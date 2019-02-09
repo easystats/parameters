@@ -1,0 +1,43 @@
+---
+output: 
+  github_document:
+    toc: false
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, reports]
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+# parameters <img src='man/figures/logo.png' align="right" height="139" />
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  tidy.opts=list(width.cutoff=60),
+  tidy=TRUE,
+  fig.path = "README-"
+)
+options(knitr.kable.NA = '',
+        digits = 4,
+        width=60)
+```
+
+
+[![Build Status](https://travis-ci.org/easystats/parameters.svg?branch=master)](https://travis-ci.org/easystats/parameters)
+[![codecov](https://codecov.io/gh/easystats/parameters/branch/master/graph/badge.svg)](https://codecov.io/gh/easystats/parameters)
+[![HitCount](http://hits.dwyl.io/easystats/parameters.svg)](http://hits.dwyl.io/easystats/parameters) [![Documentation](https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63)](https://easystats.github.io/parameters/)
+
+
+
+
+
+
+
+
+***"Understand your model's parameters!"***
+
+`parameters`'s primary goal is to provide utilities for processing the parameters of various statistical models.
