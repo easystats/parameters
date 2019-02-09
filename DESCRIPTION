@@ -17,6 +17,19 @@ Authors@R: c(
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
+Imports:
+	insight,
+	boot,
+	dplyr,
+	purrr,
+	broom
+Suggests:
+	knitr,
+	rmarkdown,
+	testthat,
+	covr
+Remotes: 
+	easystats/insight
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

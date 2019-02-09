@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • parameters</title>
+<title>Linear Model Parameters — model_parameters.lm • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,7 +37,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Linear Model Parameters — model_parameters.lm" />
+
+<meta property="og:description" content="Parameters of linear models." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -67,7 +69,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -109,96 +111,80 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Linear Model Parameters</h1>
+    
+    <div class="hidden name"><code>model_parameters.lm.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Parameters of linear models.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="as.data.frame.lm.html">as.data.frame(<i>&lt;lm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Coerce to a Data Frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_bootstrap.lm.html">model_bootstrap(<i>&lt;lm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Model bootstrapping</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_bootstrap.html">model_bootstrap()</a></code> </p>
-        </td>
-        <td><p>Model bootstrapping</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_parameters.lm.html">model_parameters(<i>&lt;lm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Linear Model Parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_parameters.html">model_parameters()</a></code> </p>
-        </td>
-        <td><p>Model Parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="standardize.data.frame.html">standardize(<i>&lt;data.frame&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Data Standardization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="standardize.factor.html">standardize(<i>&lt;factor&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Standardization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="standardize.lm.html">standardize(<i>&lt;lm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Model Standardization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="standardize.numeric.html">standardize(<i>&lt;numeric&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Standardization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="standardize.html">standardize()</a></code> </p>
-        </td>
-        <td><p>Standardization</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='co'># S3 method for lm</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>model</th>
+      <td><p>Object of class <a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a>.</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+    </tr>
+    <tr>
+      <th>standardize</th>
+      <td><p>Add standardized parameters.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods (e.g., to <code>standardize</code>).</p></td>
+    </tr>
     </table>
-  </div>
+    
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                       Parameter       beta        SE          t            p
+#&gt; 1                   (Intercept)  4.7771775 0.1734542 27.5414353 2.937815e-59
+#&gt; 2             Speciesversicolor -0.7325371 0.4950630 -1.4796846 1.411419e-01
+#&gt; 3              Speciesvirginica  0.4922397 0.5378925  0.9151266 3.616550e-01
+#&gt; 4                   Petal.Width  0.9301727 0.6491360  1.4329396 1.540425e-01
+#&gt; 5 Speciesversicolor:Petal.Width  0.4961919 0.7355601  0.6745771 5.010261e-01
+#&gt; 6  Speciesvirginica:Petal.Width -0.2793421 0.6952826 -0.4017678 6.884506e-01
+#&gt;       CI_low   CI_high   CI DoF_residual    Std_beta    Std_SE Std_CI_low
+#&gt; 1  4.4343323 5.1200227 0.95          144  0.05969491 0.7517968 -1.4262880
+#&gt; 2 -1.7110662 0.2459921 0.95          144 -0.16597410 0.7580812 -1.6643786
+#&gt; 3 -0.5709451 1.5554246 0.95          144  0.18985849 0.7960640 -1.3836217
+#&gt; 4 -0.3528933 2.2132388 0.95          144  0.85622714 0.5975319 -0.3248395
+#&gt; 5 -0.9576977 1.9500816 0.95          144  0.45674637 0.6770855 -0.8815640
+#&gt; 6 -1.6536205 1.0949362 0.95          144 -0.25713539 0.6400100 -1.5221632
+#&gt;   Std_CI_high
+#&gt; 1    1.545678
+#&gt; 2    1.332430
+#&gt; 3    1.763339
+#&gt; 4    2.037294
+#&gt; 5    1.795057
+#&gt; 6    1.007892</div><div class='input'>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
+    <h2>Author</h2>
+    <p><a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a></p>
   </div>
 </div>
 
