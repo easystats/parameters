@@ -17,7 +17,10 @@
 #' @importFrom insight get_data
 #' @export
 standardize.lm <- function(x, robust = FALSE, method = "refit", ...) {
-  data <- insight::get_data(x)
-  model_std <- update(x, data = standardize(data, robust = robust))
-  return(model_std)
+  # TODO: add other methods
+  if(method == "refit"){
+    data <- insight::get_data(x)
+    model_std <- update(x, data = standardize(data, robust = robust))
+    return(model_std)
+  }
 }

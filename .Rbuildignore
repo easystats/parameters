@@ -4,6 +4,7 @@
 ^\.travis.yml
 ^\_pkgdown.yml
 ^data/.
+^LICENSE
 ^docs/.
 ^vignettes/.
 ^logo.png

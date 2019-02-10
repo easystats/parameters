@@ -19,18 +19,19 @@ Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 Imports:
 	insight,
+	bayestestR,
 	boot,
 	dplyr,
-	purrr,
-	broom
+	purrr
 Suggests:
 	knitr,
 	rmarkdown,
 	testthat,
 	covr
 Remotes: 
-	easystats/insight
-License: MIT + file LICENSE
+	easystats/insight,
+	easystats/bayestestR
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
