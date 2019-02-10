@@ -14,8 +14,5 @@ model_bootstrap(model, n = 1000, ...)
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-See the documentation for your object's class:
-\itemize{
- \item{\link[=model_bootstrap.lm]{lm}}
- }
+Bootstrap the model n times to return a data.frame of estimates.
 }

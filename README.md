@@ -48,9 +48,9 @@ model <- lm(mpg ~ wt + cyl, data = mtcars)
 
 | Parameter   | Median |  MAD | CI\_low | CI\_high |  pd | ROPE\_Percentage | ROPE\_Equivalence |
 | :---------- | -----: | ---: | ------: | -------: | --: | ---------------: | :---------------- |
-| (Intercept) |  39.73 | 2.09 |   35.87 |    44.24 | 100 |                0 | rejected          |
-| wt          | \-3.23 | 0.66 |  \-4.90 |   \-2.02 | 100 |                0 | rejected          |
-| cyl         | \-1.48 | 0.35 |  \-2.23 |   \-0.76 | 100 |                0 | rejected          |
+| (Intercept) |  39.89 | 2.18 |   35.67 |    44.13 | 100 |                0 | rejected          |
+| wt          | \-3.23 | 0.72 |  \-4.73 |   \-1.90 | 100 |                0 | rejected          |
+| cyl         | \-1.48 | 0.37 |  \-2.20 |   \-0.75 | 100 |                0 | rejected          |
 
 ### Bayesian Models
 
@@ -61,6 +61,6 @@ model <- stan_glm(mpg ~ wt + cyl, data = mtcars)
 
 | Parameter   | Median |  MAD | CI\_low | CI\_high |     pd | ROPE\_Percentage | ROPE\_Equivalence |
 | :---------- | -----: | ---: | ------: | -------: | -----: | ---------------: | :---------------- |
-| (Intercept) |  39.68 | 1.80 |   36.86 |    42.75 | 100.00 |                0 | rejected          |
-| wt          | \-3.17 | 0.80 |  \-4.36 |   \-1.80 |  99.98 |                0 | rejected          |
-| cyl         | \-1.52 | 0.42 |  \-2.21 |   \-0.78 |  99.98 |                0 | rejected          |
+| (Intercept) |  39.67 | 1.76 |   36.66 |    42.51 | 100.00 |                0 | rejected          |
+| wt          | \-3.18 | 0.79 |  \-4.48 |   \-1.82 |  99.95 |                0 | rejected          |
+| cyl         | \-1.51 | 0.45 |  \-2.22 |   \-0.75 |  99.98 |                0 | rejected          |

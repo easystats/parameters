@@ -1,10 +1,6 @@
 #' Model bootstrapping
 #'
-#' See the documentation for your object's class:
-#' \itemize{
-#'  \item{\link[=model_bootstrap.lm]{lm}}
-#'  }
-#'
+#' Bootstrap the model n times to return a data.frame of estimates.
 #'
 #' @param model Statistical model.
 #' @param n The number of bootstrap replicates.
