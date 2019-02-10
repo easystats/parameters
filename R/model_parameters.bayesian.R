@@ -85,7 +85,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
   # Point-estimates
   # TODO: Colour the median in green/red depending on the direction
-  parameters <- data.frame("Parameter" = colnames(data))
+  parameters <- data_frame("Parameter" = colnames(data))
   if ("median" %in% c(estimate)) {
     parameters$Median <- sapply(data, median)
     parameters$MAD <- sapply(data, mad)
@@ -105,18 +105,18 @@ model_parameters.brmsfit <- .model_parameters_bayesian
       for (i in names(hdi)) {
         current_hdi <- hdi[[i]]
 
-        hdi_low <- as.data.frame(t(setNames(current_hdi$CI_low, as.numeric(current_hdi$CI))))
-        names(hdi_low) <- paste0("CI_", names(hdi_low), "_low")
+        hdi_low <- as.data.frame(t(setNames(current_hdi$CI_low, as.numeric(current_hdi$CI))), stringsAsFactors = FALSE)
+        names(hdi_low) <- paste0("CI_low_", names(hdi_low))
 
-        hdi_high <- as.data.frame(t(setNames(current_hdi$CI_high, as.numeric(current_hdi$CI))))
-        names(hdi_high) <- paste0("CI_", names(hdi_high), "_high")
+        hdi_high <- as.data.frame(t(setNames(current_hdi$CI_high, as.numeric(current_hdi$CI))), stringsAsFactors = FALSE)
+        names(hdi_high) <- paste0("CI_high_", names(hdi_high))
 
         hdi[[i]] <- cbind(hdi_low, hdi_high)
       }
       hdi <- bayestestR::flatten_list(hdi)
       hdi <- hdi[names(hdi) != "name"]
     } else {
-      hdi <- as.data.frame(t(sapply(data, bayestestR::hdi, ci = ci)))
+      hdi <- as.data.frame(t(sapply(data, bayestestR::hdi, ci = ci)), stringsAsFactors = FALSE)
       hdi <- hdi[c("CI_low", "CI_high")]
     }
     hdi <- sapply(hdi, as.numeric)
@@ -136,11 +136,11 @@ model_parameters.brmsfit <- .model_parameters_bayesian
         for (i in names(results_rope)) {
           current_rope <- results_rope[[i]]
 
-          rope_percentage <- as.data.frame(t(setNames(current_rope$ROPE_Percentage, as.numeric(current_rope$CI))))
+          rope_percentage <- as.data.frame(t(setNames(current_rope$ROPE_Percentage, as.numeric(current_rope$CI))), stringsAsFactors = FALSE)
           names(rope_percentage) <- paste0("CI_", names(rope_percentage), "_ROPE_Percentage")
           rope_percentage <- sapply(rope_percentage, as.numeric)
 
-          rope_equivalence <- as.data.frame(t(setNames(current_rope$ROPE_Equivalence, as.numeric(current_rope$CI))))
+          rope_equivalence <- as.data.frame(t(setNames(current_rope$ROPE_Equivalence, as.numeric(current_rope$CI))), stringsAsFactors = FALSE)
           names(rope_equivalence) <- paste0("CI_", names(rope_equivalence), "_ROPE_Equivalence")
           rope_equivalence <- sapply(rope_equivalence, as.character)
 
@@ -149,7 +149,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
         results_rope <- bayestestR::flatten_list(results_rope)
         results_rope <- results_rope[names(results_rope) != "name"]
       } else {
-        results_rope <- as.data.frame(t(sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci)))
+        results_rope <- as.data.frame(t(sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci)), stringsAsFactors = FALSE)
         results_rope <- results_rope[c("ROPE_Percentage", "ROPE_Equivalence")]
         results_rope$ROPE_Percentage <- as.numeric(results_rope$ROPE_Percentage)
         results_rope$ROPE_Equivalence <- as.character(results_rope$ROPE_Equivalence)
