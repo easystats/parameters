@@ -46,6 +46,3 @@ model_parameters(model)
  \item{\href{https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html}{Comparison of Indices of Effect Existence}}
  }
 }
-\author{
-\href{https://dominiquemakowski.github.io/}{Dominique Makowski}
-}

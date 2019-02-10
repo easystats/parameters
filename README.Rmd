@@ -41,3 +41,55 @@ options(knitr.kable.NA = '',
 
 `parameters`'s primary goal is to provide utilities for processing the parameters of various statistical models.
 
+
+## Installation
+
+
+Run the following:
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+install.packages("devtools")
+devtools::install_github("easystats/parameters")
+```
+```{r message=FALSE, warning=FALSE}
+library("parameters")
+```
+
+
+
+
+## Examples
+
+### General Linear Models
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+model <- lm(mpg ~ wt + cyl, data = mtcars)
+model_parameters(model, standardize = TRUE)
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+model <- lm(mpg ~ wt + cyl, data = mtcars)
+knitr::kable(model_parameters(model, standardize = TRUE), digits=2)
+```
+
+### Bootstrapped Models
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+model <- lm(mpg ~ wt + cyl, data = mtcars)
+
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+model <- lm(mpg ~ wt + cyl, data = mtcars)
+knitr::kable(model_parameters(model, standardize = FALSE, bootstrap = TRUE), digits=2)
+```
+
+### Bayesian Models
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+library(rstanarm)
+model <- stan_glm(mpg ~ wt + cyl, data = mtcars)
+
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(rstanarm)
+text <- capture.output(model <- stan_glm(mpg ~ wt + cyl, data = mtcars))
+knitr::kable(model_parameters(model, standardize = FALSE), digits=2)
+```

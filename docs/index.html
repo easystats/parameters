@@ -80,8 +80,185 @@
 <a href="#parameters" class="anchor"></a>parameters <img src="reference/figures/logo.png" align="right" height="139">
 </h1></div>
 
-<p><strong><em>Describe your model’s parameters!</em></strong></p>
+<p><strong><em>Describe and understand your model’s parameters!</em></strong></p>
 <p><code>parameters</code>’s primary goal is to provide utilities for processing the parameters of various statistical models.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>Run the following:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"easystats/parameters"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"parameters"</span>)</a></code></pre></div>
+</div>
+<div id="examples" class="section level2">
+<h2 class="hasAnchor">
+<a href="#examples" class="anchor"></a>Examples</h2>
+<div id="general-linear-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#general-linear-models" class="anchor"></a>General Linear Models</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<table class="table table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">beta</th>
+<th align="right">SE</th>
+<th align="right">t</th>
+<th align="right">DoF_residual</th>
+<th align="right">p</th>
+<th align="right">CI_low</th>
+<th align="right">CI_high</th>
+<th align="right">Std_beta</th>
+<th align="right">Std_SE</th>
+<th align="right">Std_CI_low</th>
+<th align="right">Std_CI_high</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">39.69</td>
+<td align="right">1.71</td>
+<td align="right">23.14</td>
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">36.18</td>
+<td align="right">43.19</td>
+<td align="right">0.00</td>
+<td align="right">0.08</td>
+<td align="right">-0.15</td>
+<td align="right">0.15</td>
+</tr>
+<tr class="even">
+<td align="left">wt</td>
+<td align="right">-3.19</td>
+<td align="right">0.76</td>
+<td align="right">-4.22</td>
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">-4.74</td>
+<td align="right">-1.64</td>
+<td align="right">-0.52</td>
+<td align="right">0.12</td>
+<td align="right">-0.77</td>
+<td align="right">-0.27</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="right">-1.51</td>
+<td align="right">0.41</td>
+<td align="right">-3.64</td>
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">-2.36</td>
+<td align="right">-0.66</td>
+<td align="right">-0.45</td>
+<td align="right">0.12</td>
+<td align="right">-0.70</td>
+<td align="right">-0.20</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="bootstrapped-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bootstrapped-models" class="anchor"></a>Bootstrapped Models</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a></code></pre></div>
+<table class="table table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">Median</th>
+<th align="right">MAD</th>
+<th align="right">CI_low</th>
+<th align="right">CI_high</th>
+<th align="right">pd</th>
+<th align="right">ROPE_Percentage</th>
+<th align="left">ROPE_Equivalence</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">39.75</td>
+<td align="right">2.28</td>
+<td align="right">35.55</td>
+<td align="right">43.91</td>
+<td align="right">100</td>
+<td align="right">0</td>
+<td align="left">rejected</td>
+</tr>
+<tr class="even">
+<td align="left">wt</td>
+<td align="right">-3.20</td>
+<td align="right">0.70</td>
+<td align="right">-4.64</td>
+<td align="right">-1.84</td>
+<td align="right">100</td>
+<td align="right">0</td>
+<td align="left">rejected</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="right">-1.50</td>
+<td align="right">0.34</td>
+<td align="right">-2.29</td>
+<td align="right">-0.82</td>
+<td align="right">100</td>
+<td align="right">0</td>
+<td align="left">rejected</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="bayesian-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bayesian-models" class="anchor"></a>Bayesian Models</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb5-2" title="2">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a></code></pre></div>
+<table class="table table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">Median</th>
+<th align="right">MAD</th>
+<th align="right">CI_low</th>
+<th align="right">CI_high</th>
+<th align="right">pd</th>
+<th align="right">ROPE_Percentage</th>
+<th align="left">ROPE_Equivalence</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">39.63</td>
+<td align="right">1.78</td>
+<td align="right">36.73</td>
+<td align="right">42.77</td>
+<td align="right">100.00</td>
+<td align="right">0</td>
+<td align="left">rejected</td>
+</tr>
+<tr class="even">
+<td align="left">wt</td>
+<td align="right">-3.17</td>
+<td align="right">0.77</td>
+<td align="right">-4.36</td>
+<td align="right">-1.72</td>
+<td align="right">99.98</td>
+<td align="right">0</td>
+<td align="left">rejected</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="right">-1.52</td>
+<td align="right">0.41</td>
+<td align="right">-2.24</td>
+<td align="right">-0.81</td>
+<td align="right">99.98</td>
+<td align="right">0</td>
+<td align="left">rejected</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
   </div>
 

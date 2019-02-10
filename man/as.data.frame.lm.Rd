@@ -21,6 +21,3 @@
 \description{
 Coerce to a Data Frame
 }
-\author{
-\href{https://dominiquemakowski.github.io/}{Dominique Makowski}
-}

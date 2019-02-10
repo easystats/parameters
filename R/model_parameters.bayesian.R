@@ -50,12 +50,12 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
 #' }
-#' 
+#'
 #' @references
 #' \itemize{
 #'  \item{\href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{Comparison of Point-Estimates}}
@@ -119,6 +119,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
       hdi <- as.data.frame(t(sapply(data, bayestestR::hdi, ci = ci)))
       hdi <- hdi[c("CI_low", "CI_high")]
     }
+    hdi <- sapply(hdi, as.numeric)
     parameters <- cbind(parameters, hdi)
   }
 
@@ -137,9 +138,11 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
           rope_percentage <- as.data.frame(t(setNames(current_rope$ROPE_Percentage, as.numeric(current_rope$CI))))
           names(rope_percentage) <- paste0("CI_", names(rope_percentage), "_ROPE_Percentage")
+          rope_percentage <- sapply(rope_percentage, as.numeric)
 
           rope_equivalence <- as.data.frame(t(setNames(current_rope$ROPE_Equivalence, as.numeric(current_rope$CI))))
           names(rope_equivalence) <- paste0("CI_", names(rope_equivalence), "_ROPE_Equivalence")
+          rope_equivalence <- sapply(rope_equivalence, as.character)
 
           results_rope[[i]] <- cbind(rope_percentage, rope_equivalence)
         }
@@ -148,6 +151,8 @@ model_parameters.brmsfit <- .model_parameters_bayesian
       } else {
         results_rope <- as.data.frame(t(sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci)))
         results_rope <- results_rope[c("ROPE_Percentage", "ROPE_Equivalence")]
+        results_rope$ROPE_Percentage <- as.numeric(results_rope$ROPE_Percentage)
+        results_rope$ROPE_Equivalence <- as.character(results_rope$ROPE_Equivalence)
       }
       parameters <- cbind(parameters, results_rope)
     }
