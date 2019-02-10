@@ -2,7 +2,8 @@
 #'
 #' @inheritParams model_bootstrap
 #' @examples
-#' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+#' model <- lm(mpg ~ wt + cyl, data = mtcars)
+#' model_bootstrap(model)
 #' @importFrom stats coef
 #' @importFrom insight get_data find_parameters
 #' @importFrom boot boot

@@ -27,7 +27,9 @@ Suggests:
 	knitr,
 	rmarkdown,
 	testthat,
-	covr
+	covr,
+	rstanarm,
+	brms
 Remotes: 
 	easystats/insight,
 	easystats/bayestestR

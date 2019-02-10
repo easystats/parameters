@@ -5,7 +5,7 @@
 \title{Linear Model Parameters}
 \usage{
 \method{model_parameters}{lm}(model, ci = 0.95, standardize = FALSE,
-  ...)
+  bootstrap = FALSE, ...)
 }
 \arguments{
 \item{model}{Object of class \link{lm}.}
@@ -14,13 +14,15 @@
 
 \item{standardize}{Add standardized parameters.}
 
+\item{bootstrap}{Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.}
+
 \item{...}{Arguments passed to or from other methods (e.g., to \code{standardize}).}
 }
 \description{
 Parameters of linear models.
 }
 \examples{
-model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+model <- lm(mpg ~ wt + cyl, data = mtcars)
 model_parameters(model, standardize = TRUE)
 
 }

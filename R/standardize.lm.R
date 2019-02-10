@@ -15,12 +15,13 @@
 #' coef(standardize(model))
 #' @importFrom stats update
 #' @importFrom insight get_data
+#' @importFrom utils capture.output
 #' @export
 standardize.lm <- function(x, robust = FALSE, method = "refit", ...) {
   # TODO: add other methods
-  if(method == "refit"){
+  if (method == "refit") {
     data <- insight::get_data(x)
-    model_std <- update(x, data = standardize(data, robust = robust))
+    text <- capture.output(model_std <- update(x, data = standardize(data, robust = robust)))
     return(model_std)
   }
 }
