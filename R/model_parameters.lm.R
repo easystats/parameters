@@ -11,8 +11,6 @@
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model, standardize = TRUE)
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
-#' @importFrom stats confint
 #' @export
 model_parameters.lm <- function(model, ci = .95, standardize = FALSE, bootstrap = FALSE, ...) {
   if (bootstrap) {
@@ -37,7 +35,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = FALSE, bootstrap 
 
 
 
-
+#' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_lm <- function(model, ci = .95) {
   parameters <- as.data.frame(summary(model)$coefficients)
