@@ -18,6 +18,3 @@ Compute and extract model parameters. See the documentation for your object's cl
  \item{\link[=model_parameters.stanreg]{Bayesian regressions}}
  }
 }
-\author{
-\href{https://dominiquemakowski.github.io/}{Dominique Makowski}
-}

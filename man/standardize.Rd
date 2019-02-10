@@ -20,6 +20,3 @@ Performs a standardization of data or parameters. See the documentation for your
  \item{\link[=standardize.lm]{lm}}
  }
 }
-\author{
-\href{https://dominiquemakowski.github.io/}{Dominique Makowski}
-}

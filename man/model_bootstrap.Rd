@@ -19,6 +19,3 @@ See the documentation for your object's class:
  \item{\link[=model_bootstrap.lm]{lm}}
  }
 }
-\author{
-\href{https://dominiquemakowski.github.io/}{Dominique Makowski}
-}

@@ -29,7 +29,8 @@ Suggests:
 	testthat,
 	covr,
 	rstanarm,
-	brms
+	brms,
+	lme4
 Remotes: 
 	easystats/insight,
 	easystats/bayestestR
