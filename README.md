@@ -44,23 +44,25 @@ model_parameters(model, standardize = TRUE)
 
 ``` r
 model <- lm(mpg ~ wt + cyl, data = mtcars)
+model_parameters(model, bootstrap = TRUE)
 ```
 
 | Parameter   | Median |  MAD | CI\_low | CI\_high |  pd | ROPE\_Percentage | ROPE\_Equivalence |
 | :---------- | -----: | ---: | ------: | -------: | --: | ---------------: | :---------------- |
-| (Intercept) |  39.89 | 2.18 |   35.67 |    44.13 | 100 |                0 | rejected          |
-| wt          | \-3.23 | 0.72 |  \-4.73 |   \-1.90 | 100 |                0 | rejected          |
-| cyl         | \-1.48 | 0.37 |  \-2.20 |   \-0.75 | 100 |                0 | rejected          |
+| (Intercept) |  39.91 | 2.15 |   35.66 |    43.92 | 100 |                0 | rejected          |
+| wt          | \-3.25 | 0.71 |  \-4.88 |   \-1.83 | 100 |                0 | rejected          |
+| cyl         | \-1.49 | 0.36 |  \-2.27 |   \-0.79 | 100 |                0 | rejected          |
 
 ### Bayesian Models
 
 ``` r
 library(rstanarm)
 model <- stan_glm(mpg ~ wt + cyl, data = mtcars)
+model_parameters(model)
 ```
 
 | Parameter   | Median |  MAD | CI\_low | CI\_high |     pd | ROPE\_Percentage | ROPE\_Equivalence |
 | :---------- | -----: | ---: | ------: | -------: | -----: | ---------------: | :---------------- |
-| (Intercept) |  39.67 | 1.76 |   36.66 |    42.51 | 100.00 |                0 | rejected          |
-| wt          | \-3.18 | 0.79 |  \-4.48 |   \-1.82 |  99.95 |                0 | rejected          |
-| cyl         | \-1.51 | 0.45 |  \-2.22 |   \-0.75 |  99.98 |                0 | rejected          |
+| (Intercept) |  39.68 | 1.78 |   37.03 |    42.64 | 100.00 |                0 | rejected          |
+| wt          | \-3.22 | 0.76 |  \-4.40 |   \-1.85 | 100.00 |                0 | rejected          |
+| cyl         | \-1.50 | 0.41 |  \-2.19 |   \-0.79 |  99.98 |                0 | rejected          |
