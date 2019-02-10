@@ -19,8 +19,10 @@ model_bootstrap.lm <- function(model, n = 1000, ...) {
 
   results <- boot::boot(data = data, statistic = boot_function, R = n, model = model)
 
-  df <- as.data.frame(results)
+  df <- as.data.frame(results$t)
   names(df) <- insight::find_parameters(model)$conditional
+
+  return(df)
 }
 
 

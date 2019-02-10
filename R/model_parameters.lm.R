@@ -50,7 +50,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = FALSE, ...) {
 
 
   parameters <- cbind(
-    data.frame("parameters" = rownames(parameters)),
+    data.frame("Parameter" = rownames(parameters)),
     parameters,
     ci_table
   )

@@ -15,5 +15,5 @@
 #'
 #' @export
 model_bootstrap <- function(model, n = 1000, ...) {
-  UseMethod("model_bootsrap")
+  UseMethod("model_bootstrap")
 }
