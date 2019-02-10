@@ -74,7 +74,7 @@ knitr::kable(model_parameters(model, standardize = TRUE), digits=2)
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 model <- lm(mpg ~ wt + cyl, data = mtcars)
-
+model_parameters(model, bootstrap = TRUE)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 model <- lm(mpg ~ wt + cyl, data = mtcars)
@@ -86,7 +86,7 @@ knitr::kable(model_parameters(model, standardize = FALSE, bootstrap = TRUE), dig
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 library(rstanarm)
 model <- stan_glm(mpg ~ wt + cyl, data = mtcars)
-
+model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(rstanarm)

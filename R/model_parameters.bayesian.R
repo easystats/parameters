@@ -106,10 +106,10 @@ model_parameters.brmsfit <- .model_parameters_bayesian
         current_hdi <- hdi[[i]]
 
         hdi_low <- as.data.frame(t(setNames(current_hdi$CI_low, as.numeric(current_hdi$CI))))
-        names(hdi_low) <- paste0("CI_low_", names(hdi_low))
+        names(hdi_low) <- paste0("CI_", names(hdi_low), "_low")
 
         hdi_high <- as.data.frame(t(setNames(current_hdi$CI_high, as.numeric(current_hdi$CI))))
-        names(hdi_high) <- paste0("CI_high_", names(hdi_high))
+        names(hdi_high) <- paste0("CI_", names(hdi_high), "_high")
 
         hdi[[i]] <- cbind(hdi_low, hdi_high)
       }
