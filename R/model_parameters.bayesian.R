@@ -56,7 +56,6 @@
 #' model_parameters(model)
 #' }
 #' 
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #' @references
 #' \itemize{
 #'  \item{\href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{Comparison of Point-Estimates}}

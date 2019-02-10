@@ -39,8 +39,6 @@ model_bootstrap.lm <- function(model, n = 1000, ...) {
 #' @param n The number of bootstrap replicates.
 #' @param ... Additional arguments to be passed to or from methods.
 #'
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
-#'
 #' @method as.data.frame lm
 #' @export
 as.data.frame.lm <- function(x, row.names = NULL, optional = FALSE, n = 1000, ...) {

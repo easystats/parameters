@@ -9,8 +9,6 @@
 #' @param model Statistical Model.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
-#'
 #' @export
 model_parameters <- function(model, ...) {
   UseMethod("model_parameters")
