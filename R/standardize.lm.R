@@ -14,13 +14,17 @@
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 #' coef(standardize(model))
 #' @importFrom stats update
-#' @importFrom insight get_data
+#' @importFrom insight get_data model_info find_response
+#' @importFrom utils capture.output
 #' @export
 standardize.lm <- function(x, robust = FALSE, method = "refit", ...) {
   # TODO: add other methods
-  if(method == "refit"){
+  if (method == "refit") {
     data <- insight::get_data(x)
-    model_std <- update(x, data = standardize(data, robust = robust))
+    if(insight::model_info(x)$is_binomial){
+      data[insight::find_response(x)] <- as.factor(insight::get_response(x))
+    }
+    text <- capture.output(model_std <- update(x, data = standardize(data, robust = robust)))
     return(model_std)
   }
 }

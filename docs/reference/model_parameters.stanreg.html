@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Linear Model Parameters — model_parameters.lm • parameters</title>
+<title>Bayesian Models Parameters — model_parameters.stanreg • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,9 @@
 
 
 
-<meta property="og:title" content="Linear Model Parameters — model_parameters.lm" />
+<meta property="og:title" content="Bayesian Models Parameters — model_parameters.stanreg" />
 
-<meta property="og:description" content="Parameters of linear models." />
+<meta property="og:description" content="Parameters of Bayesian models." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -113,20 +113,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Linear Model Parameters</h1>
+    <h1>Bayesian Models Parameters</h1>
     
-    <div class="hidden name"><code>model_parameters.lm.Rd</code></div>
+    <div class="hidden name"><code>model_parameters.stanreg.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Parameters of linear models.</p>
+    <p>Parameters of Bayesian models.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for lm</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for stanreg</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_bounds</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,15 +138,27 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Credible Interval (CI) level. Default to 0.90 (90%).</p></td>
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>Add standardized parameters.</p></td>
+      <td><p>Add standardized parameters. Default to FALSE as this re-fits the model and can thus take some time.</p></td>
     </tr>
     <tr>
-      <th>bootstrap</th>
-      <td><p>Should estimates be based on bootsrapped model? If TRUE, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply.</p></td>
+      <th>estimate</th>
+      <td><p>The point-estimate to compute. Can be a character or a list with "median", "mean" or "MAP".</p></td>
+    </tr>
+    <tr>
+      <th>test</th>
+      <td><p>What indices of effect existence to compute. Can be a character or a list with "p_direction", "rope" or "p_map".</p></td>
+    </tr>
+    <tr>
+      <th>rope_bounds</th>
+      <td><p>ROPE's lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td><p>The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -153,23 +166,33 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <ul>
+<li><p><a href='https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html'>Comparison of Point-Estimates</a></p></li>
+<li><p><a href='https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html'>Comparison of Indices of Effect Existence</a></p></li>
+</ul>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;     Parameter      beta        SE         t DoF_residual            p    CI_low
-#&gt; 1 (Intercept) 39.686261 1.7149840 23.140893           29 3.043182e-20 36.178725
-#&gt; 2          wt -3.190972 0.7569065 -4.215808           29 2.220200e-04 -4.739020
-#&gt; 3         cyl -1.507795 0.4146883 -3.635972           29 1.064282e-03 -2.355928
-#&gt;      CI_high      Std_beta     Std_SE Std_CI_low Std_CI_high
-#&gt; 1 43.1937976  4.897987e-17 0.07530792 -0.1540220   0.1540220
-#&gt; 2 -1.6429245 -5.180450e-01 0.12288156 -0.7693660  -0.2667240
-#&gt; 3 -0.6596622 -4.467939e-01 0.12288156 -0.6981149  -0.1954729</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

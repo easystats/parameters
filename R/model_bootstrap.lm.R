@@ -2,7 +2,8 @@
 #'
 #' @inheritParams model_bootstrap
 #' @examples
-#' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+#' model <- lm(mpg ~ wt + cyl, data = mtcars)
+#' model_bootstrap(model)
 #' @importFrom stats coef
 #' @importFrom insight get_data find_parameters
 #' @importFrom boot boot
@@ -19,8 +20,10 @@ model_bootstrap.lm <- function(model, n = 1000, ...) {
 
   results <- boot::boot(data = data, statistic = boot_function, R = n, model = model)
 
-  df <- as.data.frame(results)
+  df <- as.data.frame(results$t)
   names(df) <- insight::find_parameters(model)$conditional
+
+  return(df)
 }
 
 
@@ -35,8 +38,6 @@ model_bootstrap.lm <- function(model, n = 1000, ...) {
 #' @param optional Not used.
 #' @param n The number of bootstrap replicates.
 #' @param ... Additional arguments to be passed to or from methods.
-#'
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @method as.data.frame lm
 #' @export

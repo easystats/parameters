@@ -14,7 +14,8 @@ model_parameters(model, ...)
 \description{
 Compute and extract model parameters. See the documentation for your object's class:
 \itemize{
- \item{\link[=model_parameters.lm]{lm}}
+ \item{\link[=model_parameters.lm]{Frequentist regressions}}
+ \item{\link[=model_parameters.stanreg]{Bayesian regressions}}
  }
 }
 \author{
