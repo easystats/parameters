@@ -34,18 +34,18 @@ model_parameters.glm <- function(model, ci = .95, standardize = FALSE, bootstrap
 #' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_glm <- function(model, ci = .95) {
-  parameters <- as.data.frame(summary(model)$coefficients)
+  parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
   names(parameters) <- c("beta", "SE", "z", "p")
 
   parameters$DoF_residual <- model$df.residual
   parameters <- parameters[c("beta", "SE", "z", "DoF_residual", "p")]
 
-  ci_table <- suppressMessages(as.data.frame(confint(model, level = ci)))
+  ci_table <- suppressMessages(as.data.frame(confint(model, level = ci), stringsAsFactors = FALSE))
   names(ci_table) <- c("CI_low", "CI_high")
 
 
   parameters <- cbind(
-    data.frame("Parameter" = rownames(parameters)),
+    data_frame("Parameter" = rownames(parameters)),
     parameters,
     ci_table
   )
