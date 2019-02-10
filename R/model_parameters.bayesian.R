@@ -9,12 +9,12 @@
   }
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, ci, estimate = estimate, test = test, rope_bounds = rope_bounds, n = n)
+  parameters <- .extract_parameters_bayesian(model, ci, estimate = estimate, test = test, rope_bounds = rope_bounds, n = n, ...)
 
   # Standardized
   if (standardize) {
     std_model <- standardize(model, ...)
-    std_parameters <- .extract_parameters_bayesian(std_model, ci = ci, estimate = estimate, test = NULL, rope_bounds = rope_bounds, n = n)
+    std_parameters <- .extract_parameters_bayesian(std_model, ci = ci, estimate = estimate, test = NULL, rope_bounds = rope_bounds, n = n, ...)
     names(std_parameters) <- paste0("Std_", names(std_parameters))
 
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Std_Parameter"])
@@ -125,36 +125,38 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
 
   # Effect Existence
-  test_list <- tolower(c(test))
-  if ("pd" %in% test_list | "p_direction" %in% test_list | "pdir" %in% test_list | "mpe" %in% test_list) {
-    parameters$pd <- sapply(data, bayestestR::p_direction)
-  }
-  if ("rope" %in% test_list | "equivalence" %in% test_list | "equi" %in% test_list) {
-    if (length(ci) > 1) {
-      results_rope <- sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci, simplify = FALSE)
-      for (i in names(results_rope)) {
-        current_rope <- results_rope[[i]]
-
-        rope_percentage <- as.data.frame(t(setNames(current_rope$ROPE_Percentage, as.numeric(current_rope$CI))))
-        names(rope_percentage) <- paste0("CI_", names(rope_percentage), "_ROPE_Percentage")
-
-        rope_equivalence <- as.data.frame(t(setNames(current_rope$ROPE_Equivalence, as.numeric(current_rope$CI))))
-        names(rope_equivalence) <- paste0("CI_", names(rope_equivalence), "_ROPE_Equivalence")
-
-        results_rope[[i]] <- cbind(rope_percentage, rope_equivalence)
-      }
-      results_rope <- bayestestR::flatten_list(results_rope)
-      results_rope <- results_rope[names(results_rope) != "name"]
-    } else {
-      results_rope <- as.data.frame(t(sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci)))
-      results_rope <- results_rope[c("ROPE_Percentage", "ROPE_Equivalence")]
+  if (!is.null(test)) {
+    test_list <- tolower(c(test))
+    if ("pd" %in% test_list | "p_direction" %in% test_list | "pdir" %in% test_list | "mpe" %in% test_list) {
+      parameters$pd <- sapply(data, bayestestR::p_direction)
     }
-    parameters <- cbind(parameters, results_rope)
+    if ("rope" %in% test_list | "equivalence" %in% test_list | "equi" %in% test_list) {
+      if (length(ci) > 1) {
+        results_rope <- sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci, simplify = FALSE)
+        for (i in names(results_rope)) {
+          current_rope <- results_rope[[i]]
+
+          rope_percentage <- as.data.frame(t(setNames(current_rope$ROPE_Percentage, as.numeric(current_rope$CI))))
+          names(rope_percentage) <- paste0("CI_", names(rope_percentage), "_ROPE_Percentage")
+
+          rope_equivalence <- as.data.frame(t(setNames(current_rope$ROPE_Equivalence, as.numeric(current_rope$CI))))
+          names(rope_equivalence) <- paste0("CI_", names(rope_equivalence), "_ROPE_Equivalence")
+
+          results_rope[[i]] <- cbind(rope_percentage, rope_equivalence)
+        }
+        results_rope <- bayestestR::flatten_list(results_rope)
+        results_rope <- results_rope[names(results_rope) != "name"]
+      } else {
+        results_rope <- as.data.frame(t(sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci)))
+        results_rope <- results_rope[c("ROPE_Percentage", "ROPE_Equivalence")]
+      }
+      parameters <- cbind(parameters, results_rope)
+    }
+    if ("p_map" %in% test_list | "pmap" %in% test_list) {
+      parameters$p_MAP <- sapply(data, bayestestR::p_map)
+    }
+    # TODO: add p_ROPE, but first must enhance its implementation in bayestestR
   }
-  if ("p_map" %in% test_list | "pmap" %in% test_list) {
-    parameters$p_MAP <- sapply(data, bayestestR::p_map)
-  }
-  # TODO: add p_ROPE, but first must enhance its implementation in bayestestR
 
 
   rownames(parameters) <- NULL

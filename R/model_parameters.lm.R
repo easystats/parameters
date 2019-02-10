@@ -19,7 +19,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = FALSE, bootstrap 
     return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, ...))
   }
   # Processing
-  parameters <- .extract_parameters_lm(model, ci)
+  parameters <- .extract_parameters_lm(model, ci = ci)
 
   # Standardized
   if (standardize) {

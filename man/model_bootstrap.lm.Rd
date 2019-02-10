@@ -19,5 +19,4 @@ Model bootstrapping
 \examples{
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 model_bootstrap(model)
-
 }
