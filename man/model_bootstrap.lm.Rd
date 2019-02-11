@@ -2,9 +2,12 @@
 % Please edit documentation in R/model_bootstrap.R
 \name{model_bootstrap.lm}
 \alias{model_bootstrap.lm}
+\alias{model_bootstrap.merMod}
 \title{Model bootstrapping}
 \usage{
 \method{model_bootstrap}{lm}(model, n = 1000, silent = FALSE, ...)
+
+\method{model_bootstrap}{merMod}(model, n = 1000, silent = FALSE, ...)
 }
 \arguments{
 \item{model}{Statistical model.}

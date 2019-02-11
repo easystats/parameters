@@ -5,7 +5,7 @@
 #' @inheritParams model_parameters.lm
 #'
 #' @examples
-#' model <- glm(vs ~ wt + cyl, data = mtcars, family="binomial")
+#' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' model_parameters(model, standardize = TRUE)
 #' @export
 model_parameters.glm <- function(model, ci = .95, standardize = FALSE, bootstrap = FALSE, ...) {

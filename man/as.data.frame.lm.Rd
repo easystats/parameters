@@ -5,7 +5,7 @@
 \title{Coerce to a Data Frame}
 \usage{
 \method{as.data.frame}{lm}(x, row.names = NULL, optional = FALSE,
-  n = 1000, ...)
+  n = 1000, silent = FALSE, ...)
 }
 \arguments{
 \item{x}{Any R object.}
@@ -15,6 +15,8 @@
 \item{optional}{Not used.}
 
 \item{n}{The number of bootstrap replicates.}
+
+\item{silent}{Hide possible refit messages.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 }

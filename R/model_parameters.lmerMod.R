@@ -6,10 +6,10 @@
 #'
 #' @examples
 #' \dontrun{
-#' model <- lme4::lmer(mpg ~ wt + (1|gear), data = mtcars)
+#' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #' model_parameters(model, standardize = TRUE)
 #' }
-#'
+#' 
 #' @export
 model_parameters.lmerMod <- function(model, ci = .95, standardize = FALSE, bootstrap = FALSE, ...) {
   if (bootstrap) {

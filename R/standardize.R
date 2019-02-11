@@ -15,4 +15,3 @@
 standardize <- function(x, robust = FALSE, ...) {
   UseMethod("standardize")
 }
-
