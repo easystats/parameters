@@ -80,7 +80,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
   if (insight::model_info(model)$is_bayesian) {
     data <- insight::get_parameters(model)
   } else {
-    data <- model_bootstrap(model, n = n)
+    data <- model_bootstrap(model, n = n, ...)
   }
 
   # Point-estimates

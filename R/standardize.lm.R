@@ -28,3 +28,6 @@ standardize.lm <- function(x, robust = FALSE, method = "refit", ...) {
     return(model_std)
   }
 }
+
+#' @export
+standardize.merMod <- standardize.lm
