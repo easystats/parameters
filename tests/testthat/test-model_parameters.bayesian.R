@@ -5,7 +5,9 @@ context("model_parameters.bayesian")
 # RSTANARM --------------------------------------------------------------------
 
 test_that("model_parameters.stanreg", {
+  library(circus)
   library(rstanarm)
+  # data("stanreg_lm_1", package="circus")
 
   # GLM
   params <- model_parameters(circus::stanreg_lm_1, standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
