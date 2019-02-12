@@ -6,7 +6,7 @@
 \usage{
 \method{model_parameters}{stanreg}(model, ci = 0.9,
   standardize = FALSE, estimate = "median", test = c("pd", "rope"),
-  rope_bounds = "default", n = 1000, ...)
+  rope_bounds = "default", diagnostic = TRUE, n = 1000, ...)
 }
 \arguments{
 \item{model}{Object of class \link{lm}.}
@@ -20,6 +20,8 @@
 \item{test}{What indices of effect existence to compute. Can be a character or a list with "p_direction", "rope" or "p_map".}
 
 \item{rope_bounds}{ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
+
+\item{diagnostic}{Include sampling diagnostic metrics (effective sample, Rhat and MCSE).}
 
 \item{n}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 

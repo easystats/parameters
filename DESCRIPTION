@@ -28,12 +28,14 @@ Suggests:
 	rmarkdown,
 	testthat,
 	covr,
+	circus,
 	rstanarm,
 	brms,
 	lme4
 Remotes: 
 	easystats/insight,
-	easystats/bayestestR
+	easystats/bayestestR,
+	easystats/circus
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

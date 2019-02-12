@@ -1,5 +1,5 @@
 #' @keywords internal
-.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", n = 1000, ...) {
+.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", diagnostic = TRUE, n = 1000, ...) {
 
   # ROPE
   if (all(rope_bounds == "default")) {
@@ -18,6 +18,16 @@
     names(std_parameters) <- paste0("Std_", names(std_parameters))
 
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Std_Parameter"])
+  }
+
+  # Diagnostic
+  if(diagnostic){
+    if(inherits(model, "stanreg")){
+      diagnostic_df <- as.data.frame(model$stan_summary[row.names(model$stan_summary) %in% parameters$Parameter, ])
+      parameters$Effective_Sample <- diagnostic_df$n_eff
+      parameters$Rhat <- diagnostic_df$Rhat
+      # TODO: MCSE
+    }
   }
 
   return(parameters)
@@ -42,6 +52,7 @@
 #' @param estimate The point-estimate to compute. Can be a character or a list with "median", "mean" or "MAP".
 #' @param test What indices of effect existence to compute. Can be a character or a list with "p_direction", "rope" or "p_map".
 #' @param rope_bounds ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
+#' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE).
 #' @param n The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
 #' @param ... Arguments passed to or from other methods (e.g., to \code{standardize}).
 #'
@@ -50,12 +61,12 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
 #' }
-#' 
+#'
 #' @references
 #' \itemize{
 #'  \item{\href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{Comparison of Point-Estimates}}

@@ -23,7 +23,7 @@ Parameters of linear mixed models.
 }
 \examples{
 \dontrun{
-model <- lme4::lmer(mpg ~ wt + (1|gear), data = mtcars)
+model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 model_parameters(model, standardize = TRUE)
 }
 
