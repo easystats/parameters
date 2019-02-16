@@ -6,7 +6,7 @@
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param standardize Add standardized parameters.
 #' @param bootstrap Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.
-#' @param ... Arguments passed to or from other methods (e.g., to \code{standardize}).
+#' @param ... Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).
 #'
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
@@ -42,7 +42,6 @@ model_parameters.lm <- function(model, ci = .95, standardize = FALSE, bootstrap 
   names(parameters) <- c("beta", "SE", "t", "p")
 
   parameters$DoF_residual <- model$df.residual
-  parameters <- parameters[c("beta", "SE", "t", "DoF_residual", "p")]
 
   ci_table <- as.data.frame(confint(model, level = ci), stringsAsFactors = FALSE)
   names(ci_table) <- c("CI_low", "CI_high")
@@ -54,6 +53,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = FALSE, bootstrap 
     ci_table
   )
 
+  parameters <- parameters[c("Parameter", "beta", "SE", "CI_low", "CI_high", "t", "DoF_residual", "p")]
   rownames(parameters) <- NULL
 
   parameters

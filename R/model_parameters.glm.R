@@ -38,7 +38,6 @@ model_parameters.glm <- function(model, ci = .95, standardize = FALSE, bootstrap
   names(parameters) <- c("beta", "SE", "z", "p")
 
   parameters$DoF_residual <- model$df.residual
-  parameters <- parameters[c("beta", "SE", "z", "DoF_residual", "p")]
 
   ci_table <- suppressMessages(as.data.frame(confint(model, level = ci), stringsAsFactors = FALSE))
   names(ci_table) <- c("CI_low", "CI_high")
@@ -50,6 +49,7 @@ model_parameters.glm <- function(model, ci = .95, standardize = FALSE, bootstrap
     ci_table
   )
 
+  parameters <- parameters[c("Parameter", "beta", "SE", "CI_low", "CI_high", "z", "DoF_residual", "p")]
   rownames(parameters) <- NULL
 
   parameters

@@ -1,5 +1,5 @@
 #' @keywords internal
-.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", diagnostic = TRUE, n = 1000, ...) {
+.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, diagnostic = TRUE, n = 1000, ...) {
 
   # ROPE
   if (all(rope_bounds == "default")) {
@@ -52,6 +52,7 @@
 #' @param estimate The point-estimate to compute. Can be a character or a list with "median", "mean" or "MAP".
 #' @param test What indices of effect existence to compute. Can be a character or a list with "p_direction", "rope" or "p_map".
 #' @param rope_bounds ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
+#' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
 #' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE).
 #' @param n The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
 #' @param ... Arguments passed to or from other methods (e.g., to \code{standardize}).
@@ -87,7 +88,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = c(-0.1, 0.1), n = 1000, ...) {
+.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = c(-0.1, 0.1), rope_full = TRUE, n = 1000, ...) {
   if (insight::model_info(model)$is_bayesian) {
     data <- insight::get_parameters(model)
   } else {
@@ -142,7 +143,18 @@ model_parameters.brmsfit <- .model_parameters_bayesian
       parameters$pd <- sapply(data, bayestestR::p_direction)
     }
     if ("rope" %in% test_list | "equivalence" %in% test_list | "equi" %in% test_list) {
-      if (length(ci) > 1) {
+      if (length(ci) == 1 | rope_full) {
+        if(rope_full){
+          results_rope <- as.data.frame(t(sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = 1)), stringsAsFactors = FALSE)
+        } else{
+          results_rope <- as.data.frame(t(sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci)), stringsAsFactors = FALSE)
+        }
+        results_rope <- results_rope[c("ROPE_Percentage", "ROPE_Equivalence")]
+        results_rope$ROPE_Percentage <- as.numeric(results_rope$ROPE_Percentage)
+        results_rope$ROPE_Equivalence <- as.character(results_rope$ROPE_Equivalence)
+
+
+      } else {
         results_rope <- sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci, simplify = FALSE)
         for (i in names(results_rope)) {
           current_rope <- results_rope[[i]]
@@ -159,11 +171,6 @@ model_parameters.brmsfit <- .model_parameters_bayesian
         }
         results_rope <- bayestestR::flatten_list(results_rope)
         results_rope <- results_rope[names(results_rope) != "name"]
-      } else {
-        results_rope <- as.data.frame(t(sapply(data, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci)), stringsAsFactors = FALSE)
-        results_rope <- results_rope[c("ROPE_Percentage", "ROPE_Equivalence")]
-        results_rope$ROPE_Percentage <- as.numeric(results_rope$ROPE_Percentage)
-        results_rope$ROPE_Equivalence <- as.character(results_rope$ROPE_Equivalence)
       }
       parameters <- cbind(parameters, results_rope)
     }

@@ -31,6 +31,9 @@ test_that("model_parameters.stanreg", {
 
   params <- model_parameters(circus::stanreg_merMod_1, standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 21))
+
+  params <- model_parameters(circus::stanreg_lmerMod_1, standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"), rope_full=FALSE)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 21))
 })
 
 
