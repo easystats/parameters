@@ -125,7 +125,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
         hdi[[i]] <- cbind(hdi_low, hdi_high)
       }
-      hdi <- bayestestR::flatten_list(hdi)
+      hdi <- .flatten_list(hdi)
       hdi <- hdi[names(hdi) != "name"]
     } else {
       hdi <- as.data.frame(t(sapply(data, bayestestR::hdi, ci = ci)), stringsAsFactors = FALSE)
@@ -169,7 +169,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
           results_rope[[i]] <- cbind(rope_percentage, rope_equivalence)
         }
-        results_rope <- bayestestR::flatten_list(results_rope)
+        results_rope <- .flatten_list(results_rope)
         results_rope <- results_rope[names(results_rope) != "name"]
       }
       parameters <- cbind(parameters, results_rope)
@@ -184,3 +184,39 @@ model_parameters.brmsfit <- .model_parameters_bayesian
   rownames(parameters) <- NULL
   return(parameters)
 }
+
+
+
+
+
+
+
+#' Flatten a list
+#'
+#' @param object A list.
+#' @param name Name of column of keys in the case the output is a dataframe.
+#' @keywords internal
+.flatten_list <- function(object, name = "name") {
+  if (length(object) == 1) {
+    object[[1]]
+  } else if (all(sapply(object, is.data.frame))) {
+    if (is.null(names(object))) {
+      as.data.frame(t(sapply(object, rbind)))
+    } else {
+      tryCatch({
+        rn <- names(object)
+        object <- do.call(rbind, object)
+        object[name] <- rn
+        object[c(name, setdiff(names(object), name))]
+      }, warning = function(w) {
+        object
+      }, error = function(e) {
+        object
+      })
+    }
+  } else {
+    object
+  }
+}
+
+
