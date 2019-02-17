@@ -2,8 +2,8 @@
 #'
 #' Performs a standardization of data or parameters. See the documentation for your object's class:
 #' \itemize{
-#'  \item{\link[=standardize.data.frame]{data.frame}}
-#'  \item{\link[=standardize.lm]{lm}}
+#'  \item{\link[=standardize.data.frame]{Dataframes}}
+#'  \item{\link[=standardize.lm]{Regression models}}
 #'  }
 #'
 #'

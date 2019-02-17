@@ -3,8 +3,8 @@
 ^\.Rproj\.user$
 ^\.travis.yml
 ^\_pkgdown.yml
-^data/.
 ^LICENSE
+^data/.
 ^docs/.
 ^vignettes/.
 ^logo.png

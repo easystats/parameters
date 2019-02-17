@@ -1,0 +1,67 @@
+---
+title: "Bayesian GAM Models"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, gam, smooth]
+vignette: >
+  \usepackage[utf8]{inputenc}
+editor_options: 
+  chunk_output_type: console
+---
+
+# Introduction
+
+Trying to summarise the smooth term components from Bayesian GAM models.
+
+# Methods
+
+## Data Generation
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+library(dplyr)
+
+library(mgcv)
+library(gamm4)
+library(rstanarm)
+library(brms)
+
+library(parameters)
+
+
+data <- data.frame()
+datasets <- list("iris" = iris)
+
+# for(dataname in names(datasets)){
+#   dataset <- dplyr::select_if(datasets[[dataname]], is.numeric)
+#   
+#   for(response in colnames(dataset)){
+#     for(predictor in colnames(dataset)[colnames(dataset) != response]){
+#       formula <- as.formula(paste0(response, " ~ s(", predictor, ")"))
+#       
+#       # mgcv
+#       model_1 <- mgcv::gam(formula, data=dataset)
+#       insight::get_parameters(model_1)
+#       # parameters::model_parameters(model_1)
+#       
+#       # brms
+#       model_2 <- brms::brm(formula, data=dataset)
+#       insight::get_parameters(model_2)
+#       parameters::model_parameters(model_2)
+#     }
+#   }
+# }
+#  
+#   
+#   
+
+
+
+```
+

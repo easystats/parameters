@@ -16,12 +16,12 @@
 
 \item{bootstrap}{Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.}
 
-\item{...}{Arguments passed to or from other methods (e.g., to \code{standardize}).}
+\item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
 }
 \description{
 Parameters of general linear models.
 }
 \examples{
-model <- glm(vs ~ wt + cyl, data = mtcars, family="binomial")
+model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 model_parameters(model, standardize = TRUE)
 }
