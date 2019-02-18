@@ -59,6 +59,21 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/bayesian_gamm4.html">Bayesian GAM Models</a>
+    </li>
+    <li>
+      <a href="articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -103,11 +118,11 @@
 <th align="left">Parameter</th>
 <th align="right">beta</th>
 <th align="right">SE</th>
+<th align="right">CI_low</th>
+<th align="right">CI_high</th>
 <th align="right">t</th>
 <th align="right">DoF_residual</th>
 <th align="right">p</th>
-<th align="right">CI_low</th>
-<th align="right">CI_high</th>
 <th align="right">Std_beta</th>
 <th align="right">Std_SE</th>
 <th align="right">Std_CI_low</th>
@@ -118,11 +133,11 @@
 <td align="left">(Intercept)</td>
 <td align="right">39.69</td>
 <td align="right">1.71</td>
+<td align="right">36.18</td>
+<td align="right">43.19</td>
 <td align="right">23.14</td>
 <td align="right">29</td>
 <td align="right">0</td>
-<td align="right">36.18</td>
-<td align="right">43.19</td>
 <td align="right">0.00</td>
 <td align="right">0.08</td>
 <td align="right">-0.15</td>
@@ -132,11 +147,11 @@
 <td align="left">wt</td>
 <td align="right">-3.19</td>
 <td align="right">0.76</td>
+<td align="right">-4.74</td>
+<td align="right">-1.64</td>
 <td align="right">-4.22</td>
 <td align="right">29</td>
 <td align="right">0</td>
-<td align="right">-4.74</td>
-<td align="right">-1.64</td>
 <td align="right">-0.52</td>
 <td align="right">0.12</td>
 <td align="right">-0.77</td>
@@ -146,11 +161,11 @@
 <td align="left">cyl</td>
 <td align="right">-1.51</td>
 <td align="right">0.41</td>
+<td align="right">-2.36</td>
+<td align="right">-0.66</td>
 <td align="right">-3.64</td>
 <td align="right">29</td>
 <td align="right">0</td>
-<td align="right">-2.36</td>
-<td align="right">-0.66</td>
 <td align="right">-0.45</td>
 <td align="right">0.12</td>
 <td align="right">-0.70</td>
@@ -178,33 +193,33 @@
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">39.66</td>
+<td align="right">39.70</td>
 <td align="right">2.09</td>
-<td align="right">35.17</td>
-<td align="right">44.20</td>
-<td align="right">100</td>
-<td align="right">0</td>
+<td align="right">35.54</td>
+<td align="right">43.68</td>
+<td align="right">100.0</td>
+<td align="right">0.0</td>
 <td align="left">rejected</td>
 </tr>
 <tr class="even">
 <td align="left">wt</td>
-<td align="right">-3.21</td>
-<td align="right">0.71</td>
-<td align="right">-4.86</td>
+<td align="right">-3.23</td>
+<td align="right">0.76</td>
+<td align="right">-4.72</td>
 <td align="right">-1.79</td>
-<td align="right">100</td>
-<td align="right">0</td>
+<td align="right">100.0</td>
+<td align="right">0.0</td>
 <td align="left">rejected</td>
 </tr>
 <tr class="odd">
 <td align="left">cyl</td>
-<td align="right">-1.48</td>
+<td align="right">-1.49</td>
 <td align="right">0.36</td>
-<td align="right">-2.20</td>
-<td align="right">-0.71</td>
-<td align="right">100</td>
-<td align="right">0</td>
-<td align="left">rejected</td>
+<td align="right">-2.16</td>
+<td align="right">-0.69</td>
+<td align="right">99.8</td>
+<td align="right">1.3</td>
+<td align="left">undecided</td>
 </tr>
 </tbody>
 </table>
@@ -225,37 +240,45 @@
 <th align="right">pd</th>
 <th align="right">ROPE_Percentage</th>
 <th align="left">ROPE_Equivalence</th>
+<th align="right">Effective_Sample</th>
+<th align="right">Rhat</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">39.64</td>
-<td align="right">1.75</td>
-<td align="right">36.64</td>
-<td align="right">42.46</td>
-<td align="right">100.00</td>
-<td align="right">0</td>
+<td align="right">39.66</td>
+<td align="right">1.73</td>
+<td align="right">36.54</td>
+<td align="right">42.54</td>
+<td align="right">100</td>
+<td align="right">0.00</td>
 <td align="left">rejected</td>
+<td align="right">5874</td>
+<td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">wt</td>
-<td align="right">-3.20</td>
-<td align="right">0.72</td>
-<td align="right">-4.45</td>
-<td align="right">-1.96</td>
-<td align="right">99.98</td>
-<td align="right">0</td>
+<td align="right">-3.19</td>
+<td align="right">0.76</td>
+<td align="right">-4.39</td>
+<td align="right">-1.89</td>
+<td align="right">100</td>
+<td align="right">0.05</td>
 <td align="left">rejected</td>
+<td align="right">2363</td>
+<td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="left">cyl</td>
 <td align="right">-1.50</td>
-<td align="right">0.41</td>
-<td align="right">-2.16</td>
-<td align="right">-0.82</td>
-<td align="right">100.00</td>
-<td align="right">0</td>
-<td align="left">rejected</td>
+<td align="right">0.42</td>
+<td align="right">-2.17</td>
+<td align="right">-0.81</td>
+<td align="right">100</td>
+<td align="right">1.45</td>
+<td align="left">undecided</td>
+<td align="right">2421</td>
+<td align="right">1</td>
 </tr>
 </tbody>
 </table>

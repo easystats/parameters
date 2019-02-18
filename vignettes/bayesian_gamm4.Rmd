@@ -34,22 +34,51 @@ library(brms)
 
 library(parameters)
 
+# gam
+model_1 <- gam::gam(Petal.Length ~ gam::s(Petal.Width, 9), data=iris)
+summary(model_1)
+insight::find_terms(model_1)
+insight::get_parameters(model_1)
 
-data <- data.frame()
-datasets <- list("iris" = iris)
+# mgcv
+model_2 <- mgcv::gam(Petal.Length ~ s(Petal.Width), data=iris)
+summary(model_2)
+insight::find_terms(model_2)
+insight::get_parameters(model_2)
 
+# gamm4
+model_3 <- gamm4::gamm4(Petal.Length ~ s(Petal.Width), data=iris)
+summary(model_3)
+insight::find_terms(model_3)
+insight::get_parameters(model_3)
+
+# brms
+model_4 <- brms::brm(Petal.Length ~ s(Petal.Width), data=iris)
+summary(model_4)
+insight::find_terms(model_4)
+insight::get_parameters(model_4)
+
+# rstanarm
+model_5 <- rstanarm::stan_gamm4(Petal.Length ~ s(Petal.Width), data=iris)
+summary(model_5)
+insight::find_terms(model_5)
+insight::get_parameters(model_5)
+      
+# data <- data.frame()
+# datasets <- list("iris" = iris)
+# 
 # for(dataname in names(datasets)){
 #   dataset <- dplyr::select_if(datasets[[dataname]], is.numeric)
-#   
+# 
 #   for(response in colnames(dataset)){
 #     for(predictor in colnames(dataset)[colnames(dataset) != response]){
 #       formula <- as.formula(paste0(response, " ~ s(", predictor, ")"))
-#       
+# 
 #       # mgcv
 #       model_1 <- mgcv::gam(formula, data=dataset)
 #       insight::get_parameters(model_1)
 #       # parameters::model_parameters(model_1)
-#       
+# 
 #       # brms
 #       model_2 <- brms::brm(formula, data=dataset)
 #       insight::get_parameters(model_2)
@@ -57,9 +86,9 @@ datasets <- list("iris" = iris)
 #     }
 #   }
 # }
-#  
-#   
-#   
+
+
+
 
 
 

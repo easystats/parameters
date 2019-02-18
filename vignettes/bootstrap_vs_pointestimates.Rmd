@@ -1,0 +1,72 @@
+---
+title: "Single vs. Bootstrapped Parameters"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, gam, smooth]
+vignette: >
+  \usepackage[utf8]{inputenc}
+editor_options: 
+  chunk_output_type: console
+---
+
+# Introduction
+
+Compare point-estimates with bootstrapped parameters for frequentist models.
+
+# Methods
+
+## Data
+
+We simulated parent data of correlated data of size 10000 with different levels of noise (0.25, 0.5, 1, 1.5, 2, 2.5). From these parent populations, we extracted n = 1000 random samples of size 50 on which we computed a simple regression. We extracted the beta and SE of this regression, as well as bootstrapped estimates (median and MAD) with two different numbers of bootstrap iterations (1000 and 4000).
+
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+df <- read.csv("https://raw.github.com/easystats/circus/master/data/bootstrapped.csv")
+```
+
+For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it [here](https://easystats.github.io/circus/articles/bootstrapped.html).
+
+# Results
+
+## Visualisation
+```{r message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
+df %>% 
+  select(beta, Median_1000, Median_4000, Parent_beta, Noise) %>% 
+  gather(Parameter, Value, beta, Median_1000, Median_4000) %>% 
+  mutate(Deviance = Parent_beta - Value,
+         Noise = as.factor(Noise)) %>% 
+  ggplot(aes(y=Deviance, x=Noise, fill=Parameter)) +
+  geom_boxplot() +
+  geom_hline(yintercept=0, linetype="dashed") +
+  scale_fill_manual(values=c("#2196F3", "#f44336", "#FF9800")) +
+  theme_classic() +
+  ylab("Deviance (0 is the parent - true - effect)\n")
+```
+
+
+## Visualisation
+```{r message=FALSE, warning=FALSE}
+m1 <- lm(Parent_beta ~ beta, data=df)
+m2 <- lm(Parent_beta ~ Median_1000, data=df)
+m3 <- lm(Parent_beta ~ Median_4000, data=df)
+
+summary(m1)
+summary(m2)
+summary(m3)
+
+anova(m1, m2, m3)
+```
+
+# Conclusion 
+
+Negligible difference, but bootstrapped (n=4000) seems (very) slightly more accurate.
