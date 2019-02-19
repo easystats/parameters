@@ -9,12 +9,12 @@
   }
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, ci, estimate = estimate, test = test, rope_bounds = rope_bounds, n = n, ...)
+  parameters <- .extract_parameters_bayesian(model, ci, estimate = tolower(estimate), test = test, rope_bounds = rope_bounds, n = n, ...)
 
   # Standardized
   if (standardize) {
     std_model <- standardize(model, ...)
-    std_parameters <- .extract_parameters_bayesian(std_model, ci = ci, estimate = estimate, test = NULL, rope_bounds = rope_bounds, n = n, ...)
+    std_parameters <- .extract_parameters_bayesian(std_model, ci = ci, estimate = tolower(estimate), test = NULL, rope_bounds = rope_bounds, n = n, ...)
     names(std_parameters) <- paste0("Std_", names(std_parameters))
 
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Std_Parameter"])
@@ -49,9 +49,9 @@
 #' @param model Object of class \link{lm}.
 #' @param ci Credible Interval (CI) level. Default to 0.90 (90\%).
 #' @param standardize Add standardized parameters. Default to FALSE as this re-fits the model and can thus take some time.
-#' @param estimate The point-estimate to compute. Can be a character or a list with "median", "mean" or "MAP".
-#' @param test What indices of effect existence to compute. Can be a character or a list with "p_direction", "rope" or "p_map".
-#' @param rope_bounds ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
+#' @param estimate The \href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".
+#' @param test What \href{https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope" or "p_map".
+#' @param rope_bounds \href{https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
 #' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
 #' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE).
 #' @param n The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
@@ -88,7 +88,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = c(-0.1, 0.1), rope_full = TRUE, n = 1000, ...) {
+.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, n = 1000, ...) {
   if (insight::model_info(model)$is_bayesian) {
     data <- insight::get_parameters(model)
   } else {
@@ -106,7 +106,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
     parameters$Mean <- sapply(data, mean)
     parameters$SD <- sapply(data, sd)
   }
-  if ("MAP" %in% c(estimate)) {
+  if ("map" %in% c(estimate)) {
     parameters$MAP <- sapply(data, bayestestR::map_estimate)
   }
 

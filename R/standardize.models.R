@@ -38,4 +38,7 @@ standardize.lm <- function(x, robust = FALSE, method = "refit", ...) {
 standardize.merMod <- standardize.lm
 
 #' @export
+standardize.stanreg <- standardize.lm
+
+#' @export
 standardize.brmsfit <- standardize.lm
