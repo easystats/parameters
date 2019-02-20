@@ -95,6 +95,29 @@ model_bootstrap.merMod <- function(model, n = 1000, silent = FALSE, ...) {
 
 
 
+# model_bootstrap.htest <- function(model, n = 1000, silent = FALSE, ...) {
+#   data <- insight::get_data(model)
+#
+#   boot_function <- function(model, data, indices) {
+#     d <- data[indices, ] # allows boot to select sample
+#
+#     if (silent) {
+#       fit <- suppressMessages(update(model, data = d))
+#     } else {
+#       fit <- update(model, data = d)
+#     }
+#
+#     return(model$estimate)
+#   }
+#
+#   results <- boot::boot(data = data, statistic = boot_function, R = n, model = model)
+#
+#   return(results)
+# }
+
+
+
+
 
 
 
@@ -122,3 +145,6 @@ as.data.frame.lm <- function(x, row.names = NULL, optional = FALSE, n = 1000, si
 as.data.frame.merMod <- function(x, row.names = NULL, optional = FALSE, n = 1000, silent = FALSE, ...) {
   return(model_bootstrap(x, n = n, silent = silent, ...))
 }
+
+
+
