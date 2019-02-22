@@ -76,7 +76,6 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
 #'
 #' @examples
 #' summary(standardize(iris))
-#' @importFrom purrr map_dfc
 #' @export
 standardize.data.frame <- function(x, robust = FALSE, select = NULL, exclude = NULL, ...) {
   if (is.null(select)) {
@@ -96,6 +95,6 @@ standardize.data.frame <- function(x, robust = FALSE, select = NULL, exclude = N
   # x[select] <- mapply(standardize, x[select], MoreArgs = list(robust = robust))
   # x[select] <- sapply(x[select], standardize, robust = robust)
 
-  x[select] <- purrr::map_dfc(x[select], standardize, robust = robust)
+  x[select] <- lapply(x[select], standardize, robust = robust)
   return(x)
 }
