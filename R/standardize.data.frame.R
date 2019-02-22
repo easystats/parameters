@@ -82,7 +82,9 @@ standardize.data.frame <- function(x, robust = FALSE, select = NULL, exclude = N
     select <- names(x)
   }
 
-  select <- select[setdiff(select, exclude)]
+  if (!is.null(exclude)) {
+    select <- select[setdiff(select, exclude)]
+  }
 
   # TODO: find a base alternative to remove purrr from deps
 
