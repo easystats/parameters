@@ -80,13 +80,9 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
 standardize.data.frame <- function(x, robust = FALSE, select = NULL, exclude = NULL, ...) {
   if (is.null(select)) {
     select <- names(x)
-  } else {
-    select <- c(select)
   }
 
-  if (!is.null(exclude)) {
-    select <- select[!select %in% c(exclude)]
-  }
+  select <- select[setdiff(select, exclude)]
 
   # TODO: find a base alternative to remove purrr from deps
 
