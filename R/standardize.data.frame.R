@@ -47,8 +47,20 @@ standardize.factor <- function(x, ...) {
 #' @inheritParams standardize
 #' @export
 standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = NULL, ...) {
-  x <- dplyr::do_(x, "standardize(., select = select, exclude = exclude, robust = robust, ...)")
-  return(x)
+  grps <- attr(x, "groups", exact = TRUE)
+  x <- as.data.frame(x)
+  for (i in grps[[".rows"]]) {
+    x[i, ] <- standardize(
+      x[i, ],
+      select = select,
+      exclude = exclude,
+      robust = robust,
+      ...
+    )
+  }
+  # x <- dplyr::do_(x, "standardize(., select = select, exclude = exclude, robust = robust, ...)")
+  # return(x)
+  x
 }
 
 

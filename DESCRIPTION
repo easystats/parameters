@@ -21,7 +21,6 @@ Imports:
 	insight,
 	bayestestR,
 	boot,
-	dplyr,
 	purrr
 Suggests:
 	knitr,
