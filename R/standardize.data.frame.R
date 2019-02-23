@@ -47,8 +47,20 @@ standardize.factor <- function(x, ...) {
 #' @inheritParams standardize
 #' @export
 standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = NULL, ...) {
-  x <- dplyr::do_(x, "standardize(., select = select, exclude = exclude, robust = robust, ...)")
-  return(x)
+  grps <- attr(x, "groups", exact = TRUE)
+  x <- as.data.frame(x)
+  for (i in grps[[".rows"]]) {
+    x[i, ] <- standardize(
+      x[i, ],
+      select = select,
+      exclude = exclude,
+      robust = robust,
+      ...
+    )
+  }
+  # x <- dplyr::do_(x, "standardize(., select = select, exclude = exclude, robust = robust, ...)")
+  # return(x)
+  x
 }
 
 
@@ -64,17 +76,14 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
 #'
 #' @examples
 #' summary(standardize(iris))
-#' @importFrom purrr map_dfc
 #' @export
 standardize.data.frame <- function(x, robust = FALSE, select = NULL, exclude = NULL, ...) {
   if (is.null(select)) {
     select <- names(x)
-  } else {
-    select <- c(select)
   }
 
   if (!is.null(exclude)) {
-    select <- select[!select %in% c(exclude)]
+    select <- setdiff(select, exclude)
   }
 
   # TODO: find a base alternative to remove purrr from deps
@@ -84,6 +93,6 @@ standardize.data.frame <- function(x, robust = FALSE, select = NULL, exclude = N
   # x[select] <- mapply(standardize, x[select], MoreArgs = list(robust = robust))
   # x[select] <- sapply(x[select], standardize, robust = robust)
 
-  x[select] <- purrr::map_dfc(x[select], standardize, robust = robust)
+  x[select] <- lapply(x[select], standardize, robust = robust)
   return(x)
 }

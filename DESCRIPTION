@@ -20,9 +20,7 @@ Description: More about what it does (maybe more than one line)
 Imports:
 	insight,
 	bayestestR,
-	boot,
-	dplyr,
-	purrr
+	boot
 Suggests:
 	knitr,
 	rmarkdown,
