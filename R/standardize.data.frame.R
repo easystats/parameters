@@ -45,7 +45,6 @@ standardize.factor <- function(x, ...) {
 
 
 #' @inheritParams standardize
-#' @importFrom dplyr do
 #' @export
 standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = NULL, ...) {
   # dplyr >= 0.8.0 returns attribute "indices"
