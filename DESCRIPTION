@@ -20,7 +20,8 @@ Description: More about what it does (maybe more than one line)
 Imports:
 	insight,
 	bayestestR,
-	boot
+	boot,
+	dplyr
 Suggests:
 	knitr,
 	rmarkdown,
@@ -29,7 +30,8 @@ Suggests:
 	circus,
 	rstanarm,
 	brms,
-	lme4
+	lme4,
+	BayesFactor
 Remotes: 
 	easystats/insight,
 	easystats/bayestestR,

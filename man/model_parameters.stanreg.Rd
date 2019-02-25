@@ -7,7 +7,7 @@
 \method{model_parameters}{stanreg}(model, ci = 0.9,
   standardize = FALSE, estimate = "median", test = c("pd", "rope"),
   rope_bounds = "default", rope_full = TRUE, diagnostic = TRUE,
-  n = 1000, ...)
+  iterations = 1000, ...)
 }
 \arguments{
 \item{model}{Object of class \link{lm}.}
@@ -26,7 +26,7 @@
 
 \item{diagnostic}{Include sampling diagnostic metrics (effective sample, Rhat and MCSE).}
 
-\item{n}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
+\item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 
 \item{...}{Arguments passed to or from other methods (e.g., to \code{standardize}).}
 }

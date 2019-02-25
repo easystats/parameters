@@ -1,5 +1,5 @@
 #' @keywords internal
-.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, diagnostic = TRUE, n = 1000, ...) {
+.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, diagnostic = TRUE, iterations = 1000, ...) {
 
   # ROPE
   if (all(rope_bounds == "default")) {
@@ -9,12 +9,12 @@
   }
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, ci, estimate = tolower(estimate), test = test, rope_bounds = rope_bounds, n = n, ...)
+  parameters <- .extract_parameters_bayesian(model, ci, estimate = tolower(estimate), test = test, rope_bounds = rope_bounds, iterations = iterations, ...)
 
   # Standardized
   if (standardize) {
     std_model <- standardize(model, ...)
-    std_parameters <- .extract_parameters_bayesian(std_model, ci = ci, estimate = tolower(estimate), test = NULL, rope_bounds = rope_bounds, n = n, ...)
+    std_parameters <- .extract_parameters_bayesian(std_model, ci = ci, estimate = tolower(estimate), test = NULL, rope_bounds = rope_bounds, iterations = iterations, ...)
     names(std_parameters) <- paste0("Std_", names(std_parameters))
 
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Std_Parameter"])
@@ -54,7 +54,7 @@
 #' @param rope_bounds \href{https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
 #' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
 #' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE).
-#' @param n The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
+#' @param iterations The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
 #' @param ... Arguments passed to or from other methods (e.g., to \code{standardize}).
 #'
 #' @examples
@@ -88,11 +88,11 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, n = 1000, ...) {
+.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, iterations = 1000, ...) {
   if (insight::model_info(model)$is_bayesian) {
     data <- insight::get_parameters(model)
   } else {
-    data <- model_bootstrap(model, n = n, ...)
+    data <- model_bootstrap(model, iterations = iterations, ...)
   }
 
   # Point-estimates

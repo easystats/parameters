@@ -7,7 +7,7 @@
 \method{model_parameters}{htest}(model, bootstrap = FALSE, ...)
 }
 \arguments{
-\item{model}{Object of class htest.}
+\item{model}{Object of class \code{htest}.}
 
 \item{bootstrap}{Should estimates be bootsrapped?}
 

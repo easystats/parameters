@@ -4,12 +4,12 @@
 \alias{model_bootstrap}
 \title{Model bootstrapping}
 \usage{
-model_bootstrap(model, n = 1000, silent = FALSE, ...)
+model_bootstrap(model, iterations = 1000, silent = FALSE, ...)
 }
 \arguments{
 \item{model}{Statistical model.}
 
-\item{n}{The number of bootstrap replicates.}
+\item{iterations}{The number of bootstrap replicates.}
 
 \item{silent}{Hide possible refit messages.}
 

@@ -15,8 +15,7 @@
 \item{select}{For a data.frame, character or list of characters of column names to be
 standardized.}
 
-\item{exclude}{For a data.frame, character or list of characters of column names to be excluded
-from standardization.}
+\item{exclude}{For a data.frame, character or list of characters of column names to be excluded from standardization.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
