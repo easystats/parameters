@@ -7,7 +7,7 @@
 \method{model_parameters}{stanreg}(model, ci = 0.9,
   standardize = FALSE, estimate = "median", test = c("pd", "rope"),
   rope_bounds = "default", rope_full = TRUE, diagnostic = TRUE,
-  iterations = 1000, ...)
+  priors = TRUE, iterations = 1000, ...)
 }
 \arguments{
 \item{model}{Object of class \link{lm}.}
@@ -24,7 +24,9 @@
 
 \item{rope_full}{If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.}
 
-\item{diagnostic}{Include sampling diagnostic metrics (effective sample, Rhat and MCSE).}
+\item{diagnostic}{Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1.}
+
+\item{priors}{Include priors specifications information.}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 

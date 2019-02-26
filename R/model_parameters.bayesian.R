@@ -1,5 +1,5 @@
 #' @keywords internal
-.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, diagnostic = TRUE, iterations = 1000, ...) {
+.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, diagnostic = TRUE, priors=TRUE, iterations = 1000, ...) {
 
   # ROPE
   if (all(rope_bounds == "default")) {
@@ -30,6 +30,14 @@
     }
   }
 
+  # Priors
+  if(priors){
+    if(inherits(model, "stanreg")){
+      priors_data <- get_priors(model)
+      parameters <- merge(parameters, priors_data, by="Parameter", sort=FALSE, all.x = TRUE)
+    }
+  }
+
   return(parameters)
 }
 
@@ -53,7 +61,8 @@
 #' @param test What \href{https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope" or "p_map".
 #' @param rope_bounds \href{https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
 #' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
-#' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE).
+#' @param priors Include priors specifications information.
+#' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1.
 #' @param iterations The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
 #' @param ... Arguments passed to or from other methods (e.g., to \code{standardize}).
 #'
@@ -88,7 +97,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, iterations = 1000, ...) {
+.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, priors=TRUE, iterations = 1000, ...) {
   if (insight::model_info(model)$is_bayesian) {
     data <- insight::get_parameters(model)
   } else {
@@ -97,7 +106,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
   # Point-estimates
   # TODO: Colour the median in green/red depending on the direction
-  parameters <- data_frame("Parameter" = colnames(data))
+  parameters <- data.frame("Parameter" = colnames(data))
   if ("median" %in% c(estimate)) {
     parameters$Median <- sapply(data, median)
     parameters$MAD <- sapply(data, mad)
