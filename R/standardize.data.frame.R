@@ -47,6 +47,7 @@ standardize.factor <- function(x, ...) {
 #' @inheritParams standardize
 #' @export
 standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = NULL, ...) {
+  info <- attributes(x)
   # dplyr >= 0.8.0 returns attribute "indices"
   grps <- attr(x, "groups", exact = TRUE)
 
@@ -58,13 +59,13 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
   }
 
   # save class attribute, else row-indexing does not work
-  tmp <- class(x)
-  class(x) <- "data.frame"
+  # tmp <- class(x)
+  # class(x) <- "data.frame" # is this needed ?
 
   x <- as.data.frame(x)
   for (rows in grps) {
-    x[rows, ] <- standardize(
-      x[rows, ],
+    x[rows+1, ] <- standardize(
+      x[rows+1, ],
       select = select,
       exclude = exclude,
       robust = robust,
@@ -75,7 +76,8 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
   # return(x)
 
   # set back class, so data frame still works with dplyr
-  class(x) <- tmp
+  attributes(x) <- info
+  # class(x) <- tmp
   x
 }
 
