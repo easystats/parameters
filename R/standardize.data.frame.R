@@ -54,6 +54,7 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
   # dplyr < 0.8.0?
   if (is.null(grps)) {
     grps <- attr(x, "indices", exact = TRUE)
+    grps <- lapply(grps, function(x) x+1)
   } else {
     grps <- grps[[".rows"]]
   }
@@ -64,8 +65,8 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
 
   x <- as.data.frame(x)
   for (rows in grps) {
-    x[rows+1, ] <- standardize(
-      x[rows+1, ],
+    x[rows, ] <- standardize(
+      x[rows, ],
       select = select,
       exclude = exclude,
       robust = robust,
