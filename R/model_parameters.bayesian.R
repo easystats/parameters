@@ -34,6 +34,10 @@
   if(priors){
     if(inherits(model, "stanreg")){
       priors_data <- get_priors(model)
+      if("Prior_Scale_adjusted" %in% names(priors_data)){
+        priors_data$Prior_Scale <- priors_data$Prior_Scale_adjusted
+        priors_data$Prior_Scale_adjusted <- NULL
+      }
       parameters <- merge(parameters, priors_data, by="Parameter", sort=FALSE, all.x = TRUE)
     }
   }
@@ -61,7 +65,7 @@
 #' @param test What \href{https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope" or "p_map".
 #' @param rope_bounds \href{https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
 #' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
-#' @param priors Include priors specifications information.
+#' @param priors Include priors specifications information. If set to true (current \code{rstanarm}' default), automatically adjusted priors' scale during fitting  will be displayed.
 #' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1.
 #' @param iterations The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
 #' @param ... Arguments passed to or from other methods (e.g., to \code{standardize}).

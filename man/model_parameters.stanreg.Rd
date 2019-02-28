@@ -26,7 +26,7 @@
 
 \item{diagnostic}{Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1.}
 
-\item{priors}{Include priors specifications information.}
+\item{priors}{Include priors specifications information. If set to true (current \code{rstanarm}' default), automatically adjusted priors' scale during fitting  will be displayed.}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 

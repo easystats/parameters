@@ -103,5 +103,7 @@ get_priors.brmsfit <- function(model, ...) {
     priors <- as.data.frame(sapply(priors, c))
   }
 
+
+  priors[names(priors) != "dist"] <- sapply(priors[names(priors) != "dist"], function(x) as.numeric(as.character(x)))
   return(priors)
 }
