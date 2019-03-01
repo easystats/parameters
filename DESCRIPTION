@@ -29,7 +29,8 @@ Suggests:
 	circus,
 	rstanarm,
 	brms,
-	lme4
+	lme4,
+	BayesFactor
 Remotes: 
 	easystats/insight,
 	easystats/bayestestR,

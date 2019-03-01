@@ -5,14 +5,16 @@
 \alias{model_bootstrap.merMod}
 \title{Model bootstrapping}
 \usage{
-\method{model_bootstrap}{lm}(model, n = 1000, silent = FALSE, ...)
+\method{model_bootstrap}{lm}(model, iterations = 1000, silent = FALSE,
+  ...)
 
-\method{model_bootstrap}{merMod}(model, n = 1000, silent = FALSE, ...)
+\method{model_bootstrap}{merMod}(model, iterations = 1000,
+  silent = FALSE, ...)
 }
 \arguments{
 \item{model}{Statistical model.}
 
-\item{n}{The number of bootstrap replicates.}
+\item{iterations}{The number of bootstrap replicates.}
 
 \item{silent}{Hide possible refit messages.}
 

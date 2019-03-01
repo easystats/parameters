@@ -47,11 +47,26 @@ standardize.factor <- function(x, ...) {
 #' @inheritParams standardize
 #' @export
 standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = NULL, ...) {
+  info <- attributes(x)
+  # dplyr >= 0.8.0 returns attribute "indices"
   grps <- attr(x, "groups", exact = TRUE)
+
+  # dplyr < 0.8.0?
+  if (is.null(grps)) {
+    grps <- attr(x, "indices", exact = TRUE)
+    grps <- lapply(grps, function(x) x+1)
+  } else {
+    grps <- grps[[".rows"]]
+  }
+
+  # save class attribute, else row-indexing does not work
+  # tmp <- class(x)
+  # class(x) <- "data.frame" # is this needed ?
+
   x <- as.data.frame(x)
-  for (i in grps[[".rows"]]) {
-    x[i, ] <- standardize(
-      x[i, ],
+  for (rows in grps) {
+    x[rows, ] <- standardize(
+      x[rows, ],
       select = select,
       exclude = exclude,
       robust = robust,
@@ -60,6 +75,10 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
   }
   # x <- dplyr::do_(x, "standardize(., select = select, exclude = exclude, robust = robust, ...)")
   # return(x)
+
+  # set back class, so data frame still works with dplyr
+  attributes(x) <- info
+  # class(x) <- tmp
   x
 }
 
@@ -71,8 +90,7 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
 #' @inheritParams standardize
 #' @param select For a data.frame, character or list of characters of column names to be
 #' standardized.
-#' @param exclude For a data.frame, character or list of characters of column names to be excluded
-#' from standardization.
+#' @param exclude For a data.frame, character or list of characters of column names to be excluded from standardization.
 #'
 #' @examples
 #' summary(standardize(iris))
@@ -85,13 +103,6 @@ standardize.data.frame <- function(x, robust = FALSE, select = NULL, exclude = N
   if (!is.null(exclude)) {
     select <- setdiff(select, exclude)
   }
-
-  # TODO: find a base alternative to remove purrr from deps
-
-  # This doesn't work tho:
-
-  # x[select] <- mapply(standardize, x[select], MoreArgs = list(robust = robust))
-  # x[select] <- sapply(x[select], standardize, robust = robust)
 
   x[select] <- lapply(x[select], standardize, robust = robust)
   return(x)
