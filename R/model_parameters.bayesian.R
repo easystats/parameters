@@ -3,7 +3,7 @@
 
   # ROPE
   if (all(rope_bounds == "default")) {
-    rope_bounds <- c(-0.1 * sd(insight::get_response(model)), 0.1 * sd(insight::get_response(model)))
+    rope_bounds <- bayestestR::rope_bounds(model)
   } else if (!all(is.numeric(rope_bounds)) | length(rope_bounds) != 2) {
     stop("`rope_bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
