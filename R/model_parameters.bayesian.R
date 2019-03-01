@@ -58,7 +58,7 @@
 #'
 #' Parameters of Bayesian models.
 #'
-#' @param model Object of class \link{lm}.
+#' @param model Bayesian model.
 #' @param ci Credible Interval (CI) level. Default to 0.90 (90\%).
 #' @param standardize Add standardized parameters. Default to FALSE as this re-fits the model and can thus take some time.
 #' @param estimate The \href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".
@@ -138,7 +138,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
         hdi[[i]] <- cbind(hdi_low, hdi_high)
       }
-      hdi <- .flatten_list(hdi)
+      hdi <- flatten_list(hdi)
       hdi <- hdi[names(hdi) != "name"]
     } else {
       hdi <- as.data.frame(t(sapply(data, bayestestR::hdi, ci = ci)), stringsAsFactors = FALSE)
@@ -182,7 +182,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
           results_rope[[i]] <- cbind(rope_percentage, rope_equivalence)
         }
-        results_rope <- .flatten_list(results_rope)
+        results_rope <- flatten_list(results_rope)
         results_rope <- results_rope[names(results_rope) != "name"]
       }
       parameters <- cbind(parameters, results_rope)
@@ -198,38 +198,5 @@ model_parameters.brmsfit <- .model_parameters_bayesian
   return(parameters)
 }
 
-
-
-
-
-
-
-#' Flatten a list
-#'
-#' @param object A list.
-#' @param name Name of column of keys in the case the output is a dataframe.
-#' @keywords internal
-.flatten_list <- function(object, name = "name") {
-  if (length(object) == 1) {
-    object[[1]]
-  } else if (all(sapply(object, is.data.frame))) {
-    if (is.null(names(object))) {
-      as.data.frame(t(sapply(object, rbind)))
-    } else {
-      tryCatch({
-        rn <- names(object)
-        object <- do.call(rbind, object)
-        object[name] <- rn
-        object[c(name, setdiff(names(object), name))]
-      }, warning = function(w) {
-        object
-      }, error = function(e) {
-        object
-      })
-    }
-  } else {
-    object
-  }
-}
 
 
