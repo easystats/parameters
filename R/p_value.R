@@ -24,9 +24,9 @@ p_value <- function(model, ...){
 p_value.lmerMod <- function(model, method = c("wald", "kr"), ...){
   method <- match.arg(method)
   if (method == "wald") {
-    p_value_wald(model)
+    p_value_wald(model, ...)
   } else if (method == "kr") {
-    p_value_kenward(model)
+    p_value_kenward(model, ...)
   }
 }
 
