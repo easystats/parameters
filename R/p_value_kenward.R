@@ -12,25 +12,22 @@
 #' model <- circus::merMod_1
 #' p_value_kenward(model)
 #' }
+#' @importFrom stats pt coef
 #' @export
-p_value_kenward <- function(model, dof=NULL){
+p_value_kenward <- function(model, dof = NULL){
   UseMethod("p_value_kenward")
 }
 
 
 #' @export
-p_value_kenward.lmerMod <- function(model, dof=NULL) {
-
-  if (!requireNamespace("pbkrtest", quietly = TRUE))
-    stop("Package `pbkrtest` required for Kenward-Rogers approximation.", call. = FALSE)
-
-  if(is.null(dof)){
+p_value_kenward.lmerMod <- function(model, dof = NULL) {
+  if (is.null(dof)) {
     dof <- dof_kenward(model)
   }
 
   params <- as.data.frame(stats::coef(summary(model)))
 
-  if("t value" %in% names(params)){
+  if ("t value" %in% names(params)) {
     p <- 2 * stats::pt(abs(params[, "t value"]), dof, lower.tail = FALSE)
   } else{
     stop("Couldn't find any suitable statistic (t value) for Kenward-Roger approximation.")
@@ -41,7 +38,7 @@ p_value_kenward.lmerMod <- function(model, dof=NULL) {
     if (length(coef_names) == length(p)) names(p) <- coef_names
   }
 
-  return(p)
+  p
 }
 
 
@@ -54,6 +51,5 @@ dof_kenward <- function(model){
   if (!requireNamespace("pbkrtest", quietly = TRUE))
     stop("Package `pbkrtest` required for Kenward-Rogers approximation.", call. = FALSE)
 
-  DoF <- pbkrtest::get_ddf_Lb(model, insight::get_parameters(model, effects="fixed")$estimate)
-  return(DoF)
+  pbkrtest::get_ddf_Lb(model, insight::get_parameters(model, effects = "fixed")$estimate)
 }

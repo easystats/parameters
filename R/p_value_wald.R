@@ -11,6 +11,7 @@
 #' model <- circus::merMod_1
 #' p_value_wald(model)
 #' }
+#' @importFrom stats coef pnorm
 #' @export
 p_value_wald <- function(model){
   UseMethod("p_value_wald")
@@ -22,9 +23,9 @@ p_value_wald.merMod <- function(model) {
 
   params <- as.data.frame(stats::coef(summary(model)))
 
-  if("t value" %in% names(params)){
+  if ("t value" %in% names(params)) {
     p <- 2 * stats::pnorm(abs(params[, "t value"]), lower.tail = FALSE)
-  } else if("z value" %in% names(params)){
+  } else if ("z value" %in% names(params)) {
     p <- 2 * stats::pnorm(abs(params[, "z value"]), lower.tail = FALSE)
   } else{
     stop("Couldn't find any suitable statistic (t or z value) for Wald-test approximation.")
@@ -35,5 +36,5 @@ p_value_wald.merMod <- function(model) {
     if (length(coef_names) == length(p)) names(p) <- coef_names
   }
 
-  return(p)
+  p
 }

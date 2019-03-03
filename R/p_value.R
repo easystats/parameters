@@ -15,24 +15,22 @@
 #' p_value(model)
 #' }
 #' @export
-p_value <- function(model, method = "wald", ...){
+p_value <- function(model, ...){
   UseMethod("p_value")
 }
 
 
 #' @export
-p_value.lmerMod <- function(model, method = "wald", ...){
-  if(method=="wald" | method=="w"){
-    out <- p_value_wald(model)
-  } else if(method=="kenward" | method=="kr"){
-    out <- p_value_kenward(model)
-  } else{
-    stop("P-value method should be 'wald' or 'kenward'.")
+p_value.lmerMod <- function(model, method = c("wald", "kr"), ...){
+  method <- match.arg(method)
+  if (method == "wald") {
+    p_value_wald(model)
+  } else if (method == "kr") {
+    p_value_kenward(model)
   }
-  return(out)
 }
 
 #' @export
 p_value.merMod <- function(model, ...){
-  return(p_value_wald(model))
+  p_value_wald(model)
 }
