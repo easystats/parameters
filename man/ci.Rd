@@ -7,8 +7,7 @@
 \usage{
 ci(model, ci = 0.95, ...)
 
-\method{ci}{merMod}(model, ci = 0.95, method = c("wald", "boot",
-  "kenwood-roger"), ...)
+\method{ci}{merMod}(model, ci = 0.95, method = c("wald", "boot"), ...)
 }
 \arguments{
 \item{model}{A statistical model.}

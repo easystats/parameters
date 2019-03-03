@@ -22,7 +22,7 @@ ci <- function(model, ci=0.95, ...){
 
 #' @rdname ci
 #' @export
-ci.merMod <- function(model, ci=0.95, method = c("wald", "boot", "kenwood-roger"), ...){
+ci.merMod <- function(model, ci=0.95, method = c("wald", "boot"), ...){
   method <- match.arg(method)
 
   if (method == "wald") {
@@ -33,9 +33,6 @@ ci.merMod <- function(model, ci=0.95, method = c("wald", "boot", "kenwood-roger"
     out <- as.data.frame(lme4::confint.merMod(model, level = ci, method = "boot", ...))
     out <- out[rownames(out) %in% insight::find_parameters(model)$conditional, ]
     names(out) <- c("CI_low", "CI_high")
-  } else {
-    ## TODO KR-approx here.
-    # I think KR is something different than bootstrapped CI
   }
 
   out
