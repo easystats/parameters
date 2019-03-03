@@ -7,7 +7,6 @@
 #'
 #' @param model A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%) for frequentist models and 0.90 (90\%) for Bayesian models.
-#' @param method For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -20,6 +19,7 @@ ci <- function(model, ci=0.95, ...){
   UseMethod("ci")
 }
 
+#' @param method For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).
 #' @rdname ci
 #' @export
 ci.merMod <- function(model, ci=0.95, method = c("wald", "boot"), ...){

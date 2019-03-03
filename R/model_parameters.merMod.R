@@ -4,6 +4,7 @@
 #'
 #' @inheritParams model_parameters.lm
 #' @param p_method Method for computing p values. See \link{p_value}.
+#' @param ci_method Method for computing confidence intervals (CI). See \link{ci}.
 #'
 #' @examples
 #' \dontrun{
@@ -43,13 +44,17 @@ model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootst
 
   # p value
   if("Pr(>|z|)" %in% names(parameters)){
-    names(parameters) <- gsub("Pr(>|z|)", "p", names(parameters))
+    names(parameters)[grepl("Pr(>|z|)", names(parameters))] <- "p"
   } else{
-    if(p_method == "kenward"  & insight::model_info(model)$is_linear){
-      parameters$DoF <- dof_kenward(model)
-      parameters$p <- p_value(model, method="kenward", dof=parameters$DoF)
+    if(insight::model_info(model)$is_linear){
+      if(p_method == "kenward"){
+        parameters$DoF <- dof_kenward(model)
+        parameters$p <- p_value(model, method="kenward", dof=parameters$DoF)
+      } else{
+        parameters$p <- p_value(model, method=p_method)
+      }
     } else{
-      parameters$p <- p_value(model, method=p_method)
+      parameters$p <- p_value(model)
     }
   }
 
@@ -66,7 +71,8 @@ model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootst
   rownames(parameters) <- NULL
 
   # Reorder
-  parameters <- parameters[c("Parameter", "beta", "SE", "CI_low", "CI_high", "t", "z", "DoF", "DoF_residual", "p") %in% names(parameters)]
+  order <- c("Parameter", "beta", "SE", "CI_low", "CI_high", "t", "z", "DoF", "DoF_residual", "p")
+  parameters <- parameters[order[order %in% names(parameters)]]
 
   parameters
 }

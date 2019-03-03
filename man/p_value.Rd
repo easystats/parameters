@@ -2,9 +2,12 @@
 % Please edit documentation in R/p_value.R
 \name{p_value}
 \alias{p_value}
+\alias{p_value.lmerMod}
 \title{Compute p-values}
 \usage{
 p_value(model, ...)
+
+\method{p_value}{lmerMod}(model, method = "wald", ...)
 }
 \arguments{
 \item{model}{A statistical model.}

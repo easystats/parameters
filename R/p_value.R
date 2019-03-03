@@ -6,7 +6,6 @@
 #' }
 #'
 #' @param model A statistical model.
-#' @param method For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -20,17 +19,24 @@ p_value <- function(model, ...){
 }
 
 
+
+
+#' @rdname p_value
+#' @param method For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.
 #' @export
-p_value.lmerMod <- function(model, method = c("wald", "kr"), ...){
-  method <- match.arg(method)
+p_value.lmerMod <- function(model, method = "wald", ...){
+  method <- match.arg(method, c("wald", "kr", "kenward"))
   if (method == "wald") {
     p_value_wald(model, ...)
-  } else if (method == "kr") {
+  } else if (method == "kr" | method == "kenward") {
     p_value_kenward(model, ...)
   }
 }
 
+
+
+
 #' @export
 p_value.merMod <- function(model, ...){
-  p_value_wald(model)
+  p_value_wald(model, ...)
 }
