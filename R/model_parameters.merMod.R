@@ -44,7 +44,7 @@ model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootst
 
   # p value
   if("Pr(>|z|)" %in% names(parameters)){
-    names(parameters)[grepl("Pr(>|z|)", names(parameters))] <- "p"
+    names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
   } else{
     if(insight::model_info(model)$is_linear){
       if(p_method == "kenward"){
