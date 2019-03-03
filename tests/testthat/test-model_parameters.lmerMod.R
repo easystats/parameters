@@ -1,6 +1,6 @@
-context("model_parameters.lm")
+context("model_parameters.lmerMod")
 
-test_that("model_parameters.lm", {
+test_that("model_parameters.lmerMod", {
   model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 
   params <- model_parameters(model, standardize = TRUE)

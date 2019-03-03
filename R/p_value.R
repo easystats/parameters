@@ -6,7 +6,7 @@
 #' }
 #'
 #' @param model A statistical model.
-#' @param method For mixed models, can be \link{p_value_wald}{"wald"} (default) or \link{p_value_kenward}{"kenward"}.
+#' @param method For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
