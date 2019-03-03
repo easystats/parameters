@@ -104,7 +104,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
     data <- model_bootstrap(model, iterations = iterations, ...)
   }
 
-  # Point-estimates
+  # Summary
   # TODO: Colour the median in green/red depending on the direction
   parameters <- summarise_posteriors(data, ci = ci, estimate = estimate, test = test, rope_bounds = rope_bounds, rope_full = rope_full)
   return(parameters)

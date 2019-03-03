@@ -30,7 +30,8 @@ Suggests:
 	rstanarm,
 	brms,
 	lme4,
-	BayesFactor
+	BayesFactor,
+	pbkrtest
 Remotes: 
 	easystats/insight,
 	easystats/bayestestR,
