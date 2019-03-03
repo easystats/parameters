@@ -2,18 +2,22 @@
 % Please edit documentation in R/ci.R
 \name{ci}
 \alias{ci}
+\alias{ci.merMod}
 \title{Compute Confidence Intervals}
 \usage{
-ci(model, ci = 0.95, method = "wald", ...)
+ci(model, ci = 0.95, ...)
+
+\method{ci}{merMod}(model, ci = 0.95, method = c("wald", "boot",
+  "kenwood-roger"), ...)
 }
 \arguments{
 \item{model}{A statistical model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%) for frequentist models and 0.90 (90\%) for Bayesian models.}
 
-\item{method}{For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).}
-
 \item{...}{Arguments passed to or from other methods.}
+
+\item{method}{For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).}
 }
 \description{
 This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:

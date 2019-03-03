@@ -16,35 +16,35 @@
 #' ci(model)
 #' }
 #' @export
-ci <- function(model, ci=0.95, method = "wald", ...){
+ci <- function(model, ci=0.95, ...){
   UseMethod("ci")
 }
 
-
-
-
-
+#' @rdname ci
 #' @export
-ci.merMod <- function(model, ci=0.95, method = "wald", ...){
-  if(method=="wald" | method=="w"){
+ci.merMod <- function(model, ci=0.95, method = c("wald", "boot", "kenwood-roger"), ...){
+  method <- match.arg(method)
+
+  if (method == "wald") {
     out <- ci_wald(model)
-  } else if(method=="boot" | method=="bootstrap"){
+  } else if (method == "boot") {
     if (!requireNamespace("lme4", quietly = TRUE))
-      stop("Package `lme4` required for Kenward-Rogers approximation.", call. = FALSE)
-    out <- as.data.frame(lme4::confint.merMod(model, level=ci, ...))
+      stop("Package `lme4` required for bootstrapped approximation of confidence intervals.", call. = FALSE)
+    out <- as.data.frame(lme4::confint.merMod(model, level = ci, method = "boot", ...))
     out <- out[rownames(out) %in% insight::find_parameters(model)$conditional, ]
     names(out) <- c("CI_low", "CI_high")
-  } else{
-    stop("P-value method should be 'wald' or 'kenward'.")
+  } else {
+    ## TODO KR-approx here.
+    # I think KR is something different than bootstrapped CI
   }
-  return(out)
+
+  out
 }
-
-
 
 #' @export
-ci.stanreg <- function(model, ci=0.95, method = "wald", ...){
-  bayestestR::hdi(model, ci=ci, ...)
+ci.stanreg <- function(model, ci = 0.95, ...){
+  bayestestR::hdi(model, ci = ci, ...)
 }
+
 #' @export
 ci.brmsfit <- ci.stanreg
