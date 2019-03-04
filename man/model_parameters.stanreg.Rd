@@ -10,7 +10,7 @@
   priors = TRUE, iterations = 1000, ...)
 }
 \arguments{
-\item{model}{Object of class \link{lm}.}
+\item{model}{Bayesian model.}
 
 \item{ci}{Credible Interval (CI) level. Default to 0.90 (90\%).}
 

@@ -54,7 +54,7 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
   # dplyr < 0.8.0?
   if (is.null(grps)) {
     grps <- attr(x, "indices", exact = TRUE)
-    grps <- lapply(grps, function(x) x+1)
+    grps <- lapply(grps, function(x) x + 1)
   } else {
     grps <- grps[[".rows"]]
   }

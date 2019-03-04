@@ -63,7 +63,7 @@ model_bootstrap.lm <- function(model, iterations = 1000, silent = FALSE, ...) {
 #' @importFrom utils install.packages
 #' @export
 #' @rdname model_bootstrap.lm
-model_bootstrap.merMod <- function(model,iterations = 1000, silent = FALSE, ...) {
+model_bootstrap.merMod <- function(model, iterations = 1000, silent = FALSE, ...) {
   if (!requireNamespace("lme4")) {
     warning("This function needs `lme4` to be installed... installing now.")
     install.packages("lme4")
@@ -145,6 +145,3 @@ as.data.frame.lm <- function(x, row.names = NULL, optional = FALSE, iterations =
 as.data.frame.merMod <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, silent = FALSE, ...) {
   return(model_bootstrap(x, iterations = iterations, silent = silent, ...))
 }
-
-
-

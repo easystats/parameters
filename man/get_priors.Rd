@@ -18,13 +18,13 @@ Get information about priors specifications
 \dontrun{
 library(rstanarm)
 
-model <- rstanarm::stan_glm(Sepal.Length ~ Petal.Width, data=iris)
+model <- rstanarm::stan_glm(Sepal.Length ~ Petal.Width, data = iris)
 get_priors(model)
 
 
 library(brms)
 
-model <- brms::brm(Sepal.Length ~ Petal.Width, data=iris)
+model <- brms::brm(Sepal.Length ~ Petal.Width, data = iris)
 get_priors(model)
 }
 }

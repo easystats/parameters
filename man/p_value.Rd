@@ -2,15 +2,29 @@
 % Please edit documentation in R/p_value.R
 \name{p_value}
 \alias{p_value}
-\title{Computation of p-values}
+\alias{p_value.lmerMod}
+\title{Compute p-values}
 \usage{
 p_value(model, ...)
+
+\method{p_value}{lmerMod}(model, method = "wald", ...)
 }
 \arguments{
-\item{model}{Statistical model.}
+\item{model}{A statistical model.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{method}{For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.}
 }
 \description{
-Computes p-values related to parameters.
+This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
+\itemize{
+\item Mixed models (lme4): TO BE IMPROVED.
+}
+}
+\examples{
+\dontrun{
+model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+p_value(model)
+}
 }

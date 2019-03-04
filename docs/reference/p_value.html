@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Standardization — p_value • parameters</title>
+<title>Compute p-values — p_value • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,11 +37,10 @@
 
 
 
-<meta property="og:title" content="Standardization — p_value" />
+<meta property="og:title" content="Compute p-values — p_value" />
 
-<meta property="og:description" content="Performs a standardization of data or parameters. See the documentation for your object's class:
-Dataframes
-Regression models
+<meta property="og:description" content="This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
+Mixed models (lme4): TO BE IMPROVED.
 " />
 
 <meta property="og:image" content="/logo.png" />
@@ -58,16 +57,6 @@ Regression models
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-97457476-7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-97457476-7');
-</script>
 
   </head>
 
@@ -131,46 +120,55 @@ Regression models
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Standardization</h1>
+    <h1>Compute p-values</h1>
     
     <div class="hidden name"><code>p_value.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Performs a standardization of data or parameters. See the documentation for your object's class:</p><ul>
-<li><p><a href='standardize.data.frame.html'>Dataframes</a></p></li>
-<li><p><a href='standardize.lm.html'>Regression models</a></p></li>
+    <p>This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:</p><ul>
+<li><p>Mixed models (lme4): TO BE IMPROVED.</p></li>
 </ul>
     
     </div>
 
-    <pre class="usage"><span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for lmerMod</span>
+<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>model</th>
+      <td><p>A statistical model.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>robust</th>
-      <td><p>If TRUE, the standardization will be based on <a href='https://www.rdocumentation.org/packages/stats/topics/median'>median</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/mad'>mad</a> instead of <a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/sd'>sd</a> (default).</p></td>
+      <th>method</th>
+      <td><p>For mixed models, can be <a href='p_value_wald.html'>"wald"</a> (default) or <a href='p_value_kenward.html'>"kenward"</a>.</p></td>
     </tr>
     </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>p_value</span>(<span class='no'>model</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

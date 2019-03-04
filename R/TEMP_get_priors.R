@@ -7,14 +7,14 @@
 #' @examples
 #' \dontrun{
 #' library(rstanarm)
-#'
-#' model <- rstanarm::stan_glm(Sepal.Length ~ Petal.Width, data=iris)
+#' 
+#' model <- rstanarm::stan_glm(Sepal.Length ~ Petal.Width, data = iris)
 #' get_priors(model)
-#'
-#'
+#' 
+#' 
 #' library(brms)
-#'
-#' model <- brms::brm(Sepal.Length ~ Petal.Width, data=iris)
+#' 
+#' model <- brms::brm(Sepal.Length ~ Petal.Width, data = iris)
 #' get_priors(model)
 #' }
 #' @export
@@ -29,7 +29,6 @@ get_priors <- function(model, ...) {
 #' @importFrom tools toTitleCase
 #' @export
 get_priors.stanreg <- function(model, ...) {
-
   if (!requireNamespace("rstanarm")) {
     warning("This function needs `rstanarm` to be installed... installing now.")
     install.packages("rstanarm")
@@ -44,15 +43,15 @@ get_priors.stanreg <- function(model, ...) {
   df$parameter <- "(Intercept)"
 
   # Priors
-  if(!is.null(info$prior)){
+  if (!is.null(info$prior)) {
     priors <- .priors_to_df(info$prior)
-    priors$parameter <- head(tail(insight::find_parameters(model)$conditional, -1), nrow(priors))  # This head() thing is to deal with rstanarm_gamm4 for which find_parameters returns all the smooth info.
+    priors$parameter <- head(tail(insight::find_parameters(model)$conditional, -1), nrow(priors)) # This head() thing is to deal with rstanarm_gamm4 for which find_parameters returns all the smooth info.
     df <- rbind(df, priors[names(priors) %in% names(df)])
   }
 
 
   # Aux
-  if(!is.null(info$prior_aux)){
+  if (!is.null(info$prior_aux)) {
     aux <- .priors_to_df(info$prior_aux)
     aux$parameter <- aux$aux_name
     df <- rbind(df, aux[names(aux) %in% names(df)])
@@ -79,27 +78,25 @@ get_priors.brmsfit <- function(model, ...) {
   # info$class
   # info$prior
   stop("brms models not supported yet.")
-
-
 }
 
 
 
 
 #' @keywords internal
-.priors_to_df <- function(priors){
+.priors_to_df <- function(priors) {
   max_length <- max(sapply(priors, length))
-  for(i in names(priors)){
-    if(length(priors[[i]]) < max_length){
-      if(is.null(priors[[i]])){
+  for (i in names(priors)) {
+    if (length(priors[[i]]) < max_length) {
+      if (is.null(priors[[i]])) {
         priors[[i]] <- NA
       }
       priors[[i]] <- rep_len(priors[[i]], max_length)
     }
   }
-  if(max_length == 1){
+  if (max_length == 1) {
     priors <- as.data.frame(t(sapply(priors, c)))
-  }else{
+  } else {
     priors <- as.data.frame(sapply(priors, c))
   }
 
