@@ -35,7 +35,7 @@
     if (inherits(model, "stanreg")) {
       priors_data <- get_priors(model)
       if ("Prior_Scale_adjusted" %in% names(priors_data)) {
-        priors_data$Prior_Scale <- priors_data$Prior_Scale_adjusted
+        priors_data$Prior_Scale[!is.na(priors_data$Prior_Scale_adjusted)] <- priors_data$Prior_Scale_adjusted[!is.na(priors_data$Prior_Scale_adjusted)]
         priors_data$Prior_Scale_adjusted <- NULL
       }
       parameters <- merge(parameters, priors_data, by = "Parameter", sort = FALSE, all.x = TRUE)
@@ -71,12 +71,12 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
 #' }
-#' 
+#'
 #' @references
 #' \itemize{
 #'  \item{\href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{Comparison of Point-Estimates}}
