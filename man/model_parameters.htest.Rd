@@ -17,7 +17,7 @@
 Parameters of h-tests.
 }
 \examples{
-model <- cor.test(mtcars$mpg, mtcars$cyl, method="pearson")
+model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")
 model_parameters(model)
 
 model <- t.test(iris$Sepal.Width, iris$Sepal.Length)

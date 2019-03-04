@@ -11,22 +11,21 @@
 #' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #' model_parameters(model, standardize = TRUE)
 #' }
-#'
+#' 
 #' @export
-model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootstrap = FALSE, p_method = "wald", ci_method="wald", ...) {
+model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", ...) {
   if (bootstrap) {
     return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, ...))
   }
   # Processing
-  parameters <- .extract_parameters_mixed(model, ci = ci, p_method=p_method, ci_method=ci_method, ...)
+  parameters <- .extract_parameters_mixed(model, ci = ci, p_method = p_method, ci_method = ci_method, ...)
 
   # Standardized
   if (standardize) {
     std_model <- standardize(model, ...)
-    std_parameters <- .extract_parameters_mixed(std_model, ci, p_method=p_method, ci_method=ci_method, ...)
+    std_parameters <- .extract_parameters_mixed(std_model, ci = , p_method = p_method, ci_method = ci_method, ...)
     names(std_parameters) <- paste0("Std_", names(std_parameters))
 
-    # parameters <- cbind(parameters, std_parameters[c("Std_beta", "Std_SE", "Std_CI_low", "Std_CI_high")])
     parameters <- cbind(parameters, std_parameters[c("Std_beta", "Std_SE")])
   }
 
@@ -39,27 +38,27 @@ model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootst
 
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method="wald", ...) {
+.extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method = "wald", ...) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
 
   # p value
-  if("Pr(>|z|)" %in% names(parameters)){
+  if ("Pr(>|z|)" %in% names(parameters)) {
     names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
-  } else{
-    if(insight::model_info(model)$is_linear){
-      if(p_method == "kenward"){
+  } else {
+    if (insight::model_info(model)$is_linear) {
+      if (p_method == "kenward") {
         parameters$DoF <- dof_kenward(model)
-        parameters$p <- p_value(model, method="kenward", dof=parameters$DoF)
-      } else{
-        parameters$p <- p_value(model, method=p_method)
+        parameters$p <- p_value(model, method = "kenward", dof = parameters$DoF)
+      } else {
+        parameters$p <- p_value(model, method = p_method)
       }
-    } else{
+    } else {
       parameters$p <- p_value(model)
     }
   }
 
   # CI
-  parameters <- cbind(parameters, ci(model, method=ci_method))
+  parameters <- cbind(parameters, ci(model, method = ci_method))
 
   # Renaming
   names(parameters) <- gsub("Std. Error", "SE", names(parameters))

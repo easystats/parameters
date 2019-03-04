@@ -9,9 +9,9 @@
 #'
 #' @importFrom stats mad median sd setNames
 #' @export
-summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE){
+summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE) {
   # Point estimates
-  out <- data.frame("Parameter" =  colnames(posteriors))
+  out <- data.frame("Parameter" = colnames(posteriors))
   if ("median" %in% c(estimate)) {
     out$Median <- sapply(posteriors, median)
     out$MAD <- sapply(posteriors, mad)
@@ -58,16 +58,14 @@ summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test
     }
     if ("rope" %in% test_list | "equivalence" %in% test_list | "equi" %in% test_list) {
       if (length(ci) == 1 | rope_full) {
-        if(rope_full){
+        if (rope_full) {
           results_rope <- as.data.frame(t(sapply(posteriors, bayestestR::equivalence_test, bounds = rope_bounds, ci = 1)), stringsAsFactors = FALSE)
-        } else{
+        } else {
           results_rope <- as.data.frame(t(sapply(posteriors, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci)), stringsAsFactors = FALSE)
         }
         results_rope <- results_rope[c("ROPE_Percentage", "ROPE_Equivalence")]
         results_rope$ROPE_Percentage <- as.numeric(results_rope$ROPE_Percentage)
         results_rope$ROPE_Equivalence <- as.character(results_rope$ROPE_Equivalence)
-
-
       } else {
         results_rope <- sapply(posteriors, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci, simplify = FALSE)
         for (i in names(results_rope)) {

@@ -19,7 +19,7 @@ The Wald-test approximation treats t-values as Wald z.
 }
 \examples{
 \dontrun{
-model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1|Species), data=iris)
+model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 p_value_kenward(model)
 model <- circus::merMod_1
 p_value_kenward(model)

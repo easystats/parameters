@@ -10,11 +10,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1|Species), data=iris)
+#' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' p_value(model)
 #' }
 #' @export
-p_value <- function(model, ...){
+p_value <- function(model, ...) {
   UseMethod("p_value")
 }
 
@@ -24,7 +24,7 @@ p_value <- function(model, ...){
 #' @rdname p_value
 #' @param method For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.
 #' @export
-p_value.lmerMod <- function(model, method = "wald", ...){
+p_value.lmerMod <- function(model, method = "wald", ...) {
   method <- match.arg(method, c("wald", "kr", "kenward"))
   if (method == "wald") {
     p_value_wald(model, ...)
@@ -37,6 +37,6 @@ p_value.lmerMod <- function(model, method = "wald", ...){
 
 
 #' @export
-p_value.merMod <- function(model, ...){
+p_value.merMod <- function(model, ...) {
   p_value_wald(model, ...)
 }

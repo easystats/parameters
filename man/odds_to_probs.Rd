@@ -22,5 +22,4 @@ Convert (log)odds to probabilies.
 }
 \examples{
 odds_to_probs(-1.45)
-
 }

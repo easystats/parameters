@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • parameters</title>
+<title>BayesFactor objects Parameters — model_parameters.BFBayesFactor • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,7 +37,9 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="BayesFactor objects Parameters — model_parameters.BFBayesFactor" />
+
+<meta property="og:description" content="Parameters of BayesFactor objects." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -57,7 +59,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -116,18 +118,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>BayesFactor objects Parameters</h1>
+    
+    <div class="hidden name"><code>model_parameters.BFBayesFactor.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="bayesian_gamm4.html">Bayesian GAM Models</a></li>
-        <li><a href="bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>Parameters of BayesFactor objects.</p>
+    
     </div>
+
+    <pre class="usage"><span class='co'># S3 method for BFBayesFactor</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>4000</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>model</th>
+      <td><p>Object of class <code>BFBayesFactor</code>.</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Credible Interval (CI) level. Default to 0.90 (90%).</p></td>
+    </tr>
+    <tr>
+      <th>iterations</th>
+      <td><p>Number of posterior draws.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    </table>
+    
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
+
   </div>
 </div>
 

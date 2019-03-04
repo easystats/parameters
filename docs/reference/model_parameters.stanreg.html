@@ -56,16 +56,6 @@
 <![endif]-->
 
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-97457476-7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-97457476-7');
-</script>
-
   </head>
 
   <body>
@@ -143,14 +133,14 @@
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
   <span class='kw'>rope_bounds</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Object of class <a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a>.</p></td>
+      <td><p>Bayesian model.</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -162,15 +152,15 @@
     </tr>
     <tr>
       <th>estimate</th>
-      <td><p>The point-estimate to compute. Can be a character or a list with "median", "mean" or "MAP".</p></td>
+      <td><p>The <a href='https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html'>point-estimate(s)</a> to compute. Can be a character or a list with "median", "mean" or "MAP".</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>What indices of effect existence to compute. Can be a character or a list with "p_direction", "rope" or "p_map".</p></td>
+      <td><p>What <a href='https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html'>indices of effect existence</a> to compute. Can be a character or a list with "p_direction", "rope" or "p_map".</p></td>
     </tr>
     <tr>
       <th>rope_bounds</th>
-      <td><p>ROPE's lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
+      <td><p><a href='https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope'>ROPE's</a> lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
     </tr>
     <tr>
       <th>rope_full</th>
@@ -178,10 +168,14 @@
     </tr>
     <tr>
       <th>diagnostic</th>
-      <td><p>Include sampling diagnostic metrics (effective sample, Rhat and MCSE).</p></td>
+      <td><p>Include sampling diagnostic metrics (effective sample, Rhat and MCSE). <code>Effective Sample</code> should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). <code>Rhat</code> should not be larger than 1.1.</p></td>
     </tr>
     <tr>
-      <th>n</th>
+      <th>priors</th>
+      <td><p>Include priors specifications information. If set to true (current <code>rstanarm</code>' default), automatically adjusted priors' scale during fitting  will be displayed.</p></td>
+    </tr>
+    <tr>
+      <th>iterations</th>
       <td><p>The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.</p></td>
     </tr>
     <tr>

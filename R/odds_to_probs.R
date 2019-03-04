@@ -9,7 +9,6 @@
 #'
 #' @examples
 #' odds_to_probs(-1.45)
-#'
 #' @export
 odds_to_probs <- function(odds, select = NULL, exclude = NULL, log = FALSE) {
 
@@ -43,8 +42,8 @@ odds_to_probs <- function(odds, select = NULL, exclude = NULL, log = FALSE) {
   }
 
   # Remove non-numerics
-  dfother <- df[!sapply(df, is.numeric, simplify=TRUE)]
-  dfnum <- df[sapply(df, is.numeric, simplify=TRUE)]
+  dfother <- df[!sapply(df, is.numeric, simplify = TRUE)]
+  dfnum <- df[sapply(df, is.numeric, simplify = TRUE)]
 
   # Tranform
   dfnum <- .odds_to_probs(dfnum, log = log)

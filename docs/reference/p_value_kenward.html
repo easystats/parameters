@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • parameters</title>
+<title>Compute p values using Kenward-Roger approximation — p_value_kenward • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,7 +37,9 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Compute p values using Kenward-Roger approximation — p_value_kenward" />
+
+<meta property="og:description" content="The Wald-test approximation treats t-values as Wald z." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -57,7 +59,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -116,18 +118,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Compute p values using Kenward-Roger approximation</h1>
+    
+    <div class="hidden name"><code>p_value_kenward.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="bayesian_gamm4.html">Bayesian GAM Models</a></li>
-        <li><a href="bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>The Wald-test approximation treats t-values as Wald z.</p>
+    
     </div>
+
+    <pre class="usage"><span class='fu'>p_value_kenward</span>(<span class='no'>model</span>, <span class='kw'>dof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>dof_kenward</span>(<span class='no'>model</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>model</th>
+      <td><p>A statistical model.</p></td>
+    </tr>
+    <tr>
+      <th>dof</th>
+      <td><p>Degrees of Freedom.</p></td>
+    </tr>
+    </table>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>p_value_kenward</span>(<span class='no'>model</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>circus</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/circus/topics/merMod_1'>merMod_1</a></span>
+<span class='fu'>p_value_kenward</span>(<span class='no'>model</span>)
+<span class='co'># }</span></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 

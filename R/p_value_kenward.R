@@ -7,14 +7,14 @@
 #'
 #' @examples
 #' \dontrun{
-#' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1|Species), data=iris)
+#' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' p_value_kenward(model)
 #' model <- circus::merMod_1
 #' p_value_kenward(model)
 #' }
 #' @importFrom stats pt coef
 #' @export
-p_value_kenward <- function(model, dof = NULL){
+p_value_kenward <- function(model, dof = NULL) {
   UseMethod("p_value_kenward")
 }
 
@@ -29,7 +29,7 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
   if ("t value" %in% names(params)) {
     p <- 2 * stats::pt(abs(params[, "t value"]), dof, lower.tail = FALSE)
-  } else{
+  } else {
     stop("Couldn't find any suitable statistic (t value) for Kenward-Roger approximation.")
   }
 
@@ -47,9 +47,10 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
 #' @rdname p_value_kenward
 #' @export
-dof_kenward <- function(model){
-  if (!requireNamespace("pbkrtest", quietly = TRUE))
+dof_kenward <- function(model) {
+  if (!requireNamespace("pbkrtest", quietly = TRUE)) {
     stop("Package `pbkrtest` required for Kenward-Rogers approximation.", call. = FALSE)
+  }
 
   pbkrtest::get_ddf_Lb(model, insight::get_parameters(model, effects = "fixed")$estimate)
 }

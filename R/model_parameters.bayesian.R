@@ -1,5 +1,5 @@
 #' @keywords internal
-.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, diagnostic = TRUE, priors=TRUE, iterations = 1000, ...) {
+.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
 
   # ROPE
   if (all(rope_bounds == "default")) {
@@ -21,8 +21,8 @@
   }
 
   # Diagnostic
-  if(diagnostic){
-    if(inherits(model, "stanreg")){
+  if (diagnostic) {
+    if (inherits(model, "stanreg")) {
       diagnostic_df <- as.data.frame(model$stan_summary[row.names(model$stan_summary) %in% parameters$Parameter, ])
       parameters$Effective_Sample <- diagnostic_df$n_eff
       parameters$Rhat <- diagnostic_df$Rhat
@@ -31,14 +31,14 @@
   }
 
   # Priors
-  if(priors){
-    if(inherits(model, "stanreg")){
+  if (priors) {
+    if (inherits(model, "stanreg")) {
       priors_data <- get_priors(model)
-      if("Prior_Scale_adjusted" %in% names(priors_data)){
+      if ("Prior_Scale_adjusted" %in% names(priors_data)) {
         priors_data$Prior_Scale <- priors_data$Prior_Scale_adjusted
         priors_data$Prior_Scale_adjusted <- NULL
       }
-      parameters <- merge(parameters, priors_data, by="Parameter", sort=FALSE, all.x = TRUE)
+      parameters <- merge(parameters, priors_data, by = "Parameter", sort = FALSE, all.x = TRUE)
     }
   }
 
@@ -71,12 +71,12 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
 #' }
-#'
+#' 
 #' @references
 #' \itemize{
 #'  \item{\href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{Comparison of Point-Estimates}}
@@ -97,7 +97,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, priors=TRUE, iterations = 1000, ...) {
+.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE, priors = TRUE, iterations = 1000, ...) {
   if (insight::model_info(model)$is_bayesian) {
     data <- insight::get_parameters(model)
   } else {
@@ -109,6 +109,3 @@ model_parameters.brmsfit <- .model_parameters_bayesian
   parameters <- summarise_posteriors(data, ci = ci, estimate = estimate, test = test, rope_bounds = rope_bounds, rope_full = rope_full)
   return(parameters)
 }
-
-
-
