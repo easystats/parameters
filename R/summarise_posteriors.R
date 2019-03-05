@@ -44,6 +44,7 @@ summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test
     } else {
       hdi <- as.data.frame(t(sapply(posteriors, bayestestR::hdi, ci = ci)), stringsAsFactors = FALSE)
       hdi <- hdi[c("CI_low", "CI_high")]
+      if(is.null(ncol(hdi))) hdi <- t(hdi)  # Catch When nrow == 1
     }
     hdi <- sapply(hdi, as.numeric)
     out <- cbind(out, hdi)
