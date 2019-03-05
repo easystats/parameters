@@ -11,7 +11,7 @@
 #' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #' model_parameters(model, standardize = TRUE)
 #' }
-#' 
+#'
 #' @export
 model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", ...) {
   if (bootstrap) {
@@ -23,7 +23,7 @@ model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootst
   # Standardized
   if (standardize) {
     std_model <- standardize(model, ...)
-    std_parameters <- .extract_parameters_mixed(std_model, ci = , p_method = p_method, ci_method = ci_method, ...)
+    std_parameters <- .extract_parameters_mixed(std_model, ci = ci, p_method = p_method, ci_method = ci_method, ...)
     names(std_parameters) <- paste0("Std_", names(std_parameters))
 
     parameters <- cbind(parameters, std_parameters[c("Std_beta", "Std_SE")])

@@ -46,6 +46,7 @@ summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test
       hdi <- hdi[c("CI_low", "CI_high")]
     }
     hdi <- sapply(hdi, as.numeric)
+    if(is.null(ncol(hdi))) hdi <- t(hdi)  # Catch When nrow == 1
     out <- cbind(out, hdi)
   }
 
