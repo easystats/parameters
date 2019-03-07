@@ -17,6 +17,8 @@ Authors@R: c(
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
+Depends:
+	R (>= 2.10)
 Imports:
 	insight,
 	bayestestR,
@@ -31,7 +33,9 @@ Suggests:
 	brms,
 	lme4,
 	BayesFactor,
-	pbkrtest
+	pbkrtest,
+	caret,
+	randomForest
 Remotes: 
 	easystats/insight,
 	easystats/bayestestR,

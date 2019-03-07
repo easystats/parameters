@@ -59,10 +59,6 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
     grps <- grps[[".rows"]]
   }
 
-  # save class attribute, else row-indexing does not work
-  # tmp <- class(x)
-  # class(x) <- "data.frame" # is this needed ?
-
   x <- as.data.frame(x)
   for (rows in grps) {
     x[rows, ] <- standardize(
@@ -73,19 +69,15 @@ standardize.grouped_df <- function(x, robust = FALSE, select = NULL, exclude = N
       ...
     )
   }
-  # x <- dplyr::do_(x, "standardize(., select = select, exclude = exclude, robust = robust, ...)")
-  # return(x)
-
   # set back class, so data frame still works with dplyr
   attributes(x) <- info
-  # class(x) <- tmp
   x
 }
 
 
 #' Data Standardization
 #'
-#' Standardize (scale and reduce, Z-score) the data so that the values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1) or Median Absolute Deviance (\code{robust = TRUE}; median = 0, MAD = 1).
+#' Standardize (scale and reduce, Z-score) the data so that the values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1) or Median Absolute Deviance (\code{robust = TRUE}; median = 0, MAD = 1). A \code{normalization} scales all numeric variables in the 0 - 1 range.
 #'
 #' @inheritParams standardize
 #' @param select For a data.frame, character or list of characters of column names to be
