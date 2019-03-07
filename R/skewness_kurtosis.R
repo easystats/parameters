@@ -10,7 +10,7 @@
 #'
 #' @references All credits go to the \code{moments} package.
 #' @export
-skewness <- function (x, na.rm = FALSE) {
+skewness <- function (x, na.rm = TRUE) {
     if (is.matrix(x))
       apply(x, 2, skewness, na.rm = na.rm)
     else if (is.vector(x)) {
@@ -29,7 +29,7 @@ skewness <- function (x, na.rm = FALSE) {
 
 #' @rdname skewness
 #' @export
-kurtosis <- function (x, na.rm = FALSE) {
+kurtosis <- function (x, na.rm = TRUE) {
   if (is.matrix(x))
     apply(x, 2, kurtosis, na.rm = na.rm)
   else if (is.vector(x)) {
