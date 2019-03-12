@@ -8,7 +8,7 @@ test_that("model_parameters.mixed", {
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 9))
 
   params <- model_parameters(circus::download_model("merMod_2"), standardize = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 9))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 9))
 
   # TODO: Not sure how to deal with bootstrapped mixed models... As it throws a reasonable amount of singular fits...
 })

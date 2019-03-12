@@ -1,0 +1,105 @@
+#' Normalization
+#'
+#' Performs a normalization of data. This scales all numeric variables in the range 0 - 1.
+#'
+#' @rdname standardize.data.frame
+#'
+#' @param x Object.
+#' @param ... Arguments passed to or from other methods.
+#'
+#' @export
+normalize <- function(x, ...) {
+  UseMethod("normalize")
+}
+
+
+
+
+
+
+#' @rdname standardize.data.frame
+#' @importFrom stats median mad
+#' @export
+normalize.numeric <- function(x, ...) {
+
+  # Warning if all NaNs
+  if (all(is.na(x))) {
+    return(x)
+  }
+
+  # Warning if logical vector
+  if (length(unique(x)) == 2) {
+    if (is.null(names(x))) {
+      name <- deparse(substitute(x))
+    } else {
+      name <- names(x)
+    }
+    warning(paste0("Variable `", name, "` contains only two different values. Consider converting it to a factor."))
+  }
+
+
+  return(as.vector((x - min(x, na.rm = TRUE)) / diff(range(x, na.rm = TRUE), na.rm = TRUE)))
+}
+
+
+
+
+
+
+
+
+
+
+#' @rdname standardize.data.frame
+#' @export
+normalize.factor <- function(x, ...) {
+  return(x)
+}
+
+
+
+
+#' @rdname standardize.data.frame
+#' @export
+normalize.grouped_df <- function(x, select = NULL, exclude = NULL, ...) {
+  info <- attributes(x)
+  # dplyr >= 0.8.0 returns attribute "indices"
+  grps <- attr(x, "groups", exact = TRUE)
+
+  # dplyr < 0.8.0?
+  if (is.null(grps)) {
+    grps <- attr(x, "indices", exact = TRUE)
+    grps <- lapply(grps, function(x) x + 1)
+  } else {
+    grps <- grps[[".rows"]]
+  }
+
+  x <- as.data.frame(x)
+  for (rows in grps) {
+    x[rows, ] <- normalize(
+      x[rows, ],
+      select = select,
+      exclude = exclude,
+      ...
+    )
+  }
+  # set back class, so data frame still works with dplyr
+  attributes(x) <- info
+  x
+}
+
+
+#' @rdname standardize.data.frame
+#' @export
+normalize.data.frame <- function(x, select = NULL, exclude = NULL, ...) {
+  if (is.null(select)) {
+    select <- names(x)
+  }
+
+  if (!is.null(exclude)) {
+    select <- setdiff(select, exclude)
+  }
+
+  x[select] <- lapply(x[select], normalize)
+  return(x)
+}

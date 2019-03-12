@@ -14,9 +14,10 @@ Authors@R: c(
 		email = "d.luedecke@uke.de", 
 		comment = c(ORCID = "0000-0002-8895-3206"))
 	)
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Maintainer: Dominique Makowski <dom.makowski@gmail.com>
+Description: Process model parameters and compute indices such as p values, omega squared, and Bayesian metrics.
+Depends:
+	R (>= 2.10)
 Imports:
 	insight,
 	bayestestR,
@@ -31,7 +32,9 @@ Suggests:
 	brms,
 	lme4,
 	BayesFactor,
-	pbkrtest
+	pbkrtest,
+	caret,
+	randomForest
 Remotes: 
 	easystats/insight,
 	easystats/bayestestR,

@@ -11,5 +11,5 @@ test_that("p_value", {
   testthat::expect_equal(ci(model)[1, 1], -11.591, tol = 0.01)
 
   model <- circus::download_model("merMod_2")
-  testthat::expect_equal(ci(model)[1, 1], -6.730, tol = 0.01)
+  testthat::expect_equal(ci(model)[1, 1], -52.1, tol = 0.01)
 })
