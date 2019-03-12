@@ -27,17 +27,16 @@ Parameters of ANOVAs.
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
-model <- aov(Sepal.Length ~ Sepal.Big, data=df)
+model <- aov(Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model)
 
-model <- anova(lm(Sepal.Length ~ Sepal.Big, data=df))
+model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 model_parameters(model)
 
-model <-aov(Sepal.Length ~ Sepal.Big + Error(Species), data=df)
+model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
 
-model <- anova(lme4::lmer(Sepal.Length ~ Sepal.Big + (1|Species), data=df))
+model <- anova(lme4::lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
 model_parameters(model)
-
 }
 }

@@ -60,9 +60,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/bayesian_gamm4.html">Bayesian GAM Models</a>
-    </li>
-    <li>
       <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
     </li>
   </ul>
@@ -102,11 +99,11 @@
 <h2 class="hasAnchor">
 <a href="#data" class="anchor"></a>Data</h2>
 <p>We simulated parent data of correlated data of size 10000 with different levels of noise (0.25, 0.5, 1, 1.5, 2, 2.5). From these parent populations, we extracted n = 1000 random samples of size 50 on which we computed a simple regression. We extracted the beta and SE of this regression, as well as bootstrapped estimates (median and MAD) with two different numbers of bootstrap iterations (1000 and 4000).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)
-
-df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bootstrapped.csv"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bootstrapped.csv"</span>)</a></code></pre></div>
 <p>For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it <a href="https://easystats.github.io/circus/articles/bootstrapped.html">here</a>.</p>
 </div>
 </div>
@@ -116,27 +113,27 @@ df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocument
 <div id="visualisation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualisation" class="anchor"></a>Visualisation</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(beta, Median_<span class="dv">1000</span>, Median_<span class="dv">4000</span>, Parent_beta, Noise) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">gather</span>(Parameter, Value, beta, Median_<span class="dv">1000</span>, Median_<span class="dv">4000</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Deviance =</span> Parent_beta <span class="op">-</span><span class="st"> </span>Value,
-         <span class="dt">Noise =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(Noise)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y=</span>Deviance, <span class="dt">x=</span>Noise, <span class="dt">fill=</span>Parameter)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="st">"dashed"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#2196F3"</span>, <span class="st">"#f44336"</span>, <span class="st">"#FF9800"</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Deviance (0 is the parent - true - effect)</span><span class="ch">\n</span><span class="st">"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">select</span>(beta, Median_<span class="dv">1000</span>, Median_<span class="dv">4000</span>, Parent_beta, Noise) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">gather</span>(Parameter, Value, beta, Median_<span class="dv">1000</span>, Median_<span class="dv">4000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Deviance =</span> Parent_beta <span class="op">-</span><span class="st"> </span>Value,</a>
+<a class="sourceLine" id="cb2-5" title="5">         <span class="dt">Noise =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(Noise)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y=</span>Deviance, <span class="dt">x=</span>Noise, <span class="dt">fill=</span>Parameter)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="st">"dashed"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#2196F3"</span>, <span class="st">"#f44336"</span>, <span class="st">"#FF9800"</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Deviance (0 is the parent - true - effect)</span><span class="ch">\n</span><span class="st">"</span>)</a></code></pre></div>
 <p><img src="bootstrap_vs_pointestimates_files/figure-html/unnamed-chunk-2-1.png" width="960"></p>
 </div>
 <div id="visualisation-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualisation-1" class="anchor"></a>Visualisation</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Parent_beta <span class="op">~</span><span class="st"> </span>beta, <span class="dt">data=</span>df)
-m2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Parent_beta <span class="op">~</span><span class="st"> </span>Median_<span class="dv">1000</span>, <span class="dt">data=</span>df)
-m3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Parent_beta <span class="op">~</span><span class="st"> </span>Median_<span class="dv">4000</span>, <span class="dt">data=</span>df)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(m1)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">m1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Parent_beta <span class="op">~</span><span class="st"> </span>beta, <span class="dt">data=</span>df)</a>
+<a class="sourceLine" id="cb3-2" title="2">m2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Parent_beta <span class="op">~</span><span class="st"> </span>Median_<span class="dv">1000</span>, <span class="dt">data=</span>df)</a>
+<a class="sourceLine" id="cb3-3" title="3">m3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Parent_beta <span class="op">~</span><span class="st"> </span>Median_<span class="dv">4000</span>, <span class="dt">data=</span>df)</a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(m1)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Parent_beta ~ beta, data = df)
@@ -155,7 +152,7 @@ m3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocument
 ## Residual standard error: 0.0584 on 5998 degrees of freedom
 ## Multiple R-squared:  0.9618, Adjusted R-squared:  0.9618 
 ## F-statistic: 1.511e+05 on 1 and 5998 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(m2)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(m2)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Parent_beta ~ Median_1000, data = df)
@@ -174,7 +171,7 @@ m3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocument
 ## Residual standard error: 0.05848 on 5998 degrees of freedom
 ## Multiple R-squared:  0.9617, Adjusted R-squared:  0.9617 
 ## F-statistic: 1.506e+05 on 1 and 5998 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(m3)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(m3)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Parent_beta ~ Median_4000, data = df)
@@ -193,7 +190,7 @@ m3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocument
 ## Residual standard error: 0.05841 on 5998 degrees of freedom
 ## Multiple R-squared:  0.9618, Adjusted R-squared:  0.9618 
 ## F-statistic: 1.51e+05 on 1 and 5998 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/anova">anova</a></span>(m1, m2, m3)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/anova">anova</a></span>(m1, m2, m3)</a></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: Parent_beta ~ beta

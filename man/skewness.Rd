@@ -5,9 +5,9 @@
 \alias{kurtosis}
 \title{Compute Skewness and Kurtosis}
 \usage{
-skewness(x, na.rm = FALSE)
+skewness(x, na.rm = TRUE)
 
-kurtosis(x, na.rm = FALSE)
+kurtosis(x, na.rm = TRUE)
 }
 \arguments{
 \item{x}{A numeric vector or data.frame.}
@@ -20,7 +20,6 @@ Compute Skewness and Kurtosis
 \examples{
 skewness(rnorm(1000))
 kurtosis(rnorm(1000))
-
 }
 \references{
 All credits go to the \code{moments} package.

@@ -4,12 +4,12 @@
 #' @param ci Credible Interval (CI) level. Default to 0.90 (90\%).
 #' @param estimate The \href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".
 #' @param test What \href{https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope" or "p_map".
-#' @param rope_bounds \href{https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
+#' @param rope_range \href{https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
 #' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
 #'
 #' @importFrom stats mad median sd setNames
 #' @export
-summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE) {
+summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE) {
   # Point estimates
   out <- data.frame("Parameter" = colnames(posteriors))
   if ("median" %in% c(estimate)) {
@@ -46,7 +46,7 @@ summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test
       hdi <- hdi[c("CI_low", "CI_high")]
     }
     hdi <- sapply(hdi, as.numeric)
-    if(is.null(ncol(hdi))) hdi <- t(hdi)  # Catch When nrow == 1
+    if (is.null(ncol(hdi))) hdi <- t(hdi) # Catch When nrow == 1
     out <- cbind(out, hdi)
   }
 
@@ -60,15 +60,15 @@ summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test
     if ("rope" %in% test_list | "equivalence" %in% test_list | "equi" %in% test_list) {
       if (length(ci) == 1 | rope_full) {
         if (rope_full) {
-          results_rope <- as.data.frame(t(sapply(posteriors, bayestestR::equivalence_test, bounds = rope_bounds, ci = 1)), stringsAsFactors = FALSE)
+          results_rope <- as.data.frame(t(sapply(posteriors, bayestestR::equivalence_test, range = rope_range, ci = 1)), stringsAsFactors = FALSE)
         } else {
-          results_rope <- as.data.frame(t(sapply(posteriors, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci)), stringsAsFactors = FALSE)
+          results_rope <- as.data.frame(t(sapply(posteriors, bayestestR::equivalence_test, range = rope_range, ci = ci)), stringsAsFactors = FALSE)
         }
         results_rope <- results_rope[c("ROPE_Percentage", "ROPE_Equivalence")]
         results_rope$ROPE_Percentage <- as.numeric(results_rope$ROPE_Percentage)
         results_rope$ROPE_Equivalence <- as.character(results_rope$ROPE_Equivalence)
       } else {
-        results_rope <- sapply(posteriors, bayestestR::equivalence_test, bounds = rope_bounds, ci = ci, simplify = FALSE)
+        results_rope <- sapply(posteriors, bayestestR::equivalence_test, range = rope_range, ci = ci, simplify = FALSE)
         for (i in names(results_rope)) {
           current_rope <- results_rope[[i]]
 

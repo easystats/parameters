@@ -1,5 +1,7 @@
 #' Machine learning model trained to classify distributions
 #'
+#' Mean accuracy and Kappa of 0.96.
+#'
 #'
 "classify_distribution"
 
@@ -22,8 +24,7 @@
 #' @importFrom bayestestR map_estimate
 #' @importFrom stats IQR density predict
 #' @export
-find_distribution <- function(x, probabilities=FALSE){
-
+find_distribution <- function(x, probabilities = FALSE) {
   if (!requireNamespace("caret", quietly = TRUE)) {
     stop("Package `caret` required for distribution classification.", call. = FALSE)
   }
@@ -33,35 +34,33 @@ find_distribution <- function(x, probabilities=FALSE){
 
 
   # Extract features
+  density_Z <- parameters::normalize(density(x, n = 100)$y)
+
+  # Extract features
   data <- data.frame(
     "Mean" = mean(x),
     "SD" = sd(x),
     "Median" = median(x),
-    "MAD" = mad(x, constant=1),
+    "MAD" = mad(x, constant = 1),
     "Mean_Median_Distance" = mean(x) - median(x),
     "Mean_Mode_Distance" = mean(x) - bayestestR::map_estimate(x),
-    "SD_MAD_Distance" = sd(x) - mad(x, constant=1),
+    "SD_MAD_Distance" = sd(x) - mad(x, constant = 1),
     "Mode" = bayestestR::map_estimate(x),
     "Range" = diff(range(x)) / sd(x),
     "IQR" = stats::IQR(x),
     "Skewness" = skewness(x),
     "Kurtosis" = kurtosis(x),
-    "Smoothness_Cor" = parameters::smoothness(density(x)$y, method="cor"),
-    "Smoothness_Diff" = parameters::smoothness(density(x)$y, method="cor")
+    "Smoothness_Cor_1" = smoothness(density_Z, method = "cor", lag = 1),
+    "Smoothness_Diff_1" = smoothness(density_Z, method = "diff", lag = 1),
+    "Smoothness_Cor_5" = smoothness(density_Z, method = "cor", lag = 5),
+    "Smoothness_Diff_5" = smoothness(density_Z, method = "diff", lag = 5)
   )
 
-  density_df <- as.data.frame(t(parameters::normalize(density(x, n=20)$y)))
-  names(density_df) <- paste0("Density_", 1:ncol(density_df))
-
-  data <- cbind(data, density_df)
 
   # Predict
-  # data("classify_distribution", envir=environment())
-  # data("classify_distribution")
-  # get("classify_distribution")
-  if(probabilities){
-    return(predict(classify_distribution, data, type="prob"))
-  } else{
+  if (probabilities) {
+    return(predict(classify_distribution, data, type = "prob"))
+  } else {
     return(as.character(predict(classify_distribution, data)))
   }
 }

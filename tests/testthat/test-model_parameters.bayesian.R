@@ -9,17 +9,17 @@ test_that("model_parameters.stanreg", {
   library(rstanarm)
 
   # GLM
-  params <- model_parameters(circus::download_model("stanreg_lm_2"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 25))
+  params <- model_parameters(circus::download_model("stanreg_lm_1"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 25))
 
   params <- model_parameters(circus::download_model("stanreg_lm_2"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 25))
 
   params <- model_parameters(circus::download_model("stanreg_lm_3"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 25))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 25))
 
   params <- model_parameters(circus::download_model("stanreg_glm_1"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 25))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 25))
 
   params <- model_parameters(circus::download_model("stanreg_glm_2"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 25))
@@ -32,7 +32,7 @@ test_that("model_parameters.stanreg", {
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 25))
 
   params <- model_parameters(circus::download_model("stanreg_merMod_2"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"), rope_full = FALSE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 25))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 25))
 
   # GAM
   params <- model_parameters(circus::download_model("stanreg_gam_1"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"), rope_full = FALSE)

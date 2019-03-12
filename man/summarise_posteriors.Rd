@@ -5,7 +5,7 @@
 \title{Summarise posterior distributions.}
 \usage{
 summarise_posteriors(posteriors, ci = 0.9, estimate = "median",
-  test = c("pd", "rope"), rope_bounds = "default", rope_full = TRUE)
+  test = c("pd", "rope"), rope_range = "default", rope_full = TRUE)
 }
 \arguments{
 \item{posteriors}{A dataframe of posterior draws.}
@@ -16,7 +16,7 @@ summarise_posteriors(posteriors, ci = 0.9, estimate = "median",
 
 \item{test}{What \href{https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope" or "p_map".}
 
-\item{rope_bounds}{\href{https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
+\item{rope_range}{\href{https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_full}{If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.}
 }

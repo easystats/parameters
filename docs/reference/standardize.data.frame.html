@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data Standardization — standardize.data.frame • parameters</title>
+<title>Normalization — normalize • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,10 @@
 
 
 
-<meta property="og:title" content="Data Standardization — standardize.data.frame" />
+<meta property="og:title" content="Normalization — normalize" />
 
-<meta property="og:description" content="Standardize (scale and reduce, Z-score) the data so that the values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1) or Median Absolute Deviance (robust = TRUE; median = 0, MAD = 1)." />
+<meta property="og:description" content="Performs a normalization of data. This scales all numeric variables in the range 0 - 1.
+Standardize (scale and reduce, Z-score) the data so that the values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1) or Median Absolute Deviance (robust = TRUE; median = 0, MAD = 1). A normalization scales all numeric variables in the 0 - 1 range." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -95,9 +96,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bayesian_gamm4.html">Bayesian GAM Models</a>
-    </li>
-    <li>
       <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
     </li>
   </ul>
@@ -118,18 +116,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data Standardization</h1>
+    <h1>Normalization</h1>
     
     <div class="hidden name"><code>standardize.data.frame.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Standardize (scale and reduce, Z-score) the data so that the values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1) or Median Absolute Deviance (<code>robust = TRUE</code>; median = 0, MAD = 1).</p>
+    <p>Performs a normalization of data. This scales all numeric variables in the range 0 - 1.</p>
+<p>Standardize (scale and reduce, Z-score) the data so that the values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1) or Median Absolute Deviance (<code>robust = TRUE</code>; median = 0, MAD = 1). A <code>normalization</code> scales all numeric variables in the 0 - 1 range.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for data.frame</span>
+    <pre class="usage"><span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for factor</span>
+<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for grouped_df</span>
+<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
 <span class='fu'><a href='standardize.html'>standardize</a></span>(<span class='no'>x</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
@@ -141,8 +154,8 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>robust</th>
-      <td><p>If TRUE, the standardization will be based on <a href='https://www.rdocumentation.org/packages/stats/topics/median'>median</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/mad'>mad</a> instead of <a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/sd'>sd</a> (default).</p></td>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     <tr>
       <th>select</th>
@@ -154,8 +167,8 @@ standardized.</p></td>
       <td><p>For a data.frame, character or list of characters of column names to be excluded from standardization.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <th>robust</th>
+      <td><p>If TRUE, the standardization will be based on <a href='https://www.rdocumentation.org/packages/stats/topics/median'>median</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/mad'>mad</a> instead of <a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/sd'>sd</a> (default).</p></td>
     </tr>
     </table>
     

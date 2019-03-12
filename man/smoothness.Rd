@@ -4,20 +4,23 @@
 \alias{smoothness}
 \title{Quantify the smoothness of a vector}
 \usage{
-smoothness(x, method = "cor")
+smoothness(x, method = "cor", lag = 1)
 }
 \arguments{
 \item{x}{Numeric vector (similar to a time series).}
 
 \item{method}{Can be "diff" (the standard deviation of the standardized differences) or "cor" (default, lag-one autocorrelation).}
+
+\item{lag}{An integer indicating which lag to use. If less than 1, will be interpreted as expressed in percentage of the length of the vector.}
 }
 \description{
 Quantify the smoothness of a vector
 }
 \examples{
-smoothness(exp(-10:10), method="cor")
-smoothness(exp(-10:10), method="diff")
-
+x <- (-10:10)^3 + rnorm(21, 0, 100)
+plot(x)
+smoothness(x, method = "cor")
+smoothness(x, method = "diff")
 }
 \references{
 https://stats.stackexchange.com/questions/24607/how-to-measure-smoothness-of-a-time-series-in-r

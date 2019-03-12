@@ -1,0 +1,16 @@
+bibentry(
+    bibtype="Article",
+	title="Describe and understand your model’s parameters",
+	author=c(person("Dominique", "Makowski"), person("Daniel", "Lüdecke")),
+    journal="CRAN",
+	year="2019",
+	note="R package",
+	url="https://github.com/easystats/parameters",
+
+	textVersion =
+  	paste("Makowski, D. & Lüdecke, D. (2019). The report package for R: Ensuring the use of best practices for results reporting. CRAN.",
+        "Available from https://github.com/easystats/report.",
+		"doi: .",
+        sep=" "),
+
+	mheader = "To cite parameters in publications use:")
