@@ -1,15 +1,49 @@
-#' Summarise posterior distributions.
+#' Describe posterior distributions.
 #'
 #' @param posteriors A dataframe of posterior draws.
 #' @param ci Credible Interval (CI) level. Default to 0.90 (90\%).
 #' @param estimate The \href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".
 #' @param test What \href{https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope" or "p_map".
-#' @param rope_range \href{https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
+#' @param rope_range \href{https://easystats.github.io/bayestestR/#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
 #' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
+#' @param ci_type The type of index used for Credible Interval. Can be \code{"hdi"} (default, see \link[bayestestR]{hdi}) or "quantile".
+#'
+#' @examples
+#' describe_posterior(rnorm(1000))
 #'
 #' @importFrom stats mad median sd setNames
 #' @export
-summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE) {
+describe_posterior <- function(posteriors, ci = .90, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, ci_type="hdi") {
+  UseMethod("describe_posterior")
+}
+
+
+
+
+
+
+#' @rdname describe_posterior
+#' @export
+describe_posterior.numeric <- function(posteriors, ci = .90, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, ci_type="hdi") {
+  x <- describe_posterior(as.data.frame(posteriors), ci=ci, estimate=estimate, test=test, rope_range=rope_range, rope_full=rope_full, ci_type=ci_type)
+  x[names(x) != "Parameter"]
+}
+
+
+
+
+
+
+
+#' @rdname describe_posterior
+#' @export
+describe_posterior.double <- describe_posterior.numeric
+
+
+#' @rdname describe_posterior
+#' @method describe_posterior data.frame
+#' @export
+describe_posterior.data.frame <- function(posteriors, ci = .90, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, ci_type="hdi") {
   # Point estimates
   out <- data.frame("Parameter" = colnames(posteriors))
   if ("median" %in% c(estimate)) {
@@ -27,7 +61,11 @@ summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test
   # CI
   if (!is.null(ci)) {
     if (length(ci) > 1) {
-      hdi <- sapply(posteriors, bayestestR::hdi, ci = ci, simplify = FALSE)
+      if(ci_type == "hdi"){
+        hdi <- sapply(posteriors, bayestestR::hdi, ci = ci, simplify = FALSE)
+      } else{
+        hdi <- sapply(posteriors, bayestestR::ci, ci = ci, simplify = FALSE)
+      }
       for (i in names(hdi)) {
         current_hdi <- hdi[[i]]
 
@@ -42,7 +80,11 @@ summarise_posteriors <- function(posteriors, ci = .90, estimate = "median", test
       hdi <- .flatten_list(hdi)
       hdi <- hdi[names(hdi) != "name"]
     } else {
-      hdi <- as.data.frame(t(sapply(posteriors, bayestestR::hdi, ci = ci)), stringsAsFactors = FALSE)
+      if(ci_type == "hdi"){
+        hdi <- as.data.frame(t(sapply(posteriors, bayestestR::hdi, ci = ci)), stringsAsFactors = FALSE)
+      } else{
+        hdi <- as.data.frame(t(sapply(posteriors, bayestestR::ci, ci = ci)), stringsAsFactors = FALSE)
+      }
       hdi <- hdi[c("CI_low", "CI_high")]
     }
     hdi <- sapply(hdi, as.numeric)

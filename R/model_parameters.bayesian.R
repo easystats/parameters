@@ -1,3 +1,4 @@
+#' @rdname model_parameters.stanreg
 #' @keywords internal
 .model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
 
@@ -60,7 +61,7 @@
 #'
 #' @param model Bayesian model.
 #' @param standardize Add standardized parameters. Default to FALSE as this re-fits the model and can thus take some time.
-#' @inheritParams summarise_posteriors
+#' @inheritParams describe_posterior
 #' @param priors Include priors specifications information. If set to true (current \code{rstanarm}' default), automatically adjusted priors' scale during fitting  will be displayed.
 #' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1.
 #' @param iterations The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
@@ -71,12 +72,12 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
 #' }
-#' 
+#'
 #' @references
 #' \itemize{
 #'  \item{\href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{Comparison of Point-Estimates}}
@@ -106,6 +107,6 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
   # Summary
   # TODO: Colour the median in green/red depending on the direction
-  parameters <- summarise_posteriors(data, ci = ci, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full)
+  parameters <- describe_posterior(data, ci = ci, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full)
   return(parameters)
 }

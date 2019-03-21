@@ -1,26 +1,17 @@
-#' Compute Confidence Intervals
-#'
-#' This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
-#' \itemize{
-#' \item Mixed models (lme4): TO BE IMPROVED.
-#' }
-#'
-#' @param model A statistical model.
-#' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%) for frequentist models and 0.90 (90\%) for Bayesian models.
-#' @param ... Arguments passed to or from other methods.
-#'
-#' @examples
-#' \dontrun{
-#' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#' ci(model)
-#' }
+#' @importFrom bayestestR ci
 #' @export
-ci <- function(model, ci = 0.95, ...) {
-  UseMethod("ci")
-}
+bayestestR::ci
 
+
+
+
+
+
+
+#' Confidence Interval
+#'
+#' @method ci merMod
 #' @param method For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).
-#' @rdname ci
 #' @export
 ci.merMod <- function(model, ci = 0.95, method = c("wald", "boot"), ...) {
   method <- match.arg(method)
@@ -38,11 +29,3 @@ ci.merMod <- function(model, ci = 0.95, method = c("wald", "boot"), ...) {
 
   out
 }
-
-#' @export
-ci.stanreg <- function(model, ci = 0.95, ...) {
-  bayestestR::hdi(model, ci = ci, ...)
-}
-
-#' @export
-ci.brmsfit <- ci.stanreg

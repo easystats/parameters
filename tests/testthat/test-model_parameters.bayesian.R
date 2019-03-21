@@ -36,7 +36,7 @@ test_that("model_parameters.stanreg", {
 
   # GAM
   params <- model_parameters(circus::download_model("stanreg_gam_1"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"), rope_full = FALSE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(13, 25))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 25))
 })
 
 
