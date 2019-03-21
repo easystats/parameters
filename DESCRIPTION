@@ -35,10 +35,6 @@ Suggests:
 	pbkrtest,
 	caret,
 	randomForest
-Remotes: 
-	easystats/insight,
-	easystats/bayestestR,
-	easystats/circus
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
