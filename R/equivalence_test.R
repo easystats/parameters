@@ -42,7 +42,7 @@ equivalence_test_models <- function(x, range = "default", ci = .95, verbose = TR
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  conf_int <- as.data.frame(t(stats::confint(x, level = ci, method = "Wald")))
+  conf_int <- .clean_confint(as.data.frame(t(stats::confint(x, level = ci, method = "Wald", estimate = FALSE))))
 
   l <- lapply(
     conf_int,
