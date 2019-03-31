@@ -2,13 +2,17 @@
 % Please edit documentation in R/ci.R
 \name{ci.merMod}
 \alias{ci.merMod}
-\title{Confidence Interval}
+\title{Confidence/Credible Interval}
 \usage{
-\method{ci}{merMod}(model, ci = 0.95, method = c("wald", "boot"), ...)
+\method{ci}{merMod}(x, ci = 0.95, method = c("wald", "boot"), ...)
 }
 \arguments{
+\item{x}{bla}
+
+\item{ci}{bla}
+
 \item{method}{For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).}
 }
 \description{
-Confidence Interval
+Compute the confidence/credible interval of the parameters.
 }

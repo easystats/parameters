@@ -11,6 +11,7 @@
 #' smoothness(x, method = "diff")
 #' @references https://stats.stackexchange.com/questions/24607/how-to-measure-smoothness-of-a-time-series-in-r
 #' @importFrom stats cor
+#' @importFrom utils head tail
 #' @export
 smoothness <- function(x, method = "cor", lag = 1) {
   if (lag < 1) {

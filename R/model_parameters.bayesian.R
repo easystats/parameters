@@ -1,4 +1,5 @@
 #' @rdname model_parameters.stanreg
+#' @importFrom insight get_priors
 #' @keywords internal
 .model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
 
@@ -34,7 +35,10 @@
   # Priors
   if (priors) {
     if (inherits(model, "stanreg")) {
-      priors_data <- get_priors(model)
+      priors_data <- insight::get_priors(model)
+      names(priors_data) <- tools::toTitleCase(names(priors_data))
+      names(priors_data)[-1] <- paste0("Prior_", names(priors_data)[-1])
+      names(priors_data) <- gsub("Prior_Adjusted_scale", "Prior_Scale_adjusted", names(priors_data))
       if ("Prior_Scale_adjusted" %in% names(priors_data)) {
         priors_data$Prior_Scale[!is.na(priors_data$Prior_Scale_adjusted)] <- priors_data$Prior_Scale_adjusted[!is.na(priors_data$Prior_Scale_adjusted)]
         priors_data$Prior_Scale_adjusted <- NULL
@@ -63,7 +67,7 @@
 #' @param standardize Add standardized parameters. Default to FALSE as this re-fits the model and can thus take some time.
 #' @inheritParams describe_posterior
 #' @param priors Include priors specifications information. If set to true (current \code{rstanarm}' default), automatically adjusted priors' scale during fitting  will be displayed.
-#' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1.
+#' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1 (Gelman and Rubin, 1992) or 1.01 (Vehtari et al., 2019).
 #' @param iterations The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
 #' @param ... Arguments passed to or from other methods (e.g., to \code{standardize}).
 #'

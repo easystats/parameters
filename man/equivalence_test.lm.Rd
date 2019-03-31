@@ -2,10 +2,25 @@
 % Please edit documentation in R/equivalence_test.R
 \name{equivalence_test.lm}
 \alias{equivalence_test.lm}
-\alias{equivalence_test}
+\alias{equivalence_test.glm}
+\alias{equivalence_test.merMod}
+\alias{equivalence_test.glmmTMB}
+\alias{equivalence_test.MixMod}
 \title{Test for Practical Equivalence}
 \usage{
 \method{equivalence_test}{lm}(x, range = "default", ci = 0.95,
+  verbose = TRUE, ...)
+
+\method{equivalence_test}{glm}(x, range = "default", ci = 0.95,
+  verbose = TRUE, ...)
+
+\method{equivalence_test}{merMod}(x, range = "default", ci = 0.95,
+  verbose = TRUE, ...)
+
+\method{equivalence_test}{glmmTMB}(x, range = "default", ci = 0.95,
+  verbose = TRUE, ...)
+
+\method{equivalence_test}{MixMod}(x, range = "default", ci = 0.95,
   verbose = TRUE, ...)
 }
 \arguments{
