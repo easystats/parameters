@@ -5,15 +5,15 @@
 \alias{model_parameters.stanreg}
 \title{Bayesian Models Parameters}
 \usage{
-.model_parameters_bayesian(model, ci = 0.9, ci_method = "default",
+.model_parameters_bayesian(model, ci = 0.9, ci_method = "hdi",
   standardize = FALSE, estimate = "median", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, diagnostic = TRUE,
   priors = TRUE, iterations = 1000, ...)
 
-\method{model_parameters}{stanreg}(model, ci = 0.9,
-  ci_method = "default", standardize = FALSE, estimate = "median",
-  test = c("pd", "rope"), rope_range = "default", rope_full = TRUE,
-  diagnostic = TRUE, priors = TRUE, iterations = 1000, ...)
+\method{model_parameters}{stanreg}(model, ci = 0.9, ci_method = "hdi",
+  standardize = FALSE, estimate = "median", test = c("pd", "rope"),
+  rope_range = "default", rope_full = TRUE, diagnostic = TRUE,
+  priors = TRUE, iterations = 1000, ...)
 }
 \arguments{
 \item{model}{Bayesian model.}
