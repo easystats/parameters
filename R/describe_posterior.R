@@ -55,7 +55,7 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method="hdi",
     out$SD <- sapply(posteriors, sd)
   }
   if ("map" %in% c(estimate)) {
-    out$MAP <- sapply(posteriors, bayestestR::map_estimate)
+    out$MAP <- unlist(sapply(posteriors, bayestestR::map_estimate))
   }
 
   # CI
