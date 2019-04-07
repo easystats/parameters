@@ -7,26 +7,28 @@
 \alias{describe_posterior.data.frame}
 \title{Describe posterior distributions.}
 \usage{
-describe_posterior(posteriors, ci = 0.9, estimate = "median",
-  test = c("pd", "rope"), rope_range = "default", rope_full = TRUE,
-  ci_type = "hdi")
+describe_posterior(posteriors, ci = 0.9, ci_method = "hdi",
+  estimate = "median", test = c("pd", "rope"),
+  rope_range = "default", rope_full = TRUE)
 
 \method{describe_posterior}{numeric}(posteriors, ci = 0.9,
-  estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, ci_type = "hdi")
+  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+  rope_range = "default", rope_full = TRUE)
 
 \method{describe_posterior}{double}(posteriors, ci = 0.9,
-  estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, ci_type = "hdi")
+  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+  rope_range = "default", rope_full = TRUE)
 
 \method{describe_posterior}{data.frame}(posteriors, ci = 0.9,
-  estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, ci_type = "hdi")
+  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+  rope_range = "default", rope_full = TRUE)
 }
 \arguments{
 \item{posteriors}{A dataframe of posterior draws.}
 
 \item{ci}{Credible Interval (CI) level. Default to 0.90 (90\%).}
+
+\item{ci_method}{The type of index used for Credible Interval. Can be \code{"hdi"} (default, see \link[bayestestR]{hdi}) or "quantile" (see \link[bayestestR]{ci}).}
 
 \item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
 
@@ -35,8 +37,6 @@ describe_posterior(posteriors, ci = 0.9, estimate = "median",
 \item{rope_range}{\href{https://easystats.github.io/bayestestR/#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_full}{If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.}
-
-\item{ci_type}{The type of index used for Credible Interval. Can be \code{"hdi"} (default, see \link[bayestestR]{hdi}) or "quantile".}
 }
 \description{
 Describe posterior distributions.

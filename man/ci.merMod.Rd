@@ -16,5 +16,5 @@
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Compte confidence intervals.
+Compute confidence intervals.
 }

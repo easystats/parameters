@@ -15,7 +15,7 @@ Authors@R: c(
 		comment = c(ORCID = "0000-0002-8895-3206"))
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
-Description: Process model parameters and compute indices such as p values, omega squared, and Bayesian metrics.
+Description: Process model parameters and compute indices such as confidence intervals, p values, omega squared, and Bayesian metrics.
 Depends:
 	R (>= 2.10)
 Imports:

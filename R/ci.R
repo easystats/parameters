@@ -8,7 +8,7 @@ bayestestR::ci
 
 #' @title Confidence Intervals
 #'
-#' @description Compte confidence intervals.
+#' @description Compute confidence intervals.
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).

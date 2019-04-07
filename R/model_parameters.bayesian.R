@@ -1,7 +1,7 @@
 #' @rdname model_parameters.stanreg
 #' @importFrom insight get_priors
 #' @keywords internal
-.model_parameters_bayesian <- function(model, ci = .90, standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
+.model_parameters_bayesian <- function(model, ci = .90, ci_method="default", standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
 
   # ROPE
   if (all(rope_range == "default")) {
@@ -10,13 +10,25 @@
     stop("`rope_range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
+  # CI
+  if(ci_method == "default"){
+    if(insight::model_info(model)$is_binomial){
+      ci_method = "quantile"
+    } else{
+      ci_method = "hdi"
+    }
+  }
+  if(!ci_method %in% c("default", "quantile", "hdi")){
+    stop("`ci_method` should be 'default', 'hdi' or 'quantile'.")
+  }
+
   # Processing
-  parameters <- .extract_parameters_bayesian(model, ci, estimate = tolower(estimate), test = test, rope_range = rope_range, iterations = iterations, ...)
+  parameters <- .extract_parameters_bayesian(model, ci, ci_method = ci_method, estimate = tolower(estimate), test = test, rope_range = rope_range, iterations = iterations, ...)
 
   # Standardized
   if (standardize) {
     std_model <- standardize(model, ...)
-    std_parameters <- .extract_parameters_bayesian(std_model, ci = ci, estimate = tolower(estimate), test = NULL, rope_range = rope_range, iterations = iterations, ...)
+    std_parameters <- .extract_parameters_bayesian(std_model, ci = ci, ci_method=ci_method, estimate = tolower(estimate), test = NULL, rope_range = rope_range, iterations = iterations, ...)
     names(std_parameters) <- paste0("Std_", names(std_parameters))
 
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Std_Parameter"])
@@ -102,7 +114,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, ci = .90, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, priors = TRUE, iterations = 1000, ...) {
+.extract_parameters_bayesian <- function(model, ci = .90, ci_method="hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, priors = TRUE, iterations = 1000, ...) {
   if (insight::model_info(model)$is_bayesian) {
     data <- insight::get_parameters(model)
   } else {
@@ -110,7 +122,6 @@ model_parameters.brmsfit <- .model_parameters_bayesian
   }
 
   # Summary
-  # TODO: Colour the median in green/red depending on the direction
-  parameters <- describe_posterior(data, ci = ci, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full)
+  parameters <- describe_posterior(data, ci = ci, ci_method=ci_method, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full)
   return(parameters)
 }
