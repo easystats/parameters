@@ -1,52 +1,52 @@
-#' @rdname equivalence_test
 #' @importFrom bayestestR equivalence_test
 #' @export
 bayestestR::equivalence_test
 
 
 
-#' @title Test for Practical Equivalence
+#' @title Equivalence test
 #'
-#' @description Perform a \strong{Test for Practical Equivalence} based on a CI+ROPE decision rule.
+#' @description Compte the equivalence test for frequentist models.
 #'
-#' @param x A model.
+#' @param x A statistical model.
 #' @param range The range of practical equivalence of an effect. May be \code{"default"},
 #'   to automatically define this range based on properties of the model's data.
-#' @param ci bla
-#' @param verbose blub
-#' @param ... Currently not used
+#' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
+#' @param verbose Toggle off warnings.
+#' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
 #' m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 #' equivalence_test(m)
 #'
-#' @importFrom stats confint
-#' @importFrom bayestestR equivalence_test rope_range
 #' @export
 equivalence_test.lm <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
-  equivalence_test_frequentist(x, range, ci, verbose, ...)
+  .equivalence_test_frequentist(x, range, ci, verbose, ...)
 }
 
 
-#' @rdname equivalence_test.lm
+
 #' @export
 equivalence_test.glm <- equivalence_test.lm
 
-#' @rdname equivalence_test.lm
+
 #' @export
 equivalence_test.merMod <- equivalence_test.lm
 
-#' @rdname equivalence_test.lm
+
 #' @export
 equivalence_test.glmmTMB <- equivalence_test.lm
 
-#' @rdname equivalence_test.lm
+
 #' @export
 equivalence_test.MixMod <- equivalence_test.lm
 
 
+
+#' @importFrom stats confint
+#' @importFrom bayestestR equivalence_test rope_range
 #' @keywords internal
-equivalence_test_frequentist <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
+.equivalence_test_frequentist <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
@@ -57,7 +57,7 @@ equivalence_test_frequentist <- function(x, range = "default", ci = .95, verbose
 
   l <- lapply(
     conf_int,
-    equivalence_test_numeric,
+    .equivalence_test_numeric,
     range_rope = range,
     verbose = verbose
   )
@@ -80,7 +80,7 @@ equivalence_test_frequentist <- function(x, range = "default", ci = .95, verbose
 
 
 #' @keywords internal
-equivalence_test_numeric <- function(range_ci, range_rope, verbose) {
+.equivalence_test_numeric <- function(range_ci, range_rope, verbose) {
   if (min(range_ci) > max(range_rope) || max(range_ci) < min(range_rope)) {
     decision <- "rejected"
     coverage <- 0

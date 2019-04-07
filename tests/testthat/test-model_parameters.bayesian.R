@@ -48,8 +48,7 @@ test_that("model_parameters.brmsfit", {
   library(brms)
 
   # LM
-  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-  params <- model_parameters(model, standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
-  testthat::expect_equal(nrow(params), 3)
+  params <- model_parameters(insight::download_model("brms_mixed_1"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
+  testthat::expect_equal(nrow(params), 2)
   testthat::expect_equal(ncol(params), 19)
 })

@@ -1,4 +1,3 @@
-#' @rdname ci
 #' @importFrom bayestestR ci
 #' @export
 bayestestR::ci
@@ -7,16 +6,14 @@ bayestestR::ci
 
 
 
-
-
-#' @title Confidence/Credible Interval
+#' @title Confidence Intervals
 #'
-#' @description Compute the confidence/credible interval of the parameters.
+#' @description Compte confidence intervals.
 #'
-#' @method ci merMod
-#' @param x bla
-#' @param ci bla
+#' @param x A statistical model.
+#' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param method For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).
+#' @param ... Arguments passed to or from other methods.
 #' @export
 ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
   method <- match.arg(method)
@@ -36,7 +33,7 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
 }
 
 
-#' @rdname ci
+
 #' @method ci glm
 #' @export
 ci.glm <- function(x, ci = 0.95, ...){
@@ -46,7 +43,8 @@ ci.glm <- function(x, ci = 0.95, ...){
   out
 }
 
-#' @rdname ci
+
+
 #' @method ci lm
 #' @export
 ci.lm <- ci.glm

@@ -2,41 +2,25 @@
 % Please edit documentation in R/equivalence_test.R
 \name{equivalence_test.lm}
 \alias{equivalence_test.lm}
-\alias{equivalence_test.glm}
-\alias{equivalence_test.merMod}
-\alias{equivalence_test.glmmTMB}
-\alias{equivalence_test.MixMod}
-\title{Test for Practical Equivalence}
+\title{Equivalence test}
 \usage{
 \method{equivalence_test}{lm}(x, range = "default", ci = 0.95,
   verbose = TRUE, ...)
-
-\method{equivalence_test}{glm}(x, range = "default", ci = 0.95,
-  verbose = TRUE, ...)
-
-\method{equivalence_test}{merMod}(x, range = "default", ci = 0.95,
-  verbose = TRUE, ...)
-
-\method{equivalence_test}{glmmTMB}(x, range = "default", ci = 0.95,
-  verbose = TRUE, ...)
-
-\method{equivalence_test}{MixMod}(x, range = "default", ci = 0.95,
-  verbose = TRUE, ...)
 }
 \arguments{
-\item{x}{A model.}
+\item{x}{A statistical model.}
 
 \item{range}{The range of practical equivalence of an effect. May be \code{"default"},
 to automatically define this range based on properties of the model's data.}
 
-\item{ci}{bla}
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{verbose}{blub}
+\item{verbose}{Toggle off warnings.}
 
-\item{...}{Currently not used}
+\item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Perform a \strong{Test for Practical Equivalence} based on a CI+ROPE decision rule.
+Compte the equivalence test for frequentist models.
 }
 \examples{
 m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
