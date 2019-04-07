@@ -1,7 +1,7 @@
 #' @rdname model_parameters.stanreg
 #' @importFrom insight get_priors
 #' @keywords internal
-.model_parameters_bayesian <- function(model, ci = .90, ci_method="default", standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
+.model_parameters_bayesian <- function(model, ci = .90, ci_method="hdi", standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
 
   # ROPE
   if (all(rope_range == "default")) {
@@ -10,17 +10,7 @@
     stop("`rope_range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  # CI
-  if(ci_method == "default"){
-    if(insight::model_info(model)$is_binomial){
-      ci_method = "quantile"
-    } else{
-      ci_method = "hdi"
-    }
-  }
-  if(!ci_method %in% c("default", "quantile", "hdi")){
-    stop("`ci_method` should be 'default', 'hdi' or 'quantile'.")
-  }
+
 
   # Processing
   parameters <- .extract_parameters_bayesian(model, ci, ci_method = ci_method, estimate = tolower(estimate), test = test, rope_range = rope_range, iterations = iterations, ...)
