@@ -24,7 +24,7 @@
 #' marginal_parameters(model)
 #' }
 #'
-#' @importFrom stats model.matrix model.offset offset plogis rnorm runif var vcov
+#' @importFrom stats model.offset offset plogis rnorm runif var vcov
 #' @importFrom utils as.relistable relist
 #' @export
 marginal_parameters <- function (model, ...){
@@ -49,7 +49,7 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
   D <- object$D
   if (!is.null(object$gammas)) {
     offset_zi <- model.offset(object$model_frames$mfX_zi)
-    X_zi <- model.matrix(object$Terms$termsX_zi, object$model_frames$mfX_zi)
+    X_zi <- model.matrix_MixMod(object$Terms$termsX_zi, object$model_frames$mfX_zi)
     if (!is.null(object$Terms$termsZ_zi)) {
       Z_zi <- mapply(.constructor_Z, object$Terms$termsZ_zi, object$model_frames$mfZ_zi,
                      MoreArgs = list (id = id), SIMPLIFY = FALSE)
@@ -183,9 +183,10 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
 }
 
 
-#' @importFrom stats model.frame
+
+
 #' @keywords internal
-.constructor_Z <- function (termsZ_i, mfZ_i, id) {
+.constructor_Z <- function(termsZ_i, mfZ_i, id) {
   n <- length(unique(id))
   Zmats <- vector("list", n)
   for (i in seq_len(n)) {
@@ -225,8 +226,7 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
 
 
 
-
-
+#' @keywords internal
 .fixef_MixMod <- function(object, sub_model = c("main", "zero_part"), ...) {
   sub_model <- match.arg(sub_model)
   if (sub_model == "main") {
@@ -239,6 +239,40 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
   }
 }
 
+
+#' @importFrom stats model.matrix
+#' @keywords internal
+model.matrix_MixMod <- function(object, type = c("fixed", "random", "zi_fixed", "zi_random"), ...) {
+  type <- match.arg(type)
+  switch(type,
+         "fixed" = model.matrix(object$Terms$termsX, object$model_frames$mfX),
+         "random" = {
+           id <- object$id[[1]]
+           id <- match(id, unique(id))
+           Z <- mapply(.constructor_Z, object$Terms$termsZ, object$model_frames$mfZ,
+                       MoreArgs = list(id = id), SIMPLIFY = FALSE)
+           do.call("cbind", Z)
+         },
+         "zi_fixed" = model.matrix(object$Terms$termsX_zi, object$model_frames$mfX_zi),
+         "zi_random" = {
+           id <- object$id[[1]]
+           id <- match(id, unique(id))
+           Z <- mapply(.constructor_Z, object$Terms$termsZ_zi, object$model_frames$mfZ_zi,
+                       MoreArgs = list(id = id), SIMPLIFY = FALSE)
+           do.call("cbind", Z)
+         }
+  )
+}
+
+
+#' @keywords internal
+model.frame_MixMod <- function(formula, type = c("fixed", "random", "zi_fixed",
+                                                  "zi_random"), ...) {
+  type <- match.arg(type)
+  switch(type, "fixed" = formula$model_frames$mfX, "random" = formula$model_frames$mfZ,
+         "zi_fixed" = formula$model_frames$mfX_zi,
+         "zi_random" = formula$model_frames$mfZ_zi)
+}
 
 
 # model <- GLMMadaptive::mixed_model(Sepal.Length ~ Sepal.Width, random=~1|Species, data=iris, family="gaussian")
