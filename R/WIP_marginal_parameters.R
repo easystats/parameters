@@ -24,10 +24,10 @@
 #' marginal_parameters(model)
 #' }
 #'
-#' @importFrom stats model.offset offset plogis rnorm runif var vcov
+#' @importFrom stats model.offset offset plogis pnorm rnorm runif var vcov model.matrix
 #' @importFrom utils as.relistable relist
 #' @export
-marginal_parameters <- function (model, ...){
+marginal_parameters <- function(model, ...){
   UseMethod("marginal_parameters")
 }
 
@@ -38,9 +38,18 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
                                    M = 3000, K = 100,
                                    seed = 1, cores = max(parallel::detectCores() - 1, 1),
                                    sandwich = FALSE, ...) {
+
+  if (!requireNamespace("MASS", quietly = TRUE)) {
+    stop("Package `MASS` required, but missing. Please install it first.")
+  }
+
+  if (!requireNamespace("parallel", quietly = TRUE)) {
+    stop("Package `parallel` required, but missing. Please install it first.")
+  }
+
   object <- model
   offset <- object$offset
-  X <- model.matrix(object$Terms$termsX, object$model_frames$mfX)
+  X <- stats::model.matrix(object$Terms$termsX, object$model_frames$mfX)
   id <- match(object$id[[1L]], unique(object$id[[1L]]))
   Z <- mapply(.constructor_Z, object$Terms$termsZ, object$model_frames$mfZ,
               MoreArgs = list(id = id), SIMPLIFY = FALSE)
@@ -48,11 +57,11 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
   betas <- .fixef_MixMod(object)
   D <- object$D
   if (!is.null(object$gammas)) {
-    offset_zi <- model.offset(object$model_frames$mfX_zi)
+    offset_zi <- stats::model.offset(object$model_frames$mfX_zi)
     X_zi <- model.matrix_MixMod(object$Terms$termsX_zi, object$model_frames$mfX_zi)
     if (!is.null(object$Terms$termsZ_zi)) {
       Z_zi <- mapply(.constructor_Z, object$Terms$termsZ_zi, object$model_frames$mfZ_zi,
-                     MoreArgs = list (id = id), SIMPLIFY = FALSE)
+                     MoreArgs = list(id = id), SIMPLIFY = FALSE)
       Z_zi <- do.call("cbind", Z_zi)
     } else {
       Z_zi <- NULL
@@ -78,7 +87,7 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
     }
     tht <- unlist(as.relistable(list_thetas))
     V <- vcov(object, sandwich = sandwich)
-    cluster_compute_marg_coefs <- function (block, tht, list_thetas, V, XX, Z, X_zi,
+    cluster_compute_marg_coefs <- function(block, tht, list_thetas, V, XX, Z, X_zi,
                                             Z_zi, M, .marginal_parameters, .chol_transf,
                                             object, link_fun, seed) {
       if (!exists(".Random.seed", envir = .GlobalEnv))
@@ -100,6 +109,7 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
       }
       m_betas
     }
+
     cl <- parallel::makeCluster(cores)
     res <- parallel::parLapply(cl, blocks, cluster_compute_marg_coefs, tht = tht,
                                list_thetas = list_thetas, V = V, XX = X, Z = Z,
@@ -107,12 +117,12 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
                                object = object, .marginal_parameters = .marginal_parameters,
                                .chol_transf = .chol_transf, link_fun = link_fun, seed = seed)
     parallel::stopCluster(cl)
-    out$var_betas <- var(do.call("rbind", res))
+    out$var_betas <- stats::var(do.call("rbind", res))
     dimnames(out$var_betas) <- list(names(out$betas), names(out$betas))
     ses <- sqrt(diag(out$var_betas))
     coef_table <- cbind("Estimate" = out$betas, "Std.Err" = ses,
                         "z-value" = out$betas / ses,
-                        "p-value" = 2 * pnorm(abs(out$betas / ses), lower.tail = FALSE))
+                        "p-value" = 2 * stats::pnorm(abs(out$betas / ses), lower.tail = FALSE))
     out$coef_table <- coef_table
   }
   class(out) <- "m_coefs"
@@ -130,7 +140,7 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
 
 
 #' @keywords internal
-.marginal_parameters <- function (object, X, betas, Z, X_zi, gammas, Z_zi, D, M,
+.marginal_parameters <- function(object, X, betas, Z, X_zi, gammas, Z_zi, D, M,
                                 link_fun, seed, offset_zi) {
   if (!exists(".Random.seed", envir = .GlobalEnv))
     runif(1)
@@ -164,7 +174,7 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
   for (i in seq_len(n)) {
     set.seed(seed + i)
     id_i <- id == i
-    b <- V %*% matrix(rnorm(M * nRE), nRE, M)
+    b <- V %*% matrix(stats::rnorm(M * nRE), nRE, M)
     Zb <- Z[id_i, , drop = FALSE] %*% b[seq_len(ncol(Z)), , drop = FALSE]
     mu <- mu_fun(Xbetas[id_i] + Zb)
     if (!is.null(gammas)) {
@@ -190,11 +200,11 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
   n <- length(unique(id))
   Zmats <- vector("list", n)
   for (i in seq_len(n)) {
-    mf <- model.frame(termsZ_i, mfZ_i[id == i, , drop = FALSE],
+    mf <- stats::model.frame(termsZ_i, mfZ_i[id == i, , drop = FALSE],
                       drop.unused.levels = TRUE)
-    mm <- model.matrix(termsZ_i, mf)
+    mm <- stats::model.matrix(termsZ_i, mf)
     assign <- attr(mm, "assign")
-    Zmats[[i]] <- mm[, c(t(sapply(unique(assign), function (x) which(assign == x)))),
+    Zmats[[i]] <- mm[, c(t(sapply(unique(assign), function(x) which(assign == x)))),
                      drop = FALSE]
   }
   do.call("rbind", Zmats)
@@ -203,7 +213,7 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
 
 
 #' @keywords internal
-.chol_transf <- function (x) {
+.chol_transf <- function(x) {
   if (any(is.na(x) | !is.finite(x)))
     stop("NA or infinite values in 'x'.\n")
   if (is.matrix(x)) {
@@ -245,7 +255,7 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
 model.matrix_MixMod <- function(object, type = c("fixed", "random", "zi_fixed", "zi_random"), ...) {
   type <- match.arg(type)
   switch(type,
-         "fixed" = model.matrix(object$Terms$termsX, object$model_frames$mfX),
+         "fixed" = stats::model.matrix(object$Terms$termsX, object$model_frames$mfX),
          "random" = {
            id <- object$id[[1]]
            id <- match(id, unique(id))
@@ -253,7 +263,7 @@ model.matrix_MixMod <- function(object, type = c("fixed", "random", "zi_fixed", 
                        MoreArgs = list(id = id), SIMPLIFY = FALSE)
            do.call("cbind", Z)
          },
-         "zi_fixed" = model.matrix(object$Terms$termsX_zi, object$model_frames$mfX_zi),
+         "zi_fixed" = stats::model.matrix(object$Terms$termsX_zi, object$model_frames$mfX_zi),
          "zi_random" = {
            id <- object$id[[1]]
            id <- match(id, unique(id))
