@@ -8,6 +8,8 @@
 #' @examples
 #' odds_to_d(0.2)
 #' odds_to_d(-1.45, log=TRUE)
+#'
+#' @references Sánchez-Meca, J., Marín-Martínez, F., & Chacón-Moscoso, S. (2003). Effect-size indices for dichotomized outcomes in meta-analysis. Psychological methods, 8(4), 448.
 #' @export
 odds_to_d <- function(odds, log = FALSE) {
   if(log == FALSE){

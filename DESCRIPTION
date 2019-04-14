@@ -34,7 +34,8 @@ Suggests:
 	BayesFactor,
 	pbkrtest,
 	caret,
-	randomForest
+	randomForest,
+	MASS
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
