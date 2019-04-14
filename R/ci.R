@@ -1,48 +1,51 @@
-#' Compute Confidence Intervals
-#'
-#' This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
-#' \itemize{
-#' \item Mixed models (lme4): TO BE IMPROVED.
-#' }
-#'
-#' @param model A statistical model.
-#' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%) for frequentist models and 0.90 (90\%) for Bayesian models.
-#' @param ... Arguments passed to or from other methods.
-#'
-#' @examples
-#' \dontrun{
-#' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#' ci(model)
-#' }
+#' @importFrom bayestestR ci
 #' @export
-ci <- function(model, ci = 0.95, ...) {
-  UseMethod("ci")
-}
+bayestestR::ci
 
+
+
+
+
+#' @title Confidence Intervals
+#'
+#' @description Compute confidence intervals.
+#'
+#' @param x A statistical model.
+#' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param method For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).
-#' @rdname ci
+#' @param ... Arguments passed to or from other methods.
 #' @export
-ci.merMod <- function(model, ci = 0.95, method = c("wald", "boot"), ...) {
+ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
   method <- match.arg(method)
 
   if (method == "wald") {
-    out <- ci_wald(model)
+    out <- ci_wald(x)
   } else if (method == "boot") {
     if (!requireNamespace("lme4", quietly = TRUE)) {
-      stop("Package `lme4` required for bootstrapped approximation of confidence intervals.", call. = FALSE)
+      stop("Package `lme4` required for bootstrapped approximation of confidence intervals. Please install it.", call. = FALSE)
     }
-    out <- as.data.frame(lme4::confint.merMod(model, level = ci, method = "boot", ...))
-    out <- out[rownames(out) %in% insight::find_parameters(model)$conditional, ]
+    out <- as.data.frame(lme4::confint.merMod(x, level = ci, method = "boot", ...))
+    out <- out[rownames(out) %in% insight::find_parameters(x)$conditional, ]
     names(out) <- c("CI_low", "CI_high")
   }
 
   out
 }
 
+
+
+#' @method ci glm
 #' @export
-ci.stanreg <- function(model, ci = 0.95, ...) {
-  bayestestR::hdi(model, ci = ci, ...)
+ci.glm <- function(x, ci = 0.95, ...){
+  suppressMessages(out <- confint(x, level = ci, ...))
+  out <- as.data.frame(out, stringsAsFactors = FALSE)
+  names(out) <- c("CI_low", "CI_high")
+  out
 }
 
+
+
+#' @method ci lm
 #' @export
-ci.brmsfit <- ci.stanreg
+ci.lm <- ci.glm
+

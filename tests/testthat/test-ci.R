@@ -1,6 +1,12 @@
-context("p_value")
+context("ci")
 
-test_that("p_value", {
+test_that("ci", {
+  model <- circus::download_model("lm_1")
+  testthat::expect_equal(ci(model)[1, 1], 33.4505, tol = 0.01)
+
+  model <- circus::download_model("glm_1")
+  testthat::expect_equal(ci(model)[1, 1], 1.934, tol = 0.01)
+
   model <- circus::download_model("lmerMod_1")
   testthat::expect_equal(ci(model)[1, 1], -0.6250, tol = 0.01)
 

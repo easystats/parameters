@@ -26,10 +26,10 @@
 #' @export
 find_distribution <- function(x, probabilities = FALSE) {
   if (!requireNamespace("caret", quietly = TRUE)) {
-    stop("Package `caret` required for distribution classification.", call. = FALSE)
+    stop("Package `caret` required for distribution classification. Please install it.", call. = FALSE)
   }
   if (!requireNamespace("randomForest", quietly = TRUE)) {
-    stop("Package `randomForest` required for distribution classification.", call. = FALSE)
+    stop("Package `randomForest` required for distribution classification. Please install it.", call. = FALSE)
   }
 
 

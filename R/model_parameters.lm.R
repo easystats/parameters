@@ -43,14 +43,11 @@ model_parameters.lm <- function(model, ci = .95, standardize = FALSE, bootstrap 
 
   parameters$DoF_residual <- model$df.residual
 
-  ci_table <- as.data.frame(confint(model, level = ci), stringsAsFactors = FALSE)
-  names(ci_table) <- c("CI_low", "CI_high")
-
 
   parameters <- cbind(
     data_frame("Parameter" = rownames(parameters)),
     parameters,
-    ci_table
+    ci(model, ci = ci)
   )
 
   parameters <- parameters[c("Parameter", "beta", "SE", "CI_low", "CI_high", "t", "DoF_residual", "p")]
