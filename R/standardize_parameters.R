@@ -137,18 +137,45 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
 # library(MuMIn)
 # library(lm.beta)
 #
+# comparison <- function(model){
+#   out <- standardize_parameters(model, method="refit", robust=FALSE)
+#   robust_true <- standardize_parameters(model, method="refit", robust=FALSE)$estimate
+#
+#   out$full <- out$estimate - standardize_parameters(model, method="full", robust=FALSE)$estimate
+#   out$full_robust <- robust_true - standardize_parameters(model, method="full", robust=FALSE)$estimate
+#
+#
+#   # out$MuMin <- out$estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
+#   out$sjstats <- out$estimate - c(NA, sjstats::std_beta(model)[, 2])
+#   out$lm.beta <- out$estimate - lm.beta::lm.beta(model)$standardized.coefficients
+#   out <- dplyr::select(out, -estimate)
+#   return(out)
+# }
+#
+#
 # data <- dplyr::mutate(iris, Group_Sepal.Width = as.factor(ifelse(Sepal.Width > 3, "High", "Low")))
-# model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width + poly(Petal.Length, 2), data=data)
-#
-# out <- standardize_parameters(model, method="refit", robust=FALSE)
-# robust_true <- standardize_parameters(model, method="refit", robust=FALSE)$estimate
-#
-# out$full <- out$estimate - standardize_parameters(model, method="full", robust=FALSE)$estimate
-# out$full_robust <- robust_true - standardize_parameters(model, method="full", robust=FALSE)$estimate
 #
 #
-# # out$MuMin <- out$estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
-# out$sjstats <- out$estimate - c(NA, sjstats::std_beta(model)[, 2])
-# out$lm.beta <- out$estimate - lm.beta::lm.beta(model)$standardized.coefficients
-# out <- dplyr::select(out, -estimate)
-# knitr::kable(out, digits=2)
+# # Simple models with numerics
+# model <- lm(Sepal.Length ~ Petal.Width * Sepal.Width, data=data)
+# knitr::kable(comparison(model), digits=2)
+#
+# # Simple models with numerics
+# model <- lm(Sepal.Length ~ Species * Group_Sepal.Width, data=data)
+# knitr::kable(comparison(model), digits=2)
+#
+# # Simple models with numerics
+# model <- lm(Sepal.Length ~ Species * Petal.Width, data=data)
+# knitr::kable(comparison(model), digits=2)
+#
+# model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width * Sepal.Width, data=data)
+# knitr::kable(comparison(model), digits=2)
+#
+# # Simple models with numerics
+# model <- lm(Sepal.Length ~ Species * poly(Petal.Width, 2), data=data)
+# knitr::kable(comparison(model), digits=2)
+#
+# # COmplex models
+# model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width * poly(Petal.Length, 2), data=data)
+# knitr::kable(comparison(model), digits=2)
+
