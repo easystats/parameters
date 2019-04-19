@@ -4,25 +4,17 @@
 \alias{standardize.lm}
 \title{Model Standardization}
 \usage{
-\method{standardize}{lm}(x, robust = FALSE, method = "refit", ...)
+\method{standardize}{lm}(x, robust = FALSE, ...)
 }
 \arguments{
 \item{x}{Object.}
 
 \item{robust}{If TRUE, the standardization will be based on \link{median} and \link{mad} instead of \link{mean} and \link{sd} (default).}
 
-\item{method}{The method used for standardizing the parameters. Can be "refit" (default).}
-
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Standardize the model's parameters.
-}
-\details{
-Methods:
-\itemize{
- \item \emph{refit}: This method is based on a complete model re-fit using the standardized data. It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
- }
+Refit the model after standardizing the data.
 }
 \examples{
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
