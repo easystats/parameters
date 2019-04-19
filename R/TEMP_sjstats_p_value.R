@@ -84,13 +84,13 @@
 #' }
 #'
 #'
-#' #' @export
-#' p_value.multinom <- function(fit, ...) {
-#'   fit %>%
-#'     broom::tidy() %>%
-#'     dplyr::select(.data$term, .data$p.value, .data$std.error)
-#' }
-#'
+#' @export
+# p_value.multinom <- function(fit, ...) {
+#   fit %>%
+#     broom::tidy() %>%
+#     dplyr::select(.data$term, .data$p.value, .data$std.error)
+# }
+#
 #'
 #' #' @export
 #' p_value.vglm <- function(fit, ...) {
