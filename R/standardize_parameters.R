@@ -137,18 +137,18 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
 # library(MuMIn)
 # library(lm.beta)
 #
-# data <- dplyr::mutate(iris, Group_Sepal.Width = ifelse(Sepal.Width > 3, "High", "Low"))
-# model <- lm(Sepal.Length ~ Species * Petal.Width * Sepal.Width + poly(Petal.Length, 2), data=data)
+# data <- dplyr::mutate(iris, Group_Sepal.Width = as.factor(ifelse(Sepal.Width > 3, "High", "Low")))
+# model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width + poly(Petal.Length, 2), data=data)
 #
-# out <- insight::get_parameters(model)
-# for(method in c("refit", "full")){
-#   for(robust in c(FALSE, TRUE)){
-#     std <- data.frame(x = standardize_parameters(model, method=method, robust=robust)$estimate)
-#     names(std) <- paste0(method, "robust", robust)
-#     out <- cbind(out, std)
-#   }
-# }
+# out <- standardize_parameters(model, method="refit", robust=FALSE)
+# robust_true <- standardize_parameters(model, method="refit", robust=FALSE)$estimate
 #
-# out$MuMin <- MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
-# out$sjstats <- c(NA, sjstats::std_beta(model)[, 2])
-# out$lm.beta <- lm.beta::lm.beta(model)$standardized.coefficients
+# out$full <- out$estimate - standardize_parameters(model, method="full", robust=FALSE)$estimate
+# out$full_robust <- robust_true - standardize_parameters(model, method="full", robust=FALSE)$estimate
+#
+#
+# # out$MuMin <- out$estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
+# out$sjstats <- out$estimate - c(NA, sjstats::std_beta(model)[, 2])
+# out$lm.beta <- out$estimate - lm.beta::lm.beta(model)$standardized.coefficients
+# out <- dplyr::select(out, -estimate)
+# knitr::kable(out, digits=2)
