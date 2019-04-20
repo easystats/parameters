@@ -25,11 +25,19 @@ Methods:
  }
 }
 \examples{
-model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+data <- iris
+
+model <- lm(Sepal.Length ~ Species * Petal.Width, data = data)
 standardize_parameters(model, method="refit")
 standardize_parameters(model, method="refit", robust=TRUE)
 standardize_parameters(model, method="full", robust=FALSE)
 standardize_parameters(model, method="full", robust=TRUE)
 
+data$binary <- ifelse(data$Sepal.Width > 3, 1, 0)
+model <- glm(binary ~ Species * Sepal.Length, data = data, family="binomial")
+standardize_parameters(model, method="refit")
+standardize_parameters(model, method="refit", robust=TRUE)
+standardize_parameters(model, method="full", robust=FALSE)
+standardize_parameters(model, method="full", robust=TRUE)
 
 }

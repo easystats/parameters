@@ -6,7 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute p-values — p_value • parameters</title>
+<title>Marginal Parameters for Mixed Models
+
+Calculates marginal coefficients from fitted generalized linear mixed models. — marginal_parameters • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,11 +39,12 @@
 
 
 
-<meta property="og:title" content="Compute p-values — p_value" />
+<meta property="og:title" content="Marginal Parameters for Mixed Models
 
-<meta property="og:description" content="This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
-Mixed models (lme4): TO BE IMPROVED.
-" />
+Calculates marginal coefficients from fitted generalized linear mixed models. — marginal_parameters" />
+
+<meta property="og:description" content="Marginal Parameters for Mixed Models
+Calculates marginal coefficients from fitted generalized linear mixed models." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -120,32 +123,26 @@ Mixed models (lme4): TO BE IMPROVED.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute p-values</h1>
+    <h1>Marginal Parameters for Mixed Models
+
+Calculates marginal coefficients from fitted generalized linear mixed models.</h1>
     
-    <div class="hidden name"><code>p_value.Rd</code></div>
+    <div class="hidden name"><code>marginal_parameters.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:</p><ul>
-<li><p>Mixed models (lme4): TO BE IMPROVED.</p></li>
-</ul>
+    <p>Marginal Parameters for Mixed Models</p>
+<p>Calculates marginal coefficients from fitted generalized linear mixed models.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>marginal_parameters</span>(<span class='no'>model</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for htest</span>
-<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for aov</span>
-<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for lmerMod</span>
-<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for merMod</span>
-<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
+<span class='co'># S3 method for MixMod</span>
+<span class='fu'>marginal_parameters</span>(<span class='no'>model</span>, <span class='kw'>std_errors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>link_fun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>M</span> <span class='kw'>=</span> <span class='fl'>3000</span>, <span class='kw'>K</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='kw pkg'>parallel</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/parallel/topics/detectCores'>detectCores</a></span>() - <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>sandwich</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,23 +156,61 @@ Mixed models (lme4): TO BE IMPROVED.
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>For mixed models, can be <a href='p_value_wald.html'>"wald"</a> (default) or <a href='p_value_kenward.html'>"kenward"</a>.</p></td>
+      <th>std_errors</th>
+      <td><p>Logical indicating whether standard errors are to be computed.</p></td>
+    </tr>
+    <tr>
+      <th>link_fun</th>
+      <td><p>A function transforming the mean of the repeated measurements outcome to the linear predictor scale. Typically, this derived from the family argument of mixed_model..</p></td>
+    </tr>
+    <tr>
+      <th>M</th>
+      <td><p>Numeric scalar denoting the number of Monte Carlo samples.</p></td>
+    </tr>
+    <tr>
+      <th>K</th>
+      <td><p>Numeric scalar denoting the number of samples from the sampling distribution of the maximum likelihood estimates.</p></td>
+    </tr>
+    <tr>
+      <th>seed</th>
+      <td><p>Integer denoting the seed for the random number generation.</p></td>
+    </tr>
+    <tr>
+      <th>cores</th>
+      <td><p>Integer giving the number of cores to use; applicable only when std_errors = TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>sandwich</th>
+      <td><p>Logical; if TRUE robust/sandwich standard errors are used in the calculations.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Hedeker, D., du Toit, S. H., Demirtas, H., &amp; Gibbons, R. D. (2018). A note on marginalization of regression parameters from mixed models of binary outcomes. Biometrics, 74(1), 354-361.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='https://drizopoulos.github.io/GLMMadaptive/reference/marginal_coefs.html'>GLMMadaptive::marginal_coefs</a>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>p_value</span>(<span class='no'>model</span>)
-<span class='co'># }</span></pre>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>GLMMadaptive</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/GLMMadaptive/topics/mixed_model'>mixed_model</a></span>(<span class='no'>vs</span> ~ <span class='no'>mpg</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>,
+                                   <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/family'>binomial</a></span>())
+<span class='fu'>marginal_parameters</span>(<span class='no'>model</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

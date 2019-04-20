@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bayesian Models Parameters — model_parameters.stanreg • parameters</title>
+<title>Bayesian Models Parameters — .model_parameters_bayesian • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,7 +37,7 @@
 
 
 
-<meta property="og:title" content="Bayesian Models Parameters — model_parameters.stanreg" />
+<meta property="og:title" content="Bayesian Models Parameters — .model_parameters_bayesian" />
 
 <meta property="og:description" content="Parameters of Bayesian models." />
 
@@ -97,6 +97,9 @@
     <li>
       <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
     </li>
+    <li>
+      <a href="../articles/parameters_standardization.html">Parameters standardization</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -126,8 +129,13 @@
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for stanreg</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+    <pre class="usage"><span class='fu'>.model_parameters_bayesian</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stanreg</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
   <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
@@ -144,6 +152,10 @@
       <td><p>Credible Interval (CI) level. Default to 0.90 (90%).</p></td>
     </tr>
     <tr>
+      <th>ci_method</th>
+      <td><p>The type of index used for Credible Interval. Can be <code>"hdi"</code> (default, see <a href='https://www.rdocumentation.org/packages/bayestestR/topics/hdi'>hdi</a>) or "quantile" (see <a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a>).</p></td>
+    </tr>
+    <tr>
       <th>standardize</th>
       <td><p>Add standardized parameters. Default to FALSE as this re-fits the model and can thus take some time.</p></td>
     </tr>
@@ -157,7 +169,7 @@
     </tr>
     <tr>
       <th>rope_range</th>
-      <td><p><a href='https://easystats.github.io/bayestestR/articles/1_IndicesDescription.html#rope'>ROPE's</a> lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
+      <td><p><a href='https://easystats.github.io/bayestestR/#rope'>ROPE's</a> lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
     </tr>
     <tr>
       <th>rope_full</th>
@@ -165,7 +177,7 @@
     </tr>
     <tr>
       <th>diagnostic</th>
-      <td><p>Include sampling diagnostic metrics (effective sample, Rhat and MCSE). <code>Effective Sample</code> should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). <code>Rhat</code> should not be larger than 1.1.</p></td>
+      <td><p>Include sampling diagnostic metrics (effective sample, Rhat and MCSE). <code>Effective Sample</code> should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). <code>Rhat</code> should not be larger than 1.1 (Gelman and Rubin, 1992) or 1.01 (Vehtari et al., 2019).</p></td>
     </tr>
     <tr>
       <th>priors</th>

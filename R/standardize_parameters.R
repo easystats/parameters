@@ -12,12 +12,20 @@
 #'  }
 #'
 #' @examples
-#' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+#' data <- iris
+#'
+#' model <- lm(Sepal.Length ~ Species * Petal.Width, data = data)
 #' standardize_parameters(model, method="refit")
 #' standardize_parameters(model, method="refit", robust=TRUE)
 #' standardize_parameters(model, method="full", robust=FALSE)
 #' standardize_parameters(model, method="full", robust=TRUE)
 #'
+#' data$binary <- ifelse(data$Sepal.Width > 3, 1, 0)
+#' model <- glm(binary ~ Species * Sepal.Length, data = data, family="binomial")
+#' standardize_parameters(model, method="refit")
+#' standardize_parameters(model, method="refit", robust=TRUE)
+#' standardize_parameters(model, method="full", robust=FALSE)
+#' standardize_parameters(model, method="full", robust=TRUE)
 #'
 #' @export
 standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
@@ -35,7 +43,7 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
     stop("method should be 'refit', 'full', '2SD' or 'partial'.")
   }
 
-
+  names(std_params) <- c("Parameter", "Std_Estimate")
   std_params
 }
 
@@ -43,11 +51,10 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
 #' @keywords internal
 .standardize_parameters_full <- function(model, robust=FALSE){
   info <- insight::model_info(model)
-
+  params <- insight::get_parameters(model)
+  data <- insight::get_data(model)
   # Linear models
   if(info$is_linear){
-    params <- insight::get_parameters(model)
-    data <- insight::get_data(model)
 
     if(robust == FALSE){
       sd_y <- sd(insight::get_response(model))
@@ -58,38 +65,31 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
     std_params <- data.frame()
     for(name in params$parameter){
       coef <- params[params$parameter == name, ]$estimate
-      param_type <- .find_parameter_type(name, data)
-      if("interaction" %in% param_type){
-        if("numeric" %in% .find_parameter_type(param_type[[2]], data)){
-          if(robust == FALSE){
-            std_coef <- coef * sd(data[[param_type[[2]]]]) / sd_y
-          } else{
-            std_coef <- coef * mad(data[[param_type[[2]]]]) / sd_y
-          }
-        } else{
-          std_coef <- coef / sd_y
-        }
-      } else if("numeric" %in% param_type){
-        if(robust == FALSE){
-          std_coef <- coef * sd(data[[name]]) / sd_y
-        } else{
-          std_coef <- coef * mad(data[[name]]) / sd_y
-        }
-      } else if("intercept" %in% param_type){
-        std_coef <- 0
-      } else if("factor" %in% param_type){
-        std_coef <- coef / sd_y
-      } else {
-        std_coef <- coef / sd_y
-      }
+      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, robust=robust)
       std_params <- rbind(std_params,
                           data.frame("parameter"=name,
                                      "estimate"=std_coef))
     }
 
   # Binomial models
-  } else if(info$is_binomial){
-    stop("method='full' not applicable for binomial models yet. Please use method=`refit`.")
+  } else if(info$is_logit){
+    logit_y <- predict(model)
+    r <- cor(insight::get_response(model), odds_to_probs(logit_y, log=TRUE))
+    if(robust == FALSE){
+      sd_y <- sd(logit_y)
+    } else{
+      sd_y <- mad(logit_y)
+    }
+
+    std_params <- data.frame()
+    for(name in params$parameter){
+      coef <- params[params$parameter == name, ]$estimate
+      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, robust=robust)
+      std_coef <- std_coef * r
+      std_params <- rbind(std_params,
+                          data.frame("parameter"=name,
+                                     "estimate"=std_coef))
+    }
   } else{
     stop("method='full' not applicable to standardize this type of model. Please use method=`refit`.")
   }
@@ -97,6 +97,43 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
   return(std_params)
 
 }
+
+
+
+
+
+#' @keywords internal
+.standardize_parameter_full <- function(name, coef, data, sd_y, robust=FALSE){
+  param_type <- .find_parameter_type(name, data)
+
+  if("interaction" %in% param_type){
+    predictor <- param_type[[2]]
+    if("numeric" %in% .find_parameter_type(predictor, data)){
+      if(robust == FALSE){
+        std_coef <- coef * sd(data[[predictor]]) / sd_y
+      } else{
+        std_coef <- coef * mad(data[[predictor]]) / sd_y
+      }
+    } else{
+      std_coef <- coef / sd_y
+    }
+  } else if("numeric" %in% param_type){
+    if(robust == FALSE){
+      std_coef <- coef * sd(data[[name]]) / sd_y
+    } else{
+      std_coef <- coef * mad(data[[name]]) / sd_y
+    }
+  } else if("intercept" %in% param_type){
+    std_coef <- NA
+  } else if("factor" %in% param_type){
+    std_coef <- coef / sd_y
+  } else {
+    std_coef <- coef / sd_y
+  }
+  std_coef
+}
+
+
 
 
 
@@ -128,54 +165,4 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
 }
 
 
-# TESTING BED ------------------------------------------------------------------
-
-# library(parameters)
-# library(insight)
-# library(dplyr)
-# library(sjstats)
-# library(MuMIn)
-# library(lm.beta)
-#
-# comparison <- function(model){
-#   out <- standardize_parameters(model, method="refit", robust=FALSE)
-#   robust_true <- standardize_parameters(model, method="refit", robust=FALSE)$estimate
-#
-#   out$full <- out$estimate - standardize_parameters(model, method="full", robust=FALSE)$estimate
-#   out$full_robust <- robust_true - standardize_parameters(model, method="full", robust=FALSE)$estimate
-#
-#
-#   # out$MuMin <- out$estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
-#   out$sjstats <- out$estimate - c(NA, sjstats::std_beta(model)[, 2])
-#   out$lm.beta <- out$estimate - lm.beta::lm.beta(model)$standardized.coefficients
-#   out <- dplyr::select(out, -estimate)
-#   return(out)
-# }
-#
-#
-# data <- dplyr::mutate(iris, Group_Sepal.Width = as.factor(ifelse(Sepal.Width > 3, "High", "Low")))
-#
-#
-# # Simple models with numerics
-# model <- lm(Sepal.Length ~ Petal.Width * Sepal.Width, data=data)
-# knitr::kable(comparison(model), digits=2)
-#
-# # Simple models with numerics
-# model <- lm(Sepal.Length ~ Species * Group_Sepal.Width, data=data)
-# knitr::kable(comparison(model), digits=2)
-#
-# # Simple models with numerics
-# model <- lm(Sepal.Length ~ Species * Petal.Width, data=data)
-# knitr::kable(comparison(model), digits=2)
-#
-# model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width * Sepal.Width, data=data)
-# knitr::kable(comparison(model), digits=2)
-#
-# # Simple models with numerics
-# model <- lm(Sepal.Length ~ Species * poly(Petal.Width, 2), data=data)
-# knitr::kable(comparison(model), digits=2)
-#
-# # COmplex models
-# model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width * poly(Petal.Length, 2), data=data)
-# knitr::kable(comparison(model), digits=2)
 

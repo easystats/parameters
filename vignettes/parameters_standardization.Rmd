@@ -1,0 +1,162 @@
+---
+title: "Parameters standardization"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, parameters]
+vignette: >
+  %\VignetteIndexEntry{Get Started with Bayesian Analysis}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+# Introduction
+
+Standardising parameters can allow for comparison of coefficients accross models, variables and studies. Moreover, as it returns coefficients expressed in terms of variance modification (for instance, coefficients expresed in terms of SD of the response variable), it can allow for the usage of [effect size interpretation guidelines](https://easystats.github.io/report/articles/interpret_metrics.html), such as the famous Cohen's (1988) rules of thumb.
+
+However, standardizing the model's parameters should not be automatic: for some research fields, particular variables or types of studies (*e.g.*, replications), it sometimes makes more sense to keep, use and interpret the original parameters.
+
+Critically, parameters standardization is not a **trivial process**. Different techniques exist, that can lead to drastic differences. Thus, it is critical that the standardization method is explicitly documented and detailed.
+
+The `parameters` package include the possibility of using different techniques, described below [@bring1994standardize;@menard2004six;@gelman2008scaling;@schielzeth2010simple;@menard2011standards].
+
+
+# Standardization methods
+
+## `refit`: Re-fitting the model with standardized data
+
+The "refit" method is the purest method of standardization, as it corresponds to the parameters of a model fitted on a standardized version of the data. This standardization is recommended to improve computational accuracy [@neter1989applied]. Unfortunately, as it involves a complete re-fitting of the model, this method can be slow, especially for computationnaly heavy models, such as Bayesian ones.
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(parameters)
+
+data <- iris
+model <- lm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data)
+
+standardize_parameters(model, method="refit")
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(standardize_parameters(model, method="refit"), digits=2)
+```
+
+The `robust` (default to `FALSE`) argument enables a **robust standardization of data**, *i.e.*, based on the **median** and **MAD** instead of the **mean** and **SD**.
+
+```{r warning=FALSE, message=FALSE, include=FALSE}
+standardize_parameters(model, method="refit", robust=TRUE)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(standardize_parameters(model, method="refit", robust=TRUE), digits=2)
+```
+
+
+This method is very flexible as it can be applied to every types of models (linear, logistic...).
+
+```{r warning=FALSE, message=FALSE, include=FALSE}
+library(parameters)
+
+data$binary <- ifelse(data$Sepal.Width > 3, 1, 0)
+model <- glm(binary ~ Species + Sepal.Length, data = data, family="binomial")
+standardize_parameters(model, method="refit")
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(standardize_parameters(model, method="refit"), digits=2)
+```
+
+
+## `full`: Scaling by the variances of the response and the predictor
+
+```{r warning=FALSE, message=FALSE, include=FALSE}
+model <- lm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data)
+standardize_parameters(model, method="full")
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(standardize_parameters(model, method="full"), digits=2)
+```
+
+
+The `robust` (default to `FALSE`) argument means that the coefficients are scaled by the **MAD** instead of the **SD**.
+
+```{r warning=FALSE, message=FALSE, include=FALSE}
+standardize_parameters(model, method="full", robust=TRUE)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(standardize_parameters(model, method="full", robust=TRUE), digits=2)
+```
+
+
+This method is very flexible as it can be applied to every types of models (linear, logistic...).
+
+```{r warning=FALSE, message=FALSE, include=FALSE}
+library(parameters)
+
+model <- glm(binary ~ Species + Sepal.Length, data = data, family="binomial")
+standardize_parameters(model, method="full")
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(standardize_parameters(model, method="full"), digits=2)
+```
+
+
+<!-- library(parameters) -->
+<!-- library(insight) -->
+<!-- library(dplyr) -->
+<!-- library(sjstats) -->
+<!-- library(MuMIn) -->
+<!-- library(lm.beta) -->
+
+<!-- comparison <- function(model){ -->
+<!--   out <- standardize_parameters(model, method="refit", robust=FALSE) -->
+<!--   robust_true <- standardize_parameters(model, method="refit", robust=FALSE)$estimate -->
+
+<!--   out$full <- out$estimate - standardize_parameters(model, method="full", robust=FALSE)$estimate -->
+<!--   out$full_robust <- robust_true - standardize_parameters(model, method="full", robust=FALSE)$estimate -->
+
+
+<!--   # out$MuMin <- out$estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1] -->
+<!--   out$sjstats <- out$estimate - c(NA, sjstats::std_beta(model)[, 2]) -->
+<!--   out$lm.beta <- out$estimate - lm.beta::lm.beta(model)$standardized.coefficients -->
+<!--   out <- dplyr::select(out, -estimate) -->
+<!--   return(out) -->
+<!-- } -->
+
+
+<!-- data <- dplyr::mutate(iris, Group_Sepal.Width = as.factor(ifelse(Sepal.Width > 3, "High", "Low"))) -->
+
+
+<!-- # Simple models with numerics -->
+<!-- model <- lm(Sepal.Length ~ Petal.Width * Sepal.Width, data=data) -->
+<!-- knitr::kable(comparison(model), digits=2) -->
+
+<!-- # Simple models with numerics -->
+<!-- model <- lm(Sepal.Length ~ Species * Group_Sepal.Width, data=data) -->
+<!-- knitr::kable(comparison(model), digits=2) -->
+
+<!-- # Simple models with numerics -->
+<!-- model <- lm(Sepal.Length ~ Species * Petal.Width, data=data) -->
+<!-- knitr::kable(comparison(model), digits=2) -->
+
+<!-- model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width * Sepal.Width, data=data) -->
+<!-- knitr::kable(comparison(model), digits=2) -->
+
+<!-- # Simple models with numerics -->
+<!-- model <- lm(Sepal.Length ~ Species * poly(Petal.Width, 2), data=data) -->
+<!-- knitr::kable(comparison(model), digits=2) -->
+
+<!-- # COmplex models -->
+<!-- model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width * poly(Petal.Length, 2), data=data) -->
+<!-- knitr::kable(comparison(model), digits=2) -->
+
+
+# References
+
+
+

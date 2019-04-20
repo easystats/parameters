@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Linear Model Parameters — model_parameters.glm • parameters</title>
+<title>Describe posterior distributions. — describe_posterior • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,9 @@
 
 
 
-<meta property="og:title" content="Linear Model Parameters — model_parameters.glm" />
+<meta property="og:title" content="Describe posterior distributions. — describe_posterior" />
 
-<meta property="og:description" content="Parameters of general linear models." />
+<meta property="og:description" content="Describe posterior distributions." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -118,57 +118,74 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Linear Model Parameters</h1>
+    <h1>Describe posterior distributions.</h1>
     
-    <div class="hidden name"><code>model_parameters.glm.Rd</code></div>
+    <div class="hidden name"><code>describe_posterior.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Parameters of general linear models.</p>
+    <p>Describe posterior distributions.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for glm</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S3 method for double</span>
+<span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>Object of class <a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a>.</p></td>
+      <th>posteriors</th>
+      <td><p>A dataframe of posterior draws.</p></td>
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Credible Interval (CI) level. Default to 0.90 (90%).</p></td>
     </tr>
     <tr>
-      <th>standardize</th>
-      <td><p>Add standardized parameters.</p></td>
+      <th>ci_method</th>
+      <td><p>The type of index used for Credible Interval. Can be <code>"hdi"</code> (default, see <a href='https://www.rdocumentation.org/packages/bayestestR/topics/hdi'>hdi</a>) or "quantile" (see <a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a>).</p></td>
     </tr>
     <tr>
-      <th>bootstrap</th>
-      <td><p>Should estimates be based on bootsrapped model? If TRUE, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply.</p></td>
+      <th>estimate</th>
+      <td><p>The <a href='https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html'>point-estimate(s)</a> to compute. Can be a character or a list with "median", "mean" or "MAP".</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods (e.g., to <a href='standardize.lm.html'>standardize</a>).</p></td>
+      <th>test</th>
+      <td><p>What <a href='https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html'>indices of effect existence</a> to compute. Can be a character or a list with "p_direction", "rope" or "p_map".</p></td>
+    </tr>
+    <tr>
+      <th>rope_range</th>
+      <td><p><a href='https://easystats.github.io/bayestestR/#rope'>ROPE's</a> lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
+    </tr>
+    <tr>
+      <th>rope_full</th>
+      <td><p>If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the <code>ci</code> argument.</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;     Parameter      beta       SE    CI_low   CI_high         z DoF_residual
-#&gt; 1 (Intercept) 10.619163 4.167865  4.788803 22.662241  2.547866           29
-#&gt; 2          wt  2.100173 1.545982 -0.529565  6.242417  1.358472           29
-#&gt; 3         cyl -2.930932 1.379510 -6.919171 -1.068398 -2.124619           29
-#&gt;            p   Std_beta    Std_SE  Std_CI_low Std_CI_high
-#&gt; 1 0.01083840 -0.7591992 0.7354983  -2.5540592   0.5642707
-#&gt; 2 0.17431390  2.0549298 1.5126772  -0.5181568   6.1079393
-#&gt; 3 0.03361844 -5.2344153 2.4636963 -12.3570976  -1.9080747</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;        Median      MAD    CI_low  CI_high   pd ROPE_Percentage ROPE_Equivalence
+#&gt; 1 0.008579051 1.002888 -1.756275 1.519744 50.5             7.6        undecided</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
