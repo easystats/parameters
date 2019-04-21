@@ -1,8 +1,10 @@
-#' Convert standardized difference d to correlation r.
+#' Convert between standardized difference d and correlation r.
 #'
-#' Convert standardized difference (Cohen's d) to correlation r.
+#' Enables a conversion between standardized difference (Cohen's d) and correlation r.
 #'
 #' @param d A standardized difference value (Cohen's d).
+#' @param r A correlation coefficient r.
+#' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
 #' d_to_r(d=1.1547)
@@ -11,7 +13,7 @@
 #'   \item Borenstein, Michael, et al. "Converting among effect sizes." Introduction to meta-analysis (2009): 45-49.
 #' }
 #' @export
-d_to_r <- function(d) {
+d_to_r <- function(d, ...) {
   # if(is.null(n1) & is.null(n2)){
   #   n1 <- n2 <- 1
   # }
@@ -29,6 +31,22 @@ d_to_r <- function(d) {
   r
 }
 
+
+#' @rdname d_to_r
+#' @export
+r_to_d <- function(r, ...) {
+
+  d <- 2*r/sqrt(1-r^2)
+
+  d
+}
+
+
+
 #' @rdname d_to_r
 #' @export
 convert_d_to_r <- d_to_r
+
+#' @rdname d_to_r
+#' @export
+convert_r_to_d <- r_to_d

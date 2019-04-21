@@ -2,18 +2,28 @@
 % Please edit documentation in R/convert_d_to_r.R
 \name{d_to_r}
 \alias{d_to_r}
+\alias{r_to_d}
 \alias{convert_d_to_r}
-\title{Convert standardized difference d to correlation r.}
+\alias{convert_r_to_d}
+\title{Convert between standardized difference d and correlation r.}
 \usage{
-d_to_r(d)
+d_to_r(d, ...)
 
-convert_d_to_r(d)
+r_to_d(r, ...)
+
+convert_d_to_r(d, ...)
+
+convert_r_to_d(r, ...)
 }
 \arguments{
 \item{d}{A standardized difference value (Cohen's d).}
+
+\item{...}{Arguments passed to or from other methods.}
+
+\item{r}{A correlation coefficient r.}
 }
 \description{
-Convert standardized difference (Cohen's d) to correlation r.
+Enables a conversion between standardized difference (Cohen's d) and correlation r.
 }
 \examples{
 d_to_r(d=1.1547)
