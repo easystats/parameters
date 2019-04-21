@@ -40,6 +40,8 @@ standardize.numeric <- function(x, robust = FALSE, ...) {
 standardize.factor <- function(x, ...) {
   return(x)
 }
+#' @export
+standardize.character <- standardize.factor
 
 
 
