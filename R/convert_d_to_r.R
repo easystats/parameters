@@ -26,19 +26,14 @@ d_to_r <- function(d, ...) {
   # a <- (n1+n2)^2/(n1*n2)
 
   a <- 4
-  r <- d / (sqrt(d^2 + a))
-
-  r
+  d / (sqrt(d^2 + a))
 }
 
 
 #' @rdname d_to_r
 #' @export
 r_to_d <- function(r, ...) {
-
-  d <- 2*r/sqrt(1-r^2)
-
-  d
+  2 * r / sqrt(1 - r ^ 2)
 }
 
 
