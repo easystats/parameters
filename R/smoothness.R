@@ -10,7 +10,8 @@
 #' smoothness(x, method = "cor")
 #' smoothness(x, method = "diff")
 #' @references https://stats.stackexchange.com/questions/24607/how-to-measure-smoothness-of-a-time-series-in-r
-#' @importFrom stats cor
+#'
+#' @importFrom stats cor sd
 #' @importFrom utils head tail
 #' @export
 smoothness <- function(x, method = "cor", lag = 1) {
@@ -22,9 +23,9 @@ smoothness <- function(x, method = "cor", lag = 1) {
   }
 
   if (method == "cor") {
-    smooth <- cor(head(x, length(x) - lag), tail(x, length(x) - lag))
+    smooth <- stats::cor(utils::head(x, length(x) - lag), utils::tail(x, length(x) - lag))
   } else {
-    smooth <- sd(diff(x, lag = lag)) / abs(mean(diff(x, lag = lag)))
+    smooth <- stats::sd(diff(x, lag = lag)) / abs(mean(diff(x, lag = lag)))
   }
   return(smooth)
 }

@@ -21,6 +21,7 @@
 #' find_distribution(rnorm(100))
 #' find_distribution(rpois(100, lambda = 4))
 #' find_distribution(runif(100))
+#'
 #' @importFrom bayestestR map_estimate
 #' @importFrom stats IQR density predict
 #' @export
@@ -34,19 +35,19 @@ find_distribution <- function(x, probabilities = FALSE) {
 
 
   # Extract features
-  density_Z <- parameters::normalize(density(x, n = 100)$y)
+  density_Z <- parameters::normalize(stats::density(x, n = 100)$y)
 
   # Extract features
   data <- data.frame(
     "Mean" = mean(x),
-    "SD" = sd(x),
-    "Median" = median(x),
+    "SD" = stats::sd(x),
+    "Median" = stats::median(x),
     "MAD" = mad(x, constant = 1),
-    "Mean_Median_Distance" = mean(x) - median(x),
+    "Mean_Median_Distance" = mean(x) - stats::median(x),
     "Mean_Mode_Distance" = mean(x) - bayestestR::map_estimate(x),
-    "SD_MAD_Distance" = sd(x) - mad(x, constant = 1),
+    "SD_MAD_Distance" = stats::sd(x) - mad(x, constant = 1),
     "Mode" = bayestestR::map_estimate(x),
-    "Range" = diff(range(x)) / sd(x),
+    "Range" = diff(range(x)) / stats::sd(x),
     "IQR" = stats::IQR(x),
     "Skewness" = skewness(x),
     "Kurtosis" = kurtosis(x),
@@ -59,8 +60,8 @@ find_distribution <- function(x, probabilities = FALSE) {
 
   # Predict
   if (probabilities) {
-    return(predict(classify_distribution, data, type = "prob"))
+    return(stats::predict(classify_distribution, data, type = "prob"))
   } else {
-    return(as.character(predict(classify_distribution, data)))
+    return(as.character(stats::predict(classify_distribution, data)))
   }
 }
