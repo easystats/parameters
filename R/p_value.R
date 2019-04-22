@@ -21,35 +21,41 @@ p_value <- function(model, ...) {
 
 
 
-#' @rdname p_value
 #' @export
 p_value.htest <- function(model, ...) {
   model$p.value
 }
 
 
-#' @rdname p_value
 #' @export
 p_value.aov <- function(model, ...) {
   params <- model_parameters(model)
-  if(nrow(params) == 0){
+
+  if (nrow(params) == 0) {
     return(NA)
   }
-  if("Group" %in% names(params)){
-    params <- params[params$Group == "Within",]
+
+  if ("Group" %in% names(params)) {
+    params <- params[params$Group == "Within", ]
   }
-  if("Residuals" %in% params$Parameter){
-    params <- params[params$Parameter != "Residuals", ]
+
+  if ("Residuals" %in% params$Parameter) {
+    params <- params[params$Parameter != "Residuals",]
   }
-  if(!"p" %in% names(params)){
+
+  if (!"p" %in% names(params)) {
     return(NA)
   }
+
   p <- params$p
   names(p) <- params$Parameter
   p
 }
+
+
 #' @export
 p_value.anova <- p_value.aov
+
 #' @export
 p_value.aovlist <- p_value.aov
 
@@ -69,7 +75,6 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 
 
 
-#' @rdname p_value
 #' @export
 p_value.merMod <- function(model, ...) {
   p_value_wald(model, ...)
