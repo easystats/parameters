@@ -2,12 +2,21 @@
 % Please edit documentation in R/p_value.R
 \name{p_value}
 \alias{p_value}
+\alias{p_value.htest}
+\alias{p_value.aov}
 \alias{p_value.lmerMod}
+\alias{p_value.merMod}
 \title{Compute p-values}
 \usage{
 p_value(model, ...)
 
+\method{p_value}{htest}(model, ...)
+
+\method{p_value}{aov}(model, ...)
+
 \method{p_value}{lmerMod}(model, method = "wald", ...)
+
+\method{p_value}{merMod}(model, ...)
 }
 \arguments{
 \item{model}{A statistical model.}

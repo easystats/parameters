@@ -39,7 +39,7 @@
 
 <meta property="og:title" content="Model Standardization — standardize.lm" />
 
-<meta property="og:description" content="Standardize the model's parameters." />
+<meta property="og:description" content="Refit the model after standardizing the data." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -97,6 +97,9 @@
     <li>
       <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
     </li>
+    <li>
+      <a href="../articles/parameters_standardization.html">Parameters standardization</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -122,12 +125,12 @@
 
     <div class="ref-description">
     
-    <p>Standardize the model's parameters.</p>
+    <p>Refit the model after standardizing the data.</p>
     
     </div>
 
     <pre class="usage"><span class='co'># S3 method for lm</span>
-<span class='fu'><a href='standardize.html'>standardize</a></span>(<span class='no'>x</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"refit"</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='standardize.html'>standardize</a></span>(<span class='no'>x</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,20 +144,10 @@
       <td><p>If TRUE, the standardization will be based on <a href='https://www.rdocumentation.org/packages/stats/topics/median'>median</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/mad'>mad</a> instead of <a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/sd'>sd</a> (default).</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>The method used for standardizing the parameters. Can be "refit" (default).</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Methods:</p><ul>
-<li><p><em>refit</em>: This method is based on a complete model re-fit using the standardized data. It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.</p></li>
-</ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -170,9 +163,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

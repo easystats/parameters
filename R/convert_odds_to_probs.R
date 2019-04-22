@@ -67,7 +67,9 @@ odds_to_probs <- function(odds, select = NULL, exclude = NULL, log = FALSE) {
 }
 
 
-
+#' @rdname odds_to_probs
+#' @export
+convert_odds_to_probs <- odds_to_probs
 
 
 
