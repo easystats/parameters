@@ -14,6 +14,9 @@ bayestestR::ci
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param method For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).
 #' @param ... Arguments passed to or from other methods.
+#'
+#' @importFrom insight find_parameters
+#'
 #' @export
 ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
   method <- match.arg(method)
@@ -35,9 +38,10 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
 
 
 #' @method ci glm
+#' @importFrom stats confint
 #' @export
 ci.glm <- function(x, ci = 0.95, ...){
-  suppressMessages(out <- confint(x, level = ci, ...))
+  suppressMessages(out <- stats::confint(x, level = ci, ...))
   out <- as.data.frame(out, stringsAsFactors = FALSE)
   names(out) <- c("CI_low", "CI_high")
   out

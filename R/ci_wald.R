@@ -5,7 +5,7 @@
 #' @param dof Degrees of Freedom.
 #'
 #'
-#' @importFrom stats qt
+#' @importFrom stats qt coef
 #' @export
 ci_wald <- function(model, ci = 0.95, dof = Inf) {
   stopifnot(
@@ -18,7 +18,7 @@ ci_wald <- function(model, ci = 0.95, dof = Inf) {
 
   # all(se > 0))
   alpha <- (1 - ci) / 2
-  fac <- qt(alpha, df = dof, lower.tail = FALSE)
+  fac <- stats::qt(alpha, df = dof, lower.tail = FALSE)
   out <- cbind(
     CI_low = params$Estimate - params$Estimate * fac,
     CI_high = params$Estimate + params$Estimate * fac
