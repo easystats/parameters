@@ -27,17 +27,18 @@
 #' standardize_parameters(model, method="full", robust=FALSE)
 #' standardize_parameters(model, method="full", robust=TRUE)
 #'
+#' @importFrom insight get_parameters model_info get_data get_response
 #' @export
 standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
 
-  if(method == "refit"){
-    std_model <- standardize(model, robust=robust, ...)
+  if (method == "refit") {
+    std_model <- standardize(model, robust = robust, ...)
     std_params <- insight::get_parameters(std_model)
-  } else if(method == "full"){
-    std_params <- .standardize_parameters_full(model, robust=robust)
-  } else if(method == "2SD"){
+  } else if (method == "full") {
+    std_params <- .standardize_parameters_full(model, robust = robust)
+  } else if (method == "2SD") {
     stop("method='2SD' not implemented yet :(")
-  } else if(method == "partial"){
+  } else if (method == "partial") {
     stop("method='partial' not implemented yet :(")
   } else{
     stop("method should be 'refit', 'full', '2SD' or 'partial'.")
@@ -54,43 +55,41 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
   params <- insight::get_parameters(model)
   data <- insight::get_data(model)
   # Linear models
-  if(info$is_linear){
-
-    if(robust == FALSE){
-      sd_y <- sd(insight::get_response(model))
+  if (info$is_linear) {
+    if (robust == FALSE) {
+      sd_y <- stats::sd(insight::get_response(model))
     } else{
-      sd_y <- mad(insight::get_response(model))
+      sd_y <- stats::mad(insight::get_response(model))
     }
 
     std_params <- data.frame()
-    for(name in params$parameter){
+
+    for (name in params$parameter) {
       coef <- params[params$parameter == name, ]$estimate
-      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, robust=robust)
-      std_params <- rbind(std_params,
-                          data.frame("parameter"=name,
-                                     "estimate"=std_coef))
+      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, robust = robust)
+      std_params <-
+        rbind(std_params, data.frame("parameter" = name, "estimate" = std_coef))
     }
 
   # Binomial models
-  } else if(info$is_logit){
-    logit_y <- predict(model)
-    r <- cor(insight::get_response(model), odds_to_probs(logit_y, log=TRUE))
-    if(robust == FALSE){
-      sd_y <- sd(logit_y)
+  } else if (info$is_logit) {
+    logit_y <- stats::predict(model)
+    r <- stats::cor(insight::get_response(model), odds_to_probs(logit_y, log = TRUE))
+    if (robust == FALSE) {
+      sd_y <- stats::sd(logit_y)
     } else{
-      sd_y <- mad(logit_y)
+      sd_y <- stats::mad(logit_y)
     }
 
     std_params <- data.frame()
-    for(name in params$parameter){
+    for (name in params$parameter) {
       coef <- params[params$parameter == name, ]$estimate
-      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, robust=robust)
+      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, robust = robust)
       std_coef <- std_coef * r
-      std_params <- rbind(std_params,
-                          data.frame("parameter"=name,
-                                     "estimate"=std_coef))
+      std_params <-
+        rbind(std_params, data.frame("parameter" = name, "estimate" = std_coef))
     }
-  } else{
+  } else {
     stop("method='full' not applicable to standardize this type of model. Please use method=`refit`.")
   }
 
