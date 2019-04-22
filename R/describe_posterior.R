@@ -12,6 +12,8 @@
 #' describe_posterior(rnorm(1000))
 #'
 #' @importFrom stats mad median sd setNames
+#' @importFrom bayestestR map_estimate hdi ci p_direction p_map
+#'
 #' @export
 describe_posterior <- function(posteriors, ci = .90, ci_method="hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE) {
   UseMethod("describe_posterior")
@@ -25,7 +27,16 @@ describe_posterior <- function(posteriors, ci = .90, ci_method="hdi", estimate =
 #' @rdname describe_posterior
 #' @export
 describe_posterior.numeric <- function(posteriors, ci = .90, ci_method="hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE) {
-  x <- describe_posterior(as.data.frame(posteriors), ci=ci, ci_method=ci_method, estimate=estimate, test=test, rope_range=rope_range, rope_full=rope_full)
+  x <-
+    describe_posterior(
+      as.data.frame(posteriors),
+      ci = ci,
+      ci_method = ci_method,
+      estimate = estimate,
+      test = test,
+      rope_range = rope_range,
+      rope_full = rope_full
+    )
   x[names(x) != "Parameter"]
 }
 
@@ -43,16 +54,16 @@ describe_posterior.double <- describe_posterior.numeric
 #' @rdname describe_posterior
 #' @method describe_posterior data.frame
 #' @export
-describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method="hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE) {
+describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE) {
   # Point estimates
   out <- data.frame("Parameter" = colnames(posteriors))
   if ("median" %in% c(estimate)) {
-    out$Median <- sapply(posteriors, median)
-    out$MAD <- sapply(posteriors, mad)
+    out$Median <- sapply(posteriors, stats::median)
+    out$MAD <- sapply(posteriors, stats::mad)
   }
   if ("mean" %in% c(estimate)) {
-    out$Mean <- sapply(posteriors, mean)
-    out$SD <- sapply(posteriors, sd)
+    out$Mean <- sapply(posteriors, stats::mean)
+    out$SD <- sapply(posteriors, stats::sd)
   }
   if ("map" %in% c(estimate)) {
     out$MAP <- unlist(sapply(posteriors, bayestestR::map_estimate))
@@ -61,7 +72,7 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method="hdi",
   # CI
   if (!is.null(ci)) {
     if (length(ci) > 1) {
-      if(ci_method == "hdi"){
+      if (ci_method == "hdi") {
         hdi <- sapply(posteriors, bayestestR::hdi, ci = ci, simplify = FALSE)
       } else{
         hdi <- sapply(posteriors, bayestestR::ci, ci = ci, simplify = FALSE)
@@ -69,10 +80,10 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method="hdi",
       for (i in names(hdi)) {
         current_hdi <- hdi[[i]]
 
-        hdi_low <- as.data.frame(t(setNames(current_hdi$CI_low, as.numeric(current_hdi$CI))), stringsAsFactors = FALSE)
+        hdi_low <- as.data.frame(t(stats::setNames(current_hdi$CI_low, as.numeric(current_hdi$CI))), stringsAsFactors = FALSE)
         names(hdi_low) <- paste0("CI_low_", names(hdi_low))
 
-        hdi_high <- as.data.frame(t(setNames(current_hdi$CI_high, as.numeric(current_hdi$CI))), stringsAsFactors = FALSE)
+        hdi_high <- as.data.frame(t(stats::setNames(current_hdi$CI_high, as.numeric(current_hdi$CI))), stringsAsFactors = FALSE)
         names(hdi_high) <- paste0("CI_high_", names(hdi_high))
 
         hdi[[i]] <- cbind(hdi_low, hdi_high)
@@ -80,7 +91,7 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method="hdi",
       hdi <- .flatten_list(hdi)
       hdi <- hdi[names(hdi) != "name"]
     } else {
-      if(ci_method == "hdi"){
+      if (ci_method == "hdi") {
         hdi <- as.data.frame(t(sapply(posteriors, bayestestR::hdi, ci = ci)), stringsAsFactors = FALSE)
       } else{
         hdi <- as.data.frame(t(sapply(posteriors, bayestestR::ci, ci = ci)), stringsAsFactors = FALSE)
@@ -114,11 +125,11 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method="hdi",
         for (i in names(results_rope)) {
           current_rope <- results_rope[[i]]
 
-          rope_percentage <- as.data.frame(t(setNames(current_rope$ROPE_Percentage, as.numeric(current_rope$CI))), stringsAsFactors = FALSE)
+          rope_percentage <- as.data.frame(t(stats::setNames(current_rope$ROPE_Percentage, as.numeric(current_rope$CI))), stringsAsFactors = FALSE)
           names(rope_percentage) <- paste0("CI_", names(rope_percentage), "_ROPE_Percentage")
           rope_percentage <- sapply(rope_percentage, as.numeric)
 
-          rope_equivalence <- as.data.frame(t(setNames(current_rope$ROPE_Equivalence, as.numeric(current_rope$CI))), stringsAsFactors = FALSE)
+          rope_equivalence <- as.data.frame(t(stats::setNames(current_rope$ROPE_Equivalence, as.numeric(current_rope$CI))), stringsAsFactors = FALSE)
           names(rope_equivalence) <- paste0("CI_", names(rope_equivalence), "_ROPE_Equivalence")
           rope_equivalence <- sapply(rope_equivalence, as.character)
 
