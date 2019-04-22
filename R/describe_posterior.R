@@ -62,7 +62,7 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi
     out$MAD <- sapply(posteriors, stats::mad)
   }
   if ("mean" %in% c(estimate)) {
-    out$Mean <- sapply(posteriors, stats::mean)
+    out$Mean <- sapply(posteriors, mean)
     out$SD <- sapply(posteriors, stats::sd)
   }
   if ("map" %in% c(estimate)) {
