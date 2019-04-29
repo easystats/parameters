@@ -32,8 +32,13 @@ p_value_wald.merMod <- function(model) {
 
   if (is.null(names(p))) {
     coef_names <- rownames(params)
-    if (length(coef_names) == length(p)) names(p) <- coef_names
+  } else {
+    coef_names <- names(p)
   }
 
-  p
+  data.frame(
+    Parameter = coef_names,
+    p_value = unname(p),
+    stringsAsFactors = FALSE
+  )
 }

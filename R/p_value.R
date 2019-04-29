@@ -47,9 +47,11 @@ p_value.aov <- function(model, ...) {
     return(NA)
   }
 
-  p <- params$p
-  names(p) <- params$Parameter
-  p
+  data.frame(
+    Parameter = params$Parameter,
+    p_value = params$p,
+    stringsAsFactors = FALSE
+  )
 }
 
 

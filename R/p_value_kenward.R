@@ -35,10 +35,15 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
   if (is.null(names(p))) {
     coef_names <- rownames(params)
-    if (length(coef_names) == length(p)) names(p) <- coef_names
+  } else {
+    coef_names <- names(p)
   }
 
-  p
+  data.frame(
+    Parameter = coef_names,
+    p_value = unname(p),
+    stringsAsFactors = FALSE
+  )
 }
 
 
