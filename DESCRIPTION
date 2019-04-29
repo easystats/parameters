@@ -25,19 +25,20 @@ Imports:
 	bayestestR,
 	boot
 Suggests:
-	knitr,
-	rmarkdown,
-	testthat,
-	covr,
-	circus,
-	rstanarm,
-	brms,
-	lme4,
 	BayesFactor,
-	pbkrtest,
+	brms,
 	caret,
+	covr,
+	knitr,
+	lme4,
+	MASS,
+	pbkrtest,
 	randomForest,
-	MASS
+	rmarkdown,
+	rstanarm,
+	survey,
+	testthat,
+	VGAM
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
