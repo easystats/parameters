@@ -33,6 +33,7 @@ Suggests:
 	lme4,
 	MASS,
 	pbkrtest,
+	psych,
 	randomForest,
 	rmarkdown,
 	rstanarm,
