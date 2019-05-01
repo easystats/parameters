@@ -8,14 +8,27 @@
 #'
 #' @details \strong{Methods:}
 #' \itemize{
-#'  \item \strong{refit}: This method is based on a complete model re-fit using the standardized data. It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
+#'  \item \strong{refit}: This method is based on a complete model re-fit after standardizing the data. Hence, this method is equal to standardizing the variables before fitting the model. It is the most accurate, especially for parameters related to interactions, but it is also the most computationally costly.
 #'  \item \strong{2sd}: Same as \code{method = "refit"}, however, standardization is done by dividing by two times the SD or MAD (depending on \code{robust}).
-#'  \item \strong{full}: Post-hoc standardization of the model parmaters.
+#'  \item \strong{full}: Post-hoc standardization of the model parmaters, based on multiplying the coefficients by the standard deviation of the related terms and dividing by the standard deviation of the outcome.
 #'  \item \strong{classic}: Similar to \code{method = "full"}, but factors are treated differently. See below.
 #' }
-#' \cr \cr
 #' \strong{Standardization of factors}
-#'
+#' \cr \cr
+#' The most accurate method of getting standardized coefficients is to standardize
+#' the data before fitting the model. This is similar to \code{method = "refit"}.
+#' \code{method = "full"} performs a post-hoc standardization by multiplying
+#' the coefficients with the standard deviation of the related model term, then
+#' dividing by the standard deviation of the model's response. However, this
+#' method is only applied to numeric variables and thus the results probably
+#' differ from standardized coefficients from other functions like
+#' \code{sjstats::std_beta()} or \code{lm.beta::lm.beta()}. The reason for this
+#' behaviour is that in particular for more complex models (including interaction
+#' or polynomial or spline terms) \code{method = "full"} returned standardized
+#' coefficients that were closer to the more accurate approach of standardizing
+#' the data before fitting the model, as compared to the "classic" method implemented
+#' in \code{sjstats::std_beta()} or \code{lm.beta::lm.beta()}. However,
+#' \code{method = "classic"} mimics this "classic" behaviour.
 #'
 #' @examples
 #' data(iris)
