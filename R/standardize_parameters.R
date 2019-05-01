@@ -6,12 +6,16 @@
 #' @param method The method used for standardizing the parameters. Can be \code{"refit"} (default).
 #' @inheritParams standardize
 #'
-#' @details Methods:
+#' @details \strong{Methods:}
 #' \itemize{
 #'  \item \strong{refit}: This method is based on a complete model re-fit using the standardized data. It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
 #'  \item \strong{2sd}: Same as \code{method = "refit"}, however, standardization is done by dividing by two times the SD or MAD (depending on \code{robust}).
 #'  \item \strong{full}: Post-hoc standardization of the model parmaters.
+#'  \item \strong{classic}: Similar to \code{method = "full"}, but factors are treated differently. See below.
 #' }
+#' \cr \cr
+#' \strong{Standardization of factors}
+#'
 #'
 #' @examples
 #' data(iris)
@@ -31,18 +35,18 @@
 #' standardize_parameters(model, method = "full")
 #' standardize_parameters(model, method = "full", robust = TRUE)
 #'
-#' @importFrom stats mad sd predict cor
+#' @importFrom stats mad sd predict cor model.matrix
 #' @importFrom insight get_parameters model_info get_data get_response
 #' @importFrom utils tail
 #' @export
 standardize_parameters <- function(model, robust = FALSE, method = "refit", verbose = TRUE, ...) {
 
-  method <- match.arg(method, choices = c("default", "refit", "2sd", "full", "partial"))
+  method <- match.arg(method, choices = c("default", "refit", "2sd", "full", "partial", "classic"))
 
   if (method %in% c("refit", "2sd")) {
     std_model <- standardize(model, robust = robust, method = method, verbose = verbose, ...)
     std_params <- insight::get_parameters(std_model)
-  } else if (method %in% c("default", "full")) {
+  } else if (method %in% c("default", "full", "classic")) {
     std_params <- .standardize_parameters_full(model, robust, method)
   } else if (method == "partial") {
     stop("method='partial' not implemented yet :(")
@@ -71,7 +75,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
     for (name in params$parameter) {
       coef <- params[params$parameter == name, ]$estimate
-      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, robust)
+      std_coef <- .standardize_parameter_full(model, name, coef, data, sd_y, robust, method)
       std_params <-
         rbind(std_params, data.frame("parameter" = name, "estimate" = std_coef))
     }
@@ -89,7 +93,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
     std_params <- data.frame()
     for (name in params$parameter) {
       coef <- params[params$parameter == name, ]$estimate
-      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, robust)
+      std_coef <- .standardize_parameter_full(model, name, coef, data, sd_y, robust, method)
       std_coef <- std_coef * r
       std_params <-
         rbind(std_params, data.frame("parameter" = name, "estimate" = std_coef))
@@ -103,7 +107,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
 
 #' @keywords internal
-.standardize_parameter_full <- function(name, coef, data, sd_y, robust) {
+.standardize_parameter_full <- function(model, name, coef, data, sd_y, robust, method) {
   param_type <- .find_parameter_type(name, data)
 
   if ("interaction" %in% param_type) {
@@ -126,7 +130,15 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
   } else if ("intercept" %in% param_type) {
     std_coef <- NA
   } else if ("factor" %in% param_type) {
-    std_coef <- coef / sd_y
+    if (method == "classic") {
+      if (robust == FALSE) {
+        std_coef <- coef * stats::sd(stats::model.matrix(model)[, name]) / sd_y
+      } else{
+        std_coef <- coef * stats::mad(stats::model.matrix(model)[, name]) / sd_y
+      }
+    } else {
+      std_coef <- coef / sd_y
+    }
   } else {
     std_coef <- coef / sd_y
   }

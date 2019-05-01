@@ -26,12 +26,15 @@ the}
 Compute standardized model parameters (coefs).
 }
 \details{
-Methods:
+\strong{Methods:}
 \itemize{
  \item \strong{refit}: This method is based on a complete model re-fit using the standardized data. It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
  \item \strong{2sd}: Same as \code{method = "refit"}, however, standardization is done by dividing by two times the SD or MAD (depending on \code{robust}).
  \item \strong{full}: Post-hoc standardization of the model parmaters.
+ \item \strong{classic}: Similar to \code{method = "full"}, but factors are treated differently. See below.
 }
+\cr \cr
+\strong{Standardization of factors}
 }
 \examples{
 data(iris)

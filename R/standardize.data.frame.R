@@ -3,7 +3,7 @@
 #' @export
 standardize.numeric <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
 
-  method <- match.arg(method, choices = c("default", "refit", "2sd", "full", "partial"))
+  method <- match.arg(method, choices = c("default", "refit", "2sd", "full", "partial", "classic"))
 
   # Warning if all NaNs
   if (all(is.na(x))) {
@@ -37,7 +37,7 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
     }
   }
 
-  if (method %in% c("default", "refit", "full")) {
+  if (method %in% c("default", "classic", "refit", "full")) {
     if (robust == FALSE)
       return(as.vector((x - mean(x)) / stats::sd(x)))
     else
