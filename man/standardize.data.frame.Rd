@@ -19,7 +19,7 @@ normalize(x, ...)
 
 \method{normalize}{data.frame}(x, select = NULL, exclude = NULL, ...)
 
-\method{standardize}{data.frame}(x, robust = FALSE, select = NULL,
+\method{standardize}{data.frame}(x, method = "mean", select = NULL,
   exclude = NULL, ...)
 }
 \arguments{
@@ -27,17 +27,23 @@ normalize(x, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{select}{For a data.frame, character or list of characters of column names to be
+\item{select}{For a data frame, character vector of column names to be
+standardized. If \code{NULL} (the default), all variables will be
 standardized.}
 
-\item{exclude}{For a data.frame, character or list of characters of column names to be excluded from standardization.}
+\item{exclude}{For a data frame, character vector of column names to
+be excluded from standardization.}
 
-\item{robust}{If TRUE, the standardization will be based on \link{median} and \link{mad} instead of \link{mean} and \link{sd} (default).}
+\item{method}{The method of standardization. See 'Details'.}
 }
 \description{
-Performs a normalization of data. This scales all numeric variables in the range 0 - 1.
+Performs a normalization of data. This scales all numeric
+variables in the range 0 - 1.
 
-Standardize (scale and reduce, Z-score) the data so that the values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1) or Median Absolute Deviance (\code{robust = TRUE}; median = 0, MAD = 1). A \code{normalization} scales all numeric variables in the 0 - 1 range.
+Standardize (scale and reduce, Z-score) the data so that the
+  values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1)
+  or Median Absolute Deviance (median = 0, MAD = 1). A \code{normalization}
+  scales all numeric variables in the 0 - 1 range.
 }
 \examples{
 summary(standardize(iris))

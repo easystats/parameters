@@ -4,12 +4,12 @@
 \alias{standardize.lm}
 \title{Model Standardization}
 \usage{
-\method{standardize}{lm}(x, robust = FALSE, ...)
+\method{standardize}{lm}(x, method = "mean", ...)
 }
 \arguments{
 \item{x}{Object.}
 
-\item{robust}{If TRUE, the standardization will be based on \link{median} and \link{mad} instead of \link{mean} and \link{sd} (default).}
+\item{method}{The method of standardization. See 'Details'.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

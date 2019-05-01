@@ -4,12 +4,12 @@
 \alias{standardize}
 \title{Standardization}
 \usage{
-standardize(x, robust = FALSE, ...)
+standardize(x, method = "mean", ...)
 }
 \arguments{
 \item{x}{Object.}
 
-\item{robust}{If TRUE, the standardization will be based on \link{median} and \link{mad} instead of \link{mean} and \link{sd} (default).}
+\item{method}{The method of standardization. See 'Details'.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -19,4 +19,12 @@ Performs a standardization of data or parameters. See the documentation for your
  \item{\link[=standardize.data.frame]{Dataframes}}
  \item{\link[=standardize.lm]{Regression models}}
  }
+}
+\details{
+Methods:
+\itemize{
+ \item \strong{mean}: \code{mean} and \code{sd} (default).
+ \item \strong{median}: \code{median} and \code{mad}.
+ \item \strong{2sd}: \code{mean} and two times the \code{sd}.
+}
 }

@@ -8,40 +8,47 @@
 #'
 #' @details Methods:
 #' \itemize{
-#'  \item \emph{refit}: This method is based on a complete model re-fit using the standardized data. It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
-#'  }
+#'  \item \strong{refit}: This method is based on a complete model re-fit using the standardized data (based on \code{mean} and \code{sd}). It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
+#'  \item \strong{refit_robust}: This method is based on a complete model re-fit using the standardized data (based on \code{median} and \code{mad}). It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
+#'  \item \strong{refit_2sd}: This method is based on a complete model re-fit using the standardized data (based on \code{mean} and two times the \code{sd}). It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
+#'  \item \strong{full}: Post-hoc standardization of the model parmaters, based on \code{sd} of parameters.
+#'  \item \strong{full_robust}: Post-hoc standardization of the model parmaters, based on \code{mad} of parameters.
+#' }
 #'
 #' @examples
-#' data <- iris
+#' data(iris)
 #'
-#' model <- lm(Sepal.Length ~ Species * Petal.Width, data = data)
-#' standardize_parameters(model, method="refit")
-#' standardize_parameters(model, method="refit", robust=TRUE)
-#' standardize_parameters(model, method="full", robust=FALSE)
-#' standardize_parameters(model, method="full", robust=TRUE)
+#' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+#' standardize_parameters(model, method = "refit")
+#' standardize_parameters(model, method = "refit_robust")
+#' standardize_parameters(model, method = "refit_2sd")
+#' standardize_parameters(model, method = "full")
+#' standardize_parameters(model, method = "full_robust")
 #'
-#' data$binary <- ifelse(data$Sepal.Width > 3, 1, 0)
-#' model <- glm(binary ~ Species * Sepal.Length, data = data, family="binomial")
-#' standardize_parameters(model, method="refit")
-#' standardize_parameters(model, method="refit", robust=TRUE)
-#' standardize_parameters(model, method="full", robust=FALSE)
-#' standardize_parameters(model, method="full", robust=TRUE)
+#' iris$binary <- ifelse(iris$Sepal.Width > 3, 1, 0)
+#' model <- glm(binary ~ Species * Sepal.Length, data = iris, family = "binomial")
+#' standardize_parameters(model, method = "refit")
+#' standardize_parameters(model, method = "refit_robust")
+#' standardize_parameters(model, method = "full")
+#' standardize_parameters(model, method = "full_robust")
 #'
 #' @importFrom stats mad sd predict cor
 #' @importFrom insight get_parameters model_info get_data get_response
 #' @importFrom utils tail
 #' @export
-standardize_parameters <- function(model, method = "refit", robust = FALSE, ...) {
+standardize_parameters <- function(model, method = "refit", ...) {
 
-  method <- match.arg(method, choices = c("refit", "full", "2SD", "partial"))
+  method <- match.arg(method, choices = c("refit", "refit_robust", "refit_2sd", "full", "full_robust", "partial"))
 
-  if (method == "refit") {
-    std_model <- standardize(model, robust = robust, ...)
+  if (method %in% c("refit", "refit_robust")) {
+    method <- switch(method, refit = "mean", refit_robust = "median")
+    std_model <- standardize(model, method = method, ...)
     std_params <- insight::get_parameters(std_model)
-  } else if (method == "full") {
-    std_params <- .standardize_parameters_full(model, robust = robust)
-  } else if (method == "2SD") {
-    stop("method='2SD' not implemented yet :(")
+  } else if (method %in% c("mean", "full", "full_robust")) {
+    std_params <- .standardize_parameters_full(model, method)
+  } else if (method == "refit_2sd") {
+    std_model <- standardize(model, method = "2sd", ...)
+    std_params <- insight::get_parameters(std_model)
   } else if (method == "partial") {
     stop("method='partial' not implemented yet :(")
   }
@@ -52,16 +59,16 @@ standardize_parameters <- function(model, method = "refit", robust = FALSE, ...)
 
 
 #' @keywords internal
-.standardize_parameters_full <- function(model, robust=FALSE){
+.standardize_parameters_full <- function(model, method) {
   info <- insight::model_info(model)
   params <- insight::get_parameters(model)
   data <- insight::get_data(model)
 
   # Linear models
   if (info$is_linear) {
-    if (robust == FALSE) {
+    if (method %in% c("mean", "full")) {
       sd_y <- stats::sd(insight::get_response(model))
-    } else{
+    } else {
       sd_y <- stats::mad(insight::get_response(model))
     }
 
@@ -69,7 +76,7 @@ standardize_parameters <- function(model, method = "refit", robust = FALSE, ...)
 
     for (name in params$parameter) {
       coef <- params[params$parameter == name, ]$estimate
-      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, robust = robust)
+      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, method)
       std_params <-
         rbind(std_params, data.frame("parameter" = name, "estimate" = std_coef))
     }
@@ -78,7 +85,7 @@ standardize_parameters <- function(model, method = "refit", robust = FALSE, ...)
   } else if (info$is_logit) {
     logit_y <- stats::predict(model)
     r <- stats::cor(insight::get_response(model), odds_to_probs(logit_y, log = TRUE))
-    if (robust == FALSE) {
+    if (method %in% c("mean", "full")) {
       sd_y <- stats::sd(logit_y)
     } else{
       sd_y <- stats::mad(logit_y)
@@ -87,13 +94,13 @@ standardize_parameters <- function(model, method = "refit", robust = FALSE, ...)
     std_params <- data.frame()
     for (name in params$parameter) {
       coef <- params[params$parameter == name, ]$estimate
-      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, robust = robust)
+      std_coef <- .standardize_parameter_full(name, coef, data, sd_y, method)
       std_coef <- std_coef * r
       std_params <-
         rbind(std_params, data.frame("parameter" = name, "estimate" = std_coef))
     }
   } else {
-    stop("method='full' not applicable to standardize this type of model. Please use method=`refit`.")
+    stop("method='full' not applicable to standardize this type of model. Please use method='refit'.")
   }
 
   std_params
@@ -101,13 +108,13 @@ standardize_parameters <- function(model, method = "refit", robust = FALSE, ...)
 
 
 #' @keywords internal
-.standardize_parameter_full <- function(name, coef, data, sd_y, robust = FALSE) {
+.standardize_parameter_full <- function(name, coef, data, sd_y, method) {
   param_type <- .find_parameter_type(name, data)
 
   if ("interaction" %in% param_type) {
     predictor <- param_type[[2]]
     if ("numeric" %in% .find_parameter_type(predictor, data)) {
-      if (robust == FALSE) {
+      if (method %in% c("mean", "full")) {
         std_coef <- coef * stats::sd(data[[predictor]]) / sd_y
       } else{
         std_coef <- coef * stats::mad(data[[predictor]]) / sd_y
@@ -116,7 +123,7 @@ standardize_parameters <- function(model, method = "refit", robust = FALSE, ...)
       std_coef <- coef / sd_y
     }
   } else if ("numeric" %in% param_type) {
-    if (robust == FALSE) {
+    if (method %in% c("mean", "full")) {
       std_coef <- coef * stats::sd(data[[name]]) / sd_y
     } else{
       std_coef <- coef * stats::mad(data[[name]]) / sd_y

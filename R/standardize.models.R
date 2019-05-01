@@ -13,7 +13,7 @@
 #' @importFrom insight get_data model_info find_response
 #' @importFrom utils capture.output
 #' @export
-standardize.lm <- function(x, robust = FALSE, ...) {
+standardize.lm <- function(x, method = "mean", ...) {
   data <- insight::get_data(x)
 
   if (insight::model_info(x)$is_binomial) {
@@ -21,9 +21,9 @@ standardize.lm <- function(x, robust = FALSE, ...) {
   }
 
   if (inherits(x, c("brmsfit"))) {
-    text <- utils::capture.output(model_std <- stats::update(x, newdata = standardize(data, robust = robust)))
+    text <- utils::capture.output(model_std <- stats::update(x, newdata = standardize(data, method = method)))
   } else {
-    text <- utils::capture.output(model_std <- stats::update(x, data = standardize(data, robust = robust)))
+    text <- utils::capture.output(model_std <- stats::update(x, data = standardize(data, method = method)))
   }
 
   model_std

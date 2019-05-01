@@ -1,6 +1,8 @@
-#' Normalization
+#' @title Normalization
+#' @name normalize
 #'
-#' Performs a normalization of data. This scales all numeric variables in the range 0 - 1.
+#' @description Performs a normalization of data. This scales all numeric
+#' variables in the range 0 - 1.
 #'
 #' @rdname standardize.data.frame
 #'

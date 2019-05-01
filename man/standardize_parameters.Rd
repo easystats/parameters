@@ -4,14 +4,12 @@
 \alias{standardize_parameters}
 \title{Get Standardized Model Parameters}
 \usage{
-standardize_parameters(model, method = "refit", robust = FALSE, ...)
+standardize_parameters(model, method = "refit", ...)
 }
 \arguments{
 \item{model}{A statistical model.}
 
 \item{method}{The method used for standardizing the parameters. Can be "refit" (default).}
-
-\item{robust}{If TRUE, the standardization will be based on \link{median} and \link{mad} instead of \link{mean} and \link{sd} (default).}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -21,23 +19,28 @@ Compute standardized model parameters (coefs).
 \details{
 Methods:
 \itemize{
- \item \emph{refit}: This method is based on a complete model re-fit using the standardized data. It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
- }
+ \item \strong{refit}: This method is based on a complete model re-fit using the standardized data (based on \code{mean} and \code{sd}). It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
+ \item \strong{refit_robust}: This method is based on a complete model re-fit using the standardized data (based on \code{median} and \code{mad}). It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
+ \item \strong{refit_2sd}: This method is based on a complete model re-fit using the standardized data (based on \code{mean} and two times the \code{sd}). It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
+ \item \strong{full}: Post-hoc standardization of the model parmaters, based on \code{sd} of parameters.
+ \item \strong{full_robust}: Post-hoc standardization of the model parmaters, based on \code{mad} of parameters.
+}
 }
 \examples{
-data <- iris
+data(iris)
 
-model <- lm(Sepal.Length ~ Species * Petal.Width, data = data)
-standardize_parameters(model, method="refit")
-standardize_parameters(model, method="refit", robust=TRUE)
-standardize_parameters(model, method="full", robust=FALSE)
-standardize_parameters(model, method="full", robust=TRUE)
+model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+standardize_parameters(model, method = "refit")
+standardize_parameters(model, method = "refit_robust")
+standardize_parameters(model, method = "refit_2sd")
+standardize_parameters(model, method = "full")
+standardize_parameters(model, method = "full_robust")
 
-data$binary <- ifelse(data$Sepal.Width > 3, 1, 0)
-model <- glm(binary ~ Species * Sepal.Length, data = data, family="binomial")
-standardize_parameters(model, method="refit")
-standardize_parameters(model, method="refit", robust=TRUE)
-standardize_parameters(model, method="full", robust=FALSE)
-standardize_parameters(model, method="full", robust=TRUE)
+iris$binary <- ifelse(iris$Sepal.Width > 3, 1, 0)
+model <- glm(binary ~ Species * Sepal.Length, data = iris, family = "binomial")
+standardize_parameters(model, method = "refit")
+standardize_parameters(model, method = "refit_robust")
+standardize_parameters(model, method = "full")
+standardize_parameters(model, method = "full_robust")
 
 }

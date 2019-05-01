@@ -8,10 +8,17 @@
 #'
 #'
 #' @param x Object.
-#' @param robust If TRUE, the standardization will be based on \link{median} and \link{mad} instead of \link{mean} and \link{sd} (default).
+#' @param method The method of standardization. See 'Details'.
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @details Methods:
+#' \itemize{
+#'  \item \strong{mean}: \code{mean} and \code{sd} (default).
+#'  \item \strong{median}: \code{median} and \code{mad}.
+#'  \item \strong{2sd}: \code{mean} and two times the \code{sd}.
+#' }
+#'
 #' @export
-standardize <- function(x, robust = FALSE, ...) {
+standardize <- function(x, method = "mean", ...) {
   UseMethod("standardize")
 }
