@@ -8,17 +8,22 @@
 #'
 #'
 #' @param x Object.
+#' @param robust Logical, if \code{TRUE}, centering is done by substracting the
+#'   median from the variables and divide it by the median absolute deviation
+#'   (MAD). If \code{FALSE}, variables are standardized by substracting the
+#'   mean and divide it by the standard deviation (SD).
+#'   the
 #' @param method The method of standardization. See 'Details'.
+#' @param verbose Toggle warnings on or off.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details Methods:
 #' \itemize{
-#'  \item \strong{mean}: \code{mean} and \code{sd} (default).
-#'  \item \strong{median}: \code{median} and \code{mad}.
-#'  \item \strong{2sd}: \code{mean} and two times the \code{sd}.
+#'  \item \strong{default}: Depending on \code{robust}, variables are divided by SD or MAD.
+#'  \item \strong{2sd}: Depending on \code{robust}, variables are divided by two times the SD or MAD.
 #' }
 #'
 #' @export
-standardize <- function(x, method = "mean", ...) {
+standardize <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
   UseMethod("standardize")
 }

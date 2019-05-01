@@ -4,12 +4,21 @@
 \alias{standardize.lm}
 \title{Model Standardization}
 \usage{
-\method{standardize}{lm}(x, method = "mean", ...)
+\method{standardize}{lm}(x, robust = FALSE, method = "default",
+  verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Object.}
 
+\item{robust}{Logical, if \code{TRUE}, centering is done by substracting the
+median from the variables and divide it by the median absolute deviation
+(MAD). If \code{FALSE}, variables are standardized by substracting the
+mean and divide it by the standard deviation (SD).
+the}
+
 \item{method}{The method of standardization. See 'Details'.}
+
+\item{verbose}{Toggle warnings on or off.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

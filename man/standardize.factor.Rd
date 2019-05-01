@@ -21,8 +21,7 @@ Performs a standardization of data or parameters. See the documentation for your
 \details{
 Methods:
 \itemize{
- \item \strong{mean}: \code{mean} and \code{sd} (default).
- \item \strong{median}: \code{median} and \code{mad}.
- \item \strong{2sd}: \code{mean} and two times the \code{sd}.
+ \item \strong{default}: Depending on \code{robust}, variables are divided by SD or MAD.
+ \item \strong{2sd}: Depending on \code{robust}, variables are divided by two times the SD or MAD.
 }
 }

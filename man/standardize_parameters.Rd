@@ -4,12 +4,21 @@
 \alias{standardize_parameters}
 \title{Get Standardized Model Parameters}
 \usage{
-standardize_parameters(model, method = "refit", ...)
+standardize_parameters(model, robust = FALSE, method = "refit",
+  verbose = TRUE, ...)
 }
 \arguments{
 \item{model}{A statistical model.}
 
-\item{method}{The method used for standardizing the parameters. Can be "refit" (default).}
+\item{robust}{Logical, if \code{TRUE}, centering is done by substracting the
+median from the variables and divide it by the median absolute deviation
+(MAD). If \code{FALSE}, variables are standardized by substracting the
+mean and divide it by the standard deviation (SD).
+the}
+
+\item{method}{The method used for standardizing the parameters. Can be \code{"refit"} (default).}
+
+\item{verbose}{Toggle warnings on or off.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -19,11 +28,9 @@ Compute standardized model parameters (coefs).
 \details{
 Methods:
 \itemize{
- \item \strong{refit}: This method is based on a complete model re-fit using the standardized data (based on \code{mean} and \code{sd}). It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
- \item \strong{refit_robust}: This method is based on a complete model re-fit using the standardized data (based on \code{median} and \code{mad}). It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
- \item \strong{refit_2sd}: This method is based on a complete model re-fit using the standardized data (based on \code{mean} and two times the \code{sd}). It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
- \item \strong{full}: Post-hoc standardization of the model parmaters, based on \code{sd} of parameters.
- \item \strong{full_robust}: Post-hoc standardization of the model parmaters, based on \code{mad} of parameters.
+ \item \strong{refit}: This method is based on a complete model re-fit using the standardized data. It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.
+ \item \strong{2sd}: Same as \code{method = "refit"}, however, standardization is done by dividing by two times the SD or MAD (depending on \code{robust}).
+ \item \strong{full}: Post-hoc standardization of the model parmaters.
 }
 }
 \examples{
@@ -31,16 +38,17 @@ data(iris)
 
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 standardize_parameters(model, method = "refit")
-standardize_parameters(model, method = "refit_robust")
-standardize_parameters(model, method = "refit_2sd")
+standardize_parameters(model, method = "refit", robust = TRUE)
+standardize_parameters(model, method = "2sd")
+standardize_parameters(model, method = "2sd", robust = TRUE)
 standardize_parameters(model, method = "full")
-standardize_parameters(model, method = "full_robust")
+standardize_parameters(model, method = "full", robust = TRUE)
 
 iris$binary <- ifelse(iris$Sepal.Width > 3, 1, 0)
 model <- glm(binary ~ Species * Sepal.Length, data = iris, family = "binomial")
 standardize_parameters(model, method = "refit")
-standardize_parameters(model, method = "refit_robust")
+standardize_parameters(model, method = "refit", robust = TRUE)
 standardize_parameters(model, method = "full")
-standardize_parameters(model, method = "full_robust")
+standardize_parameters(model, method = "full", robust = TRUE)
 
 }
