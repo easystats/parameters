@@ -45,7 +45,7 @@ find_distribution <- function(x, probabilities = FALSE) {
     "MAD" = mad(x, constant = 1),
     "Mean_Median_Distance" = mean(x) - stats::median(x),
     "Mean_Mode_Distance" = mean(x) - bayestestR::map_estimate(x),
-    "SD_MAD_Distance" = stats::sd(x) - mad(x, constant = 1),
+    "SD_MAD_Distance" = stats::sd(x) - stats::mad(x, constant = 1),
     "Mode" = bayestestR::map_estimate(x),
     "Range" = diff(range(x)) / stats::sd(x),
     "IQR" = stats::IQR(x),
