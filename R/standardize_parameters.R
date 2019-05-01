@@ -27,9 +27,13 @@
 #' standardize_parameters(model, method="full", robust=FALSE)
 #' standardize_parameters(model, method="full", robust=TRUE)
 #'
+#' @importFrom stats mad sd predict cor
 #' @importFrom insight get_parameters model_info get_data get_response
+#' @importFrom utils tail
 #' @export
-standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
+standardize_parameters <- function(model, method = "refit", robust = FALSE, ...) {
+
+  method <- match.arg(method, choices = c("refit", "full", "2SD", "partial"))
 
   if (method == "refit") {
     std_model <- standardize(model, robust = robust, ...)
@@ -40,8 +44,6 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
     stop("method='2SD' not implemented yet :(")
   } else if (method == "partial") {
     stop("method='partial' not implemented yet :(")
-  } else{
-    stop("method should be 'refit', 'full', '2SD' or 'partial'.")
   }
 
   names(std_params) <- c("Parameter", "Std_Estimate")
@@ -54,6 +56,7 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
   info <- insight::model_info(model)
   params <- insight::get_parameters(model)
   data <- insight::get_data(model)
+
   # Linear models
   if (info$is_linear) {
     if (robust == FALSE) {
@@ -93,42 +96,39 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
     stop("method='full' not applicable to standardize this type of model. Please use method=`refit`.")
   }
 
-  return(std_params)
-
+  std_params
 }
 
 
-
-
-
 #' @keywords internal
-.standardize_parameter_full <- function(name, coef, data, sd_y, robust=FALSE){
+.standardize_parameter_full <- function(name, coef, data, sd_y, robust = FALSE) {
   param_type <- .find_parameter_type(name, data)
 
-  if("interaction" %in% param_type){
+  if ("interaction" %in% param_type) {
     predictor <- param_type[[2]]
-    if("numeric" %in% .find_parameter_type(predictor, data)){
-      if(robust == FALSE){
-        std_coef <- coef * sd(data[[predictor]]) / sd_y
+    if ("numeric" %in% .find_parameter_type(predictor, data)) {
+      if (robust == FALSE) {
+        std_coef <- coef * stats::sd(data[[predictor]]) / sd_y
       } else{
-        std_coef <- coef * mad(data[[predictor]]) / sd_y
+        std_coef <- coef * stats::mad(data[[predictor]]) / sd_y
       }
     } else{
       std_coef <- coef / sd_y
     }
-  } else if("numeric" %in% param_type){
-    if(robust == FALSE){
-      std_coef <- coef * sd(data[[name]]) / sd_y
+  } else if ("numeric" %in% param_type) {
+    if (robust == FALSE) {
+      std_coef <- coef * stats::sd(data[[name]]) / sd_y
     } else{
-      std_coef <- coef * mad(data[[name]]) / sd_y
+      std_coef <- coef * stats::mad(data[[name]]) / sd_y
     }
-  } else if("intercept" %in% param_type){
+  } else if ("intercept" %in% param_type) {
     std_coef <- NA
-  } else if("factor" %in% param_type){
+  } else if ("factor" %in% param_type) {
     std_coef <- coef / sd_y
   } else {
     std_coef <- coef / sd_y
   }
+
   std_coef
 }
 
@@ -140,28 +140,24 @@ standardize_parameters <- function(model, method="refit", robust=FALSE, ...){
 #' @keywords internal
 .find_parameter_type <- function(name, data){
 
-  if(grepl(":", name)){
-    var <- tail(unlist(strsplit(name, ":", fixed=TRUE)), 1)
+  if (grepl(":", name)) {
+    var <- utils::tail(unlist(strsplit(name, ":", fixed = TRUE)), 1)
     return(c("interaction", var))
-  } else if(name == "(Intercept)"){
+  } else if (name == "(Intercept)") {
     return(c("intercept"))
-  } else if(name %in% names(data)){
+  } else if (name %in% names(data)) {
     return(c("numeric"))
-  } else{
+  } else {
     facs <- data[sapply(data, is.factor)]
     facs_names <- c()
-    for(fac in names(facs)){
-      facs_names <- c(facs_names,
-                      paste0(fac, unique(data[[fac]])))
+    for (fac in names(facs)) {
+      facs_names <- c(facs_names, paste0(fac, unique(data[[fac]])))
     }
 
-    if(name %in% facs_names){
-      return(c("factor"))
+    if (name %in% facs_names) {
+      return("factor")
     } else{
-      return(c("unknown"))
+      return("unknown")
     }
   }
 }
-
-
-

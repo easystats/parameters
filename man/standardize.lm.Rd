@@ -19,4 +19,5 @@ Refit the model after standardizing the data.
 \examples{
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 coef(standardize(model))
+
 }
