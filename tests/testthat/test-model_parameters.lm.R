@@ -1,8 +1,9 @@
 context("model_parameters.lm")
+library(insight)
+library(testthat)
 
 test_that("model_parameters.lm", {
-  library(circus)
-  model <- circus::download_model("lm_1")
+  model <- insight::download_model("lm_1")
 
   params <- model_parameters(model, standardize = TRUE)
   testthat::expect_equal(nrow(params), 2)
@@ -12,13 +13,13 @@ test_that("model_parameters.lm", {
   testthat::expect_equal(nrow(params), 2)
   testthat::expect_equal(ncol(params), 19)
 
-  model <- circus::download_model("lm_2")
+  model <- insight::download_model("lm_2")
 
   params <- model_parameters(model, standardize = TRUE)
   testthat::expect_equal(nrow(params), 3)
   testthat::expect_equal(ncol(params), 12)
 
-  model <- circus::download_model("lm_3")
+  model <- insight::download_model("lm_3")
 
   params <- model_parameters(model, standardize = TRUE)
   testthat::expect_equal(nrow(params), 4)
