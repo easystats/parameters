@@ -19,8 +19,8 @@ normalize(x, ...)
 
 \method{normalize}{data.frame}(x, select = NULL, exclude = NULL, ...)
 
-\method{standardize}{data.frame}(x, method = "mean", select = NULL,
-  exclude = NULL, ...)
+\method{standardize}{data.frame}(x, robust = FALSE, method = "default",
+  select = NULL, exclude = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Object.}
@@ -34,7 +34,15 @@ standardized.}
 \item{exclude}{For a data frame, character vector of column names to
 be excluded from standardization.}
 
+\item{robust}{Logical, if \code{TRUE}, centering is done by substracting the
+median from the variables and divide it by the median absolute deviation
+(MAD). If \code{FALSE}, variables are standardized by substracting the
+mean and divide it by the standard deviation (SD).
+the}
+
 \item{method}{The method of standardization. See 'Details'.}
+
+\item{verbose}{Toggle warnings on or off.}
 }
 \description{
 Performs a normalization of data. This scales all numeric

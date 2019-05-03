@@ -40,7 +40,7 @@ normalize.numeric <- function(x, ...) {
   }
 
 
-  return(as.vector((x - min(x, na.rm = TRUE)) / diff(range(x, na.rm = TRUE), na.rm = TRUE)))
+  as.vector((x - min(x, na.rm = TRUE)) / diff(range(x, na.rm = TRUE), na.rm = TRUE))
 }
 
 
@@ -55,7 +55,7 @@ normalize.numeric <- function(x, ...) {
 #' @rdname standardize.data.frame
 #' @export
 normalize.factor <- function(x, ...) {
-  return(x)
+  x
 }
 
 
@@ -103,5 +103,5 @@ normalize.data.frame <- function(x, select = NULL, exclude = NULL, ...) {
   }
 
   x[select] <- lapply(x[select], normalize)
-  return(x)
+  x
 }

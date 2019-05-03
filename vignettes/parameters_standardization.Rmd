@@ -36,7 +36,7 @@ The `parameters` package include the possibility of using different techniques, 
 
 The "refit" method is the purest method of standardization, as it corresponds to the parameters of a model fitted on a standardized version of the data. This standardization is recommended to improve computational accuracy [@neter1989applied]. Unfortunately, as it involves a complete re-fitting of the model, this method can be slow, especially for computationnaly heavy models, such as Bayesian ones.
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r message=FALSE, warning=FALSE, results='hide'}
 library(parameters)
 
 data <- iris
@@ -50,7 +50,7 @@ knitr::kable(standardize_parameters(model, method="refit"), digits=2)
 
 The `robust` (default to `FALSE`) argument enables a **robust standardization of data**, *i.e.*, based on the **median** and **MAD** instead of the **mean** and **SD**.
 
-```{r warning=FALSE, message=FALSE, include=FALSE}
+```{r warning=FALSE, message=FALSE, results='hide'}
 standardize_parameters(model, method="refit", robust=TRUE)
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
@@ -60,7 +60,7 @@ knitr::kable(standardize_parameters(model, method="refit", robust=TRUE), digits=
 
 This method is very flexible as it can be applied to every types of models (linear, logistic...).
 
-```{r warning=FALSE, message=FALSE, include=FALSE}
+```{r warning=FALSE, message=FALSE, results='hide'}
 library(parameters)
 
 data$binary <- ifelse(data$Sepal.Width > 3, 1, 0)
@@ -74,7 +74,7 @@ knitr::kable(standardize_parameters(model, method="refit"), digits=2)
 
 ## `full`: Scaling by the variances of the response and the predictor
 
-```{r warning=FALSE, message=FALSE, include=FALSE}
+```{r warning=FALSE, message=FALSE, results='hide'}
 model <- lm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data)
 standardize_parameters(model, method="full")
 ```
@@ -85,7 +85,7 @@ knitr::kable(standardize_parameters(model, method="full"), digits=2)
 
 The `robust` (default to `FALSE`) argument means that the coefficients are scaled by the **MAD** instead of the **SD**.
 
-```{r warning=FALSE, message=FALSE, include=FALSE}
+```{r warning=FALSE, message=FALSE, results='hide'}
 standardize_parameters(model, method="full", robust=TRUE)
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
@@ -95,7 +95,7 @@ knitr::kable(standardize_parameters(model, method="full", robust=TRUE), digits=2
 
 This method is very flexible as it can be applied to every types of models (linear, logistic...).
 
-```{r warning=FALSE, message=FALSE, include=FALSE}
+```{r message=FALSE, warning=FALSE, results='hide'}
 library(parameters)
 
 model <- glm(binary ~ Species + Sepal.Length, data = data, family="binomial")

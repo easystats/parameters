@@ -4,12 +4,21 @@
 \alias{standardize}
 \title{Standardization}
 \usage{
-standardize(x, method = "mean", ...)
+standardize(x, robust = FALSE, method = "default", verbose = TRUE,
+  ...)
 }
 \arguments{
 \item{x}{Object.}
 
+\item{robust}{Logical, if \code{TRUE}, centering is done by substracting the
+median from the variables and divide it by the median absolute deviation
+(MAD). If \code{FALSE}, variables are standardized by substracting the
+mean and divide it by the standard deviation (SD).
+the}
+
 \item{method}{The method of standardization. See 'Details'.}
+
+\item{verbose}{Toggle warnings on or off.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -23,8 +32,7 @@ Performs a standardization of data or parameters. See the documentation for your
 \details{
 Methods:
 \itemize{
- \item \strong{mean}: \code{mean} and \code{sd} (default).
- \item \strong{median}: \code{median} and \code{mad}.
- \item \strong{2sd}: \code{mean} and two times the \code{sd}.
+ \item \strong{default}: Depending on \code{robust}, variables are divided by SD or MAD.
+ \item \strong{2sd}: Depending on \code{robust}, variables are divided by two times the SD or MAD.
 }
 }
