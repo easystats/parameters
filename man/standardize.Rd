@@ -24,6 +24,11 @@ the}
 \item{verbose}{Toggle warnings on or off.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{force}{Logical, if \code{TRUE}, forces standardization of factors as
+well. Factors are converted to numerical values, with the lowest level
+being the value \code{1} (unless the factor has numeric levels, which are
+converted to the corresponding numeric value).}
 }
 \description{
 Performs a standardization of data or parameters. See the documentation for your object's class:

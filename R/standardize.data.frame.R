@@ -67,7 +67,7 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
 #' @export
 standardize.factor <- function(x, force = FALSE, ...) {
   if (force) {
-    standardize.numeric(x)
+    standardize.numeric(x, ...)
   } else {
     x
   }
