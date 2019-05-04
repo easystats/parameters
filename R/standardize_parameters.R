@@ -65,7 +65,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
     # Extract parameters
     if(insight::model_info(model)$is_bayesian){
-      params <- describe_posterior(insight::get_parameters(model), test=NULL, ...)
+      params <- describe_posterior(insight::get_parameters(model), test=NULL, ci = NULL, dispersion=FALSE, ...)
     } else{
       params <- insight::get_parameters(model)
       names(params) <- c("Parameter", "beta")
@@ -111,6 +111,9 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
   # Binomial models
   } else if (info$is_logit) {
+    if(insight::model_info(model)$is_bayesian){
+      stop(paste0("Standardization method ", method, " is not available for this kind of model."))
+    }
     logit_y <- stats::predict(model)
     r <- stats::cor(insight::get_response(model), odds_to_probs(logit_y, log = TRUE))
     if (robust == FALSE) {

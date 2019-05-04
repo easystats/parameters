@@ -16,8 +16,12 @@
   parameters <- .extract_parameters_bayesian(model, ci, ci_method = ci_method, estimate = tolower(estimate), test = test, rope_range = rope_range, iterations = iterations, ...)
 
   # Standardized
-  if (standardize) {
-    std_parameters <- standardize_parameters(model, estimate = tolower(estimate), ...)
+  if (standardize != FALSE & !is.null(standardize)) {
+    if(standardize == TRUE){
+      warning("Please set the `standardize` method explicitly. Set to \"full\" by default.")
+      standardize <- "full"
+    }
+    std_parameters <- standardize_parameters(model, method = standardize, estimate = tolower(estimate), ...)
 
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
   }
@@ -64,7 +68,7 @@
 #' Parameters of Bayesian models.
 #'
 #' @param model Bayesian model.
-#' @param standardize Add standardized parameters. Default to FALSE as this re-fits the model and can thus take some time.
+#' @param standardize Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{standardize_parameters}).
 #' @inheritParams describe_posterior
 #' @param priors Include priors specifications information. If set to true (current \code{rstanarm}' default), automatically adjusted priors' scale during fitting  will be displayed.
 #' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1 (Gelman and Rubin, 1992) or 1.01 (Vehtari et al., 2019).

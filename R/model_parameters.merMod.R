@@ -11,7 +11,7 @@
 #' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #' model_parameters(model, standardize = TRUE)
 #' }
-#' 
+#'
 #' @export
 model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", ...) {
   if (bootstrap) {
@@ -21,12 +21,13 @@ model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootst
   parameters <- .extract_parameters_mixed(model, ci = ci, p_method = p_method, ci_method = ci_method, ...)
 
   # Standardized
-  if (standardize) {
-    std_model <- standardize(model, ...)
-    std_parameters <- .extract_parameters_mixed(std_model, ci = ci, p_method = p_method, ci_method = ci_method, ...)
-    names(std_parameters) <- paste0("Std_", names(std_parameters))
-
-    parameters <- cbind(parameters, std_parameters[c("Std_beta", "Std_SE")])
+  # Standardized
+  if (standardize != FALSE & !is.null(standardize)) {
+    if(standardize == TRUE){
+      warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
+      standardize <- "refit"
+    }
+    parameters <- cbind(parameters, standardize_parameters(model, method = standardize)[2])
   }
 
   return(parameters)

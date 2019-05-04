@@ -22,7 +22,7 @@
 
 \item{ci_method}{The type of index used for Credible Interval. Can be \code{"hdi"} (default, see \link[bayestestR]{hdi}) or "quantile" (see \link[bayestestR]{ci}).}
 
-\item{standardize}{Add standardized parameters. Default to FALSE as this re-fits the model and can thus take some time.}
+\item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{standardize_parameters}).}
 
 \item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
 

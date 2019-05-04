@@ -4,7 +4,7 @@
 #'
 #' @param model Object of class \link{lm}.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param standardize Add standardized parameters.
+#' @param standardize Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{standardize_parameters}).
 #' @param bootstrap Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.
 #' @param ... Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).
 #'
@@ -20,8 +20,12 @@ model_parameters.lm <- function(model, ci = .95, standardize = FALSE, bootstrap 
   parameters <- .extract_parameters_lm(model, ci = ci)
 
   # Standardized
-  if (standardize) {
-    parameters <- cbind(parameters, standardize_parameters(model)[2])
+  if (standardize != FALSE & !is.null(standardize)) {
+    if(standardize == TRUE){
+      warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
+      standardize <- "refit"
+    }
+    parameters <- cbind(parameters, standardize_parameters(model, method = standardize)[2])
   }
 
   return(parameters)
