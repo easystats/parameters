@@ -8,6 +8,8 @@ library(testthat)
 # RSTANARM --------------------------------------------------------------------
 
 test_that("model_parameters.stanreg", {
+  set.seed(333)
+
   # GLM
   params <- model_parameters(insight::download_model("stanreg_lm_1"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 24))
@@ -31,7 +33,7 @@ test_that("model_parameters.stanreg", {
   params <- model_parameters(insight::download_model("stanreg_merMod_1"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 24))
 
-  testthat::expect_warning(params <- model_parameters(insight::download_model("stanreg_merMod_2"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"), rope_full = FALSE))
+  params <- model_parameters(insight::download_model("stanreg_merMod_2"), standardize = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"), rope_full = FALSE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 24))
 
   # GAM

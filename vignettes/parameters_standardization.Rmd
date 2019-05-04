@@ -303,7 +303,7 @@ knitr::kable(comparison(model), digits=2)
 
 # Conclusion
 
-
+Use `refit` if possible, otherwise `full`.
 
 
 # References

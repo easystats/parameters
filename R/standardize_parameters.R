@@ -82,6 +82,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
     stop("method='partial' not implemented yet :(")
   }
 
+  names(std_params)[-1] <- paste0("Std_", names(std_params)[-1])
   std_params
 }
 

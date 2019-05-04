@@ -17,7 +17,7 @@
 
   # Standardized
   if (standardize) {
-    std_parameters <- standardize_parameters(model, ci = ci, ci_method=ci_method, estimate = tolower(estimate), rope_range = rope_range, iterations = iterations, ...)
+    std_parameters <- standardize_parameters(model, ci = ci, ci_method=ci_method, estimate = tolower(estimate), rope_range = rope_range, ...)
     names(std_parameters) <- paste0("Std_", names(std_parameters))
 
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Std_Parameter"])
@@ -75,8 +75,10 @@
 #' @examples
 #' \dontrun{
 #' library(rstanarm)
+#' library(parameters)
+#'
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-#' model_parameters(model)
+#' model_parameters(model, standardize=TRUE)
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

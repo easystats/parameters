@@ -21,11 +21,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = FALSE, bootstrap 
 
   # Standardized
   if (standardize) {
-    std_model <- standardize(model, ...)
-    std_parameters <- .extract_parameters_lm(std_model, ci)
-    names(std_parameters) <- paste0("Std_", names(std_parameters))
-
-    parameters <- cbind(parameters, std_parameters[c("Std_beta", "Std_SE", "Std_CI_low", "Std_CI_high")])
+    parameters <- cbind(parameters, standardize_parameters(model)[2])
   }
 
   return(parameters)
