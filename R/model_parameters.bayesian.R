@@ -16,13 +16,13 @@
   parameters <- .extract_parameters_bayesian(model, ci, ci_method = ci_method, estimate = tolower(estimate), test = test, rope_range = rope_range, iterations = iterations, ...)
 
   # Standardized
-  if (standardize != FALSE & !is.null(standardize)) {
-    if(standardize == TRUE){
-      warning("Please set the `standardize` method explicitly. Set to \"full\" by default.")
-      standardize <- "full"
-    }
-    std_parameters <- standardize_parameters(model, method = standardize, estimate = tolower(estimate), ...)
+  if (isTRUE(standardize)) {
+    warning("Please set the `standardize` method explicitly. Set to \"full\" by default.")
+    standardize <- "full"
+  }
 
+  if (!is.null(standardize) && !is.logical(standardize)) {
+    std_parameters <- standardize_parameters(model, method = standardize, estimate = tolower(estimate), ...)
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
   }
 

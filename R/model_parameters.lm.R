@@ -20,15 +20,16 @@ model_parameters.lm <- function(model, ci = .95, standardize = FALSE, bootstrap 
   parameters <- .extract_parameters_lm(model, ci = ci)
 
   # Standardized
-  if (standardize != FALSE & !is.null(standardize)) {
-    if(standardize == TRUE){
-      warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
-      standardize <- "refit"
-    }
+  if (isTRUE(standardize)) {
+    warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
+    standardize <- "refit"
+  }
+
+  if (!is.null(standardize) && !is.logical(standardize)) {
     parameters <- cbind(parameters, standardize_parameters(model, method = standardize)[2])
   }
 
-  return(parameters)
+  parameters
 }
 
 
