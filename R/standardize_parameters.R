@@ -48,25 +48,49 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
   method <- match.arg(method, choices = c("default", "refit", "2sd", "full", "partial", "classic"))
 
+  # Refit
   if (method %in% c("refit", "2sd")) {
     std_model <- standardize(model, robust = robust, method = method, verbose = verbose, ...)
-    std_params <- insight::get_parameters(std_model)
+
+    # Extract parameters
+    if(insight::model_info(model)$is_bayesian){
+      std_params <- describe_posterior(insight::get_parameters(std_model), test=NULL, ...)
+    } else{
+      std_params <- insight::get_parameters(std_model)
+      names(std_params) <- c("Parameter", "beta")
+    }
+
+  # Posthoc
   } else if (method %in% c("default", "full", "classic")) {
-    std_params <- .standardize_parameters_full(model, robust, method)
+
+    # Extract parameters
+    if(insight::model_info(model)$is_bayesian){
+      params <- describe_posterior(insight::get_parameters(model), test=NULL, ...)
+    } else{
+      params <- insight::get_parameters(model)
+      names(params) <- c("Parameter", "beta")
+    }
+
+    std_params <- params["Parameter"]
+    for(estimate in tail(names(params), -1)){
+      std_params <- cbind(std_params,
+                          .standardize_parameters_full(model, params[c("Parameter", estimate)], robust, method)[2])
+    }
+
+  # Partial
   } else if (method == "partial") {
     stop("method='partial' not implemented yet :(")
   }
 
-  names(std_params) <- c("Parameter", "Std_Estimate")
   std_params
 }
 
 
 #' @keywords internal
-.standardize_parameters_full <- function(model, robust, method) {
+.standardize_parameters_full <- function(model, params, robust, method) {
   info <- insight::model_info(model)
-  params <- insight::get_parameters(model)
   data <- insight::get_data(model)
+  name_estimate <- tail(names(params), -1)
 
   # Linear models
   if (info$is_linear) {
@@ -77,12 +101,11 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
     }
 
     std_params <- data.frame()
-
-    for (name in params$parameter) {
-      coef <- params[params$parameter == name, ]$estimate
+    for (name in params$Parameter) {
+      coef <- params[params$Parameter == name, name_estimate]
       std_coef <- .standardize_parameter_full(model, name, coef, data, sd_y, robust, method)
       std_params <-
-        rbind(std_params, data.frame("parameter" = name, "estimate" = std_coef))
+        rbind(std_params, data.frame("Parameter" = name, "estimate" = std_coef))
     }
 
   # Binomial models
@@ -96,17 +119,18 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
     }
 
     std_params <- data.frame()
-    for (name in params$parameter) {
-      coef <- params[params$parameter == name, ]$estimate
+    for (name in params$Parameter) {
+      coef <- params[params$Parameter == name, name_estimate]
       std_coef <- .standardize_parameter_full(model, name, coef, data, sd_y, robust, method)
       std_coef <- std_coef * r
       std_params <-
-        rbind(std_params, data.frame("parameter" = name, "estimate" = std_coef))
+        rbind(std_params, data.frame("Parameter" = name, "estimate" = std_coef))
     }
   } else {
     stop("method='full' not applicable to standardize this type of model. Please use method='refit'.")
   }
 
+  names(std_params) <- names(params)
   std_params
 }
 

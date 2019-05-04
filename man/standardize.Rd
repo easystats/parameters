@@ -2,16 +2,21 @@
 % Please edit documentation in R/standardize.R, R/standardize.data.frame.R
 \name{standardize}
 \alias{standardize}
+\alias{standardize.numeric}
 \alias{standardize.factor}
 \title{Standardization}
 \usage{
-standardize(x, robust = FALSE, method = "default", verbose = TRUE,
-  force = FALSE, ...)
+standardize(x, ...)
+
+\method{standardize}{numeric}(x, robust = FALSE, method = "default",
+  verbose = TRUE, ...)
 
 \method{standardize}{factor}(x, force = FALSE, ...)
 }
 \arguments{
 \item{x}{Object.}
+
+\item{...}{Arguments passed to or from other methods.}
 
 \item{robust}{Logical, if \code{TRUE}, centering is done by substracting the
 median from the variables and divide it by the median absolute deviation
@@ -27,8 +32,6 @@ the}
 well. Factors are converted to numerical values, with the lowest level
 being the value \code{1} (unless the factor has numeric levels, which are
 converted to the corresponding numeric value).}
-
-\item{...}{Arguments passed to or from other methods.}
 }
 \description{
 Performs a standardization of data or parameters. See the documentation for your object's class:

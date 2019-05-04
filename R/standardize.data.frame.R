@@ -1,4 +1,4 @@
-#' @inherit standardize
+#' @rdname standardize
 #' @importFrom stats median mad na.omit
 #' @export
 standardize.numeric <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {

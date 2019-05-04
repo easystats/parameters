@@ -105,26 +105,30 @@ library(sjstats)
 library(lm.beta)
 
 comparison <- function(model, robust=FALSE){
-  out <- standardize_parameters(model, method="refit", robust=robust)
+  out <- standardize_parameters(model, method="refit", robust=robust)[1:2]
   
   out$full <- tryCatch({
-    out$Std_Estimate - standardize_parameters(model, method="full", robust=robust)$Std_Estimate
+    out[, 2] - standardize_parameters(model, method="full", robust=robust)[, 2]
 }, error = function(error_condition) {
     "Error"
 })
   out$classic <- tryCatch({
-    out$Std_Estimate - standardize_parameters(model, method="classic", robust=robust)$Std_Estimate
+    out[, 2] - standardize_parameters(model, method="classic", robust=robust)[, 2]
 }, error = function(error_condition) {
     "Error"
 })
   out$sjstats <- tryCatch({
-    out$Std_Estimate - c(NA, sjstats::std_beta(model)[, 2])
+    if(insight::model_info(model)$is_bayesian){
+      out[, 2] - c(NA, parameters::describe_posterior(sjstats::std_beta(model))[, 1])
+    } else{
+      out[, 2] - c(NA, sjstats::std_beta(model)[, 2])
+    }
 }, error = function(error_condition) {
     "Error"
 })
   
   out$lm.beta <- tryCatch({
-    out$Std_Estimate - lm.beta::lm.beta(model)$standardized.coefficients
+    out[, 2] - lm.beta::lm.beta(model)$standardized.coefficients
 }, error = function(error_condition) {
     "Error"
 })
@@ -135,7 +139,7 @@ comparison <- function(model, robust=FALSE){
 #     "Error"
 # })
 
-  out$Std_Estimate <- NULL
+  out[, 2] <- NULL
   return(out)
 }
 ```
@@ -215,8 +219,86 @@ knitr::kable(comparison(model), digits=2)
 
 For polynomial transformations, other software become very unreliable.
 
+### Bayesian Models
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+library(rstanarm)
+
+model <- stan_glm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data)
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+library(rstanarm)
+junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data))
+knitr::kable(comparison(model), digits=2)
+```
+
+
 
 ## Models with factors
+
+### Linear Model
+
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+model <- lm(Sepal.Length ~ Petal.Width + Group_Sepal.Width, data=data) 
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(comparison(model), digits=2)
+```
+
+
+### Logistic Model
+
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+model <- glm(Binary_Sepal.Width ~ Petal.Width + Species, data=data, family="binomial")
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(comparison(model), digits=2)
+```
+
+
+### Linear Mixed Model
+
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+library(lme4)
+
+model <- lme4::lmer(Sepal.Length ~ Petal.Length + Group_Sepal.Width + (1|Species), data=data)
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(comparison(model), digits=2)
+```
+
+### Interactions
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+model <- lm(Sepal.Length ~ Petal.Width * Group_Sepal.Width, data=data)
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(comparison(model), digits=2)
+```
+
+
+
+### Bayesian Models
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+library(rstanarm)
+
+model <- stan_glm(Sepal.Length ~ Petal.Width + Group_Sepal.Width, data=data)
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+library(rstanarm)
+junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Width + Group_Sepal.Width, data=data))
+knitr::kable(comparison(model), digits=2)
+```
 
 
 # Conclusion

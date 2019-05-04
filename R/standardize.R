@@ -28,6 +28,6 @@
 #' }
 #'
 #' @export
-standardize <- function(x, robust = FALSE, method = "default", verbose = TRUE, force = FALSE, ...) {
+standardize <- function(x, ...) {
   UseMethod("standardize")
 }
