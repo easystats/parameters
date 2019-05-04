@@ -56,8 +56,8 @@ p_value.aovlist <- p_value.aov
 
 
 #' @export
-p_value.gam <- function(fit, ...) {
-  sm <- summary(fit)
+p_value.gam <- function(model, ...) {
+  sm <- summary(model)
   lc <- length(sm$p.coeff)
   p <- sm$p.pv[1:lc]
 

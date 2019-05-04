@@ -141,7 +141,7 @@ comparison <- function(model, robust=FALSE){
 ```
 
 
-## Simple models with only numeric predictors
+## Models with only numeric predictors
 
 
 ### Linear Model
@@ -215,30 +215,13 @@ knitr::kable(comparison(model), digits=2)
 
 For polynomial transformations, other software become very unreliable.
 
+
+## Models with factors
+
+
 # Conclusion
 
 
-<!-- model <- lm(Sepal.Length ~ Petal.Width * Sepal.Width, data=data) -->
-<!-- knitr::kable(comparison(model), digits=2) -->
-
-<!-- # Simple models with numerics -->
-<!-- model <- lm(Sepal.Length ~ Species * Group_Sepal.Width, data=data) -->
-<!-- knitr::kable(comparison(model), digits=2) -->
-
-<!-- # Simple models with numerics -->
-<!-- model <- lm(Sepal.Length ~ Species * Petal.Width, data=data) -->
-<!-- knitr::kable(comparison(model), digits=2) -->
-
-<!-- model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width * Sepal.Width, data=data) -->
-<!-- knitr::kable(comparison(model), digits=2) -->
-
-<!-- # Simple models with numerics -->
-<!-- model <- lm(Sepal.Length ~ Species * poly(Petal.Width, 2), data=data) -->
-<!-- knitr::kable(comparison(model), digits=2) -->
-
-<!-- # COmplex models -->
-<!-- model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width * poly(Petal.Length, 2), data=data) -->
-<!-- knitr::kable(comparison(model), digits=2) -->
 
 
 # References
