@@ -116,6 +116,6 @@ model_parameters.brmsfit <- .model_parameters_bayesian
   }
 
   # Summary
-  parameters <- describe_posterior(data, ci = ci, ci_method=ci_method, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full)
+  parameters <- describe_posterior(data, ci = ci, ci_method = ci_method, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full)
   return(parameters)
 }
