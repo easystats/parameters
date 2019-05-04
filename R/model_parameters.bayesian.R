@@ -17,7 +17,7 @@
 
   # Standardized
   if (standardize) {
-    std_parameters <- standardize_parameters(model, ...)
+    std_parameters <- standardize_parameters(model, estimate = tolower(estimate), ...)
 
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
   }
