@@ -21,11 +21,11 @@ bibliography: bibliography.bib
 
 # Introduction
 
-Standardising parameters can allow for comparison of coefficients accross models, variables and studies. Moreover, as it returns coefficients expressed in terms of variance modification (for instance, coefficients expresed in terms of SD of the response variable), it can allow for the usage of [effect size interpretation guidelines](https://easystats.github.io/report/articles/interpret_metrics.html), such as the famous Cohen's (1988) rules of thumb.
+Standardising parameters (*i.e.*, coefficients) can allow for their comparison within and between models, variables and studies. Moreover, as it returns coefficients expressed in terms of variance modification (for instance, coefficients expresed in terms of SD of the response variable), it can allow for the usage of [effect size interpretation guidelines](https://easystats.github.io/report/articles/interpret_metrics.html), such as the famous Cohen's (1988) rules of thumb.
 
-However, standardizing the model's parameters should not be automatic: for some research fields, particular variables or types of studies (*e.g.*, replications), it sometimes makes more sense to keep, use and interpret the original parameters.
+However, standardizing the model's parameters should not be automatic: for some research fields, particular variables or types of studies (*e.g.*, replications), it sometimes makes more sense to keep, use and interpret the original parameters, especially if they are well known or easily understood.
 
-Critically, parameters standardization is not a **trivial process**. Different techniques exist, that can lead to drastic differences. Thus, it is critical that the standardization method is explicitly documented and detailed.
+Critically, parameters standardization is not a **trivial process**. Different techniques exist, that can lead to drastically different results. Thus, it is critical that the standardization method is explicitly documented and detailed.
 
 The `parameters` package include the possibility of using different techniques, described below [@bring1994standardize;@menard2004six;@gelman2008scaling;@schielzeth2010simple;@menard2011standards].
 
@@ -34,7 +34,8 @@ The `parameters` package include the possibility of using different techniques, 
 
 ## `refit`: Re-fitting the model with standardized data
 
-The "refit" method is the purest method of standardization, as it corresponds to the parameters of a model fitted on a standardized version of the data. This standardization is recommended to improve computational accuracy [@neter1989applied]. Unfortunately, as it involves a complete re-fitting of the model, this method can be slow, especially for computationnaly heavy models, such as Bayesian ones.
+This method is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the "purest" and the most accurate [@neter1989applied], but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (*e.g.*, polynomial or spline terms).
+
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
 library(parameters)
@@ -58,7 +59,7 @@ knitr::kable(standardize_parameters(model, method="refit", robust=TRUE), digits=
 ```
 
 
-This method is very flexible as it can be applied to every types of models (linear, logistic...).
+This method is very flexible as it can be applied to all types of models (linear, logistic...).
 
 ```{r warning=FALSE, message=FALSE, results='hide'}
 library(parameters)
@@ -71,8 +72,16 @@ standardize_parameters(model, method="refit")
 knitr::kable(standardize_parameters(model, method="refit"), digits=2)
 ```
 
+## `2sd`: Scaling by two 2 SDs
+
+Same as `method = "refit"`, however, standardization is done by dividing by two times the `SD` or `MAD` (depending on `robust`). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors (see @gelman2008scaling).
+
+
 
 ## `full`: Scaling by the variances of the response and the predictor
+
+Post-hoc standardization of the model paramaters. The coefficients are divided by the standard deviation (or MAD if `robust`) of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if `robust`) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of `x` is related to a change of 0.24 of the SD of `y`). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.
+
 
 ```{r warning=FALSE, message=FALSE, results='hide'}
 model <- lm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data)
@@ -82,57 +91,53 @@ standardize_parameters(model, method="full")
 knitr::kable(standardize_parameters(model, method="full"), digits=2)
 ```
 
+## `classic`: Basic scaling of all parameters
 
-The `robust` (default to `FALSE`) argument means that the coefficients are scaled by the **MAD** instead of the **SD**.
+This method is similar to `method = "full"`, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as `sjstats::std_beta()` or `lm.beta::lm.beta()`.
 
-```{r warning=FALSE, message=FALSE, results='hide'}
-standardize_parameters(model, method="full", robust=TRUE)
+# Methods Comparison
+
+```{r message=FALSE, warning=FALSE}
+library(parameters)
+library(sjstats)
+library(lm.beta)
+
+comparison <- function(model, robust=FALSE){
+  out <- standardize_parameters(model, method="refit", robust=robust)
+  out$full <- out$Std_Estimate - standardize_parameters(model, method="full", robust=robust)$Std_Estimate
+  out$classic <- out$Std_Estimate - standardize_parameters(model, method="classic", robust=robust)$Std_Estimate
+
+  # out$MuMin <- out$estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
+  out$sjstats <- out$Std_Estimate - c(NA, sjstats::std_beta(model)[, 2])
+  out$lm.beta <- out$Std_Estimate - lm.beta::lm.beta(model)$standardized.coefficients
+  out$Std_Estimate <- NULL
+  return(out)
+}
 ```
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-knitr::kable(standardize_parameters(model, method="full", robust=TRUE), digits=2)
-```
 
 
-This method is very flexible as it can be applied to every types of models (linear, logistic...).
+## Simple models with only numeric predictors
+
+
+### LM
+
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
-library(parameters)
+data <- iris
+data$Group_Sepal.Width <- as.factor(ifelse(data$Sepal.Width > 3, "High", "Low"))
+data$Binary_Sepal.Width <- as.factor(ifelse(data$Sepal.Width > 3, 1, 0))
 
-model <- glm(binary ~ Species + Sepal.Length, data = data, family="binomial")
-standardize_parameters(model, method="full")
+model <- lm(Sepal.Length ~ Petal.Width * Sepal.Width, data=data) 
+comparison(model)
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-knitr::kable(standardize_parameters(model, method="full"), digits=2)
+knitr::kable(comparison(model), digits=2)
 ```
-
-
-<!-- library(parameters) -->
-<!-- library(insight) -->
-<!-- library(dplyr) -->
-<!-- library(sjstats) -->
-<!-- library(MuMIn) -->
-<!-- library(lm.beta) -->
-
-<!-- comparison <- function(model){ -->
-<!--   out <- standardize_parameters(model, method="refit", robust=FALSE) -->
-<!--   robust_true <- standardize_parameters(model, method="refit", robust=FALSE)$estimate -->
-
-<!--   out$full <- out$estimate - standardize_parameters(model, method="full", robust=FALSE)$estimate -->
-<!--   out$full_robust <- robust_true - standardize_parameters(model, method="full", robust=FALSE)$estimate -->
-
-
-<!--   # out$MuMin <- out$estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1] -->
-<!--   out$sjstats <- out$estimate - c(NA, sjstats::std_beta(model)[, 2]) -->
-<!--   out$lm.beta <- out$estimate - lm.beta::lm.beta(model)$standardized.coefficients -->
-<!--   out <- dplyr::select(out, -estimate) -->
-<!--   return(out) -->
-<!-- } -->
-
 
 <!-- data <- dplyr::mutate(iris, Group_Sepal.Width = as.factor(ifelse(Sepal.Width > 3, "High", "Low"))) -->
 
 
-<!-- # Simple models with numerics -->
+
 <!-- model <- lm(Sepal.Length ~ Petal.Width * Sepal.Width, data=data) -->
 <!-- knitr::kable(comparison(model), digits=2) -->
 

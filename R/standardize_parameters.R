@@ -1,6 +1,6 @@
 #' Standardized Model Parameters
 #'
-#' Compute standardized model parameters (coefficients).
+#' Compute standardized model parameters (coefficients). See \href{https://easystats.github.io/parameters/articles/parameters_standardization.html}{this vignette}.
 #'
 #' @param model A statistical model.
 #' @param method The method used for standardizing the parameters. Can be \code{"refit"} (default), "2sd", "full" or "classic".
@@ -8,8 +8,8 @@
 #'
 #' @details \strong{Methods:}
 #' \itemize{
-#'  \item \strong{refit}: This method is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the most accurate, but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms).
-#'  \item \strong{2sd}: Same as \code{method = "refit"}, however, standardization is done by dividing by two times the SD or MAD (depending on \code{robust}).
+#'  \item \strong{refit}: This method is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the "purest" and the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms). The \code{robust} (default to \code{FALSE}) argument enables a robust standardization of data, i.e., based on the \code{median} and \code{MAD} instead of the \code{mean} and \code{SD}.
+#'  \item \strong{2sd}: Same as \code{method = "refit"}, however, standardization is done by dividing by two times the \code{SD} or \code{MAD} (depending on \code{robust}). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors (see Gelman, 2008).
 #'  \item \strong{full}: Post-hoc standardization of the model paramaters. The coefficients are divided by the standard deviation (or MAD if \code{robust}) of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if \code{robust}) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of \code{x} is related to a change of 0.24 of the SD of \code{y}). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.
 #'  \item \strong{classic}: This method is similar to \code{method = "full"}, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as \code{sjstats::std_beta()} or \code{lm.beta::lm.beta()}.
 #' }
@@ -37,6 +37,12 @@
 #' @importFrom stats mad sd predict cor model.matrix
 #' @importFrom insight get_parameters model_info get_data get_response
 #' @importFrom utils tail
+#'
+#' @references
+#' \itemize{
+#'   \item Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear regression models.
+#'   \item Gelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. Statistics in medicine, 27(15), 2865-2873.
+#' }
 #' @export
 standardize_parameters <- function(model, robust = FALSE, method = "refit", verbose = TRUE, ...) {
 
