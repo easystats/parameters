@@ -26,7 +26,7 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
   }
 
   # Warning if logical vector
-  if (length(unique(x)) == 2) {
+  if (length(unique(x)) == 2 && !is.factor(x) && !is.character(x)) {
     if (is.null(names(x))) {
       name <- deparse(substitute(x))
     } else {
@@ -35,6 +35,10 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
     if (verbose) {
       warning(paste0("Variable `", name, "` contains only two different values. Consider converting it to a factor."))
     }
+  }
+
+  if (is.factor(x) || is.character(x)) {
+    x <- .factor_to_numeric(x)
   }
 
   if (method %in% c("default", "classic", "refit", "full")) {
@@ -58,12 +62,18 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
 
 
 
-
+#' @rdname standardize
 #' @inherit standardize
 #' @export
-standardize.factor <- function(x, ...) {
-  return(x)
+standardize.factor <- function(x, force = FALSE, ...) {
+  if (force) {
+    standardize.numeric(x, ...)
+  } else {
+    x
+  }
 }
+
+
 #' @export
 standardize.character <- standardize.factor
 
