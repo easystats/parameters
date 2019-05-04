@@ -97,6 +97,8 @@ This method is similar to `method = "full"`, but treats all variables as continu
 
 # Methods Comparison
 
+We will use the "refit" method as the baseline. We will then compute the differences between these standardized parameters and the ones provided by the other functions. The **bigger the (absolute) number, the worse it is**.
+
 ```{r message=FALSE, warning=FALSE}
 library(parameters)
 library(sjstats)
@@ -104,12 +106,35 @@ library(lm.beta)
 
 comparison <- function(model, robust=FALSE){
   out <- standardize_parameters(model, method="refit", robust=robust)
-  out$full <- out$Std_Estimate - standardize_parameters(model, method="full", robust=robust)$Std_Estimate
-  out$classic <- out$Std_Estimate - standardize_parameters(model, method="classic", robust=robust)$Std_Estimate
+  
+  out$full <- tryCatch({
+    out$Std_Estimate - standardize_parameters(model, method="full", robust=robust)$Std_Estimate
+}, error = function(error_condition) {
+    "Error"
+})
+  out$classic <- tryCatch({
+    out$Std_Estimate - standardize_parameters(model, method="classic", robust=robust)$Std_Estimate
+}, error = function(error_condition) {
+    "Error"
+})
+  out$sjstats <- tryCatch({
+    out$Std_Estimate - c(NA, sjstats::std_beta(model)[, 2])
+}, error = function(error_condition) {
+    "Error"
+})
+  
+  out$lm.beta <- tryCatch({
+    out$Std_Estimate - lm.beta::lm.beta(model)$standardized.coefficients
+}, error = function(error_condition) {
+    "Error"
+})
+  
+#   out$MuMin <- tryCatch({
+#     out$Std_Estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
+# }, error = function(error_condition) {
+#     "Error"
+# })
 
-  # out$MuMin <- out$estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
-  out$sjstats <- out$Std_Estimate - c(NA, sjstats::std_beta(model)[, 2])
-  out$lm.beta <- out$Std_Estimate - lm.beta::lm.beta(model)$standardized.coefficients
   out$Std_Estimate <- NULL
   return(out)
 }
@@ -119,7 +144,7 @@ comparison <- function(model, robust=FALSE){
 ## Simple models with only numeric predictors
 
 
-### LM
+### Linear Model
 
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
@@ -127,15 +152,70 @@ data <- iris
 data$Group_Sepal.Width <- as.factor(ifelse(data$Sepal.Width > 3, "High", "Low"))
 data$Binary_Sepal.Width <- as.factor(ifelse(data$Sepal.Width > 3, 1, 0))
 
-model <- lm(Sepal.Length ~ Petal.Width * Sepal.Width, data=data) 
+model <- lm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data) 
 comparison(model)
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 knitr::kable(comparison(model), digits=2)
 ```
 
-<!-- data <- dplyr::mutate(iris, Group_Sepal.Width = as.factor(ifelse(Sepal.Width > 3, "High", "Low"))) -->
+For this simple model, **all methods return results equal to the "refit" method**.
 
+### Logistic Model
+
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+model <- glm(Binary_Sepal.Width ~ Petal.Width + Sepal.Length, data=data, family="binomial")
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(comparison(model), digits=2)
+```
+
+
+### Linear Mixed Model
+
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+library(lme4)
+
+model <- lme4::lmer(Sepal.Length ~ Petal.Width + Sepal.Width + (1|Species), data=data)
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(comparison(model), digits=2)
+```
+
+For this simple mixed model, **all methods return results equal to the "refit" method**.
+
+### Interactions
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+model <- lm(Sepal.Length ~ Petal.Width * Sepal.Width, data=data)
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(comparison(model), digits=2)
+```
+
+
+When interactions are involved, post-hoc methods return different results. However, methods implemented in other softwares perform arguably worse.
+
+<!-- haha Sorry Daniel maybe we should rephrase this ^^ -->
+
+### Transformation
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+model <- lm(Sepal.Length ~ poly(Petal.Width, 2) + poly(Sepal.Width, 2), data=data)
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(comparison(model), digits=2)
+```
+
+For polynomial transformations, other software become very unreliable.
+
+# Conclusion
 
 
 <!-- model <- lm(Sepal.Length ~ Petal.Width * Sepal.Width, data=data) -->
