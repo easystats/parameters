@@ -17,10 +17,9 @@
 
   # Standardized
   if (standardize) {
-    std_parameters <- standardize_parameters(model, ci = ci, ci_method=ci_method, estimate = tolower(estimate), rope_range = rope_range, ...)
-    names(std_parameters) <- paste0("Std_", names(std_parameters))
+    std_parameters <- standardize_parameters(model, ...)
 
-    parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Std_Parameter"])
+    parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
   }
 
   # Diagnostic

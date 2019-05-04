@@ -54,7 +54,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
     # Extract parameters
     if(insight::model_info(model)$is_bayesian){
-      std_params <- describe_posterior(insight::get_parameters(std_model), test=NULL, ...)
+      std_params <- describe_posterior(insight::get_parameters(std_model), test=NULL, ci = NULL, dispersion=FALSE, ...)
     } else{
       std_params <- insight::get_parameters(std_model)
       names(std_params) <- c("Parameter", "beta")
