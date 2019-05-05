@@ -15,7 +15,8 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Parameters standardization">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="Parameters standardization">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -93,9 +94,9 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Standardising parameters can allow for comparison of coefficients accross models, variables and studies. Moreover, as it returns coefficients expressed in terms of variance modification (for instance, coefficients expresed in terms of SD of the response variable), it can allow for the usage of <a href="https://easystats.github.io/report/articles/interpret_metrics.html">effect size interpretation guidelines</a>, such as the famous Cohen’s (1988) rules of thumb.</p>
-<p>However, standardizing the model’s parameters should not be automatic: for some research fields, particular variables or types of studies (<em>e.g.</em>, replications), it sometimes makes more sense to keep, use and interpret the original parameters.</p>
-<p>Critically, parameters standardization is not a <strong>trivial process</strong>. Different techniques exist, that can lead to drastic differences. Thus, it is critical that the standardization method is explicitly documented and detailed.</p>
+<p>Standardising parameters (<em>i.e.</em>, coefficients) can allow for their comparison within and between models, variables and studies. Moreover, as it returns coefficients expressed in terms of variance modification (for instance, coefficients expresed in terms of SD of the response variable), it can allow for the usage of <a href="https://easystats.github.io/report/articles/interpret_metrics.html">effect size interpretation guidelines</a>, such as the famous Cohen’s (1988) rules of thumb.</p>
+<p>However, standardizing the model’s parameters should not be automatic: for some research fields, particular variables or types of studies (<em>e.g.</em>, replications), it sometimes makes more sense to keep, use and interpret the original parameters, especially if they are well known or easily understood.</p>
+<p>Critically, parameters standardization is not a <strong>trivial process</strong>. Different techniques exist, that can lead to drastically different results. Thus, it is critical that the standardization method is explicitly documented and detailed.</p>
 <p>The <code>parameters</code> package include the possibility of using different techniques, described below <span class="citation">(Bring 1994; Menard 2004, 2011; Gelman 2008; Schielzeth 2010)</span>.</p>
 </div>
 <div id="standardization-methods" class="section level1">
@@ -104,11 +105,17 @@
 <div id="refit-re-fitting-the-model-with-standardized-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#refit-re-fitting-the-model-with-standardized-data" class="anchor"></a><code>refit</code>: Re-fitting the model with standardized data</h2>
-<p>The “refit” method is the purest method of standardization, as it corresponds to the parameters of a model fitted on a standardized version of the data. This standardization is recommended to improve computational accuracy <span class="citation">(Neter, Wasserman, and Kutner 1989)</span>. Unfortunately, as it involves a complete re-fitting of the model, this method can be slow, especially for computationnaly heavy models, such as Bayesian ones.</p>
+<p>This method is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the “purest” and the most accurate <span class="citation">(Neter, Wasserman, and Kutner 1989)</span>, but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (<em>e.g.</em>, polynomial or spline terms).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(parameters)</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3">data &lt;-<span class="st"> </span>iris</a>
+<a class="sourceLine" id="cb1-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span>(model, <span class="dt">method=</span><span class="st">"refit"</span>)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">Std_Estimate</th>
+<th align="right">Std_beta</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -126,10 +133,11 @@
 </tbody>
 </table>
 <p>The <code>robust</code> (default to <code>FALSE</code>) argument enables a <strong>robust standardization of data</strong>, <em>i.e.</em>, based on the <strong>median</strong> and <strong>MAD</strong> instead of the <strong>mean</strong> and <strong>SD</strong>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span>(model, <span class="dt">method=</span><span class="st">"refit"</span>, <span class="dt">robust=</span><span class="ot">TRUE</span>)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">Std_Estimate</th>
+<th align="right">Std_beta</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -146,11 +154,16 @@
 </tr>
 </tbody>
 </table>
-<p>This method is very flexible as it can be applied to every types of models (linear, logistic…).</p>
+<p>This method is very flexible as it can be applied to all types of models (linear, logistic…).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(parameters)</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3">data<span class="op">$</span>binary &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(data<span class="op">$</span>Sepal.Width <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(binary <span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Sepal.Length, <span class="dt">data =</span> data, <span class="dt">family=</span><span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span>(model, <span class="dt">method=</span><span class="st">"refit"</span>)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">Std_Estimate</th>
+<th align="right">Std_beta</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -172,13 +185,21 @@
 </tbody>
 </table>
 </div>
+<div id="sd-scaling-by-two-2-sds" class="section level2">
+<h2 class="hasAnchor">
+<a href="#sd-scaling-by-two-2-sds" class="anchor"></a><code>2sd</code>: Scaling by two 2 SDs</h2>
+<p>Same as <code>method = "refit"</code>, however, standardization is done by dividing by two times the <code>SD</code> or <code>MAD</code> (depending on <code>robust</code>). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors (see <span class="citation">Gelman (2008)</span>).</p>
+</div>
 <div id="full-scaling-by-the-variances-of-the-response-and-the-predictor" class="section level2">
 <h2 class="hasAnchor">
 <a href="#full-scaling-by-the-variances-of-the-response-and-the-predictor" class="anchor"></a><code>full</code>: Scaling by the variances of the response and the predictor</h2>
+<p>Post-hoc standardization of the model paramaters. The coefficients are divided by the standard deviation (or MAD if <code>robust</code>) of the outcome (which becomes their expression ‘unit’). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if <code>robust</code>) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of <code>x</code> is related to a change of 0.24 of the SD of <code>y</code>). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span>(model, <span class="dt">method=</span><span class="st">"full"</span>)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">Std_Estimate</th>
+<th align="right">Std_beta</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -195,54 +216,542 @@
 </tr>
 </tbody>
 </table>
-<p>The <code>robust</code> (default to <code>FALSE</code>) argument means that the coefficients are scaled by the <strong>MAD</strong> instead of the <strong>SD</strong>.</p>
+</div>
+<div id="classic-basic-scaling-of-all-parameters" class="section level2">
+<h2 class="hasAnchor">
+<a href="#classic-basic-scaling-of-all-parameters" class="anchor"></a><code>classic</code>: Basic scaling of all parameters</h2>
+<p>This method is similar to <code>method = "full"</code>, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as <code><a href="https://www.rdocumentation.org/packages/sjstats/topics/std_beta">sjstats::std_beta()</a></code> or <code><a href="https://www.rdocumentation.org/packages/lm.beta/topics/lm.beta">lm.beta::lm.beta()</a></code>.</p>
+</div>
+</div>
+<div id="methods-comparison" class="section level1">
+<h1 class="hasAnchor">
+<a href="#methods-comparison" class="anchor"></a>Methods Comparison</h1>
+<p>We will use the “refit” method as the baseline. We will then compute the differences between these standardized parameters and the ones provided by the other functions. The <strong>bigger the (absolute) number, the worse it is</strong>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(parameters)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sjstats)</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lm.beta)</a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5">comparison &lt;-<span class="st"> </span><span class="cf">function</span>(model, <span class="dt">robust=</span><span class="ot">FALSE</span>){</a>
+<a class="sourceLine" id="cb5-6" title="6">  out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span>(model, <span class="dt">method=</span><span class="st">"refit"</span>, <span class="dt">robust=</span>robust)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb5-7" title="7">  </a>
+<a class="sourceLine" id="cb5-8" title="8">  out<span class="op">$</span>full &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb5-9" title="9">    out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span>(model, <span class="dt">method=</span><span class="st">"full"</span>, <span class="dt">robust=</span>robust)[, <span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb5-10" title="10">}, <span class="dt">error =</span> <span class="cf">function</span>(error_condition) {</a>
+<a class="sourceLine" id="cb5-11" title="11">    <span class="st">"Error"</span></a>
+<a class="sourceLine" id="cb5-12" title="12">})</a>
+<a class="sourceLine" id="cb5-13" title="13">  out<span class="op">$</span>classic &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb5-14" title="14">    out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span>(model, <span class="dt">method=</span><span class="st">"classic"</span>, <span class="dt">robust=</span>robust)[, <span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb5-15" title="15">}, <span class="dt">error =</span> <span class="cf">function</span>(error_condition) {</a>
+<a class="sourceLine" id="cb5-16" title="16">    <span class="st">"Error"</span></a>
+<a class="sourceLine" id="cb5-17" title="17">})</a>
+<a class="sourceLine" id="cb5-18" title="18">  out<span class="op">$</span>sjstats &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb5-19" title="19">    <span class="cf">if</span>(insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/model_info">model_info</a></span>(model)<span class="op">$</span>is_bayesian){</a>
+<a class="sourceLine" id="cb5-20" title="20">      out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">NA</span>, parameters<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/parameters/topics/describe_posterior">describe_posterior</a></span>(sjstats<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sjstats/topics/std_beta">std_beta</a></span>(model))[, <span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb5-21" title="21">    } <span class="cf">else</span>{</a>
+<a class="sourceLine" id="cb5-22" title="22">      out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">NA</span>, sjstats<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sjstats/topics/std_beta">std_beta</a></span>(model)[, <span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb5-23" title="23">    }</a>
+<a class="sourceLine" id="cb5-24" title="24">}, <span class="dt">error =</span> <span class="cf">function</span>(error_condition) {</a>
+<a class="sourceLine" id="cb5-25" title="25">    <span class="st">"Error"</span></a>
+<a class="sourceLine" id="cb5-26" title="26">})</a>
+<a class="sourceLine" id="cb5-27" title="27">  </a>
+<a class="sourceLine" id="cb5-28" title="28">  out<span class="op">$</span>lm.beta &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb5-29" title="29">    out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>lm.beta<span class="op">::</span><span class="kw">lm.beta</span>(model)<span class="op">$</span>standardized.coefficients</a>
+<a class="sourceLine" id="cb5-30" title="30">}, <span class="dt">error =</span> <span class="cf">function</span>(error_condition) {</a>
+<a class="sourceLine" id="cb5-31" title="31">    <span class="st">"Error"</span></a>
+<a class="sourceLine" id="cb5-32" title="32">})</a>
+<a class="sourceLine" id="cb5-33" title="33">  </a>
+<a class="sourceLine" id="cb5-34" title="34"><span class="co">#   out$MuMin &lt;- tryCatch({</span></a>
+<a class="sourceLine" id="cb5-35" title="35"><span class="co">#     out$Std_Estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]</span></a>
+<a class="sourceLine" id="cb5-36" title="36"><span class="co"># }, error = function(error_condition) {</span></a>
+<a class="sourceLine" id="cb5-37" title="37"><span class="co">#     "Error"</span></a>
+<a class="sourceLine" id="cb5-38" title="38"><span class="co"># })</span></a>
+<a class="sourceLine" id="cb5-39" title="39"></a>
+<a class="sourceLine" id="cb5-40" title="40">  out[, <span class="dv">2</span>] &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb5-41" title="41">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(out)</a>
+<a class="sourceLine" id="cb5-42" title="42">}</a></code></pre></div>
+<div id="models-with-only-numeric-predictors" class="section level2">
+<h2 class="hasAnchor">
+<a href="#models-with-only-numeric-predictors" class="anchor"></a>Models with only numeric predictors</h2>
+<div id="linear-model" class="section level3">
+<h3 class="hasAnchor">
+<a href="#linear-model" class="anchor"></a>Linear Model</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">data &lt;-<span class="st"> </span>iris</a>
+<a class="sourceLine" id="cb6-2" title="2">data<span class="op">$</span>Group_Sepal.Width &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(data<span class="op">$</span>Sepal.Width <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="st">"High"</span>, <span class="st">"Low"</span>))</a>
+<a class="sourceLine" id="cb6-3" title="3">data<span class="op">$</span>Binary_Sepal.Width &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(data<span class="op">$</span>Sepal.Width <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data) </a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">Std_Estimate</th>
+<th align="right">full</th>
+<th align="right">classic</th>
+<th align="right">sjstats</th>
+<th align="right">lm.beta</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
 <td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">Petal.Width</td>
-<td align="right">0.97</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">Sepal.Width</td>
-<td align="right">0.17</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
-<p>This method is very flexible as it can be applied to every types of models (linear, logistic…).</p>
+<p>For this simple model, <strong>all methods return results equal to the “refit” method</strong>.</p>
+</div>
+<div id="logistic-model" class="section level3">
+<h3 class="hasAnchor">
+<a href="#logistic-model" class="anchor"></a>Logistic Model</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(Binary_Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Length, <span class="dt">data=</span>data, <span class="dt">family=</span><span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">Std_Estimate</th>
+<th align="left">full</th>
+<th align="left">classic</th>
+<th align="right">sjstats</th>
+<th align="left">lm.beta</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="left">Error</td>
+<td align="left">Error</td>
+<td align="right">NA</td>
+<td align="left">Error</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Width</td>
+<td align="left">Error</td>
+<td align="left">Error</td>
+<td align="right">1.45</td>
+<td align="left">Error</td>
+</tr>
+<tr class="odd">
+<td align="left">Sepal.Length</td>
+<td align="left">Error</td>
+<td align="left">Error</td>
+<td align="right">-0.81</td>
+<td align="left">Error</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="linear-mixed-model" class="section level3">
+<h3 class="hasAnchor">
+<a href="#linear-mixed-model" class="anchor"></a>Linear Mixed Model</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3">model &lt;-<span class="st"> </span>lme4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="kw">comparison</span>(model)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">full</th>
+<th align="right">classic</th>
+<th align="right">sjstats</th>
+<th align="left">lm.beta</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
 <td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">Error</td>
 </tr>
 <tr class="even">
-<td align="left">Speciesversicolor</td>
-<td align="right">-1.88</td>
+<td align="left">Petal.Width</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Error</td>
 </tr>
 <tr class="odd">
-<td align="left">Speciesvirginica</td>
-<td align="right">-1.91</td>
-</tr>
-<tr class="even">
-<td align="left">Sepal.Length</td>
-<td align="right">0.53</td>
+<td align="left">Sepal.Width</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Error</td>
 </tr>
 </tbody>
 </table>
-<!-- library(parameters) --><!-- library(insight) --><!-- library(dplyr) --><!-- library(sjstats) --><!-- library(MuMIn) --><!-- library(lm.beta) --><!-- comparison <- function(model){ --><!--   out <- standardize_parameters(model, method="refit", robust=FALSE) --><!--   robust_true <- standardize_parameters(model, method="refit", robust=FALSE)$estimate --><!--   out$full <- out$estimate - standardize_parameters(model, method="full", robust=FALSE)$estimate --><!--   out$full_robust <- robust_true - standardize_parameters(model, method="full", robust=FALSE)$estimate --><!--   # out$MuMin <- out$estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1] --><!--   out$sjstats <- out$estimate - c(NA, sjstats::std_beta(model)[, 2]) --><!--   out$lm.beta <- out$estimate - lm.beta::lm.beta(model)$standardized.coefficients --><!--   out <- dplyr::select(out, -estimate) --><!--   return(out) --><!-- } --><!-- data <- dplyr::mutate(iris, Group_Sepal.Width = as.factor(ifelse(Sepal.Width > 3, "High", "Low"))) --><!-- # Simple models with numerics --><!-- model <- lm(Sepal.Length ~ Petal.Width * Sepal.Width, data=data) --><!-- knitr::kable(comparison(model), digits=2) --><!-- # Simple models with numerics --><!-- model <- lm(Sepal.Length ~ Species * Group_Sepal.Width, data=data) --><!-- knitr::kable(comparison(model), digits=2) --><!-- # Simple models with numerics --><!-- model <- lm(Sepal.Length ~ Species * Petal.Width, data=data) --><!-- knitr::kable(comparison(model), digits=2) --><!-- model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width * Sepal.Width, data=data) --><!-- knitr::kable(comparison(model), digits=2) --><!-- # Simple models with numerics --><!-- model <- lm(Sepal.Length ~ Species * poly(Petal.Width, 2), data=data) --><!-- knitr::kable(comparison(model), digits=2) --><!-- # COmplex models --><!-- model <- lm(Sepal.Length ~ Species * Petal.Width * Group_Sepal.Width * poly(Petal.Length, 2), data=data) --><!-- knitr::kable(comparison(model), digits=2) -->
+<p>For this simple mixed model, <strong>all methods return results equal to the “refit” method</strong>.</p>
 </div>
+<div id="interactions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#interactions" class="anchor"></a>Interactions</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">*</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">full</th>
+<th align="right">classic</th>
+<th align="right">sjstats</th>
+<th align="right">lm.beta</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">-0.01</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Width</td>
+<td align="right">-0.28</td>
+<td align="right">-0.28</td>
+<td align="right">-0.28</td>
+<td align="right">-0.28</td>
+</tr>
+<tr class="odd">
+<td align="left">Sepal.Width</td>
+<td align="right">-0.06</td>
+<td align="right">-0.06</td>
+<td align="right">-0.06</td>
+<td align="right">-0.06</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Width:Sepal.Width</td>
+<td align="right">0.01</td>
+<td align="right">0.01</td>
+<td align="right">0.24</td>
+<td align="right">0.24</td>
+</tr>
+</tbody>
+</table>
+<p>When interactions are involved, post-hoc methods return different results. However, methods implemented in other softwares perform arguably worse.</p>
+<!-- haha Sorry Daniel maybe we should rephrase this ^^ -->
+</div>
+<div id="transformation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#transformation" class="anchor"></a>Transformation</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/poly">poly</a></span>(Petal.Width, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/poly">poly</a></span>(Sepal.Width, <span class="dv">2</span>), <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">full</th>
+<th align="right">classic</th>
+<th align="right">sjstats</th>
+<th align="right">lm.beta</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">poly(Petal.Width, 2)1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">10.48</td>
+<td align="right">10.48</td>
+</tr>
+<tr class="odd">
+<td align="left">poly(Petal.Width, 2)2</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">-1.86</td>
+<td align="right">-1.86</td>
+</tr>
+<tr class="even">
+<td align="left">poly(Sepal.Width, 2)1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3.44</td>
+<td align="right">3.44</td>
+</tr>
+<tr class="odd">
+<td align="left">poly(Sepal.Width, 2)2</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.28</td>
+<td align="right">0.28</td>
+</tr>
+</tbody>
+</table>
+<p>For polynomial transformations, other software become very unreliable.</p>
+</div>
+<div id="bayesian-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bayesian-models" class="anchor"></a>Bayesian Models</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="kw">comparison</span>(model)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">full</th>
+<th align="right">classic</th>
+<th align="right">sjstats</th>
+<th align="right">lm.beta</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Width</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Sepal.Width</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="models-with-factors" class="section level2">
+<h2 class="hasAnchor">
+<a href="#models-with-factors" class="anchor"></a>Models with factors</h2>
+<div id="linear-model-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#linear-model-1" class="anchor"></a>Linear Model</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Group_Sepal.Width, <span class="dt">data=</span>data) </a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">full</th>
+<th align="right">classic</th>
+<th align="right">sjstats</th>
+<th align="right">lm.beta</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.14</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Width</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Group_Sepal.WidthLow</td>
+<td align="right">0</td>
+<td align="right">-0.12</td>
+<td align="right">-0.12</td>
+<td align="right">-0.12</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="logistic-model-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#logistic-model-1" class="anchor"></a>Logistic Model</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(Binary_Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Species, <span class="dt">data=</span>data, <span class="dt">family=</span><span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="left">full</th>
+<th align="left">classic</th>
+<th align="right">sjstats</th>
+<th align="left">lm.beta</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="left">Error</td>
+<td align="left">Error</td>
+<td align="right">NA</td>
+<td align="left">Error</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Width</td>
+<td align="left">Error</td>
+<td align="left">Error</td>
+<td align="right">-5.01</td>
+<td align="left">Error</td>
+</tr>
+<tr class="odd">
+<td align="left">Speciesversicolor</td>
+<td align="left">Error</td>
+<td align="left">Error</td>
+<td align="right">-0.57</td>
+<td align="left">Error</td>
+</tr>
+<tr class="even">
+<td align="left">Speciesvirginica</td>
+<td align="left">Error</td>
+<td align="left">Error</td>
+<td align="right">-0.75</td>
+<td align="left">Error</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="linear-mixed-model-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#linear-mixed-model-1" class="anchor"></a>Linear Mixed Model</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3">model &lt;-<span class="st"> </span>lme4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Group_Sepal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="kw">comparison</span>(model)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">full</th>
+<th align="right">classic</th>
+<th align="right">sjstats</th>
+<th align="left">lm.beta</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">Error</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Length</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">Error</td>
+</tr>
+<tr class="odd">
+<td align="left">Group_Sepal.WidthLow</td>
+<td align="right">0</td>
+<td align="right">-0.14</td>
+<td align="right">-0.14</td>
+<td align="left">Error</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="interactions-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#interactions-1" class="anchor"></a>Interactions</h3>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">*</span><span class="st"> </span>Group_Sepal.Width, <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">full</th>
+<th align="right">classic</th>
+<th align="right">sjstats</th>
+<th align="right">lm.beta</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.12</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Width</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Group_Sepal.WidthLow</td>
+<td align="right">0.27</td>
+<td align="right">0.01</td>
+<td align="right">0.01</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Width:Group_Sepal.WidthLow</td>
+<td align="right">-0.05</td>
+<td align="right">-0.05</td>
+<td align="right">-0.01</td>
+<td align="right">-0.01</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="bayesian-models-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bayesian-models-1" class="anchor"></a>Bayesian Models</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb16-2" title="2"></a>
+<a class="sourceLine" id="cb16-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Group_Sepal.Width, <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb16-4" title="4"><span class="kw">comparison</span>(model)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">full</th>
+<th align="right">classic</th>
+<th align="right">sjstats</th>
+<th align="right">lm.beta</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.13</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Width</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Group_Sepal.WidthLow</td>
+<td align="right">0</td>
+<td align="right">-0.13</td>
+<td align="right">-0.13</td>
+<td align="right">-0.13</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1 class="hasAnchor">
+<a href="#conclusion" class="anchor"></a>Conclusion</h1>
+<p>Use <code>refit</code> if possible, otherwise <code>full</code>.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
@@ -279,9 +788,18 @@
       <li>
 <a href="#standardization-methods">Standardization methods</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#refit-re-fitting-the-model-with-standardized-data"><code>refit</code>: Re-fitting the model with standardized data</a></li>
+      <li><a href="#sd-scaling-by-two-2-sds"><code>2sd</code>: Scaling by two 2 SDs</a></li>
       <li><a href="#full-scaling-by-the-variances-of-the-response-and-the-predictor"><code>full</code>: Scaling by the variances of the response and the predictor</a></li>
+      <li><a href="#classic-basic-scaling-of-all-parameters"><code>classic</code>: Basic scaling of all parameters</a></li>
       </ul>
 </li>
+      <li>
+<a href="#methods-comparison">Methods Comparison</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#models-with-only-numeric-predictors">Models with only numeric predictors</a></li>
+      <li><a href="#models-with-factors">Models with factors</a></li>
+      </ul>
+</li>
+      <li><a href="#conclusion">Conclusion</a></li>
       <li><a href="#references">References</a></li>
       </ul>
 </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute p values using Wald-test approximation — p_value_wald • parameters</title>
+<title>Extract standard errors — standard_error • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Compute p values using Wald-test approximation — p_value_wald" />
+<meta property="og:title" content="Extract standard errors — standard_error" />
 
-<meta property="og:description" content="The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5" />
+<meta property="og:description" content="This function attempts to return standard errors of a model's parameters." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -120,36 +120,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute p values using Wald-test approximation</h1>
+    <h1>Extract standard errors</h1>
     
-    <div class="hidden name"><code>p_value_wald.Rd</code></div>
+    <div class="hidden name"><code>standard_error.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5<!-- % at p = 0.05. --></p>
+    <p>This function attempts to return standard errors of a model's parameters.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>p_value_wald</span>(<span class='no'>model</span>)</pre>
+    <pre class="usage"><span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+
+<span class='fu'>se</span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>A statistical model.</p></td>
+      <td><p>A model.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>p_value_wald</span>(<span class='no'>model</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>circus</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/circus/topics/merMod_1'>merMod_1</a></span>
-<span class='fu'>p_value_wald</span>(<span class='no'>model</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>standard_error</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; $Species
+#&gt;   (Intercept)
+#&gt; 1   0.9565974
+#&gt; 2   0.9565974
+#&gt; 3   0.9565974
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -37,6 +37,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Standardization — standardize" />
 
 <meta property="og:description" content="Performs a standardization of data or parameters. See the documentation for your object's class:
@@ -135,7 +137,14 @@ Regression models
     
     </div>
 
-    <pre class="usage"><span class='fu'>standardize</span>(<span class='no'>x</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>standardize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>standardize</span>(<span class='no'>x</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for factor</span>
+<span class='fu'>standardize</span>(<span class='no'>x</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,14 +154,40 @@ Regression models
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>robust</th>
-      <td><p>If TRUE, the standardization will be based on <a href='https://www.rdocumentation.org/packages/stats/topics/median'>median</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/mad'>mad</a> instead of <a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/sd'>sd</a> (default).</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
+    <tr>
+      <th>robust</th>
+      <td><p>Logical, if <code>TRUE</code>, centering is done by substracting the
+median from the variables and divide it by the median absolute deviation
+(MAD). If <code>FALSE</code>, variables are standardized by substracting the
+mean and divide it by the standard deviation (SD).
+the</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>The method of standardization. See 'Details'.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings on or off.</p></td>
+    </tr>
+    <tr>
+      <th>force</th>
+      <td><p>Logical, if <code>TRUE</code>, forces standardization of factors as
+well. Factors are converted to numerical values, with the lowest level
+being the value <code>1</code> (unless the factor has numeric levels, which are
+converted to the corresponding numeric value).</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Methods:</p><ul>
+<li><p><strong>default</strong>: Depending on <code>robust</code>, variables are divided by SD or MAD.</p></li>
+<li><p><strong>2sd</strong>: Depending on <code>robust</code>, variables are divided by two times the SD or MAD.</p></li>
+</ul>
     
 
   </div>
@@ -160,7 +195,9 @@ Regression models
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>
