@@ -79,8 +79,9 @@ data_frame <- function(...) {
 #' @importFrom stats na.omit
 #' @keywords internal
 .factor_to_numeric <- function(x) {
-  if (is.numeric(x))
+  if (is.numeric(x)) {
     return(x)
+  }
 
   if (anyNA(suppressWarnings(as.numeric(as.character(stats::na.omit(x)))))) {
     if (is.character(x)) {

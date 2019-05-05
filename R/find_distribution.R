@@ -21,7 +21,6 @@
 #' find_distribution(rnorm(100))
 #' find_distribution(rpois(100, lambda = 4))
 #' find_distribution(runif(100))
-#'
 #' @importFrom bayestestR map_estimate
 #' @importFrom stats IQR density predict
 #' @export

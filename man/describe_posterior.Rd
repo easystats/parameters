@@ -45,5 +45,4 @@ Describe posterior distributions.
 }
 \examples{
 describe_posterior(rnorm(1000))
-
 }

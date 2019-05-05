@@ -53,7 +53,7 @@ library(rstanarm)
 library(parameters)
 
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-model_parameters(model, standardize=TRUE)
+model_parameters(model, standardize = TRUE)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

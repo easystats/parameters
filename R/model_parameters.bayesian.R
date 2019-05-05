@@ -1,7 +1,7 @@
 #' @rdname model_parameters.stanreg
 #' @importFrom insight get_priors
 #' @keywords internal
-.model_parameters_bayesian <- function(model, ci = .90, ci_method="hdi", standardize = FALSE, standardize_robust = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
+.model_parameters_bayesian <- function(model, ci = .90, ci_method = "hdi", standardize = FALSE, standardize_robust = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
 
   # ROPE
   if (all(rope_range == "default")) {
@@ -79,15 +79,15 @@
 #' \dontrun{
 #' library(rstanarm)
 #' library(parameters)
-#'
+#' 
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-#' model_parameters(model, standardize=TRUE)
-#'
+#' model_parameters(model, standardize = TRUE)
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
 #' }
-#'
+#' 
 #' @references
 #' \itemize{
 #'  \item{\href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{Comparison of Point-Estimates}}
@@ -108,7 +108,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, ci = .90, ci_method="hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, priors = TRUE, iterations = 1000, ...) {
+.extract_parameters_bayesian <- function(model, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, priors = TRUE, iterations = 1000, ...) {
   if (insight::model_info(model)$is_bayesian) {
     data <- insight::get_parameters(model)
   } else {

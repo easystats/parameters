@@ -40,7 +40,7 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
 #' @method ci glm
 #' @importFrom stats confint
 #' @export
-ci.glm <- function(x, ci = 0.95, ...){
+ci.glm <- function(x, ci = 0.95, ...) {
   suppressMessages(out <- stats::confint(x, level = ci, ...))
   out <- as.data.frame(out, stringsAsFactors = FALSE)
   names(out) <- c("CI_low", "CI_high")
@@ -52,4 +52,3 @@ ci.glm <- function(x, ci = 0.95, ...){
 #' @method ci lm
 #' @export
 ci.lm <- ci.glm
-

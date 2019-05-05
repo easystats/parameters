@@ -25,5 +25,4 @@ Compte the equivalence test for frequentist models.
 \examples{
 m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 equivalence_test(m)
-
 }

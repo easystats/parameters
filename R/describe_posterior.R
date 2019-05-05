@@ -11,7 +11,6 @@
 #'
 #' @examples
 #' describe_posterior(rnorm(1000))
-#'
 #' @importFrom stats mad median sd setNames
 #' @importFrom bayestestR map_estimate hdi ci p_direction p_map
 #'
@@ -80,7 +79,7 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi
     if (length(ci) > 1) {
       if (ci_method == "hdi") {
         hdi <- sapply(posteriors, bayestestR::hdi, ci = ci, simplify = FALSE)
-      } else{
+      } else {
         hdi <- sapply(posteriors, bayestestR::ci, ci = ci, simplify = FALSE)
       }
       for (i in names(hdi)) {
@@ -99,7 +98,7 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi
     } else {
       if (ci_method == "hdi") {
         hdi <- as.data.frame(t(sapply(posteriors, bayestestR::hdi, ci = ci)), stringsAsFactors = FALSE)
-      } else{
+      } else {
         hdi <- as.data.frame(t(sapply(posteriors, bayestestR::ci, ci = ci)), stringsAsFactors = FALSE)
       }
       hdi <- hdi[c("CI_low", "CI_high")]

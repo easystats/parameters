@@ -11,7 +11,6 @@
 #' @examples
 #' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' p_value(model)
-#'
 #' @importFrom stats coef vcov pnorm
 #' @export
 p_value <- function(model, ...) {
@@ -32,7 +31,7 @@ p_value.aov <- function(model, ...) {
   }
 
   if ("Residuals" %in% params$Parameter) {
-    params <- params[params$Parameter != "Residuals",]
+    params <- params[params$Parameter != "Residuals", ]
   }
 
   if (!"p" %in% names(params)) {
@@ -168,8 +167,9 @@ p_value.svyglm <- function(model, ...) {
 
 #' @export
 p_value.svyglm.nb <- function(model, ...) {
-  if (!isNamespaceLoaded("survey"))
+  if (!isNamespaceLoaded("survey")) {
     requireNamespace("survey", quietly = TRUE)
+  }
 
   est <- stats::coef(model)
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
@@ -188,8 +188,9 @@ p_value.svyglm.nb <- function(model, ...) {
 
 #' @export
 p_value.vglm <- function(model, ...) {
-  if (!requireNamespace("VGAM", quietly = TRUE))
+  if (!requireNamespace("VGAM", quietly = TRUE)) {
     stop("Package `VGAM` required.", call. = FALSE)
+  }
 
   cs <- VGAM::summary(model)@coef3
   p <- cs[, 4]
@@ -215,8 +216,9 @@ p_value.vglm <- function(model, ...) {
     pvcn <- which(colnames(cs) == "Pr(>|t|)")
 
     # if not, do we have a p-value column based on z?
-    if (length(pvcn) == 0)
+    if (length(pvcn) == 0) {
       pvcn <- which(colnames(cs) == "Pr(>|z|)")
+    }
 
     # if not, default to 4
     if (length(pvcn) == 0) pvcn <- 4

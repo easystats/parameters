@@ -19,8 +19,7 @@ Convert (log)odds to standardized difference using Cohen's (1988) formula \eqn{\
 }
 \examples{
 odds_to_d(0.2)
-odds_to_d(-1.45, log=TRUE)
-
+odds_to_d(-1.45, log = TRUE)
 }
 \references{
 \itemize{

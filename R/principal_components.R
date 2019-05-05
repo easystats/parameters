@@ -28,39 +28,40 @@
 #' @examples
 #' data(iris)
 #' principal_components(iris[, 1:4])
-#'
+#' 
 #' data(iris)
 #' principal_components(iris[, 1:4], rotation = "varimax", n_comp = 2)
-#'
+#' 
 #' pr <- principal_components(iris[, 1:4], rotation = "varimax", n_comp = 2)
-#'
+#' 
 #' # show all
 #' print(pr, cutoff = .001)
-#'
+#' 
 #' # show only some
 #' print(pr, cutoff = .5)
-#'
 #' @importFrom stats prcomp na.omit varimax
 #' @export
 principal_components <- function(x, rotation = NULL, n_comp = NULL) {
-  if (is.null(rotation))
+  if (is.null(rotation)) {
     .pca(x)
-  else
+  } else {
     .pca_rotate(x, rotation, n_comp)
+  }
 }
 
 
 
 .pca <- function(x) {
-
-  if (!inherits(x, c("prcomp", "data.frame")))
+  if (!inherits(x, c("prcomp", "data.frame"))) {
     stop("`x` must be of class `prcomp` or a data frame.", call. = F)
+  }
 
 
   # if x is a df, run prcomp
 
-  if (inherits(x, "data.frame"))
+  if (inherits(x, "data.frame")) {
     x <- stats::prcomp(stats::na.omit(x), retx = TRUE, center = TRUE, scale. = TRUE)
+  }
 
 
   # get tidy summary of prcomp object
@@ -104,29 +105,27 @@ principal_components <- function(x, rotation = NULL, n_comp = NULL) {
 
 
 .pca_rotate <- function(x, rotation, n_comp) {
-
   if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
     stop("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
   }
 
-  if (!inherits(x, c("prcomp", "data.frame")))
+  if (!inherits(x, c("prcomp", "data.frame"))) {
     stop("`x` must be of class `prcomp` or a data frame.", call. = F)
+  }
 
-  if (!inherits(x, "data.frame") && rotation != "varimax")
+  if (!inherits(x, "data.frame") && rotation != "varimax") {
     stop(sprintf("`x` must be a data frame for `%s`-rotation.", rotation), call. = F)
+  }
 
   # rotate loadings
 
   if (rotation != "varimax") {
-
     if (!requireNamespace("psych", quietly = TRUE)) {
       stop(sprintf("Package `psych` required for `%s`-rotation.", rotation), call. = F)
     }
 
     tmp <- psych::principal(r = x, n_compactors = n_comp, rotate = rotation)
-
   } else {
-
     if (!inherits(x, "pca")) {
       x <- .pca(x)
     }
@@ -139,7 +138,6 @@ principal_components <- function(x, rotation = NULL, n_comp = NULL) {
     }
 
     tmp <- stats::varimax(loadings[, seq_len(n_comp)])
-
   }
 
 

@@ -39,8 +39,10 @@ Calculates marginal coefficients from fitted generalized linear mixed models.
 }
 \examples{
 \dontrun{
-model <- GLMMadaptive::mixed_model(vs ~ mpg, random = ~ 1 | cyl, data = mtcars,
-                                   family = binomial())
+model <- GLMMadaptive::mixed_model(vs ~ mpg,
+  random = ~ 1 | cyl, data = mtcars,
+  family = binomial()
+)
 marginal_parameters(model)
 }
 

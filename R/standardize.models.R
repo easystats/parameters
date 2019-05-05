@@ -8,7 +8,6 @@
 #' @examples
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 #' coef(standardize(model))
-#'
 #' @importFrom stats update
 #' @importFrom insight get_data model_info find_response
 #' @importFrom utils capture.output
@@ -37,6 +36,3 @@ standardize.stanreg <- standardize.lm
 
 #' @export
 standardize.brmsfit <- standardize.lm
-
-
-

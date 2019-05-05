@@ -17,7 +17,7 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
 
   # Standardized
   if (standardize != FALSE & !is.null(standardize)) {
-    if(standardize == TRUE){
+    if (standardize == TRUE) {
       warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
       standardize <- "refit"
     }

@@ -18,7 +18,6 @@ bayestestR::equivalence_test
 #' @examples
 #' m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 #' equivalence_test(m)
-#'
 #' @export
 equivalence_test.lm <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
   .equivalence_test_frequentist(x, range, ci, verbose, ...)

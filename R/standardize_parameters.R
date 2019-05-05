@@ -18,7 +18,7 @@
 #' @examples
 #' library(parameters)
 #' data(iris)
-#'
+#' 
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 #' standardize_parameters(model, method = "refit")
 #' standardize_parameters(model, method = "refit", robust = TRUE)
@@ -26,14 +26,13 @@
 #' standardize_parameters(model, method = "2sd", robust = TRUE)
 #' standardize_parameters(model, method = "full")
 #' standardize_parameters(model, method = "full", robust = TRUE)
-#'
+#' 
 #' iris$binary <- ifelse(iris$Sepal.Width > 3, 1, 0)
 #' model <- glm(binary ~ Species * Sepal.Length, data = iris, family = "binomial")
 #' standardize_parameters(model, method = "refit")
 #' standardize_parameters(model, method = "refit", robust = TRUE)
 #' standardize_parameters(model, method = "full")
 #' standardize_parameters(model, method = "full", robust = TRUE)
-#'
 #' @importFrom stats mad sd predict cor model.matrix
 #' @importFrom insight get_parameters model_info get_data get_response
 #' @importFrom utils tail
@@ -45,7 +44,6 @@
 #' }
 #' @export
 standardize_parameters <- function(model, robust = FALSE, method = "refit", verbose = TRUE, ...) {
-
   method <- match.arg(method, choices = c("default", "refit", "2sd", "full", "partial", "classic"))
 
   # Refit
@@ -55,29 +53,31 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
     # Extract parameters
     if (insight::model_info(model)$is_bayesian) {
       std_params <- describe_posterior(insight::get_parameters(std_model), test = NULL, ci = NULL, dispersion = FALSE, ...)
-    } else{
+    } else {
       std_params <- insight::get_parameters(std_model)
       names(std_params) <- c("Parameter", "beta")
     }
 
-  # Posthoc
+    # Posthoc
   } else if (method %in% c("default", "full", "classic")) {
 
     # Extract parameters
     if (insight::model_info(model)$is_bayesian) {
       params <- describe_posterior(insight::get_parameters(model), test = NULL, ci = NULL, dispersion = FALSE, ...)
-    } else{
+    } else {
       params <- insight::get_parameters(model)
       names(params) <- c("Parameter", "beta")
     }
 
     std_params <- params["Parameter"]
     for (estimate in tail(names(params), -1)) {
-      std_params <- cbind(std_params,
-                          .standardize_parameters_full(model, params[c("Parameter", estimate)], robust, method)[2])
+      std_params <- cbind(
+        std_params,
+        .standardize_parameters_full(model, params[c("Parameter", estimate)], robust, method)[2]
+      )
     }
 
-  # Partial
+    # Partial
   } else if (method == "partial") {
     stop("method='partial' not implemented yet :(")
   }
@@ -109,7 +109,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
         rbind(std_params, data.frame("Parameter" = name, "estimate" = std_coef))
     }
 
-  # Binomial models
+    # Binomial models
   } else if (info$is_logit) {
     if (insight::model_info(model)$is_bayesian) {
       stop(paste0("Standardization method ", method, " is not available for this kind of model."))
@@ -118,7 +118,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
     r <- stats::cor(insight::get_response(model), odds_to_probs(logit_y, log = TRUE))
     if (robust == FALSE) {
       sd_y <- stats::sd(logit_y)
-    } else{
+    } else {
       sd_y <- stats::mad(logit_y)
     }
 
@@ -148,16 +148,16 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
     if ("numeric" %in% .find_parameter_type(predictor, data)) {
       if (robust == FALSE) {
         std_coef <- coef * stats::sd(data[[predictor]]) / sd_y
-      } else{
+      } else {
         std_coef <- coef * stats::mad(data[[predictor]]) / sd_y
       }
-    } else{
+    } else {
       std_coef <- coef / sd_y
     }
   } else if ("numeric" %in% param_type) {
     if (robust == FALSE) {
       std_coef <- coef * stats::sd(data[[name]]) / sd_y
-    } else{
+    } else {
       std_coef <- coef * stats::mad(data[[name]]) / sd_y
     }
   } else if ("intercept" %in% param_type) {
@@ -166,7 +166,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
     if (method == "classic") {
       if (robust == FALSE) {
         std_coef <- coef * stats::sd(stats::model.matrix(model)[, name]) / sd_y
-      } else{
+      } else {
         std_coef <- coef * stats::mad(stats::model.matrix(model)[, name]) / sd_y
       }
     } else {
@@ -185,8 +185,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
 
 #' @keywords internal
-.find_parameter_type <- function(name, data){
-
+.find_parameter_type <- function(name, data) {
   if (grepl(":", name)) {
     var <- utils::tail(unlist(strsplit(name, ":", fixed = TRUE)), 1)
     return(c("interaction", var))
@@ -203,7 +202,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
     if (name %in% facs_names) {
       return("factor")
-    } else{
+    } else {
       return("unknown")
     }
   }
