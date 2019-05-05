@@ -72,22 +72,21 @@
 #' @inheritParams describe_posterior
 #' @param priors Include priors specifications information. If set to true (current \code{rstanarm}' default), automatically adjusted priors' scale during fitting  will be displayed.
 #' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1 (Gelman and Rubin, 1992) or 1.01 (Vehtari et al., 2019).
-#' @param iterations The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
 #' @param ... Arguments passed to or from other methods (e.g., to \code{standardize}).
 #'
 #' @examples
 #' \dontrun{
 #' library(rstanarm)
 #' library(parameters)
-#' 
+#'
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model, standardize = TRUE)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model)
 #' }
-#' 
+#'
 #' @references
 #' \itemize{
 #'  \item{\href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{Comparison of Point-Estimates}}

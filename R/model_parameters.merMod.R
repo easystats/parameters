@@ -11,11 +11,11 @@
 #' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #' model_parameters(model, standardize = TRUE)
 #' }
-#' 
+#'
 #' @export
-model_parameters.merMod <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", ...) {
+model_parameters.merMod <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, ...) {
   if (bootstrap) {
-    return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, ...))
+    return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, iterations = iterations, ...))
   }
   # Processing
   parameters <- .extract_parameters_mixed(model, ci = ci, p_method = p_method, ci_method = ci_method, ...)

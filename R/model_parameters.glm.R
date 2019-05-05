@@ -8,9 +8,9 @@
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' model_parameters(model, standardize = TRUE)
 #' @export
-model_parameters.glm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, ...) {
+model_parameters.glm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
   if (bootstrap) {
-    return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, ...))
+    return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, iterations = iterations, ...))
   }
   # Processing
   parameters <- .extract_parameters_glm(model, ci = ci)

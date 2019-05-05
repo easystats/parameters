@@ -5,7 +5,8 @@
 \title{Linear Model Parameters}
 \usage{
 \method{model_parameters}{glm}(model, ci = 0.95, standardize = "refit",
-  standardize_robust = FALSE, bootstrap = FALSE, ...)
+  standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000,
+  ...)
 }
 \arguments{
 \item{model}{Object of class \link{lm}.}
@@ -17,6 +18,8 @@
 \item{standardize_robust}{Robust standardization. See \link{standardize_parameters}.}
 
 \item{bootstrap}{Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.}
+
+\item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 
 \item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
 }

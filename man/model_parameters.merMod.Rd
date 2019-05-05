@@ -6,7 +6,8 @@
 \usage{
 \method{model_parameters}{merMod}(model, ci = 0.95,
   standardize = "refit", standardize_robust = FALSE,
-  bootstrap = FALSE, p_method = "wald", ci_method = "wald", ...)
+  bootstrap = FALSE, p_method = "wald", ci_method = "wald",
+  iterations = 1000, ...)
 }
 \arguments{
 \item{model}{Object of class \link{lm}.}
@@ -22,6 +23,8 @@
 \item{p_method}{Method for computing p values. See \link{p_value}.}
 
 \item{ci_method}{Method for computing confidence intervals (CI). See \link{ci}.}
+
+\item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 
 \item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
 }

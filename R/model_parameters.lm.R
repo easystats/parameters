@@ -7,15 +7,16 @@
 #' @param standardize Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{standardize_parameters}).
 #' @param standardize_robust Robust standardization. See \link{standardize_parameters}.
 #' @param bootstrap Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.
+#' @param iterations The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
 #' @param ... Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).
 #'
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' model_parameters(model, standardize = TRUE)
 #' @export
-model_parameters.lm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, ...) {
+model_parameters.lm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
   if (bootstrap) {
-    return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, ...))
+    return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, iterations = iterations, ...))
   }
   # Processing
   parameters <- .extract_parameters_lm(model, ci = ci)
