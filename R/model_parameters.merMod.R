@@ -13,7 +13,7 @@
 #' }
 #'
 #' @export
-model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", ...) {
+model_parameters.merMod <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", ...) {
   if (bootstrap) {
     return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, ...))
   }
@@ -27,7 +27,7 @@ model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, bootst
       warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
       standardize <- "refit"
     }
-    parameters <- cbind(parameters, standardize_parameters(model, method = standardize)[2])
+    parameters <- cbind(parameters, standardize_parameters(model, method = standardize, robust = standardize_robust)[2])
   }
 
   return(parameters)

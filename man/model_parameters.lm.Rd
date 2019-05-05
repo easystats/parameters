@@ -4,8 +4,8 @@
 \alias{model_parameters.lm}
 \title{Linear Model Parameters}
 \usage{
-\method{model_parameters}{lm}(model, ci = 0.95, standardize = FALSE,
-  bootstrap = FALSE, ...)
+\method{model_parameters}{lm}(model, ci = 0.95, standardize = "refit",
+  standardize_robust = FALSE, bootstrap = FALSE, ...)
 }
 \arguments{
 \item{model}{Object of class \link{lm}.}
@@ -13,6 +13,8 @@
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
 \item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{standardize_parameters}).}
+
+\item{standardize_robust}{Robust standardization. See \link{standardize_parameters}.}
 
 \item{bootstrap}{Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.}
 

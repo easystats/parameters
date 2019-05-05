@@ -8,7 +8,7 @@
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' model_parameters(model, standardize = TRUE)
 #' @export
-model_parameters.glm <- function(model, ci = .95, standardize = FALSE, bootstrap = FALSE, ...) {
+model_parameters.glm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, ...) {
   if (bootstrap) {
     return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, ...))
   }
@@ -21,7 +21,7 @@ model_parameters.glm <- function(model, ci = .95, standardize = FALSE, bootstrap
       warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
       standardize <- "refit"
     }
-    parameters <- cbind(parameters, standardize_parameters(model, method = standardize)[2])
+    parameters <- cbind(parameters, standardize_parameters(model, method = standardize, robust = standardize_robust)[2])
   }
 
   return(parameters)
