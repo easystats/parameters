@@ -16,7 +16,7 @@
 #' @importFrom bayestestR map_estimate hdi ci p_direction p_map
 #'
 #' @export
-describe_posterior <- function(posteriors, ci = .90, ci_method="hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE) {
+describe_posterior <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE) {
   UseMethod("describe_posterior")
 }
 
@@ -27,7 +27,7 @@ describe_posterior <- function(posteriors, ci = .90, ci_method="hdi", estimate =
 
 #' @rdname describe_posterior
 #' @export
-describe_posterior.numeric <- function(posteriors, ci = .90, ci_method="hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE) {
+describe_posterior.numeric <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE) {
   x <-
     describe_posterior(
       as.data.frame(posteriors),

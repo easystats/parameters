@@ -21,16 +21,16 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
   parameters <- .extract_parameters_mixed(model, ci = ci, p_method = p_method, ci_method = ci_method, ...)
 
   # Standardized
-  # Standardized
-  if (standardize != FALSE & !is.null(standardize)) {
-    if(standardize == TRUE){
-      warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
-      standardize <- "refit"
-    }
+  if (isTRUE(standardize)) {
+    warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
+    standardize <- "refit"
+  }
+
+  if (!is.null(standardize) && !is.logical(standardize)) {
     parameters <- cbind(parameters, standardize_parameters(model, method = standardize, robust = standardize_robust)[2])
   }
 
-  return(parameters)
+  parameters
 }
 
 

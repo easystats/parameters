@@ -53,8 +53,8 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
     std_model <- standardize(model, robust = robust, method = method, verbose = verbose, ...)
 
     # Extract parameters
-    if(insight::model_info(model)$is_bayesian){
-      std_params <- describe_posterior(insight::get_parameters(std_model), test=NULL, ci = NULL, dispersion=FALSE, ...)
+    if (insight::model_info(model)$is_bayesian) {
+      std_params <- describe_posterior(insight::get_parameters(std_model), test = NULL, ci = NULL, dispersion = FALSE, ...)
     } else{
       std_params <- insight::get_parameters(std_model)
       names(std_params) <- c("Parameter", "beta")
@@ -64,15 +64,15 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
   } else if (method %in% c("default", "full", "classic")) {
 
     # Extract parameters
-    if(insight::model_info(model)$is_bayesian){
-      params <- describe_posterior(insight::get_parameters(model), test=NULL, ci = NULL, dispersion=FALSE, ...)
+    if (insight::model_info(model)$is_bayesian) {
+      params <- describe_posterior(insight::get_parameters(model), test = NULL, ci = NULL, dispersion = FALSE, ...)
     } else{
       params <- insight::get_parameters(model)
       names(params) <- c("Parameter", "beta")
     }
 
     std_params <- params["Parameter"]
-    for(estimate in tail(names(params), -1)){
+    for (estimate in tail(names(params), -1)) {
       std_params <- cbind(std_params,
                           .standardize_parameters_full(model, params[c("Parameter", estimate)], robust, method)[2])
     }
@@ -111,7 +111,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
   # Binomial models
   } else if (info$is_logit) {
-    if(insight::model_info(model)$is_bayesian){
+    if (insight::model_info(model)$is_bayesian) {
       stop(paste0("Standardization method ", method, " is not available for this kind of model."))
     }
     logit_y <- stats::predict(model)
