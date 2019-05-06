@@ -18,5 +18,4 @@ This function uses an internal random forest model to classify the variable's di
 find_distribution(rnorm(100))
 find_distribution(rpois(100, lambda = 4))
 find_distribution(runif(100))
-
 }

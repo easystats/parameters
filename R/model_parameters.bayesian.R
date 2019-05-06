@@ -1,7 +1,7 @@
 #' @rdname model_parameters.stanreg
 #' @importFrom insight get_priors
 #' @keywords internal
-.model_parameters_bayesian <- function(model, ci = .90, ci_method="hdi", standardize = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
+.model_parameters_bayesian <- function(model, ci = .90, ci_method = "hdi", standardize = FALSE, standardize_robust = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
 
   # ROPE
   if (all(rope_range == "default")) {
@@ -16,12 +16,14 @@
   parameters <- .extract_parameters_bayesian(model, ci, ci_method = ci_method, estimate = tolower(estimate), test = test, rope_range = rope_range, iterations = iterations, ...)
 
   # Standardized
-  if (standardize) {
-    std_model <- standardize(model, ...)
-    std_parameters <- .extract_parameters_bayesian(std_model, ci = ci, ci_method=ci_method, estimate = tolower(estimate), test = NULL, rope_range = rope_range, iterations = iterations, ...)
-    names(std_parameters) <- paste0("Std_", names(std_parameters))
+  if (isTRUE(standardize)) {
+    warning("Please set the `standardize` method explicitly. Set to \"full\" by default.")
+    standardize <- "full"
+  }
 
-    parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Std_Parameter"])
+  if (!is.null(standardize) && !is.logical(standardize)) {
+    std_parameters <- standardize_parameters(model, method = standardize, estimate = tolower(estimate), robust = standardize_robust, ...)
+    parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
   }
 
   # Diagnostic
@@ -66,18 +68,19 @@
 #' Parameters of Bayesian models.
 #'
 #' @param model Bayesian model.
-#' @param standardize Add standardized parameters. Default to FALSE as this re-fits the model and can thus take some time.
+#' @inheritParams model_parameters.lm
 #' @inheritParams describe_posterior
 #' @param priors Include priors specifications information. If set to true (current \code{rstanarm}' default), automatically adjusted priors' scale during fitting  will be displayed.
 #' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1 (Gelman and Rubin, 1992) or 1.01 (Vehtari et al., 2019).
-#' @param iterations The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
 #' @param ... Arguments passed to or from other methods (e.g., to \code{standardize}).
 #'
 #' @examples
 #' \dontrun{
 #' library(rstanarm)
+#' library(parameters)
+#'
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-#' model_parameters(model)
+#' model_parameters(model, standardize = TRUE)
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
@@ -104,7 +107,7 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, ci = .90, ci_method="hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, priors = TRUE, iterations = 1000, ...) {
+.extract_parameters_bayesian <- function(model, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, priors = TRUE, iterations = 1000, ...) {
   if (insight::model_info(model)$is_bayesian) {
     data <- insight::get_parameters(model)
   } else {
@@ -112,6 +115,6 @@ model_parameters.brmsfit <- .model_parameters_bayesian
   }
 
   # Summary
-  parameters <- describe_posterior(data, ci = ci, ci_method=ci_method, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full)
+  parameters <- describe_posterior(data, ci = ci, ci_method = ci_method, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full)
   return(parameters)
 }

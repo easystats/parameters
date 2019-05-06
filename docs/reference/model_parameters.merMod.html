@@ -37,6 +37,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Linear Mixed Model Parameters — model_parameters.merMod" />
 
 <meta property="og:description" content="Parameters of linear mixed models." />
@@ -131,8 +133,8 @@
 
     <pre class="usage"><span class='co'># S3 method for merMod</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>p_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>, <span class='kw'>standardize_robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>p_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,7 +149,11 @@
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>Add standardized parameters.</p></td>
+      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <a href='standardize_parameters.html'>standardize_parameters</a>).</p></td>
+    </tr>
+    <tr>
+      <th>standardize_robust</th>
+      <td><p>Robust standardization. See <a href='standardize_parameters.html'>standardize_parameters</a>.</p></td>
     </tr>
     <tr>
       <th>bootstrap</th>

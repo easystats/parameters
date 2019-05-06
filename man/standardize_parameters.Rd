@@ -2,7 +2,7 @@
 % Please edit documentation in R/standardize_parameters.R
 \name{standardize_parameters}
 \alias{standardize_parameters}
-\title{Get Standardized Model Parameters}
+\title{Standardized Model Parameters}
 \usage{
 standardize_parameters(model, robust = FALSE, method = "refit",
   verbose = TRUE, ...)
@@ -16,41 +16,26 @@ median from the variables and divide it by the median absolute deviation
 mean and divide it by the standard deviation (SD).
 the}
 
-\item{method}{The method used for standardizing the parameters. Can be \code{"refit"} (default).}
+\item{method}{The method used for standardizing the parameters. Can be \code{"refit"} (default), "2sd", "full" or "classic".}
 
 \item{verbose}{Toggle warnings on or off.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Compute standardized model parameters (coefs).
+Compute standardized model parameters (coefficients). See \href{https://easystats.github.io/parameters/articles/parameters_standardization.html}{this vignette}.
 }
 \details{
 \strong{Methods:}
 \itemize{
- \item \strong{refit}: This method is based on a complete model re-fit after standardizing the data. Hence, this method is equal to standardizing the variables before fitting the model. It is the most accurate, especially for parameters related to interactions, but it is also the most computationally costly.
- \item \strong{2sd}: Same as \code{method = "refit"}, however, standardization is done by dividing by two times the SD or MAD (depending on \code{robust}).
- \item \strong{full}: Post-hoc standardization of the model parmaters, based on multiplying the coefficients by the standard deviation of the related terms and dividing by the standard deviation of the outcome.
- \item \strong{classic}: Similar to \code{method = "full"}, but factors are treated differently. See below.
+ \item \strong{refit}: This method is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the "purest" and the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms). The \code{robust} (default to \code{FALSE}) argument enables a robust standardization of data, i.e., based on the \code{median} and \code{MAD} instead of the \code{mean} and \code{SD}.
+ \item \strong{2sd}: Same as \code{method = "refit"}, however, standardization is done by dividing by two times the \code{SD} or \code{MAD} (depending on \code{robust}). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors (see Gelman, 2008).
+ \item \strong{full}: Post-hoc standardization of the model paramaters. The coefficients are divided by the standard deviation (or MAD if \code{robust}) of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if \code{robust}) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of \code{x} is related to a change of 0.24 of the SD of \code{y}). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.
+ \item \strong{classic}: This method is similar to \code{method = "full"}, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as \code{sjstats::std_beta()} or \code{lm.beta::lm.beta()}.
 }
-\strong{Standardization of factors}
-\cr \cr
-The most accurate method of getting standardized coefficients is to standardize
-the data before fitting the model. This is similar to \code{method = "refit"}.
-\code{method = "full"} performs a post-hoc standardization by multiplying
-the coefficients with the standard deviation of the related model term, then
-dividing by the standard deviation of the model's response. However, this
-method is only applied to numeric variables and thus the results probably
-differ from standardized coefficients from other functions like
-\code{sjstats::std_beta()} or \code{lm.beta::lm.beta()}. The reason for this
-behaviour is that in particular for more complex models (including interaction
-or polynomial or spline terms) \code{method = "full"} returned standardized
-coefficients that were closer to the more accurate approach of standardizing
-the data before fitting the model, as compared to the "classic" method implemented
-in \code{sjstats::std_beta()} or \code{lm.beta::lm.beta()}. However,
-\code{method = "classic"} mimics this "classic" behaviour.
 }
 \examples{
+library(parameters)
 data(iris)
 
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
@@ -67,5 +52,10 @@ standardize_parameters(model, method = "refit")
 standardize_parameters(model, method = "refit", robust = TRUE)
 standardize_parameters(model, method = "full")
 standardize_parameters(model, method = "full", robust = TRUE)
-
+}
+\references{
+\itemize{
+  \item Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear regression models.
+  \item Gelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. Statistics in medicine, 27(15), 2865-2873.
+}
 }

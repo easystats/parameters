@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute p values using Wald-test approximation — p_value_wald • parameters</title>
+<title>Principal Components Analysis — principal_components • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Compute p values using Wald-test approximation — p_value_wald" />
+<meta property="og:title" content="Principal Components Analysis — principal_components" />
 
-<meta property="og:description" content="The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5" />
+<meta property="og:description" content="This function performs a principal component analysis and
+  returns the loadings (of the unrotated matrix) as data frame, or
+  returns a rotated matrix of the loadings (if rotation is not
+  NULL)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -120,42 +123,95 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute p values using Wald-test approximation</h1>
+    <h1>Principal Components Analysis</h1>
     
-    <div class="hidden name"><code>p_value_wald.Rd</code></div>
+    <div class="hidden name"><code>principal_components.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5<!-- % at p = 0.05. --></p>
+    <p>This function performs a principal component analysis and
+  returns the loadings (of the unrotated matrix) as data frame, or
+  returns a rotated matrix of the loadings (if <code>rotation</code> is not
+  <code>NULL</code>).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>p_value_wald</span>(<span class='no'>model</span>)</pre>
+    <pre class="usage"><span class='fu'>principal_components</span>(<span class='no'>x</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_comp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>A statistical model.</p></td>
+      <th>x</th>
+      <td><p>A data frame or a <code><a href='https://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp</a></code>-object.</p></td>
+    </tr>
+    <tr>
+      <th>rotation</th>
+      <td><p>Rotation of the factor loadings. May be one of
+<code>"varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster"</code>
+or <code>"none"</code>. If <code>rotatoin = NULL</code>, loadings for the principal
+components from the unrotated matrix are returned.</p></td>
+    </tr>
+    <tr>
+      <th>n_comp</th>
+      <td><p>Number of components to extract. If <code>rotation = "varmiax"</code>
+and <code>n_comp = NULL</code>, number of components is based on the Kaiser-criteria.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>If <code>rotation = NULL</code>, a data frame with all loadings of principal
+  components. Else, a rotated loadings matrix, as data frame. Details on the
+  variance components are saved as attributes.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code><a href='https://www.rdocumentation.org/packages/base/topics/print'>print()</a></code>-method has a <code>cutoff</code>-argument, which is a
+  scalar between 0 and 1, indicating which (absolute) values from the
+  <em>rotated</em> loadings (i.e. when <code>rotation</code> is <em>not</em> <code>NULL</code>)
+  should be blank in the output. By default, all loadings between -.1 and .1
+  are not shown.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>p_value_wald</span>(<span class='no'>model</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>circus</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/circus/topics/merMod_1'>merMod_1</a></span>
-<span class='fu'>p_value_wald</span>(<span class='no'>model</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>iris</span>)
+<span class='fu'>principal_components</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])</div><div class='output co'>#&gt;         PC1       PC2        PC3         PC4
+#&gt; 1 1.7083611 0.9560494 0.38308860 0.143926497
+#&gt; 2 2.9184978 0.9140305 0.14675688 0.020714836
+#&gt; 3 0.7296245 0.2285076 0.03668922 0.005178709
+#&gt; 4 0.7296245 0.9581321 0.99482129 1.000000000</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>iris</span>)
+<span class='fu'>principal_components</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"varimax"</span>, <span class='kw'>n_comp</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt;                     PC1         PC2
+#&gt; Sepal.Length  0.9593030 -0.04833591
+#&gt; Sepal.Width  -0.1445841 -0.98489327
+#&gt; Petal.Length  0.9442042  0.30365829
+#&gt; Petal.Width   0.9324373  0.25659503</div><div class='input'>
+<span class='no'>pr</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"varimax"</span>, <span class='kw'>n_comp</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
+<span class='co'># show all</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>pr</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>.001</span>)</div><div class='output co'>#&gt;                     PC1         PC2
+#&gt; Sepal.Length  0.9593030 -0.04833591
+#&gt; Sepal.Width  -0.1445841 -0.98489327
+#&gt; Petal.Length  0.9442042  0.30365829
+#&gt; Petal.Width   0.9324373  0.25659503</div><div class='input'>
+<span class='co'># show only some</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>pr</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>.5</span>)</div><div class='output co'>#&gt;                     PC1         PC2
+#&gt; Sepal.Length  0.9593030 -0.04833591
+#&gt; Sepal.Width  -0.1445841 -0.98489327
+#&gt; Petal.Length  0.9442042  0.30365829
+#&gt; Petal.Width   0.9324373  0.25659503</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

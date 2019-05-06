@@ -6,23 +6,27 @@
 \title{Bayesian Models Parameters}
 \usage{
 .model_parameters_bayesian(model, ci = 0.9, ci_method = "hdi",
-  standardize = FALSE, estimate = "median", test = c("pd", "rope"),
+  standardize = FALSE, standardize_robust = FALSE,
+  estimate = "median", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, diagnostic = TRUE,
   priors = TRUE, iterations = 1000, ...)
 
 \method{model_parameters}{stanreg}(model, ci = 0.9, ci_method = "hdi",
-  standardize = FALSE, estimate = "median", test = c("pd", "rope"),
+  standardize = FALSE, standardize_robust = FALSE,
+  estimate = "median", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, diagnostic = TRUE,
   priors = TRUE, iterations = 1000, ...)
 }
 \arguments{
 \item{model}{Bayesian model.}
 
-\item{ci}{Credible Interval (CI) level. Default to 0.90 (90\%).}
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be \code{"hdi"} (default, see \link[bayestestR]{hdi}) or "quantile" (see \link[bayestestR]{ci}).}
 
-\item{standardize}{Add standardized parameters. Default to FALSE as this re-fits the model and can thus take some time.}
+\item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{standardize_parameters}).}
+
+\item{standardize_robust}{Robust standardization. See \link{standardize_parameters}.}
 
 \item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
 
@@ -46,8 +50,10 @@ Parameters of Bayesian models.
 \examples{
 \dontrun{
 library(rstanarm)
+library(parameters)
+
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-model_parameters(model)
+model_parameters(model, standardize = TRUE)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

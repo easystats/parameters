@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Standardized Model Parameters — standardize_parameters • parameters</title>
+<title>Standardized Model Parameters — standardize_parameters • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,11 @@
 
 
 
-<meta property="og:title" content="Get Standardized Model Parameters — standardize_parameters" />
+  <link href="../extra.css" rel="stylesheet">
+  
+<meta property="og:title" content="Standardized Model Parameters — standardize_parameters" />
 
-<meta property="og:description" content="Compute standardized model parameters (coefs)." />
+<meta property="og:description" content="Compute standardized model parameters (coefficients). See this vignette." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -118,18 +120,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Standardized Model Parameters</h1>
+    <h1>Standardized Model Parameters</h1>
     
     <div class="hidden name"><code>standardize_parameters.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compute standardized model parameters (coefs).</p>
+    <p>Compute standardized model parameters (coefficients). See <a href='https://easystats.github.io/parameters/articles/parameters_standardization.html'>this vignette</a>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"refit"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"refit"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,12 +142,20 @@
       <td><p>A statistical model.</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>The method used for standardizing the parameters. Can be "refit" (default).</p></td>
+      <th>robust</th>
+      <td><p>Logical, if <code>TRUE</code>, centering is done by substracting the
+median from the variables and divide it by the median absolute deviation
+(MAD). If <code>FALSE</code>, variables are standardized by substracting the
+mean and divide it by the standard deviation (SD).
+the</p></td>
     </tr>
     <tr>
-      <th>robust</th>
-      <td><p>If TRUE, the standardization will be based on <a href='https://www.rdocumentation.org/packages/stats/topics/median'>median</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/mad'>mad</a> instead of <a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/sd'>sd</a> (default).</p></td>
+      <th>method</th>
+      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code> (default), "2sd", "full" or "classic".</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings on or off.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -154,68 +165,90 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Methods:</p><ul>
-<li><p><em>refit</em>: This method is based on a complete model re-fit using the standardized data. It is the most accurate, especially for parameters related to interactions, but it is also the most computationnaly costly.</p></li>
+    <p><strong>Methods:</strong></p><ul>
+<li><p><strong>refit</strong>: This method is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the "purest" and the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms). The <code>robust</code> (default to <code>FALSE</code>) argument enables a robust standardization of data, i.e., based on the <code>median</code> and <code>MAD</code> instead of the <code>mean</code> and <code>SD</code>.</p></li>
+<li><p><strong>2sd</strong>: Same as <code>method = "refit"</code>, however, standardization is done by dividing by two times the <code>SD</code> or <code>MAD</code> (depending on <code>robust</code>). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors (see Gelman, 2008).</p></li>
+<li><p><strong>full</strong>: Post-hoc standardization of the model paramaters. The coefficients are divided by the standard deviation (or MAD if <code>robust</code>) of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if <code>robust</code>) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of <code>x</code> is related to a change of 0.24 of the SD of <code>y</code>). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p></li>
+<li><p><strong>classic</strong>: This method is similar to <code>method = "full"</code>, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as <code><a href='https://www.rdocumentation.org/packages/sjstats/topics/std_beta'>sjstats::std_beta()</a></code> or <code><a href='https://www.rdocumentation.org/packages/lm.beta/topics/lm.beta'>lm.beta::lm.beta()</a></code>.</p></li>
+</ul>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <ul>
+<li><p>Neter, J., Wasserman, W., &amp; Kutner, M. H. (1989). Applied linear regression models.</p></li>
+<li><p>Gelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 </ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>iris</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>)
-<span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"refit"</span>)</div><div class='output co'>#&gt;                       Parameter Std_Estimate
-#&gt; 1                   (Intercept)   0.05969491
-#&gt; 2             Speciesversicolor  -0.16597410
-#&gt; 3              Speciesvirginica   0.18985849
-#&gt; 4                   Petal.Width   0.85622714
-#&gt; 5 Speciesversicolor:Petal.Width   0.45674637
-#&gt; 6  Speciesvirginica:Petal.Width  -0.25713539</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"refit"</span>, <span class='kw'>robust</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                       Parameter Std_Estimate
-#&gt; 1                   (Intercept)   0.17960924
-#&gt; 2             Speciesversicolor  -0.08429934
-#&gt; 3              Speciesvirginica   0.12439049
-#&gt; 4                   Petal.Width   0.93017273
-#&gt; 5 Speciesversicolor:Petal.Width   0.49619195
-#&gt; 6  Speciesvirginica:Petal.Width  -0.27934215</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"full"</span>, <span class='kw'>robust</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;                       Parameter Std_Estimate
-#&gt; 1                   (Intercept)           NA
-#&gt; 2             Speciesversicolor   -0.8846360
-#&gt; 3              Speciesvirginica    0.5944450
-#&gt; 4                   Petal.Width    0.8562271
-#&gt; 5 Speciesversicolor:Petal.Width    0.4567464
-#&gt; 6  Speciesvirginica:Petal.Width   -0.2571354</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"full"</span>, <span class='kw'>robust</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                       Parameter Std_Estimate
-#&gt; 1                   (Intercept)           NA
-#&gt; 2             Speciesversicolor   -0.7058421
-#&gt; 3              Speciesvirginica    0.4743016
-#&gt; 4                   Petal.Width    0.9301727
-#&gt; 5 Speciesversicolor:Petal.Width    0.4961919
-#&gt; 6  Speciesvirginica:Petal.Width   -0.2793421</div><div class='input'>
-<span class='no'>data</span>$<span class='no'>binary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>data</span>$<span class='no'>Sepal.Width</span> <span class='kw'>&gt;</span> <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>0</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>binary</span> ~ <span class='no'>Species</span> * <span class='no'>Sepal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>family</span><span class='kw'>=</span><span class='st'>"binomial"</span>)
-<span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"refit"</span>)</div><div class='output co'>#&gt;                        Parameter Std_Estimate
-#&gt; 1                    (Intercept)     6.786380
-#&gt; 2              Speciesversicolor    -9.544176
-#&gt; 3               Speciesvirginica    -8.145297
-#&gt; 4                   Sepal.Length     4.238719
-#&gt; 5 Speciesversicolor:Sepal.Length    -1.518858
-#&gt; 6  Speciesvirginica:Sepal.Length    -3.514712</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"refit"</span>, <span class='kw'>robust</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                        Parameter Std_Estimate
-#&gt; 1                    (Intercept)     6.564564
-#&gt; 2              Speciesversicolor    -9.464693
-#&gt; 3               Speciesvirginica    -7.961370
-#&gt; 4                   Sepal.Length     5.312411
-#&gt; 5 Speciesversicolor:Sepal.Length    -1.903594
-#&gt; 6  Speciesvirginica:Sepal.Length    -4.405008</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"full"</span>, <span class='kw'>robust</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;                        Parameter Std_Estimate
-#&gt; 1                    (Intercept)           NA
-#&gt; 2              Speciesversicolor    0.3115888
-#&gt; 3               Speciesvirginica    4.4215443
-#&gt; 4                   Sepal.Length    1.1251789
-#&gt; 5 Speciesversicolor:Sepal.Length   -0.4031848
-#&gt; 6  Speciesvirginica:Sepal.Length   -0.9329893</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"full"</span>, <span class='kw'>robust</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                        Parameter Std_Estimate
-#&gt; 1                    (Intercept)           NA
-#&gt; 2              Speciesversicolor    0.4047491
-#&gt; 3               Speciesvirginica    5.7435181
-#&gt; 4                   Sepal.Length    1.8318193
-#&gt; 5 Speciesversicolor:Sepal.Length   -0.6563949
-#&gt; 6  Speciesvirginica:Sepal.Length   -1.5189298</div><div class='input'>
-</div></pre>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"refit"</span>)</div><div class='output co'>#&gt;                       Parameter    Std_beta
+#&gt; 1                   (Intercept)  0.05969491
+#&gt; 2             Speciesversicolor -0.16597410
+#&gt; 3              Speciesvirginica  0.18985849
+#&gt; 4                   Petal.Width  0.85622714
+#&gt; 5 Speciesversicolor:Petal.Width  0.45674637
+#&gt; 6  Speciesvirginica:Petal.Width -0.25713539</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"refit"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                       Parameter    Std_beta
+#&gt; 1                   (Intercept)  0.17960924
+#&gt; 2             Speciesversicolor -0.08429934
+#&gt; 3              Speciesvirginica  0.12439049
+#&gt; 4                   Petal.Width  0.93017273
+#&gt; 5 Speciesversicolor:Petal.Width  0.49619195
+#&gt; 6  Speciesvirginica:Petal.Width -0.27934215</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2sd"</span>)</div><div class='output co'>#&gt;                       Parameter    Std_beta
+#&gt; 1                   (Intercept)  0.02984746
+#&gt; 2             Speciesversicolor -0.08298705
+#&gt; 3              Speciesvirginica  0.09492924
+#&gt; 4                   Petal.Width  0.85622714
+#&gt; 5 Speciesversicolor:Petal.Width  0.45674637
+#&gt; 6  Speciesvirginica:Petal.Width -0.25713539</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2sd"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                       Parameter    Std_beta
+#&gt; 1                   (Intercept)  0.08980462
+#&gt; 2             Speciesversicolor -0.04214967
+#&gt; 3              Speciesvirginica  0.06219525
+#&gt; 4                   Petal.Width  0.93017273
+#&gt; 5 Speciesversicolor:Petal.Width  0.49619195
+#&gt; 6  Speciesvirginica:Petal.Width -0.27934215</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"full"</span>)</div><div class='output co'>#&gt;                       Parameter   Std_beta
+#&gt; 1                   (Intercept)         NA
+#&gt; 2             Speciesversicolor -0.8846360
+#&gt; 3              Speciesvirginica  0.5944450
+#&gt; 4                   Petal.Width  0.8562271
+#&gt; 5 Speciesversicolor:Petal.Width  0.4567464
+#&gt; 6  Speciesvirginica:Petal.Width -0.2571354</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                       Parameter   Std_beta
+#&gt; 1                   (Intercept)         NA
+#&gt; 2             Speciesversicolor -0.7058421
+#&gt; 3              Speciesvirginica  0.4743016
+#&gt; 4                   Petal.Width  0.9301727
+#&gt; 5 Speciesversicolor:Petal.Width  0.4961919
+#&gt; 6  Speciesvirginica:Petal.Width -0.2793421</div><div class='input'>
+<span class='no'>iris</span>$<span class='no'>binary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>iris</span>$<span class='no'>Sepal.Width</span> <span class='kw'>&gt;</span> <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>0</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>binary</span> ~ <span class='no'>Species</span> * <span class='no'>Sepal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"refit"</span>)</div><div class='output co'>#&gt;                        Parameter  Std_beta
+#&gt; 1                    (Intercept)  6.786380
+#&gt; 2              Speciesversicolor -9.544176
+#&gt; 3               Speciesvirginica -8.145297
+#&gt; 4                   Sepal.Length  4.238719
+#&gt; 5 Speciesversicolor:Sepal.Length -1.518858
+#&gt; 6  Speciesvirginica:Sepal.Length -3.514712</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"refit"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                        Parameter  Std_beta
+#&gt; 1                    (Intercept)  6.564564
+#&gt; 2              Speciesversicolor -9.464693
+#&gt; 3               Speciesvirginica -7.961370
+#&gt; 4                   Sepal.Length  5.312411
+#&gt; 5 Speciesversicolor:Sepal.Length -1.903594
+#&gt; 6  Speciesvirginica:Sepal.Length -4.405008</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"full"</span>)</div><div class='output co'>#&gt;                        Parameter   Std_beta
+#&gt; 1                    (Intercept)         NA
+#&gt; 2              Speciesversicolor  0.3115888
+#&gt; 3               Speciesvirginica  4.4215443
+#&gt; 4                   Sepal.Length  1.1251789
+#&gt; 5 Speciesversicolor:Sepal.Length -0.4031848
+#&gt; 6  Speciesvirginica:Sepal.Length -0.9329893</div><div class='input'><span class='fu'>standardize_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                        Parameter   Std_beta
+#&gt; 1                    (Intercept)         NA
+#&gt; 2              Speciesversicolor  0.4047491
+#&gt; 3               Speciesvirginica  5.7435181
+#&gt; 4                   Sepal.Length  1.8318193
+#&gt; 5 Speciesversicolor:Sepal.Length -0.6563949
+#&gt; 6  Speciesvirginica:Sepal.Length -1.5189298</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -223,6 +256,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

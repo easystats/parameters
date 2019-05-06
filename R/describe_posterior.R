@@ -7,15 +7,15 @@
 #' @param test What \href{https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope" or "p_map".
 #' @param rope_range \href{https://easystats.github.io/bayestestR/#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
 #' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
+#' @param dispersion Indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).
 #'
 #' @examples
 #' describe_posterior(rnorm(1000))
-#'
 #' @importFrom stats mad median sd setNames
 #' @importFrom bayestestR map_estimate hdi ci p_direction p_map
 #'
 #' @export
-describe_posterior <- function(posteriors, ci = .90, ci_method="hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE) {
+describe_posterior <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE) {
   UseMethod("describe_posterior")
 }
 
@@ -26,7 +26,7 @@ describe_posterior <- function(posteriors, ci = .90, ci_method="hdi", estimate =
 
 #' @rdname describe_posterior
 #' @export
-describe_posterior.numeric <- function(posteriors, ci = .90, ci_method="hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE) {
+describe_posterior.numeric <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE) {
   x <-
     describe_posterior(
       as.data.frame(posteriors),
@@ -35,7 +35,8 @@ describe_posterior.numeric <- function(posteriors, ci = .90, ci_method="hdi", es
       estimate = estimate,
       test = test,
       rope_range = rope_range,
-      rope_full = rope_full
+      rope_full = rope_full,
+      dispersion = dispersion
     )
   x[names(x) != "Parameter"]
 }
@@ -54,16 +55,20 @@ describe_posterior.double <- describe_posterior.numeric
 #' @rdname describe_posterior
 #' @method describe_posterior data.frame
 #' @export
-describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE) {
+describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE) {
   # Point estimates
   out <- data.frame("Parameter" = colnames(posteriors))
   if ("median" %in% c(estimate)) {
     out$Median <- sapply(posteriors, stats::median)
-    out$MAD <- sapply(posteriors, stats::mad)
+    if (dispersion) {
+      out$MAD <- sapply(posteriors, stats::mad)
+    }
   }
   if ("mean" %in% c(estimate)) {
     out$Mean <- sapply(posteriors, mean)
-    out$SD <- sapply(posteriors, stats::sd)
+    if (dispersion) {
+      out$SD <- sapply(posteriors, stats::sd)
+    }
   }
   if ("map" %in% c(estimate)) {
     out$MAP <- unlist(sapply(posteriors, bayestestR::map_estimate))
@@ -74,7 +79,7 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi
     if (length(ci) > 1) {
       if (ci_method == "hdi") {
         hdi <- sapply(posteriors, bayestestR::hdi, ci = ci, simplify = FALSE)
-      } else{
+      } else {
         hdi <- sapply(posteriors, bayestestR::ci, ci = ci, simplify = FALSE)
       }
       for (i in names(hdi)) {
@@ -93,7 +98,7 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi
     } else {
       if (ci_method == "hdi") {
         hdi <- as.data.frame(t(sapply(posteriors, bayestestR::hdi, ci = ci)), stringsAsFactors = FALSE)
-      } else{
+      } else {
         hdi <- as.data.frame(t(sapply(posteriors, bayestestR::ci, ci = ci)), stringsAsFactors = FALSE)
       }
       hdi <- hdi[c("CI_low", "CI_high")]

@@ -15,6 +15,10 @@
 #'   the
 #' @param method The method of standardization. See 'Details'.
 #' @param verbose Toggle warnings on or off.
+#' @param force Logical, if \code{TRUE}, forces standardization of factors as
+#'   well. Factors are converted to numerical values, with the lowest level
+#'   being the value \code{1} (unless the factor has numeric levels, which are
+#'   converted to the corresponding numeric value).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details Methods:
@@ -24,6 +28,6 @@
 #' }
 #'
 #' @export
-standardize <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
+standardize <- function(x, ...) {
   UseMethod("standardize")
 }

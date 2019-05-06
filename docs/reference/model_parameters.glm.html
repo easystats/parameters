@@ -37,6 +37,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Linear Model Parameters — model_parameters.glm" />
 
 <meta property="og:description" content="Parameters of general linear models." />
@@ -130,8 +132,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for glm</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>,
+  <span class='kw'>standardize_robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,7 +148,11 @@
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>Add standardized parameters.</p></td>
+      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <a href='standardize_parameters.html'>standardize_parameters</a>).</p></td>
+    </tr>
+    <tr>
+      <th>standardize_robust</th>
+      <td><p>Robust standardization. See <a href='standardize_parameters.html'>standardize_parameters</a>.</p></td>
     </tr>
     <tr>
       <th>bootstrap</th>
@@ -161,14 +167,14 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;     Parameter      beta       SE    CI_low   CI_high         z DoF_residual
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Please set the `standardize` method explicitly. Set to "refit" by default.</span></div><div class='output co'>#&gt;     Parameter      beta       SE    CI_low   CI_high         z DoF_residual
 #&gt; 1 (Intercept) 10.619163 4.167865  4.788803 22.662241  2.547866           29
 #&gt; 2          wt  2.100173 1.545982 -0.529565  6.242417  1.358472           29
 #&gt; 3         cyl -2.930932 1.379510 -6.919171 -1.068398 -2.124619           29
-#&gt;            p   Std_beta    Std_SE  Std_CI_low Std_CI_high
-#&gt; 1 0.01083840 -0.7591992 0.7354983  -2.5540592   0.5642707
-#&gt; 2 0.17431390  2.0549298 1.5126772  -0.5181568   6.1079393
-#&gt; 3 0.03361844 -5.2344153 2.4636963 -12.3570976  -1.9080747</div></pre>
+#&gt;            p   Std_beta
+#&gt; 1 0.01083840 -0.7591992
+#&gt; 2 0.17431390  2.0549298
+#&gt; 3 0.03361844 -5.2344153</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

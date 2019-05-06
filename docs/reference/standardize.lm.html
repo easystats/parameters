@@ -37,6 +37,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Model Standardization — standardize.lm" />
 
 <meta property="og:description" content="Refit the model after standardizing the data." />
@@ -130,7 +132,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for lm</span>
-<span class='fu'><a href='standardize.html'>standardize</a></span>(<span class='no'>x</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='standardize.html'>standardize</a></span>(<span class='no'>x</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,7 +144,19 @@
     </tr>
     <tr>
       <th>robust</th>
-      <td><p>If TRUE, the standardization will be based on <a href='https://www.rdocumentation.org/packages/stats/topics/median'>median</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/mad'>mad</a> instead of <a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a> and <a href='https://www.rdocumentation.org/packages/stats/topics/sd'>sd</a> (default).</p></td>
+      <td><p>Logical, if <code>TRUE</code>, centering is done by substracting the
+median from the variables and divide it by the median absolute deviation
+(MAD). If <code>FALSE</code>, variables are standardized by substracting the
+mean and divide it by the standard deviation (SD).
+the</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>The method of standardization. See 'Details'.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings on or off.</p></td>
     </tr>
     <tr>
       <th>...</th>

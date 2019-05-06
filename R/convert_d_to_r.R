@@ -7,8 +7,7 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
-#' d_to_r(d=1.1547)
-#'
+#' d_to_r(d = 1.1547)
 #' @references \itemize{
 #'   \item Borenstein, Michael, et al. "Converting among effect sizes." Introduction to meta-analysis (2009): 45-49.
 #' }
@@ -33,7 +32,7 @@ d_to_r <- function(d, ...) {
 #' @rdname d_to_r
 #' @export
 r_to_d <- function(r, ...) {
-  2 * r / sqrt(1 - r ^ 2)
+  2 * r / sqrt(1 - r^2)
 }
 
 

@@ -1,8 +1,7 @@
-#' @inherit standardize
+#' @rdname standardize
 #' @importFrom stats median mad na.omit
 #' @export
 standardize.numeric <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
-
   method <- match.arg(method, choices = c("default", "refit", "2sd", "full", "partial", "classic"))
 
   # Warning if all NaNs
@@ -26,7 +25,7 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
   }
 
   # Warning if logical vector
-  if (length(unique(x)) == 2) {
+  if (length(unique(x)) == 2 && !is.factor(x) && !is.character(x)) {
     if (is.null(names(x))) {
       name <- deparse(substitute(x))
     } else {
@@ -37,16 +36,22 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
     }
   }
 
+  if (is.factor(x) || is.character(x)) {
+    x <- .factor_to_numeric(x)
+  }
+
   if (method %in% c("default", "classic", "refit", "full")) {
-    if (robust == FALSE)
+    if (robust == FALSE) {
       return(as.vector((x - mean(x)) / stats::sd(x)))
-    else
+    } else {
       return(as.vector((x - stats::median(x)) / stats::mad(x)))
+    }
   } else {
-    if (robust == FALSE)
+    if (robust == FALSE) {
       return(as.vector((x - mean(x)) / (2 * stats::sd(x))))
-    else
+    } else {
       return(as.vector((x - stats::median(x)) / (2 * stats::mad(x))))
+    }
   }
 }
 
@@ -58,12 +63,18 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
 
 
 
-
+#' @rdname standardize
 #' @inherit standardize
 #' @export
-standardize.factor <- function(x, ...) {
-  return(x)
+standardize.factor <- function(x, force = FALSE, ...) {
+  if (force) {
+    standardize(as.numeric(x), ...)
+  } else {
+    x
+  }
 }
+
+
 #' @export
 standardize.character <- standardize.factor
 
@@ -72,7 +83,7 @@ standardize.character <- standardize.factor
 
 #' @inheritParams standardize
 #' @export
-standardize.grouped_df <- function(x, robust = FALSE, method = "default", select = NULL, exclude = NULL, verbose = TRUE, ...) {
+standardize.grouped_df <- function(x, robust = FALSE, method = "default", select = NULL, exclude = NULL, verbose = TRUE, force = FALSE, ...) {
   info <- attributes(x)
   # dplyr >= 0.8.0 returns attribute "indices"
   grps <- attr(x, "groups", exact = TRUE)
@@ -94,6 +105,7 @@ standardize.grouped_df <- function(x, robust = FALSE, method = "default", select
       robust = robust,
       method = method,
       verbose = verbose,
+      force = force,
       ...
     )
   }
@@ -120,7 +132,7 @@ standardize.grouped_df <- function(x, robust = FALSE, method = "default", select
 #' @examples
 #' summary(standardize(iris))
 #' @export
-standardize.data.frame <- function(x, robust = FALSE, method = "default", select = NULL, exclude = NULL, verbose = TRUE, ...) {
+standardize.data.frame <- function(x, robust = FALSE, method = "default", select = NULL, exclude = NULL, verbose = TRUE, force = FALSE, ...) {
   if (is.null(select)) {
     select <- names(x)
   }
@@ -129,6 +141,6 @@ standardize.data.frame <- function(x, robust = FALSE, method = "default", select
     select <- setdiff(select, exclude)
   }
 
-  x[select] <- lapply(x[select], standardize, robust = robust, method = method, verbose = verbose)
+  x[select] <- lapply(x[select], standardize, robust = robust, method = method, verbose = verbose, force = force)
   x
 }

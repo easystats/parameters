@@ -8,7 +8,6 @@
 #' @examples
 #' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' standard_error(model)
-#'
 #' @importFrom stats coef vcov setNames
 #' @export
 standard_error <- function(model, ...) {
@@ -86,8 +85,9 @@ standard_error.merMod <- function(model, ...) {
 
 #' @export
 standard_error.vglm <- function(model, ...) {
-  if (!requireNamespace("VGAM", quietly = TRUE))
+  if (!requireNamespace("VGAM", quietly = TRUE)) {
     stop("Package `VGAM` required.", call. = FALSE)
+  }
 
   cs <- VGAM::summary(model)@coef3
   se <- cs[, 2]
@@ -103,8 +103,9 @@ standard_error.vglm <- function(model, ...) {
 
 #' @export
 standard_error.svyglm.nb <- function(model, ...) {
-  if (!isNamespaceLoaded("survey"))
+  if (!isNamespaceLoaded("survey")) {
     requireNamespace("survey", quietly = TRUE)
+  }
 
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
 

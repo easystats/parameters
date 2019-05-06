@@ -20,7 +20,8 @@ normalize(x, ...)
 \method{normalize}{data.frame}(x, select = NULL, exclude = NULL, ...)
 
 \method{standardize}{data.frame}(x, robust = FALSE, method = "default",
-  select = NULL, exclude = NULL, verbose = TRUE, ...)
+  select = NULL, exclude = NULL, verbose = TRUE, force = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{Object.}
@@ -43,6 +44,11 @@ the}
 \item{method}{The method of standardization. See 'Details'.}
 
 \item{verbose}{Toggle warnings on or off.}
+
+\item{force}{Logical, if \code{TRUE}, forces standardization of factors as
+well. Factors are converted to numerical values, with the lowest level
+being the value \code{1} (unless the factor has numeric levels, which are
+converted to the corresponding numeric value).}
 }
 \description{
 Performs a normalization of data. This scales all numeric
