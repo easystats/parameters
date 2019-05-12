@@ -18,7 +18,7 @@
 #' @examples
 #' library(parameters)
 #' data(iris)
-#' 
+#'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 #' standardize_parameters(model, method = "refit")
 #' standardize_parameters(model, method = "refit", robust = TRUE)
@@ -26,16 +26,18 @@
 #' standardize_parameters(model, method = "2sd", robust = TRUE)
 #' standardize_parameters(model, method = "full")
 #' standardize_parameters(model, method = "full", robust = TRUE)
-#' 
+#'
 #' iris$binary <- ifelse(iris$Sepal.Width > 3, 1, 0)
 #' model <- glm(binary ~ Species * Sepal.Length, data = iris, family = "binomial")
 #' standardize_parameters(model, method = "refit")
 #' standardize_parameters(model, method = "refit", robust = TRUE)
 #' standardize_parameters(model, method = "full")
 #' standardize_parameters(model, method = "full", robust = TRUE)
+#'
 #' @importFrom stats mad sd predict cor model.matrix
 #' @importFrom insight get_parameters model_info get_data get_response
 #' @importFrom utils tail
+#' @importFrom bayestestR describe_posterior
 #'
 #' @references
 #' \itemize{
@@ -52,7 +54,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
     # Extract parameters
     if (insight::model_info(model)$is_bayesian) {
-      std_params <- describe_posterior(insight::get_parameters(std_model), test = NULL, ci = NULL, dispersion = FALSE, ...)
+      std_params <- bayestestR::describe_posterior(insight::get_parameters(std_model), test = NULL, ci = NULL, dispersion = FALSE, ...)
     } else {
       std_params <- insight::get_parameters(std_model)
       names(std_params) <- c("Parameter", "beta")
@@ -63,7 +65,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
     # Extract parameters
     if (insight::model_info(model)$is_bayesian) {
-      params <- describe_posterior(insight::get_parameters(model), test = NULL, ci = NULL, dispersion = FALSE, ...)
+      params <- bayestestR::describe_posterior(insight::get_parameters(model), test = NULL, ci = NULL, dispersion = FALSE, ...)
     } else {
       params <- insight::get_parameters(model)
       names(params) <- c("Parameter", "beta")

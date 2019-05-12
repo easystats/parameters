@@ -22,23 +22,23 @@
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{ci_method}{The type of index used for Credible Interval. Can be \code{"hdi"} (default, see \link[bayestestR]{hdi}) or "quantile" (see \link[bayestestR]{ci}).}
+\item{ci_method}{The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).}
 
 \item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{standardize_parameters}).}
 
 \item{standardize_robust}{Robust standardization. See \link{standardize_parameters}.}
 
-\item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
+\item{estimate}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}} to compute. Can be a character or a list with "median", "mean" or "MAP".}
 
-\item{test}{What \href{https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope" or "p_map".}
+\item{test}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence}} to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".}
 
-\item{rope_range}{\href{https://easystats.github.io/bayestestR/#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
+\item{rope_range}{\href{{https://easystats.github.io/bayestestR/#rope}{ROPE's}} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_full}{If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.}
 
 \item{diagnostic}{Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1 (Gelman and Rubin, 1992) or 1.01 (Vehtari et al., 2019).}
 
-\item{priors}{Include priors specifications information. If set to true (current \code{rstanarm}' default), automatically adjusted priors' scale during fitting  will be displayed.}
+\item{priors}{Include priors specifications information. If set to true (current \code{rstanarm} default), automatically adjusted priors' scale during fitting  will be displayed.}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 

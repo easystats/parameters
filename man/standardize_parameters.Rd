@@ -52,6 +52,7 @@ standardize_parameters(model, method = "refit")
 standardize_parameters(model, method = "refit", robust = TRUE)
 standardize_parameters(model, method = "full")
 standardize_parameters(model, method = "full", robust = TRUE)
+
 }
 \references{
 \itemize{
