@@ -28,7 +28,7 @@
 
 \item{standardize_robust}{Robust standardization. See \link{standardize_parameters}.}
 
-\item{estimate}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}} to compute. Can be a character or a list with "median", "mean" or "MAP".}
+\item{estimate}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}} to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
 
 \item{test}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence}} to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".}
 

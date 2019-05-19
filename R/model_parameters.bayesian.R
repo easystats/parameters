@@ -1,19 +1,10 @@
 #' @rdname model_parameters.stanreg
 #' @importFrom insight get_priors
 #' @keywords internal
-.model_parameters_bayesian <- function(model, ci = .90, ci_method = "hdi", standardize = FALSE, standardize_robust = FALSE, estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, diagnostic = TRUE, priors = TRUE, iterations = 1000, ...) {
-
-  # ROPE
-  if (all(rope_range == "default")) {
-    rope_range <- bayestestR::rope_range(model)
-  } else if (!all(is.numeric(rope_range)) | length(rope_range) != 2) {
-    stop("`rope_range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
-  }
-
-
+.model_parameters_bayesian <- function(model, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), standardize = FALSE, standardize_robust = FALSE, iterations = 1000, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, ci, ci_method = ci_method, estimate = tolower(estimate), test = test, rope_range = rope_range, iterations = iterations, ...)
+  parameters <- .extract_parameters_bayesian(model, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, diagnostic = diagnostic, iterations = iterations, ...)
 
   # Standardized
   if (isTRUE(standardize)) {
@@ -22,18 +13,8 @@
   }
 
   if (!is.null(standardize) && !is.logical(standardize)) {
-    std_parameters <- standardize_parameters(model, method = standardize, estimate = tolower(estimate), robust = standardize_robust, ...)
+    std_parameters <- standardize_parameters(model, method = standardize, robust = standardize_robust, estimate = tolower(estimate), ...)
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
-  }
-
-  # Diagnostic
-  if (diagnostic) {
-    if (inherits(model, "stanreg")) {
-      diagnostic_df <- as.data.frame(model$stan_summary[row.names(model$stan_summary) %in% parameters$Parameter, ])
-      parameters$Effective_Sample <- diagnostic_df$n_eff
-      parameters$Rhat <- diagnostic_df$Rhat
-      # TODO: MCSE
-    }
   }
 
   # Priors
@@ -65,14 +46,11 @@
 
 #' Bayesian Models Parameters
 #'
-#' Parameters of Bayesian models.
+#' Compute Parameters of Bayesian models.
 #'
 #' @param model Bayesian model.
 #' @inheritParams model_parameters.lm
 #' @inheritParams bayestestR::describe_posterior
-#' @param priors Include priors specifications information. If set to true (current \code{rstanarm} default), automatically adjusted priors' scale during fitting  will be displayed.
-#' @param diagnostic Include sampling diagnostic metrics (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1 (Gelman and Rubin, 1992) or 1.01 (Vehtari et al., 2019).
-#' @param ... Arguments passed to or from other methods (e.g., to \code{standardize}).
 #'
 #' @examples
 #' \dontrun{
@@ -87,17 +65,13 @@
 #' model_parameters(model)
 #' }
 #'
-#' @references
-#' \itemize{
-#'  \item{\href{https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html}{Comparison of Point-Estimates}}
-#'  \item{\href{https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html}{Comparison of Indices of Effect Existence}}
-#'  }
+#' @references \href{https://easystats.github.io/bayestestR/reference/describe_posterior.html}{Posterior Description}
 #' @importFrom insight get_response
 #' @export
 model_parameters.stanreg <- .model_parameters_bayesian
 
 #' @export
-model_parameters.brmsfit <- .model_parameters_bayesian
+model_parameters.brmsfit <- model_parameters.stanreg
 
 
 
@@ -107,14 +81,15 @@ model_parameters.brmsfit <- .model_parameters_bayesian
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, priors = TRUE, iterations = 1000, ...) {
+.extract_parameters_bayesian <- function(model, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), iterations = 1000, ...) {
   if (insight::model_info(model)$is_bayesian) {
-    data <- insight::get_parameters(model)
+    parameters <- bayestestR::describe_posterior(model, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, diagnostic = diagnostic, ...)
   } else {
     data <- model_bootstrap(model, iterations = iterations, ...)
+    parameters <- bayestestR::describe_posterior(data, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, rope_full = rope_full, ...)
   }
 
   # Summary
-  parameters <- bayestestR::describe_posterior(data, ci = ci, ci_method = ci_method, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full)
+
   return(parameters)
 }
