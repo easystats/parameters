@@ -15,9 +15,6 @@ standard_error <- function(model, ...) {
 }
 
 
-#' @rdname standard_error
-#' @export
-se <- standard_error
 
 
 #' @export

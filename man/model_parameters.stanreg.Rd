@@ -48,7 +48,7 @@ Parameters of Bayesian models.
 \dontrun{
 library(rstanarm)
 model <- stan_glm(Sepal.Length ~ Species, data=iris)
-model_parameters(model)
+model_parameters(model, standardize = "full")
 
 library(brms)
 model <- brm(Sepal.Length ~ Species, data=iris)
