@@ -9,7 +9,7 @@
 #' @examples
 #' model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")
 #' model_parameters(model)
-#' 
+#'
 #' model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
 #' model <- t.test(mtcars$mpg ~ mtcars$vs)
 #' model <- t.test(iris$Sepal.Width, mu = 1)

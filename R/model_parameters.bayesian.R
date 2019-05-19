@@ -1,10 +1,9 @@
-#' @rdname model_parameters.stanreg
 #' @importFrom insight get_priors
 #' @keywords internal
-.model_parameters_bayesian <- function(model, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), standardize = FALSE, standardize_robust = FALSE, iterations = 1000, ...) {
+.model_parameters_bayesian <- function(model, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, standardize = FALSE, standardize_robust = FALSE, iterations = 1000, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, diagnostic = diagnostic, iterations = iterations, ...)
+  parameters <- .extract_parameters_bayesian(model, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, iterations = iterations, ...)
 
   # Standardized
   if (isTRUE(standardize)) {
@@ -17,61 +16,8 @@
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
   }
 
-  # Priors
-  if (priors) {
-    if (inherits(model, "stanreg")) {
-      priors_data <- insight::get_priors(model)
-      names(priors_data) <- tools::toTitleCase(names(priors_data))
-      names(priors_data)[-1] <- paste0("Prior_", names(priors_data)[-1])
-      names(priors_data) <- gsub("Prior_Adjusted_scale", "Prior_Scale_adjusted", names(priors_data))
-      if ("Prior_Scale_adjusted" %in% names(priors_data)) {
-        priors_data$Prior_Scale[!is.na(priors_data$Prior_Scale_adjusted)] <- priors_data$Prior_Scale_adjusted[!is.na(priors_data$Prior_Scale_adjusted)]
-        priors_data$Prior_Scale_adjusted <- NULL
-      }
-      parameters <- merge(parameters, priors_data, by = "Parameter", sort = FALSE, all.x = TRUE)
-    }
-  }
-
   return(parameters)
 }
-
-
-
-
-
-
-
-
-
-
-#' Bayesian Models Parameters
-#'
-#' Compute Parameters of Bayesian models.
-#'
-#' @param model Bayesian model.
-#' @inheritParams model_parameters.lm
-#' @inheritParams bayestestR::describe_posterior
-#'
-#' @examples
-#' \dontrun{
-#' library(rstanarm)
-#' library(parameters)
-#'
-#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-#' model_parameters(model, standardize = TRUE)
-#'
-#' library(brms)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' model_parameters(model)
-#' }
-#'
-#' @references \href{https://easystats.github.io/bayestestR/reference/describe_posterior.html}{Posterior Description}
-#' @importFrom insight get_response
-#' @export
-model_parameters.stanreg <- .model_parameters_bayesian
-
-#' @export
-model_parameters.brmsfit <- model_parameters.stanreg
 
 
 
@@ -81,15 +27,48 @@ model_parameters.brmsfit <- model_parameters.stanreg
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), iterations = 1000, ...) {
+.extract_parameters_bayesian <- function(model, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000, ...) {
+
+  # Bayesian Models
   if (insight::model_info(model)$is_bayesian) {
-    parameters <- bayestestR::describe_posterior(model, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, diagnostic = diagnostic, ...)
+    parameters <- bayestestR::describe_posterior(model, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
+
+    # Bootstrapped Models
   } else {
     data <- model_bootstrap(model, iterations = iterations, ...)
     parameters <- bayestestR::describe_posterior(data, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, rope_full = rope_full, ...)
   }
 
-  # Summary
-
-  return(parameters)
+  parameters
 }
+
+
+
+
+
+
+#' Bayesian Models Parameters
+#'
+#' Parameters of Bayesian models.
+#'
+#' @inheritParams model_parameters.lm
+#' @inheritParams bayestestR::describe_posterior
+#' @param model Bayesian model.
+#'
+#' @examples
+#' \dontrun{
+#' library(rstanarm)
+#' model <- stan_glm(Sepal.Length ~ Species, data=iris)
+#' model_parameters(model, standardize = "full")
+#'
+#' library(brms)
+#' model <- brm(Sepal.Length ~ Species, data=iris)
+#' model_parameters(model)
+#' }
+#' @export
+model_parameters.stanreg <- .model_parameters_bayesian
+
+
+#' @export
+model_parameters.brmsfit <- model_parameters.stanreg
+

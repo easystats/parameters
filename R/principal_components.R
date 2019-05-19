@@ -28,15 +28,15 @@
 #' @examples
 #' data(iris)
 #' principal_components(iris[, 1:4])
-#' 
+#'
 #' data(iris)
 #' principal_components(iris[, 1:4], rotation = "varimax", n_comp = 2)
-#' 
+#'
 #' pr <- principal_components(iris[, 1:4], rotation = "varimax", n_comp = 2)
-#' 
+#'
 #' # show all
 #' print(pr, cutoff = .001)
-#' 
+#'
 #' # show only some
 #' print(pr, cutoff = .5)
 #' @importFrom stats prcomp na.omit varimax

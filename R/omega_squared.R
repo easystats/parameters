@@ -9,20 +9,20 @@
 #' \dontrun{
 #' df <- iris
 #' df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
-#' 
+#'
 #' model <- aov(Sepal.Length ~ Sepal.Big, data = df)
 #' omega_squared(model)
-#' 
+#'
 #' model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 #' omega_squared(model)
-#' 
+#'
 #' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 #' omega_squared(model)
-#' 
+#'
 #' model <- anova(lme4::lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
 #' omega_squared(model)
 #' }
-#' 
+#'
 #' @export
 omega_squared <- function(model, partial = TRUE) {
   params <- .extract_parameters_anova(model)

@@ -11,7 +11,7 @@ test_that("model_parameters.stanreg", {
   set.seed(333)
 
   # GLM
-  params <- model_parameters(insight::download_model("stanreg_lm_1"), standardize = "full", estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
+  params <- model_parameters(insight::download_model("stanreg_lm_1"), standardize = "full", estimate = "all", test = c("pd", "rope"))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 20))
 
   params <- model_parameters(insight::download_model("stanreg_lm_2"), standardize = "full", estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"))
