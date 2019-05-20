@@ -2,6 +2,8 @@ context("model_parameters.BFBayesFactor")
 
 test_that("model_parameters.BFBayesFactor", {
   library(BayesFactor)
+  library(dplyr)
+
   model <- BayesFactor::ttestBF(iris$Sepal.Length, iris$Sepal.Width, paired = TRUE)
   testthat::expect_equal(model_parameters(model)$BF, 6.107436e+69, tolerance = 2)
   model <- BayesFactor::ttestBF(formula = mpg ~ am, data = dplyr::mutate(mtcars, am = as.factor(am)))

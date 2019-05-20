@@ -25,7 +25,7 @@
 #' )
 #' marginal_parameters(model)
 #' }
-#' 
+#'
 #' @importFrom stats model.offset offset plogis pnorm rnorm runif var vcov model.matrix
 #' @importFrom utils as.relistable relist
 #' @export

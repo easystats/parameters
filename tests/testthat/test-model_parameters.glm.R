@@ -6,11 +6,9 @@ test_that("model_parameters.glm - binomial", {
   model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 
   params <- model_parameters(model, standardize = "refit")
-  testthat::expect_equal(nrow(params), 3)
-  testthat::expect_equal(ncol(params), 9)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 9))
 
 
-  params <- suppressWarnings(model_parameters(model, standardize = "refit", bootstrap = TRUE, estimate = c("median", "mean", "MAP"), test = c("pd", "rope", "p_map"), n = 500))
-  testthat::expect_equal(nrow(params), 3)
-  testthat::expect_equal(ncol(params), 13)
+  params <- suppressWarnings(model_parameters(model, standardize = "refit", estimate = "all", test = "all", dispersion=TRUE, bootstrap = TRUE, n = 500))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 13))
 })

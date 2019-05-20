@@ -33,7 +33,6 @@
 #' standardize_parameters(model, method = "refit", robust = TRUE)
 #' standardize_parameters(model, method = "full")
 #' standardize_parameters(model, method = "full", robust = TRUE)
-#'
 #' @importFrom stats mad sd predict cor model.matrix
 #' @importFrom insight get_parameters model_info get_data get_response
 #' @importFrom utils tail
@@ -54,7 +53,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
     # Extract parameters
     if (insight::model_info(model)$is_bayesian) {
-      std_params <- bayestestR::describe_posterior(insight::get_parameters(std_model), test = NULL, ci = NULL, dispersion = FALSE, ...)
+      std_params <- bayestestR::describe_posterior(insight::get_parameters(std_model), test = NULL, ci = NULL, dispersion = FALSE, priors = NULL, ...)
     } else {
       std_params <- insight::get_parameters(std_model)
       names(std_params) <- c("Parameter", "beta")
@@ -65,7 +64,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
     # Extract parameters
     if (insight::model_info(model)$is_bayesian) {
-      params <- bayestestR::describe_posterior(insight::get_parameters(model), test = NULL, ci = NULL, dispersion = FALSE, ...)
+      params <- bayestestR::describe_posterior(insight::get_parameters(model), test = NULL, ci = NULL, dispersion = FALSE, priors = NULL, ...)
     } else {
       params <- insight::get_parameters(model)
       names(params) <- c("Parameter", "beta")
