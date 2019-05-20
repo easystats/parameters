@@ -29,7 +29,6 @@ Suggests:
 	brms,
 	caret,
 	covr,
-	dplyr,
 	knitr,
 	lme4,
 	MASS,
