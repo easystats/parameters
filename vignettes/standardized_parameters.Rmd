@@ -1,5 +1,5 @@
 ---
-title: "Parameters standardization"
+title: "Standardized Parameters"
 output: 
   github_document:
     toc: true
@@ -11,7 +11,7 @@ output:
     fig_height: 6
 tags: [r, parameters]
 vignette: >
-  %\VignetteIndexEntry{Get Started with Bayesian Analysis}
+  %\VignetteIndexEntry{Standardized Parameters}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -21,20 +21,20 @@ bibliography: bibliography.bib
 
 # Introduction
 
-Standardising parameters (*i.e.*, coefficients) can allow for their comparison within and between models, variables and studies. Moreover, as it returns coefficients expressed in terms of variance modification (for instance, coefficients expresed in terms of SD of the response variable), it can allow for the usage of [effect size interpretation guidelines](https://easystats.github.io/report/articles/interpret_metrics.html), such as the famous Cohen's (1988) rules of thumb.
+Standardising parameters (*i.e.*, coefficients) can allow for their comparison within and between models, variables and studies. Moreover, as it returns coefficients expressed in terms of **change of variance** (for instance, coefficients expresed in terms of SD of the response variable), it can allow for the usage of [effect size interpretation guidelines](https://easystats.github.io/report/articles/interpret_metrics.html), such as the famous Cohen's (1988) rules of thumb.
 
-However, standardizing the model's parameters should not be automatic: for some research fields, particular variables or types of studies (*e.g.*, replications), it sometimes makes more sense to keep, use and interpret the original parameters, especially if they are well known or easily understood.
+However, standardizing the model's parameters should *not* be automatic: for some research fields, particular variables or types of studies (*e.g.*, replications), it sometimes makes more sense to keep, use and interpret the original parameters, especially if they are well known or easily understood.
 
-Critically, parameters standardization is not a **trivial process**. Different techniques exist, that can lead to drastically different results. Thus, it is critical that the standardization method is explicitly documented and detailed.
+Critically, **parameters standardization is not a trivial process**. Different techniques exist, that can lead to drastically different results. Thus, it is critical that the standardization method is explicitly documented and detailed.
 
-The `parameters` package include the possibility of using different techniques, described below [@bring1994standardize;@menard2004six;@gelman2008scaling;@schielzeth2010simple;@menard2011standards].
+**`parameters` include different techniques of parameters standardization**, described below [@bring1994standardize;@menard2004six;@gelman2008scaling;@schielzeth2010simple;@menard2011standards].
 
 
 # Standardization methods
 
 ## `refit`: Re-fitting the model with standardized data
 
-This method is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the "purest" and the most accurate [@neter1989applied], but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (*e.g.*, polynomial or spline terms).
+**This method is based on a complete model re-fit with a standardized version of data**. Hence, this method is equal to standardizing the variables before fitting the model. It is the "purest" and the most accurate [@neter1989applied], but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (*e.g.*, polynomial or spline terms).
 
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
@@ -74,7 +74,7 @@ knitr::kable(standardize_parameters(model, method="refit"), digits=2)
 
 ## `2sd`: Scaling by two 2 SDs
 
-Same as `method = "refit"`, however, standardization is done by dividing by two times the `SD` or `MAD` (depending on `robust`). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors (see @gelman2008scaling).
+Same as `method = "refit"`, however, standardization is done by dividing by two times the `SD` or `MAD` (depending on `robust`). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors [@gelman2008scaling].
 
 
 

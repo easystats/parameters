@@ -105,7 +105,7 @@ Calculates marginal coefficients from fitted generalized linear mixed models." /
       <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
     </li>
     <li>
-      <a href="../articles/parameters_standardization.html">Parameters standardization</a>
+      <a href="../articles/standardized_parameters.html">Standardized Parameters</a>
     </li>
   </ul>
 </li>
@@ -198,7 +198,7 @@ Calculates marginal coefficients from fitted generalized linear mixed models.</h
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>GLMMadaptive</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/GLMMadaptive/topics/mixed_model'>mixed_model</a></span>(<span class='no'>vs</span> ~ <span class='no'>mpg</span>,
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>GLMMadaptive</span><span class='kw ns'>::</span><span class='fu'>mixed_model</span>(<span class='no'>vs</span> ~ <span class='no'>mpg</span>,
   <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>,
   <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/family'>binomial</a></span>()
 )

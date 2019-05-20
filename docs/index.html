@@ -17,7 +17,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Processing of Model Parameters">
-<meta property="og:description" content="Process model parameters and compute indices such as confidence intervals, p values, omega squared, and Bayesian metrics.">
+<meta property="og:description" content="Extract or compute model parameters including standardized or bootstrapped estimates.">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -64,7 +64,7 @@
       <a href="articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
     </li>
     <li>
-      <a href="articles/parameters_standardization.html">Parameters standardization</a>
+      <a href="articles/standardized_parameters.html">Standardized Parameters</a>
     </li>
   </ul>
 </li>
@@ -165,43 +165,35 @@
 <thead><tr class="header">
 <th align="left">Parameter</th>
 <th align="right">Median</th>
-<th align="right">MAD</th>
 <th align="right">CI_low</th>
 <th align="right">CI_high</th>
 <th align="right">pd</th>
 <th align="right">ROPE_Percentage</th>
-<th align="left">ROPE_Equivalence</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">39.67</td>
-<td align="right">2.14</td>
-<td align="right">35.31</td>
-<td align="right">43.67</td>
-<td align="right">100</td>
-<td align="right">0.0</td>
-<td align="left">rejected</td>
+<td align="right">39.71</td>
+<td align="right">35.87</td>
+<td align="right">44.61</td>
+<td align="right">100.0</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">wt</td>
-<td align="right">-3.16</td>
-<td align="right">0.73</td>
-<td align="right">-4.69</td>
-<td align="right">-1.75</td>
-<td align="right">100</td>
-<td align="right">0.0</td>
-<td align="left">rejected</td>
-</tr>
-<tr class="odd">
 <td align="left">cyl</td>
 <td align="right">-1.48</td>
-<td align="right">0.35</td>
-<td align="right">-2.23</td>
-<td align="right">-0.69</td>
-<td align="right">100</td>
-<td align="right">1.7</td>
-<td align="left">rejected</td>
+<td align="right">-2.22</td>
+<td align="right">-0.76</td>
+<td align="right">99.9</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">wt</td>
+<td align="right">-3.22</td>
+<td align="right">-4.81</td>
+<td align="right">-1.82</td>
+<td align="right">100.0</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
@@ -216,13 +208,11 @@
 <thead><tr class="header">
 <th align="left">Parameter</th>
 <th align="right">Median</th>
-<th align="right">MAD</th>
 <th align="right">CI_low</th>
 <th align="right">CI_high</th>
 <th align="right">pd</th>
 <th align="right">ROPE_Percentage</th>
-<th align="left">ROPE_Equivalence</th>
-<th align="right">Effective_Sample</th>
+<th align="right">ESS</th>
 <th align="right">Rhat</th>
 <th align="left">Prior_Distribution</th>
 <th align="right">Prior_Location</th>
@@ -231,48 +221,42 @@
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">39.65</td>
-<td align="right">1.75</td>
-<td align="right">36.74</td>
-<td align="right">42.60</td>
+<td align="right">39.70</td>
+<td align="right">36.59</td>
+<td align="right">42.47</td>
 <td align="right">100.00</td>
 <td align="right">0.00</td>
-<td align="left">rejected</td>
-<td align="right">4540</td>
+<td align="right">5732</td>
 <td align="right">1</td>
 <td align="left">normal</td>
 <td align="right">0</td>
 <td align="right">60.27</td>
 </tr>
 <tr class="even">
-<td align="left">wt</td>
-<td align="right">-3.17</td>
-<td align="right">0.76</td>
-<td align="right">-4.42</td>
-<td align="right">-1.94</td>
-<td align="right">100.00</td>
-<td align="right">0.10</td>
-<td align="left">rejected</td>
-<td align="right">2048</td>
-<td align="right">1</td>
-<td align="left">normal</td>
-<td align="right">0</td>
-<td align="right">15.40</td>
-</tr>
-<tr class="odd">
 <td align="left">cyl</td>
-<td align="right">-1.52</td>
-<td align="right">0.42</td>
-<td align="right">-2.22</td>
-<td align="right">-0.81</td>
-<td align="right">99.98</td>
-<td align="right">1.65</td>
-<td align="left">rejected</td>
-<td align="right">2131</td>
+<td align="right">-1.50</td>
+<td align="right">-2.23</td>
+<td align="right">-0.79</td>
+<td align="right">99.83</td>
+<td align="right">2.33</td>
+<td align="right">1793</td>
 <td align="right">1</td>
 <td align="left">normal</td>
 <td align="right">0</td>
 <td align="right">8.44</td>
+</tr>
+<tr class="odd">
+<td align="left">wt</td>
+<td align="right">-3.19</td>
+<td align="right">-4.46</td>
+<td align="right">-1.76</td>
+<td align="right">100.00</td>
+<td align="right">0.10</td>
+<td align="right">1836</td>
+<td align="right">1</td>
+<td align="left">normal</td>
+<td align="right">0</td>
+<td align="right">15.40</td>
 </tr>
 </tbody>
 </table>

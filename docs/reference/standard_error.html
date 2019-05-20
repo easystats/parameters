@@ -100,7 +100,7 @@
       <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
     </li>
     <li>
-      <a href="../articles/parameters_standardization.html">Parameters standardization</a>
+      <a href="../articles/standardized_parameters.html">Standardized Parameters</a>
     </li>
   </ul>
 </li>
@@ -131,9 +131,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='no'>...</span>)
-
-<span class='fu'>se</span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,9 +151,9 @@
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>standard_error</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; $Species
 #&gt;   (Intercept)
-#&gt; 1   0.9565974
-#&gt; 2   0.9565974
-#&gt; 3   0.9565974
+#&gt; 1   0.9566126
+#&gt; 2   0.9566126
+#&gt; 3   0.9566126
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
