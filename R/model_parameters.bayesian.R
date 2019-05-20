@@ -16,6 +16,20 @@
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
   }
 
+
+  # Remove unecessary columns
+  # CI
+  if("CI" %in% names(parameters) && length(unique(parameters$CI)) == 1){
+    parameters$CI <- NULL
+  }
+  if("ROPE_CI" %in% names(parameters) && length(unique(parameters$ROPE_CI)) == 1){
+    parameters$ROPE_CI <- NULL
+  }
+  if("ROPE_low" %in% names(parameters)){
+    parameters$ROPE_low <- NULL
+    parameters$ROPE_high <- NULL
+  }
+
   return(parameters)
 }
 
@@ -35,8 +49,8 @@
 
     # Bootstrapped Models
   } else {
-    data <- model_bootstrap(model, iterations = iterations, ...)
-    parameters <- bayestestR::describe_posterior(data, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, rope_full = rope_full, ...)
+    data <- model_bootstrap(model, iterations = iterations)
+    parameters <- bayestestR::describe_posterior(data, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, ...)
   }
 
   parameters
