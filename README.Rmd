@@ -39,7 +39,7 @@ options(knitr.kable.NA = '',
 
 ***Describe and understand your model's parameters!***
 
-`parameters`'s primary goal is to provide utilities for processing the parameters of various statistical models.
+`parameters`'s primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing p-values, CIs, and other indices for a wide variety of models, this package implements features like standardization, normalization or bootstrapping of parameters and models or conversion between indices of effect size.
 
 
 ## Installation
@@ -60,7 +60,9 @@ library("parameters")
 
 ## Examples
 
-### General Linear Models
+### Describe models' parameters
+
+#### General Linear Models
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 model_parameters(model, standardize = TRUE)
@@ -70,7 +72,7 @@ model <- lm(mpg ~ wt + cyl, data = mtcars)
 knitr::kable(model_parameters(model, standardize = TRUE), digits=2)
 ```
 
-### Bootstrapped Models
+#### Bootstrapped Models
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 model <- lm(mpg ~ wt + cyl, data = mtcars)
@@ -81,7 +83,7 @@ model <- lm(mpg ~ wt + cyl, data = mtcars)
 knitr::kable(model_parameters(model, standardize = FALSE, bootstrap = TRUE), digits=2)
 ```
 
-### Bayesian Models
+#### Bayesian Models
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 library(rstanarm)

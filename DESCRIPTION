@@ -15,7 +15,7 @@ Authors@R: c(
 		comment = c(ORCID = "0000-0002-8895-3206"))
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
-Description: Extract or compute model parameters including standardized or bootstrapped estimates.
+Description: The package's primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing p-values, CIs, and other indices for a wide variety of models, this package implements features like standardization, normalization or bootstrapping of parameters and models or conversion between indices of effect size.
 Depends:
 	R (>= 2.10),
 	stats,
