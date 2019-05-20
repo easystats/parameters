@@ -13,8 +13,8 @@ test_that("model_parameters.BFBayesFactor", {
   testthat::expect_error(model_parameters(model))
 
   df <- mtcars
-  df$gear <- as.factor(gear)
-  df$am <- as.factor(am)
+  df$gear <- as.factor(df$gear)
+  df$am <- as.factor(df$am)
   model <- BayesFactor::anovaBF(mpg ~ gear * am, data = df)
   testthat::expect_error(model_parameters(model))
 })
