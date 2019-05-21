@@ -21,8 +21,8 @@ Depends:
 	stats,
 	utils
 Imports:
-	insight,
-	bayestestR,
+	insight (>= 0.3.0),
+	bayestestR (>= 0.1.6),
 	boot
 Suggests:
 	BayesFactor,
