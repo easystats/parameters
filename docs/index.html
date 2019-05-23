@@ -17,7 +17,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Processing of Model Parameters">
-<meta property="og:description" content="Extract or compute model parameters including standardized or bootstrapped estimates.">
+<meta property="og:description" content="The package's primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing p-values, CIs, and other indices for a wide variety of models, this package implements features like standardization, normalization or bootstrapping of parameters and models or conversion between indices of effect size.">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -90,7 +90,7 @@
 </h1></div>
 
 <p><strong><em>Describe and understand your model’s parameters!</em></strong></p>
-<p><code>parameters</code>’s primary goal is to provide utilities for processing the parameters of various statistical models.</p>
+<p><code>parameters</code>’s primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing p-values, CIs, and other indices for a wide variety of models, this package implements features like standardization, normalization or bootstrapping of parameters and models or conversion between indices of effect size.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -102,9 +102,12 @@
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
-<div id="general-linear-models" class="section level3">
+<div id="describe-models-parameters" class="section level3">
 <h3 class="hasAnchor">
-<a href="#general-linear-models" class="anchor"></a>General Linear Models</h3>
+<a href="#describe-models-parameters" class="anchor"></a>Describe models’ parameters</h3>
+<div id="general-linear-models" class="section level4">
+<h4 class="hasAnchor">
+<a href="#general-linear-models" class="anchor"></a>General Linear Models</h4>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <table class="table table">
@@ -156,9 +159,9 @@
 </tbody>
 </table>
 </div>
-<div id="bootstrapped-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bootstrapped-models" class="anchor"></a>Bootstrapped Models</h3>
+<div id="bootstrapped-models" class="section level4">
+<h4 class="hasAnchor">
+<a href="#bootstrapped-models" class="anchor"></a>Bootstrapped Models</h4>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">bootstrap =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <table class="table table">
@@ -173,34 +176,34 @@
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">39.71</td>
-<td align="right">35.87</td>
-<td align="right">44.61</td>
-<td align="right">100.0</td>
+<td align="right">39.85</td>
+<td align="right">35.83</td>
+<td align="right">43.90</td>
+<td align="right">100</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">cyl</td>
-<td align="right">-1.48</td>
-<td align="right">-2.22</td>
-<td align="right">-0.76</td>
-<td align="right">99.9</td>
+<td align="right">-1.49</td>
+<td align="right">-2.24</td>
+<td align="right">-0.72</td>
+<td align="right">100</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">wt</td>
-<td align="right">-3.22</td>
-<td align="right">-4.81</td>
-<td align="right">-1.82</td>
-<td align="right">100.0</td>
+<td align="right">-3.25</td>
+<td align="right">-4.70</td>
+<td align="right">-1.69</td>
+<td align="right">100</td>
 <td align="right">0</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="bayesian-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bayesian-models" class="anchor"></a>Bayesian Models</h3>
+<div id="bayesian-models" class="section level4">
+<h4 class="hasAnchor">
+<a href="#bayesian-models" class="anchor"></a>Bayesian Models</h4>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb5-2" title="2">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
@@ -221,12 +224,12 @@
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">39.70</td>
-<td align="right">36.59</td>
-<td align="right">42.47</td>
+<td align="right">39.72</td>
+<td align="right">36.84</td>
+<td align="right">42.71</td>
 <td align="right">100.00</td>
-<td align="right">0.00</td>
-<td align="right">5732</td>
+<td align="right">0</td>
+<td align="right">4618</td>
 <td align="right">1</td>
 <td align="left">normal</td>
 <td align="right">0</td>
@@ -234,12 +237,12 @@
 </tr>
 <tr class="even">
 <td align="left">cyl</td>
-<td align="right">-1.50</td>
-<td align="right">-2.23</td>
-<td align="right">-0.79</td>
-<td align="right">99.83</td>
-<td align="right">2.33</td>
-<td align="right">1793</td>
+<td align="right">-1.52</td>
+<td align="right">-2.24</td>
+<td align="right">-0.80</td>
+<td align="right">99.85</td>
+<td align="right">0</td>
+<td align="right">1708</td>
 <td align="right">1</td>
 <td align="left">normal</td>
 <td align="right">0</td>
@@ -247,12 +250,12 @@
 </tr>
 <tr class="odd">
 <td align="left">wt</td>
-<td align="right">-3.19</td>
-<td align="right">-4.46</td>
-<td align="right">-1.76</td>
-<td align="right">100.00</td>
-<td align="right">0.10</td>
-<td align="right">1836</td>
+<td align="right">-3.17</td>
+<td align="right">-4.44</td>
+<td align="right">-1.80</td>
+<td align="right">99.95</td>
+<td align="right">0</td>
+<td align="right">1690</td>
 <td align="right">1</td>
 <td align="left">normal</td>
 <td align="right">0</td>
@@ -260,6 +263,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 </div>

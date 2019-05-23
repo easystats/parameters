@@ -40,6 +40,8 @@ Suggests:
 	survey,
 	testthat,
 	VGAM
+Remotes: 
+	easystats/bayestestR
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

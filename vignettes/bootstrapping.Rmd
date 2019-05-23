@@ -1,5 +1,5 @@
 ---
-title: "Single vs. Bootstrapped Parameters"
+title: "Bootstrapping models and parameters"
 output: 
   github_document:
     toc: true
