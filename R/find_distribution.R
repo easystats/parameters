@@ -1,6 +1,6 @@
 #' Machine learning model trained to classify distributions
 #'
-#' Mean accuracy and Kappa of 0.96.
+#' Mean accuracy and Kappa of 0.86 and 0.85, repsectively. The code to train this model is available HERE.
 #'
 #'
 "classify_distribution"
@@ -25,41 +25,30 @@
 #' @importFrom stats IQR density predict
 #' @export
 find_distribution <- function(x, probabilities = FALSE) {
-  if (!requireNamespace("caret", quietly = TRUE)) {
-    stop("Package `caret` required for distribution classification. Please install it.", call. = FALSE)
-  }
+
   if (!requireNamespace("randomForest", quietly = TRUE)) {
     stop("Package `randomForest` required for distribution classification. Please install it.", call. = FALSE)
   }
 
 
   # Extract features
-  density_Z <- parameters::normalize(stats::density(x, n = 100)$y)
-
-  # Extract features
   data <- data.frame(
-    "Mean" = mean(x),
-    "SD" = stats::sd(x),
-    "Median" = stats::median(x),
-    "MAD" = mad(x, constant = 1),
-    "Mean_Median_Distance" = mean(x) - stats::median(x),
-    "Mean_Mode_Distance" = mean(x) - bayestestR::map_estimate(x),
-    "SD_MAD_Distance" = stats::sd(x) - stats::mad(x, constant = 1),
-    "Mode" = bayestestR::map_estimate(x),
-    "Range" = diff(range(x)) / stats::sd(x),
+    "SD" = sd(x),
+    "MAD" = mad(x, constant=1),
+    "Mean_Median_Distance" = mean(x) - median(x),
+    "Mean_Mode_Distance" = mean(x) - as.numeric(bayestestR::map_estimate(x, bw = "nrd0")),
+    "SD_MAD_Distance" = sd(x) - mad(x, constant=1),
+    "Range" = diff(range(x)) / sd(x),
     "IQR" = stats::IQR(x),
     "Skewness" = skewness(x),
     "Kurtosis" = kurtosis(x),
-    "Smoothness_Cor_1" = smoothness(density_Z, method = "cor", lag = 1),
-    "Smoothness_Diff_1" = smoothness(density_Z, method = "diff", lag = 1),
-    "Smoothness_Cor_5" = smoothness(density_Z, method = "cor", lag = 5),
-    "Smoothness_Diff_5" = smoothness(density_Z, method = "diff", lag = 5)
+    "Uniques" = length(unique(x)) / length(x)
   )
 
 
   # Predict
   if (probabilities) {
-    return(stats::predict(classify_distribution, data, type = "prob"))
+    return(as.data.frame(stats::predict(classify_distribution, data, type = "prob")))
   } else {
     return(as.character(stats::predict(classify_distribution, data)))
   }

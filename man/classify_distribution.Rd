@@ -4,11 +4,11 @@
 \name{classify_distribution}
 \alias{classify_distribution}
 \title{Machine learning model trained to classify distributions}
-\format{An object of class \code{train} (inherits from \code{train.formula}) of length 21.}
+\format{An object of class \code{randomForest.formula} (inherits from \code{randomForest}) of length 8.}
 \usage{
 classify_distribution
 }
 \description{
-Mean accuracy and Kappa of 0.96.
+Mean accuracy and Kappa of 0.86 and 0.85, repsectively. The code to train this model is available HERE.
 }
 \keyword{datasets}
