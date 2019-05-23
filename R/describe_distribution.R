@@ -4,23 +4,22 @@
 #' This function describes a distribution.
 #'
 #' @param x A numeric vector.
+#' @param range Return the range (min and max).
 #' @inheritParams bayestestR::point_estimate
 #'
 #' @examples
 #' describe_distribution(rnorm(100))
 #' describe_distribution(rpois(100, lambda = 4))
 #' describe_distribution(runif(100))
-#' @importFrom bayestestR map_estimate
-#' @importFrom stats IQR density predict
 #' @export
-describe_distribution <- function(x, estimate = "mean", dispersion = TRUE, range = TRUE, ...) {
+describe_distribution <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, ...) {
   UseMethod("describe_distribution")
 
 }
 
 
 #' @export
-describe_distribution.numeric <- function(x, estimate = "mean", dispersion = TRUE, range = TRUE, ...) {
+describe_distribution.numeric <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, ...) {
 
   # Missing
   n_missing <- sum(is.na(x))
@@ -35,7 +34,7 @@ describe_distribution.numeric <- function(x, estimate = "mean", dispersion = TRU
 
   # Point estimates
   out <- cbind(out,
-               bayestestR::point_estimate(x, estimate = estimate, dispersion = dispersion, ...))
+               bayestestR::point_estimate(x, centrality = centrality, dispersion = dispersion, ...))
 
   # Range
   if (range){

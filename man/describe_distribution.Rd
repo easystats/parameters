@@ -4,15 +4,17 @@
 \alias{describe_distribution}
 \title{Describe a Distribution}
 \usage{
-describe_distribution(x, estimate = "mean", dispersion = TRUE,
+describe_distribution(x, centrality = "mean", dispersion = TRUE,
   range = TRUE, ...)
 }
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{estimate}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}} to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
+\item{centrality}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}} (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
 
 \item{dispersion}{if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
+
+\item{range}{Return the range (min and max).}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 }
@@ -22,5 +24,5 @@ This function describes a distribution.
 \examples{
 describe_distribution(rnorm(100))
 describe_distribution(rpois(100, lambda = 4))
-describe_distribution(rbeta(100))
+describe_distribution(runif(100))
 }

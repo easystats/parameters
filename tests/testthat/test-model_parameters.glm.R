@@ -1,3 +1,32 @@
+context("model_parameters.lm")
+library(insight)
+library(testthat)
+
+test_that("model_parameters.lm", {
+  model <- insight::download_model("lm_1")
+
+  params <- model_parameters(model, standardize = "refit")
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 9))
+
+  params <- model_parameters(model, standardize = "refit", centrality = "all", test = "all", dispersion=TRUE, bootstrap = TRUE, n = 500)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 13))
+
+  model <- insight::download_model("lm_2")
+
+  params <- model_parameters(model, standardize = "2sd")
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 9))
+
+  model <- insight::download_model("lm_3")
+
+  params <- model_parameters(model, standardize = "full")
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 9))
+})
+
+
+
+
+
+
 context("model_parameters.glm")
 
 test_that("model_parameters.glm - binomial", {
@@ -9,6 +38,6 @@ test_that("model_parameters.glm - binomial", {
   testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 9))
 
 
-  params <- suppressWarnings(model_parameters(model, standardize = "refit", estimate = "all", test = "all", dispersion=TRUE, bootstrap = TRUE, n = 500))
+  params <- suppressWarnings(model_parameters(model, standardize = "refit", centrality = "all", test = "all", dispersion=TRUE, bootstrap = TRUE, n = 500))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 13))
 })

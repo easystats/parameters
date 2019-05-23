@@ -4,7 +4,7 @@
 \alias{model_parameters.stanreg}
 \title{Bayesian Models Parameters}
 \usage{
-\method{model_parameters}{stanreg}(model, estimate = "median",
+\method{model_parameters}{stanreg}(model, centrality = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_ci = 1, bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"), priors = TRUE, standardize = FALSE,
@@ -13,7 +13,7 @@
 \arguments{
 \item{model}{Bayesian model.}
 
-\item{estimate}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}} to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
+\item{centrality}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}} (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
 
 \item{dispersion}{if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
