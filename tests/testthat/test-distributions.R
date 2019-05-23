@@ -1,7 +1,7 @@
 context("distributions")
 
 test_that("distributions", {
-  x <- bayestestR::rnorm_perfect(100)
+  x <- bayestestR::distribution_normal(100)
 
   testthat::expect_equal(kurtosis(x), 2.635, tol = 0.01)
   testthat::expect_equal(skewness(x), 0, tol = 0.01)

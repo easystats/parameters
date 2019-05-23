@@ -53,7 +53,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
     # Extract parameters
     if (insight::model_info(model)$is_bayesian) {
-      std_params <- bayestestR::describe_posterior(insight::get_parameters(std_model), test = NULL, ci = NULL, dispersion = FALSE, priors = NULL, ...)
+      std_params <- bayestestR::describe_posterior(std_model, test = NULL, ci = NULL, dispersion = FALSE, diagnostic = NULL, priors = FALSE, ...)
     } else {
       std_params <- insight::get_parameters(std_model)
       names(std_params) <- c("Parameter", "beta")
@@ -64,7 +64,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
     # Extract parameters
     if (insight::model_info(model)$is_bayesian) {
-      params <- bayestestR::describe_posterior(insight::get_parameters(model), test = NULL, ci = NULL, dispersion = FALSE, priors = NULL, ...)
+      params <- bayestestR::describe_posterior(model, test = NULL, ci = NULL, dispersion = FALSE, diagnostic = NULL, priors = FALSE, ...)
     } else {
       params <- insight::get_parameters(model)
       names(params) <- c("Parameter", "beta")
@@ -92,14 +92,16 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 .standardize_parameters_full <- function(model, params, robust, method) {
   info <- insight::model_info(model)
   data <- insight::get_data(model)
+  response <- insight::get_response(model)
+  if(!is.numeric(response)) response <- as.numeric(as.character(response))
   name_estimate <- tail(names(params), -1)
 
   # Linear models
   if (info$is_linear) {
     if (robust == FALSE) {
-      sd_y <- stats::sd(insight::get_response(model))
+      sd_y <- stats::sd(response)
     } else {
-      sd_y <- stats::mad(insight::get_response(model))
+      sd_y <- stats::mad(response)
     }
 
     std_params <- data.frame()
@@ -116,7 +118,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
       stop(paste0("Standardization method ", method, " is not available for this kind of model."))
     }
     logit_y <- stats::predict(model)
-    r <- stats::cor(insight::get_response(model), odds_to_probs(logit_y, log = TRUE))
+    r <- stats::cor(response, odds_to_probs(logit_y, log = TRUE))
     if (robust == FALSE) {
       sd_y <- stats::sd(logit_y)
     } else {

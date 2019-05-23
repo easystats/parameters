@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert (log)odds to standardized difference. — odds_to_d • parameters</title>
+<title>Convert between (log)odds and standardized difference. — odds_to_d • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Convert (log)odds to standardized difference. — odds_to_d" />
+<meta property="og:title" content="Convert between (log)odds and standardized difference. — odds_to_d" />
 
-<meta property="og:description" content="Convert (log)odds to standardized difference using Cohen's (1988) formula \(\frac{\log(odds)\times\sqrt{3}}{\pi}\)." />
+<meta property="og:description" content="Convert between (log)odds and standardized difference using Cohen's (1988) formula \(\frac{\log(odds)\times\sqrt{3}}{\pi}\)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -100,7 +100,7 @@
       <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
     </li>
     <li>
-      <a href="../articles/parameters_standardization.html">Parameters standardization</a>
+      <a href="../articles/standardized_parameters.html">Standardized Parameters</a>
     </li>
   </ul>
 </li>
@@ -120,20 +120,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert (log)odds to standardized difference.</h1>
+    <h1>Convert between (log)odds and standardized difference.</h1>
     
     <div class="hidden name"><code>odds_to_d.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Convert (log)odds to standardized difference using Cohen's (1988) formula \(\frac{\log(odds)\times\sqrt{3}}{\pi}\).</p>
+    <p>Convert between (log)odds and standardized difference using Cohen's (1988) formula \(\frac{\log(odds)\times\sqrt{3}}{\pi}\).</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>odds_to_d</span>(<span class='no'>odds</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>convert_odds_to_d</span>(<span class='no'>odds</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>convert_odds_to_d</span>(<span class='no'>odds</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>d_to_odds</span>(<span class='no'>d</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>convert_d_to_odds</span>(<span class='no'>d</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,6 +149,10 @@
     <tr>
       <th>log</th>
       <td><p>Are these Log odds (such as in logistic models)?</p></td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td><p>standardized difference values in vector or dataframe.</p></td>
     </tr>
     </table>
     

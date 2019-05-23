@@ -17,7 +17,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Processing of Model Parameters">
-<meta property="og:description" content="Process model parameters and compute indices such as confidence intervals, p values, omega squared, and Bayesian metrics.">
+<meta property="og:description" content="The package's primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing p-values, CIs, and other indices for a wide variety of models, this package implements features like standardization, normalization or bootstrapping of parameters and models or conversion between indices of effect size.">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -64,7 +64,7 @@
       <a href="articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
     </li>
     <li>
-      <a href="articles/parameters_standardization.html">Parameters standardization</a>
+      <a href="articles/standardized_parameters.html">Standardized Parameters</a>
     </li>
   </ul>
 </li>
@@ -90,7 +90,7 @@
 </h1></div>
 
 <p><strong><em>Describe and understand your model’s parameters!</em></strong></p>
-<p><code>parameters</code>’s primary goal is to provide utilities for processing the parameters of various statistical models.</p>
+<p><code>parameters</code>’s primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing p-values, CIs, and other indices for a wide variety of models, this package implements features like standardization, normalization or bootstrapping of parameters and models or conversion between indices of effect size.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -102,9 +102,12 @@
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
-<div id="general-linear-models" class="section level3">
+<div id="describe-models-parameters" class="section level3">
 <h3 class="hasAnchor">
-<a href="#general-linear-models" class="anchor"></a>General Linear Models</h3>
+<a href="#describe-models-parameters" class="anchor"></a>Describe models’ parameters</h3>
+<div id="general-linear-models" class="section level4">
+<h4 class="hasAnchor">
+<a href="#general-linear-models" class="anchor"></a>General Linear Models</h4>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <table class="table table">
@@ -156,59 +159,51 @@
 </tbody>
 </table>
 </div>
-<div id="bootstrapped-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bootstrapped-models" class="anchor"></a>Bootstrapped Models</h3>
+<div id="bootstrapped-models" class="section level4">
+<h4 class="hasAnchor">
+<a href="#bootstrapped-models" class="anchor"></a>Bootstrapped Models</h4>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">bootstrap =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <table class="table table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
 <th align="right">Median</th>
-<th align="right">MAD</th>
 <th align="right">CI_low</th>
 <th align="right">CI_high</th>
 <th align="right">pd</th>
 <th align="right">ROPE_Percentage</th>
-<th align="left">ROPE_Equivalence</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">39.67</td>
-<td align="right">2.14</td>
-<td align="right">35.31</td>
-<td align="right">43.67</td>
+<td align="right">39.85</td>
+<td align="right">35.83</td>
+<td align="right">43.90</td>
 <td align="right">100</td>
-<td align="right">0.0</td>
-<td align="left">rejected</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">wt</td>
-<td align="right">-3.16</td>
-<td align="right">0.73</td>
-<td align="right">-4.69</td>
-<td align="right">-1.75</td>
+<td align="left">cyl</td>
+<td align="right">-1.49</td>
+<td align="right">-2.24</td>
+<td align="right">-0.72</td>
 <td align="right">100</td>
-<td align="right">0.0</td>
-<td align="left">rejected</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">cyl</td>
-<td align="right">-1.48</td>
-<td align="right">0.35</td>
-<td align="right">-2.23</td>
-<td align="right">-0.69</td>
+<td align="left">wt</td>
+<td align="right">-3.25</td>
+<td align="right">-4.70</td>
+<td align="right">-1.69</td>
 <td align="right">100</td>
-<td align="right">1.7</td>
-<td align="left">rejected</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="bayesian-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bayesian-models" class="anchor"></a>Bayesian Models</h3>
+<div id="bayesian-models" class="section level4">
+<h4 class="hasAnchor">
+<a href="#bayesian-models" class="anchor"></a>Bayesian Models</h4>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb5-2" title="2">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
@@ -216,13 +211,11 @@
 <thead><tr class="header">
 <th align="left">Parameter</th>
 <th align="right">Median</th>
-<th align="right">MAD</th>
 <th align="right">CI_low</th>
 <th align="right">CI_high</th>
 <th align="right">pd</th>
 <th align="right">ROPE_Percentage</th>
-<th align="left">ROPE_Equivalence</th>
-<th align="right">Effective_Sample</th>
+<th align="right">ESS</th>
 <th align="right">Rhat</th>
 <th align="left">Prior_Distribution</th>
 <th align="right">Prior_Location</th>
@@ -231,51 +224,46 @@
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">39.65</td>
-<td align="right">1.75</td>
-<td align="right">36.74</td>
-<td align="right">42.60</td>
+<td align="right">39.72</td>
+<td align="right">36.84</td>
+<td align="right">42.71</td>
 <td align="right">100.00</td>
-<td align="right">0.00</td>
-<td align="left">rejected</td>
-<td align="right">4540</td>
+<td align="right">0</td>
+<td align="right">4618</td>
 <td align="right">1</td>
 <td align="left">normal</td>
 <td align="right">0</td>
 <td align="right">60.27</td>
 </tr>
 <tr class="even">
-<td align="left">wt</td>
-<td align="right">-3.17</td>
-<td align="right">0.76</td>
-<td align="right">-4.42</td>
-<td align="right">-1.94</td>
-<td align="right">100.00</td>
-<td align="right">0.10</td>
-<td align="left">rejected</td>
-<td align="right">2048</td>
-<td align="right">1</td>
-<td align="left">normal</td>
-<td align="right">0</td>
-<td align="right">15.40</td>
-</tr>
-<tr class="odd">
 <td align="left">cyl</td>
 <td align="right">-1.52</td>
-<td align="right">0.42</td>
-<td align="right">-2.22</td>
-<td align="right">-0.81</td>
-<td align="right">99.98</td>
-<td align="right">1.65</td>
-<td align="left">rejected</td>
-<td align="right">2131</td>
+<td align="right">-2.24</td>
+<td align="right">-0.80</td>
+<td align="right">99.85</td>
+<td align="right">0</td>
+<td align="right">1708</td>
 <td align="right">1</td>
 <td align="left">normal</td>
 <td align="right">0</td>
 <td align="right">8.44</td>
 </tr>
+<tr class="odd">
+<td align="left">wt</td>
+<td align="right">-3.17</td>
+<td align="right">-4.44</td>
+<td align="right">-1.80</td>
+<td align="right">99.95</td>
+<td align="right">0</td>
+<td align="right">1690</td>
+<td align="right">1</td>
+<td align="left">normal</td>
+<td align="right">0</td>
+<td align="right">15.40</td>
+</tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 </div>
