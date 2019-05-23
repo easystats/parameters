@@ -9,7 +9,7 @@
 #' @examples
 #' describe_distribution(rnorm(100))
 #' describe_distribution(rpois(100, lambda = 4))
-#' describe_distribution(rbeta(100))
+#' describe_distribution(runif(100))
 #' @importFrom bayestestR map_estimate
 #' @importFrom stats IQR density predict
 #' @export
