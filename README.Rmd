@@ -22,24 +22,20 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 options(knitr.kable.NA = '',
-        digits = 4,
+        digits = 1,
         width=60)
+
+set.seed(333)
 ```
 
-
+[![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
+[![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
 [![Build Status](https://travis-ci.org/easystats/parameters.svg?branch=master)](https://travis-ci.org/easystats/parameters)
 [![codecov](https://codecov.io/gh/easystats/parameters/branch/master/graph/badge.svg)](https://codecov.io/gh/easystats/parameters)
-[![HitCount](http://hits.dwyl.io/easystats/parameters.svg)](http://hits.dwyl.io/easystats/parameters) [![Documentation](https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63)](https://easystats.github.io/parameters/)
-
-
-
-
-
-
 
 ***Describe and understand your model's parameters!***
 
-`parameters`'s primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing p-values, CIs, and other indices for a wide variety of models, this package implements features like standardization, normalization or bootstrapping of parameters and models or conversion between indices of effect size.
+`parameters`'s primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing *p*-values, CIs, and other indices for a wide variety of models, this package implements features like standardization, normalization or bootstrapping of parameters and models, as well as conversion between indices of effect size.
 
 
 ## Installation
@@ -56,23 +52,121 @@ library("parameters")
 ```
 
 
+## Documentation
+
+[![Documentation](https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63)](https://easystats.github.io/parameters/)
+[![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
+[![Features](https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3)](https://easystats.github.io/parameters/reference/index.html)
+
+Click on the buttons above to access the package [**documentation**](https://easystats.github.io/parameters/) and the [**easystats blog**](https://easystats.github.io/blog/posts/), and check-out these vignettes:
+
+- [Parameters' standardization](https://easystats.github.io/parameters/articles/standardization.html)
+- [Model bootstrapping](https://easystats.github.io/parameters/articles/bootstrapping.html)
 
 
-## Examples
+# Features
 
-### Describe models' parameters
+## Model's parameters description
 
-#### General Linear Models
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-model <- lm(mpg ~ wt + cyl, data = mtcars)
-model_parameters(model, standardize = TRUE)
+
+### Correlations
+
+```{r, warning=FALSE, message=FALSE, results='hide'}
+model <- cor.test(iris$Sepal.Length, iris$Sepal.Width)
+model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-model <- lm(mpg ~ wt + cyl, data = mtcars)
-knitr::kable(model_parameters(model, standardize = TRUE), digits=2)
+knitr::kable(model_parameters(model), digits=1)
 ```
 
-#### Bootstrapped Models
+```{r, warning=FALSE, message=FALSE, results='hide'}
+library(BayesFactor)
+
+model <- BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width)
+model_parameters(model)
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+knitr::kable(model_parameters(model), digits=1)
+```
+
+
+### t-tests
+
+```{r, warning=FALSE, message=FALSE, results='hide'}
+df <- iris
+df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
+
+model <- t.test(Sepal.Length ~ Sepal.Big, data = df)
+model_parameters(model)
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+knitr::kable(model_parameters(model), digits=1)
+```
+
+
+### ANOVAs
+
+```{r, warning=FALSE, message=FALSE, results='hide'}
+model <- aov(Sepal.Length ~ Sepal.Big, data = df)
+model_parameters(model)
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+knitr::kable(model_parameters(model), digits=1)
+```
+
+```{r, warning=FALSE, message=FALSE, results='hide'}
+model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
+model_parameters(model)
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+knitr::kable(model_parameters(model), digits=1)
+```
+
+```{r, warning=FALSE, message=FALSE, results='hide'}
+model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
+model_parameters(model)
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+knitr::kable(model_parameters(model), digits=1)
+```
+
+```{r, warning=FALSE, message=FALSE, results='hide'}
+library(lme4)
+model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
+model_parameters(model)
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+knitr::kable(model_parameters(model), digits=1)
+```
+
+
+
+### General Linear Models (GLM)
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
+model_parameters(model, standardize = "refit")
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
+knitr::kable(model_parameters(model, standardize = "refit"), digits=1)
+```
+
+
+### Mixed models
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+library(lme4)
+
+model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+model_parameters(model, standardize = "refit")
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(lme4)
+
+model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+knitr::kable(model_parameters(model, standardize = "refit"), digits=1)
+```
+
+### Bootstrapped models
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 model <- lm(mpg ~ wt + cyl, data = mtcars)
@@ -80,18 +174,31 @@ model_parameters(model, bootstrap = TRUE)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 model <- lm(mpg ~ wt + cyl, data = mtcars)
-knitr::kable(model_parameters(model, standardize = FALSE, bootstrap = TRUE), digits=2)
+knitr::kable(model_parameters(model, standardize = FALSE, bootstrap = TRUE), digits=1)
 ```
 
-#### Bayesian Models
+### Bayesian models
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 library(rstanarm)
+
 model <- stan_glm(mpg ~ wt + cyl, data = mtcars)
 model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(rstanarm)
+
 text <- capture.output(model <- stan_glm(mpg ~ wt + cyl, data = mtcars))
-knitr::kable(model_parameters(model, standardize = FALSE), digits=2)
+knitr::kable(model_parameters(model), digits=1)
+```
+
+
+
+## Miscellaenous
+
+### Describe a Distribution
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+x <- rnorm(300)
+describe_distribution(x, centrality = "median")
 ```
