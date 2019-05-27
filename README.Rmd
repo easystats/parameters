@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
   tidy=TRUE,
   fig.path = "README-"
 )
+knitr::opts_chunk$set(comment=">")
 options(knitr.kable.NA = '',
         digits = 1,
         width=60)
@@ -211,7 +212,7 @@ knitr::kable(model_parameters(model), digits=1)
 
 ### Describe a Distribution
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 x <- rnorm(300)
 describe_distribution(x, centrality = "median")
 ```
@@ -219,7 +220,10 @@ describe_distribution(x, centrality = "median")
 
 ### Standardization and normalization
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-x <- rnorm(300)
-describe_distribution(x, centrality = "median")
+```{r, warning=FALSE, message=FALSE}
+df <- standardize(iris)
+summary(df$Sepal.Length)
+
+df <- normalize(iris)
+summary(df$Sepal.Length)
 ```

@@ -29,7 +29,7 @@ devtools::install_github("easystats/parameters")
 library("parameters")
 ```
 
-## Documentation
+# Features
 
 [![Documentation](https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63)](https://easystats.github.io/parameters/)
 [![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
@@ -44,8 +44,6 @@ check-out these vignettes:
     standardization](https://easystats.github.io/parameters/articles/standardization.html)
   - [Model
     bootstrapping](https://easystats.github.io/parameters/articles/bootstrapping.html)
-
-# Features
 
 ## Model’s parameters description
 
@@ -104,6 +102,8 @@ model_parameters(model)
 
 ### ANOVAs
 
+#### Simple
+
 ``` r
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model)
@@ -114,15 +114,7 @@ model_parameters(model)
 | Sepal.Big |            1 |   1 |          1.1 | 2 | 0.2 |                       0 |
 | Residuals |          101 | 148 |          0.7 |   |     |                         |
 
-``` r
-model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
-model_parameters(model)
-```
-
-| Parameter | Sum\_Squares | DoF | Mean\_Square | F |   p | Omega\_Squared\_partial |
-| :-------- | -----------: | --: | -----------: | -: | --: | ----------------------: |
-| Sepal.Big |            1 |   1 |          1.1 | 2 | 0.2 |                       0 |
-| Residuals |          101 | 148 |          0.7 |   |     |                         |
+#### Repeated measures
 
 ``` r
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
@@ -156,30 +148,8 @@ model_parameters(model, standardize = "refit")
 | Parameter   | beta | SE | CI\_low | CI\_high |   z | DoF\_residual |   p | Std\_beta |
 | :---------- | ---: | -: | ------: | -------: | --: | ------------: | --: | --------: |
 | (Intercept) |   11 |  4 |     4.8 |       23 |   2 |            29 | 0.0 |     \-0.8 |
-| wt          |    2 |  2 |   \-0.5 |        6 |   1 |            29 | 0.2 |       2.1 |
-| cyl         |  \-3 |  1 |   \-6.9 |      \-1 | \-2 |            29 | 0.0 |     \-5.2 |
-
-<!-- ### Mixed models -->
-
-<!-- ```{r, warning=FALSE, message=FALSE, eval=FALSE} -->
-
-<!-- library(lme4) -->
-
-<!-- model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) -->
-
-<!-- model_parameters(model, standardize = "refit") -->
-
-<!-- ``` -->
-
-<!-- ```{r, warning=FALSE, message=FALSE, echo=FALSE} -->
-
-<!-- library(lme4) -->
-
-<!-- model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) -->
-
-<!-- knitr::kable(model_parameters(model, standardize = "refit"), digits=1) -->
-
-<!-- ``` -->
+| cyl         |  \-3 |  1 |   \-6.9 |      \-1 | \-2 |            29 | 0.0 |       2.1 |
+| wt          |    2 |  2 |   \-0.5 |        6 |   1 |            29 | 0.2 |     \-5.2 |
 
 ### Bootstrapped models
 
@@ -193,6 +163,20 @@ model_parameters(model, bootstrap = TRUE)
 | (Intercept) |     40 |      35 |     43.5 | 100 |                0 |
 | cyl         |    \-2 |     \-2 |    \-0.7 | 100 |                0 |
 | wt          |    \-3 |     \-5 |    \-1.8 | 100 |                0 |
+
+### Mixed models
+
+``` r
+library(lme4)
+
+model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+model_parameters(model, standardize = "refit")
+```
+
+| Parameter    | beta |  SE | CI\_low | CI\_high | t | p | Std\_beta |
+| :----------- | ---: | --: | ------: | -------: | -: | -: | --------: |
+| (Intercept)  |  2.0 | 0.6 |   \-1.9 |      5.9 | 4 | 0 |         0 |
+| Petal.Length |  0.3 | 0.1 |   \-0.3 |      0.8 | 5 | 0 |         1 |
 
 ### Bayesian models
 
@@ -209,11 +193,29 @@ model_parameters(model)
 | cyl         |    \-2 |     \-2 |    \-0.8 | 100 |                2 | 1997 |    1 | normal              |               0 |            8 |
 | wt          |    \-3 |     \-4 |    \-1.8 | 100 |                0 | 1963 |    1 | normal              |               0 |           15 |
 
-## Miscellaenous
+## Miscellaneous
 
 ### Describe a Distribution
 
-    ##     Type Type_Confidence Median MAD Min Max Skewness
-    ## 1 normal              60  -0.06   1  -3   3     0.03
-    ##   Kurtosis n_Obs n_Missing
-    ## 1        3   300         0
+``` r
+x <- rnorm(300)
+describe_distribution(x, centrality = "median")
+>     Type Type_Confidence Median MAD Min Max Skewness
+> 1 normal              60  -0.06   1  -3   3     0.03
+>   Kurtosis n_Obs n_Missing
+> 1        3   300         0
+```
+
+### Standardization and normalization
+
+``` r
+df <- standardize(iris)
+summary(df$Sepal.Length)
+>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+>    -1.9    -0.9    -0.1     0.0     0.7     2.5
+
+df <- normalize(iris)
+summary(df$Sepal.Length)
+>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+>     0.0     0.2     0.4     0.4     0.6     1.0
+```
