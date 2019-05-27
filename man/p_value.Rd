@@ -3,7 +3,7 @@
 \name{p_value}
 \alias{p_value}
 \alias{p_value.lmerMod}
-\title{Compute p-values}
+\title{p-values}
 \usage{
 p_value(model, ...)
 

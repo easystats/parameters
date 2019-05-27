@@ -120,6 +120,8 @@ knitr::kable(model_parameters(model), digits=1)
 
 ### ANOVAs
 
+#### Simple
+
 ```{r, warning=FALSE, message=FALSE, results='hide'}
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model)
@@ -128,13 +130,7 @@ model_parameters(model)
 knitr::kable(model_parameters(model), digits=1)
 ```
 
-```{r, warning=FALSE, message=FALSE, results='hide'}
-model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(model_parameters(model), digits=1)
-```
+#### Repeated measures
 
 ```{r, warning=FALSE, message=FALSE, results='hide'}
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
@@ -165,21 +161,6 @@ model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 knitr::kable(model_parameters(model, standardize = "refit"), digits=1)
 ```
 
-
-<!-- ### Mixed models -->
-<!-- ```{r, warning=FALSE, message=FALSE, eval=FALSE} -->
-<!-- library(lme4) -->
-
-<!-- model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) -->
-<!-- model_parameters(model, standardize = "refit") -->
-<!-- ``` -->
-<!-- ```{r, warning=FALSE, message=FALSE, echo=FALSE} -->
-<!-- library(lme4) -->
-
-<!-- model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) -->
-<!-- knitr::kable(model_parameters(model, standardize = "refit"), digits=1) -->
-<!-- ``` -->
-
 ### Bootstrapped models
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
@@ -190,6 +171,23 @@ model_parameters(model, bootstrap = TRUE)
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 knitr::kable(model_parameters(model, standardize = FALSE, bootstrap = TRUE), digits=1)
 ```
+
+
+### Mixed models
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+library(lme4)
+
+model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+model_parameters(model, standardize = "refit")
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(lme4)
+
+model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+knitr::kable(model_parameters(model, standardize = "refit"), digits=1)
+```
+
+
 
 ### Bayesian models
 
@@ -208,7 +206,7 @@ knitr::kable(model_parameters(model), digits=1)
 
 
 
-## Miscellaenous
+## Miscellaneous
 
 ### Describe a Distribution
 

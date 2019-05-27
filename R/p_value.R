@@ -1,4 +1,4 @@
-#' Compute p-values
+#' p-values
 #'
 #' This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
 #' \itemize{
@@ -40,7 +40,7 @@ p_value.aov <- function(model, ...) {
 
   data.frame(
     Parameter = params$Parameter,
-    p_value = params$p,
+    p = params$p,
     stringsAsFactors = FALSE
   )
 }
@@ -62,7 +62,7 @@ p_value.gam <- function(model, ...) {
 
   data.frame(
     Parameter = names(p),
-    p_value = as.vector(p),
+    p = as.vector(p),
     stringsAsFactors = FALSE
   )
 }
@@ -77,7 +77,7 @@ p_value.gmnl <- function(model, ...) {
 
   pv <- data.frame(
     Parameter = names(p),
-    p_value = as.vector(p),
+    p = as.vector(p),
     stringsAsFactors = FALSE
   )
 
@@ -105,7 +105,7 @@ p_value.lm <- function(model, ...) {
   parms <- as.data.frame(stats::coef(summary(model)))
   data.frame(
     Parameter = rownames(parms),
-    p_value = as.vector(parms[, "Pr(>|t|)", drop = TRUE]),
+    p = as.vector(parms[, "Pr(>|t|)", drop = TRUE]),
     stringsAsFactors = FALSE
   )
 }
@@ -143,7 +143,7 @@ p_value.polr <- function(model, ...) {
 
   data.frame(
     Parameter = names(p),
-    p_value = as.vector(p),
+    p = as.vector(p),
     stringsAsFactors = FALSE
   )
 }
@@ -158,7 +158,7 @@ p_value.svyglm <- function(model, ...) {
 
   data.frame(
     Parameter = names(p),
-    p_value = as.vector(p),
+    p = as.vector(p),
     stringsAsFactors = FALSE
   )
 }
@@ -179,7 +179,7 @@ p_value.svyglm.nb <- function(model, ...) {
 
   data.frame(
     Parameter = names(p),
-    p_value = as.vector(p),
+    p = as.vector(p),
     stringsAsFactors = FALSE
   )
 }
@@ -198,7 +198,7 @@ p_value.vglm <- function(model, ...) {
 
   data.frame(
     Parameter = names(p),
-    p_value = as.vector(p),
+    p = as.vector(p),
     stringsAsFactors = FALSE
   )
 }

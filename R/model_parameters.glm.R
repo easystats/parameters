@@ -38,12 +38,10 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
   names(parameters) <- c("beta", "SE", "z", "p")
 
   parameters$DoF_residual <- model$df.residual
+  parameters$Parameter <- row.names(parameters)
 
-  parameters <- cbind(
-    data_frame("Parameter" = rownames(parameters)),
-    parameters,
-    ci(model, ci = ci)
-  )
+  # CI
+  parameters <- merge(parameters, ci(model, ci = ci), by="Parameter")
 
   parameters <- parameters[c("Parameter", "beta", "SE", "CI_low", "CI_high", "z", "DoF_residual", "p")]
   rownames(parameters) <- NULL

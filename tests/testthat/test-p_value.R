@@ -29,34 +29,34 @@ test_that("p_value", {
 
   # ANOVAs
   model <- insight::download_model("aov_1")
-  testthat::expect_equal(p_value(model)$p_value, 0, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p, 0, tol = 0.01)
 
   model <- insight::download_model("anova_1")
-  testthat::expect_equal(p_value(model)$p_value, 0, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p, 0, tol = 0.01)
 
   model <- insight::download_model("aovlist_1")
-  testthat::expect_equal(p_value(model)$p_value, 0, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p, 0, tol = 0.01)
 
   model <- insight::download_model("aov_2")
-  testthat::expect_equal(p_value(model)$p_value[1], 0, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[1], 0, tol = 0.01)
 
   model <- insight::download_model("anova_2")
-  testthat::expect_equal(p_value(model)$p_value[1], 0, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[1], 0, tol = 0.01)
 
   model <- insight::download_model("aovlist_2")
-  testthat::expect_equal(p_value(model)$p_value[1], 0.922, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[1], 0.922, tol = 0.01)
 
   model <- insight::download_model("aov_3")
-  testthat::expect_equal(p_value(model)$p_value[1], 0, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[1], 0, tol = 0.01)
 
   model <- insight::download_model("anova_3")
-  testthat::expect_equal(p_value(model)$p_value[1], 0, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[1], 0, tol = 0.01)
 
   model <- insight::download_model("aovlist_3")
-  testthat::expect_equal(p_value(model)$p_value[1], 0, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[1], 0, tol = 0.01)
 
   model <- insight::download_model("anova_4")
-  testthat::expect_equal(p_value(model)$p_value[2], 0, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[2], 0, tol = 0.01)
 
   # ANOVA lmer
   model <- insight::download_model("anova_lmerMod_0")
@@ -78,18 +78,18 @@ test_that("p_value", {
   testthat::expect_equal(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_6")
-  testthat::expect_equal(p_value(model)$p_value[2], 0, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[2], 0, tol = 0.01)
 
 
 
   # Mixed models
   model <- insight::download_model("lmerMod_1")
-  testthat::expect_equal(p_value(model)$p_value[1], 0.195, tol = 0.01)
-  testthat::expect_equal(p_value(model, method = "kr")$p_value[1], 0.227, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[1], 0.195, tol = 0.01)
+  testthat::expect_equal(p_value(model, method = "kr")$p[1], 0.227, tol = 0.01)
 
   model <- insight::download_model("merMod_1")
-  testthat::expect_equal(p_value(model)$p_value[1], 0.065, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[1], 0.065, tol = 0.01)
 
   model <- insight::download_model("merMod_2")
-  testthat::expect_equal(p_value(model)$p_value[1], 0.299, tol = 0.01)
+  testthat::expect_equal(p_value(model)$p[1], 0.299, tol = 0.01)
 })

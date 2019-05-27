@@ -23,6 +23,9 @@ ci_wald <- function(model, ci = 0.95, dof = Inf) {
     CI_low = params$Estimate - params$Estimate * fac,
     CI_high = params$Estimate + params$Estimate * fac
   )
-  row.names(out) <- row.names(params)
+
+  out <- as.data.frame(out)
+  out$Parameter <- row.names(params)
+  out <- out[c("Parameter", "CI_low", "CI_high")]
   out
 }

@@ -1,4 +1,4 @@
-#' Compute p values using Wald-test approximation
+#' p-values using Wald-test approximation
 #'
 #' The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5% at p = 0.05.
 #'
@@ -6,9 +6,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#' p_value_wald(model)
-#' model <- circus::merMod_1
+#' library(lme4)
+#' model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' p_value_wald(model)
 #' }
 #' @importFrom stats coef pnorm
@@ -38,7 +37,7 @@ p_value_wald.merMod <- function(model) {
 
   data.frame(
     Parameter = coef_names,
-    p_value = unname(p),
+    p = unname(p),
     stringsAsFactors = FALSE
   )
 }

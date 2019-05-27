@@ -21,15 +21,25 @@ bayestestR::ci
 ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
   method <- match.arg(method)
 
+  # Wald approx
   if (method == "wald") {
     out <- ci_wald(x)
+
+  # Bootstrapped CIs
   } else if (method == "boot") {
     if (!requireNamespace("lme4", quietly = TRUE)) {
       stop("Package `lme4` required for bootstrapped approximation of confidence intervals. Please install it.", call. = FALSE)
     }
+
+    # Compute
     out <- as.data.frame(lme4::confint.merMod(x, level = ci, method = "boot", ...))
     out <- out[rownames(out) %in% insight::find_parameters(x)$conditional, ]
     names(out) <- c("CI_low", "CI_high")
+
+    # Clean up
+    out$Parameter <- row.names(out)
+    out <- out[c("Parameter", "CI_low", "CI_high")]
+    row.names(out) <- NULL
   }
 
   out
@@ -44,6 +54,11 @@ ci.glm <- function(x, ci = 0.95, ...) {
   suppressMessages(out <- stats::confint(x, level = ci, ...))
   out <- as.data.frame(out, stringsAsFactors = FALSE)
   names(out) <- c("CI_low", "CI_high")
+
+  # Clean up
+  out$Parameter <- row.names(out)
+  out <- out[c("Parameter", "CI_low", "CI_high")]
+  row.names(out) <- NULL
   out
 }
 
