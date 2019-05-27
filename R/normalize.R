@@ -28,6 +28,21 @@ normalize.numeric <- function(x, verbose = TRUE, ...) {
     return(x)
   }
 
+
+  # Warning if only one value
+  if (length(unique(x)) == 1) {
+    if (is.null(names(x))) {
+      name <- deparse(substitute(x))
+    } else {
+      name <- names(x)
+    }
+    if (verbose) {
+      warning(paste0("Variable `", name, "` contains only one unique value and will not be normalized."))
+    }
+    return(x)
+  }
+
+
   # Warning if logical vector
   if (length(unique(x)) == 2) {
     if (is.null(names(x))) {
