@@ -97,10 +97,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
     </li>
     <li>
-      <a href="../articles/standardized_parameters.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardized Parameters</a>
     </li>
   </ul>
 </li>
@@ -132,8 +132,10 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>4000</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>,
+  <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,26 +145,61 @@
       <td><p>Object of class <code>BFBayesFactor</code>.</p></td>
     </tr>
     <tr>
-      <th>ci</th>
-      <td><p>Credible Interval (CI) level. Default to 0.90 (90%).</p></td>
+      <th>centrality</th>
+      <td><p>The <a href='{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}'> (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".</a></p></td>
     </tr>
     <tr>
-      <th>iterations</th>
-      <td><p>Number of posterior draws.</p></td>
+      <th>dispersion</th>
+      <td><p>if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Value or vector of probability of the interval (between 0 and 1)
+to be estimated. Named Credible Interval (CI) for consistency.</p></td>
+    </tr>
+    <tr>
+      <th>ci_method</th>
+      <td><p>The type of index used for Credible Interval. Can be hdi (default) or "quantile" (see <a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a>).</p></td>
+    </tr>
+    <tr>
+      <th>test</th>
+      <td><p>The <a href='{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence}'> to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".</a></p></td>
+    </tr>
+    <tr>
+      <th>rope_range</th>
+      <td><p><a href='{https://easystats.github.io/bayestestR/rope}{ROPE's}'> lower and higher bounds. Should be a list of two values (e.g., </a><code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
+    </tr>
+    <tr>
+      <th>rope_ci</th>
+      <td><p>The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.</p></td>
+    </tr>
+    <tr>
+      <th>priors</th>
+      <td><p>Add the prior used for each parameter.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <td><p>Additional arguments to be passed to or from methods.</p></td>
     </tr>
     </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>BayesFactor</span>)
+<span class='no'>bf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>bf</span>)
+<span class='co'># }</span><div class='input'>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

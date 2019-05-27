@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute p values using Kenward-Roger approximation — p_value_kenward • parameters</title>
+<title>p-values using Kenward-Roger approximation — p_value_kenward • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Compute p values using Kenward-Roger approximation — p_value_kenward" />
+<meta property="og:title" content="p-values using Kenward-Roger approximation — p_value_kenward" />
 
-<meta property="og:description" content="The Wald-test approximation treats t-values as Wald z." />
+<meta property="og:description" content="An approximate F-test based on the Kenward-Roger (1997) approach ." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -97,10 +97,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
     </li>
     <li>
-      <a href="../articles/standardized_parameters.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardized Parameters</a>
     </li>
   </ul>
 </li>
@@ -120,14 +120,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute p values using Kenward-Roger approximation</h1>
+    <h1>p-values using Kenward-Roger approximation</h1>
     
     <div class="hidden name"><code>p_value_kenward.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The Wald-test approximation treats t-values as Wald z.</p>
+    <p>An approximate F-test based on the Kenward-Roger (1997) approach .</p>
     
     </div>
 
@@ -148,20 +148,26 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Kenward, M. G., &amp; Roger, J. H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics, 983-997.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>p_value_kenward</span>(<span class='no'>model</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>circus</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/circus/topics/merMod_1'>merMod_1</a></span>
-<span class='fu'>p_value_kenward</span>(<span class='no'>model</span>)
-<span class='co'># }</span></pre>
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

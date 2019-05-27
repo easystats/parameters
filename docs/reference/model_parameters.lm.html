@@ -97,10 +97,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
     </li>
     <li>
-      <a href="../articles/standardized_parameters.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardized Parameters</a>
     </li>
   </ul>
 </li>
@@ -174,12 +174,12 @@
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Please set the `standardize` method explicitly. Set to "refit" by default.</span></div><div class='output co'>#&gt;     Parameter      beta        SE    CI_low    CI_high         t DoF_residual
 #&gt; 1 (Intercept) 39.686261 1.7149840 36.178725 43.1937976 23.140893           29
-#&gt; 2          wt -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808           29
-#&gt; 3         cyl -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972           29
+#&gt; 2         cyl -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972           29
+#&gt; 3          wt -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808           29
 #&gt;              p      Std_beta
 #&gt; 1 3.043182e-20  4.897987e-17
-#&gt; 2 2.220200e-04 -5.180450e-01
-#&gt; 3 1.064282e-03 -4.467939e-01</div></pre>
+#&gt; 2 1.064282e-03 -5.180450e-01
+#&gt; 3 2.220200e-04 -4.467939e-01</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

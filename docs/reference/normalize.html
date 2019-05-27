@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model bootstrapping — model_bootstrap • parameters</title>
+<title>Normalization — normalize • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Model bootstrapping — model_bootstrap" />
+<meta property="og:title" content="Normalization — normalize" />
 
-<meta property="og:description" content="Bootstrap the model n times to return a data.frame of estimates." />
+<meta property="og:description" content="Performs a normalization of data. This scales all numeric
+variables in the range 0 - 1." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -120,37 +121,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Model bootstrapping</h1>
+    <h1>Normalization</h1>
     
-    <div class="hidden name"><code>model_bootstrap.Rd</code></div>
+    <div class="hidden name"><code>normalize.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Bootstrap the model n times to return a data.frame of estimates.</p>
+    <p>Performs a normalization of data. This scales all numeric
+variables in the range 0 - 1.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>model_bootstrap</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for grouped_df</span>
+<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>Statistical model.</p></td>
-    </tr>
-    <tr>
-      <th>iterations</th>
-      <td><p>The number of bootstrap replicates.</p></td>
-    </tr>
-    <tr>
-      <th>silent</th>
-      <td><p>Hide possible refit messages.</p></td>
+      <th>x</th>
+      <td><p>Object.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings on or off.</p></td>
+    </tr>
+    <tr>
+      <th>select</th>
+      <td><p>For a data frame, character vector of column names to be
+standardized. If <code>NULL</code> (the default), all variables will be
+standardized.</p></td>
+    </tr>
+    <tr>
+      <th>exclude</th>
+      <td><p>For a data frame, character vector of column names to
+be excluded from standardization.</p></td>
     </tr>
     </table>
     

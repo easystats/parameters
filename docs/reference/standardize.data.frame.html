@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Normalization — normalize • parameters</title>
+<title>Data Standardization — standardize.data.frame • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,11 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Normalization — normalize" />
+<meta property="og:title" content="Data Standardization — standardize.data.frame" />
 
-<meta property="og:description" content="Performs a normalization of data. This scales all numeric
-variables in the range 0 - 1.
-Standardize (scale and reduce, Z-score) the data so that the
+<meta property="og:description" content="Standardize (scale and reduce, Z-score) the data so that the
   values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1)
   or Median Absolute Deviance (median = 0, MAD = 1). A normalization
   scales all numeric variables in the 0 - 1 range." />
@@ -102,10 +100,10 @@ Standardize (scale and reduce, Z-score) the data so that the
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
     </li>
     <li>
-      <a href="../articles/standardized_parameters.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardized Parameters</a>
     </li>
   </ul>
 </li>
@@ -125,37 +123,21 @@ Standardize (scale and reduce, Z-score) the data so that the
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Normalization</h1>
+    <h1>Data Standardization</h1>
     
     <div class="hidden name"><code>standardize.data.frame.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Performs a normalization of data. This scales all numeric
-variables in the range 0 - 1.</p>
-<p>Standardize (scale and reduce, Z-score) the data so that the
+    <p>Standardize (scale and reduce, Z-score) the data so that the
   values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1)
   or Median Absolute Deviance (median = 0, MAD = 1). A <code>normalization</code>
   scales all numeric variables in the 0 - 1 range.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for numeric</span>
-<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for factor</span>
-<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for grouped_df</span>
-<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for data.frame</span>
-<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for data.frame</span>
+    <pre class="usage"><span class='co'># S3 method for data.frame</span>
 <span class='fu'><a href='standardize.html'>standardize</a></span>(<span class='no'>x</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
   <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>)</pre>
@@ -166,21 +148,6 @@ variables in the range 0 - 1.</p>
     <tr>
       <th>x</th>
       <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr>
-    <tr>
-      <th>select</th>
-      <td><p>For a data frame, character vector of column names to be
-standardized. If <code>NULL</code> (the default), all variables will be
-standardized.</p></td>
-    </tr>
-    <tr>
-      <th>exclude</th>
-      <td><p>For a data frame, character vector of column names to
-be excluded from standardization.</p></td>
     </tr>
     <tr>
       <th>robust</th>
@@ -195,6 +162,17 @@ the</p></td>
       <td><p>The method of standardization. See 'Details'.</p></td>
     </tr>
     <tr>
+      <th>select</th>
+      <td><p>For a data frame, character vector of column names to be
+standardized. If <code>NULL</code> (the default), all variables will be
+standardized.</p></td>
+    </tr>
+    <tr>
+      <th>exclude</th>
+      <td><p>For a data frame, character vector of column names to
+be excluded from standardization.</p></td>
+    </tr>
+    <tr>
       <th>verbose</th>
       <td><p>Toggle warnings on or off.</p></td>
     </tr>
@@ -204,6 +182,10 @@ the</p></td>
 well. Factors are converted to numerical values, with the lowest level
 being the value <code>1</code> (unless the factor has numeric levels, which are
 converted to the corresponding numeric value).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
     

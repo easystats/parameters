@@ -97,10 +97,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrap_vs_pointestimates.html">Single vs. Bootstrapped Parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
     </li>
     <li>
-      <a href="../articles/standardized_parameters.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardized Parameters</a>
     </li>
   </ul>
 </li>
@@ -161,10 +161,10 @@
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/t.test'>t.test</a></span>(<span class='no'>iris</span>$<span class='no'>Sepal.Width</span>, <span class='no'>iris</span>$<span class='no'>Sepal.Length</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/t.test'>t.test</a></span>(<span class='no'>mtcars</span>$<span class='no'>mpg</span> ~ <span class='no'>mtcars</span>$<span class='no'>vs</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/t.test'>t.test</a></span>(<span class='no'>iris</span>$<span class='no'>Sepal.Width</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                  Parameter     Mean mu Difference        t DoF             p
-#&gt; mean of x iris$Sepal.Width 3.057333  1   2.057333 57.80921 149 5.990468e-104
-#&gt;            CI_low  CI_high CI_level            Method
-#&gt; mean of x 2.98701 3.127656     0.95 One Sample t-test</div></pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;          Parameter     Mean mu Difference        t DoF             p  CI_low
+#&gt; 1 iris$Sepal.Width 3.057333  1   2.057333 57.80921 149 5.990468e-104 2.98701
+#&gt;    CI_high CI_level            Method
+#&gt; 1 3.127656     0.95 One Sample t-test</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
