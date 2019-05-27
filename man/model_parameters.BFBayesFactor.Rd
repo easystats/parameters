@@ -4,18 +4,42 @@
 \alias{model_parameters.BFBayesFactor}
 \title{BayesFactor objects Parameters}
 \usage{
-\method{model_parameters}{BFBayesFactor}(model, ci = 0.9,
-  iterations = 4000, ...)
+\method{model_parameters}{BFBayesFactor}(model, centrality = "median",
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  "rope"), rope_range = "default", rope_ci = 0.89, priors = TRUE,
+  ...)
 }
 \arguments{
 \item{model}{Object of class \code{BFBayesFactor}.}
 
-\item{ci}{Credible Interval (CI) level. Default to 0.90 (90\%).}
+\item{centrality}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}} (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
 
-\item{iterations}{Number of posterior draws.}
+\item{dispersion}{if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{ci}{Value or vector of probability of the interval (between 0 and 1)
+to be estimated. Named Credible Interval (CI) for consistency.}
+
+\item{ci_method}{The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).}
+
+\item{test}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence}} to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".}
+
+\item{rope_range}{\href{{https://easystats.github.io/bayestestR/rope}{ROPE's}} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
+
+\item{rope_ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.}
+
+\item{priors}{Add the prior used for each parameter.}
+
+\item{...}{Additional arguments to be passed to or from methods.}
 }
 \description{
 Parameters of BayesFactor objects.
+}
+\examples{
+\dontrun{
+library(BayesFactor)
+bf <- ttestBF(x = rnorm(100, 1, 1))
+model_parameters(bf)
+}
+
+
 }

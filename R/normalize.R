@@ -1,10 +1,9 @@
-#' @title Normalization
-#' @name normalize
+#' Normalization
 #'
-#' @description Performs a normalization of data. This scales all numeric
+#' Performs a normalization of data. This scales all numeric
 #' variables in the range 0 - 1.
 #'
-#' @rdname standardize.data.frame
+#' @inheritParams standardize.data.frame
 #'
 #' @param x Object.
 #' @param ... Arguments passed to or from other methods.
@@ -19,15 +18,30 @@ normalize <- function(x, ...) {
 
 
 
-#' @rdname standardize.data.frame
+#' @rdname normalize
 #' @importFrom stats median mad
 #' @export
-normalize.numeric <- function(x, ...) {
+normalize.numeric <- function(x, verbose = TRUE, ...) {
 
   # Warning if all NaNs
   if (all(is.na(x))) {
     return(x)
   }
+
+
+  # Warning if only one value
+  if (length(unique(x)) == 1) {
+    if (is.null(names(x))) {
+      name <- deparse(substitute(x))
+    } else {
+      name <- names(x)
+    }
+    if (verbose) {
+      warning(paste0("Variable `", name, "` contains only one unique value and will not be normalized."))
+    }
+    return(x)
+  }
+
 
   # Warning if logical vector
   if (length(unique(x)) == 2) {
@@ -36,7 +50,9 @@ normalize.numeric <- function(x, ...) {
     } else {
       name <- names(x)
     }
-    warning(paste0("Variable `", name, "` contains only two different values. Consider converting it to a factor."))
+    if (verbose){
+      warning(paste0("Variable `", name, "` contains only two different values. Consider converting it to a factor."))
+    }
   }
 
 
@@ -50,9 +66,6 @@ normalize.numeric <- function(x, ...) {
 
 
 
-
-
-#' @rdname standardize.data.frame
 #' @export
 normalize.factor <- function(x, ...) {
   x
@@ -61,7 +74,7 @@ normalize.factor <- function(x, ...) {
 
 
 
-#' @rdname standardize.data.frame
+#' @rdname normalize
 #' @export
 normalize.grouped_df <- function(x, select = NULL, exclude = NULL, ...) {
   info <- attributes(x)
@@ -91,7 +104,7 @@ normalize.grouped_df <- function(x, select = NULL, exclude = NULL, ...) {
 }
 
 
-#' @rdname standardize.data.frame
+#' @rdname normalize
 #' @export
 normalize.data.frame <- function(x, select = NULL, exclude = NULL, ...) {
   if (is.null(select)) {

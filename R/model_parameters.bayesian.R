@@ -18,7 +18,6 @@
 
 
   # Remove unecessary columns
-  # CI
   if("CI" %in% names(parameters) && length(unique(parameters$CI)) == 1){
     parameters$CI <- NULL
   }

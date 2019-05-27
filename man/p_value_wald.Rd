@@ -2,7 +2,7 @@
 % Please edit documentation in R/p_value_wald.R
 \name{p_value_wald}
 \alias{p_value_wald}
-\title{Compute p values using Wald-test approximation}
+\title{p-values using Wald-test approximation}
 \usage{
 p_value_wald(model)
 }
@@ -14,9 +14,8 @@ The Wald-test approximation treats t-values as Wald z. Since the t distribution 
 }
 \examples{
 \dontrun{
-model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-p_value_wald(model)
-model <- circus::merMod_1
+library(lme4)
+model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 p_value_wald(model)
 }
 }

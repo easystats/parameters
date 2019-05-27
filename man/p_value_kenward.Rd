@@ -3,7 +3,7 @@
 \name{p_value_kenward}
 \alias{p_value_kenward}
 \alias{dof_kenward}
-\title{Compute p values using Kenward-Roger approximation}
+\title{p-values using Kenward-Roger approximation}
 \usage{
 p_value_kenward(model, dof = NULL)
 
@@ -15,13 +15,16 @@ dof_kenward(model)
 \item{dof}{Degrees of Freedom.}
 }
 \description{
-The Wald-test approximation treats t-values as Wald z.
+An approximate F-test based on the Kenward-Roger (1997) approach .
 }
 \examples{
 \dontrun{
-model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-p_value_kenward(model)
-model <- circus::merMod_1
+library(lme4)
+model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 p_value_kenward(model)
 }
+
+}
+\references{
+Kenward, M. G., & Roger, J. H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics, 983-997.
 }

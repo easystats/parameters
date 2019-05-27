@@ -7,7 +7,6 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
-#' \dontrun{
 #' df <- iris
 #' df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 #'
@@ -19,8 +18,10 @@
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 #' model_parameters(model)
+#' \dontrun{
+#' library(lme4)
 #'
-#' model <- anova(lme4::lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
+#' model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
 #' model_parameters(model)
 #' }
 #' @export

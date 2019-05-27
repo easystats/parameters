@@ -40,7 +40,12 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
 #' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method = "wald", ...) {
+
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
+  parameters$Parameter <- row.names(parameters)
+
+  # CI
+  parameters <- merge(parameters, ci(model, ci = ci, method = ci_method), by="Parameter")
 
   # p value
   if ("Pr(>|z|)" %in% names(parameters)) {
@@ -49,17 +54,15 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
     if (insight::model_info(model)$is_linear) {
       if (p_method == "kenward") {
         parameters$DoF <- dof_kenward(model)
-        parameters$p <- p_value(model, method = "kenward", dof = parameters$DoF)
+        parameters <- merge(parameters, p_value(model, method = "kenward", dof = parameters$DoF), by="Parameter")
       } else {
-        parameters$p <- p_value(model, method = p_method)
+        parameters <- merge(parameters, p_value(model, method = p_method), by="Parameter")
       }
     } else {
-      parameters$p <- p_value(model)
+      parameters <- merge(parameters, p_value(model), by="Parameter")
     }
   }
 
-  # CI
-  parameters <- cbind(parameters, ci(model, method = ci_method))
 
   # Renaming
   names(parameters) <- gsub("Std. Error", "SE", names(parameters))
@@ -67,7 +70,6 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
   names(parameters) <- gsub("t value", "t", names(parameters))
   names(parameters) <- gsub("z value", "z", names(parameters))
 
-  parameters$Parameter <- row.names(parameters)
   rownames(parameters) <- NULL
 
   # Reorder

@@ -3,55 +3,39 @@
 #' Parameters of BayesFactor objects.
 #'
 #' @param model Object of class \code{BFBayesFactor}.
-#' @param ci Credible Interval (CI) level. Default to 0.90 (90\%).
-#' @param iterations Number of posterior draws.
-#' @param ... Arguments passed to or from other methods.
+#' @inheritParams bayestestR::describe_posterior
+#'
+#'
+#' @examples
+#' \dontrun{
+#' library(BayesFactor)
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' model_parameters(bf)
+#' }
 #'
 #'
 #' @export
-model_parameters.BFBayesFactor <- function(model, ci = 0.90, iterations = 4000, ...) {
-  if (!requireNamespace("BayesFactor")) {
-    warning("This function needs `BayesFactor` to be installed... installing now.")
-    install.packages("BayesFactor")
-    requireNamespace("BayesFactor")
+model_parameters.BFBayesFactor <- function(model, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, priors = TRUE, ...) {
+  if (!requireNamespace("BayesFactor", quietly = TRUE)) {
+    stop("Package 'BayesFactor' needed to plot ROPE. Please install it.")
   }
 
-  if (any(class(model@denominator) %in% c("BFcorrelation"))) {
-    numerator <- model@numerator[[names(model@numerator)]]
-    posteriors <- as.data.frame(suppressMessages(BayesFactor::posterior(model, iterations = iterations, progress = FALSE, ...)))
+  out <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, priors = priors, ...)
 
-    hdi <- bayestestR::hdi(posteriors$rho, ci = ci)
-    out <- data.frame(
-      "Median" = median(posteriors$rho),
-      "MAD" = mad(posteriors$rho),
-      "CI_low" = hdi$CI_low,
-      "CI_high" = hdi$CI_high,
-      "BF" = exp(numerator@analysis$bf),
-      "Prior" = numerator@prior$rscale
-    )
+  # Extract BF
+  out$BF <- as.data.frame(bayestestR::bayesfactor_models(model)[-1, ])$BF
 
-    comment(out) <- "Bayesian correlation"
-  } else if (any(class(model@denominator) %in% c("BFoneSample", "BFindepSample"))) {
-    numerator <- model@numerator[[names(model@numerator)]]
-    posteriors <- as.data.frame(suppressMessages(BayesFactor::posterior(model, iterations = iterations, progress = FALSE, ...)))
-
-    hdi <- bayestestR::hdi(posteriors$mu, ci = ci)
-    out <- data.frame(
-      "Median" = median(posteriors$mu),
-      "MAD" = mad(posteriors$mu),
-      "CI_low" = hdi$CI_low,
-      "CI_high" = hdi$CI_high,
-      "BF" = exp(numerator@analysis$bf),
-      "Prior" = numerator@prior$rscale
-    )
-    if (any(class(model@denominator) %in% c("BFoneSample"))) {
-      comment(out) <- "one sample Bayesian t-test"
-    } else {
-      comment(out) <- "two samples Bayesian t-test"
-    }
-  } else {
-    stop(paste0("BayesFactor objects of type ", class(model@denominator)[1], " not supported yet."))
+  # Remove unecessary columns
+  if("CI" %in% names(out) && length(unique(out$CI)) == 1){
+    out$CI <- NULL
+  }
+  if("ROPE_CI" %in% names(out) && length(unique(out$ROPE_CI)) == 1){
+    out$ROPE_CI <- NULL
+  }
+  if("ROPE_low" %in% names(out)){
+    out$ROPE_low <- NULL
+    out$ROPE_high <- NULL
   }
 
-  return(out)
+  out
 }
