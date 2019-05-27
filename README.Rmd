@@ -208,7 +208,16 @@ knitr::kable(model_parameters(model), digits=1)
 
 ## Miscellaneous
 
+
 ### Describe a Distribution
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+x <- rnorm(300)
+describe_distribution(x, centrality = "median")
+```
+
+
+### Standardization and normalization
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 x <- rnorm(300)
