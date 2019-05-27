@@ -108,5 +108,6 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
     stop("model_parameters not implemented for such h-tests yet.")
   }
 
+  row.names(out) <- NULL
   return(out)
 }

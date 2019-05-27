@@ -52,7 +52,8 @@ library("parameters")
 ```
 
 
-## Documentation
+
+# Features
 
 [![Documentation](https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63)](https://easystats.github.io/parameters/)
 [![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
@@ -64,12 +65,12 @@ Click on the buttons above to access the package [**documentation**](https://eas
 - [Model bootstrapping](https://easystats.github.io/parameters/articles/bootstrapping.html)
 
 
-# Features
-
 ## Model's parameters description
 
 
 ### Correlations
+
+#### Frequentist 
 
 ```{r, warning=FALSE, message=FALSE, results='hide'}
 model <- cor.test(iris$Sepal.Length, iris$Sepal.Width)
@@ -78,6 +79,8 @@ model_parameters(model)
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 knitr::kable(model_parameters(model), digits=1)
 ```
+
+#### Bayesian 
 
 ```{r, warning=FALSE, message=FALSE, results='hide'}
 library(BayesFactor)
@@ -92,11 +95,22 @@ knitr::kable(model_parameters(model), digits=1)
 
 ### t-tests
 
+#### Frequentist 
 ```{r, warning=FALSE, message=FALSE, results='hide'}
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
-model <- t.test(Sepal.Length ~ Sepal.Big, data = df)
+model <- t.test(Sepal.Length ~ Sepal.Big, data=df)
+model_parameters(model)
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+knitr::kable(model_parameters(model), digits=1)
+```
+
+#### Bayesian 
+
+```{r, warning=FALSE, message=FALSE, results='hide'}
+model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data=df)
 model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
@@ -152,19 +166,19 @@ knitr::kable(model_parameters(model, standardize = "refit"), digits=1)
 ```
 
 
-### Mixed models
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-library(lme4)
+<!-- ### Mixed models -->
+<!-- ```{r, warning=FALSE, message=FALSE, eval=FALSE} -->
+<!-- library(lme4) -->
 
-model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
-model_parameters(model, standardize = "refit")
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-library(lme4)
+<!-- model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) -->
+<!-- model_parameters(model, standardize = "refit") -->
+<!-- ``` -->
+<!-- ```{r, warning=FALSE, message=FALSE, echo=FALSE} -->
+<!-- library(lme4) -->
 
-model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
-knitr::kable(model_parameters(model, standardize = "refit"), digits=1)
-```
+<!-- model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) -->
+<!-- knitr::kable(model_parameters(model, standardize = "refit"), digits=1) -->
+<!-- ``` -->
 
 ### Bootstrapped models
 
