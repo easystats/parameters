@@ -26,7 +26,7 @@ model_bootstrap <- function(model, iterations = 1000, silent = FALSE, ...) {
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' model_bootstrap(model)
-#' @importFrom stats coef
+#' @importFrom stats coef update setNames
 #' @importFrom insight get_data find_parameters get_parameters
 #' @importFrom boot boot
 #' @export
@@ -39,12 +39,12 @@ model_bootstrap.lm <- function(model, iterations = 1000, silent = FALSE, ...) {
     if (silent) {
       fit <- suppressMessages(update(model, data = d))
     } else {
-      fit <- update(model, data = d)
+      fit <- stats::update(model, data = d)
     }
 
 
     params <- insight::get_parameters(fit)
-    params <- setNames(params$estimate, params$parameter) # Transform to named vector
+    params <- stats::setNames(params$estimate, params$parameter) # Transform to named vector
     return(params)
   }
 
@@ -60,19 +60,16 @@ model_bootstrap.lm <- function(model, iterations = 1000, silent = FALSE, ...) {
 
 
 
-#' @importFrom utils install.packages
 #' @export
 #' @rdname model_bootstrap.lm
 model_bootstrap.merMod <- function(model, iterations = 1000, silent = FALSE, ...) {
-  if (!requireNamespace("lme4")) {
-    warning("This function needs `lme4` to be installed... installing now.")
-    install.packages("lme4")
-    requireNamespace("lme4")
+  if (!requireNamespace("lme4", quietly = TRUE)) {
+    stop("This function requires package `lme4` to work. Please install it.")
   }
 
   boot_function <- function(model) {
     params <- insight::get_parameters(model)
-    params <- setNames(params$estimate, params$parameter) # Transform to named vector
+    params <- stats::setNames(params$estimate, params$parameter) # Transform to named vector
     return(params)
   }
 
