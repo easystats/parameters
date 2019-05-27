@@ -22,7 +22,7 @@
 #' find_distribution(rpois(100, lambda = 4))
 #' find_distribution(runif(100))
 #' @importFrom bayestestR map_estimate
-#' @importFrom stats IQR density predict
+#' @importFrom stats IQR density predict sd mad
 #' @export
 find_distribution <- function(x, probabilities = FALSE) {
 
@@ -33,12 +33,12 @@ find_distribution <- function(x, probabilities = FALSE) {
 
   # Extract features
   data <- data.frame(
-    "SD" = sd(x),
-    "MAD" = mad(x, constant=1),
+    "SD" = stats::sd(x),
+    "MAD" = stats::mad(x, constant = 1),
     "Mean_Median_Distance" = mean(x) - median(x),
     "Mean_Mode_Distance" = mean(x) - as.numeric(bayestestR::map_estimate(x, bw = "nrd0")),
-    "SD_MAD_Distance" = sd(x) - mad(x, constant=1),
-    "Range" = diff(range(x)) / sd(x),
+    "SD_MAD_Distance" = stats::sd(x) - stats::mad(x, constant = 1),
+    "Range" = diff(range(x)) / stats::sd(x),
     "IQR" = stats::IQR(x),
     "Skewness" = skewness(x),
     "Kurtosis" = kurtosis(x),
