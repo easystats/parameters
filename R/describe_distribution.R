@@ -18,12 +18,13 @@ describe_distribution <- function(x, centrality = "mean", dispersion = TRUE, ran
 }
 
 
+#' @importFrom stats na.omit
 #' @export
 describe_distribution.numeric <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, ...) {
 
   # Missing
   n_missing <- sum(is.na(x))
-  x <- na.omit(x)
+  x <- stats::na.omit(x)
 
   # Distribution
   type <- as.data.frame(t(find_distribution(x, probabilities = TRUE)))
@@ -37,7 +38,7 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
                bayestestR::point_estimate(x, centrality = centrality, dispersion = dispersion, ...))
 
   # Range
-  if (range){
+  if (range) {
     out <- cbind(out,
                  data.frame(Min = min(x, na.rm = TRUE),
                             Max = max(x, na.rm = TRUE)))

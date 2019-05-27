@@ -33,6 +33,7 @@
 #' standardize_parameters(model, method = "refit", robust = TRUE)
 #' standardize_parameters(model, method = "full")
 #' standardize_parameters(model, method = "full", robust = TRUE)
+#'
 #' @importFrom stats mad sd predict cor model.matrix
 #' @importFrom insight get_parameters model_info get_data get_response
 #' @importFrom utils tail
@@ -88,13 +89,14 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 }
 
 
+
 #' @keywords internal
 .standardize_parameters_full <- function(model, params, robust, method) {
   info <- insight::model_info(model)
   data <- insight::get_data(model)
   response <- insight::get_response(model)
-  if(!is.numeric(response)) response <- as.numeric(as.character(response))
-  name_estimate <- tail(names(params), -1)
+  if (!is.numeric(response)) response <- as.numeric(as.character(response))
+  name_estimate <- utils::tail(names(params), -1)
 
   # Linear models
   if (info$is_linear) {
