@@ -10,9 +10,9 @@ describe_distribution(x, centrality = "mean", dispersion = TRUE,
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{centrality}{The \href{{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}} (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
+\item{centrality}{The point-estimates (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
 
-\item{dispersion}{if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
+\item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
 \item{range}{Return the range (min and max).}
 
