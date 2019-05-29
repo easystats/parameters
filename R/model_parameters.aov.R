@@ -11,10 +11,11 @@
 #' df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-#' model_parameters(model)
+#' model_parameters(model, omega_squared = "partial")
 #'
 #' model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 #' model_parameters(model)
+#' model_parameters(model, omega_squared = "partial")
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 #' model_parameters(model)
@@ -25,14 +26,27 @@
 #' model_parameters(model)
 #' }
 #' @export
-model_parameters.aov <- function(model, omega_squared = "partial", ...) {
+model_parameters.aov <- function(model, omega_squared = NULL, ...) {
   parameters <- .extract_parameters_anova(model)
 
-  if (!is.null(omega_squared) & "Residuals" %in% parameters$Parameter) {
+  # Omega squared
+  if (!is.null(omega_squared)){
+
+    # Sanity checks
+    if (!"Residuals" %in% parameters$Parameter){
+      warning("No residuals data found. Omega squared can only be computed for simple `aov` models.")
+      omega_squared <- NULL
+    }
+
+    if ("Within" %in% parameters$Parameter){
+      warning("Omega squared not implemented yet for repeated-measures ANOVAs.")
+      omega_squared <- NULL
+    }
+
     if (omega_squared == "partial") {
-      parameters$Omega_Squared_partial <- omega_squared(model, partial = TRUE)
+      parameters$Omega_Sq_partial <- omega_squared(model, partial = TRUE)$Omega_Sq_partial
     } else {
-      parameters$Omega_Squared <- omega_squared(model, partial = FALSE)
+      parameters$Omega_Sq <- omega_squared(model, partial = FALSE)$Omega_Sq
     }
   }
   return(parameters)
