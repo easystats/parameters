@@ -1,6 +1,6 @@
 #' Machine learning model trained to classify distributions
 #'
-#' Mean accuracy and Kappa of 0.86 and 0.85, repsectively. The code to train this model is available HERE.
+#' Mean accuracy and Kappa of 0.86 and 0.85, repsectively. The code to train this model is available at \href{https://easystats.github.io/circus/articles/classify_distribution.html}.
 #'
 #'
 "classify_distribution"
@@ -27,7 +27,7 @@
 find_distribution <- function(x, probabilities = FALSE) {
 
   if (!requireNamespace("randomForest", quietly = TRUE)) {
-    stop("Package `randomForest` required for distribution classification. Please install it.", call. = FALSE)
+    stop("Package `randomForest` required for distribution classification. Please install it by running `install.packages(randomForest).", call. = FALSE)
   }
 
 
