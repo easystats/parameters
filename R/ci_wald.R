@@ -1,6 +1,5 @@
-#' Confidence Interval based on Wald-test approximation
+#' @rdname p_value_wald
 #'
-#' @param model A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param dof Degrees of Freedom.
 #'

@@ -1,6 +1,6 @@
-#' p-values using Wald-test approximation
+#' Wald-test approximation for CIs and p-values
 #'
-#' The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5% at p = 0.05.
+#' The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5\% at p = 0.05.
 #'
 #' @param model A statistical model.
 #'
@@ -11,6 +11,8 @@
 #' p_value_wald(model)
 #' }
 #' @importFrom stats coef pnorm
+#'
+#' @references Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.
 #' @export
 p_value_wald <- function(model) {
   UseMethod("p_value_wald")
