@@ -20,19 +20,19 @@
 #' data(iris)
 #'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-#' standardize_parameters(model, method = "refit")
-#' standardize_parameters(model, method = "refit", robust = TRUE)
-#' standardize_parameters(model, method = "2sd")
-#' standardize_parameters(model, method = "2sd", robust = TRUE)
-#' standardize_parameters(model, method = "full")
-#' standardize_parameters(model, method = "full", robust = TRUE)
+#' parameters_standardize(model, method = "refit")
+#' parameters_standardize(model, method = "refit", robust = TRUE)
+#' parameters_standardize(model, method = "2sd")
+#' parameters_standardize(model, method = "2sd", robust = TRUE)
+#' parameters_standardize(model, method = "full")
+#' parameters_standardize(model, method = "full", robust = TRUE)
 #'
 #' iris$binary <- ifelse(iris$Sepal.Width > 3, 1, 0)
 #' model <- glm(binary ~ Species * Sepal.Length, data = iris, family = "binomial")
-#' standardize_parameters(model, method = "refit")
-#' standardize_parameters(model, method = "refit", robust = TRUE)
-#' standardize_parameters(model, method = "full")
-#' standardize_parameters(model, method = "full", robust = TRUE)
+#' parameters_standardize(model, method = "refit")
+#' parameters_standardize(model, method = "refit", robust = TRUE)
+#' parameters_standardize(model, method = "full")
+#' parameters_standardize(model, method = "full", robust = TRUE)
 #'
 #' @importFrom stats mad sd predict cor model.matrix
 #' @importFrom insight get_parameters model_info get_data get_response
@@ -45,7 +45,7 @@
 #'   \item Gelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. Statistics in medicine, 27(15), 2865-2873.
 #' }
 #' @export
-standardize_parameters <- function(model, robust = FALSE, method = "refit", verbose = TRUE, ...) {
+parameters_standardize <- function(model, robust = FALSE, method = "refit", verbose = TRUE, ...) {
   method <- match.arg(method, choices = c("default", "refit", "2sd", "full", "partial", "classic"))
 
   # Refit
@@ -75,7 +75,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
     for (estimate in tail(names(params), -1)) {
       std_params <- cbind(
         std_params,
-        .standardize_parameters_full(model, params[c("Parameter", estimate)], robust, method)[2]
+        .parameters_standardize_full(model, params[c("Parameter", estimate)], robust, method)[2]
       )
     }
 
@@ -91,7 +91,7 @@ standardize_parameters <- function(model, robust = FALSE, method = "refit", verb
 
 
 #' @keywords internal
-.standardize_parameters_full <- function(model, params, robust, method) {
+.parameters_standardize_full <- function(model, params, robust, method) {
   info <- insight::model_info(model)
   data <- insight::get_data(model)
   response <- insight::get_response(model)

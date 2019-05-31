@@ -12,7 +12,7 @@
   }
 
   if (!is.null(standardize) && !is.logical(standardize)) {
-    std_parameters <- standardize_parameters(model, method = standardize, robust = standardize_robust, centrality = tolower(centrality), ...)
+    std_parameters <- parameters_standardize(model, method = standardize, robust = standardize_robust, centrality = tolower(centrality), ...)
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
   }
 

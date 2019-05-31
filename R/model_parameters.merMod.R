@@ -27,7 +27,7 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
   }
 
   if (!is.null(standardize) && !is.logical(standardize)) {
-    parameters <- cbind(parameters, standardize_parameters(model, method = standardize, robust = standardize_robust)[2])
+    parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
   parameters

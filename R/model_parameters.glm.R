@@ -21,7 +21,7 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
       warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
       standardize <- "refit"
     }
-    parameters <- cbind(parameters, standardize_parameters(model, method = standardize, robust = standardize_robust)[2])
+    parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
   return(parameters)

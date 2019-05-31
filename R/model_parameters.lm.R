@@ -4,8 +4,8 @@
 #'
 #' @param model Object of class \link{lm}.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param standardize Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{standardize_parameters}).
-#' @param standardize_robust Robust standardization. See \link{standardize_parameters}.
+#' @param standardize Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{parameters_standardize}).
+#' @param standardize_robust Robust standardization. See \link{parameters_standardize}.
 #' @param bootstrap Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.
 #' @param iterations The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.
 #' @param ... Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).
@@ -28,7 +28,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
   }
 
   if (!is.null(standardize) && !is.logical(standardize)) {
-    parameters <- cbind(parameters, standardize_parameters(model, method = standardize, robust = standardize_robust)[2])
+    parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
   parameters
