@@ -2,7 +2,7 @@
 % Please edit documentation in R/parameters_standardize.R
 \name{parameters_standardize}
 \alias{parameters_standardize}
-\title{Standardized Model Parameters}
+\title{Parameters standardization}
 \usage{
 parameters_standardize(model, robust = FALSE, method = "refit",
   verbose = TRUE, ...)

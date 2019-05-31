@@ -4,12 +4,12 @@
 #'
 #' @param model Statistical model.
 #' @param iterations The number of bootstrap replicates.
-#' @param silent Hide possible refit messages.
+#' @param verbose Hide possible refit messages.
 #' @param ... Arguments passed to or from other methods.
 #'
 #'
 #' @export
-model_bootstrap <- function(model, iterations = 1000, silent = FALSE, ...) {
+model_bootstrap <- function(model, iterations = 1000, verbose = FALSE, ...) {
   UseMethod("model_bootstrap")
 }
 
@@ -30,13 +30,13 @@ model_bootstrap <- function(model, iterations = 1000, silent = FALSE, ...) {
 #' @importFrom insight get_data find_parameters get_parameters
 #' @importFrom boot boot
 #' @export
-model_bootstrap.lm <- function(model, iterations = 1000, silent = FALSE, ...) {
+model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
   data <- insight::get_data(model)
 
   boot_function <- function(model, data, indices) {
     d <- data[indices, ] # allows boot to select sample
 
-    if (silent) {
+    if (verbose) {
       fit <- suppressMessages(update(model, data = d))
     } else {
       fit <- stats::update(model, data = d)
@@ -62,7 +62,7 @@ model_bootstrap.lm <- function(model, iterations = 1000, silent = FALSE, ...) {
 
 #' @export
 #' @rdname model_bootstrap.lm
-model_bootstrap.merMod <- function(model, iterations = 1000, silent = FALSE, ...) {
+model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ...) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("This function requires package `lme4` to work. Please install it.")
   }
@@ -73,7 +73,7 @@ model_bootstrap.merMod <- function(model, iterations = 1000, silent = FALSE, ...
     return(params)
   }
 
-  if (silent) {
+  if (verbose) {
     results <- suppressMessages(lme4::bootMer(model, boot_function, nsim = iterations, ...))
   } else {
     results <- lme4::bootMer(model, boot_function, nsim = iterations, ...)
@@ -92,13 +92,13 @@ model_bootstrap.merMod <- function(model, iterations = 1000, silent = FALSE, ...
 
 
 
-# model_bootstrap.htest <- function(model, n = 1000, silent = FALSE, ...) {
+# model_bootstrap.htest <- function(model, n = 1000, verbose = FALSE, ...) {
 #   data <- insight::get_data(model)
 #
 #   boot_function <- function(model, data, indices) {
 #     d <- data[indices, ] # allows boot to select sample
 #
-#     if (silent) {
+#     if (verbose) {
 #       fit <- suppressMessages(update(model, data = d))
 #     } else {
 #       fit <- update(model, data = d)
@@ -128,17 +128,17 @@ model_bootstrap.merMod <- function(model, iterations = 1000, silent = FALSE, ...
 #' @param row.names Not used.
 #' @param optional Not used.
 #' @param iterations The number of bootstrap replicates.
-#' @param silent Hide possible refit messages.
+#' @param verbose Hide possible refit messages.
 #' @param ... Additional arguments to be passed to or from methods.
 #'
 #' @method as.data.frame lm
 #' @export
-as.data.frame.lm <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, silent = FALSE, ...) {
-  return(model_bootstrap(x, iterations = iterations, silent = silent, ...))
+as.data.frame.lm <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
+  return(model_bootstrap(x, iterations = iterations, verbose = verbose, ...))
 }
 
 
 #' @export
-as.data.frame.merMod <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, silent = FALSE, ...) {
-  return(model_bootstrap(x, iterations = iterations, silent = silent, ...))
+as.data.frame.merMod <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
+  return(model_bootstrap(x, iterations = iterations, verbose = verbose, ...))
 }

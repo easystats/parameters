@@ -5,18 +5,18 @@
 \alias{model_bootstrap.merMod}
 \title{Model bootstrapping}
 \usage{
-\method{model_bootstrap}{lm}(model, iterations = 1000, silent = FALSE,
+\method{model_bootstrap}{lm}(model, iterations = 1000, verbose = FALSE,
   ...)
 
 \method{model_bootstrap}{merMod}(model, iterations = 1000,
-  silent = FALSE, ...)
+  verbose = FALSE, ...)
 }
 \arguments{
 \item{model}{Statistical model.}
 
 \item{iterations}{The number of bootstrap replicates.}
 
-\item{silent}{Hide possible refit messages.}
+\item{verbose}{Hide possible refit messages.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

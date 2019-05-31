@@ -1,4 +1,4 @@
-#' Standardized Model Parameters
+#' Parameters standardization
 #'
 #' Compute standardized model parameters (coefficients). See \href{https://easystats.github.io/parameters/articles/parameters_standardization.html}{this vignette}.
 #'

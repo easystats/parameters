@@ -4,14 +4,14 @@
 \alias{model_bootstrap}
 \title{Model bootstrapping}
 \usage{
-model_bootstrap(model, iterations = 1000, silent = FALSE, ...)
+model_bootstrap(model, iterations = 1000, verbose = FALSE, ...)
 }
 \arguments{
 \item{model}{Statistical model.}
 
 \item{iterations}{The number of bootstrap replicates.}
 
-\item{silent}{Hide possible refit messages.}
+\item{verbose}{Hide possible refit messages.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
