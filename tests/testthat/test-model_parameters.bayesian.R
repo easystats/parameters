@@ -1,14 +1,13 @@
 context("model_parameters.bayesian")
-library(insight)
-library(rstanarm)
-library(brms)
-library(testthat)
 
 
 # RSTANARM --------------------------------------------------------------------
 
 test_that("model_parameters.stanreg", {
   set.seed(333)
+  library(rstanarm)
+  library(logspline)
+
 
   # GLM
   params <- model_parameters(insight::download_model("stanreg_lm_1"), standardize = "full", centrality = "all", test = "all", dispersion=TRUE)
@@ -50,6 +49,7 @@ test_that("model_parameters.brmsfit", {
   skip_on_travis()
   skip_on_cran()
 
+  library(brms)
   # LM
   # testthat::expect_warning(params <- model_parameters(insight::download_model("brms_mixed_1"), standardize = "refit", centrality = "all", test = c("pd", "rope"), dispersion=TRUE))
   # testthat::expect_equal(nrow(params), 2)

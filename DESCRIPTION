@@ -33,6 +33,7 @@ Suggests:
 	dplyr,
 	knitr,
 	lme4,
+	logspline,
 	MASS,
 	pbkrtest,
 	psych,
