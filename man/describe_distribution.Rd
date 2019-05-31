@@ -23,6 +23,4 @@ This function describes a distribution.
 }
 \examples{
 describe_distribution(rnorm(100))
-describe_distribution(rpois(100, lambda = 4))
-describe_distribution(runif(100))
 }

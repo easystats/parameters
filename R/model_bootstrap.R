@@ -1,6 +1,6 @@
 #' Model bootstrapping
 #'
-#' Bootstrap the model n times to return a data.frame of estimates.
+#' Bootstrap a statistical model n times to return a data.frame of estimates.
 #'
 #' @param model Statistical model.
 #' @param iterations The number of bootstrap replicates.
