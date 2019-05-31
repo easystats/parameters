@@ -15,7 +15,7 @@ dof_kenward(model)
 \item{dof}{Degrees of Freedom.}
 }
 \description{
-An approximate F-test based on the Kenward-Roger (1997) approach .
+An approximate F-test based on the Kenward-Roger (1997) approach.
 }
 \examples{
 \dontrun{

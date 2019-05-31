@@ -33,7 +33,7 @@ model <- lm(mpg ~ ., data = mtcars)
 parameters_selection(model)
 
 model <- lm(mpg ~ cyl * disp * hp * wt , data = mtcars)
-parameters_selection(model, cross_validation = FALSE)
+parameters_selection(model)
 
 \dontrun{
 # lme4 -------------------------------------------
@@ -46,7 +46,7 @@ library(rstanarm)
 model <- stan_glm(mpg ~ ., data = mtcars)
 parameters_selection(model, cross_validation = TRUE)
 
-model <- stan_glm(mpg ~ cyl * disp * hp * wt , data = mtcars)
+model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars)
 parameters_selection(model, cross_validation = FALSE)
 }
 
