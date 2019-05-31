@@ -27,6 +27,7 @@ Imports:
 Suggests:
 	BayesFactor,
 	brms,
+	cAIC4,
 	caret,
 	covr,
 	dplyr,
@@ -35,6 +36,7 @@ Suggests:
 	MASS,
 	pbkrtest,
 	psych,
+	projpred,
 	randomForest,
 	rmarkdown,
 	rstanarm,

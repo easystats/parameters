@@ -9,6 +9,7 @@
 classify_distribution
 }
 \description{
-Mean accuracy and Kappa of 0.86 and 0.85, repsectively. The code to train this model is available HERE.
+Mean accuracy and Kappa of 0.86 and 0.85, repsectively. The code to train this model is available
+\href{https://easystats.github.io/circus/articles/classify_distribution.html}{here}.
 }
 \keyword{datasets}

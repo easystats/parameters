@@ -1,6 +1,7 @@
 #' Machine learning model trained to classify distributions
 #'
-#' Mean accuracy and Kappa of 0.86 and 0.85, repsectively. The code to train this model is available at \href{https://easystats.github.io/circus/articles/classify_distribution.html}.
+#' Mean accuracy and Kappa of 0.86 and 0.85, repsectively. The code to train this model is available
+#' \href{https://easystats.github.io/circus/articles/classify_distribution.html}{here}.
 #'
 #'
 "classify_distribution"
