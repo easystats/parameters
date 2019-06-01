@@ -46,6 +46,31 @@ p_value.aov <- function(model, ...) {
 }
 
 
+
+#' @seealso https://blogs.sas.com/content/iml/2011/11/02/how-to-compute-p-values-for-a-bootstrap-distribution.html
+#' @export
+p_value.numeric <- function(model, ...){
+  2 * (1 - max(
+    c(
+      (1 + length(model[model > 0])) / (1 + length(model)),
+      (1 + length(model[model < 0])) / (1 + length(model))
+    )
+  ))
+}
+
+
+
+#' @export
+p_value.data.frame <- function(model, ...){
+  data <- model[sapply(model, is.numeric)]
+  data.frame(Parameter = names(data),
+             p = sapply(data, p_value))
+
+}
+
+
+
+
 #' @export
 p_value.anova <- p_value.aov
 

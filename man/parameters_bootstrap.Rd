@@ -5,7 +5,7 @@
 \title{Parameters bootstrapping}
 \usage{
 parameters_bootstrap(model, iterations = 1000, centrality = "median",
-  ci = 0.95, ci_method = "quantile", ...)
+  ci = 0.95, ci_method = "quantile", test = "p-value", ...)
 }
 \arguments{
 \item{model}{Statistical model.}
@@ -19,14 +19,16 @@ to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).}
 
+\item{test}{The indices of effect existence to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".}
+
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Compute bootstrapped parameters and their related indices such as Confidence Interval (CI) and p-value.
+Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
 }
 \examples{
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-parameters_bootstrap(model)
+parameters_bootstrap(mode)
 
 }
 \references{

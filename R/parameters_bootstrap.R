@@ -1,14 +1,16 @@
 #' Parameters bootstrapping
 #'
-#' Compute bootstrapped parameters and their related indices such as Confidence Interval (CI) and p-value.
+#' Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
 #'
 #'
 #' @inheritParams model_bootstrap
 #' @inheritParams bayestestR::describe_posterior
 #'
 #' @examples
+#' library(parameters)
+#'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-#' parameters_bootstrap(model, test = c("p", "pd"))
+#' parameters_bootstrap(model)
 #'
 #' @references Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.
 #'
@@ -40,21 +42,14 @@ parameters_bootstrap <- function(model, iterations = 1000, centrality = "median"
 
   # p-value
   if(p_value){
-    parameters$p <- sapply(data, .p_value_bootstrapped)
+    col_order <- parameters$Parameter
+    p <- p_value(data, ...)
+    parameters <- merge(parameters, p, all = TRUE)
+    parameters <- parameters[match(col_order, parameters$Parameter), ]
   }
 
   parameters
 }
 
 
-#' @seealso https://blogs.sas.com/content/iml/2011/11/02/how-to-compute-p-values-for-a-bootstrap-distribution.html
-#' @keywords internal
-.p_value_bootstrapped <- function(x){
-  2 * (1 - max(
-    c(
-      (1 + length(x[x > 0])) / (1 + length(x)),
-      (1 + length(x[x < 0])) / (1 + length(x))
-    )
-  ))
-}
 

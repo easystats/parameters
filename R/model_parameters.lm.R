@@ -12,14 +12,17 @@
 #'
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
-#' model_parameters(model, standardize = TRUE)
+#' model_parameters(model, standardize = "refit")
 #' @export
 model_parameters.lm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
-  if (bootstrap) {
-    return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, iterations = iterations, ...))
-  }
+
   # Processing
-  parameters <- .extract_parameters_lm(model, ci = ci)
+  if (bootstrap) {
+    parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
+  } else{
+    parameters <- .extract_parameters_lm(model, ci = ci)
+  }
+
 
   # Standardized
   if (isTRUE(standardize)) {
