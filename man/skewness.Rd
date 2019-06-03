@@ -5,7 +5,7 @@
 \alias{kurtosis}
 \title{Compute Skewness and Kurtosis}
 \usage{
-skewness(x, ...)
+skewness(x, na.rm = TRUE, ...)
 
 kurtosis(x, ...)
 }
@@ -13,6 +13,8 @@ kurtosis(x, ...)
 \item{x}{A numeric vector or data.frame.}
 
 \item{na.rm}{Remove missing values.}
+
+\item{...}{Arguments passed to or from other methods.}
 }
 \description{
 Compute Skewness and Kurtosis

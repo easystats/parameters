@@ -2,6 +2,7 @@
 #'
 #' @param x A numeric vector or data.frame.
 #' @param na.rm Remove missing values.
+#' @param ... Arguments passed to or from other methods.
 #'
 #' @details \strong{Skewness}
 #' \cr \cr
@@ -30,7 +31,7 @@
 #' kurtosis(rnorm(1000))
 #'
 #' @export
-skewness <- function(x, ...) {
+skewness <- function(x, na.rm = TRUE, ...) {
   UseMethod("skewness")
 }
 

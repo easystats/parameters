@@ -11,13 +11,13 @@ test_that("model_parameters.stanreg", {
 
   # GLM
   params <- model_parameters(insight::download_model("stanreg_lm_1"), standardize = "full", centrality = "all", test = "all", dispersion=TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 20))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
 
   params <- model_parameters(insight::download_model("stanreg_lm_2"), standardize = "full", centrality = "all", test = "all", dispersion=TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 20))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 18))
 
   params <- model_parameters(insight::download_model("stanreg_lm_3"), standardize = "full", centrality = "all", test = "all", dispersion=TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 20))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 18))
 
   params <- model_parameters(insight::download_model("stanreg_glm_1"), standardize = "refit", centrality = "all", test = "all", dispersion=TRUE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 20))
@@ -27,7 +27,7 @@ test_that("model_parameters.stanreg", {
 
   # Mixed
   params <- model_parameters(insight::download_model("stanreg_lmerMod_1"), standardize = "full", centrality = "all", test = "all", dispersion=TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 20))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
 
   params <- model_parameters(insight::download_model("stanreg_merMod_1"), standardize = "refit", centrality = "all", test = "all", dispersion=TRUE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 20))
