@@ -66,14 +66,14 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
 
   # Renaming
   names(parameters) <- gsub("Std. Error", "SE", names(parameters))
-  names(parameters) <- gsub("Estimate", "beta", names(parameters))
+  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
   names(parameters) <- gsub("t value", "t", names(parameters))
   names(parameters) <- gsub("z value", "z", names(parameters))
 
   rownames(parameters) <- NULL
 
   # Reorder
-  order <- c("Parameter", "beta", "SE", "CI_low", "CI_high", "t", "z", "DoF", "DoF_residual", "p")
+  order <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "z", "DoF", "DoF_residual", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   parameters

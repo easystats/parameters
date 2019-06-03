@@ -50,34 +50,11 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
   # Refit
   if (method %in% c("refit", "2sd")) {
-    std_model <- standardize(model, robust = robust, method = method, verbose = verbose, ...)
-
-    # Extract parameters
-    if (insight::model_info(model)$is_bayesian) {
-      std_params <- bayestestR::describe_posterior(std_model, test = NULL, ci = NULL, dispersion = FALSE, diagnostic = NULL, priors = FALSE, ...)
-    } else {
-      std_params <- insight::get_parameters(std_model)
-      names(std_params) <- c("Parameter", "beta")
-    }
+    std_params <- .parameters_standardize_refit(model, robust = robust, method = method, verbose = verbose, ...)
 
     # Posthoc
   } else if (method %in% c("default", "full", "classic")) {
-
-    # Extract parameters
-    if (insight::model_info(model)$is_bayesian) {
-      params <- bayestestR::describe_posterior(model, test = NULL, ci = NULL, dispersion = FALSE, diagnostic = NULL, priors = FALSE, ...)
-    } else {
-      params <- insight::get_parameters(model)
-      names(params) <- c("Parameter", "beta")
-    }
-
-    std_params <- params["Parameter"]
-    for (estimate in tail(names(params), -1)) {
-      std_params <- cbind(
-        std_params,
-        .parameters_standardize_full(model, params[c("Parameter", estimate)], robust, method)[2]
-      )
-    }
+    std_params <- .parameters_standardize_full(model, param_names = NULL, param_values = NULL, robust = robust, method = method, verbose = verbose, ...)
 
     # Partial
   } else if (method == "partial") {
@@ -90,125 +67,260 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
 
 
-#' @keywords internal
-.parameters_standardize_full <- function(model, params, robust, method) {
-  info <- insight::model_info(model)
-  data <- insight::get_data(model)
-  response <- insight::get_response(model)
-  if (!is.numeric(response)) response <- as.numeric(as.character(response))
-  name_estimate <- utils::tail(names(params), -1)
 
-  # Linear models
+
+
+
+
+
+
+
+
+
+# REFIT -------------------------------------------------------------------
+#' @keywords internal
+.parameters_standardize_refit <- function(model, robust = FALSE, method = "refit", verbose = TRUE, bootstrap = FALSE, ...){
+  std_model <- standardize(model, robust = robust, method = method, verbose = verbose, ...)
+
+  # Bayesian models
+  if (insight::model_info(model)$is_bayesian) {
+    std_params <- bayestestR::describe_posterior(std_model, dispersion = FALSE, ci = NULL, test = NULL, diagnostic = NULL, priors = FALSE, ...)
+    std_params <- std_params[names(std_params) %in% c("Parameter", "Coefficient", "Median", "Mean", "MAP")]
+
+  # Frequentist models
+  } else {
+    if(bootstrap){
+      std_params <- parameters_bootstrap(std_model, ...)
+      std_params <- std_params[names(std_params) %in% c("Parameter", "Coefficient", "Median", "Mean", "MAP")]
+    } else{
+      std_params <- insight::get_parameters(std_model, ...)
+      names(std_params) <- c("Parameter", "Coefficient")
+    }
+  }
+  std_params
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# POST-HOC -------------------------------------------------------------------
+#' @keywords internal
+.parameters_standardize_full <- function(model, param_names = NULL, param_values = NULL, robust = FALSE, method = "full", verbose = TRUE, ...) {
+
+  # Get parameters
+  if(is.null(param_names) | is.null(param_values) | length(param_names) != length(param_values)){
+    params <- model_parameters(model, standardize = FALSE, ...)
+    param_values <- params[names(params) %in% c("Coefficient", "Median", "Mean", "MAP")][, 1]
+    param_names <- params$Parameter
+  }
+
+  # Get response variance
+  sd_y <- .variance_response(model, robust = robust, method = method, ...)
+
+  # Create parameter table
+  param_table <- .parameters_types_table(param_names, param_values, insight::get_data(model))
+
+  # Loop over all parameters
+  std_params <- c()
+  for(i in 1:nrow(param_table)){
+    sd_x <- .variance_predictor(param_table$Type[i], param_table$Type[i], insight::get_data(model), robust = robust, method = method, ...)
+    new_coef <- param_table$Value[i] * sd_x / sd_y
+    std_params <- c(std_params, new_coef)
+  }
+
+  data.frame(Parameter = param_table$Parameter,
+             Coefficient = std_params)
+}
+
+
+
+
+#' @keywords internal
+.variance_response <- function(model, robust = FALSE, method = "full", ...){
+  info <- insight::model_info(model)
+  response <- insight::get_response(model)
+
   if (info$is_linear) {
     if (robust == FALSE) {
       sd_y <- stats::sd(response)
     } else {
       sd_y <- stats::mad(response)
     }
-
-    std_params <- data.frame()
-    for (name in params$Parameter) {
-      coef <- params[params$Parameter == name, name_estimate]
-      std_coef <- .standardize_parameter_full(model, name, coef, data, sd_y, robust, method)
-      std_params <-
-        rbind(std_params, data.frame("Parameter" = name, "estimate" = std_coef))
-    }
-
-    # Binomial models
   } else if (info$is_logit) {
     if (insight::model_info(model)$is_bayesian) {
-      stop(paste0("Standardization method ", method, " is not available for this kind of model."))
+      logit_y <- rstanarm::posterior_predict(model, ...)
+    } else{
+      logit_y <- stats::predict(model, ...)
     }
-    logit_y <- stats::predict(model)
     r <- stats::cor(response, odds_to_probs(logit_y, log = TRUE))
     if (robust == FALSE) {
-      sd_y <- stats::sd(logit_y)
+      sd_y <- stats::sd(logit_y) * r
     } else {
-      sd_y <- stats::mad(logit_y)
+      sd_y <- stats::mad(logit_y) * r
     }
-
-    std_params <- data.frame()
-    for (name in params$Parameter) {
-      coef <- params[params$Parameter == name, name_estimate]
-      std_coef <- .standardize_parameter_full(model, name, coef, data, sd_y, robust, method)
-      std_coef <- std_coef * r
-      std_params <-
-        rbind(std_params, data.frame("Parameter" = name, "estimate" = std_coef))
-    }
-  } else {
-    stop("method='full' not applicable to standardize this type of model. Please use method='refit'.")
+  } else{
+    stop(paste0("Standardization method ", method, " is not available for this kind of model."))
   }
-
-  names(std_params) <- names(params)
-  std_params
+  sd_y
 }
 
 
-#' @keywords internal
-.standardize_parameter_full <- function(model, name, coef, data, sd_y, robust, method) {
-  param_type <- .find_parameter_type(name, data)
 
-  if ("interaction" %in% param_type) {
-    predictor <- param_type[[2]]
-    if ("numeric" %in% .find_parameter_type(predictor, data)) {
-      if (robust == FALSE) {
-        std_coef <- coef * stats::sd(data[[predictor]]) / sd_y
-      } else {
-        std_coef <- coef * stats::mad(data[[predictor]]) / sd_y
-      }
-    } else {
-      std_coef <- coef / sd_y
-    }
-  } else if ("numeric" %in% param_type) {
+#' @keywords internal
+.variance_predictor <- function(type, variable, data, robust = FALSE, method = "full",  ...){
+  if (type == "numeric") {
     if (robust == FALSE) {
-      std_coef <- coef * stats::sd(data[[name]]) / sd_y
+      sd_x <- stats::sd(data[, variable])
     } else {
-      std_coef <- coef * stats::mad(data[[name]]) / sd_y
+      sd_x <- stats::mad(data[, variable])
     }
-  } else if ("intercept" %in% param_type) {
-    std_coef <- NA
-  } else if ("factor" %in% param_type) {
-    if (method == "classic") {
+  } else if (type == "factor") {
+    if(method == "classic"){
       if (robust == FALSE) {
-        std_coef <- coef * stats::sd(stats::model.matrix(model)[, name]) / sd_y
+        sd_x <- stats::sd(as.numeric(data[, variable]))
       } else {
-        std_coef <- coef * stats::mad(stats::model.matrix(model)[, name]) / sd_y
+        sd_x <- stats::mad(as.numeric(data[, variable]))
       }
-    } else {
-      std_coef <- coef / sd_y
+    } else{
+      sd_x <- 1
     }
-  } else {
-    std_coef <- coef / sd_y
+  } else if(type == "interaction"){
+    if(is.numeric(data[, variable])){
+      if (robust == FALSE) {
+        sd_x <- stats::sd(data[, variable])
+      } else {
+        sd_x <- stats::mad(data[, variable])
+      }
+    } else if(is.factor(data[, variable])){
+      if(method == "classic"){
+        if (robust == FALSE) {
+          sd_x <- stats::sd(as.numeric(data[, variable]))
+        } else {
+          sd_x <- stats::mad(as.numeric(data[, variable]))
+        }
+      } else{
+        sd_x <- 1
+      }
+    } else{
+      sd_x <- 1
+    }
+  } else{
+    sd_x <- 1
   }
-
-  std_coef
+  sd_x
 }
 
 
 
+#'
+#' #' @keywords internal
+#' .parameters_standardize_full <- function(model, params, robust, method) {
+#'   info <- insight::model_info(model)
+#'   data <- insight::get_data(model)
+#'   response <- insight::get_response(model)
+#'   if (!is.numeric(response)) response <- as.numeric(as.character(response))
+#'   name_estimate <- utils::tail(names(params), -1)
+#'
+#'   # Linear models
+#'   if (info$is_linear) {
+#'     if (robust == FALSE) {
+#'       sd_y <- stats::sd(response)
+#'     } else {
+#'       sd_y <- stats::mad(response)
+#'     }
+#'
+#'     std_params <- data.frame()
+#'     for (name in params$Parameter) {
+#'       coef <- params[params$Parameter == name, name_estimate]
+#'       std_coef <- .standardize_parameter_full(model, name, coef, data, sd_y, robust, method)
+#'       std_params <-
+#'         rbind(std_params, data.frame("Parameter" = name, "estimate" = std_coef))
+#'     }
+#'
+#'     # Binomial models
+#'   } else if (info$is_logit) {
+#'     if (insight::model_info(model)$is_bayesian) {
+#'       stop(paste0("Standardization method ", method, " is not available for this kind of model."))
+#'     }
+#'     logit_y <- stats::predict(model)
+#'     r <- stats::cor(response, odds_to_probs(logit_y, log = TRUE))
+#'     if (robust == FALSE) {
+#'       sd_y <- stats::sd(logit_y)
+#'     } else {
+#'       sd_y <- stats::mad(logit_y)
+#'     }
+#'
+#'     std_params <- data.frame()
+#'     for (name in params$Parameter) {
+#'       coef <- params[params$Parameter == name, name_estimate]
+#'       std_coef <- .standardize_parameter_full(model, name, coef, data, sd_y, robust, method)
+#'       std_coef <- std_coef * r
+#'       std_params <-
+#'         rbind(std_params, data.frame("Parameter" = name, "estimate" = std_coef))
+#'     }
+#'   } else {
+#'     stop("method='full' not applicable to standardize this type of model. Please use method='refit'.")
+#'   }
+#'
+#'   names(std_params) <- names(params)
+#'   std_params
+#' }
 
 
 
-#' @keywords internal
-.find_parameter_type <- function(name, data) {
-  if (grepl(":", name)) {
-    var <- utils::tail(unlist(strsplit(name, ":", fixed = TRUE)), 1)
-    return(c("interaction", var))
-  } else if (name == "(Intercept)") {
-    return(c("intercept"))
-  } else if (name %in% names(data)) {
-    return(c("numeric"))
-  } else {
-    facs <- data[sapply(data, is.factor)]
-    facs_names <- c()
-    for (fac in names(facs)) {
-      facs_names <- c(facs_names, paste0(fac, unique(data[[fac]])))
-    }
 
-    if (name %in% facs_names) {
-      return("factor")
-    } else {
-      return("unknown")
-    }
-  }
-}
+
+
+
+#'
+#' #' @keywords internal
+#' .standardize_parameter_full <- function(param_name, param_value, data, sd_y, sd_x = NULL) {
+#'   param_type <- .parameters_types(param_name, data)
+#'
+#'   if ("interaction" %in% param_type) {
+#'     predictor <- param_type[[2]]
+#'     if ("numeric" %in% .parameters_types(predictor, data)) {
+#'       std_coef <- param_value * sd_x / sd_y
+#'     } else {
+#'       std_coef <- param_value / sd_y
+#'     }
+#'   } else if ("numeric" %in% param_type) {
+#'     std_coef <- param_value * sd_x / sd_y
+#'   } else if ("intercept" %in% param_type) {
+#'     std_coef <- NA
+#'   } else if ("factor" %in% param_type) {
+#'     std_coef <- param_value / sd_y
+#'   } else {
+#'     std_coef <- param_value / sd_y
+#'   }
+#'
+#'   std_coef
+#' }
+#'
+#'
+#'
+#' #' @keywords internal
+#' .standardize_parameter_classic <- function(param_value, sd_y, sd_x = NULL) {
+#'   param_value * sd_x / sd_y
+#' }
+
+
+
+

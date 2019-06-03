@@ -45,7 +45,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
 #' @keywords internal
 .extract_parameters_lm <- function(model, ci = .95) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
-  names(parameters) <- c("beta", "SE", "t", "p")
+  names(parameters) <- c("Coefficient", "SE", "t", "p")
 
   parameters$DoF_residual <- model$df.residual
   parameters$Parameter <- row.names(parameters)
@@ -54,7 +54,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
   parameters <- merge(parameters, ci(model, ci = ci), by="Parameter")
 
 
-  parameters <- parameters[c("Parameter", "beta", "SE", "CI_low", "CI_high", "t", "DoF_residual", "p")]
+  parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "DoF_residual", "p")]
   rownames(parameters) <- NULL
 
   parameters

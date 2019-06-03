@@ -27,8 +27,10 @@ to be estimated. Named Credible Interval (CI) for consistency.}
 Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
 }
 \examples{
+library(parameters)
+
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-parameters_bootstrap(mode)
+parameters_bootstrap(model)
 
 }
 \references{

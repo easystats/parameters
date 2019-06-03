@@ -35,7 +35,7 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
 #' @keywords internal
 .extract_parameters_glm <- function(model, ci = .95) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
-  names(parameters) <- c("beta", "SE", "z", "p")
+  names(parameters) <- c("Coefficient", "SE", "z", "p")
 
   parameters$DoF_residual <- model$df.residual
   parameters$Parameter <- row.names(parameters)
@@ -43,7 +43,7 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
   # CI
   parameters <- merge(parameters, ci(model, ci = ci), by="Parameter")
 
-  parameters <- parameters[c("Parameter", "beta", "SE", "CI_low", "CI_high", "z", "DoF_residual", "p")]
+  parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "DoF_residual", "p")]
   rownames(parameters) <- NULL
 
   parameters
