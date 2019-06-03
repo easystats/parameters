@@ -5,14 +5,14 @@
 \alias{kurtosis}
 \title{Compute Skewness and Kurtosis}
 \usage{
-skewness(x, na.rm = TRUE)
+skewness(x, ...)
 
-kurtosis(x, na.rm = TRUE)
+kurtosis(x, ...)
 }
 \arguments{
 \item{x}{A numeric vector or data.frame.}
 
-\item{na.rm}{Remove NaNs.}
+\item{na.rm}{Remove missing values.}
 }
 \description{
 Compute Skewness and Kurtosis
@@ -20,7 +20,5 @@ Compute Skewness and Kurtosis
 \examples{
 skewness(rnorm(1000))
 kurtosis(rnorm(1000))
-}
-\references{
-All credits go to the \code{moments} package.
+
 }
