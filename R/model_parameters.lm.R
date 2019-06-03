@@ -12,7 +12,9 @@
 #'
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
+#'
 #' model_parameters(model, standardize = "refit")
+#' model_parameters(model, bootstrap = TRUE)
 #' @export
 model_parameters.lm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
 
@@ -51,8 +53,9 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
   parameters$Parameter <- row.names(parameters)
 
   # CI
+  col_order <- parameters$Parameter
   parameters <- merge(parameters, ci(model, ci = ci), by="Parameter")
-
+  parameters <- parameters[match(col_order, parameters$Parameter), ]
 
   parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "DoF_residual", "p")]
   rownames(parameters) <- NULL

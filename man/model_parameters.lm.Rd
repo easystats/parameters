@@ -28,5 +28,7 @@ Parameters of linear models.
 }
 \examples{
 model <- lm(mpg ~ wt + cyl, data = mtcars)
+
 model_parameters(model, standardize = "refit")
+model_parameters(model, bootstrap = TRUE)
 }

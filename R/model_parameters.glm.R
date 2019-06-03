@@ -6,14 +6,17 @@
 #'
 #' @examples
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
-#' model_parameters(model, standardize = TRUE)
+#' model_parameters(model, standardize = "refit")
 #' @export
 model_parameters.glm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
-  if (bootstrap) {
-    return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, iterations = iterations, ...))
-  }
+
   # Processing
-  parameters <- .extract_parameters_glm(model, ci = ci)
+  if (bootstrap) {
+    parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
+  } else{
+    parameters <- .extract_parameters_glm(model, ci = ci)
+  }
+
 
   # Standardized
   if (standardize != FALSE & !is.null(standardize)) {
@@ -41,7 +44,9 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
   parameters$Parameter <- row.names(parameters)
 
   # CI
+  col_order <- parameters$Parameter
   parameters <- merge(parameters, ci(model, ci = ci), by="Parameter")
+  parameters <- parameters[match(col_order, parameters$Parameter), ]
 
   parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "DoF_residual", "p")]
   rownames(parameters) <- NULL

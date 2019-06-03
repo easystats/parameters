@@ -45,7 +45,9 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
   parameters$Parameter <- row.names(parameters)
 
   # CI
+  col_order <- parameters$Parameter
   parameters <- merge(parameters, ci(model, ci = ci, method = ci_method), by="Parameter")
+  parameters <- parameters[match(col_order, parameters$Parameter), ]
 
   # p value
   if ("Pr(>|z|)" %in% names(parameters)) {

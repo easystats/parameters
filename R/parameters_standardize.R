@@ -140,7 +140,7 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
   # Loop over all parameters
   std_params <- c()
   for(i in 1:nrow(param_table)){
-    sd_x <- .variance_predictor(param_table$Type[i], param_table$Type[i], insight::get_data(model), robust = robust, method = method, ...)
+    sd_x <- .variance_predictor(param_table$Type[i], param_table$Variable[i], insight::get_data(model), robust = robust, method = method, ...)
     new_coef <- param_table$Value[i] * sd_x / sd_y
     std_params <- c(std_params, new_coef)
   }
@@ -226,101 +226,4 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
   }
   sd_x
 }
-
-
-
-#'
-#' #' @keywords internal
-#' .parameters_standardize_full <- function(model, params, robust, method) {
-#'   info <- insight::model_info(model)
-#'   data <- insight::get_data(model)
-#'   response <- insight::get_response(model)
-#'   if (!is.numeric(response)) response <- as.numeric(as.character(response))
-#'   name_estimate <- utils::tail(names(params), -1)
-#'
-#'   # Linear models
-#'   if (info$is_linear) {
-#'     if (robust == FALSE) {
-#'       sd_y <- stats::sd(response)
-#'     } else {
-#'       sd_y <- stats::mad(response)
-#'     }
-#'
-#'     std_params <- data.frame()
-#'     for (name in params$Parameter) {
-#'       coef <- params[params$Parameter == name, name_estimate]
-#'       std_coef <- .standardize_parameter_full(model, name, coef, data, sd_y, robust, method)
-#'       std_params <-
-#'         rbind(std_params, data.frame("Parameter" = name, "estimate" = std_coef))
-#'     }
-#'
-#'     # Binomial models
-#'   } else if (info$is_logit) {
-#'     if (insight::model_info(model)$is_bayesian) {
-#'       stop(paste0("Standardization method ", method, " is not available for this kind of model."))
-#'     }
-#'     logit_y <- stats::predict(model)
-#'     r <- stats::cor(response, odds_to_probs(logit_y, log = TRUE))
-#'     if (robust == FALSE) {
-#'       sd_y <- stats::sd(logit_y)
-#'     } else {
-#'       sd_y <- stats::mad(logit_y)
-#'     }
-#'
-#'     std_params <- data.frame()
-#'     for (name in params$Parameter) {
-#'       coef <- params[params$Parameter == name, name_estimate]
-#'       std_coef <- .standardize_parameter_full(model, name, coef, data, sd_y, robust, method)
-#'       std_coef <- std_coef * r
-#'       std_params <-
-#'         rbind(std_params, data.frame("Parameter" = name, "estimate" = std_coef))
-#'     }
-#'   } else {
-#'     stop("method='full' not applicable to standardize this type of model. Please use method='refit'.")
-#'   }
-#'
-#'   names(std_params) <- names(params)
-#'   std_params
-#' }
-
-
-
-
-
-
-
-#'
-#' #' @keywords internal
-#' .standardize_parameter_full <- function(param_name, param_value, data, sd_y, sd_x = NULL) {
-#'   param_type <- .parameters_types(param_name, data)
-#'
-#'   if ("interaction" %in% param_type) {
-#'     predictor <- param_type[[2]]
-#'     if ("numeric" %in% .parameters_types(predictor, data)) {
-#'       std_coef <- param_value * sd_x / sd_y
-#'     } else {
-#'       std_coef <- param_value / sd_y
-#'     }
-#'   } else if ("numeric" %in% param_type) {
-#'     std_coef <- param_value * sd_x / sd_y
-#'   } else if ("intercept" %in% param_type) {
-#'     std_coef <- NA
-#'   } else if ("factor" %in% param_type) {
-#'     std_coef <- param_value / sd_y
-#'   } else {
-#'     std_coef <- param_value / sd_y
-#'   }
-#'
-#'   std_coef
-#' }
-#'
-#'
-#'
-#' #' @keywords internal
-#' .standardize_parameter_classic <- function(param_value, sd_y, sd_x = NULL) {
-#'   param_value * sd_x / sd_y
-#' }
-
-
-
 

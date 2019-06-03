@@ -28,5 +28,5 @@ Parameters of general linear models.
 }
 \examples{
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
-model_parameters(model, standardize = TRUE)
+model_parameters(model, standardize = "refit")
 }
