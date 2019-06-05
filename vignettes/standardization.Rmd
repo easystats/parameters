@@ -43,19 +43,19 @@ library(parameters)
 data <- iris
 model <- lm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data)
 
-standardize_parameters(model, method="refit")
+parameters_standardize(model, method="refit")
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-knitr::kable(standardize_parameters(model, method="refit"), digits=2)
+knitr::kable(parameters_standardize(model, method="refit"), digits=2)
 ```
 
 The `robust` (default to `FALSE`) argument enables a **robust standardization of data**, *i.e.*, based on the **median** and **MAD** instead of the **mean** and **SD**.
 
 ```{r warning=FALSE, message=FALSE, results='hide'}
-standardize_parameters(model, method="refit", robust=TRUE)
+parameters_standardize(model, method="refit", robust=TRUE)
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-knitr::kable(standardize_parameters(model, method="refit", robust=TRUE), digits=2)
+knitr::kable(parameters_standardize(model, method="refit", robust=TRUE), digits=2)
 ```
 
 
@@ -66,10 +66,10 @@ library(parameters)
 
 data$binary <- ifelse(data$Sepal.Width > 3, 1, 0)
 model <- glm(binary ~ Species + Sepal.Length, data = data, family="binomial")
-standardize_parameters(model, method="refit")
+parameters_standardize(model, method="refit")
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-knitr::kable(standardize_parameters(model, method="refit"), digits=2)
+knitr::kable(parameters_standardize(model, method="refit"), digits=2)
 ```
 
 ## `2sd`: Scaling by two 2 SDs
@@ -85,10 +85,10 @@ Post-hoc standardization of the model paramaters. The coefficients are divided b
 
 ```{r warning=FALSE, message=FALSE, results='hide'}
 model <- lm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data)
-standardize_parameters(model, method="full")
+parameters_standardize(model, method="full")
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-knitr::kable(standardize_parameters(model, method="full"), digits=2)
+knitr::kable(parameters_standardize(model, method="full"), digits=2)
 ```
 
 ## `classic`: Basic scaling of all parameters
@@ -105,21 +105,21 @@ library(sjstats)
 library(lm.beta)
 
 comparison <- function(model, robust=FALSE){
-  out <- standardize_parameters(model, method="refit", robust=robust)[1:2]
+  out <- parameters_standardize(model, method="refit", robust=robust)[1:2]
   
   out$full <- tryCatch({
-    out[, 2] - standardize_parameters(model, method="full", robust=robust)[, 2]
+    out[, 2] - parameters_standardize(model, method="full", robust=robust)[, 2]
 }, error = function(error_condition) {
     "Error"
 })
   out$classic <- tryCatch({
-    out[, 2] - standardize_parameters(model, method="classic", robust=robust)[, 2]
+    out[, 2] - parameters_standardize(model, method="classic", robust=robust)[, 2]
 }, error = function(error_condition) {
     "Error"
 })
   out$sjstats <- tryCatch({
     if(insight::model_info(model)$is_bayesian){
-      out[, 2] - c(NA, parameters::describe_posterior(sjstats::std_beta(model))[, 1])
+      out[, 2] - c(NA, bayestestR::describe_posterior(as.data.frame(sjstats::std_beta(model)))[, 2])
     } else{
       out[, 2] - c(NA, sjstats::std_beta(model)[, 2])
     }
@@ -131,6 +131,8 @@ comparison <- function(model, robust=FALSE){
     out[, 2] - lm.beta::lm.beta(model)$standardized.coefficients
 }, error = function(error_condition) {
     "Error"
+}, warning = function(warning_condition) {
+  "Error"
 })
   
 #   out$MuMin <- tryCatch({
