@@ -21,7 +21,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
-  } else{
+  } else {
     parameters <- .extract_parameters_lm(model, ci = ci)
   }
 
@@ -54,7 +54,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
 
   # CI
   col_order <- parameters$Parameter
-  parameters <- merge(parameters, ci(model, ci = ci), by="Parameter")
+  parameters <- merge(parameters, ci(model, ci = ci), by = "Parameter")
   parameters <- parameters[match(col_order, parameters$Parameter), ]
 
   parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "DoF_residual", "p")]

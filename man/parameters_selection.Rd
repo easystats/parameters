@@ -32,13 +32,12 @@ Automated selection of the 'best' parameters. For frequentist simple GLMs, it pe
 model <- lm(mpg ~ ., data = mtcars)
 parameters_selection(model)
 
-model <- lm(mpg ~ cyl * disp * hp * wt , data = mtcars)
+model <- lm(mpg ~ cyl * disp * hp * wt, data = mtcars)
 parameters_selection(model)
-
 \dontrun{
 # lme4 -------------------------------------------
 library(lme4)
-model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1|Species), data = iris)
+model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species), data = iris)
 parameters_selection(model)
 
 # rstanarm -------------------------------------------
@@ -49,6 +48,5 @@ parameters_selection(model, cross_validation = TRUE)
 model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars)
 parameters_selection(model, cross_validation = FALSE)
 }
-
 
 }

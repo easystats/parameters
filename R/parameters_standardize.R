@@ -33,7 +33,6 @@
 #' parameters_standardize(model, method = "refit", robust = TRUE)
 #' parameters_standardize(model, method = "full")
 #' parameters_standardize(model, method = "full", robust = TRUE)
-#'
 #' @importFrom stats mad sd predict cor model.matrix
 #' @importFrom insight get_parameters model_info get_data get_response
 #' @importFrom utils tail
@@ -79,7 +78,7 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
 # REFIT -------------------------------------------------------------------
 #' @keywords internal
-.parameters_standardize_refit <- function(model, robust = FALSE, method = "refit", verbose = TRUE, bootstrap = FALSE, ...){
+.parameters_standardize_refit <- function(model, robust = FALSE, method = "refit", verbose = TRUE, bootstrap = FALSE, ...) {
   std_model <- standardize(model, robust = robust, method = method, verbose = verbose, ...)
 
   # Bayesian models
@@ -87,12 +86,12 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
     std_params <- bayestestR::describe_posterior(std_model, dispersion = FALSE, ci = NULL, test = NULL, diagnostic = NULL, priors = FALSE, ...)
     std_params <- std_params[names(std_params) %in% c("Parameter", "Coefficient", "Median", "Mean", "MAP")]
 
-  # Frequentist models
+    # Frequentist models
   } else {
-    if(bootstrap){
+    if (bootstrap) {
       std_params <- parameters_bootstrap(std_model, ...)
       std_params <- std_params[names(std_params) %in% c("Parameter", "Coefficient", "Median", "Mean", "MAP")]
-    } else{
+    } else {
       std_params <- insight::get_parameters(std_model, ...)
       names(std_params) <- c("Parameter", "Coefficient")
     }
@@ -125,7 +124,7 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 .parameters_standardize_full <- function(model, param_names = NULL, param_values = NULL, robust = FALSE, method = "full", verbose = TRUE, ...) {
 
   # Get parameters
-  if(is.null(param_names) | is.null(param_values) | length(param_names) != length(param_values)){
+  if (is.null(param_names) | is.null(param_values) | length(param_names) != length(param_values)) {
     params <- model_parameters(model, standardize = FALSE, ...)
     param_values <- params[names(params) %in% c("Coefficient", "Median", "Mean", "MAP")][, 1]
     param_names <- params$Parameter
@@ -139,21 +138,23 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
   # Loop over all parameters
   std_params <- c()
-  for(i in 1:nrow(param_table)){
+  for (i in 1:nrow(param_table)) {
     sd_x <- .variance_predictor(param_table$Type[i], param_table$Variable[i], insight::get_data(model), robust = robust, method = method, ...)
     new_coef <- param_table$Value[i] * sd_x / sd_y
     std_params <- c(std_params, new_coef)
   }
 
-  data.frame(Parameter = param_table$Parameter,
-             Coefficient = std_params)
+  data.frame(
+    Parameter = param_table$Parameter,
+    Coefficient = std_params
+  )
 }
 
 
 
 
 #' @keywords internal
-.variance_response <- function(model, robust = FALSE, method = "full", ...){
+.variance_response <- function(model, robust = FALSE, method = "full", ...) {
   info <- insight::model_info(model)
   response <- insight::get_response(model)
 
@@ -163,7 +164,7 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
     } else {
       sd_y <- stats::mad(response)
     }
-  } else{
+  } else {
     sd_y <- 1
   }
   sd_y
@@ -172,7 +173,7 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
 
 #' @keywords internal
-.variance_predictor <- function(type, variable, data, robust = FALSE, method = "full",  ...){
+.variance_predictor <- function(type, variable, data, robust = FALSE, method = "full", ...) {
   if (type == "intercept") {
     sd_x <- 0
   } else if (type == "numeric") {
@@ -182,38 +183,37 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
       sd_x <- stats::mad(data[, variable])
     }
   } else if (type == "factor") {
-    if(method == "classic"){
+    if (method == "classic") {
       if (robust == FALSE) {
         sd_x <- stats::sd(as.numeric(data[, variable]))
       } else {
         sd_x <- stats::mad(as.numeric(data[, variable]))
       }
-    } else{
+    } else {
       sd_x <- 1
     }
-  } else if(type == "interaction"){
-    if(is.numeric(data[, variable])){
+  } else if (type == "interaction") {
+    if (is.numeric(data[, variable])) {
       if (robust == FALSE) {
         sd_x <- stats::sd(data[, variable])
       } else {
         sd_x <- stats::mad(data[, variable])
       }
-    } else if(is.factor(data[, variable])){
-      if(method == "classic"){
+    } else if (is.factor(data[, variable])) {
+      if (method == "classic") {
         if (robust == FALSE) {
           sd_x <- stats::sd(as.numeric(data[, variable]))
         } else {
           sd_x <- stats::mad(as.numeric(data[, variable]))
         }
-      } else{
+      } else {
         sd_x <- 1
       }
-    } else{
+    } else {
       sd_x <- 1
     }
-  } else{
+  } else {
     sd_x <- 1
   }
   sd_x
 }
-

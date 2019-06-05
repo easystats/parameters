@@ -30,15 +30,15 @@ model_parameters.aov <- function(model, omega_squared = NULL, ...) {
   parameters <- .extract_parameters_anova(model)
 
   # Omega squared
-  if (!is.null(omega_squared)){
+  if (!is.null(omega_squared)) {
 
     # Sanity checks
-    if (!"Residuals" %in% parameters$Parameter){
+    if (!"Residuals" %in% parameters$Parameter) {
       warning("No residuals data found. Omega squared can only be computed for simple `aov` models.")
       omega_squared <- NULL
     }
 
-    if ("Within" %in% parameters$Parameter){
+    if ("Within" %in% parameters$Parameter) {
       warning("Omega squared not implemented yet for repeated-measures ANOVAs.")
       omega_squared <- NULL
     }

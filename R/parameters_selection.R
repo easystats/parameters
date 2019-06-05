@@ -10,13 +10,12 @@
 #' model <- lm(mpg ~ ., data = mtcars)
 #' parameters_selection(model)
 #'
-#' model <- lm(mpg ~ cyl * disp * hp * wt , data = mtcars)
+#' model <- lm(mpg ~ cyl * disp * hp * wt, data = mtcars)
 #' parameters_selection(model)
-#'
 #' \dontrun{
 #' # lme4 -------------------------------------------
 #' library(lme4)
-#' model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1|Species), data = iris)
+#' model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species), data = iris)
 #' parameters_selection(model)
 #'
 #' # rstanarm -------------------------------------------
@@ -28,9 +27,8 @@
 #' parameters_selection(model, cross_validation = FALSE)
 #' }
 #'
-#'
 #' @export
-parameters_selection <- function(model, ...){
+parameters_selection <- function(model, ...) {
   UseMethod("parameters_selection")
 }
 
@@ -39,7 +37,7 @@ parameters_selection <- function(model, ...){
 #' @rdname parameters_selection
 #' @importFrom stats step
 #' @export
-parameters_selection.lm <- function(model, ...){
+parameters_selection.lm <- function(model, ...) {
   junk <- capture.output(best <- step(model, ...))
 
   parameters <- names(best$coefficients)
@@ -57,7 +55,7 @@ parameters_selection.lm <- function(model, ...){
 
 #' @rdname parameters_selection
 #' @export
-parameters_selection.merMod <- function(model, ...){
+parameters_selection.merMod <- function(model, ...) {
   if (!requireNamespace("cAIC4", quietly = TRUE)) {
     stop("Package `cAIC4` required. Please install it by running `install.packages(cAIC4)`.", call. = FALSE)
   }
@@ -81,16 +79,16 @@ parameters_selection.merMod <- function(model, ...){
 #' @param cross_validation Select with cross-validation.
 #' @rdname parameters_selection
 #' @export
-parameters_selection.stanreg <- function(model, method=NULL, cross_validation = FALSE, ...){
+parameters_selection.stanreg <- function(model, method = NULL, cross_validation = FALSE, ...) {
   if (!requireNamespace("projpred", quietly = TRUE)) {
     stop("Package `projpred` required. Please install it by running `install.packages(projpred)`.", call. = FALSE)
   }
 
-  if(cross_validation){
+  if (cross_validation) {
     message("Cross-validating best parameters...")
-    junk <- capture.output(selection <- projpred::cv_varsel(model, method=method), ...)
-  } else{
-    selection <- projpred::varsel(model, method=method, ...)
+    junk <- capture.output(selection <- projpred::cv_varsel(model, method = method), ...)
+  } else {
+    selection <- projpred::varsel(model, method = method, ...)
   }
 
   # Visualise
@@ -110,23 +108,23 @@ parameters_selection.stanreg <- function(model, method=NULL, cross_validation = 
 
 
 #' @keywords internal
-.reconstruct_formula <- function(parameters){
+.reconstruct_formula <- function(parameters) {
 
   # Clean
-  if(tail(parameters, 1) == "sigma"){
-    parameters <- parameters[1:length(parameters)-1]
+  if (tail(parameters, 1) == "sigma") {
+    parameters <- parameters[1:length(parameters) - 1]
   }
-  if(parameters[1] == "(Intercept)"){
+  if (parameters[1] == "(Intercept)") {
     parameters <- parameters[2:length(parameters)]
   }
 
   # Detect interactions
   interactions <- parameters[grepl(":", parameters)]
-  if(length(interactions) > 0){
-    for(interaction in interactions){
+  if (length(interactions) > 0) {
+    for (interaction in interactions) {
       terms <- unlist(strsplit(interaction, ":", fixed = TRUE))
-      if(length(terms) == 2){
-        if(all(terms %in% parameters)){
+      if (length(terms) == 2) {
+        if (all(terms %in% parameters)) {
           # replace interactions components by interactions
           parameters <- parameters[!parameters %in% c(terms, interaction)]
           parameters <- c(parameters, paste0(terms, collapse = " * "))

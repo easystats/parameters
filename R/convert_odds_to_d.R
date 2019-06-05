@@ -34,9 +34,9 @@ convert_odds_to_d <- odds_to_d
 #' @rdname odds_to_d
 #' @export
 d_to_odds <- function(d, log = FALSE) {
-  if(log == TRUE){
+  if (log == TRUE) {
     d * pi / sqrt(3)
-  } else{
+  } else {
     exp(d * pi / sqrt(3))
   }
 }

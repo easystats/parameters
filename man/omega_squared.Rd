@@ -28,6 +28,4 @@ omega_squared(model)
 
 # model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 # omega_squared(model)
-
-
 }

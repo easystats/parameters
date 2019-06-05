@@ -25,7 +25,7 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
   if (method == "wald") {
     out <- ci_wald(x)
 
-  # Bootstrapped CIs
+    # Bootstrapped CIs
   } else if (method == "boot") {
     if (!requireNamespace("lme4", quietly = TRUE)) {
       stop("Package `lme4` required for bootstrapped approximation of confidence intervals. Please install it.", call. = FALSE)

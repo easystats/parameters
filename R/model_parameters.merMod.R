@@ -40,13 +40,12 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
 #' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method = "wald", ...) {
-
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
   parameters$Parameter <- row.names(parameters)
 
   # CI
   col_order <- parameters$Parameter
-  parameters <- merge(parameters, ci(model, ci = ci, method = ci_method), by="Parameter")
+  parameters <- merge(parameters, ci(model, ci = ci, method = ci_method), by = "Parameter")
   parameters <- parameters[match(col_order, parameters$Parameter), ]
 
   # p value
@@ -56,12 +55,12 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
     if (insight::model_info(model)$is_linear) {
       if (p_method == "kenward") {
         parameters$DoF <- dof_kenward(model)
-        parameters <- merge(parameters, p_value(model, method = "kenward", dof = parameters$DoF), by="Parameter")
+        parameters <- merge(parameters, p_value(model, method = "kenward", dof = parameters$DoF), by = "Parameter")
       } else {
-        parameters <- merge(parameters, p_value(model, method = p_method), by="Parameter")
+        parameters <- merge(parameters, p_value(model, method = p_method), by = "Parameter")
       }
     } else {
-      parameters <- merge(parameters, p_value(model), by="Parameter")
+      parameters <- merge(parameters, p_value(model), by = "Parameter")
     }
   }
 

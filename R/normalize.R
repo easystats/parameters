@@ -50,7 +50,7 @@ normalize.numeric <- function(x, verbose = TRUE, ...) {
     } else {
       name <- names(x)
     }
-    if (verbose){
+    if (verbose) {
       warning(paste0("Variable `", name, "` contains only two different values. Consider converting it to a factor."))
     }
   }

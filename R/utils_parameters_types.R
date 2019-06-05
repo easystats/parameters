@@ -23,7 +23,6 @@
 
 #' @keywords internal
 .parameters_types_table <- function(param_names, param_values, data) {
-
   params_table <- data.frame(
     Parameter = param_names,
     Value = param_values,
@@ -33,11 +32,11 @@
 
   type_list <- c()
   subparam_list <- c()
-  for(i in types){
-    if(length(i) == 1){
+  for (i in types) {
+    if (length(i) == 1) {
       type_list <- c(type_list, i[[1]])
       subparam_list <- c(subparam_list, NA)
-    } else{
+    } else {
       type_list <- c(type_list, i[[1]])
       subparam_list <- c(subparam_list, i[[2]])
     }

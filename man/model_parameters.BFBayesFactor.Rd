@@ -41,5 +41,4 @@ bf <- ttestBF(x = rnorm(100, 1, 1))
 model_parameters(bf)
 }
 
-
 }

@@ -13,7 +13,7 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
-  } else{
+  } else {
     parameters <- .extract_parameters_glm(model, ci = ci)
   }
 
@@ -45,7 +45,7 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
 
   # CI
   col_order <- parameters$Parameter
-  parameters <- merge(parameters, ci(model, ci = ci), by="Parameter")
+  parameters <- merge(parameters, ci(model, ci = ci), by = "Parameter")
   parameters <- parameters[match(col_order, parameters$Parameter), ]
 
   parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "DoF_residual", "p")]

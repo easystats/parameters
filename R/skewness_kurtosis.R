@@ -29,7 +29,6 @@
 #' @examples
 #' skewness(rnorm(1000))
 #' kurtosis(rnorm(1000))
-#'
 #' @export
 skewness <- function(x, na.rm = TRUE, ...) {
   UseMethod("skewness")

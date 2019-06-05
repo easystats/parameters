@@ -8,7 +8,7 @@ test_that("model_parameters.lm", {
   params <- model_parameters(model, standardize = "refit")
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 9))
 
-  params <- model_parameters(model, dispersion=TRUE, bootstrap = TRUE, n = 500)
+  params <- model_parameters(model, dispersion = TRUE, bootstrap = TRUE, n = 500)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 7))
 
   model <- insight::download_model("lm_2")

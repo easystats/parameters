@@ -19,8 +19,6 @@
 #'
 #' # model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 #' # omega_squared(model)
-#'
-#'
 #' @export
 omega_squared <- function(model, partial = TRUE) {
   UseMethod("omega_squared")
@@ -45,7 +43,7 @@ omega_squared.anova <- omega_squared.aov
   params <- .extract_parameters_anova(model)
   values <- .values_aov(params)
 
-  if (!"Residuals" %in% params$Parameter){
+  if (!"Residuals" %in% params$Parameter) {
     stop("No residuals data found. Omega squared can only be computed for simple `aov` models.")
   }
 

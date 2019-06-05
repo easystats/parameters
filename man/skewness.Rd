@@ -45,5 +45,4 @@ tails (\cite{https://en.wikipedia.org/wiki/Kurtosis}).
 \examples{
 skewness(rnorm(1000))
 kurtosis(rnorm(1000))
-
 }
