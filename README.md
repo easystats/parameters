@@ -109,10 +109,10 @@ model <- aov(Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model)
 ```
 
-| Parameter | Sum\_Squares | DoF | Mean\_Square | F |   p | Omega\_Squared\_partial |
-| :-------- | -----------: | --: | -----------: | -: | --: | ----------------------: |
-| Sepal.Big |            1 |   1 |          1.1 | 2 | 0.2 |                       0 |
-| Residuals |          101 | 148 |          0.7 |   |     |                         |
+| Parameter | Sum\_Squares | DoF | Mean\_Square | F |   p |
+| :-------- | -----------: | --: | -----------: | -: | --: |
+| Sepal.Big |            1 |   1 |          1.1 | 2 | 0.2 |
+| Residuals |          101 | 148 |          0.7 |   |     |
 
 #### Repeated measures
 
@@ -121,12 +121,12 @@ model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
 ```
 
-| Group   | Parameter | Sum\_Squares | DoF | Mean\_Square |    F |   p | Omega\_Squared\_partial |
-| :------ | :-------- | -----------: | --: | -----------: | ---: | --: | ----------------------: |
-| Species | Sepal.Big |           28 |   1 |         28.3 |  0.8 | 0.5 |                       0 |
-| Species | Residuals |           35 |   1 |         34.9 |      |     |                         |
-| Within  | Sepal.Big |            5 |   1 |          4.7 | 20.2 | 0.0 |                       0 |
-| Within  | Residuals |           34 | 146 |          0.2 |      |     |                         |
+| Group   | Parameter | Sum\_Squares | DoF | Mean\_Square |    F |   p |
+| :------ | :-------- | -----------: | --: | -----------: | ---: | --: |
+| Species | Sepal.Big |           28 |   1 |         28.3 |  0.8 | 0.5 |
+| Species | Residuals |           35 |   1 |         34.9 |      |     |
+| Within  | Sepal.Big |            5 |   1 |          4.7 | 20.2 | 0.0 |
+| Within  | Residuals |           34 | 146 |          0.2 |      |     |
 
 ``` r
 library(lme4)
@@ -145,24 +145,25 @@ model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 model_parameters(model, standardize = "refit")
 ```
 
-| Parameter   | beta | SE | CI\_low | CI\_high |   z | DoF\_residual |   p | Std\_beta |
-| :---------- | ---: | -: | ------: | -------: | --: | ------------: | --: | --------: |
-| (Intercept) |   11 |  4 |     4.8 |       23 |   2 |            29 | 0.0 |     \-0.8 |
-| cyl         |  \-3 |  1 |   \-6.9 |      \-1 | \-2 |            29 | 0.0 |       2.1 |
-| wt          |    2 |  2 |   \-0.5 |        6 |   1 |            29 | 0.2 |     \-5.2 |
+| Parameter   | Coefficient | SE | CI\_low | CI\_high |   z | DoF\_residual |   p | Std\_Coefficient |
+| :---------- | ----------: | -: | ------: | -------: | --: | ------------: | --: | ---------------: |
+| (Intercept) |          11 |  4 |     4.8 |       23 |   2 |            29 | 0.0 |            \-0.8 |
+| wt          |           2 |  2 |   \-0.5 |        6 |   1 |            29 | 0.2 |              2.1 |
+| cyl         |         \-3 |  1 |   \-6.9 |      \-1 | \-2 |            29 | 0.0 |            \-5.2 |
 
 ### Bootstrapped models
 
 ``` r
-model <- lm(mpg ~ wt + cyl, data = mtcars)
+model <- lm(mpg ~ drat * cyl, data = mtcars)
 model_parameters(model, bootstrap = TRUE)
 ```
 
-| Parameter   | Median | CI\_low | CI\_high |  pd | ROPE\_Percentage |
-| :---------- | -----: | ------: | -------: | --: | ---------------: |
-| (Intercept) |     40 |      35 |     43.5 | 100 |                0 |
-| cyl         |    \-2 |     \-2 |    \-0.7 | 100 |                0 |
-| wt          |    \-3 |     \-5 |    \-1.8 | 100 |                0 |
+|   | Parameter   | Coefficient | CI\_low | CI\_high |   p |
+| - | :---------- | ----------: | ------: | -------: | --: |
+| 1 | (Intercept) |         0.9 |  \-43.7 |     37.5 | 0.9 |
+| 3 | drat        |         9.3 |   \-0.5 |     20.9 | 0.1 |
+| 2 | cyl         |         2.0 |   \-3.4 |      8.3 | 0.4 |
+| 4 | drat:cyl    |       \-1.2 |   \-3.0 |      0.2 | 0.1 |
 
 ### Mixed models
 
@@ -173,10 +174,10 @@ model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 model_parameters(model, standardize = "refit")
 ```
 
-| Parameter    | beta |  SE | CI\_low | CI\_high | t | p | Std\_beta |
-| :----------- | ---: | --: | ------: | -------: | -: | -: | --------: |
-| (Intercept)  |  2.0 | 0.6 |   \-1.9 |      5.9 | 4 | 0 |         0 |
-| Petal.Length |  0.3 | 0.1 |   \-0.3 |      0.8 | 5 | 0 |         1 |
+| Parameter    | Coefficient |  SE | CI\_low | CI\_high | t | p | Std\_Coefficient |
+| :----------- | ----------: | --: | ------: | -------: | -: | -: | ---------------: |
+| (Intercept)  |         2.0 | 0.6 |   \-1.9 |      5.9 | 4 | 0 |                0 |
+| Petal.Length |         0.3 | 0.1 |   \-0.3 |      0.8 | 5 | 0 |                1 |
 
 ### Bayesian models
 
@@ -187,11 +188,42 @@ model <- stan_glm(mpg ~ wt + cyl, data = mtcars)
 model_parameters(model)
 ```
 
-| Parameter   | Median | CI\_low | CI\_high |  pd | ROPE\_Percentage |  ESS | Rhat | Prior\_Distribution | Prior\_Location | Prior\_Scale |
-| :---------- | -----: | ------: | -------: | --: | ---------------: | ---: | ---: | :------------------ | --------------: | -----------: |
-| (Intercept) |     40 |      37 |     42.9 | 100 |                0 | 5250 |    1 | normal              |               0 |           60 |
-| cyl         |    \-2 |     \-2 |    \-0.8 | 100 |                2 | 1997 |    1 | normal              |               0 |            8 |
-| wt          |    \-3 |     \-4 |    \-1.8 | 100 |                0 | 1963 |    1 | normal              |               0 |           15 |
+|   | Parameter   | Median | CI\_low | CI\_high |  pd | ROPE\_Percentage |  ESS | Rhat | Prior\_Distribution | Prior\_Location | Prior\_Scale |
+| - | :---------- | -----: | ------: | -------: | --: | ---------------: | ---: | ---: | :------------------ | --------------: | -----------: |
+| 1 | (Intercept) |     40 |      37 |     42.9 | 100 |                0 | 5250 |    1 | normal              |               0 |           60 |
+| 3 | wt          |    \-3 |     \-4 |    \-1.8 | 100 |                0 | 1963 |    1 | normal              |               0 |           15 |
+| 2 | cyl         |    \-2 |     \-2 |    \-0.8 | 100 |                2 | 1997 |    1 | normal              |               0 |            8 |
+
+## Best model selection and parameters reduction
+
+### General Linear Models (GLM)
+
+``` r
+model <- lm(disp ~ ., data = mtcars)
+parameters_selection(model)
+> [1] "cyl + hp + wt + qsec + carb"
+```
+
+### Mixed models
+
+``` r
+library(lme4)
+
+model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1|Species), data = iris)
+parameters_selection(model)
+> [1] "Petal.Length + Sepal.Length:Petal.Length + Petal.Width:Petal.Length + Sepal.Length:Petal.Width:Petal.Length + Sepal.Length * Petal.Width"
+```
+
+### Bayesian models
+
+``` r
+library(rstanarm)
+
+model <- stan_glm(mpg ~ ., data = mtcars)
+parameters_selection(model)
+```
+
+    > [1] "wt + cyl + hp + am + qsec + disp"
 
 ## Miscellaneous
 
@@ -200,10 +232,8 @@ model_parameters(model)
 ``` r
 x <- rnorm(300)
 describe_distribution(x, centrality = "median")
->     Type Type_Confidence Median MAD Min Max Skewness
-> 1 normal              60  -0.06   1  -3   3     0.03
->   Kurtosis n_Obs n_Missing
-> 1        3   300         0
+>   Median MAD Min Max Skewness Kurtosis n_Obs n_Missing
+> 1   0.04   1  -3   3    -0.07     -0.1   300         0
 ```
 
 ### Standardization and normalization

@@ -41,7 +41,7 @@
   
 <meta property="og:title" content="Model bootstrapping — model_bootstrap" />
 
-<meta property="og:description" content="Bootstrap the model n times to return a data.frame of estimates." />
+<meta property="og:description" content="Bootstrap a statistical model n times to return a data.frame of estimates." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -127,11 +127,11 @@
 
     <div class="ref-description">
     
-    <p>Bootstrap the model n times to return a data.frame of estimates.</p>
+    <p>Bootstrap a statistical model n times to return a data.frame of estimates.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>model_bootstrap</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>model_bootstrap</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,7 +145,7 @@
       <td><p>The number of bootstrap replicates.</p></td>
     </tr>
     <tr>
-      <th>silent</th>
+      <th>verbose</th>
       <td><p>Hide possible refit messages.</p></td>
     </tr>
     <tr>

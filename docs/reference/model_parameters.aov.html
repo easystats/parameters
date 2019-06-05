@@ -132,13 +132,13 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for aov</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='no'>...</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for anova</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='no'>...</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for aovlist</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,30 +163,21 @@
 <span class='no'>df</span>$<span class='no'>Sepal.Big</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>df</span>$<span class='no'>Sepal.Width</span> <span class='kw'>&gt;=</span> <span class='fl'>3</span>, <span class='st'>"Yes"</span>, <span class='st'>"No"</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/aov'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;   Parameter Sum_Squares DoF Mean_Square        F         p
-#&gt; 1 Sepal.Big    1.098271   1   1.0982711 1.608232 0.2067318
-#&gt; 2 Residuals  101.070062 148   0.6829058       NA        NA
-#&gt;   Omega_Squared_partial
-#&gt; 1           0.004038505
-#&gt; 2                    NA</div><div class='input'>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>)</div><div class='output co'>#&gt;   Parameter Sum_Squares DoF Mean_Square        F         p Omega_Sq_partial
+#&gt; 1 Sepal.Big    1.098271   1   1.0982711 1.608232 0.2067318      0.004038505
+#&gt; 2 Residuals  101.070062 148   0.6829058       NA        NA               NA</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/anova'>anova</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>))
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;   Parameter Sum_Squares DoF Mean_Square        F         p
 #&gt; 1 Sepal.Big    1.098271   1   1.0982711 1.608232 0.2067318
-#&gt; 2 Residuals  101.070062 148   0.6829058       NA        NA
-#&gt;   Omega_Squared_partial
-#&gt; 1           0.004038505
-#&gt; 2                    NA</div><div class='input'>
+#&gt; 2 Residuals  101.070062 148   0.6829058       NA        NA</div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>)</div><div class='output co'>#&gt;   Parameter Sum_Squares DoF Mean_Square        F         p Omega_Sq_partial
+#&gt; 1 Sepal.Big    1.098271   1   1.0982711 1.608232 0.2067318      0.004038505
+#&gt; 2 Residuals  101.070062 148   0.6829058       NA        NA               NA</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/aov'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/aov'>Error</a></span>(<span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;     Group Parameter Sum_Squares DoF Mean_Square          F            p
 #&gt; 1 Species Sepal.Big   28.271139   1  28.2711386  0.8091109 5.336492e-01
 #&gt; 2 Species Residuals   34.940995   1  34.9409947         NA           NA
 #&gt; 3  Within Sepal.Big    4.742252   1   4.7422520 20.2364486 1.386674e-05
-#&gt; 4  Within Residuals   34.213948 146   0.2343421         NA           NA
-#&gt;   Omega_Squared_partial
-#&gt; 1          -0.001274216
-#&gt; 2                    NA
-#&gt; 3          -0.005795247
-#&gt; 4                    NA</div><span class='co'># NOT RUN {</span>
+#&gt; 4  Within Residuals   34.213948 146   0.2343421         NA           NA</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/anova'>anova</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>))
