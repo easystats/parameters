@@ -163,20 +163,20 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
     } else {
       sd_y <- stats::mad(response)
     }
-  } else if (info$is_logit) {
-    if (insight::model_info(model)$is_bayesian) {
-      logit_y <- rstanarm::posterior_predict(model, ...)
-    } else{
-      logit_y <- stats::predict(model, ...)
-    }
-    r <- stats::cor(response, odds_to_probs(logit_y, log = TRUE))
-    if (robust == FALSE) {
-      sd_y <- stats::sd(logit_y) * r
-    } else {
-      sd_y <- stats::mad(logit_y) * r
-    }
+  # } else if (info$is_logit) {
+  #   if (insight::model_info(model)$is_bayesian) {
+  #     logit_y <- rstanarm::posterior_predict(model, ...)
+  #   } else{
+  #     logit_y <- as.numeric(stats::predict(model, ...))
+  #   }
+  #   r <- stats::cor(as.numeric(response), odds_to_probs(logit_y, log = TRUE))
+  #   if (robust == FALSE) {
+  #     sd_y <- stats::sd(logit_y) * r
+  #   } else {
+  #     sd_y <- stats::mad(logit_y) * r
+  #   }
   } else{
-    stop(paste0("Standardization method ", method, " is not available for this kind of model."))
+    sd_y <- 1
   }
   sd_y
 }
@@ -185,7 +185,9 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
 #' @keywords internal
 .variance_predictor <- function(type, variable, data, robust = FALSE, method = "full",  ...){
-  if (type == "numeric") {
+  if (type == "intercept") {
+    sd_x <- 0
+  } else if (type == "numeric") {
     if (robust == FALSE) {
       sd_x <- stats::sd(data[, variable])
     } else {
