@@ -10,7 +10,7 @@ describe_distribution(x, centrality = "mean", dispersion = TRUE,
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{centrality}{The point-estimates (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
+\item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 

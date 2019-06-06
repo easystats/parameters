@@ -11,6 +11,8 @@
 #' @examples
 #' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' p_value(model)
+#'
+#' @importFrom bayestestR p_map
 #' @importFrom stats coef vcov pnorm
 #' @export
 p_value <- function(model, ...) {
@@ -51,6 +53,26 @@ p_value.anova <- p_value.aov
 
 #' @export
 p_value.aovlist <- p_value.aov
+
+
+
+#' @export
+p_value.brmsfit <- function(model, ...) {
+  p <- bayestestR::p_map(model)
+  colnames(p)[2] <- "p"
+  class(p) <- "data.frame"
+  p
+}
+
+
+
+#' @export
+p_value.BFBayesFactor <- function(model, ...) {
+  p <- bayestestR::p_map(model)
+  colnames(p)[2] <- "p"
+  class(p) <- "data.frame"
+  p
+}
 
 
 
@@ -146,6 +168,16 @@ p_value.polr <- function(model, ...) {
     p = as.vector(p),
     stringsAsFactors = FALSE
   )
+}
+
+
+
+#' @export
+p_value.stanreg <- function(model, ...) {
+  p <- bayestestR::p_map(model)
+  colnames(p)[2] <- "p"
+  class(p) <- "data.frame"
+  p
 }
 
 

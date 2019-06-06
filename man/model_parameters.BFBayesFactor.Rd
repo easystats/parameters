@@ -12,20 +12,31 @@
 \arguments{
 \item{model}{Object of class \code{BFBayesFactor}.}
 
-\item{centrality}{The point-estimates (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
+\item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
 \item{ci}{Value or vector of probability of the interval (between 0 and 1)
 to be estimated. Named Credible Interval (CI) for consistency.}
 
-\item{ci_method}{The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).}
+\item{ci_method}{The type of index used for Credible Interval. Can be
+\code{"hdi"} (default, see \code{\link{hdi}}) or \code{"quantile"}
+(see \code{\link{ci}}).}
 
-\item{test}{The indices of effect existence to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".}
+\item{test}{The indices of effect existence to compute. Character (vector) or
+list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
+\code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
+\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.#'
+For each "test", the corresponding \pkg{bayestestR} function is called
+(e.g. \code{\link{rope}} or \code{\link{p_direction}}) and its results
+included in the summary output.}
 
-\item{rope_range}{ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
+\item{rope_range}{ROPE's lower and higher bounds. Should be a list of two
+values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"},
+the bounds are set to \code{x +- 0.1*SD(response)}.}
 
-\item{rope_ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.}
+\item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
+proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
 
