@@ -15,21 +15,17 @@ omega_squared(model, partial = TRUE)
 Computation of (Partial) Omega Squared for ANOVAs.
 }
 \examples{
-\dontrun{
+library(parameters)
+
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
 omega_squared(model)
 
-model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
+model <- anova(lm(Sepal.Length ~ Sepal.Big * Species, data = df))
 omega_squared(model)
 
-model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
-omega_squared(model)
-
-model <- anova(lme4::lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
-omega_squared(model)
-}
-
+# model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
+# omega_squared(model)
 }

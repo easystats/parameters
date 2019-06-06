@@ -6,9 +6,9 @@ bayestestR::ci
 
 
 
-#' @title Confidence Intervals
+#' Confidence Interval (CI)
 #'
-#' @description Compute confidence intervals.
+#' Compute confidence intervals for frequentist models.
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
@@ -25,7 +25,7 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
   if (method == "wald") {
     out <- ci_wald(x)
 
-  # Bootstrapped CIs
+    # Bootstrapped CIs
   } else if (method == "boot") {
     if (!requireNamespace("lme4", quietly = TRUE)) {
       stop("Package `lme4` required for bootstrapped approximation of confidence intervals. Please install it.", call. = FALSE)
@@ -46,7 +46,7 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
 }
 
 
-
+#' @rdname ci.merMod
 #' @method ci glm
 #' @importFrom stats confint
 #' @export

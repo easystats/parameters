@@ -8,8 +8,8 @@ test_that("model_parameters.lm", {
   params <- model_parameters(model, standardize = "refit")
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 9))
 
-  params <- model_parameters(model, standardize = "refit", centrality = "all", test = "all", dispersion=TRUE, bootstrap = TRUE, n = 500)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 13))
+  params <- model_parameters(model, dispersion = TRUE, bootstrap = TRUE, n = 500)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 7))
 
   model <- insight::download_model("lm_2")
 
@@ -38,6 +38,6 @@ test_that("model_parameters.glm - binomial", {
   testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 9))
 
 
-  params <- suppressWarnings(model_parameters(model, standardize = "refit", centrality = "all", test = "all", dispersion=TRUE, bootstrap = TRUE, n = 500))
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 13))
+  params <- suppressWarnings(model_parameters(model, standardize = "refit", bootstrap = TRUE, n = 500))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 6))
 })

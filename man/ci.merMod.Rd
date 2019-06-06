@@ -2,9 +2,12 @@
 % Please edit documentation in R/ci.R
 \name{ci.merMod}
 \alias{ci.merMod}
-\title{Confidence Intervals}
+\alias{ci.glm}
+\title{Confidence Interval (CI)}
 \usage{
 \method{ci}{merMod}(x, ci = 0.95, method = c("wald", "boot"), ...)
+
+\method{ci}{glm}(x, ci = 0.95, ...)
 }
 \arguments{
 \item{x}{A statistical model.}
@@ -16,5 +19,5 @@
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Compute confidence intervals.
+Compute confidence intervals for frequentist models.
 }

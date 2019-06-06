@@ -22,19 +22,22 @@ Depends:
 	utils
 Imports:
 	insight (>= 0.3.0),
-	bayestestR (>= 0.1.6),
+	bayestestR (>= 0.2.0),
 	boot
 Suggests:
 	BayesFactor,
 	brms,
+	cAIC4,
 	caret,
 	covr,
 	dplyr,
 	knitr,
 	lme4,
+	logspline,
 	MASS,
 	pbkrtest,
 	psych,
+	projpred,
 	randomForest,
 	rmarkdown,
 	rstanarm,

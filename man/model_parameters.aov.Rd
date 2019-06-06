@@ -6,11 +6,11 @@
 \alias{model_parameters.aovlist}
 \title{ANOVAs Parameters}
 \usage{
-\method{model_parameters}{aov}(model, omega_squared = "partial", ...)
+\method{model_parameters}{aov}(model, omega_squared = NULL, ...)
 
-\method{model_parameters}{anova}(model, omega_squared = "partial", ...)
+\method{model_parameters}{anova}(model, omega_squared = NULL, ...)
 
-\method{model_parameters}{aovlist}(model, omega_squared = "partial", ...)
+\method{model_parameters}{aovlist}(model, omega_squared = NULL, ...)
 }
 \arguments{
 \item{model}{Object of class \link{aov}, \link{anova} or \code{aovlist}.}
@@ -27,10 +27,11 @@ df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model)
+model_parameters(model, omega_squared = "partial")
 
 model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 model_parameters(model)
+model_parameters(model, omega_squared = "partial")
 
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)

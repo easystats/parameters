@@ -147,11 +147,11 @@
     </tr>
     <tr>
       <th>centrality</th>
-      <td><p>The <a href='{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)}'> (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".</a></p></td>
+      <td><p>The point-estimates (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".</p></td>
     </tr>
     <tr>
       <th>dispersion</th>
-      <td><p>if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></td>
+      <td><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -163,11 +163,11 @@
     </tr>
     <tr>
       <th>test</th>
-      <td><p>The <a href='{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence}'> to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".</a></p></td>
+      <td><p>The indices of effect existence to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".</p></td>
     </tr>
     <tr>
       <th>rope_range</th>
-      <td><p><a href='{https://easystats.github.io/bayestestR/rope}{ROPE's}'> lower and higher bounds. Should be a list of two values (e.g., </a><code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
+      <td><p>ROPE's lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
     </tr>
     <tr>
       <th>rope_ci</th>
@@ -175,7 +175,7 @@
     </tr>
     <tr>
       <th>bf_prior</th>
-      <td><p>Distribution representing a prior for the computation of <a href='{https://easystats.github.io/bayestestR/bayesfactor_savagedickey}{Bayes factors}'>. Used if the input is a posterior, otherwise (in the case of models) ignored.</a></p></td>
+      <td><p>Distribution representing a prior for the computation of Bayes factors. Used if the input is a posterior, otherwise (in the case of models) ignored.</p></td>
     </tr>
     <tr>
       <th>diagnostic</th>
@@ -187,11 +187,11 @@
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <a href='standardize_parameters.html'>standardize_parameters</a>).</p></td>
+      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <a href='parameters_standardize.html'>parameters_standardize</a>).</p></td>
     </tr>
     <tr>
       <th>standardize_robust</th>
-      <td><p>Robust standardization. See <a href='standardize_parameters.html'>standardize_parameters</a>.</p></td>
+      <td><p>Robust standardization. See <a href='parameters_standardize.html'>parameters_standardize</a>.</p></td>
     </tr>
     <tr>
       <th>iterations</th>

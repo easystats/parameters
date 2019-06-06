@@ -1,6 +1,6 @@
 #' p-values using Kenward-Roger approximation
 #'
-#' An approximate F-test based on the Kenward-Roger (1997) approach .
+#' An approximate F-test based on the Kenward-Roger (1997) approach.
 #'
 #' @param model A statistical model.
 #' @param dof Degrees of Freedom.

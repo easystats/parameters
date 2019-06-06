@@ -125,10 +125,10 @@ knitr::kable(model_parameters(model), digits=1)
 
 ```{r, warning=FALSE, message=FALSE, results='hide'}
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model)
+model_parameters(model, omega_squared = TRUE)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(model_parameters(model), digits=1)
+knitr::kable(model_parameters(model, omega_squared = TRUE), digits=1)
 ```
 
 #### Repeated measures
@@ -165,11 +165,11 @@ knitr::kable(model_parameters(model, standardize = "refit"), digits=1)
 ### Bootstrapped models
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
-model <- lm(mpg ~ wt + cyl, data = mtcars)
+model <- lm(mpg ~ drat * cyl, data = mtcars)
 model_parameters(model, bootstrap = TRUE)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-model <- lm(mpg ~ wt + cyl, data = mtcars)
+model <- lm(mpg ~ drat * cyl, data = mtcars)
 knitr::kable(model_parameters(model, standardize = FALSE, bootstrap = TRUE), digits=1)
 ```
 
@@ -206,8 +206,41 @@ knitr::kable(model_parameters(model), digits=1)
 ```
 
 
+## Best model selection and parameters reduction
+
+### General Linear Models (GLM)
+
+```{r, warning=FALSE, message=FALSE}
+model <- lm(disp ~ ., data = mtcars)
+parameters_selection(model)
+```
+
+### Mixed models
+
+```{r, warning=FALSE, message=FALSE}
+library(lme4)
+
+model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1|Species), data = iris)
+parameters_selection(model)
+```
+
+
+### Bayesian models
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+library(rstanarm)
+
+model <- stan_glm(mpg ~ ., data = mtcars)
+parameters_selection(model)
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+text <- capture.output(model <- stan_glm(mpg ~ ., data = mtcars))
+parameters_selection(model)
+```
+
 
 ## Miscellaneous
+
 
 
 ### Describe a Distribution

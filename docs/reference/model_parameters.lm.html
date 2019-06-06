@@ -149,11 +149,11 @@
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <a href='standardize_parameters.html'>standardize_parameters</a>).</p></td>
+      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <a href='parameters_standardize.html'>parameters_standardize</a>).</p></td>
     </tr>
     <tr>
       <th>standardize_robust</th>
-      <td><p>Robust standardization. See <a href='standardize_parameters.html'>standardize_parameters</a>.</p></td>
+      <td><p>Robust standardization. See <a href='parameters_standardize.html'>parameters_standardize</a>.</p></td>
     </tr>
     <tr>
       <th>bootstrap</th>
@@ -172,14 +172,18 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Please set the `standardize` method explicitly. Set to "refit" by default.</span></div><div class='output co'>#&gt;     Parameter      beta        SE    CI_low    CI_high         t DoF_residual
-#&gt; 1 (Intercept) 39.686261 1.7149840 36.178725 43.1937976 23.140893           29
-#&gt; 2         cyl -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972           29
-#&gt; 3          wt -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808           29
-#&gt;              p      Std_beta
-#&gt; 1 3.043182e-20  4.897987e-17
-#&gt; 2 1.064282e-03 -5.180450e-01
-#&gt; 3 2.220200e-04 -4.467939e-01</div></pre>
+
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>)</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high         t DoF_residual
+#&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893           29
+#&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808           29
+#&gt; 3         cyl   -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972           29
+#&gt;              p Std_Coefficient
+#&gt; 1 3.043182e-20    4.897987e-17
+#&gt; 2 2.220200e-04   -5.180450e-01
+#&gt; 3 1.064282e-03   -4.467939e-01</div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;     Parameter Coefficient    CI_low    CI_high           p Std_Coefficient
+#&gt; 1 (Intercept)   39.685307 34.893537 44.1489425 0.000000000    4.897987e-17
+#&gt; 3          wt   -3.221924 -5.063589 -1.9159490 0.000000000   -5.180450e-01
+#&gt; 2         cyl   -1.463379 -2.162746 -0.6885157 0.001998002   -4.467939e-01</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

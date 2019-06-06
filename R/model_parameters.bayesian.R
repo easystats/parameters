@@ -12,19 +12,19 @@
   }
 
   if (!is.null(standardize) && !is.logical(standardize)) {
-    std_parameters <- standardize_parameters(model, method = standardize, robust = standardize_robust, centrality = tolower(centrality), ...)
+    std_parameters <- parameters_standardize(model, method = standardize, robust = standardize_robust, centrality = tolower(centrality), ...)
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
   }
 
 
   # Remove unecessary columns
-  if("CI" %in% names(parameters) && length(unique(parameters$CI)) == 1){
+  if ("CI" %in% names(parameters) && length(unique(parameters$CI)) == 1) {
     parameters$CI <- NULL
   }
-  if("ROPE_CI" %in% names(parameters) && length(unique(parameters$ROPE_CI)) == 1){
+  if ("ROPE_CI" %in% names(parameters) && length(unique(parameters$ROPE_CI)) == 1) {
     parameters$ROPE_CI <- NULL
   }
-  if("ROPE_low" %in% names(parameters)){
+  if ("ROPE_low" %in% names(parameters)) {
     parameters$ROPE_low <- NULL
     parameters$ROPE_high <- NULL
   }
@@ -71,11 +71,11 @@
 #' @examples
 #' \dontrun{
 #' library(rstanarm)
-#' model <- stan_glm(Sepal.Length ~ Species, data=iris)
+#' model <- stan_glm(Sepal.Length ~ Species, data = iris)
 #' model_parameters(model, standardize = "full")
 #'
 #' library(brms)
-#' model <- brm(Sepal.Length ~ Species, data=iris)
+#' model <- brm(Sepal.Length ~ Species, data = iris)
 #' model_parameters(model)
 #' }
 #' @export
@@ -84,4 +84,3 @@ model_parameters.stanreg <- .model_parameters_bayesian
 
 #' @export
 model_parameters.brmsfit <- model_parameters.stanreg
-

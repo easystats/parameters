@@ -13,7 +13,6 @@
 #' model_parameters(bf)
 #' }
 #'
-#'
 #' @export
 model_parameters.BFBayesFactor <- function(model, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, priors = TRUE, ...) {
   if (!requireNamespace("BayesFactor", quietly = TRUE)) {
@@ -26,13 +25,13 @@ model_parameters.BFBayesFactor <- function(model, centrality = "median", dispers
   out$BF <- as.data.frame(bayestestR::bayesfactor_models(model)[-1, ])$BF
 
   # Remove unecessary columns
-  if("CI" %in% names(out) && length(unique(out$CI)) == 1){
+  if ("CI" %in% names(out) && length(unique(out$CI)) == 1) {
     out$CI <- NULL
   }
-  if("ROPE_CI" %in% names(out) && length(unique(out$ROPE_CI)) == 1){
+  if ("ROPE_CI" %in% names(out) && length(unique(out$ROPE_CI)) == 1) {
     out$ROPE_CI <- NULL
   }
-  if("ROPE_low" %in% names(out)){
+  if ("ROPE_low" %in% names(out)) {
     out$ROPE_low <- NULL
     out$ROPE_high <- NULL
   }

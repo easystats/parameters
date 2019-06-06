@@ -27,7 +27,7 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
   }
 
   if (!is.null(standardize) && !is.logical(standardize)) {
-    parameters <- cbind(parameters, standardize_parameters(model, method = standardize, robust = standardize_robust)[2])
+    parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
   parameters
@@ -40,12 +40,13 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
 #' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method = "wald", ...) {
-
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
   parameters$Parameter <- row.names(parameters)
 
   # CI
-  parameters <- merge(parameters, ci(model, ci = ci, method = ci_method), by="Parameter")
+  col_order <- parameters$Parameter
+  parameters <- merge(parameters, ci(model, ci = ci, method = ci_method), by = "Parameter")
+  parameters <- parameters[match(col_order, parameters$Parameter), ]
 
   # p value
   if ("Pr(>|z|)" %in% names(parameters)) {
@@ -54,26 +55,26 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
     if (insight::model_info(model)$is_linear) {
       if (p_method == "kenward") {
         parameters$DoF <- dof_kenward(model)
-        parameters <- merge(parameters, p_value(model, method = "kenward", dof = parameters$DoF), by="Parameter")
+        parameters <- merge(parameters, p_value(model, method = "kenward", dof = parameters$DoF), by = "Parameter")
       } else {
-        parameters <- merge(parameters, p_value(model, method = p_method), by="Parameter")
+        parameters <- merge(parameters, p_value(model, method = p_method), by = "Parameter")
       }
     } else {
-      parameters <- merge(parameters, p_value(model), by="Parameter")
+      parameters <- merge(parameters, p_value(model), by = "Parameter")
     }
   }
 
 
   # Renaming
   names(parameters) <- gsub("Std. Error", "SE", names(parameters))
-  names(parameters) <- gsub("Estimate", "beta", names(parameters))
+  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
   names(parameters) <- gsub("t value", "t", names(parameters))
   names(parameters) <- gsub("z value", "z", names(parameters))
 
   rownames(parameters) <- NULL
 
   # Reorder
-  order <- c("Parameter", "beta", "SE", "CI_low", "CI_high", "t", "z", "DoF", "DoF_residual", "p")
+  order <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "z", "DoF", "DoF_residual", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   parameters

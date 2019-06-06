@@ -13,9 +13,9 @@
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{standardize_parameters}).}
+\item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{parameters_standardize}).}
 
-\item{standardize_robust}{Robust standardization. See \link{standardize_parameters}.}
+\item{standardize_robust}{Robust standardization. See \link{parameters_standardize}.}
 
 \item{bootstrap}{Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.}
 
@@ -28,5 +28,7 @@ Parameters of linear models.
 }
 \examples{
 model <- lm(mpg ~ wt + cyl, data = mtcars)
-model_parameters(model, standardize = TRUE)
+
+model_parameters(model, standardize = "refit")
+model_parameters(model, bootstrap = TRUE)
 }
