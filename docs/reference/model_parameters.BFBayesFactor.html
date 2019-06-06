@@ -146,7 +146,7 @@
     </tr>
     <tr>
       <th>centrality</th>
-      <td><p>The point-estimates (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".</p></td>
+      <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
     </tr>
     <tr>
       <th>dispersion</th>
@@ -159,19 +159,30 @@ to be estimated. Named Credible Interval (CI) for consistency.</p></td>
     </tr>
     <tr>
       <th>ci_method</th>
-      <td><p>The type of index used for Credible Interval. Can be hdi (default) or "quantile" (see <a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a>).</p></td>
+      <td><p>The type of index used for Credible Interval. Can be
+<code>"hdi"</code> (default, see <code>hdi</code>) or <code>"quantile"</code>
+(see <code><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></code>).</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>The indices of effect existence to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".</p></td>
+      <td><p>The indices of effect existence to compute. Character (vector) or
+list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
+<code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
+<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.#'
+For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
+(e.g. <code>rope</code> or <code>p_direction</code>) and its results
+included in the summary output.</p></td>
     </tr>
     <tr>
       <th>rope_range</th>
-      <td><p>ROPE's lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
+      <td><p>ROPE's lower and higher bounds. Should be a list of two
+values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>,
+the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
     </tr>
     <tr>
       <th>rope_ci</th>
-      <td><p>The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.</p></td>
+      <td><p>The Credible Interval (CI) probability, corresponding to the
+proportion of HDI, to use for the percentage in ROPE.</p></td>
     </tr>
     <tr>
       <th>priors</th>
@@ -190,7 +201,6 @@ to be estimated. Named Credible Interval (CI) for consistency.</p></td>
 <span class='no'>bf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>bf</span>)
 <span class='co'># }</span><div class='input'>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

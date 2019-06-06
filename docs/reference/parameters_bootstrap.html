@@ -147,7 +147,7 @@
     </tr>
     <tr>
       <th>centrality</th>
-      <td><p>The point-estimates (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".</p></td>
+      <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -156,11 +156,19 @@ to be estimated. Named Credible Interval (CI) for consistency.</p></td>
     </tr>
     <tr>
       <th>ci_method</th>
-      <td><p>The type of index used for Credible Interval. Can be hdi (default) or "quantile" (see <a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a>).</p></td>
+      <td><p>The type of index used for Credible Interval. Can be
+<code>"hdi"</code> (default, see <code>hdi</code>) or <code>"quantile"</code>
+(see <code><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></code>).</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>The indices of effect existence to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".</p></td>
+      <td><p>The indices of effect existence to compute. Character (vector) or
+list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
+<code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
+<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.#'
+For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
+(e.g. <code>rope</code> or <code>p_direction</code>) and its results
+included in the summary output.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -183,8 +191,7 @@ to be estimated. Named Credible Interval (CI) for consistency.</p></td>
 #&gt; 5              Speciesvirginica   0.5065900 -0.7861730 1.6483223 0.405594406
 #&gt; 2                   Petal.Width   0.9294179  0.2636763 1.9069627 0.001998002
 #&gt; 4 Speciesversicolor:Petal.Width   0.4738309 -0.7142185 1.4490763 0.371628372
-#&gt; 6  Speciesvirginica:Petal.Width  -0.2961914 -1.4154657 0.5770563 0.561438561</div><div class='input'>
-</div></pre>
+#&gt; 6  Speciesvirginica:Petal.Width  -0.2961914 -1.4154657 0.5770563 0.561438561</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
