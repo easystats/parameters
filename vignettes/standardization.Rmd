@@ -1,5 +1,5 @@
 ---
-title: "Standardized Parameters"
+title: "Standardizing Parameters"
 output: 
   github_document:
     toc: true
@@ -11,13 +11,22 @@ output:
     fig_height: 6
 tags: [r, parameters]
 vignette: >
-  %\VignetteIndexEntry{Standardized Parameters}
+  %\VignetteIndexEntry{Standardizing Parameters}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 bibliography: bibliography.bib
 ---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(comment=">")
+options(digits=2)
+
+set.seed(333)
+```
 
 # Introduction
 

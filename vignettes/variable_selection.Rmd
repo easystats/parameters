@@ -1,0 +1,94 @@
+---
+title: "Variable selection"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, parameters, variable selection, feature selection]
+vignette: >
+  %\VignetteIndexEntry{Variable selection}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(comment=">")
+options(digits=2)
+
+set.seed(333)
+```
+
+# Variable Selection
+
+Also known as [**feature selection**](https://en.wikipedia.org/wiki/Feature_selection) in machine learning, the goal of variable selection is to **identify a subset of predictors** to **simplify models**. This can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
+
+There are many different methods. The one that is appropriate for a given problem depends on the model type, the data, the objective and the theorethical rationale.
+
+The `parameters` package implements a helper that will **automatically pick a method deemed appropriate for the provided model**, run the variables selection and return the **optimal formula**, which you can then re-use to update the model.
+
+## Simple linear regression
+
+### Fit a powerful model
+
+If you are familiar with R and the formula interface, you know of the possibility of including a dot (`.`) in the formula, signifying **"all the remaining variables"**. Curiously, few are aware of the possibility of additionaly easily adding **all the interaction terms**. This can be achieved using the `*.*` notation.
+
+Let's try that with the linear regression predicting **Sepal.Length** with the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R.
+
+```{r message=FALSE, warning=FALSE}
+model <- lm(Sepal.Length ~ .*., data=iris)
+summary(model)
+```
+
+***Wow, that's a lot of parameters!***
+
+But still though, look at that **gorgeous R2! 0.882!** *I wish I had that in my research...*
+
+### Too many parameters?
+
+As you might know, having a **model that is too performant is not always a good thing**. For instance, it can be a marker of [**overfitting**](https://en.wikipedia.org/wiki/Overfitting): the model corresponds too closely to a particular set of data, and may therefore fail to predict future observations reliably. In multiple regressions, in can also fall under the [**Freedman's paradox**](https://en.wikipedia.org/wiki/Freedman%27s_paradox): some predictors that have actually no relation to the dependent variable being predicted will be **spuriously found to be statistically significant**.
+
+Let's run a few checks using the [**performance**](https://github.com/easystats/performance) package:
+```{r message=FALSE, warning=FALSE}
+library(performance)
+
+performance::check_normality(model)
+performance::check_heteroscedasticity(model)
+performance::check_autocorrelation(model)
+performance::check_collinearity(model)
+```
+
+The main issue of the model seems to be the high [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity). This suggestst that our model might not be able to give valid results about any individual predictor, nor tell which predictors are redundant with respect to others.
+
+### Parameters selection
+
+Time to do some variables selection. This can be easily done using the `parameters_selection()` function.
+
+
+
+```{r message=FALSE, warning=FALSE}
+library(parameters)
+
+parameters_selection(model)
+```
+
+This gave us a formula containing the best parameters. One way of using that is in a tidy pipeline (using [`%>%`](https://cran.r-project.org/web/packages/magrittr/README.html)), using this output to update a new model.
+
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+
+model <- lm(Sepal.Length ~ .*., data=iris) %>% 
+  parameters_selection()
+# TO BE FIXED
+```
+
+

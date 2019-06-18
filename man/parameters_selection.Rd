@@ -26,7 +26,7 @@ parameters_selection(model, ...)
 \item{cross_validation}{Select with cross-validation.}
 }
 \description{
-Automated selection of the 'best' parameters. For frequentist simple GLMs, it performes an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
+Automated selection of the 'best' parameters. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
 }
 \examples{
 model <- lm(mpg ~ ., data = mtcars)

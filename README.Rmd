@@ -206,7 +206,7 @@ knitr::kable(model_parameters(model), digits=1)
 ```
 
 
-## Best model selection and parameters reduction
+## Best model selection and variables selection
 
 ### General Linear Models (GLM)
 
@@ -247,7 +247,7 @@ parameters_selection(model)
 
 ```{r, warning=FALSE, message=FALSE}
 x <- rnorm(300)
-describe_distribution(x, centrality = "median")
+describe_distribution(x)
 ```
 
 

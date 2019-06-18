@@ -1,6 +1,6 @@
 #' Parameters Selection
 #'
-#' Automated selection of the 'best' parameters. For frequentist simple GLMs, it performes an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
+#' Automated selection of the 'best' parameters. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
 #'
 #' @param model A statistical model.
 #' @param ... Arguments passed to or from other methods.
