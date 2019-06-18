@@ -48,9 +48,9 @@ model <- lm(Sepal.Length ~ .*., data=iris)
 summary(model)
 ```
 
-***Wow, that's a lot of parameters!***
+***Wow, that's a lot of parameters! And almost none of them is significant...***
 
-But still though, look at that **gorgeous R2! 0.882!** *I wish I had that in my research...*
+Which is ***weird***, considering that **gorgeous R2! 0.882!** *I wish I had that in my research...*
 
 ### Too many parameters?
 
@@ -70,25 +70,18 @@ The main issue of the model seems to be the high [multicollinearity](https://en.
 
 ### Parameters selection
 
-Time to do some variables selection. This can be easily done using the `parameters_selection()` function.
-
-
-
-```{r message=FALSE, warning=FALSE}
-library(parameters)
-
-parameters_selection(model)
-```
-
-This gave us a formula containing the best parameters. One way of using that is in a tidy pipeline (using [`%>%`](https://cran.r-project.org/web/packages/magrittr/README.html)), using this output to update a new model.
+Time to do some variables selection. This can be easily done using the `parameters_selection()` function, that will **automatically select the best variables** and update the model accordingly. One way of using that is in a tidy pipeline (using [`%>%`](https://cran.r-project.org/web/packages/magrittr/README.html)), using this output to update a new model.
 
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
 
-model <- lm(Sepal.Length ~ .*., data=iris) %>% 
-  parameters_selection()
-# TO BE FIXED
+lm(Sepal.Length ~ .*., data=iris) %>% 
+  parameters_selection() %>% 
+  summary()
 ```
+
+
+That's still a lot of parameters, but as you can see, but almost all of them are now significant, and the R2 did not change much. 
 
 

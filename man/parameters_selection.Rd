@@ -9,7 +9,8 @@
 \usage{
 parameters_selection(model, ...)
 
-\method{parameters_selection}{lm}(model, ...)
+\method{parameters_selection}{lm}(model, direction = "both",
+  steps = 1000, k = 2, ...)
 
 \method{parameters_selection}{merMod}(model, ...)
 
@@ -21,12 +22,31 @@ parameters_selection(model, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 
+\item{direction}{
+    the mode of stepwise search, can be one of \code{"both"},
+    \code{"backward"}, or \code{"forward"}, with a default of \code{"both"}.
+    If the \code{scope} argument is missing the default for
+    \code{direction} is \code{"backward"}.  Values can be abbreviated.
+  }
+
+\item{steps}{
+    the maximum number of steps to be considered.  The default is 1000
+    (essentially as many as required).  It is typically used to stop the
+    process early.
+  }
+
+\item{k}{
+    the multiple of the number of degrees of freedom used for the penalty.
+    Only \code{k = 2} gives the genuine AIC: \code{k = log(n)} is sometimes
+    referred to as BIC or SBC.
+  }
+
 \item{method}{The method used in the variable selection. Can be NULL (default), "forward" or "L1". See \code{projpred::varsel}.}
 
 \item{cross_validation}{Select with cross-validation.}
 }
 \description{
-Automated selection of the 'best' parameters. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
+This function performs an automated selection of the 'best' parameters, udpating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
 }
 \examples{
 model <- lm(mpg ~ ., data = mtcars)
@@ -48,5 +68,4 @@ parameters_selection(model, cross_validation = TRUE)
 model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars)
 parameters_selection(model, cross_validation = FALSE)
 }
-
 }

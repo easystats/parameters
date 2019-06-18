@@ -1,6 +1,6 @@
 #' Parameters Selection
 #'
-#' Automated selection of the 'best' parameters. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
+#' This function performs an automated selection of the 'best' parameters, udpating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
 #'
 #' @param model A statistical model.
 #' @param ... Arguments passed to or from other methods.
@@ -26,7 +26,6 @@
 #' model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars)
 #' parameters_selection(model, cross_validation = FALSE)
 #' }
-#'
 #' @export
 parameters_selection <- function(model, ...) {
   UseMethod("parameters_selection")
@@ -35,14 +34,18 @@ parameters_selection <- function(model, ...) {
 
 
 #' @rdname parameters_selection
+#' @inheritParams stats::step
 #' @importFrom stats step
 #' @export
-parameters_selection.lm <- function(model, ...) {
-  junk <- capture.output(best <- step(model, ...))
+parameters_selection.lm <- function(model, direction = "both", steps = 1000, k = 2, ...) {
+  junk <- capture.output(best <- step(model,
+                                      trace = 0,
+                                      direction = direction,
+                                      steps = steps,
+                                      k = k,
+                                      ...))
 
-  parameters <- names(best$coefficients)
-  formula <- .reconstruct_formula(parameters)
-  formula
+  best
 }
 
 
@@ -60,12 +63,9 @@ parameters_selection.merMod <- function(model, ...) {
     stop("Package `cAIC4` required. Please install it by running `install.packages(cAIC4)`.", call. = FALSE)
   }
 
-  best <- cAIC4::stepcAIC(model)
-  # TODO: Need to improve reconstruct formula to also account for random effects and all
-  parameters <- insight::find_parameters(best$finalModel, effects = "fixed", flatten = TRUE)
+  best <- cAIC4::stepcAIC(model)$finalModel
 
-  formula <- .reconstruct_formula(parameters)
-  formula
+  best
 }
 
 
@@ -96,10 +96,14 @@ parameters_selection.stanreg <- function(model, method = NULL, cross_validation 
 
   # Extract parameters
   projection <- projpred::project(selection, nv = projpred::suggest_size(selection), ...)
-  parameters <- names(as.data.frame(as.matrix(projection)))
+  parameters <- row.names(projection$beta)
 
-  formula <- .reconstruct_formula(parameters)
-  formula
+  # Reconstruct formula
+  formula <- .reconstruct_formula(parameters, model)
+
+  # Update model
+  junk <- capture.output(best <- update(model, formula = formula, ...))
+  best
 }
 
 
@@ -108,32 +112,33 @@ parameters_selection.stanreg <- function(model, method = NULL, cross_validation 
 
 
 #' @keywords internal
-.reconstruct_formula <- function(parameters) {
+.reconstruct_formula <- function(parameters, model) {
 
-  # Clean
-  if (tail(parameters, 1) == "sigma") {
-    parameters <- parameters[1:length(parameters) - 1]
-  }
-  if (parameters[1] == "(Intercept)") {
-    parameters <- parameters[2:length(parameters)]
-  }
-
-  # Detect interactions
-  interactions <- parameters[grepl(":", parameters)]
-  if (length(interactions) > 0) {
-    for (interaction in interactions) {
-      terms <- unlist(strsplit(interaction, ":", fixed = TRUE))
-      if (length(terms) == 2) {
-        if (all(terms %in% parameters)) {
-          # replace interactions components by interactions
-          parameters <- parameters[!parameters %in% c(terms, interaction)]
-          parameters <- c(parameters, paste0(terms, collapse = " * "))
-        }
-      }
-    }
-  }
+  # # Clean
+  # if (tail(parameters, 1) == "sigma") {
+  #   parameters <- parameters[1:length(parameters) - 1]
+  # }
+  # if (parameters[1] == "(Intercept)") {
+  #   parameters <- parameters[2:length(parameters)]
+  # }
+  #
+  # # Detect interactions
+  # interactions <- parameters[grepl(":", parameters)]
+  # if (length(interactions) > 0) {
+  #   for (interaction in interactions) {
+  #     terms <- unlist(strsplit(interaction, ":", fixed = TRUE))
+  #     if (length(terms) == 2) {
+  #       if (all(terms %in% parameters)) {
+  #         # replace interactions components by interactions
+  #         parameters <- parameters[!parameters %in% c(terms, interaction)]
+  #         parameters <- c(parameters, paste0(terms, collapse = " * "))
+  #       }
+  #     }
+  #   }
+  # }
 
 
   formula <- paste(parameters, collapse = " + ")
+  formula <- paste(insight::find_response(model), "~", formula)
   formula
 }

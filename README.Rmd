@@ -211,8 +211,9 @@ knitr::kable(model_parameters(model), digits=1)
 ### General Linear Models (GLM)
 
 ```{r, warning=FALSE, message=FALSE}
-model <- lm(disp ~ ., data = mtcars)
-parameters_selection(model)
+lm(disp ~ ., data = mtcars) %>% 
+  parameters_selection() %>% 
+  summary()
 ```
 
 ### Mixed models
@@ -220,8 +221,9 @@ parameters_selection(model)
 ```{r, warning=FALSE, message=FALSE}
 library(lme4)
 
-model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1|Species), data = iris)
-parameters_selection(model)
+model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1|Species), data = iris)  %>%
+  parameters_selection() %>% 
+  summary()
 ```
 
 
@@ -230,12 +232,14 @@ parameters_selection(model)
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 library(rstanarm)
 
-model <- stan_glm(mpg ~ ., data = mtcars)
-parameters_selection(model)
+model <- stan_glm(mpg ~ ., data = mtcars) %>% 
+  parameters_selection() %>% 
+  summary()
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 text <- capture.output(model <- stan_glm(mpg ~ ., data = mtcars))
-parameters_selection(model)
+parameters_selection(model) %>% 
+  summary()
 ```
 
 
