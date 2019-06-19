@@ -60,10 +60,11 @@ Let's run a few checks using the [**performance**](https://github.com/easystats/
 ```{r message=FALSE, warning=FALSE}
 library(performance)
 
-performance::check_normality(model)
-performance::check_heteroscedasticity(model)
-performance::check_autocorrelation(model)
-performance::check_collinearity(model)
+check_normality(model)
+# check_homogeneity(model)
+check_heteroscedasticity(model)
+check_autocorrelation(model)
+check_collinearity(model)
 ```
 
 The main issue of the model seems to be the high [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity). This suggestst that our model might not be able to give valid results about any individual predictor, nor tell which predictors are redundant with respect to others.

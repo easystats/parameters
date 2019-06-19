@@ -6,7 +6,7 @@ data_frame <- function(...) {
   x
 }
 
-
+#' @keywords internal
 .clean_confint <- function(ci) {
   estimate_row <- grep(pattern = "^estimate", x = rownames(ci), ignore.case = TRUE)
   if (length(estimate_row)) {
