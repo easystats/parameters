@@ -53,6 +53,9 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
     # Posthoc
   } else if (method %in% c("default", "full", "classic")) {
+    # params <- model_parameters(model, standardize = FALSE, ...)
+    # param_values <- params[names(params) %in% c("Coefficient", "Median", "Mean", "MAP")]
+    # param_names <- params$Parameter
     std_params <- .parameters_standardize_full(model, param_names = NULL, param_values = NULL, robust = robust, method = method, verbose = verbose, ...)
 
     # Partial
@@ -126,28 +129,31 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
   # Get parameters
   if (is.null(param_names) | is.null(param_values) | length(param_names) != length(param_values)) {
     params <- model_parameters(model, standardize = FALSE, ...)
-    param_values <- params[names(params) %in% c("Coefficient", "Median", "Mean", "MAP")][, 1]
+    param_values <- params[names(params) %in% c("Coefficient", "Median", "Mean", "MAP")]
     param_names <- params$Parameter
   }
 
-  # Get response variance
-  sd_y <- .variance_response(model, robust = robust, method = method, ...)
+  out <-   data.frame(Parameter = param_names)
 
-  # Create parameter table
-  param_table <- .parameters_types_table(param_names, param_values, insight::get_data(model))
+  for(param_name in names(param_values)){
+    # Get response variance
+    sd_y <- .variance_response(model, robust = robust, method = method, ...)
 
-  # Loop over all parameters
-  std_params <- c()
-  for (i in 1:nrow(param_table)) {
-    sd_x <- .variance_predictor(param_table$Type[i], param_table$Variable[i], insight::get_data(model), robust = robust, method = method, ...)
-    new_coef <- param_table$Value[i] * sd_x / sd_y
-    std_params <- c(std_params, new_coef)
+    # Create parameter table
+    param_table <- .parameters_types_table(param_names, param_values[[param_name]], insight::get_data(model))
+
+    # Loop over all parameters
+    std_params <- c()
+    for (i in 1:nrow(param_table)) {
+      sd_x <- .variance_predictor(param_table$Type[i], param_table$Variable[i], insight::get_data(model), robust = robust, method = method, ...)
+      new_coef <- param_table$Value[i] * sd_x / sd_y
+      std_params <- c(std_params, new_coef)
+    }
+
+    out[[param_name]] <- std_params
   }
 
-  data.frame(
-    Parameter = param_table$Parameter,
-    Coefficient = std_params
-  )
+  out
 }
 
 

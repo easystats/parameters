@@ -58,12 +58,16 @@ parameters_selection.lm <- function(model, direction = "both", steps = 1000, k =
 
 #' @rdname parameters_selection
 #' @export
-parameters_selection.merMod <- function(model, ...) {
+parameters_selection.merMod <- function(model, direction = "backward", steps = 1000, ...) {
   if (!requireNamespace("cAIC4", quietly = TRUE)) {
     stop("Package `cAIC4` required. Please install it by running `install.packages(cAIC4)`.", call. = FALSE)
   }
 
-  best <- cAIC4::stepcAIC(model)$finalModel
+  best <- cAIC4::stepcAIC(model,
+                          direction = direction,
+                          steps = steps,
+                          allowUseAcross = TRUE,
+                          ...)$finalModel
 
   best
 }

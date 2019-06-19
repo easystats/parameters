@@ -221,7 +221,7 @@ lm(disp ~ ., data = mtcars) %>%
 ```{r, warning=FALSE, message=FALSE}
 library(lme4)
 
-model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1|Species), data = iris)  %>%
+model <- lmer(mpg ~ carb * gear * am + (1|cyl), data = mtcars)  %>%
   parameters_selection() %>% 
   summary()
 ```
