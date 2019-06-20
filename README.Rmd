@@ -206,7 +206,7 @@ knitr::kable(model_parameters(model), digits=1)
 ```
 
 
-## Variable/Features Selection and Reduction
+## Variable and parameters selection
 
 ### General Linear Models (GLM)
 
@@ -261,6 +261,8 @@ parameters_selection(model) %>%
   model_parameters() %>% 
   knitr::kable(digits=1)
 ```
+
+## Variable and features extraction
 
 
 ## Miscellaneous

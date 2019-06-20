@@ -14,6 +14,11 @@
 #' library(parameters)
 #'
 #' n_factors(mtcars, type = "PCA", package = "nFactors")
+#'
+#' result <- n_factors(mtcars[, 1:5], type = "FA", package = "psych")
+#' as.numeric(result)
+#' summary(result)
+#'
 #' \dontrun{
 #'   n_factors(mtcars, type = "PCA")
 #'   n_factors(mtcars, type = "FA", algorithm = "mle")
@@ -122,11 +127,14 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   row.names(out) <- NULL  # Reset row index
   class(out) <- c("n_factors", class(out))
 
-  # Add summarize
-  attr(out, "by_factors") <- data.frame(
+  # Add summary
+  by_factors <- data_frame(
     n_Factors = as.factor(unique(out$n_Factors)),
     n_Methods = as.vector(by(out, as.factor(out$n_Factors), function(out) n = nrow(out)))
   )
+
+  attr(out, "by_factors") <- by_factors
+  attr(out, "n") <-  min(as.numeric(by_factors[by_factors$n_Methods ==  max(by_factors$n_Methods), c("n_Factors")]))
 
   out
 }
@@ -136,6 +144,67 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 
 
 
+
+
+
+
+
+
+#' @export
+print.n_factors <- function(x, ...){
+
+  results <- attributes(x)$by_factors
+
+  # Extract info
+  max_methods <- max(results$n_Methods)
+  best_n <- results[results$n_Methods == max_methods, ]
+
+  if(nrow(best_n) == 1){
+    best_n_text <- as.character(best_n$n_Factors)
+  } else{
+    best_n_text <- paste0(best_n$n_Factors, collapse = " and ")
+  }
+
+  # Extract methods
+  methods_text <- c()
+  for(i in c(best_n$n_Factors)){
+    methods <- x[x$n_Factors == i, ]$Method
+    methods <- paste0(methods, collapse = ", ")
+    methods_text <- c(methods_text, methods)
+  }
+  methods_text <- paste0(methods_text, collapse = "; ")
+
+
+  # Text
+  text <- paste0("The choice of ",
+                 best_n_text,
+                 " dimensions is supported by ",
+                 max_methods,
+                 " (",
+                 sprintf("%.2f", max_methods / nrow(x) * 100),
+                 "%) methods out of ",
+                 nrow(x),
+                 " (",
+                 methods_text,
+                 ").")
+
+  insight::print_color("# Method Agreement Procedure:\n\n", "blue")
+  cat(text)
+}
+
+
+#' @export
+summary.n_factors <- function(x, ...){
+  attributes(x)$by_factors
+}
+
+#' @export
+as.numeric.n_factors <- function(x, ...){
+  attributes(x)$n
+}
+
+#' @export
+as.double.n_factors <- as.numeric.n_factors
 
 
 
@@ -249,11 +318,11 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 .n_factors_ega <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA"){
 
   # Replace with own corelation matrix
-  suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(x, model = "glasso", plot.EGA = FALSE)$n.dim))
-  suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(x, model = "TMFG", plot.EGA = FALSE)$n.dim))
+  junk <- capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(x, model = "glasso", plot.EGA = FALSE)$n.dim)))
+  junk <- capture.output(suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(x, model = "TMFG", plot.EGA = FALSE)$n.dim)))
 
   data.frame(n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
-             Method = c("Glasso", "TMFG"),
+             Method = c("EGA (glasso)", "EAG (TMFG)"),
              Family = "EGA")
 }
 
@@ -305,47 +374,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 
 
 
-#' @export
-print.n_factors <- function(x, ...){
 
-  results <- attributes(x)$by_factors
-
-  # Extract info
-  max_methods <- max(results$n_Methods)
-  best_n <- results[results$n_Methods == max_methods, ]
-
-  if(nrow(best_n) == 1){
-    best_n_text <- as.character(best_n$n_Factors)
-  } else{
-    best_n_text <- paste0(best_n$n_Factors, collapse = " and ")
-  }
-
-  # Extract methods
-  methods_text <- c()
-  for(i in c(best_n$n_Factors)){
-    methods <- x[x$n_Factors == i, ]$Method
-    methods <- paste0(methods, collapse = ", ")
-    methods_text <- c(methods_text, methods)
-  }
-  methods_text <- paste0(methods_text, collapse = "; ")
-
-
-  # Text
-  text <- paste0("The choice of ",
-                 best_n_text,
-                 " dimensions is supported by ",
-                 max_methods,
-                 " (",
-                 sprintf("%.2f", max_methods / nrow(x) * 100),
-                 "%) methods out of ",
-                 nrow(x),
-                 " (",
-                 methods_text,
-                 ").")
-
-  insight::print_color("# Method Agreement Procedure:\n\n", "blue")
-  cat(text)
-}
 
 
 #   # Plot
