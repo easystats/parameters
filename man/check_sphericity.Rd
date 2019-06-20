@@ -21,7 +21,7 @@ check_sphericity(mtcars)
 
 }
 \references{
-Bartlett, M. S. (1951). The effect of standardization on a χ 2 approximation in factor analysis. Biometrika, 38(3/4), 337-344.
+Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 }
 \author{
 William Revelle (the psych package)

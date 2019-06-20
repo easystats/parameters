@@ -1,22 +1,20 @@
-#' @title Principal Components Analysis
-#' @name principal_components
+#' Principal Components Analysis (PCA)
 #'
-#' @description This function performs a principal component analysis and
-#'   returns the loadings (of the unrotated matrix) as data frame, or
-#'   returns a rotated matrix of the loadings (if \code{rotation} is not
-#'   \code{NULL}).
+#' This function performs a principal component analysis (PCA) and returns the loadings (of the unrotated matrix) as data frame, or returns a rotated matrix of the loadings (if \code{rotation} is not \code{NULL}).
 #'
 #' @param x A data frame or a \code{\link[stats]{prcomp}}-object.
 #' @param rotation Rotation of the factor loadings. May be one of
 #'    \code{"varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster"}
 #'    or \code{"none"}. If \code{rotatoin = NULL}, loadings for the principal
 #'    components from the unrotated matrix are returned.
-#' @param n_comp Number of components to extract. If \code{rotation = "varmiax"}
-#'    and \code{n_comp = NULL}, number of components is based on the Kaiser-criteria.
+#' @param n Number of components to extract. If \code{rotation = "varmiax"}
+#'    and \code{n = NULL}, number of components is based on \link{n_factors}.
+#' @param ... Arguments passed to or from other methods.
 #'
 #' @return If \code{rotation = NULL}, a data frame with all loadings of principal
 #'   components. Else, a rotated loadings matrix, as data frame. Details on the
 #'   variance components are saved as attributes.
+#'
 #'
 #' @details The \code{print()}-method has a \code{cutoff}-argument, which is a
 #'   scalar between 0 and 1, indicating which (absolute) values from the
@@ -26,13 +24,13 @@
 #'
 #'
 #' @examples
-#' data(iris)
-#' principal_components(iris[, 1:4])
+#' library(parameters)
+#' principal_components(mtcars)
 #'
 #' data(iris)
-#' principal_components(iris[, 1:4], rotation = "varimax", n_comp = 2)
+#' principal_components(mtcars, rotation = "varimax", n = 2)
 #'
-#' pr <- principal_components(iris[, 1:4], rotation = "varimax", n_comp = 2)
+#' pr <- principal_components(mtcars, rotation = "varimax", n = 2)
 #'
 #' # show all
 #' print(pr, cutoff = .001)
@@ -41,11 +39,11 @@
 #' print(pr, cutoff = .5)
 #' @importFrom stats prcomp na.omit varimax
 #' @export
-principal_components <- function(x, rotation = NULL, n_comp = NULL) {
+principal_components <- function(x, n = NULL, rotation = NULL, ...) {
   if (is.null(rotation)) {
     .pca(x)
   } else {
-    .pca_rotate(x, rotation, n_comp)
+    .pca_rotate(x, rotation, n)
   }
 }
 
@@ -104,7 +102,7 @@ principal_components <- function(x, rotation = NULL, n_comp = NULL) {
 }
 
 
-.pca_rotate <- function(x, rotation, n_comp) {
+.pca_rotate <- function(x, rotation, n) {
   if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
     stop("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
   }
@@ -124,20 +122,20 @@ principal_components <- function(x, rotation = NULL, n_comp = NULL) {
       stop(sprintf("Package `psych` required for `%s`-rotation.", rotation), call. = F)
     }
 
-    tmp <- psych::principal(r = x, n_compactors = n_comp, rotate = rotation)
+    tmp <- psych::principal(r = x, n_compactors = n, rotate = rotation)
   } else {
     if (!inherits(x, "pca")) {
       x <- .pca(x)
     }
 
     loadings <- attr(x, "loadings", exact = TRUE)
-    if (is.null(n_comp)) n_comp <- attr(x, "kaiser", exact = TRUE)
+    if (is.null(n)) n <- attr(x, "kaiser", exact = TRUE)
 
-    if (n_comp < 2) {
+    if (n < 2) {
       stop("Can't rotate loadings, too few components extracted.", call. = F)
     }
 
-    tmp <- stats::varimax(loadings[, seq_len(n_comp)])
+    tmp <- stats::varimax(loadings[, seq_len(n)])
   }
 
 
