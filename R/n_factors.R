@@ -345,26 +345,6 @@ print.n_factors <- function(x, ...){
 }
 
 
-
-
-
-
-# text <- paste0(
-#     "The choice of ",
-#     best_n,
-#     factor_text,
-#     "is supported by ",
-#     n_methods,
-#     " (out of ",
-#     round(nrow(results)),
-#     "; ",
-#     round(n_methods / nrow(results) * 100, 2),
-#     "%) methods (",
-#     best_n_methods,
-#     ")."
-#   )
-#
-#
 #   # Plot
 #   # -------------
 #   plot_data <- summary

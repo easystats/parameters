@@ -117,9 +117,9 @@ check_sphericity <- function(x, ...){
   results <- list(chisq = statistic, p = pval, dof = df)
 
   if (pval < 0.001) {
-    insight::print_color(sprintf("OK: There is sufficient significant correlation in the data for factor analaysis (X2(%i) = %.2f, p = %.3f).", df, statistic, pval), "green")
+    insight::print_color(sprintf("OK: There is sufficient significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, p = %.3f).", df, statistic, pval), "green")
   } else {
-    insight::print_color(sprintf("Warning: There is not enough significant correlation in the data for factor analaysis (X2(%i) = %.2f, p = %.3f).", df, statistic, pval), "red")
+    insight::print_color(sprintf("Warning: There is not enough significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, p = %.3f).", df, statistic, pval), "red")
   }
 
   invisible(results)
