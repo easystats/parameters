@@ -151,7 +151,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   nfac <- nFactors::nBartlett(eigen_values, N = nobs, alpha = 0.05, details = FALSE)$nFactors
   data.frame(n_Factors = as.numeric(nfac),
              Method = tools::toTitleCase(names(nfac)),
-             Type = "Barlett")
+             Family = "Barlett")
 }
 
 
@@ -163,7 +163,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 
   data.frame(n_Factors = as.numeric(nfac),
              Method = "Bentler",
-             Type = "Bentler")
+             Family = "Bentler")
 }
 
 
@@ -180,7 +180,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 
   data.frame(n_Factors = as.numeric(nfac),
              Method = "CNG",
-             Type = "CNG")
+             Family = "CNG")
 }
 
 
@@ -196,7 +196,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   nfac <- nFactors::nMreg(cormatrix, cor=TRUE, model=model)$nFactors
   data.frame(n_Factors = as.numeric(nfac),
              Method = c("beta", "t", "p"),
-             Type = "Multiple_regression")
+             Family = "Multiple_regression")
 }
 
 
@@ -211,8 +211,8 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   }
   nfac <- unlist(nFactors::nScree(cormatrix, cor=TRUE, model=model)$Components)
   data.frame(n_Factors = as.numeric(nfac),
-             Method = c("Optimal_coordinates", "Acceleration_factor", "Parallel_analysis", "Kaiser_criterion"),
-             Type = "Scree")
+             Method = c("Optimal coordinates", "Acceleration factor", "Parallel analysis", "Kaiser criterion"),
+             Family = "Scree")
 }
 
 
@@ -227,8 +227,8 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   }
   nfac <- nFactors::nSeScree(cormatrix, cor=TRUE, model=model)$nFactors
   data.frame(n_Factors = as.numeric(nfac),
-             Method = c("SE", "R2"),
-             Type = "Scree_SE")
+             Method = c("SE Scree", "R2"),
+             Family = "Scree_SE")
 }
 
 
@@ -246,8 +246,8 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(x, model = "TMFG", plot.EGA = FALSE)$n.dim))
 
   data.frame(n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
-             Method = c("glasso", "TMFG"),
-             Type = "EGA")
+             Method = c("Glasso", "TMFG"),
+             Family = "EGA")
 }
 
 
@@ -289,11 +289,60 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   BIC_adj <- which.min(stats$SABIC)
 
   data.frame(n_Factors = as.numeric(c(vss_1, vss_2, velicer_MAP, BIC_reg, BIC_adj)),
-             Method = c("VSS_complexity_1", "VSS_complexity_2", "Velicers_MAP", "BIC", "BIC_adjusted"),
-             Type = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC"))
+             Method = c("VSS complexity 1", "VSS complexity 2", "Velicer's MAP", "BIC", "BIC (adjusted)"),
+             Family = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC"))
 }
 
 
+
+
+
+
+#' @export
+print.n_factors <- function(x, ...){
+
+  # Summarize
+  results <- data.frame(
+    n_Factors = as.factor(unique(x$n_Factors)),
+    n_Methods = as.vector(by(x, as.factor(x$n_Factors), function(x) n = nrow(x)))
+  )
+
+  # Extract info
+  max_methods <- max(results$n_Methods)
+  best_n <- results[results$n_Methods == max_methods, ]
+
+  if(nrow(best_n) == 1){
+    best_n_text <- as.character(best_n$n_Factors)
+  } else{
+    best_n_text <- paste0(best_n$n_Factors, collapse = " and ")
+  }
+
+  # Extract methods
+  methods_text <- c()
+  for(i in c(best_n$n_Factors)){
+    methods <- x[x$n_Factors == i, ]$Method
+    methods <- paste0(methods, collapse = ", ")
+    methods_text <- c(methods_text, methods)
+  }
+  methods_text <- paste0(methods_text, collapse = "; ")
+
+
+  # Text
+  text <- paste0("The choice of ",
+                 best_n_text,
+                 " dimensions is supported by ",
+                 max_methods,
+                 " (",
+                 sprintf("%.2f", max_methods / nrow(x) * 100),
+                 "%) methods out of ",
+                 nrow(x),
+                 " (",
+                 methods_text,
+                 ").")
+
+  insight::print_color("# Method Agreement Procedure:\n\n", "blue")
+  cat(text)
+}
 
 
 
