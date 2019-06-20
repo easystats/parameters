@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_factorstructure.R
 \name{check_factorstructure}
 \alias{check_factorstructure}
-\title{Check for suitability of data for Factor Analysis (FA)}
+\title{Check suitability of data for Factor Analysis (FA)}
 \usage{
 check_factorstructure(x, ...)
 }

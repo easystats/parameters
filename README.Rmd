@@ -206,24 +206,43 @@ knitr::kable(model_parameters(model), digits=1)
 ```
 
 
-## Best model selection and variables selection
+## Variable/Features Selection and Reduction
 
 ### General Linear Models (GLM)
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+library(dplyr)
+
 lm(disp ~ ., data = mtcars) %>% 
   parameters_selection() %>% 
-  summary()
+  model_parameters()
 ```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(dplyr)
+
+lm(disp ~ ., data = mtcars) %>% 
+  parameters_selection() %>% 
+  model_parameters() %>% 
+  knitr::kable(digits=1)
+```
+
 
 ### Mixed models
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
 library(lme4)
 
-model <- lmer(mpg ~ carb * gear * am + (1|cyl), data = mtcars)  %>%
+lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data = iris)  %>%
   parameters_selection() %>% 
-  summary()
+  model_parameters()
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(lme4)
+
+lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data = iris)  %>%
+  parameters_selection() %>% 
+  model_parameters() %>% 
+  knitr::kable(digits=1)
 ```
 
 
@@ -234,12 +253,13 @@ library(rstanarm)
 
 model <- stan_glm(mpg ~ ., data = mtcars) %>% 
   parameters_selection() %>% 
-  summary()
+  model_parameters()
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 text <- capture.output(model <- stan_glm(mpg ~ ., data = mtcars))
 parameters_selection(model) %>% 
-  summary()
+  model_parameters() %>% 
+  knitr::kable(digits=1)
 ```
 
 

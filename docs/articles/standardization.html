@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Standardized Parameters • parameters</title>
+<title>Standardizing Models and Parameters • parameters</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Standardized Parameters">
+<meta property="og:title" content="Standardizing Models and Parameters">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -51,20 +51,38 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
+  <a href="../reference/index.html">Features</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Parameters Transformation
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapping Models and Parameters</a>
     </li>
     <li>
-      <a href="../articles/standardization.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardizing Models and Parameters</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Variable/Feature Reduction
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/variable_selection.html">Variable Selection (stepwise, projpred, ...)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_extraction.html">Variable Extraction (PCA, FA, ...)</a>
     </li>
   </ul>
 </li>
@@ -81,7 +99,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Standardized Parameters</h1>
+      <h1>Standardizing Models and Parameters</h1>
             
       
       
@@ -168,19 +186,19 @@
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">3.32</td>
+<td align="right">3.3</td>
 </tr>
 <tr class="even">
 <td align="left">Speciesversicolor</td>
-<td align="right">-5.43</td>
+<td align="right">-5.4</td>
 </tr>
 <tr class="odd">
 <td align="left">Speciesvirginica</td>
-<td align="right">-5.51</td>
+<td align="right">-5.5</td>
 </tr>
 <tr class="even">
 <td align="left">Sepal.Length</td>
-<td align="right">1.51</td>
+<td align="right">1.5</td>
 </tr>
 </tbody>
 </table>
@@ -296,7 +314,7 @@
 <td align="left">(Intercept)</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
@@ -375,7 +393,7 @@
 <td align="left">(Intercept)</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="left">Error</td>
 </tr>
 <tr class="even">
@@ -414,7 +432,7 @@
 <td align="left">(Intercept)</td>
 <td align="right">-0.01</td>
 <td align="right">-0.01</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">-0.01</td>
 </tr>
 <tr class="even">
@@ -461,7 +479,7 @@
 <td align="left">(Intercept)</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0.00</td>
 </tr>
 <tr class="even">
@@ -516,7 +534,7 @@
 <td align="left">(Intercept)</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
@@ -558,7 +576,7 @@
 <td align="left">(Intercept)</td>
 <td align="right">0.14</td>
 <td align="right">0.14</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0.14</td>
 </tr>
 <tr class="even">
@@ -594,29 +612,29 @@
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">8.03</td>
-<td align="right">8.03</td>
+<td align="right">8</td>
+<td align="right">8.0</td>
 <td align="left">Error</td>
 <td align="left">Error</td>
 </tr>
 <tr class="even">
 <td align="left">Petal.Width</td>
-<td align="right">0.00</td>
-<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
 <td align="left">Error</td>
 <td align="left">Error</td>
 </tr>
 <tr class="odd">
 <td align="left">Speciesversicolor</td>
-<td align="right">0.00</td>
-<td align="right">-1.99</td>
+<td align="right">0</td>
+<td align="right">-2.0</td>
 <td align="left">Error</td>
 <td align="left">Error</td>
 </tr>
 <tr class="even">
 <td align="left">Speciesvirginica</td>
-<td align="right">0.00</td>
-<td align="right">-2.62</td>
+<td align="right">0</td>
+<td align="right">-2.6</td>
 <td align="left">Error</td>
 <td align="left">Error</td>
 </tr>
@@ -643,7 +661,7 @@
 <td align="left">(Intercept)</td>
 <td align="right">0.15</td>
 <td align="right">0.15</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="left">Error</td>
 </tr>
 <tr class="even">
@@ -681,7 +699,7 @@
 <td align="left">(Intercept)</td>
 <td align="left">Error</td>
 <td align="left">Error</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0.12</td>
 </tr>
 <tr class="even">
@@ -730,7 +748,7 @@
 <td align="left">(Intercept)</td>
 <td align="right">0.14</td>
 <td align="right">0.14</td>
-<td align="right">NA</td>
+<td align="right"></td>
 <td align="right">0.14</td>
 </tr>
 <tr class="even">
@@ -746,7 +764,7 @@
 <td align="left">Group_Sepal.WidthLow</td>
 <td align="right">0.00</td>
 <td align="right">-0.12</td>
-<td align="right">-0.13</td>
+<td align="right">-0.12</td>
 <td align="right">-0.12</td>
 </tr>
 </tbody>

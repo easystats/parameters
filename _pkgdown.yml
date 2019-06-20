@@ -7,3 +7,26 @@ authors:
 template:
   params:
     bootswatch: cosmo
+
+
+navbar:
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: News
+    href: news/index.html
+  - text: Features
+    href: reference/index.html
+  - text: Parameters Transformation
+    menu:
+      - text: 'Bootstrapping Models and Parameters'
+        href: articles/bootstrapping.html
+      - text: 'Standardizing Models and Parameters'
+        href: articles/standardization.html
+  - text: Variable/Feature Reduction
+    menu:
+      - text: 'Variable Selection (stepwise, projpred, ...)'
+        href: articles/variable_selection.html
+      - text: 'Variable Extraction (PCA, FA, ...)'
+        href: articles/variable_extraction.html

@@ -1,4 +1,4 @@
-#' Check for suitability of data for Factor Analysis (FA)
+#' Check suitability of data for Factor Analysis (FA)
 #'
 #' This checks whether the data is appropriate for Factor Analysis (FA) by running the \link[=check_sphericity]{Bartlett's Test of Sphericity} and the \link[=check_kmo]{Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA)}.
 #'

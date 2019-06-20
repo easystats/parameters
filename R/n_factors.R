@@ -121,6 +121,13 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   out <- out[order(out$n_Factors), ]  # Arrange by n factors
   row.names(out) <- NULL  # Reset row index
   class(out) <- c("n_factors", class(out))
+
+  # Add summarize
+  attr(out, "by_factors") <- data.frame(
+    n_Factors = as.factor(unique(out$n_Factors)),
+    n_Methods = as.vector(by(out, as.factor(out$n_Factors), function(out) n = nrow(out)))
+  )
+
   out
 }
 
@@ -301,11 +308,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 #' @export
 print.n_factors <- function(x, ...){
 
-  # Summarize
-  results <- data.frame(
-    n_Factors = as.factor(unique(x$n_Factors)),
-    n_Methods = as.vector(by(x, as.factor(x$n_Factors), function(x) n = nrow(x)))
-  )
+  results <- attributes(x)$by_factors
 
   # Extract info
   max_methods <- max(results$n_Methods)

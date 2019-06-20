@@ -1,5 +1,5 @@
 ---
-title: "Standardizing Parameters"
+title: "Standardizing Models and Parameters"
 output: 
   github_document:
     toc: true
@@ -11,7 +11,7 @@ output:
     fig_height: 6
 tags: [r, parameters]
 vignette: >
-  %\VignetteIndexEntry{Standardizing Parameters}
+  %\VignetteIndexEntry{Standardizing Models and Parameters}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
