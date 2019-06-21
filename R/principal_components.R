@@ -1,4 +1,4 @@
-#' Principal Components Analysis (PCA)
+#' Principal Component Analysis (PCA)
 #'
 #' This function performs a principal component analysis (PCA) and returns the loadings (of the unrotated matrix) as dataframe.
 #'
@@ -128,6 +128,11 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   loadings
 }
 
+
+
+
+
+
 #' @export
 sort.PCA <- function(x, ...) {
   for (col in names(x)[-1]) {
@@ -158,8 +163,13 @@ print.PCA <- function(x, ...) {
 }
 
 
+#' @export
+principal_components.lm <- function(x, ...) {
+  principal_components(insight::get_predictors(x, ...), ...)
+}
 
-
+#' @export
+principal_components.merMod <- principal_components.lm
 
 
 

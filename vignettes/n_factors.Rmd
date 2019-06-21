@@ -45,7 +45,7 @@ Let's take a look at the `attitude` data, available is base R:
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 head(attitude)
 ```
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, echo=FALSE}
 knitr::kable(head(attitude), digits=2)
 ```
 

@@ -3,7 +3,7 @@
 \name{principal_components}
 \alias{principal_components}
 \alias{PCA}
-\title{Principal Components Analysis (PCA)}
+\title{Principal Component Analysis (PCA)}
 \usage{
 principal_components(x, n = NULL, sort = FALSE, threshold = NULL,
   standardize = TRUE, ...)
