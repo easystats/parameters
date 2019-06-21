@@ -47,7 +47,7 @@ Suggests:
 	testthat,
 	VGAM
 Remotes: 
-	https://github.com/davidruegamer/cAIC4dev
+	davidruegamer/cAIC4dev
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
