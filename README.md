@@ -41,10 +41,21 @@ Click on the buttons above to access the package
 [**easystats blog**](https://easystats.github.io/blog/posts/), and
 check-out these vignettes:
 
-  - [Parameters’
-    standardization](https://easystats.github.io/parameters/articles/standardization.html)
-  - [Model
-    bootstrapping](https://easystats.github.io/parameters/articles/bootstrapping.html)
+#### Parameters Engineering
+
+  - [Bootstrapped
+    parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
+  - [Standardized
+    parameters](https://easystats.github.io/parameters/articles/standardization.html)
+
+#### Variable/Feature Reduction
+
+  - [How many factors to retain in Factor Analysis
+    (FA)](https://easystats.github.io/parameters/articles/n_factors.html)
+  - [Variable extraction (PCA, FA,
+    …)](https://easystats.github.io/parameters/articles/variable_extraction.html)
+  - [Variable selection (stepwise, projpred,
+    …)](https://easystats.github.io/parameters/articles/variable_selection.html)
 
 ## Model’s parameters description
 
