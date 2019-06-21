@@ -33,10 +33,9 @@ n_factors(mtcars, type = "PCA", package = "nFactors")
 result <- n_factors(mtcars[, 1:5], type = "FA", package = "psych")
 as.numeric(result)
 summary(result)
-
 \dontrun{
-  n_factors(mtcars, type = "PCA")
-  n_factors(mtcars, type = "FA", algorithm = "mle")
+n_factors(mtcars, type = "PCA")
+n_factors(mtcars, type = "FA", algorithm = "mle")
 }
 
 }

@@ -1,6 +1,6 @@
-#' Linear Mixed Model Parameters
+#' Mixed Model Parameters
 #'
-#' Parameters of linear mixed models.
+#' Parameters of mixed models.
 #'
 #' @inheritParams model_parameters.lm
 #' @param p_method Method for computing p values. See \link{p_value}.

@@ -11,7 +11,6 @@
 #' @examples
 #' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' p_value(model)
-#'
 #' @importFrom bayestestR p_direction convert_pd_to_p
 #' @importFrom stats coef vcov pnorm
 #' @export

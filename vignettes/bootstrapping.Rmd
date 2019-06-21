@@ -1,5 +1,5 @@
 ---
-title: "Bootstrapping Models and Parameters"
+title: "Bootstrapped parameters"
 output: 
   github_document:
     toc: true
@@ -11,7 +11,7 @@ output:
     fig_height: 6
 tags: [r, bayesian, gam, smooth]
 vignette: >
-  %\VignetteIndexEntry{Bootstrapping Models and Parameters}
+  %\VignetteIndexEntry{Bootstrapped parameters}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

@@ -18,17 +18,15 @@
 #' result <- n_factors(mtcars[, 1:5], type = "FA", package = "psych")
 #' as.numeric(result)
 #' summary(result)
-#'
 #' \dontrun{
-#'   n_factors(mtcars, type = "PCA")
-#'   n_factors(mtcars, type = "FA", algorithm = "mle")
+#' n_factors(mtcars, type = "PCA")
+#' n_factors(mtcars, type = "FA", algorithm = "mle")
 #' }
 #'
 #' @importFrom stats cor
 #' @export
-n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default", package = "all", safe = TRUE, ...){
-
-  if(package == "all"){
+n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default", package = "all", safe = TRUE, ...) {
+  if (package == "all") {
     package <- c("nFactors", "EGAnet", "psych")
   }
 
@@ -44,78 +42,116 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   out <- data.frame()
 
   # nFactors -------------------------------------------
-  if("nFactors" %in% c(package)){
-
+  if ("nFactors" %in% c(package)) {
     if (!requireNamespace("nFactors", quietly = TRUE)) {
       stop("The package 'nFactors' is needed. Please install it by running 'install.packages(nFactors)'.")
     }
 
-    if(safe){
-      out <- rbind(out,
-                   tryCatch(.n_factors_bartlett(x, cormatrix, nobs, eigen_values, type),
-                            error = function(e) data.frame()))
-      out <- rbind(out,
-                   tryCatch(.n_factors_bentler(x, cormatrix, nobs, eigen_values, type),
-                            error = function(e) data.frame()))
-      out <- rbind(out,
-                   tryCatch(.n_factors_cng(x, cormatrix, nobs, eigen_values, type),
-                            error = function(e) data.frame()))
-      out <- rbind(out,
-                   tryCatch(.n_factors_mreg(x, cormatrix, nobs, eigen_values, type),
-                            error = function(e) data.frame()))
-      out <- rbind(out,
-                   tryCatch(.n_factors_scree(x, cormatrix, nobs, eigen_values, type),
-                            error = function(e) data.frame()))
-      out <- rbind(out,
-                   tryCatch(.n_factors_sescree(x, cormatrix, nobs, eigen_values, type),
-                            error = function(e) data.frame()))
-    } else{
-      out <- rbind(out,
-                   .n_factors_bartlett(x, cormatrix, nobs, eigen_values, type))
-      out <- rbind(out,
-                   .n_factors_bentler(x, cormatrix, nobs, eigen_values, type))
-      out <- rbind(out,
-                   .n_factors_cng(x, cormatrix, nobs, eigen_values, type))
-      out <- rbind(out,
-                   .n_factors_mreg(x, cormatrix, nobs, eigen_values, type))
-      out <- rbind(out,
-                   .n_factors_scree(x, cormatrix, nobs, eigen_values, type))
-      out <- rbind(out,
-                   .n_factors_sescree(x, cormatrix, nobs, eigen_values, type))
+    if (safe) {
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_bartlett(x, cormatrix, nobs, eigen_values, type),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_bentler(x, cormatrix, nobs, eigen_values, type),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_cng(x, cormatrix, nobs, eigen_values, type),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_mreg(x, cormatrix, nobs, eigen_values, type),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_scree(x, cormatrix, nobs, eigen_values, type),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_sescree(x, cormatrix, nobs, eigen_values, type),
+          error = function(e) data.frame()
+        )
+      )
+    } else {
+      out <- rbind(
+        out,
+        .n_factors_bartlett(x, cormatrix, nobs, eigen_values, type)
+      )
+      out <- rbind(
+        out,
+        .n_factors_bentler(x, cormatrix, nobs, eigen_values, type)
+      )
+      out <- rbind(
+        out,
+        .n_factors_cng(x, cormatrix, nobs, eigen_values, type)
+      )
+      out <- rbind(
+        out,
+        .n_factors_mreg(x, cormatrix, nobs, eigen_values, type)
+      )
+      out <- rbind(
+        out,
+        .n_factors_scree(x, cormatrix, nobs, eigen_values, type)
+      )
+      out <- rbind(
+        out,
+        .n_factors_sescree(x, cormatrix, nobs, eigen_values, type)
+      )
     }
   }
 
   # EGAnet -------------------------------------------
-  if("EGAnet" %in% c(package)){
-
+  if ("EGAnet" %in% c(package)) {
     if (!requireNamespace("EGAnet", quietly = TRUE)) {
       stop("The package 'EGAnet' is needed. Please install it by running 'install.packages(EGAnet)'.")
     }
 
-    if(safe){
-      out <- rbind(out,
-                   tryCatch(.n_factors_ega(x, cormatrix, nobs, eigen_values, type),
-                            error = function(e) data.frame()))
-    } else{
-      out <- rbind(out,
-                   .n_factors_ega(x, cormatrix, nobs, eigen_values, type))
+    if (safe) {
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_ega(x, cormatrix, nobs, eigen_values, type),
+          error = function(e) data.frame()
+        )
+      )
+    } else {
+      out <- rbind(
+        out,
+        .n_factors_ega(x, cormatrix, nobs, eigen_values, type)
+      )
     }
   }
 
 
   # psych -------------------------------------------
-  if("psych" %in% c(package)){
+  if ("psych" %in% c(package)) {
     if (!requireNamespace("psych", quietly = TRUE)) {
       stop("The package 'psych' is needed. Please install it by running 'install.packages(psych)'.")
     }
 
-    if(safe){
-      out <- rbind(out,
-                   tryCatch(.n_factors_vss(x, cormatrix, nobs, type, rotation, algorithm),
-                            error = function(e) data.frame()))
-    } else{
-      out <- rbind(out,
-                   .n_factors_vss(x, cormatrix, nobs, type, rotation, algorithm))
+    if (safe) {
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_vss(x, cormatrix, nobs, type, rotation, algorithm),
+          error = function(e) data.frame()
+        )
+      )
+    } else {
+      out <- rbind(
+        out,
+        .n_factors_vss(x, cormatrix, nobs, type, rotation, algorithm)
+      )
     }
   }
 
@@ -123,18 +159,18 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   # TODO created weighted composite score
 
 
-  out <- out[order(out$n_Factors), ]  # Arrange by n factors
-  row.names(out) <- NULL  # Reset row index
+  out <- out[order(out$n_Factors), ] # Arrange by n factors
+  row.names(out) <- NULL # Reset row index
   class(out) <- c("n_factors", class(out))
 
   # Add summary
   by_factors <- data_frame(
     n_Factors = as.factor(unique(out$n_Factors)),
-    n_Methods = as.vector(by(out, as.factor(out$n_Factors), function(out) n = nrow(out)))
+    n_Methods = as.vector(by(out, as.factor(out$n_Factors), function(out) n <- nrow(out)))
   )
 
   attr(out, "by_factors") <- by_factors
-  attr(out, "n") <-  min(as.numeric(by_factors[by_factors$n_Methods ==  max(by_factors$n_Methods), c("n_Factors")]))
+  attr(out, "n") <- min(as.numeric(by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")]))
 
   out
 }
@@ -151,23 +187,22 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 
 
 #' @export
-print.n_factors <- function(x, ...){
-
+print.n_factors <- function(x, ...) {
   results <- attributes(x)$by_factors
 
   # Extract info
   max_methods <- max(results$n_Methods)
   best_n <- results[results$n_Methods == max_methods, ]
 
-  if(nrow(best_n) == 1){
+  if (nrow(best_n) == 1) {
     best_n_text <- as.character(best_n$n_Factors)
-  } else{
+  } else {
     best_n_text <- paste0(best_n$n_Factors, collapse = " and ")
   }
 
   # Extract methods
   methods_text <- c()
-  for(i in c(best_n$n_Factors)){
+  for (i in c(best_n$n_Factors)) {
     methods <- x[x$n_Factors == i, ]$Method
     methods <- paste0(methods, collapse = ", ")
     methods_text <- c(methods_text, methods)
@@ -176,17 +211,19 @@ print.n_factors <- function(x, ...){
 
 
   # Text
-  text <- paste0("The choice of ",
-                 best_n_text,
-                 " dimensions is supported by ",
-                 max_methods,
-                 " (",
-                 sprintf("%.2f", max_methods / nrow(x) * 100),
-                 "%) methods out of ",
-                 nrow(x),
-                 " (",
-                 methods_text,
-                 ").")
+  text <- paste0(
+    "The choice of ",
+    best_n_text,
+    " dimensions is supported by ",
+    max_methods,
+    " (",
+    sprintf("%.2f", max_methods / nrow(x) * 100),
+    "%) methods out of ",
+    nrow(x),
+    " (",
+    methods_text,
+    ")."
+  )
 
   insight::print_color("# Method Agreement Procedure:\n\n", "blue")
   cat(text)
@@ -194,12 +231,12 @@ print.n_factors <- function(x, ...){
 
 
 #' @export
-summary.n_factors <- function(object, ...){
+summary.n_factors <- function(object, ...) {
   attributes(object)$by_factors
 }
 
 #' @export
-as.numeric.n_factors <- function(x, ...){
+as.numeric.n_factors <- function(x, ...) {
   attributes(x)$n
 }
 
@@ -222,89 +259,95 @@ as.double.n_factors <- as.numeric.n_factors
 
 #' Bartlett, Anderson and Lawley Procedures
 #' @keywords internal
-.n_factors_bartlett <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA"){
-
+.n_factors_bartlett <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
   nfac <- nFactors::nBartlett(eigen_values, N = nobs, alpha = 0.05, details = FALSE)$nFactors
-  data.frame(n_Factors = as.numeric(nfac),
-             Method = tools::toTitleCase(names(nfac)),
-             Family = "Barlett")
+  data.frame(
+    n_Factors = as.numeric(nfac),
+    Method = tools::toTitleCase(names(nfac)),
+    Family = "Barlett"
+  )
 }
 
 
 #' Bentler and Yuan's Procedure
 #' @keywords internal
-.n_factors_bentler <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA"){
-
+.n_factors_bentler <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
   nfac <- nFactors::nBentler(eigen_values, N = nobs, alpha = 0.05)$nFactors
 
-  data.frame(n_Factors = as.numeric(nfac),
-             Method = "Bentler",
-             Family = "Bentler")
+  data.frame(
+    n_Factors = as.numeric(nfac),
+    Method = "Bentler",
+    Family = "Bentler"
+  )
 }
 
 
 #' Cattell-Nelson-Gorsuch CNG Indices
 #' @keywords internal
-.n_factors_cng <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA"){
-
-  if(tolower(type) %in% c("fa", "factor", "efa")){
+.n_factors_cng <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
+  if (tolower(type) %in% c("fa", "factor", "efa")) {
     model <- "factors"
-  } else{
+  } else {
     model <- "components"
   }
-  nfac <- nFactors::nCng(cormatrix, cor=TRUE, model=model)$nFactors
+  nfac <- nFactors::nCng(cormatrix, cor = TRUE, model = model)$nFactors
 
-  data.frame(n_Factors = as.numeric(nfac),
-             Method = "CNG",
-             Family = "CNG")
+  data.frame(
+    n_Factors = as.numeric(nfac),
+    Method = "CNG",
+    Family = "CNG"
+  )
 }
 
 
 #' Multiple Regression Procedure
 #' @keywords internal
-.n_factors_mreg <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA"){
-
-  if(tolower(type) %in% c("fa", "factor", "efa")){
+.n_factors_mreg <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
+  if (tolower(type) %in% c("fa", "factor", "efa")) {
     model <- "factors"
-  } else{
+  } else {
     model <- "components"
   }
-  nfac <- nFactors::nMreg(cormatrix, cor=TRUE, model=model)$nFactors
-  data.frame(n_Factors = as.numeric(nfac),
-             Method = c("beta", "t", "p"),
-             Family = "Multiple_regression")
+  nfac <- nFactors::nMreg(cormatrix, cor = TRUE, model = model)$nFactors
+  data.frame(
+    n_Factors = as.numeric(nfac),
+    Method = c("beta", "t", "p"),
+    Family = "Multiple_regression"
+  )
 }
 
 
 #' Non Graphical Cattel's Scree Test
 #' @keywords internal
-.n_factors_scree <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA"){
-
-  if(tolower(type) %in% c("fa", "factor", "efa")){
+.n_factors_scree <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
+  if (tolower(type) %in% c("fa", "factor", "efa")) {
     model <- "factors"
-  } else{
+  } else {
     model <- "components"
   }
-  nfac <- unlist(nFactors::nScree(cormatrix, cor=TRUE, model=model)$Components)
-  data.frame(n_Factors = as.numeric(nfac),
-             Method = c("Optimal coordinates", "Acceleration factor", "Parallel analysis", "Kaiser criterion"),
-             Family = "Scree")
+  nfac <- unlist(nFactors::nScree(cormatrix, cor = TRUE, model = model)$Components)
+  data.frame(
+    n_Factors = as.numeric(nfac),
+    Method = c("Optimal coordinates", "Acceleration factor", "Parallel analysis", "Kaiser criterion"),
+    Family = "Scree"
+  )
 }
 
 
 #' Standard Error Scree and Coefficient of Determination Procedures
 #' @keywords internal
-.n_factors_sescree <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA"){
-
-  if(tolower(type) %in% c("fa", "factor", "efa")){
+.n_factors_sescree <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
+  if (tolower(type) %in% c("fa", "factor", "efa")) {
     model <- "factors"
-  } else{
+  } else {
     model <- "components"
   }
-  nfac <- nFactors::nSeScree(cormatrix, cor=TRUE, model=model)$nFactors
-  data.frame(n_Factors = as.numeric(nfac),
-             Method = c("SE Scree", "R2"),
-             Family = "Scree_SE")
+  nfac <- nFactors::nSeScree(cormatrix, cor = TRUE, model = model)$nFactors
+  data.frame(
+    n_Factors = as.numeric(nfac),
+    Method = c("SE Scree", "R2"),
+    Family = "Scree_SE"
+  )
 }
 
 
@@ -315,27 +358,28 @@ as.double.n_factors <- as.numeric.n_factors
 # EGAnet ------------------------
 
 #' @keywords internal
-.n_factors_ega <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA"){
+.n_factors_ega <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
 
   # Replace with own corelation matrix
   junk <- capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(x, model = "glasso", plot.EGA = FALSE)$n.dim)))
   junk <- capture.output(suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(x, model = "TMFG", plot.EGA = FALSE)$n.dim)))
 
-  data.frame(n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
-             Method = c("EGA (glasso)", "EAG (TMFG)"),
-             Family = "EGA")
+  data.frame(
+    n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
+    Method = c("EGA (glasso)", "EAG (TMFG)"),
+    Family = "EGA"
+  )
 }
 
 
 # psych ------------------------
 
 #' @keywords internal
-.n_factors_vss <- function(x = NULL, cormatrix = NULL, nobs = NULL, type = "FA", rotation = "varimax", algorithm = "default"){
-
-  if(algorithm == "default"){
-    if(tolower(type) %in% c("fa", "factor", "efa")){
+.n_factors_vss <- function(x = NULL, cormatrix = NULL, nobs = NULL, type = "FA", rotation = "varimax", algorithm = "default") {
+  if (algorithm == "default") {
+    if (tolower(type) %in% c("fa", "factor", "efa")) {
       algorithm <- "minres"
-    } else{
+    } else {
       algorithm <- "pc"
     }
   }
@@ -344,7 +388,7 @@ as.double.n_factors <- as.numeric.n_factors
   # Compute VSS
   vss <- psych::VSS(
     cormatrix,
-    n = ncol(x)-1,
+    n = ncol(x) - 1,
     n.obs = nobs,
     rotate = rotation,
     fm = algorithm,
@@ -364,9 +408,11 @@ as.double.n_factors <- as.numeric.n_factors
   BIC_reg <- which.min(stats$BIC)
   BIC_adj <- which.min(stats$SABIC)
 
-  data.frame(n_Factors = as.numeric(c(vss_1, vss_2, velicer_MAP, BIC_reg, BIC_adj)),
-             Method = c("VSS complexity 1", "VSS complexity 2", "Velicer's MAP", "BIC", "BIC (adjusted)"),
-             Family = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC"))
+  data.frame(
+    n_Factors = as.numeric(c(vss_1, vss_2, velicer_MAP, BIC_reg, BIC_adj)),
+    Method = c("VSS complexity 1", "VSS complexity 2", "Velicer's MAP", "BIC", "BIC (adjusted)"),
+    Family = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC")
+  )
 }
 
 

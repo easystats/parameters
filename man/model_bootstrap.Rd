@@ -18,3 +18,8 @@ model_bootstrap(model, iterations = 1000, verbose = FALSE, ...)
 \description{
 Bootstrap a statistical model n times to return a data.frame of estimates.
 }
+\examples{
+model <- lm(mpg ~ wt + cyl, data = mtcars)
+head(model_bootstrap(model))
+
+}

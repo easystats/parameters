@@ -23,7 +23,6 @@ Kaiser (1975) suggested that KMO > .9 were marvelous, in the .80s, mertitourious
 library(parameters)
 
 check_kmo(mtcars)
-
 }
 \references{
 \itemize{

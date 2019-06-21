@@ -1,12 +1,4 @@
-#' Linear Model Parameters
-#'
-#' Parameters of general linear models.
-#'
-#' @inheritParams model_parameters.lm
-#'
-#' @examples
-#' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
-#' model_parameters(model, standardize = "refit")
+#' @rdname model_parameters.lm
 #' @export
 model_parameters.glm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
 

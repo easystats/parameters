@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.htest.R
 \name{model_parameters.htest}
 \alias{model_parameters.htest}
-\title{h-test Parameters}
+\title{Correlations and t-test Parameters}
 \usage{
 \method{model_parameters}{htest}(model, bootstrap = FALSE, ...)
 }
@@ -14,7 +14,7 @@
 \item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
 }
 \description{
-Parameters of h-tests.
+Parameters of h-tests (correlations, t-tests).
 }
 \examples{
 model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")

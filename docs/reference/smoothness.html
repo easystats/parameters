@@ -94,16 +94,16 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Transformation
+    Parameters Engineering
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrapping.html">Bootstrapping Models and Parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
     </li>
     <li>
-      <a href="../articles/standardization.html">Standardizing Models and Parameters</a>
+      <a href="../articles/standardization.html">Standardized parameters</a>
     </li>
   </ul>
 </li>
@@ -115,10 +115,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/variable_selection.html">Variable Selection (stepwise, projpred, ...)</a>
+      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
     </li>
     <li>
-      <a href="../articles/variable_extraction.html">Variable Extraction (PCA, FA, ...)</a>
+      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
     </li>
   </ul>
 </li>
@@ -175,7 +178,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> (-<span class='fl'>10</span>:<span class='fl'>10</span>)^<span class='fl'>3</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>21</span>, <span class='fl'>0</span>, <span class='fl'>100</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='smoothness-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>smoothness</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"cor"</span>)</div><div class='output co'>#&gt; [1] 0.927123</div><div class='input'><span class='fu'>smoothness</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"diff"</span>)</div><div class='output co'>#&gt; [1] 1.503309</div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='smoothness-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>smoothness</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"cor"</span>)</div><div class='output co'>#&gt; [1] 0.9277251</div><div class='input'><span class='fu'>smoothness</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"diff"</span>)</div><div class='output co'>#&gt; [1] 1.54376</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

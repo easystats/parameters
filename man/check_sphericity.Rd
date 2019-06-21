@@ -18,7 +18,6 @@ Bartlett (1951) introduced the test of sphericity, which tests whether a matrix 
 library(parameters)
 
 check_sphericity(mtcars)
-
 }
 \references{
 Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.

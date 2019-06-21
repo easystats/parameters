@@ -7,10 +7,9 @@
 #' library(parameters)
 #'
 #' check_factorstructure(mtcars)
-#'
 #' @seealso check_kmo check_sphericity
 #' @export
-check_factorstructure <- function(x, ...){
+check_factorstructure <- function(x, ...) {
   check_sphericity(x, ...)
   check_kmo(x, ...)
 }
@@ -36,7 +35,6 @@ check_factorstructure <- function(x, ...){
 #' library(parameters)
 #'
 #' check_kmo(mtcars)
-#'
 #' @author William Revelle (the psych package)
 #'
 #' @references \itemize{
@@ -46,7 +44,7 @@ check_factorstructure <- function(x, ...){
 #' }
 #' @importFrom stats cov2cor
 #' @export
-check_kmo <- function(x, ...){
+check_kmo <- function(x, ...) {
 
   # This could be improved using the correlation package to use different correlation methods
   cormatrix <- cor(x, use = "pairwise.complete.obs", ...)
@@ -58,8 +56,8 @@ check_kmo <- function(x, ...){
 
   sumQ2 <- sum(Q^2)
   sumr2 <- sum(cormatrix^2)
-  MSA <- sumr2/(sumr2 + sumQ2)
-  MSA_variable <- colSums(cormatrix^2)/(colSums(cormatrix^2) + colSums(Q^2))
+  MSA <- sumr2 / (sumr2 + sumQ2)
+  MSA_variable <- colSums(cormatrix^2) / (colSums(cormatrix^2) + colSums(Q^2))
   results <- list(MSA = MSA, MSA_variable = MSA_variable)
 
   if (MSA < 0.5) {
@@ -94,14 +92,13 @@ check_kmo <- function(x, ...){
 #' library(parameters)
 #'
 #' check_sphericity(mtcars)
-#'
 #' @author William Revelle (the psych package)
 #'
 #' @references Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 #'
 #' @importFrom stats pchisq
 #' @export
-check_sphericity <- function(x, ...){
+check_sphericity <- function(x, ...) {
 
   # This could be improved using the correlation package to use different correlation methods
   cormatrix <- cor(x, use = "pairwise.complete.obs", ...)
@@ -110,8 +107,8 @@ check_sphericity <- function(x, ...){
   p <- dim(cormatrix)[2]
 
   detR <- det(cormatrix)
-  statistic <- -log(detR) * (n - 1 - (2 * p + 5)/6)
-  df <- p * (p - 1)/2
+  statistic <- -log(detR) * (n - 1 - (2 * p + 5) / 6)
+  df <- p * (p - 1) / 2
   pval <- pchisq(statistic, df, lower.tail = FALSE)
 
   results <- list(chisq = statistic, p = pval, dof = df)
@@ -124,4 +121,3 @@ check_sphericity <- function(x, ...){
 
   invisible(results)
 }
-

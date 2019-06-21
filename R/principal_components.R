@@ -16,6 +16,10 @@
 #' principal_components(mtcars[, 1:5])
 #' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 #' principal_components(mtcars[, 1:7], n = 3, threshold = "max", sort = TRUE)
+#'
+#' pca <- principal_components(mtcars[, 1:5])
+#' summary(pca)
+#' predict(pca, mtcars[, 1:7])
 #' @importFrom stats prcomp
 #' @export
 principal_components <- function(x, n = NULL, sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
@@ -108,15 +112,14 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
 
   # Replace by NA all cells below threshold
   if (!is.null(threshold)) {
-    if(threshold == "max"){
-      for(i in 1:nrow(loadings)){
+    if (threshold == "max") {
+      for (i in 1:nrow(loadings)) {
         maxi <- max(abs(loadings[i, -1]))
         loadings[i, -1][abs(loadings[i, -1]) < maxi] <- NA
       }
-    } else{
+    } else {
       loadings[, sapply(loadings, is.numeric)][abs(loadings[, sapply(loadings, is.numeric)]) < threshold] <- NA
     }
-
   }
 
   # add class-attribute for printing
@@ -237,7 +240,7 @@ print.PCA <- function(x, ...) {
   }
 
   order <- row.names(x)
-  loadings <- loadings[order(order), ]  # Arrange by max
+  loadings <- loadings[order(order), ] # Arrange by max
   row.names(loadings) <- NULL
 
   loadings

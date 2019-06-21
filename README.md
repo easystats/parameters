@@ -11,10 +11,11 @@ Status](https://travis-ci.org/easystats/parameters.svg?branch=master)](https://t
 
 `parameters`’s primary goal is to provide utilities for processing the
 parameters of various statistical models. Beyond computing *p*-values,
-CIs, and other indices for a wide variety of models, this package
-implements features like standardization, normalization or bootstrapping
-of parameters and models, as well as conversion between indices of
-effect size.
+**CIs**, and other indices for a wide variety of models, this package
+implements features like **standardization** or **bootstrapping** of
+parameters and models, **feature reduction** (feature extraction and
+variable selection) as well as conversion between indices of **effect
+size**.
 
 ## Installation
 
@@ -46,6 +47,23 @@ check-out these vignettes:
     bootstrapping](https://easystats.github.io/parameters/articles/bootstrapping.html)
 
 ## Model’s parameters description
+
+The `model_parameters` function allows you to extract the parameters and
+their characteristics from various models in a consistent way. It could
+be considered as an alternative to
+[broom::tidy()](https://github.com/tidymodels/broom), with some notable
+differences:
+
+  - The names of the returned dataframe are **specific** to their
+    content. For instance, the column containing the statistic is named
+    following the statistic name, *i.e.*, `t`, `z`, etc.
+  - It is able to compute or extract indices not available by default,
+    such as ***p* values**, **CIs**, etc.
+  - It includes **feature engineering** capabilities, including
+    [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html)
+    and
+    [**standardization**](https://easystats.github.io/parameters/articles/standardization.html)
+    of parameters.
 
 ### Correlations
 
@@ -194,7 +212,7 @@ model_parameters(model)
 | 3 | wt          |    \-3 |     \-4 |    \-1.9 | 100 |                0 | 1963 |    1 | normal              |               0 |           15 |
 | 2 | cyl         |    \-2 |     \-2 |    \-0.8 | 100 |                2 | 1997 |    1 | normal              |               0 |            8 |
 
-## Variable/Features Selection and Reduction
+## Variable and parameters selection
 
 ### General Linear Models (GLM)
 
@@ -221,7 +239,7 @@ lm(disp ~ ., data = mtcars) %>%
 library(lme4)
 
 lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data = iris)  %>%
-  parameters_selection() %>% 
+  parameters_selection() %>%
   model_parameters()
 ```
 
@@ -256,6 +274,17 @@ model <- stan_glm(mpg ~ ., data = mtcars) %>%
 | 6 | qsec        |    0.8 |   \-0.2 |      1.7 |  91 |             36.2 | 2449 |    1 | normal              |               0 |          8.4 |
 | 4 | disp        |    0.0 |     0.0 |      0.0 |  87 |            100.0 | 2750 |    1 | normal              |               0 |          0.1 |
 
+## Variable and features extraction
+
+### How many factors to retain in Factor Analysis (FA)
+
+``` r
+n_factors(attitude)
+> # Method Agreement Procedure:
+> 
+> The choice of 1 dimensions is supported by 4 (40.00%) methods out of 10 (EGA (glasso), EAG (TMFG), VSS complexity 1, Velicer's MAP).
+```
+
 ## Miscellaneous
 
 ### Describe a Distribution
@@ -263,8 +292,8 @@ model <- stan_glm(mpg ~ ., data = mtcars) %>%
 ``` r
 x <- rnorm(300)
 describe_distribution(x)
->     Mean SD Min Max Skewness Kurtosis n_Obs n_Missing
-> 1 -0.007  1  -3   3      0.1     -0.1   300         0
+>    Mean SD Min Max Skewness Kurtosis n_Obs n_Missing
+> 1 -0.03  1  -4   3    -0.08      0.1   300         0
 ```
 
 ### Standardization and normalization

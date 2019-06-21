@@ -39,11 +39,12 @@ parameters_selection <- function(model, ...) {
 #' @export
 parameters_selection.lm <- function(model, direction = "both", steps = 1000, k = 2, ...) {
   junk <- capture.output(best <- step(model,
-                                      trace = 0,
-                                      direction = direction,
-                                      steps = steps,
-                                      k = k,
-                                      ...))
+    trace = 0,
+    direction = direction,
+    steps = steps,
+    k = k,
+    ...
+  ))
 
   best
 }
@@ -64,10 +65,11 @@ parameters_selection.merMod <- function(model, direction = "backward", steps = 1
   }
 
   best <- cAIC4::stepcAIC(model,
-                          direction = direction,
-                          steps = steps,
-                          allowUseAcross = TRUE,
-                          ...)$finalModel
+    direction = direction,
+    steps = steps,
+    allowUseAcross = TRUE,
+    ...
+  )$finalModel
 
   best
 }

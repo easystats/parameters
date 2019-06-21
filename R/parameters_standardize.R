@@ -133,9 +133,9 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
     param_names <- params$Parameter
   }
 
-  out <-   data.frame(Parameter = param_names)
+  out <- data.frame(Parameter = param_names)
 
-  for(param_name in names(param_values)){
+  for (param_name in names(param_values)) {
     # Get response variance
     sd_y <- .variance_response(model, robust = robust, method = method, ...)
 

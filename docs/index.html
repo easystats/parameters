@@ -58,16 +58,16 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Transformation
+    Parameters Engineering
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/bootstrapping.html">Bootstrapping Models and Parameters</a>
+      <a href="articles/bootstrapping.html">Bootstrapped parameters</a>
     </li>
     <li>
-      <a href="articles/standardization.html">Standardizing Models and Parameters</a>
+      <a href="articles/standardization.html">Standardized parameters</a>
     </li>
   </ul>
 </li>
@@ -79,10 +79,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/variable_selection.html">Variable Selection (stepwise, projpred, ...)</a>
+      <a href="articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
     </li>
     <li>
-      <a href="articles/variable_extraction.html">Variable Extraction (PCA, FA, ...)</a>
+      <a href="articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+    </li>
+    <li>
+      <a href="articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
     </li>
   </ul>
 </li>
@@ -108,7 +111,7 @@
 </h1></div>
 
 <p><strong><em>Describe and understand your model’s parameters!</em></strong></p>
-<p><code>parameters</code>’s primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing <em>p</em>-values, CIs, and other indices for a wide variety of models, this package implements features like standardization, normalization or bootstrapping of parameters and models, as well as conversion between indices of effect size.</p>
+<p><code>parameters</code>’s primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing <em>p</em>-values, <strong>CIs</strong>, and other indices for a wide variety of models, this package implements features like <strong>standardization</strong> or <strong>bootstrapping</strong> of parameters and models, <strong>feature reduction</strong> (feature extraction and variable selection) as well as conversion between indices of <strong>effect size</strong>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -130,6 +133,12 @@
 <div id="models-parameters-description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#models-parameters-description" class="anchor"></a>Model’s parameters description</h2>
+<p>The <code>model_parameters</code> function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to <a href="https://github.com/tidymodels/broom">broom::tidy()</a>, with some notable differences:</p>
+<ul>
+<li>The names of the returned dataframe are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, <em>i.e.</em>, <code>t</code>, <code>z</code>, etc.</li>
+<li>It is able to compute or extract indices not available by default, such as <strong><em>p</em> values</strong>, <strong>CIs</strong>, etc.</li>
+<li>It includes <strong>feature engineering</strong> capabilities, including <a href="https://easystats.github.io/parameters/articles/bootstrapping.html"><strong>bootstrapping</strong></a> and <a href="https://easystats.github.io/parameters/articles/standardization.html"><strong>standardization</strong></a> of parameters.</li>
+</ul>
 <div id="correlations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#correlations" class="anchor"></a>Correlations</h3>
@@ -605,9 +614,9 @@
 </table>
 </div>
 </div>
-<div id="variablefeatures-selection-and-reduction" class="section level2">
+<div id="variable-and-parameters-selection" class="section level2">
 <h2 class="hasAnchor">
-<a href="#variablefeatures-selection-and-reduction" class="anchor"></a>Variable/Features Selection and Reduction</h2>
+<a href="#variable-and-parameters-selection" class="anchor"></a>Variable and parameters selection</h2>
 <div id="general-linear-models-glm-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#general-linear-models-glm-1" class="anchor"></a>General Linear Models (GLM)</h3>
@@ -704,7 +713,7 @@
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
 <a class="sourceLine" id="cb15-2" title="2"></a>
 <a class="sourceLine" id="cb15-3" title="3"><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">*</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data =</span> iris)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb15-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
 <table class="table table">
 <thead><tr class="header">
@@ -927,29 +936,41 @@
 </table>
 </div>
 </div>
+<div id="variable-and-features-extraction" class="section level2">
+<h2 class="hasAnchor">
+<a href="#variable-and-features-extraction" class="anchor"></a>Variable and features extraction</h2>
+<div id="how-many-factors-to-retain-in-factor-analysis-fa" class="section level3">
+<h3 class="hasAnchor">
+<a href="#how-many-factors-to-retain-in-factor-analysis-fa" class="anchor"></a>How many factors to retain in Factor Analysis (FA)</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="reference/n_factors.html">n_factors</a></span>(attitude)</a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="op">&gt;</span><span class="st"> </span><span class="co"># Method Agreement Procedure:</span></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="er">&gt;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="er">&gt;</span><span class="st"> </span>The choice of <span class="dv">1</span> dimensions is supported by <span class="dv">4</span> (<span class="fl">40.00</span>%) methods out of <span class="dv">10</span> (<span class="kw">EGA</span> (glasso), <span class="kw">EAG</span> (TMFG), VSS complexity <span class="dv">1</span>, Velicer<span class="st">'s MAP).</span></a></code></pre></div>
+</div>
+</div>
 <div id="miscellaneous" class="section level2">
 <h2 class="hasAnchor">
 <a href="#miscellaneous" class="anchor"></a>Miscellaneous</h2>
 <div id="describe-a-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#describe-a-distribution" class="anchor"></a>Describe a Distribution</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">300</span>)</a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(x)</a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="op">&gt;</span><span class="st">     </span>Mean SD Min Max Skewness Kurtosis n_Obs n_Missing</a>
-<a class="sourceLine" id="cb17-4" title="4"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="fl">-0.007</span>  <span class="dv">1</span>  <span class="dv">-3</span>   <span class="dv">3</span>      <span class="fl">0.1</span>     <span class="fl">-0.1</span>   <span class="dv">300</span>         <span class="dv">0</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">300</span>)</a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(x)</a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="op">&gt;</span><span class="st">    </span>Mean SD Min Max Skewness Kurtosis n_Obs n_Missing</a>
+<a class="sourceLine" id="cb18-4" title="4"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="fl">-0.03</span>  <span class="dv">1</span>  <span class="dv">-4</span>   <span class="dv">3</span>    <span class="fl">-0.08</span>      <span class="fl">0.1</span>   <span class="dv">300</span>         <span class="dv">0</span></a></code></pre></div>
 </div>
 <div id="standardization-and-normalization" class="section level3">
 <h3 class="hasAnchor">
 <a href="#standardization-and-normalization" class="anchor"></a>Standardization and normalization</h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/standardize.html">standardize</a></span>(iris)</a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(df<span class="op">$</span>Sepal.Length)</a>
-<a class="sourceLine" id="cb18-3" title="3"><span class="op">&gt;</span><span class="st">    </span>Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </a>
-<a class="sourceLine" id="cb18-4" title="4"><span class="op">&gt;</span><span class="st">    </span><span class="fl">-1.9</span>    <span class="fl">-0.9</span>    <span class="fl">-0.1</span>     <span class="fl">0.0</span>     <span class="fl">0.7</span>     <span class="fl">2.5</span></a>
-<a class="sourceLine" id="cb18-5" title="5"></a>
-<a class="sourceLine" id="cb18-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/normalize.html">normalize</a></span>(iris)</a>
-<a class="sourceLine" id="cb18-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(df<span class="op">$</span>Sepal.Length)</a>
-<a class="sourceLine" id="cb18-8" title="8"><span class="op">&gt;</span><span class="st">    </span>Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </a>
-<a class="sourceLine" id="cb18-9" title="9"><span class="op">&gt;</span><span class="st">     </span><span class="fl">0.0</span>     <span class="fl">0.2</span>     <span class="fl">0.4</span>     <span class="fl">0.4</span>     <span class="fl">0.6</span>     <span class="fl">1.0</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/standardize.html">standardize</a></span>(iris)</a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(df<span class="op">$</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="op">&gt;</span><span class="st">    </span>Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="op">&gt;</span><span class="st">    </span><span class="fl">-1.9</span>    <span class="fl">-0.9</span>    <span class="fl">-0.1</span>     <span class="fl">0.0</span>     <span class="fl">0.7</span>     <span class="fl">2.5</span></a>
+<a class="sourceLine" id="cb19-5" title="5"></a>
+<a class="sourceLine" id="cb19-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/normalize.html">normalize</a></span>(iris)</a>
+<a class="sourceLine" id="cb19-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(df<span class="op">$</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb19-8" title="8"><span class="op">&gt;</span><span class="st">    </span>Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </a>
+<a class="sourceLine" id="cb19-9" title="9"><span class="op">&gt;</span><span class="st">     </span><span class="fl">0.0</span>     <span class="fl">0.2</span>     <span class="fl">0.4</span>     <span class="fl">0.4</span>     <span class="fl">0.6</span>     <span class="fl">1.0</span></a></code></pre></div>
 </div>
 </div>
 </div>

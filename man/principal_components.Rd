@@ -33,4 +33,8 @@ library(parameters)
 principal_components(mtcars[, 1:5])
 principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 principal_components(mtcars[, 1:7], n = 3, threshold = "max", sort = TRUE)
+
+pca <- principal_components(mtcars[, 1:5])
+summary(pca)
+predict(pca, mtcars[, 1:7])
 }

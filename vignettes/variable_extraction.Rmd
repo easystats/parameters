@@ -1,5 +1,5 @@
 ---
-title: "Variable Extraction (PCA, FA, ...)"
+title: "Variable extraction (PCA, FA, ...)"
 output: 
   github_document:
     toc: true
@@ -11,7 +11,7 @@ output:
     fig_height: 6
 tags: [r, parameters, variable extraction, feature extraction, dimension extraction]
 vignette: >
-  %\VignetteIndexEntry{Variable Extraction (PCA, FA, ...)}
+  %\VignetteIndexEntry{Variable extraction (PCA, FA, ...)}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -27,7 +27,7 @@ options(digits=2)
 set.seed(333)
 ```
 
-# Variable Reduction
+# Variable Extraction
 
 Also known as [feature extraction](https://en.wikipedia.org/wiki/Feature_extraction) in machine learning, the goal of variable reduction is to **reduce the number of predictors** by derivating, from a set of measured data, new variables intended to be informative and non-redundant. This method can be used to **simplify models**, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
 

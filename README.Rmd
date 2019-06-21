@@ -238,15 +238,15 @@ lm(disp ~ ., data = mtcars) %>%
 library(lme4)
 
 lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data = iris)  %>%
-  parameters_selection() %>% 
+  parameters_selection() %>%
   model_parameters()
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(lme4)
 
 lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data = iris)  %>%
-  parameters_selection() %>% 
-  model_parameters() %>% 
+  parameters_selection() %>%
+  model_parameters() %>%
   knitr::kable(digits=1)
 ```
 
@@ -269,6 +269,12 @@ parameters_selection(model) %>%
 
 ## Variable and features extraction
 
+
+### How many factors to retain in Factor Analysis (FA)
+
+```{r, warning=FALSE, message=FALSE}
+n_factors(attitude)
+```
 
 ## Miscellaneous
 

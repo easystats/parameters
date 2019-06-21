@@ -8,7 +8,53 @@ template:
   params:
     bootswatch: cosmo
 
+reference:
+- title: "Model Parameters"
+  contents:
+  - starts_with("model_parameters")
+  - n_parameters
+  - standard_error
+  - p_value
+  - p_value_kenward
+  - ci_wald
+  - ci.merMod
+  - equivalence_test
+  - omega_squared
+  
+- title: "Parameters Engineering"
+  contents:
+  - model_bootstrap
+  - parameters_bootstrap
+  - parameters_standardize
+  - marginal_parameters
+  
+- title: "Variable/Feature Reduction"
+  contents:
 
+  - check_factorstructure
+  - check_kmo
+  - check_sphericity
+  - n_factors
+  - parameters_selection
+  
+
+- title: "Index Conversion"
+  contents:
+  - d_to_r
+  - odds_to_d
+  - odds_to_probs
+  
+- title: "Miscellaneous"
+  contents:
+  - standardize
+  - standardize.data.frame
+  - normalize
+  - describe_distribution
+  - skewness
+  - principal_components
+  - smoothness
+  
+  
 navbar:
   type: default
   left:
@@ -20,13 +66,16 @@ navbar:
     href: reference/index.html
   - text: Parameters Engineering
     menu:
-      - text: 'Bootstrapping Models and Parameters'
+      - text: 'Bootstrapped parameters'
         href: articles/bootstrapping.html
-      - text: 'Standardizing Models and Parameters'
+      - text: 'Standardized parameters'
         href: articles/standardization.html
   - text: Variable/Feature Reduction
     menu:
-      - text: 'Variable Selection (stepwise, projpred, ...)'
-        href: articles/variable_selection.html
-      - text: 'Variable Extraction (PCA, FA, ...)'
+      - text: 'How many factors to retain in Factor Analysis (FA)'
+        href: articles/n_factors.html
+      - text: 'Variable extraction (PCA, FA, ...)'
         href: articles/variable_extraction.html
+      - text: 'Variable selection (stepwise, projpred, ...)'
+        href: articles/variable_selection.html
+

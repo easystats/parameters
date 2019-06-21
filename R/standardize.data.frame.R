@@ -40,10 +40,10 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
     x <- .factor_to_numeric(x)
   }
 
-  if(robust){
+  if (robust) {
     center <- stats::median(x)
     scale <- stats::mad(x)
-  } else{
+  } else {
     center <- mean(x)
     scale <- stats::sd(x)
   }

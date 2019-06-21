@@ -94,16 +94,16 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Transformation
+    Parameters Engineering
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrapping.html">Bootstrapping Models and Parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
     </li>
     <li>
-      <a href="../articles/standardization.html">Standardizing Models and Parameters</a>
+      <a href="../articles/standardization.html">Standardized parameters</a>
     </li>
   </ul>
 </li>
@@ -115,10 +115,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/variable_selection.html">Variable Selection (stepwise, projpred, ...)</a>
+      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
     </li>
     <li>
-      <a href="../articles/variable_extraction.html">Variable Extraction (PCA, FA, ...)</a>
+      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
     </li>
   </ul>
 </li>
@@ -216,15 +219,15 @@ the</p></td>
 #&gt; 4                   Petal.Width      0.93017273
 #&gt; 5 Speciesversicolor:Petal.Width      0.49619195
 #&gt; 6  Speciesvirginica:Petal.Width     -0.27934215</div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2sd"</span>)</div><div class='output co'>#&gt;                       Parameter Std_Coefficient
-#&gt; 1                   (Intercept)      0.02984746
-#&gt; 2             Speciesversicolor     -0.08298705
-#&gt; 3              Speciesvirginica      0.09492924
-#&gt; 4                   Petal.Width      0.85622714
-#&gt; 5 Speciesversicolor:Petal.Width      0.45674637
-#&gt; 6  Speciesvirginica:Petal.Width     -0.25713539</div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2sd"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                       Parameter Std_Coefficient
-#&gt; 1                   (Intercept)      0.08980462
-#&gt; 2             Speciesversicolor     -0.04214967
-#&gt; 3              Speciesvirginica      0.06219525
+#&gt; 1                   (Intercept)      0.02046621
+#&gt; 2             Speciesversicolor     -0.05690368
+#&gt; 3              Speciesvirginica      0.06509237
+#&gt; 4                   Petal.Width      1.01050442
+#&gt; 5 Speciesversicolor:Petal.Width      0.53904414
+#&gt; 6  Speciesvirginica:Petal.Width     -0.30346673</div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2sd"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;                       Parameter Std_Coefficient
+#&gt; 1                   (Intercept)      0.09672589
+#&gt; 2             Speciesversicolor     -0.04539816
+#&gt; 3              Speciesvirginica      0.06698865
 #&gt; 4                   Petal.Width      0.93017273
 #&gt; 5 Speciesversicolor:Petal.Width      0.49619195
 #&gt; 6  Speciesvirginica:Petal.Width     -0.27934215</div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"full"</span>)</div><div class='output co'>#&gt;                       Parameter Std_Coefficient
