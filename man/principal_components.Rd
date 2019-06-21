@@ -5,17 +5,20 @@
 \alias{PCA}
 \title{Principal Components Analysis (PCA)}
 \usage{
-principal_components(x, n = NULL, threshold = NULL,
+principal_components(x, n = NULL, sort = FALSE, threshold = NULL,
   standardize = TRUE, ...)
 
-PCA(x, n = NULL, threshold = NULL, standardize = TRUE, ...)
+PCA(x, n = NULL, sort = FALSE, threshold = NULL,
+  standardize = TRUE, ...)
 }
 \arguments{
 \item{x}{A dataframe.}
 
 \item{n}{Number of components to extract. If \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}.}
 
-\item{threshold}{A value between 0 and 1 indicating which (absolute) values from the loadings should be removed.}
+\item{sort}{Sort the loadings.}
+
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable.}
 
 \item{standardize}{A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).}
 
@@ -26,7 +29,8 @@ This function performs a principal component analysis (PCA) and returns the load
 }
 \examples{
 library(parameters)
+
 principal_components(mtcars[, 1:5])
 principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
-
+principal_components(mtcars[, 1:7], n = 3, threshold = "max", sort = TRUE)
 }
