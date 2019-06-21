@@ -12,8 +12,9 @@
 #' @examples
 #' library(parameters)
 #'
-#' principal_components(mtcars)
-#' principal_components(mtcars, n = "all", threshold = 0.2)
+#' x <- mtcars[, 1:7]
+#' principal_components(x)
+#' principal_components(x, n = "all", threshold = 0.2)
 #'
 #' @importFrom stats prcomp
 #' @export
@@ -35,9 +36,20 @@ principal_components.data.frame <- function(x, n = NULL, threshold = NULL, stand
     x <- standardize(x, ...)
   }
 
-
   # PCA
   pca <- stats::prcomp(x, retx = TRUE, center = FALSE, scale. = FALSE, ...)
+
+
+  # N factors
+  if(is.null(n)){
+    n <- as.numeric(n_factors(x, type = "PCA", rotation = "none", ...))
+  } else if(n == "all"){
+    n <- length(pca$sdev)
+  } else if(n > length(pca$sdev)){
+    n <- length(pca$sdev)
+  }
+
+
 
   # Re-add centers and scales
   if(standardize){
@@ -48,34 +60,41 @@ principal_components.data.frame <- function(x, n = NULL, threshold = NULL, stand
   # Summary
   eigenvalues <- pca$sdev^2
   data_summary <- data_frame(
-    Components = sprintf("PC%i", seq_len(length(pca$sdev))),
+    Component = sprintf("PC%i", seq_len(length(pca$sdev))),
     SD = pca$sdev,
     Eigenvalues = eigenvalues,
     Variance = eigenvalues / sum(eigenvalues),
     Variance_Cumulative = cumsum(eigenvalues / sum(eigenvalues))
   )
 
+  pca$sdev <-  pca$sdev[1:n]
+  pca$rotation <- pca$rotation[, 1:n]
+  pca$x <- pca$x[, 1:n]
+  data_summary <- data_summary[1:n, ]
 
-  # N factors
-  if(is.null(n)){
-    n <- as.numeric(n_factors(x, type = "PCA", rotation = "none", ...))
-  } else if(n == "all"){
-    n <- nrow(data_summary)
-  } else if(n > nrow(data_summary)){
-    n <- nrow(data_summary)
-  } else{
-    stop("'n' must be 'all', NULL or a number.")
-  }
+
 
   # Compute loadings
   loadings <- as.data.frame(pca$rotation %*% diag(pca$sdev))
-  names(loadings) <- data_summary$Components
+  names(loadings) <- data_summary$Component
+
+  # Best representation (max loading)
+  rowmax_index <- sapply(as.data.frame(t(loadings)), function(x) which.max(abs(x)))
+  rowmax <- sapply(as.data.frame(t(loadings)), function(x) x[which.max(abs(x))])
+  loadings_max <- data_frame(Component = names(loadings)[rowmax_index], Loading = rowmax)
+
+  # Format
   loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
   row.names(loadings) <- NULL
+  loadings_max <- cbind(data.frame(Variable = row.names(loadings_max)), loadings_max)
+  row.names(loadings_max) <- NULL
+
+
 
   attr(loadings, "summary") <- data_summary
   attr(loadings, "pca") <- pca
   attr(loadings, "scores") <- pca$x
+  attr(loadings, "loadings_max") <- attr(loadings, "scores") <- pca$x
   attr(loadings, "n") <- n
 
   # Replace by NA all cells below threshold
@@ -96,6 +115,11 @@ summary.PCA <- function(object, ...){
 }
 
 #' @export
+model_parameters.PCA <- function(model, ...){
+  attributes(model)$summary
+}
+
+#' @export
 predict.PCA <- function(object, ...){
   predict(attributes(object)$pca, ...)
 }
@@ -104,7 +128,7 @@ predict.PCA <- function(object, ...){
 print.PCA <- function(x, ...){
   cat(.text_components_variance(x, type = "principal component"))
   cat("\n\n")
-  print(format(as.data.frame(x)))
+  print(format(as.data.frame(x), ...))
 }
 
 
