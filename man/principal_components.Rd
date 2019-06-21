@@ -26,9 +26,7 @@ This function performs a principal component analysis (PCA) and returns the load
 }
 \examples{
 library(parameters)
-
-x <- mtcars[, 1:7]
-principal_components(x)
-principal_components(x, n = "all", threshold = 0.2)
+principal_components(mtcars[, 1:5])
+principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 
 }

@@ -11,14 +11,13 @@
 #'
 #' @examples
 #' library(parameters)
-#'
-#' x <- mtcars[, 1:7]
-#' principal_components(x)
-#' principal_components(x, n = "all", threshold = 0.2)
+
+#' principal_components(mtcars[, 1:5])
+#' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 #'
 #' @importFrom stats prcomp
 #' @export
-principal_components <- function(x, n = NULL, threshold = NULL, standardize = TRUE, ...) {
+principal_components <- function(x, n = NULL, sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
   UseMethod("principal_components")
 }
 
@@ -68,14 +67,18 @@ principal_components.data.frame <- function(x, n = NULL, threshold = NULL, stand
   )
 
   pca$sdev <-  pca$sdev[1:n]
-  pca$rotation <- pca$rotation[, 1:n]
-  pca$x <- pca$x[, 1:n]
-  data_summary <- data_summary[1:n, ]
+  pca$rotation <- pca$rotation[, 1:n, drop=FALSE]
+  pca$x <- pca$x[, 1:n, drop=FALSE]
+  data_summary <- data_summary[1:n, , drop=FALSE]
 
 
 
   # Compute loadings
-  loadings <- as.data.frame(pca$rotation %*% diag(pca$sdev))
+  if(length(pca$sdev) > 1){
+    loadings <- as.data.frame(pca$rotation %*% diag(pca$sdev))
+  } else{
+    loadings <- as.data.frame(pca$rotation %*% pca$sdev)
+  }
   names(loadings) <- data_summary$Component
 
   # Best representation (max loading)
@@ -96,6 +99,11 @@ principal_components.data.frame <- function(x, n = NULL, threshold = NULL, stand
   attr(loadings, "scores") <- pca$x
   attr(loadings, "loadings_max") <- attr(loadings, "scores") <- pca$x
   attr(loadings, "n") <- n
+
+  # Sorting
+  # if(sort){
+  #   sort
+  # }
 
   # Replace by NA all cells below threshold
   if(!is.null(threshold)){
@@ -154,14 +162,14 @@ print.PCA <- function(x, ...){
   text <- paste0(text,
                  " accounted for ",
                  sprintf("%.2f", max(summary$Variance_Cumulative) * 100),
-                 "% of the total variance")
+                 "% of the total variance of the original data")
 
   if (nrow(summary) == 1) {
     text <- paste0(text, ".")
   } else{
     text <- paste0(text,
                    " (",
-                   paste0(summary$Components,
+                   paste0(summary$Component,
                           " = ",
                           sprintf("%.2f", summary$Variance * 100),
                           "%", collapse = ", "),
