@@ -65,7 +65,6 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   eigenvalues <- pca$sdev^2
   data_summary <- data_frame(
     Component = sprintf("PC%i", seq_len(length(pca$sdev))),
-    SD = pca$sdev,
     Eigenvalues = eigenvalues,
     Variance = eigenvalues / sum(eigenvalues),
     Variance_Cumulative = cumsum(eigenvalues / sum(eigenvalues))
@@ -98,24 +97,26 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   row.names(loadings_max) <- NULL
 
 
-
+  # Add attributes
   attr(loadings, "summary") <- data_summary
   attr(loadings, "pca") <- pca
+  attr(loadings, "rotation") <- "none"
   attr(loadings, "scores") <- pca$x
   attr(loadings, "loadings_max") <- loadings_max
   attr(loadings, "n") <- n
 
+  loading_cols <- 2:(n+1)
   # Sorting
   if (sort) {
-    loadings <- .sort_loadings(loadings)
+    loadings <- .sort_loadings(loadings, cols = loading_cols)
   }
 
   # Replace by NA all cells below threshold
   if (!is.null(threshold)) {
     if (threshold == "max") {
       for (i in 1:nrow(loadings)) {
-        maxi <- max(abs(loadings[i, -1]))
-        loadings[i, -1][abs(loadings[i, -1]) < maxi] <- NA
+        maxi <- max(abs(loadings[i, loading_cols]))
+        loadings[i, loading_cols][abs(loadings[i, loading_cols]) < maxi] <- NA
       }
     } else {
       loadings[, sapply(loadings, is.numeric)][abs(loadings[, sapply(loadings, is.numeric)]) < threshold] <- NA
@@ -186,6 +187,11 @@ principal_components.merMod <- principal_components.lm
     text <- paste0("The ", nrow(summary), " ", type, "s")
   }
 
+  # rotation
+  if(attributes(x)$rotation != "none"){
+    text <- paste0(text, " (", attributes(x)$rotation, " rotation)")
+  }
+
   text <- paste0(
     text,
     " accounted for ",
@@ -214,10 +220,10 @@ principal_components.merMod <- principal_components.lm
 
 
 #' @keywords internal
-.sort_loadings <- function(loadings) {
+.sort_loadings <- function(loadings, cols = -1) {
 
   # Remove variable name column
-  x <- loadings[, -1]
+  x <- loadings[, cols]
   row.names(x) <- NULL
 
   # Initialize clusters
