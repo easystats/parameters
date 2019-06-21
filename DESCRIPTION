@@ -31,10 +31,12 @@ Suggests:
 	caret,
 	covr,
 	dplyr,
+	EGAnet,
 	knitr,
 	lme4,
 	logspline,
 	MASS,
+	nFactors,
 	pbkrtest,
 	psych,
 	projpred,
@@ -45,7 +47,7 @@ Suggests:
 	testthat,
 	VGAM
 Remotes: 
-	easystats/bayestestR
+	https://github.com/davidruegamer/cAIC4dev
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

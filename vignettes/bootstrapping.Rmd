@@ -1,5 +1,5 @@
 ---
-title: "Bootstrapping models and parameters"
+title: "Bootstrapped parameters"
 output: 
   github_document:
     toc: true
@@ -11,12 +11,21 @@ output:
     fig_height: 6
 tags: [r, bayesian, gam, smooth]
 vignette: >
-  %\VignetteIndexEntry{Get Started with Bayesian Analysis}
+  %\VignetteIndexEntry{Bootstrapped parameters}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(comment=">")
+options(digits=2)
+
+set.seed(333)
+```
 
 # Introduction
 

@@ -5,7 +5,7 @@
 \title{Bayesian Models Parameters}
 \usage{
 \method{model_parameters}{stanreg}(model, centrality = "median",
-  dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_ci = 1, bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"), priors = TRUE, standardize = FALSE,
   standardize_robust = FALSE, iterations = 1000, ...)

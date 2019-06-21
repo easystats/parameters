@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data Standardization — standardize.data.frame • parameters</title>
+<title>Data Standardization (Z-scores) — standardize.data.frame • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Data Standardization — standardize.data.frame" />
+<meta property="og:title" content="Data Standardization (Z-scores) — standardize.data.frame" />
 
-<meta property="og:description" content="Standardize (scale and reduce, Z-score) the data so that the
+<meta property="og:description" content="Standardize (centering and scaling, Z-score) the data so that the
   values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1)
   or Median Absolute Deviance (median = 0, MAD = 1). A normalization
   scales all numeric variables in the 0 - 1 range." />
@@ -90,20 +90,41 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
+  <a href="../reference/index.html">Features</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Parameters Engineering
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
     </li>
     <li>
-      <a href="../articles/standardization.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardized parameters</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Variable/Feature Reduction
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
     </li>
   </ul>
 </li>
@@ -123,14 +144,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data Standardization</h1>
+    <h1>Data Standardization (Z-scores)</h1>
     
     <div class="hidden name"><code>standardize.data.frame.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Standardize (scale and reduce, Z-score) the data so that the
+    <p>Standardize (centering and scaling, Z-score) the data so that the
   values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1)
   or Median Absolute Deviance (median = 0, MAD = 1). A <code>normalization</code>
   scales all numeric variables in the 0 - 1 range.</p>

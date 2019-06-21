@@ -1,6 +1,6 @@
-#' h-test Parameters
+#' Correlations and t-test Parameters
 #'
-#' Parameters of h-tests.
+#' Parameters of h-tests (correlations, t-tests).
 #'
 #' @param model Object of class \code{htest}.
 #' @param bootstrap Should estimates be bootsrapped?

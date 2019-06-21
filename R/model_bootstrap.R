@@ -2,6 +2,10 @@
 #'
 #' Bootstrap a statistical model n times to return a data.frame of estimates.
 #'
+#' @examples
+#' model <- lm(mpg ~ wt + cyl, data = mtcars)
+#' head(model_bootstrap(model))
+#'
 #' @param model Statistical model.
 #' @param iterations The number of bootstrap replicates.
 #' @param verbose Hide possible refit messages.
@@ -20,12 +24,7 @@ model_bootstrap <- function(model, iterations = 1000, verbose = FALSE, ...) {
 
 
 
-#' Model bootstrapping
-#'
-#' @inheritParams model_bootstrap
-#' @examples
-#' model <- lm(mpg ~ wt + cyl, data = mtcars)
-#' model_bootstrap(model)
+
 #' @importFrom stats coef update setNames
 #' @importFrom insight get_data find_parameters get_parameters
 #' @importFrom boot boot
@@ -61,7 +60,6 @@ model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
 
 
 #' @export
-#' @rdname model_bootstrap.lm
 model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ...) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("This function requires package `lme4` to work. Please install it.")
@@ -121,17 +119,7 @@ model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
 
 
 
-#' Coerce to a Data Frame
-#'
-#'
-#' @param x Any R object.
-#' @param row.names Not used.
-#' @param optional Not used.
-#' @param iterations The number of bootstrap replicates.
-#' @param verbose Hide possible refit messages.
-#' @param ... Additional arguments to be passed to or from methods.
-#'
-#' @method as.data.frame lm
+
 #' @export
 as.data.frame.lm <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
   return(model_bootstrap(x, iterations = iterations, verbose = verbose, ...))

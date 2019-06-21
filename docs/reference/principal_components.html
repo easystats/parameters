@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Principal Components Analysis — principal_components • parameters</title>
+<title>Principal Component Analysis (PCA) — principal_components • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,12 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Principal Components Analysis — principal_components" />
+<meta property="og:title" content="Principal Component Analysis (PCA) — principal_components" />
 
-<meta property="og:description" content="This function performs a principal component analysis and
-  returns the loadings (of the unrotated matrix) as data frame, or
-  returns a rotated matrix of the loadings (if rotation is not
-  NULL)." />
+<meta property="og:description" content="This function performs a principal component analysis (PCA) and returns the loadings (of the unrotated matrix) as dataframe." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -90,20 +87,41 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
+  <a href="../reference/index.html">Features</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Parameters Engineering
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
     </li>
     <li>
-      <a href="../articles/standardization.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardized parameters</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Variable/Feature Reduction
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
     </li>
   </ul>
 </li>
@@ -123,95 +141,123 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Principal Components Analysis</h1>
+    <h1>Principal Component Analysis (PCA)</h1>
     
     <div class="hidden name"><code>principal_components.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function performs a principal component analysis and
-  returns the loadings (of the unrotated matrix) as data frame, or
-  returns a rotated matrix of the loadings (if <code>rotation</code> is not
-  <code>NULL</code>).</p>
+    <p>This function performs a principal component analysis (PCA) and returns the loadings (of the unrotated matrix) as dataframe.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>principal_components</span>(<span class='no'>x</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_comp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>principal_components</span>(<span class='no'>x</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+
+<span class='fu'>PCA</span>(<span class='no'>x</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A data frame or a <code><a href='https://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp</a></code>-object.</p></td>
+      <td><p>A dataframe.</p></td>
     </tr>
     <tr>
-      <th>rotation</th>
-      <td><p>Rotation of the factor loadings. May be one of
-<code>"varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster"</code>
-or <code>"none"</code>. If <code>rotatoin = NULL</code>, loadings for the principal
-components from the unrotated matrix are returned.</p></td>
+      <th>n</th>
+      <td><p>Number of components to extract. If <code>n = NULL</code>, the number of components is selected through <code><a href='n_factors.html'>n_factors</a></code>.</p></td>
     </tr>
     <tr>
-      <th>n_comp</th>
-      <td><p>Number of components to extract. If <code>rotation = "varmiax"</code>
-and <code>n_comp = NULL</code>, number of components is based on the Kaiser-criteria.</p></td>
+      <th>sort</th>
+      <td><p>Sort the loadings.</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable.</p></td>
+    </tr>
+    <tr>
+      <th>standardize</th>
+      <td><p>A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>If <code>rotation = NULL</code>, a data frame with all loadings of principal
-  components. Else, a rotated loadings matrix, as data frame. Details on the
-  variance components are saved as attributes.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The <code><a href='https://www.rdocumentation.org/packages/base/topics/print'>print()</a></code>-method has a <code>cutoff</code>-argument, which is a
-  scalar between 0 and 1, indicating which (absolute) values from the
-  <em>rotated</em> loadings (i.e. when <code>rotation</code> is <em>not</em> <code>NULL</code>)
-  should be blank in the output. By default, all loadings between -.1 and .1
-  are not shown.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>iris</span>)
-<span class='fu'>principal_components</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])</div><div class='output co'>#&gt;         PC1       PC2        PC3         PC4
-#&gt; 1 1.7083611 0.9560494 0.38308860 0.143926497
-#&gt; 2 2.9184978 0.9140305 0.14675688 0.020714836
-#&gt; 3 0.7296245 0.2285076 0.03668922 0.005178709
-#&gt; 4 0.7296245 0.9581321 0.99482129 1.000000000</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>iris</span>)
-<span class='fu'>principal_components</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"varimax"</span>, <span class='kw'>n_comp</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt;                     PC1         PC2
-#&gt; Sepal.Length  0.9593030 -0.04833591
-#&gt; Sepal.Width  -0.1445841 -0.98489327
-#&gt; Petal.Length  0.9442042  0.30365829
-#&gt; Petal.Width   0.9324373  0.25659503</div><div class='input'>
-<span class='no'>pr</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"varimax"</span>, <span class='kw'>n_comp</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
-<span class='co'># show all</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>pr</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>.001</span>)</div><div class='output co'>#&gt;                     PC1         PC2
-#&gt; Sepal.Length  0.9593030 -0.04833591
-#&gt; Sepal.Width  -0.1445841 -0.98489327
-#&gt; Petal.Length  0.9442042  0.30365829
-#&gt; Petal.Width   0.9324373  0.25659503</div><div class='input'>
-<span class='co'># show only some</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>pr</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>.5</span>)</div><div class='output co'>#&gt;                     PC1         PC2
-#&gt; Sepal.Length  0.9593030 -0.04833591
-#&gt; Sepal.Width  -0.1445841 -0.98489327
-#&gt; Petal.Length  0.9442042  0.30365829
-#&gt; Petal.Width   0.9324373  0.25659503</div></pre>
+<span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt; The unique principal component accounted for 80.76% of the total variance of the original data.
+#&gt; 
+#&gt;   Variable        PC1
+#&gt; 1      mpg -0.9292872
+#&gt; 2      cyl  0.9588415
+#&gt; 3     disp  0.9506985
+#&gt; 4       hp  0.8627550
+#&gt; 5     drat -0.7789827</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; The 7 principal components accounted for 100.00% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%, PC7 = 0.70%).
+#&gt; 
+#&gt;   Variable        PC1        PC2       PC3        PC4       PC5        PC6 PC7
+#&gt; 1      mpg -0.9308661         NA        NA -0.3047324        NA         NA  NA
+#&gt; 2      cyl  0.9578708         NA        NA         NA        NA -0.2149809  NA
+#&gt; 3     disp  0.9528463         NA        NA -0.2335489        NA         NA  NA
+#&gt; 4       hp  0.8744936  0.3623835        NA         NA 0.2992024         NA  NA
+#&gt; 5     drat -0.7468681  0.4824288 0.4435378         NA        NA         NA  NA
+#&gt; 6       wt  0.8825092 -0.3466793 0.2587107         NA        NA         NA  NA
+#&gt; 7     qsec -0.5410937 -0.8058477        NA         NA        NA         NA  NA</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; The 3 principal components accounted for 94.11% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%).
+#&gt; 
+#&gt;   Variable        PC1        PC2 PC3
+#&gt; 1     disp  0.9528463         NA  NA
+#&gt; 2      mpg -0.9308661         NA  NA
+#&gt; 3      cyl  0.9578708         NA  NA
+#&gt; 4     drat -0.7468681         NA  NA
+#&gt; 5       wt  0.8825092         NA  NA
+#&gt; 6       hp  0.8744936         NA  NA
+#&gt; 7     qsec         NA -0.8058477  NA</div><div class='input'>
+<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>])
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;   Component       SD Eigenvalues  Variance Variance_Cumulative
+#&gt; 1       PC1 2.009463     4.03794 0.8075879           0.8075879</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>pca</span>, <span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>])</div><div class='output co'>#&gt;                             PC1
+#&gt; Mazda RX4           -0.83958112
+#&gt; Mazda RX4 Wag       -0.83958112
+#&gt; Datsun 710          -1.78076155
+#&gt; Hornet 4 Drive       0.09834476
+#&gt; Hornet Sportabout    1.58552749
+#&gt; Valiant              0.42628595
+#&gt; Duster 360           2.31798915
+#&gt; Merc 240D           -1.83392218
+#&gt; Merc 230            -1.69378203
+#&gt; Merc 280            -0.60554684
+#&gt; Merc 280C           -0.49812301
+#&gt; Merc 450SE           1.52990575
+#&gt; Merc 450SL           1.46084757
+#&gt; Merc 450SLC          1.62198332
+#&gt; Cadillac Fleetwood   2.99730327
+#&gt; Lincoln Continental  2.96336452
+#&gt; Chrysler Imperial    2.48424862
+#&gt; Fiat 128            -2.96506160
+#&gt; Honda Civic         -3.52699413
+#&gt; Toyota Corolla      -3.21693607
+#&gt; Toyota Corona       -1.50101897
+#&gt; Dodge Challenger     1.79695027
+#&gt; AMC Javelin          1.48376642
+#&gt; Camaro Z28           1.97953272
+#&gt; Pontiac Firebird     1.75060571
+#&gt; Fiat X1-9           -2.57258674
+#&gt; Porsche 914-2       -2.41238961
+#&gt; Lotus Europa        -2.22991874
+#&gt; Ford Pantera L       1.55523735
+#&gt; Ferrari Dino        -0.18704672
+#&gt; Maserati Bora        2.36338454
+#&gt; Volvo 142E          -1.71202696</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

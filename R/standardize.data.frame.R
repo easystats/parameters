@@ -40,19 +40,23 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
     x <- .factor_to_numeric(x)
   }
 
-  if (method %in% c("default", "classic", "refit", "full")) {
-    if (robust == FALSE) {
-      return(as.vector((x - mean(x)) / stats::sd(x)))
-    } else {
-      return(as.vector((x - stats::median(x)) / stats::mad(x)))
-    }
+  if (robust) {
+    center <- stats::median(x)
+    scale <- stats::mad(x)
   } else {
-    if (robust == FALSE) {
-      return(as.vector((x - mean(x)) / (2 * stats::sd(x))))
-    } else {
-      return(as.vector((x - stats::median(x)) / (2 * stats::mad(x))))
-    }
+    center <- mean(x)
+    scale <- stats::sd(x)
   }
+
+  if (method %in% c("default", "classic", "refit", "full")) {
+    x <- as.vector((x - center) / scale)
+  } else {
+    x <- as.vector((x - center) / 2 * scale)
+  }
+
+  attr(x, "center") <- center
+  attr(x, "scale") <- scale
+  x
 }
 
 
@@ -115,9 +119,9 @@ standardize.grouped_df <- function(x, robust = FALSE, method = "default", select
 }
 
 
-#' @title Data Standardization
+#' Data Standardization (Z-scores)
 #'
-#' @description Standardize (scale and reduce, Z-score) the data so that the
+#' Standardize (centering and scaling, Z-score) the data so that the
 #'   values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1)
 #'   or Median Absolute Deviance (median = 0, MAD = 1). A \code{normalization}
 #'   scales all numeric variables in the 0 - 1 range.
@@ -142,5 +146,8 @@ standardize.data.frame <- function(x, robust = FALSE, method = "default", select
   }
 
   x[select] <- lapply(x[select], standardize, robust = robust, method = method, verbose = verbose, force = force)
+
+  attr(x, "center") <- sapply(x[select], function(z) attributes(z)$center)
+  attr(x, "scale") <- sapply(x[select], function(z) attributes(z)$scale)
   x
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.merMod.R
 \name{model_parameters.merMod}
 \alias{model_parameters.merMod}
-\title{Linear Mixed Model Parameters}
+\title{Mixed Model Parameters}
 \usage{
 \method{model_parameters}{merMod}(model, ci = 0.95,
   standardize = "refit", standardize_robust = FALSE,
@@ -29,7 +29,7 @@
 \item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
 }
 \description{
-Parameters of linear mixed models.
+Parameters of mixed models.
 }
 \examples{
 \dontrun{

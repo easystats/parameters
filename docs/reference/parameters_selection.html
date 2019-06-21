@@ -41,7 +41,7 @@
   
 <meta property="og:title" content="Parameters Selection — parameters_selection" />
 
-<meta property="og:description" content="Automated selection of the 'best' parameters. For frequentist simple GLMs, it performes an AIC-based stepwise selection. For Bayesian models, it uses the projpred package." />
+<meta property="og:description" content="This function performs an automated selection of the 'best' parameters, udpating and returning the &quot;best&quot; model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the projpred package." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -87,20 +87,41 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
+  <a href="../reference/index.html">Features</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Parameters Engineering
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
     </li>
     <li>
-      <a href="../articles/standardization.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardized parameters</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Variable/Feature Reduction
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
     </li>
   </ul>
 </li>
@@ -127,17 +148,19 @@
 
     <div class="ref-description">
     
-    <p>Automated selection of the 'best' parameters. For frequentist simple GLMs, it performes an AIC-based stepwise selection. For Bayesian models, it uses the <code>projpred</code> package.</p>
+    <p>This function performs an automated selection of the 'best' parameters, udpating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the <code>projpred</code> package.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for lm</span>
-<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"both"</span>,
+  <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for merMod</span>
-<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"backward"</span>,
+  <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -155,6 +178,25 @@
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     <tr>
+      <th>direction</th>
+      <td><p>the mode of stepwise search, can be one of <code>"both"</code>,
+    <code>"backward"</code>, or <code>"forward"</code>, with a default of <code>"both"</code>.
+    If the <code>scope</code> argument is missing the default for
+    <code>direction</code> is <code>"backward"</code>.  Values can be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>steps</th>
+      <td><p>the maximum number of steps to be considered.  The default is 1000
+    (essentially as many as required).  It is typically used to stop the
+    process early.</p></td>
+    </tr>
+    <tr>
+      <th>k</th>
+      <td><p>the multiple of the number of degrees of freedom used for the penalty.
+    Only <code>k = 2</code> gives the genuine AIC: <code>k = log(n)</code> is sometimes
+    referred to as BIC or SBC.</p></td>
+    </tr>
+    <tr>
       <th>method</th>
       <td><p>The method used in the variable selection. Can be NULL (default), "forward" or "L1". See <code><a href='https://www.rdocumentation.org/packages/projpred/topics/varsel'>projpred::varsel</a></code>.</p></td>
     </tr>
@@ -167,9 +209,29 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'>parameters_selection</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; [1] "wt + qsec + am"</div><div class='input'>
+<span class='fu'>parameters_selection</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = mpg ~ wt + qsec + am, data = mtcars)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)           wt         qsec           am  
+#&gt;       9.618       -3.917        1.226        2.936  
+#&gt; </div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> * <span class='no'>disp</span> * <span class='no'>hp</span> * <span class='no'>wt</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'>parameters_selection</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; [1] "cyl:hp + disp:hp + cyl:wt + disp:wt + cyl:disp:hp + cyl:hp:wt + cyl * disp + hp * wt"</div><span class='co'># NOT RUN {</span>
+<span class='fu'>parameters_selection</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = mpg ~ cyl + disp + hp + wt + cyl:disp + cyl:hp + 
+#&gt;     disp:hp + cyl:wt + disp:wt + hp:wt + cyl:disp:hp + cyl:hp:wt, 
+#&gt;     data = mtcars)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          cyl         disp           hp           wt     cyl:disp  
+#&gt;  49.1436077   -3.6167276   -1.2955318   -0.0004854   58.8328841    0.1704703  
+#&gt;      cyl:hp      disp:hp       cyl:wt      disp:wt        hp:wt  cyl:disp:hp  
+#&gt;  -0.0134573    0.0132124   -7.4915051   -0.0167172   -0.6524341   -0.0016542  
+#&gt;   cyl:hp:wt  
+#&gt;   0.0850798  
+#&gt; </div><span class='co'># NOT RUN {</span>
 <span class='co'># lme4 -------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Width</span> ~ <span class='no'>Sepal.Length</span> * <span class='no'>Petal.Width</span> * <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
@@ -182,8 +244,7 @@
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> * <span class='no'>disp</span> * <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

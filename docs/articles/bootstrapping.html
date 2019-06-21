@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bootstrapping models and parameters • parameters</title>
+<title>Bootstrapped parameters • parameters</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Bootstrapping models and parameters">
+<meta property="og:title" content="Bootstrapped parameters">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -51,20 +51,41 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
+  <a href="../reference/index.html">Features</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Parameters Engineering
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
     </li>
     <li>
-      <a href="../articles/standardization.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardized parameters</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Variable/Feature Reduction
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
     </li>
   </ul>
 </li>
@@ -81,7 +102,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Bootstrapping models and parameters</h1>
+      <h1>Bootstrapped parameters</h1>
             
       
       
@@ -128,7 +149,7 @@
 <a class="sourceLine" id="cb2-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#2196F3"</span>, <span class="st">"#f44336"</span>, <span class="st">"#FF9800"</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-10" title="10"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-11" title="11"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Deviance (0 is the parent - true - effect)</span><span class="ch">\n</span><span class="st">"</span>)</a></code></pre></div>
-<p><img src="bootstrapping_files/figure-html/unnamed-chunk-2-1.png" width="960"></p>
+<p><img src="bootstrapping_files/figure-html/unnamed-chunk-3-1.png" width="960"></p>
 </div>
 <div id="visualisation-1" class="section level2">
 <h2 class="hasAnchor">
@@ -138,72 +159,72 @@
 <a class="sourceLine" id="cb3-3" title="3">m3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Parent_beta <span class="op">~</span><span class="st"> </span>Median_<span class="dv">4000</span>, <span class="dt">data=</span>df)</a>
 <a class="sourceLine" id="cb3-4" title="4"></a>
 <a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(m1)</a></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = Parent_beta ~ beta, data = df)
-## 
-## Residuals:
-##       Min        1Q    Median        3Q       Max 
-## -0.237657 -0.035904  0.001865  0.037246  0.272880 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 0.018092   0.001412   12.81   &lt;2e-16 ***
-## beta        0.962395   0.002476  388.65   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.0584 on 5998 degrees of freedom
-## Multiple R-squared:  0.9618, Adjusted R-squared:  0.9618 
-## F-statistic: 1.511e+05 on 1 and 5998 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>&gt; 
+&gt; Call:
+&gt; lm(formula = Parent_beta ~ beta, data = df)
+&gt; 
+&gt; Residuals:
+&gt;      Min       1Q   Median       3Q      Max 
+&gt; -0.23766 -0.03590  0.00187  0.03725  0.27288 
+&gt; 
+&gt; Coefficients:
+&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+&gt; (Intercept)  0.01809    0.00141    12.8   &lt;2e-16 ***
+&gt; beta         0.96240    0.00248   388.6   &lt;2e-16 ***
+&gt; ---
+&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+&gt; 
+&gt; Residual standard error: 0.058 on 5998 degrees of freedom
+&gt; Multiple R-squared:  0.962,   Adjusted R-squared:  0.962 
+&gt; F-statistic: 1.51e+05 on 1 and 5998 DF,  p-value: &lt;2e-16</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(m2)</a></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = Parent_beta ~ Median_1000, data = df)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.23390 -0.03658  0.00144  0.03718  0.27591 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 0.018057   0.001414   12.77   &lt;2e-16 ***
-## Median_1000 0.962428   0.002480  388.12   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.05848 on 5998 degrees of freedom
-## Multiple R-squared:  0.9617, Adjusted R-squared:  0.9617 
-## F-statistic: 1.506e+05 on 1 and 5998 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>&gt; 
+&gt; Call:
+&gt; lm(formula = Parent_beta ~ Median_1000, data = df)
+&gt; 
+&gt; Residuals:
+&gt;      Min       1Q   Median       3Q      Max 
+&gt; -0.23390 -0.03658  0.00144  0.03718  0.27591 
+&gt; 
+&gt; Coefficients:
+&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+&gt; (Intercept)  0.01806    0.00141    12.8   &lt;2e-16 ***
+&gt; Median_1000  0.96243    0.00248   388.1   &lt;2e-16 ***
+&gt; ---
+&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+&gt; 
+&gt; Residual standard error: 0.058 on 5998 degrees of freedom
+&gt; Multiple R-squared:  0.962,   Adjusted R-squared:  0.962 
+&gt; F-statistic: 1.51e+05 on 1 and 5998 DF,  p-value: &lt;2e-16</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(m3)</a></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = Parent_beta ~ Median_4000, data = df)
-## 
-## Residuals:
-##       Min        1Q    Median        3Q       Max 
-## -0.235978 -0.035901  0.001719  0.037252  0.267757 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 0.018039   0.001413   12.77   &lt;2e-16 ***
-## Median_4000 0.962497   0.002477  388.56   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.05841 on 5998 degrees of freedom
-## Multiple R-squared:  0.9618, Adjusted R-squared:  0.9618 
-## F-statistic: 1.51e+05 on 1 and 5998 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>&gt; 
+&gt; Call:
+&gt; lm(formula = Parent_beta ~ Median_4000, data = df)
+&gt; 
+&gt; Residuals:
+&gt;      Min       1Q   Median       3Q      Max 
+&gt; -0.23598 -0.03590  0.00172  0.03725  0.26776 
+&gt; 
+&gt; Coefficients:
+&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+&gt; (Intercept)  0.01804    0.00141    12.8   &lt;2e-16 ***
+&gt; Median_4000  0.96250    0.00248   388.6   &lt;2e-16 ***
+&gt; ---
+&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+&gt; 
+&gt; Residual standard error: 0.058 on 5998 degrees of freedom
+&gt; Multiple R-squared:  0.962,   Adjusted R-squared:  0.962 
+&gt; F-statistic: 1.51e+05 on 1 and 5998 DF,  p-value: &lt;2e-16</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/anova">anova</a></span>(m1, m2, m3)</a></code></pre></div>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: Parent_beta ~ beta
-## Model 2: Parent_beta ~ Median_1000
-## Model 3: Parent_beta ~ Median_4000
-##   Res.Df    RSS Df Sum of Sq F Pr(&gt;F)
-## 1   5998 20.457                      
-## 2   5998 20.511  0 -0.053527         
-## 3   5998 20.467  0  0.043847</code></pre>
+<pre><code>&gt; Analysis of Variance Table
+&gt; 
+&gt; Model 1: Parent_beta ~ beta
+&gt; Model 2: Parent_beta ~ Median_1000
+&gt; Model 3: Parent_beta ~ Median_4000
+&gt;   Res.Df  RSS Df Sum of Sq F Pr(&gt;F)
+&gt; 1   5998 20.5                      
+&gt; 2   5998 20.5  0   -0.0535         
+&gt; 3   5998 20.5  0    0.0438</code></pre>
 </div>
 </div>
 <div id="conclusion" class="section level1">

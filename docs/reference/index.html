@@ -85,20 +85,41 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
+  <a href="../reference/index.html">Features</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Parameters Engineering
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bootstrapping.html">Bootstrapping models and parameters</a>
+      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
     </li>
     <li>
-      <a href="../articles/standardization.html">Standardized Parameters</a>
+      <a href="../articles/standardization.html">Standardized parameters</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Variable/Feature Reduction
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+    </li>
+    <li>
+      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
     </li>
   </ul>
 </li>
@@ -132,61 +153,11 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-model-parameters" class="hasAnchor"><a href="#section-model-parameters" class="anchor"></a>Model Parameters</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
-        
-        <td>
-          <p><code><a href="as.data.frame.lm.html">as.data.frame(<i>&lt;lm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Coerce to a Data Frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Confidence Interval (CI)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="describe_distribution.html">describe_distribution()</a></code> </p>
-        </td>
-        <td><p>Describe a Distribution</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="d_to_r.html">d_to_r()</a></code> <code><a href="d_to_r.html">r_to_d()</a></code> <code><a href="d_to_r.html">convert_d_to_r()</a></code> <code><a href="d_to_r.html">convert_r_to_d()</a></code> </p>
-        </td>
-        <td><p>Convert between standardized difference d and correlation r.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="equivalence_test.lm.html">equivalence_test(<i>&lt;lm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Equivalence test</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="marginal_parameters.html">marginal_parameters()</a></code> </p>
-        </td>
-        <td><p>Marginal Parameters for Mixed Models
-
-Calculates marginal coefficients from fitted generalized linear mixed models.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_bootstrap.lm.html">model_bootstrap(<i>&lt;lm&gt;</i>)</a></code> <code><a href="model_bootstrap.lm.html">model_bootstrap(<i>&lt;merMod&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Model bootstrapping</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_bootstrap.html">model_bootstrap()</a></code> </p>
-        </td>
-        <td><p>Model bootstrapping</p></td>
-      </tr><tr>
         
         <td>
           <p><code><a href="model_parameters.aov.html">model_parameters(<i>&lt;aov&gt;</i>)</a></code> <code><a href="model_parameters.aov.html">model_parameters(<i>&lt;anova&gt;</i>)</a></code> <code><a href="model_parameters.aov.html">model_parameters(<i>&lt;aovlist&gt;</i>)</a></code> </p>
@@ -201,19 +172,13 @@ Calculates marginal coefficients from fitted generalized linear mixed models.</p
       </tr><tr>
         
         <td>
-          <p><code><a href="model_parameters.glm.html">model_parameters(<i>&lt;glm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Linear Model Parameters</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="model_parameters.htest.html">model_parameters(<i>&lt;htest&gt;</i>)</a></code> </p>
         </td>
-        <td><p>h-test Parameters</p></td>
+        <td><p>Correlations and t-test Parameters</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="model_parameters.lm.html">model_parameters(<i>&lt;lm&gt;</i>)</a></code> </p>
+          <p><code><a href="model_parameters.lm.html">model_parameters(<i>&lt;glm&gt;</i>)</a></code> <code><a href="model_parameters.lm.html">model_parameters(<i>&lt;lm&gt;</i>)</a></code> </p>
         </td>
         <td><p>Linear Model Parameters</p></td>
       </tr><tr>
@@ -221,7 +186,7 @@ Calculates marginal coefficients from fitted generalized linear mixed models.</p
         <td>
           <p><code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;merMod&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Linear Mixed Model Parameters</p></td>
+        <td><p>Mixed Model Parameters</p></td>
       </tr><tr>
         
         <td>
@@ -237,51 +202,15 @@ Calculates marginal coefficients from fitted generalized linear mixed models.</p
       </tr><tr>
         
         <td>
-          <p><code><a href="normalize.html">normalize()</a></code> </p>
+          <p><code><a href="n_parameters.html">n_parameters()</a></code> </p>
         </td>
-        <td><p>Normalization</p></td>
+        <td><p>Count how many parameters in a model</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="odds_to_d.html">odds_to_d()</a></code> <code><a href="odds_to_d.html">convert_odds_to_d()</a></code> <code><a href="odds_to_d.html">d_to_odds()</a></code> <code><a href="odds_to_d.html">convert_d_to_odds()</a></code> </p>
+          <p><code><a href="standard_error.html">standard_error()</a></code> </p>
         </td>
-        <td><p>Convert between (log)odds and standardized difference.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="odds_to_probs.html">odds_to_probs()</a></code> <code><a href="odds_to_probs.html">convert_odds_to_probs()</a></code> </p>
-        </td>
-        <td><p>Convert (log)odds to probabilies.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="omega_squared.html">omega_squared()</a></code> </p>
-        </td>
-        <td><p>(Partial) Omega Squared.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="parameters_bootstrap.html">parameters_bootstrap()</a></code> </p>
-        </td>
-        <td><p>Parameters bootstrapping</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="parameters_selection.html">parameters_selection()</a></code> </p>
-        </td>
-        <td><p>Parameters Selection</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="parameters_standardize.html">parameters_standardize()</a></code> </p>
-        </td>
-        <td><p>Parameters standardization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="principal_components.html">principal_components()</a></code> </p>
-        </td>
-        <td><p>Principal Components Analysis</p></td>
+        <td><p>Extract standard errors</p></td>
       </tr><tr>
         
         <td>
@@ -303,28 +232,128 @@ Calculates marginal coefficients from fitted generalized linear mixed models.</p
       </tr><tr>
         
         <td>
-          <p><code><a href="skewness.html">skewness()</a></code> <code><a href="skewness.html">kurtosis()</a></code> </p>
+          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Compute Skewness and Kurtosis</p></td>
+        <td><p>Confidence Interval (CI)</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="smoothness.html">smoothness()</a></code> </p>
+          <p><code><a href="reexports.html">reexports</a></code> </p>
         </td>
-        <td><p>Quantify the smoothness of a vector</p></td>
+        <td><p>Objects exported from other packages</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="standardize.data.frame.html">standardize(<i>&lt;data.frame&gt;</i>)</a></code> </p>
+          <p><code><a href="omega_squared.html">omega_squared()</a></code> </p>
         </td>
-        <td><p>Data Standardization</p></td>
+        <td><p>(Partial) Omega Squared.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-parameters-engineering" class="hasAnchor"><a href="#section-parameters-engineering" class="anchor"></a>Parameters Engineering</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="model_bootstrap.html">model_bootstrap()</a></code> </p>
+        </td>
+        <td><p>Model bootstrapping</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="standardize.lm.html">standardize(<i>&lt;lm&gt;</i>)</a></code> </p>
+          <p><code><a href="parameters_bootstrap.html">parameters_bootstrap()</a></code> </p>
         </td>
-        <td><p>Model Standardization</p></td>
+        <td><p>Parameters bootstrapping</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_standardize.html">parameters_standardize()</a></code> </p>
+        </td>
+        <td><p>Parameters standardization</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="marginal_parameters.html">marginal_parameters()</a></code> </p>
+        </td>
+        <td><p>Marginal Parameters for Mixed Models
+
+Calculates marginal coefficients from fitted generalized linear mixed models.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-variable-feature-reduction" class="hasAnchor"><a href="#section-variable-feature-reduction" class="anchor"></a>Variable/Feature Reduction</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="check_factorstructure.html">check_factorstructure()</a></code> </p>
+        </td>
+        <td><p>Check suitability of data for Factor Analysis (FA)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_kmo.html">check_kmo()</a></code> </p>
+        </td>
+        <td><p>Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA) for Factor Analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_sphericity.html">check_sphericity()</a></code> </p>
+        </td>
+        <td><p>Bartlett's Test of Sphericity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="n_factors.html">n_factors()</a></code> </p>
+        </td>
+        <td><p>Number of Components/Factors to Retain</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_selection.html">parameters_selection()</a></code> </p>
+        </td>
+        <td><p>Parameters Selection</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-index-conversion" class="hasAnchor"><a href="#section-index-conversion" class="anchor"></a>Index Conversion</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="d_to_r.html">d_to_r()</a></code> <code><a href="d_to_r.html">r_to_d()</a></code> <code><a href="d_to_r.html">convert_d_to_r()</a></code> <code><a href="d_to_r.html">convert_r_to_d()</a></code> </p>
+        </td>
+        <td><p>Convert between standardized difference d and correlation r.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="odds_to_d.html">odds_to_d()</a></code> <code><a href="odds_to_d.html">convert_odds_to_d()</a></code> <code><a href="odds_to_d.html">d_to_odds()</a></code> <code><a href="odds_to_d.html">convert_d_to_odds()</a></code> </p>
+        </td>
+        <td><p>Convert between (log)odds and standardized difference.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="odds_to_probs.html">odds_to_probs()</a></code> <code><a href="odds_to_probs.html">convert_odds_to_probs()</a></code> </p>
+        </td>
+        <td><p>Convert (log)odds to probabilies.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-miscellaneous" class="hasAnchor"><a href="#section-miscellaneous" class="anchor"></a>Miscellaneous</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="standardize.html">standardize()</a></code> </p>
@@ -333,9 +362,39 @@ Calculates marginal coefficients from fitted generalized linear mixed models.</p
       </tr><tr>
         
         <td>
-          <p><code><a href="standard_error.html">standard_error()</a></code> </p>
+          <p><code><a href="standardize.data.frame.html">standardize(<i>&lt;data.frame&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Extract standard errors</p></td>
+        <td><p>Data Standardization (Z-scores)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="normalize.html">normalize()</a></code> </p>
+        </td>
+        <td><p>Normalization</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="describe_distribution.html">describe_distribution()</a></code> </p>
+        </td>
+        <td><p>Describe a Distribution</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="skewness.html">skewness()</a></code> <code><a href="skewness.html">kurtosis()</a></code> </p>
+        </td>
+        <td><p>Compute Skewness and Kurtosis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="principal_components.html">principal_components()</a></code> <code><a href="principal_components.html">PCA()</a></code> </p>
+        </td>
+        <td><p>Principal Component Analysis (PCA)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="smoothness.html">smoothness()</a></code> </p>
+        </td>
+        <td><p>Quantify the smoothness of a vector</p></td>
       </tr>
     </tbody>
     </table>
@@ -344,7 +403,11 @@ Calculates marginal coefficients from fitted generalized linear mixed models.</p
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-model-parameters">Model Parameters</a></li>
+      <li><a href="#section-parameters-engineering">Parameters Engineering</a></li>
+      <li><a href="#section-variable-feature-reduction">Variable/Feature Reduction</a></li>
+      <li><a href="#section-index-conversion">Index Conversion</a></li>
+      <li><a href="#section-miscellaneous">Miscellaneous</a></li>
     </ul>
   </div>
 </div>
