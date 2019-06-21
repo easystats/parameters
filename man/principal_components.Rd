@@ -2,50 +2,32 @@
 % Please edit documentation in R/principal_components.R
 \name{principal_components}
 \alias{principal_components}
+\alias{PCA}
 \title{Principal Components Analysis (PCA)}
 \usage{
-principal_components(x, n = NULL, rotation = NULL, ...)
+principal_components(x, n = NULL, threshold = NULL,
+  standardize = TRUE, ...)
+
+PCA(x, n = NULL, threshold = NULL, standardize = TRUE, ...)
 }
 \arguments{
-\item{x}{A data frame or a \code{\link[stats]{prcomp}}-object.}
+\item{x}{A dataframe.}
 
-\item{n}{Number of components to extract. If \code{rotation = "varmiax"}
-and \code{n = NULL}, number of components is based on \link{n_factors}.}
+\item{n}{Number of components to extract. If \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}.}
 
-\item{rotation}{Rotation of the factor loadings. May be one of
-\code{"varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster"}
-or \code{"none"}. If \code{rotatoin = NULL}, loadings for the principal
-components from the unrotated matrix are returned.}
+\item{threshold}{A value between 0 and 1 indicating which (absolute) values from the loadings should be removed.}
+
+\item{standardize}{A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).}
 
 \item{...}{Arguments passed to or from other methods.}
 }
-\value{
-If \code{rotation = NULL}, a data frame with all loadings of principal
-  components. Else, a rotated loadings matrix, as data frame. Details on the
-  variance components are saved as attributes.
-}
 \description{
-This function performs a principal component analysis (PCA) and returns the loadings (of the unrotated matrix) as data frame, or returns a rotated matrix of the loadings (if \code{rotation} is not \code{NULL}).
-}
-\details{
-The \code{print()}-method has a \code{cutoff}-argument, which is a
-  scalar between 0 and 1, indicating which (absolute) values from the
-  \emph{rotated} loadings (i.e. when \code{rotation} is \emph{not} \code{NULL})
-  should be blank in the output. By default, all loadings between -.1 and .1
-  are not shown.
+This function performs a principal component analysis (PCA) and returns the loadings (of the unrotated matrix) as dataframe.
 }
 \examples{
 library(parameters)
+
 principal_components(mtcars)
+principal_components(mtcars, n = "all", threshold = 0.2)
 
-data(iris)
-principal_components(mtcars, rotation = "varimax", n = 2)
-
-pr <- principal_components(mtcars, rotation = "varimax", n = 2)
-
-# show all
-print(pr, cutoff = .001)
-
-# show only some
-print(pr, cutoff = .5)
 }

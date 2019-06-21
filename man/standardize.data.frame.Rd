@@ -2,7 +2,7 @@
 % Please edit documentation in R/standardize.data.frame.R
 \name{standardize.data.frame}
 \alias{standardize.data.frame}
-\title{Data Standardization}
+\title{Data Standardization (Z-scores)}
 \usage{
 \method{standardize}{data.frame}(x, robust = FALSE, method = "default",
   select = NULL, exclude = NULL, verbose = TRUE, force = FALSE,
@@ -36,7 +36,7 @@ converted to the corresponding numeric value).}
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Standardize (scale and reduce, Z-score) the data so that the
+Standardize (centering and scaling, Z-score) the data so that the
   values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1)
   or Median Absolute Deviance (median = 0, MAD = 1). A \code{normalization}
   scales all numeric variables in the 0 - 1 range.

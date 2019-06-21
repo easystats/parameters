@@ -194,8 +194,8 @@ print.n_factors <- function(x, ...){
 
 
 #' @export
-summary.n_factors <- function(x, ...){
-  attributes(x)$by_factors
+summary.n_factors <- function(object, ...){
+  attributes(object)$by_factors
 }
 
 #' @export

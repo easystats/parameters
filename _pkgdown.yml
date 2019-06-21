@@ -18,7 +18,7 @@ navbar:
     href: news/index.html
   - text: Features
     href: reference/index.html
-  - text: Parameters Transformation
+  - text: Parameters Engineering
     menu:
       - text: 'Bootstrapping Models and Parameters'
         href: articles/bootstrapping.html
