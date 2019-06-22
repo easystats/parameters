@@ -225,13 +225,13 @@
 <a class="sourceLine" id="cb2-2" title="2">pca</a></code></pre></div>
 <pre><code>&gt; The unique principal component accounted for 52.82% of the total variance of the original data.
 &gt; 
-&gt;     Variable  PC1
-&gt; 1 complaints 0.78
-&gt; 2 privileges 0.70
-&gt; 3   learning 0.82
-&gt; 4     raises 0.88
-&gt; 5   critical 0.40
-&gt; 6    advance 0.68</code></pre>
+&gt;     Variable  PC1 Complexity
+&gt; 1 complaints 0.78          1
+&gt; 2 privileges 0.70          1
+&gt; 3   learning 0.82          1
+&gt; 4     raises 0.88          1
+&gt; 5   critical 0.40          1
+&gt; 6    advance 0.68          1</code></pre>
 <p>The <code>principal_component()</code> function automatically selected one component (if the number of components is not specified, this function uses <a href="https://easystats.github.io/parameters/articles/n_factors.html"><code><a href="../reference/n_factors.html">n_factors()</a></code></a> to estimate the optimal number to keep) and returned the <strong>loadings</strong>, <em>i.e.</em>, the relationship with all of the original variables.</p>
 <p>As we can see here, it seems that our new component captured the essence of all our other variables together. We can extract the values of these components for each of our observation using the <code><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict()</a></code> method and store it in our dataframe.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df<span class="op">$</span>Component &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(pca)</a></code></pre></div>
@@ -276,6 +276,76 @@
 </tbody>
 </table>
 </div>
+<div id="using-the-psych-package-for-pca-and-efa" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-the-psych-package-for-pca-and-efa" class="anchor"></a>Using the <code>psych</code> package for PCA and EFA</h2>
+<p>Nevertheless, we recommend using the <a href="https://cran.r-project.org/package=psych"><code>psych</code></a> <span class="citation">(Revelle 2018)</span> package for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are <strong>fully supported</strong> by <code>parameters</code> through the <code><a href="../reference/model_parameters.html">model_parameters()</a></code> function.</p>
+<p>As such, the above analysis can be fully reproduced as follows:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(psych)</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(insight)  <span class="co"># To access data</span></a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co"># Start by extracting the data from the model</span></a>
+<a class="sourceLine" id="cb6-5" title="5">data &lt;-<span class="st"> </span>insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/get_predictors">get_predictors</a></span>(model)</a>
+<a class="sourceLine" id="cb6-6" title="6"></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co"># How many factors to extract</span></a>
+<a class="sourceLine" id="cb6-8" title="8">n &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n_factors.html">n_factors</a></span>(data)</a>
+<a class="sourceLine" id="cb6-9" title="9">n </a>
+<a class="sourceLine" id="cb6-10" title="10"></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co"># Fit the PCA</span></a>
+<a class="sourceLine" id="cb6-12" title="12">pca &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/psych/topics/principal">principal</a></span>(data, <span class="dt">nfactors =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(n)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>()</a>
+<a class="sourceLine" id="cb6-14" title="14">pca</a></code></pre></div>
+<p><em>Note:</em> By default, <code><a href="https://www.rdocumentation.org/packages/psych/topics/principal">psych::principal()</a></code> uses a <strong>varimax</strong> rotation to extract rotated components, possibly leading to discrepancies in the results.</p>
+<p>Finally, refit the model:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(model, rating <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(pca)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">Coefficient</th>
+<th align="right">SE</th>
+<th align="right">CI_low</th>
+<th align="right">CI_high</th>
+<th align="right">t</th>
+<th align="right">DoF_residual</th>
+<th align="right">p</th>
+<th align="right">Std_Coefficient</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">64.6</td>
+<td align="right">1.7</td>
+<td align="right">61.2</td>
+<td align="right">68.0</td>
+<td align="right">38.8</td>
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+</tr>
+<tr class="even">
+<td align="left">predict(pca)</td>
+<td align="right">4.6</td>
+<td align="right">1.0</td>
+<td align="right">2.7</td>
+<td align="right">6.6</td>
+<td align="right">4.9</td>
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">0.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
+<div id="refs" class="references">
+<div id="ref-revelle2018">
+<p>Revelle, William. 2018. <em>Psych: Procedures for Psychological, Psychometric, and Personality Research</em>. Evanston, Illinois: Northwestern University. <a href="https://CRAN.R-project.org/package=psych">https://CRAN.R-project.org/package=psych</a>.</p>
+</div>
+</div>
 </div>
   </div>
 
@@ -287,8 +357,10 @@
 <li>
 <a href="#variable-extraction">Variable Extraction</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#principal-component-analysis-pca">Principal Component Analysis (PCA)</a></li>
+      <li><a href="#using-the-psych-package-for-pca-and-efa">Using the <code>psych</code> package for PCA and EFA</a></li>
       </ul>
 </li>
+      <li><a href="#references">References</a></li>
       </ul>
 </div>
       </div>

@@ -16,6 +16,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
+bibliography: bibliography.bib
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
@@ -83,4 +84,41 @@ update(model, rating ~ Component) %>%
   knitr::kable(digits=1)
 ```
 
+## Using the `psych` package for PCA and EFA
 
+Nevertheless, we recommend using the [`psych`](https://cran.r-project.org/package=psych) [@revelle2018] package for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are **fully supported** by `parameters` through the `model_parameters()` function.
+
+As such, the above analysis can be fully reproduced as follows:
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+library(psych)
+library(insight)  # To access data
+
+# Start by extracting the data from the model
+data <- insight::get_predictors(model)
+
+# How many factors to extract
+n <- n_factors(data)
+n 
+
+# Fit the PCA
+pca <- psych::principal(data, nfactors = as.numeric(n)) %>% 
+  model_parameters()
+pca
+```
+
+*Note:* By default, `psych::principal()` uses a **varimax** rotation to extract rotated components, possibly leading to discrepancies in the results.
+
+Finally, refit the model:
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+update(model, rating ~ predict(pca)) %>% 
+  model_parameters()
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+update(model, rating ~  predict(pca)) %>% 
+  model_parameters() %>% 
+  knitr::kable(digits=1)
+```
+
+# References

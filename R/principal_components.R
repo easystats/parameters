@@ -9,17 +9,26 @@
 #' @param standardize A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @details
+#'  \itemize{
+#'    \item \strong{Complexity} (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.
+#' }
+#'
 #'
 #' @examples
 #' library(parameters)
 #'
 #' principal_components(mtcars[, 1:5])
 #' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
-#' principal_components(mtcars[, 1:7], n = 3, threshold = "max", sort = TRUE)
+#' principal_components(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
 #'
-#' pca <- principal_components(mtcars[, 1:5])
+#' pca <- principal_components(mtcars[, 1:5], n = 2)
 #' summary(pca)
 #' predict(pca, mtcars[, 1:7])
+#'
+#' @references \itemize{
+#'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
+#' }
 #' @importFrom stats prcomp
 #' @export
 principal_components <- function(x, n = NULL, sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
@@ -41,7 +50,7 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   }
 
   # PCA
-  pca <- stats::prcomp(x, retx = TRUE, center = FALSE, scale. = FALSE, ...)
+  pca <- stats::prcomp(x, retx = TRUE, center = TRUE, scale. = TRUE, ...)
 
 
   # N factors
@@ -96,6 +105,9 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   loadings_max <- cbind(data.frame(Variable = row.names(loadings_max)), loadings_max)
   row.names(loadings_max) <- NULL
 
+  # Add information
+  loading_cols <- 2:(n+1)
+  loadings$Complexity <- (apply(loadings[, loading_cols, drop = FALSE],1,function(x) sum(x^2)))^2/apply(loadings[, loading_cols, drop = FALSE],1,function(x)sum(x^4))
 
   # Add attributes
   attr(loadings, "summary") <- data_summary
@@ -103,9 +115,10 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   attr(loadings, "rotation") <- "none"
   attr(loadings, "scores") <- pca$x
   attr(loadings, "loadings_max") <- loadings_max
+  attr(loadings, "standardize") <- standardize
+  attr(loadings, "additional_arguments") <- list(...)
   attr(loadings, "n") <- n
 
-  loading_cols <- 2:(n+1)
   # Sorting
   if (sort) {
     loadings <- .sort_loadings(loadings, cols = loading_cols)
@@ -113,14 +126,7 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
 
   # Replace by NA all cells below threshold
   if (!is.null(threshold)) {
-    if (threshold == "max") {
-      for (i in 1:nrow(loadings)) {
-        maxi <- max(abs(loadings[i, loading_cols]))
-        loadings[i, loading_cols][abs(loadings[i, loading_cols]) < maxi] <- NA
-      }
-    } else {
-      loadings[, sapply(loadings, is.numeric)][abs(loadings[, sapply(loadings, is.numeric)]) < threshold] <- NA
-    }
+    loadings <- .filer_loadings(loadings, cols = loading_cols, threshold = threshold)
   }
 
   # add class-attribute for printing
@@ -152,8 +158,12 @@ model_parameters.PCA <- function(model, ...) {
 }
 
 #' @export
-predict.PCA <- function(object, ...) {
-  predict(attributes(object)$pca, ...)
+predict.PCA <- function(object, newdata = NULL, ...) {
+  if(is.null(newdata)){
+    attributes(object)$scores
+  } else{
+    predict(attributes(object)$pca, newdata = newdata, ...)
+  }
 }
 
 #' @export
@@ -219,11 +229,27 @@ principal_components.merMod <- principal_components.lm
 
 
 
+
+#' @keywords internal
+.filer_loadings <- function(loadings, cols = -1, threshold = 0.2) {
+  if (threshold == "max") {
+    for (i in 1:nrow(loadings)) {
+      maxi <- max(abs(loadings[i, cols, drop = FALSE]))
+      loadings[i, cols][abs(loadings[i, cols]) < maxi] <- NA
+    }
+  } else {
+    loadings[, cols][abs(loadings[, cols]) < threshold] <- NA
+  }
+  loadings
+}
+
+
+
 #' @keywords internal
 .sort_loadings <- function(loadings, cols = -1) {
 
   # Remove variable name column
-  x <- loadings[, cols]
+  x <- loadings[, cols, drop = FALSE]
   row.names(x) <- NULL
 
   # Initialize clusters

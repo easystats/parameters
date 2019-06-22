@@ -1,6 +1,6 @@
 #' Format PCA/FA from the psych package
 #'
-#' Format PCA/FA objects from the psych package.
+#' Format PCA/FA objects from the psych package (Revelle, 2016).
 #'
 #' @param model PCA or FA created by the \code{psych::principal} or \code{psych::fa} functions.
 #' @inheritParams principal_components
@@ -12,18 +12,23 @@
 #'    \item \strong{Uniqueness} represents the variance that is 'unique' to the variable and not shared with other variables. It is equal to \code{1 – communality} (variance that is shared with other variables). A uniqueness of \code{0.20} suggests that 20\% or that variable is not shared with other variables in the overall factor model. The greater 'uniqueness' the lower the relevance of the variable in the factor model.
 #' }
 #'
-#' @examples \dontrun{
+#' @examples
 #' library(parameters)
+#' \dontrun{
 #' library(psych)
 #'
-#' pca <- psych::principal(attitude, nfactors = 3, rotate="none")
+#' pca <- psych::principal(attitude)
 #' model_parameters(pca)
+#'
+#' pca <- psych::principal(attitude, nfactors = 3, rotate="none")
 #' model_parameters(pca, sort = TRUE, threshold = 0.2)
 #' }
-#'
+#' # Note that the latter is identical to the 'principal_components' function available in parameters:
+#' principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 #'
 #' @references \itemize{
 #'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
+#'   \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
 #' }
 #' @export
 model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ...) {
@@ -38,9 +43,17 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
   data_summary <- data_frame(
     Component = names(variance),
     Eigenvalues = model$values[1:n],
-    Variance = as.numeric(variance["Proportion Var", ]),
-    Variance_Cumulative = as.numeric(variance["Cumulative Var", ])
+    Variance = as.numeric(variance["Proportion Var", ])
   )
+  if("Cumulative Var" %in% row.names(variance)){
+    data_summary$Variance_Cumulative <- as.numeric(variance["Cumulative Var", ])
+  } else{
+    if(ncol(variance) == 1){
+      data_summary$Variance_Cumulative <- as.numeric(variance["Proportion Var", ])
+    } else{
+      data_summary$Variance_Cumulative <- NA
+    }
+  }
 
   # Get loadings
   loadings <- as.data.frame(unclass(model$loadings))
@@ -53,11 +66,13 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
   # Format
   loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
   row.names(loadings) <- NULL
-  loadings$Complexity <- model$complexity
-  loadings$Uniqueness <- model$uniquenesses
-
   loadings_max <- cbind(data.frame(Variable = row.names(loadings_max)), loadings_max)
   row.names(loadings_max) <- NULL
+
+  # Add information
+  loading_cols <- 2:(n+1)
+  loadings$Complexity <- model$complexity
+  loadings$Uniqueness <- model$uniquenesses
 
   # Add attributes
   attr(loadings, "summary") <- data_summary
@@ -65,9 +80,10 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
   attr(loadings, "rotation") <- pca$rotation
   attr(loadings, "scores") <- pca$scores
   attr(loadings, "loadings_max") <- loadings_max
+  attr(loadings, "additional_arguments") <- list(...)
   attr(loadings, "n") <- n
 
-  loading_cols <- 2:(n+1)
+
   # Sorting
   if (sort) {
     loadings <- .sort_loadings(loadings, cols = loading_cols)
@@ -75,14 +91,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
 
   # Replace by NA all cells below threshold
   if (!is.null(threshold)) {
-    if (threshold == "max") {
-      for (i in 1:nrow(loadings)) {
-        maxi <- max(abs(loadings[i, loading_cols]))
-        loadings[i, loading_cols][abs(loadings[i, loading_cols]) < maxi] <- NA
-      }
-    } else {
-      loadings[, sapply(loadings, is.numeric)][abs(loadings[, sapply(loadings, is.numeric)]) < threshold] <- NA
-    }
+    loadings <- .filer_loadings(loadings, cols = loading_cols, threshold = threshold)
   }
 
   # add class-attribute for printing
@@ -92,3 +101,12 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
 
 }
 
+
+
+# #' @export
+# principal.lm <- function(x, ...) {
+#   if (!requireNamespace("psych", quietly = TRUE)) {
+#     stop("The package 'psych' is needed. Please install it by running 'install.packages(psych)'.")
+#   }
+#   psych::principal(insight::get_predictors(x, ...), ...)
+# }

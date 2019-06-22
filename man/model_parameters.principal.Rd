@@ -17,7 +17,7 @@
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Format PCA/FA objects from the psych package.
+Format PCA/FA objects from the psych package (Revelle, 2016).
 }
 \details{
 \itemize{
@@ -26,19 +26,23 @@ Format PCA/FA objects from the psych package.
 }
 }
 \examples{
-\dontrun{
 library(parameters)
+\dontrun{
 library(psych)
 
-pca <- psych::principal(attitude, nfactors = 3, rotate="none")
+pca <- psych::principal(attitude)
 model_parameters(pca)
+
+pca <- psych::principal(attitude, nfactors = 3, rotate="none")
 model_parameters(pca, sort = TRUE, threshold = 0.2)
 }
-
+# Note that the latter is identical to the 'principal_components' function available in parameters:
+principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 
 }
 \references{
 \itemize{
   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
+  \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
 }
 }
