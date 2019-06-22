@@ -17,6 +17,7 @@
 #' \dontrun{
 #' library(psych)
 #'
+#' # Principal Component Analysis (PCA) ---------
 #' pca <- psych::principal(attitude)
 #' model_parameters(pca)
 #'
@@ -26,6 +27,13 @@
 #' # Note that the latter is identical to the 'principal_components' function available in parameters:
 #' principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 #'
+#' \dontrun{
+#' # Exploratory Factor Analysis (EFA) ---------
+#' efa <- psych::fa(attitude, nfactors = 3)
+#' model_parameters(efa)
+#' }
+#'
+#'
 #' @references \itemize{
 #'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
 #'   \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
@@ -34,8 +42,6 @@
 model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ...) {
 
   # PCA
-  pca <- model
-
   n <- model$factors
 
   # Get summary
@@ -76,30 +82,37 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
 
   # Add attributes
   attr(loadings, "summary") <- data_summary
-  attr(loadings, "pca") <- pca
-  attr(loadings, "rotation") <- pca$rotation
-  attr(loadings, "scores") <- pca$scores
+  attr(loadings, "model") <- model
+  attr(loadings, "rotation") <- model$rotation
+  attr(loadings, "scores") <- model$scores
   attr(loadings, "loadings_max") <- loadings_max
   attr(loadings, "additional_arguments") <- list(...)
   attr(loadings, "n") <- n
-
+  attr(loadings, "type") <- model$fn
+  attr(loadings, "loadings_columns") <- loading_cols
 
   # Sorting
   if (sort) {
-    loadings <- .sort_loadings(loadings, cols = loading_cols)
+    loadings <- .sort_loadings(loadings)
   }
 
   # Replace by NA all cells below threshold
   if (!is.null(threshold)) {
-    loadings <- .filer_loadings(loadings, cols = loading_cols, threshold = threshold)
+    loadings <- .filer_loadings(loadings, threshold = threshold)
   }
 
   # add class-attribute for printing
-  class(loadings) <- c("PCA", class(loadings))
+  class(loadings) <- c("factor_structure", class(loadings))
 
   loadings
 
 }
+
+
+
+
+#' @export
+model_parameters.fa <- model_parameters.principal
 
 
 

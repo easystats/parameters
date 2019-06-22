@@ -240,39 +240,39 @@
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;   Component Eigenvalues  Variance Variance_Cumulative
 #&gt; 1       PC1   4.0379396 0.8075879           0.8075879
-#&gt; 2       PC2   0.5622352 0.1124470           0.9200349</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>pca</span>, <span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>])</div><div class='output co'>#&gt;                             PC1         PC2
-#&gt; Mazda RX4           -0.83958112 -0.12417860
-#&gt; Mazda RX4 Wag       -0.83958112 -0.12417860
-#&gt; Datsun 710          -1.78076155  0.20357157
-#&gt; Hornet 4 Drive       0.09834476  1.10598482
-#&gt; Hornet Sportabout    1.58552749  0.32873919
-#&gt; Valiant              0.42628595  1.61371418
-#&gt; Duster 360           2.31798915 -0.38579468
-#&gt; Merc 240D           -1.83392218  0.71554314
-#&gt; Merc 230            -1.69378203  0.07797675
-#&gt; Merc 280            -0.60554684 -0.27702188
-#&gt; Merc 280C           -0.49812301 -0.28570556
-#&gt; Merc 450SE           1.52990575  0.40014511
-#&gt; Merc 450SL           1.46084757  0.40572748
-#&gt; Merc 450SLC          1.62198332  0.39270195
-#&gt; Cadillac Fleetwood   2.99730327  0.34308959
-#&gt; Lincoln Continental  2.96336452  0.15336639
-#&gt; Chrysler Imperial    2.48424862 -0.29287006
-#&gt; Fiat 128            -2.96506160  0.14911053
-#&gt; Honda Civic         -3.52699413 -1.02550272
-#&gt; Toyota Corolla      -3.21693607 -0.04349485
-#&gt; Toyota Corona       -1.50101897  0.38651333
-#&gt; Dodge Challenger     1.79695027  1.11397253
-#&gt; AMC Javelin          1.48376642  0.52524948
-#&gt; Camaro Z28           1.97953272 -1.17526822
-#&gt; Pontiac Firebird     1.75060571  0.43376680
-#&gt; Fiat X1-9           -2.57258674  0.11744981
-#&gt; Porsche 914-2       -2.41238961 -0.63531022
-#&gt; Lotus Europa        -2.22991874  0.20202457
-#&gt; Ford Pantera L       1.55523735 -2.06076910
-#&gt; Ferrari Dino        -0.18704672 -0.26276186
-#&gt; Maserati Bora        2.36338454 -1.64100466
-#&gt; Volvo 142E          -1.71202696 -0.33478623</div><div class='input'>
+#&gt; 2       PC2   0.5622352 0.1124470           0.9200349</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;            PC1         PC2
+#&gt; 1  -0.83958112 -0.12417860
+#&gt; 2  -0.83958112 -0.12417860
+#&gt; 3  -1.78076155  0.20357157
+#&gt; 4   0.09834476  1.10598482
+#&gt; 5   1.58552749  0.32873919
+#&gt; 6   0.42628595  1.61371418
+#&gt; 7   2.31798915 -0.38579468
+#&gt; 8  -1.83392218  0.71554314
+#&gt; 9  -1.69378203  0.07797675
+#&gt; 10 -0.60554684 -0.27702188
+#&gt; 11 -0.49812301 -0.28570556
+#&gt; 12  1.52990575  0.40014511
+#&gt; 13  1.46084757  0.40572748
+#&gt; 14  1.62198332  0.39270195
+#&gt; 15  2.99730327  0.34308959
+#&gt; 16  2.96336452  0.15336639
+#&gt; 17  2.48424862 -0.29287006
+#&gt; 18 -2.96506160  0.14911053
+#&gt; 19 -3.52699413 -1.02550272
+#&gt; 20 -3.21693607 -0.04349485
+#&gt; 21 -1.50101897  0.38651333
+#&gt; 22  1.79695027  1.11397253
+#&gt; 23  1.48376642  0.52524948
+#&gt; 24  1.97953272 -1.17526822
+#&gt; 25  1.75060571  0.43376680
+#&gt; 26 -2.57258674  0.11744981
+#&gt; 27 -2.41238961 -0.63531022
+#&gt; 28 -2.22991874  0.20202457
+#&gt; 29  1.55523735 -2.06076910
+#&gt; 30 -0.18704672 -0.26276186
+#&gt; 31  2.36338454 -1.64100466
+#&gt; 32 -1.71202696 -0.33478623</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

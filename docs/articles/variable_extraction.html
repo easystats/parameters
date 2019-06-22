@@ -233,10 +233,10 @@
 &gt; 5   critical 0.40          1
 &gt; 6    advance 0.68          1</code></pre>
 <p>The <code>principal_component()</code> function automatically selected one component (if the number of components is not specified, this function uses <a href="https://easystats.github.io/parameters/articles/n_factors.html"><code><a href="../reference/n_factors.html">n_factors()</a></code></a> to estimate the optimal number to keep) and returned the <strong>loadings</strong>, <em>i.e.</em>, the relationship with all of the original variables.</p>
-<p>As we can see here, it seems that our new component captured the essence of all our other variables together. We can extract the values of these components for each of our observation using the <code><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict()</a></code> method and store it in our dataframe.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df<span class="op">$</span>Component &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(pca)</a></code></pre></div>
+<p>As we can see here, it seems that our new component captured the essence of all our other variables together. We can extract the values of these components for each of our observation using the <code><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict()</a></code> method and merge it with our dataframe.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(df, <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(pca))</a></code></pre></div>
 <p>We can know update the model with this new component:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(model, rating <span class="op">~</span><span class="st"> </span>Component) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(model, rating <span class="op">~</span><span class="st"> </span>PC1) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -263,7 +263,7 @@
 <td align="right">0.0</td>
 </tr>
 <tr class="even">
-<td align="left">Component</td>
+<td align="left">PC1</td>
 <td align="right">4.6</td>
 <td align="right">1.0</td>
 <td align="right">2.7</td>
@@ -288,7 +288,7 @@
 <a class="sourceLine" id="cb6-5" title="5">data &lt;-<span class="st"> </span>insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/get_predictors">get_predictors</a></span>(model)</a>
 <a class="sourceLine" id="cb6-6" title="6"></a>
 <a class="sourceLine" id="cb6-7" title="7"><span class="co"># How many factors to extract</span></a>
-<a class="sourceLine" id="cb6-8" title="8">n &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n_factors.html">n_factors</a></span>(data)</a>
+<a class="sourceLine" id="cb6-8" title="8">n &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n_factors.html">n_factors</a></span>(data, <span class="dt">type =</span> <span class="st">"PCA"</span>)</a>
 <a class="sourceLine" id="cb6-9" title="9">n </a>
 <a class="sourceLine" id="cb6-10" title="10"></a>
 <a class="sourceLine" id="cb6-11" title="11"><span class="co"># Fit the PCA</span></a>
@@ -297,8 +297,10 @@
 <a class="sourceLine" id="cb6-14" title="14">pca</a></code></pre></div>
 <p><em>Note:</em> By default, <code><a href="https://www.rdocumentation.org/packages/psych/topics/principal">psych::principal()</a></code> uses a <strong>varimax</strong> rotation to extract rotated components, possibly leading to discrepancies in the results.</p>
 <p>Finally, refit the model:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(model, rating <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(pca)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(df, <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(pca))</a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(model, rating <span class="op">~</span><span class="st"> </span>PC1) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
@@ -324,7 +326,7 @@
 <td align="right">0.0</td>
 </tr>
 <tr class="even">
-<td align="left">predict(pca)</td>
+<td align="left">PC1</td>
 <td align="right">4.6</td>
 <td align="right">1.0</td>
 <td align="right">2.7</td>
@@ -332,10 +334,297 @@
 <td align="right">4.9</td>
 <td align="right">28</td>
 <td align="right">0</td>
-<td align="right">0.4</td>
+<td align="right">0.7</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div id="exploratory-factor-analysis-efa" class="section level2">
+<h2 class="hasAnchor">
+<a href="#exploratory-factor-analysis-efa" class="anchor"></a>Exploratory Factor Analysis (EFA)</h2>
+<p>The difference between PCA and EFA can be quite hard to intuitively grasp as their output is very familiar. The idea is that PCA aims at extracting the most variance possible from all variables of the dataset, whereas EFA aims at creating consistent factors from the dataset without desperately trying to represent all the variables.</p>
+<p>This is why PCA is popular for feature reduction, as it will try to best represent the variance contained in the original data, minimizing the loss of information. On the other hand, EFA is usually in the context of exploring the latent dimensions that might be hidden in the observed variables, without necessary striving at representing the whole dataset.</p>
+<p>To illustrate EFA, let us use the <a href="ipip.ori.org">International Personality Item Pool</a> data available in the <a href="https://www.personality-project.org/r/html/bfi.html"><code>psych</code></a> package. It includes 25 personality self report items.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">data &lt;-<span class="st"> </span>psych<span class="op">::</span>bfi[, <span class="dv">1</span><span class="op">:</span><span class="dv">25</span>]  <span class="co"># Select only the 25 first columns corresponding to the items</span></a>
+<a class="sourceLine" id="cb8-2" title="2">data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit</a></span>(data)  <span class="co"># remove missing values</span></a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co"># How many factors to extract</span></a>
+<a class="sourceLine" id="cb8-5" title="5">n &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n_factors.html">n_factors</a></span>(data)</a>
+<a class="sourceLine" id="cb8-6" title="6">n </a></code></pre></div>
+<pre><code>&gt; # Method Agreement Procedure:
+&gt; 
+&gt; The choice of 5 dimensions is supported by 3 (30.00%) methods out of 10 (EGA (glasso), VSS complexity 2, Velicer's MAP).</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Fit an EFA</span></a>
+<a class="sourceLine" id="cb10-2" title="2">efa &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/psych/topics/fa">fa</a></span>(data, <span class="dt">nfactors =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="dt">sort =</span> <span class="ot">TRUE</span>, <span class="dt">threshold =</span> <span class="st">"max"</span>)</a>
+<a class="sourceLine" id="cb10-4" title="4">efa</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Variable</th>
+<th align="right">MR2</th>
+<th align="right">MR3</th>
+<th align="right">MR1</th>
+<th align="right">MR5</th>
+<th align="right">MR4</th>
+<th align="right">Complexity</th>
+<th align="right">Uniqueness</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">N5</td>
+<td align="right">0.5</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">2.0</td>
+<td align="right">0.7</td>
+</tr>
+<tr class="even">
+<td align="left">N2</td>
+<td align="right">0.8</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.0</td>
+<td align="right">0.4</td>
+</tr>
+<tr class="odd">
+<td align="left">N1</td>
+<td align="right">0.8</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.1</td>
+<td align="right">0.3</td>
+</tr>
+<tr class="even">
+<td align="left">N4</td>
+<td align="right">0.5</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">2.3</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="odd">
+<td align="left">N3</td>
+<td align="right">0.7</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">C5</td>
+<td align="right"></td>
+<td align="right">-0.6</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.4</td>
+<td align="right">0.6</td>
+</tr>
+<tr class="odd">
+<td align="left">C1</td>
+<td align="right"></td>
+<td align="right">0.6</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.2</td>
+<td align="right">0.7</td>
+</tr>
+<tr class="even">
+<td align="left">C3</td>
+<td align="right"></td>
+<td align="right">0.6</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.1</td>
+<td align="right">0.7</td>
+</tr>
+<tr class="odd">
+<td align="left">C2</td>
+<td align="right"></td>
+<td align="right">0.7</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.2</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">C4</td>
+<td align="right"></td>
+<td align="right">-0.6</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="odd">
+<td align="left">E3</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">-0.4</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">2.7</td>
+<td align="right">0.6</td>
+</tr>
+<tr class="even">
+<td align="left">E1</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">0.6</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.2</td>
+<td align="right">0.7</td>
+</tr>
+<tr class="odd">
+<td align="left">E5</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">-0.4</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">2.7</td>
+<td align="right">0.6</td>
+</tr>
+<tr class="even">
+<td align="left">E2</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">0.7</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="odd">
+<td align="left">E4</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">-0.6</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1.5</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">A1</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">-0.4</td>
+<td align="right"></td>
+<td align="right">1.9</td>
+<td align="right">0.8</td>
+</tr>
+<tr class="odd">
+<td align="left">A2</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">0.7</td>
+<td align="right"></td>
+<td align="right">1.0</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">A3</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">0.7</td>
+<td align="right"></td>
+<td align="right">1.1</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="odd">
+<td align="left">A5</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">0.5</td>
+<td align="right"></td>
+<td align="right">1.5</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">A4</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">0.4</td>
+<td align="right"></td>
+<td align="right">1.7</td>
+<td align="right">0.7</td>
+</tr>
+<tr class="odd">
+<td align="left">O3</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">0.6</td>
+<td align="right">1.2</td>
+<td align="right">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">O4</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">0.4</td>
+<td align="right">2.6</td>
+<td align="right">0.8</td>
+</tr>
+<tr class="odd">
+<td align="left">O1</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">0.5</td>
+<td align="right">1.1</td>
+<td align="right">0.7</td>
+</tr>
+<tr class="even">
+<td align="left">O5</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">-0.5</td>
+<td align="right">1.2</td>
+<td align="right">0.7</td>
+</tr>
+<tr class="odd">
+<td align="left">O2</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">-0.5</td>
+<td align="right">1.7</td>
+<td align="right">0.7</td>
+</tr>
+</tbody>
+</table>
+<p>As we can see, the 25 items correspond to 5 latent factors which are, you guessed it, the famous <strong>big 5</strong>. Based on this model, we can now predict back the scores for each individual for these new variables:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(efa, <span class="dt">names =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Neuroticism"</span>, <span class="st">"Conscientiousness"</span>, <span class="st">"Extraversion"</span>, <span class="st">"Agreeableness"</span>, <span class="st">"Opennness"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(efa)), <span class="dt">digits =</span> <span class="dv">1</span>, <span class="dt">names =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Neuroticism"</span>, <span class="st">"Conscientiousness"</span>, <span class="st">"Extraversion"</span>, <span class="st">"Agreeableness"</span>, <span class="st">"Opennness"</span>))</a></code></pre></div>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">
@@ -358,6 +647,7 @@
 <a href="#variable-extraction">Variable Extraction</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#principal-component-analysis-pca">Principal Component Analysis (PCA)</a></li>
       <li><a href="#using-the-psych-package-for-pca-and-efa">Using the <code>psych</code> package for PCA and EFA</a></li>
+      <li><a href="#exploratory-factor-analysis-efa">Exploratory Factor Analysis (EFA)</a></li>
       </ul>
 </li>
       <li><a href="#references">References</a></li>

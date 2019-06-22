@@ -75,9 +75,9 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 ## Model's parameters description
 
-The `model_parameters` function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to [broom::tidy()](https://github.com/tidymodels/broom), with some notable differences: 
+The `model_parameters` function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
 
-- The names of the returned dataframe are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, *i.e.*, *t*, *z*, etc.
+- The names of the returned dataframe are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, *i.e.*, *t*, *z*, etc., instead of a generic name such as *statistic*.
 - It is able to compute or extract indices not available by default, such as ***p* values**, **CIs**, etc.
 - It includes **feature engineering** capabilities, including [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html) and [**standardization**](https://easystats.github.io/parameters/articles/standardization.html) of parameters.
 
@@ -216,6 +216,15 @@ library(rstanarm)
 text <- capture.output(model <- stan_glm(mpg ~ wt + cyl, data = mtcars))
 knitr::kable(model_parameters(model), digits=1)
 ```
+
+<!-- ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA) -->
+
+<!-- ```{r, warning=FALSE, message=FALSE} -->
+<!-- library(psych) -->
+
+<!-- model <- fa(attitude, nfactors = 3) -->
+<!-- model_parameters(model) -->
+<!-- ``` -->
 
 
 ## Variable and parameters selection

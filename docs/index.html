@@ -146,9 +146,9 @@
 <div id="models-parameters-description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#models-parameters-description" class="anchor"></a>Model’s parameters description</h2>
-<p>The <code>model_parameters</code> function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to <a href="https://github.com/tidymodels/broom">broom::tidy()</a>, with some notable differences:</p>
+<p>The <code>model_parameters</code> function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to <a href="https://github.com/tidymodels/broom"><code><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">broom::tidy()</a></code></a>, with some notable differences:</p>
 <ul>
-<li>The names of the returned dataframe are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, <em>i.e.</em>, <em>t</em>, <em>z</em>, etc.</li>
+<li>The names of the returned dataframe are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, <em>i.e.</em>, <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em>.</li>
 <li>It is able to compute or extract indices not available by default, such as <strong><em>p</em> values</strong>, <strong>CIs</strong>, etc.</li>
 <li>It includes <strong>feature engineering</strong> capabilities, including <a href="https://easystats.github.io/parameters/articles/bootstrapping.html"><strong>bootstrapping</strong></a> and <a href="https://easystats.github.io/parameters/articles/standardization.html"><strong>standardization</strong></a> of parameters.</li>
 </ul>
@@ -625,6 +625,7 @@
 </tr>
 </tbody>
 </table>
+<!-- ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA) --><!-- ```{r, warning=FALSE, message=FALSE} --><!-- library(psych) --><!-- model <- fa(attitude, nfactors = 3) --><!-- model_parameters(model) --><!-- ``` -->
 </div>
 </div>
 <div id="variable-and-parameters-selection" class="section level2">

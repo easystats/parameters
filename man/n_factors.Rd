@@ -23,7 +23,7 @@ n_factors(x, type = "FA", rotation = "varimax",
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA).
+This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus. In case of ties, it will select the solution with the less factors.
 }
 \examples{
 library(parameters)

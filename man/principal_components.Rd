@@ -41,7 +41,7 @@ principal_components(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
 
 pca <- principal_components(mtcars[, 1:5], n = 2)
 summary(pca)
-predict(pca, mtcars[, 1:7])
+predict(pca)
 
 }
 \references{

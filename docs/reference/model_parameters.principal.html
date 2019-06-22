@@ -196,6 +196,7 @@
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>psych</span>)
 
+<span class='co'># Principal Component Analysis (PCA) ---------</span>
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/principal'>principal</a></span>(<span class='no'>attitude</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>pca</span>)
 
@@ -212,6 +213,12 @@
 #&gt; 5     rating 0.7961866 -0.4239721  0.2424866   1.739422
 #&gt; 6    advance 0.5832712  0.6086213 -0.4562244   2.849165
 #&gt; 7   critical 0.3573175  0.6436979  0.6450449   2.542072</div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># Exploratory Factor Analysis (EFA) ---------</span>
+<span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/fa'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>)
+<span class='co'># }</span><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

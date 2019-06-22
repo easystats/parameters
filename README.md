@@ -62,12 +62,13 @@ check-out these vignettes:
 The `model_parameters` function allows you to extract the parameters and
 their characteristics from various models in a consistent way. It could
 be considered as an alternative to
-[broom::tidy()](https://github.com/tidymodels/broom), with some notable
-differences:
+[`broom::tidy()`](https://github.com/tidymodels/broom), with some
+notable differences:
 
   - The names of the returned dataframe are **specific** to their
     content. For instance, the column containing the statistic is named
-    following the statistic name, *i.e.*, `t`, `z`, etc.
+    following the statistic name, *i.e.*, *t*, *z*, etc., instead of a
+    generic name such as *statistic*.
   - It is able to compute or extract indices not available by default,
     such as ***p* values**, **CIs**, etc.
   - It includes **feature engineering** capabilities, including
@@ -222,6 +223,25 @@ model_parameters(model)
 | 1 | (Intercept) |     40 |      37 |     42.5 | 100 |                0 | 5250 |    1 | normal              |               0 |           60 |
 | 3 | wt          |    \-3 |     \-4 |    \-1.9 | 100 |                0 | 1963 |    1 | normal              |               0 |           15 |
 | 2 | cyl         |    \-2 |     \-2 |    \-0.8 | 100 |                2 | 1997 |    1 | normal              |               0 |            8 |
+
+### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA)
+
+``` r
+library(psych)
+
+model <- fa(attitude, nfactors = 3)
+model_parameters(model)
+> The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).
+> 
+>     Variable  MR1   MR2   MR3 Complexity Uniqueness
+> 1     rating  0.9 -0.07 -0.05          1        0.2
+> 2 complaints  1.0 -0.06  0.04          1        0.1
+> 3 privileges  0.4  0.25 -0.05          2        0.6
+> 4   learning  0.5  0.54 -0.28          3        0.2
+> 5     raises  0.5  0.43  0.25          2        0.2
+> 6   critical  0.2  0.17  0.48          1        0.7
+> 7    advance -0.1  0.91  0.07          1        0.2
+```
 
 ## Variable and parameters selection
 

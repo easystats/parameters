@@ -30,6 +30,7 @@ library(parameters)
 \dontrun{
 library(psych)
 
+# Principal Component Analysis (PCA) ---------
 pca <- psych::principal(attitude)
 model_parameters(pca)
 
@@ -38,6 +39,13 @@ model_parameters(pca, sort = TRUE, threshold = 0.2)
 }
 # Note that the latter is identical to the 'principal_components' function available in parameters:
 principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
+
+\dontrun{
+# Exploratory Factor Analysis (EFA) ---------
+efa <- psych::fa(attitude, nfactors = 3)
+model_parameters(efa)
+}
+
 
 }
 \references{

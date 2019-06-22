@@ -24,7 +24,7 @@
 #'
 #' pca <- principal_components(mtcars[, 1:5], n = 2)
 #' summary(pca)
-#' predict(pca, mtcars[, 1:7])
+#' predict(pca)
 #'
 #' @references \itemize{
 #'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
@@ -50,47 +50,47 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   }
 
   # PCA
-  pca <- stats::prcomp(x, retx = TRUE, center = TRUE, scale. = TRUE, ...)
+  model <- stats::prcomp(x, retx = TRUE, center = TRUE, scale. = TRUE, ...)
 
 
   # N factors
   if (is.null(n)) {
     n <- as.numeric(n_factors(x, type = "PCA", rotation = "none", ...))
   } else if (n == "all") {
-    n <- length(pca$sdev)
-  } else if (n > length(pca$sdev)) {
-    n <- length(pca$sdev)
+    n <- length(model$sdev)
+  } else if (n > length(model$sdev)) {
+    n <- length(model$sdev)
   }
 
 
 
   # Re-add centers and scales
   if (standardize) {
-    pca$center <- attributes(x)$center
-    pca$scale <- attributes(x)$scale
+    model$center <- attributes(x)$center
+    model$scale <- attributes(x)$scale
   }
 
   # Summary
-  eigenvalues <- pca$sdev^2
+  eigenvalues <- model$sdev^2
   data_summary <- data_frame(
-    Component = sprintf("PC%i", seq_len(length(pca$sdev))),
+    Component = sprintf("PC%i", seq_len(length(model$sdev))),
     Eigenvalues = eigenvalues,
     Variance = eigenvalues / sum(eigenvalues),
     Variance_Cumulative = cumsum(eigenvalues / sum(eigenvalues))
   )
 
-  pca$sdev <- pca$sdev[1:n]
-  pca$rotation <- pca$rotation[, 1:n, drop = FALSE]
-  pca$x <- pca$x[, 1:n, drop = FALSE]
+  model$sdev <- model$sdev[1:n]
+  model$rotation <- model$rotation[, 1:n, drop = FALSE]
+  model$x <- model$x[, 1:n, drop = FALSE]
   data_summary <- data_summary[1:n, , drop = FALSE]
 
 
 
   # Compute loadings
-  if (length(pca$sdev) > 1) {
-    loadings <- as.data.frame(pca$rotation %*% diag(pca$sdev))
+  if (length(model$sdev) > 1) {
+    loadings <- as.data.frame(model$rotation %*% diag(model$sdev))
   } else {
-    loadings <- as.data.frame(pca$rotation %*% pca$sdev)
+    loadings <- as.data.frame(model$rotation %*% model$sdev)
   }
   names(loadings) <- data_summary$Component
 
@@ -111,26 +111,28 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
 
   # Add attributes
   attr(loadings, "summary") <- data_summary
-  attr(loadings, "pca") <- pca
+  attr(loadings, "model") <- model
   attr(loadings, "rotation") <- "none"
-  attr(loadings, "scores") <- pca$x
+  attr(loadings, "scores") <- model$x
   attr(loadings, "loadings_max") <- loadings_max
   attr(loadings, "standardize") <- standardize
   attr(loadings, "additional_arguments") <- list(...)
   attr(loadings, "n") <- n
+  attr(loadings, "type") <- "prcomp"
+  attr(loadings, "loadings_columns") <- loading_cols
 
   # Sorting
   if (sort) {
-    loadings <- .sort_loadings(loadings, cols = loading_cols)
+    loadings <- .sort_loadings(loadings)
   }
 
   # Replace by NA all cells below threshold
   if (!is.null(threshold)) {
-    loadings <- .filer_loadings(loadings, cols = loading_cols, threshold = threshold)
+    loadings <- .filer_loadings(loadings, threshold = threshold)
   }
 
   # add class-attribute for printing
-  class(loadings) <- c("PCA", class(loadings))
+  class(loadings) <- c("factor_structure", class(loadings))
 
   loadings
 }
@@ -140,35 +142,43 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
 
 
 
-#' @export
-sort.PCA <- function(x, ...) {
-  for (col in names(x)[-1]) {
-    x[]
-  }
-}
 
 #' @export
-summary.PCA <- function(object, ...) {
+sort.factor_structure <- function(x, ...) {
+  .sort_loadings(x)
+}
+
+
+#' @export
+summary.factor_structure <- function(object, ...) {
   attributes(object)$summary
 }
 
+
 #' @export
-model_parameters.PCA <- function(model, ...) {
+model_parameters.factor_structure <- function(model, ...) {
   attributes(model)$summary
 }
 
-#' @export
-predict.PCA <- function(object, newdata = NULL, ...) {
-  if(is.null(newdata)){
-    attributes(object)$scores
-  } else{
-    predict(attributes(object)$pca, newdata = newdata, ...)
-  }
-}
 
 #' @export
-print.PCA <- function(x, ...) {
-  cat(.text_components_variance(x, type = "principal component"))
+predict.factor_structure <- function(object, newdata = NULL, names = NULL, ...) {
+  if(is.null(newdata)){
+    out <- as.data.frame(attributes(object)$scores)
+  } else{
+    out <- as.data.frame(predict(attributes(object)$model, newdata = newdata, ...))
+  }
+  if(!is.null(names)){
+    names(out)[1:length(c(names))] <- names
+  }
+  row.names(out) <- NULL
+  out
+}
+
+
+#' @export
+print.factor_structure <- function(x, ...) {
+  cat(.text_components_variance(x))
   cat("\n\n")
   print(format(as.data.frame(x), ...))
 }
@@ -188,7 +198,18 @@ principal_components.merMod <- principal_components.lm
 
 
 #' @keywords internal
-.text_components_variance <- function(x, type = "principal component") {
+.text_components_variance <- function(x) {
+
+  type <- attributes(x)$type
+  if(type %in% c("prcomp", "principal")){
+    type <- "principal component"
+  } else if(type %in% c("fa")){
+    type <- "latent factor"
+  } else{
+    type <- paste0(type, " component")
+  }
+
+
   summary <- attributes(x)$summary
 
   if (nrow(summary) == 1) {
@@ -231,7 +252,10 @@ principal_components.merMod <- principal_components.lm
 
 
 #' @keywords internal
-.filer_loadings <- function(loadings, cols = -1, threshold = 0.2) {
+.filer_loadings <- function(loadings, threshold = 0.2) {
+
+  cols <- attributes(loadings)$loadings_columns
+
   if (threshold == "max") {
     for (i in 1:nrow(loadings)) {
       maxi <- max(abs(loadings[i, cols, drop = FALSE]))
@@ -246,7 +270,9 @@ principal_components.merMod <- principal_components.lm
 
 
 #' @keywords internal
-.sort_loadings <- function(loadings, cols = -1) {
+.sort_loadings <- function(loadings) {
+
+  cols <- attributes(loadings)$loadings_columns
 
   # Remove variable name column
   x <- loadings[, cols, drop = FALSE]
@@ -282,7 +308,7 @@ principal_components.merMod <- principal_components.lm
   }
 
   order <- row.names(x)
-  loadings <- loadings[order(order), ] # Arrange by max
+  loadings <- loadings[order(as.numeric(as.character(order))), ] # Arrange by max
   row.names(loadings) <- NULL
 
   loadings
