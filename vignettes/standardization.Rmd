@@ -9,7 +9,7 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
-tags: [r, parameters]
+tags: [r, parameters, standardization, effect size, cohen d, standardized coefficients]
 vignette: >
   %\VignetteIndexEntry{Standardized parameters}
   \usepackage[utf8]{inputenc}

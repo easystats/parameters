@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Number of Components/Factors to Retain — n_factors • parameters</title>
+<title>Format PCA/FA from the psych package — model_parameters.principal • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Number of Components/Factors to Retain — n_factors" />
+<meta property="og:title" content="Format PCA/FA from the psych package — model_parameters.principal" />
 
-<meta property="og:description" content="This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus. In case of ties, it will select the solution with the less factors." />
+<meta property="og:description" content="Format PCA/FA objects from the psych package (Revelle, 2016)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -141,46 +141,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Number of Components/Factors to Retain</h1>
+    <h1>Format PCA/FA from the psych package</h1>
     
-    <div class="hidden name"><code>n_factors.Rd</code></div>
+    <div class="hidden name"><code>model_parameters.principal.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus. In case of ties, it will select the solution with the less factors.</p>
+    <p>Format PCA/FA objects from the psych package (Revelle, 2016).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>n_factors</span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"FA"</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"varimax"</span>,
-  <span class='kw'>algorithm</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>safe</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for principal</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A dataframe.</p></td>
+      <th>model</th>
+      <td><p>PCA or FA created by the <code><a href='https://www.rdocumentation.org/packages/psych/topics/principal'>psych::principal</a></code> or <code><a href='https://www.rdocumentation.org/packages/psych/topics/fa'>psych::fa</a></code> functions.</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>Can be "FA" or "PCA", depending on what you want to do.</p></td>
+      <th>sort</th>
+      <td><p>Sort the loadings.</p></td>
     </tr>
     <tr>
-      <th>rotation</th>
-      <td><p>Only used for VSS. The rotation to apply. Can be "none" "varimax", "quartimax", "bentlerT", "equamax", "varimin", "geominT" and "bifactor" for orthogonal rotations, and "promax", "oblimin", "simplimax", "bentlerQ, "geominQ" and "biquartimin" and "cluster" for oblique transformations.</p></td>
-    </tr>
-    <tr>
-      <th>algorithm</th>
-      <td><p>Factoring method used by VSS. Can be "pa" for Principal Axis Factor Analysis, "minres" for minimum residual (OLS) factoring, "mle" for Maximum Likelihood FA and "pc" for Principal Components. "default" will select "minres" if <code>type</code> is "FA" and "pc" if <code>type</code> is "PCA".</p></td>
-    </tr>
-    <tr>
-      <th>package</th>
-      <td><p>Can be "all" or a vector containing "nFactors", "EGAnet" and "psych". These are the packages from which methods are used.</p></td>
-    </tr>
-    <tr>
-      <th>safe</th>
-      <td><p>If TRUE, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.</p></td>
+      <th>threshold</th>
+      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -188,36 +177,48 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <ul>
+<li><p><strong>Complexity</strong> (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.</p></li>
+<li><p><strong>Uniqueness</strong> represents the variance that is 'unique' to the variable and not shared with other variables. It is equal to <code>1 – communality</code> (variance that is shared with other variables). A uniqueness of <code>0.20</code> suggests that 20% or that variable is not shared with other variables in the overall factor model. The greater 'uniqueness' the lower the relevance of the variable in the factor model.</p></li>
+</ul>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <ul>
-<li><p>Bartlett, M. S. (1950). Tests of significance in factor analysis. British Journal of statistical psychology, 3(2), 77-85.</p></li>
-<li><p>Bentler, P. M., \&amp; Yuan, K. H. (1996). Test of linear trend in eigenvalues of a covariance matrix with application to data analysis. British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.</p></li>
-<li><p>Cattell, R. B. (1966). The scree test for the number of factors. Multivariate behavioral research, 1(2), 245-276.</p></li>
-<li><p>Zoski, K. W., \&amp; Jurs, S. (1996). An objective counterpart to the visual scree test for factor analysis: The standard error scree. Educational and Psychological Measurement, 56(3), 443-451.</p></li>
-<li><p>Zoski, K., \&amp; Jurs, S. (1993). Using multiple regression to determine the number of factors to retain in factor analysis. Multiple Linear Regression Viewpoints, 20(1), 5-9.</p></li>
-<li><p>Nasser, F., Benson, J., \&amp; Wisenbaker, J. (2002). The performance of regression-based variations of the visual scree for determining the number of common factors. Educational and psychological measurement, 62(3), 397-419.</p></li>
-<li><p>Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M. D., Sadana, R., \&amp; Thiyagarajan, J. A. (2018). Investigating the performance of Exploratory Graph Analysis and traditional techniques to identify the number of latent factors: A simulation and tutorial.</p></li>
-<li><p>Golino, H. F., \&amp; Epskamp, S. (2017). Exploratory graph analysis: A new approach for estimating the number of dimensions in psychological research. PloS one, 12(6), e0174035.</p></li>
-<li><p>Revelle, W., \&amp; Rocklin, T. (1979). Very simple structure: An alternative procedure for estimating the optimal number of interpretable factors. Multivariate Behavioral Research, 14(4), 403-414.</p></li>
-<li><p>Velicer, W. F. (1976). Determining the number of components from the matrix of partial correlations. Psychometrika, 41(3), 321-327.</p></li>
+<li><p>Pettersson, E., \&amp; Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.</p></li>
+<li><p>Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.</p></li>
 </ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)</div><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>psych</span>)
 
-<span class='fu'>n_factors</span>(<span class='no'>mtcars</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"PCA"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"nFactors"</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
+<span class='co'># Principal Component Analysis (PCA) ---------</span>
+<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/principal'>principal</a></span>(<span class='no'>attitude</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>pca</span>)
+
+<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/principal'>principal</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rotate</span><span class='kw'>=</span><span class='st'>"none"</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>pca</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
+<span class='co'># }</span><div class='input'><span class='co'># Note that the latter is identical to the 'principal_components' function available in parameters:</span>
+<span class='fu'><a href='principal_components.html'>principal_components</a></span>(<span class='no'>attitude</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; The 3 principal components accounted for 81.49% of the total variance of the original data (PC1 = 53.09%, PC2 = 16.30%, PC3 = 12.10%).
 #&gt; 
-#&gt; </span><span>The choice of 3 dimensions is supported by 4 (30.77%) methods out of 13 (Bartlett, CNG, SE Scree, R2).</div><div class='input'>
-<span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'>n_factors</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"FA"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"psych"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>as.numeric</a></span>(<span class='no'>result</span>)</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>result</span>)</div><div class='output co'>#&gt;   n_Factors n_Methods
-#&gt; 1         1         3
-#&gt; 2         2         1
-#&gt; 3         3         1</div></span><span class='co'># NOT RUN {</span>
-<span class='fu'>n_factors</span>(<span class='no'>mtcars</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"PCA"</span>)
-<span class='fu'>n_factors</span>(<span class='no'>mtcars</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"FA"</span>, <span class='kw'>algorithm</span> <span class='kw'>=</span> <span class='st'>"mle"</span>)
+#&gt;     Variable       PC1        PC2        PC3 Complexity
+#&gt; 1   learning 0.8261764         NA -0.2994027   1.265768
+#&gt; 2 complaints 0.8492648 -0.3563602  0.2076599   1.476308
+#&gt; 3     raises 0.8619753         NA         NA   1.102249
+#&gt; 4 privileges 0.6839314         NA         NA   1.175153
+#&gt; 5     rating 0.7961866 -0.4239721  0.2424866   1.739422
+#&gt; 6    advance 0.5832712  0.6086213 -0.4562244   2.849165
+#&gt; 7   critical 0.3573175  0.6436979  0.6450449   2.542072</div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># Exploratory Factor Analysis (EFA) ---------</span>
+<span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/fa'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>)
 <span class='co'># }</span><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -225,6 +226,8 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>

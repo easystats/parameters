@@ -16,6 +16,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
+bibliography: bibliography.bib
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
@@ -66,21 +67,101 @@ pca
 
 The `principal_component()` function automatically selected one component (if the number of components is not specified, this function uses [`n_factors()`](https://easystats.github.io/parameters/articles/n_factors.html) to estimate the optimal number to keep) and returned the **loadings**, *i.e.*, the relationship with all of the original variables. 
 
-As we can see here, it seems that our new component captured the essence of all our other variables together. We can extract the values of these components for each of our observation using the `predict()` method and store it in our dataframe.
+As we can see here, it seems that our new component captured the essence of all our other variables together. We can extract the values of these components for each of our observation using the `predict()` method and merge it with our dataframe.
 
 ```{r message=FALSE, warning=FALSE}
-df$Component <- predict(pca)
+df <- cbind(df, predict(pca))
 ```
 
 We can know update the model with this new component:
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-update(model, rating ~ Component) %>% 
+update(model, rating ~ PC1) %>% 
   model_parameters()
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-update(model, rating ~ Component) %>% 
+update(model, rating ~ PC1) %>% 
+  model_parameters() %>% 
+  knitr::kable(digits=1)
+```
+
+## Using the `psych` package for PCA and EFA
+
+Nevertheless, we recommend using the [`psych`](https://cran.r-project.org/package=psych) [@revelle2018] package for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are **fully supported** by `parameters` through the `model_parameters()` function.
+
+As such, the above analysis can be fully reproduced as follows:
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+library(psych)
+library(insight)  # To access data
+
+# Start by extracting the data from the model
+data <- insight::get_predictors(model)
+
+# How many factors to extract
+n <- n_factors(data, type = "PCA")
+n 
+
+# Fit the PCA
+pca <- psych::principal(data, nfactors = as.numeric(n)) %>% 
+  model_parameters()
+pca
+```
+
+*Note:* By default, `psych::principal()` uses a **varimax** rotation to extract rotated components, possibly leading to discrepancies in the results.
+
+Finally, refit the model:
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+df <- cbind(df, predict(pca))
+
+update(model, rating ~ PC1) %>% 
+  model_parameters()
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+df <- cbind(df, predict(pca))
+
+update(model, rating ~  PC1) %>% 
   model_parameters() %>% 
   knitr::kable(digits=1)
 ```
 
 
+## Exploratory Factor Analysis (EFA)
+
+The difference between PCA and EFA can be quite hard to intuitively grasp as their output is very familiar. The idea is that PCA aims at extracting the most variance possible from all variables of the dataset, whereas EFA aims at creating consistent factors from the dataset without desperately trying to represent all the variables. 
+
+This is why PCA is popular for feature reduction, as it will try to best represent the variance contained in the original data, minimizing the loss of information. On the other hand, EFA is usually in the context of exploring the latent dimensions that might be hidden in the observed variables, without necessary striving at representing the whole dataset.
+
+To illustrate EFA, let us use the [International Personality Item Pool](ipip.ori.org) data available in the [ `psych`](https://www.personality-project.org/r/html/bfi.html) package. It includes 25 personality self report items.
+
+```{r message=FALSE, warning=FALSE}
+data <- psych::bfi[, 1:25]  # Select only the 25 first columns corresponding to the items
+data <- na.omit(data)  # remove missing values
+
+# How many factors to extract
+n <- n_factors(data)
+n 
+```
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+# Fit an EFA
+efa <- psych::fa(data, nfactors = 5) %>% 
+  model_parameters(sort = TRUE, threshold = "max")
+efa
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+efa <- psych::fa(data, nfactors = 5) %>% 
+  model_parameters(sort = TRUE, threshold = "max")
+efa %>% 
+  knitr::kable(digits=1)
+```
+
+As we can see, the 25 items correspond to 5 latent factors which are, you guessed it, the famous **big 5**. Based on this model, we can now predict back the scores for each individual for these new variables:
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"))
+```
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+knitr::kable(head(predict(efa)), digits = 1, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"))
+```
+
+# References

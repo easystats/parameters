@@ -1,6 +1,6 @@
 #' Number of Components/Factors to Retain
 #'
-#' This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA).
+#' This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus. In case of ties, it will select the solution with the less factors.
 #'
 #' @param x A dataframe.
 #' @param type Can be "FA" or "PCA", depending on what you want to do.
@@ -23,6 +23,18 @@
 #' n_factors(mtcars, type = "FA", algorithm = "mle")
 #' }
 #'
+#' @references \itemize{
+#'   \item Bartlett, M. S. (1950). Tests of significance in factor analysis. British Journal of statistical psychology, 3(2), 77-85.
+#'   \item Bentler, P. M., \& Yuan, K. H. (1996). Test of linear trend in eigenvalues of a covariance matrix with application to data analysis. British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.
+#'   \item Cattell, R. B. (1966). The scree test for the number of factors. Multivariate behavioral research, 1(2), 245-276.
+#'   \item Zoski, K. W., \& Jurs, S. (1996). An objective counterpart to the visual scree test for factor analysis: The standard error scree. Educational and Psychological Measurement, 56(3), 443-451.
+#'   \item Zoski, K., \& Jurs, S. (1993). Using multiple regression to determine the number of factors to retain in factor analysis. Multiple Linear Regression Viewpoints, 20(1), 5-9.
+#'   \item Nasser, F., Benson, J., \& Wisenbaker, J. (2002). The performance of regression-based variations of the visual scree for determining the number of common factors. Educational and psychological measurement, 62(3), 397-419.
+#'   \item Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M. D., Sadana, R., \& Thiyagarajan, J. A. (2018). Investigating the performance of Exploratory Graph Analysis and traditional techniques to identify the number of latent factors: A simulation and tutorial.
+#'   \item Golino, H. F., \& Epskamp, S. (2017). Exploratory graph analysis: A new approach for estimating the number of dimensions in psychological research. PloS one, 12(6), e0174035.
+#'   \item Revelle, W., \& Rocklin, T. (1979). Very simple structure: An alternative procedure for estimating the optimal number of interpretable factors. Multivariate Behavioral Research, 14(4), 403-414.
+#'   \item Velicer, W. F. (1976). Determining the number of components from the matrix of partial correlations. Psychometrika, 41(3), 321-327.
+#' }
 #' @importFrom stats cor
 #' @export
 n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default", package = "all", safe = TRUE, ...) {
@@ -178,7 +190,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   )
 
   attr(out, "by_factors") <- by_factors
-  attr(out, "n") <- min(as.numeric(by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")]))
+  attr(out, "n") <- min(as.numeric(as.character(by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")])))
 
   out
 }
@@ -200,28 +212,16 @@ print.n_factors <- function(x, ...) {
 
   # Extract info
   max_methods <- max(results$n_Methods)
-  best_n <- results[results$n_Methods == max_methods, ]
-
-  if (nrow(best_n) == 1) {
-    best_n_text <- as.character(best_n$n_Factors)
-  } else {
-    best_n_text <- paste0(best_n$n_Factors, collapse = " and ")
-  }
+  best_n <- attributes(x)$n
 
   # Extract methods
-  methods_text <- c()
-  for (i in c(best_n$n_Factors)) {
-    methods <- x[x$n_Factors == i, ]$Method
-    methods <- paste0(methods, collapse = ", ")
-    methods_text <- c(methods_text, methods)
-  }
-  methods_text <- paste0(methods_text, collapse = "; ")
+  methods_text <- paste0(as.character(x[x$n_Factors == best_n, "Method"]), collapse = ", ")
 
 
   # Text
   text <- paste0(
     "The choice of ",
-    best_n_text,
+    as.character(best_n),
     " dimensions is supported by ",
     max_methods,
     " (",

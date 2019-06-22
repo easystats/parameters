@@ -187,18 +187,30 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <ul>
+<li><p><strong>Complexity</strong> (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.</p></li>
+</ul>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <ul>
+<li><p>Pettersson, E., \&amp; Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.</p></li>
+</ul>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
 <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt; The unique principal component accounted for 80.76% of the total variance of the original data.
 #&gt; 
-#&gt;   Variable        PC1
-#&gt; 1      mpg -0.9292872
-#&gt; 2      cyl  0.9588415
-#&gt; 3     disp  0.9506985
-#&gt; 4       hp  0.8627550
-#&gt; 5     drat -0.7789827</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; The 7 principal components accounted for 100.00% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%, PC7 = 0.70%).
+#&gt;   Variable        PC1 Complexity
+#&gt; 1      mpg -0.9292872          1
+#&gt; 2      cyl  0.9588415          1
+#&gt; 3     disp  0.9506985          1
+#&gt; 4       hp  0.8627550          1
+#&gt; 5     drat -0.7789827          1</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; The 7 principal components accounted for 100.00% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%, PC7 = 0.70%).
 #&gt; 
 #&gt;   Variable        PC1        PC2       PC3        PC4       PC5        PC6 PC7
 #&gt; 1      mpg -0.9308661         NA        NA -0.3047324        NA         NA  NA
@@ -207,57 +219,71 @@
 #&gt; 4       hp  0.8744936  0.3623835        NA         NA 0.2992024         NA  NA
 #&gt; 5     drat -0.7468681  0.4824288 0.4435378         NA        NA         NA  NA
 #&gt; 6       wt  0.8825092 -0.3466793 0.2587107         NA        NA         NA  NA
-#&gt; 7     qsec -0.5410937 -0.8058477        NA         NA        NA         NA  NA</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; The 3 principal components accounted for 94.11% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%).
+#&gt; 7     qsec -0.5410937 -0.8058477        NA         NA        NA         NA  NA
+#&gt;   Complexity
+#&gt; 1   1.315779
+#&gt; 2   1.184449
+#&gt; 3   1.208044
+#&gt; 4   1.638575
+#&gt; 5   2.474732
+#&gt; 6   1.597572
+#&gt; 7   1.965888</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; The 2 principal components accounted for 89.18% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%).
 #&gt; 
-#&gt;   Variable        PC1        PC2 PC3
-#&gt; 1     disp  0.9528463         NA  NA
-#&gt; 2      mpg -0.9308661         NA  NA
-#&gt; 3      cyl  0.9578708         NA  NA
-#&gt; 4     drat -0.7468681         NA  NA
-#&gt; 5       wt  0.8825092         NA  NA
-#&gt; 6       hp  0.8744936         NA  NA
-#&gt; 7     qsec         NA -0.8058477  NA</div><div class='input'>
-<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>])
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;   Component       SD Eigenvalues  Variance Variance_Cumulative
-#&gt; 1       PC1 2.009463     4.03794 0.8075879           0.8075879</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>pca</span>, <span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>])</div><div class='output co'>#&gt;                             PC1
-#&gt; Mazda RX4           -0.83958112
-#&gt; Mazda RX4 Wag       -0.83958112
-#&gt; Datsun 710          -1.78076155
-#&gt; Hornet 4 Drive       0.09834476
-#&gt; Hornet Sportabout    1.58552749
-#&gt; Valiant              0.42628595
-#&gt; Duster 360           2.31798915
-#&gt; Merc 240D           -1.83392218
-#&gt; Merc 230            -1.69378203
-#&gt; Merc 280            -0.60554684
-#&gt; Merc 280C           -0.49812301
-#&gt; Merc 450SE           1.52990575
-#&gt; Merc 450SL           1.46084757
-#&gt; Merc 450SLC          1.62198332
-#&gt; Cadillac Fleetwood   2.99730327
-#&gt; Lincoln Continental  2.96336452
-#&gt; Chrysler Imperial    2.48424862
-#&gt; Fiat 128            -2.96506160
-#&gt; Honda Civic         -3.52699413
-#&gt; Toyota Corolla      -3.21693607
-#&gt; Toyota Corona       -1.50101897
-#&gt; Dodge Challenger     1.79695027
-#&gt; AMC Javelin          1.48376642
-#&gt; Camaro Z28           1.97953272
-#&gt; Pontiac Firebird     1.75060571
-#&gt; Fiat X1-9           -2.57258674
-#&gt; Porsche 914-2       -2.41238961
-#&gt; Lotus Europa        -2.22991874
-#&gt; Ford Pantera L       1.55523735
-#&gt; Ferrari Dino        -0.18704672
-#&gt; Maserati Bora        2.36338454
-#&gt; Volvo 142E          -1.71202696</div></pre>
+#&gt;   Variable        PC1        PC2 Complexity
+#&gt; 1     disp  0.9528463         NA   1.017297
+#&gt; 2      mpg -0.9308661         NA   1.018371
+#&gt; 3      cyl  0.9578708         NA   1.015511
+#&gt; 4     drat -0.7468681         NA   1.710738
+#&gt; 5       wt  0.8825092         NA   1.301458
+#&gt; 6       hp  0.8744936         NA   1.333605
+#&gt; 7     qsec         NA -0.8058477   1.749385</div><div class='input'>
+<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;   Component Eigenvalues  Variance Variance_Cumulative
+#&gt; 1       PC1   4.0379396 0.8075879           0.8075879
+#&gt; 2       PC2   0.5622352 0.1124470           0.9200349</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;            PC1         PC2
+#&gt; 1  -0.83958112 -0.12417860
+#&gt; 2  -0.83958112 -0.12417860
+#&gt; 3  -1.78076155  0.20357157
+#&gt; 4   0.09834476  1.10598482
+#&gt; 5   1.58552749  0.32873919
+#&gt; 6   0.42628595  1.61371418
+#&gt; 7   2.31798915 -0.38579468
+#&gt; 8  -1.83392218  0.71554314
+#&gt; 9  -1.69378203  0.07797675
+#&gt; 10 -0.60554684 -0.27702188
+#&gt; 11 -0.49812301 -0.28570556
+#&gt; 12  1.52990575  0.40014511
+#&gt; 13  1.46084757  0.40572748
+#&gt; 14  1.62198332  0.39270195
+#&gt; 15  2.99730327  0.34308959
+#&gt; 16  2.96336452  0.15336639
+#&gt; 17  2.48424862 -0.29287006
+#&gt; 18 -2.96506160  0.14911053
+#&gt; 19 -3.52699413 -1.02550272
+#&gt; 20 -3.21693607 -0.04349485
+#&gt; 21 -1.50101897  0.38651333
+#&gt; 22  1.79695027  1.11397253
+#&gt; 23  1.48376642  0.52524948
+#&gt; 24  1.97953272 -1.17526822
+#&gt; 25  1.75060571  0.43376680
+#&gt; 26 -2.57258674  0.11744981
+#&gt; 27 -2.41238961 -0.63531022
+#&gt; 28 -2.22991874  0.20202457
+#&gt; 29  1.55523735 -2.06076910
+#&gt; 30 -0.18704672 -0.26276186
+#&gt; 31  2.36338454 -1.64100466
+#&gt; 32 -1.71202696 -0.33478623</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

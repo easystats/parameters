@@ -27,14 +27,25 @@ PCA(x, n = NULL, sort = FALSE, threshold = NULL,
 \description{
 This function performs a principal component analysis (PCA) and returns the loadings (of the unrotated matrix) as dataframe.
 }
+\details{
+\itemize{
+   \item \strong{Complexity} (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.
+}
+}
 \examples{
 library(parameters)
 
 principal_components(mtcars[, 1:5])
 principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
-principal_components(mtcars[, 1:7], n = 3, threshold = "max", sort = TRUE)
+principal_components(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
 
-pca <- principal_components(mtcars[, 1:5])
+pca <- principal_components(mtcars[, 1:5], n = 2)
 summary(pca)
-predict(pca, mtcars[, 1:7])
+predict(pca)
+
+}
+\references{
+\itemize{
+  \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
+}
 }

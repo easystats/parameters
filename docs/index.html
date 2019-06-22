@@ -126,16 +126,29 @@
 <a href="#features" class="anchor"></a>Features</h1>
 <p><a href="https://easystats.github.io/parameters/"><img src="https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63" alt="Documentation"></a> <a href="https://easystats.github.io/blog/posts/"><img src="https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800" alt="Blog"></a> <a href="https://easystats.github.io/parameters/reference/index.html"><img src="https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3" alt="Features"></a></p>
 <p>Click on the buttons above to access the package <a href="https://easystats.github.io/parameters/"><strong>documentation</strong></a> and the <a href="https://easystats.github.io/blog/posts/"><strong>easystats blog</strong></a>, and check-out these vignettes:</p>
+<div id="parameters-engineering" class="section level4">
+<h4 class="hasAnchor">
+<a href="#parameters-engineering" class="anchor"></a>Parameters Engineering</h4>
 <ul>
-<li><a href="https://easystats.github.io/parameters/articles/standardization.html">Parameters’ standardization</a></li>
-<li><a href="https://easystats.github.io/parameters/articles/bootstrapping.html">Model bootstrapping</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/bootstrapping.html">Bootstrapped parameters</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/standardization.html">Standardized parameters</a></li>
 </ul>
+</div>
+<div id="variablefeature-reduction" class="section level4">
+<h4 class="hasAnchor">
+<a href="#variablefeature-reduction" class="anchor"></a>Variable/Feature Reduction</h4>
+<ul>
+<li><a href="https://easystats.github.io/parameters/articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/variable_extraction.html">Variable extraction (PCA, FA, …)</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/variable_selection.html">Variable selection (stepwise, projpred, …)</a></li>
+</ul>
+</div>
 <div id="models-parameters-description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#models-parameters-description" class="anchor"></a>Model’s parameters description</h2>
-<p>The <code>model_parameters</code> function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to <a href="https://github.com/tidymodels/broom">broom::tidy()</a>, with some notable differences:</p>
+<p>The <code>model_parameters</code> function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to <a href="https://github.com/tidymodels/broom"><code><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">broom::tidy()</a></code></a>, with some notable differences:</p>
 <ul>
-<li>The names of the returned dataframe are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, <em>i.e.</em>, <code>t</code>, <code>z</code>, etc.</li>
+<li>The names of the returned dataframe are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, <em>i.e.</em>, <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em>.</li>
 <li>It is able to compute or extract indices not available by default, such as <strong><em>p</em> values</strong>, <strong>CIs</strong>, etc.</li>
 <li>It includes <strong>feature engineering</strong> capabilities, including <a href="https://easystats.github.io/parameters/articles/bootstrapping.html"><strong>bootstrapping</strong></a> and <a href="https://easystats.github.io/parameters/articles/standardization.html"><strong>standardization</strong></a> of parameters.</li>
 </ul>
@@ -612,6 +625,7 @@
 </tr>
 </tbody>
 </table>
+<!-- ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA) --><!-- ```{r, warning=FALSE, message=FALSE} --><!-- library(psych) --><!-- model <- fa(attitude, nfactors = 3) --><!-- model_parameters(model) --><!-- ``` -->
 </div>
 </div>
 <div id="variable-and-parameters-selection" class="section level2">
