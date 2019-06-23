@@ -146,6 +146,7 @@
 <div id="models-parameters-description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#models-parameters-description" class="anchor"></a>Model’s parameters description</h2>
+<p><img src="paper/figure1.png" align="center"></p>
 <p>The <code>model_parameters</code> function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to <a href="https://github.com/tidymodels/broom"><code><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">broom::tidy()</a></code></a>, with some notable differences:</p>
 <ul>
 <li>The names of the returned dataframe are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, <em>i.e.</em>, <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em>.</li>
@@ -625,12 +626,13 @@
 </tr>
 </tbody>
 </table>
-<!-- ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA) --><!-- ```{r, warning=FALSE, message=FALSE} --><!-- library(psych) --><!-- model <- fa(attitude, nfactors = 3) --><!-- model_parameters(model) --><!-- ``` -->
+<!-- I don't know why but the chunk below fails when building site (but knitting the README des not...) --><!-- ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA) --><!-- ```{r, warning=FALSE, message=FALSE} --><!-- library(psych) --><!-- model <- fa(attitude, nfactors = 3) --><!-- model_parameters(model) --><!-- ``` -->
 </div>
 </div>
 <div id="variable-and-parameters-selection" class="section level2">
 <h2 class="hasAnchor">
 <a href="#variable-and-parameters-selection" class="anchor"></a>Variable and parameters selection</h2>
+<p><img src="paper/figure2.png" align="center"></p>
 <div id="general-linear-models-glm-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#general-linear-models-glm-1" class="anchor"></a>General Linear Models (GLM)</h3>

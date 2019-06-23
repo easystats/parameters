@@ -59,6 +59,8 @@ check-out these vignettes:
 
 ## Model’s parameters description
 
+<img src='paper/figure1.png' align="center" />
+
 The `model_parameters` function allows you to extract the parameters and
 their characteristics from various models in a consistent way. It could
 be considered as an alternative to
@@ -224,6 +226,8 @@ model_parameters(model)
 | 3 | wt          |    \-3 |     \-4 |    \-1.9 | 100 |                0 | 1963 |    1 | normal              |               0 |           15 |
 | 2 | cyl         |    \-2 |     \-2 |    \-0.8 | 100 |                2 | 1997 |    1 | normal              |               0 |            8 |
 
+<!-- I don't know why but the chunk below fails when building site (but knitting the README des not...) -->
+
 ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA)
 
 ``` r
@@ -244,6 +248,8 @@ model_parameters(model)
 ```
 
 ## Variable and parameters selection
+
+<img src='paper/figure2.png' align="center" />
 
 ### General Linear Models (GLM)
 
