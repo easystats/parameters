@@ -73,8 +73,13 @@ Click on the buttons above to access the package [**documentation**](https://eas
 - [Variable extraction (PCA, FA, …)](https://easystats.github.io/parameters/articles/variable_extraction.html)
 - [Variable selection (stepwise, projpred, …)](https://easystats.github.io/parameters/articles/variable_selection.html)
 
+
+
+ 
 ## Model's parameters description
 
+<img src='paper/figure1.png' align="center" />
+ 
 The `model_parameters` function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
 
 - The names of the returned dataframe are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, *i.e.*, *t*, *z*, etc., instead of a generic name such as *statistic*.
@@ -217,6 +222,11 @@ text <- capture.output(model <- stan_glm(mpg ~ wt + cyl, data = mtcars))
 knitr::kable(model_parameters(model), digits=1)
 ```
 
+
+<!-- I don't know why but the chunk below fails when building site (but knitting the README des not...) -->
+
+
+
 <!-- ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA) -->
 
 <!-- ```{r, warning=FALSE, message=FALSE} -->
@@ -227,8 +237,11 @@ knitr::kable(model_parameters(model), digits=1)
 <!-- ``` -->
 
 
+ 
 ## Variable and parameters selection
 
+<img src='paper/figure2.png' align="center" />
+ 
 ### General Linear Models (GLM)
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
@@ -283,6 +296,9 @@ parameters_selection(model) %>%
   knitr::kable(digits=1)
 ```
 
+
+
+ 
 ## Variable and features extraction
 
 
