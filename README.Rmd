@@ -232,7 +232,7 @@ knitr::kable(model_parameters(model), digits=1)
 <!-- ```{r, warning=FALSE, message=FALSE} -->
 <!-- library(psych) -->
 
-<!-- model <- fa(attitude, nfactors = 3) -->
+<!-- model <- psych::fa(attitude, nfactors = 3) -->
 <!-- model_parameters(model) -->
 <!-- ``` -->
 

@@ -41,7 +41,7 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
       out$p <- model$p.value
       out$CI_low <- model$conf.int[1]
       out$CI_high <- model$conf.int[2]
-      out$CI_level <- attributes(model$conf.int)$conf.level
+      out$CI <- attributes(model$conf.int)$conf.level
       out$Method <- "Pearson"
     } else if (grepl("Spearman", model$method)) {
       out$rho <- model$estimate
@@ -70,7 +70,7 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
-        "CI_level" = attributes(model$conf.int)$conf.level,
+        "CI" = attributes(model$conf.int)$conf.level,
         "Method" = model$method
       )
     } else if (grepl(" by ", model$data.name)) {
@@ -86,7 +86,7 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
-        "CI_level" = attributes(model$conf.int)$conf.level,
+        "CI" = attributes(model$conf.int)$conf.level,
         "Method" = model$method
       )
     } else {
@@ -100,7 +100,7 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
-        "CI_level" = attributes(model$conf.int)$conf.level,
+        "CI" = attributes(model$conf.int)$conf.level,
         "Method" = model$method
       )
     }

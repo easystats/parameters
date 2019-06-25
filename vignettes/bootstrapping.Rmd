@@ -28,15 +28,17 @@ options(digits=2)
 set.seed(333)
 ```
 
-# Introduction
 
-Compare point-estimates with bootstrapped parameters for frequentist models.
+The basic idea of bootstrapping is that inference about a parent population from sample data can be modelled by resampling the sample data. It is often used as an alternative to statistical inference based on the assumption of a parametric model when that assumption is in doubt, or where parametric inference is complicated.
 
-# Methods
+## Comparison between regular and boostrapped estimates
 
-## Data
+### Data
 
-We simulated parent data of correlated data of size 10000 with different levels of noise (0.25, 0.5, 1, 1.5, 2, 2.5). From these parent populations, we extracted n = 1000 random samples of size 50 on which we computed a simple regression. We extracted the beta and SE of this regression, as well as bootstrapped estimates (median and MAD) with two different numbers of bootstrap iterations (1000 and 4000).
+In order to compare point-estimates with bootstrapped parameters for frequentist models. We generated one large sample (the **parent population**, size `1000000`) of two continuous variables producing a regression coefficient of `0.5`. We then iteratively extracted a subsample of size `30`, computed 3 types of coefficient (regular, bootstrapped median with 1000 and 4000 iterations) that were substracted from the "parent" coefficient. The closer the value is from 0, and the closer it is from the "true" effect.
+
+The data is available on githuband the code to generate it is abailable [here](https://easystats.github.io/circus/articles/bootstrapped.html).
+
 
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)
@@ -46,39 +48,47 @@ library(tidyr)
 df <- read.csv("https://raw.github.com/easystats/circus/master/data/bootstrapped.csv")
 ```
 
-For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it [here](https://easystats.github.io/circus/articles/bootstrapped.html).
 
-# Results
-
-## Visualisation
+### Visualisation
 ```{r message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
-df %>% 
-  select(beta, Median_1000, Median_4000, Parent_beta, Noise) %>% 
-  gather(Parameter, Value, beta, Median_1000, Median_4000) %>% 
-  mutate(Deviance = Parent_beta - Value,
-         Noise = as.factor(Noise)) %>% 
-  ggplot(aes(y=Deviance, x=Noise, fill=Parameter)) +
-  geom_boxplot() +
+library(see)
+
+df_long <- df %>% 
+  select(Coefficient, Bootstrapped_1000, Bootstrapped_4000) %>% 
+  gather(Type, Distance) %>% 
+  mutate(Type = forcats::fct_relevel(Type, c("Coefficient", "Bootstrapped_1000", "Bootstrapped_4000")))
+
+df_long %>% 
+  ggplot(aes(y=Distance, x=Type, fill=Type)) +
+  geom_violin() +
   geom_hline(yintercept=0, linetype="dashed") +
-  scale_fill_manual(values=c("#2196F3", "#f44336", "#FF9800")) +
-  theme_classic() +
-  ylab("Deviance (0 is the parent - true - effect)\n")
+  scale_fill_manual(values=c("#2196F3", "#FF9800", "#f44336")) +
+  theme_modern() +
+  ylab("Distance (0 is the parent / true effect)")
 ```
 
 
-## Visualisation
+### Testing
+
+#### Bayes factor analysis
 ```{r message=FALSE, warning=FALSE}
-m1 <- lm(Parent_beta ~ beta, data=df)
-m2 <- lm(Parent_beta ~ Median_1000, data=df)
-m3 <- lm(Parent_beta ~ Median_4000, data=df)
+library(BayesFactor)
+library(bayestestR)
 
-summary(m1)
-summary(m2)
-summary(m3)
-
-anova(m1, m2, m3)
+bayestestR::bayesfactor(BayesFactor::ttestBF(df$Coefficient))
+bayestestR::bayesfactor(BayesFactor::ttestBF(df$Bootstrapped_1000))
+bayestestR::bayesfactor(BayesFactor::ttestBF(df$Bootstrapped_4000))
 ```
 
-# Conclusion 
+#### Contrast analysis
+```{r message=FALSE, warning=FALSE}
+library(emmeans)
 
-Negligible difference, but bootstrapped (n=4000) seems (very) slightly more accurate.
+lm(Distance ~ Type, data = df_long) %>% 
+  emmeans::emmeans(~Type)
+```
+
+
+### Conclusion 
+
+Negligible difference, but bootstrapped (n=1000) seems (very) slightly more accurate.
