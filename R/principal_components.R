@@ -308,7 +308,7 @@ principal_components.merMod <- principal_components.lm
   }
 
   order <- row.names(x)
-  loadings <- loadings[order(as.numeric(as.character(order))), ] # Arrange by max
+  loadings <- loadings[as.numeric(as.character(order)), ] # Arrange by max
   row.names(loadings) <- NULL
 
   loadings

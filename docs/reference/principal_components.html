@@ -230,12 +230,12 @@
 #&gt; 7   1.965888</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; The 2 principal components accounted for 89.18% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%).
 #&gt; 
 #&gt;   Variable        PC1        PC2 Complexity
-#&gt; 1     disp  0.9528463         NA   1.017297
-#&gt; 2      mpg -0.9308661         NA   1.018371
-#&gt; 3      cyl  0.9578708         NA   1.015511
-#&gt; 4     drat -0.7468681         NA   1.710738
-#&gt; 5       wt  0.8825092         NA   1.301458
-#&gt; 6       hp  0.8744936         NA   1.333605
+#&gt; 1      cyl  0.9578708         NA   1.015511
+#&gt; 2     disp  0.9528463         NA   1.017297
+#&gt; 3      mpg -0.9308661         NA   1.018371
+#&gt; 4       wt  0.8825092         NA   1.301458
+#&gt; 5       hp  0.8744936         NA   1.333605
+#&gt; 6     drat -0.7468681         NA   1.710738
 #&gt; 7     qsec         NA -0.8058477   1.749385</div><div class='input'>
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;   Component Eigenvalues  Variance Variance_Cumulative

@@ -120,10 +120,9 @@
 <a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"easystats/parameters"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"parameters"</span>)</a></code></pre></div>
 </div>
-</div>
-<div id="features" class="section level1">
-<h1 class="hasAnchor">
-<a href="#features" class="anchor"></a>Features</h1>
+<div id="documentation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#documentation" class="anchor"></a>Documentation</h2>
 <p><a href="https://easystats.github.io/parameters/"><img src="https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63" alt="Documentation"></a> <a href="https://easystats.github.io/blog/posts/"><img src="https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800" alt="Blog"></a> <a href="https://easystats.github.io/parameters/reference/index.html"><img src="https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3" alt="Features"></a></p>
 <p>Click on the buttons above to access the package <a href="https://easystats.github.io/parameters/"><strong>documentation</strong></a> and the <a href="https://easystats.github.io/blog/posts/"><strong>easystats blog</strong></a>, and check-out these vignettes:</p>
 <div id="parameters-engineering" class="section level4">
@@ -143,11 +142,16 @@
 <li><a href="https://easystats.github.io/parameters/articles/variable_selection.html">Variable selection (stepwise, projpred, …)</a></li>
 </ul>
 </div>
+</div>
+</div>
+<div id="features" class="section level1">
+<h1 class="hasAnchor">
+<a href="#features" class="anchor"></a>Features</h1>
 <div id="models-parameters-description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#models-parameters-description" class="anchor"></a>Model’s parameters description</h2>
-<p><img src="paper/figure1.png" align="center"></p>
-<p>The <code>model_parameters</code> function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to <a href="https://github.com/tidymodels/broom"><code><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">broom::tidy()</a></code></a>, with some notable differences:</p>
+<p><img src="reference/figures/figure1.png" align="center"></p>
+<p>The <code>model_parameters</code> function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom"><code><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">broom::tidy()</a></code></a>, with some notable differences:</p>
 <ul>
 <li>The names of the returned dataframe are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, <em>i.e.</em>, <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em>.</li>
 <li>It is able to compute or extract indices not available by default, such as <strong><em>p</em> values</strong>, <strong>CIs</strong>, etc.</li>
@@ -171,7 +175,7 @@
 <th align="right">p</th>
 <th align="right">CI_low</th>
 <th align="right">CI_high</th>
-<th align="right">CI_level</th>
+<th align="right">CI</th>
 <th align="left">Method</th>
 </tr></thead>
 <tbody><tr class="odd">
@@ -213,7 +217,7 @@
 <td align="right">-0.1</td>
 <td align="right">-0.2</td>
 <td align="right">0</td>
-<td align="right">92</td>
+<td align="right">0.9</td>
 <td align="right">43</td>
 <td align="left">cauchy</td>
 <td align="right">0</td>
@@ -246,7 +250,7 @@
 <th align="right">p</th>
 <th align="right">CI_low</th>
 <th align="right">CI_high</th>
-<th align="right">CI_level</th>
+<th align="right">CI</th>
 <th align="left">Method</th>
 </tr></thead>
 <tbody><tr class="odd">
@@ -288,7 +292,7 @@
 <td align="right">6</td>
 <td align="right">6</td>
 <td align="right">6</td>
-<td align="right">100</td>
+<td align="right">1</td>
 <td align="right">0</td>
 <td align="left">cauchy</td>
 <td align="right">0</td>
@@ -588,7 +592,7 @@
 <td align="right">40</td>
 <td align="right">37</td>
 <td align="right">42.5</td>
-<td align="right">100</td>
+<td align="right">1</td>
 <td align="right">0</td>
 <td align="right">5250</td>
 <td align="right">1</td>
@@ -602,7 +606,7 @@
 <td align="right">-3</td>
 <td align="right">-4</td>
 <td align="right">-1.9</td>
-<td align="right">100</td>
+<td align="right">1</td>
 <td align="right">0</td>
 <td align="right">1963</td>
 <td align="right">1</td>
@@ -616,7 +620,7 @@
 <td align="right">-2</td>
 <td align="right">-2</td>
 <td align="right">-0.8</td>
-<td align="right">100</td>
+<td align="right">1</td>
 <td align="right">2</td>
 <td align="right">1997</td>
 <td align="right">1</td>
@@ -626,21 +630,130 @@
 </tr>
 </tbody>
 </table>
-<!-- I don't know why but the chunk below fails when building site (but knitting the README des not...) --><!-- ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA) --><!-- ```{r, warning=FALSE, message=FALSE} --><!-- library(psych) --><!-- model <- fa(attitude, nfactors = 3) --><!-- model_parameters(model) --><!-- ``` -->
+</div>
+<div id="exploratory-factor-analysis-efa-and-principal-component-analysis-pca" class="section level3">
+<h3 class="hasAnchor">
+<a href="#exploratory-factor-analysis-efa-and-principal-component-analysis-pca" class="anchor"></a>Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA)</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(psych)</a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3">model &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/psych/topics/fa">fa</a></span>(attitude, <span class="dt">nfactors =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="op">&gt;</span><span class="st"> </span>The <span class="dv">3</span> latent <span class="kw">factors</span> (oblimin rotation) accounted <span class="cf">for</span> <span class="fl">66.60</span><span class="op">% of the total variance of the original data (MR1 = 38.19%</span>, MR2 =<span class="st"> </span><span class="fl">22.69</span><span class="op">%, MR3 = 5.72%</span><span class="er">)</span>.</a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="op">&gt;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="er">&gt;</span><span class="st">     </span>Variable  MR1   MR2   MR3 Complexity Uniqueness</a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>     rating  <span class="fl">0.9</span> <span class="fl">-0.07</span> <span class="fl">-0.05</span>          <span class="dv">1</span>        <span class="fl">0.2</span></a>
+<a class="sourceLine" id="cb14-9" title="9"><span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> complaints  <span class="fl">1.0</span> <span class="fl">-0.06</span>  <span class="fl">0.04</span>          <span class="dv">1</span>        <span class="fl">0.1</span></a>
+<a class="sourceLine" id="cb14-10" title="10"><span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span> privileges  <span class="fl">0.4</span>  <span class="fl">0.25</span> <span class="fl">-0.05</span>          <span class="dv">2</span>        <span class="fl">0.6</span></a>
+<a class="sourceLine" id="cb14-11" title="11"><span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>   learning  <span class="fl">0.5</span>  <span class="fl">0.54</span> <span class="fl">-0.28</span>          <span class="dv">3</span>        <span class="fl">0.2</span></a>
+<a class="sourceLine" id="cb14-12" title="12"><span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>     raises  <span class="fl">0.5</span>  <span class="fl">0.43</span>  <span class="fl">0.25</span>          <span class="dv">2</span>        <span class="fl">0.2</span></a>
+<a class="sourceLine" id="cb14-13" title="13"><span class="op">&gt;</span><span class="st"> </span><span class="dv">6</span>   critical  <span class="fl">0.2</span>  <span class="fl">0.17</span>  <span class="fl">0.48</span>          <span class="dv">1</span>        <span class="fl">0.7</span></a>
+<a class="sourceLine" id="cb14-14" title="14"><span class="op">&gt;</span><span class="st"> </span><span class="dv">7</span>    advance <span class="fl">-0.1</span>  <span class="fl">0.91</span>  <span class="fl">0.07</span>          <span class="dv">1</span>        <span class="fl">0.2</span></a></code></pre></div>
+</div>
+<div id="confirmatory-factor-analysis-cfa-and-structural-equation-models-sem" class="section level3">
+<h3 class="hasAnchor">
+<a href="#confirmatory-factor-analysis-cfa-and-structural-equation-models-sem" class="anchor"></a>Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)</h3>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lavaan)</a>
+<a class="sourceLine" id="cb15-2" title="2"></a>
+<a class="sourceLine" id="cb15-3" title="3">model &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/lavaan/topics/cfa">cfa</a></span>(<span class="st">' visual  =~ x1 + x2 + x3</span></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="st">                       textual =~ x4 + x5 + x6</span></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="st">                       speed   =~ x7 + x8 + x9 '</span>, </a>
+<a class="sourceLine" id="cb15-6" title="6">                     <span class="dt">data=</span>HolzingerSwineford1939)</a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
+<table class="table table">
+<thead><tr class="header">
+<th align="left">To</th>
+<th align="left">Operator</th>
+<th align="left">From</th>
+<th align="right">Coefficient</th>
+<th align="right">SE</th>
+<th align="right">p</th>
+<th align="right">CI_low</th>
+<th align="right">CI_high</th>
+<th align="left">Type</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">visual</td>
+<td align="left">=~</td>
+<td align="left">x1</td>
+<td align="right">1.0</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">1.0</td>
+<td align="right">1.0</td>
+<td align="left">Loading</td>
+</tr>
+<tr class="even">
+<td align="left">visual</td>
+<td align="left">=~</td>
+<td align="left">x2</td>
+<td align="right">0.6</td>
+<td align="right">0.1</td>
+<td align="right">0</td>
+<td align="right">0.4</td>
+<td align="right">0.7</td>
+<td align="left">Loading</td>
+</tr>
+<tr class="odd">
+<td align="left">visual</td>
+<td align="left">=~</td>
+<td align="left">x3</td>
+<td align="right">0.7</td>
+<td align="right">0.1</td>
+<td align="right">0</td>
+<td align="right">0.5</td>
+<td align="right">0.9</td>
+<td align="left">Loading</td>
+</tr>
+<tr class="even">
+<td align="left">textual</td>
+<td align="left">=~</td>
+<td align="left">x4</td>
+<td align="right">1.0</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">1.0</td>
+<td align="right">1.0</td>
+<td align="left">Loading</td>
+</tr>
+<tr class="odd">
+<td align="left">textual</td>
+<td align="left">=~</td>
+<td align="left">x5</td>
+<td align="right">1.1</td>
+<td align="right">0.1</td>
+<td align="right">0</td>
+<td align="right">1.0</td>
+<td align="right">1.2</td>
+<td align="left">Loading</td>
+</tr>
+<tr class="even">
+<td align="left">textual</td>
+<td align="left">=~</td>
+<td align="left">x6</td>
+<td align="right">0.9</td>
+<td align="right">0.1</td>
+<td align="right">0</td>
+<td align="right">0.8</td>
+<td align="right">1.0</td>
+<td align="left">Loading</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="variable-and-parameters-selection" class="section level2">
 <h2 class="hasAnchor">
 <a href="#variable-and-parameters-selection" class="anchor"></a>Variable and parameters selection</h2>
-<p><img src="paper/figure2.png" align="center"></p>
+<p><img src="reference/figures/figure2.png" align="center"></p>
 <div id="general-linear-models-glm-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#general-linear-models-glm-1" class="anchor"></a>General Linear Models (GLM)</h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb14-2" title="2"></a>
-<a class="sourceLine" id="cb14-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb16-2" title="2"></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
 <table class="table table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
@@ -726,11 +839,11 @@
 <div id="mixed-models-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mixed-models-1" class="anchor"></a>Mixed models</h3>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
-<a class="sourceLine" id="cb15-2" title="2"></a>
-<a class="sourceLine" id="cb15-3" title="3"><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">*</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data =</span> iris)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
+<a class="sourceLine" id="cb17-2" title="2"></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">*</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data =</span> iris)  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
 <table class="table table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
@@ -829,11 +942,11 @@
 <div id="bayesian-models-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bayesian-models-1" class="anchor"></a>Bayesian models</h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
-<a class="sourceLine" id="cb16-2" title="2"></a>
-<a class="sourceLine" id="cb16-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb18-2" title="2"></a>
+<a class="sourceLine" id="cb18-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
 <table class="table table">
 <thead><tr class="header">
 <th></th>
@@ -856,7 +969,7 @@
 <td align="right">20.2</td>
 <td align="right">-1.9</td>
 <td align="right">42.1</td>
-<td align="right">92</td>
+<td align="right">0.9</td>
 <td align="right">1.1</td>
 <td align="right">2483</td>
 <td align="right">1</td>
@@ -870,7 +983,7 @@
 <td align="right">-3.9</td>
 <td align="right">-5.9</td>
 <td align="right">-1.9</td>
-<td align="right">100</td>
+<td align="right">1.0</td>
 <td align="right">0.3</td>
 <td align="right">2860</td>
 <td align="right">1</td>
@@ -884,7 +997,7 @@
 <td align="right">-0.5</td>
 <td align="right">-1.8</td>
 <td align="right">0.8</td>
-<td align="right">72</td>
+<td align="right">0.7</td>
 <td align="right">48.2</td>
 <td align="right">2781</td>
 <td align="right">1</td>
@@ -898,7 +1011,7 @@
 <td align="right">0.0</td>
 <td align="right">0.0</td>
 <td align="right">0.0</td>
-<td align="right">90</td>
+<td align="right">0.9</td>
 <td align="right">100.0</td>
 <td align="right">2907</td>
 <td align="right">1</td>
@@ -912,7 +1025,7 @@
 <td align="right">2.9</td>
 <td align="right">0.2</td>
 <td align="right">5.9</td>
-<td align="right">95</td>
+<td align="right">1.0</td>
 <td align="right">7.0</td>
 <td align="right">3082</td>
 <td align="right">1</td>
@@ -926,7 +1039,7 @@
 <td align="right">0.8</td>
 <td align="right">-0.2</td>
 <td align="right">1.7</td>
-<td align="right">91</td>
+<td align="right">0.9</td>
 <td align="right">36.2</td>
 <td align="right">2449</td>
 <td align="right">1</td>
@@ -940,7 +1053,7 @@
 <td align="right">0.0</td>
 <td align="right">0.0</td>
 <td align="right">0.0</td>
-<td align="right">87</td>
+<td align="right">0.9</td>
 <td align="right">100.0</td>
 <td align="right">2750</td>
 <td align="right">1</td>
@@ -958,10 +1071,10 @@
 <div id="how-many-factors-to-retain-in-factor-analysis-fa" class="section level3">
 <h3 class="hasAnchor">
 <a href="#how-many-factors-to-retain-in-factor-analysis-fa" class="anchor"></a>How many factors to retain in Factor Analysis (FA)</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="reference/n_factors.html">n_factors</a></span>(attitude)</a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="op">&gt;</span><span class="st"> </span><span class="co"># Method Agreement Procedure:</span></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="er">&gt;</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-4" title="4"><span class="er">&gt;</span><span class="st"> </span>The choice of <span class="dv">1</span> dimensions is supported by <span class="dv">4</span> (<span class="fl">40.00</span>%) methods out of <span class="dv">10</span> (<span class="kw">EGA</span> (glasso), <span class="kw">EAG</span> (TMFG), VSS complexity <span class="dv">1</span>, Velicer<span class="st">'s MAP).</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="reference/n_factors.html">n_factors</a></span>(attitude)</a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="op">&gt;</span><span class="st"> </span><span class="co"># Method Agreement Procedure:</span></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="er">&gt;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="er">&gt;</span><span class="st"> </span>The choice of <span class="dv">1</span> dimensions is supported by <span class="dv">4</span> (<span class="fl">40.00</span>%) methods out of <span class="dv">10</span> (<span class="kw">EGA</span> (glasso), <span class="kw">EAG</span> (TMFG), VSS complexity <span class="dv">1</span>, Velicer<span class="st">'s MAP).</span></a></code></pre></div>
 </div>
 </div>
 <div id="miscellaneous" class="section level2">
@@ -970,23 +1083,23 @@
 <div id="describe-a-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#describe-a-distribution" class="anchor"></a>Describe a Distribution</h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">300</span>)</a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(x)</a>
-<a class="sourceLine" id="cb18-3" title="3"><span class="op">&gt;</span><span class="st">    </span>Mean SD Min Max Skewness Kurtosis n_Obs n_Missing</a>
-<a class="sourceLine" id="cb18-4" title="4"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="fl">-0.03</span>  <span class="dv">1</span>  <span class="dv">-4</span>   <span class="dv">3</span>    <span class="fl">-0.08</span>      <span class="fl">0.1</span>   <span class="dv">300</span>         <span class="dv">0</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">300</span>)</a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(x)</a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="op">&gt;</span><span class="st">    </span>Mean SD Min Max Skewness Kurtosis n_Obs n_Missing</a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="fl">-0.03</span>  <span class="dv">1</span>  <span class="dv">-4</span>   <span class="dv">3</span>    <span class="fl">-0.08</span>      <span class="fl">0.1</span>   <span class="dv">300</span>         <span class="dv">0</span></a></code></pre></div>
 </div>
 <div id="standardization-and-normalization" class="section level3">
 <h3 class="hasAnchor">
 <a href="#standardization-and-normalization" class="anchor"></a>Standardization and normalization</h3>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/standardize.html">standardize</a></span>(iris)</a>
-<a class="sourceLine" id="cb19-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(df<span class="op">$</span>Sepal.Length)</a>
-<a class="sourceLine" id="cb19-3" title="3"><span class="op">&gt;</span><span class="st">    </span>Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="op">&gt;</span><span class="st">    </span><span class="fl">-1.9</span>    <span class="fl">-0.9</span>    <span class="fl">-0.1</span>     <span class="fl">0.0</span>     <span class="fl">0.7</span>     <span class="fl">2.5</span></a>
-<a class="sourceLine" id="cb19-5" title="5"></a>
-<a class="sourceLine" id="cb19-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/normalize.html">normalize</a></span>(iris)</a>
-<a class="sourceLine" id="cb19-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(df<span class="op">$</span>Sepal.Length)</a>
-<a class="sourceLine" id="cb19-8" title="8"><span class="op">&gt;</span><span class="st">    </span>Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </a>
-<a class="sourceLine" id="cb19-9" title="9"><span class="op">&gt;</span><span class="st">     </span><span class="fl">0.0</span>     <span class="fl">0.2</span>     <span class="fl">0.4</span>     <span class="fl">0.4</span>     <span class="fl">0.6</span>     <span class="fl">1.0</span></a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/standardize.html">standardize</a></span>(iris)</a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(df<span class="op">$</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="op">&gt;</span><span class="st">    </span>Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="op">&gt;</span><span class="st">    </span><span class="fl">-1.9</span>    <span class="fl">-0.9</span>    <span class="fl">-0.1</span>     <span class="fl">0.0</span>     <span class="fl">0.7</span>     <span class="fl">2.5</span></a>
+<a class="sourceLine" id="cb21-5" title="5"></a>
+<a class="sourceLine" id="cb21-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/normalize.html">normalize</a></span>(iris)</a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(df<span class="op">$</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb21-8" title="8"><span class="op">&gt;</span><span class="st">    </span>Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </a>
+<a class="sourceLine" id="cb21-9" title="9"><span class="op">&gt;</span><span class="st">     </span><span class="fl">0.0</span>     <span class="fl">0.2</span>     <span class="fl">0.4</span>     <span class="fl">0.4</span>     <span class="fl">0.6</span>     <span class="fl">1.0</span></a></code></pre></div>
 </div>
 </div>
 </div>

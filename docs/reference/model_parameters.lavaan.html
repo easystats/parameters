@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model Parameters — model_parameters • parameters</title>
+<title>Format CFA/SEM from the lavaan package — model_parameters.lavaan • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,15 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Model Parameters — model_parameters" />
+<meta property="og:title" content="Format CFA/SEM from the lavaan package — model_parameters.lavaan" />
 
-<meta property="og:description" content="Compute and extract model parameters. See the documentation for your object's class:
-Correlations and t-tests
-ANOVAs
-Frequentist regressions
-Bayesian regressions
-PCA and FA
-" />
+<meta property="og:description" content="Format CFA/SEM objects from the lavaan package (Rosseel, 2012)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -147,31 +141,35 @@ PCA and FA
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Model Parameters</h1>
+    <h1>Format CFA/SEM from the lavaan package</h1>
     
-    <div class="hidden name"><code>model_parameters.Rd</code></div>
+    <div class="hidden name"><code>model_parameters.lavaan.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compute and extract model parameters. See the documentation for your object's class:</p><ul>
-<li><p><a href='model_parameters.htest.html'>Correlations and t-tests</a></p></li>
-<li><p><a href='model_parameters.aov.html'>ANOVAs</a></p></li>
-<li><p><a href='model_parameters.lm.html'>Frequentist regressions</a></p></li>
-<li><p><a href='model_parameters.stanreg.html'>Bayesian regressions</a></p></li>
-<li><p><a href='model_parameters.principal.html'>PCA and FA</a></p></li>
-</ul>
+    <p>Format CFA/SEM objects from the lavaan package (Rosseel, 2012).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>model_parameters</span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for lavaan</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Statistical Model.</p></td>
+      <td><p>CFA or SEM created by the <code><a href='https://www.rdocumentation.org/packages/lavaan/topics/cfa'>lavaan::cfa</a></code> or <code><a href='https://www.rdocumentation.org/packages/lavaan/topics/sem'>lavaan::sem</a></code> functions.</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+    </tr>
+    <tr>
+      <th>standardize</th>
+      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <a href='parameters_standardize.html'>parameters_standardize</a>).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -179,13 +177,37 @@ PCA and FA
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
+    <ul>
+<li><p>Rosseel (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1-36.</p></li>
+</ul>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)</div><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lavaan</span>)
+
+<span class='co'># Confirmatory Factor Analysis (CFA) ---------</span>
+
+<span class='no'>structure</span> <span class='kw'>&lt;-</span> <span class='st'>' visual  =~ x1 + x2 + x3
+               textual =~ x4 + x5 + x6
+               speed   =~ x7 + x8 + x9 '</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lavaan/topics/cfa'>cfa</a></span>(<span class='no'>structure</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>HolzingerSwineford1939</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#references">References</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

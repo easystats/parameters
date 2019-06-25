@@ -54,7 +54,7 @@ library("parameters")
 
 
 
-# Features
+## Documentation
 
 [![Documentation](https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63)](https://easystats.github.io/parameters/)
 [![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
@@ -74,13 +74,13 @@ Click on the buttons above to access the package [**documentation**](https://eas
 - [Variable selection (stepwise, projpred, …)](https://easystats.github.io/parameters/articles/variable_selection.html)
 
 
-
+# Features
  
 ## Model's parameters description
 
-<img src='paper/figure1.png' align="center" />
+<img src='man/figures/figure1.png' align="center" />
  
-The `model_parameters` function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as an alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
+The `model_parameters` function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
 
 - The names of the returned dataframe are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, *i.e.*, *t*, *z*, etc., instead of a generic name such as *statistic*.
 - It is able to compute or extract indices not available by default, such as ***p* values**, **CIs**, etc.
@@ -223,24 +223,41 @@ knitr::kable(model_parameters(model), digits=1)
 ```
 
 
-<!-- I don't know why but the chunk below fails when building site (but knitting the README des not...) -->
 
 
+### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA)
 
-<!-- ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA) -->
+```{r, warning=FALSE, message=FALSE}
+library(psych)
 
-<!-- ```{r, warning=FALSE, message=FALSE} -->
-<!-- library(psych) -->
+model <- psych::fa(attitude, nfactors = 3)
+model_parameters(model)
+```
 
-<!-- model <- fa(attitude, nfactors = 3) -->
-<!-- model_parameters(model) -->
-<!-- ``` -->
+### Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)
 
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+library(lavaan)
 
+model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
+                       textual =~ x4 + x5 + x6
+                       speed   =~ x7 + x8 + x9 ', 
+                     data=HolzingerSwineford1939)
+model_parameters(model)
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(lavaan)
+
+model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
+                       textual =~ x4 + x5 + x6
+                       speed   =~ x7 + x8 + x9 ', 
+                     data=HolzingerSwineford1939)
+knitr::kable(head(model_parameters(model)), digits=1)
+```
  
 ## Variable and parameters selection
 
-<img src='paper/figure2.png' align="center" />
+<img src='man/figures/figure2.png' align="center" />
  
 ### General Linear Models (GLM)
 

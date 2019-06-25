@@ -30,7 +30,7 @@ devtools::install_github("easystats/parameters")
 library("parameters")
 ```
 
-# Features
+## Documentation
 
 [![Documentation](https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63)](https://easystats.github.io/parameters/)
 [![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
@@ -57,13 +57,15 @@ check-out these vignettes:
   - [Variable selection (stepwise, projpred,
     …)](https://easystats.github.io/parameters/articles/variable_selection.html)
 
+# Features
+
 ## Model’s parameters description
 
-<img src='paper/figure1.png' align="center" />
+<img src='man/figures/figure1.png' align="center" />
 
 The `model_parameters` function allows you to extract the parameters and
 their characteristics from various models in a consistent way. It could
-be considered as an alternative to
+be considered as a lightweight alternative to
 [`broom::tidy()`](https://github.com/tidymodels/broom), with some
 notable differences:
 
@@ -88,9 +90,9 @@ model <- cor.test(iris$Sepal.Length, iris$Sepal.Width)
 model_parameters(model)
 ```
 
-| Parameter1        | Parameter2       |     r |   t | DoF |   p | CI\_low | CI\_high | CI\_level | Method  |
-| :---------------- | :--------------- | ----: | --: | --: | --: | ------: | -------: | --------: | :------ |
-| iris$Sepal.Length | iris$Sepal.Width | \-0.1 | \-1 | 148 | 0.2 |   \-0.3 |        0 |         1 | Pearson |
+| Parameter1        | Parameter2       |     r |   t | DoF |   p | CI\_low | CI\_high | CI | Method  |
+| :---------------- | :--------------- | ----: | --: | --: | --: | ------: | -------: | -: | :------ |
+| iris$Sepal.Length | iris$Sepal.Width | \-0.1 | \-1 | 148 | 0.2 |   \-0.3 |        0 |  1 | Pearson |
 
 #### Bayesian
 
@@ -101,9 +103,9 @@ model <- BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width)
 model_parameters(model)
 ```
 
-| Parameter | Median | CI\_low | CI\_high | pd | ROPE\_Percentage | Prior\_Distribution | Prior\_Location | Prior\_Scale |  BF |
-| :-------- | -----: | ------: | -------: | -: | ---------------: | :------------------ | --------------: | -----------: | --: |
-| rho       |  \-0.1 |   \-0.2 |        0 | 92 |               43 | cauchy              |               0 |          0.3 | 0.5 |
+| Parameter | Median | CI\_low | CI\_high |  pd | ROPE\_Percentage | Prior\_Distribution | Prior\_Location | Prior\_Scale |  BF |
+| :-------- | -----: | ------: | -------: | --: | ---------------: | :------------------ | --------------: | -----------: | --: |
+| rho       |  \-0.1 |   \-0.2 |        0 | 0.9 |               43 | cauchy              |               0 |          0.3 | 0.5 |
 
 ### t-tests
 
@@ -117,9 +119,9 @@ model <- t.test(Sepal.Length ~ Sepal.Big, data=df)
 model_parameters(model)
 ```
 
-| Parameter    | Group     | Mean\_Group1 | Mean\_Group2 | Difference | t | DoF |   p | CI\_low | CI\_high | CI\_level | Method                  |
-| :----------- | :-------- | -----------: | -----------: | ---------: | -: | --: | --: | ------: | -------: | --------: | :---------------------- |
-| Sepal.Length | Sepal.Big |            6 |            6 |      \-0.2 | 1 | 142 | 0.2 |   \-0.1 |      0.4 |         1 | Welch Two Sample t-test |
+| Parameter    | Group     | Mean\_Group1 | Mean\_Group2 | Difference | t | DoF |   p | CI\_low | CI\_high | CI | Method                  |
+| :----------- | :-------- | -----------: | -----------: | ---------: | -: | --: | --: | ------: | -------: | -: | :---------------------- |
+| Sepal.Length | Sepal.Big |            6 |            6 |      \-0.2 | 1 | 142 | 0.2 |   \-0.1 |      0.4 |  1 | Welch Two Sample t-test |
 
 #### Bayesian
 
@@ -128,9 +130,9 @@ model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data=df)
 model_parameters(model)
 ```
 
-| Parameter  | Median | CI\_low | CI\_high |  pd | ROPE\_Percentage | Prior\_Distribution | Prior\_Location | Prior\_Scale |  BF |
-| :--------- | -----: | ------: | -------: | --: | ---------------: | :------------------ | --------------: | -----------: | --: |
-| Difference |      6 |       6 |        6 | 100 |                0 | cauchy              |               0 |          0.7 | 0.4 |
+| Parameter  | Median | CI\_low | CI\_high | pd | ROPE\_Percentage | Prior\_Distribution | Prior\_Location | Prior\_Scale |  BF |
+| :--------- | -----: | ------: | -------: | -: | ---------------: | :------------------ | --------------: | -----------: | --: |
+| Difference |      6 |       6 |        6 |  1 |                0 | cauchy              |               0 |          0.7 | 0.4 |
 
 ### ANOVAs
 
@@ -220,11 +222,11 @@ model <- stan_glm(mpg ~ wt + cyl, data = mtcars)
 model_parameters(model)
 ```
 
-|   | Parameter   | Median | CI\_low | CI\_high |  pd | ROPE\_Percentage |  ESS | Rhat | Prior\_Distribution | Prior\_Location | Prior\_Scale |
-| - | :---------- | -----: | ------: | -------: | --: | ---------------: | ---: | ---: | :------------------ | --------------: | -----------: |
-| 1 | (Intercept) |     40 |      37 |     42.5 | 100 |                0 | 5250 |    1 | normal              |               0 |           60 |
-| 3 | wt          |    \-3 |     \-4 |    \-1.9 | 100 |                0 | 1963 |    1 | normal              |               0 |           15 |
-| 2 | cyl         |    \-2 |     \-2 |    \-0.8 | 100 |                2 | 1997 |    1 | normal              |               0 |            8 |
+|   | Parameter   | Median | CI\_low | CI\_high | pd | ROPE\_Percentage |  ESS | Rhat | Prior\_Distribution | Prior\_Location | Prior\_Scale |
+| - | :---------- | -----: | ------: | -------: | -: | ---------------: | ---: | ---: | :------------------ | --------------: | -----------: |
+| 1 | (Intercept) |     40 |      37 |     42.5 |  1 |                0 | 5250 |    1 | normal              |               0 |           60 |
+| 3 | wt          |    \-3 |     \-4 |    \-1.9 |  1 |                0 | 1963 |    1 | normal              |               0 |           15 |
+| 2 | cyl         |    \-2 |     \-2 |    \-0.8 |  1 |                2 | 1997 |    1 | normal              |               0 |            8 |
 
 <!-- I don't know why but the chunk below fails when building site (but knitting the README des not...) -->
 
@@ -233,7 +235,7 @@ model_parameters(model)
 ``` r
 library(psych)
 
-model <- fa(attitude, nfactors = 3)
+model <- psych::fa(attitude, nfactors = 3)
 model_parameters(model)
 > The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).
 > 
@@ -247,9 +249,30 @@ model_parameters(model)
 > 7    advance -0.1  0.91  0.07          1        0.2
 ```
 
+### Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)
+
+``` r
+library(lavaan)
+
+model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
+                       textual =~ x4 + x5 + x6
+                       speed   =~ x7 + x8 + x9 ', 
+                     data=HolzingerSwineford1939)
+model_parameters(model)
+```
+
+| To      | Operator | From | Coefficient |  SE | p | CI\_low | CI\_high | Type    |
+| :------ | :------- | :--- | ----------: | --: | -: | ------: | -------: | :------ |
+| visual  | \=\~     | x1   |         1.0 | 0.0 | 0 |     1.0 |      1.0 | Loading |
+| visual  | \=\~     | x2   |         0.6 | 0.1 | 0 |     0.4 |      0.7 | Loading |
+| visual  | \=\~     | x3   |         0.7 | 0.1 | 0 |     0.5 |      0.9 | Loading |
+| textual | \=\~     | x4   |         1.0 | 0.0 | 0 |     1.0 |      1.0 | Loading |
+| textual | \=\~     | x5   |         1.1 | 0.1 | 0 |     1.0 |      1.2 | Loading |
+| textual | \=\~     | x6   |         0.9 | 0.1 | 0 |     0.8 |      1.0 | Loading |
+
 ## Variable and parameters selection
 
-<img src='paper/figure2.png' align="center" />
+<img src='man/figures/figure2.png' align="center" />
 
 ### General Linear Models (GLM)
 
@@ -303,13 +326,13 @@ model <- stan_glm(mpg ~ ., data = mtcars) %>%
 
 |   | Parameter   | Median | CI\_low | CI\_high |  pd | ROPE\_Percentage |  ESS | Rhat | Prior\_Distribution | Prior\_Location | Prior\_Scale |
 | - | :---------- | -----: | ------: | -------: | --: | ---------------: | ---: | ---: | :------------------ | --------------: | -----------: |
-| 1 | (Intercept) |   20.2 |   \-1.9 |     42.1 |  92 |              1.1 | 2483 |    1 | normal              |               0 |         60.3 |
-| 7 | wt          |  \-3.9 |   \-5.9 |    \-1.9 | 100 |              0.3 | 2860 |    1 | normal              |               0 |         15.4 |
-| 3 | cyl         |  \-0.5 |   \-1.8 |      0.8 |  72 |             48.2 | 2781 |    1 | normal              |               0 |          8.4 |
-| 5 | hp          |    0.0 |     0.0 |      0.0 |  90 |            100.0 | 2907 |    1 | normal              |               0 |          0.2 |
-| 2 | am          |    2.9 |     0.2 |      5.9 |  95 |              7.0 | 3082 |    1 | normal              |               0 |         15.1 |
-| 6 | qsec        |    0.8 |   \-0.2 |      1.7 |  91 |             36.2 | 2449 |    1 | normal              |               0 |          8.4 |
-| 4 | disp        |    0.0 |     0.0 |      0.0 |  87 |            100.0 | 2750 |    1 | normal              |               0 |          0.1 |
+| 1 | (Intercept) |   20.2 |   \-1.9 |     42.1 | 0.9 |              1.1 | 2483 |    1 | normal              |               0 |         60.3 |
+| 7 | wt          |  \-3.9 |   \-5.9 |    \-1.9 | 1.0 |              0.3 | 2860 |    1 | normal              |               0 |         15.4 |
+| 3 | cyl         |  \-0.5 |   \-1.8 |      0.8 | 0.7 |             48.2 | 2781 |    1 | normal              |               0 |          8.4 |
+| 5 | hp          |    0.0 |     0.0 |      0.0 | 0.9 |            100.0 | 2907 |    1 | normal              |               0 |          0.2 |
+| 2 | am          |    2.9 |     0.2 |      5.9 | 1.0 |              7.0 | 3082 |    1 | normal              |               0 |         15.1 |
+| 6 | qsec        |    0.8 |   \-0.2 |      1.7 | 0.9 |             36.2 | 2449 |    1 | normal              |               0 |          8.4 |
+| 4 | disp        |    0.0 |     0.0 |      0.0 | 0.9 |            100.0 | 2750 |    1 | normal              |               0 |          0.1 |
 
 ## Variable and features extraction
 

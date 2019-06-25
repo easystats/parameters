@@ -33,6 +33,7 @@ Suggests:
 	dplyr,
 	EGAnet,
 	knitr,
+	lavaan,
 	lme4,
 	logspline,
 	MASS,
