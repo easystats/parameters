@@ -114,12 +114,3 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
 #' @export
 model_parameters.fa <- model_parameters.principal
 
-
-
-# #' @export
-# principal.lm <- function(x, ...) {
-#   if (!requireNamespace("psych", quietly = TRUE)) {
-#     stop("The package 'psych' is needed. Please install it by running 'install.packages(psych)'.")
-#   }
-#   psych::principal(insight::get_predictors(x, ...), ...)
-# }
