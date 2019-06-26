@@ -7,5 +7,10 @@
 #'
 #' @export
 n_parameters <- function(x, ...) {
+  UseMethod("n_parameters")
+}
+
+#' @export
+n_parameters.default <- function(x, ...) {
   length(insight::find_parameters(x, flatten = TRUE, ...))
 }

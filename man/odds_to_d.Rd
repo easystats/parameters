@@ -5,7 +5,7 @@
 \alias{convert_odds_to_d}
 \alias{d_to_odds}
 \alias{convert_d_to_odds}
-\title{Convert between (log)odds and standardized difference.}
+\title{Conversion between (log)odds and standardized difference}
 \usage{
 odds_to_d(odds, log = FALSE)
 
@@ -23,7 +23,7 @@ convert_d_to_odds(d, log = FALSE)
 \item{d}{standardized difference values in vector or dataframe.}
 }
 \description{
-Convert between (log)odds and standardized difference using Cohen's (1988) formula \eqn{\frac{\log(odds)\times\sqrt{3}}{\pi}}.
+Enables a conversion between (log)odds and standardized difference using Cohen's (1988) formula \eqn{\frac{\log(odds)\times\sqrt{3}}{\pi}}.
 }
 \examples{
 odds_to_d(0.2)

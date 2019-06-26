@@ -30,7 +30,7 @@
 #' \dontrun{
 #' # Exploratory Factor Analysis (EFA) ---------
 #' efa <- psych::fa(attitude, nfactors = 3)
-#' model_parameters(efa)
+#' model_parameters(efa, threshold = "max", sort = TRUE)
 #' }
 #'
 #'
@@ -64,16 +64,10 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
   # Get loadings
   loadings <- as.data.frame(unclass(model$loadings))
 
-  # Best representation (max loading)
-  rowmax_index <- sapply(as.data.frame(t(loadings)), function(x) which.max(abs(x)))
-  rowmax <- sapply(as.data.frame(t(loadings)), function(x) x[which.max(abs(x))])
-  loadings_max <- data_frame(Component = names(loadings)[rowmax_index], Loading = rowmax)
 
   # Format
   loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
   row.names(loadings) <- NULL
-  loadings_max <- cbind(data.frame(Variable = row.names(loadings_max)), loadings_max)
-  row.names(loadings_max) <- NULL
 
   # Add information
   loading_cols <- 2:(n+1)
@@ -85,7 +79,6 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
   attr(loadings, "model") <- model
   attr(loadings, "rotation") <- model$rotation
   attr(loadings, "scores") <- model$scores
-  attr(loadings, "loadings_max") <- loadings_max
   attr(loadings, "additional_arguments") <- list(...)
   attr(loadings, "n") <- n
   attr(loadings, "type") <- model$fn
@@ -100,6 +93,9 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
   if (!is.null(threshold)) {
     loadings <- .filer_loadings(loadings, threshold = threshold)
   }
+
+  # Add some more attributes
+  attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
 
   # add class-attribute for printing
   class(loadings) <- c("factor_structure", class(loadings))

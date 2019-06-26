@@ -4,6 +4,7 @@
 #'
 #' @param model CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions.
 #' @inheritParams model_parameters.lm
+#' @param type What type of links to return. Can be some of \code{c("regression", "correlation", "loading", "variance", "mean")}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #'
@@ -26,9 +27,12 @@
 #'   \item Rosseel (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1-36.
 #' }
 #' @export
-model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, ...) {
+model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type = c("regression", "correlation", "loading"), ...) {
 
   params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, ...)
+
+  # Filter
+  params <- params[tolower(params$Type) %in% type, ]
 
   # add class-attribute for printing
   class(params) <- c("parameters_sem", class(params))
@@ -67,8 +71,9 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, ...) 
 
   params$Type <- ifelse(params$Operator == "=~", "Loading",
                         ifelse(params$Operator == "~", "Regression",
-                               ifelse(params$Operator == "~~", "Correlation", NA)))
-  params$Type <- ifelse(params$From == params$To, "Residual", params$Type)
+                               ifelse(params$Operator == "~~", "Correlation",
+                                      ifelse(params$Operator == "~1", "Mean", NA))))
+  params$Type <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Type)
   params$p <- ifelse(is.na(params$p), 0, params$p)
 
   if ("group" %in% names(data)) {
@@ -76,5 +81,15 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, ...) 
   }
   params
 }
+
+
+#' @export
+n_parameters.lavaan <- function(x, ...){
+  if (!requireNamespace("lavaan", quietly = TRUE)) {
+    stop("Package `lavaan` required. Please install it by running `install.packages(lavaan)`.", call. = FALSE)
+  }
+  lavaan::fitmeasures(x)$npar
+}
+
 
 

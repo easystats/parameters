@@ -43,7 +43,7 @@ principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 \dontrun{
 # Exploratory Factor Analysis (EFA) ---------
 efa <- psych::fa(attitude, nfactors = 3)
-model_parameters(efa)
+model_parameters(efa, threshold = "max", sort = TRUE)
 }
 
 

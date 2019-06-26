@@ -5,7 +5,8 @@
 \title{Format CFA/SEM from the lavaan package}
 \usage{
 \method{model_parameters}{lavaan}(model, ci = 0.95,
-  standardize = FALSE, ...)
+  standardize = FALSE, type = c("regression", "correlation",
+  "loading"), ...)
 }
 \arguments{
 \item{model}{CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions.}
@@ -13,6 +14,8 @@
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
 \item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{parameters_standardize}).}
+
+\item{type}{What type of links to return. Can be some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
