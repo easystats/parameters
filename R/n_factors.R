@@ -56,7 +56,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   # nFactors -------------------------------------------
   if ("nFactors" %in% c(package)) {
     if (!requireNamespace("nFactors", quietly = TRUE)) {
-      stop("The package 'nFactors' is needed. Please install it by running 'install.packages(nFactors)'.")
+      stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('nFactors')`.")
     }
 
     if (safe) {
@@ -133,7 +133,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   # EGAnet -------------------------------------------
   if ("EGAnet" %in% c(package)) {
     if (!requireNamespace("EGAnet", quietly = TRUE)) {
-      stop("The package 'EGAnet' is needed. Please install it by running 'install.packages(EGAnet)'.")
+      stop("Package 'EGAnet' required for this function to work. Please install it by running `install.packages('EGAnet')`.")
     }
 
     if (safe) {
@@ -156,7 +156,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   # psych -------------------------------------------
   if ("psych" %in% c(package)) {
     if (!requireNamespace("psych", quietly = TRUE)) {
-      stop("The package 'psych' is needed. Please install it by running 'install.packages(psych)'.")
+      stop("Package 'psych' required for this function to work. Please install it by running `install.packages('psych')`.")
     }
 
     if (safe) {

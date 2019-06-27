@@ -62,7 +62,7 @@ model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
 #' @export
 model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ...) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("This function requires package `lme4` to work. Please install it.")
+    stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
   }
 
   boot_function <- function(model) {

@@ -35,7 +35,7 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
   params <- params[tolower(params$Type) %in% type, ]
 
   # add class-attribute for printing
-  class(params) <- c("parameters_sem", class(params))
+  class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
 
   params
 
@@ -46,7 +46,7 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
 .extract_parameters_lavaan <- function(model, ci = 0.95, standardize = FALSE, ...){
 
   if (!requireNamespace("lavaan", quietly = TRUE)) {
-    stop("Package `lavaan` required. Please install it by running `install.packages(lavaan)`.", call. = FALSE)
+    stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
   }
 
   if (standardize == FALSE) {
@@ -86,10 +86,9 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
 #' @export
 n_parameters.lavaan <- function(x, ...){
   if (!requireNamespace("lavaan", quietly = TRUE)) {
-    stop("Package `lavaan` required. Please install it by running `install.packages(lavaan)`.", call. = FALSE)
+    stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
   }
   lavaan::fitmeasures(x)$npar
 }
-
 
 
