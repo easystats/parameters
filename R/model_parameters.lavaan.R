@@ -79,6 +79,8 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
   if ("group" %in% names(data)) {
     params$Group <- data$group
   }
+
+  attr(params, "CI") <- ci
   params
 }
 
