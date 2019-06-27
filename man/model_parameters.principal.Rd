@@ -12,7 +12,7 @@
 
 \item{sort}{Sort the loadings.}
 
-\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable.}
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).}
 
 \item{...}{Arguments passed to or from other methods.}
 }
