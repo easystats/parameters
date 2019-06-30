@@ -24,9 +24,6 @@ convert_efa_to_cfa <- function(model, ...){
   UseMethod("convert_efa_to_cfa")
 }
 
-#' @rdname convert_efa_to_cfa
-#' @export
-efa_to_cfa <- convert_efa_to_cfa
 
 
 
@@ -35,10 +32,14 @@ convert_efa_to_cfa.fa <- function(model, threshold = "max", ...){
   .efa_to_cfa(model_parameters(model, threshold = threshold, ...))
 }
 
+#' @export
 convert_efa_to_cfa.factor_structure <- function(model, ...){
   .efa_to_cfa(model, ...)
 }
 
+#' @rdname convert_efa_to_cfa
+#' @export
+efa_to_cfa <- convert_efa_to_cfa
 
 
 
