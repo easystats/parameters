@@ -41,11 +41,11 @@ marginal_parameters.MixMod <- function(model, std_errors = FALSE, link_fun = NUL
                                        seed = 1, cores = max(parallel::detectCores() - 1, 1),
                                        sandwich = FALSE, ...) {
   if (!requireNamespace("MASS", quietly = TRUE)) {
-    stop("Package `MASS` required, but missing. Please install it first.")
+    stop("Package 'MASS' required for this function to work. Please install it by running `install.packages('MASS')`.")
   }
 
   if (!requireNamespace("parallel", quietly = TRUE)) {
-    stop("Package `parallel` required, but missing. Please install it first.")
+    stop("Package 'parallel' required for this function to work. Please install it by running `install.packages('parallel')`.")
   }
 
   object <- model

@@ -1,4 +1,4 @@
-#' Convert between standardized difference d and correlation r.
+#' Conversion between standardized difference d and correlation r
 #'
 #' Enables a conversion between standardized difference (Cohen's d) and correlation r.
 #'

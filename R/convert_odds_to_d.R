@@ -1,6 +1,6 @@
-#' Convert between (log)odds and standardized difference.
+#' Conversion between (log)odds and standardized difference
 #'
-#' Convert between (log)odds and standardized difference using Cohen's (1988) formula \eqn{\frac{\log(odds)\times\sqrt{3}}{\pi}}.
+#' Enables a conversion between (log)odds and standardized difference using Cohen's (1988) formula \eqn{\frac{\log(odds)\times\sqrt{3}}{\pi}}.
 #'
 #' @param odds Odds values in vector or dataframe.
 #' @param log Are these Log odds (such as in logistic models)?

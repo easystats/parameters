@@ -44,7 +44,7 @@ standard_error.aovlist <- standard_error.aov
 #' @export
 standard_error.merMod <- function(model, ...) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package `lme4` required for this function to work. Please install it.")
+    stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
   }
 
   cc <- stats::coef(model)

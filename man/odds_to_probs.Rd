@@ -3,7 +3,7 @@
 \name{odds_to_probs}
 \alias{odds_to_probs}
 \alias{convert_odds_to_probs}
-\title{Convert (log)odds to probabilies.}
+\title{Conversion between (log)odds and probabilies}
 \usage{
 odds_to_probs(odds, select = NULL, exclude = NULL, log = FALSE)
 
@@ -22,7 +22,7 @@ from transformation.}
 \item{log}{Are these Log odds (such as in logistic models)?}
 }
 \description{
-Convert (log)odds to probabilies.
+Enables a conversion between (log)odds and probabilities.
 }
 \examples{
 odds_to_probs(-1.45)

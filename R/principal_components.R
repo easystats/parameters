@@ -5,7 +5,7 @@
 #' @param x A dataframe.
 #' @param n Number of components to extract. If \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}.
 #' @param sort Sort the loadings.
-#' @param threshold A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable.
+#' @param threshold A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).
 #' @param standardize A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -94,16 +94,10 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   }
   names(loadings) <- data_summary$Component
 
-  # Best representation (max loading)
-  rowmax_index <- sapply(as.data.frame(t(loadings)), function(x) which.max(abs(x)))
-  rowmax <- sapply(as.data.frame(t(loadings)), function(x) x[which.max(abs(x))])
-  loadings_max <- data_frame(Component = names(loadings)[rowmax_index], Loading = rowmax)
 
   # Format
   loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
   row.names(loadings) <- NULL
-  loadings_max <- cbind(data.frame(Variable = row.names(loadings_max)), loadings_max)
-  row.names(loadings_max) <- NULL
 
   # Add information
   loading_cols <- 2:(n+1)
@@ -114,7 +108,6 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   attr(loadings, "model") <- model
   attr(loadings, "rotation") <- "none"
   attr(loadings, "scores") <- model$x
-  attr(loadings, "loadings_max") <- loadings_max
   attr(loadings, "standardize") <- standardize
   attr(loadings, "additional_arguments") <- list(...)
   attr(loadings, "n") <- n
@@ -130,6 +123,9 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   if (!is.null(threshold)) {
     loadings <- .filer_loadings(loadings, threshold = threshold)
   }
+
+  # Add some more attributes
+  attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
 
   # add class-attribute for printing
   class(loadings) <- c("factor_structure", class(loadings))
@@ -252,9 +248,12 @@ principal_components.merMod <- principal_components.lm
 
 
 #' @keywords internal
-.filer_loadings <- function(loadings, threshold = 0.2) {
+.filer_loadings <- function(loadings, threshold = 0.2, cols = NULL) {
 
-  cols <- attributes(loadings)$loadings_columns
+  if(is.null(cols)){
+    cols <- attributes(loadings)$loadings_columns
+  }
+
 
   if (threshold == "max") {
     for (i in 1:nrow(loadings)) {
@@ -270,9 +269,11 @@ principal_components.merMod <- principal_components.lm
 
 
 #' @keywords internal
-.sort_loadings <- function(loadings) {
+.sort_loadings <- function(loadings, cols = NULL) {
 
-  cols <- attributes(loadings)$loadings_columns
+  if(is.null(cols)){
+    cols <- attributes(loadings)$loadings_columns
+  }
 
   # Remove variable name column
   x <- loadings[, cols, drop = FALSE]
@@ -313,6 +314,63 @@ principal_components.merMod <- principal_components.lm
 
   loadings
 }
+
+
+
+
+
+
+#' @importFrom stats reshape
+#' @keywords internal
+.long_loadings <- function(loadings, threshold = NULL, cols = NULL) {
+
+
+  if(is.null(cols)){
+    cols <- attributes(loadings)$loadings_columns
+  }
+
+
+  if(!is.null(threshold)){
+    loadings <- .filer_loadings(loadings, threshold = threshold, cols = cols)
+  }
+
+  # Reshape to long
+  long <- reshape(loadings,
+          direction = "long",
+          varying = list(names(loadings)[cols]),
+          v.names = "Loading",
+          timevar = "Component",
+          idvar = "Variable")
+
+  # Restore component names
+  for(i in 1:length(unique(long$Component))){
+    component <- unique(long$Component)[[i]]
+    name <- names(loadings)[cols][[i]]
+    long[long$Component == component, "Component"] <- name
+  }
+
+  # Filtering
+  long <- long[!is.na(long$Loading), ]
+
+  row.names(long) <- NULL
+  # Reorder columns
+  long[, c("Component",
+           "Variable",
+           "Loading",
+           names(loadings)[-cols][!names(loadings)[-cols] %in% c("Component", "Variable", "Loading")])]
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # #' @keywords internal

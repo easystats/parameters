@@ -1,4 +1,6 @@
-#' Convert (log)odds to probabilies.
+#' Conversion between (log)odds and probabilies
+#'
+#' Enables a conversion between (log)odds and probabilities.
 #'
 #' @param odds Odds values in vector or dataframe.
 #' @param select Character or list of of column names to be

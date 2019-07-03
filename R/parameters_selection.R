@@ -61,7 +61,7 @@ parameters_selection.lm <- function(model, direction = "both", steps = 1000, k =
 #' @export
 parameters_selection.merMod <- function(model, direction = "backward", steps = 1000, ...) {
   if (!requireNamespace("cAIC4", quietly = TRUE)) {
-    stop("Package `cAIC4` required. Please install it by running `install.packages(cAIC4)`.", call. = FALSE)
+    stop("Package 'cAIC4' required for this function to work. Please install it by running `install.packages('cAIC4')`.")
   }
 
   best <- cAIC4::stepcAIC(model,
@@ -87,7 +87,7 @@ parameters_selection.merMod <- function(model, direction = "backward", steps = 1
 #' @export
 parameters_selection.stanreg <- function(model, method = NULL, cross_validation = FALSE, ...) {
   if (!requireNamespace("projpred", quietly = TRUE)) {
-    stop("Package `projpred` required. Please install it by running `install.packages(projpred)`.", call. = FALSE)
+    stop("Package 'projpred' required for this function to work. Please install it by running `install.packages('projpred')`.")
   }
 
   if (cross_validation) {

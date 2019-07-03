@@ -5,7 +5,7 @@
 \alias{r_to_d}
 \alias{convert_d_to_r}
 \alias{convert_r_to_d}
-\title{Convert between standardized difference d and correlation r.}
+\title{Conversion between standardized difference d and correlation r}
 \usage{
 d_to_r(d, ...)
 
