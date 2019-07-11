@@ -14,8 +14,8 @@ parameters_bootstrap(model, iterations = 1000, centrality = "median",
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
-\item{ci}{Value or vector of probability of the interval (between 0 and 1)
-to be estimated. Named Credible Interval (CI) for consistency.}
+\item{ci}{Value or vector of probability of the CI (between 0 and 1)
+to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
 \code{"hdi"} (default, see \code{\link{hdi}}) or \code{"quantile"}

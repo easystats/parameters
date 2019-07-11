@@ -2,16 +2,33 @@
 #'
 #' This checks whether the data is appropriate for Factor Analysis (FA) by running the \link[=check_sphericity]{Bartlett's Test of Sphericity} and the \link[=check_kmo]{Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA)}.
 #'
-#' @inheritParams check_kmo
+#' @inheritParams check_sphericity
 #' @examples
 #' library(parameters)
 #'
 #' check_factorstructure(mtcars)
 #' @seealso check_kmo check_sphericity
 #' @export
-check_factorstructure <- function(x, ...) {
-  check_sphericity(x, ...)
-  check_kmo(x, ...)
+check_factorstructure <- function(x, silent = FALSE, ...) {
+
+  # TODO: Avoid double computation of indices
+  # TODO: detect (and remove?) factors
+  # TODO: This could be improved using the correlation package to use different correlation methods
+
+  if(!silent){
+    text_kmo <- capture.output(check_kmo(x, silent = FALSE, ...))
+    text_sphericity <- capture.output(check_sphericity(x, silent = FALSE, ...))
+
+    text <- paste0("  - KMO, ", text_kmo, "\n  - Sphericity, ", text_sphericity)
+    if(grepl("Warning:", text)){
+      insight::print_color(text, "red")
+    } else{
+      insight::print_color(text, "green")
+    }
+  }
+
+  invisible(list(KMO = check_kmo(x, silent = TRUE, ...),
+                 sphericity = check_sphericity(x, silent = TRUE, ...)))
 }
 
 
@@ -28,8 +45,7 @@ check_factorstructure <- function(x, ...) {
 #' Kaiser (1975) suggested that KMO > .9 were marvelous, in the .80s, mertitourious, in the .70s, middling, in the .60s, medicore, in the 50s, miserable, and less than .5, unacceptable. Hair et al. (2006) suggest accepting a value > 0.5. Values between 0.5 and 0.7 are mediocre, and values between 0.7 and 0.8 are good.
 #'
 #'
-#' @param x A dataframe.
-#' @param ... Arguments passed to or from other methods.
+#' @inheritParams check_sphericity
 #'
 #' @examples
 #' library(parameters)
@@ -44,9 +60,8 @@ check_factorstructure <- function(x, ...) {
 #' }
 #' @importFrom stats cov2cor
 #' @export
-check_kmo <- function(x, ...) {
+check_kmo <- function(x, silent = FALSE,  ...) {
 
-  # This could be improved using the correlation package to use different correlation methods
   cormatrix <- cor(x, use = "pairwise.complete.obs", ...)
   Q <- solve(cormatrix)
 
@@ -60,10 +75,12 @@ check_kmo <- function(x, ...) {
   MSA_variable <- colSums(cormatrix^2) / (colSums(cormatrix^2) + colSums(Q^2))
   results <- list(MSA = MSA, MSA_variable = MSA_variable)
 
-  if (MSA < 0.5) {
-    insight::print_color(sprintf("Warning: Factor analysis is likely to be inappropriate (KMO = %.2f).", MSA), "red")
-  } else {
-    insight::print_color(sprintf("OK: The data seems appropriate for factor analysis (KMO = %.2f).", MSA), "green")
+  if(!silent){
+    if (MSA < 0.5) {
+      insight::print_color(sprintf("Warning: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that factor analysis is likely to be inappropriate (KMO = %.2f).", MSA), "red")
+    } else {
+      insight::print_color(sprintf("OK: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = %.2f).", MSA), "green")
+    }
   }
 
   invisible(results)
@@ -86,6 +103,7 @@ check_kmo <- function(x, ...) {
 #'
 #'
 #' @param x A dataframe.
+#' @param silent Hide results printing.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -97,8 +115,9 @@ check_kmo <- function(x, ...) {
 #' @references Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 #'
 #' @importFrom stats pchisq
+#'
 #' @export
-check_sphericity <- function(x, ...) {
+check_sphericity <- function(x, silent = FALSE, ...) {
 
   # This could be improved using the correlation package to use different correlation methods
   cormatrix <- cor(x, use = "pairwise.complete.obs", ...)
@@ -113,10 +132,12 @@ check_sphericity <- function(x, ...) {
 
   results <- list(chisq = statistic, p = pval, dof = df)
 
-  if (pval < 0.001) {
-    insight::print_color(sprintf("OK: There is sufficient significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, p = %.3f).", df, statistic, pval), "green")
-  } else {
-    insight::print_color(sprintf("Warning: There is not enough significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, p = %.3f).", df, statistic, pval), "red")
+  if(!silent){
+    if (pval < 0.001) {
+      insight::print_color(sprintf("OK: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, p %s).", df, statistic, format_p(pval)), "green")
+    } else {
+      insight::print_color(sprintf("Warning: Bartlett's test of sphericity suggests that there is not enough significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, p %s).", df, statistic, format_p(pval)), "red")
+    }
   }
 
   invisible(results)

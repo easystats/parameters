@@ -4,10 +4,12 @@
 \alias{check_sphericity}
 \title{Bartlett's Test of Sphericity}
 \usage{
-check_sphericity(x, ...)
+check_sphericity(x, silent = FALSE, ...)
 }
 \arguments{
 \item{x}{A dataframe.}
+
+\item{silent}{Hide results printing.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

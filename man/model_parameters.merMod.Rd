@@ -10,13 +10,13 @@
   iterations = 1000, ...)
 }
 \arguments{
-\item{model}{Object of class \link{lm}.}
+\item{model}{Frequentist regression object.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{parameters_standardize}).}
+\item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \code{\link{parameters_standardize}}).}
 
-\item{standardize_robust}{Robust standardization. See \link{parameters_standardize}.}
+\item{standardize_robust}{Robust standardization. See \code{\link{parameters_standardize}}.}
 
 \item{bootstrap}{Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.}
 
