@@ -17,12 +17,13 @@
 #'
 #' @examples
 #' library(parameters)
+#' x <- mtcars
 #'
-#' principal_components(mtcars[, 1:5])
-#' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
-#' principal_components(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
+#' principal_components(x[, 1:4])
+#' principal_components(x[, 1:7], n = "all", threshold = 0.2)
+#' principal_components(x[, 1:7], n = 2, threshold = "max", sort = TRUE)
 #'
-#' pca <- principal_components(mtcars[, 1:5], n = 2)
+#' pca <- principal_components(x[, 1:5], n = 2)
 #' summary(pca)
 #' predict(pca)
 #'
