@@ -3,11 +3,14 @@ context("model_parameters.bayesian")
 
 # RSTANARM --------------------------------------------------------------------
 
-test_that("model_parameters.stanreg", {
+testthat::test_that("model_parameters.stanreg", {
   set.seed(333)
   library(rstanarm)
   library(logspline)
 
+
+  # P value
+  testthat::expect_equal(ncol(p_value(insight::download_model("stanreg_lm_1"))), 2)
 
   # GLM
   params <- model_parameters(insight::download_model("stanreg_lm_1"), standardize = "full", centrality = "all", test = "all", dispersion = TRUE)
@@ -37,7 +40,7 @@ test_that("model_parameters.stanreg", {
 
   # GAM
   params <- model_parameters(insight::download_model("stanreg_gam_1"), standardize = "refit", centrality = "all", test = "all", dispersion = TRUE)
-  # testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 21)) # skip on travis and CRAN for now until new insight
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 21)) # skip on travis and CRAN for now until new insight
 })
 
 
