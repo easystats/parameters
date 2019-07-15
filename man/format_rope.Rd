@@ -15,5 +15,5 @@ format_rope(rope_percentage, digits = 2)
 Confidence/Credible Interval (CI) Formatting
 }
 \examples{
-format_rope(1.20, 3.57)
+format_rope(0.12, 3.57)
 }

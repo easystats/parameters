@@ -14,3 +14,9 @@ test_that("format_p", {
 test_that("format_value", {
   testthat::expect_equal(nchar(format_value(1.2012313)), 4, tol = 0)
 })
+
+test_that("format others", {
+  testthat::expect_equal(nchar(format_pd(0.02)), 10, tol = 0)
+  testthat::expect_equal(nchar(format_bf(4)), 9, tol = 0)
+  testthat::expect_equal(nchar(format_rope(0.02)), 13, tol = 0)
+})

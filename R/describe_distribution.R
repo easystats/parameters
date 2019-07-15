@@ -1,7 +1,7 @@
 #' Describe a Distribution
 #'
 #'
-#' This function describes a distribution.
+#' This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).
 #'
 #' @param x A numeric vector.
 #' @param range Return the range (min and max).

@@ -19,7 +19,7 @@ describe_distribution(x, centrality = "mean", dispersion = TRUE,
 \item{...}{Additional arguments to be passed to or from methods.}
 }
 \description{
-This function describes a distribution.
+This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).
 }
 \examples{
 describe_distribution(rnorm(100))

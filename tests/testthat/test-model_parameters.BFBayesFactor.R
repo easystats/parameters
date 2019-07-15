@@ -1,7 +1,7 @@
 context("model_parameters.BFBayesFactor")
 
 test_that("model_parameters.BFBayesFactor", {
-  testthat::skip_on_travis()
+  #testthat::skip_on_travis()
 
   library(BayesFactor)
   library(logspline)
