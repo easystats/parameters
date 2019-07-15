@@ -51,7 +51,7 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
     )
   )
 
-  out$n_Obs <- length(x)
+  out$n <- length(x)
   out$n_Missing <- n_missing
   out$`.temp` <- NULL
   out
