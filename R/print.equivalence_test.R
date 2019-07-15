@@ -7,25 +7,25 @@ print.equivalence_test_lm <- function(x, digits = 2, ...) {
   cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, .rope[1], digits, .rope[2]))
 
   # find the longest CI-value, so we can align the brackets in the ouput
-  x$ci_low <- sprintf("%.*f", digits, x$ci_low)
-  x$ci_high <- sprintf("%.*f", digits, x$ci_high)
+  x$CI_low <- sprintf("%.*f", digits, x$CI_low)
+  x$CI_high <- sprintf("%.*f", digits, x$CI_high)
 
-  maxlen_low <- max(nchar(x$ci_low))
-  maxlen_high <- max(nchar(x$ci_high))
+  maxlen_low <- max(nchar(x$CI_low))
+  maxlen_high <- max(nchar(x$CI_high))
 
-  x$coverage <- sprintf("%.*f %%", digits, 100 * x$coverage)
-  x$conf.int <- sprintf("[%*s %*s]", maxlen_low, x$ci_low, maxlen_high, x$ci_high)
+  x$ROPE_Percentage <- sprintf("%.*f %%", digits, 100 * x$ROPE_Percentage)
+  x$conf.int <- sprintf("[%*s %*s]", maxlen_low, x$CI_low, maxlen_high, x$CI_high)
 
-  ci <- unique(x$ci)
-  keep.columns <- c("ci", "parameter", "decision", "coverage", "conf.int")
+  CI <- unique(x$CI)
+  keep.columns <- c("CI", "Parameter", "ROPE_Equivalence", "ROPE_Percentage", "conf.int")
 
   x <- x[, intersect(keep.columns, colnames(x))]
 
-  colnames(x)[which(colnames(x) == "decision")] <- "H0"
-  colnames(x)[which(colnames(x) == "coverage")] <- "inside ROPE"
+  colnames(x)[which(colnames(x) == "ROPE_Equivalence")] <- "H0"
+  colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "inside ROPE"
 
-  for (i in ci) {
-    xsub <- x[x$ci == i, -which(colnames(x) == "ci"), drop = FALSE]
+  for (i in CI) {
+    xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
     colnames(xsub)[ncol(xsub)] <- sprintf("%i%% CI", round(100 * i))
     print.data.frame(xsub, digits = digits, row.names = FALSE)
     cat("\n")

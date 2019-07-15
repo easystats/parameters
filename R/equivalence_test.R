@@ -63,8 +63,8 @@ equivalence_test.MixMod <- equivalence_test.lm
 
   dat <- do.call(rbind, l)
   out <- data.frame(
-    parameter = names(l),
-    ci = ci,
+    Parameter = names(l),
+    CI = ci,
     dat,
     stringsAsFactors = FALSE
   )
@@ -81,15 +81,15 @@ equivalence_test.MixMod <- equivalence_test.lm
 #' @keywords internal
 .equivalence_test_numeric <- function(range_ci, range_rope, verbose) {
   if (min(range_ci) > max(range_rope) || max(range_ci) < min(range_rope)) {
-    decision <- "rejected"
+    decision <- "Rejected"
     coverage <- 0
   } else if (max(range_ci) <= max(range_rope) && min(range_ci) >= min(range_rope)) {
-    decision <- "accepted"
+    decision <- "Accepted"
     coverage <- 1
   } else {
     diff_rope <- abs(diff(range_rope))
     diff_ci <- abs(diff(range_ci))
-    decision <- "undecided"
+    decision <- "Undecided"
 
     if (min(range_rope) >= min(range_ci) && max(range_rope) <= max(range_ci)) {
       coverage <- diff_rope / diff_ci
@@ -101,10 +101,10 @@ equivalence_test.MixMod <- equivalence_test.lm
   }
 
   data.frame(
-    decision = decision,
-    coverage = coverage,
-    ci_low = range_ci[1],
-    ci_high = range_ci[2],
+    CI_low = range_ci[1],
+    CI_high = range_ci[2],
+    ROPE_Percentage = coverage,
+    ROPE_Equivalence = decision,
     stringsAsFactors = FALSE
   )
 }
