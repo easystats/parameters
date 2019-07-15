@@ -64,11 +64,23 @@ parameters_selection.merMod <- function(model, direction = "backward", steps = 1
     stop("Package 'cAIC4' required for this function to work. Please install it by running `install.packages('cAIC4')`.")
   }
 
+  # Find slope and group candidates
+  # data <- insight::get_data(model)
+  # factors <- names(data[sapply(data, is.factor)])
+  # if(length(factors) == 0){
+  #   factors <- NULL
+  # }
+  # nums <- names(data[sapply(data, is.numeric)])
+  # if(length(nums) == 0){
+  #   nums <- NULL
+  # }
+
   best <- cAIC4::stepcAIC(model,
+    # groupCandidates = factors,
+    # slopeCandidates = nums,
     direction = direction,
     steps = steps,
-    allowUseAcross = TRUE,
-    ...
+    allowUseAcross = TRUE
   )$finalModel
 
   best
