@@ -175,7 +175,7 @@
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable.</p></td>
+      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).</p></td>
     </tr>
     <tr>
       <th>standardize</th>
@@ -203,14 +203,8 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
-<span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt; The unique principal component accounted for 80.76% of the total variance of the original data.
-#&gt; 
-#&gt;   Variable        PC1 Complexity
-#&gt; 1      mpg -0.9292872          1
-#&gt; 2      cyl  0.9588415          1
-#&gt; 3     disp  0.9506985          1
-#&gt; 4       hp  0.8627550          1
-#&gt; 5     drat -0.7789827          1</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; The 7 principal components accounted for 100.00% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%, PC7 = 0.70%).
+<span class='co'># principal_components(mtcars[, 1:4])</span>
+<span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; The 7 principal components accounted for 100.00% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%, PC7 = 0.70%).
 #&gt; 
 #&gt;   Variable        PC1        PC2       PC3        PC4       PC5        PC6 PC7
 #&gt; 1      mpg -0.9308661         NA        NA -0.3047324        NA         NA  NA
@@ -272,8 +266,7 @@
 #&gt; 29  1.55523735 -2.06076910
 #&gt; 30 -0.18704672 -0.26276186
 #&gt; 31  2.36338454 -1.64100466
-#&gt; 32 -1.71202696 -0.33478623</div><div class='input'>
-</div></pre>
+#&gt; 32 -1.71202696 -0.33478623</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

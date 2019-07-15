@@ -16,16 +16,16 @@
 #'
 #' # Confirmatory Factor Analysis (CFA) ---------
 #'
-#' structure <- ' visual  =~ x1 + x2 + x3
+#' structure <- " visual  =~ x1 + x2 + x3
 #'                textual =~ x4 + x5 + x6
-#'                speed   =~ x7 + x8 + x9 '
-#' model <- lavaan::cfa(structure, data=HolzingerSwineford1939)
+#'                speed   =~ x7 + x8 + x9 "
+#' model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
 #' model_parameters(model)
 #' model_parameters(model, standardize = TRUE)
 #'
 #' # Structural Equation Model (SEM) ------------
 #'
-#' structure <- '
+#' structure <- "
 #'   # latent variable definitions
 #'     ind60 =~ x1 + x2 + x3
 #'     dem60 =~ y1 + a*y2 + b*y3 + c*y4
@@ -39,8 +39,8 @@
 #'     y3 ~~ y7
 #'     y4 ~~ y8
 #'     y6 ~~ y8
-#' '
-#' model <- lavaan::sem(structure, data=PoliticalDemocracy)
+#' "
+#' model <- lavaan::sem(structure, data = PoliticalDemocracy)
 #' model_parameters(model)
 #' model_parameters(model, standardize = TRUE)
 #'
@@ -58,7 +58,6 @@
 #' }
 #' @export
 model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type = c("regression", "correlation", "loading"), ...) {
-
   params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, ...)
 
   # Filter
@@ -68,13 +67,11 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
   class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
 
   params
-
 }
 
 
 #' @keywords internal
-.extract_parameters_lavaan <- function(model, ci = 0.95, standardize = FALSE, ...){
-
+.extract_parameters_lavaan <- function(model, ci = 0.95, standardize = FALSE, ...) {
   if (!requireNamespace("lavaan", quietly = TRUE)) {
     stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
   }
@@ -100,9 +97,12 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
   )
 
   params$Type <- ifelse(params$Operator == "=~", "Loading",
-                        ifelse(params$Operator == "~", "Regression",
-                               ifelse(params$Operator == "~~", "Correlation",
-                                      ifelse(params$Operator == "~1", "Mean", NA))))
+    ifelse(params$Operator == "~", "Regression",
+      ifelse(params$Operator == "~~", "Correlation",
+        ifelse(params$Operator == "~1", "Mean", NA)
+      )
+    )
+  )
   params$Type <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Type)
   params$p <- ifelse(is.na(params$p), 0, params$p)
 
@@ -116,11 +116,9 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
 
 
 #' @export
-n_parameters.lavaan <- function(x, ...){
+n_parameters.lavaan <- function(x, ...) {
   if (!requireNamespace("lavaan", quietly = TRUE)) {
     stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
   }
   lavaan::fitmeasures(x)$npar
 }
-
-

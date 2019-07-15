@@ -169,7 +169,7 @@
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable.</p></td>
+      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -200,7 +200,7 @@
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/principal'>principal</a></span>(<span class='no'>attitude</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>pca</span>)
 
-<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/principal'>principal</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rotate</span><span class='kw'>=</span><span class='st'>"none"</span>)
+<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/principal'>principal</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='st'>"none"</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>pca</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
 <span class='co'># }</span><div class='input'><span class='co'># Note that the latter is identical to the 'principal_components' function available in parameters:</span>
 <span class='fu'><a href='principal_components.html'>principal_components</a></span>(<span class='no'>attitude</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; The 3 principal components accounted for 81.49% of the total variance of the original data (PC1 = 53.09%, PC2 = 16.30%, PC3 = 12.10%).
@@ -212,13 +212,11 @@
 #&gt; 4     rating 0.7961866 -0.4239721  0.2424866   1.739422
 #&gt; 5 privileges 0.6839314         NA         NA   1.175153
 #&gt; 6    advance 0.5832712  0.6086213 -0.4562244   2.849165
-#&gt; 7   critical 0.3573175  0.6436979  0.6450449   2.542072</div><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+#&gt; 7   critical 0.3573175  0.6436979  0.6450449   2.542072</div><span class='co'># NOT RUN {</span>
 <span class='co'># Exploratory Factor Analysis (EFA) ---------</span>
 <span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/fa'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='co'># }</span><div class='input'>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

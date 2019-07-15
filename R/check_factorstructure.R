@@ -15,20 +15,22 @@ check_factorstructure <- function(x, silent = FALSE, ...) {
   # TODO: detect (and remove?) factors
   # TODO: This could be improved using the correlation package to use different correlation methods
 
-  if(!silent){
+  if (!silent) {
     text_kmo <- capture.output(check_kmo(x, silent = FALSE, ...))
     text_sphericity <- capture.output(check_sphericity(x, silent = FALSE, ...))
 
     text <- paste0("  - KMO, ", text_kmo, "\n  - Sphericity, ", text_sphericity)
-    if(grepl("Warning:", text)){
+    if (grepl("Warning:", text)) {
       insight::print_color(text, "red")
-    } else{
+    } else {
       insight::print_color(text, "green")
     }
   }
 
-  invisible(list(KMO = check_kmo(x, silent = TRUE, ...),
-                 sphericity = check_sphericity(x, silent = TRUE, ...)))
+  invisible(list(
+    KMO = check_kmo(x, silent = TRUE, ...),
+    sphericity = check_sphericity(x, silent = TRUE, ...)
+  ))
 }
 
 
@@ -60,8 +62,7 @@ check_factorstructure <- function(x, silent = FALSE, ...) {
 #' }
 #' @importFrom stats cov2cor
 #' @export
-check_kmo <- function(x, silent = FALSE,  ...) {
-
+check_kmo <- function(x, silent = FALSE, ...) {
   cormatrix <- cor(x, use = "pairwise.complete.obs", ...)
   Q <- solve(cormatrix)
 
@@ -75,7 +76,7 @@ check_kmo <- function(x, silent = FALSE,  ...) {
   MSA_variable <- colSums(cormatrix^2) / (colSums(cormatrix^2) + colSums(Q^2))
   results <- list(MSA = MSA, MSA_variable = MSA_variable)
 
-  if(!silent){
+  if (!silent) {
     if (MSA < 0.5) {
       insight::print_color(sprintf("Warning: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that factor analysis is likely to be inappropriate (KMO = %.2f).", MSA), "red")
     } else {
@@ -132,7 +133,7 @@ check_sphericity <- function(x, silent = FALSE, ...) {
 
   results <- list(chisq = statistic, p = pval, dof = df)
 
-  if(!silent){
+  if (!silent) {
     if (pval < 0.001) {
       insight::print_color(sprintf("OK: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, p %s).", df, statistic, format_p(pval)), "green")
     } else {

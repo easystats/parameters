@@ -28,8 +28,10 @@ efa <- psych::fa(attitude, nfactors = 3)
 model1 <- efa_to_cfa(efa)
 model2 <- efa_to_cfa(efa, threshold = 0.3)
 
-anova(lavaan::cfa(model1, data=attitude),
-      lavaan::cfa(model2, data=attitude))
+anova(
+  lavaan::cfa(model1, data = attitude),
+  lavaan::cfa(model2, data = attitude)
+)
 }
 
 }

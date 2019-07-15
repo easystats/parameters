@@ -154,7 +154,8 @@
 
     <pre class="usage"><span class='co'># S3 method for lavaan</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"regression"</span>, <span class='st'>"correlation"</span>,
+  <span class='st'>"loading"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,7 +170,11 @@
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <a href='parameters_standardize.html'>parameters_standardize</a>).</p></td>
+      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize</a></code>).</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>What type of links to return. Can be some of <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c("regression", "correlation", "loading", "variance", "mean")</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -186,16 +191,46 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)</div><span class='co'># NOT RUN {</span>
+<span class='co'># lavaan -------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lavaan</span>)
 
 <span class='co'># Confirmatory Factor Analysis (CFA) ---------</span>
 
-<span class='no'>structure</span> <span class='kw'>&lt;-</span> <span class='st'>' visual  =~ x1 + x2 + x3
+<span class='no'>structure</span> <span class='kw'>&lt;-</span> <span class='st'>" visual  =~ x1 + x2 + x3
                textual =~ x4 + x5 + x6
-               speed   =~ x7 + x8 + x9 '</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lavaan/topics/cfa'>cfa</a></span>(<span class='no'>structure</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>HolzingerSwineford1939</span>)
+               speed   =~ x7 + x8 + x9 "</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lavaan/topics/cfa'>cfa</a></span>(<span class='no'>structure</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HolzingerSwineford1939</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
+<span class='co'># Structural Equation Model (SEM) ------------</span>
+
+<span class='no'>structure</span> <span class='kw'>&lt;-</span> <span class='st'>"
+  # latent variable definitions
+    ind60 =~ x1 + x2 + x3
+    dem60 =~ y1 + a*y2 + b*y3 + c*y4
+    dem65 =~ y5 + a*y6 + b*y7 + c*y8
+  # regressions
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+  # residual correlations
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+"</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lavaan/topics/sem'>sem</a></span>(<span class='no'>structure</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>PoliticalDemocracy</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+
+<span class='co'># blavaan ------------------------------------</span>
+<span class='co'># library(blavaan)</span>
+
+<span class='co'># model &lt;- blavaan::bsem(structure, data=PoliticalDemocracy)</span>
+<span class='co'># model_parameters(model)</span>
+<span class='co'># model_parameters(model, standardize = TRUE)</span>
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
