@@ -11,6 +11,7 @@
 #' @examples
 #' library(parameters)
 #' \dontrun{
+#' # lavaan -------------------------------------
 #' library(lavaan)
 #'
 #' # Confirmatory Factor Analysis (CFA) ---------
@@ -20,7 +21,36 @@
 #'                speed   =~ x7 + x8 + x9 '
 #' model <- lavaan::cfa(structure, data=HolzingerSwineford1939)
 #' model_parameters(model)
+#' model_parameters(model, standardize = TRUE)
 #'
+#' # Structural Equation Model (SEM) ------------
+#'
+#' structure <- '
+#'   # latent variable definitions
+#'     ind60 =~ x1 + x2 + x3
+#'     dem60 =~ y1 + a*y2 + b*y3 + c*y4
+#'     dem65 =~ y5 + a*y6 + b*y7 + c*y8
+#'   # regressions
+#'     dem60 ~ ind60
+#'     dem65 ~ ind60 + dem60
+#'   # residual correlations
+#'     y1 ~~ y5
+#'     y2 ~~ y4 + y6
+#'     y3 ~~ y7
+#'     y4 ~~ y8
+#'     y6 ~~ y8
+#' '
+#' model <- lavaan::sem(structure, data=PoliticalDemocracy)
+#' model_parameters(model)
+#' model_parameters(model, standardize = TRUE)
+#'
+#'
+#' # blavaan ------------------------------------
+#' # library(blavaan)
+#'
+#' # model <- blavaan::bsem(structure, data=PoliticalDemocracy)
+#' # model_parameters(model)
+#' # model_parameters(model, standardize = TRUE)
 #' }
 #'
 #' @references \itemize{

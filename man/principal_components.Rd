@@ -35,7 +35,7 @@ This function performs a principal component analysis (PCA) and returns the load
 \examples{
 library(parameters)
 
-principal_components(mtcars[, 1:5])
+# principal_components(mtcars[, 1:4])
 principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 principal_components(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
 

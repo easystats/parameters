@@ -64,9 +64,10 @@
 #'
 #' Parameters of Bayesian models.
 #'
+#' @param model Bayesian model.
 #' @inheritParams model_parameters.lm
 #' @inheritParams bayestestR::describe_posterior
-#' @param model Bayesian model.
+#'
 #'
 #' @examples
 #' \dontrun{

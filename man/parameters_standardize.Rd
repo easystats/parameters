@@ -16,14 +16,14 @@ median from the variables and divide it by the median absolute deviation
 mean and divide it by the standard deviation (SD).
 the}
 
-\item{method}{The method used for standardizing the parameters. Can be \code{"refit"} (default), "2sd", "full" or "classic".}
+\item{method}{The method used for standardizing the parameters. Can be \code{"refit"} (default), \code{"2sd"}, \code{"full"} or \code{"classic"}.}
 
 \item{verbose}{Toggle warnings on or off.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Compute standardized model parameters (coefficients). See \href{https://easystats.github.io/parameters/articles/parameters_standardization.html}{this vignette}.
+Compute standardized model parameters (coefficients).
 }
 \details{
 \strong{Methods:}

@@ -1,9 +1,9 @@
 #' Parameters standardization
 #'
-#' Compute standardized model parameters (coefficients). See \href{https://easystats.github.io/parameters/articles/parameters_standardization.html}{this vignette}.
+#' Compute standardized model parameters (coefficients).
 #'
 #' @param model A statistical model.
-#' @param method The method used for standardizing the parameters. Can be \code{"refit"} (default), "2sd", "full" or "classic".
+#' @param method The method used for standardizing the parameters. Can be \code{"refit"} (default), \code{"2sd"}, \code{"full"} or \code{"classic"}.
 #' @inheritParams standardize
 #'
 #' @details \strong{Methods:}

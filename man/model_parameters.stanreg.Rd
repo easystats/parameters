@@ -44,9 +44,9 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \link{parameters_standardize}).}
+\item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \code{\link{parameters_standardize}}).}
 
-\item{standardize_robust}{Robust standardization. See \link{parameters_standardize}.}
+\item{standardize_robust}{Robust standardization. See \code{\link{parameters_standardize}}.}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 
