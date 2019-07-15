@@ -15,7 +15,7 @@
 
 \item{standardize}{Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \code{\link{parameters_standardize}}).}
 
-\item{type}{What type of links to return. Can be some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
+\item{type}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

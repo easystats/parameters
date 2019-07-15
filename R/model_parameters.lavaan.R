@@ -4,7 +4,7 @@
 #'
 #' @param model CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions.
 #' @inheritParams model_parameters.lm
-#' @param type What type of links to return. Can be some of \code{c("regression", "correlation", "loading", "variance", "mean")}.
+#' @param type What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #'
@@ -61,6 +61,9 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
   params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, ...)
 
   # Filter
+  if(type == "all"){
+    type <- c("regression", "correlation", "loading", "variance", "mean")
+  }
   params <- params[tolower(params$Type) %in% type, ]
 
   # add class-attribute for printing
