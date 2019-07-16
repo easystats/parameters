@@ -16,7 +16,7 @@ test_that("format_value", {
 })
 
 test_that("format others", {
-  # testthat::expect_equal(nchar(format_pd(0.02)), 10, tol = 0)
+  testthat::expect_true(is.character(format_pd(0.02)))
   testthat::expect_equal(nchar(format_bf(4)), 9, tol = 0)
-  # testthat::expect_equal(nchar(format_rope(0.02)), 13, tol = 0)
+  testthat::expect_true(is.character(format_rope(0.02)))
 })

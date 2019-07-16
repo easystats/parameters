@@ -2,23 +2,87 @@
 #'
 #' Enables a conversion between (log)odds and probabilities.
 #'
-#' @param odds Odds values in vector or dataframe.
+#' @param x Odds or probs values in vector or dataframe.
+#' @param log Are these Log odds (such as in logistic models)?
+#' @param ... Arguments passed to or from other methods.
+#'
+#' @examples
+#' odds_to_probs(-1.45)
+#' odds_to_probs(3.22)
+#' @export
+odds_to_probs <- function(x, log = FALSE, ...){
+  UseMethod("odds_to_probs")
+}
+
+#' @export
+odds_to_probs.numeric <- function(x, log = FALSE, ...){
+  .odds_to_probs(x, log = log)
+}
+
+#' @export
+odds_to_probs.double <- odds_to_probs.numeric
+
+
+
 #' @param select Character or list of of column names to be
 #' transformed.
 #' @param exclude Character or list of column names to be excluded
 #' from transformation.
-#' @param log Are these Log odds (such as in logistic models)?
-#'
-#' @examples
-#' odds_to_probs(-1.45)
+#' @rdname odds_to_probs
 #' @export
-odds_to_probs <- function(odds, select = NULL, exclude = NULL, log = FALSE) {
+odds_to_probs.data.frame <- function(x, log = FALSE, select = NULL, exclude = NULL, ...){
+  .odds_to_probs_df(odds = x, log = log, select = select, exclude = exclude, ...)
+}
+
+
+#' @rdname odds_to_probs
+#' @export
+probs_to_odds <- function(x, log = FALSE, ...){
+  UseMethod("probs_to_odds")
+}
+
+#' @export
+probs_to_odds.numeric <- function(x, log = FALSE, ...){
+  .probs_to_odds(x, log = log)
+}
+
+#' @export
+probs_to_odds.double <- probs_to_odds.numeric
+
+#' @export
+probs_to_odds.data.frame <- function(x, log = FALSE, select = NULL, exclude = NULL, ...){
+  .odds_to_probs_df(probs = x, log = log, select = select, exclude = exclude, ...)
+}
+
+#' @rdname odds_to_probs
+#' @export
+convert_odds_to_probs <- odds_to_probs
+
+
+#' @rdname odds_to_probs
+#' @export
+convert_probs_to_odds <- probs_to_odds
+
+
+
+
+
+
+
+
+
+
+
+
+
+#' @keywords internal
+.odds_to_probs_df <- function(odds=NULL, probs=NULL, log = FALSE, select = NULL, exclude = NULL, ...) {
 
   # If vector
-  if (ncol(as.matrix(odds)) == 1) {
-    return(.odds_to_probs(odds, log = log))
-  } else {
+  if(!is.null(odds)){
     df <- odds
+  } else{
+    df <- probs
   }
 
   # Variable order
@@ -48,7 +112,11 @@ odds_to_probs <- function(odds, select = NULL, exclude = NULL, log = FALSE) {
   dfnum <- df[sapply(df, is.numeric, simplify = TRUE)]
 
   # Tranform
-  dfnum <- .odds_to_probs(dfnum, log = log)
+  if(!is.null(odds)){
+    dfnum <- .odds_to_probs(dfnum, log = log)
+  } else{
+    dfnum <- .probs_to_odds(dfnum, log = log)
+  }
 
   # Add non-numerics
   if (is.null(ncol(dfother))) {
@@ -69,14 +137,6 @@ odds_to_probs <- function(odds, select = NULL, exclude = NULL, log = FALSE) {
 }
 
 
-#' @rdname odds_to_probs
-#' @export
-convert_odds_to_probs <- odds_to_probs
-
-
-
-
-
 #' @keywords internal
 .odds_to_probs <- function(odds, log = TRUE) {
   if (log == TRUE) {
@@ -84,4 +144,13 @@ convert_odds_to_probs <- odds_to_probs
   }
   probs <- odds / (1 + odds)
   return(probs)
+}
+
+#' @keywords internal
+.probs_to_odds <- function(probs, log = TRUE) {
+  odds <- probs / (1 - probs)
+  if (log == TRUE) {
+    odds <- log(odds)
+  }
+  return(odds)
 }
