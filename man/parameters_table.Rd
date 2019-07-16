@@ -4,10 +4,12 @@
 \alias{parameters_table}
 \title{Parameters Table Formatting}
 \usage{
-parameters_table(x, ...)
+parameters_table(x, clean_names = TRUE, ...)
 }
 \arguments{
 \item{x}{A dataframe of model's parameters.}
+
+\item{clean_names}{Clean parameters' names if possible.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -17,6 +19,7 @@ Parameters Table Formatting
 \examples{
 library(parameters)
 
-model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
+x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
+parameters_table(x)
 
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_table.R
 \name{format_table}
 \alias{format_table}
-\title{Dataframe and Tables Pretty Printing}
+\title{Dataframe and Tables Pretty Formatting}
 \usage{
 format_table(x, sep = " | ")
 }
@@ -12,7 +12,7 @@ format_table(x, sep = " | ")
 \item{sep}{Column separator.}
 }
 \description{
-Dataframe and Tables Pretty Printing
+Dataframe and Tables Pretty Formatting
 }
 \examples{
 library(parameters)

@@ -1,4 +1,4 @@
-#' Dataframe and Tables Pretty Printing
+#' Dataframe and Tables Pretty Formatting
 #'
 #' @param x A dataframe.
 #' @param sep Column separator.
@@ -43,5 +43,4 @@ format_table <- function(x, sep = " | ") {
   }
   rows
 }
-
 
