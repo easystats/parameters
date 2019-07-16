@@ -2,12 +2,12 @@
 % Please edit documentation in R/format_value.R
 \name{format_value}
 \alias{format_value}
-\alias{format_value_unless_integers}
+\alias{format_value_unless_integer}
 \title{Numeric Values Formatting}
 \usage{
 format_value(x, digits = 2, ...)
 
-format_value_unless_integers(x, digits = 2, ...)
+format_value_unless_integer(x, digits = 2, ...)
 }
 \arguments{
 \item{x}{Numeric value.}

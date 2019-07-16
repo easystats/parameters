@@ -22,10 +22,9 @@ format_value <- function(x, digits = 2, ...) {
 
 
 #' @rdname format_value
-#' @inheritParams format_value
 #' @importFrom stats na.omit
 #' @export
-format_value_unless_integers <- function(x, digits = 2, ...) {
+format_value_unless_integer <- function(x, digits = 2, ...) {
   if (is.numeric(x) && !all(is.int(stats::na.omit(x)))) {
     format_value(x, digits = digits)
   } else {
