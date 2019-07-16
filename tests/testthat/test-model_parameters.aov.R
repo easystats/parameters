@@ -4,10 +4,10 @@ library(testthat)
 
 test_that("model_parameters.aov", {
   model <- insight::download_model("aov_1")
-  testthat::expect_equal(sum(model_parameters(model)$DoF), 149)
+  testthat::expect_equal(sum(model_parameters(model, omega_squared = "partial")$DoF), 149)
 
   model <- insight::download_model("aov_2")
-  testthat::expect_equal(sum(model_parameters(model)$DoF), 149)
+  testthat::expect_equal(sum(model_parameters(model, omega_squared = "full")$DoF), 149)
 
   model <- insight::download_model("aov_3")
   testthat::expect_equal(sum(model_parameters(model)$DoF), 149)

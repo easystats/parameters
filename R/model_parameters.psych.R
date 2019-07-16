@@ -21,18 +21,16 @@
 #' pca <- psych::principal(attitude)
 #' model_parameters(pca)
 #'
-#' pca <- psych::principal(attitude, nfactors = 3, rotate="none")
+#' pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
 #' model_parameters(pca, sort = TRUE, threshold = 0.2)
 #' }
 #' # Note that the latter is identical to the 'principal_components' function available in parameters:
 #' principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
-#'
 #' \dontrun{
 #' # Exploratory Factor Analysis (EFA) ---------
 #' efa <- psych::fa(attitude, nfactors = 3)
 #' model_parameters(efa, threshold = "max", sort = TRUE)
 #' }
-#'
 #'
 #' @references \itemize{
 #'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
@@ -51,12 +49,12 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
     Eigenvalues = model$values[1:n],
     Variance = as.numeric(variance["Proportion Var", ])
   )
-  if("Cumulative Var" %in% row.names(variance)){
+  if ("Cumulative Var" %in% row.names(variance)) {
     data_summary$Variance_Cumulative <- as.numeric(variance["Cumulative Var", ])
-  } else{
-    if(ncol(variance) == 1){
+  } else {
+    if (ncol(variance) == 1) {
       data_summary$Variance_Cumulative <- as.numeric(variance["Proportion Var", ])
-    } else{
+    } else {
       data_summary$Variance_Cumulative <- NA
     }
   }
@@ -70,7 +68,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
   row.names(loadings) <- NULL
 
   # Add information
-  loading_cols <- 2:(n+1)
+  loading_cols <- 2:(n + 1)
   loadings$Complexity <- model$complexity
   loadings$Uniqueness <- model$uniquenesses
 
@@ -101,7 +99,6 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
   class(loadings) <- c("factor_structure", class(loadings))
 
   loadings
-
 }
 
 
@@ -109,4 +106,3 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
 
 #' @export
 model_parameters.fa <- model_parameters.principal
-

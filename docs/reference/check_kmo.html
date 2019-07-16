@@ -152,7 +152,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>check_kmo</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>check_kmo</span>(<span class='no'>x</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,6 +160,10 @@
     <tr>
       <th>x</th>
       <td><p>A dataframe.</p></td>
+    </tr>
+    <tr>
+      <th>silent</th>
+      <td><p>Hide results printing.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -184,7 +188,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
-<span class='fu'>check_kmo</span>(<span class='no'>mtcars</span>)</div><div class='output co'>#&gt; <span style='color: #00BB00;'>OK: The data seems appropriate for factor analysis (KMO = 0.83).</span><span></div></span></pre>
+<span class='fu'>check_kmo</span>(<span class='no'>mtcars</span>)</div><div class='output co'>#&gt; <span style='color: #00BB00;'>OK: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = 0.83).</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

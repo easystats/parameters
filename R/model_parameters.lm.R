@@ -119,4 +119,3 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
 
   parameters
 }
-

@@ -25,7 +25,6 @@
 #' pca <- principal_components(mtcars[, 1:5], n = 2)
 #' summary(pca)
 #' predict(pca)
-#'
 #' @references \itemize{
 #'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
 #' }
@@ -100,8 +99,8 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   row.names(loadings) <- NULL
 
   # Add information
-  loading_cols <- 2:(n+1)
-  loadings$Complexity <- (apply(loadings[, loading_cols, drop = FALSE],1,function(x) sum(x^2)))^2/apply(loadings[, loading_cols, drop = FALSE],1,function(x)sum(x^4))
+  loading_cols <- 2:(n + 1)
+  loadings$Complexity <- (apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^2)))^2 / apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^4))
 
   # Add attributes
   attr(loadings, "summary") <- data_summary
@@ -159,12 +158,12 @@ model_parameters.factor_structure <- function(model, ...) {
 
 #' @export
 predict.factor_structure <- function(object, newdata = NULL, names = NULL, ...) {
-  if(is.null(newdata)){
+  if (is.null(newdata)) {
     out <- as.data.frame(attributes(object)$scores)
-  } else{
+  } else {
     out <- as.data.frame(predict(attributes(object)$model, newdata = newdata, ...))
   }
-  if(!is.null(names)){
+  if (!is.null(names)) {
     names(out)[1:length(c(names))] <- names
   }
   row.names(out) <- NULL
@@ -195,13 +194,12 @@ principal_components.merMod <- principal_components.lm
 
 #' @keywords internal
 .text_components_variance <- function(x) {
-
   type <- attributes(x)$type
-  if(type %in% c("prcomp", "principal")){
+  if (type %in% c("prcomp", "principal")) {
     type <- "principal component"
-  } else if(type %in% c("fa")){
+  } else if (type %in% c("fa")) {
     type <- "latent factor"
-  } else{
+  } else {
     type <- paste0(type, " component")
   }
 
@@ -215,7 +213,7 @@ principal_components.merMod <- principal_components.lm
   }
 
   # rotation
-  if(attributes(x)$rotation != "none"){
+  if (attributes(x)$rotation != "none") {
     text <- paste0(text, " (", attributes(x)$rotation, " rotation)")
   }
 
@@ -249,8 +247,7 @@ principal_components.merMod <- principal_components.lm
 
 #' @keywords internal
 .filer_loadings <- function(loadings, threshold = 0.2, cols = NULL) {
-
-  if(is.null(cols)){
+  if (is.null(cols)) {
     cols <- attributes(loadings)$loadings_columns
   }
 
@@ -270,8 +267,7 @@ principal_components.merMod <- principal_components.lm
 
 #' @keywords internal
 .sort_loadings <- function(loadings, cols = NULL) {
-
-  if(is.null(cols)){
+  if (is.null(cols)) {
     cols <- attributes(loadings)$loadings_columns
   }
 
@@ -323,27 +319,26 @@ principal_components.merMod <- principal_components.lm
 #' @importFrom stats reshape
 #' @keywords internal
 .long_loadings <- function(loadings, threshold = NULL, cols = NULL) {
-
-
-  if(is.null(cols)){
+  if (is.null(cols)) {
     cols <- attributes(loadings)$loadings_columns
   }
 
 
-  if(!is.null(threshold)){
+  if (!is.null(threshold)) {
     loadings <- .filer_loadings(loadings, threshold = threshold, cols = cols)
   }
 
   # Reshape to long
   long <- reshape(loadings,
-          direction = "long",
-          varying = list(names(loadings)[cols]),
-          v.names = "Loading",
-          timevar = "Component",
-          idvar = "Variable")
+    direction = "long",
+    varying = list(names(loadings)[cols]),
+    v.names = "Loading",
+    timevar = "Component",
+    idvar = "Variable"
+  )
 
   # Restore component names
-  for(i in 1:length(unique(long$Component))){
+  for (i in 1:length(unique(long$Component))) {
     component <- unique(long$Component)[[i]]
     name <- names(loadings)[cols][[i]]
     long[long$Component == component, "Component"] <- name
@@ -354,10 +349,12 @@ principal_components.merMod <- principal_components.lm
 
   row.names(long) <- NULL
   # Reorder columns
-  long[, c("Component",
-           "Variable",
-           "Loading",
-           names(loadings)[-cols][!names(loadings)[-cols] %in% c("Component", "Variable", "Loading")])]
+  long[, c(
+    "Component",
+    "Variable",
+    "Loading",
+    names(loadings)[-cols][!names(loadings)[-cols] %in% c("Component", "Variable", "Loading")]
+  )]
 }
 
 

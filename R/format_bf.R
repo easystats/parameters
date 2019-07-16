@@ -9,7 +9,7 @@
 #' @export
 format_bf <- function(bf, digits = 2) {
   bf <- c(bf)
-  text <- ifelse(bf > 999, "BF > 999", paste0("BF = ", format_value(bf, digits=digits)))
+  text <- ifelse(bf > 999, "BF > 999", paste0("BF = ", format_value(bf, digits = digits)))
 
   return(text)
 }

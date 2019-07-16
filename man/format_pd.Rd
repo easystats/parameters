@@ -15,5 +15,5 @@ format_pd(pd, digits = 2)
 Probability of direction (pd) Formatting
 }
 \examples{
-format_pd(1.20)
+format_pd(0.12)
 }

@@ -28,7 +28,7 @@ standard_error.aov <- function(model, ...) {
 
   data.frame(
     Parameter = params$Parameter,
-    p_value = params$p,
+    SE = params$SE,
     stringsAsFactors = FALSE
   )
 }
@@ -91,7 +91,7 @@ standard_error.vglm <- function(model, ...) {
 
   data.frame(
     Parameter = names(se),
-    Std_Error = as.vector(se),
+    SE = as.vector(se),
     stringsAsFactors = FALSE
   )
 }
@@ -108,7 +108,7 @@ standard_error.svyglm.nb <- function(model, ...) {
 
   data.frame(
     Parameter = names(se),
-    Std_Error = as.vector(se),
+    SE = as.vector(se),
     stringsAsFactors = FALSE
   )
 }
@@ -122,7 +122,7 @@ standard_error.svyglm <- function(model, ...) {
 
   data.frame(
     Parameter = names(se),
-    Std_Error = as.vector(se),
+    SE = as.vector(se),
     stringsAsFactors = FALSE
   )
 }
@@ -136,7 +136,7 @@ standard_error.gmnl <- function(model, ...) {
 
   pv <- data.frame(
     Parameter = names(se),
-    Std_Error = as.vector(se),
+    SE = as.vector(se),
     stringsAsFactors = FALSE
   )
 
@@ -159,7 +159,7 @@ standard_error.polr <- function(model, ...) {
 
   data.frame(
     Parameter = names(se),
-    p_value = as.vector(se),
+    SE = as.vector(se),
     stringsAsFactors = FALSE
   )
 }

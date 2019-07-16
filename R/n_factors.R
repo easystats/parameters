@@ -63,43 +63,43 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
       out <- rbind(
         out,
         tryCatch(.n_factors_bartlett(x, cormatrix, nobs, eigen_values, type),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
         tryCatch(.n_factors_bentler(x, cormatrix, nobs, eigen_values, type),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
         tryCatch(.n_factors_cng(x, cormatrix, nobs, eigen_values, type),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
         tryCatch(.n_factors_mreg(x, cormatrix, nobs, eigen_values, type),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
         tryCatch(.n_factors_scree(x, cormatrix, nobs, eigen_values, type),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
         tryCatch(.n_factors_sescree(x, cormatrix, nobs, eigen_values, type),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
     } else {
@@ -140,8 +140,8 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
       out <- rbind(
         out,
         tryCatch(.n_factors_ega(x, cormatrix, nobs, eigen_values, type),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
     } else {
@@ -163,8 +163,8 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
       out <- rbind(
         out,
         tryCatch(.n_factors_vss(x, cormatrix, nobs, type, rotation, algorithm),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
     } else {
@@ -374,7 +374,7 @@ as.double.n_factors <- as.numeric.n_factors
 
   data.frame(
     n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
-    Method = c("EGA (glasso)", "EAG (TMFG)"),
+    Method = c("EGA (glasso)", "EGA (TMFG)"),
     Family = "EGA"
   )
 }

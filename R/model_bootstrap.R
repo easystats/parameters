@@ -5,7 +5,6 @@
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' head(model_bootstrap(model))
-#'
 #' @param model Statistical model.
 #' @param iterations The number of bootstrap replicates.
 #' @param verbose Hide possible refit messages.

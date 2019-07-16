@@ -2,28 +2,40 @@
 % Please edit documentation in R/convert_odds_to_probs.R
 \name{odds_to_probs}
 \alias{odds_to_probs}
+\alias{odds_to_probs.data.frame}
+\alias{probs_to_odds}
 \alias{convert_odds_to_probs}
+\alias{convert_probs_to_odds}
 \title{Conversion between (log)odds and probabilies}
 \usage{
-odds_to_probs(odds, select = NULL, exclude = NULL, log = FALSE)
+odds_to_probs(x, log = FALSE, ...)
 
-convert_odds_to_probs(odds, select = NULL, exclude = NULL,
-  log = FALSE)
+\method{odds_to_probs}{data.frame}(x, log = FALSE, select = NULL,
+  exclude = NULL, ...)
+
+probs_to_odds(x, log = FALSE, ...)
+
+convert_odds_to_probs(x, log = FALSE, ...)
+
+convert_probs_to_odds(x, log = FALSE, ...)
 }
 \arguments{
-\item{odds}{Odds values in vector or dataframe.}
+\item{x}{Odds or probs values in vector or dataframe.}
+
+\item{log}{Are these Log odds (such as in logistic models)?}
+
+\item{...}{Arguments passed to or from other methods.}
 
 \item{select}{Character or list of of column names to be
 transformed.}
 
 \item{exclude}{Character or list of column names to be excluded
 from transformation.}
-
-\item{log}{Are these Log odds (such as in logistic models)?}
 }
 \description{
 Enables a conversion between (log)odds and probabilities.
 }
 \examples{
 odds_to_probs(-1.45)
+odds_to_probs(3.22)
 }
