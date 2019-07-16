@@ -52,6 +52,14 @@ parameters_standardize(model, method = "refit")
 parameters_standardize(model, method = "refit", robust = TRUE)
 parameters_standardize(model, method = "full")
 parameters_standardize(model, method = "full", robust = TRUE)
+
+\dontrun{
+library(rstanarm)
+model <- stan_glm(Sepal.Length ~ Species * Petal.Width, data = iris)
+parameters_standardize(model, method = "full", centrality = "all")
+parameters_standardize(model, method = "full", robust = TRUE, centrality = "all")
+
+}
 }
 \references{
 \itemize{

@@ -36,6 +36,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
     parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
+  class(parameters) <- c("parameters_table", class(parameters))
   parameters
 }
 

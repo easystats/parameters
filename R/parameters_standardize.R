@@ -33,6 +33,14 @@
 #' parameters_standardize(model, method = "refit", robust = TRUE)
 #' parameters_standardize(model, method = "full")
 #' parameters_standardize(model, method = "full", robust = TRUE)
+#'
+#' \dontrun{
+#' library(rstanarm)
+#' model <- stan_glm(Sepal.Length ~ Species * Petal.Width, data = iris)
+#' parameters_standardize(model, method = "full", centrality = "all")
+#' parameters_standardize(model, method = "full", robust = TRUE, centrality = "all")
+#'
+#' }
 #' @importFrom stats mad sd predict cor model.matrix
 #' @importFrom insight get_parameters model_info get_data get_response
 #' @importFrom utils tail
@@ -134,18 +142,19 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
   }
 
   out <- data.frame(Parameter = param_names)
+  param_table <- parameters_type(model)
 
   for (param_name in names(param_values)) {
     # Get response variance
     sd_y <- .variance_response(model, robust = robust, method = method, ...)
 
     # Create parameter table
-    param_table <- .parameters_types_table(param_names, param_values[[param_name]], insight::get_data(model))
+    param_table$Value <- param_values[[param_name]]
 
     # Loop over all parameters
     std_params <- c()
     for (i in 1:nrow(param_table)) {
-      sd_x <- .variance_predictor(param_table$Type[i], param_table$Variable[i], insight::get_data(model), robust = robust, method = method, ...)
+      sd_x <- .variance_predictor(param_table$Type[i], param_table$Term[i], insight::get_data(model), robust = robust, method = method, ...)
       new_coef <- param_table$Value[i] * sd_x / sd_y
       std_params <- c(std_params, new_coef)
     }
