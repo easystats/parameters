@@ -61,7 +61,7 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
   params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, ...)
 
   # Filter
-  if(type == "all"){
+  if (type == "all") {
     type <- c("regression", "correlation", "loading", "variance", "mean")
   }
   params <- params[tolower(params$Type) %in% type, ]

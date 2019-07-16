@@ -10,12 +10,12 @@
 #' odds_to_probs(-1.45)
 #' odds_to_probs(3.22)
 #' @export
-odds_to_probs <- function(x, log = FALSE, ...){
+odds_to_probs <- function(x, log = FALSE, ...) {
   UseMethod("odds_to_probs")
 }
 
 #' @export
-odds_to_probs.numeric <- function(x, log = FALSE, ...){
+odds_to_probs.numeric <- function(x, log = FALSE, ...) {
   .odds_to_probs(x, log = log)
 }
 
@@ -30,19 +30,19 @@ odds_to_probs.double <- odds_to_probs.numeric
 #' from transformation.
 #' @rdname odds_to_probs
 #' @export
-odds_to_probs.data.frame <- function(x, log = FALSE, select = NULL, exclude = NULL, ...){
+odds_to_probs.data.frame <- function(x, log = FALSE, select = NULL, exclude = NULL, ...) {
   .odds_to_probs_df(odds = x, log = log, select = select, exclude = exclude, ...)
 }
 
 
 #' @rdname odds_to_probs
 #' @export
-probs_to_odds <- function(x, log = FALSE, ...){
+probs_to_odds <- function(x, log = FALSE, ...) {
   UseMethod("probs_to_odds")
 }
 
 #' @export
-probs_to_odds.numeric <- function(x, log = FALSE, ...){
+probs_to_odds.numeric <- function(x, log = FALSE, ...) {
   .probs_to_odds(x, log = log)
 }
 
@@ -50,7 +50,7 @@ probs_to_odds.numeric <- function(x, log = FALSE, ...){
 probs_to_odds.double <- probs_to_odds.numeric
 
 #' @export
-probs_to_odds.data.frame <- function(x, log = FALSE, select = NULL, exclude = NULL, ...){
+probs_to_odds.data.frame <- function(x, log = FALSE, select = NULL, exclude = NULL, ...) {
   .odds_to_probs_df(probs = x, log = log, select = select, exclude = exclude, ...)
 }
 
@@ -76,12 +76,12 @@ convert_probs_to_odds <- probs_to_odds
 
 
 #' @keywords internal
-.odds_to_probs_df <- function(odds=NULL, probs=NULL, log = FALSE, select = NULL, exclude = NULL, ...) {
+.odds_to_probs_df <- function(odds = NULL, probs = NULL, log = FALSE, select = NULL, exclude = NULL, ...) {
 
   # If vector
-  if(!is.null(odds)){
+  if (!is.null(odds)) {
     df <- odds
-  } else{
+  } else {
     df <- probs
   }
 
@@ -112,9 +112,9 @@ convert_probs_to_odds <- probs_to_odds
   dfnum <- df[sapply(df, is.numeric, simplify = TRUE)]
 
   # Tranform
-  if(!is.null(odds)){
+  if (!is.null(odds)) {
     dfnum <- .odds_to_probs(dfnum, log = log)
-  } else{
+  } else {
     dfnum <- .probs_to_odds(dfnum, log = log)
   }
 

@@ -23,6 +23,4 @@ test_that("efa-cfa", {
   x <- anova(m1, lavaan::cfa(model2, data = attitude))
   params <- parameters::model_parameters(x)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 6))
-
-
 })

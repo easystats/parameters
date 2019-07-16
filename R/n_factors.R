@@ -374,7 +374,7 @@ as.double.n_factors <- as.numeric.n_factors
 
   data.frame(
     n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
-    Method = c("EGA (glasso)", "EAG (TMFG)"),
+    Method = c("EGA (glasso)", "EGA (TMFG)"),
     Family = "EGA"
   )
 }

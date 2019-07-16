@@ -10,7 +10,7 @@ Status](https://travis-ci.org/easystats/parameters.svg?branch=master)](https://t
 ***Describe and understand your model’s parameters\!***
 
 `parameters`’s primary goal is to provide utilities for processing the
-parameters of various statistical models. Beyond computing *p*-values,
+parameters of various statistical models. Beyond computing *p* values,
 **CIs**, and other indices for a wide variety of models, this package
 implements features like **standardization** or **bootstrapping** of
 parameters and models, **feature reduction** (feature extraction and
@@ -105,7 +105,7 @@ model_parameters(model)
 
 | Parameter | Median | CI\_low | CI\_high |  pd | ROPE\_Percentage | Prior\_Distribution | Prior\_Location | Prior\_Scale |  BF |
 | :-------- | -----: | ------: | -------: | --: | ---------------: | :------------------ | --------------: | -----------: | --: |
-| rho       |  \-0.1 |   \-0.2 |        0 | 0.9 |               43 | cauchy              |               0 |          0.3 | 0.5 |
+| rho       |  \-0.1 |   \-0.2 |        0 | 0.9 |              0.4 | cauchy              |               0 |          0.3 | 0.5 |
 
 ### t-tests
 
@@ -226,9 +226,7 @@ model_parameters(model)
 | - | :---------- | -----: | ------: | -------: | -: | ---------------: | ---: | ---: | :------------------ | --------------: | -----------: |
 | 1 | (Intercept) |     40 |      37 |     42.5 |  1 |                0 | 5250 |    1 | normal              |               0 |           60 |
 | 3 | wt          |    \-3 |     \-4 |    \-1.9 |  1 |                0 | 1963 |    1 | normal              |               0 |           15 |
-| 2 | cyl         |    \-2 |     \-2 |    \-0.8 |  1 |                2 | 1997 |    1 | normal              |               0 |            8 |
-
-<!-- I don't know why but the chunk below fails when building site (but knitting the README des not...) -->
+| 2 | cyl         |    \-2 |     \-2 |    \-0.8 |  1 |                0 | 1997 |    1 | normal              |               0 |            8 |
 
 ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA)
 
@@ -326,23 +324,20 @@ model <- stan_glm(mpg ~ ., data = mtcars) %>%
 
 |   | Parameter   | Median | CI\_low | CI\_high |  pd | ROPE\_Percentage |  ESS | Rhat | Prior\_Distribution | Prior\_Location | Prior\_Scale |
 | - | :---------- | -----: | ------: | -------: | --: | ---------------: | ---: | ---: | :------------------ | --------------: | -----------: |
-| 1 | (Intercept) |   20.2 |   \-1.9 |     42.1 | 0.9 |              1.1 | 2483 |    1 | normal              |               0 |         60.3 |
-| 7 | wt          |  \-3.9 |   \-5.9 |    \-1.9 | 1.0 |              0.3 | 2860 |    1 | normal              |               0 |         15.4 |
-| 3 | cyl         |  \-0.5 |   \-1.8 |      0.8 | 0.7 |             48.2 | 2781 |    1 | normal              |               0 |          8.4 |
-| 5 | hp          |    0.0 |     0.0 |      0.0 | 0.9 |            100.0 | 2907 |    1 | normal              |               0 |          0.2 |
-| 2 | am          |    2.9 |     0.2 |      5.9 | 1.0 |              7.0 | 3082 |    1 | normal              |               0 |         15.1 |
-| 6 | qsec        |    0.8 |   \-0.2 |      1.7 | 0.9 |             36.2 | 2449 |    1 | normal              |               0 |          8.4 |
-| 4 | disp        |    0.0 |     0.0 |      0.0 | 0.9 |            100.0 | 2750 |    1 | normal              |               0 |          0.1 |
+| 1 | (Intercept) |   20.2 |   \-1.9 |     42.1 | 0.9 |              0.0 | 2483 |    1 | normal              |               0 |         60.3 |
+| 7 | wt          |  \-3.9 |   \-5.9 |    \-1.9 | 1.0 |              0.0 | 2860 |    1 | normal              |               0 |         15.4 |
+| 3 | cyl         |  \-0.5 |   \-1.8 |      0.8 | 0.7 |              0.5 | 2781 |    1 | normal              |               0 |          8.4 |
+| 5 | hp          |    0.0 |     0.0 |      0.0 | 0.9 |              1.0 | 2907 |    1 | normal              |               0 |          0.2 |
+| 2 | am          |    2.9 |     0.2 |      5.9 | 1.0 |              0.1 | 3082 |    1 | normal              |               0 |         15.1 |
+| 6 | qsec        |    0.8 |   \-0.2 |      1.7 | 0.9 |              0.4 | 2449 |    1 | normal              |               0 |          8.4 |
+| 4 | disp        |    0.0 |     0.0 |      0.0 | 0.9 |              1.0 | 2750 |    1 | normal              |               0 |          0.1 |
 
 ## Variable and features extraction
 
 ### How many factors to retain in Factor Analysis (FA)
 
 ``` r
-n_factors(attitude)
-> # Method Agreement Procedure:
-> 
-> The choice of 1 dimensions is supported by 4 (40.00%) methods out of 10 (EGA (glasso), EAG (TMFG), VSS complexity 1, Velicer's MAP).
+n_factors(mtcars)
 ```
 
 ## Miscellaneous
@@ -352,8 +347,8 @@ n_factors(attitude)
 ``` r
 x <- rnorm(300)
 describe_distribution(x)
->    Mean SD Min Max Skewness Kurtosis n_Obs n_Missing
-> 1 -0.03  1  -4   3    -0.08      0.1   300         0
+>     Mean SD Min Max Skewness Kurtosis   n n_Missing
+> 1 -0.007  1  -3   3      0.1     -0.1 300         0
 ```
 
 ### Standardization and normalization

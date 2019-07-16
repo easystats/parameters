@@ -321,8 +321,8 @@ parameters_selection(model) %>%
 
 ### How many factors to retain in Factor Analysis (FA)
 
-```{r, warning=FALSE, message=FALSE}
-n_factors(attitude)
+```{r, warning=FALSE, message=FALSE, eval = FALSE}
+n_factors(mtcars)
 ```
 
 ## Miscellaneous

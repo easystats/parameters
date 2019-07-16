@@ -4,15 +4,19 @@ test_that("odds_to_probs", {
   testthat::expect_equal(odds_to_probs(-1.6), 2.66, tolerance = 0.01)
   testthat::expect_equal(odds_to_probs(-1.6, log = TRUE), 0.17, tolerance = 0.01)
   testthat::expect_equal(probs_to_odds(2.66), -1.6, tolerance = 0.01)
+  testthat::expect_equal(probs_to_odds(0.17, log = TRUE), -1.6, tolerance = 0.01)
   testthat::expect_equal(odds_to_probs(-1.6, log = TRUE), 0.17, tolerance = 0.01)
 
-  testthat::expect_equal(
+  testthat::expect_true(
     ncol(odds_to_probs(
       iris,
       select = c("Sepal.Length"),
       exclude = c("Petal.Length")
-    )),
-    5
+    )) == ncol(probs_to_odds(
+      iris,
+      select = c("Sepal.Length"),
+      exclude = c("Petal.Length")
+    ))
   )
 })
 
