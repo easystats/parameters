@@ -11,7 +11,11 @@
 #' model_parameters(model)
 #'
 #' model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
+#' model_parameters(model)
+#'
 #' model <- t.test(mtcars$mpg ~ mtcars$vs)
+#' model_parameters(model)
+#'
 #' model <- t.test(iris$Sepal.Width, mu = 1)
 #' model_parameters(model)
 #' @export
@@ -19,8 +23,12 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
   if (bootstrap) {
     stop("Bootstrapped h-tests are not yet implemented.")
   } else {
-    return(.extract_parameters_htest(model))
+    parameters <- .extract_parameters_htest(model)
   }
+
+  class(parameters) <- c("parameters_table", class(parameters))
+  attr(parameters, "ci") <- attributes(model$conf.int)$conf.level
+  parameters
 }
 
 
@@ -41,7 +49,6 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
       out$p <- model$p.value
       out$CI_low <- model$conf.int[1]
       out$CI_high <- model$conf.int[2]
-      out$CI <- attributes(model$conf.int)$conf.level
       out$Method <- "Pearson"
     } else if (grepl("Spearman", model$method)) {
       out$rho <- model$estimate
@@ -70,7 +77,6 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
-        "CI" = attributes(model$conf.int)$conf.level,
         "Method" = model$method
       )
     } else if (grepl(" by ", model$data.name)) {
@@ -86,7 +92,6 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
-        "CI" = attributes(model$conf.int)$conf.level,
         "Method" = model$method
       )
     } else {
@@ -100,7 +105,6 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
-        "CI" = attributes(model$conf.int)$conf.level,
         "Method" = model$method
       )
     }

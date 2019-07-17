@@ -49,7 +49,9 @@ model_parameters.aov <- function(model, omega_squared = NULL, ...) {
       parameters$Omega_Sq <- omega_squared(model, partial = FALSE)$Omega_Sq
     }
   }
-  return(parameters)
+
+  class(parameters) <- c("parameters_table", class(parameters))
+  parameters
 }
 
 
