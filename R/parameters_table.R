@@ -35,9 +35,13 @@ parameters_table.parameters_table <- function(x, clean_names = TRUE, ...){
     x <- x[c(names(x)[1:(ci_position-1)], ci_colname, names(x)[ci_position:(length(names(x))-1)])]  # Replace at initial position
     x$CI_low <- x$CI_high <- NULL
   }
+  std_cols <- names(x)[grepl("Std_", names(x))]
+  if(length(std_cols) >= 1){
+    names(x)[grepl("Std_", names(x))] <- paste0(gsub("Std_", "", std_cols), " (std.)")
+  }
 
   # Format remaining columns
-  other_cols <- c("Coefficient", "SE", "t", "Std_Coefficient")
+  other_cols <- c("Coefficient", "SE", "t", "z", "Std_Coefficient")
   x[other_cols[other_cols %in% names(x)]] <- format_value(x[other_cols[other_cols %in% names(x)]])
 
   x
