@@ -20,13 +20,13 @@ parameters_type <- function(model, ...){
   types <- lapply(params_table$Parameter, .parameters_type, insight::get_data(model))
   types <- as.data.frame(do.call(rbind, types), stringsAsFactors = FALSE)
 
-  names(types) <- c("Type", "Term", "Secondary_Term")
+  names(types) <- c("Type", "Term", "Parameter2")
 
   # find secondary type
   secondary <- lapply(as.character(types$Secondary_Term), .parameters_type, insight::get_data(model))
-  types$Secondary_Type <- do.call(rbind, secondary)[, 1]
+  types$Type2 <- do.call(rbind, secondary)[, 1]
 
-  cbind(params_table, types[c("Type", "Term", "Secondary_Type", "Secondary_Term")])
+  cbind(params_table, types)
 }
 
 

@@ -38,6 +38,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
 
   class(parameters) <- c("parameters_table", class(parameters))
   attr(parameters, "clean_names") <- format_parameters(model)
+  attr(parameters, "ci") <- ci
   parameters
 }
 

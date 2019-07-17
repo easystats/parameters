@@ -17,7 +17,6 @@ Dataframe and Tables Pretty Formatting
 \examples{
 library(parameters)
 
-x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
-cat(format_table(x))
+cat(format_table(iris))
 
 }

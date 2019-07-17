@@ -2,17 +2,16 @@
 % Please edit documentation in R/format_value.R
 \name{format_value}
 \alias{format_value}
-\alias{format_value_unless_integer}
 \title{Numeric Values Formatting}
 \usage{
-format_value(x, digits = 2, ...)
-
-format_value_unless_integer(x, digits = 2, ...)
+format_value(x, digits = 2, protect_integers = FALSE, ...)
 }
 \arguments{
 \item{x}{Numeric value.}
 
 \item{digits}{Number of significant digits.}
+
+\item{protect_integers}{Should integers be kept as integers (i.e., without decimals)?}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -24,4 +23,12 @@ format_value(1.20)
 format_value(1.2)
 format_value(1.2012313)
 format_value(c(0.0045, 234, -23))
+
+format_value(as.factor(c("A", "B", "A")))
+format_value(iris$Species)
+
+format_value(3)
+format_value(3, protect_integers = TRUE)
+
+format_value(iris)
 }

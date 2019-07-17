@@ -6,15 +6,18 @@
 #' @examples
 #' library(parameters)
 #'
-#' x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
-#' cat(format_table(x))
+#' cat(format_table(iris))
 #'
 #' @export
 format_table <- function(x, sep = " | ") {
-  df <- as.data.frame(sapply(x, format_value, digits = 2), stringsAsFactors = FALSE)
+
+  # Convert to character
+  col_names <- names(x)
+  df <- as.data.frame(sapply(x, as.character, simplify = FALSE), stringsAsFactors = FALSE)
+  names(df) <- col_names
 
   # Add colnames as row
-  df <- rbind(Parameter = colnames(df), df)
+  df <- rbind(colnames(df), df)
 
   # Align
   aligned <- format(df, justify = "right")

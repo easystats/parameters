@@ -14,8 +14,8 @@ test_that("format_p", {
 test_that("format_value", {
   testthat::expect_equal(nchar(format_value(1.2012313)), 4)
   testthat::expect_true(is.int(2))
-  testthat::expect_equal(nchar(format_value_unless_integer(4.2)), 4)
-  testthat::expect_equal(nchar(format_value_unless_integer(4.0)), 1)
+  testthat::expect_equal(nchar(format_value(4.2, protect_integers = TRUE)), 4)
+  testthat::expect_equal(nchar(format_value(4.0, protect_integers = TRUE)), 1)
 })
 
 test_that("format others", {

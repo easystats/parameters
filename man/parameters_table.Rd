@@ -20,6 +20,6 @@ Parameters Table Formatting
 library(parameters)
 
 x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
-parameters_table(x)
+as.data.frame(parameters_table(x))
 
 }
