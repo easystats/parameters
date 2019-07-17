@@ -8,8 +8,12 @@
 #'
 #' @examples
 #' \dontrun{
+#' library(lme4)
 #' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
-#' model_parameters(model, standardize = TRUE)
+#' model_parameters(model, standardize = "refit")
+#'
+#' model <- lme4::glmer(vs ~ wt + (1 | gear), data = mtcars, family = "binomial")
+#' model_parameters(model)
 #' }
 #'
 #' @export
@@ -30,6 +34,9 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
     parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
+  class(parameters) <- c("parameters_model", class(parameters))
+  attr(parameters, "clean_names") <- format_parameters(model)
+  attr(parameters, "ci") <- ci
   parameters
 }
 

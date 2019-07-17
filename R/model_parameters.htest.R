@@ -26,7 +26,7 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
     parameters <- .extract_parameters_htest(model)
   }
 
-  class(parameters) <- c("parameters_table", class(parameters))
+  class(parameters) <- c("parameters_model", class(parameters))
   attr(parameters, "ci") <- attributes(model$conf.int)$conf.level
   parameters
 }
