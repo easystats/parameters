@@ -27,6 +27,7 @@ parameters_table.parameters_model <- function(x, clean_names = TRUE, ...){
   # Format specific columns
   if("DoF" %in% names(x)) x$DoF <- format_value(x$DoF, protect_integers = TRUE)
   if("DoF_residual" %in% names(x)) x$DoF_residual <- format_value(x$DoF_residual, protect_integers = TRUE)
+  names(x)[names(x) == "DoF_residual"] <- "DoF (residual)"
   if("p" %in% names(x)) x$p <- ifelse(x$p < 0.001, "< .001", substring(format_value(x$p, digits = 3), 2))
   if(all(c("CI_low", "CI_high") %in% names(x))) {
     ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
