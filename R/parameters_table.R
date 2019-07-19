@@ -12,12 +12,8 @@
 #'
 #' @export
 parameters_table <- function(x, clean_names = TRUE, ...){
-  UseMethod("parameters_table")
-}
 
-
-#' @export
-parameters_table.parameters_model <- function(x, clean_names = TRUE, ...){
+  x <- as.data.frame(x)
 
   # Format parameters names
   if(clean_names & !is.null(attributes(x)$clean_names)){
@@ -89,11 +85,8 @@ parameters_table.parameters_model <- function(x, clean_names = TRUE, ...){
   x
 }
 
-#' @export
-parameters_table.factor_structure <- parameters_table.parameters_model
 
-#' @export
-parameters_table.parameters_sem <- parameters_table.parameters_model
+
 
 #' @export
 print.parameters_model <- function(x, clean_names = TRUE, ...) {
