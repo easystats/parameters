@@ -94,9 +94,9 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
     From = data$rhs,
     Coefficient = data$est,
     SE = data$se,
-    p = data$pvalue,
     CI_low = data$ci.lower,
-    CI_high = data$ci.upper
+    CI_high = data$ci.upper,
+    p = data$pvalue
   )
 
   params$Type <- ifelse(params$Operator == "=~", "Loading",

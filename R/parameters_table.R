@@ -33,7 +33,7 @@ parameters_table.parameters_model <- function(x, clean_names = TRUE, ...){
     ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
     x[ci_colname] <- format_ci(x$CI_low, x$CI_high, ci = NULL)
     ci_position <- which(names(x) == "CI_low")
-    x <- x[c(names(x)[1:(ci_position-1)], ci_colname, names(x)[ci_position:(length(names(x))-1)])]  # Replace at initial position
+    x <- x[c(names(x)[0:(ci_position-1)], ci_colname, names(x)[ci_position:(length(names(x))-1)])]  # Replace at initial position
     x$CI_low <- x$CI_high <- NULL
   }
   # Standardized
@@ -52,7 +52,7 @@ parameters_table.parameters_model <- function(x, clean_names = TRUE, ...){
   if("pd" %in% names(x)) x$pd <- ifelse(x$pd < 1, paste0(format_value(x$pd * 100), "%"), "100%")
   if("ROPE_Percentage" %in% names(x)) x$ROPE_Percentage <- ifelse(x$ROPE_Percentage == 0, "0%",
                                                                   ifelse(x$ROPE_Percentage == 1, "100%",
-                                                                         paste0(format_value(x$pd * 100), "%")))
+                                                                         paste0(format_value(x$ROPE_Percentage * 100), "%")))
   names(x)[names(x) == "ROPE_Percentage"] <- "% in ROPE"
 
   # Priors
@@ -65,7 +65,7 @@ parameters_table.parameters_model <- function(x, clean_names = TRUE, ...){
                       ")")
 
     col_position <- which(names(x) == "Prior_Distribution")
-    x <- x[c(names(x)[1:(col_position-1)], "Prior", names(x)[col_position:(length(names(x))-1)])]  # Replace at initial position
+    x <- x[c(names(x)[0:(col_position-1)], "Prior", names(x)[col_position:(length(names(x))-1)])]  # Replace at initial position
     x$Prior_Distribution <- x$Prior_Location <- x$Prior_Scale <- NULL
   }
 
@@ -76,9 +76,21 @@ parameters_table.parameters_model <- function(x, clean_names = TRUE, ...){
   other_cols <- c("Coefficient", "r", "rho", "Difference", "Median", "Mean", "Mean_Parameter1", "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "Sum_Squares", "Mean_Square", "MAD", "SE", "SD", "t", "S", "F", "z")
   x[other_cols[other_cols %in% names(x)]] <- format_value(x[other_cols[other_cols %in% names(x)]])
 
+
+  # SEM links
+  if(all(c("To", "Operator", "From") %in% names(x))) {
+    x$Link <- paste(x$To, x$Operator, x$From)
+
+    col_position <- which(names(x) == "To")
+    x <- x[c(names(x)[0:(col_position-1)], "Link", names(x)[col_position:(length(names(x))-1)])]  # Replace at initial position
+    x$To <- x$Operator <- x$From <- NULL
+  }
+
   x
 }
 
+#' @export
+parameters_table.factor_structure <- parameters_table.parameters_model
 
 #' @export
 parameters_table.parameters_sem <- parameters_table.parameters_model

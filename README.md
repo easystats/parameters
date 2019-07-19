@@ -64,8 +64,8 @@ check-out these vignettes:
 <img src='man/figures/figure1.png' align="center" />
 
 The `model_parameters` function allows you to extract the parameters and
-their characteristics from various models in a consistent way. It could
-be considered as a lightweight alternative to
+their characteristics from various models in a consistent way. It can be
+considered as a lightweight alternative to
 [`broom::tidy()`](https://github.com/tidymodels/broom), with some
 notable differences:
 
@@ -90,9 +90,9 @@ model <- cor.test(iris$Sepal.Length, iris$Sepal.Width)
 model_parameters(model)
 ```
 
-| Parameter1        | Parameter2       |     r |   t | DoF |   p | CI\_low | CI\_high | CI | Method  |
-| :---------------- | :--------------- | ----: | --: | --: | --: | ------: | -------: | -: | :------ |
-| iris$Sepal.Length | iris$Sepal.Width | \-0.1 | \-1 | 148 | 0.2 |   \-0.3 |        0 |  1 | Pearson |
+| Parameter1        | Parameter2       | r      | t      | DoF | p    | 95% CI          | Method  |
+| :---------------- | :--------------- | :----- | :----- | --: | :--- | :-------------- | :------ |
+| iris$Sepal.Length | iris$Sepal.Width | \-0.12 | \-1.44 | 148 | .152 | \[-0.27, 0.04\] | Pearson |
 
 #### Bayesian
 
@@ -103,9 +103,9 @@ model <- BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width)
 model_parameters(model)
 ```
 
-| Parameter | Median | CI\_low | CI\_high |  pd | ROPE\_Percentage | Prior\_Distribution | Prior\_Location | Prior\_Scale |  BF |
-| :-------- | -----: | ------: | -------: | --: | ---------------: | :------------------ | --------------: | -----------: | --: |
-| rho       |  \-0.1 |   \-0.2 |        0 | 0.9 |              0.4 | cauchy              |               0 |          0.3 | 0.5 |
+| Parameter | Median | 89% CI          | pd     | % in ROPE | Prior              | BF   |
+| :-------- | :----- | :-------------- | :----- | :-------- | :----------------- | :--- |
+| rho       | \-0.11 | \[-0.25, 0.01\] | 91.75% | 43.36%    | Cauchy (0 +- 0.33) | 0.51 |
 
 ### t-tests
 
@@ -119,9 +119,9 @@ model <- t.test(Sepal.Length ~ Sepal.Big, data=df)
 model_parameters(model)
 ```
 
-| Parameter    | Group     | Mean\_Group1 | Mean\_Group2 | Difference | t | DoF |   p | CI\_low | CI\_high | CI | Method                  |
-| :----------- | :-------- | -----------: | -----------: | ---------: | -: | --: | --: | ------: | -------: | -: | :---------------------- |
-| Sepal.Length | Sepal.Big |            6 |            6 |      \-0.2 | 1 | 142 | 0.2 |   \-0.1 |      0.4 |  1 | Welch Two Sample t-test |
+| Parameter    | Group     | Mean\_Group1 | Mean\_Group2 | Difference | t    | DoF    | p    | 95% CI          | Method                  |
+| :----------- | :-------- | :----------- | :----------- | :--------- | :--- | :----- | :--- | :-------------- | :---------------------- |
+| Sepal.Length | Sepal.Big | 5.95         | 5.78         | \-0.18     | 1.36 | 142.15 | .177 | \[-0.08, 0.43\] | Welch Two Sample t-test |
 
 #### Bayesian
 
@@ -130,9 +130,9 @@ model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data=df)
 model_parameters(model)
 ```
 
-| Parameter  | Median | CI\_low | CI\_high | pd | ROPE\_Percentage | Prior\_Distribution | Prior\_Location | Prior\_Scale |  BF |
-| :--------- | -----: | ------: | -------: | -: | ---------------: | :------------------ | --------------: | -----------: | --: |
-| Difference |      6 |       6 |        6 |  1 |                0 | cauchy              |               0 |          0.7 | 0.4 |
+| Parameter  | Median | 89% CI         | pd   | % in ROPE | Prior              | BF   |
+| :--------- | :----- | :------------- | :--- | :-------- | :----------------- | :--- |
+| Difference | 5.86   | \[5.75, 5.97\] | 100% | 0%        | Cauchy (0 +- 0.71) | 0.38 |
 
 ### ANOVAs
 
@@ -143,10 +143,10 @@ model <- aov(Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model, omega_squared = TRUE)
 ```
 
-| Parameter | Sum\_Squares | DoF | Mean\_Square | F |   p | Omega\_Sq |
-| :-------- | -----------: | --: | -----------: | -: | --: | --------: |
-| Sepal.Big |            1 |   1 |          1.1 | 2 | 0.2 |         0 |
-| Residuals |          101 | 148 |          0.7 |   |     |           |
+| Parameter | Sum\_Squares | DoF | Mean\_Square | F    | p    | Omega\_Sq |
+| :-------- | :----------- | --: | :----------- | :--- | :--- | --------: |
+| Sepal.Big | 1.10         |   1 | 1.10         | 1.61 | .207 |         0 |
+| Residuals | 101.07       | 148 | 0.68         |      |      |           |
 
 #### Repeated measures
 
@@ -155,12 +155,12 @@ model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
 ```
 
-| Group   | Parameter | Sum\_Squares | DoF | Mean\_Square |    F |   p |
-| :------ | :-------- | -----------: | --: | -----------: | ---: | --: |
-| Species | Sepal.Big |           28 |   1 |         28.3 |  0.8 | 0.5 |
-| Species | Residuals |           35 |   1 |         34.9 |      |     |
-| Within  | Sepal.Big |            5 |   1 |          4.7 | 20.2 | 0.0 |
-| Within  | Residuals |           34 | 146 |          0.2 |      |     |
+| Group   | Parameter | Sum\_Squares | DoF | Mean\_Square | F     | p       |
+| :------ | :-------- | :----------- | --: | :----------- | :---- | :------ |
+| Species | Sepal.Big | 28.27        |   1 | 28.27        | 0.81  | .534    |
+| Species | Residuals | 34.94        |   1 | 34.94        |       |         |
+| Within  | Sepal.Big | 4.74         |   1 | 4.74         | 20.24 | \< .001 |
+| Within  | Residuals | 34.21        | 146 | 0.23         |       |         |
 
 ``` r
 library(lme4)
@@ -168,9 +168,9 @@ model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
 model_parameters(model)
 ```
 
-| Parameter | Sum\_Squares | DoF | Mean\_Square |  F |
-| :-------- | -----------: | --: | -----------: | -: |
-| Sepal.Big |            5 |   1 |            5 | 20 |
+| Parameter | Sum\_Squares | DoF | Mean\_Square | F     |
+| :-------- | :----------- | --: | :----------- | :---- |
+| Sepal.Big | 4.64         |   1 | 4.64         | 19.82 |
 
 ### General Linear Models (GLM)
 
@@ -179,11 +179,11 @@ model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 model_parameters(model, standardize = "refit")
 ```
 
-| Parameter   | Coefficient | SE | CI\_low | CI\_high |   z | DoF\_residual |   p | Std\_Coefficient |
-| :---------- | ----------: | -: | ------: | -------: | --: | ------------: | --: | ---------------: |
-| (Intercept) |          11 |  4 |     4.8 |       23 |   2 |            29 | 0.0 |            \-0.8 |
-| wt          |           2 |  2 |   \-0.5 |        6 |   1 |            29 | 0.2 |              2.1 |
-| cyl         |         \-3 |  1 |   \-6.9 |      \-1 | \-2 |            29 | 0.0 |            \-5.2 |
+| Parameter   | Coefficient | SE   | 95% CI           | z      | DoF (residual) | p    | Coefficient (std.) |
+| :---------- | :---------- | :--- | :--------------- | :----- | -------------: | :--- | :----------------- |
+| (Intercept) | 10.62       | 4.17 | \[4.79, 22.66\]  | 2.55   |             29 | .011 | \-0.76             |
+| wt          | 2.10        | 1.55 | \[-0.53, 6.24\]  | 1.36   |             29 | .174 | 2.05               |
+| cyl         | \-2.93      | 1.38 | \[-6.92, -1.07\] | \-2.12 |             29 | .034 | \-5.23             |
 
 ### Bootstrapped models
 
@@ -192,12 +192,12 @@ model <- lm(mpg ~ drat * cyl, data = mtcars)
 model_parameters(model, bootstrap = TRUE)
 ```
 
-|   | Parameter   | Coefficient | CI\_low | CI\_high |   p |
-| - | :---------- | ----------: | ------: | -------: | --: |
-| 1 | (Intercept) |         0.9 |  \-43.7 |     37.5 | 0.9 |
-| 3 | drat        |         9.3 |   \-0.5 |     20.9 | 0.1 |
-| 2 | cyl         |         2.0 |   \-3.4 |      8.3 | 0.4 |
-| 4 | drat:cyl    |       \-1.2 |   \-3.0 |      0.2 | 0.1 |
+|   | Parameter   | Coefficient | 95% CI            | p    |
+| - | :---------- | :---------- | :---------------- | :--- |
+| 1 | (Intercept) | 0.93        | \[-43.74, 37.46\] | .941 |
+| 3 | drat        | 9.31        | \[-0.49, 20.92\]  | .066 |
+| 2 | cyl         | 1.95        | \[-3.37, 8.29\]   | .408 |
+| 4 | drat \* cyl | \-1.20      | \[-2.95, 0.19\]   | .074 |
 
 ### Mixed models
 
@@ -208,10 +208,10 @@ model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 model_parameters(model, standardize = "refit")
 ```
 
-| Parameter    | Coefficient |  SE | CI\_low | CI\_high | t | p | Std\_Coefficient |
-| :----------- | ----------: | --: | ------: | -------: | -: | -: | ---------------: |
-| (Intercept)  |         2.0 | 0.6 |   \-1.9 |      5.9 | 4 | 0 |                0 |
-| Petal.Length |         0.3 | 0.1 |   \-0.3 |      0.8 | 5 | 0 |                1 |
+| Parameter    | Coefficient | SE   | 95% CI          | t    | p       | Coefficient (std.) |
+| :----------- | :---------- | :--- | :-------------- | :--- | :------ | :----------------- |
+| (Intercept)  | 2.00        | 0.56 | \[-1.92, 5.92\] | 3.56 | \< .001 | 0.00               |
+| Petal.Length | 0.28        | 0.06 | \[-0.27, 0.83\] | 4.75 | \< .001 | 1.14               |
 
 ### Bayesian models
 
@@ -222,11 +222,11 @@ model <- stan_glm(mpg ~ wt + cyl, data = mtcars)
 model_parameters(model)
 ```
 
-|   | Parameter   | Median | CI\_low | CI\_high | pd | ROPE\_Percentage |  ESS | Rhat | Prior\_Distribution | Prior\_Location | Prior\_Scale |
-| - | :---------- | -----: | ------: | -------: | -: | ---------------: | ---: | ---: | :------------------ | --------------: | -----------: |
-| 1 | (Intercept) |     40 |      37 |     42.5 |  1 |                0 | 5250 |    1 | normal              |               0 |           60 |
-| 3 | wt          |    \-3 |     \-4 |    \-1.9 |  1 |                0 | 1963 |    1 | normal              |               0 |           15 |
-| 2 | cyl         |    \-2 |     \-2 |    \-0.8 |  1 |                0 | 1997 |    1 | normal              |               0 |            8 |
+|   | Parameter   | Median | 89% CI           | pd     | % in ROPE |  ESS | Rhat  | Prior               |
+| - | :---------- | :----- | :--------------- | :----- | :-------- | ---: | :---- | :------------------ |
+| 1 | (Intercept) | 39.64  | \[36.69, 42.52\] | 100%   | 0%        | 5250 | 0.999 | Normal (0 +- 60.27) |
+| 3 | wt          | \-3.19 | \[-4.38, -1.92\] | 100%   | 0.05%     | 1963 | 1.000 | Normal (0 +- 15.40) |
+| 2 | cyl         | \-1.51 | \[-2.21, -0.84\] | 99.98% | 1.88%     | 1997 | 1.000 | Normal (0 +- 8.44)  |
 
 ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA)
 
@@ -235,17 +235,17 @@ library(psych)
 
 model <- psych::fa(attitude, nfactors = 3)
 model_parameters(model)
-> The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).
-> 
->     Variable  MR1   MR2   MR3 Complexity Uniqueness
-> 1     rating  0.9 -0.07 -0.05          1        0.2
-> 2 complaints  1.0 -0.06  0.04          1        0.1
-> 3 privileges  0.4  0.25 -0.05          2        0.6
-> 4   learning  0.5  0.54 -0.28          3        0.2
-> 5     raises  0.5  0.43  0.25          2        0.2
-> 6   critical  0.2  0.17  0.48          1        0.7
-> 7    advance -0.1  0.91  0.07          1        0.2
 ```
+
+| Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness |
+| :--------- | ----: | ----: | ----: | ---------: | ---------: |
+| rating     |   0.9 | \-0.1 |   0.0 |          1 |        0.2 |
+| complaints |   1.0 | \-0.1 |   0.0 |          1 |        0.1 |
+| privileges |   0.4 |   0.3 | \-0.1 |          2 |        0.6 |
+| learning   |   0.5 |   0.5 | \-0.3 |          2 |        0.2 |
+| raises     |   0.5 |   0.4 |   0.3 |          2 |        0.2 |
+| critical   |   0.2 |   0.2 |   0.5 |          2 |        0.7 |
+| advance    | \-0.1 |   0.9 |   0.1 |          1 |        0.2 |
 
 ### Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)
 
@@ -259,14 +259,20 @@ model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
 model_parameters(model)
 ```
 
-| To      | Operator | From | Coefficient |  SE | p | CI\_low | CI\_high | Type    |
-| :------ | :------- | :--- | ----------: | --: | -: | ------: | -------: | :------ |
-| visual  | \=\~     | x1   |         1.0 | 0.0 | 0 |     1.0 |      1.0 | Loading |
-| visual  | \=\~     | x2   |         0.6 | 0.1 | 0 |     0.4 |      0.7 | Loading |
-| visual  | \=\~     | x3   |         0.7 | 0.1 | 0 |     0.5 |      0.9 | Loading |
-| textual | \=\~     | x4   |         1.0 | 0.0 | 0 |     1.0 |      1.0 | Loading |
-| textual | \=\~     | x5   |         1.1 | 0.1 | 0 |     1.0 |      1.2 | Loading |
-| textual | \=\~     | x6   |         0.9 | 0.1 | 0 |     0.8 |      1.0 | Loading |
+|    | Link                | Coefficient | SE   | 95% CI         | p       | Type        |
+| -- | :------------------ | :---------- | :--- | :------------- | :------ | :---------- |
+| 1  | visual =\~ x1       | 1.00        | 0.00 | \[1.00, 1.00\] | \< .001 | Loading     |
+| 2  | visual =\~ x2       | 0.55        | 0.10 | \[0.36, 0.75\] | \< .001 | Loading     |
+| 3  | visual =\~ x3       | 0.73        | 0.11 | \[0.52, 0.94\] | \< .001 | Loading     |
+| 4  | textual =\~ x4      | 1.00        | 0.00 | \[1.00, 1.00\] | \< .001 | Loading     |
+| 5  | textual =\~ x5      | 1.11        | 0.07 | \[0.98, 1.24\] | \< .001 | Loading     |
+| 6  | textual =\~ x6      | 0.93        | 0.06 | \[0.82, 1.03\] | \< .001 | Loading     |
+| 7  | speed =\~ x7        | 1.00        | 0.00 | \[1.00, 1.00\] | \< .001 | Loading     |
+| 8  | speed =\~ x8        | 1.18        | 0.16 | \[0.86, 1.50\] | \< .001 | Loading     |
+| 9  | speed =\~ x9        | 1.08        | 0.15 | \[0.79, 1.38\] | \< .001 | Loading     |
+| 22 | visual \~\~ textual | 0.41        | 0.07 | \[0.26, 0.55\] | \< .001 | Correlation |
+| 23 | visual \~\~ speed   | 0.26        | 0.06 | \[0.15, 0.37\] | \< .001 | Correlation |
+| 24 | textual \~\~ speed  | 0.17        | 0.05 | \[0.08, 0.27\] | \< .001 | Correlation |
 
 ## Variable and parameters selection
 
