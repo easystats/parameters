@@ -172,10 +172,11 @@ predict.factor_structure <- function(object, newdata = NULL, names = NULL, ...) 
 
 
 #' @export
-print.factor_structure <- function(x, ...) {
-  cat(.text_components_variance(x))
+print.factor_structure <- function(x, digits = 2, ...) {
+  insight::print_colour(.text_components_variance(x), "yellow")
   cat("\n\n")
-  print(format(as.data.frame(x), ...))
+
+  cat(format_table(format_value(x, digits = digits)))
 }
 
 

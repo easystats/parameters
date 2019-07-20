@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_p.R
 \name{format_p}
 \alias{format_p}
-\title{p-values Formatting}
+\title{p-values formatting}
 \usage{
 format_p(p, stars = FALSE, stars_only = FALSE)
 }
@@ -14,7 +14,7 @@ format_p(p, stars = FALSE, stars_only = FALSE)
 \item{stars_only}{Return only significance stars.}
 }
 \description{
-p-values Formatting
+Format p-values.
 }
 \examples{
 format_p(.02)

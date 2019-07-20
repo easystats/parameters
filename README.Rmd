@@ -80,7 +80,7 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 <img src='man/figures/figure1.png' align="center" />
  
-The `model_parameters` function allows you to extract the parameters and their characteristics from various models in a consistent way. It could be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
+The `model_parameters` function allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
 
 - The names of the returned dataframe are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, *i.e.*, *t*, *z*, etc., instead of a generic name such as *statistic*.
 - It is able to compute or extract indices not available by default, such as ***p* values**, **CIs**, etc.
@@ -95,7 +95,7 @@ model <- cor.test(iris$Sepal.Length, iris$Sepal.Width)
 model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(model_parameters(model), digits=1)
+knitr::kable(parameters_table(model_parameters(model)))
 ```
 
 #### Bayesian 
@@ -107,7 +107,7 @@ model <- BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width)
 model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(model_parameters(model), digits=1)
+knitr::kable(parameters_table(model_parameters(model)))
 ```
 
 
@@ -122,7 +122,7 @@ model <- t.test(Sepal.Length ~ Sepal.Big, data=df)
 model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(model_parameters(model), digits=1)
+knitr::kable(parameters_table(model_parameters(model)))
 ```
 
 #### Bayesian 
@@ -132,7 +132,7 @@ model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data=df)
 model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(model_parameters(model), digits=1)
+knitr::kable(parameters_table(model_parameters(model)))
 ```
 
 
@@ -145,7 +145,7 @@ model <- aov(Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model, omega_squared = TRUE)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(model_parameters(model, omega_squared = TRUE), digits=1)
+knitr::kable(parameters_table(model_parameters(model, omega_squared = TRUE)))
 ```
 
 #### Repeated measures
@@ -155,7 +155,7 @@ model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(model_parameters(model), digits=1)
+knitr::kable(parameters_table(model_parameters(model)))
 ```
 
 ```{r, warning=FALSE, message=FALSE, results='hide'}
@@ -164,7 +164,7 @@ model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
 model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(model_parameters(model), digits=1)
+knitr::kable(parameters_table(model_parameters(model)))
 ```
 
 
@@ -176,7 +176,7 @@ model_parameters(model, standardize = "refit")
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
-knitr::kable(model_parameters(model, standardize = "refit"), digits=1)
+knitr::kable(parameters_table(model_parameters(model, standardize = "refit")))
 ```
 
 ### Bootstrapped models
@@ -187,7 +187,7 @@ model_parameters(model, bootstrap = TRUE)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 model <- lm(mpg ~ drat * cyl, data = mtcars)
-knitr::kable(model_parameters(model, standardize = FALSE, bootstrap = TRUE), digits=1)
+knitr::kable(parameters_table(model_parameters(model, standardize = FALSE, bootstrap = TRUE)))
 ```
 
 
@@ -202,7 +202,7 @@ model_parameters(model, standardize = "refit")
 library(lme4)
 
 model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
-knitr::kable(model_parameters(model, standardize = "refit"), digits=1)
+knitr::kable(parameters_table(model_parameters(model, standardize = "refit")))
 ```
 
 
@@ -218,8 +218,8 @@ model_parameters(model)
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(rstanarm)
 
-text <- capture.output(model <- stan_glm(mpg ~ wt + cyl, data = mtcars))
-knitr::kable(model_parameters(model), digits=1)
+model <- stan_glm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
+knitr::kable(parameters_table(model_parameters(model)))
 ```
 
 
@@ -227,12 +227,19 @@ knitr::kable(model_parameters(model), digits=1)
 
 ### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA)
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
 library(psych)
 
 model <- psych::fa(attitude, nfactors = 3)
 model_parameters(model)
 ```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(psych)
+
+model <- psych::fa(attitude, nfactors = 3)
+knitr::kable(parameters_table(model_parameters(model)))
+```
+
 
 ### Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)
 
@@ -252,7 +259,7 @@ model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
                        textual =~ x4 + x5 + x6
                        speed   =~ x7 + x8 + x9 ', 
                      data=HolzingerSwineford1939)
-knitr::kable(head(model_parameters(model)), digits=1)
+knitr::kable(parameters_table(model_parameters(model)))
 ```
  
 ## Variable and parameters selection

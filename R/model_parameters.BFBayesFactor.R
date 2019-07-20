@@ -9,8 +9,8 @@
 #' @examples
 #' \dontrun{
 #' library(BayesFactor)
-#' bf <- ttestBF(x = rnorm(100, 1, 1))
-#' model_parameters(bf)
+#' model <- ttestBF(x = rnorm(100, 1, 1))
+#' model_parameters(model)
 #' }
 #'
 #' @export
@@ -32,5 +32,7 @@ model_parameters.BFBayesFactor <- function(model, centrality = "median", dispers
     out$ROPE_high <- NULL
   }
 
+  class(out) <- c("parameters_model", class(out))
+  attr(out, "ci") <- ci
   out
 }

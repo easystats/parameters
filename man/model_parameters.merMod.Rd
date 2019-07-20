@@ -33,8 +33,12 @@ Parameters of mixed models.
 }
 \examples{
 \dontrun{
+library(lme4)
 model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
-model_parameters(model, standardize = TRUE)
+model_parameters(model, standardize = "refit")
+
+model <- lme4::glmer(vs ~ wt + (1 | gear), data = mtcars, family = "binomial")
+model_parameters(model)
 }
 
 }

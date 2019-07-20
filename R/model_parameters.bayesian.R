@@ -29,32 +29,11 @@
     parameters$ROPE_high <- NULL
   }
 
-  return(parameters)
-}
-
-
-
-
-
-
-
-#' @importFrom stats sd setNames
-#' @keywords internal
-.extract_parameters_bayesian <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000, ...) {
-
-  # Bayesian Models
-  if (insight::model_info(model)$is_bayesian) {
-    parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
-
-    # Bootstrapped Models
-  } else {
-    data <- model_bootstrap(model, iterations = iterations)
-    parameters <- bayestestR::describe_posterior(data, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
-  }
-
+  class(parameters) <- c("parameters_model", class(parameters))
+  attr(parameters, "clean_names") <- format_parameters(model)
+  attr(parameters, "ci") <- ci
   parameters
 }
-
 
 
 
@@ -85,3 +64,30 @@ model_parameters.stanreg <- .model_parameters_bayesian
 
 #' @export
 model_parameters.brmsfit <- model_parameters.stanreg
+
+
+
+
+
+
+
+
+
+
+
+#' @importFrom stats sd setNames
+#' @keywords internal
+.extract_parameters_bayesian <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000, ...) {
+
+  # Bayesian Models
+  if (insight::model_info(model)$is_bayesian) {
+    parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
+
+    # Bootstrapped Models
+  } else {
+    data <- model_bootstrap(model, iterations = iterations)
+    parameters <- bayestestR::describe_posterior(data, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
+  }
+
+  parameters
+}

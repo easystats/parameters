@@ -61,14 +61,14 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
   params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, ...)
 
   # Filter
-  if (type == "all") {
+  if (all(type == "all")) {
     type <- c("regression", "correlation", "loading", "variance", "mean")
   }
   params <- params[tolower(params$Type) %in% type, ]
 
   # add class-attribute for printing
   class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
-
+  attr(params, "ci") <- ci
   params
 }
 
@@ -94,9 +94,9 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
     From = data$rhs,
     Coefficient = data$est,
     SE = data$se,
-    p = data$pvalue,
     CI_low = data$ci.lower,
-    CI_high = data$ci.upper
+    CI_high = data$ci.upper,
+    p = data$pvalue
   )
 
   params$Type <- ifelse(params$Operator == "=~", "Loading",
@@ -113,7 +113,6 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
     params$Group <- data$group
   }
 
-  attr(params, "CI") <- ci
   params
 }
 
@@ -124,4 +123,11 @@ n_parameters.lavaan <- function(x, ...) {
     stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
   }
   lavaan::fitmeasures(x)$npar
+}
+
+
+#' @export
+print.parameters_sem <- function(x, ...){
+  formatted_table <- parameters_table(x)
+  cat(format_table(formatted_table))
 }

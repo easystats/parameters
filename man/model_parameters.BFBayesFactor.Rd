@@ -48,8 +48,8 @@ Parameters of BayesFactor objects.
 \examples{
 \dontrun{
 library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
-model_parameters(bf)
+model <- ttestBF(x = rnorm(100, 1, 1))
+model_parameters(model)
 }
 
 }

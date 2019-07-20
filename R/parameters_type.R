@@ -1,0 +1,62 @@
+#' Type of Model Parameters
+#'
+#' @param model A statistical model.
+#' @param ... Arguments passed to or from other methods.
+#'
+#' @examples
+#' library(parameters)
+#' model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
+#'
+#' parameters_type(model)
+#'
+#' @export
+parameters_type <- function(model, ...){
+
+  params_table <- data.frame(
+    Parameter = insight::find_parameters(model)$conditional,
+    stringsAsFactors = FALSE
+  )
+
+  types <- lapply(params_table$Parameter, .parameters_type, insight::get_data(model))
+  types <- as.data.frame(do.call(rbind, types), stringsAsFactors = FALSE)
+
+  names(types) <- c("Type", "Term", "Parameter2")
+
+  # find secondary type
+  secondary <- lapply(as.character(types$Secondary_Term), .parameters_type, insight::get_data(model))
+  types$Type2 <- do.call(rbind, secondary)[, 1]
+
+  cbind(params_table, types)
+}
+
+
+
+#' @keywords internal
+.parameters_type <- function(name, data) {
+  if(is.na(name)){
+    return(c(NA, NA, NA))
+  } else if (grepl(":", name)) {
+    var <- unlist(strsplit(name, ":", fixed = TRUE))
+    if(length(var) > 2){
+      var <- c(tail(var, 1), paste0(head(var, -1), collapse = ":"))
+    } else{
+      var <- rev(var)
+    }
+    return(c("interaction", var))
+  } else if (name == "(Intercept)") {
+    return(c("intercept", NA, NA))
+  } else if (name %in% names(data)) {
+    return(c("numeric", name, NA))
+  } else {
+    facs <- data[sapply(data, is.factor)]
+    facs_names <- c()
+    for (fac in names(facs)) {
+      facs_names <- c(facs_names, paste0(fac, unique(data[[fac]])))
+      if (name %in% facs_names) {
+        return(c("factor", fac, NA))
+      }
+    }
+
+    return(c("unknown", NA, NA))
+  }
+}

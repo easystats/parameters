@@ -1,4 +1,6 @@
-#' p-values Formatting
+#' p-values formatting
+#'
+#' Format p-values.
 #'
 #' @param p value or vector of p-values.
 #' @param stars Add significance stars.

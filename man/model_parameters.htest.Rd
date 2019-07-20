@@ -21,7 +21,11 @@ model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")
 model_parameters(model)
 
 model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
+model_parameters(model)
+
 model <- t.test(mtcars$mpg ~ mtcars$vs)
+model_parameters(model)
+
 model <- t.test(iris$Sepal.Width, mu = 1)
 model_parameters(model)
 }

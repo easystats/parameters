@@ -15,14 +15,20 @@
 #'
 #' model_parameters(model, standardize = "refit")
 #' model_parameters(model, bootstrap = TRUE)
+#'
+#' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
+#' model_parameters(model)
 #' @export
 model_parameters.lm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
+
+  # Type of model
+  info <- insight::model_info(model)
 
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_lm(model, ci = ci)
+    parameters <- .extract_parameters_glm(model, ci = ci, linear = info$is_linear)
   }
 
 
@@ -36,65 +42,18 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
     parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
+  class(parameters) <- c("parameters_model", class(parameters))
+  attr(parameters, "clean_names") <- format_parameters(model)
+  attr(parameters, "ci") <- ci
   parameters
 }
 
 
 
 
-
-#' @importFrom stats confint
-#' @keywords internal
-.extract_parameters_lm <- function(model, ci = .95) {
-  parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
-  names(parameters) <- c("Coefficient", "SE", "t", "p")
-
-  parameters$DoF_residual <- model$df.residual
-  parameters$Parameter <- row.names(parameters)
-
-  # CI
-  col_order <- parameters$Parameter
-  parameters <- merge(parameters, ci(model, ci = ci), by = "Parameter")
-  parameters <- parameters[match(col_order, parameters$Parameter), ]
-
-  parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "DoF_residual", "p")]
-  rownames(parameters) <- NULL
-
-  parameters
-}
-
-
-
-
-
-
-
-# GLM ---------------------------------------------------------------------
-
-
-#' @rdname model_parameters.lm
 #' @export
-model_parameters.glm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
+model_parameters.glm <- model_parameters.lm
 
-  # Processing
-  if (bootstrap) {
-    parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
-  } else {
-    parameters <- .extract_parameters_glm(model, ci = ci)
-  }
-
-
-  # Standardized
-  if (standardize != FALSE & !is.null(standardize)) {
-    if (standardize == TRUE) {
-      warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
-      standardize <- "refit"
-    }
-    parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
-  }
-
-  return(parameters)
-}
 
 
 
@@ -102,9 +61,15 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
 
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_glm <- function(model, ci = .95) {
+.extract_parameters_glm <- function(model, ci = .95, linear = FALSE) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
-  names(parameters) <- c("Coefficient", "SE", "z", "p")
+
+  if(linear){
+    names(parameters) <- c("Coefficient", "SE", "t", "p")
+  } else{
+    names(parameters) <- c("Coefficient", "SE", "z", "p")
+  }
+
 
   parameters$DoF_residual <- model$df.residual
   parameters$Parameter <- row.names(parameters)
@@ -114,8 +79,11 @@ model_parameters.glm <- function(model, ci = .95, standardize = "refit", standar
   parameters <- merge(parameters, ci(model, ci = ci), by = "Parameter")
   parameters <- parameters[match(col_order, parameters$Parameter), ]
 
-  parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "DoF_residual", "p")]
+  if(linear){
+    parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "DoF_residual", "p")]
+  } else{
+    parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "DoF_residual", "p")]
+  }
   rownames(parameters) <- NULL
-
   parameters
 }

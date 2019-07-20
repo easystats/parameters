@@ -2,14 +2,9 @@
 % Please edit documentation in R/model_parameters.lm.R
 \name{model_parameters.lm}
 \alias{model_parameters.lm}
-\alias{model_parameters.glm}
 \title{Parameters of (General) Linear Models}
 \usage{
 \method{model_parameters}{lm}(model, ci = 0.95, standardize = "refit",
-  standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000,
-  ...)
-
-\method{model_parameters}{glm}(model, ci = 0.95, standardize = "refit",
   standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000,
   ...)
 }
@@ -36,4 +31,7 @@ model <- lm(mpg ~ wt + cyl, data = mtcars)
 
 model_parameters(model, standardize = "refit")
 model_parameters(model, bootstrap = TRUE)
+
+model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
+model_parameters(model)
 }
