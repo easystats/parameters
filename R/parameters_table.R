@@ -69,7 +69,7 @@ parameters_table <- function(x, clean_names = TRUE, ...){
   if("ESS" %in% names(x)) x$ESS <- format_value(x$ESS, protect_integers = TRUE)
 
   # Format remaining columns
-  other_cols <- c("Coefficient", "r", "rho", "Difference", "Median", "Mean", "Mean_Parameter1", "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "Sum_Squares", "Mean_Square", "MAD", "SE", "SD", "t", "S", "F", "z")
+  other_cols <- names(x)[sapply(x, is.numeric)]
   x[other_cols[other_cols %in% names(x)]] <- format_value(x[other_cols[other_cols %in% names(x)]])
 
 
@@ -84,7 +84,6 @@ parameters_table <- function(x, clean_names = TRUE, ...){
 
   x
 }
-
 
 
 

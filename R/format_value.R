@@ -63,7 +63,7 @@ format_value.logical <- format_value.numeric
   if (is.numeric(x) && !all(is.int(stats::na.omit(x)))) {
     .format_value(x, digits = digits)
   } else {
-    x
+    as.character(x)
   }
 }
 
