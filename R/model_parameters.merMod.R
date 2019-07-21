@@ -61,7 +61,7 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
   } else {
     if (insight::model_info(model)$is_linear) {
       if (p_method == "kenward") {
-        parameters$DoF <- dof_kenward(model)
+        parameters$df <- dof_kenward(model)
         parameters <- merge(parameters, p_value(model, method = "kenward", dof = parameters$DoF), by = "Parameter")
       } else {
         parameters <- merge(parameters, p_value(model, method = p_method), by = "Parameter")
@@ -81,7 +81,7 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
   rownames(parameters) <- NULL
 
   # Reorder
-  order <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "z", "DoF", "DoF_residual", "p")
+  order <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "z", "df", "df_residual", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   parameters
