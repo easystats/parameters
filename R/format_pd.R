@@ -11,7 +11,7 @@
 #' @export
 format_pd <- function(pd, stars = FALSE, stars_only = FALSE, name = "pd") {
   text <- ifelse(pd >= 1, "= 100%***",
-                 ifelse(pd > 0.999, "> 99.9%***",
+                 ifelse(pd > 0.999, paste0("= ", format_value(pd * 100), "%***"),
                         ifelse(pd > 0.99, paste0("= ", format_value(pd * 100), "%**"),
                                ifelse(pd > 0.97, paste0("= ", format_value(pd * 100), "%*"),
                                       paste0("= ", format_value(pd * 100), "%")))))
