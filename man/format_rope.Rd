@@ -2,18 +2,19 @@
 % Please edit documentation in R/format_rope.R
 \name{format_rope}
 \alias{format_rope}
-\title{Confidence/Credible Interval (CI) Formatting}
+\title{Percentage in ROPE Formatting}
 \usage{
-format_rope(rope_percentage, digits = 2)
+format_rope(rope_percentage, name = "ROPE")
 }
 \arguments{
-\item{rope_percentage}{Value or vector of ROPE-percentages.}
+\item{rope_percentage}{Value or vector of percentages in ROPE.}
 
-\item{digits}{Number of significant digits.}
+\item{name}{Name prefixing the text. Can be \code{NULL}.}
 }
 \description{
-Confidence/Credible Interval (CI) Formatting
+Percentage in ROPE Formatting
 }
 \examples{
-format_rope(0.12, 3.57)
+format_rope(c(0.02, 0.12, 0.357, 0))
+format_rope(c(0.02, 0.12, 0.357, 0), name = NULL)
 }

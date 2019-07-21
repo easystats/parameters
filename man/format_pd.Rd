@@ -4,16 +4,22 @@
 \alias{format_pd}
 \title{Probability of direction (pd) Formatting}
 \usage{
-format_pd(pd, digits = 2)
+format_pd(pd, stars = FALSE, stars_only = FALSE, name = "pd")
 }
 \arguments{
 \item{pd}{Probability of direction (pd).}
 
-\item{digits}{Number of significant digits.}
+\item{stars}{Add significance stars (e.g., p < .001***).}
+
+\item{stars_only}{Return only significance stars.}
+
+\item{name}{Name prefixing the text. Can be \code{NULL}.}
 }
 \description{
 Probability of direction (pd) Formatting
 }
 \examples{
 format_pd(0.12)
+format_pd(c(0.12, 1, 0.9999, 0.98, 0.995, 0.96), name = NULL)
+format_pd(c(0.12, 1, 0.9999, 0.98, 0.995, 0.96), stars = TRUE)
 }

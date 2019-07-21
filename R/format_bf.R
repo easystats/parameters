@@ -1,15 +1,20 @@
 #' Bayes Factor Formatting
 #'
 #' @param bf Bayes Factor.
-#' @param digits Number of significant digits.
+#' @inheritParams format_p
 #'
 #' @examples
 #' format_bf(1.20)
-#' format_bf(c(1.20, 1557, 1, 8888))
+#' format_bf(c(1.20, 1557, 3.5, 12), stars = TRUE)
+#' format_bf(c(1.20, 1557, 3.5, 12), name = NULL)
 #' @export
-format_bf <- function(bf, digits = 2) {
-  bf <- c(bf)
-  text <- ifelse(bf > 999, "BF > 999", paste0("BF = ", format_value(bf, digits = digits)))
+format_bf <- function(bf, stars = FALSE, stars_only = FALSE, name = "BF") {
+  text <- ifelse(bf > 999, "> 999***",
+                 paste0("= ",
+                        ifelse(bf > 30, paste0(format_value(bf), "***"),
+                               ifelse(bf > 10, paste0(format_value(bf), "**"),
+                                      ifelse(bf > 3, paste0(format_value(bf), "*"),
+                                             paste0(format_value(bf)))))))
 
-  return(text)
+  .add_prefix_and_remove_stars(text, stars, stars_only, name)
 }

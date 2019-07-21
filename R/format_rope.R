@@ -1,13 +1,15 @@
-#' Confidence/Credible Interval (CI) Formatting
+#' Percentage in ROPE Formatting
 #'
-#' @param rope_percentage Value or vector of ROPE-percentages.
-#' @param digits Number of significant digits.
-#'
+#' @param rope_percentage Value or vector of percentages in ROPE.
+#' @inheritParams format_p
 #'
 #' @examples
-#' format_rope(0.12, 3.57)
+#' format_rope(c(0.02, 0.12, 0.357, 0))
+#' format_rope(c(0.02, 0.12, 0.357, 0), name = NULL)
 #' @export
-format_rope <- function(rope_percentage, digits = 2) {
-  text <- paste0(format_value(rope_percentage * 100, digits = digits), "% in ROPE")
-  return(text)
+format_rope <- function(rope_percentage, name = "ROPE") {
+  text <- ifelse(rope_percentage == 0, "= 0%",
+                        ifelse(rope_percentage == 1, "= 100%",
+                               paste0("= ", format_value(rope_percentage * 100), "%")))
+  .add_prefix_and_remove_stars(text, stars = FALSE, stars_only = FALSE, name)
 }
