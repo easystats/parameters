@@ -4,7 +4,7 @@
 \alias{format_rope}
 \title{Percentage in ROPE Formatting}
 \usage{
-format_rope(rope_percentage, name = "ROPE")
+format_rope(rope_percentage, name = "in ROPE")
 }
 \arguments{
 \item{rope_percentage}{Value or vector of percentages in ROPE.}
