@@ -117,14 +117,14 @@ model_parameters.aovlist <- model_parameters.aov
 
   # Rename
   names(parameters) <- gsub("Pr(>F)", "p", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Df", "DoF", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Chi.Df", "Chisq_DoF", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Chi DoF", "Chisq_DoF", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Df", "df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Chi.Df", "Chisq_df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Chi DoF", "Chisq_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum Sq", "Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Mean Sq", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("F value", "F", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Res.Df", "DoF_residual", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Res.DoF", "DoF_residual", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Res.Df", "df_residual", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Res.DoF", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum of Sq", "Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chisq", "Chisq", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr(>Chi_Square)", "p", names(parameters), fixed = TRUE)
@@ -143,7 +143,7 @@ model_parameters.aovlist <- model_parameters.aov
 
   # Reorder
   row.names(parameters) <- NULL
-  order <- c("Group", "Parameter", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_DoF", "RSS", "Sum_Squares", "DoF", "Mean_Square", "F", "p")
+  order <- c("Group", "Parameter", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_df", "RSS", "Sum_Squares", "df", "df_residual", "Mean_Square", "F", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   return(parameters)

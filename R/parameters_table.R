@@ -2,6 +2,7 @@
 #'
 #' @param x A dataframe of model's parameters.
 #' @param clean_names Clean parameters' names if possible.
+#' @inheritParams format_p
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -11,7 +12,7 @@
 #' as.data.frame(parameters_table(x))
 #'
 #' @export
-parameters_table <- function(x, clean_names = TRUE, ...){
+parameters_table <- function(x, clean_names = TRUE, stars = FALSE, ...){
 
   x <- as.data.frame(x)
 
@@ -21,10 +22,10 @@ parameters_table <- function(x, clean_names = TRUE, ...){
   }
 
   # Format specific columns
-  if("DoF" %in% names(x)) x$DoF <- format_value(x$DoF, protect_integers = TRUE)
-  if("DoF_residual" %in% names(x)) x$DoF_residual <- format_value(x$DoF_residual, protect_integers = TRUE)
-  names(x)[names(x) == "DoF_residual"] <- "DoF"
-  if("p" %in% names(x)) x$p <- ifelse(x$p < 0.001, "< .001", substring(format_value(x$p, digits = 3), 2))
+  if("df" %in% names(x)) x$df <- format_value(x$df, protect_integers = TRUE)
+  if("df_residual" %in% names(x)) x$df_residual <- format_value(x$df_residual, protect_integers = TRUE)
+  names(x)[names(x) == "df_residual"] <- "df"
+  if("p" %in% names(x)) x$p <- format_p(x$p, name = NULL, stars = stars)
   if(all(c("CI_low", "CI_high") %in% names(x))) {
     ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
     x[ci_colname] <- format_ci(x$CI_low, x$CI_high, ci = NULL)
@@ -44,11 +45,9 @@ parameters_table <- function(x, clean_names = TRUE, ...){
   # Bayesian
   if("Prior_Location" %in% names(x)) x$Prior_Location <- format_value(x$Prior_Location, protect_integers = TRUE)
   if("Prior_Scale" %in% names(x)) x$Prior_Scale <- format_value(x$Prior_Scale, protect_integers = TRUE)
-  if("BF" %in% names(x)) x$BF <- ifelse(x$BF > 999, "> 999", format_value(x$BF, protect_integers = TRUE))
-  if("pd" %in% names(x)) x$pd <- ifelse(x$pd < 1, paste0(format_value(x$pd * 100), "%"), "100%")
-  if("ROPE_Percentage" %in% names(x)) x$ROPE_Percentage <- ifelse(x$ROPE_Percentage == 0, "0%",
-                                                                  ifelse(x$ROPE_Percentage == 1, "100%",
-                                                                         paste0(format_value(x$ROPE_Percentage * 100), "%")))
+  if("BF" %in% names(x)) x$BF <- format_bf(x$BF, name = NULL, stars = stars)
+  if("pd" %in% names(x)) x$pd <- format_pd(x$pd, name = NULL, stars = stars)
+  if("ROPE_Percentage" %in% names(x)) x$ROPE_Percentage <- format_rope(x$ROPE_Percentage, name = NULL)
   names(x)[names(x) == "ROPE_Percentage"] <- "% in ROPE"
 
   # Priors

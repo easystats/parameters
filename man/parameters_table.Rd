@@ -4,12 +4,14 @@
 \alias{parameters_table}
 \title{Parameters Table Formatting}
 \usage{
-parameters_table(x, clean_names = TRUE, ...)
+parameters_table(x, clean_names = TRUE, stars = FALSE, ...)
 }
 \arguments{
 \item{x}{A dataframe of model's parameters.}
 
 \item{clean_names}{Clean parameters' names if possible.}
+
+\item{stars}{Add significance stars (e.g., p < .001***).}
 
 \item{...}{Arguments passed to or from other methods.}
 }

@@ -45,7 +45,7 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
     if (grepl("Pearson", model$method)) {
       out$r <- model$estimate
       out$t <- model$statistic
-      out$DoF <- model$parameter
+      out$df <- model$parameter
       out$p <- model$p.value
       out$CI_low <- model$conf.int[1]
       out$CI_high <- model$conf.int[2]
@@ -53,13 +53,13 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
     } else if (grepl("Spearman", model$method)) {
       out$rho <- model$estimate
       out$S <- model$statistic
-      out$DoF <- model$parameter
+      out$df <- model$parameter
       out$p <- model$p.value
       out$Method <- "Spearman"
     } else {
       out$tau <- model$estimate
       out$z <- model$statistic
-      out$DoF <- model$parameter
+      out$df <- model$parameter
       out$p <- model$p.value
       out$Method <- "Kendall"
     }
@@ -73,7 +73,7 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
         "Mean_Parameter2" = model$estimate[2],
         "Difference" = model$estimate[2] - model$estimate[1],
         "t" = model$statistic,
-        "DoF" = model$parameter,
+        "df" = model$parameter,
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
@@ -88,7 +88,7 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
         "Mean_Group2" = model$estimate[2],
         "Difference" = model$estimate[2] - model$estimate[1],
         "t" = model$statistic,
-        "DoF" = model$parameter,
+        "df" = model$parameter,
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
@@ -101,7 +101,7 @@ model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
         "mu" = model$null.value,
         "Difference" = model$estimate - model$null.value,
         "t" = model$statistic,
-        "DoF" = model$parameter,
+        "df" = model$parameter,
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],

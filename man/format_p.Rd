@@ -4,18 +4,22 @@
 \alias{format_p}
 \title{p-values formatting}
 \usage{
-format_p(p, stars = FALSE, stars_only = FALSE)
+format_p(p, stars = FALSE, stars_only = FALSE, name = "p")
 }
 \arguments{
 \item{p}{value or vector of p-values.}
 
-\item{stars}{Add significance stars.}
+\item{stars}{Add significance stars (e.g., p < .001***).}
 
 \item{stars_only}{Return only significance stars.}
+
+\item{name}{Name prefixing the text. Can be \code{NULL}.}
 }
 \description{
 Format p-values.
 }
 \examples{
-format_p(.02)
+format_p(c(.02, .065, 0, .23))
+format_p(c(.02, .065, 0, .23), name = NULL)
+format_p(c(.02, .065, 0, .23), stars_only = TRUE)
 }

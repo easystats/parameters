@@ -71,7 +71,7 @@ model_parameters.glm <- model_parameters.lm
   }
 
 
-  parameters$DoF_residual <- model$df.residual
+  parameters$df_residual <- model$df.residual
   parameters$Parameter <- row.names(parameters)
 
   # CI
@@ -80,9 +80,9 @@ model_parameters.glm <- model_parameters.lm
   parameters <- parameters[match(col_order, parameters$Parameter), ]
 
   if(linear){
-    parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "DoF_residual", "p")]
+    parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "df_residual", "p")]
   } else{
-    parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "DoF_residual", "p")]
+    parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "df_residual", "p")]
   }
   rownames(parameters) <- NULL
   parameters

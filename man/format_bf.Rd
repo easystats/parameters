@@ -4,17 +4,22 @@
 \alias{format_bf}
 \title{Bayes Factor Formatting}
 \usage{
-format_bf(bf, digits = 2)
+format_bf(bf, stars = FALSE, stars_only = FALSE, name = "BF")
 }
 \arguments{
 \item{bf}{Bayes Factor.}
 
-\item{digits}{Number of significant digits.}
+\item{stars}{Add significance stars (e.g., p < .001***).}
+
+\item{stars_only}{Return only significance stars.}
+
+\item{name}{Name prefixing the text. Can be \code{NULL}.}
 }
 \description{
 Bayes Factor Formatting
 }
 \examples{
 format_bf(1.20)
-format_bf(c(1.20, 1557, 1, 8888))
+format_bf(c(1.20, 1557, 3.5, 12), stars = TRUE)
+format_bf(c(1.20, 1557, 3.5, 12), name = NULL)
 }

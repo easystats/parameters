@@ -6,8 +6,8 @@ test_that("format_ci", {
 
 
 test_that("format_p", {
-  testthat::expect_equal(nchar(format_p(0.02)), 5)
-  testthat::expect_equal(nchar(format_p(0.02, stars = TRUE)), 6)
+  testthat::expect_equal(nchar(format_p(0.02)), 7)
+  testthat::expect_equal(nchar(format_p(0.02, stars = TRUE)), 8)
   testthat::expect_equal(nchar(format_p(0.02, stars_only = TRUE)), 1)
 })
 
