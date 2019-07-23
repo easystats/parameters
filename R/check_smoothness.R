@@ -14,7 +14,7 @@
 #' @importFrom stats cor sd
 #' @importFrom utils head tail
 #' @export
-smoothness <- function(x, method = "cor", lag = 1) {
+check_smoothness <- function(x, method = "cor", lag = 1) {
   if (lag < 1) {
     lag <- round(lag * length(x))
   }
@@ -29,3 +29,7 @@ smoothness <- function(x, method = "cor", lag = 1) {
   }
   return(smooth)
 }
+
+#' @rdname check_smoothness
+#' @export
+smoothness <- check_smoothness
