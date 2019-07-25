@@ -28,7 +28,6 @@ Suggests:
 	BayesFactor,
 	brms,
 	cAIC4,
-	caret,
 	covr,
 	dplyr,
 	EGAnet,
