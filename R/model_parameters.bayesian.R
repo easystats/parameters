@@ -16,7 +16,8 @@
     parameters <- cbind(parameters, std_parameters[names(std_parameters) != "Parameter"])
   }
 
-  class(parameters) <- c("parameters_model", class(parameters))
+
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   attr(parameters, "clean_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
   parameters

@@ -42,7 +42,7 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
     parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
-  class(parameters) <- c("parameters_model", class(parameters))
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   attr(parameters, "clean_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
   parameters
@@ -64,7 +64,7 @@ model_parameters.glm <- model_parameters.lm
 .extract_parameters_glm <- function(model, ci = .95, linear = FALSE) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
 
-  if(linear){
+  if (linear) {
     names(parameters) <- c("Coefficient", "SE", "t", "p")
   } else{
     names(parameters) <- c("Coefficient", "SE", "z", "p")
@@ -79,7 +79,7 @@ model_parameters.glm <- model_parameters.lm
   parameters <- merge(parameters, ci(model, ci = ci), by = "Parameter")
   parameters <- parameters[match(col_order, parameters$Parameter), ]
 
-  if(linear){
+  if (linear) {
     parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "df_residual", "p")]
   } else{
     parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "df_residual", "p")]
