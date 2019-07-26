@@ -50,7 +50,7 @@ model_parameters.aov <- function(model, omega_squared = NULL, ...) {
     }
   }
 
-  class(parameters) <- c("parameters_model", class(parameters))
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 

@@ -5,3 +5,12 @@ plot.parameters_sem <- function(x, ...) {
   }
   NextMethod()
 }
+
+
+#' @export
+plot.parameters_model <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot model parameters. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
+}
