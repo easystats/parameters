@@ -6,7 +6,7 @@
 #' @param digits Number of significant digits.
 #'
 #'
-#'
+#' @return A formatted string.
 #' @examples
 #' format_ci(1.20, 3.57, ci = 90)
 #' format_ci(1.20, 3.57, ci = NULL)

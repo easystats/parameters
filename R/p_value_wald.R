@@ -10,8 +10,9 @@
 #' model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' p_value_wald(model)
 #' }
-#' @importFrom stats coef pnorm
 #'
+#' @return The p-values.
+#' @importFrom stats coef pnorm
 #' @references Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.
 #' @export
 p_value_wald <- function(model) {

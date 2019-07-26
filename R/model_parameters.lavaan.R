@@ -53,6 +53,8 @@
 #' # model_parameters(model, standardize = TRUE)
 #' }
 #'
+#' @return A data.frame of indices related to the model's parameters.
+#'
 #' @references \itemize{
 #'   \item Rosseel (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1-36.
 #' }

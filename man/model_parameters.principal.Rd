@@ -16,6 +16,9 @@
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame of loadings.
+}
 \description{
 Format PCA/FA objects from the psych package (Revelle, 2016).
 }

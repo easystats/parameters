@@ -16,6 +16,9 @@ kurtosis(x, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+Values of skewness or kurtosis.
+}
 \description{
 Compute Skewness and Kurtosis
 }

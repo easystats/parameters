@@ -15,6 +15,9 @@ format_value(x, digits = 2, protect_integers = FALSE, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A formatted string.
+}
 \description{
 Numeric Values Formatting
 }

@@ -19,6 +19,9 @@
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame of indices related to the model's parameters.
+}
 \description{
 Format CFA/SEM objects from the lavaan package (Rosseel, 2012).
 }

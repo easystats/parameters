@@ -21,6 +21,8 @@
 #'   converted to the corresponding numeric value).
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @return The standardized object.
+#'
 #' @details Methods:
 #' \itemize{
 #'  \item \strong{default}: Depending on \code{robust}, variables are divided by SD or MAD.

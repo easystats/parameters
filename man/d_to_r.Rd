@@ -22,11 +22,15 @@ convert_r_to_d(r, ...)
 
 \item{r}{A correlation coefficient r.}
 }
+\value{
+Converted index.
+}
 \description{
 Enables a conversion between standardized difference (Cohen's d) and correlation r.
 }
 \examples{
 d_to_r(d = 1.1547)
+
 }
 \references{
 \itemize{

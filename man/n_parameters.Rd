@@ -11,6 +11,9 @@ n_parameters(x, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+The number of parameters in the model.
+}
 \description{
 Returns the number of parameters of a model.
 }

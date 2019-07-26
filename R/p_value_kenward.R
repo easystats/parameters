@@ -12,6 +12,7 @@
 #' p_value_kenward(model)
 #' }
 #'
+#' @return The p-values.
 #' @references Kenward, M. G., & Roger, J. H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics, 983-997.
 #' @importFrom stats pt coef
 #' @export

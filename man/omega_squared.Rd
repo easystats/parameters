@@ -11,6 +11,9 @@ omega_squared(model, partial = TRUE)
 
 \item{partial}{Return partial omega squared.}
 }
+\value{
+Omega squared values.
+}
 \description{
 Computation of (Partial) Omega Squared for ANOVAs.
 }
@@ -26,6 +29,10 @@ omega_squared(model)
 model <- anova(lm(Sepal.Length ~ Sepal.Big * Species, data = df))
 omega_squared(model)
 
-# model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
-# omega_squared(model)
+\donttest{
+# Don't work for now
+model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
+omega_squared(model)
+}
+
 }

@@ -16,6 +16,9 @@ p_value_wald(model)
 
 \item{dof}{Degrees of Freedom.}
 }
+\value{
+The p-values.
+}
 \description{
 The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5\% at p = 0.05.
 }
@@ -25,6 +28,7 @@ library(lme4)
 model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 p_value_wald(model)
 }
+
 }
 \references{
 Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.

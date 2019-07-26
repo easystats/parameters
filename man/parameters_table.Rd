@@ -15,6 +15,9 @@ parameters_table(x, clean_names = TRUE, stars = FALSE, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame.
+}
 \description{
 Parameters Table Formatting
 }
@@ -29,4 +32,5 @@ library(rstanarm)
 x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
 as.data.frame(parameters_table(x))
 }
+
 }

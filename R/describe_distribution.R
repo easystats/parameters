@@ -7,6 +7,8 @@
 #' @param range Return the range (min and max).
 #' @inheritParams bayestestR::point_estimate
 #'
+#'
+#' @return Converted index.
 #' @examples
 #' describe_distribution(rnorm(100))
 #' @export

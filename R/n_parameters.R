@@ -5,6 +5,7 @@
 #' @param x A statistical model.
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @return The number of parameters in the model.
 #' @export
 n_parameters <- function(x, ...) {
   UseMethod("n_parameters")

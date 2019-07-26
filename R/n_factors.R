@@ -18,10 +18,12 @@
 #' result <- n_factors(mtcars[, 1:5], type = "FA", package = "psych")
 #' as.numeric(result)
 #' summary(result)
-#' \dontrun{
+#' \donttest{
 #' n_factors(mtcars, type = "PCA")
 #' n_factors(mtcars, type = "FA", algorithm = "mle")
 #' }
+#'
+#' @return A data.frame.
 #'
 #' @references \itemize{
 #'   \item Bartlett, M. S. (1950). Tests of significance in factor analysis. British Journal of statistical psychology, 3(2), 77-85.

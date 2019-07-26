@@ -19,6 +19,9 @@
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame of indices related to the model's parameters.
+}
 \description{
 Parameters of ANOVAs.
 }

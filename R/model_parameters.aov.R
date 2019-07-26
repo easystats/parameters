@@ -25,6 +25,7 @@
 #' model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
 #' model_parameters(model)
 #' }
+#' @return A data.frame of indices related to the model's parameters.
 #' @export
 model_parameters.aov <- function(model, omega_squared = NULL, ...) {
   parameters <- .extract_parameters_anova(model)

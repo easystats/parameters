@@ -31,6 +31,9 @@ included in the summary output.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+Bootstrapped parameters.
+}
 \description{
 Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
 }
@@ -39,6 +42,8 @@ library(parameters)
 
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 parameters_bootstrap(model)
+
+
 }
 \references{
 Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.

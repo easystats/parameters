@@ -11,6 +11,9 @@ parameters_type(model, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame.
+}
 \description{
 Type of Model Parameters
 }

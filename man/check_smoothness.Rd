@@ -16,6 +16,9 @@ smoothness(x, method = "cor", lag = 1)
 
 \item{lag}{An integer indicating which lag to use. If less than 1, will be interpreted as expressed in percentage of the length of the vector.}
 }
+\value{
+Value of smoothness.
+}
 \description{
 Quantify the smoothness of a vector
 }
@@ -24,6 +27,7 @@ x <- (-10:10)^3 + rnorm(21, 0, 100)
 plot(x)
 smoothness(x, method = "cor")
 smoothness(x, method = "diff")
+
 }
 \references{
 https://stats.stackexchange.com/questions/24607/how-to-measure-smoothness-of-a-time-series-in-r

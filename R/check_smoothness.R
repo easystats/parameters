@@ -9,6 +9,8 @@
 #' plot(x)
 #' smoothness(x, method = "cor")
 #' smoothness(x, method = "diff")
+#'
+#' @return Value of smoothness.
 #' @references https://stats.stackexchange.com/questions/24607/how-to-measure-smoothness-of-a-time-series-in-r
 #'
 #' @importFrom stats cor sd
@@ -27,7 +29,7 @@ check_smoothness <- function(x, method = "cor", lag = 1) {
   } else {
     smooth <- stats::sd(diff(x, lag = lag)) / abs(mean(diff(x, lag = lag)))
   }
-  return(smooth)
+  smooth
 }
 
 #' @rdname check_smoothness

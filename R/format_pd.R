@@ -3,7 +3,7 @@
 #' @param pd Probability of direction (pd).
 #' @inheritParams format_p
 #'
-#'
+#' @return A formatted string.
 #' @examples
 #' format_pd(0.12)
 #' format_pd(c(0.12, 1, 0.9999, 0.98, 0.995, 0.96), name = NULL)

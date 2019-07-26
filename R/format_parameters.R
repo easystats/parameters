@@ -8,6 +8,7 @@
 #' model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
 #' format_parameters(model)
 #'
+#' @return The formatted parameter names.
 #' @export
 format_parameters <- function(model) {
   types <- parameters_type(model)

@@ -7,7 +7,7 @@
 #' @param stars_only Return only significance stars.
 #' @param name Name prefixing the text. Can be \code{NULL}.
 #'
-#'
+#' @return A formatted string.
 #' @examples
 #' format_p(c(.02, .065, 0, .23))
 #' format_p(c(.02, .065, 0, .23), name = NULL)

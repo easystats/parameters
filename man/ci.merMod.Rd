@@ -18,6 +18,9 @@
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame containing the CI bounds.
+}
 \description{
-Compute confidence intervals for frequentist models.
+Compute confidence intervals (CI) for frequentist models.
 }

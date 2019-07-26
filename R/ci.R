@@ -8,15 +8,16 @@ bayestestR::ci
 
 #' Confidence Interval (CI)
 #'
-#' Compute confidence intervals for frequentist models.
+#' Compute confidence intervals (CI) for frequentist models.
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param method For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @importFrom insight find_parameters
+#' @return A data.frame containing the CI bounds.
 #'
+#' @importFrom insight find_parameters
 #' @export
 ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
   method <- match.arg(method)

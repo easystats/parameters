@@ -14,6 +14,11 @@ efa_to_cfa(model, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+Converted index.
+
+Converted index.
+}
 \description{
 Enables a conversion betwen Exploratory Factor Analysis (EFA) and Confirmatory Factor Analysis (CFA) \code{lavaan}-ready structure.
 }
@@ -33,5 +38,4 @@ anova(
   lavaan::cfa(model2, data = attitude)
 )
 }
-
 }

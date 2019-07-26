@@ -15,6 +15,9 @@ model_bootstrap(model, iterations = 1000, verbose = FALSE, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame.
+}
 \description{
 Bootstrap a statistical model n times to return a data.frame of estimates.
 }

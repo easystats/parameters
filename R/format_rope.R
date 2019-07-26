@@ -3,6 +3,8 @@
 #' @param rope_percentage Value or vector of percentages in ROPE.
 #' @inheritParams format_p
 #'
+#' @return A formatted string.
+#'
 #' @examples
 #' format_rope(c(0.02, 0.12, 0.357, 0))
 #' format_rope(c(0.02, 0.12, 0.357, 0), name = NULL)

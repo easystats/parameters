@@ -9,6 +9,7 @@
 #'
 #' parameters_type(model)
 #'
+#' @return A data.frame.
 #' @export
 parameters_type <- function(model, ...){
 

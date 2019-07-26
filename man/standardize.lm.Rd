@@ -22,10 +22,14 @@ the}
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+The model fitted on standardized data.
+}
 \description{
 Refit the model after standardizing the data.
 }
 \examples{
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 coef(standardize(model))
+
 }

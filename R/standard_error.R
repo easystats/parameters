@@ -8,6 +8,8 @@
 #' @examples
 #' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' standard_error(model)
+#'
+#' @return A data.frame.
 #' @importFrom stats coef vcov setNames
 #' @export
 standard_error <- function(model, ...) {

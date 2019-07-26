@@ -18,6 +18,8 @@
 #'
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' model_parameters(model)
+#'
+#' @return A data.frame of indices related to the model's parameters.
 #' @export
 model_parameters.lm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
 

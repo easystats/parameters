@@ -11,6 +11,9 @@ format_table(x, sep = " | ")
 
 \item{sep}{Column separator.}
 }
+\value{
+A data.frame in character format.
+}
 \description{
 Dataframe and Tables Pretty Formatting
 }

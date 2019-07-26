@@ -28,6 +28,9 @@
 
 \item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
 }
+\value{
+A data.frame of indices related to the model's parameters.
+}
 \description{
 Parameters of mixed models.
 }

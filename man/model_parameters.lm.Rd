@@ -23,6 +23,9 @@
 
 \item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
 }
+\value{
+A data.frame of indices related to the model's parameters.
+}
 \description{
 Extract and compute indices and measures to describe parameters of (general) linear models (GLMs).
 }
@@ -34,4 +37,5 @@ model_parameters(model, bootstrap = TRUE)
 
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 model_parameters(model)
+
 }
