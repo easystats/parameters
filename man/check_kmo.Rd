@@ -13,6 +13,9 @@ check_kmo(x, silent = FALSE, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A list of indices related to KMO.
+}
 \description{
 Kaiser (1970) introduced a Measure of Sampling Adequacy (MSA), later modified by Kaiser and Rice (1974). The Kaiser-Meyer-Olkin (KMO) statistic, which can vary from 0 to 1, indicates the degree to which each variable in a set is predicted without error by the other variables.
 }
@@ -27,7 +30,6 @@ This function is strongly inspired by the \code{KMO} function in the \code{psych
 library(parameters)
 
 check_kmo(mtcars)
-
 
 }
 \references{

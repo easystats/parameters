@@ -15,6 +15,9 @@ format_bf(bf, stars = FALSE, stars_only = FALSE, name = "BF")
 
 \item{name}{Name prefixing the text. Can be \code{NULL}.}
 }
+\value{
+A formatted string.
+}
 \description{
 Bayes Factor Formatting
 }

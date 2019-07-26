@@ -7,6 +7,8 @@
 #' library(parameters)
 #'
 #' check_factorstructure(mtcars)
+#'
+#' @return A list of lists of indices related to sphericity and KMO.
 #' @seealso check_kmo check_sphericity
 #' @export
 check_factorstructure <- function(x, silent = FALSE, ...) {
@@ -54,6 +56,7 @@ check_factorstructure <- function(x, silent = FALSE, ...) {
 #'
 #' check_kmo(mtcars)
 #'
+#' @return A list of indices related to KMO.
 #'
 #' @details This function is strongly inspired by the \code{KMO} function in the \code{psych} package (Revelle, 2016). All credits go to its author.
 #'
@@ -116,6 +119,8 @@ check_kmo <- function(x, silent = FALSE, ...) {
 #' check_sphericity(mtcars)
 #'
 #' @details This function is strongly inspired by the \code{cortest.bartlett} function in the \code{psych} package (Revelle, 2016). All credits go to its author.
+#'
+#' @return A list of indices related to sphericity.
 #'
 #' @references \itemize{
 #'   \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
