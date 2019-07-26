@@ -15,7 +15,7 @@ Authors@R: c(
 		comment = c(ORCID = "0000-0002-8895-3206"))
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
-Description: Utilities for processing the parameters of various statistical models. Beyond computing p values, CIs, and other indices for a wide variety of models, this package implements features like standardization or bootstrapping of parameters and models, feature reduction (feature extraction and variable selection) as well as conversion between indices of effect size.
+Description: Utilities for processing the parameters of various statistical models. Beyond computing p values, CIs, and other indices for a wide variety of models (see support list of insight; Lüdecke, Waggoner & Makowski (2019) <10.21105/joss.01412>), this package implements features like standardization or bootstrapping of parameters and models, feature reduction (feature extraction and variable selection) as well as conversion between indices of effect size.
 Depends:
 	R (>= 2.10),
 	stats,
@@ -28,7 +28,6 @@ Suggests:
 	BayesFactor,
 	brms,
 	cAIC4,
-	caret,
 	covr,
 	dplyr,
 	EGAnet,

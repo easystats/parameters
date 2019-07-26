@@ -53,9 +53,12 @@ check_factorstructure <- function(x, silent = FALSE, ...) {
 #' library(parameters)
 #'
 #' check_kmo(mtcars)
-#' @author William Revelle (the psych package)
+#'
+#'
+#' @details This function is strongly inspired by the \code{KMO} function in the \code{psych} package (Revelle, 2016). All credits go to its author.
 #'
 #' @references \itemize{
+#'   \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
 #'   \item Kaiser, H. F. (1970). A second generation little jiffy. Psychometrika, 35(4), 401-415.
 #'   \item Kaiser, H. F., \& Rice, J. (1974). Little jiffy, mark IV. Educational and psychological measurement, 34(1), 111-117.
 #'   \item Kaiser, H. F. (1974). An index of factorial simplicity. Psychometrika, 39(1), 31-36.
@@ -111,9 +114,13 @@ check_kmo <- function(x, silent = FALSE, ...) {
 #' library(parameters)
 #'
 #' check_sphericity(mtcars)
-#' @author William Revelle (the psych package)
 #'
-#' @references Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.
+#' @details This function is strongly inspired by the \code{cortest.bartlett} function in the \code{psych} package (Revelle, 2016). All credits go to its author.
+#'
+#' @references \itemize{
+#'   \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
+#'   \item Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.
+#' }
 #'
 #' @importFrom stats pchisq
 #'

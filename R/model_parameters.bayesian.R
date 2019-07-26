@@ -17,18 +17,6 @@
   }
 
 
-  # Remove unecessary columns
-  if ("CI" %in% names(parameters) && length(unique(parameters$CI)) == 1) {
-    parameters$CI <- NULL
-  }
-  if ("ROPE_CI" %in% names(parameters) && length(unique(parameters$ROPE_CI)) == 1) {
-    parameters$ROPE_CI <- NULL
-  }
-  if ("ROPE_low" %in% names(parameters)) {
-    parameters$ROPE_low <- NULL
-    parameters$ROPE_high <- NULL
-  }
-
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   attr(parameters, "clean_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
@@ -87,6 +75,22 @@ model_parameters.brmsfit <- model_parameters.stanreg
   } else {
     data <- model_bootstrap(model, iterations = iterations)
     parameters <- bayestestR::describe_posterior(data, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
+  }
+
+  if(length(ci) > 1){
+    parameters <- bayestestR::reshape_ci(parameters)
+  }
+
+  # Remove unecessary columns
+  if ("CI" %in% names(parameters) && length(unique(parameters$CI)) == 1) {
+    parameters$CI <- NULL
+  }
+  if ("ROPE_CI" %in% names(parameters) && length(unique(parameters$ROPE_CI)) == 1) {
+    parameters$ROPE_CI <- NULL
+  }
+  if ("ROPE_low" %in% names(parameters) & "ROPE_high" %in% names(parameters)) {
+    parameters$ROPE_low <- NULL
+    parameters$ROPE_high <- NULL
   }
 
   parameters

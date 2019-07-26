@@ -11,6 +11,11 @@
 #' x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
 #' as.data.frame(parameters_table(x))
 #'
+#' \dontrun{
+#' library(rstanarm)
+#' x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
+#' as.data.frame(parameters_table(x))
+#' }
 #' @export
 parameters_table <- function(x, clean_names = TRUE, stars = FALSE, ...){
 
@@ -26,13 +31,21 @@ parameters_table <- function(x, clean_names = TRUE, stars = FALSE, ...){
   if("df_residual" %in% names(x)) x$df_residual <- format_value(x$df_residual, protect_integers = TRUE)
   names(x)[names(x) == "df_residual"] <- "df"
   if("p" %in% names(x)) x$p <- format_p(x$p, name = NULL, stars = stars)
-  if(all(c("CI_low", "CI_high") %in% names(x))) {
+
+  # CI
+  ci_low <- names(x)[grep("CI_low*", names(x))]
+  ci_high <- names(x)[grep("CI_high*", names(x))]
+  if(length(ci_low) >= 1 & length(ci_low) == length(ci_high)){
     ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
-    x[ci_colname] <- format_ci(x$CI_low, x$CI_high, ci = NULL)
-    ci_position <- which(names(x) == "CI_low")
-    x <- x[c(names(x)[0:(ci_position-1)], ci_colname, names(x)[ci_position:(length(names(x))-1)])]  # Replace at initial position
-    x$CI_low <- x$CI_high <- NULL
+    for(i in 1:length(ci_colname)){
+      x[ci_colname[i]] <- format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL)
+    }
+    # Replace at initial position
+    ci_position <- which(names(x) == ci_low[1])
+    x <- x[c(names(x)[0:(ci_position-1)][!names(x)[0:(ci_position-1)] %in% ci_colname], ci_colname, names(x)[ci_position:(length(names(x))-1)][!names(x)[ci_position:(length(names(x))-1)] %in% ci_colname])]
+    x <- x[!names(x) %in% c(ci_low, ci_high)]
   }
+
   # Standardized
   std_cols <- names(x)[grepl("Std_", names(x))]
   x[std_cols] <- format_value(x[std_cols])
