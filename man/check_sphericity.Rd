@@ -16,14 +16,18 @@ check_sphericity(x, silent = FALSE, ...)
 \description{
 Bartlett (1951) introduced the test of sphericity, which tests whether a matrix is significantly different from an identity matrix. This statistical test for the presence of correlations among variables, providing the statistical probability that the correlation matrix has significant correlations among at least some of variables. As for factor analysis to work, some relationships between variables are needed, thus, a significant Bartlett’s test of sphericity is required, say p < .001.
 }
+\details{
+This function is strongly inspired by the \code{cortest.bartlett} function in the \code{psych} package (Revelle, 2016). All credits go to its author.
+}
 \examples{
 library(parameters)
 
 check_sphericity(mtcars)
+
 }
 \references{
-Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.
+\itemize{
+  \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
+  \item Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 }
-\author{
-William Revelle (the psych package)
 }
