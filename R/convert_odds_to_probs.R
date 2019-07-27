@@ -6,6 +6,7 @@
 #' @param log Are these Log odds (such as in logistic models)?
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @return Converted index.
 #' @examples
 #' odds_to_probs(-1.45)
 #' odds_to_probs(3.22)

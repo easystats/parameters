@@ -15,6 +15,9 @@ format_ci(CI_low, CI_high, ci = 0.95, digits = 2)
 
 \item{digits}{Number of significant digits.}
 }
+\value{
+A formatted string.
+}
 \description{
 Confidence/Credible Interval (CI) Formatting
 }

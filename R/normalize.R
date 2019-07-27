@@ -8,6 +8,7 @@
 #' @param x Object.
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @return Standardized object.
 #' @export
 normalize <- function(x, ...) {
   UseMethod("normalize")

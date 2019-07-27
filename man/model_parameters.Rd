@@ -11,6 +11,9 @@ model_parameters(model, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame of indices related to the model's parameters.
+}
 \description{
 Compute and extract model parameters. See the documentation for your object's class:
 \itemize{

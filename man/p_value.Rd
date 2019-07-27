@@ -16,6 +16,9 @@ p_value(model, ...)
 
 \item{method}{For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.}
 }
+\value{
+The p-values.
+}
 \description{
 This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
 \itemize{
@@ -25,4 +28,5 @@ This function attempts to return, or compute, p-values of a model's parameters. 
 \examples{
 model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 p_value(model)
+
 }

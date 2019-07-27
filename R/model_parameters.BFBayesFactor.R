@@ -13,6 +13,7 @@
 #' model_parameters(model)
 #' }
 #'
+#' @return A data.frame of indices related to the model's parameters.
 #' @export
 model_parameters.BFBayesFactor <- function(model, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, priors = TRUE, ...) {
   out <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, priors = priors, ...)

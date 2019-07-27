@@ -8,6 +8,9 @@
 #' @examples
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 #' coef(standardize(model))
+#'
+#' @return The model fitted on standardized data.
+#'
 #' @importFrom stats update
 #' @importFrom insight get_data model_info find_response
 #' @importFrom utils capture.output

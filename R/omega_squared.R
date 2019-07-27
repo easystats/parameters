@@ -17,8 +17,14 @@
 #' model <- anova(lm(Sepal.Length ~ Sepal.Big * Species, data = df))
 #' omega_squared(model)
 #'
-#' # model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
-#' # omega_squared(model)
+#' \donttest{
+#' # Don't work for now
+#' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
+#' omega_squared(model)
+#' }
+#'
+#' @return Omega squared values.
+#'
 #' @export
 omega_squared <- function(model, partial = TRUE) {
   UseMethod("omega_squared")

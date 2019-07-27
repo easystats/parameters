@@ -46,6 +46,9 @@ parameters_selection(model, ...)
 
 \item{cross_validation}{Select with cross-validation.}
 }
+\value{
+The model refitted with optimal number of parameters.
+}
 \description{
 This function performs an automated selection of the 'best' parameters, udpating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
 }
@@ -69,4 +72,5 @@ parameters_selection(model, cross_validation = TRUE)
 model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars)
 parameters_selection(model, cross_validation = FALSE)
 }
+
 }

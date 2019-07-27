@@ -6,6 +6,7 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #'
+#' @return A formatted string.
 #'
 #' @examples
 #' format_value(1.20)

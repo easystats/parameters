@@ -10,7 +10,7 @@
 #' @param verbose Hide possible refit messages.
 #' @param ... Arguments passed to or from other methods.
 #'
-#'
+#' @return A data.frame.
 #' @export
 model_bootstrap <- function(model, iterations = 1000, verbose = FALSE, ...) {
   UseMethod("model_bootstrap")

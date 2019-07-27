@@ -9,6 +9,9 @@ format_parameters(model)
 \arguments{
 \item{model}{A statistical model.}
 }
+\value{
+The formatted parameter names.
+}
 \description{
 Parameters Names Formatting
 }

@@ -3,6 +3,8 @@
 #' @param bf Bayes Factor.
 #' @inheritParams format_p
 #'
+#' @return A formatted string.
+#'
 #' @examples
 #' format_bf(1.20)
 #' format_bf(c(1.20, 1557, 3.5, 12), stars = TRUE)

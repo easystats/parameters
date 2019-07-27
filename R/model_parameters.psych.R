@@ -32,6 +32,7 @@
 #' model_parameters(efa, threshold = "max", sort = TRUE)
 #' }
 #'
+#' @return A data.frame of loadings.
 #' @references \itemize{
 #'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
 #'   \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.

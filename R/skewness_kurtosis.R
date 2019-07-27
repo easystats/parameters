@@ -26,6 +26,7 @@
 #' A kurtosis value below zero indicates a "platykurtic" distribution with \emph{thinner}
 #' tails (\cite{https://en.wikipedia.org/wiki/Kurtosis}).
 #'
+#' @return Values of skewness or kurtosis.
 #' @examples
 #' skewness(rnorm(1000))
 #' kurtosis(rnorm(1000))

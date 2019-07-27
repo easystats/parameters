@@ -13,6 +13,9 @@ check_factorstructure(x, silent = FALSE, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A list of lists of indices related to sphericity and KMO.
+}
 \description{
 This checks whether the data is appropriate for Factor Analysis (FA) by running the \link[=check_sphericity]{Bartlett's Test of Sphericity} and the \link[=check_kmo]{Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA)}.
 }
@@ -20,6 +23,7 @@ This checks whether the data is appropriate for Factor Analysis (FA) by running 
 library(parameters)
 
 check_factorstructure(mtcars)
+
 }
 \seealso{
 check_kmo check_sphericity

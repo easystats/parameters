@@ -46,6 +46,7 @@
 #' @importFrom utils tail
 #' @importFrom bayestestR describe_posterior
 #'
+#' @return Standardized parameters.
 #' @references
 #' \itemize{
 #'   \item Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear regression models.
@@ -109,11 +110,6 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
   }
   std_params
 }
-
-
-
-
-
 
 
 

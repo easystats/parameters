@@ -35,6 +35,9 @@ converted to the corresponding numeric value).}
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A standardized data.frame.
+}
 \description{
 Standardize (centering and scaling, Z-score) the data so that the
   values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1)
@@ -43,4 +46,5 @@ Standardize (centering and scaling, Z-score) the data so that the
 }
 \examples{
 summary(standardize(iris))
+
 }

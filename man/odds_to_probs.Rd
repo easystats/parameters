@@ -32,6 +32,9 @@ transformed.}
 \item{exclude}{Character or list of column names to be excluded
 from transformation.}
 }
+\value{
+Converted index.
+}
 \description{
 Enables a conversion between (log)odds and probabilities.
 }

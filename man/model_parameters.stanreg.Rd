@@ -52,6 +52,9 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
 }
+\value{
+A data.frame of indices related to the model's parameters.
+}
 \description{
 Parameters of Bayesian models.
 }
@@ -65,4 +68,5 @@ library(brms)
 model <- brm(Sepal.Length ~ Species, data = iris)
 model_parameters(model)
 }
+
 }

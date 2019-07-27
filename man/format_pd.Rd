@@ -15,6 +15,9 @@ format_pd(pd, stars = FALSE, stars_only = FALSE, name = "pd")
 
 \item{name}{Name prefixing the text. Can be \code{NULL}.}
 }
+\value{
+A formatted string.
+}
 \description{
 Probability of direction (pd) Formatting
 }

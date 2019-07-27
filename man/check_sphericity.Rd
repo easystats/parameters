@@ -13,6 +13,9 @@ check_sphericity(x, silent = FALSE, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A list of indices related to sphericity.
+}
 \description{
 Bartlett (1951) introduced the test of sphericity, which tests whether a matrix is significantly different from an identity matrix. This statistical test for the presence of correlations among variables, providing the statistical probability that the correlation matrix has significant correlations among at least some of variables. As for factor analysis to work, some relationships between variables are needed, thus, a significant Bartlett’s test of sphericity is required, say p < .001.
 }

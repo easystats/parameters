@@ -3,6 +3,7 @@
 #' @param x A dataframe.
 #' @param sep Column separator.
 #'
+#' @return A data.frame in character format.
 #' @examples
 #' library(parameters)
 #'

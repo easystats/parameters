@@ -4,6 +4,8 @@
 #'
 #' @param model An EFA model (e.g., a \code{psych::fa} object).
 #' @inheritParams principal_components
+#'
+#' @return Converted index.
 #' @examples
 #' \dontrun{
 #' library(psych)
@@ -20,7 +22,7 @@
 #'   lavaan::cfa(model2, data = attitude)
 #' )
 #' }
-#'
+#' @return Converted index.
 #' @export
 convert_efa_to_cfa <- function(model, ...) {
   UseMethod("convert_efa_to_cfa")

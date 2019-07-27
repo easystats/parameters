@@ -11,10 +11,14 @@ standard_error(model, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame.
+}
 \description{
 This function attempts to return standard errors of a model's parameters.
 }
 \examples{
 model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 standard_error(model)
+
 }

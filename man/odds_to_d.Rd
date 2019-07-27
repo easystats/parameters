@@ -22,12 +22,16 @@ convert_d_to_odds(d, log = FALSE)
 
 \item{d}{standardized difference values in vector or dataframe.}
 }
+\value{
+Converted index.
+}
 \description{
 Enables a conversion between (log)odds and standardized difference using Cohen's (1988) formula \eqn{\frac{\log(odds)\times\sqrt{3}}{\pi}}.
 }
 \examples{
 odds_to_d(0.2)
 odds_to_d(-1.45, log = TRUE)
+
 }
 \references{
 \itemize{

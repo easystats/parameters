@@ -15,6 +15,9 @@ format_p(p, stars = FALSE, stars_only = FALSE, name = "p")
 
 \item{name}{Name prefixing the text. Can be \code{NULL}.}
 }
+\value{
+A formatted string.
+}
 \description{
 Format p-values.
 }

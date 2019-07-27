@@ -33,6 +33,9 @@ well. Factors are converted to numerical values, with the lowest level
 being the value \code{1} (unless the factor has numeric levels, which are
 converted to the corresponding numeric value).}
 }
+\value{
+The standardized object.
+}
 \description{
 Performs a standardization of data or parameters. See the documentation for your object's class:
 \itemize{

@@ -46,6 +46,8 @@
 #' model <- brm(Sepal.Length ~ Species, data = iris)
 #' model_parameters(model)
 #' }
+#'
+#' @return A data.frame of indices related to the model's parameters.
 #' @export
 model_parameters.stanreg <- .model_parameters_bayesian
 

@@ -24,6 +24,9 @@ PCA(x, n = NULL, sort = FALSE, threshold = NULL,
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame of loadings.
+}
 \description{
 This function performs a principal component analysis (PCA) and returns the loadings (of the unrotated matrix) as dataframe.
 }
@@ -35,13 +38,16 @@ This function performs a principal component analysis (PCA) and returns the load
 \examples{
 library(parameters)
 
-# principal_components(mtcars[, 1:4])
+\donttest{
+principal_components(mtcars[, 1:4])
+}
 principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 principal_components(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
 
 pca <- principal_components(mtcars[, 1:5], n = 2)
 summary(pca)
 predict(pca)
+
 }
 \references{
 \itemize{

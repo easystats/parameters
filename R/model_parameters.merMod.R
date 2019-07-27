@@ -16,6 +16,7 @@
 #' model_parameters(model)
 #' }
 #'
+#' @return A data.frame of indices related to the model's parameters.
 #' @export
 model_parameters.merMod <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, ...) {
   if (bootstrap) {
@@ -51,9 +52,18 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
   parameters$Parameter <- row.names(parameters)
 
   # CI
-  col_order <- parameters$Parameter
-  parameters <- merge(parameters, ci(model, ci = ci, method = ci_method), by = "Parameter")
-  parameters <- parameters[match(col_order, parameters$Parameter), ]
+  if(!is.null(ci)){
+    ci_df <- ci(model, ci = ci, method = ci_method)
+    if(length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+    ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
+
+    col_order <- parameters$Parameter
+    parameters <- merge(parameters, ci_df, by = "Parameter")
+    parameters <- parameters[match(col_order, parameters$Parameter), ]
+  } else{
+    ci_cols <- c()
+  }
+
 
   # p value
   if ("Pr(>|z|)" %in% names(parameters)) {
@@ -78,11 +88,10 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
   names(parameters) <- gsub("t value", "t", names(parameters))
   names(parameters) <- gsub("z value", "z", names(parameters))
 
-  rownames(parameters) <- NULL
-
   # Reorder
-  order <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "z", "df", "df_residual", "p")
+  order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "df", "df_residual", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
+  rownames(parameters) <- NULL
   parameters
 }

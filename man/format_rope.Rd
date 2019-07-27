@@ -11,6 +11,9 @@ format_rope(rope_percentage, name = "in ROPE")
 
 \item{name}{Name prefixing the text. Can be \code{NULL}.}
 }
+\value{
+A formatted string.
+}
 \description{
 Percentage in ROPE Formatting
 }

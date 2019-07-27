@@ -13,6 +13,9 @@
 
 \item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
 }
+\value{
+A data.frame of indices related to the model's parameters.
+}
 \description{
 Parameters of h-tests (correlations, t-tests).
 }
@@ -28,4 +31,5 @@ model_parameters(model)
 
 model <- t.test(iris$Sepal.Width, mu = 1)
 model_parameters(model)
+
 }

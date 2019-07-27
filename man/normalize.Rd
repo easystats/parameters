@@ -29,6 +29,9 @@ standardized.}
 \item{exclude}{For a data frame, character vector of column names to
 be excluded from standardization.}
 }
+\value{
+Standardized object.
+}
 \description{
 Performs a normalization of data. This scales all numeric
 variables in the range 0 - 1.

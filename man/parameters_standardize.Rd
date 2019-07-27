@@ -22,6 +22,9 @@ the}
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+Standardized parameters.
+}
 \description{
 Compute standardized model parameters (coefficients).
 }

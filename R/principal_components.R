@@ -18,13 +18,17 @@
 #' @examples
 #' library(parameters)
 #'
-#' # principal_components(mtcars[, 1:4])
+#' \donttest{
+#' principal_components(mtcars[, 1:4])
+#' }
 #' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 #' principal_components(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
 #'
 #' pca <- principal_components(mtcars[, 1:5], n = 2)
 #' summary(pca)
 #' predict(pca)
+#'
+#' @return A data.frame of loadings.
 #' @references \itemize{
 #'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
 #' }

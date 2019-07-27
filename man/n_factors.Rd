@@ -22,6 +22,9 @@ n_factors(x, type = "FA", rotation = "varimax",
 
 \item{...}{Arguments passed to or from other methods.}
 }
+\value{
+A data.frame.
+}
 \description{
 This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus. In case of ties, it will select the solution with the less factors.
 }
@@ -33,7 +36,7 @@ n_factors(mtcars, type = "PCA", package = "nFactors")
 result <- n_factors(mtcars[, 1:5], type = "FA", package = "psych")
 as.numeric(result)
 summary(result)
-\dontrun{
+\donttest{
 n_factors(mtcars, type = "PCA")
 n_factors(mtcars, type = "FA", algorithm = "mle")
 }
