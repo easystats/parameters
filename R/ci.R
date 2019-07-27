@@ -6,6 +6,51 @@ bayestestR::ci
 
 
 
+#' @rdname ci.merMod
+#' @method ci glm
+#' @importFrom stats confint
+#' @export
+ci.glm <- function(x, ci = 0.95, ...) {
+
+  suppressMessages(out <- lapply(ci, function(ci, x) .ci_lm(x, ci, ...), x = x))
+
+  out <- do.call(rbind, out)
+  row.names(out) <- NULL
+  out
+}
+
+
+#' @method ci lm
+#' @export
+ci.lm <- ci.glm
+
+
+
+
+
+
+#' @keywords internal
+.ci_lm <- function(x, ci, ...){
+  out <- stats::confint(x, level = ci)
+
+  out <- as.data.frame(out, stringsAsFactors = FALSE)
+  names(out) <- c("CI_low", "CI_high")
+
+  out$CI <- ci * 100
+
+  out$Parameter <- row.names(out)
+  out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
+
+  row.names(out) <- NULL
+  out
+}
+
+
+
+
+
+
+
 #' Confidence Interval (CI)
 #'
 #' Compute confidence intervals (CI) for frequentist models.
@@ -24,47 +69,58 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
 
   # Wald approx
   if (method == "wald") {
-    out <- ci_wald(x)
+    out <- ci_wald(x, ci = ci, dof = Inf)
 
     # Bootstrapped CIs
   } else if (method == "boot") {
-    if (!requireNamespace("lme4", quietly = TRUE)) {
-      stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
-    }
-
-    # Compute
-    out <- as.data.frame(lme4::confint.merMod(x, level = ci, method = "boot", ...))
-    out <- out[rownames(out) %in% insight::find_parameters(x)$conditional, ]
-    names(out) <- c("CI_low", "CI_high")
-
-    # Clean up
-    out$Parameter <- row.names(out)
-    out <- out[c("Parameter", "CI_low", "CI_high")]
+    out <- lapply(ci, function(ci, x) .ci_boot_merMod(x, ci, ...), x = x)
+    out <- do.call(rbind, out)
     row.names(out) <- NULL
   }
-
   out
 }
 
 
-#' @rdname ci.merMod
-#' @method ci glm
-#' @importFrom stats confint
-#' @export
-ci.glm <- function(x, ci = 0.95, ...) {
-  suppressMessages(out <- stats::confint(x, level = ci, ...))
-  out <- as.data.frame(out, stringsAsFactors = FALSE)
+#' @keywords internal
+.ci_boot_merMod <- function(x, ci, ...){
+  if (!requireNamespace("lme4", quietly = TRUE)) {
+    stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
+  }
+
+  # Compute
+  out <- as.data.frame(lme4::confint.merMod(x, level = ci, method = "boot", ...))
+  out <- out[rownames(out) %in% insight::find_parameters(x)$conditional, ]
   names(out) <- c("CI_low", "CI_high")
 
   # Clean up
   out$Parameter <- row.names(out)
-  out <- out[c("Parameter", "CI_low", "CI_high")]
+  out$CI <- ci
+  out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
   row.names(out) <- NULL
   out
 }
 
 
 
-#' @method ci lm
-#' @export
-ci.lm <- ci.glm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

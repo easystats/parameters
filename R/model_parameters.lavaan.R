@@ -81,6 +81,13 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
     stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
   }
 
+  # CI
+  if(length(ci) > 1){
+    ci <- ci[1]
+    warning(paste0("lavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`."))
+  }
+
+  # Get estimates
   if (standardize == FALSE) {
     data <- lavaan::parameterEstimates(model, se = TRUE, level = ci, ...)
   } else {

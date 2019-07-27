@@ -17,6 +17,8 @@ test_that("efa-cfa", {
   params <- parameters::model_parameters(m1)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(10, 9))
 
+  testthat::expect_warning(parameters::model_parameters(m1, ci = c(0.8, 0.9)))
+
   params <- parameters::model_parameters(m1, standardize = TRUE, type = "all")
   testthat::expect_equal(c(nrow(params), ncol(params)), c(20, 9))
 

@@ -77,15 +77,23 @@ model_parameters.glm <- model_parameters.lm
   parameters$Parameter <- row.names(parameters)
 
   # CI
-  col_order <- parameters$Parameter
-  parameters <- merge(parameters, ci(model, ci = ci), by = "Parameter")
-  parameters <- parameters[match(col_order, parameters$Parameter), ]
+  if(!is.null(ci)){
+    ci_df <- ci(model, ci = ci)
+    if(length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+    ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
 
-  if (linear) {
-    parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "df_residual", "p")]
+    col_order <- parameters$Parameter
+    parameters <- merge(parameters, ci_df, by = "Parameter")
+    parameters <- parameters[match(col_order, parameters$Parameter), ]
   } else{
-    parameters <- parameters[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "df_residual", "p")]
+    ci_cols <- c()
   }
+
+
+  # Reorder
+  order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "df_residual", "p")
+  parameters <- parameters[order[order %in% names(parameters)]]
+
   rownames(parameters) <- NULL
   parameters
 }

@@ -7,13 +7,18 @@
 #' @importFrom stats qt coef
 #' @export
 ci_wald <- function(model, ci = 0.95, dof = Inf) {
-  stopifnot(
-    length(ci) == 1,
-    is.numeric(ci),
-    ci > 0, ci < 1
-  )
 
-  params <- as.data.frame(stats::coef(summary(model)))
+  out <- lapply(ci, function(ci, model, dof) .ci_wald(model, ci, dof), model = model, dof = dof)
+
+  out <- do.call(rbind, out)
+  row.names(out) <- NULL
+  out
+}
+
+
+#' @keywords internal
+.ci_wald <- function(x, ci, dof = Inf){
+  params <- as.data.frame(stats::coef(summary(x)))
 
   # all(se > 0))
   alpha <- (1 - ci) / 2
@@ -24,7 +29,8 @@ ci_wald <- function(model, ci = 0.95, dof = Inf) {
   )
 
   out <- as.data.frame(out)
+  out$CI <- ci
   out$Parameter <- row.names(params)
-  out <- out[c("Parameter", "CI_low", "CI_high")]
+  out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
   out
 }
