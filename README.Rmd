@@ -114,9 +114,9 @@ model <- BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width)
 model_parameters(model)
 ```
 
-### t-tests
+### *t*-tests
 
-#### Frequentist q
+#### Frequentist
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
@@ -194,11 +194,11 @@ model_parameters(model, standardize = "refit")
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 model <- lm(mpg ~ drat * cyl, data = mtcars)
-model_parameters(model, bootstrap = TRUE)
+model_parameters(model, bootstrap = TRUE, iterations = 500)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 model <- lm(mpg ~ drat * cyl, data = mtcars)
-model_parameters(model, bootstrap = TRUE)
+model_parameters(model, bootstrap = TRUE, iterations = 500)
 ```
 
 

@@ -26,7 +26,9 @@ parameters_table <- function(x, clean_names = TRUE, stars = FALSE, ...){
 
   # Format parameters names
   if(clean_names & !is.null(attributes(x)$clean_names)){
-    x$Parameter <- attributes(x)$clean_names
+    if(length(attributes(x)$clean_names) == length(x$Parameter)){
+      x$Parameter <- attributes(x)$clean_names
+    }
   }
 
   # Format specific columns
