@@ -20,8 +20,8 @@
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"HDI"} (default, see \code{\link{hdi}}) or \code{"ETI"}
-(see \code{\link{eti}}).}
+\code{"hdi"} (default, see \code{\link{hdi}}) or \code{"quantile"}
+(see \code{\link{ci}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
