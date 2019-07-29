@@ -4,12 +4,19 @@
 \alias{format_table}
 \title{Dataframe and Tables Pretty Formatting}
 \usage{
-format_table(x, sep = " | ")
+format_table(x, sep = " | ", header = "-", digits = 2,
+  protect_integers = TRUE)
 }
 \arguments{
 \item{x}{A dataframe.}
 
 \item{sep}{Column separator.}
+
+\item{header}{Header separator. Can be \code{NULL}.}
+
+\item{digits}{Number of significant digits.}
+
+\item{protect_integers}{Should integers be kept as integers (i.e., without decimals)?}
 }
 \value{
 A data.frame in character format.
@@ -21,5 +28,6 @@ Dataframe and Tables Pretty Formatting
 library(parameters)
 
 cat(format_table(iris))
+cat(format_table(iris, se= " ", header = "*", digits = 1))
 
 }

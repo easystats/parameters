@@ -2,19 +2,34 @@
 #'
 #' @param x A dataframe.
 #' @param sep Column separator.
+#' @param header Header separator. Can be \code{NULL}.
+#' @inheritParams format_value
 #'
 #' @return A data.frame in character format.
 #' @examples
 #' library(parameters)
 #'
 #' cat(format_table(iris))
+#' cat(format_table(iris, se= " ", header = "*", digits = 1))
 #'
 #' @export
-format_table <- function(x, sep = " | ") {
+format_table <- function(x, sep = " | ", header = "-", digits = 2, protect_integers = TRUE) {
+
+  df <- x
+
+  # round all numerics
+  col_names <- names(df)
+  df <- as.data.frame(sapply(df, function(i) {
+    if(is.numeric(i)) {
+      format_value(i, digits = digits, protect_integers = protect_integers)}
+    else{
+      i
+    }
+  }, simplify = FALSE), stringsAsFactors = FALSE)
+
 
   # Convert to character
-  col_names <- names(x)
-  df <- as.data.frame(sapply(x, as.character, simplify = FALSE), stringsAsFactors = FALSE)
+  df <- as.data.frame(sapply(df, as.character, simplify = FALSE), stringsAsFactors = FALSE)
   names(df) <- col_names
 
   # Add colnames as row
@@ -31,8 +46,10 @@ format_table <- function(x, sep = " | ") {
 
   final <- as.matrix(aligned)
 
-  # left-align first column
-  final[, 1] <- format(trimws(final[, 1]), justify = "left")
+  # left-align first column (if a character or a factor)
+  if(!is.numeric(x[, 1])){
+    final[, 1] <- format(trimws(final[, 1]), justify = "left")
+  }
 
   # Transform to character
   rows <- c()
@@ -42,7 +59,9 @@ format_table <- function(x, sep = " | ") {
 
     # First row separation
     if (row == 1) {
-      rows <- paste0(rows, paste0(rep_len("-", nchar(final_row)), collapse = ""), sep = "\n")
+      if(!is.null(header)){
+        rows <- paste0(rows, paste0(rep_len(header, nchar(final_row)), collapse = ""), sep = "\n")
+      }
     }
   }
   rows
