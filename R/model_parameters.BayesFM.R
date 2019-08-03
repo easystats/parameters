@@ -11,16 +11,13 @@
 #' @examples
 #' library(parameters)
 #' \dontrun{
-#' # psych version for comparison
-#' library(psych)
-#' model_parameters(psych::fa(mtcars, nfactors = 2, rotate="none"), threshold = "max", sort = TRUE)
-#'
-#' # BayesFM version
 #' library(BayesFM)
 #' efa <- BayesFM::befa(mtcars, iter = 1000)
-#' model_parameters(efa, sort = TRUE)
+#' results <- model_parameters(efa, sort = TRUE)
 #'
-#' attributes(model_parameters(efa))$loadings_long
+#' results
+#' attributes(results)$loadings_long
+#' efa_to_cfa(results)
 #' }
 #'
 #' @return A data.frame of loadings.
@@ -79,6 +76,7 @@ model_parameters.befa <- function(model, sort = FALSE, centrality = "median", di
                     cbind(data.frame(Component = comp, Variable = var), rez))
     }
   }
+  long_loadings$Component <- paste0("F", long_loadings$Component)
 
   # Clean
   long_loadings$Parameter <- NULL
@@ -105,6 +103,8 @@ model_parameters.befa <- function(model, sort = FALSE, centrality = "median", di
 
 
   # Add some more attributes
+  long_loadings <- na.omit(long_loadings)
+  row.names(long_loadings) <- NULL
   attr(loadings, "loadings_long") <- long_loadings
 
   # add class-attribute for printing

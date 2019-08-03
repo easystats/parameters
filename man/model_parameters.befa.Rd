@@ -43,16 +43,13 @@ Format PCA/FA objects from the psych package (Revelle, 2016).
 \examples{
 library(parameters)
 \dontrun{
-# psych version for comparison
-library(psych)
-model_parameters(psych::fa(mtcars, nfactors = 2, rotate="none"), threshold = "max", sort = TRUE)
-
-# BayesFM version
 library(BayesFM)
 efa <- BayesFM::befa(mtcars, iter = 1000)
-model_parameters(efa, sort = TRUE)
+results <- model_parameters(efa, sort = TRUE)
 
-attributes(model_parameters(efa))$loadings_long
+results
+attributes(results)$loadings_long
+efa_to_cfa(results)
 }
 
 }
