@@ -57,8 +57,8 @@ data_frame <- function(...) {
 
 
 
-# Recode a variable so its lowest value is beginning with zero
-#
+#' Recode a variable so its lowest value is beginning with zero
+#'
 #' @keywords internal
 .recode_to_zero <- function(x) {
   # check if factor
@@ -74,8 +74,8 @@ data_frame <- function(...) {
 
 
 
-# Safe transformation from factor/character to numeric
-#
+#' Safe transformation from factor/character to numeric
+#'
 #' @importFrom stats na.omit
 #' @keywords internal
 .factor_to_numeric <- function(x) {
@@ -91,4 +91,17 @@ data_frame <- function(...) {
   }
 
   as.numeric(as.character(x))
+}
+
+
+
+#' Find most common occurence
+#'
+#' @keywords internal
+.find_most_common <- function(x) {
+  out <- names(sort(table(x),decreasing=TRUE))[1]
+
+  if(is.numeric(x)) out <- as.numeric(out)
+
+  out
 }

@@ -97,7 +97,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
   attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
 
   # add class-attribute for printing
-  class(loadings) <- c("factor_structure", class(loadings))
+  class(loadings) <- c("parameters_efa", class(loadings))
 
   loadings
 }

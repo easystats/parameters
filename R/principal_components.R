@@ -131,7 +131,7 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
   attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
 
   # add class-attribute for printing
-  class(loadings) <- c("factor_structure", class(loadings))
+  class(loadings) <- c("parameters_efa", class(loadings))
 
   loadings
 }
@@ -143,25 +143,25 @@ principal_components.data.frame <- function(x, n = NULL, sort = FALSE, threshold
 
 
 #' @export
-sort.factor_structure <- function(x, ...) {
+sort.parameters_efa <- function(x, ...) {
   .sort_loadings(x)
 }
 
 
 #' @export
-summary.factor_structure <- function(object, ...) {
+summary.parameters_efa <- function(object, ...) {
   attributes(object)$summary
 }
 
 
 #' @export
-model_parameters.factor_structure <- function(model, ...) {
+model_parameters.parameters_efa <- function(model, ...) {
   attributes(model)$summary
 }
 
 
 #' @export
-predict.factor_structure <- function(object, newdata = NULL, names = NULL, ...) {
+predict.parameters_efa <- function(object, newdata = NULL, names = NULL, ...) {
   if (is.null(newdata)) {
     out <- as.data.frame(attributes(object)$scores)
   } else {
@@ -176,10 +176,11 @@ predict.factor_structure <- function(object, newdata = NULL, names = NULL, ...) 
 
 
 #' @export
-print.factor_structure <- function(x, digits = 2, ...) {
-  insight::print_colour(.text_components_variance(x), "yellow")
-  cat("\n\n")
-
+print.parameters_efa <- function(x, digits = 2, ...) {
+  if(!is.null(attributes(x)$type)){
+    insight::print_colour(.text_components_variance(x), "yellow")
+    cat("\n\n")
+  }
   cat(format_table(format_value(x, digits = digits)))
 }
 
@@ -199,6 +200,7 @@ principal_components.merMod <- principal_components.lm
 
 #' @keywords internal
 .text_components_variance <- function(x) {
+
   type <- attributes(x)$type
   if (type %in% c("prcomp", "principal")) {
     type <- "principal component"
@@ -250,23 +252,6 @@ principal_components.merMod <- principal_components.lm
 
 
 
-#' @keywords internal
-.filer_loadings <- function(loadings, threshold = 0.2, cols = NULL) {
-  if (is.null(cols)) {
-    cols <- attributes(loadings)$loadings_columns
-  }
-
-
-  if (threshold == "max") {
-    for (i in 1:nrow(loadings)) {
-      maxi <- max(abs(loadings[i, cols, drop = FALSE]))
-      loadings[i, cols][abs(loadings[i, cols]) < maxi] <- NA
-    }
-  } else {
-    loadings[, cols][abs(loadings[, cols]) < threshold] <- NA
-  }
-  loadings
-}
 
 
 
@@ -320,47 +305,6 @@ principal_components.merMod <- principal_components.lm
 
 
 
-
-#' @importFrom stats reshape
-#' @keywords internal
-.long_loadings <- function(loadings, threshold = NULL, cols = NULL) {
-  if (is.null(cols)) {
-    cols <- attributes(loadings)$loadings_columns
-  }
-
-
-  if (!is.null(threshold)) {
-    loadings <- .filer_loadings(loadings, threshold = threshold, cols = cols)
-  }
-
-  # Reshape to long
-  long <- reshape(loadings,
-    direction = "long",
-    varying = list(names(loadings)[cols]),
-    v.names = "Loading",
-    timevar = "Component",
-    idvar = "Variable"
-  )
-
-  # Restore component names
-  for (i in 1:length(unique(long$Component))) {
-    component <- unique(long$Component)[[i]]
-    name <- names(loadings)[cols][[i]]
-    long[long$Component == component, "Component"] <- name
-  }
-
-  # Filtering
-  long <- long[!is.na(long$Loading), ]
-
-  row.names(long) <- NULL
-  # Reorder columns
-  long[, c(
-    "Component",
-    "Variable",
-    "Loading",
-    names(loadings)[-cols][!names(loadings)[-cols] %in% c("Component", "Variable", "Loading")]
-  )]
-}
 
 
 
