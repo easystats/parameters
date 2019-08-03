@@ -25,6 +25,7 @@ Imports:
 	bayestestR (>= 0.2.4),
 	boot
 Suggests:
+	BayesFM,
 	BayesFactor,
 	brms,
 	cAIC4,

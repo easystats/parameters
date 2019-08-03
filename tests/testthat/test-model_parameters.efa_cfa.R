@@ -26,3 +26,12 @@ test_that("efa-cfa", {
   params <- parameters::model_parameters(x)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 6))
 })
+
+
+test_that("BayesFM", {
+  library(BayesFM)
+
+  efa <- BayesFM::befa(mtcars, iter = 1000)
+  params <- parameters::model_parameters(efa, sort = TRUE)
+  testthat::expect_equal(nrow(params), 11)
+})

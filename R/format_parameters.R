@@ -8,6 +8,15 @@
 #' model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
 #' format_parameters(model)
 #'
+#' model <- lm(Sepal.Length ~ Species / Petal.Length, data = iris)
+#' format_parameters(model)
+#'
+#' model <- lm(Sepal.Length ~ Species / Petal.Length * Sepal.Width, data = iris)
+#' format_parameters(model)
+#'
+#' model <- lm(Sepal.Length ~ Species / (Petal.Length * Sepal.Width), data = iris)
+#' format_parameters(model)
+#'
 #' @return The formatted parameter names.
 #' @export
 format_parameters <- function(model) {
@@ -24,8 +33,10 @@ format_parameters <- function(model) {
 
       for(j in 1:length(components)){
         component <- components[j]
-        if(types[types$Parameter == component, "Type"] == "factor"){
-          components[j] <- .format_factor(component, types[types$Parameter == component, "Term"])
+        if(component %in% types$Parameter){
+          if(types[types$Parameter == component, "Type"] == "factor"){
+            components[j] <- .format_factor(component, types[types$Parameter == component, "Term"])
+          }
         }
       }
       if(length(components) > 2){
