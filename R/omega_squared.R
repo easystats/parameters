@@ -41,6 +41,19 @@ omega_squared.aov <- function(model, partial = TRUE) {
 omega_squared.anova <- omega_squared.aov
 
 
+#' @export
+omega_squared.aovlist <- function(model, partial = TRUE) {
+  params <- .extract_parameters_anova(model)
+  values <- .values_aov(params)
+
+  if (!"Residuals" %in% params$Parameter) {
+    stop("No residuals data found. Omega squared can only be computed for simple `aov` models.")
+  }
+
+  mapply(function(p, v) {
+    .extract_omega_squared(p, v, partial)
+  }, split(params, params$Group), values, SIMPLIFY = FALSE)
+}
 
 
 
@@ -53,9 +66,12 @@ omega_squared.anova <- omega_squared.aov
     stop("No residuals data found. Omega squared can only be computed for simple `aov` models.")
   }
 
+  .extract_omega_squared(params, values, partial)
+}
 
+
+.extract_omega_squared <- function(params, values, partial) {
   if (partial == FALSE) {
-    # params$Omega_Sq <- (params$Sum_Squares - params$df * values$Mean_Square_residuals) / (values$Sum_Squares_residuals + values$Mean_Square_residuals)
     params$Omega_Sq <- (params$Sum_Squares - params$df * values$Mean_Square_residuals) / (values$Sum_Squares_total + values$Mean_Square_residuals)
     params[params$Parameter == "Residuals", "Omega_Sq"] <- NA
   } else {

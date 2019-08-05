@@ -2,15 +2,25 @@
 .values_aov <- function(params) {
 
   # number of observations
-  N <- sum(params$df) + 1
 
 
-  if ("Group" %in% names(params)) {
-    if ("Within" %in% params$Parameter) {
-      stop("Omega squared not implemented yet for repeated-measures ANOVAs.")
-    }
+  if ("Group" %in% names(params) && ("Within" %in% params$Group)) {
+    # stop("Omega squared not implemented yet for repeated-measures ANOVAs.")
+
+    lapply(split(params, params$Group), function(.i) {
+      N <- sum(.i$df) + 1
+      .prepare_values_aov(.i, N)
+    })
+
+  } else {
+    N <- sum(params$df) + 1
+    .prepare_values_aov(params)
   }
+}
 
+
+
+.prepare_values_aov <- function(params, N) {
   # get mean squared of residuals
   Mean_Square_residuals <- sum(params[params$Parameter == "Residuals", ]$Mean_Square)
   # get sum of squares of residuals
@@ -19,7 +29,6 @@
   Sum_Squares_total <- sum(params$Sum_Squares)
   # number of terms in model
   N_terms <- nrow(params) - 1
-
 
 
   list(
