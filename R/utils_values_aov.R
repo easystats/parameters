@@ -5,8 +5,6 @@
 
 
   if ("Group" %in% names(params) && ("Within" %in% params$Group)) {
-    # stop("Omega squared not implemented yet for repeated-measures ANOVAs.")
-
     lapply(split(params, params$Group), function(.i) {
       N <- sum(.i$df) + 1
       .prepare_values_aov(.i, N)
@@ -14,7 +12,7 @@
 
   } else {
     N <- sum(params$df) + 1
-    .prepare_values_aov(params)
+    .prepare_values_aov(params, N)
   }
 }
 
