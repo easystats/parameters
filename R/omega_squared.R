@@ -4,6 +4,7 @@
 #'
 #' @param partial Return partial omega squared.
 #' @inheritParams eta_squared
+#' @inheritParams model_bootstrap
 #'
 #' @examples
 #' library(parameters)
@@ -26,15 +27,15 @@
 #' @return Omega squared values.
 #'
 #' @export
-omega_squared <- function(model, partial = TRUE, ci = NULL) {
+omega_squared <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
   UseMethod("omega_squared")
 }
 
 
 
 #' @export
-omega_squared.aov <- function(model, partial = TRUE, ci = NULL) {
-  m <- .omega_squared(model, partial = partial, ci = ci)
+omega_squared.aov <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
+  m <- .omega_squared(model, partial = partial, ci = ci, iterations = iterations)
   class(m) <- c(ifelse(isTRUE(partial), "partial_omega_squared", "omega_squared"), class(m))
   m
 }
@@ -44,7 +45,7 @@ omega_squared.anova <- omega_squared.aov
 
 
 #' @export
-omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
+omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
   stop("Omega squared not implemented yet for repeated-measures ANOVAs.")
 
   # params <- .extract_parameters_anova(model)
@@ -62,7 +63,7 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
 
 
 #' @keywords internal
-.omega_squared <- function(model, partial, ci) {
+.omega_squared <- function(model, partial, ci, iterations) {
   params <- .extract_parameters_anova(model)
   values <- .values_aov(params)
 
@@ -78,7 +79,8 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
     ci.lvl = ci,
     df = params[["df"]],
     statistic = params[["F"]],
-    model = model
+    model = model,
+    iterations = iterations
   )
 }
 
@@ -97,7 +99,9 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
 
 
 
-.ci_omega_squared <- function(x, partial, ci.lvl, df, statistic, model, iterations = 1000) {
+#' @importFrom stats aov quantile
+#' @importFrom insight get_data find_formula
+.ci_omega_squared <- function(x, partial, ci.lvl, df, statistic, model, iterations) {
   if (is.null(ci.lvl) || is.na(ci.lvl)) return(x)
   N <- sum(df) + 1
 
@@ -140,16 +144,24 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
 
     boot_function <- function(model, data, indices) {
       d <- data[indices, ] # allows boot to select sample
-      fit <- stats::aov(f$conditional, data = dat)
+      fit <- stats::aov(f$conditional, data = d)
       params <- .extract_parameters_anova(fit)
       values <- .values_aov(params)
       osq <- .extract_omega_squared(params, values, partial = TRUE)
       return(osq[["Omega_Sq_partial"]])
     }
 
-    results <- boot::boot(data = dat, statistic = boot_function, R = iterations, model = model)
+    results <- boot::boot(
+      data = dat,
+      statistic = boot_function,
+      R = iterations,
+      model = model,
+      parallel = "multicore"
+    )
 
     df <- as.data.frame(results$t)
+    x$CI_low <- sapply(df[, 1:ncol(df)], stats::quantile, probs = (1 - ci.lvl) / 2, na.rm = TRUE)
+    x$CI_high <- sapply(df[, 1:ncol(df)], stats::quantile, probs = (1 + ci.lvl) / 2, na.rm = TRUE)
     x
   }
 }
