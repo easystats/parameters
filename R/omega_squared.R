@@ -81,5 +81,5 @@ omega_squared.aovlist <- function(model, partial = TRUE) {
     params[params$Parameter == "Residuals", "Omega_Sq_partial"] <- NA
   }
 
-  params[names(params)[names(params) %in% c("Group", "Parameter", "Omega_Sq", "Omega_Sq_partial")]]
+  params[, intersect(c("Group", "Parameter", "Omega_Sq", "Omega_Sq_partial"), names(params)), drop = FALSE]
 }
