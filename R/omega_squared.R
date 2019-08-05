@@ -55,7 +55,8 @@ omega_squared.anova <- omega_squared.aov
 
 
   if (partial == FALSE) {
-    params$Omega_Sq <- (params$Sum_Squares - params$df * values$Mean_Square_residuals) / (values$Sum_Squares_residuals + values$Mean_Square_residuals)
+    # params$Omega_Sq <- (params$Sum_Squares - params$df * values$Mean_Square_residuals) / (values$Sum_Squares_residuals + values$Mean_Square_residuals)
+    params$Omega_Sq <- (params$Sum_Squares - params$df * values$Mean_Square_residuals) / (values$Sum_Squares_total + values$Mean_Square_residuals)
     params[params$Parameter == "Residuals", "Omega_Sq"] <- NA
   } else {
     params$Omega_Sq_partial <- (params$df * (params$Mean_Square - values$Mean_Square_residuals)) / (params$df * params$Mean_Square + (values$n - params$df) * values$Mean_Square_residuals)

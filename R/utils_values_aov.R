@@ -2,7 +2,7 @@
 .values_aov <- function(params) {
 
   # number of observations
-  N <- sum(params$DoF) + 1
+  N <- sum(params$df) + 1
 
 
   if ("Group" %in% names(params)) {
