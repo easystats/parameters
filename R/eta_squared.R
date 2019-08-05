@@ -34,7 +34,9 @@ eta_squared <- function(model, partial = TRUE) {
 
 #' @export
 eta_squared.aov <- function(model, partial = TRUE) {
-  .eta_squared(model, partial = partial)
+  m <- .eta_squared(model, partial = partial)
+  class(m) <- c(ifelse(isTRUE(partial), "partial_eta_squared", "eta_squared"), class(m))
+  m
 }
 
 #' @export
@@ -68,7 +70,12 @@ eta_squared.aovlist <- function(model, partial = TRUE) {
     stop("No residuals data found. Eta squared can only be computed for simple `aov` models.")
   }
 
-  .extract_eta_squared(params, values, partial)
+  eff_size <- .extract_eta_squared(params, values, partial)
+
+  # required for CI
+  attr(eff_size, "F_statistic") <- params[["F"]]
+  attr(eff_size, "df") <- params[["df"]]
+  eff_size
 }
 
 

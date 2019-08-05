@@ -34,7 +34,9 @@ omega_squared <- function(model, partial = TRUE) {
 
 #' @export
 omega_squared.aov <- function(model, partial = TRUE) {
-  .omega_squared(model, partial = partial)
+  m <- .omega_squared(model, partial = partial)
+  class(m) <- c(ifelse(isTRUE(partial), "partial_omega_squared", "omega_squared"), class(m))
+  m
 }
 
 #' @export
@@ -68,7 +70,11 @@ omega_squared.aovlist <- function(model, partial = TRUE) {
     stop("No residuals data found. Omega squared can only be computed for simple `aov` models.")
   }
 
-  .extract_omega_squared(params, values, partial)
+  eff_size <- .extract_omega_squared(params, values, partial)
+
+  # required for CI
+  attr(eff_size, "F_statistic") <- params[["F"]]
+  eff_size
 }
 
 
