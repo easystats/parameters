@@ -47,20 +47,19 @@ ci.partial_eta_squared <- function(x, ci = 0.95, ...) {
         )
 
         data.frame(
-          conf.low = ci$LL,
-          conf.high = ci$UL
+          CI_low = ci$LL,
+          CI_high = ci$UL
         )
       } else {
         data.frame(
-          conf.low = NA,
-          conf.high = NA
+          CI_low = NA,
+          CI_high = NA
         )
       }
     }
   )
 
-  ci_df <- do.call(rbind, ci_eta)
-  cbind(x, ci_df)
+  cbind(x, do.call(rbind, ci_eta))
 }
 
 
