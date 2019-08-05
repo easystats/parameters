@@ -4,7 +4,7 @@
 \alias{eta_squared}
 \title{(Partial) Eta Squared Squared.}
 \usage{
-eta_squared(model, partial = TRUE, ci = NULL)
+eta_squared(model, partial = TRUE, ci = NULL, iterations = 1000)
 }
 \arguments{
 \item{model}{an ANOVA object.}
@@ -13,6 +13,8 @@ eta_squared(model, partial = TRUE, ci = NULL)
 
 \item{ci}{Scalar between 0 and 1. If not \code{NULL}, lower and upper
 confidence intervals are returned as well.}
+
+\item{iterations}{The number of bootstrap replicates.}
 }
 \value{
 Eta squared values.

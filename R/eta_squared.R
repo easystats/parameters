@@ -7,6 +7,8 @@
 #' @param ci Scalar between 0 and 1. If not \code{NULL}, lower and upper
 #'   confidence intervals are returned as well.
 #'
+#' @inheritParams model_bootstrap
+#'
 #' @examples
 #' library(parameters)
 #'
@@ -28,15 +30,15 @@
 #' @return Eta squared values.
 #'
 #' @export
-eta_squared <- function(model, partial = TRUE, ci = NULL) {
+eta_squared <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
   UseMethod("eta_squared")
 }
 
 
 
 #' @export
-eta_squared.aov <- function(model, partial = TRUE, ci = NULL) {
-  m <- .eta_squared(model, partial = partial, ci = ci)
+eta_squared.aov <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
+  m <- .eta_squared(model, partial = partial, ci = ci, iterations = iterations)
   class(m) <- c(ifelse(isTRUE(partial), "partial_eta_squared", "eta_squared"), class(m))
   m
 }
@@ -46,7 +48,7 @@ eta_squared.anova <- eta_squared.aov
 
 
 #' @export
-eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
+eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
   stop("Eta squared not implemented yet for repeated-measures ANOVAs.")
 
   # params <- .extract_parameters_anova(model)
@@ -64,7 +66,7 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
 
 
 #' @keywords internal
-.eta_squared <- function(model, partial, ci) {
+.eta_squared <- function(model, partial, ci, iterations) {
   params <- .extract_parameters_anova(model)
   values <- .values_aov(params)
 
@@ -79,7 +81,9 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
     partial = partial,
     ci.lvl = ci,
     df = params[["df"]],
-    statistic = params[["F"]]
+    statistic = params[["F"]],
+    model = model,
+    iterations = iterations
   )
 }
 
@@ -99,7 +103,7 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
 
 
 
-.ci_eta_squared <- function(x, partial, ci.lvl, df, statistic) {
+.ci_eta_squared <- function(x, partial, ci.lvl, df, statistic, model, iterations) {
   if (is.null(ci.lvl) || is.na(ci.lvl)) return(x)
 
   if (isTRUE(partial)) {
@@ -113,24 +117,53 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
             df2 = df[nrow(x)],
             conf.level = ci.lvl
           )
-
-          data.frame(
-            CI_low = ci$LL,
-            CI_high = ci$UL
-          )
+          ci.low <- ci$LL
+          ci.high <- ci$UL
         } else {
-          data.frame(
-            CI_low = NA,
-            CI_high = NA
-          )
+          ci.low <- ci.high <- NA
         }
+
+        data.frame(
+          CI_low = ci.low,
+          CI_high = ci.high
+        )
       }
     )
 
     cbind(x, do.call(rbind, ci_eta))
   } else {
-    ## TODO add bootstrapped CIs for normal eta-squared
-    warning("Confidence intervals for eta-squared are not implemented yet.")
+    if (inherits(model, "anova") || is.data.frame(model)) {
+      warning("Confidence intervals can't be computed for data frames or objects of class 'anova'.")
+      return(x)
+    }
+
+    if (!requireNamespace("boot", quietly = TRUE)) {
+      stop("Package 'boot' needed for this function to work. Please install it.")
+    }
+
+    dat <- insight::get_data(model)
+    f <- insight::find_formula(model)
+
+    boot_function <- function(model, data, indices) {
+      d <- data[indices, ] # allows boot to select sample
+      fit <- stats::aov(f$conditional, data = d)
+      params <- .extract_parameters_anova(fit)
+      values <- .values_aov(params)
+      osq <- .extract_eta_squared(params, values, partial = FALSE)
+      return(osq[["Eta_Sq"]])
+    }
+
+    results <- boot::boot(
+      data = dat,
+      statistic = boot_function,
+      R = iterations,
+      model = model,
+      parallel = "multicore"
+    )
+
+    df <- as.data.frame(results$t)
+    x$CI_low <- sapply(df[, 1:ncol(df)], stats::quantile, probs = (1 - ci.lvl) / 2, na.rm = TRUE)
+    x$CI_high <- sapply(df[, 1:ncol(df)], stats::quantile, probs = (1 + ci.lvl) / 2, na.rm = TRUE)
     x
   }
 }
