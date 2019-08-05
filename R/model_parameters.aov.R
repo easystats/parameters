@@ -39,7 +39,7 @@ model_parameters.aov <- function(model, omega_squared = NULL, ...) {
       omega_squared <- NULL
     }
 
-    if ("Within" %in% parameters$Parameter) {
+    if ("Group" %in% names(parameters) && ("Within" %in% parameters$Group)) {
       warning("Omega squared not implemented yet for repeated-measures ANOVAs.")
       omega_squared <- NULL
     }

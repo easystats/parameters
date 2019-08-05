@@ -43,16 +43,18 @@ omega_squared.anova <- omega_squared.aov
 
 #' @export
 omega_squared.aovlist <- function(model, partial = TRUE) {
-  params <- .extract_parameters_anova(model)
-  values <- .values_aov(params)
+  stop("Omega squared not implemented yet for repeated-measures ANOVAs.")
 
-  if (!"Residuals" %in% params$Parameter) {
-    stop("No residuals data found. Omega squared can only be computed for simple `aov` models.")
-  }
-
-  mapply(function(p, v) {
-    .extract_omega_squared(p, v, partial)
-  }, split(params, params$Group), values, SIMPLIFY = FALSE)
+  # params <- .extract_parameters_anova(model)
+  # values <- .values_aov(params)
+  #
+  # if (!"Residuals" %in% params$Parameter) {
+  #   stop("No residuals data found. Omega squared can only be computed for simple `aov` models.")
+  # }
+  #
+  # mapply(function(p, v) {
+  #   .extract_omega_squared(p, v, partial)
+  # }, split(params, params$Group), values, SIMPLIFY = FALSE)
 }
 
 
