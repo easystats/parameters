@@ -95,6 +95,7 @@ model_parameters.aovlist <- model_parameters.aov
     } else if (length(attributes(model)$heading) > 2) {
       parameters$Parameter <- attributes(model)$heading[-1:-2]
     }
+    parameters$Mean_Square <- parameters[["Sum Sq"]] / parameters[["Df"]]
   } else if ("aovlist" %in% class(model)) {
     if (names(model)[1L] == "(Intercept)") {
       model <- model[-1L]
