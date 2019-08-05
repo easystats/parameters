@@ -1,4 +1,4 @@
-#' (Partial) Omega Squared.
+#' (Partial) Eta Squared Squared.
 #'
 #' Computation of (Partial) Eta Squared for ANOVAs.
 #'

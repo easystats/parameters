@@ -2,7 +2,7 @@
 % Please edit documentation in R/eta_squared.R
 \name{eta_squared}
 \alias{eta_squared}
-\title{(Partial) Omega Squared.}
+\title{(Partial) Eta Squared Squared.}
 \usage{
 eta_squared(model, partial = TRUE, ci = NULL)
 }
