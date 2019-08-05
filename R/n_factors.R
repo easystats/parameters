@@ -268,6 +268,7 @@ as.double.n_factors <- as.numeric.n_factors
 
 
 #' Bartlett, Anderson and Lawley Procedures
+#' @importFrom tools toTitleCase
 #' @keywords internal
 .n_factors_bartlett <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
   nfac <- nFactors::nBartlett(eigen_values, N = nobs, alpha = 0.05, details = FALSE)$nFactors

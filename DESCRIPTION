@@ -17,16 +17,17 @@ Authors@R: c(
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 Description: Utilities for processing the parameters of various statistical models. Beyond computing p values, CIs, and other indices for a wide variety of models (see support list of insight; Lüdecke, Waggoner & Makowski (2019) <10.21105/joss.01412>), this package implements features like standardization or bootstrapping of parameters and models, feature reduction (feature extraction and variable selection) as well as conversion between indices of effect size.
 Depends:
-	R (>= 2.10),
+	R (>= 3.0),
 	stats,
 	utils
 Imports:
-	insight (>= 0.4.0),
-	bayestestR (>= 0.2.4),
-	boot
+	insight (>= 0.4.1),
+	bayestestR (>= 0.2.5),
+	tools
 Suggests:
 	BayesFM,
 	BayesFactor,
+	boot,
 	brms,
 	cAIC4,
 	covr,

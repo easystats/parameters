@@ -26,16 +26,20 @@ model_bootstrap <- function(model, iterations = 1000, verbose = FALSE, ...) {
 
 #' @importFrom stats coef update setNames
 #' @importFrom insight get_data find_parameters get_parameters
-#' @importFrom boot boot
 #' @export
 model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
+
+  if (!requireNamespace("boot", quietly = TRUE)) {
+    stop("Package 'boot' needed for this function to work. Please install it.")
+  }
+
   data <- insight::get_data(model)
 
   boot_function <- function(model, data, indices) {
     d <- data[indices, ] # allows boot to select sample
 
     if (verbose) {
-      fit <- suppressMessages(update(model, data = d))
+      fit <- suppressMessages(stats::update(model, data = d))
     } else {
       fit <- stats::update(model, data = d)
     }
