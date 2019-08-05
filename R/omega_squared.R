@@ -26,15 +26,15 @@
 #' @return Omega squared values.
 #'
 #' @export
-omega_squared <- function(model, partial = TRUE) {
+omega_squared <- function(model, partial = TRUE, ci = NULL) {
   UseMethod("omega_squared")
 }
 
 
 
 #' @export
-omega_squared.aov <- function(model, partial = TRUE) {
-  m <- .omega_squared(model, partial = partial)
+omega_squared.aov <- function(model, partial = TRUE, ci = NULL) {
+  m <- .omega_squared(model, partial = partial, ci = ci)
   class(m) <- c(ifelse(isTRUE(partial), "partial_omega_squared", "omega_squared"), class(m))
   m
 }
@@ -44,7 +44,7 @@ omega_squared.anova <- omega_squared.aov
 
 
 #' @export
-omega_squared.aovlist <- function(model, partial = TRUE) {
+omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
   stop("Omega squared not implemented yet for repeated-measures ANOVAs.")
 
   # params <- .extract_parameters_anova(model)
@@ -62,7 +62,7 @@ omega_squared.aovlist <- function(model, partial = TRUE) {
 
 
 #' @keywords internal
-.omega_squared <- function(model, partial = TRUE) {
+.omega_squared <- function(model, partial, ci) {
   params <- .extract_parameters_anova(model)
   values <- .values_aov(params)
 
@@ -72,10 +72,13 @@ omega_squared.aovlist <- function(model, partial = TRUE) {
 
   eff_size <- .extract_omega_squared(params, values, partial)
 
-  # required for CI
-  attr(eff_size, "F_statistic") <- params[["F"]]
-  attr(eff_size, "df") <- params[["df"]]
-  eff_size
+  .ci_omega_squared(
+    x = eff_size,
+    partial = partial,
+    ci.lvl = ci,
+    df = params[["df"]],
+    statistic = params[["F"]]
+  )
 }
 
 
@@ -89,4 +92,41 @@ omega_squared.aovlist <- function(model, partial = TRUE) {
   }
 
   params[, intersect(c("Group", "Parameter", "Omega_Sq", "Omega_Sq_partial"), names(params)), drop = FALSE]
+}
+
+
+
+.ci_omega_squared <- function(x, partial, ci.lvl, df, statistic) {
+  if (is.null(ci.lvl) || is.na(ci.lvl)) return(x)
+  N <- sum(df) + 1
+
+  if (partial == FALSE) {
+    ci_omega <- lapply(
+      1:nrow(x),
+      function(.x) {
+        if (!is.na(statistic[.x])) {
+          ci <- .confint_ncg(
+            F.value = statistic[.x],
+            conf.level = ci.lvl,
+            df.1 = df[.x],
+            df.2 = df[nrow(x)]
+          )
+          ci.low <- ci$Lower.Limit / (ci$Lower.Limit + N)
+          ci.high <- ci$Upper.Limit / (ci$Upper.Limit + N)
+        } else {
+          ci.low <- ci.high <- NA
+        }
+
+        data.frame(
+          CI_low = ci.low,
+          CI_high = ci.high
+        )
+      }
+    )
+    cbind(x, do.call(rbind, ci_omega))
+  } else {
+    ## TODO add bootstrapped CIs for partial omega-squared
+    warning("Confidence intervals for partial omega-squared are not implemented yet.")
+    x
+  }
 }

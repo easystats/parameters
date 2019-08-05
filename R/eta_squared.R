@@ -74,7 +74,7 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
 
   eff_size <- .extract_eta_squared(params, values, partial)
 
-  .ci_petasq(
+  .ci_eta_squared(
     x = eff_size,
     partial = partial,
     ci.lvl = ci,
@@ -99,7 +99,7 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
 
 
 
-.ci_petasq <- function(x, partial, ci.lvl, df, statistic) {
+.ci_eta_squared <- function(x, partial, ci.lvl, df, statistic) {
   if (is.null(ci.lvl) || is.na(ci.lvl)) return(x)
 
   if (isTRUE(partial)) {
