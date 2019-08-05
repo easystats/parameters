@@ -74,6 +74,7 @@ omega_squared.aovlist <- function(model, partial = TRUE) {
 
   # required for CI
   attr(eff_size, "F_statistic") <- params[["F"]]
+  attr(eff_size, "df") <- params[["df"]]
   eff_size
 }
 
