@@ -77,7 +77,8 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
     partial = partial,
     ci.lvl = ci,
     df = params[["df"]],
-    statistic = params[["F"]]
+    statistic = params[["F"]],
+    model = model
   )
 }
 
@@ -96,7 +97,7 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
 
 
 
-.ci_omega_squared <- function(x, partial, ci.lvl, df, statistic) {
+.ci_omega_squared <- function(x, partial, ci.lvl, df, statistic, model, iterations = 1000) {
   if (is.null(ci.lvl) || is.na(ci.lvl)) return(x)
   N <- sum(df) + 1
 
@@ -125,8 +126,30 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
     )
     cbind(x, do.call(rbind, ci_omega))
   } else {
-    ## TODO add bootstrapped CIs for partial omega-squared
-    warning("Confidence intervals for partial omega-squared are not implemented yet.")
+    if (inherits(model, "anova") || is.data.frame(model)) {
+      warning("Confidence intervals can't be computed for data frames or objects of class 'anova'.")
+      return(x)
+    }
+
+    if (!requireNamespace("boot", quietly = TRUE)) {
+      stop("Package 'boot' needed for this function to work. Please install it.")
+    }
+
+    dat <- insight::get_data(model)
+    f <- insight::find_formula(model)
+
+    boot_function <- function(model, data, indices) {
+      d <- data[indices, ] # allows boot to select sample
+      fit <- stats::aov(f$conditional, data = dat)
+      params <- .extract_parameters_anova(fit)
+      values <- .values_aov(params)
+      osq <- .extract_omega_squared(params, values, partial = TRUE)
+      return(osq[["Omega_Sq_partial"]])
+    }
+
+    results <- boot::boot(data = dat, statistic = boot_function, R = iterations, model = model)
+
+    df <- as.data.frame(results$t)
     x
   }
 }
