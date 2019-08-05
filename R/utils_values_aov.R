@@ -12,7 +12,7 @@
 
   } else {
     N <- sum(params$df) + 1
-    .prepare_values_aov(params)
+    .prepare_values_aov(params, N)
   }
 }
 
