@@ -2,8 +2,8 @@
 #'
 #' Computation of (Partial) Omega Squared for ANOVAs.
 #'
-#' @param model an ANOVA object.
 #' @param partial Return partial omega squared.
+#' @inheritParams eta_squared
 #'
 #' @examples
 #' library(parameters)

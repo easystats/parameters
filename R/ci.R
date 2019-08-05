@@ -26,44 +26,6 @@ ci.lm <- ci.glm
 
 
 
-#' @export
-ci.partial_eta_squared <- function(x, ci = 0.95, ...) {
-  rows <- nrow(x)
-  df.den <- attr(x, "df")[rows]
-  statistic <- attr(x, "F_statistic")
-
-  ci_eta <- lapply(
-    1:rows,
-    function(.x) {
-      df.num = attr(x, "df")[.x]
-      test.stat <- statistic[.x]
-
-      if (!is.na(test.stat)) {
-        ci <- .ci_partial_eta_squared(
-          F.value = test.stat,
-          df1 = df.num,
-          df2 = df.den,
-          conf.level = ci
-        )
-
-        data.frame(
-          CI_low = ci$LL,
-          CI_high = ci$UL
-        )
-      } else {
-        data.frame(
-          CI_low = NA,
-          CI_high = NA
-        )
-      }
-    }
-  )
-
-  cbind(x, do.call(rbind, ci_eta))
-}
-
-
-
 
 #' @keywords internal
 .ci_lm <- function(x, ci, ...){

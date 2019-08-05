@@ -4,12 +4,15 @@
 \alias{eta_squared}
 \title{(Partial) Omega Squared.}
 \usage{
-eta_squared(model, partial = TRUE)
+eta_squared(model, partial = TRUE, ci = NULL)
 }
 \arguments{
 \item{model}{an ANOVA object.}
 
 \item{partial}{Return partial eta squared.}
+
+\item{ci}{Scalar between 0 and 1. If not \code{NULL}, lower and upper
+confidence intervals are returned as well.}
 }
 \value{
 Eta squared values.

@@ -4,6 +4,8 @@
 #'
 #' @param model an ANOVA object.
 #' @param partial Return partial eta squared.
+#' @param ci Scalar between 0 and 1. If not \code{NULL}, lower and upper
+#'   confidence intervals are returned as well.
 #'
 #' @examples
 #' library(parameters)
@@ -26,15 +28,15 @@
 #' @return Eta squared values.
 #'
 #' @export
-eta_squared <- function(model, partial = TRUE) {
+eta_squared <- function(model, partial = TRUE, ci = NULL) {
   UseMethod("eta_squared")
 }
 
 
 
 #' @export
-eta_squared.aov <- function(model, partial = TRUE) {
-  m <- .eta_squared(model, partial = partial)
+eta_squared.aov <- function(model, partial = TRUE, ci = NULL) {
+  m <- .eta_squared(model, partial = partial, ci = ci)
   class(m) <- c(ifelse(isTRUE(partial), "partial_eta_squared", "eta_squared"), class(m))
   m
 }
@@ -44,7 +46,7 @@ eta_squared.anova <- eta_squared.aov
 
 
 #' @export
-eta_squared.aovlist <- function(model, partial = TRUE) {
+eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
   stop("Eta squared not implemented yet for repeated-measures ANOVAs.")
 
   # params <- .extract_parameters_anova(model)
@@ -62,7 +64,7 @@ eta_squared.aovlist <- function(model, partial = TRUE) {
 
 
 #' @keywords internal
-.eta_squared <- function(model, partial = TRUE) {
+.eta_squared <- function(model, partial, ci) {
   params <- .extract_parameters_anova(model)
   values <- .values_aov(params)
 
@@ -72,11 +74,15 @@ eta_squared.aovlist <- function(model, partial = TRUE) {
 
   eff_size <- .extract_eta_squared(params, values, partial)
 
-  # required for CI
-  attr(eff_size, "F_statistic") <- params[["F"]]
-  attr(eff_size, "df") <- params[["df"]]
-  eff_size
+  .ci_petasq(
+    x = eff_size,
+    partial = partial,
+    ci.lvl = ci,
+    df = params[["df"]],
+    statistic = params[["F"]]
+  )
 }
+
 
 
 .extract_eta_squared <- function(params, values, partial) {
@@ -89,4 +95,42 @@ eta_squared.aovlist <- function(model, partial = TRUE) {
   }
 
   params[, intersect(c("Group", "Parameter", "Eta_Sq", "Eta_Sq_partial"), names(params)), drop = FALSE]
+}
+
+
+
+.ci_petasq <- function(x, partial, ci.lvl, df, statistic) {
+  if (is.null(ci.lvl) || is.na(ci.lvl)) return(x)
+
+  if (isTRUE(partial)) {
+    ci_eta <- lapply(
+      1:nrow(x),
+      function(.x) {
+        if (!is.na(statistic[.x])) {
+          ci <- .ci_partial_eta_squared(
+            F.value = statistic[.x],
+            df1 = df[.x],
+            df2 = df[nrow(x)],
+            conf.level = ci.lvl
+          )
+
+          data.frame(
+            CI_low = ci$LL,
+            CI_high = ci$UL
+          )
+        } else {
+          data.frame(
+            CI_low = NA,
+            CI_high = NA
+          )
+        }
+      }
+    )
+
+    cbind(x, do.call(rbind, ci_eta))
+  } else {
+    ## TODO add bootstrapped CIs for normal eta-squared
+    warning("Confidence intervals for eta-squared are not implemented yet.")
+    x
+  }
 }
