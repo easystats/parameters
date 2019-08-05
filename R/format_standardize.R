@@ -43,5 +43,5 @@ format_standardize <- function(x, reference = x, robust = FALSE, digits = NULL, 
   x[x != "+0"] <- paste(x[x != "+0"], deviation_name)
   x[x == "+0"] <- central_name
 
-  factor(x, levels = unique(x))
+  factor(x, levels = rev(unique(x)))
 }
