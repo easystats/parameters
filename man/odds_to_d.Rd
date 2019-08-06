@@ -31,7 +31,6 @@ Enables a conversion between (log)odds and standardized difference using Cohen's
 \examples{
 odds_to_d(0.2)
 odds_to_d(-1.45, log = TRUE)
-
 }
 \references{
 \itemize{

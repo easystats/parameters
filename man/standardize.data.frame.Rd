@@ -46,5 +46,4 @@ Standardize (centering and scaling, Z-score) the data so that the
 }
 \examples{
 summary(standardize(iris))
-
 }

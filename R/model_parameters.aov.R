@@ -34,8 +34,6 @@ model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL
 
   # Sanity checks
   if (!is.null(omega_squared) | !is.null(eta_squared) | !is.null(epsilon_squared)) {
-
-
     if (!"Residuals" %in% parameters$Parameter) {
       warning("No residuals data found. Omega squared can only be computed for simple `aov` models.")
       omega_squared <- NULL
@@ -50,8 +48,8 @@ model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL
 
   # Effect sizes ------------------------------------------------------------
   # Omega squared
-  if (!is.null(omega_squared)){
-    if(omega_squared == "partial") {
+  if (!is.null(omega_squared)) {
+    if (omega_squared == "partial") {
       parameters$Omega_Sq_partial <- omega_squared(model, partial = TRUE)$Omega_Sq_partial
     } else {
       parameters$Omega_Sq <- omega_squared(model, partial = FALSE)$Omega_Sq
@@ -59,8 +57,8 @@ model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL
   }
 
   # Eta squared
-  if (!is.null(eta_squared)){
-    if(eta_squared == "partial") {
+  if (!is.null(eta_squared)) {
+    if (eta_squared == "partial") {
       parameters$Eta_Sq_partial <- eta_squared(model, partial = TRUE)$Eta_Sq_partial
     } else {
       parameters$Eta_Sq <- eta_squared(model, partial = FALSE)$Eta_Sq
@@ -68,7 +66,7 @@ model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL
   }
 
   # Epsilon squared
-  if (!is.null(epsilon_squared)){
+  if (!is.null(epsilon_squared)) {
     parameters$Epsilon_sq <- epsilon_squared(model)$Epsilon_sq
   }
 
@@ -119,7 +117,7 @@ model_parameters.aovlist <- model_parameters.aov
 
     # If mixed models...
     sumsq <- names(parameters)[names(parameters) %in% c("Sum Sq", "Sum of Sq")]
-    if(length(sumsq) != 0){
+    if (length(sumsq) != 0) {
       parameters$Mean_Square <- parameters[[sumsq]] / parameters[["Df"]]
     }
   } else if ("aovlist" %in% class(model)) {

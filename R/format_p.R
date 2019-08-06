@@ -29,10 +29,10 @@ format_p <- function(p, stars = FALSE, stars_only = FALSE, name = "p") {
 
 
 #' @keywords internal
-.add_prefix_and_remove_stars <- function(text, stars, stars_only, name){
-  if(is.null(name)){
+.add_prefix_and_remove_stars <- function(text, stars, stars_only, name) {
+  if (is.null(name)) {
     text <- gsub("= ", "", text)
-  } else{
+  } else {
     text <- paste(name, text)
   }
 

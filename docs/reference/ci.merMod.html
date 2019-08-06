@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Confidence Interval (CI) — ci.merMod • parameters</title>
+<title>Confidence Interval (CI) — ci.glm • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Confidence Interval (CI) — ci.merMod" />
+<meta property="og:title" content="Confidence Interval (CI) — ci.glm" />
 
-<meta property="og:description" content="Compute confidence intervals for frequentist models." />
+<meta property="og:description" content="Compute confidence intervals (CI) for frequentist models." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -148,15 +148,15 @@
 
     <div class="ref-description">
     
-    <p>Compute confidence intervals for frequentist models.</p>
+    <p>Compute confidence intervals (CI) for frequentist models.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for merMod</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"boot"</span>), <span class='no'>...</span>)
+    <pre class="usage"><span class='co'># S3 method for glm</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for glm</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='no'>...</span>)</pre>
+<span class='co'># S3 method for merMod</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"boot"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,14 +170,18 @@
       <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>For mixed models, can be <a href='p_value_wald.html'>"wald"</a> (default) or "boot" (see <code><a href='https://www.rdocumentation.org/packages/lme4/topics/confint.merMod'>lme4::confint.merMod</a></code>).</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
+    <tr>
+      <th>method</th>
+      <td><p>For mixed models, can be <a href='p_value_wald.html'>"wald"</a> (default) or "boot" (see <code><a href='https://www.rdocumentation.org/packages/lme4/topics/confint.merMod'>lme4::confint.merMod</a></code>).</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data.frame containing the CI bounds.</p>
     
 
   </div>
@@ -185,7 +189,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>

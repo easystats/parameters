@@ -15,11 +15,13 @@
   Diff <- stats::pf(q = F.value, df1 = df.1, df2 = df.2, ncp = LL.0) - (1 - alpha.lower)
 
   if (stats::pf(q = F.value, df1 = df.1, df2 = df.2, ncp = LL.0) < (1 - alpha.lower)) {
-    FAILED <- if (stats::pf(q = F.value, df1 = df.1, df2 = df.2, ncp = 0) < 1 - alpha.lower)
+    FAILED <- if (stats::pf(q = F.value, df1 = df.1, df2 = df.2, ncp = 0) < 1 - alpha.lower) {
       LL.0 <- 1e-08
+    }
 
-    if (stats::pf(q = F.value, df1 = df.1, df2 = df.2, ncp = LL.0) < 1 - alpha.lower)
+    if (stats::pf(q = F.value, df1 = df.1, df2 = df.2, ncp = LL.0) < 1 - alpha.lower) {
       FAILED <- TRUE
+    }
   }
 
   if (is.null(FAILED)) {
@@ -97,7 +99,7 @@
 
       if (isTRUE(Diff.1) & !isTRUE(Diff.2) & !isTRUE(Diff.3)) {
         UL.Bounds <- c(UL.Bounds[1], (UL.Bounds[1] +
-                                        UL.Bounds[2])/2, UL.Bounds[2])
+          UL.Bounds[2]) / 2, UL.Bounds[2])
       }
 
       Diff <- stats::pf(q = F.value, df1 = df.1, df2 = df.2, ncp = UL.Bounds[2]) - alpha.upper

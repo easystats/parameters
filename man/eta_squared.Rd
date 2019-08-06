@@ -64,7 +64,6 @@ model <- anova(lm(Sepal.Length ~ Sepal.Big * Species, data = df))
 omega_squared(model)
 eta_squared(model)
 epsilon_squared(model)
-
 \donttest{
 # Don't work for now
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)

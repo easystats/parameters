@@ -27,7 +27,6 @@ x <- (-10:10)^3 + rnorm(21, 0, 100)
 plot(x)
 smoothness(x, method = "cor")
 smoothness(x, method = "diff")
-
 }
 \references{
 https://stats.stackexchange.com/questions/24607/how-to-measure-smoothness-of-a-time-series-in-r

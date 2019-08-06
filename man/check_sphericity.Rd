@@ -26,7 +26,6 @@ This function is strongly inspired by the \code{cortest.bartlett} function in th
 library(parameters)
 
 check_sphericity(mtcars)
-
 }
 \references{
 \itemize{

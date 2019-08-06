@@ -136,7 +136,7 @@
 <th align="right">CI_low</th>
 <th align="right">CI_high</th>
 <th align="right">t</th>
-<th align="right">DoF_residual</th>
+<th align="right">df_residual</th>
 <th align="right">p</th>
 <th align="right">Std_Coefficient</th>
 </tr></thead>
@@ -225,13 +225,14 @@
 <a class="sourceLine" id="cb2-2" title="2">pca</a></code></pre></div>
 <pre><code>&gt; The unique principal component accounted for 52.82% of the total variance of the original data.
 &gt; 
-&gt;     Variable  PC1 Complexity
-&gt; 1 complaints 0.78          1
-&gt; 2 privileges 0.70          1
-&gt; 3   learning 0.82          1
-&gt; 4     raises 0.88          1
-&gt; 5   critical 0.40          1
-&gt; 6    advance 0.68          1</code></pre>
+&gt; Variable   |  PC1 | Complexity
+&gt; ------------------------------
+&gt; complaints | 0.78 |       1.00
+&gt; privileges | 0.70 |       1.00
+&gt; learning   | 0.82 |       1.00
+&gt; raises     | 0.88 |       1.00
+&gt; critical   | 0.40 |       1.00
+&gt; advance    | 0.68 |       1.00</code></pre>
 <p>The <code>principal_component()</code> function automatically selected one component (if the number of components is not specified, this function uses <a href="https://easystats.github.io/parameters/articles/n_factors.html"><code><a href="../reference/n_factors.html">n_factors()</a></code></a> to estimate the optimal number to keep) and returned the <strong>loadings</strong>, <em>i.e.</em>, the relationship with all of the original variables.</p>
 <p>As we can see here, it seems that our new component captured the essence of all our other variables together. We can extract the values of these components for each of our observation using the <code><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict()</a></code> method and merge it with our dataframe.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(df, <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(pca))</a></code></pre></div>
@@ -246,7 +247,7 @@
 <th align="right">CI_low</th>
 <th align="right">CI_high</th>
 <th align="right">t</th>
-<th align="right">DoF_residual</th>
+<th align="right">df_residual</th>
 <th align="right">p</th>
 <th align="right">Std_Coefficient</th>
 </tr></thead>
@@ -309,7 +310,7 @@
 <th align="right">CI_low</th>
 <th align="right">CI_high</th>
 <th align="right">t</th>
-<th align="right">DoF_residual</th>
+<th align="right">df_residual</th>
 <th align="right">p</th>
 <th align="right">Std_Coefficient</th>
 </tr></thead>

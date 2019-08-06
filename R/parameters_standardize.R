@@ -33,13 +33,11 @@
 #' parameters_standardize(model, method = "refit", robust = TRUE)
 #' parameters_standardize(model, method = "full")
 #' parameters_standardize(model, method = "full", robust = TRUE)
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- stan_glm(Sepal.Length ~ Species * Petal.Width, data = iris)
 #' parameters_standardize(model, method = "full", centrality = "all")
 #' parameters_standardize(model, method = "full", robust = TRUE, centrality = "all")
-#'
 #' }
 #' @importFrom stats mad sd predict cor model.matrix
 #' @importFrom insight get_parameters model_info get_data get_response

@@ -22,5 +22,4 @@ library(parameters)
 model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
 
 parameters_type(model)
-
 }

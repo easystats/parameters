@@ -9,7 +9,6 @@
       N <- sum(.i$df) + 1
       .prepare_values_aov(.i, N)
     })
-
   } else {
     N <- sum(params$df) + 1
     .prepare_values_aov(params, N)

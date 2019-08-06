@@ -37,7 +37,6 @@ This function performs a principal component analysis (PCA) and returns the load
 }
 \examples{
 library(parameters)
-
 \donttest{
 principal_components(mtcars[, 1:4])
 }
@@ -47,7 +46,6 @@ principal_components(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
 pca <- principal_components(mtcars[, 1:5], n = 2)
 summary(pca)
 predict(pca)
-
 }
 \references{
 \itemize{

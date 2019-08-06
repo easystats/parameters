@@ -28,7 +28,6 @@ model_bootstrap <- function(model, iterations = 1000, verbose = FALSE, ...) {
 #' @importFrom insight get_data find_parameters get_parameters
 #' @export
 model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
-
   if (!requireNamespace("boot", quietly = TRUE)) {
     stop("Package 'boot' needed for this function to work. Please install it.")
   }

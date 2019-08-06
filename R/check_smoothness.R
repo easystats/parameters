@@ -9,7 +9,6 @@
 #' plot(x)
 #' smoothness(x, method = "cor")
 #' smoothness(x, method = "diff")
-#'
 #' @return Value of smoothness.
 #' @references https://stats.stackexchange.com/questions/24607/how-to-measure-smoothness-of-a-time-series-in-r
 #'

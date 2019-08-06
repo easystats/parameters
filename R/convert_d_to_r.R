@@ -8,7 +8,6 @@
 #'
 #' @examples
 #' d_to_r(d = 1.1547)
-#'
 #' @return Converted index.
 #' @references \itemize{
 #'   \item Borenstein, Michael, et al. "Converting among effect sizes." Introduction to meta-analysis (2009): 45-49.

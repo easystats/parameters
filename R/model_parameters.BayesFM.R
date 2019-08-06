@@ -24,7 +24,6 @@
 #'
 #' @export
 model_parameters.befa <- function(model, sort = FALSE, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = NULL, ...) {
-
   if (!attr(model, "post.column.switch") | !attr(model, "post.sign.switch")) {
     if (!requireNamespace("BayesFM", quietly = TRUE)) {
       stop("Package 'BayesFM' required for this function to work. Please install it by running `install.packages('BayesFM')`.")
@@ -63,17 +62,19 @@ model_parameters.befa <- function(model, sort = FALSE, centrality = "median", di
 
   # Compute posterior by dedic
   long_loadings <- data.frame()
-  for(var in unique(loadings$Variable)){
-    for(comp in unique(loadings$Component)){
+  for (var in unique(loadings$Variable)) {
+    for (comp in unique(loadings$Component)) {
       chunk <- loadings[loadings$Variable == var & loadings$Component == comp, ]
-      if(nrow(chunk) == 0){
+      if (nrow(chunk) == 0) {
         rez <- bayestestR::describe_posterior(loadings$Loading, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, ...)
         rez[1, ] <- NA
-      } else{
+      } else {
         rez <- bayestestR::describe_posterior(chunk$Loading, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, ...)
       }
-      long_loadings <- rbind(long_loadings,
-                    cbind(data.frame(Component = comp, Variable = var), rez))
+      long_loadings <- rbind(
+        long_loadings,
+        cbind(data.frame(Component = comp, Variable = var), rez)
+      )
     }
   }
   long_loadings$Component <- paste0("F", long_loadings$Component)
@@ -112,6 +113,3 @@ model_parameters.befa <- function(model, sort = FALSE, centrality = "median", di
 
   loadings
 }
-
-
-

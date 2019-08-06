@@ -29,5 +29,4 @@ Transform a standardized vector into character, e.g., \code{c("-1 SD", "Mean", "
 format_standardize(c(-1, 0, 1))
 format_standardize(c(-1, 0, 1, 2), reference = rnorm(1000))
 format_standardize(c(-1, 0, 1, 2), reference = rnorm(1000), robust = TRUE)
-
 }

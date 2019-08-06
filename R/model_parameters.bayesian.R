@@ -79,7 +79,7 @@ model_parameters.brmsfit <- model_parameters.stanreg
     parameters <- bayestestR::describe_posterior(data, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
   }
 
-  if(length(ci) > 1){
+  if (length(ci) > 1) {
     parameters <- bayestestR::reshape_ci(parameters)
   }
 

@@ -13,7 +13,6 @@
 #'
 #' loadings
 #' reshape_loadings(loadings)
-#'
 #' }
 #' @export
 reshape_loadings <- function(x, ...) {
@@ -32,8 +31,8 @@ reshape_loadings.parameters_efa <- function(x, threshold = NULL, ...) {
 #' @param loadings_columns Vector indicating the columns corresponding to loadings.
 #' @export
 reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = NULL, ...) {
-  if(is.null(loadings_columns)) loadings_columns <- 1:ncol(x)
-  if(length(loadings_columns) > 1){
+  if (is.null(loadings_columns)) loadings_columns <- 1:ncol(x)
+  if (length(loadings_columns) > 1) {
     .long_loadings(x, threshold = threshold, loadings_columns = loadings_columns)
   }
 }
@@ -43,8 +42,7 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 #' @importFrom stats reshape
 #' @keywords internal
 .wide_loadings <- function(loadings, loadings_columns = "Loading", component_column = "Component", variable_column = "Variable", ...) {
-
-  if(is.numeric(loadings[[component_column]])){
+  if (is.numeric(loadings[[component_column]])) {
     loadings[[component_column]] <- paste0("F", loadings[[component_column]])
   }
 
@@ -77,11 +75,11 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 
   # Reshape to long
   long <- reshape(loadings,
-                  direction = "long",
-                  varying = list(names(loadings)[loadings_columns]),
-                  v.names = "Loading",
-                  timevar = "Component",
-                  idvar = "Variable"
+    direction = "long",
+    varying = list(names(loadings)[loadings_columns]),
+    v.names = "Loading",
+    timevar = "Component",
+    idvar = "Variable"
   )
 
   # Restore component names
@@ -132,7 +130,7 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 
 
 #' @export
-print.parameters_loadings <- function(x, ...){
+print.parameters_loadings <- function(x, ...) {
   formatted_table <- parameters_table(x)
   cat(format_table(formatted_table))
 }

@@ -52,15 +52,15 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
   parameters$Parameter <- row.names(parameters)
 
   # CI
-  if(!is.null(ci)){
+  if (!is.null(ci)) {
     ci_df <- ci(model, ci = ci, method = ci_method)
-    if(length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+    if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
 
     col_order <- parameters$Parameter
     parameters <- merge(parameters, ci_df, by = "Parameter")
     parameters <- parameters[match(col_order, parameters$Parameter), ]
-  } else{
+  } else {
     ci_cols <- c()
   }
 

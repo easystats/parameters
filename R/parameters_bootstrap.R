@@ -11,8 +11,6 @@
 #'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 #' parameters_bootstrap(model)
-#'
-#'
 #' @return Bootstrapped parameters.
 #'
 #' @references Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.

@@ -99,9 +99,9 @@ data_frame <- function(...) {
 #'
 #' @keywords internal
 .find_most_common <- function(x) {
-  out <- names(sort(table(x),decreasing=TRUE))[1]
+  out <- names(sort(table(x), decreasing = TRUE))[1]
 
-  if(is.numeric(x)) out <- as.numeric(out)
+  if (is.numeric(x)) out <- as.numeric(out)
 
   out
 }

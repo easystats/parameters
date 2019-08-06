@@ -76,7 +76,9 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations =
 #' @importFrom insight get_data find_formula
 #' @keywords internal
 .ci_omega_squared <- function(x, partial, ci.lvl, df, statistic, model, iterations) {
-  if (is.null(ci.lvl) || is.na(ci.lvl)) return(x)
+  if (is.null(ci.lvl) || is.na(ci.lvl)) {
+    return(x)
+  }
   N <- sum(df) + 1
 
   if (partial == FALSE) {

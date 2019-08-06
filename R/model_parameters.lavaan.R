@@ -82,7 +82,7 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
   }
 
   # CI
-  if(length(ci) > 1){
+  if (length(ci) > 1) {
     ci <- ci[1]
     warning(paste0("lavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`."))
   }
@@ -136,7 +136,7 @@ n_parameters.lavaan <- function(x, ...) {
 
 
 #' @export
-print.parameters_sem <- function(x, ...){
+print.parameters_sem <- function(x, ...) {
   formatted_table <- parameters_table(x)
   cat(format_table(formatted_table))
 }
