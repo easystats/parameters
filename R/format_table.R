@@ -10,7 +10,7 @@
 #' library(parameters)
 #'
 #' cat(format_table(iris))
-#' cat(format_table(iris, se = " ", header = "*", digits = 1))
+#' cat(format_table(iris, sep = " ", header = "*", digits = 1))
 #' @export
 format_table <- function(x, sep = " | ", header = "-", digits = 2, protect_integers = TRUE) {
   df <- x
