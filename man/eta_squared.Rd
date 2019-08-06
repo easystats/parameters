@@ -2,14 +2,19 @@
 % Please edit documentation in R/eta_squared.R
 \name{eta_squared}
 \alias{eta_squared}
-\title{(Partial) Omega Squared.}
+\title{(Partial) Eta Squared Squared.}
 \usage{
-eta_squared(model, partial = TRUE)
+eta_squared(model, partial = TRUE, ci = NULL, iterations = 1000)
 }
 \arguments{
 \item{model}{an ANOVA object.}
 
 \item{partial}{Return partial eta squared.}
+
+\item{ci}{Scalar between 0 and 1. If not \code{NULL}, lower and upper
+confidence intervals are returned as well.}
+
+\item{iterations}{The number of bootstrap replicates.}
 }
 \value{
 Eta squared values.

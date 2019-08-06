@@ -2,8 +2,9 @@
 #'
 #' Computation of (Partial) Omega Squared for ANOVAs.
 #'
-#' @param model an ANOVA object.
 #' @param partial Return partial omega squared.
+#' @inheritParams eta_squared
+#' @inheritParams model_bootstrap
 #'
 #' @examples
 #' library(parameters)
@@ -26,15 +27,15 @@
 #' @return Omega squared values.
 #'
 #' @export
-omega_squared <- function(model, partial = TRUE) {
+omega_squared <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
   UseMethod("omega_squared")
 }
 
 
 
 #' @export
-omega_squared.aov <- function(model, partial = TRUE) {
-  m <- .omega_squared(model, partial = partial)
+omega_squared.aov <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
+  m <- .omega_squared(model, partial = partial, ci = ci, iterations = iterations)
   class(m) <- c(ifelse(isTRUE(partial), "partial_omega_squared", "omega_squared"), class(m))
   m
 }
@@ -44,7 +45,7 @@ omega_squared.anova <- omega_squared.aov
 
 
 #' @export
-omega_squared.aovlist <- function(model, partial = TRUE) {
+omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
   stop("Omega squared not implemented yet for repeated-measures ANOVAs.")
 
   # params <- .extract_parameters_anova(model)
@@ -62,7 +63,7 @@ omega_squared.aovlist <- function(model, partial = TRUE) {
 
 
 #' @keywords internal
-.omega_squared <- function(model, partial = TRUE) {
+.omega_squared <- function(model, partial, ci, iterations) {
   params <- .extract_parameters_anova(model)
   values <- .values_aov(params)
 
@@ -72,9 +73,15 @@ omega_squared.aovlist <- function(model, partial = TRUE) {
 
   eff_size <- .extract_omega_squared(params, values, partial)
 
-  # required for CI
-  attr(eff_size, "F_statistic") <- params[["F"]]
-  eff_size
+  .ci_omega_squared(
+    x = eff_size,
+    partial = partial,
+    ci.lvl = ci,
+    df = params[["df"]],
+    statistic = params[["F"]],
+    model = model,
+    iterations = iterations
+  )
 }
 
 
@@ -88,4 +95,73 @@ omega_squared.aovlist <- function(model, partial = TRUE) {
   }
 
   params[, intersect(c("Group", "Parameter", "Omega_Sq", "Omega_Sq_partial"), names(params)), drop = FALSE]
+}
+
+
+
+#' @importFrom stats aov quantile
+#' @importFrom insight get_data find_formula
+.ci_omega_squared <- function(x, partial, ci.lvl, df, statistic, model, iterations) {
+  if (is.null(ci.lvl) || is.na(ci.lvl)) return(x)
+  N <- sum(df) + 1
+
+  if (partial == FALSE) {
+    ci_omega <- lapply(
+      1:nrow(x),
+      function(.x) {
+        if (!is.na(statistic[.x])) {
+          ci <- .confint_ncg(
+            F.value = statistic[.x],
+            conf.level = ci.lvl,
+            df.1 = df[.x],
+            df.2 = df[nrow(x)]
+          )
+          ci.low <- ci$Lower.Limit / (ci$Lower.Limit + N)
+          ci.high <- ci$Upper.Limit / (ci$Upper.Limit + N)
+        } else {
+          ci.low <- ci.high <- NA
+        }
+
+        data.frame(
+          CI_low = ci.low,
+          CI_high = ci.high
+        )
+      }
+    )
+    cbind(x, do.call(rbind, ci_omega))
+  } else {
+    if (inherits(model, "anova") || is.data.frame(model)) {
+      warning("Confidence intervals can't be computed for data frames or objects of class 'anova'.")
+      return(x)
+    }
+
+    if (!requireNamespace("boot", quietly = TRUE)) {
+      stop("Package 'boot' needed for this function to work. Please install it.")
+    }
+
+    dat <- insight::get_data(model)
+    f <- insight::find_formula(model)
+
+    boot_function <- function(model, data, indices) {
+      d <- data[indices, ] # allows boot to select sample
+      fit <- stats::aov(f$conditional, data = d)
+      params <- .extract_parameters_anova(fit)
+      values <- .values_aov(params)
+      osq <- .extract_omega_squared(params, values, partial = TRUE)
+      return(osq[["Omega_Sq_partial"]])
+    }
+
+    results <- boot::boot(
+      data = dat,
+      statistic = boot_function,
+      R = iterations,
+      model = model,
+      parallel = "multicore"
+    )
+
+    df <- as.data.frame(results$t)
+    x$CI_low <- sapply(df[, 1:ncol(df)], stats::quantile, probs = (1 - ci.lvl) / 2, na.rm = TRUE)
+    x$CI_high <- sapply(df[, 1:ncol(df)], stats::quantile, probs = (1 + ci.lvl) / 2, na.rm = TRUE)
+    x
+  }
 }
