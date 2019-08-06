@@ -150,4 +150,3 @@ print.equivalence_test_lm <- function(x, digits = 2, ...) {
     cat("\n")
   }
 }
-

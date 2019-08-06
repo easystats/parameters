@@ -171,28 +171,42 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list of indices related to sphericity.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function is strongly inspired by the <code>cortest.bartlett</code> function in the <code>psych</code> package (Revelle, 2016). All credits go to its author.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.</p>
+    <ul>
+<li><p>Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.</p></li>
+<li><p>Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.</p></li>
+</ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
-<span class='fu'>check_sphericity</span>(<span class='no'>mtcars</span>)</div><div class='output co'>#&gt; <span style='color: #00BB00;'>OK: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(55) = 408.01, p &lt; .001).</span><span></div></span></pre>
+<span class='fu'>check_sphericity</span>(<span class='no'>mtcars</span>)</div><div class='output co'>#&gt; <span style='color: #00BB00;'>OK: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(55) = 408.01, p p &lt; .001).</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
 
-    <h2>Author</h2>
-    <p>William Revelle (the psych package)</p>
   </div>
 </div>
 

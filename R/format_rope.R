@@ -11,9 +11,11 @@
 #' @export
 format_rope <- function(rope_percentage, name = "in ROPE") {
   text <- ifelse(rope_percentage == 0, "0%",
-                        ifelse(rope_percentage == 1, "100%",
-                               paste0(format_value(rope_percentage * 100), "%")))
-  if(!is.null(name)){
+    ifelse(rope_percentage == 1, "100%",
+      paste0(format_value(rope_percentage * 100), "%")
+    )
+  )
+  if (!is.null(name)) {
     text <- paste(text, name)
   }
   text

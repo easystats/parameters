@@ -28,5 +28,4 @@ This function attempts to return, or compute, p-values of a model's parameters. 
 \examples{
 model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 p_value(model)
-
 }

@@ -12,11 +12,17 @@
 #' @export
 format_bf <- function(bf, stars = FALSE, stars_only = FALSE, name = "BF") {
   text <- ifelse(bf > 999, "> 999***",
-                 paste0("= ",
-                        ifelse(bf > 30, paste0(format_value(bf), "***"),
-                               ifelse(bf > 10, paste0(format_value(bf), "**"),
-                                      ifelse(bf > 3, paste0(format_value(bf), "*"),
-                                             paste0(format_value(bf)))))))
+    paste0(
+      "= ",
+      ifelse(bf > 30, paste0(format_value(bf), "***"),
+        ifelse(bf > 10, paste0(format_value(bf), "**"),
+          ifelse(bf > 3, paste0(format_value(bf), "*"),
+            paste0(format_value(bf))
+          )
+        )
+      )
+    )
+  )
 
   .add_prefix_and_remove_stars(text, stars, stars_only, name)
 }

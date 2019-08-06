@@ -10,19 +10,18 @@
 #' library(parameters)
 #'
 #' cat(format_table(iris))
-#' cat(format_table(iris, se= " ", header = "*", digits = 1))
-#'
+#' cat(format_table(iris, se = " ", header = "*", digits = 1))
 #' @export
 format_table <- function(x, sep = " | ", header = "-", digits = 2, protect_integers = TRUE) {
-
   df <- x
 
   # round all numerics
   col_names <- names(df)
   df <- as.data.frame(sapply(df, function(i) {
-    if(is.numeric(i)) {
-      format_value(i, digits = digits, protect_integers = protect_integers)}
-    else{
+    if (is.numeric(i)) {
+      format_value(i, digits = digits, protect_integers = protect_integers)
+    }
+    else {
       i
     }
   }, simplify = FALSE), stringsAsFactors = FALSE)
@@ -47,7 +46,7 @@ format_table <- function(x, sep = " | ", header = "-", digits = 2, protect_integ
   final <- as.matrix(aligned)
 
   # left-align first column (if a character or a factor)
-  if(!is.numeric(x[, 1])){
+  if (!is.numeric(x[, 1])) {
     final[, 1] <- format(trimws(final[, 1]), justify = "left")
   }
 
@@ -59,11 +58,10 @@ format_table <- function(x, sep = " | ", header = "-", digits = 2, protect_integ
 
     # First row separation
     if (row == 1) {
-      if(!is.null(header)){
+      if (!is.null(header)) {
         rows <- paste0(rows, paste0(rep_len(header, nchar(final_row)), collapse = ""), sep = "\n")
       }
     }
   }
   rows
 }
-

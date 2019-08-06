@@ -30,7 +30,6 @@ This function is strongly inspired by the \code{KMO} function in the \code{psych
 library(parameters)
 
 check_kmo(mtcars)
-
 }
 \references{
 \itemize{

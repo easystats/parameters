@@ -6,16 +6,23 @@
 \alias{model_parameters.aovlist}
 \title{ANOVAs Parameters}
 \usage{
-\method{model_parameters}{aov}(model, omega_squared = NULL, ...)
+\method{model_parameters}{aov}(model, omega_squared = NULL,
+  eta_squared = NULL, epsilon_squared = NULL, ...)
 
-\method{model_parameters}{anova}(model, omega_squared = NULL, ...)
+\method{model_parameters}{anova}(model, omega_squared = NULL,
+  eta_squared = NULL, epsilon_squared = NULL, ...)
 
-\method{model_parameters}{aovlist}(model, omega_squared = NULL, ...)
+\method{model_parameters}{aovlist}(model, omega_squared = NULL,
+  eta_squared = NULL, epsilon_squared = NULL, ...)
 }
 \arguments{
 \item{model}{Object of class \link{aov}, \link{anova} or \code{aovlist}.}
 
-\item{omega_squared}{Compute omega squared as indices of effect size. Can be \code{NULL}, "partial" (default) or "raw" for non-partial indices.}
+\item{omega_squared}{Compute \link[=eta_squared]{omega squared} as index of effect size. Can be "partial" (adjusted for effect size) or "raw".}
+
+\item{eta_squared}{Compute \link[=eta_squared]{eta squared} as index of effect size. Can be "partial" (adjusted for effect size) or "raw".}
+
+\item{epsilon_squared}{Compute \link[=eta_squared]{epsilon squared} as index of effect size.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -30,11 +37,11 @@ df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model, omega_squared = "partial")
+model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
 
 model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 model_parameters(model)
-model_parameters(model, omega_squared = "partial")
+model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
 
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)

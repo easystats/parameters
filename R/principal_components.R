@@ -17,7 +17,6 @@
 #'
 #' @examples
 #' library(parameters)
-#'
 #' \donttest{
 #' principal_components(mtcars[, 1:4])
 #' }
@@ -27,7 +26,6 @@
 #' pca <- principal_components(mtcars[, 1:5], n = 2)
 #' summary(pca)
 #' predict(pca)
-#'
 #' @return A data.frame of loadings.
 #' @references \itemize{
 #'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
@@ -177,11 +175,11 @@ predict.parameters_efa <- function(object, newdata = NULL, names = NULL, ...) {
 
 #' @export
 print.parameters_efa <- function(x, digits = 2, ...) {
-  if(!is.null(attributes(x)$type)){
+  if (!is.null(attributes(x)$type)) {
     insight::print_colour(.text_components_variance(x), "yellow")
     cat("\n\n")
   }
-  cat(format_table(format_value(x, digits = digits)))
+  cat(format_table(x, digits = digits))
 }
 
 
@@ -200,7 +198,6 @@ principal_components.merMod <- principal_components.lm
 
 #' @keywords internal
 .text_components_variance <- function(x) {
-
   type <- attributes(x)$type
   if (type %in% c("prcomp", "principal")) {
     type <- "principal component"

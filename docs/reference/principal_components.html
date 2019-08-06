@@ -187,6 +187,10 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data.frame of loadings.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <ul>
@@ -201,36 +205,34 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
-
-<span class='co'># principal_components(mtcars[, 1:4])</span>
-<span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; The 7 principal components accounted for 100.00% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%, PC7 = 0.70%).
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>The unique principal component accounted for 87.55% of the total variance of the original data.</span><span>
 #&gt; 
-#&gt;   Variable        PC1        PC2       PC3        PC4       PC5        PC6 PC7
-#&gt; 1      mpg -0.9308661         NA        NA -0.3047324        NA         NA  NA
-#&gt; 2      cyl  0.9578708         NA        NA         NA        NA -0.2149809  NA
-#&gt; 3     disp  0.9528463         NA        NA -0.2335489        NA         NA  NA
-#&gt; 4       hp  0.8744936  0.3623835        NA         NA 0.2992024         NA  NA
-#&gt; 5     drat -0.7468681  0.4824288 0.4435378         NA        NA         NA  NA
-#&gt; 6       wt  0.8825092 -0.3466793 0.2587107         NA        NA         NA  NA
-#&gt; 7     qsec -0.5410937 -0.8058477        NA         NA        NA         NA  NA
-#&gt;   Complexity
-#&gt; 1   1.315779
-#&gt; 2   1.184449
-#&gt; 3   1.208044
-#&gt; 4   1.638575
-#&gt; 5   2.474732
-#&gt; 6   1.597572
-#&gt; 7   1.965888</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; The 2 principal components accounted for 89.18% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%).
+#&gt; Variable |   PC1 | Complexity
+#&gt; -----------------------------
+#&gt; mpg      | -0.93 |       1.00
+#&gt; cyl      |  0.96 |       1.00
+#&gt; disp     |  0.95 |       1.00
+#&gt; hp       |  0.91 |       1.00</div></span><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>The 7 principal components accounted for 100.00% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%, PC7 = 0.70%).</span><span>
 #&gt; 
-#&gt;   Variable        PC1        PC2 Complexity
-#&gt; 1      cyl  0.9578708         NA   1.015511
-#&gt; 2     disp  0.9528463         NA   1.017297
-#&gt; 3      mpg -0.9308661         NA   1.018371
-#&gt; 4       wt  0.8825092         NA   1.301458
-#&gt; 5       hp  0.8744936         NA   1.333605
-#&gt; 6     drat -0.7468681         NA   1.710738
-#&gt; 7     qsec         NA -0.8058477   1.749385</div><div class='input'>
+#&gt; Variable |   PC1 |   PC2 |  PC3 |   PC4 |  PC5 |   PC6 | PC7 | Complexity
+#&gt; -------------------------------------------------------------------------
+#&gt; mpg      | -0.93 |    NA |   NA | -0.30 |   NA |    NA |  NA |       1.32
+#&gt; cyl      |  0.96 |    NA |   NA |    NA |   NA | -0.21 |  NA |       1.18
+#&gt; disp     |  0.95 |    NA |   NA | -0.23 |   NA |    NA |  NA |       1.21
+#&gt; hp       |  0.87 |  0.36 |   NA |    NA | 0.30 |    NA |  NA |       1.64
+#&gt; drat     | -0.75 |  0.48 | 0.44 |    NA |   NA |    NA |  NA |       2.47
+#&gt; wt       |  0.88 | -0.35 | 0.26 |    NA |   NA |    NA |  NA |       1.60
+#&gt; qsec     | -0.54 | -0.81 |   NA |    NA |   NA |    NA |  NA |       1.97</div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #BBBB00;'>The 2 principal components accounted for 89.18% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%).</span><span>
+#&gt; 
+#&gt; Variable |   PC1 |   PC2 | Complexity
+#&gt; -------------------------------------
+#&gt; cyl      |  0.96 |    NA |       1.02
+#&gt; disp     |  0.95 |    NA |       1.02
+#&gt; mpg      | -0.93 |    NA |       1.02
+#&gt; wt       |  0.88 |    NA |       1.30
+#&gt; hp       |  0.87 |    NA |       1.33
+#&gt; drat     | -0.75 |    NA |       1.71
+#&gt; qsec     |    NA | -0.81 |       1.75</div><div class='input'>
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;   Component Eigenvalues  Variance Variance_Cumulative
 #&gt; 1       PC1   4.0379396 0.8075879           0.8075879
@@ -266,13 +268,16 @@
 #&gt; 29  1.55523735 -2.06076910
 #&gt; 30 -0.18704672 -0.26276186
 #&gt; 31  2.36338454 -1.64100466
-#&gt; 32 -1.71202696 -0.33478623</div></pre>
+#&gt; 32 -1.71202696 -0.33478623</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>

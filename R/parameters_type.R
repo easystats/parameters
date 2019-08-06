@@ -8,11 +8,9 @@
 #' model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
 #'
 #' parameters_type(model)
-#'
 #' @return A data.frame.
 #' @export
-parameters_type <- function(model, ...){
-
+parameters_type <- function(model, ...) {
   params_table <- data.frame(
     Parameter = insight::find_parameters(model)$conditional,
     stringsAsFactors = FALSE
@@ -34,13 +32,13 @@ parameters_type <- function(model, ...){
 
 #' @keywords internal
 .parameters_type <- function(name, data) {
-  if(is.na(name)){
+  if (is.na(name)) {
     return(c(NA, NA, NA))
   } else if (grepl(":", name)) {
     var <- unlist(strsplit(name, ":", fixed = TRUE))
-    if(length(var) > 2){
+    if (length(var) > 2) {
       var <- c(tail(var, 1), paste0(head(var, -1), collapse = ":"))
-    } else{
+    } else {
       var <- rev(var)
     }
     return(c("interaction", var))

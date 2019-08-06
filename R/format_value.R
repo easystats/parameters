@@ -24,7 +24,6 @@
 #' @export
 format_value <- function(x, digits = 2, protect_integers = FALSE, ...) {
   UseMethod("format_value")
-
 }
 
 
@@ -36,11 +35,13 @@ format_value.data.frame <- function(x, digits = 2, protect_integers = FALSE, ...
 
 #' @export
 format_value.numeric <- function(x, digits = 2, protect_integers = FALSE, ...) {
-  if(protect_integers){
-    .format_value_unless_integer(x, digits = digits, ...)
-  } else{
-    .format_value(x, digits = digits, ...)
+  if (protect_integers) {
+    out <- .format_value_unless_integer(x, digits = digits, ...)
+  } else {
+    out <- .format_value(x, digits = digits, ...)
   }
+  out[out == "-0"] <- "0"
+  out
 }
 
 #' @export

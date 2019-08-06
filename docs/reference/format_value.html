@@ -152,9 +152,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>format_value</span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
-
-<span class='fu'>format_value_unless_integers</span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>format_value</span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>protect_integers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,20 +166,209 @@
       <td><p>Number of significant digits.</p></td>
     </tr>
     <tr>
+      <th>protect_integers</th>
+      <td><p>Should integers be kept as integers (i.e., without decimals)?</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A formatted string.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>format_value</span>(<span class='fl'>1.20</span>)</div><div class='output co'>#&gt; [1] "1.20"</div><div class='input'><span class='fu'>format_value</span>(<span class='fl'>1.2</span>)</div><div class='output co'>#&gt; [1] "1.20"</div><div class='input'><span class='fu'>format_value</span>(<span class='fl'>1.2012313</span>)</div><div class='output co'>#&gt; [1] "1.20"</div><div class='input'><span class='fu'>format_value</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.0045</span>, <span class='fl'>234</span>, -<span class='fl'>23</span>))</div><div class='output co'>#&gt; [1] "0.00"   "234.00" "-23.00"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>format_value</span>(<span class='fl'>1.20</span>)</div><div class='output co'>#&gt; [1] "1.20"</div><div class='input'><span class='fu'>format_value</span>(<span class='fl'>1.2</span>)</div><div class='output co'>#&gt; [1] "1.20"</div><div class='input'><span class='fu'>format_value</span>(<span class='fl'>1.2012313</span>)</div><div class='output co'>#&gt; [1] "1.20"</div><div class='input'><span class='fu'>format_value</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.0045</span>, <span class='fl'>234</span>, -<span class='fl'>23</span>))</div><div class='output co'>#&gt; [1] "0.00"   "234.00" "-23.00"</div><div class='input'>
+<span class='fu'>format_value</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>as.factor</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; [1] A B A
+#&gt; Levels: A B</div><div class='input'><span class='fu'>format_value</span>(<span class='no'>iris</span>$<span class='no'>Species</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt;   [1] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;   [7] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [13] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [19] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [25] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [31] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [37] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [43] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [49] setosa     setosa     versicolor versicolor versicolor versicolor
+#&gt;  [55] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [61] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [67] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [73] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [79] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [85] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [91] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [97] versicolor versicolor versicolor versicolor virginica  virginica 
+#&gt; [103] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [109] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [115] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [121] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [127] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [133] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [139] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [145] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; Levels: setosa versicolor virginica</div><div class='input'>
+<span class='fu'>format_value</span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; [1] "3.00"</div><div class='input'><span class='fu'>format_value</span>(<span class='fl'>3</span>, <span class='kw'>protect_integers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "3"</div><div class='input'>
+<span class='fu'>format_value</span>(<span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+#&gt; 1           5.10        3.50         1.40        0.20     setosa
+#&gt; 2           4.90        3.00         1.40        0.20     setosa
+#&gt; 3           4.70        3.20         1.30        0.20     setosa
+#&gt; 4           4.60        3.10         1.50        0.20     setosa
+#&gt; 5           5.00        3.60         1.40        0.20     setosa
+#&gt; 6           5.40        3.90         1.70        0.40     setosa
+#&gt; 7           4.60        3.40         1.40        0.30     setosa
+#&gt; 8           5.00        3.40         1.50        0.20     setosa
+#&gt; 9           4.40        2.90         1.40        0.20     setosa
+#&gt; 10          4.90        3.10         1.50        0.10     setosa
+#&gt; 11          5.40        3.70         1.50        0.20     setosa
+#&gt; 12          4.80        3.40         1.60        0.20     setosa
+#&gt; 13          4.80        3.00         1.40        0.10     setosa
+#&gt; 14          4.30        3.00         1.10        0.10     setosa
+#&gt; 15          5.80        4.00         1.20        0.20     setosa
+#&gt; 16          5.70        4.40         1.50        0.40     setosa
+#&gt; 17          5.40        3.90         1.30        0.40     setosa
+#&gt; 18          5.10        3.50         1.40        0.30     setosa
+#&gt; 19          5.70        3.80         1.70        0.30     setosa
+#&gt; 20          5.10        3.80         1.50        0.30     setosa
+#&gt; 21          5.40        3.40         1.70        0.20     setosa
+#&gt; 22          5.10        3.70         1.50        0.40     setosa
+#&gt; 23          4.60        3.60         1.00        0.20     setosa
+#&gt; 24          5.10        3.30         1.70        0.50     setosa
+#&gt; 25          4.80        3.40         1.90        0.20     setosa
+#&gt; 26          5.00        3.00         1.60        0.20     setosa
+#&gt; 27          5.00        3.40         1.60        0.40     setosa
+#&gt; 28          5.20        3.50         1.50        0.20     setosa
+#&gt; 29          5.20        3.40         1.40        0.20     setosa
+#&gt; 30          4.70        3.20         1.60        0.20     setosa
+#&gt; 31          4.80        3.10         1.60        0.20     setosa
+#&gt; 32          5.40        3.40         1.50        0.40     setosa
+#&gt; 33          5.20        4.10         1.50        0.10     setosa
+#&gt; 34          5.50        4.20         1.40        0.20     setosa
+#&gt; 35          4.90        3.10         1.50        0.20     setosa
+#&gt; 36          5.00        3.20         1.20        0.20     setosa
+#&gt; 37          5.50        3.50         1.30        0.20     setosa
+#&gt; 38          4.90        3.60         1.40        0.10     setosa
+#&gt; 39          4.40        3.00         1.30        0.20     setosa
+#&gt; 40          5.10        3.40         1.50        0.20     setosa
+#&gt; 41          5.00        3.50         1.30        0.30     setosa
+#&gt; 42          4.50        2.30         1.30        0.30     setosa
+#&gt; 43          4.40        3.20         1.30        0.20     setosa
+#&gt; 44          5.00        3.50         1.60        0.60     setosa
+#&gt; 45          5.10        3.80         1.90        0.40     setosa
+#&gt; 46          4.80        3.00         1.40        0.30     setosa
+#&gt; 47          5.10        3.80         1.60        0.20     setosa
+#&gt; 48          4.60        3.20         1.40        0.20     setosa
+#&gt; 49          5.30        3.70         1.50        0.20     setosa
+#&gt; 50          5.00        3.30         1.40        0.20     setosa
+#&gt; 51          7.00        3.20         4.70        1.40 versicolor
+#&gt; 52          6.40        3.20         4.50        1.50 versicolor
+#&gt; 53          6.90        3.10         4.90        1.50 versicolor
+#&gt; 54          5.50        2.30         4.00        1.30 versicolor
+#&gt; 55          6.50        2.80         4.60        1.50 versicolor
+#&gt; 56          5.70        2.80         4.50        1.30 versicolor
+#&gt; 57          6.30        3.30         4.70        1.60 versicolor
+#&gt; 58          4.90        2.40         3.30        1.00 versicolor
+#&gt; 59          6.60        2.90         4.60        1.30 versicolor
+#&gt; 60          5.20        2.70         3.90        1.40 versicolor
+#&gt; 61          5.00        2.00         3.50        1.00 versicolor
+#&gt; 62          5.90        3.00         4.20        1.50 versicolor
+#&gt; 63          6.00        2.20         4.00        1.00 versicolor
+#&gt; 64          6.10        2.90         4.70        1.40 versicolor
+#&gt; 65          5.60        2.90         3.60        1.30 versicolor
+#&gt; 66          6.70        3.10         4.40        1.40 versicolor
+#&gt; 67          5.60        3.00         4.50        1.50 versicolor
+#&gt; 68          5.80        2.70         4.10        1.00 versicolor
+#&gt; 69          6.20        2.20         4.50        1.50 versicolor
+#&gt; 70          5.60        2.50         3.90        1.10 versicolor
+#&gt; 71          5.90        3.20         4.80        1.80 versicolor
+#&gt; 72          6.10        2.80         4.00        1.30 versicolor
+#&gt; 73          6.30        2.50         4.90        1.50 versicolor
+#&gt; 74          6.10        2.80         4.70        1.20 versicolor
+#&gt; 75          6.40        2.90         4.30        1.30 versicolor
+#&gt; 76          6.60        3.00         4.40        1.40 versicolor
+#&gt; 77          6.80        2.80         4.80        1.40 versicolor
+#&gt; 78          6.70        3.00         5.00        1.70 versicolor
+#&gt; 79          6.00        2.90         4.50        1.50 versicolor
+#&gt; 80          5.70        2.60         3.50        1.00 versicolor
+#&gt; 81          5.50        2.40         3.80        1.10 versicolor
+#&gt; 82          5.50        2.40         3.70        1.00 versicolor
+#&gt; 83          5.80        2.70         3.90        1.20 versicolor
+#&gt; 84          6.00        2.70         5.10        1.60 versicolor
+#&gt; 85          5.40        3.00         4.50        1.50 versicolor
+#&gt; 86          6.00        3.40         4.50        1.60 versicolor
+#&gt; 87          6.70        3.10         4.70        1.50 versicolor
+#&gt; 88          6.30        2.30         4.40        1.30 versicolor
+#&gt; 89          5.60        3.00         4.10        1.30 versicolor
+#&gt; 90          5.50        2.50         4.00        1.30 versicolor
+#&gt; 91          5.50        2.60         4.40        1.20 versicolor
+#&gt; 92          6.10        3.00         4.60        1.40 versicolor
+#&gt; 93          5.80        2.60         4.00        1.20 versicolor
+#&gt; 94          5.00        2.30         3.30        1.00 versicolor
+#&gt; 95          5.60        2.70         4.20        1.30 versicolor
+#&gt; 96          5.70        3.00         4.20        1.20 versicolor
+#&gt; 97          5.70        2.90         4.20        1.30 versicolor
+#&gt; 98          6.20        2.90         4.30        1.30 versicolor
+#&gt; 99          5.10        2.50         3.00        1.10 versicolor
+#&gt; 100         5.70        2.80         4.10        1.30 versicolor
+#&gt; 101         6.30        3.30         6.00        2.50  virginica
+#&gt; 102         5.80        2.70         5.10        1.90  virginica
+#&gt; 103         7.10        3.00         5.90        2.10  virginica
+#&gt; 104         6.30        2.90         5.60        1.80  virginica
+#&gt; 105         6.50        3.00         5.80        2.20  virginica
+#&gt; 106         7.60        3.00         6.60        2.10  virginica
+#&gt; 107         4.90        2.50         4.50        1.70  virginica
+#&gt; 108         7.30        2.90         6.30        1.80  virginica
+#&gt; 109         6.70        2.50         5.80        1.80  virginica
+#&gt; 110         7.20        3.60         6.10        2.50  virginica
+#&gt; 111         6.50        3.20         5.10        2.00  virginica
+#&gt; 112         6.40        2.70         5.30        1.90  virginica
+#&gt; 113         6.80        3.00         5.50        2.10  virginica
+#&gt; 114         5.70        2.50         5.00        2.00  virginica
+#&gt; 115         5.80        2.80         5.10        2.40  virginica
+#&gt; 116         6.40        3.20         5.30        2.30  virginica
+#&gt; 117         6.50        3.00         5.50        1.80  virginica
+#&gt; 118         7.70        3.80         6.70        2.20  virginica
+#&gt; 119         7.70        2.60         6.90        2.30  virginica
+#&gt; 120         6.00        2.20         5.00        1.50  virginica
+#&gt; 121         6.90        3.20         5.70        2.30  virginica
+#&gt; 122         5.60        2.80         4.90        2.00  virginica
+#&gt; 123         7.70        2.80         6.70        2.00  virginica
+#&gt; 124         6.30        2.70         4.90        1.80  virginica
+#&gt; 125         6.70        3.30         5.70        2.10  virginica
+#&gt; 126         7.20        3.20         6.00        1.80  virginica
+#&gt; 127         6.20        2.80         4.80        1.80  virginica
+#&gt; 128         6.10        3.00         4.90        1.80  virginica
+#&gt; 129         6.40        2.80         5.60        2.10  virginica
+#&gt; 130         7.20        3.00         5.80        1.60  virginica
+#&gt; 131         7.40        2.80         6.10        1.90  virginica
+#&gt; 132         7.90        3.80         6.40        2.00  virginica
+#&gt; 133         6.40        2.80         5.60        2.20  virginica
+#&gt; 134         6.30        2.80         5.10        1.50  virginica
+#&gt; 135         6.10        2.60         5.60        1.40  virginica
+#&gt; 136         7.70        3.00         6.10        2.30  virginica
+#&gt; 137         6.30        3.40         5.60        2.40  virginica
+#&gt; 138         6.40        3.10         5.50        1.80  virginica
+#&gt; 139         6.00        3.00         4.80        1.80  virginica
+#&gt; 140         6.90        3.10         5.40        2.10  virginica
+#&gt; 141         6.70        3.10         5.60        2.40  virginica
+#&gt; 142         6.90        3.10         5.10        2.30  virginica
+#&gt; 143         5.80        2.70         5.10        1.90  virginica
+#&gt; 144         6.80        3.20         5.90        2.30  virginica
+#&gt; 145         6.70        3.30         5.70        2.50  virginica
+#&gt; 146         6.70        3.00         5.20        2.30  virginica
+#&gt; 147         6.30        2.50         5.00        1.90  virginica
+#&gt; 148         6.50        3.00         5.20        2.00  virginica
+#&gt; 149         6.20        3.40         5.40        2.30  virginica
+#&gt; 150         5.90        3.00         5.10        1.80  virginica</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

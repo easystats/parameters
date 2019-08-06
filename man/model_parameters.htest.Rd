@@ -31,5 +31,4 @@ model_parameters(model)
 
 model <- t.test(iris$Sepal.Width, mu = 1)
 model_parameters(model)
-
 }

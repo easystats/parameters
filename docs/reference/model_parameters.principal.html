@@ -177,6 +177,10 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data.frame of loadings.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <ul>
@@ -203,16 +207,17 @@
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/principal'>principal</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='st'>"none"</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>pca</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
 <span class='co'># }</span><div class='input'><span class='co'># Note that the latter is identical to the 'principal_components' function available in parameters:</span>
-<span class='fu'><a href='principal_components.html'>principal_components</a></span>(<span class='no'>attitude</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; The 3 principal components accounted for 81.49% of the total variance of the original data (PC1 = 53.09%, PC2 = 16.30%, PC3 = 12.10%).
+<span class='fu'><a href='principal_components.html'>principal_components</a></span>(<span class='no'>attitude</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>The 3 principal components accounted for 81.49% of the total variance of the original data (PC1 = 53.09%, PC2 = 16.30%, PC3 = 12.10%).</span><span>
 #&gt; 
-#&gt;     Variable       PC1        PC2        PC3 Complexity
-#&gt; 1     raises 0.8619753         NA         NA   1.102249
-#&gt; 2 complaints 0.8492648 -0.3563602  0.2076599   1.476308
-#&gt; 3   learning 0.8261764         NA -0.2994027   1.265768
-#&gt; 4     rating 0.7961866 -0.4239721  0.2424866   1.739422
-#&gt; 5 privileges 0.6839314         NA         NA   1.175153
-#&gt; 6    advance 0.5832712  0.6086213 -0.4562244   2.849165
-#&gt; 7   critical 0.3573175  0.6436979  0.6450449   2.542072</div><span class='co'># NOT RUN {</span>
+#&gt; Variable   |  PC1 |   PC2 |   PC3 | Complexity
+#&gt; ----------------------------------------------
+#&gt; raises     | 0.86 |    NA |    NA |       1.10
+#&gt; complaints | 0.85 | -0.36 |  0.21 |       1.48
+#&gt; learning   | 0.83 |    NA | -0.30 |       1.27
+#&gt; rating     | 0.80 | -0.42 |  0.24 |       1.74
+#&gt; privileges | 0.68 |    NA |    NA |       1.18
+#&gt; advance    | 0.58 |  0.61 | -0.46 |       2.85
+#&gt; critical   | 0.36 |  0.64 |  0.65 |       2.54</div></span><span class='co'># NOT RUN {</span>
 <span class='co'># Exploratory Factor Analysis (EFA) ---------</span>
 <span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/fa'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -224,6 +229,8 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>

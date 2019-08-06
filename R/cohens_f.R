@@ -1,23 +1,4 @@
-#' Cohen's f
-#'
-#' Computation of Cohen's f for ANOVAs.
-#'
-#' @inheritParams eta_squared
-#'
-#' @examples
-#' library(parameters)
-#'
-#' df <- iris
-#' df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
-#'
-#' model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-#' cohens_f(model)
-#'
-#' model <- anova(lm(Sepal.Length ~ Sepal.Big * Species, data = df))
-#' cohens_f(model)
-#'
-#' @return Cohen's f values.
-#'
+#' @rdname eta_squared
 #' @export
 cohens_f <- function(model) {
   UseMethod("cohens_f")

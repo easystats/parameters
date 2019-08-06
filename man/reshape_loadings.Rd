@@ -35,6 +35,5 @@ loadings <- reshape_loadings(pca)
 
 loadings
 reshape_loadings(loadings)
-
 }
 }

@@ -171,14 +171,20 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list of indices related to KMO.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>A value of 0 indicates that the sum of partial correlations is large relative to the sum correlations, indicating factor analysis is likely to be inappropriate. A KMO value close to 1 indicates that the sum of partial correlations is not large relative to the sum of correlations and so factor analysis should yield distinct and reliable factors.</p>
 <p>Kaiser (1975) suggested that KMO &gt; .9 were marvelous, in the .80s, mertitourious, in the .70s, middling, in the .60s, medicore, in the 50s, miserable, and less than .5, unacceptable. Hair et al. (2006) suggest accepting a value &gt; 0.5. Values between 0.5 and 0.7 are mediocre, and values between 0.7 and 0.8 are good.</p>
+<p>This function is strongly inspired by the <code>KMO</code> function in the <code>psych</code> package (Revelle, 2016). All credits go to its author.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <ul>
+<li><p>Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.</p></li>
 <li><p>Kaiser, H. F. (1970). A second generation little jiffy. Psychometrika, 35(4), 401-415.</p></li>
 <li><p>Kaiser, H. F., \&amp; Rice, J. (1974). Little jiffy, mark IV. Educational and psychological measurement, 34(1), 111-117.</p></li>
 <li><p>Kaiser, H. F. (1974). An index of factorial simplicity. Psychometrika, 39(1), 31-36.</p></li>
@@ -188,13 +194,16 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
-<span class='fu'>check_kmo</span>(<span class='no'>mtcars</span>)</div><div class='output co'>#&gt; <span style='color: #00BB00;'>OK: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = 0.83).</span><span></div></span></pre>
+<span class='fu'>check_kmo</span>(<span class='no'>mtcars</span>)</div><div class='output co'>#&gt; <span style='color: #00BB00;'>OK: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = 0.83).</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>
@@ -202,8 +211,6 @@
       <li><a href="#examples">Examples</a></li>
     </ul>
 
-    <h2>Author</h2>
-    <p>William Revelle (the psych package)</p>
   </div>
 </div>
 

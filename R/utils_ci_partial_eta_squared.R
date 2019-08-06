@@ -22,8 +22,8 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-.ci_partial_eta_squared <- function(F.value, df1, df2, conf.level=.90) {
+#' @keywords internal
+.ci_partial_eta_squared <- function(F.value, df1, df2, conf.level = .90) {
   F_value <- F.value
 
   conf_level <- conf.level
@@ -55,6 +55,6 @@
 }
 
 
-get_partial_eta2_from_lambda <- function(lambda, df1, df2)  {
+get_partial_eta2_from_lambda <- function(lambda, df1, df2) {
   lambda / (lambda + df1 + df2 + 1)
 }

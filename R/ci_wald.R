@@ -7,7 +7,6 @@
 #' @importFrom stats qt coef
 #' @export
 ci_wald <- function(model, ci = 0.95, dof = Inf) {
-
   out <- lapply(ci, function(ci, model, dof) .ci_wald(model, ci, dof), model = model, dof = dof)
 
   out <- do.call(rbind, out)
@@ -17,7 +16,7 @@ ci_wald <- function(model, ci = 0.95, dof = Inf) {
 
 
 #' @keywords internal
-.ci_wald <- function(x, ci, dof = Inf){
+.ci_wald <- function(x, ci, dof = Inf) {
   params <- as.data.frame(stats::coef(summary(x)))
 
   # all(se > 0))

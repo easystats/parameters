@@ -135,7 +135,6 @@ standardize.grouped_df <- function(x, robust = FALSE, method = "default", select
 #'
 #' @examples
 #' summary(standardize(iris))
-#'
 #' @return A standardized data.frame.
 #' @export
 standardize.data.frame <- function(x, robust = FALSE, method = "default", select = NULL, exclude = NULL, verbose = TRUE, force = FALSE, ...) {

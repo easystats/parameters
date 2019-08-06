@@ -37,5 +37,4 @@ model_parameters(model, bootstrap = TRUE)
 
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 model_parameters(model)
-
 }

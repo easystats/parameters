@@ -11,7 +11,6 @@ bayestestR::ci
 #' @importFrom stats confint
 #' @export
 ci.glm <- function(x, ci = 0.95, ...) {
-
   suppressMessages(out <- lapply(ci, function(ci, x) .ci_lm(x, ci, ...), x = x))
 
   out <- do.call(rbind, out)
@@ -28,7 +27,7 @@ ci.lm <- ci.glm
 
 
 #' @keywords internal
-.ci_lm <- function(x, ci, ...){
+.ci_lm <- function(x, ci, ...) {
   out <- stats::confint(x, level = ci)
 
   out <- as.data.frame(out, stringsAsFactors = FALSE)
@@ -80,7 +79,7 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
 
 
 #' @keywords internal
-.ci_boot_merMod <- function(x, ci, ...){
+.ci_boot_merMod <- function(x, ci, ...) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
   }
@@ -97,28 +96,3 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
   row.names(out) <- NULL
   out
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
