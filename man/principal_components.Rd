@@ -5,16 +5,18 @@
 \alias{PCA}
 \title{Principal Component Analysis (PCA)}
 \usage{
-principal_components(x, n = NULL, sort = FALSE, threshold = NULL,
-  standardize = TRUE, ...)
+principal_components(x, n = NULL, rotation = "none", sort = FALSE,
+  threshold = NULL, standardize = TRUE, ...)
 
-PCA(x, n = NULL, sort = FALSE, threshold = NULL,
+PCA(x, n = NULL, rotation = "none", sort = FALSE, threshold = NULL,
   standardize = TRUE, ...)
 }
 \arguments{
 \item{x}{A dataframe.}
 
 \item{n}{Number of components to extract. If \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}.}
+
+\item{rotation}{If not "none", the PCA will be computed using the \code{psych} package. Possible options include "varimax", "quartimax", "promax", "oblimin", "simplimax", and "cluster". See \code{psych::fa} for details.}
 
 \item{sort}{Sort the loadings.}
 
@@ -37,15 +39,19 @@ This function performs a principal component analysis (PCA) and returns the load
 }
 \examples{
 library(parameters)
-\donttest{
-principal_components(mtcars[, 1:4])
-}
+
 principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
-principal_components(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
+principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
 
 pca <- principal_components(mtcars[, 1:5], n = 2)
 summary(pca)
 predict(pca)
+
+\donttest{
+# Automated number of components
+principal_components(mtcars[, 1:4])
+}
+
 }
 \references{
 \itemize{

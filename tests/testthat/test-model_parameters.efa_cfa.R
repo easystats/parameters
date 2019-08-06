@@ -1,5 +1,24 @@
 context("efa-cfa")
 
+
+test_that("principal_components", {
+  set.seed(333)
+
+  x <- principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
+  testthat::expect_equal(c(ncol(x), nrow(x)), c(9, 7))
+  x <- principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
+  testthat::expect_equal(c(ncol(x), nrow(x)), c(5, 7))
+
+  pca <- principal_components(mtcars[, 1:5], n = 2)
+  testthat::expect_equal(c(ncol(pca), nrow(pca)), c(4, 5))
+  x <- summary(pca)
+  testthat::expect_equal(c(ncol(x), nrow(x)), c(4, 2))
+  x <- predict(pca)
+  testthat::expect_equal(c(ncol(x), nrow(x)), c(2, 32))
+})
+
+
+
 test_that("efa-cfa", {
   library(psych)
   library(lavaan)
