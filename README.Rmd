@@ -150,11 +150,11 @@ model_parameters(model)
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model, omega_squared = TRUE)
+model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model, omega_squared = TRUE)
+model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
 ```
 
 

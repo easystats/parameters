@@ -140,13 +140,13 @@ model_parameters(model)
 
 ``` r
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model, omega_squared = TRUE)
+model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
 ```
 
-    # Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq
-    # --------------------------------------------------------------------
-    # Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | > .1 |     0.00
-    # Residuals |      101.07 | 148 |        0.68 |   NA |   NA |       NA
+    # Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
+    # --------------------------------------------------------------------------------------------------------------
+    # Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | > .1 |               0.00 |             0.01 |       0.00
+    # Residuals |      101.07 | 148 |        0.68 |   NA |   NA |                 NA |               NA |         NA
 
 #### Repeated measures
 
