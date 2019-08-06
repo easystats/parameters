@@ -1,23 +1,4 @@
-#' Epsilon Squared.
-#'
-#' Computation of Epsilon Squared for ANOVAs.
-#'
-#' @inheritParams eta_squared
-#'
-#' @examples
-#' library(parameters)
-#'
-#' df <- iris
-#' df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
-#'
-#' model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-#' epsilon_squared(model)
-#'
-#' model <- anova(lm(Sepal.Length ~ Sepal.Big * Species, data = df))
-#' epsilon_squared(model)
-#'
-#' @return Cohen's f values.
-#'
+#' @rdname eta_squared
 #' @export
 epsilon_squared <- function(model) {
   UseMethod("epsilon_squared")
@@ -56,7 +37,7 @@ epsilon_squared.aovlist <- function(model) {
 }
 
 
-
+#' @keywords internal
 .extract_epsilon_squared <- function(params, values) {
   params$Epsilon_sq <- (params$Sum_Squares - params$df * values$Mean_Square_residuals) / values$Sum_Squares_total
   params[params$Parameter == "Residuals", "Epsilon_sq"] <- NA

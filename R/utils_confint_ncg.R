@@ -4,6 +4,7 @@
 # License: GPL-3
 
 #' @importFrom stats pf qf
+#' @keywords internal
 .confint_ncg <- function(F.value = NULL, conf.level = 0.95, df.1 = NULL, df.2 = NULL) {
   alpha.lower <- alpha.upper <- (1 - conf.level) / 2
   tol <- 1e-09

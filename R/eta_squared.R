@@ -1,13 +1,28 @@
-#' (Partial) Eta Squared Squared.
+#' ANOVA Effect Size (Omega Squared, Eta Squared, Epsilon Squared)
 #'
-#' Computation of (Partial) Eta Squared for ANOVAs.
+#' Set of functions to compute (partial) indices for ANOVAs, such as omega squared, the eta squared or the epsilon squared (Kelly, 1935). They are measures of effect size, or the degree of association for a population. They are an estimate of how much variance in the response variables are accounted for by the explanatory variables.
 #'
-#' @param model an ANOVA object.
-#' @param partial Return partial eta squared.
-#' @param ci Scalar between 0 and 1. If not \code{NULL}, lower and upper
-#'   confidence intervals are returned as well.
-#'
+#' @param model An ANOVA object.
+#' @param partial If \code{TRUE}, return partial indices (adjusted for sample size).
+#' @param ci Confidence Interval (CI) level computed via boostrap.
 #' @inheritParams model_bootstrap
+#'
+#' @details
+#' \subsection{Omega Squared}{
+#' Omega squared is considered as a lesser biased alternative to eta-squared, especially when sample sizes are small (Albers \& Lakens, 2018). Field (2013) suggests the following interpretation heuristics:
+#' \itemize{
+#'   \item Omega Squared = 0 - 0.01: Very small
+#'   \item Omega Squared = 0.01 - 0.06: Small
+#'   \item Omega Squared = 0.06 - 0.14: Medium
+#'   \item Omega Squared > 0.14: Large
+#' }
+#'
+#' } \subsection{Epsilon Squared}{
+#' It is one of the least common measures of effect sizes: omega squared and eta squared are used more frequently. Altough having a different name and a formula in appearance different, this index is equivalent to the adjusted R2 (Allen, 2017, p. 382).
+#'
+#' } \subsection{Cohen's f}{
+#' Cohen's f statistic is one appropriate effect size index to use for a oneway analysis of variance (ANOVA). Cohen's f can take on values between zero, when the population means are all equal, and an indefinitely large number as standard deviation of means increases relative to the average standard deviation within each group. Cohen has suggested that the values of 0.10, 0.25, and 0.40 represent small, medium, and large effect sizes, respectively.
+#' }
 #'
 #' @examples
 #' library(parameters)
@@ -16,18 +31,36 @@
 #' df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big, data = df)
+#' omega_squared(model)
 #' eta_squared(model)
+#' epsilon_squared(model)
+#' cohens_f(model)
 #'
 #' model <- anova(lm(Sepal.Length ~ Sepal.Big * Species, data = df))
+#' omega_squared(model)
 #' eta_squared(model)
+#' epsilon_squared(model)
 #'
 #' \donttest{
 #' # Don't work for now
 #' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
+#' omega_squared(model)
 #' eta_squared(model)
+#' epsilon_squared(model)
 #' }
 #'
-#' @return Eta squared values.
+#' @return Data.frame containig the effect size values.
+#'
+#'
+#' @references \itemize{
+#'   \item Albers, C., \& Lakens, D. (2018). When power analyses based on pilot data are biased: Inaccurate effect size estimators and follow-up bias. Journal of experimental social psychology, 74, 187-195.
+#'   \item Allen, R. (2017). Statistics and Experimental Design for Psychologists: A Model Comparison Approach. World Scientific Publishing Company.
+#'   \item Field, A. (2013). Discovering statistics using IBM SPSS statistics. sage.
+#'   \item Kelley, K. (2007). Methods for the behavioral, educational, and social sciences: An R package. Behavior Research Methods, 39(4), 979-984.
+#'   \item Kelley, T. (1935) An unbiased correlation ratio measure. Proceedings of the National Academy of Sciences. 21(9). 554-559.
+#' }
+#'
+#' The computation of CIs is based on the implementation done by Stanley (2018) in the \code{ApaTables} package and Kelley (2007) in the \code{MBESS} package. All credits go to them.
 #'
 #' @export
 eta_squared <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
@@ -88,7 +121,7 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations = 1
 }
 
 
-
+#' @keywords internal
 .extract_eta_squared <- function(params, values, partial) {
   if (partial == FALSE) {
     params[params$Parameter == "Residuals", "Eta_Sq"] <- NA
@@ -102,7 +135,7 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations = 1
 }
 
 
-
+#' @keywords internal
 .ci_eta_squared <- function(x, partial, ci.lvl, df, statistic, model, iterations) {
   if (is.null(ci.lvl) || is.na(ci.lvl)) return(x)
 
@@ -142,15 +175,14 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations = 1
     }
 
     dat <- insight::get_data(model)
-    f <- insight::find_formula(model)
 
     boot_function <- function(model, data, indices) {
       d <- data[indices, ] # allows boot to select sample
-      fit <- stats::aov(f$conditional, data = d)
+      fit <- stats::aov(insight::find_formula(model)$conditional, data = d)
       params <- .extract_parameters_anova(fit)
       values <- .values_aov(params)
       osq <- .extract_eta_squared(params, values, partial = FALSE)
-      return(osq[["Eta_Sq"]])
+      osq[["Eta_Sq"]]
     }
 
     results <- boot::boot(

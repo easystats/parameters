@@ -22,16 +22,17 @@ test_that("efa-cfa", {
   params <- parameters::model_parameters(m1, standardize = TRUE, type = "all")
   testthat::expect_equal(c(nrow(params), ncol(params)), c(20, 9))
 
-  x <- anova(m1, lavaan::cfa(model2, data = attitude))
+  x <- lavaan::anova(m1, lavaan::cfa(model2, data = attitude))
   params <- parameters::model_parameters(x)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 6))
 })
 
 
 test_that("BayesFM", {
+  set.seed(333)
   library(BayesFM)
 
-  efa <- BayesFM::befa(mtcars, iter = 1000)
-  params <- parameters::model_parameters(efa, sort = TRUE)
+  befa <- BayesFM::befa(mtcars, iter = 1000)
+  params <- parameters::model_parameters(befa, sort = TRUE)
   testthat::expect_equal(nrow(params), 11)
 })

@@ -1,31 +1,4 @@
-#' (Partial) Omega Squared.
-#'
-#' Computation of (Partial) Omega Squared for ANOVAs.
-#'
-#' @param partial Return partial omega squared.
-#' @inheritParams eta_squared
-#' @inheritParams model_bootstrap
-#'
-#' @examples
-#' library(parameters)
-#'
-#' df <- iris
-#' df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
-#'
-#' model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-#' omega_squared(model)
-#'
-#' model <- anova(lm(Sepal.Length ~ Sepal.Big * Species, data = df))
-#' omega_squared(model)
-#'
-#' \donttest{
-#' # Don't work for now
-#' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
-#' omega_squared(model)
-#' }
-#'
-#' @return Omega squared values.
-#'
+#' @rdname eta_squared
 #' @export
 omega_squared <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
   UseMethod("omega_squared")
@@ -84,7 +57,7 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations =
   )
 }
 
-
+#' @keywords internal
 .extract_omega_squared <- function(params, values, partial) {
   if (partial == FALSE) {
     params$Omega_Sq <- (params$Sum_Squares - params$df * values$Mean_Square_residuals) / (values$Sum_Squares_total + values$Mean_Square_residuals)
@@ -101,6 +74,7 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations =
 
 #' @importFrom stats aov quantile
 #' @importFrom insight get_data find_formula
+#' @keywords internal
 .ci_omega_squared <- function(x, partial, ci.lvl, df, statistic, model, iterations) {
   if (is.null(ci.lvl) || is.na(ci.lvl)) return(x)
   N <- sum(df) + 1
@@ -140,11 +114,10 @@ omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations =
     }
 
     dat <- insight::get_data(model)
-    f <- insight::find_formula(model)
 
     boot_function <- function(model, data, indices) {
       d <- data[indices, ] # allows boot to select sample
-      fit <- stats::aov(f$conditional, data = d)
+      fit <- stats::aov(insight::find_formula(model)$conditional, data = d)
       params <- .extract_parameters_anova(fit)
       values <- .values_aov(params)
       osq <- .extract_omega_squared(params, values, partial = TRUE)

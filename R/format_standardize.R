@@ -12,7 +12,7 @@
 #' format_standardize(c(-1, 0, 1, 2), reference = rnorm(1000))
 #' format_standardize(c(-1, 0, 1, 2), reference = rnorm(1000), robust = TRUE)
 #'
-#'
+#' @import stats
 #' @export
 format_standardize <- function(x, reference = x, robust = FALSE, digits = NULL, ...){
 

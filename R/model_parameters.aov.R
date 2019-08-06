@@ -95,7 +95,12 @@ model_parameters.aovlist <- model_parameters.aov
     } else if (length(attributes(model)$heading) > 2) {
       parameters$Parameter <- attributes(model)$heading[-1:-2]
     }
-    parameters$Mean_Square <- parameters[["Sum Sq"]] / parameters[["Df"]]
+
+    # If mixed models...
+    sumsq <- names(parameters)[names(parameters) %in% c("Sum Sq", "Sum of Sq")]
+    if(length(sumsq) != 0){
+      parameters$Mean_Square <- parameters[[sumsq]] / parameters[["Df"]]
+    }
   } else if ("aovlist" %in% class(model)) {
     if (names(model)[1L] == "(Intercept)") {
       model <- model[-1L]
@@ -148,5 +153,5 @@ model_parameters.aovlist <- model_parameters.aov
   order <- c("Group", "Parameter", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_df", "RSS", "Sum_Squares", "df", "df_residual", "Mean_Square", "F", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
-  return(parameters)
+  parameters
 }

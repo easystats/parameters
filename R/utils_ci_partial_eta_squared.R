@@ -22,7 +22,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
+#' @keywords internal
 .ci_partial_eta_squared <- function(F.value, df1, df2, conf.level=.90) {
   F_value <- F.value
 
