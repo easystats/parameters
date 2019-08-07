@@ -39,13 +39,22 @@ predict.parameters_efa <- function(object, newdata = NULL, names = NULL, ...) {
 }
 
 
+#' @importFrom insight print_color print_colour
 #' @export
 print.parameters_efa <- function(x, digits = 2, ...) {
-  if (!is.null(attributes(x)$type)) {
-    insight::print_colour(.text_components_variance(x), "yellow")
-    cat("\n\n")
-  }
+  .rotation <- attr(x, "rotation", exact = TRUE)
+
+  if (.rotation == "none")
+    insight::print_color("# Loadings from Principal Component Analysis (no rotation)\n\n", "blue")
+  else
+    insight::print_color(sprintf("# Rotated loadings from Principal Component Analysis (%s-rotation)\n\n", .rotation), "blue")
+
   cat(format_table(x, digits = digits, ...))
+
+  if (!is.null(attributes(x)$type)) {
+    cat("\n")
+    insight::print_colour(.text_components_variance(x), "yellow")
+  }
 }
 
 
