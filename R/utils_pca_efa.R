@@ -27,6 +27,8 @@ summary.parameters_efa <- function(object, digits = 3, ...) {
 
   colnames(x) <- c("", col_names)
   cat(format_table(x, digits = digits, ...))
+
+  invisible(x)
 }
 
 
