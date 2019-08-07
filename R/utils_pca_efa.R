@@ -35,6 +35,8 @@ summary.parameters_efa <- function(object, ...) {
 #' @export
 print.parameters_efa_summary <- function(x, digits = 3, ...) {
   cat(format_table(x, digits = digits, ...))
+
+  invisible(x)
 }
 
 #' @export

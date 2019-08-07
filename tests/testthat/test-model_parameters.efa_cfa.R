@@ -12,7 +12,7 @@ test_that("principal_components", {
   pca <- principal_components(mtcars[, 1:5], n = 2)
   testthat::expect_equal(c(ncol(pca), nrow(pca)), c(4, 5))
   x <- summary(pca)
-  testthat::expect_equal(c(ncol(x), nrow(x)), c(4, 2))
+  testthat::expect_equal(c(ncol(x), nrow(x)), c(3, 5))
   x <- predict(pca)
   testthat::expect_equal(c(ncol(x), nrow(x)), c(2, 32))
 })
