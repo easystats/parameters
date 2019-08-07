@@ -5,8 +5,16 @@ sort.parameters_efa <- function(x, ...) {
 
 
 #' @export
-summary.parameters_efa <- function(object, ...) {
-  attributes(object)$summary
+summary.parameters_efa <- function(object, digits = 3, ...) {
+  x <- attributes(object)$summary
+  col_names <- x$Component
+  x <- as.data.frame(t(x[, -1]))
+  colnames(x) <- col_names
+  x <- cbind(
+    data.frame("Values" = c("Standard Deviation", "Eigenvalues", "Variance", "Cumulative Variance"), stringsAsFactors = FALSE),
+    rbind(attributes(object)$model$sdev, x)
+  )
+  cat(format_table(x, digits = digits, ...))
 }
 
 
