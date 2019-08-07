@@ -12,7 +12,7 @@
 #' cat(format_table(iris))
 #' cat(format_table(iris, sep = " ", header = "*", digits = 1))
 #' @export
-format_table <- function(x, sep = " | ", header = "-", digits = 2, protect_integers = TRUE) {
+format_table <- function(x, sep = " | ", header = "-", digits = 2, protect_integers = TRUE, na = "") {
   df <- x
 
   # round all numerics

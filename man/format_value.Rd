@@ -4,7 +4,7 @@
 \alias{format_value}
 \title{Numeric Values Formatting}
 \usage{
-format_value(x, digits = 2, protect_integers = FALSE, ...)
+format_value(x, digits = 2, protect_integers = FALSE, na = "", ...)
 }
 \arguments{
 \item{x}{Numeric value.}
@@ -12,6 +12,8 @@ format_value(x, digits = 2, protect_integers = FALSE, ...)
 \item{digits}{Number of significant digits.}
 
 \item{protect_integers}{Should integers be kept as integers (i.e., without decimals)?}
+
+\item{na}{Value by which `NA` values are replaced. By default, an empty string (i.e. \code{""}) is returned for `NA`.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

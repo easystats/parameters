@@ -18,7 +18,7 @@ n_factors(x, type = "FA", rotation = "varimax",
 
 \item{package}{Can be \code{"all"} or a vector containing \code{"nFactors"}, \code{"EGAnet"} and \code{"psych"}. These are the packages from which methods are used.}
 
-\item{safe}{If TRUE, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.}
+\item{safe}{If \code{TRUE}, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
