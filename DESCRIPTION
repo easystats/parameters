@@ -32,7 +32,7 @@ Suggests:
 	cAIC4,
 	covr,
 	dplyr,
-	EGAnet,
+	EGAnet (>= 0.7),
 	knitr,
 	lavaan,
 	lme4,
