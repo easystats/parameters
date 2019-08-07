@@ -55,21 +55,21 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
     x <- standardize(x, ...)
   }
 
-  if(rotation != "none"){
-    return(.pca_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, ...))
-  }
-
   # PCA
   model <- stats::prcomp(x, retx = TRUE, center = TRUE, scale. = TRUE, ...)
 
 
   # N factors
   if (is.null(n)) {
-    n <- as.numeric(n_factors(x, type = "PCA", rotation = "none", ...))
+    n <- as.numeric(n_factors(x, type = "PCA", rotation = rotation, ...))
   } else if (n == "all") {
     n <- length(model$sdev)
   } else if (n > length(model$sdev)) {
     n <- length(model$sdev)
+  }
+
+  if (rotation != "none") {
+    return(.pca_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, ...))
   }
 
   # Re-add centers and scales
