@@ -37,6 +37,9 @@ This function performs a principal component analysis (PCA) and returns the load
    \item \strong{Complexity} (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.
 }
 }
+\note{
+There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component.
+}
 \examples{
 library(parameters)
 
