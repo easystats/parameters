@@ -48,7 +48,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   nobs <- nrow(x)
 
   # TODO: this could be improved with better correlation
-  cormatrix <- cor(x, use = "pairwise.complete.obs")
+  cormatrix <- stats::cor(x, use = "pairwise.complete.obs")
   eigen_values <- eigen(cormatrix)$values
 
 
