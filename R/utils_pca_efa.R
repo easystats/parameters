@@ -14,8 +14,16 @@ summary.parameters_efa <- function(object, digits = 3, ...) {
 
   col_names <- x$Component
 
-  x <- as.data.frame(t(x[, c(6, 2:5)]))
-  x <- cbind(data.frame("Values" = c("Standard Deviation", "Eigenvalues", "Variance", "Cumulative Variance", "Explained Variance"), stringsAsFactors = FALSE), x)
+  cols <- intersect(
+    c("Std_Dev", "Eigenvalues", "Variance", "Variance_Cumulative", "Variance_Explained"),
+    colnames(x)
+  )
+
+  rows <- c("Eigenvalues", "Variance", "Cumulative Variance", "Explained Variance")
+  if ("Std_Dev" %in% cols) rows <- c("Standard Deviation", rows)
+
+  x <- as.data.frame(t(x[, cols]))
+  x <- cbind(data.frame("Values" = rows, stringsAsFactors = FALSE), x)
 
   colnames(x) <- c("", col_names)
   cat(format_table(x, digits = digits, ...))
