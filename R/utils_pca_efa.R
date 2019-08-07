@@ -7,15 +7,17 @@ sort.parameters_efa <- function(x, ...) {
 #' @export
 summary.parameters_efa <- function(object, digits = 3, ...) {
   insight::print_color("# (Explained) Variance of Principal Components\n\n", "blue")
+
   x <- attributes(object)$summary
   x$Variance_Explained <- x$Variance / sum(x$Variance)
+  x$Std_Dev <- attributes(object)$model$sdev
+
   col_names <- x$Component
-  x <- as.data.frame(t(x[, -1]))
-  colnames(x) <- col_names
-  x <- cbind(
-    data.frame("Values" = c("Standard Deviation", "Eigenvalues", "Variance", "Cumulative Variance", "Explained Variance"), stringsAsFactors = FALSE),
-    rbind(attributes(object)$model$sdev, x)
-  )
+
+  x <- as.data.frame(t(x[, c(6, 2:5)]))
+  x <- cbind(data.frame("Values" = c("Standard Deviation", "Eigenvalues", "Variance", "Cumulative Variance", "Explained Variance"), stringsAsFactors = FALSE), x)
+
+  colnames(x) <- c("", col_names)
   cat(format_table(x, digits = digits, ...))
 }
 
