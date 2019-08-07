@@ -4,7 +4,7 @@
 #'
 #' @param x A dataframe.
 #' @param n Number of components to extract. If \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}.
-#' @param rotation If not "none", the PCA will be computed using the \code{psych} package. Possible options include "varimax", "quartimax", "promax", "oblimin", "simplimax", and "cluster". See \code{psych::fa} for details.
+#' @param rotation If not "none", the PCA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, and \code{"cluster"}. See \code{\link[psych]{fa}} for details.
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).
 #' @param standardize A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).
@@ -33,7 +33,7 @@
 #'
 #' @return A data.frame of loadings.
 #' @references \itemize{
-#'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
+#'   \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
 #' }
 #' @importFrom stats prcomp
 #' @export

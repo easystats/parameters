@@ -12,6 +12,8 @@ n_factors(x, type = "FA", rotation = "varimax",
 
 \item{type}{Can be \code{"FA"} or \code{"PCA"}, depending on what you want to do.}
 
+\item{rotation}{Only used for VSS (Very Simple Structure criterion, see \code{\link[psych]{VSS}}. The rotation to apply. Can be \code{"none"}, \code{"varimax"}, \code{"quartimax"}, \code{"bentlerT"}, \code{"equamax"}, \code{"varimin"}, \code{"geominT"} and \code{"bifactor"} for orthogonal rotations, and \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, \code{"bentlerQ"}, \code{"geominQ"}, \code{"biquartimin"} and \code{"cluster"} for oblique transformations.}
+
 \item{algorithm}{Factoring method used by VSS. Can be \code{"pa"} for Principal Axis Factor Analysis, \code{"minres"} for minimum residual (OLS) factoring, \code{"mle"} for Maximum Likelihood FA and \code{"pc"} for Principal Components. \code{"default"} will select \code{"minres"} if \code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.}
 
 \item{package}{Can be \code{"all"} or a vector containing \code{"nFactors"}, \code{"EGAnet"} and \code{"psych"}. These are the packages from which methods are used.}

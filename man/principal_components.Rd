@@ -16,7 +16,7 @@ PCA(x, n = NULL, rotation = "none", sort = FALSE, threshold = NULL,
 
 \item{n}{Number of components to extract. If \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}.}
 
-\item{rotation}{If not "none", the PCA will be computed using the \code{psych} package. Possible options include "varimax", "quartimax", "promax", "oblimin", "simplimax", and "cluster". See \code{psych::fa} for details.}
+\item{rotation}{If not "none", the PCA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, and \code{"cluster"}. See \code{\link[psych]{fa}} for details.}
 
 \item{sort}{Sort the loadings.}
 
@@ -55,6 +55,6 @@ principal_components(mtcars[, 1:4])
 }
 \references{
 \itemize{
-  \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
+  \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
 }
 }
