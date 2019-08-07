@@ -41,6 +41,10 @@ convert_efa_to_cfa.parameters_efa <- function(model, ...) {
   .efa_to_cfa(model, ...)
 }
 
+#' @export
+convert_efa_to_cfa.parameters_pca <- convert_efa_to_cfa.parameters_efa
+
+
 #' @rdname convert_efa_to_cfa
 #' @export
 efa_to_cfa <- convert_efa_to_cfa

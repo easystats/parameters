@@ -137,7 +137,7 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
   attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
 
   # add class-attribute for printing
-  class(loadings) <- c("parameters_efa", class(loadings))
+  class(loadings) <- c("parameters_pca", class(loadings))
 
   loadings
 }
