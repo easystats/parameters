@@ -164,23 +164,23 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Can be "FA" or "PCA", depending on what you want to do.</p></td>
+      <td><p>Can be <code>"FA"</code> or <code>"PCA"</code>, depending on what you want to do.</p></td>
     </tr>
     <tr>
       <th>rotation</th>
-      <td><p>Only used for VSS. The rotation to apply. Can be "none" "varimax", "quartimax", "bentlerT", "equamax", "varimin", "geominT" and "bifactor" for orthogonal rotations, and "promax", "oblimin", "simplimax", "bentlerQ, "geominQ" and "biquartimin" and "cluster" for oblique transformations.</p></td>
+      <td><p>Only used for VSS (Very Simple Structure criterion, see <code><a href='https://www.rdocumentation.org/packages/psych/topics/VSS'>VSS</a></code>. The rotation to apply. Can be <code>"none"</code>, <code>"varimax"</code>, <code>"quartimax"</code>, <code>"bentlerT"</code>, <code>"equamax"</code>, <code>"varimin"</code>, <code>"geominT"</code> and <code>"bifactor"</code> for orthogonal rotations, and <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>, <code>"bentlerQ"</code>, <code>"geominQ"</code>, <code>"biquartimin"</code> and <code>"cluster"</code> for oblique transformations.</p></td>
     </tr>
     <tr>
       <th>algorithm</th>
-      <td><p>Factoring method used by VSS. Can be "pa" for Principal Axis Factor Analysis, "minres" for minimum residual (OLS) factoring, "mle" for Maximum Likelihood FA and "pc" for Principal Components. "default" will select "minres" if <code>type</code> is "FA" and "pc" if <code>type</code> is "PCA".</p></td>
+      <td><p>Factoring method used by VSS. Can be <code>"pa"</code> for Principal Axis Factor Analysis, <code>"minres"</code> for minimum residual (OLS) factoring, <code>"mle"</code> for Maximum Likelihood FA and <code>"pc"</code> for Principal Components. <code>"default"</code> will select <code>"minres"</code> if <code>type = "FA"</code> and <code>"pc"</code> if <code>type = "PCA"</code>.</p></td>
     </tr>
     <tr>
       <th>package</th>
-      <td><p>Can be "all" or a vector containing "nFactors", "EGAnet" and "psych". These are the packages from which methods are used.</p></td>
+      <td><p>Can be <code>"all"</code> or a vector containing <code>"nFactors"</code>, <code>"EGAnet"</code> and <code>"psych"</code>. These are the packages from which methods are used.</p></td>
     </tr>
     <tr>
       <th>safe</th>
-      <td><p>If TRUE, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.</p></td>
+      <td><p>If <code>TRUE</code>, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -196,14 +196,14 @@
 
     <ul>
 <li><p>Bartlett, M. S. (1950). Tests of significance in factor analysis. British Journal of statistical psychology, 3(2), 77-85.</p></li>
-<li><p>Bentler, P. M., \&amp; Yuan, K. H. (1996). Test of linear trend in eigenvalues of a covariance matrix with application to data analysis. British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.</p></li>
+<li><p>Bentler, P. M., &amp; Yuan, K. H. (1996). Test of linear trend in eigenvalues of a covariance matrix with application to data analysis. British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.</p></li>
 <li><p>Cattell, R. B. (1966). The scree test for the number of factors. Multivariate behavioral research, 1(2), 245-276.</p></li>
-<li><p>Zoski, K. W., \&amp; Jurs, S. (1996). An objective counterpart to the visual scree test for factor analysis: The standard error scree. Educational and Psychological Measurement, 56(3), 443-451.</p></li>
-<li><p>Zoski, K., \&amp; Jurs, S. (1993). Using multiple regression to determine the number of factors to retain in factor analysis. Multiple Linear Regression Viewpoints, 20(1), 5-9.</p></li>
-<li><p>Nasser, F., Benson, J., \&amp; Wisenbaker, J. (2002). The performance of regression-based variations of the visual scree for determining the number of common factors. Educational and psychological measurement, 62(3), 397-419.</p></li>
-<li><p>Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M. D., Sadana, R., \&amp; Thiyagarajan, J. A. (2018). Investigating the performance of Exploratory Graph Analysis and traditional techniques to identify the number of latent factors: A simulation and tutorial.</p></li>
-<li><p>Golino, H. F., \&amp; Epskamp, S. (2017). Exploratory graph analysis: A new approach for estimating the number of dimensions in psychological research. PloS one, 12(6), e0174035.</p></li>
-<li><p>Revelle, W., \&amp; Rocklin, T. (1979). Very simple structure: An alternative procedure for estimating the optimal number of interpretable factors. Multivariate Behavioral Research, 14(4), 403-414.</p></li>
+<li><p>Zoski, K. W., &amp; Jurs, S. (1996). An objective counterpart to the visual scree test for factor analysis: The standard error scree. Educational and Psychological Measurement, 56(3), 443-451.</p></li>
+<li><p>Zoski, K., &amp; Jurs, S. (1993). Using multiple regression to determine the number of factors to retain in factor analysis. Multiple Linear Regression Viewpoints, 20(1), 5-9.</p></li>
+<li><p>Nasser, F., Benson, J., &amp; Wisenbaker, J. (2002). The performance of regression-based variations of the visual scree for determining the number of common factors. Educational and psychological measurement, 62(3), 397-419.</p></li>
+<li><p>Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M. D., Sadana, R., &amp; Thiyagarajan, J. A. (2018). Investigating the performance of Exploratory Graph Analysis and traditional techniques to identify the number of latent factors: A simulation and tutorial.</p></li>
+<li><p>Golino, H. F., &amp; Epskamp, S. (2017). Exploratory graph analysis: A new approach for estimating the number of dimensions in psychological research. PloS one, 12(6), e0174035.</p></li>
+<li><p>Revelle, W., &amp; Rocklin, T. (1979). Very simple structure: An alternative procedure for estimating the optimal number of interpretable factors. Multivariate Behavioral Research, 14(4), 403-414.</p></li>
 <li><p>Velicer, W. F. (1976). Determining the number of components from the matrix of partial correlations. Psychometrika, 41(3), 321-327.</p></li>
 </ul>
     

@@ -207,17 +207,19 @@
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/principal'>principal</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='st'>"none"</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>pca</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
 <span class='co'># }</span><div class='input'><span class='co'># Note that the latter is identical to the 'principal_components' function available in parameters:</span>
-<span class='fu'><a href='principal_components.html'>principal_components</a></span>(<span class='no'>attitude</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>The 3 principal components accounted for 81.49% of the total variance of the original data (PC1 = 53.09%, PC2 = 16.30%, PC3 = 12.10%).</span><span>
+<span class='fu'><a href='principal_components.html'>principal_components</a></span>(<span class='no'>attitude</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
 #&gt; 
-#&gt; Variable   |  PC1 |   PC2 |   PC3 | Complexity
+#&gt; </span><span>Variable   |  PC1 |   PC2 |   PC3 | Complexity
 #&gt; ----------------------------------------------
-#&gt; raises     | 0.86 |    NA |    NA |       1.10
+#&gt; raises     | 0.86 |       |       |       1.10
 #&gt; complaints | 0.85 | -0.36 |  0.21 |       1.48
-#&gt; learning   | 0.83 |    NA | -0.30 |       1.27
+#&gt; learning   | 0.83 |       | -0.30 |       1.27
 #&gt; rating     | 0.80 | -0.42 |  0.24 |       1.74
-#&gt; privileges | 0.68 |    NA |    NA |       1.18
+#&gt; privileges | 0.68 |       |       |       1.18
 #&gt; advance    | 0.58 |  0.61 | -0.46 |       2.85
-#&gt; critical   | 0.36 |  0.64 |  0.65 |       2.54</div></span><span class='co'># NOT RUN {</span>
+#&gt; critical   | 0.36 |  0.64 |  0.65 |       2.54
+#&gt; 
+#&gt; </span><span style='color: #BBBB00;'>The 3 principal components accounted for 81.49% of the total variance of the original data (PC1 = 53.09%, PC2 = 16.30%, PC3 = 12.10%).</span><span></div></span><span class='co'># NOT RUN {</span>
 <span class='co'># Exploratory Factor Analysis (EFA) ---------</span>
 <span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/fa'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)

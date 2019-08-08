@@ -197,8 +197,7 @@
 #&gt; 3   &gt; .1               2.31
 #&gt; 4 &lt; .001               0.36
 #&gt; 5   &gt; .1               0.09
-#&gt; 6   &gt; .1               0.11</div><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+#&gt; 6   &gt; .1               0.11</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.69</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))

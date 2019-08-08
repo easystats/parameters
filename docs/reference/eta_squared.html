@@ -241,8 +241,7 @@
 #&gt; 1         Sepal.Big  0.008427078
 #&gt; 2           Species  0.649727083
 #&gt; 3 Sepal.Big:Species -0.004213375
-#&gt; 4         Residuals           NA</div><div class='input'>
-</div><div class='input'><span class='co'># Don't work for now</span>
+#&gt; 4         Residuals           NA</div><div class='input'><span class='co'># Don't work for now</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/aov'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/aov'>Error</a></span>(<span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
 <span class='fu'>omega_squared</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span class='error'>Error in omega_squared.aovlist(model): Omega squared not implemented yet for repeated-measures ANOVAs.</span></div><div class='input'><span class='fu'>eta_squared</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eta_squared.aovlist(model): Eta squared not implemented yet for repeated-measures ANOVAs.</span></div><div class='input'><span class='fu'>epsilon_squared</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span class='error'>Error in epsilon_squared.aovlist(model): Epsilon squared not implemented yet for repeated-measures ANOVAs.</span></div><div class='input'>
 </div></pre>
