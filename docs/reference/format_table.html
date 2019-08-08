@@ -153,7 +153,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>format_table</span>(<span class='no'>x</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" | "</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='st'>"-"</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>protect_integers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>protect_integers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,6 +177,10 @@
     <tr>
       <th>protect_integers</th>
       <td><p>Should integers be kept as integers (i.e., without decimals)?</p></td>
+    </tr>
+    <tr>
+      <th>missing</th>
+      <td><p>Value by which `NA` values are replaced. By default, an empty string (i.e. <code>""</code>) is returned for `NA`.</p></td>
     </tr>
     </table>
     
@@ -339,7 +343,7 @@
 #&gt;         6.30 |        2.50 |         5.00 |        1.90 |  virginica
 #&gt;         6.50 |        3.00 |         5.20 |        2.00 |  virginica
 #&gt;         6.20 |        3.40 |         5.40 |        2.30 |  virginica
-#&gt;         5.90 |        3.00 |         5.10 |        1.80 |  virginica</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cat'>cat</a></span>(<span class='fu'>format_table</span>(<span class='no'>iris</span>, <span class='kw'>se</span><span class='kw'>=</span> <span class='st'>" "</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='st'>"*"</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='output co'>#&gt; Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+#&gt;         5.90 |        3.00 |         5.10 |        1.80 |  virginica</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cat'>cat</a></span>(<span class='fu'>format_table</span>(<span class='no'>iris</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" "</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='st'>"*"</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='output co'>#&gt; Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
 #&gt; ************************************************************
 #&gt;          5.1         3.5          1.4         0.2     setosa
 #&gt;          4.9         3.0          1.4         0.2     setosa
@@ -490,8 +494,7 @@
 #&gt;          6.3         2.5          5.0         1.9  virginica
 #&gt;          6.5         3.0          5.2         2.0  virginica
 #&gt;          6.2         3.4          5.4         2.3  virginica
-#&gt;          5.9         3.0          5.1         1.8  virginica</div><div class='input'>
-</div></pre>
+#&gt;          5.9         3.0          5.1         1.8  virginica</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -5,7 +5,7 @@
 \title{Dataframe and Tables Pretty Formatting}
 \usage{
 format_table(x, sep = " | ", header = "-", digits = 2,
-  protect_integers = TRUE)
+  protect_integers = TRUE, missing = "")
 }
 \arguments{
 \item{x}{A dataframe.}
@@ -17,6 +17,8 @@ format_table(x, sep = " | ", header = "-", digits = 2,
 \item{digits}{Number of significant digits.}
 
 \item{protect_integers}{Should integers be kept as integers (i.e., without decimals)?}
+
+\item{missing}{Value by which `NA` values are replaced. By default, an empty string (i.e. \code{""}) is returned for `NA`.}
 }
 \value{
 A data.frame in character format.

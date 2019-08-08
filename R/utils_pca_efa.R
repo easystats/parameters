@@ -3,17 +3,56 @@ sort.parameters_efa <- function(x, ...) {
   .sort_loadings(x)
 }
 
+#' @export
+sort.parameters_pca <- sort.parameters_efa
 
 #' @export
 summary.parameters_efa <- function(object, ...) {
-  attributes(object)$summary
+  insight::print_color("# (Explained) Variance of Principal Components\n\n", "blue")
+
+  x <- attributes(object)$summary
+  x$Variance_Explained <- x$Variance / sum(x$Variance)
+  x$Std_Dev <- attributes(object)$model$sdev
+
+  col_names <- x$Component
+
+  cols <- intersect(
+    c("Std_Dev", "Eigenvalues", "Variance", "Variance_Cumulative", "Variance_Explained"),
+    colnames(x)
+  )
+
+  rows <- c("Eigenvalues", "Variance", "Cumulative Variance", "Explained Variance")
+  if ("Std_Dev" %in% cols) rows <- c("Standard Deviation", rows)
+
+  x <- as.data.frame(t(x[, cols]))
+  x <- cbind(data.frame("Values" = rows, stringsAsFactors = FALSE), x)
+
+  colnames(x) <- c("", col_names)
+  class(x) <- c("parameters_efa_summary", class(x))
+  x
 }
+
+#' @export
+print.parameters_efa_summary <- function(x, digits = 3, ...) {
+  cat(format_table(x, digits = digits, ...))
+
+  invisible(x)
+}
+
+#' @export
+summary.parameters_pca <- summary.parameters_efa
+
+
 
 
 #' @export
 model_parameters.parameters_efa <- function(model, ...) {
   attributes(model)$summary
 }
+#' @export
+model_parameters.parameters_pca <- model_parameters.parameters_efa
+
+
 
 
 #' @export
@@ -29,16 +68,34 @@ predict.parameters_efa <- function(object, newdata = NULL, names = NULL, ...) {
   row.names(out) <- NULL
   out
 }
+#' @export
+predict.parameters_pca <- predict.parameters_efa
 
 
+
+
+#' @importFrom insight print_color print_colour
 #' @export
 print.parameters_efa <- function(x, digits = 2, ...) {
+  .rotation <- attr(x, "rotation", exact = TRUE)
+
+  if (.rotation == "none")
+    insight::print_color("# Loadings from Principal Component Analysis (no rotation)\n\n", "blue")
+  else
+    insight::print_color(sprintf("# Rotated loadings from Principal Component Analysis (%s-rotation)\n\n", .rotation), "blue")
+
+  cat(format_table(x, digits = digits, ...))
+
   if (!is.null(attributes(x)$type)) {
+    cat("\n")
     insight::print_colour(.text_components_variance(x), "yellow")
-    cat("\n\n")
   }
-  cat(format_table(x, digits = digits))
 }
+#' @export
+print.parameters_pca <- print.parameters_efa
+
+
+
 
 
 #' @export

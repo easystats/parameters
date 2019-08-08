@@ -4,7 +4,7 @@
 #'
 #' @param x A dataframe.
 #' @param n Number of components to extract. If \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}.
-#' @param rotation If not "none", the PCA will be computed using the \code{psych} package. Possible options include "varimax", "quartimax", "promax", "oblimin", "simplimax", and "cluster". See \code{psych::fa} for details.
+#' @param rotation If not "none", the PCA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, and \code{"cluster"}. See \code{\link[psych]{fa}} for details.
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).
 #' @param standardize A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).
@@ -15,6 +15,7 @@
 #'    \item \strong{Complexity} (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.
 #' }
 #'
+#' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component.
 #'
 #' @examples
 #' library(parameters)
@@ -33,7 +34,7 @@
 #'
 #' @return A data.frame of loadings.
 #' @references \itemize{
-#'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
+#'   \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
 #' }
 #' @importFrom stats prcomp
 #' @export
@@ -55,21 +56,21 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
     x <- standardize(x, ...)
   }
 
-  if(rotation != "none"){
-    return(.pca_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, ...))
-  }
-
   # PCA
   model <- stats::prcomp(x, retx = TRUE, center = TRUE, scale. = TRUE, ...)
 
 
   # N factors
   if (is.null(n)) {
-    n <- as.numeric(n_factors(x, type = "PCA", rotation = "none", ...))
+    n <- as.numeric(n_factors(x, type = "PCA", rotation = rotation, ...))
   } else if (n == "all") {
     n <- length(model$sdev)
   } else if (n > length(model$sdev)) {
     n <- length(model$sdev)
+  }
+
+  if (rotation != "none") {
+    return(.pca_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, ...))
   }
 
   # Re-add centers and scales
@@ -136,7 +137,7 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
   attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
 
   # add class-attribute for printing
-  class(loadings) <- c("parameters_efa", class(loadings))
+  class(loadings) <- c("parameters_pca", class(loadings))
 
   loadings
 }

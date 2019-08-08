@@ -190,7 +190,7 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">df &lt;-<span class="st"> </span>iris</a>
 <a class="sourceLine" id="cb7-2" title="2">df<span class="op">$</span>Sepal.Big &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>Sepal.Width <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>, <span class="st">"Yes"</span>, <span class="st">"No"</span>)</a>
 <a class="sourceLine" id="cb7-3" title="3"></a>
-<a class="sourceLine" id="cb7-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/t.test">t.test</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big, <span class="dt">data=</span>df)</a>
+<a class="sourceLine" id="cb7-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/t.test">t.test</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big, <span class="dt">data =</span> df)</a>
 <a class="sourceLine" id="cb7-5" title="5"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
 <pre><code># Parameter    |     Group | Mean_Group1 | Mean_Group2 | Difference |    t |     df |    p |        95% CI |                  Method
 # ----------------------------------------------------------------------------------------------------------------------------------
@@ -199,8 +199,9 @@
 <div id="bayesian-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#bayesian-1" class="anchor"></a>Bayesian</h4>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">model &lt;-<span class="st"> </span>BayesFactor<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF">ttestBF</a></span>(<span class="dt">formula =</span> Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big, <span class="dt">data=</span>df)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">model &lt;-<span class="st"> </span>BayesFactor<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF">ttestBF</a></span>(<span class="dt">formula =</span> Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big, </a>
+<a class="sourceLine" id="cb9-2" title="2">    <span class="dt">data =</span> df)</a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
 <pre><code># Parameter  | Median |        89% CI |     pd | % in ROPE |              Prior |   BF
 # ------------------------------------------------------------------------------------
 # Difference |   0.16 | [-0.05, 0.37] | 88.85% |    26.79% | Cauchy (0 +- 0.71) | 0.38</code></pre>
@@ -213,11 +214,12 @@
 <h4 class="hasAnchor">
 <a href="#simple" class="anchor"></a>Simple</h4>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/aov">aov</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big, <span class="dt">data =</span> df)</a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">omega_squared =</span> <span class="st">"partial"</span>, <span class="dt">eta_squared =</span> <span class="st">"partial"</span>, <span class="dt">epsilon_squared =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb11-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">omega_squared =</span> <span class="st">"partial"</span>, <span class="dt">eta_squared =</span> <span class="st">"partial"</span>, </a>
+<a class="sourceLine" id="cb11-3" title="3">    <span class="dt">epsilon_squared =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code># Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
 # --------------------------------------------------------------------------------------------------------------
 # Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | &gt; .1 |               0.00 |             0.01 |       0.00
-# Residuals |      101.07 | 148 |        0.68 |   NA |   NA |                 NA |               NA |         NA</code></pre>
+# Residuals |      101.07 | 148 |        0.68 |      |   NA |                    |                  |</code></pre>
 </div>
 <div id="repeated-measures" class="section level4">
 <h4 class="hasAnchor">
@@ -227,12 +229,13 @@
 <pre><code># Group   | Parameter | Sum_Squares |  df | Mean_Square |     F |      p
 # ----------------------------------------------------------------------
 # Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 |   &gt; .1
-# Species | Residuals |       34.94 |   1 |       34.94 |    NA |     NA
+# Species | Residuals |       34.94 |   1 |       34.94 |       |     NA
 # Within  | Sepal.Big |        4.74 |   1 |        4.74 | 20.24 | &lt; .001
-# Within  | Residuals |       34.21 | 146 |        0.23 |    NA |     NA</code></pre>
+# Within  | Residuals |       34.21 | 146 |        0.23 |       |     NA</code></pre>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
-<a class="sourceLine" id="cb15-2" title="2">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/anova">anova</a></span>(<span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> df))</a>
-<a class="sourceLine" id="cb15-3" title="3"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
+<a class="sourceLine" id="cb15-2" title="2">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/anova">anova</a></span>(<span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), </a>
+<a class="sourceLine" id="cb15-3" title="3">    <span class="dt">data =</span> df))</a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
 <pre><code># Parameter | Sum_Squares | df | Mean_Square |     F
 # --------------------------------------------------
 # Sepal.Big |        4.64 |  1 |        4.64 | 19.82</code></pre>
@@ -266,7 +269,7 @@
 <a href="#mixed-models" class="anchor"></a>Mixed models</h3>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
 <a class="sourceLine" id="cb21-2" title="2"></a>
-<a class="sourceLine" id="cb21-3" title="3">model &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data =</span> iris)</a>
+<a class="sourceLine" id="cb21-3" title="3">model &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
 <a class="sourceLine" id="cb21-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"refit"</span>)</a></code></pre></div>
 <pre><code># Parameter    | Coefficient |   SE |        95% CI |    t |      p | Coefficient (std.)
 # --------------------------------------------------------------------------------------
@@ -293,7 +296,7 @@
 <a class="sourceLine" id="cb25-2" title="2"></a>
 <a class="sourceLine" id="cb25-3" title="3">model &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/psych/topics/fa">fa</a></span>(attitude, <span class="dt">nfactors =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb25-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<pre><code># The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).
+<pre><code># # Rotated loadings from Principal Component Analysis (oblimin-rotation)
 # 
 # Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness
 # ------------------------------------------------------------
@@ -303,17 +306,19 @@
 # learning   |  0.47 |  0.54 | -0.28 |       2.51 |       0.24
 # raises     |  0.55 |  0.43 |  0.25 |       2.35 |       0.23
 # critical   |  0.16 |  0.17 |  0.48 |       1.46 |       0.67
-# advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22</code></pre>
+# advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22
+# 
+# The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</code></pre>
 </div>
 <div id="confirmatory-factor-analysis-cfa-and-structural-equation-models-sem" class="section level3">
 <h3 class="hasAnchor">
 <a href="#confirmatory-factor-analysis-cfa-and-structural-equation-models-sem" class="anchor"></a>Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)</h3>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lavaan)</a>
 <a class="sourceLine" id="cb27-2" title="2"></a>
-<a class="sourceLine" id="cb27-3" title="3">model &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/lavaan/topics/cfa">cfa</a></span>(<span class="st">' visual  =~ x1 + x2 + x3</span></a>
+<a class="sourceLine" id="cb27-3" title="3">model &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/lavaan/topics/cfa">cfa</a></span>(<span class="st">" visual  =~ x1 + x2 + x3</span></a>
 <a class="sourceLine" id="cb27-4" title="4"><span class="st">                       textual =~ x4 + x5 + x6</span></a>
-<a class="sourceLine" id="cb27-5" title="5"><span class="st">                       speed   =~ x7 + x8 + x9 '</span>, </a>
-<a class="sourceLine" id="cb27-6" title="6">                     <span class="dt">data=</span>HolzingerSwineford1939)</a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="st">                       speed   =~ x7 + x8 + x9 "</span>, </a>
+<a class="sourceLine" id="cb27-6" title="6">    <span class="dt">data =</span> HolzingerSwineford1939)</a>
 <a class="sourceLine" id="cb27-7" title="7"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
 <pre><code># Link              | Coefficient |   SE |       95% CI |      p |        Type
 # ----------------------------------------------------------------------------
@@ -340,9 +345,7 @@
 <a href="#general-linear-models-glm-1" class="anchor"></a>General Linear Models (GLM)</h3>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb29-2" title="2"></a>
-<a class="sourceLine" id="cb29-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb29-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
 <pre><code># Parameter   | Coefficient |     SE |            95% CI |     t | df |      p | Coefficient (std.)
 # -------------------------------------------------------------------------------------------------
 # (Intercept) |      141.70 | 125.67 | [-116.62, 400.02] |  1.13 | 26 |   &gt; .1 |              -0.00
@@ -357,9 +360,9 @@
 <a href="#mixed-models-1" class="anchor"></a>Mixed models</h3>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
 <a class="sourceLine" id="cb31-2" title="2"></a>
-<a class="sourceLine" id="cb31-3" title="3"><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">*</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data =</span> iris)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb31-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb31-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb31-3" title="3"><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">*</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="st">    </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-5" title="5"><span class="st">    </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
 <pre><code># Parameter                                  | Coefficient |   SE |        95% CI |     t |     p | Coefficient (std.)
 # --------------------------------------------------------------------------------------------------------------------
 # (Intercept)                                |        1.78 | 0.91 | [-1.71, 5.26] |  1.95 |  0.05 |              -0.24
@@ -376,9 +379,8 @@
 <a href="#bayesian-models-1" class="anchor"></a>Bayesian models</h3>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb33-2" title="2"></a>
-<a class="sourceLine" id="cb33-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb33-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-4" title="4"><span class="st">    </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
 <pre><code># Parameter   | Median |         89% CI |     pd | % in ROPE |  ESS |  Rhat |               Prior
 # -----------------------------------------------------------------------------------------------
 # (Intercept) |  19.82 | [-1.20, 41.01] | 93.90% |     1.30% | 1254 | 0.999 | Normal (0 +- 60.27)

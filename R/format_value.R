@@ -3,6 +3,7 @@
 #' @param x Numeric value.
 #' @param digits Number of significant digits.
 #' @param protect_integers Should integers be kept as integers (i.e., without decimals)?
+#' @param missing Value by which `NA` values are replaced. By default, an empty string (i.e. \code{""}) is returned for `NA`.
 #' @param ... Arguments passed to or from other methods.
 #'
 #'
@@ -22,23 +23,23 @@
 #'
 #' format_value(iris)
 #' @export
-format_value <- function(x, digits = 2, protect_integers = FALSE, ...) {
+format_value <- function(x, digits = 2, protect_integers = FALSE, missing = "", ...) {
   UseMethod("format_value")
 }
 
 
 #' @export
-format_value.data.frame <- function(x, digits = 2, protect_integers = FALSE, ...) {
-  as.data.frame(sapply(x, format_value, digits = digits, protect_integers = protect_integers, simplify = FALSE))
+format_value.data.frame <- function(x, digits = 2, protect_integers = FALSE, missing = "", ...) {
+  as.data.frame(sapply(x, format_value, digits = digits, protect_integers = protect_integers, missing = missing, simplify = FALSE))
 }
 
 
 #' @export
-format_value.numeric <- function(x, digits = 2, protect_integers = FALSE, ...) {
+format_value.numeric <- function(x, digits = 2, protect_integers = FALSE, missing = "", ...) {
   if (protect_integers) {
-    out <- .format_value_unless_integer(x, digits = digits, ...)
+    out <- .format_value_unless_integer(x, digits = digits, .missing = missing, ...)
   } else {
-    out <- .format_value(x, digits = digits, ...)
+    out <- .format_value(x, digits = digits, .missing = missing, ...)
   }
   out[out == "-0"] <- "0"
   out
@@ -61,19 +62,34 @@ format_value.logical <- format_value.numeric
 
 #' @importFrom stats na.omit
 #' @keywords internal
-.format_value_unless_integer <- function(x, digits = 2, ...) {
+.format_value_unless_integer <- function(x, digits = 2, .missing = "", ...) {
   if (is.numeric(x) && !all(is.int(stats::na.omit(x)))) {
-    .format_value(x, digits = digits)
+    .format_value(x, digits = digits, .missing = .missing)
+  } else if (anyNA(x)) {
+    .convert_missing(x, .missing)
   } else {
     as.character(x)
   }
 }
 
 #' @keywords internal
-.format_value <- function(x, digits = 2, ...) {
+.format_value <- function(x, digits = 2, .missing = "", ...) {
   if (is.numeric(x)) {
-    x <- ifelse(is.na(x), NA, sprintf(paste0("%.", digits, "f"), x))
+    x <- ifelse(is.na(x), .missing, sprintf(paste0("%.", digits, "f"), x))
+  } else if (anyNA(x)) {
+    x <- .convert_missing(x, .missing)
   }
+  x
+}
+
+
+.convert_missing <- function(x, .missing) {
+  if (length(x) == 1) {
+    return(as.character(.missing))
+  }
+  missings <- which(is.na(x))
+  x[missings] <- as.character(.missing)
+  x[!missings] <- as.character(x)
   x
 }
 

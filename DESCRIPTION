@@ -32,7 +32,7 @@ Suggests:
 	cAIC4,
 	covr,
 	dplyr,
-	EGAnet,
+	EGAnet (>= 0.7),
 	knitr,
 	lavaan,
 	lme4,
@@ -49,8 +49,6 @@ Suggests:
 	survey,
 	testthat,
 	VGAM
-Remotes: 
-	easystats/bayestestR
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

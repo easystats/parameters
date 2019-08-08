@@ -115,7 +115,7 @@ model_parameters(model)
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
-model <- t.test(Sepal.Length ~ Sepal.Big, data=df)
+model <- t.test(Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model)
 ```
 
@@ -126,7 +126,8 @@ model_parameters(model)
 #### Bayesian
 
 ``` r
-model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data=df)
+model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, 
+    data = df)
 model_parameters(model)
 ```
 
@@ -140,13 +141,14 @@ model_parameters(model)
 
 ``` r
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
+model_parameters(model, omega_squared = "partial", eta_squared = "partial", 
+    epsilon_squared = TRUE)
 ```
 
     # Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
     # --------------------------------------------------------------------------------------------------------------
     # Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | > .1 |               0.00 |             0.01 |       0.00
-    # Residuals |      101.07 | 148 |        0.68 |   NA |   NA |                 NA |               NA |         NA
+    # Residuals |      101.07 | 148 |        0.68 |      |   NA |                    |                  |
 
 #### Repeated measures
 
@@ -158,13 +160,14 @@ model_parameters(model)
     # Group   | Parameter | Sum_Squares |  df | Mean_Square |     F |      p
     # ----------------------------------------------------------------------
     # Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 |   > .1
-    # Species | Residuals |       34.94 |   1 |       34.94 |    NA |     NA
+    # Species | Residuals |       34.94 |   1 |       34.94 |       |     NA
     # Within  | Sepal.Big |        4.74 |   1 |        4.74 | 20.24 | < .001
-    # Within  | Residuals |       34.21 | 146 |        0.23 |    NA |     NA
+    # Within  | Residuals |       34.21 | 146 |        0.23 |       |     NA
 
 ``` r
 library(lme4)
-model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
+model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), 
+    data = df))
 model_parameters(model)
 ```
 
@@ -204,7 +207,7 @@ model_parameters(model, bootstrap = TRUE, iterations = 500)
 ``` r
 library(lme4)
 
-model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+model <- lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris)
 model_parameters(model, standardize = "refit")
 ```
 
@@ -237,7 +240,7 @@ model <- psych::fa(attitude, nfactors = 3)
 model_parameters(model)
 ```
 
-    # The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).
+    # # Rotated loadings from Principal Component Analysis (oblimin-rotation)
     # 
     # Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness
     # ------------------------------------------------------------
@@ -248,16 +251,18 @@ model_parameters(model)
     # raises     |  0.55 |  0.43 |  0.25 |       2.35 |       0.23
     # critical   |  0.16 |  0.17 |  0.48 |       1.46 |       0.67
     # advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22
+    # 
+    # The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).
 
 ### Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)
 
 ``` r
 library(lavaan)
 
-model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
+model <- lavaan::cfa(" visual  =~ x1 + x2 + x3
                        textual =~ x4 + x5 + x6
-                       speed   =~ x7 + x8 + x9 ', 
-                     data=HolzingerSwineford1939)
+                       speed   =~ x7 + x8 + x9 ", 
+    data = HolzingerSwineford1939)
 model_parameters(model)
 ```
 
@@ -285,9 +290,7 @@ model_parameters(model)
 ``` r
 library(dplyr)
 
-lm(disp ~ ., data = mtcars) %>% 
-  parameters_selection() %>% 
-  model_parameters()
+lm(disp ~ ., data = mtcars) %>% parameters_selection() %>% model_parameters()
 ```
 
     # Parameter   | Coefficient |     SE |            95% CI |     t | df |      p | Coefficient (std.)
@@ -304,9 +307,9 @@ lm(disp ~ ., data = mtcars) %>%
 ``` r
 library(lme4)
 
-lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data = iris)  %>%
-  parameters_selection() %>%
-  model_parameters()
+lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + 
+    (1 | Species), data = iris) %>% parameters_selection() %>% 
+    model_parameters()
 ```
 
     # Parameter                                  | Coefficient |   SE |        95% CI |     t |     p | Coefficient (std.)
@@ -325,9 +328,8 @@ lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data
 ``` r
 library(rstanarm)
 
-model <- stan_glm(mpg ~ ., data = mtcars) %>% 
-  parameters_selection() %>% 
-  model_parameters()
+model <- stan_glm(mpg ~ ., data = mtcars) %>% parameters_selection() %>% 
+    model_parameters()
 ```
 
     # Parameter   | Median |         89% CI |     pd | % in ROPE |  ESS |  Rhat |               Prior
