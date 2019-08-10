@@ -7,7 +7,7 @@
 #' @param ci_method Method for computing confidence intervals (CI). See \link{ci}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(lme4)
 #' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #' model_parameters(model, standardize = "refit")

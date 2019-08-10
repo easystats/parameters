@@ -5,7 +5,7 @@
 #' @param model A statistical model.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(lme4)
 #' model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' p_value_wald(model)

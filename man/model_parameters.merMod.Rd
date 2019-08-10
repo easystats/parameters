@@ -35,7 +35,7 @@ A data.frame of indices related to the model's parameters.
 Parameters of mixed models.
 }
 \examples{
-\dontrun{
+\donttest{
 library(lme4)
 model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 model_parameters(model, standardize = "refit")

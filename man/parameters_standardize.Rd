@@ -55,9 +55,9 @@ parameters_standardize(model, method = "refit")
 parameters_standardize(model, method = "refit", robust = TRUE)
 parameters_standardize(model, method = "full")
 parameters_standardize(model, method = "full", robust = TRUE)
-\dontrun{
+\donttest{
 library(rstanarm)
-model <- stan_glm(Sepal.Length ~ Species * Petal.Width, data = iris)
+model <- stan_glm(Sepal.Length ~ Species * Petal.Width, data = iris, iter = 500, refresh = 0)
 parameters_standardize(model, method = "full", centrality = "all")
 parameters_standardize(model, method = "full", robust = TRUE, centrality = "all")
 }

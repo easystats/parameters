@@ -21,7 +21,7 @@ The p-values.
 An approximate F-test based on the Kenward-Roger (1997) approach.
 }
 \examples{
-\dontrun{
+\donttest{
 library(lme4)
 model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 p_value_kenward(model)

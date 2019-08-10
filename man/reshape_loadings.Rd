@@ -27,7 +27,7 @@ Reshape loadings between wide/long formats.
 }
 \examples{
 library(parameters)
-\dontrun{
+\donttest{
 library(psych)
 
 pca <- model_parameters(psych::fa(attitude, nfactors = 3))
