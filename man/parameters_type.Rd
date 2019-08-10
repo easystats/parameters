@@ -19,7 +19,13 @@ Type of Model Parameters
 }
 \examples{
 library(parameters)
-model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
 
+model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
+parameters_type(model)
+
+model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2), data = iris)
+parameters_type(model)
+
+model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
 parameters_type(model)
 }
