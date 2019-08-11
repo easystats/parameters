@@ -81,9 +81,9 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 <img src='man/figures/figure1.png' align="center" />
  
-The `model_parameters` function allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
+The `model_parameters()` function allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
 
-- The names of the returned dataframe are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, *i.e.*, *t*, *z*, etc., instead of a generic name such as *statistic*.
+- The names of the returned dataframe are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic*.
 - It is able to compute or extract indices not available by default, such as ***p* values**, **CIs**, etc.
 - It includes **feature engineering** capabilities, including [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html) and [**standardization**](https://easystats.github.io/parameters/articles/standardization.html) of parameters.
 
@@ -129,18 +129,18 @@ model_parameters(model)
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
-model <- t.test(Sepal.Length ~ Sepal.Big, data=df)
+model <- t.test(Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model)
 ```
 
 #### Bayesian 
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
-model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data=df)
+model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model)
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data=df)
+model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model)
 ```
 
@@ -270,7 +270,7 @@ library(lavaan)
 model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
                        textual =~ x4 + x5 + x6
                        speed   =~ x7 + x8 + x9 ', 
-                     data=HolzingerSwineford1939)
+                     data = HolzingerSwineford1939)
 model_parameters(model)
 ```
 
