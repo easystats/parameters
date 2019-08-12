@@ -22,6 +22,8 @@ A formatted string.
 Confidence/Credible Interval (CI) Formatting
 }
 \examples{
-format_ci(1.20, 3.57, ci = 90)
+format_ci(1.20, 3.57, ci = 0.90)
 format_ci(1.20, 3.57, ci = NULL)
+format_ci(c(1.20, 23.4), c(3.57, -1.35), ci = 0.90)
+format_ci(c(1.20, NA, NA), c(3.57, -1.35, NA), ci = 0.90)
 }

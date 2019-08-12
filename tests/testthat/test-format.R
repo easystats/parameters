@@ -1,7 +1,9 @@
 context("format")
 
 test_that("format_ci", {
-  testthat::expect_equal(nchar(format_ci(1.2012313, 145)), 21)
+  testthat::expect_equal(nchar(format_ci(1.2012313, 145)), 23)
+  testthat::expect_equal(nchar(format_ci(c(1.2012313, NA), c(145, 12.4))), c(23, 22))
+  testthat::expect_equal(nchar(format_ci(c(NA, NA), c(1.2012313, NA))), c(27, 0))
 })
 
 
