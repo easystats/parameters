@@ -27,6 +27,11 @@
 #' @return The formatted parameter names.
 #' @export
 format_parameters <- function(model) {
+  UseMethod("format_parameters")
+}
+
+#' @export
+format_parameters.default <- function(model) {
   types <- parameters_type(model)
 
   names <- types$Parameter
@@ -61,8 +66,18 @@ format_parameters <- function(model) {
       }
     }
   }
-
+  names(names) <- types$Parameter
   names
+}
+
+
+
+#' @export
+format_parameters.parameters_model <- function(model){
+  if (!is.null(attributes(model)$pretty_names)) {
+    model$Parameter <- attributes(model)$pretty_names[model$Parameter]
+  }
+  model
 }
 
 

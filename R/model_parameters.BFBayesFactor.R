@@ -33,7 +33,7 @@ model_parameters.BFBayesFactor <- function(model, centrality = "median", dispers
     out$ROPE_high <- NULL
   }
 
-  class(out) <- c("parameters_model", class(out))
   attr(out, "ci") <- ci
+  class(out) <- c("parameters_model", class(out))
   out
 }
