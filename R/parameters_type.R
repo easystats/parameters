@@ -61,8 +61,8 @@ parameters_type <- function(model, ...) {
     return(c("numeric", name, NA))
 
   # Polynomials
-  } else if(grepl("poly(", name, fixed = TRUE)) {
-    if(grepl(", raw = TRUE", name, fixed = TRUE)){
+  } else if (grepl("poly(", name, fixed = TRUE)) {
+    if (grepl(", raw = TRUE", name, fixed = TRUE)) {
       name <- gsub(", raw = TRUE", "", name, fixed = TRUE)
       type <- "poly_raw"
     } else{
