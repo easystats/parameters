@@ -24,9 +24,6 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
 
   # Format parameters names
   if (pretty_names & !is.null(attributes(x)$pretty_names)) {
-    # if (length(attributes(x)$clean_names) == length(x$Parameter)) {
-    #   x$Parameter <- attributes(x)$pretty_names
-    # }
     x$Parameter <- attributes(x)$pretty_names[x$Parameter]
   }
 
