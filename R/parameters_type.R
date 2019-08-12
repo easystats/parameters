@@ -36,6 +36,7 @@ parameters_type <- function(model, ...) {
 
 
 
+#' @importFrom utils tail head
 #' @keywords internal
 .parameters_type <- function(name, data) {
   if (is.na(name)) {
@@ -45,7 +46,7 @@ parameters_type <- function(model, ...) {
   } else if (grepl(":", name, fixed = TRUE)) {
     var <- unlist(strsplit(name, ":", fixed = TRUE))
     if (length(var) > 2) {
-      var <- c(tail(var, 1), paste0(head(var, -1), collapse = ":"))
+      var <- c(utils::tail(var, 1), paste0(utils::head(var, -1), collapse = ":"))
     } else {
       var <- rev(var)
     }
