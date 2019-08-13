@@ -7,23 +7,31 @@
 #' @param ci_method Method for computing confidence intervals (CI). See \link{ci}.
 #'
 #' @examples
-#' \donttest{
+#' library(parameters)
 #' library(lme4)
+#'
 #' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #' model_parameters(model, standardize = "refit")
 #'
 #' model <- lme4::glmer(vs ~ wt + (1 | gear), data = mtcars, family = "binomial")
 #' model_parameters(model)
+#'
+#' \donttest{
+#' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
+#' model_parameters(model, standardize = "full", bootstrap = TRUE, iterations = 50)
 #' }
 #'
 #' @return A data.frame of indices related to the model's parameters.
 #' @export
 model_parameters.merMod <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, ...) {
-  if (bootstrap) {
-    return(.model_parameters_bayesian(model, ci = ci, standardize = standardize, iterations = iterations, ...))
-  }
+
   # Processing
-  parameters <- .extract_parameters_mixed(model, ci = ci, p_method = p_method, ci_method = ci_method, ...)
+  if (bootstrap) {
+    parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
+  } else {
+    parameters <- .extract_parameters_mixed(model, ci = ci, p_method = p_method, ci_method = ci_method, ...)
+  }
+
 
   # Standardized
   if (isTRUE(standardize)) {
