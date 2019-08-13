@@ -12,7 +12,7 @@
 #'
 #' model <- lm(mpg ~ cyl * disp * hp * wt, data = mtcars)
 #' parameters_selection(model)
-#' \dontrun{
+#' \donttest{
 #' # lme4 -------------------------------------------
 #' library(lme4)
 #' model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species), data = iris)
@@ -20,7 +20,7 @@
 #'
 #' # rstanarm -------------------------------------------
 #' library(rstanarm)
-#' model <- stan_glm(mpg ~ ., data = mtcars)
+#' model <- stan_glm(mpg ~ ., data = mtcars, iter = 500, refresh = 0)
 #' parameters_selection(model, cross_validation = TRUE)
 #'
 #' model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars)

@@ -7,7 +7,7 @@
 #' @param ci_method Method for computing confidence intervals (CI). See \link{ci}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(lme4)
 #' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #' model_parameters(model, standardize = "refit")
@@ -35,9 +35,9 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
     parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
-  attr(parameters, "clean_names") <- format_parameters(model)
+  attr(parameters, "pretty_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 

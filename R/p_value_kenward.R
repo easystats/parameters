@@ -6,7 +6,7 @@
 #' @param dof Degrees of Freedom.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(lme4)
 #' model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' p_value_kenward(model)

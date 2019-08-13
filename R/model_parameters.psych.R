@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' library(parameters)
-#' \dontrun{
+#' \donttest{
 #' library(psych)
 #'
 #' # Principal Component Analysis (PCA) ---------
@@ -26,7 +26,7 @@
 #' }
 #' # Note that the latter is identical to the 'principal_components' function available in parameters:
 #' principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
-#' \dontrun{
+#' \donttest{
 #' # Exploratory Factor Analysis (EFA) ---------
 #' efa <- psych::fa(attitude, nfactors = 3)
 #' model_parameters(efa, threshold = "max", sort = TRUE)

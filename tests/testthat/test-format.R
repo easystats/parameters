@@ -2,6 +2,8 @@ context("format")
 
 test_that("format_ci", {
   testthat::expect_equal(nchar(format_ci(1.2012313, 145)), 21)
+  testthat::expect_equal(nchar(format_ci(c(1.2012313, NA), c(145, 12.4))), c(21, 23))
+  testthat::expect_equal(nchar(format_ci(c(NA, NA), c(1.2012313, NA))), c(22, 0))
 })
 
 
@@ -17,6 +19,19 @@ test_that("format_value", {
   testthat::expect_equal(nchar(format_value(4.2, protect_integers = TRUE)), 4)
   testthat::expect_equal(nchar(format_value(4.0, protect_integers = TRUE)), 1)
 })
+
+test_that("format_number and format_order", {
+  testthat::expect_equal(format_number(2), "two")
+  testthat::expect_equal(format_number(45), "forty five")
+  testthat::expect_equal(format_number(2), "two")
+
+  testthat::expect_equal(format_order(2), "second")
+  testthat::expect_equal(format_order(45), "forty fifth")
+
+  testthat::expect_equal(format_order(2, textual = FALSE), "2nd")
+  testthat::expect_equal(format_order(45, textual = FALSE), "45th")
+})
+
 
 test_that("format others", {
   testthat::expect_true(is.character(format_pd(0.02)))

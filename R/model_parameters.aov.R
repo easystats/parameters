@@ -21,7 +21,7 @@
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 #' model_parameters(model)
-#' \dontrun{
+#' \donttest{
 #' library(lme4)
 #'
 #' model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))

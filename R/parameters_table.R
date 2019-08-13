@@ -1,7 +1,7 @@
 #' Parameters Table Formatting
 #'
 #' @param x A dataframe of model's parameters.
-#' @param clean_names Clean parameters' names if possible.
+#' @param pretty_names Pretty parameters' names.
 #' @inheritParams format_p
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -10,7 +10,7 @@
 #'
 #' x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
 #' as.data.frame(parameters_table(x))
-#' \dontrun{
+#' \donttest{
 #' library(rstanarm)
 #' x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
 #' as.data.frame(parameters_table(x))
@@ -19,14 +19,12 @@
 #' @return A data.frame.
 #'
 #' @export
-parameters_table <- function(x, clean_names = TRUE, stars = FALSE, ...) {
+parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   x <- as.data.frame(x)
 
   # Format parameters names
-  if (clean_names & !is.null(attributes(x)$clean_names)) {
-    if (length(attributes(x)$clean_names) == length(x$Parameter)) {
-      x$Parameter <- attributes(x)$clean_names
-    }
+  if (pretty_names & !is.null(attributes(x)$pretty_names)) {
+    x$Parameter <- attributes(x)$pretty_names[x$Parameter]
   }
 
   # Format specific columns
@@ -105,7 +103,7 @@ parameters_table <- function(x, clean_names = TRUE, stars = FALSE, ...) {
 
 
 #' @export
-print.parameters_model <- function(x, clean_names = TRUE, ...) {
-  formatted_table <- parameters_table(x, clean_names = clean_names, ...)
+print.parameters_model <- function(x, pretty_names = TRUE, ...) {
+  formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
   cat(format_table(formatted_table))
 }

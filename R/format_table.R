@@ -30,6 +30,7 @@ format_table <- function(x, sep = " | ", header = "-", digits = 2, protect_integ
   # Convert to character
   df <- as.data.frame(sapply(df, as.character, simplify = FALSE), stringsAsFactors = FALSE)
   names(df) <- col_names
+  df[is.na(df)] <- as.character(missing)
 
   # Add colnames as row
   df <- rbind(colnames(df), df)

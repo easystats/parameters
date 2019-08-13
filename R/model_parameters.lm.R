@@ -43,9 +43,9 @@ model_parameters.lm <- function(model, ci = .95, standardize = "refit", standard
     parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
-  attr(parameters, "clean_names") <- format_parameters(model)
+  attr(parameters, "pretty_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 

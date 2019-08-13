@@ -16,17 +16,38 @@
 #'
 #' model <- lm(Sepal.Length ~ Species / (Petal.Length * Sepal.Width), data = iris)
 #' format_parameters(model)
+#'
+#' model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2), data = iris)
+#' format_parameters(model)
+#'
+#' model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
+#' format_parameters(model)
+#'
+#'
 #' @return The formatted parameter names.
 #' @export
 format_parameters <- function(model) {
+  UseMethod("format_parameters")
+}
+
+#' @export
+format_parameters.default <- function(model) {
   types <- parameters_type(model)
 
   names <- types$Parameter
   for (i in 1:nrow(types)) {
+
+    # Factors
     if (types$Type[i] == "factor") {
-      names[i] <- .format_factor(names[i], types$Term[i])
+      names[i] <- .format_factor(name = names[i], variable = types$Term[i])
     }
 
+    # Polynomials
+    if (types$Type[i] %in% c("poly", "poly_raw")){
+      names[i] <- .format_poly(name = names[i], variable = types$Term[i], type = types$Type[i], degree = types$Parameter2[i])
+    }
+
+    # Interactions
     if (types$Type[i] == "interaction") {
       components <- unlist(strsplit(names[i], ":", fixed = TRUE))
 
@@ -45,13 +66,30 @@ format_parameters <- function(model) {
       }
     }
   }
-
+  names(names) <- types$Parameter
   names
 }
 
 
-#' @keywords internal
-.format_factor <- function(param, term) {
-  level <- gsub(term, "", param)
-  paste0(term, " (", level, ")")
+
+#' @export
+format_parameters.parameters_model <- function(model){
+  if (!is.null(attributes(model)$pretty_names)) {
+    model$Parameter <- attributes(model)$pretty_names[model$Parameter]
+  }
+  model
 }
+
+
+#' @keywords internal
+.format_factor <- function(name, variable) {
+  level <- gsub(variable, "", name)
+  paste0(variable, " (", level, ")")
+}
+
+#' @keywords internal
+.format_poly <- function(name, variable, type, degree) {
+  paste0(variable, " (", format_order(as.numeric(degree), textual = FALSE), " degree)")
+}
+
+

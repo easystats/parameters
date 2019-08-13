@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' library(parameters)
-#' \dontrun{
+#' \donttest{
 #' # lavaan -------------------------------------
 #' library(lavaan)
 #'

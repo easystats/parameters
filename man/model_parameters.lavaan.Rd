@@ -27,7 +27,7 @@ Format CFA/SEM objects from the lavaan package (Rosseel, 2012).
 }
 \examples{
 library(parameters)
-\dontrun{
+\donttest{
 # lavaan -------------------------------------
 library(lavaan)
 

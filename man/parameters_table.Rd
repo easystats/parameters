@@ -4,12 +4,12 @@
 \alias{parameters_table}
 \title{Parameters Table Formatting}
 \usage{
-parameters_table(x, clean_names = TRUE, stars = FALSE, ...)
+parameters_table(x, pretty_names = TRUE, stars = FALSE, ...)
 }
 \arguments{
 \item{x}{A dataframe of model's parameters.}
 
-\item{clean_names}{Clean parameters' names if possible.}
+\item{pretty_names}{Pretty parameters' names.}
 
 \item{stars}{Add significance stars (e.g., p < .001***).}
 
@@ -26,7 +26,7 @@ library(parameters)
 
 x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
 as.data.frame(parameters_table(x))
-\dontrun{
+\donttest{
 library(rstanarm)
 x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
 as.data.frame(parameters_table(x))
