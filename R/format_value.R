@@ -41,7 +41,12 @@ format_value.numeric <- function(x, digits = 2, protect_integers = FALSE, missin
   } else {
     out <- .format_value(x, digits = digits, .missing = missing, ...)
   }
+  # Deal with negative zeros
   out[out == "-0"] <- "0"
+  out[out == "-0.0"] <- "0.0"
+  out[out == "-0.00"] <- "0.00"
+  out[out == "-0.000"] <- "0.000"
+  out[out == "-0.0000"] <- "0.0000"
   out
 }
 
