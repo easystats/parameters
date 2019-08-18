@@ -48,7 +48,10 @@ format_parameters.default <- function(model) {
     }
 
     # Interactions
-    if (types$Type[i] == "interaction") {
+    if (types$Type[i] %in% c("interaction", "nested")) {
+
+      sep <- ifelse(types$Type[i] == "interaction", " * ", " / ")
+
       components <- unlist(strsplit(names[i], ":", fixed = TRUE))
 
       for (j in 1:length(components)) {
@@ -60,9 +63,9 @@ format_parameters.default <- function(model) {
         }
       }
       if (length(components) > 2) {
-        names[i] <- paste0("(", paste0(head(components, -1), collapse = " * "), ") * ", tail(components, 1))
+        names[i] <- paste0("(", paste0(head(components, -1), collapse = " * "), ")", sep, tail(components, 1))
       } else {
-        names[i] <- paste0(components, collapse = " * ")
+        names[i] <- paste0(components, collapse = sep)
       }
     }
   }

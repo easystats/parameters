@@ -20,7 +20,7 @@ Type of Model Parameters
 \examples{
 library(parameters)
 
-model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
+model <- lm(Sepal.Length ~ Petal.Length + Species, data = iris)
 parameters_type(model)
 
 model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2), data = iris)
@@ -29,6 +29,27 @@ parameters_type(model)
 model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
 parameters_type(model)
 
-model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
+# Interactions
+model <- lm(Sepal.Length ~ Sepal.Width * Species, data = iris)
 parameters_type(model)
+
+model <- lm(Sepal.Length ~ Species * Sepal.Width, data = iris)
+parameters_type(model)
+
+model <- lm(Sepal.Length ~ Species / Sepal.Width, data = iris)
+parameters_type(model)
+
+model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
+parameters_type(model)
+
+# Complex interactions
+data <- iris
+data$fac2 <- ifelse(data$Sepal.Width > mean(data$Sepal.Width), "A", "B")
+model <- lm(Sepal.Length ~ Species / fac2 / Petal.Length, data = data)
+parameters_type(model)
+
+model <- lm(Sepal.Length ~ Species / fac2 * Petal.Length, data = data)
+parameters_type(model)
+
+
 }

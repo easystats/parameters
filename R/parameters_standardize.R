@@ -201,7 +201,7 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
     } else {
       sd_x <- 1
     }
-  } else if (type == "interaction") {
+  } else if (type %in% c("interaction", "nested")) {
     if (is.numeric(data[, variable])) {
       if (robust == FALSE) {
         sd_x <- stats::sd(data[, variable])
