@@ -68,6 +68,13 @@ parameters_type <- function(model, ...) {
       out[paste0(out$Variable, out$Secondary_Variable) == i, "Type"] <- "nested"
     }
   }
+  for(i in unique(out$Secondary_Parameter)){
+    if(!is.na(i) && i %in% out$Parameter){
+      out[!is.na(out$Secondary_Parameter) & out$Secondary_Parameter == i, "Secondary_Type"] <- out[!is.na(out$Parameter) & out$Parameter == i, "Type"]
+    }
+  }
+
+  # Out
   out
 }
 

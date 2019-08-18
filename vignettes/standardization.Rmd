@@ -32,7 +32,7 @@ set.seed(333)
 
 Standardising parameters (*i.e.*, coefficients) can allow for their comparison within and between models, variables and studies. Moreover, as it returns coefficients expressed in terms of **change of variance** (for instance, coefficients expresed in terms of SD of the response variable), it can allow for the usage of [effect size interpretation guidelines](https://easystats.github.io/report/articles/interpret_metrics.html), such as the famous Cohen's (1988) rules of thumb.
 
-However, standardizing the model's parameters should *not* be automatic: for some research fields, particular variables or types of studies (*e.g.*, replications), it sometimes makes more sense to keep, use and interpret the original parameters, especially if they are well known or easily understood.
+However, standardizing the model's parameters should *not* be automatically and mindlessly done: for some research fields, particular variables or types of studies (*e.g.*, replications), it sometimes makes more sense to keep, use and interpret the original parameters, especially if they are well known or easily understood.
 
 Critically, **parameters standardization is not a trivial process**. Different techniques exist, that can lead to drastically different results. Thus, it is critical that the standardization method is explicitly documented and detailed.
 
@@ -112,6 +112,7 @@ We will use the "refit" method as the baseline. We will then compute the differe
 library(parameters)
 library(sjstats)
 library(lm.beta)
+library(MuMIn)
 
 comparison <- function(model, robust=FALSE){
   out <- parameters_standardize(model, method="refit", robust=robust)[1:2]
@@ -144,12 +145,13 @@ comparison <- function(model, robust=FALSE){
   "Error"
 })
   
-#   out$MuMin <- tryCatch({
-#     out$Std_Estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
-# }, error = function(error_condition) {
-#     "Error"
-# })
+  out$MuMIn <- tryCatch({
+    out[, 2] - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
+}, error = function(error_condition) {
+    "Error"
+})
 
+  # QuantPsyc::lm.beta
   out[, 2] <- NULL
   return(out)
 }
@@ -216,7 +218,6 @@ knitr::kable(comparison(model), digits=2)
 
 When interactions are involved, post-hoc methods return different results. However, methods implemented in other softwares perform arguably worse.
 
-<!-- haha Sorry Daniel maybe we should rephrase this ^^ -->
 
 ### Transformation
 

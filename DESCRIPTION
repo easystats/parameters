@@ -38,6 +38,7 @@ Suggests:
 	lme4,
 	logspline,
 	MASS,
+	MuMIn,
 	nFactors,
 	pbkrtest,
 	psych,
