@@ -14,51 +14,87 @@
 #'
 #' model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
 #' parameters_type(model)
+#'
+#' model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
+#' parameters_type(model)
 #' @return A data.frame.
 #' @export
 parameters_type <- function(model, ...) {
-  params_table <- data.frame(
+
+  params <- data.frame(
     Parameter = insight::find_parameters(model)$conditional,
     stringsAsFactors = FALSE
   )
 
-  types <- lapply(params_table$Parameter, .parameters_type, data = insight::get_data(model))
-  types <- as.data.frame(do.call(rbind, types), stringsAsFactors = FALSE)
+  data = insight::get_data(model)
+  reference <- .list_factors_numerics(data)
 
-  names(types) <- c("Type", "Term", "Parameter2")
+  main <- .parameters_type_table(names = params$Parameter, data, reference)
+  secondary <- .parameters_type_table(names = main$Secondary_Parameter, data, reference)
+  names(secondary) <- paste0("Secondary_", names(secondary))
+  names(secondary)[names(secondary) == "Secondary_Secondary_Parameter"] <- "Tertiary_Parameter"
 
-  # find secondary type
-  secondary <- lapply(as.character(types$Secondary_Term), .parameters_type, insight::get_data(model))
-  types$Type2 <- do.call(rbind, secondary)[, 1]
-
-  cbind(params_table, types)
+  cbind(params, main, secondary)
 }
 
 
 
-#' @importFrom utils tail head
 #' @keywords internal
-.parameters_type <- function(name, data) {
-  if (is.na(name)) {
-    return(c(NA, NA, NA))
+.parameters_type_table <- function(names, data, reference) {
+  out <- lapply(names, .parameters_type, data = data, reference = reference)
+  out <- as.data.frame(do.call(rbind, out), stringsAsFactors = FALSE)
+  names(out) <- c("Type", "Variable", "Level", "Secondary_Parameter")
+  out
+}
 
-  # Interactions
-  } else if (grepl(":", name, fixed = TRUE)) {
+
+
+
+
+#' @keywords internal
+.parameters_type <- function(name, data, reference) {
+  if (grepl(":", name, fixed = TRUE)) {
+
+    # Split
     var <- unlist(strsplit(name, ":", fixed = TRUE))
     if (length(var) > 2) {
       var <- c(utils::tail(var, 1), paste0(utils::head(var, -1), collapse = ":"))
     } else {
       var <- rev(var)
     }
-    return(c("interaction", var))
+
+    main <- .parameters_type_basic(var[1], data, reference)
+    return(c("interaction", main[2], main[3], var[2]))
+
+  } else {
+    .parameters_type_basic(name, data, reference)
+  }
+}
+
+
+
+
+#' @importFrom utils tail head
+#' @keywords internal
+.parameters_type_basic <- function(name, data, reference) {
+  if (is.na(name)) {
+    return(c(NA, NA, NA, NA))
 
   # Intercept
-  } else if (name == "(Intercept)") {
-    return(c("intercept", NA, NA))
+  } else if (name == "(Intercept)" | name == "b_Intercept") {
+    return(c("intercept", NA, NA, NA))
 
   # Numeric
-  } else if (name %in% names(data)) {
-    return(c("numeric", name, NA))
+  } else if (name %in% reference$numeric) {
+    return(c("numeric", name, NA, NA))
+
+  # Factors
+  } else if (name %in% reference$levels) {
+    fac <- reference$levels_parent[match(name, reference$levels)]
+    return(c("factor",
+             fac,
+             gsub(fac, "", name, fixed = TRUE),
+             NA))
 
   # Polynomials
   } else if (grepl("poly(", name, fixed = TRUE)) {
@@ -73,19 +109,36 @@ parameters_type <- function(model, ...) {
     var <- vars[[1]]
     degree <- vars[[2]]
     degree <- substr(vars[[2]], nchar(vars[[2]]), nchar(vars[[2]]))
-    return(c(type, var, degree))
+    return(c(type, var, degree, NA))
 
-  # Factors
+
   } else {
-    facs <- data[sapply(data, is.factor)]
-    facs_names <- c()
-    for (fac in names(facs)) {
-      facs_names <- c(facs_names, paste0(fac, unique(data[[fac]])))
-      if (name %in% facs_names) {
-        return(c("factor", fac, NA))
-      }
-    }
-
-    return(c("unknown", NA, NA))
+    return(c("unknown", NA, NA, NA))
   }
 }
+
+
+
+#' @keywords internal
+.list_factors_numerics <- function(data) {
+  out <- list()
+  out$numeric <- names(data[sapply(data, is.numeric)])
+
+  # Factors
+  out$factor <- names(data[sapply(data, is.factor) | sapply(data, is.character)])
+
+  out$levels <- NA
+  out$levels_parent <- NA
+  for(fac in out$factor){
+    levels <- paste0(fac, unique(data[[fac]]))
+    out$levels_parent <- c(out$levels_parent, rep(fac, length(levels)))
+    out$levels <- c(out$levels, levels)
+  }
+  out$levels <- out$levels[!is.na(out$levels)]
+  out$levels_parent <- out$levels_parent[!is.na(out$levels_parent)]
+
+  out
+}
+
+
+

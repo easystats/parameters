@@ -28,4 +28,7 @@ parameters_type(model)
 
 model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
 parameters_type(model)
+
+model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
+parameters_type(model)
 }

@@ -39,12 +39,12 @@ format_parameters.default <- function(model) {
 
     # Factors
     if (types$Type[i] == "factor") {
-      names[i] <- .format_factor(name = names[i], variable = types$Term[i])
+      names[i] <- .format_factor(name = names[i], variable = types$Variable[i])
     }
 
     # Polynomials
     if (types$Type[i] %in% c("poly", "poly_raw")){
-      names[i] <- .format_poly(name = names[i], variable = types$Term[i], type = types$Type[i], degree = types$Parameter2[i])
+      names[i] <- .format_poly(name = names[i], variable = types$Variable[i], type = types$Type[i], degree = types$Level[i])
     }
 
     # Interactions
@@ -55,7 +55,7 @@ format_parameters.default <- function(model) {
         component <- components[j]
         if (component %in% types$Parameter) {
           if (types[types$Parameter == component, "Type"] == "factor") {
-            components[j] <- .format_factor(component, types[types$Parameter == component, "Term"])
+            components[j] <- .format_factor(component, types[types$Parameter == component, "Variable"])
           }
         }
       }

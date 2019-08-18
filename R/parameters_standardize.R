@@ -148,7 +148,7 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
     # Loop over all parameters
     std_params <- c()
     for (i in 1:nrow(param_table)) {
-      sd_x <- .variance_predictor(param_table$Type[i], param_table$Term[i], insight::get_data(model), robust = robust, method = method, ...)
+      sd_x <- .variance_predictor(type = param_table$Type[i], variable = param_table$Variable[i], data = insight::get_data(model), robust = robust, method = method, ...)
       new_coef <- param_table$Value[i] * sd_x / sd_y
       std_params <- c(std_params, new_coef)
     }

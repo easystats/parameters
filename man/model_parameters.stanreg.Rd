@@ -59,6 +59,14 @@ A data.frame of indices related to the model's parameters.
 Parameters of Bayesian models.
 }
 \examples{
+library(parameters)
+library(rstanarm)
+
+model <- rstanarm::stan_glm(Sepal.Length ~ Petal.Length * Species,
+  data = iris, iter = 100, refresh = 0
+)
+
+model_parameters(model, standardize = "full")
 \dontrun{
 library(rstanarm)
 model <- stan_glm(Sepal.Length ~ Species, data = iris)
