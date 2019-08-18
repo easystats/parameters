@@ -33,14 +33,15 @@ parameters_type(model)
 model <- lm(Sepal.Length ~ Sepal.Width * Species, data = iris)
 parameters_type(model)
 
+model <- lm(Sepal.Length ~ Sepal.Width * Species * Petal.Length, data = iris)
+parameters_type(model)
+
 model <- lm(Sepal.Length ~ Species * Sepal.Width, data = iris)
 parameters_type(model)
 
 model <- lm(Sepal.Length ~ Species / Sepal.Width, data = iris)
 parameters_type(model)
 
-model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
-parameters_type(model)
 
 # Complex interactions
 data <- iris

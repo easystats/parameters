@@ -106,7 +106,9 @@ This method is similar to `method = "full"`, but treats all variables as continu
 
 # Methods Comparison
 
-We will use the "refit" method as the baseline. We will then compute the differences between these standardized parameters and the ones provided by the other functions. The **bigger the (absolute) number, the worse it is**.
+We will use the "refit" method as the baseline. We will then compute the differences between these standardized parameters and the ones provided by the other functions. The **bigger the (absolute) number, the worse it is**. 
+
+> **SPOILER ALERT: the standardization implemented in `parameters` is the most accurate and the most flexible.**
 
 ```{r message=FALSE, warning=FALSE}
 library(parameters)
@@ -151,7 +153,6 @@ comparison <- function(model, robust=FALSE){
     "Error"
 })
 
-  # QuantPsyc::lm.beta
   out[, 2] <- NULL
   return(out)
 }
@@ -241,7 +242,7 @@ comparison(model)
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 library(rstanarm)
-junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data))
+model <- stan_glm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data, refresh = 0)
 knitr::kable(comparison(model), digits=2)
 ```
 
@@ -259,6 +260,8 @@ comparison(model)
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 knitr::kable(comparison(model), digits=2)
 ```
+
+When factors are involved, methods that standardize the numeric transformation of factors give different results.
 
 
 ### Logistic Model
@@ -308,7 +311,19 @@ comparison(model)
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 library(rstanarm)
-junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Width + Group_Sepal.Width, data=data))
+model <- stan_glm(Sepal.Length ~ Petal.Width + Group_Sepal.Width, data=data, refresh = 0)
+knitr::kable(comparison(model), digits=2)
+```
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+library(rstanarm)
+
+model <- stan_lmer(Sepal.Length ~ Petal.Width + Group_Sepal.Width + (1|Species), data=data)
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+library(rstanarm)
+model <- stan_lmer(Sepal.Length ~ Petal.Width + Group_Sepal.Width + (1|Species), data=data, refresh = 0, iter = 500)
 knitr::kable(comparison(model), digits=2)
 ```
 
