@@ -138,6 +138,9 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
   out <- data.frame(Parameter = param_names)
   param_table <- parameters_type(model)
 
+  # match order of parameters in param_table and params
+  param_table <- param_table[order(param_table$Parameter, params$Parameter), ]
+
   for (param_name in names(param_values)) {
     # Get response variance
     sd_y <- .variance_response(model, robust = robust, method = method, ...)
