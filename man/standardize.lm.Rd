@@ -16,7 +16,7 @@ median from the variables and divide it by the median absolute deviation
 mean and divide it by the standard deviation (SD).
 the}
 
-\item{method}{The method of standardization. See 'Details'.}
+\item{method}{The method of standardization. For data.frames, can be \code{"default"} (variables are divided by SD or MAD depending on \code{robust}) or \code{"2sd"} (divided by two times the deviation).}
 
 \item{verbose}{Toggle warnings on or off.}
 
