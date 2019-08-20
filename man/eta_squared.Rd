@@ -5,6 +5,7 @@
 \alias{cohens_f}
 \alias{epsilon_squared}
 \alias{eta_squared}
+\alias{eta_squared.aov}
 \alias{omega_squared}
 \title{ANOVA Effect Size (Omega Squared, Eta Squared, Epsilon Squared)}
 \usage{
@@ -12,7 +13,10 @@ cohens_f(model)
 
 epsilon_squared(model)
 
-eta_squared(model, partial = TRUE, ci = NULL, iterations = 1000)
+eta_squared(model, partial = TRUE, ci = NULL, ...)
+
+\method{eta_squared}{aov}(model, partial = TRUE, ci = NULL,
+  iterations = 1000, ...)
 
 omega_squared(model, partial = TRUE, ci = NULL, iterations = 1000)
 }
@@ -22,6 +26,8 @@ omega_squared(model, partial = TRUE, ci = NULL, iterations = 1000)
 \item{partial}{If \code{TRUE}, return partial indices (adjusted for sample size).}
 
 \item{ci}{Confidence Interval (CI) level computed via boostrap.}
+
+\item{...}{Arguments passed to or from other methods.}
 
 \item{iterations}{The number of bootstrap replicates.}
 }

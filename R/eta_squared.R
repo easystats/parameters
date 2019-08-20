@@ -62,27 +62,30 @@
 #' The computation of CIs is based on the implementation done by Stanley (2018) in the \code{ApaTables} package and Kelley (2007) in the \code{MBESS} package. All credits go to them.
 #'
 #' @export
-eta_squared <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
+eta_squared <- function(model, partial = TRUE, ci = NULL, ...) {
   UseMethod("eta_squared")
 }
 
 
-
+#' @rdname eta_squared
 #' @export
-eta_squared.aov <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
-  m <- .eta_squared(model, partial = partial, ci = ci, iterations = iterations)
-  class(m) <- c(ifelse(isTRUE(partial), "partial_eta_squared", "eta_squared"), class(m))
-  m
+eta_squared.aov <- function(model, partial = TRUE, ci = NULL, iterations = 1000, ...) {
+  out <- .eta_squared(model, partial = partial, ci = ci, iterations = iterations)
+  class(out) <- c(ifelse(isTRUE(partial), "partial_eta_squared", "eta_squared"), class(out))
+  out
 }
+
 
 #' @export
 eta_squared.anova <- eta_squared.aov
 
 
 #' @export
-eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
-  if (isFALSE(partial))
+eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL, ...) {
+  if (isFALSE(partial)){
     warning("Currently only supports partial eta squared for repeated-measures ANOVAs.")
+  }
+
 
   par_table <- .extract_parameters_anova(model)
   par_table <- split(par_table,par_table$Group)
@@ -94,16 +97,26 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
   .eta_square_from_F(par_table, ci = ci)
 }
 
-#' @export
-eta_squared.merMod <- function(model, partial = TRUE, ci = NULL) {
-  if (isFALSE(partial))
-    warning("Currently only supports partial eta squared for moxed models.")
 
-  model <- lmerTest:::as_lmerModLmerTest(model)
-  par_table <- lmerTest:::anova.lmerModLmerTest(model)
+
+
+#' @export
+eta_squared.merMod <- function(model, partial = TRUE, ci = NULL, ...) {
+
+  if (isFALSE(partial)){
+    warning("Currently only supports partial eta squared for moxed models.")
+  }
+
+  if (!requireNamespace("lmerTest", quietly = TRUE)) {
+    stop("Package 'lmerTest' required for this function to work. Please install it by running `install.packages('lmerTest')`.")
+  }
+
+
+  model <- lmerTest::as_lmerModLmerTest(model)
+  par_table <- anova(model)
   par_table <- cbind(Parameter = rownames(par_table),par_table)
   colnames(par_table)[4:6] <- c("df","df2","F")
-  parameters:::.eta_square_from_F(par_table, ci = ci)
+  .eta_square_from_F(par_table, ci = ci)
 }
 
 #' @keywords internal
@@ -129,6 +142,10 @@ eta_squared.merMod <- function(model, partial = TRUE, ci = NULL) {
 }
 
 
+
+
+
+
 #' @keywords internal
 .extract_eta_squared <- function(params, values, partial) {
   if (partial == FALSE) {
@@ -141,6 +158,11 @@ eta_squared.merMod <- function(model, partial = TRUE, ci = NULL) {
 
   params[, intersect(c("Group", "Parameter", "Eta_Sq", "Eta_Sq_partial"), names(params)), drop = FALSE]
 }
+
+
+
+
+
 
 
 #' @keywords internal
@@ -209,6 +231,10 @@ eta_squared.merMod <- function(model, partial = TRUE, ci = NULL) {
     x
   }
 }
+
+
+
+
 
 #' @keywords internal
 .eta_square_from_F <- function(.data, ci = NULL) {
