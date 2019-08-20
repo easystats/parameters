@@ -7,8 +7,8 @@
 
   # Standardized
   if (isTRUE(standardize)) {
-    warning("Please set the `standardize` method explicitly. Set to \"full\" by default.")
-    standardize <- "full"
+    warning("Please set the `standardize` method explicitly. Set to \"smart\" by default.")
+    standardize <- "smart"
   }
 
   if (!is.null(standardize) && !is.logical(standardize)) {
@@ -44,11 +44,11 @@
 #'   data = iris, iter = 100, refresh = 0
 #' )
 #'
-#' model_parameters(model, standardize = "full")
+#' model_parameters(model, standardize = "smart")
 #' \dontrun{
 #' library(rstanarm)
 #' model <- stan_glm(Sepal.Length ~ Species, data = iris)
-#' model_parameters(model, standardize = "full")
+#' model_parameters(model, standardize = "smart")
 #'
 #' library(brms)
 #' model <- brm(Sepal.Length ~ Species, data = iris)

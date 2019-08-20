@@ -51,6 +51,4 @@ parameters_type(model)
 
 model <- lm(Sepal.Length ~ Species / fac2 * Petal.Length, data = data)
 parameters_type(model)
-
-
 }

@@ -22,11 +22,12 @@ format_ci <- function(CI_low, CI_high, ci = 0.95, digits = 2) {
 }
 
 #' @keywords internal
-.format_ci <- function(CI_low, CI_high, digits = 2){
+.format_ci <- function(CI_low, CI_high, digits = 2) {
   paste0(
     "[",
     format_value(CI_low, digits = digits, missing = "missing"),
     ", ",
     format_value(CI_high, digits = digits, missing = "missing"),
-    "]")
+    "]"
+  )
 }

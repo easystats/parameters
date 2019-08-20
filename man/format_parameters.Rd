@@ -35,6 +35,4 @@ format_parameters(model)
 
 model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
 format_parameters(model)
-
-
 }

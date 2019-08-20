@@ -227,7 +227,7 @@
 #&gt; wt       |  0.88 | -0.35 | 0.26 |       |      |       |     |       1.60
 #&gt; qsec     | -0.54 | -0.81 |      |       |      |       |     |       1.97
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 7 principal components accounted for 100.00% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%, PC7 = 0.70%).</span><span></div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"oblimin"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: GPArotation</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (oblimin-rotation)
+#&gt; </span><span style='color: #BBBB00;'>The 7 principal components accounted for 100.00% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%, PC7 = 0.70%).</span><span></div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"oblimin"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (oblimin-rotation)
 #&gt; 
 #&gt; </span><span>Variable |   TC1 |   TC2 | Complexity | Uniqueness
 #&gt; --------------------------------------------------
@@ -281,8 +281,7 @@
 #&gt; 29  1.55523735 -2.06076910
 #&gt; 30 -0.18704672 -0.26276186
 #&gt; 31  2.36338454 -1.64100466
-#&gt; 32 -1.71202696 -0.33478623</div><div class='input'>
-</div></span><div class='input'><span class='co'># Automated number of components</span>
+#&gt; 32 -1.71202696 -0.33478623</div></span><div class='input'><span class='co'># Automated number of components</span>
 <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable |   PC1 | Complexity

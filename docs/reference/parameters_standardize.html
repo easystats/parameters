@@ -273,12 +273,24 @@ the</p></td>
 #&gt; 3               Speciesvirginica       16.656626
 #&gt; 4                   Sepal.Length        5.312411
 #&gt; 5 Speciesversicolor:Sepal.Length       -1.903594
-#&gt; 6  Speciesvirginica:Sepal.Length       -4.405008</div><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)
-<span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)
-<span class='co'># }</span></pre>
+#&gt; 6  Speciesvirginica:Sepal.Length       -4.405008</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Speciesversicolor:Petal.Width and Speciesversicolor (r = 0.74), Speciesversicolor:Petal.Width and Petal.Width (r = 0.85), Speciesvirginica:Petal.Width and Speciesversicolor:Petal.Width (r = 0.76). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt;                       Parameter Std_Median   Std_Mean    Std_MAP
+#&gt; 1                   (Intercept)  0.0000000  0.0000000  0.0000000
+#&gt; 2             Speciesversicolor -0.8397421 -0.8246046 -0.8347153
+#&gt; 3              Speciesvirginica  0.5361959  0.5400393  0.5488100
+#&gt; 4                   Petal.Width  0.8398032  0.8386111  0.8353795
+#&gt; 5 Speciesversicolor:Petal.Width  0.4326380  0.4359383  0.3667724
+#&gt; 6  Speciesvirginica:Petal.Width -0.2278883 -0.2229682 -0.2565590</div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Speciesversicolor:Petal.Width and Speciesversicolor (r = 0.74), Speciesversicolor:Petal.Width and Petal.Width (r = 0.85), Speciesvirginica:Petal.Width and Speciesversicolor:Petal.Width (r = 0.76). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt;                       Parameter Std_Median   Std_Mean    Std_MAP
+#&gt; 1                   (Intercept)  0.0000000  0.0000000  0.0000000
+#&gt; 2             Speciesversicolor -0.6700217 -0.6579437 -0.6660110
+#&gt; 3              Speciesvirginica  0.4278253  0.4308919  0.4378900
+#&gt; 4                   Petal.Width  0.9123304  0.9110353  0.9075247
+#&gt; 5 Speciesversicolor:Petal.Width  0.4700016  0.4735868  0.3984477
+#&gt; 6  Speciesvirginica:Petal.Width -0.2475692 -0.2422242 -0.2787160</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

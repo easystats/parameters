@@ -210,13 +210,13 @@ included in the summary output.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low  CI_high           p
-#&gt; 1                   (Intercept)   4.7741775  4.5092873 4.982164 0.000000000
-#&gt; 3             Speciesversicolor  -0.7149703 -1.6747131 0.141785 0.101898102
-#&gt; 5              Speciesvirginica   0.5075727 -0.7442835 1.696475 0.417582418
-#&gt; 2                   Petal.Width   0.9144236  0.2674237 1.931836 0.001998002
-#&gt; 4 Speciesversicolor:Petal.Width   0.4756677 -0.7014166 1.460394 0.381618382
-#&gt; 6  Speciesvirginica:Petal.Width  -0.2908197 -1.3995433 0.600094 0.567432567</div></pre>
+<span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
+#&gt; 1                   (Intercept)   4.7736099  4.5157501 4.9911776 0.000000000
+#&gt; 3             Speciesversicolor  -0.7205815 -1.6684709 0.1515156 0.111888112
+#&gt; 5              Speciesvirginica   0.5148321 -0.7485980 1.7236521 0.395604396
+#&gt; 2                   Petal.Width   0.9317668  0.2377168 1.9597384 0.001998002
+#&gt; 4 Speciesversicolor:Petal.Width   0.4769612 -0.6974434 1.4647602 0.383616384
+#&gt; 6  Speciesvirginica:Petal.Width  -0.2929462 -1.4379609 0.6177568 0.555444555</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

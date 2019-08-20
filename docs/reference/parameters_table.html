@@ -152,7 +152,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>parameters_table</span>(<span class='no'>x</span>, <span class='kw'>clean_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>stars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>parameters_table</span>(<span class='no'>x</span>, <span class='kw'>pretty_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>stars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,8 +162,8 @@
       <td><p>A dataframe of model's parameters.</p></td>
     </tr>
     <tr>
-      <th>clean_names</th>
-      <td><p>Clean parameters' names if possible.</p></td>
+      <th>pretty_names</th>
+      <td><p>Pretty parameters' names.</p></td>
     </tr>
     <tr>
       <th>stars</th>
@@ -197,11 +197,114 @@
 #&gt; 3   &gt; .1               2.31
 #&gt; 4 &lt; .001               0.36
 #&gt; 5   &gt; .1               0.09
-#&gt; 6   &gt; .1               0.11</div><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.69</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))
-<span class='co'># }</span><div class='input'>
+#&gt; 6   &gt; .1               0.11</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.69</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))</div><div class='output co'>#&gt; 
+#&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
+#&gt; Chain 1: 
+#&gt; Chain 1: Gradient evaluation took 0 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+#&gt; Chain 1: Adjust your expectations accordingly!
+#&gt; Chain 1: 
+#&gt; Chain 1: 
+#&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+#&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+#&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+#&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
+#&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
+#&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+#&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+#&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+#&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+#&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+#&gt; Chain 1: 
+#&gt; Chain 1:  Elapsed Time: 0.079 seconds (Warm-up)
+#&gt; Chain 1:                0.08 seconds (Sampling)
+#&gt; Chain 1:                0.159 seconds (Total)
+#&gt; Chain 1: 
+#&gt; 
+#&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
+#&gt; Chain 2: 
+#&gt; Chain 2: Gradient evaluation took 0 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+#&gt; Chain 2: Adjust your expectations accordingly!
+#&gt; Chain 2: 
+#&gt; Chain 2: 
+#&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+#&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+#&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+#&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
+#&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
+#&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+#&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+#&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+#&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+#&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+#&gt; Chain 2: 
+#&gt; Chain 2:  Elapsed Time: 0.082 seconds (Warm-up)
+#&gt; Chain 2:                0.089 seconds (Sampling)
+#&gt; Chain 2:                0.171 seconds (Total)
+#&gt; Chain 2: 
+#&gt; 
+#&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
+#&gt; Chain 3: 
+#&gt; Chain 3: Gradient evaluation took 0 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+#&gt; Chain 3: Adjust your expectations accordingly!
+#&gt; Chain 3: 
+#&gt; Chain 3: 
+#&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+#&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+#&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+#&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
+#&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
+#&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+#&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+#&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+#&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+#&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+#&gt; Chain 3: 
+#&gt; Chain 3:  Elapsed Time: 0.078 seconds (Warm-up)
+#&gt; Chain 3:                0.088 seconds (Sampling)
+#&gt; Chain 3:                0.166 seconds (Total)
+#&gt; Chain 3: 
+#&gt; 
+#&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
+#&gt; Chain 4: 
+#&gt; Chain 4: Gradient evaluation took 0 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+#&gt; Chain 4: Adjust your expectations accordingly!
+#&gt; Chain 4: 
+#&gt; Chain 4: 
+#&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
+#&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
+#&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
+#&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
+#&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
+#&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+#&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+#&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+#&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+#&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
+#&gt; Chain 4: 
+#&gt; Chain 4:  Elapsed Time: 0.079 seconds (Warm-up)
+#&gt; Chain 4:                0.081 seconds (Sampling)
+#&gt; Chain 4:                0.16 seconds (Total)
+#&gt; Chain 4: </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;              Parameter Median       69% CI       89% CI       95% CI   pd
+#&gt; 1          (Intercept)   5.01 [4.93, 5.08] [4.89, 5.12] [4.86, 5.15] 100%
+#&gt; 2 Species (versicolor)   0.92 [0.82, 1.03] [0.76, 1.09] [0.72, 1.13] 100%
+#&gt; 3  Species (virginica)   1.58 [1.47, 1.68] [1.42, 1.75] [1.37, 1.78] 100%
+#&gt;   % in ROPE  ESS  Rhat              Prior
+#&gt; 1        0% 3127 1.000 Normal (0 +- 8.28)
+#&gt; 2        0% 2968 1.000 Normal (0 +- 2.07)
+#&gt; 3        0% 3486 1.000 Normal (0 +- 2.07)</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

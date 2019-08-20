@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters of (General) Linear Models — model_parameters.lm • parameters</title>
+<title>Order (first, second, ...) formatting — format_order • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Parameters of (General) Linear Models — model_parameters.lm" />
+<meta property="og:title" content="Order (first, second, ...) formatting — format_order" />
 
-<meta property="og:description" content="Extract and compute indices and measures to describe parameters of (general) linear models (GLMs)." />
+<meta property="og:description" content="Format order." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -141,78 +141,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameters of (General) Linear Models</h1>
+    <h1>Order (first, second, ...) formatting</h1>
     
-    <div class="hidden name"><code>model_parameters.lm.Rd</code></div>
+    <div class="hidden name"><code>format_order.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Extract and compute indices and measures to describe parameters of (general) linear models (GLMs).</p>
+    <p>Format order.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for lm</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>,
-  <span class='kw'>standardize_robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>format_order</span>(<span class='no'>order</span>, <span class='kw'>textual</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>Frequentist regression object.</p></td>
+      <th>order</th>
+      <td><p>value or vector of orders.</p></td>
     </tr>
     <tr>
-      <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
-    </tr>
-    <tr>
-      <th>standardize</th>
-      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>standardize_robust</th>
-      <td><p>Robust standardization. See <code><a href='parameters_standardize.html'>parameters_standardize</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>bootstrap</th>
-      <td><p>Should estimates be based on bootsrapped model? If TRUE, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply.</p></td>
-    </tr>
-    <tr>
-      <th>iterations</th>
-      <td><p>The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.</p></td>
+      <th>textual</th>
+      <td><p>Return number as words. If <code>FALSE</code>, will run <code><a href='format_value.html'>format_value</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods (e.g., to <a href='standardize.lm.html'>standardize</a>).</p></td>
+      <td><p>Arguments to be passed to <code><a href='format_value.html'>format_value</a></code> if <code>textual</code> is <code>FALSE</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame of indices related to the model's parameters.</p>
+    <p>A formatted string.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p | Coefficient (std.)
-#&gt; --------------------------------------------------------------------------------------------
-#&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 29 | &lt; .001 |               0.00
-#&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 29 | &lt; .001 |              -0.52
-#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 29 |  &lt; .01 |              -0.45</div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p | Coefficient (std.)
-#&gt; ------------------------------------------------------------------------
-#&gt; (Intercept) |       39.60 | [35.52, 43.89] | &lt; .001 |               0.00
-#&gt; wt          |       -3.26 | [-4.95, -1.98] | &lt; .001 |              -0.52
-#&gt; cyl         |       -1.47 | [-2.16, -0.72] | &lt; .001 |              -0.45</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     z | df |     p | Coefficient (std.)
-#&gt; -------------------------------------------------------------------------------------------
-#&gt; (Intercept) |       10.62 | 4.17 |  [4.79, 22.66] |  2.55 | 29 | &lt; .05 |              -0.76
-#&gt; wt          |        2.10 | 1.55 |  [-0.53, 6.24] |  1.36 | 29 |  &gt; .1 |               2.05
-#&gt; cyl         |       -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 29 | &lt; .05 |              -5.23</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>format_order</span>(<span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] "second"</div><div class='input'><span class='fu'>format_order</span>(<span class='fl'>8</span>)</div><div class='output co'>#&gt; [1] "eigth"</div><div class='input'><span class='fu'>format_order</span>(<span class='fl'>25</span>, <span class='kw'>textual</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "25th"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -49,7 +49,6 @@ principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "ma
 pca <- principal_components(mtcars[, 1:5], n = 2)
 summary(pca)
 predict(pca)
-
 \donttest{
 # Automated number of components
 principal_components(mtcars[, 1:4])

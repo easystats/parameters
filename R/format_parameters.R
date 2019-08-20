@@ -22,8 +22,6 @@
 #'
 #' model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
 #' format_parameters(model)
-#'
-#'
 #' @return The formatted parameter names.
 #' @export
 format_parameters <- function(model) {
@@ -43,13 +41,12 @@ format_parameters.default <- function(model) {
     }
 
     # Polynomials
-    if (types$Type[i] %in% c("poly", "poly_raw")){
+    if (types$Type[i] %in% c("poly", "poly_raw")) {
       names[i] <- .format_poly(name = names[i], variable = types$Variable[i], type = types$Type[i], degree = types$Level[i])
     }
 
     # Interactions
     if (types$Type[i] %in% c("interaction", "nested")) {
-
       sep <- ifelse(types$Type[i] == "interaction", " * ", " / ")
 
       components <- unlist(strsplit(names[i], ":", fixed = TRUE))
@@ -76,7 +73,7 @@ format_parameters.default <- function(model) {
 
 
 #' @export
-format_parameters.parameters_model <- function(model){
+format_parameters.parameters_model <- function(model) {
   if (!is.null(attributes(model)$pretty_names)) {
     model$Parameter <- attributes(model)$pretty_names[model$Parameter]
   }
@@ -94,5 +91,3 @@ format_parameters.parameters_model <- function(model){
 .format_poly <- function(name, variable, type, degree) {
   paste0(variable, " (", format_order(as.numeric(degree), textual = FALSE), " degree)")
 }
-
-

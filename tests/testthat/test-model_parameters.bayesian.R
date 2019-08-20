@@ -13,13 +13,13 @@ testthat::test_that("model_parameters.stanreg", {
   testthat::expect_equal(ncol(p_value(insight::download_model("stanreg_lm_1"))), 2)
 
   # GLM
-  params <- model_parameters(insight::download_model("stanreg_lm_1"), standardize = "full", centrality = "all", test = "all", dispersion = TRUE)
+  params <- model_parameters(insight::download_model("stanreg_lm_1"), standardize = "smart", centrality = "all", test = "all", dispersion = TRUE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 21))
 
-  params <- model_parameters(insight::download_model("stanreg_lm_2"), standardize = "full", centrality = "all", test = "all", dispersion = TRUE)
+  params <- model_parameters(insight::download_model("stanreg_lm_2"), standardize = "smart", centrality = "all", test = "all", dispersion = TRUE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 21))
 
-  params <- model_parameters(insight::download_model("stanreg_lm_3"), standardize = "full", centrality = "all", test = "all", dispersion = TRUE)
+  params <- model_parameters(insight::download_model("stanreg_lm_3"), standardize = "smart", centrality = "all", test = "all", dispersion = TRUE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 21))
 
   params <- model_parameters(insight::download_model("stanreg_glm_1"), standardize = "refit", centrality = "all", test = "all", dispersion = TRUE)
@@ -29,7 +29,7 @@ testthat::test_that("model_parameters.stanreg", {
   testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 21))
 
   # Mixed
-  params <- model_parameters(insight::download_model("stanreg_lmerMod_1"), standardize = "full", centrality = "all", test = "all", dispersion = TRUE)
+  params <- model_parameters(insight::download_model("stanreg_lmerMod_1"), standardize = "smart", centrality = "all", test = "all", dispersion = TRUE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 21))
 
   params <- model_parameters(insight::download_model("stanreg_merMod_1"), standardize = "refit", centrality = "all", test = "all", dispersion = TRUE)

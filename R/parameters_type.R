@@ -37,8 +37,6 @@
 #'
 #' model <- lm(Sepal.Length ~ Species / fac2 * Petal.Length, data = data)
 #' parameters_type(model)
-#'
-#'
 #' @return A data.frame.
 #' @export
 parameters_type <- function(model, ...) {
@@ -49,7 +47,7 @@ parameters_type <- function(model, ...) {
     stringsAsFactors = FALSE
   )
 
-  data = insight::get_data(model)
+  data <- insight::get_data(model)
   reference <- .list_factors_numerics(data)
 
   # Get types
@@ -61,15 +59,14 @@ parameters_type <- function(model, ...) {
   out <- cbind(params, main, secondary)
 
   # Deal with nested interactions
-  for(i in unique(paste0(out[out$Type == "interaction", "Variable"], out[out$Type == "interaction", "Secondary_Variable"]))){
-
+  for (i in unique(paste0(out[out$Type == "interaction", "Variable"], out[out$Type == "interaction", "Secondary_Variable"]))) {
     interac <- out[paste0(out$Variable, out$Secondary_Variable) == i, ]
-    if(!all(interac$Term %in% out$Parameter)){
+    if (!all(interac$Term %in% out$Parameter)) {
       out[paste0(out$Variable, out$Secondary_Variable) == i, "Type"] <- "nested"
     }
   }
-  for(i in unique(out$Secondary_Parameter)){
-    if(!is.na(i) && i %in% out$Parameter){
+  for (i in unique(out$Secondary_Parameter)) {
+    if (!is.na(i) && i %in% out$Parameter) {
       out[!is.na(out$Secondary_Parameter) & out$Secondary_Parameter == i, "Secondary_Type"] <- out[!is.na(out$Parameter) & out$Parameter == i, "Type"]
     }
   }
@@ -106,7 +103,6 @@ parameters_type <- function(model, ...) {
 
     main <- .parameters_type_basic(var[1], data, reference)
     return(c("interaction", main[2], main[3], main[4], var[2]))
-
   } else {
     .parameters_type_basic(name, data, reference)
   }
@@ -121,29 +117,31 @@ parameters_type <- function(model, ...) {
   if (is.na(name)) {
     return(c(NA, NA, NA, NA, NA))
 
-  # Intercept
+    # Intercept
   } else if (name == "(Intercept)" | name == "b_Intercept") {
     return(c("intercept", "(Intercept)", NA, NA, NA))
 
-  # Numeric
+    # Numeric
   } else if (name %in% reference$numeric) {
     return(c("numeric", name, name, NA, NA))
 
-  # Factors
+    # Factors
   } else if (name %in% reference$levels) {
     fac <- reference$levels_parent[match(name, reference$levels)]
-    return(c("factor",
-             name,
-             fac,
-             gsub(fac, "", name, fixed = TRUE),
-             NA))
+    return(c(
+      "factor",
+      name,
+      fac,
+      gsub(fac, "", name, fixed = TRUE),
+      NA
+    ))
 
-  # Polynomials
+    # Polynomials
   } else if (grepl("poly(", name, fixed = TRUE)) {
     if (grepl(", raw = TRUE", name, fixed = TRUE)) {
       name <- gsub(", raw = TRUE", "", name, fixed = TRUE)
       type <- "poly_raw"
-    } else{
+    } else {
       type <- "poly"
     }
     vars <- gsub("poly(", "", name, fixed = TRUE)
@@ -152,8 +150,6 @@ parameters_type <- function(model, ...) {
     degree <- vars[[2]]
     degree <- substr(vars[[2]], nchar(vars[[2]]), nchar(vars[[2]]))
     return(c(type, name, var, degree, NA))
-
-
   } else {
     return(c("unknown", NA, NA, NA, NA))
   }
@@ -171,7 +167,7 @@ parameters_type <- function(model, ...) {
 
   out$levels <- NA
   out$levels_parent <- NA
-  for(fac in out$factor){
+  for (fac in out$factor) {
     levels <- paste0(fac, unique(data[[fac]]))
     out$levels_parent <- c(out$levels_parent, rep(fac, length(levels)))
     out$levels <- c(out$levels, levels)
@@ -181,4 +177,3 @@ parameters_type <- function(model, ...) {
 
   out
 }
-
