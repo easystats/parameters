@@ -211,12 +211,12 @@
 <a href="#sd-scaling-by-two-2-sds" class="anchor"></a><code>2sd</code>: Scaling by two 2 SDs</h2>
 <p>Same as <code>method = "refit"</code>, however, standardization is done by dividing by two times the <code>SD</code> or <code>MAD</code> (depending on <code>robust</code>). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors <span class="citation">(Gelman 2008)</span>.</p>
 </div>
-<div id="full-scaling-by-the-variances-of-the-response-and-the-predictor" class="section level2">
+<div id="smart-scaling-by-the-variances-of-the-response-and-the-predictor" class="section level2">
 <h2 class="hasAnchor">
-<a href="#full-scaling-by-the-variances-of-the-response-and-the-predictor" class="anchor"></a><code>full</code>: Scaling by the variances of the response and the predictor</h2>
+<a href="#smart-scaling-by-the-variances-of-the-response-and-the-predictor" class="anchor"></a><code>smart</code>: Scaling by the variances of the response and the predictor</h2>
 <p>Post-hoc standardization of the model paramaters. The coefficients are divided by the standard deviation (or MAD if <code>robust</code>) of the outcome (which becomes their expression ‘unit’). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if <code>robust</code>) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of <code>x</code> is related to a change of 0.24 of the SD of <code>y</code>). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"full"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"smart"</span>)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
@@ -241,7 +241,7 @@
 <div id="classic-basic-scaling-of-all-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#classic-basic-scaling-of-all-parameters" class="anchor"></a><code>classic</code>: Basic scaling of all parameters</h2>
-<p>This method is similar to <code>method = "full"</code>, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as <code><a href="https://www.rdocumentation.org/packages/sjstats/topics/std_beta">sjstats::std_beta()</a></code> or <code><a href="https://www.rdocumentation.org/packages/lm.beta/topics/lm.beta">lm.beta::lm.beta()</a></code>.</p>
+<p>This method is similar to <code>method = "smart"</code>, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as <code><a href="https://www.rdocumentation.org/packages/sjstats/topics/std_beta">sjstats::std_beta()</a></code> or <code><a href="https://www.rdocumentation.org/packages/lm.beta/topics/lm.beta">lm.beta::lm.beta()</a></code>.</p>
 </div>
 </div>
 <div id="methods-comparison" class="section level1">
@@ -259,8 +259,8 @@
 <a class="sourceLine" id="cb5-6" title="6">comparison &lt;-<span class="st"> </span><span class="cf">function</span>(model, <span class="dt">robust=</span><span class="ot">FALSE</span>){</a>
 <a class="sourceLine" id="cb5-7" title="7">  out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"refit"</span>, <span class="dt">robust=</span>robust)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a>
 <a class="sourceLine" id="cb5-8" title="8">  </a>
-<a class="sourceLine" id="cb5-9" title="9">  out<span class="op">$</span>full &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
-<a class="sourceLine" id="cb5-10" title="10">    out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"full"</span>, <span class="dt">robust=</span>robust)[, <span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb5-9" title="9">  out<span class="op">$</span>smart &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb5-10" title="10">    out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"smart"</span>, <span class="dt">robust=</span>robust)[, <span class="dv">2</span>]</a>
 <a class="sourceLine" id="cb5-11" title="11">}, <span class="dt">error =</span> <span class="cf">function</span>(error_condition) {</a>
 <a class="sourceLine" id="cb5-12" title="12">    <span class="st">"Error"</span></a>
 <a class="sourceLine" id="cb5-13" title="13">})</a>
@@ -311,7 +311,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="right">lm.beta</th>
@@ -354,7 +354,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="left">sjstats</th>
 <th align="left">lm.beta</th>
@@ -398,7 +398,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="left">lm.beta</th>
@@ -441,7 +441,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="right">lm.beta</th>
@@ -475,7 +475,7 @@
 <tr class="even">
 <td align="left">Petal.Width:Sepal.Width</td>
 <td align="right">0.01</td>
-<td align="right">0.01</td>
+<td align="right">0.24</td>
 <td align="right">0.24</td>
 <td align="right">0.24</td>
 <td align="right">0.24</td>
@@ -492,7 +492,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="right">lm.beta</th>
@@ -502,7 +502,7 @@
 <tr class="odd">
 <td align="left">(Intercept)</td>
 <td align="right">0</td>
-<td align="right">0</td>
+<td align="right">0.00</td>
 <td align="right"></td>
 <td align="right">0.00</td>
 <td align="right">0.00</td>
@@ -510,7 +510,7 @@
 <tr class="even">
 <td align="left">poly(Petal.Width, 2)1</td>
 <td align="right">0</td>
-<td align="right">0</td>
+<td align="right">10.48</td>
 <td align="right">10.48</td>
 <td align="right">10.48</td>
 <td align="right">10.48</td>
@@ -518,7 +518,7 @@
 <tr class="odd">
 <td align="left">poly(Petal.Width, 2)2</td>
 <td align="right">0</td>
-<td align="right">0</td>
+<td align="right">-1.86</td>
 <td align="right">-1.86</td>
 <td align="right">-1.86</td>
 <td align="right">-1.86</td>
@@ -526,7 +526,7 @@
 <tr class="even">
 <td align="left">poly(Sepal.Width, 2)1</td>
 <td align="right">0</td>
-<td align="right">0</td>
+<td align="right">3.44</td>
 <td align="right">3.44</td>
 <td align="right">3.44</td>
 <td align="right">3.44</td>
@@ -534,7 +534,7 @@
 <tr class="odd">
 <td align="left">poly(Sepal.Width, 2)2</td>
 <td align="right">0</td>
-<td align="right">0</td>
+<td align="right">0.28</td>
 <td align="right">0.28</td>
 <td align="right">0.28</td>
 <td align="right">0.28</td>
@@ -553,7 +553,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="right">lm.beta</th>
@@ -599,7 +599,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="right">lm.beta</th>
@@ -642,7 +642,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="left">sjstats</th>
 <th align="left">lm.beta</th>
@@ -668,7 +668,7 @@
 <tr class="odd">
 <td align="left">Speciesversicolor</td>
 <td align="right">0</td>
-<td align="right">-2.0</td>
+<td align="right">-5.8</td>
 <td align="left">Error</td>
 <td align="left">Error</td>
 <td align="left">Error</td>
@@ -676,7 +676,7 @@
 <tr class="even">
 <td align="left">Speciesvirginica</td>
 <td align="right">0</td>
-<td align="right">-2.6</td>
+<td align="right">-7.6</td>
 <td align="left">Error</td>
 <td align="left">Error</td>
 <td align="left">Error</td>
@@ -694,7 +694,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="left">lm.beta</th>
@@ -736,7 +736,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="right">lm.beta</th>
@@ -770,7 +770,7 @@
 <tr class="even">
 <td align="left">Petal.Width:Group_Sepal.WidthLow</td>
 <td align="right">-0.05</td>
-<td align="right">0.06</td>
+<td align="right">-0.01</td>
 <td align="right">-0.01</td>
 <td align="right">-0.01</td>
 <td align="right">-0.01</td>
@@ -782,7 +782,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="right">lm.beta</th>
@@ -799,7 +799,7 @@
 </tr>
 <tr class="even">
 <td align="left">Group_Sepal.WidthLow</td>
-<td align="right">0.15</td>
+<td align="right">0.27</td>
 <td align="right">0.01</td>
 <td align="right">0.01</td>
 <td align="right">0.01</td>
@@ -816,7 +816,7 @@
 <tr class="even">
 <td align="left">Group_Sepal.WidthLow:Petal.Width</td>
 <td align="right">0.00</td>
-<td align="right">0.00</td>
+<td align="right">-0.01</td>
 <td align="right">-0.01</td>
 <td align="right">-0.01</td>
 <td align="right">-0.01</td>
@@ -834,7 +834,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="right">lm.beta</th>
@@ -874,7 +874,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
-<th align="right">full</th>
+<th align="right">smart</th>
 <th align="right">classic</th>
 <th align="right">sjstats</th>
 <th align="left">lm.beta</th>
@@ -913,7 +913,7 @@
 <div id="conclusion" class="section level1">
 <h1 class="hasAnchor">
 <a href="#conclusion" class="anchor"></a>Conclusion</h1>
-<p>Use <code>refit</code> if possible, otherwise <code>full</code>.</p>
+<p>Use <code>refit</code> if possible, otherwise <code>smart</code>.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
@@ -951,7 +951,7 @@
 <a href="#standardization-methods">Standardization methods</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#refit-re-fitting-the-model-with-standardized-data"><code>refit</code>: Re-fitting the model with standardized data</a></li>
       <li><a href="#sd-scaling-by-two-2-sds"><code>2sd</code>: Scaling by two 2 SDs</a></li>
-      <li><a href="#full-scaling-by-the-variances-of-the-response-and-the-predictor"><code>full</code>: Scaling by the variances of the response and the predictor</a></li>
+      <li><a href="#smart-scaling-by-the-variances-of-the-response-and-the-predictor"><code>smart</code>: Scaling by the variances of the response and the predictor</a></li>
       <li><a href="#classic-basic-scaling-of-all-parameters"><code>classic</code>: Basic scaling of all parameters</a></li>
       </ul>
 </li>
