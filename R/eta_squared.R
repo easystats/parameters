@@ -80,22 +80,31 @@ eta_squared.anova <- eta_squared.aov
 
 
 #' @export
-eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
-  stop("Eta squared not implemented yet for repeated-measures ANOVAs.")
+eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL) {
+  if (isFALSE(partial))
+    warning("Currently only supports partial eta squared for repeated-measures ANOVAs.")
 
-  # params <- .extract_parameters_anova(model)
-  # values <- .values_aov(params)
-  #
-  # if (!"Residuals" %in% params$Parameter) {
-  #   stop("No residuals data found. Omega squared can only be computed for simple `aov` models.")
-  # }
-  #
-  # mapply(function(p, v) {
-  #   .extract_eta_squared(p, v, partial)
-  # }, split(params, params$Group), values, SIMPLIFY = FALSE)
+  par_table <- .extract_parameters_anova(model)
+  par_table <- split(par_table,par_table$Group)
+  par_table <- lapply(par_table, function(.data) {
+    .data$df2 <- .data$df[.data$Parameter=="Residuals"]
+    .data
+  })
+  par_table <- do.call(rbind,par_table)
+  .eta_square_from_F(par_table, ci = ci)
 }
 
+#' @export
+eta_squared.merMod <- function(model, partial = TRUE, ci = NULL) {
+  if (isFALSE(partial))
+    warning("Currently only supports partial eta squared for moxed models.")
 
+  model <- lmerTest:::as_lmerModLmerTest(model)
+  par_table <- lmerTest:::anova.lmerModLmerTest(model)
+  par_table <- cbind(Parameter = rownames(par_table),par_table)
+  colnames(par_table)[4:6] <- c("df","df2","F")
+  parameters:::.eta_square_from_F(par_table, ci = ci)
+}
 
 #' @keywords internal
 .eta_squared <- function(model, partial, ci, iterations) {
@@ -199,4 +208,31 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations = 1
     x$CI_high <- sapply(df[, 1:ncol(df)], stats::quantile, probs = (1 + ci.lvl) / 2, na.rm = TRUE)
     x
   }
+}
+
+#' @keywords internal
+.eta_square_from_F <- function(.data, ci = NULL) {
+  .data$Eta_Sq_partial <- .data$`F` * .data$df /
+    (.data$`F` * .data$df + .data$df2)
+
+  if (is.numeric(ci)) {
+    .data$CI_high <- .data$CI_low <- NA
+    for (i in seq_len(nrow(.data))) {
+      if (!is.na(.data$`F`[i])) {
+        cl <- .ci_partial_eta_squared(
+          F.value = .data$`F`[i],
+          df1 = .data$df[i],
+          df2 = .data$df2[i],
+          conf.level = ci
+        )
+        .data$CI_low[i] <- cl$LL
+        .data$CI_high[i] <- cl$UL
+      }
+    }
+  }
+
+  rownames(.data) <- NULL
+  .data <- .data[,colnames(.data) %in% c("Parameter","Eta_Sq_partial","CI_high","CI_low")]
+  class(.data) <- c("partial_eta_squared",class(.data))
+  .data
 }
