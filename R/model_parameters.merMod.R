@@ -58,6 +58,7 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
 .extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method = "wald", ...) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
   parameters$Parameter <- row.names(parameters)
+  original_order <- parameters$Parameter
 
   # CI
   if (!is.null(ci)) {
@@ -89,6 +90,9 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
     }
   }
 
+  # Rematch order after merging
+  parameters <- parameters[match(parameters$Parameter, original_order), ]
+  row.names(parameters) <- NULL
 
   # Renaming
   names(parameters) <- gsub("Std. Error", "SE", names(parameters))
