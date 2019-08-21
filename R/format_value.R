@@ -105,5 +105,5 @@ format_value.logical <- format_value.numeric
 #'
 #' @export
 is.int <- function(x) {
-  x %% 1 == 0
+  ifelse(is.infinite(x), FALSE, x %% 1 == 0)
 }
