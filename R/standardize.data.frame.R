@@ -2,7 +2,7 @@
 #' @importFrom stats median mad na.omit
 #' @export
 standardize.numeric <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
-  method <- match.arg(method, choices = c("default", "refit", "2sd", "full", "partial", "classic"))
+  method <- match.arg(method, choices = c("default", "refit", "2sd", "smart", "partial", "classic"))
 
   # Warning if all NaNs
   if (all(is.na(x))) {
@@ -48,7 +48,7 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
     scale <- stats::sd(x)
   }
 
-  if (method %in% c("default", "classic", "refit", "full")) {
+  if (method %in% c("default", "classic", "refit", "smart")) {
     x <- as.vector((x - center) / scale)
   } else {
     x <- as.vector((x - center) / 2 * scale)

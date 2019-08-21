@@ -6,7 +6,7 @@ test_that("model_parameters.mixed", {
   params <- model_parameters(insight::download_model("lmerMod_1"), standardize = "refit")
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 8))
 
-  params <- model_parameters(insight::download_model("lmerMod_1"), standardize = "full", ci = c(0.8, 0.9))
+  params <- model_parameters(insight::download_model("lmerMod_1"), standardize = "smart", ci = c(0.8, 0.9))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 10))
 
   params <- model_parameters(insight::download_model("merMod_1"), standardize = "refit")

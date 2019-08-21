@@ -194,19 +194,41 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)</div><span class='co'># NOT RUN {</span>
-<span class='co'># lavaan -------------------------------------</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lavaan</span>)
-
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)</div><div class='input'><span class='co'># lavaan -------------------------------------</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lavaan</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'lavaan' was built under R version 3.6.1</span></div><div class='output co'>#&gt; <span class='message'>This is lavaan 0.6-4</span></div><div class='output co'>#&gt; <span class='message'>lavaan is BETA software! Please report any bugs.</span></div><div class='input'>
 <span class='co'># Confirmatory Factor Analysis (CFA) ---------</span>
 
 <span class='no'>structure</span> <span class='kw'>&lt;-</span> <span class='st'>" visual  =~ x1 + x2 + x3
                textual =~ x4 + x5 + x6
                speed   =~ x7 + x8 + x9 "</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lavaan/topics/cfa'>cfa</a></span>(<span class='no'>structure</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HolzingerSwineford1939</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Link              | Coefficient |   SE |       95% CI |      p |        Type
+#&gt; ----------------------------------------------------------------------------
+#&gt; visual =~ x1      |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001 |     Loading
+#&gt; visual =~ x2      |        0.55 | 0.10 | [0.36, 0.75] | &lt; .001 |     Loading
+#&gt; visual =~ x3      |        0.73 | 0.11 | [0.52, 0.94] | &lt; .001 |     Loading
+#&gt; textual =~ x4     |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001 |     Loading
+#&gt; textual =~ x5     |        1.11 | 0.07 | [0.98, 1.24] | &lt; .001 |     Loading
+#&gt; textual =~ x6     |        0.93 | 0.06 | [0.82, 1.03] | &lt; .001 |     Loading
+#&gt; speed =~ x7       |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001 |     Loading
+#&gt; speed =~ x8       |        1.18 | 0.16 | [0.86, 1.50] | &lt; .001 |     Loading
+#&gt; speed =~ x9       |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001 |     Loading
+#&gt; visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | &lt; .001 | Correlation
+#&gt; visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | &lt; .001 | Correlation
+#&gt; textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | &lt; .001 | Correlation</div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Link              | Coefficient |   SE |       95% CI |      p |        Type
+#&gt; ----------------------------------------------------------------------------
+#&gt; visual =~ x1      |        0.77 | 0.05 | [0.66, 0.88] | &lt; .001 |     Loading
+#&gt; visual =~ x2      |        0.42 | 0.06 | [0.31, 0.54] | &lt; .001 |     Loading
+#&gt; visual =~ x3      |        0.58 | 0.06 | [0.47, 0.69] | &lt; .001 |     Loading
+#&gt; textual =~ x4     |        0.85 | 0.02 | [0.81, 0.90] | &lt; .001 |     Loading
+#&gt; textual =~ x5     |        0.86 | 0.02 | [0.81, 0.90] | &lt; .001 |     Loading
+#&gt; textual =~ x6     |        0.84 | 0.02 | [0.79, 0.88] | &lt; .001 |     Loading
+#&gt; speed =~ x7       |        0.57 | 0.05 | [0.47, 0.67] | &lt; .001 |     Loading
+#&gt; speed =~ x8       |        0.72 | 0.05 | [0.62, 0.82] | &lt; .001 |     Loading
+#&gt; speed =~ x9       |        0.67 | 0.05 | [0.56, 0.77] | &lt; .001 |     Loading
+#&gt; visual ~~ textual |        0.46 | 0.06 | [0.33, 0.58] | &lt; .001 | Correlation
+#&gt; visual ~~ speed   |        0.47 | 0.07 | [0.33, 0.61] | &lt; .001 | Correlation
+#&gt; textual ~~ speed  |        0.28 | 0.07 | [0.15, 0.42] | &lt; .001 | Correlation</div><div class='input'>
 <span class='co'># Structural Equation Model (SEM) ------------</span>
 
 <span class='no'>structure</span> <span class='kw'>&lt;-</span> <span class='st'>"
@@ -225,17 +247,57 @@
     y6 ~~ y8
 "</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lavaan/topics/sem'>sem</a></span>(<span class='no'>structure</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>PoliticalDemocracy</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Link          | Coefficient |   SE |        95% CI |      p |        Type
+#&gt; -------------------------------------------------------------------------
+#&gt; ind60 =~ x1   |        1.00 | 0.00 |  [1.00, 1.00] | &lt; .001 |     Loading
+#&gt; ind60 =~ x2   |        2.18 | 0.14 |  [1.91, 2.45] | &lt; .001 |     Loading
+#&gt; ind60 =~ x3   |        1.82 | 0.15 |  [1.52, 2.12] | &lt; .001 |     Loading
+#&gt; dem60 =~ y1   |        1.00 | 0.00 |  [1.00, 1.00] | &lt; .001 |     Loading
+#&gt; dem60 =~ y2   |        1.19 | 0.14 |  [0.92, 1.46] | &lt; .001 |     Loading
+#&gt; dem60 =~ y3   |        1.17 | 0.12 |  [0.94, 1.41] | &lt; .001 |     Loading
+#&gt; dem60 =~ y4   |        1.25 | 0.12 |  [1.02, 1.48] | &lt; .001 |     Loading
+#&gt; dem65 =~ y5   |        1.00 | 0.00 |  [1.00, 1.00] | &lt; .001 |     Loading
+#&gt; dem65 =~ y6   |        1.19 | 0.14 |  [0.92, 1.46] | &lt; .001 |     Loading
+#&gt; dem65 =~ y7   |        1.17 | 0.12 |  [0.94, 1.41] | &lt; .001 |     Loading
+#&gt; dem65 =~ y8   |        1.25 | 0.12 |  [1.02, 1.48] | &lt; .001 |     Loading
+#&gt; dem60 ~ ind60 |        1.47 | 0.39 |  [0.70, 2.24] | &lt; .001 |  Regression
+#&gt; dem65 ~ ind60 |        0.60 | 0.23 |  [0.16, 1.04] |  &lt; .01 |  Regression
+#&gt; dem65 ~ dem60 |        0.87 | 0.07 |  [0.72, 1.01] | &lt; .001 |  Regression
+#&gt; y1 ~~ y5      |        0.58 | 0.36 | [-0.11, 1.28] |   &gt; .1 | Correlation
+#&gt; y2 ~~ y4      |        1.44 | 0.69 |  [0.09, 2.79] |  &lt; .05 | Correlation
+#&gt; y2 ~~ y6      |        2.18 | 0.74 |  [0.74, 3.63] |  &lt; .01 | Correlation
+#&gt; y3 ~~ y7      |        0.71 | 0.61 | [-0.49, 1.91] |   &gt; .1 | Correlation
+#&gt; y4 ~~ y8      |        0.36 | 0.44 | [-0.51, 1.23] |   &gt; .1 | Correlation
+#&gt; y6 ~~ y8      |        1.37 | 0.58 |  [0.24, 2.50] |  &lt; .05 | Correlation</div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Link          | Coefficient |   SE |        95% CI |      p |        Type
+#&gt; -------------------------------------------------------------------------
+#&gt; ind60 =~ x1   |        0.92 | 0.02 |  [0.88, 0.97] | &lt; .001 |     Loading
+#&gt; ind60 =~ x2   |        0.97 | 0.02 |  [0.94, 1.01] | &lt; .001 |     Loading
+#&gt; ind60 =~ x3   |        0.87 | 0.03 |  [0.81, 0.93] | &lt; .001 |     Loading
+#&gt; dem60 =~ y1   |        0.85 | 0.04 |  [0.77, 0.93] | &lt; .001 |     Loading
+#&gt; dem60 =~ y2   |        0.69 | 0.06 |  [0.57, 0.81] | &lt; .001 |     Loading
+#&gt; dem60 =~ y3   |        0.76 | 0.05 |  [0.66, 0.86] | &lt; .001 |     Loading
+#&gt; dem60 =~ y4   |        0.84 | 0.04 |  [0.76, 0.92] | &lt; .001 |     Loading
+#&gt; dem65 =~ y5   |        0.82 | 0.04 |  [0.73, 0.90] | &lt; .001 |     Loading
+#&gt; dem65 =~ y6   |        0.75 | 0.05 |  [0.65, 0.86] | &lt; .001 |     Loading
+#&gt; dem65 =~ y7   |        0.80 | 0.05 |  [0.71, 0.89] | &lt; .001 |     Loading
+#&gt; dem65 =~ y8   |        0.83 | 0.04 |  [0.75, 0.91] | &lt; .001 |     Loading
+#&gt; dem60 ~ ind60 |        0.45 | 0.10 |  [0.25, 0.65] | &lt; .001 |  Regression
+#&gt; dem65 ~ ind60 |        0.19 | 0.07 |  [0.05, 0.33] |  &lt; .01 |  Regression
+#&gt; dem65 ~ dem60 |        0.88 | 0.05 |  [0.78, 0.98] | &lt; .001 |  Regression
+#&gt; y1 ~~ y5      |        0.28 | 0.14 |  [0.00, 0.56] |  &lt; .05 | Correlation
+#&gt; y2 ~~ y4      |        0.29 | 0.11 |  [0.07, 0.52] |  &lt; .05 | Correlation
+#&gt; y2 ~~ y6      |        0.36 | 0.10 |  [0.17, 0.54] | &lt; .001 | Correlation
+#&gt; y3 ~~ y7      |        0.17 | 0.13 | [-0.09, 0.43] |   &gt; .1 | Correlation
+#&gt; y4 ~~ y8      |        0.11 | 0.13 | [-0.14, 0.36] |   &gt; .1 | Correlation
+#&gt; y6 ~~ y8      |        0.34 | 0.11 |  [0.12, 0.55] |  &lt; .01 | Correlation</div><div class='input'>
 
+# blavaan ------------------------------------
+# library(blavaan)
 
-<span class='co'># blavaan ------------------------------------</span>
-<span class='co'># library(blavaan)</span>
-
-<span class='co'># model &lt;- blavaan::bsem(structure, data=PoliticalDemocracy)</span>
-<span class='co'># model_parameters(model)</span>
-<span class='co'># model_parameters(model, standardize = TRUE)</span>
-<span class='co'># }</span><div class='input'>
+# model <- blavaan::bsem(structure, data=PoliticalDemocracy)
+# model_parameters(model)
+# model_parameters(model, standardize = TRUE)
+</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

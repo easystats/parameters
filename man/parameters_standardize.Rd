@@ -16,7 +16,7 @@ median from the variables and divide it by the median absolute deviation
 mean and divide it by the standard deviation (SD).
 the}
 
-\item{method}{The method used for standardizing the parameters. Can be \code{"refit"} (default), \code{"2sd"}, \code{"full"} or \code{"classic"}.}
+\item{method}{The method used for standardizing the parameters. Can be \code{"refit"} (default), \code{"2sd"}, \code{"smart"} or \code{"classic"}.}
 
 \item{verbose}{Toggle warnings on or off.}
 
@@ -33,8 +33,8 @@ Compute standardized model parameters (coefficients).
 \itemize{
  \item \strong{refit}: This method is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the "purest" and the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms). The \code{robust} (default to \code{FALSE}) argument enables a robust standardization of data, i.e., based on the \code{median} and \code{MAD} instead of the \code{mean} and \code{SD}.
  \item \strong{2sd}: Same as \code{method = "refit"}, however, standardization is done by dividing by two times the \code{SD} or \code{MAD} (depending on \code{robust}). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors (see Gelman, 2008).
- \item \strong{full}: Post-hoc standardization of the model paramaters. The coefficients are divided by the standard deviation (or MAD if \code{robust}) of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if \code{robust}) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of \code{x} is related to a change of 0.24 of the SD of \code{y}). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.
- \item \strong{classic}: This method is similar to \code{method = "full"}, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as \code{sjstats::std_beta()} or \code{lm.beta::lm.beta()}.
+ \item \strong{smart} (Standardization of Model's parameters with Adjustement, Reconnaissance and Transformation): Post-hoc standardization of the parameters, aiming at emulating the results obtained by "refit". The coefficients are divided by the standard deviation (or MAD if \code{robust}) of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if \code{robust}) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of \code{x} is related to a change of 0.24 of the SD of \code{y}). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.
+ \item \strong{classic}: This method is similar to \code{method = "smart"}, but treats all variables as continuous: it also scales the coefficient by the standard deviation of model's matrix' parameter of factors levels (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as \code{sjstats::std_beta()} or \code{lm.beta::lm.beta()}.
 }
 }
 \examples{
@@ -46,20 +46,20 @@ parameters_standardize(model, method = "refit")
 parameters_standardize(model, method = "refit", robust = TRUE)
 parameters_standardize(model, method = "2sd")
 parameters_standardize(model, method = "2sd", robust = TRUE)
-parameters_standardize(model, method = "full")
-parameters_standardize(model, method = "full", robust = TRUE)
+parameters_standardize(model, method = "smart")
+parameters_standardize(model, method = "smart", robust = TRUE)
 
 iris$binary <- ifelse(iris$Sepal.Width > 3, 1, 0)
 model <- glm(binary ~ Species * Sepal.Length, data = iris, family = "binomial")
 parameters_standardize(model, method = "refit")
 parameters_standardize(model, method = "refit", robust = TRUE)
-parameters_standardize(model, method = "full")
-parameters_standardize(model, method = "full", robust = TRUE)
+parameters_standardize(model, method = "smart")
+parameters_standardize(model, method = "smart", robust = TRUE)
 \donttest{
 library(rstanarm)
 model <- stan_glm(Sepal.Length ~ Species * Petal.Width, data = iris, iter = 500, refresh = 0)
-parameters_standardize(model, method = "full", centrality = "all")
-parameters_standardize(model, method = "full", robust = TRUE, centrality = "all")
+parameters_standardize(model, method = "smart", centrality = "all")
+parameters_standardize(model, method = "smart", robust = TRUE, centrality = "all")
 }
 }
 \references{

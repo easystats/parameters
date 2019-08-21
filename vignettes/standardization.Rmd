@@ -32,7 +32,7 @@ set.seed(333)
 
 Standardising parameters (*i.e.*, coefficients) can allow for their comparison within and between models, variables and studies. Moreover, as it returns coefficients expressed in terms of **change of variance** (for instance, coefficients expresed in terms of SD of the response variable), it can allow for the usage of [effect size interpretation guidelines](https://easystats.github.io/report/articles/interpret_metrics.html), such as the famous Cohen's (1988) rules of thumb.
 
-However, standardizing the model's parameters should *not* be automatic: for some research fields, particular variables or types of studies (*e.g.*, replications), it sometimes makes more sense to keep, use and interpret the original parameters, especially if they are well known or easily understood.
+However, standardizing the model's parameters should *not* be automatically and mindlessly done: for some research fields, particular variables or types of studies (*e.g.*, replications), it sometimes makes more sense to keep, use and interpret the original parameters, especially if they are well known or easily understood.
 
 Critically, **parameters standardization is not a trivial process**. Different techniques exist, that can lead to drastically different results. Thus, it is critical that the standardization method is explicitly documented and detailed.
 
@@ -87,37 +87,40 @@ Same as `method = "refit"`, however, standardization is done by dividing by two 
 
 
 
-## `full`: Scaling by the variances of the response and the predictor
+## `smart`: Scaling by the variances of the response and the predictor
 
 Post-hoc standardization of the model paramaters. The coefficients are divided by the standard deviation (or MAD if `robust`) of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if `robust`) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of `x` is related to a change of 0.24 of the SD of `y`). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.
 
 
 ```{r warning=FALSE, message=FALSE, results='hide'}
 model <- lm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data)
-parameters_standardize(model, method="full")
+parameters_standardize(model, method="smart")
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-knitr::kable(parameters_standardize(model, method="full"), digits=2)
+knitr::kable(parameters_standardize(model, method="smart"), digits=2)
 ```
 
 ## `classic`: Basic scaling of all parameters
 
-This method is similar to `method = "full"`, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as `sjstats::std_beta()` or `lm.beta::lm.beta()`.
+This method is similar to `method = "smart"`, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as `sjstats::std_beta()` or `lm.beta::lm.beta()`.
 
 # Methods Comparison
 
-We will use the "refit" method as the baseline. We will then compute the differences between these standardized parameters and the ones provided by the other functions. The **bigger the (absolute) number, the worse it is**.
+We will use the "refit" method as the baseline. We will then compute the differences between these standardized parameters and the ones provided by the other functions. The **bigger the (absolute) number, the worse it is**. 
+
+> **SPOILER ALERT: the standardization implemented in `parameters` is the most accurate and the most flexible.**
 
 ```{r message=FALSE, warning=FALSE}
 library(parameters)
 library(sjstats)
 library(lm.beta)
+library(MuMIn)
 
 comparison <- function(model, robust=FALSE){
   out <- parameters_standardize(model, method="refit", robust=robust)[1:2]
   
-  out$full <- tryCatch({
-    out[, 2] - parameters_standardize(model, method="full", robust=robust)[, 2]
+  out$smart <- tryCatch({
+    out[, 2] - parameters_standardize(model, method="smart", robust=robust)[, 2]
 }, error = function(error_condition) {
     "Error"
 })
@@ -144,14 +147,14 @@ comparison <- function(model, robust=FALSE){
   "Error"
 })
   
-#   out$MuMin <- tryCatch({
-#     out$Std_Estimate - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
-# }, error = function(error_condition) {
-#     "Error"
-# })
+  out$MuMIn <- tryCatch({
+    out[, 2] - MuMIn::std.coef(model, partial.sd=FALSE)[, 1]
+}, error = function(error_condition) {
+    "Error"
+})
 
   out[, 2] <- NULL
-  return(out)
+  out
 }
 ```
 
@@ -216,7 +219,6 @@ knitr::kable(comparison(model), digits=2)
 
 When interactions are involved, post-hoc methods return different results. However, methods implemented in other softwares perform arguably worse.
 
-<!-- haha Sorry Daniel maybe we should rephrase this ^^ -->
 
 ### Transformation
 
@@ -240,7 +242,7 @@ comparison(model)
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 library(rstanarm)
-junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data))
+model <- stan_glm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data, refresh = 0)
 knitr::kable(comparison(model), digits=2)
 ```
 
@@ -258,6 +260,8 @@ comparison(model)
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 knitr::kable(comparison(model), digits=2)
 ```
+
+When factors are involved, methods that standardize the numeric transformation of factors give different results.
 
 
 ### Logistic Model
@@ -295,7 +299,13 @@ comparison(model)
 knitr::kable(comparison(model), digits=2)
 ```
 
-
+```{r message=FALSE, warning=FALSE, results='hide'}
+model <- lm(Sepal.Length ~ Group_Sepal.Width * Petal.Width, data=data)
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+knitr::kable(comparison(model), digits=2)
+```
 
 ### Bayesian Models
 
@@ -307,14 +317,26 @@ comparison(model)
 ```
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 library(rstanarm)
-junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Width + Group_Sepal.Width, data=data))
+model <- stan_glm(Sepal.Length ~ Petal.Width + Group_Sepal.Width, data=data, refresh = 0)
+knitr::kable(comparison(model), digits=2)
+```
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+library(rstanarm)
+
+model <- stan_lmer(Sepal.Length ~ Petal.Width + Group_Sepal.Width + (1|Species), data=data)
+comparison(model)
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+library(rstanarm)
+model <- stan_lmer(Sepal.Length ~ Petal.Width + Group_Sepal.Width + (1|Species), data=data, refresh = 0, iter = 500)
 knitr::kable(comparison(model), digits=2)
 ```
 
 
 # Conclusion
 
-Use `refit` if possible, otherwise `full`.
+Use `refit` if possible, otherwise `smart`.
 
 
 # References

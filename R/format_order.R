@@ -13,37 +13,36 @@
 #' format_order(25, textual = FALSE)
 #' @export
 format_order <- function(order, textual = TRUE, ...) {
-  if(textual){
+  if (textual) {
     order <- format_number(order)
     parts <- unlist(strsplit(order, " ", fixed = TRUE))
     parts[length(parts)] <- switch(tail(parts, 1),
-                                   "one" = "first",
-                                   "two" = "second",
-                                   "three" = "third",
-                                   "four" = "fourth",
-                                   "five" = "fifth",
-                                   "six" = "sixth",
-                                   "seven" = "seventh",
-                                   "eight" = "eigth",
-                                   "nine" = "ninth")
+      "one" = "first",
+      "two" = "second",
+      "three" = "third",
+      "four" = "fourth",
+      "five" = "fifth",
+      "six" = "sixth",
+      "seven" = "seventh",
+      "eight" = "eigth",
+      "nine" = "ninth"
+    )
     out <- paste(parts, collapse = " ")
-  } else{
+  } else {
     number <- format_value(order, digits = 0, ...)
     last <- substr(number, nchar(number), nchar(number))
     out <- paste0(number, switch(last,
-                                 "1" = "st",
-                                 "2" = "nd",
-                                 "3" = "rd",
-                                 "4" = "th",
-                                 "5" = "th",
-                                 "6" = "th",
-                                 "7" = "th",
-                                 "8" = "th",
-                                 "9" = "th"))
+      "1" = "st",
+      "2" = "nd",
+      "3" = "rd",
+      "4" = "th",
+      "5" = "th",
+      "6" = "th",
+      "7" = "th",
+      "8" = "th",
+      "9" = "th"
+    ))
   }
 
   out
 }
-
-
-

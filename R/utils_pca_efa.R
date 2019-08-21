@@ -79,10 +79,11 @@ predict.parameters_pca <- predict.parameters_efa
 print.parameters_efa <- function(x, digits = 2, ...) {
   .rotation <- attr(x, "rotation", exact = TRUE)
 
-  if (.rotation == "none")
+  if (.rotation == "none") {
     insight::print_color("# Loadings from Principal Component Analysis (no rotation)\n\n", "blue")
-  else
+  } else {
     insight::print_color(sprintf("# Rotated loadings from Principal Component Analysis (%s-rotation)\n\n", .rotation), "blue")
+  }
 
   cat(format_table(x, digits = digits, ...))
 

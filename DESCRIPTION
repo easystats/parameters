@@ -12,7 +12,12 @@ Authors@R: c(
 		"Lüdecke", 
 		role = c("aut"), 
 		email = "d.luedecke@uke.de", 
-		comment = c(ORCID = "0000-0002-8895-3206"))
+		comment = c(ORCID = "0000-0002-8895-3206")),
+	person("Mattan S.", 
+		"Ben-Shachar", 
+		role = c("aut"), 
+		email = "matanshm@post.bgu.ac.il", 
+		comment = c(ORCID = "0000-0002-4287-4801"))
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 Description: Utilities for processing the parameters of various statistical models. Beyond computing p values, CIs, and other indices for a wide variety of models (see support list of insight; Lüdecke, Waggoner & Makowski (2019) <doi:10.21105/joss.01412>), this package implements features like standardization or bootstrapping of parameters and models, feature reduction (feature extraction and variable selection) as well as conversion between indices of effect size.
@@ -36,8 +41,10 @@ Suggests:
 	knitr,
 	lavaan,
 	lme4,
+	lmerTest,
 	logspline,
 	MASS,
+	MuMIn,
 	nFactors,
 	pbkrtest,
 	psych,

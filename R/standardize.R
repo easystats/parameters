@@ -13,7 +13,7 @@
 #'   (MAD). If \code{FALSE}, variables are standardized by substracting the
 #'   mean and divide it by the standard deviation (SD).
 #'   the
-#' @param method The method of standardization. See 'Details'.
+#' @param method The method of standardization. For data.frames, can be \code{"default"} (variables are divided by SD or MAD depending on \code{robust}) or \code{"2sd"} (divided by two times the deviation).
 #' @param verbose Toggle warnings on or off.
 #' @param force Logical, if \code{TRUE}, forces standardization of factors as
 #'   well. Factors are converted to numerical values, with the lowest level
@@ -22,12 +22,6 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return The standardized object.
-#'
-#' @details Methods:
-#' \itemize{
-#'  \item \strong{default}: Depending on \code{robust}, variables are divided by SD or MAD.
-#'  \item \strong{2sd}: Depending on \code{robust}, variables are divided by two times the SD or MAD.
-#' }
 #'
 #' @export
 standardize <- function(x, ...) {

@@ -15,10 +15,9 @@
 #'
 #' model <- lme4::glmer(vs ~ wt + (1 | gear), data = mtcars, family = "binomial")
 #' model_parameters(model)
-#'
 #' \donttest{
 #' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
-#' model_parameters(model, standardize = "full", bootstrap = TRUE, iterations = 50)
+#' model_parameters(model, standardize = "smart", bootstrap = TRUE, iterations = 50)
 #' }
 #'
 #' @return A data.frame of indices related to the model's parameters.
@@ -58,6 +57,7 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
 .extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method = "wald", ...) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
   parameters$Parameter <- row.names(parameters)
+  original_order <- parameters$Parameter
 
   # CI
   if (!is.null(ci)) {
@@ -89,6 +89,9 @@ model_parameters.merMod <- function(model, ci = .95, standardize = "refit", stan
     }
   }
 
+  # Rematch order after merging
+  parameters <- parameters[match(parameters$Parameter, original_order), ]
+  row.names(parameters) <- NULL
 
   # Renaming
   names(parameters) <- gsub("Std. Error", "SE", names(parameters))

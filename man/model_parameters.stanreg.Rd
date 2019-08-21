@@ -59,11 +59,17 @@ A data.frame of indices related to the model's parameters.
 Parameters of Bayesian models.
 }
 \examples{
-\dontrun{
+\donttest{
+library(parameters)
 library(rstanarm)
-model <- stan_glm(Sepal.Length ~ Species, data = iris)
-model_parameters(model, standardize = "full")
 
+model <- rstanarm::stan_glm(Sepal.Length ~ Petal.Length * Species,
+  data = iris, iter = 500, refresh = 0
+)
+
+model_parameters(model, standardize = "smart")
+}
+\dontrun{
 library(brms)
 model <- brm(Sepal.Length ~ Species, data = iris)
 model_parameters(model)
