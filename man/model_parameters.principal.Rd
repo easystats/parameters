@@ -5,7 +5,7 @@
 \title{Format PCA/FA from the psych package}
 \usage{
 \method{model_parameters}{principal}(model, sort = FALSE,
-  threshold = NULL, ...)
+  threshold = NULL, labels = NULL, ...)
 }
 \arguments{
 \item{model}{PCA or FA created by the \code{psych::principal} or \code{psych::fa} functions.}
@@ -13,6 +13,8 @@
 \item{sort}{Sort the loadings.}
 
 \item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).}
+
+\item{labels}{A character vector containing labels to be added to the loadings data. Usually, the question related to the item.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

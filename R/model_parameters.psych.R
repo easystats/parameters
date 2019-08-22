@@ -4,6 +4,7 @@
 #'
 #' @param model PCA or FA created by the \code{psych::principal} or \code{psych::fa} functions.
 #' @inheritParams principal_components
+#' @param labels A character vector containing labels to be added to the loadings data. Usually, the question related to the item.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details
@@ -14,22 +15,22 @@
 #'
 #' @examples
 #' library(parameters)
-#' \donttest{
 #' library(psych)
 #'
+#' \donttest{
 #' # Principal Component Analysis (PCA) ---------
 #' pca <- psych::principal(attitude)
 #' model_parameters(pca)
+#' }
 #'
 #' pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
 #' model_parameters(pca, sort = TRUE, threshold = 0.2)
-#' }
-#' # Note that the latter is identical to the 'principal_components' function available in parameters:
+#'
 #' principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 #' \donttest{
 #' # Exploratory Factor Analysis (EFA) ---------
 #' efa <- psych::fa(attitude, nfactors = 3)
-#' model_parameters(efa, threshold = "max", sort = TRUE)
+#' model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
 #' }
 #'
 #' @return A data.frame of loadings.
@@ -38,7 +39,7 @@
 #'   \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
 #' }
 #' @export
-model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ...) {
+model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, labels = NULL, ...) {
 
   # PCA
   n <- model$factors
@@ -63,13 +64,20 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, ..
   # Get loadings
   loadings <- as.data.frame(unclass(model$loadings))
 
-
   # Format
   loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
   row.names(loadings) <- NULL
 
+  # Labels
+  if(!is.null(labels)){
+    loadings$Label <- labels
+    loadings <- loadings[c("Variable", "Label", names(loadings)[!names(loadings) %in% c("Variable", "Label")])]
+    loading_cols <- 3:(n + 2)
+  } else{
+    loading_cols <- 2:(n + 1)
+  }
+
   # Add information
-  loading_cols <- 2:(n + 1)
   loadings$Complexity <- model$complexity
   loadings$Uniqueness <- model$uniquenesses
 
