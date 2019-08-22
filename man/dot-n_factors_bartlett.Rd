@@ -4,8 +4,8 @@
 \alias{.n_factors_bartlett}
 \title{Bartlett, Anderson and Lawley Procedures}
 \usage{
-.n_factors_bartlett(x = NULL, cormatrix = NULL, nobs = NULL,
-  eigen_values = NULL, type = "FA")
+.n_factors_bartlett(eigen_values = NULL, model = "factors",
+  nobs = NULL)
 }
 \description{
 Bartlett, Anderson and Lawley Procedures

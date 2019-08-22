@@ -4,8 +4,7 @@
 \alias{.n_factors_mreg}
 \title{Multiple Regression Procedure}
 \usage{
-.n_factors_mreg(x = NULL, cormatrix = NULL, nobs = NULL,
-  eigen_values = NULL, type = "FA")
+.n_factors_mreg(eigen_values = NULL, model = "factors")
 }
 \description{
 Multiple Regression Procedure

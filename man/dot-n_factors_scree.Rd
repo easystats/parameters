@@ -4,8 +4,7 @@
 \alias{.n_factors_scree}
 \title{Non Graphical Cattel's Scree Test}
 \usage{
-.n_factors_scree(x = NULL, cormatrix = NULL, nobs = NULL,
-  eigen_values = NULL, type = "FA")
+.n_factors_scree(eigen_values = NULL, model = "factors")
 }
 \description{
 Non Graphical Cattel's Scree Test

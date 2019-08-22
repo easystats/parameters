@@ -4,8 +4,7 @@
 \alias{.n_factors_sescree}
 \title{Standard Error Scree and Coefficient of Determination Procedures}
 \usage{
-.n_factors_sescree(x = NULL, cormatrix = NULL, nobs = NULL,
-  eigen_values = NULL, type = "FA")
+.n_factors_sescree(eigen_values = NULL, model = "factors")
 }
 \description{
 Standard Error Scree and Coefficient of Determination Procedures

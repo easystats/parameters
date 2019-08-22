@@ -82,18 +82,18 @@ eta_squared.anova <- eta_squared.aov
 
 #' @export
 eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL, ...) {
-  if (isFALSE(partial)){
+  if (isFALSE(partial)) {
     warning("Currently only supports partial eta squared for repeated-measures ANOVAs.")
   }
 
 
   par_table <- .extract_parameters_anova(model)
-  par_table <- split(par_table,par_table$Group)
+  par_table <- split(par_table, par_table$Group)
   par_table <- lapply(par_table, function(.data) {
-    .data$df2 <- .data$df[.data$Parameter=="Residuals"]
+    .data$df2 <- .data$df[.data$Parameter == "Residuals"]
     .data
   })
-  par_table <- do.call(rbind,par_table)
+  par_table <- do.call(rbind, par_table)
   .eta_square_from_F(par_table, ci = ci)
 }
 
@@ -102,8 +102,7 @@ eta_squared.aovlist <- function(model, partial = TRUE, ci = NULL, ...) {
 
 #' @export
 eta_squared.merMod <- function(model, partial = TRUE, ci = NULL, ...) {
-
-  if (isFALSE(partial)){
+  if (isFALSE(partial)) {
     warning("Currently only supports partial eta squared for moxed models.")
   }
 
@@ -114,8 +113,8 @@ eta_squared.merMod <- function(model, partial = TRUE, ci = NULL, ...) {
 
   model <- lmerTest::as_lmerModLmerTest(model)
   par_table <- anova(model)
-  par_table <- cbind(Parameter = rownames(par_table),par_table)
-  colnames(par_table)[4:6] <- c("df","df2","F")
+  par_table <- cbind(Parameter = rownames(par_table), par_table)
+  colnames(par_table)[4:6] <- c("df", "df2", "F")
   .eta_square_from_F(par_table, ci = ci)
 }
 
@@ -258,7 +257,7 @@ eta_squared.merMod <- function(model, partial = TRUE, ci = NULL, ...) {
   }
 
   rownames(.data) <- NULL
-  .data <- .data[,colnames(.data) %in% c("Parameter","Eta_Sq_partial","CI_high","CI_low")]
-  class(.data) <- c("partial_eta_squared",class(.data))
+  .data <- .data[, colnames(.data) %in% c("Parameter", "Eta_Sq_partial", "CI_high", "CI_low")]
+  class(.data) <- c("partial_eta_squared", class(.data))
   .data
 }

@@ -39,6 +39,7 @@ Suggests:
 	dplyr,
 	EGAnet (>= 0.7),
 	knitr,
+	lattice,
 	lavaan,
 	lme4,
 	lmerTest,
