@@ -2,10 +2,14 @@
 % Please edit documentation in R/convert_efa_to_cfa.R
 \name{convert_efa_to_cfa}
 \alias{convert_efa_to_cfa}
+\alias{convert_efa_to_cfa.fa}
 \alias{efa_to_cfa}
 \title{Conversion between EFA results and CFA structure}
 \usage{
 convert_efa_to_cfa(model, ...)
+
+\method{convert_efa_to_cfa}{fa}(model, threshold = "max", names = NULL,
+  ...)
 
 efa_to_cfa(model, ...)
 }
@@ -13,6 +17,10 @@ efa_to_cfa(model, ...)
 \item{model}{An EFA model (e.g., a \code{psych::fa} object).}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).}
+
+\item{names}{Vector containing dimension names.}
 }
 \value{
 Converted index.
@@ -23,7 +31,6 @@ Converted index.
 Enables a conversion betwen Exploratory Factor Analysis (EFA) and Confirmatory Factor Analysis (CFA) \code{lavaan}-ready structure.
 }
 \examples{
-\dontrun{
 library(psych)
 library(lavaan)
 library(parameters)
@@ -37,5 +44,5 @@ anova(
   lavaan::cfa(model1, data = attitude),
   lavaan::cfa(model2, data = attitude)
 )
-}
+
 }

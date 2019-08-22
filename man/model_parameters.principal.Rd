@@ -32,22 +32,22 @@ Format PCA/FA objects from the psych package (Revelle, 2016).
 }
 \examples{
 library(parameters)
-\donttest{
 library(psych)
 
+\donttest{
 # Principal Component Analysis (PCA) ---------
 pca <- psych::principal(attitude)
 model_parameters(pca)
+}
 
 pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
 model_parameters(pca, sort = TRUE, threshold = 0.2)
-}
-# Note that the latter is identical to the 'principal_components' function available in parameters:
+
 principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 \donttest{
 # Exploratory Factor Analysis (EFA) ---------
 efa <- psych::fa(attitude, nfactors = 3)
-model_parameters(efa, threshold = "max", sort = TRUE)
+model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
 }
 
 }
