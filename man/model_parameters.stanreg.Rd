@@ -69,10 +69,5 @@ model <- rstanarm::stan_glm(Sepal.Length ~ Petal.Length * Species,
 
 model_parameters(model, standardize = "smart")
 }
-\dontrun{
-library(brms)
-model <- brm(Sepal.Length ~ Species, data = iris)
-model_parameters(model)
-}
 
 }

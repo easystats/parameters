@@ -7,7 +7,7 @@
 #'
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(BayesFactor)
 #' model <- ttestBF(x = rnorm(100, 1, 1))
 #' model_parameters(model)

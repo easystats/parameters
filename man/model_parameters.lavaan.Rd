@@ -27,7 +27,7 @@ Format CFA/SEM objects from the lavaan package (Rosseel, 2012).
 }
 \examples{
 library(parameters)
-\donttest{
+
 # lavaan -------------------------------------
 library(lavaan)
 
@@ -61,7 +61,7 @@ model <- lavaan::sem(structure, data = PoliticalDemocracy)
 model_parameters(model)
 model_parameters(model, standardize = TRUE)
 
-
+\donttest{
 # blavaan ------------------------------------
 # library(blavaan)
 

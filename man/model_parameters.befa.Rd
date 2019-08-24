@@ -42,7 +42,7 @@ Format PCA/FA objects from the psych package (Revelle, 2016).
 }
 \examples{
 library(parameters)
-\dontrun{
+\donttest{
 library(BayesFM)
 efa <- BayesFM::befa(mtcars, iter = 1000)
 results <- model_parameters(efa, sort = TRUE)

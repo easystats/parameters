@@ -49,7 +49,7 @@ A data.frame of indices related to the model's parameters.
 Parameters of BayesFactor objects.
 }
 \examples{
-\dontrun{
+\donttest{
 library(BayesFactor)
 model <- ttestBF(x = rnorm(100, 1, 1))
 model_parameters(model)
