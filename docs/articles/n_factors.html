@@ -195,25 +195,33 @@
 <a class="sourceLine" id="cb2-4" title="4">results</a></code></pre></div>
 <pre><code>&gt; # Method Agreement Procedure:
 &gt; 
-&gt; The choice of 1 dimensions is supported by 4 (40.00%) methods out of 10 (EGA (glasso), EGA (TMFG), VSS complexity 1, Velicer's MAP).</code></pre>
+&gt; The choice of 1 dimensions is supported by 7 (38.89%) methods out of 18 (Acceleration factor, SE Scree, R2, EGA (glasso), EGA (TMFG), VSS complexity 1, Velicer's MAP).</code></pre>
 <p>One can obtain a summary table or more details as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(results)</a></code></pre></div>
-<pre><code>&gt;    n_Factors           Method       Family
-&gt; 1          1     EGA (glasso)          EGA
-&gt; 2          1       EGA (TMFG)          EGA
-&gt; 3          1 VSS complexity 1          VSS
-&gt; 4          1    Velicer's MAP Velicers_MAP
-&gt; 5          2 VSS complexity 2          VSS
-&gt; 6          2              BIC          BIC
-&gt; 7          3         Bartlett      Barlett
-&gt; 8          3   BIC (adjusted)          BIC
-&gt; 9          4         Anderson      Barlett
-&gt; 10         4           Lawley      Barlett</code></pre>
+<pre><code>&gt;    n_Factors              Method       Family
+&gt; 1          1 Acceleration factor        Scree
+&gt; 2          1            SE Scree     Scree_SE
+&gt; 3          1                  R2     Scree_SE
+&gt; 4          1        EGA (glasso)          EGA
+&gt; 5          1          EGA (TMFG)          EGA
+&gt; 6          1    VSS complexity 1          VSS
+&gt; 7          1       Velicer's MAP Velicers_MAP
+&gt; 8          2             Bentler      Bentler
+&gt; 9          2 Optimal coordinates        Scree
+&gt; 10         2   Parallel analysis        Scree
+&gt; 11         2    Kaiser criterion        Scree
+&gt; 12         2    VSS complexity 2          VSS
+&gt; 13         2                 BIC          BIC
+&gt; 14         3            Bartlett      Barlett
+&gt; 15         3                 CNG          CNG
+&gt; 16         3      BIC (adjusted)          BIC
+&gt; 17         4            Anderson      Barlett
+&gt; 18         4              Lawley      Barlett</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(results)</a></code></pre></div>
 <pre><code>&gt;   n_Factors n_Methods
-&gt; 1         1         4
-&gt; 2         2         2
-&gt; 3         3         2
+&gt; 1         1         7
+&gt; 2         2         6
+&gt; 3         3         3
 &gt; 4         4         2</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
@@ -242,7 +250,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
 </div>
 
 <div class="pkgdown">

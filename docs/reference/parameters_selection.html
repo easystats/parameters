@@ -261,17 +261,17 @@
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; stan_glm
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
 #&gt;  formula:      mpg ~ wt
 #&gt;  observations: 32
 #&gt;  predictors:   2
 #&gt; ------
 #&gt;             Median MAD_SD
-#&gt; (Intercept) 37.2    2.0  
-#&gt; wt          -5.3    0.6  
+#&gt; (Intercept) 37.3    1.9  
+#&gt; wt          -5.4    0.6  
 #&gt; 
 #&gt; Auxiliary parameter(s):
 #&gt;       Median MAD_SD
@@ -305,9 +305,9 @@
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 1.194 seconds (Warm-up)
-#&gt; Chain 1:                1.248 seconds (Sampling)
-#&gt; Chain 1:                2.442 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 1.039 seconds (Warm-up)
+#&gt; Chain 1:                1.081 seconds (Sampling)
+#&gt; Chain 1:                2.12 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -330,9 +330,9 @@
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 1.214 seconds (Warm-up)
-#&gt; Chain 2:                1.11 seconds (Sampling)
-#&gt; Chain 2:                2.324 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 1.059 seconds (Warm-up)
+#&gt; Chain 2:                1.021 seconds (Sampling)
+#&gt; Chain 2:                2.08 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -355,9 +355,9 @@
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 1.232 seconds (Warm-up)
-#&gt; Chain 3:                1.076 seconds (Sampling)
-#&gt; Chain 3:                2.308 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 1.101 seconds (Warm-up)
+#&gt; Chain 3:                0.982 seconds (Sampling)
+#&gt; Chain 3:                2.083 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -380,9 +380,9 @@
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 1.258 seconds (Warm-up)
-#&gt; Chain 4:                1.053 seconds (Sampling)
-#&gt; Chain 4:                2.311 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 1.107 seconds (Warm-up)
+#&gt; Chain 4:                0.904 seconds (Sampling)
+#&gt; Chain 4:                2.011 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
 #&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp
@@ -402,7 +402,7 @@
 #&gt; 
 #&gt; Sample avg. posterior predictive distribution of y:
 #&gt;          Median MAD_SD
-#&gt; mean_PPD 20.1    0.6  
+#&gt; mean_PPD 20.1    0.7  
 #&gt; 
 #&gt; ------
 #&gt; * For help interpreting the printed output see ?print.stanreg
@@ -424,7 +424,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
 </div>
 
 <div class="pkgdown">

@@ -170,7 +170,7 @@
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize</a></code>).</p></td>
+      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize</a></code>), such as "refit", "2sd", "smart" or "classic". The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -194,8 +194,11 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)</div><div class='input'><span class='co'># lavaan -------------------------------------</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lavaan</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'lavaan' was built under R version 3.6.1</span></div><div class='output co'>#&gt; <span class='message'>This is lavaan 0.6-4</span></div><div class='output co'>#&gt; <span class='message'>lavaan is BETA software! Please report any bugs.</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
+
+<span class='co'># lavaan -------------------------------------</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lavaan</span>)
+
 <span class='co'># Confirmatory Factor Analysis (CFA) ---------</span>
 
 <span class='no'>structure</span> <span class='kw'>&lt;-</span> <span class='st'>" visual  =~ x1 + x2 + x3
@@ -290,8 +293,7 @@
 #&gt; y3 ~~ y7      |        0.17 | 0.13 | [-0.09, 0.43] |   &gt; .1 | Correlation
 #&gt; y4 ~~ y8      |        0.11 | 0.13 | [-0.14, 0.36] |   &gt; .1 | Correlation
 #&gt; y6 ~~ y8      |        0.34 | 0.11 |  [0.12, 0.55] |  &lt; .01 | Correlation</div><div class='input'>
-
-# blavaan ------------------------------------
+</div><div class='input'># blavaan ------------------------------------
 # library(blavaan)
 
 # model <- blavaan::bsem(structure, data=PoliticalDemocracy)
@@ -317,7 +319,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
 </div>
 
 <div class="pkgdown">

@@ -154,6 +154,10 @@
 
     <pre class="usage"><span class='fu'>convert_efa_to_cfa</span>(<span class='no'>model</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for fa</span>
+<span class='fu'>convert_efa_to_cfa</span>(<span class='no'>model</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>)
+
 <span class='fu'>efa_to_cfa</span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -167,6 +171,14 @@
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).</p></td>
+    </tr>
+    <tr>
+      <th>names</th>
+      <td><p>Vector containing dimension names.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -176,21 +188,32 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>psych</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lavaan</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>psych</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'psych'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:testthat':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    describe</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lavaan</span>)</div><div class='output co'>#&gt; <span class='message'>This is lavaan 0.6-4</span></div><div class='output co'>#&gt; <span class='message'>lavaan is BETA software! Please report any bugs.</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'lavaan'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:psych':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    cor2cov</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
-<span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/fa'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-
+<span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/psych/topics/fa'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: GPArotation</span></div><div class='input'>
 <span class='no'>model1</span> <span class='kw'>&lt;-</span> <span class='fu'>efa_to_cfa</span>(<span class='no'>efa</span>)
 <span class='no'>model2</span> <span class='kw'>&lt;-</span> <span class='fu'>efa_to_cfa</span>(<span class='no'>efa</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/lavaan/topics/lavTestLRT'>anova</a></span>(
   <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lavaan/topics/cfa'>cfa</a></span>(<span class='no'>model1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>attitude</span>),
   <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lavaan/topics/cfa'>cfa</a></span>(<span class='no'>model2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>attitude</span>)
-)
-<span class='co'># }</span></pre>
+)</div><div class='output co'>#&gt; <span class='warning'>Warning: lavaan WARNING: some estimated ov variances are negative</span></div><div class='output co'>#&gt; Chi Square Difference Test
+#&gt; 
+#&gt;                                      Df    AIC    BIC   Chisq Chisq diff
+#&gt; lavaan::cfa(model2, data = attitude) 10 1540.5 1565.7  9.1827           
+#&gt; lavaan::cfa(model1, data = attitude) 12 1549.8 1572.2 22.4374     13.255
+#&gt;                                      Df diff Pr(&gt;Chisq)   
+#&gt; lavaan::cfa(model2, data = attitude)                      
+#&gt; lavaan::cfa(model1, data = attitude)       2   0.001324 **
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -207,7 +230,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
 </div>
 
 <div class="pkgdown">
