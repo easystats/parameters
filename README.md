@@ -63,15 +63,15 @@ check-out these vignettes:
 
 <img src='man/figures/figure1.png' align="center" />
 
-The `model_parameters` function allows you to extract the parameters and
-their characteristics from various models in a consistent way. It can be
-considered as a lightweight alternative to
+The `model_parameters()` function allows you to extract the parameters
+and their characteristics from various models in a consistent way. It
+can be considered as a lightweight alternative to
 [`broom::tidy()`](https://github.com/tidymodels/broom), with some
 notable differences:
 
   - The names of the returned dataframe are **specific** to their
     content. For instance, the column containing the statistic is named
-    following the statistic name, *i.e.*, *t*, *z*, etc., instead of a
+    following the statistic name, i.e., *t*, *z*, etc., instead of a
     generic name such as *statistic*.
   - It is able to compute or extract indices not available by default,
     such as ***p* values**, **CIs**, etc.
@@ -148,7 +148,7 @@ model_parameters(model, omega_squared = "partial", eta_squared = "partial",
     # Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
     # --------------------------------------------------------------------------------------------------------------
     # Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | > .1 |               0.00 |             0.01 |       0.00
-    # Residuals |      101.07 | 148 |        0.68 |      |   NA |                    |                  |
+    # Residuals |      101.07 | 148 |        0.68 |      |      |                    |                  |
 
 #### Repeated measures
 
@@ -160,9 +160,9 @@ model_parameters(model)
     # Group   | Parameter | Sum_Squares |  df | Mean_Square |     F |      p
     # ----------------------------------------------------------------------
     # Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 |   > .1
-    # Species | Residuals |       34.94 |   1 |       34.94 |       |     NA
+    # Species | Residuals |       34.94 |   1 |       34.94 |       |       
     # Within  | Sepal.Big |        4.74 |   1 |        4.74 | 20.24 | < .001
-    # Within  | Residuals |       34.21 | 146 |        0.23 |       |     NA
+    # Within  | Residuals |       34.21 | 146 |        0.23 |       |
 
 ``` r
 library(lme4)
@@ -295,7 +295,7 @@ lm(disp ~ ., data = mtcars) %>% parameters_selection() %>% model_parameters()
 
     # Parameter   | Coefficient |     SE |            95% CI |     t | df |      p | Coefficient (std.)
     # -------------------------------------------------------------------------------------------------
-    # (Intercept) |      141.70 | 125.67 | [-116.62, 400.02] |  1.13 | 26 |   > .1 |              -0.00
+    # (Intercept) |      141.70 | 125.67 | [-116.62, 400.02] |  1.13 | 26 |   > .1 |               0.00
     # cyl         |       13.14 |   7.90 |    [-3.10, 29.38] |  1.66 | 26 |   > .1 |               0.19
     # hp          |        0.63 |   0.20 |      [0.22, 1.03] |  3.18 | 26 |  < .01 |               0.35
     # wt          |       80.45 |  12.22 |   [55.33, 105.57] |  6.58 | 26 | < .001 |               0.64
@@ -315,13 +315,13 @@ lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width +
     # Parameter                                  | Coefficient |   SE |        95% CI |     t |     p | Coefficient (std.)
     # --------------------------------------------------------------------------------------------------------------------
     # (Intercept)                                |        1.78 | 0.91 | [-1.71, 5.26] |  1.95 |  0.05 |              -0.24
-    # Sepal.Width                                |        0.88 | 0.50 | [-0.84, 2.60] |  1.77 |  0.08 |               0.30
-    # Petal.Length                               |        0.28 | 0.24 | [-0.27, 0.83] |  1.16 |  > .1 |               1.57
+    # Petal.Length * Petal.Width                 |        0.28 | 0.24 | [-0.27, 0.83] |  1.16 |  > .1 |               0.30
+    # (Sepal.Width * Petal.Length) * Petal.Width |       -0.05 | 0.08 | [0.04, -0.14] | -0.61 |  > .1 |               1.57
     # Petal.Width                                |       -2.04 | 1.52 | [1.96, -6.03] | -1.34 |  > .1 |              -0.43
-    # Sepal.Width * Petal.Length                 |        0.75 | 0.27 | [-0.72, 2.22] |  2.80 | < .01 |              -0.15
-    # Sepal.Width * Petal.Width                  |       -0.10 | 0.16 | [0.10, -0.30] | -0.63 |  > .1 |               0.07
-    # Petal.Length * Petal.Width                 |       -0.05 | 0.08 | [0.04, -0.14] | -0.61 |  > .1 |               0.22
-    # (Sepal.Width * Petal.Length) * Petal.Width |        0.34 | 0.49 | [-0.33, 1.02] |  0.70 |  > .1 |              -0.03
+    # Petal.Length                               |        0.88 | 0.50 | [-0.84, 2.60] |  1.77 |  0.08 |              -0.15
+    # Sepal.Width                                |        0.75 | 0.27 | [-0.72, 2.22] |  2.80 | < .01 |               0.07
+    # Sepal.Width * Petal.Width                  |        0.34 | 0.49 | [-0.33, 1.02] |  0.70 |  > .1 |               0.22
+    # Sepal.Width * Petal.Length                 |       -0.10 | 0.16 | [0.10, -0.30] | -0.63 |  > .1 |              -0.03
 
 ### Bayesian models
 
@@ -352,7 +352,7 @@ n_factors(mtcars)
 
     # # Method Agreement Procedure:
     # 
-    # The choice of 2 dimensions is supported by 2 (40.00%) methods out of 5 (EGA (glasso), EGA (TMFG)).
+    # The choice of 2 dimensions is supported by 5 (31.25%) methods out of 16 (Optimal coordinates, Parallel analysis, Kaiser criterion, EGA (glasso), EGA (TMFG)).
 
 ## Miscellaneous
 
