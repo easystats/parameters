@@ -61,45 +61,53 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
       stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('nFactors')`.")
     }
 
+    # Model
+    if (tolower(type) %in% c("fa", "factor", "efa")) {
+      model <- "factors"
+    } else {
+      model <- "components"
+    }
+
+    # Compute all
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_bartlett(x, cormatrix, nobs, eigen_values, type),
+        tryCatch(.n_factors_bartlett(eigen_values, model, nobs),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_bentler(x, cormatrix, nobs, eigen_values, type),
+        tryCatch(.n_factors_bentler(eigen_values, model, nobs),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_cng(x, cormatrix, nobs, eigen_values, type),
+        tryCatch(.n_factors_cng(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_mreg(x, cormatrix, nobs, eigen_values, type),
+        tryCatch(.n_factors_mreg(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_scree(x, cormatrix, nobs, eigen_values, type),
+        tryCatch(.n_factors_scree(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_sescree(x, cormatrix, nobs, eigen_values, type),
+        tryCatch(.n_factors_sescree(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
@@ -107,27 +115,27 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
     } else {
       out <- rbind(
         out,
-        .n_factors_bartlett(x, cormatrix, nobs, eigen_values, type)
+        .n_factors_bartlett(eigen_values, model, nobs)
       )
       out <- rbind(
         out,
-        .n_factors_bentler(x, cormatrix, nobs, eigen_values, type)
+        .n_factors_bentler(eigen_values, model, nobs)
       )
       out <- rbind(
         out,
-        .n_factors_cng(x, cormatrix, nobs, eigen_values, type)
+        .n_factors_cng(eigen_values, model)
       )
       out <- rbind(
         out,
-        .n_factors_mreg(x, cormatrix, nobs, eigen_values, type)
+        .n_factors_mreg(eigen_values, model)
       )
       out <- rbind(
         out,
-        .n_factors_scree(x, cormatrix, nobs, eigen_values, type)
+        .n_factors_scree(eigen_values, model)
       )
       out <- rbind(
         out,
-        .n_factors_sescree(x, cormatrix, nobs, eigen_values, type)
+        .n_factors_sescree(eigen_values, model)
       )
     }
   }
@@ -270,8 +278,8 @@ as.double.n_factors <- as.numeric.n_factors
 #' Bartlett, Anderson and Lawley Procedures
 #' @importFrom tools toTitleCase
 #' @keywords internal
-.n_factors_bartlett <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
-  nfac <- nFactors::nBartlett(eigen_values, N = nobs, alpha = 0.05, details = FALSE)$nFactors
+.n_factors_bartlett <- function(eigen_values = NULL, model = "factors", nobs = NULL) {
+  nfac <- nFactors::nBartlett(eigen_values, N = nobs, alpha = 0.05, details = FALSE, model = model)$nFactors
   data.frame(
     n_Factors = as.numeric(nfac),
     Method = tools::toTitleCase(names(nfac)),
@@ -282,8 +290,8 @@ as.double.n_factors <- as.numeric.n_factors
 
 #' Bentler and Yuan's Procedure
 #' @keywords internal
-.n_factors_bentler <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
-  nfac <- nFactors::nBentler(eigen_values, N = nobs, alpha = 0.05)$nFactors
+.n_factors_bentler <- function(eigen_values = NULL, model = "factors", nobs = NULL) {
+  nfac <- .nBentler(x = eigen_values, N = nobs, model = model, alpha = 0.05, details = FALSE)$nFactors
 
   data.frame(
     n_Factors = as.numeric(nfac),
@@ -295,13 +303,8 @@ as.double.n_factors <- as.numeric.n_factors
 
 #' Cattell-Nelson-Gorsuch CNG Indices
 #' @keywords internal
-.n_factors_cng <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
-  if (tolower(type) %in% c("fa", "factor", "efa")) {
-    model <- "factors"
-  } else {
-    model <- "components"
-  }
-  nfac <- nFactors::nCng(cormatrix, cor = TRUE, model = model)$nFactors
+.n_factors_cng <- function(eigen_values = NULL, model = "factors") {
+  nfac <- nFactors::nCng(x = eigen_values, cor = TRUE, model = model)$nFactors
 
   data.frame(
     n_Factors = as.numeric(nfac),
@@ -313,13 +316,8 @@ as.double.n_factors <- as.numeric.n_factors
 
 #' Multiple Regression Procedure
 #' @keywords internal
-.n_factors_mreg <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
-  if (tolower(type) %in% c("fa", "factor", "efa")) {
-    model <- "factors"
-  } else {
-    model <- "components"
-  }
-  nfac <- nFactors::nMreg(cormatrix, cor = TRUE, model = model)$nFactors
+.n_factors_mreg <- function(eigen_values = NULL, model = "factors") {
+  nfac <- nFactors::nMreg(x = eigen_values, cor = TRUE, model = model)$nFactors
   data.frame(
     n_Factors = as.numeric(nfac),
     Method = c("beta", "t", "p"),
@@ -330,13 +328,8 @@ as.double.n_factors <- as.numeric.n_factors
 
 #' Non Graphical Cattel's Scree Test
 #' @keywords internal
-.n_factors_scree <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
-  if (tolower(type) %in% c("fa", "factor", "efa")) {
-    model <- "factors"
-  } else {
-    model <- "components"
-  }
-  nfac <- unlist(nFactors::nScree(cormatrix, cor = TRUE, model = model)$Components)
+.n_factors_scree <- function(eigen_values = NULL, model = "factors") {
+  nfac <- unlist(nFactors::nScree(x = eigen_values, cor = TRUE, model = model)$Components)
   data.frame(
     n_Factors = as.numeric(nfac),
     Method = c("Optimal coordinates", "Acceleration factor", "Parallel analysis", "Kaiser criterion"),
@@ -347,13 +340,8 @@ as.double.n_factors <- as.numeric.n_factors
 
 #' Standard Error Scree and Coefficient of Determination Procedures
 #' @keywords internal
-.n_factors_sescree <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
-  if (tolower(type) %in% c("fa", "factor", "efa")) {
-    model <- "factors"
-  } else {
-    model <- "components"
-  }
-  nfac <- nFactors::nSeScree(cormatrix, cor = TRUE, model = model)$nFactors
+.n_factors_sescree <- function(eigen_values = NULL, model = "factors") {
+  nfac <- nFactors::nSeScree(x = eigen_values, cor = TRUE, model = model)$nFactors
   data.frame(
     n_Factors = as.numeric(nfac),
     Method = c("SE Scree", "R2"),
@@ -374,6 +362,8 @@ as.double.n_factors <- as.numeric.n_factors
   # Replace with own corelation matrix
   junk <- capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(x, model = "glasso", plot.EGA = FALSE)$n.dim)))
   junk <- capture.output(suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(x, model = "TMFG", plot.EGA = FALSE)$n.dim)))
+  # junk <- capture.output(suppressWarnings(suppressMessages(nfac_glasso_boot <- EGAnet::bootEGA(x, model = "glasso", n = 500, plot.typicalStructure = FALSE)$n.dim)))
+  # junk <- capture.output(suppressWarnings(suppressMessages(nfac_TMFG_boot <- EGAnet::bootEGA(x, model = "TMFG", n = 500, plot.typicalStructure = FALSE)$n.dim)))
 
   data.frame(
     n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
@@ -425,6 +415,96 @@ as.double.n_factors <- as.numeric.n_factors
     Family = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC")
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Re-implementation of nBentler in nFactors ------------------------
+
+#' @keywords internal
+.nBentler <-
+  function(x, N, model = model, log = TRUE, alpha = 0.05, cor = TRUE, details = TRUE,
+             minPar = c(min(lambda) - abs(min(lambda)) + .001, 0.001),
+             maxPar = c(max(lambda), lm(lambda ~ I(length(lambda):1))$coef[2]),
+             ...) {
+    if (!requireNamespace("nFactors", quietly = TRUE)) {
+      stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('lattice')`.")
+    }
+
+    lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
+    if (length(which(lambda < 0)) > 0) {
+      stop("These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted.")
+    }
+
+    n <- N
+    significance <- alpha
+    min.k <- 3
+    LRT <- data.frame(
+      q = numeric(length(lambda) - min.k), k = numeric(length(lambda) - min.k),
+      LRT = numeric(length(lambda) - min.k), a = numeric(length(lambda) - min.k),
+      b = numeric(length(lambda) - min.k),
+      p = numeric(length(lambda) - min.k),
+      convergence = numeric(length(lambda) - min.k)
+    )
+    bentler.n <- 0
+    for (i in 1:(length(lambda) - min.k)) {
+      temp <- nFactors::bentlerParameters(x = lambda, N = n, nFactors = i, log = log, cor = cor, minPar = minPar, maxPar = maxPar, graphic = FALSE)
+      LRT[i, 3] <- temp$lrt
+      LRT[i, 4] <- ifelse(is.null(temp$coef[1]), NA, temp$coef[1])
+      LRT[i, 5] <- ifelse(is.null(temp$coef[2]), NA, temp$coef[2])
+      LRT[i, 6] <- ifelse(is.null(temp$p.value), NA, temp$p.value)
+      LRT[i, 7] <- ifelse(is.null(temp$convergence), NA, temp$convergence)
+      LRT[i, 2] <- i
+      LRT[i, 1] <- length(lambda) - i
+    }
+    # LRT     <- LRT[order(LRT[,1],decreasing = TRUE),]
+    for (i in 1:(length(lambda) - min.k)) {
+      if (i == 1) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+      if (i > 1) {
+        if (LRT$p[i - 1] <= 0.05) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+      }
+    }
+    if (bentler.n == 0) bentler.n <- length(lambda)
+    if (details == TRUE) details <- LRT else details <- NULL
+    res <- list(detail = details, nFactors = bentler.n)
+    class(res) <- c("nFactors", "list")
+    res
+  }
+
+
+
+
+
+
+
+
+
+
 
 
 

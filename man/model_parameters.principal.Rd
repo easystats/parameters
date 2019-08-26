@@ -5,7 +5,7 @@
 \title{Format PCA/FA from the psych package}
 \usage{
 \method{model_parameters}{principal}(model, sort = FALSE,
-  threshold = NULL, ...)
+  threshold = NULL, labels = NULL, ...)
 }
 \arguments{
 \item{model}{PCA or FA created by the \code{psych::principal} or \code{psych::fa} functions.}
@@ -13,6 +13,8 @@
 \item{sort}{Sort the loadings.}
 
 \item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).}
+
+\item{labels}{A character vector containing labels to be added to the loadings data. Usually, the question related to the item.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -25,27 +27,27 @@ Format PCA/FA objects from the psych package (Revelle, 2016).
 \details{
 \itemize{
    \item \strong{Complexity} (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.
-   \item \strong{Uniqueness} represents the variance that is 'unique' to the variable and not shared with other variables. It is equal to \code{1 – communality} (variance that is shared with other variables). A uniqueness of \code{0.20} suggests that 20\% or that variable is not shared with other variables in the overall factor model. The greater 'uniqueness' the lower the relevance of the variable in the factor model.
+   \item \strong{Uniqueness} represents the variance that is 'unique' to the variable and not shared with other variables. It is equal to \code{1 – communality} (variance that is shared with other variables). A uniqueness of \code{0.20} suggests that 20\% or that variable's variance is not shared with other variables in the overall factor model. The greater 'uniqueness' the lower the relevance of the variable in the factor model.
 }
 }
 \examples{
 library(parameters)
-\donttest{
 library(psych)
 
+\donttest{
 # Principal Component Analysis (PCA) ---------
 pca <- psych::principal(attitude)
 model_parameters(pca)
+}
 
 pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
 model_parameters(pca, sort = TRUE, threshold = 0.2)
-}
-# Note that the latter is identical to the 'principal_components' function available in parameters:
+
 principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 \donttest{
 # Exploratory Factor Analysis (EFA) ---------
 efa <- psych::fa(attitude, nfactors = 3)
-model_parameters(efa, threshold = "max", sort = TRUE)
+model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
 }
 
 }

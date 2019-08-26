@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' library(parameters)
-#' \donttest{
+#'
 #' # lavaan -------------------------------------
 #' library(lavaan)
 #'
@@ -44,7 +44,7 @@
 #' model_parameters(model)
 #' model_parameters(model, standardize = TRUE)
 #'
-#'
+#' \donttest{
 #' # blavaan ------------------------------------
 #' # library(blavaan)
 #'
@@ -71,6 +71,7 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
   # add class-attribute for printing
   class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
   attr(params, "ci") <- ci
+  attr(params, "model") <- model
   params
 }
 
@@ -139,4 +140,14 @@ n_parameters.lavaan <- function(x, ...) {
 print.parameters_sem <- function(x, ...) {
   formatted_table <- parameters_table(x)
   cat(format_table(formatted_table))
+}
+
+
+#' @export
+predict.parameters_sem <- function(object, newdata = NULL, ...) {
+  if (!requireNamespace("lavaan", quietly = TRUE)) {
+    stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
+  }
+
+  as.data.frame(lavaan::lavPredict(attributes(object)$model, newdata = newdata, method = "EBM", ...))
 }

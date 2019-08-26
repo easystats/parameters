@@ -28,6 +28,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   }
 
   # Format specific columns
+  if ("n_Obs" %in% names(x)) x$n_Obs <- format_value(x$n_Obs, protect_integers = TRUE)
+  if ("n_Missing" %in% names(x)) x$n_Missing <- format_value(x$n_Missing, protect_integers = TRUE)
   if ("df" %in% names(x)) x$df <- format_value(x$df, protect_integers = TRUE)
   if ("df_residual" %in% names(x)) x$df_residual <- format_value(x$df_residual, protect_integers = TRUE)
   names(x)[names(x) == "df_residual"] <- "df"

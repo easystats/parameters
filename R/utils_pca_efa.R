@@ -76,7 +76,26 @@ predict.parameters_pca <- predict.parameters_efa
 
 #' @importFrom insight print_color print_colour
 #' @export
-print.parameters_efa <- function(x, digits = 2, ...) {
+print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+
+  # Labels
+  if(!is.null(labels)){
+    x$Label <- labels
+    x <- x[c("Variable", "Label", names(x)[!names(x) %in% c("Variable", "Label")])]
+  }
+
+  # Sorting
+  if (sort) {
+    x <- .sort_loadings(x)
+  }
+
+  # Replace by NA all cells below threshold
+  if (!is.null(threshold)) {
+    x <- .filer_loadings(x, threshold = threshold)
+  }
+
+
+
   .rotation <- attr(x, "rotation", exact = TRUE)
 
   if (.rotation == "none") {

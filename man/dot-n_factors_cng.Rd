@@ -4,8 +4,7 @@
 \alias{.n_factors_cng}
 \title{Cattell-Nelson-Gorsuch CNG Indices}
 \usage{
-.n_factors_cng(x = NULL, cormatrix = NULL, nobs = NULL,
-  eigen_values = NULL, type = "FA")
+.n_factors_cng(eigen_values = NULL, model = "factors")
 }
 \description{
 Cattell-Nelson-Gorsuch CNG Indices

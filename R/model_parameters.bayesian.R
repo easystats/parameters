@@ -47,11 +47,6 @@
 #'
 #' model_parameters(model, standardize = "smart")
 #' }
-#' \dontrun{
-#' library(brms)
-#' model <- brm(Sepal.Length ~ Species, data = iris)
-#' model_parameters(model)
-#' }
 #'
 #' @return A data.frame of indices related to the model's parameters.
 #' @export

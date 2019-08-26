@@ -4,7 +4,7 @@
 #'
 #' @param model Frequentist regression object.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param standardize Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \code{\link{parameters_standardize}}).
+#' @param standardize Add standardized parameters. Can be FALSE or a character indicating the standardization method (see \code{\link{parameters_standardize}}), such as "refit", "2sd", "smart" or "classic". The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).
 #' @param standardize_robust Robust standardization. See \code{\link{parameters_standardize}}.
 #' @param bootstrap Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.
 #' @param iterations The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.

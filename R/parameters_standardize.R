@@ -154,16 +154,17 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
     for (i in 1:nrow(param_table)) {
 
       # Classic
-      if(method == "classic"){
+      if (method == "classic") {
         sd_x <- .variance_predictor_classic(
           parameter = param_table$Parameter[i],
           type = param_table$Type[i],
           model_matrix = as.data.frame(stats::model.matrix(model)),
           robust = robust,
-          ...)
+          ...
+        )
 
-      # Smart
-      } else{
+        # Smart
+      } else {
         sd_x <- .variance_predictor_smart(
           type = param_table$Type[i],
           variable = param_table$Variable[i],
@@ -210,7 +211,7 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 .variance_predictor_classic <- function(parameter, type, model_matrix, robust = FALSE, ...) {
   if (type == "intercept") {
     0
-  } else{
+  } else {
     .get_deviation(model_matrix, parameter, robust)
   }
 }
@@ -222,7 +223,6 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
 #' @keywords internal
 .variance_predictor_smart <- function(type, variable, data, param_table, robust = FALSE, ...) {
-
   if (type == "intercept") {
     sd_x <- 0
   } else if (type == "numeric") {
@@ -240,7 +240,6 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
     #     }
     #   }
     # }
-
   } else if (type %in% c("interaction", "nested")) {
     if (is.numeric(data[, variable])) {
       sd_x <- .get_deviation(data, variable, robust)

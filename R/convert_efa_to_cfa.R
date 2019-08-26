@@ -4,10 +4,10 @@
 #'
 #' @param model An EFA model (e.g., a \code{psych::fa} object).
 #' @inheritParams principal_components
+#' @param names Vector containing dimension names.
 #'
 #' @return Converted index.
 #' @examples
-#' \dontrun{
 #' library(psych)
 #' library(lavaan)
 #' library(parameters)
@@ -21,7 +21,7 @@
 #'   lavaan::cfa(model1, data = attitude),
 #'   lavaan::cfa(model2, data = attitude)
 #' )
-#' }
+#'
 #' @return Converted index.
 #' @export
 convert_efa_to_cfa <- function(model, ...) {
@@ -30,15 +30,16 @@ convert_efa_to_cfa <- function(model, ...) {
 
 
 
-
+#' @rdname convert_efa_to_cfa
+#' @inheritParams model_parameters.principal
 #' @export
-convert_efa_to_cfa.fa <- function(model, threshold = "max", ...) {
-  .efa_to_cfa(model_parameters(model, threshold = threshold, ...))
+convert_efa_to_cfa.fa <- function(model, threshold = "max", names = NULL, ...) {
+  .efa_to_cfa(model_parameters(model, threshold = threshold, ...), names = names, ...)
 }
 
 #' @export
-convert_efa_to_cfa.parameters_efa <- function(model, ...) {
-  .efa_to_cfa(model, ...)
+convert_efa_to_cfa.parameters_efa <- function(model, names = NULL, ...) {
+  .efa_to_cfa(model, names = names, ...)
 }
 
 #' @export
@@ -53,14 +54,25 @@ efa_to_cfa <- convert_efa_to_cfa
 
 
 #' @keywords internal
-.efa_to_cfa <- function(loadings, ...) {
+.efa_to_cfa <- function(loadings, names = NULL, ...) {
   loadings <- attributes(loadings)$loadings_long
 
+  # Get dimension names
+  if(is.null(names)){
+    names <- unique(loadings$Component)
+  }
+
+  # Catch error
+  if(length(names) != length(unique(loadings$Component))){
+    stop(paste("The `names` vector must be of same length as the number of dimensions, in this case", length(unique(loadings$Component))))
+  }
+
   cfa <- c()
-  for (comp in unique(loadings$Component)) {
+  # Iterate over dimensions
+  for (i in 1:length(names)) {
     cfa <- c(
       cfa,
-      paste0(comp, " =~ ", paste(as.character(loadings[loadings$Component == comp, "Variable"]), collapse = " + "))
+      paste0(names[i], " =~ ", paste(as.character(loadings[loadings$Component == unique(loadings$Component)[i], "Variable"]), collapse = " + "))
     )
   }
 
