@@ -1,5 +1,9 @@
 # parameters 0.1.1
 
+## General
+
+  - `parameters()` is an alias for `model_parameters()`.
+
 ## New functions
 
   - `parameters_simulate()` and `model_simulate()`, as computational faster alternatives to `parameters_bootstrap()` and `model_bootstrap()`.

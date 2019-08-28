@@ -19,3 +19,7 @@
 model_parameters <- function(model, ...) {
   UseMethod("model_parameters")
 }
+
+
+#' @export
+parameters <- model_parameters
