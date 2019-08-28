@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mixed Model Parameters — model_parameters.merMod • parameters</title>
+<title>Parameters simulation — parameters_simulate • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Mixed Model Parameters — model_parameters.merMod" />
+<meta property="og:title" content="Parameters simulation — parameters_simulate" />
 
-<meta property="og:description" content="Parameters of mixed models." />
+<meta property="og:description" content="Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -141,88 +141,94 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mixed Model Parameters</h1>
+    <h1>Parameters simulation</h1>
     
-    <div class="hidden name"><code>model_parameters.merMod.Rd</code></div>
+    <div class="hidden name"><code>parameters_simulate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Parameters of mixed models.</p>
+    <p>Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for merMod</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>, <span class='kw'>standardize_robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>p_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>n_sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Frequentist regression object.</p></td>
+      <td><p>Statistical model.</p></td>
+    </tr>
+    <tr>
+      <th>n_sims</th>
+      <td><p>The number of simulation draws to create.</p></td>
+    </tr>
+    <tr>
+      <th>centrality</th>
+      <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
-    </tr>
-    <tr>
-      <th>standardize</th>
-      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize</a></code>), such as "refit", "2sd", "smart" or "classic". The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).</p></td>
-    </tr>
-    <tr>
-      <th>standardize_robust</th>
-      <td><p>Robust standardization. See <code><a href='parameters_standardize.html'>parameters_standardize</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>bootstrap</th>
-      <td><p>Should estimates be based on bootsrapped model? If TRUE, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply.</p></td>
-    </tr>
-    <tr>
-      <th>p_method</th>
-      <td><p>Method for computing p values. See <a href='p_value.html'>p_value</a>.</p></td>
+      <td><p>Value or vector of probability of the CI (between 0 and 1)
+to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code>.95</code> (95%) for frequentist models.</p></td>
     </tr>
     <tr>
       <th>ci_method</th>
-      <td><p>Method for computing confidence intervals (CI). See <a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a>.</p></td>
+      <td><p>The type of index used for Credible Interval. Can be
+<code>"HDI"</code> (default, see <code>hdi</code>) or <code>"ETI"</code>
+(see <code>eti</code>).</p></td>
     </tr>
     <tr>
-      <th>iterations</th>
-      <td><p>The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.</p></td>
+      <th>test</th>
+      <td><p>The indices of effect existence to compute. Character (vector) or
+list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
+<code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
+<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.#'
+For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
+(e.g. <code>rope</code> or <code>p_direction</code>) and its results
+included in the summary output.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods (e.g., to <a href='standardize.lm.html'>standardize</a>).</p></td>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame of indices related to the model's parameters.</p>
+    <p>A data frame with simulated parameters.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>parameters_simulate()</code> is a computationally faster alternative
+  to <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code>. Simulated draws for coefficients are based
+  on a multivariate normal distribution (<code><a href='https://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>MASS::mvrnorm()</a></code> with mean
+  <code><a href='https://www.rdocumentation.org/packages/stats/topics/coef'>coef(model)</a></code> and variance <code><a href='https://www.rdocumentation.org/packages/stats/topics/vcov'>vcov(model)</a></code>.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge; New York: Cambridge University Press 2007: 140-143</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='model_bootstrap.html'>model_bootstrap</a></code>, <code><a href='parameters_bootstrap.html'>parameters_bootstrap</a></code>, <code><a href='model_simulate.html'>model_simulate</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |           95% CI |     t |      p | Coefficient (std.)
-#&gt; -----------------------------------------------------------------------------------------
-#&gt; (Intercept) |       36.19 | 2.19 | [-34.74, 107.12] | 16.52 | &lt; .001 |              -0.02
-#&gt; wt          |       -5.05 | 0.64 | [  4.84, -14.93] | -7.89 | &lt; .001 |              -0.82</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/glmer'>glmer</a></span>(<span class='no'>vs</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     z |     p | Coefficient (std.)
-#&gt; --------------------------------------------------------------------------------------
-#&gt; (Intercept) |        5.85 | 2.93 | [-5.62, 17.32] |  1.99 | &lt; .05 |              -0.76
-#&gt; wt          |       -2.06 | 0.95 | [ 1.97, -6.09] | -2.16 | &lt; .05 |              -2.01</div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p | Coefficient (std.)
-#&gt; ------------------------------------------------------------------------
-#&gt; (Intercept) |       36.30 | [30.86, 40.93] | &lt; .001 |               0.00
-#&gt; wt          |       -5.11 | [-6.47, -3.27] | &lt; .001 |              -0.82</div><div class='input'>
-</div></pre>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>parameters_simulate</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high         p
+#&gt; 1                   (Intercept)   3.5249529  3.2385617  3.8186149 0.0000000
+#&gt; 4             Speciesversicolor  -1.1592284 -1.8568256 -0.4767588 0.0000000
+#&gt; 6              Speciesvirginica  -2.2524428 -3.1284200 -1.3907312 0.0000000
+#&gt; 3                   Petal.Width   0.4584995 -0.4293374  1.2722800 0.3636364
+#&gt; 2                  Petal.Length   0.9406410  0.7929482  1.0887982 0.0000000
+#&gt; 5 Speciesversicolor:Petal.Width  -0.7576459 -1.7369444  0.2354379 0.1378621
+#&gt; 7  Speciesvirginica:Petal.Width  -0.4182937 -1.2904503  0.5672709 0.4175824</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -230,6 +236,12 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

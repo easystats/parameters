@@ -153,7 +153,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>format_value</span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>protect_integers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='no'>...</span>)</pre>
+  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,7 +172,11 @@
     </tr>
     <tr>
       <th>missing</th>
-      <td><p>Value by which `NA` values are replaced. By default, an empty string (i.e. <code>""</code>) is returned for `NA`.</p></td>
+      <td><p>Value by which <code>NA</code> values are replaced. By default, an empty string (i.e. <code>""</code>) is returned for codeNA.</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>Minimum width of the returned string. If not <code>NULL</code> and <code>width</code> is larger than the string's length, leading whitespaces are added to the string.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -187,6 +191,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>format_value</span>(<span class='fl'>1.20</span>)</div><div class='output co'>#&gt; [1] "1.20"</div><div class='input'><span class='fu'>format_value</span>(<span class='fl'>1.2</span>)</div><div class='output co'>#&gt; [1] "1.20"</div><div class='input'><span class='fu'>format_value</span>(<span class='fl'>1.2012313</span>)</div><div class='output co'>#&gt; [1] "1.20"</div><div class='input'><span class='fu'>format_value</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.0045</span>, <span class='fl'>234</span>, -<span class='fl'>23</span>))</div><div class='output co'>#&gt; [1] "0.00"   "234.00" "-23.00"</div><div class='input'>
+<span class='fu'>format_value</span>(<span class='fl'>1.20</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] "      1.20"</div><div class='input'>
 <span class='fu'>format_value</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>as.factor</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; [1] A B A
 #&gt; Levels: A B</div><div class='input'><span class='fu'>format_value</span>(<span class='no'>iris</span>$<span class='no'>Species</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt;   [1] setosa     setosa     setosa     setosa     setosa     setosa    
 #&gt;   [7] setosa     setosa     setosa     setosa     setosa     setosa    

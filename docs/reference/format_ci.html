@@ -152,7 +152,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>format_ci</span>(<span class='no'>CI_low</span>, <span class='no'>CI_high</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>format_ci</span>(<span class='no'>CI_low</span>, <span class='no'>CI_high</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,6 +172,10 @@
     <tr>
       <th>digits</th>
       <td><p>Number of significant digits.</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>Minimum width of the returned string. If not <code>NULL</code> and <code>width</code> is larger than the string's length, leading whitespaces are added to the string.</p></td>
     </tr>
     </table>
     

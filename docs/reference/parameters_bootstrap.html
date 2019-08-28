@@ -205,18 +205,22 @@ included in the summary output.</p></td>
 
     <p>Davison, A. C., &amp; Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='model_bootstrap.html'>model_bootstrap</a></code>, <code><a href='parameters_simulate.html'>parameters_simulate</a></code>, <code><a href='model_simulate.html'>model_simulate</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
-#&gt; 1                   (Intercept)   4.7719428  4.5366555 4.9720766 0.000000000
-#&gt; 3             Speciesversicolor  -0.7228348 -1.6400729 0.1248828 0.091908092
-#&gt; 5              Speciesvirginica   0.4632110 -0.7867499 1.6675100 0.393606394
-#&gt; 2                   Petal.Width   0.9442953  0.2553707 1.9086460 0.005994006
-#&gt; 4 Speciesversicolor:Petal.Width   0.4985566 -0.6380207 1.5129560 0.391608392
-#&gt; 6  Speciesvirginica:Petal.Width  -0.2848688 -1.3536116 0.5954030 0.557442557</div></pre>
+#&gt; 1                   (Intercept)   4.7748545  4.5143430 4.9692591 0.000000000
+#&gt; 3             Speciesversicolor  -0.7461157 -1.7128422 0.1065436 0.085914086
+#&gt; 5              Speciesvirginica   0.4588454 -0.7378354 1.6816523 0.405594406
+#&gt; 2                   Petal.Width   0.9414670  0.2752622 1.9484927 0.003996004
+#&gt; 4 Speciesversicolor:Petal.Width   0.4916188 -0.6554931 1.5093295 0.385614386
+#&gt; 6  Speciesvirginica:Petal.Width  -0.2715887 -1.4504642 0.5377948 0.573426573</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -226,6 +230,8 @@ included in the summary output.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

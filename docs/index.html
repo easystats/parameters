@@ -165,9 +165,9 @@
 <a href="#frequentist" class="anchor"></a>Frequentist</h4>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor.test">cor.test</a></span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<pre><code># Parameter1        |       Parameter2 |     r |     t |  df |    p |        95% CI |  Method
-# -------------------------------------------------------------------------------------------
-# iris$Sepal.Length | iris$Sepal.Width | -0.12 | -1.44 | 148 | &gt; .1 | [-0.27, 0.04] | Pearson</code></pre>
+<pre><code># Parameter1        |       Parameter2 |     r |     t |  df |    p |         95% CI |  Method
+# --------------------------------------------------------------------------------------------
+# iris$Sepal.Length | iris$Sepal.Width | -0.12 | -1.44 | 148 | &gt; .1 | [-0.27,  0.04] | Pearson</code></pre>
 </div>
 <div id="bayesian" class="section level4">
 <h4 class="hasAnchor">
@@ -176,9 +176,9 @@
 <a class="sourceLine" id="cb5-2" title="2"></a>
 <a class="sourceLine" id="cb5-3" title="3">model &lt;-<span class="st"> </span>BayesFactor<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BayesFactor/topics/correlationBF">correlationBF</a></span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)</a>
 <a class="sourceLine" id="cb5-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<pre><code># Parameter | Median |        89% CI |     pd | % in ROPE |              Prior |   BF
-# -----------------------------------------------------------------------------------
-# rho       |  -0.11 | [-0.23, 0.02] | 92.90% |    43.13% | Cauchy (0 +- 0.33) | 0.51</code></pre>
+<pre><code># Parameter | Median |         89% CI |     pd | % in ROPE |              Prior |   BF
+# ------------------------------------------------------------------------------------
+# rho       |  -0.11 | [-0.23,  0.02] | 92.90% |    43.13% | Cauchy (0 +- 0.33) | 0.51</code></pre>
 </div>
 </div>
 <div id="t-tests" class="section level3">
@@ -192,9 +192,9 @@
 <a class="sourceLine" id="cb7-3" title="3"></a>
 <a class="sourceLine" id="cb7-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/t.test">t.test</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big, <span class="dt">data =</span> df)</a>
 <a class="sourceLine" id="cb7-5" title="5"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<pre><code># Parameter    |     Group | Mean_Group1 | Mean_Group2 | Difference |    t |     df |    p |        95% CI |                  Method
-# ----------------------------------------------------------------------------------------------------------------------------------
-# Sepal.Length | Sepal.Big |        5.95 |        5.78 |      -0.18 | 1.36 | 142.15 | &gt; .1 | [-0.08, 0.43] | Welch Two Sample t-test</code></pre>
+<pre><code># Parameter    |     Group | Mean_Group1 | Mean_Group2 | Difference |    t |     df |    p |         95% CI |                  Method
+# -----------------------------------------------------------------------------------------------------------------------------------
+# Sepal.Length | Sepal.Big |        5.95 |        5.78 |      -0.18 | 1.36 | 142.15 | &gt; .1 | [-0.08,  0.43] | Welch Two Sample t-test</code></pre>
 </div>
 <div id="bayesian-1" class="section level4">
 <h4 class="hasAnchor">
@@ -202,9 +202,9 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">model &lt;-<span class="st"> </span>BayesFactor<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF">ttestBF</a></span>(<span class="dt">formula =</span> Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big, </a>
 <a class="sourceLine" id="cb9-2" title="2">    <span class="dt">data =</span> df)</a>
 <a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<pre><code># Parameter  | Median |        89% CI |     pd | % in ROPE |              Prior |   BF
-# ------------------------------------------------------------------------------------
-# Difference |   0.16 | [-0.05, 0.37] | 88.85% |    26.79% | Cauchy (0 +- 0.71) | 0.38</code></pre>
+<pre><code># Parameter  | Median |         89% CI |     pd | % in ROPE |              Prior |   BF
+# -------------------------------------------------------------------------------------
+# Difference |   0.16 | [-0.05,  0.37] | 88.85% |    26.79% | Cauchy (0 +- 0.71) | 0.38</code></pre>
 </div>
 </div>
 <div id="anovas" class="section level3">
@@ -219,7 +219,7 @@
 <pre><code># Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
 # --------------------------------------------------------------------------------------------------------------
 # Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | &gt; .1 |               0.00 |             0.01 |       0.00
-# Residuals |      101.07 | 148 |        0.68 |      |      |                    |                  |</code></pre>
+# Residuals |      101.07 | 148 |        0.68 |      | NA   |                    |                  |</code></pre>
 </div>
 <div id="repeated-measures" class="section level4">
 <h4 class="hasAnchor">
@@ -228,10 +228,10 @@
 <a class="sourceLine" id="cb13-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
 <pre><code># Group   | Parameter | Sum_Squares |  df | Mean_Square |     F |      p
 # ----------------------------------------------------------------------
-# Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 |   &gt; .1
-# Species | Residuals |       34.94 |   1 |       34.94 |       |       
+# Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 | &gt; .1  
+# Species | Residuals |       34.94 |   1 |       34.94 |       | NA    
 # Within  | Sepal.Big |        4.74 |   1 |        4.74 | 20.24 | &lt; .001
-# Within  | Residuals |       34.21 | 146 |        0.23 |       |</code></pre>
+# Within  | Residuals |       34.21 | 146 |        0.23 |       | NA</code></pre>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
 <a class="sourceLine" id="cb15-2" title="2">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/anova">anova</a></span>(<span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), </a>
 <a class="sourceLine" id="cb15-3" title="3">    <span class="dt">data =</span> df))</a>
@@ -248,8 +248,8 @@
 <a class="sourceLine" id="cb17-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"refit"</span>)</a></code></pre></div>
 <pre><code># Parameter   | Coefficient |   SE |         95% CI |     z | df |     p | Coefficient (std.)
 # -------------------------------------------------------------------------------------------
-# (Intercept) |       10.62 | 4.17 |  [4.79, 22.66] |  2.55 | 29 | &lt; .05 |              -0.76
-# wt          |        2.10 | 1.55 |  [-0.53, 6.24] |  1.36 | 29 |  &gt; .1 |               2.05
+# (Intercept) |       10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 29 | &lt; .05 |              -0.76
+# wt          |        2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 29 | &gt; .1  |               2.05
 # cyl         |       -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 29 | &lt; .05 |              -5.23</code></pre>
 </div>
 <div id="bootstrapped-models" class="section level3">
@@ -257,12 +257,12 @@
 <a href="#bootstrapped-models" class="anchor"></a>Bootstrapped models</h3>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>drat <span class="op">*</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
 <a class="sourceLine" id="cb19-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">bootstrap =</span> <span class="ot">TRUE</span>, <span class="dt">iterations =</span> <span class="dv">500</span>)</a></code></pre></div>
-<pre><code># Parameter   | Coefficient |          95% CI |     p | Coefficient (std.)
-# ------------------------------------------------------------------------
-# (Intercept) |       -0.94 | [-45.58, 32.09] |  &gt; .1 |              -0.13
-# drat        |        9.55 |   [0.55, 21.32] | &lt; .05 |               0.16
-# cyl         |        2.18 |   [-2.50, 8.41] |  &gt; .1 |              -0.71
-# drat * cyl  |       -1.25 |   [-2.92, 0.12] |  0.06 |              -0.19</code></pre>
+<pre><code># Parameter   | Coefficient |           95% CI |     p | Coefficient (std.)
+# -------------------------------------------------------------------------
+# (Intercept) |       -0.94 | [-45.58,  32.09] | &gt; .1  |              -0.13
+# drat        |        9.55 | [  0.55,  21.32] | &lt; .05 |               0.16
+# cyl         |        2.18 | [ -2.50,   8.41] | &gt; .1  |              -0.71
+# drat * cyl  |       -1.25 | [ -2.92,   0.12] | 0.06  |              -0.19</code></pre>
 </div>
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
@@ -271,10 +271,10 @@
 <a class="sourceLine" id="cb21-2" title="2"></a>
 <a class="sourceLine" id="cb21-3" title="3">model &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
 <a class="sourceLine" id="cb21-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"refit"</span>)</a></code></pre></div>
-<pre><code># Parameter    | Coefficient |   SE |        95% CI |    t |      p | Coefficient (std.)
-# --------------------------------------------------------------------------------------
-# (Intercept)  |        2.00 | 0.56 | [-1.92, 5.92] | 3.56 | &lt; .001 |               0.00
-# Petal.Length |        0.28 | 0.06 | [-0.27, 0.83] | 4.75 | &lt; .001 |               1.14</code></pre>
+<pre><code># Parameter    | Coefficient |   SE |         95% CI |    t |      p | Coefficient (std.)
+# ---------------------------------------------------------------------------------------
+# (Intercept)  |        2.00 | 0.56 | [-1.92,  5.92] | 3.56 | &lt; .001 |               0.00
+# Petal.Length |        0.28 | 0.06 | [-0.27,  0.83] | 4.75 | &lt; .001 |               1.14</code></pre>
 </div>
 <div id="bayesian-models" class="section level3">
 <h3 class="hasAnchor">
@@ -346,14 +346,14 @@
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb29-2" title="2"></a>
 <a class="sourceLine" id="cb29-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
-<pre><code># Parameter   | Coefficient |     SE |            95% CI |     t | df |      p | Coefficient (std.)
-# -------------------------------------------------------------------------------------------------
-# (Intercept) |      141.70 | 125.67 | [-116.62, 400.02] |  1.13 | 26 |   &gt; .1 |               0.00
-# cyl         |       13.14 |   7.90 |    [-3.10, 29.38] |  1.66 | 26 |   &gt; .1 |               0.19
-# hp          |        0.63 |   0.20 |      [0.22, 1.03] |  3.18 | 26 |  &lt; .01 |               0.35
-# wt          |       80.45 |  12.22 |   [55.33, 105.57] |  6.58 | 26 | &lt; .001 |               0.64
-# qsec        |      -14.68 |   6.14 |   [-27.31, -2.05] | -2.39 | 26 |  &lt; .05 |              -0.21
-# carb        |      -28.75 |   5.60 |  [-40.28, -17.23] | -5.13 | 26 | &lt; .001 |              -0.37</code></pre>
+<pre><code># Parameter   | Coefficient |     SE |             95% CI |     t | df |      p | Coefficient (std.)
+# --------------------------------------------------------------------------------------------------
+# (Intercept) |      141.70 | 125.67 | [-116.62,  400.02] |  1.13 | 26 | &gt; .1   |               0.00
+# cyl         |       13.14 |   7.90 | [  -3.10,   29.38] |  1.66 | 26 | &gt; .1   |               0.19
+# hp          |        0.63 |   0.20 | [   0.22,    1.03] |  3.18 | 26 | &lt; .01  |               0.35
+# wt          |       80.45 |  12.22 | [  55.33,  105.57] |  6.58 | 26 | &lt; .001 |               0.64
+# qsec        |      -14.68 |   6.14 | [ -27.31,   -2.05] | -2.39 | 26 | &lt; .05  |              -0.21
+# carb        |      -28.75 |   5.60 | [ -40.28,  -17.23] | -5.13 | 26 | &lt; .001 |              -0.37</code></pre>
 </div>
 <div id="mixed-models-1" class="section level3">
 <h3 class="hasAnchor">
@@ -363,16 +363,16 @@
 <a class="sourceLine" id="cb31-3" title="3"><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">*</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb31-4" title="4"><span class="st">    </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb31-5" title="5"><span class="st">    </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
-<pre><code># Parameter                                  | Coefficient |   SE |        95% CI |     t |     p | Coefficient (std.)
-# --------------------------------------------------------------------------------------------------------------------
-# (Intercept)                                |        1.78 | 0.91 | [-1.71, 5.26] |  1.95 |  0.05 |              -0.24
-# Petal.Length * Petal.Width                 |        0.28 | 0.24 | [-0.27, 0.83] |  1.16 |  &gt; .1 |               0.30
-# (Sepal.Width * Petal.Length) * Petal.Width |       -0.05 | 0.08 | [0.04, -0.14] | -0.61 |  &gt; .1 |               1.57
-# Petal.Width                                |       -2.04 | 1.52 | [1.96, -6.03] | -1.34 |  &gt; .1 |              -0.43
-# Petal.Length                               |        0.88 | 0.50 | [-0.84, 2.60] |  1.77 |  0.08 |              -0.15
-# Sepal.Width                                |        0.75 | 0.27 | [-0.72, 2.22] |  2.80 | &lt; .01 |               0.07
-# Sepal.Width * Petal.Width                  |        0.34 | 0.49 | [-0.33, 1.02] |  0.70 |  &gt; .1 |               0.22
-# Sepal.Width * Petal.Length                 |       -0.10 | 0.16 | [0.10, -0.30] | -0.63 |  &gt; .1 |              -0.03</code></pre>
+<pre><code># Parameter                                  | Coefficient |   SE |         95% CI |     t |     p | Coefficient (std.)
+# ---------------------------------------------------------------------------------------------------------------------
+# (Intercept)                                |        1.78 | 0.91 | [-1.71,  5.26] |  1.95 | 0.05  |              -0.24
+# Petal.Length * Petal.Width                 |        0.28 | 0.24 | [-0.27,  0.83] |  1.16 | &gt; .1  |               0.30
+# (Sepal.Width * Petal.Length) * Petal.Width |       -0.05 | 0.08 | [ 0.04, -0.14] | -0.61 | &gt; .1  |               1.57
+# Petal.Width                                |       -2.04 | 1.52 | [ 1.96, -6.03] | -1.34 | &gt; .1  |              -0.43
+# Petal.Length                               |        0.88 | 0.50 | [-0.84,  2.60] |  1.77 | 0.08  |              -0.15
+# Sepal.Width                                |        0.75 | 0.27 | [-0.72,  2.22] |  2.80 | &lt; .01 |               0.07
+# Sepal.Width * Petal.Width                  |        0.34 | 0.49 | [-0.33,  1.02] |  0.70 | &gt; .1  |               0.22
+# Sepal.Width * Petal.Length                 |       -0.10 | 0.16 | [ 0.10, -0.30] | -0.63 | &gt; .1  |              -0.03</code></pre>
 </div>
 <div id="bayesian-models-1" class="section level3">
 <h3 class="hasAnchor">
@@ -385,11 +385,11 @@
 # -----------------------------------------------------------------------------------------------
 # (Intercept) |  19.82 | [-1.20, 41.01] | 93.90% |     1.30% | 1254 | 0.999 | Normal (0 +- 60.27)
 # wt          |  -3.96 | [-6.01, -1.79] | 99.65% |     0.60% | 1249 | 0.999 | Normal (0 +- 15.40)
-# cyl         |  -0.50 |  [-1.85, 0.74] | 72.90% |    45.90% | 1472 | 1.000 |  Normal (0 +- 8.44)
-# hp          |  -0.02 |  [-0.04, 0.01] | 88.20% |      100% | 1813 | 0.999 |  Normal (0 +- 0.22)
-# am          |   2.93 |   [0.24, 5.80] | 94.85% |     6.85% | 1500 | 1.000 | Normal (0 +- 15.07)
-# qsec        |   0.80 |  [-0.04, 1.79] | 92.15% |    35.40% | 1237 | 0.999 |  Normal (0 +- 8.43)
-# disp        |   0.01 |  [-0.01, 0.03] | 86.10% |      100% | 1409 | 1.000 |  Normal (0 +- 0.12)</code></pre>
+# cyl         |  -0.50 | [-1.85,  0.74] | 72.90% |    45.90% | 1472 | 1.000 |  Normal (0 +- 8.44)
+# hp          |  -0.02 | [-0.04,  0.01] | 88.20% |      100% | 1813 | 0.999 |  Normal (0 +- 0.22)
+# am          |   2.93 | [ 0.24,  5.80] | 94.85% |     6.85% | 1500 | 1.000 | Normal (0 +- 15.07)
+# qsec        |   0.80 | [-0.04,  1.79] | 92.15% |    35.40% | 1237 | 0.999 |  Normal (0 +- 8.43)
+# disp        |   0.01 | [-0.01,  0.03] | 86.10% |      100% | 1409 | 1.000 |  Normal (0 +- 0.12)</code></pre>
 </div>
 </div>
 <div id="variable-and-features-extraction" class="section level2">
