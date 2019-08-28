@@ -18,7 +18,7 @@ format_table(x, sep = " | ", header = "-", digits = 2,
 
 \item{protect_integers}{Should integers be kept as integers (i.e., without decimals)?}
 
-\item{missing}{Value by which `NA` values are replaced. By default, an empty string (i.e. \code{""}) is returned for `NA`.}
+\item{missing}{Value by which \code{NA} values are replaced. By default, an empty string (i.e. \code{""}) is returned for code{NA}.}
 }
 \value{
 A data.frame in character format.

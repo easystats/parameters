@@ -40,8 +40,9 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   ci_high <- names(x)[grep("CI_high*", names(x))]
   if (length(ci_low) >= 1 & length(ci_low) == length(ci_high)) {
     ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
+    max_len <- max(nchar(c(round(x[[ci_low]], 2), round(x[[ci_high]], 2))))
     for (i in 1:length(ci_colname)) {
-      x[ci_colname[i]] <- format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL)
+      x[ci_colname[i]] <- format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL, width = max_len)
     }
     # Replace at initial position
     ci_position <- which(names(x) == ci_low[1])
