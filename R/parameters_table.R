@@ -33,7 +33,10 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   if ("df" %in% names(x)) x$df <- format_value(x$df, protect_integers = TRUE)
   if ("df_residual" %in% names(x)) x$df_residual <- format_value(x$df_residual, protect_integers = TRUE)
   names(x)[names(x) == "df_residual"] <- "df"
-  if ("p" %in% names(x)) x$p <- format_p(x$p, name = NULL, stars = stars)
+  if ("p" %in% names(x)) {
+    x$p <- format_p(x$p, name = NULL, stars = stars)
+    x$p <- format(x$p, justify = "left")
+  }
 
   # CI
   ci_low <- names(x)[grep("CI_low*", names(x))]
