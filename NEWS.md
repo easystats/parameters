@@ -1,5 +1,9 @@
 # parameters 0.1.1
 
+## New functions
+
+  - `parameters_simulate()` and `model_simulate()`, as computational faster alternatives to `parameters_bootstrap()` and `model_bootstrap()`.
+
 ## Changes to functions
 
   - `format_value()` and `format_ci()` get a `width`-argument to set the minimum length of the returned formatted string.

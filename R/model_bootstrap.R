@@ -2,15 +2,18 @@
 #'
 #' Bootstrap a statistical model n times to return a data.frame of estimates.
 #'
-#' @examples
-#' model <- lm(mpg ~ wt + cyl, data = mtcars)
-#' head(model_bootstrap(model))
 #' @param model Statistical model.
 #' @param iterations The number of bootstrap replicates.
 #' @param verbose Hide possible refit messages.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return A data.frame.
+#'
+#' @seealso \code{\link{parameters_bootstrap}}, \code{\link{model_simulate}}, \code{\link{parameters_simulate}}
+#'
+#' @examples
+#' model <- lm(mpg ~ wt + cyl, data = mtcars)
+#' head(model_bootstrap(model))
 #' @export
 model_bootstrap <- function(model, iterations = 1000, verbose = FALSE, ...) {
   UseMethod("model_bootstrap")

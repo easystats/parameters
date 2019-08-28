@@ -25,3 +25,6 @@ Bootstrap a statistical model n times to return a data.frame of estimates.
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 head(model_bootstrap(model))
 }
+\seealso{
+\code{\link{parameters_bootstrap}}, \code{\link{model_simulate}}, \code{\link{parameters_simulate}}
+}
