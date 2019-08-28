@@ -105,3 +105,19 @@ data_frame <- function(...) {
 
   out
 }
+
+
+
+# remove NULL elements from lists
+.compact_list <- function(x) x[!sapply(x, function(i) length(i) == 0 || is.null(i) || any(i == "NULL"))]
+
+
+
+# remove empty string from character
+.compact_character <- function(x) x[!sapply(x, function(i) nchar(i) == 0 || is.null(i) || any(i == "NULL"))]
+
+
+.rename_values <- function(x, old, new) {
+  x[x %in% old] <- new
+  x
+}

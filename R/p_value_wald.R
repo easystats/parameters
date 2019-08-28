@@ -24,7 +24,12 @@ p_value_wald <- function(model) {
 #' @export
 p_value_wald.merMod <- function(model) {
   params <- as.data.frame(stats::coef(summary(model)))
+  .p_value_wald(params)
+}
 
+
+
+.p_value_wald <- function(params) {
   if ("t value" %in% names(params)) {
     p <- 2 * stats::pnorm(abs(params[, "t value"]), lower.tail = FALSE)
   } else if ("z value" %in% names(params)) {
@@ -39,9 +44,8 @@ p_value_wald.merMod <- function(model) {
     coef_names <- names(p)
   }
 
-  data.frame(
+  data_frame(
     Parameter = coef_names,
-    p = unname(p),
-    stringsAsFactors = FALSE
+    p = unname(p)
   )
 }

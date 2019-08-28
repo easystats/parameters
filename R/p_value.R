@@ -21,6 +21,45 @@ p_value <- function(model, ...) {
 
 
 #' @export
+p_value.default <- function(model, ...) {
+  p <- tryCatch({
+    if (grepl("^Zelig-", class(model)[1])) {
+      if (!requireNamespace("Zelig", quietly = T))
+        stop("Package `Zelig` required. Please install", call. = F)
+      unlist(Zelig::get_pvalue(model))
+    } else {
+      stats::coef(summary(model))[, 4]
+    }
+  },
+  error = function(e) { NULL }
+  )
+
+  if (is.null(p)) {
+    insight::print_color("\nCould not extract p-values from model object.\n", "red")
+  } else {
+    data_frame(
+      Parameter = names(p),
+      p = as.vector(p)
+    )
+  }
+}
+
+
+
+#' @export
+p_value.rlm <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
 p_value.aov <- function(model, ...) {
   params <- model_parameters(model)
 
@@ -40,10 +79,9 @@ p_value.aov <- function(model, ...) {
     return(NA)
   }
 
-  data.frame(
+  data_frame(
     Parameter = params$Parameter,
-    p = params$p,
-    stringsAsFactors = FALSE
+    p = params$p
   )
 }
 
@@ -65,7 +103,7 @@ p_value.numeric <- function(model, ...) {
 #' @export
 p_value.data.frame <- function(model, ...) {
   data <- model[sapply(model, is.numeric)]
-  data.frame(
+  data_frame(
     Parameter = names(data),
     p = sapply(data, p_value)
   )
@@ -86,10 +124,9 @@ p_value.aovlist <- p_value.aov
 p_value.brmsfit <- function(model, ...) {
   p <- bayestestR::p_direction(model)
 
-  data.frame(
+  data_frame(
     Parameter = p$Parameter,
-    p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE),
-    stringsAsFactors = FALSE
+    p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE)
   )
 }
 
@@ -109,10 +146,9 @@ p_value.gam <- function(model, ...) {
   lc <- length(sm$p.coeff)
   p <- sm$p.pv[1:lc]
 
-  data.frame(
+  data_frame(
     Parameter = names(p),
-    p = as.vector(p),
-    stringsAsFactors = FALSE
+    p = as.vector(p)
   )
 }
 
@@ -124,10 +160,9 @@ p_value.gmnl <- function(model, ...) {
   p <- cs[, 4]
   # se <- cs[, 2]
 
-  pv <- data.frame(
+  pv <- data_frame(
     Parameter = names(p),
-    p = as.vector(p),
-    stringsAsFactors = FALSE
+    p = as.vector(p)
   )
 
   # rename intercepts
@@ -152,10 +187,9 @@ p_value.htest <- function(model, ...) {
 #' @export
 p_value.lm <- function(model, ...) {
   parms <- as.data.frame(stats::coef(summary(model)))
-  data.frame(
+  data_frame(
     Parameter = rownames(parms),
-    p = as.vector(parms[, "Pr(>|t|)", drop = TRUE]),
-    stringsAsFactors = FALSE
+    p = as.vector(parms[, "Pr(>|t|)", drop = TRUE])
   )
 }
 
@@ -168,7 +202,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
   method <- match.arg(method, c("wald", "kr", "kenward"))
   if (method == "wald") {
     p_value_wald(model, ...)
-  } else if (method == "kr" | method == "kenward") {
+  } else if (method %in% c("kr", "kenward")) {
     p_value_kenward(model, ...)
   }
 }
@@ -183,6 +217,60 @@ p_value.merMod <- function(model, ...) {
 
 
 #' @export
+p_value.glmmTMB <- function(model, ...) {
+  cs <- .compact_list(stats::coef(summary(model)))
+  x <- lapply(names(cs), function(i) {
+    pv <- .p_value_wald(as.data.frame(cs[[i]]))
+    pv$Component <- i
+    pv
+  })
+
+  p <- do.call(rbind, x)
+  p$Component <- .rename_values(p$Component, "cond", "conditional")
+  p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
+
+  p
+}
+
+
+
+#' @export
+p_value.multinom <- function(model, ...) {
+  s <- summary(model)
+  stat <- s$coefficients / s$standard.errors
+  p <- 2 * stats::pnorm(stat, lower.tail = FALSE)
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.maxLik <- function(model, ...) {
+  p <- summary(model)$estimate[, 4]
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+#' @export
+p_value.pglm <- function(model, ...) {
+  p <- summary(model)$estimate[, 4]
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+#' @export
 p_value.polr <- function(model, ...) {
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   tstat <- smry[[3]]
@@ -190,10 +278,9 @@ p_value.polr <- function(model, ...) {
   p <- 2 * stats::pnorm(abs(tstat), lower.tail = FALSE)
   names(p) <- rownames(smry)
 
-  data.frame(
+  data_frame(
     Parameter = names(p),
-    p = as.vector(p),
-    stringsAsFactors = FALSE
+    p = as.vector(p)
   )
 }
 
@@ -203,12 +290,23 @@ p_value.polr <- function(model, ...) {
 p_value.svyglm <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- cs[, 4]
-  # se <- cs[, 2]
 
-  data.frame(
+  data_frame(
     Parameter = names(p),
-    p = as.vector(p),
-    stringsAsFactors = FALSE
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.svyolr <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
   )
 }
 
@@ -226,10 +324,9 @@ p_value.svyglm.nb <- function(model, ...) {
 
   names(p) <- gsub("\\beta\\.", "", names(p), fixed = FALSE)
 
-  data.frame(
+  data_frame(
     Parameter = names(p),
-    p = as.vector(p),
-    stringsAsFactors = FALSE
+    p = as.vector(p)
   )
 }
 
@@ -245,10 +342,9 @@ p_value.vglm <- function(model, ...) {
   p <- cs[, 4]
   # se <- cs[, 2]
 
-  data.frame(
+  data_frame(
     Parameter = names(p),
-    p = as.vector(p),
-    stringsAsFactors = FALSE
+    p = as.vector(p)
   )
 }
 
