@@ -155,6 +155,29 @@ p_value.gam <- function(model, ...) {
 
 
 #' @export
+p_value.gls <- function(model, ...) {
+  p <- summary(model)$tTable[, 4]
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.pggls <- function(model, ...) {
+  p <- summary(model)$CoefTable[, 4]
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+
+#' @export
 p_value.gmnl <- function(model, ...) {
   cs <- summary(model)$CoefTable
   p <- cs[, 4]
