@@ -20,30 +20,31 @@ reference:
   - ci.merMod
   - equivalence_test
   - omega_squared
-  
+
 - title: "Parameters Engineering"
   contents:
   - model_bootstrap
   - parameters_bootstrap
+  - model_simulate
+  - parameters_simulate
   - parameters_standardize
   - marginal_parameters
-  
+
 - title: "Variable/Feature Reduction"
   contents:
-
   - check_factorstructure
   - check_kmo
   - check_sphericity
   - n_factors
   - parameters_selection
-  
+
 
 - title: "Index Conversion"
   contents:
   - d_to_r
   - odds_to_d
   - odds_to_probs
-  
+
 - title: "Miscellaneous"
   contents:
   - standardize
@@ -53,8 +54,8 @@ reference:
   - skewness
   - principal_components
   - smoothness
-  
-  
+
+
 navbar:
   type: default
   left:
