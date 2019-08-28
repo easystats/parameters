@@ -26,5 +26,5 @@
 #' @export
 parameters_simulate <- function(model, n_sims = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
   data <- model_simulate(model, n_sims = n_sims, ...)
-  .summary_bootstrap(data = data, test = test, centrality = centrality, ci_method = ci_method, ...)
+  .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
 }

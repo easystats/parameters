@@ -21,12 +21,12 @@
 #' @export
 parameters_bootstrap <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
   data <- model_bootstrap(model, iterations = iterations, ...)
-  .summary_bootstrap(data = data, test = test, centrality = centrality, ci_method = ci_method, ...)
+  .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
 }
 
 
 
-.summary_bootstrap <- function(data, test, centrality, ci_method, ...) {
+.summary_bootstrap <- function(data, test, centrality, ci, ci_method, ...) {
   # Is the p-value requested?
   if ("p-value" %in% c(test) | "p" %in% c(test) | "pval" %in% c(test)) {
     p_value <- TRUE
