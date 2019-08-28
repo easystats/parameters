@@ -67,14 +67,22 @@ eta_squared <- function(model, partial = TRUE, ci = NULL, ...) {
 }
 
 
+#' @importFrom stats anova
 #' @rdname eta_squared
 #' @export
 eta_squared.aov <- function(model, partial = TRUE, ci = NULL, iterations = 1000, ...) {
+  if (!inherits(model, c("Gam", "aov", "anova", "anova.rms", "aovlist"))) model <- stats::anova(model)
   out <- .eta_squared(model, partial = partial, ci = ci, iterations = iterations)
   class(out) <- c(ifelse(isTRUE(partial), "partial_eta_squared", "eta_squared"), class(out))
   out
 }
 
+
+#' @export
+eta_squared.lm <- eta_squared.aov
+
+#' @export
+eta_squared.glm <- eta_squared.aov
 
 #' @export
 eta_squared.anova <- eta_squared.aov
