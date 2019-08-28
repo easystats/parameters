@@ -8,6 +8,7 @@ cohens_f <- function(model) {
 
 #' @export
 cohens_f.aov <- function(model) {
+  if (!inherits(model, c("Gam", "aov", "anova", "anova.rms"))) model <- stats::anova(model)
   m <- .cohens_f(model)
   class(m) <- c("cohens_f", class(m))
   m
@@ -15,6 +16,12 @@ cohens_f.aov <- function(model) {
 
 #' @export
 cohens_f.anova <- cohens_f.aov
+
+#' @export
+cohens_f.lm <- cohens_f.aov
+
+#' @export
+cohens_f.glm <- cohens_f.aov
 
 
 #' @export

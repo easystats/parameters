@@ -8,6 +8,7 @@ omega_squared <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
 
 #' @export
 omega_squared.aov <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {
+  if (!inherits(model, c("Gam", "aov", "anova", "anova.rms"))) model <- stats::anova(model)
   m <- .omega_squared(model, partial = partial, ci = ci, iterations = iterations)
   class(m) <- c(ifelse(isTRUE(partial), "partial_omega_squared", "omega_squared"), class(m))
   m
@@ -16,6 +17,11 @@ omega_squared.aov <- function(model, partial = TRUE, ci = NULL, iterations = 100
 #' @export
 omega_squared.anova <- omega_squared.aov
 
+#' @export
+omega_squared.lm <- omega_squared.aov
+
+#' @export
+omega_squared.glm <- omega_squared.aov
 
 #' @export
 omega_squared.aovlist <- function(model, partial = TRUE, ci = NULL, iterations = 1000) {

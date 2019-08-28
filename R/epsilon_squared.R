@@ -8,6 +8,7 @@ epsilon_squared <- function(model) {
 
 #' @export
 epsilon_squared.aov <- function(model) {
+  if (!inherits(model, c("Gam", "aov", "anova", "anova.rms"))) model <- stats::anova(model)
   m <- .epsilon_squared(model)
   class(m) <- c("epsilon_squared", class(m))
   m
@@ -15,6 +16,12 @@ epsilon_squared.aov <- function(model) {
 
 #' @export
 epsilon_squared.anova <- epsilon_squared.aov
+
+#' @export
+epsilon_squared.lm <- epsilon_squared.aov
+
+#' @export
+epsilon_squared.glm <- epsilon_squared.aov
 
 
 #' @export
