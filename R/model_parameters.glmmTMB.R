@@ -28,12 +28,10 @@ model_parameters.MixMod <- model_parameters.glmmTMB
 
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_glmmTMB <- function(model, ci, component, ...) {
+.extract_parameters_glmmTMB <- function(model, ci, component, merge_by = c("Parameter", "Component"), ...) {
   parameters <- insight::get_parameters(model, effects = "fixed", component = component)
   colnames(parameters) <- c("Parameter", "Estimate", "Component")
   original_order <- parameters$.id <- 1:nrow(parameters)
-
-  merge_by <- c("Parameter", "Component")
 
   # CI
   if (!is.null(ci)) {
