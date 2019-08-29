@@ -110,6 +110,18 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
 
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, ...) {
-  formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
-  cat(format_table(formatted_table))
+  if ("Component" %in% names(x) && length(unique(x$Component)) > 1) {
+    l <- split(x, x$Component)
+    for (i in names(l)) {
+      comp <- switch(i, "conditional" = "Conditional", "zero_inflated" = "Zero-Inflated")
+      insight::print_color(sprintf("# %s component\n\n", comp), "blue")
+      l[[i]]$Component <- NULL
+      formatted_table <- parameters_table(l[[i]], pretty_names = pretty_names, ...)
+      cat(format_table(formatted_table))
+      cat("\n")
+    }
+  } else {
+    formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
+    cat(format_table(formatted_table))
+  }
 }
