@@ -2,7 +2,6 @@
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-
   component <- match.arg(component)
 
   # fix argument, if model has no zi-part
@@ -23,8 +22,8 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, p_metho
   parameters
 }
 
-
-
+#' @export
+model_parameters.MixMod <- model_parameters.glmmTMB
 
 
 #' @importFrom stats confint
@@ -72,25 +71,4 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, p_metho
 
   rownames(parameters) <- NULL
   parameters
-}
-
-
-
-.get_statistic <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  component <- match.arg(component)
-
-  cs <- .compact_list(stats::coef(summary(model)))
-  x <- lapply(names(cs), function(i) {
-    data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
-      Statistic = as.vector(cs[[i]][, 3]),
-      Component = i
-    )
-  })
-
-  stat <- do.call(rbind, x)
-  stat$Component <- .rename_values(stat$Component, "cond", "conditional")
-  stat$Component <- .rename_values(stat$Component, "zi", "zero_inflated")
-
-  .filter_component(stat, component)
 }

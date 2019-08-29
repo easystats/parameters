@@ -33,6 +33,7 @@ standard_error.glm <- standard_error.lm
 standard_error.merMod <- standard_error.lm
 
 
+#' @rdname standard_error
 #' @export
 standard_error.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
@@ -50,6 +51,27 @@ standard_error.glmmTMB <- function(model, component = c("all", "conditional", "z
   se$Component <- .rename_values(se$Component, "cond", "conditional")
   se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
 
+  .filter_component(se, component)
+}
+
+
+#' @rdname standard_error
+#' @export
+standard_error.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  s <- summary(model)
+  cs <- list(s$coef_table, s$coef_table_zi)
+  names(cs) <- c("conditional", "zero_inflated")
+  cs <- .compact_list(cs)
+  x <- lapply(names(cs), function(i) {
+    data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+      SE = as.vector(cs[[i]][, 2]),
+      Component = i
+    )
+  })
+
+  se <- do.call(rbind, x)
   .filter_component(se, component)
 }
 

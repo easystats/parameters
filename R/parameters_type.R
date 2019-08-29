@@ -42,9 +42,11 @@
 parameters_type <- function(model, ...) {
 
   # Get info
-  params <- data.frame(
-    Parameter = insight::find_parameters(model)$conditional,
-    stringsAsFactors = FALSE
+  params <- data_frame(
+    Parameter = c(
+      insight::find_parameters(model)$conditional,
+      insight::find_parameters(model)$zero_inflated
+    )
   )
 
   data <- insight::get_data(model)

@@ -34,6 +34,14 @@ ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "z
 }
 
 
+#' @rdname ci.merMod
+#' @export
+ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+}
+
+
 #' Confidence Interval (CI)
 #'
 #' Compute confidence intervals (CI) for frequentist models.

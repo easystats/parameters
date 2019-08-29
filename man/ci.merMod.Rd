@@ -3,12 +3,16 @@
 \name{ci.glm}
 \alias{ci.glm}
 \alias{ci.glmmTMB}
+\alias{ci.MixMod}
 \alias{ci.merMod}
 \title{Confidence Interval (CI)}
 \usage{
 \method{ci}{glm}(x, ci = 0.95, ...)
 
 \method{ci}{glmmTMB}(x, ci = 0.95, component = c("all", "conditional",
+  "zi", "zero_inflated"), ...)
+
+\method{ci}{MixMod}(x, ci = 0.95, component = c("all", "conditional",
   "zi", "zero_inflated"), ...)
 
 \method{ci}{merMod}(x, ci = 0.95, method = c("wald", "boot"), ...)
