@@ -60,6 +60,17 @@ p_value.rlm <- function(model, ...) {
 
 
 #' @export
+p_value.wbm <- function(model, ...) {
+  p <- model@summ$coeftable[, "p"]
+  data_frame(
+    Parameter = gsub(pattern = "`", replacement = "", x = names(p), fixed = TRUE),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
 p_value.aov <- function(model, ...) {
   params <- model_parameters(model)
 
