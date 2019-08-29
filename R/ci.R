@@ -3,7 +3,6 @@
 bayestestR::ci
 
 
-
 #' @rdname ci.merMod
 #' @method ci glm
 #' @export
@@ -18,7 +17,7 @@ ci.glm <- function(x, ci = .95, ...) {
 #' @method ci lm
 #' @export
 ci.lm <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci)
+  ci_wald(model = x, ci = ci, component = "conditional")
 }
 
 #' @export
@@ -26,6 +25,13 @@ ci.BBmm <- ci.lm
 
 #' @export
 ci.BBreg <- ci.lm
+
+#' @rdname ci.merMod
+#' @export
+ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+}
 
 
 #' Confidence Interval (CI)
@@ -36,6 +42,7 @@ ci.BBreg <- ci.lm
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param method For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams model_simulate
 #'
 #' @return A data.frame containing the CI bounds.
 #'

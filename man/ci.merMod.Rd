@@ -2,10 +2,14 @@
 % Please edit documentation in R/ci.R
 \name{ci.glm}
 \alias{ci.glm}
+\alias{ci.glmmTMB}
 \alias{ci.merMod}
 \title{Confidence Interval (CI)}
 \usage{
 \method{ci}{glm}(x, ci = 0.95, ...)
+
+\method{ci}{glmmTMB}(x, ci = 0.95, component = c("all", "conditional",
+  "zi", "zero_inflated"), ...)
 
 \method{ci}{merMod}(x, ci = 0.95, method = c("wald", "boot"), ...)
 }
@@ -15,6 +19,11 @@
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{component}{Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. \code{component} may be one of \code{"conditional"},
+\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 
 \item{method}{For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).}
 }

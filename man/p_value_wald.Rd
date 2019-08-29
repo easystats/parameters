@@ -5,7 +5,8 @@
 \alias{p_value_wald}
 \title{Wald-test approximation for CIs and p-values}
 \usage{
-ci_wald(model, ci = 0.95, dof = NULL)
+ci_wald(model, ci = 0.95, dof = NULL, component = c("all",
+  "conditional", "zi", "zero_inflated"))
 
 p_value_wald(model)
 }
@@ -15,6 +16,11 @@ p_value_wald(model)
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
 \item{dof}{Degrees of Freedom. If not specified, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters).}
+
+\item{component}{Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. \code{component} may be one of \code{"conditional"},
+\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 }
 \value{
 The p-values.

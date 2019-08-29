@@ -4,6 +4,7 @@
 #'
 #' @param model A model.
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams model_simulate
 #'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
@@ -30,6 +31,35 @@ standard_error.glm <- standard_error.lm
 
 #' @export
 standard_error.merMod <- standard_error.lm
+
+
+#' @export
+standard_error.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+
+  params_cond <- insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE)
+  params_zi <- insight::find_parameters(model, effects = "fixed", component = "zero_inflated", flatten = TRUE)
+
+  d <- NULL
+
+  if (component %in% c("all", "conditional") && !is.null(params_cond)) {
+    d <- data_frame(
+      Parameter = params_cond,
+      SE = .get_se_from_summary(model, component = "cond"),
+      Component = "conditional"
+    )
+  }
+
+  if (component %in% c("all", "zi", "zero_inflated") && !is.null(params_zi)) {
+    d <- do.call(rbind, list(d, data_frame(
+      Parameter = params_zi,
+      SE = .get_se_from_summary(model, component = "zi"),
+      Component = "zero_inflated"
+    )))
+  }
+
+  d
+}
 
 
 #' @export
@@ -164,9 +194,14 @@ standard_error.polr <- function(model, ...) {
 
 
 #' @importFrom stats coef
-.get_se_from_summary <- function(model) {
+.get_se_from_summary <- function(model, component = NULL) {
   cs <- stats::coef(summary(model))
-  as.vector(cs[, 2])
+  if (is.list(cs) && !is.null(component)) cs <- cs[[component]]
+
+  if (!is.null(cs))
+    as.vector(cs[, 2])
+  else
+    NULL
 }
 
 

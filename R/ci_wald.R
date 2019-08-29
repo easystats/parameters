@@ -2,12 +2,13 @@
 #'
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param dof Degrees of Freedom. If not specified, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters).
-#'
+#' @inheritParams model_simulate
 #'
 #' @importFrom stats qt coef
 #' @export
-ci_wald <- function(model, ci = .95, dof = NULL) {
-  out <- lapply(ci, function(ci, model, dof) .ci_wald(model, ci, dof), model = model, dof = dof)
+ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "conditional", "zi", "zero_inflated")) {
+  component <- match.arg(component)
+  out <- lapply(ci, function(ci, model, dof, component) .ci_wald(model, ci, dof, component), model = model, dof = dof, component = component)
   out <- do.call(rbind, out)
   row.names(out) <- NULL
   out
@@ -17,10 +18,10 @@ ci_wald <- function(model, ci = .95, dof = NULL) {
 #' @importFrom insight get_parameters n_obs
 #' @importFrom stats qt
 #' @keywords internal
-.ci_wald <- function(x, ci, dof) {
-  params <- insight::get_parameters(x, effects = "fixed", component = "conditional")
+.ci_wald <- function(x, ci, dof, component) {
+  params <- insight::get_parameters(x, effects = "fixed", component = component)
   estimates <- params$estimate
-  se <- standard_error(x)$SE
+  se <- standard_error(x, component = component)$SE
 
   if (is.null(dof)) {
     dof <- insight::n_obs(x) - nrow(params)
@@ -36,7 +37,10 @@ ci_wald <- function(model, ci = .95, dof = NULL) {
   out <- as.data.frame(out)
   out$CI <- ci
   out$Parameter <- params$parameter
+
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
+  if ("component" %in% names(params)) out$Component <- params$component
+
   out
 }
 
