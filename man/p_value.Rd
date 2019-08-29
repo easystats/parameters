@@ -3,11 +3,15 @@
 \name{p_value}
 \alias{p_value}
 \alias{p_value.lmerMod}
+\alias{p_value.glmmTMB}
 \title{p-values}
 \usage{
 p_value(model, ...)
 
 \method{p_value}{lmerMod}(model, method = "wald", ...)
+
+\method{p_value}{glmmTMB}(model, component = c("all", "conditional",
+  "zi", "zero_inflated"), ...)
 }
 \arguments{
 \item{model}{A statistical model.}
@@ -15,6 +19,11 @@ p_value(model, ...)
 \item{...}{Arguments passed to or from other methods.}
 
 \item{method}{For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.}
+
+\item{component}{Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. \code{component} may be one of \code{"conditional"},
+\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 }
 \value{
 The p-values.

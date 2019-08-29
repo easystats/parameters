@@ -269,6 +269,7 @@ p_value.merMod <- function(model, ...) {
 
 
 
+#' @rdname p_value
 #' @export
 p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
