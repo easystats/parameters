@@ -3,7 +3,10 @@
 ## General
 
   - `parameters()` is an alias for `model_parameters()`.
-  - Preliminary support for models from package **panelr**.
+  - `p_value()` now supports more model objects.
+  - `ci()` now supports more model objects.
+  - `standard_error()` now supports more model objects.
+  - `model_parameters()` now supports more model objects.
 
 ## New functions
 
@@ -12,8 +15,6 @@
 ## Changes to functions
 
   - `format_value()` and `format_ci()` get a `width`-argument to set the minimum length of the returned formatted string.
-  - `p_value()` now supports more model objects.
-  - `ci()` now supports more model objects.
   - `eta_squared()`, `omega_squared()`, `epsilon_squared()` and `cohens_f()` now support more model objects.
   - The `print()`-method for `model_parameters()` now better aligns confidence intervals and p-values.
 
