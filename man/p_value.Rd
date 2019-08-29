@@ -4,6 +4,7 @@
 \alias{p_value}
 \alias{p_value.lmerMod}
 \alias{p_value.glmmTMB}
+\alias{p_value.MixMod}
 \title{p-values}
 \usage{
 p_value(model, ...)
@@ -12,6 +13,9 @@ p_value(model, ...)
 
 \method{p_value}{glmmTMB}(model, component = c("all", "conditional",
   "zi", "zero_inflated"), ...)
+
+\method{p_value}{MixMod}(model, component = c("all", "conditional", "zi",
+  "zero_inflated"), ...)
 }
 \arguments{
 \item{model}{A statistical model.}
