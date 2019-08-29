@@ -68,6 +68,14 @@ p_value.BBmm <- function(model, ...) {
 }
 
 
+#' @export
+p_value.BBreg <- function(model, ...) {
+  data_frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    p = as.data.frame(summary(model)$coefficients)$p.value
+  )
+}
+
 
 #' @export
 p_value.wbm <- function(model, ...) {

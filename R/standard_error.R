@@ -42,6 +42,15 @@ standard_error.BBmm <- function(model, ...) {
 
 
 #' @export
+standard_error.BBreg <- function(model, ...) {
+  data_frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    SE = as.data.frame(summary(model)$coefficients)$StdErr
+  )
+}
+
+
+#' @export
 standard_error.wbm <- function(model, ...) {
   data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
