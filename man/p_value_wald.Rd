@@ -2,13 +2,10 @@
 % Please edit documentation in R/ci_wald.R, R/p_value_wald.R
 \name{ci_wald}
 \alias{ci_wald}
-\alias{ci_wald.default}
 \alias{p_value_wald}
 \title{Wald-test approximation for CIs and p-values}
 \usage{
-ci_wald(model, ...)
-
-\method{ci_wald}{default}(model, ci = 0.95, dof = Inf)
+ci_wald(model, ci = 0.95, dof = NULL)
 
 p_value_wald(model)
 }
@@ -17,7 +14,7 @@ p_value_wald(model)
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{dof}{Degrees of Freedom.}
+\item{dof}{Degrees of Freedom. If not specified, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters).}
 }
 \value{
 The p-values.

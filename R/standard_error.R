@@ -1,14 +1,14 @@
 #' Extract standard errors
 #'
-#' This function attempts to return standard errors of a model's parameters.
+#' This function attempts to return standard errors of model parameters.
 #'
 #' @param model A model.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
-#' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+#' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
-#' @return A data.frame.
+#' @return A data frame.
 #' @importFrom stats coef vcov setNames
 #' @export
 standard_error <- function(model, ...) {
@@ -16,6 +16,29 @@ standard_error <- function(model, ...) {
 }
 
 
+#' @export
+standard_error.lm <- function(model, ...) {
+  data_frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    SE = .get_se_from_summary(model)
+  )
+}
+
+
+#' @export
+standard_error.glm <- standard_error.lm
+
+#' @export
+standard_error.merMod <- standard_error.lm
+
+
+#' @export
+standard_error.wbm <- function(model, ...) {
+  data_frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
+    SE = as.vector(as.data.frame(model@summ$coeftable, stringsAsFactors = FALSE)[["S.E."]])
+  )
+}
 
 
 #' @export
@@ -43,45 +66,6 @@ standard_error.aovlist <- standard_error.aov
 
 
 #' @export
-standard_error.merMod <- function(model, ...) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
-  }
-
-  cc <- stats::coef(model)
-
-  # get names of intercepts
-  inames <- names(cc)
-
-  # variances of fixed effects
-  fixed.vars <- diag(as.matrix(stats::vcov(model)))
-
-  # extract variances of conditional modes
-  r1 <- lme4::ranef(model, condVar = TRUE)
-
-  # we may have multiple random intercepts, iterate all
-  se.merMod <- lapply(1:length(cc), function(i) {
-    cmode.vars <- t(apply(attr(r1[[i]], "postVar"), 3, diag))
-    seVals <- sqrt(sweep(cmode.vars, 2, fixed.vars[names(r1[[i]])], "+", check.margin = FALSE))
-
-    if (length(r1[[i]]) == 1) {
-      seVals <- as.data.frame(t(seVals))
-      stats::setNames(seVals, names(r1[[i]]))
-    } else {
-      seVals <- seVals[, 1:2]
-      stats::setNames(as.data.frame(seVals), names(r1[[i]]))
-    }
-  })
-
-  # set names of list
-  names(se.merMod) <- inames
-
-  se.merMod
-}
-
-
-
-#' @export
 standard_error.vglm <- function(model, ...) {
   if (!requireNamespace("VGAM", quietly = TRUE)) {
     stop("Package `VGAM` required.", call. = FALSE)
@@ -90,10 +74,9 @@ standard_error.vglm <- function(model, ...) {
   cs <- VGAM::summary(model)@coef3
   se <- cs[, 2]
 
-  data.frame(
+  data_frame(
     Parameter = names(se),
-    SE = as.vector(se),
-    stringsAsFactors = FALSE
+    SE = as.vector(se)
   )
 }
 
@@ -107,10 +90,9 @@ standard_error.svyglm.nb <- function(model, ...) {
 
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
 
-  data.frame(
+  data_frame(
     Parameter = names(se),
-    SE = as.vector(se),
-    stringsAsFactors = FALSE
+    SE = as.vector(se)
   )
 }
 
@@ -121,10 +103,9 @@ standard_error.svyglm <- function(model, ...) {
   cs <- stats::coef(summary(model))
   se <- cs[, 2]
 
-  data.frame(
+  data_frame(
     Parameter = names(se),
-    SE = as.vector(se),
-    stringsAsFactors = FALSE
+    SE = as.vector(se)
   )
 }
 
@@ -135,10 +116,9 @@ standard_error.gmnl <- function(model, ...) {
   cs <- summary(model)$CoefTable
   se <- cs[, 2]
 
-  pv <- data.frame(
+  pv <- data_frame(
     Parameter = names(se),
-    SE = as.vector(se),
-    stringsAsFactors = FALSE
+    SE = as.vector(se)
   )
 
   # rename intercepts
@@ -158,10 +138,9 @@ standard_error.polr <- function(model, ...) {
   se <- smry[[2]]
   names(se) <- rownames(smry)
 
-  data.frame(
+  data_frame(
     Parameter = names(se),
-    SE = as.vector(se),
-    stringsAsFactors = FALSE
+    SE = as.vector(se)
   )
 }
 
@@ -169,5 +148,42 @@ standard_error.polr <- function(model, ...) {
 #' @importFrom stats coef
 .get_se_from_summary <- function(model) {
   cs <- stats::coef(summary(model))
-  cs[, 2]
+  as.vector(cs[, 2])
 }
+
+
+# .ranef_se <- function(x) {
+#   if (!requireNamespace("lme4", quietly = TRUE)) {
+#     stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
+#   }
+#
+#   cc <- stats::coef(model)
+#
+#   # get names of intercepts
+#   inames <- names(cc)
+#
+#   # variances of fixed effects
+#   fixed.vars <- diag(as.matrix(stats::vcov(model)))
+#
+#   # extract variances of conditional modes
+#   r1 <- lme4::ranef(model, condVar = TRUE)
+#
+#   # we may have multiple random intercepts, iterate all
+#   se.merMod <- lapply(1:length(cc), function(i) {
+#     cmode.vars <- t(apply(attr(r1[[i]], "postVar"), 3, diag))
+#     seVals <- sqrt(sweep(cmode.vars, 2, fixed.vars[names(r1[[i]])], "+", check.margin = FALSE))
+#
+#     if (length(r1[[i]]) == 1) {
+#       seVals <- as.data.frame(t(seVals))
+#       stats::setNames(seVals, names(r1[[i]]))
+#     } else {
+#       seVals <- seVals[, 1:2]
+#       stats::setNames(as.data.frame(seVals), names(r1[[i]]))
+#     }
+#   })
+#
+#   # set names of list
+#   names(se.merMod) <- inames
+#
+#   se.merMod
+# }

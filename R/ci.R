@@ -4,15 +4,11 @@ bayestestR::ci
 
 
 
-
-
 #' @rdname ci.merMod
 #' @method ci glm
-#' @importFrom stats confint
 #' @export
-ci.glm <- function(x, ci = 0.95, ...) {
-  suppressMessages(out <- lapply(ci, function(ci, x) .ci_lm(x, ci, ...), x = x))
-
+ci.glm <- function(x, ci = .95, ...) {
+  out <- lapply(ci, function(i) .ci_profiled_wald(x = x, ci = i))
   out <- do.call(rbind, out)
   row.names(out) <- NULL
   out
@@ -21,31 +17,9 @@ ci.glm <- function(x, ci = 0.95, ...) {
 
 #' @method ci lm
 #' @export
-ci.lm <- ci.glm
-
-
-
-
-#' @keywords internal
-.ci_lm <- function(x, ci, ...) {
-  out <- stats::confint(x, level = ci)
-
-  out <- as.data.frame(out, stringsAsFactors = FALSE)
-  names(out) <- c("CI_low", "CI_high")
-
-  out$CI <- ci * 100
-
-  out$Parameter <- row.names(out)
-  out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
-
-  row.names(out) <- NULL
-  out
+ci.lm <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci)
 }
-
-
-
-
-
 
 
 #' Confidence Interval (CI)
