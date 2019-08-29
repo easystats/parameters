@@ -3,6 +3,7 @@
 ## General
 
   - `parameters()` is an alias for `model_parameters()`.
+  - Preliminary support for models from package **panelr**.
 
 ## New functions
 
