@@ -37,13 +37,18 @@ ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "z
 ci.polr <- function(x, ci = .95, ...) {
   out <- lapply(ci, function(i) .ci_profiled_wald2(x = x, ci = i))
   out <- do.call(rbind, out)
-  row.names(out) <- NULL
 
   # for polr, profiled CI do not return CI for response levels
   # thus, we also calculate Wald CI and add missing rows to result
   out_missing <- ci_wald(model = x, ci = ci, component = "conditional")
   missing_rows <- out_missing$Parameter %in% setdiff(out_missing$Parameter, out$Parameter)
-  rbind(out_missing[missing_rows, ], out)
+  out <- rbind(out, out_missing[missing_rows, ])
+
+  # fix names, to match standard error and p_value
+  out$Parameter <- gsub("Intercept: ", "", out$Parameter, fixed = TRUE)
+  row.names(out) <- NULL
+
+  out
 }
 
 
