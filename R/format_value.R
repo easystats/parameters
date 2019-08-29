@@ -45,11 +45,12 @@ format_value.numeric <- function(x, digits = 2, protect_integers = FALSE, missin
     out <- .format_value(x, digits = digits, .missing = missing, .width = width, ...)
   }
   # Deal with negative zeros
-  out[out == "-0"] <- "0"
-  out[out == "-0.0"] <- "0.0"
-  out[out == "-0.00"] <- "0.00"
-  out[out == "-0.000"] <- "0.000"
-  out[out == "-0.0000"] <- "0.0000"
+  whitespace <- ifelse(is.null(width), "", " ")
+  out[out == "-0"] <- paste0(whitespace, "0")
+  out[out == "-0.0"] <- paste0(whitespace, "0.0")
+  out[out == "-0.00"] <- paste0(whitespace, "0.00")
+  out[out == "-0.000"] <- paste0(whitespace, "0.000")
+  out[out == "-0.0000"] <- paste0(whitespace, "0.0000")
   out
 }
 
