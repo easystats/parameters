@@ -285,13 +285,7 @@ p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "ze
   p$Component <- .rename_values(p$Component, "cond", "conditional")
   p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
 
-  switch(
-    component,
-    "conditional" = p[p$Component == "conditional", ],
-    "zi" = ,
-    "zero_inflated" = p[p$Component == "zero_inflated", ],
-    p
-  )
+  .filter_component(p, component)
 }
 
 

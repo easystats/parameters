@@ -46,17 +46,11 @@ standard_error.glmmTMB <- function(model, component = c("all", "conditional", "z
     )
   })
 
-  p <- do.call(rbind, x)
-  p$Component <- .rename_values(p$Component, "cond", "conditional")
-  p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
+  se <- do.call(rbind, x)
+  se$Component <- .rename_values(se$Component, "cond", "conditional")
+  se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
 
-  switch(
-    component,
-    "conditional" = p[p$Component == "conditional", ],
-    "zi" = ,
-    "zero_inflated" = p[p$Component == "zero_inflated", ],
-    p
-  )
+  .filter_component(se, component)
 }
 
 

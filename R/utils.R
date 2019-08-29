@@ -121,3 +121,16 @@ data_frame <- function(...) {
   x[x %in% old] <- new
   x
 }
+
+
+# for models with zero-inflation component, return
+# required component of model-summary
+.filter_component <- function(dat, component) {
+  switch(
+    component,
+    "conditional" = dat[dat$Component == "conditional", ],
+    "zi" = ,
+    "zero_inflated" = dat[dat$Component == "zero_inflated", ],
+    dat
+  )
+}
