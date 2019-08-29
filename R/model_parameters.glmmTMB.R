@@ -13,7 +13,7 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, p_metho
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_glmmTMB(model, ci = ci, component = component, ...)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = component, ...)
   }
 
   attr(parameters, "pretty_names") <- format_parameters(model)
@@ -28,8 +28,12 @@ model_parameters.MixMod <- model_parameters.glmmTMB
 
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_glmmTMB <- function(model, ci, component, merge_by = c("Parameter", "Component"), ...) {
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), ...) {
   parameters <- insight::get_parameters(model, effects = "fixed", component = component)
+
+  if (inherits(model, "polr")) {
+    parameters$parameter <- gsub("Intercept: ", "", parameters$parameter, fixed = TRUE)
+  }
 
   if ("component" %in% names(parameters)) {
     cn <- c("Parameter", "Estimate", "Component")

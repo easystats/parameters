@@ -49,6 +49,11 @@ parameters_type <- function(model, ...) {
     )
   )
 
+  if (inherits(model, "polr")) {
+    params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
+  }
+
+
   data <- insight::get_data(model)
   reference <- .list_factors_numerics(data)
 

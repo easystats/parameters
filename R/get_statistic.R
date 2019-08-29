@@ -42,3 +42,13 @@
   stat <- do.call(rbind, x)
   .filter_component(stat, component)
 }
+
+
+
+.get_statistic.polr <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  data_frame(
+    Parameter = gsub("`", "", rownames(cs), fixed = TRUE),
+    Statistic = as.vector(cs[, 3])
+  )
+}
