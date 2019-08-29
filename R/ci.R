@@ -86,6 +86,7 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
 
   # Compute
   out <- as.data.frame(lme4::confint.merMod(x, level = ci, method = "boot", ...))
+  rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
   out <- out[rownames(out) %in% insight::find_parameters(x)$conditional, ]
   names(out) <- c("CI_low", "CI_high")
 

@@ -2,10 +2,13 @@
 % Please edit documentation in R/ci_wald.R, R/p_value_wald.R
 \name{ci_wald}
 \alias{ci_wald}
+\alias{ci_wald.default}
 \alias{p_value_wald}
 \title{Wald-test approximation for CIs and p-values}
 \usage{
-ci_wald(model, ci = 0.95, dof = Inf)
+ci_wald(model, ...)
+
+\method{ci_wald}{default}(model, ci = 0.95, dof = Inf)
 
 p_value_wald(model)
 }
