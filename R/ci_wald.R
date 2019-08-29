@@ -52,6 +52,8 @@ ci_wald.wbm <- function(model, ci = 0.95, dof = Inf) {
 }
 
 
+#' @importFrom insight find_parameters
+#' @importFrom stats qt
 #' @keywords internal
 .ci_wald_panelr <- function(x, ci, dof = Inf) {
   params <- as.data.frame(x@summ$coeftable, stringsAsFactors = FALSE)
@@ -66,7 +68,7 @@ ci_wald.wbm <- function(model, ci = 0.95, dof = Inf) {
 
   out <- as.data.frame(out)
   out$CI <- ci
-  out$Parameter <- row.names(params)
+  out$Parameter <- insight::find_parameters(x, effects = "fixed", flatten = TRUE)
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
   out
 }

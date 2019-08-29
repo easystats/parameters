@@ -1,22 +1,11 @@
 #' @export
-model_parameters.wbm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, ...) {
+model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, ...) {
 
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- .extract_parameters_panelr(model, ci = ci, p_method = p_method, ci_method = ci_method, ...)
-  }
-
-
-  # Standardized
-  if (isTRUE(standardize)) {
-    warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
-    standardize <- "refit"
-  }
-
-  if (!is.null(standardize) && !is.logical(standardize)) {
-    parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
   }
 
   attr(parameters, "pretty_names") <- format_parameters(model)
@@ -51,9 +40,7 @@ model_parameters.wbm <- function(model, ci = .95, standardize = "refit", standar
 
 
   # p value
-  if ("p" %in% names(parameters)) {
-    names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
-  } else {
+  if (!("p" %in% names(parameters))) {
     parameters <- merge(parameters, p_value(model), by = "Parameter")
   }
 
