@@ -21,6 +21,12 @@ ci.lm <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci)
 }
 
+#' @export
+ci.BBmm <- ci.lm
+
+#' @export
+ci.BBreg <- ci.lm
+
 
 #' Confidence Interval (CI)
 #'
