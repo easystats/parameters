@@ -33,6 +33,15 @@ standard_error.merMod <- standard_error.lm
 
 
 #' @export
+standard_error.BBmm <- function(model, ...) {
+  data_frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    SE = as.data.frame(summary(model)$fixed.coefficients)$StdErr
+  )
+}
+
+
+#' @export
 standard_error.wbm <- function(model, ...) {
   data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),

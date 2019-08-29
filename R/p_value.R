@@ -60,6 +60,16 @@ p_value.rlm <- function(model, ...) {
 
 
 #' @export
+p_value.BBmm <- function(model, ...) {
+  data_frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    p = as.data.frame(summary(model)$fixed.coefficients)$p.value
+  )
+}
+
+
+
+#' @export
 p_value.wbm <- function(model, ...) {
   p <- model@summ$coeftable[, "p"]
   data_frame(
