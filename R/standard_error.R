@@ -37,28 +37,26 @@ standard_error.merMod <- standard_error.lm
 standard_error.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
 
-  params_cond <- insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE)
-  params_zi <- insight::find_parameters(model, effects = "fixed", component = "zero_inflated", flatten = TRUE)
-
-  d <- NULL
-
-  if (component %in% c("all", "conditional") && !is.null(params_cond)) {
-    d <- data_frame(
-      Parameter = params_cond,
-      SE = .get_se_from_summary(model, component = "cond"),
-      Component = "conditional"
+  cs <- .compact_list(stats::coef(summary(model)))
+  x <- lapply(names(cs), function(i) {
+    data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+      SE = as.vector(cs[[i]][, 2]),
+      Component = i
     )
-  }
+  })
 
-  if (component %in% c("all", "zi", "zero_inflated") && !is.null(params_zi)) {
-    d <- do.call(rbind, list(d, data_frame(
-      Parameter = params_zi,
-      SE = .get_se_from_summary(model, component = "zi"),
-      Component = "zero_inflated"
-    )))
-  }
+  p <- do.call(rbind, x)
+  p$Component <- .rename_values(p$Component, "cond", "conditional")
+  p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
 
-  d
+  switch(
+    component,
+    "conditional" = p[p$Component == "conditional", ],
+    "zi" = ,
+    "zero_inflated" = p[p$Component == "zero_inflated", ],
+    p
+  )
 }
 
 

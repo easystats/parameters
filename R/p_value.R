@@ -7,6 +7,7 @@
 #'
 #' @param model A statistical model.
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams model_simulate
 #'
 #' @examples
 #' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
@@ -269,7 +270,9 @@ p_value.merMod <- function(model, ...) {
 
 
 #' @export
-p_value.glmmTMB <- function(model, ...) {
+p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     pv <- .p_value_wald(as.data.frame(cs[[i]]))
@@ -281,7 +284,13 @@ p_value.glmmTMB <- function(model, ...) {
   p$Component <- .rename_values(p$Component, "cond", "conditional")
   p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
 
-  p
+  switch(
+    component,
+    "conditional" = p[p$Component == "conditional", ],
+    "zi" = ,
+    "zero_inflated" = p[p$Component == "zero_inflated", ],
+    p
+  )
 }
 
 
