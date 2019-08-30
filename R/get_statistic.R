@@ -69,3 +69,9 @@
 
   out
 }
+
+
+
+.get_statistic.lme <- function(model, ...) {
+  .get_statistic.default(model, statistic_column = 4)
+}

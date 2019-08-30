@@ -1,8 +1,8 @@
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), statistic_column = 3, ...) {
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), ...) {
   parameters <- insight::get_parameters(model, effects = "fixed", component = component)
-  .statistic <- .get_statistic(model, component = component, statistic_column = statistic_column)
+  .statistic <- .get_statistic(model, component = component)
 
   if (inherits(model, "polr")) {
     parameters$parameter <- gsub("Intercept: ", "", parameters$parameter, fixed = TRUE)

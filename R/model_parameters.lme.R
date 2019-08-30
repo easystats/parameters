@@ -5,7 +5,7 @@ model_parameters.lme <- function(model, ci = .95, standardize = "refit", standar
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = "Parameter", statistic_column = 4, ...)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = "Parameter", ...)
   }
 
 
@@ -24,3 +24,6 @@ model_parameters.lme <- function(model, ci = .95, standardize = "refit", standar
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
+
+#' @export
+model_parameters.gls <- model_parameters.lme
