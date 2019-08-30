@@ -54,6 +54,7 @@ Suggests:
 	MASS,
 	MuMIn,
 	nFactors,
+	nlme,
 	pbkrtest,
 	psych,
 	projpred,
