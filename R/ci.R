@@ -1,72 +1,10 @@
-#' @importFrom bayestestR ci
-#' @export
-bayestestR::ci
-
-
-#' @rdname ci.merMod
-#' @method ci glm
-#' @export
-ci.glm <- function(x, ci = .95, ...) {
-  out <- lapply(ci, function(i) .ci_profiled_wald(x = x, ci = i))
-  out <- do.call(rbind, out)
-  row.names(out) <- NULL
-  out
-}
-
-
-#' @method ci lm
-#' @export
-ci.lm <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, component = "conditional")
-}
-
-#' @export
-ci.BBmm <- ci.lm
-
-#' @export
-ci.BBreg <- ci.lm
-
-#' @rdname ci.merMod
-#' @export
-ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  component <- match.arg(component)
-  ci_wald(model = x, ci = ci, dof = Inf, component = component)
-}
-
-#' @export
-ci.polr <- function(x, ci = .95, ...) {
-  out <- lapply(ci, function(i) .ci_profiled_wald2(x = x, ci = i))
-  out <- do.call(rbind, out)
-
-  # for polr, profiled CI do not return CI for response levels
-  # thus, we also calculate Wald CI and add missing rows to result
-  out_missing <- ci_wald(model = x, ci = ci, component = "conditional")
-  missing_rows <- out_missing$Parameter %in% setdiff(out_missing$Parameter, out$Parameter)
-  out <- rbind(out, out_missing[missing_rows, ])
-
-  # fix names, to match standard error and p_value
-  out$Parameter <- gsub("Intercept: ", "", out$Parameter, fixed = TRUE)
-  row.names(out) <- NULL
-
-  out
-}
-
-
-#' @rdname ci.merMod
-#' @export
-ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  component <- match.arg(component)
-  ci_wald(model = x, ci = ci, dof = Inf, component = component)
-}
-
-
 #' Confidence Interval (CI)
 #'
 #' Compute confidence intervals (CI) for frequentist models.
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param method For mixed models, can be \link[=ci_wald]{"wald"} (default) or "boot" (see \code{lme4::confint.merMod}).
+#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default) or \code{"boot"} (see \code{lme4::confint.merMod}). For generalized linear models, can be \code{"profile"} (default) or \code{"wald"}.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_simulate
 #'
@@ -79,7 +17,7 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
 
   # Wald approx
   if (method == "wald") {
-    out <- ci_wald(x, ci = ci, dof = Inf)
+    out <- ci_wald(model = x, ci = ci, dof = Inf)
 
     # Bootstrapped CIs
   } else if (method == "boot") {
@@ -91,22 +29,87 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
 }
 
 
-#' @keywords internal
-.ci_boot_merMod <- function(x, ci, ...) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
+#' @importFrom bayestestR ci
+#' @export
+bayestestR::ci
+
+
+
+#' @rdname ci.merMod
+#' @method ci glm
+#' @export
+ci.glm <- function(x, ci = .95, method = c("profile", "wald"), ...) {
+  method <- match.arg(method)
+  if (method == "profile") {
+    out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
+  } else {
+    out <- lapply(ci, function(i) ci_wald(model = x, ci = i, component = "conditional"))
   }
-
-  # Compute
-  out <- as.data.frame(lme4::confint.merMod(x, level = ci, method = "boot", ...))
-  rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
-  out <- out[rownames(out) %in% insight::find_parameters(x)$conditional, ]
-  names(out) <- c("CI_low", "CI_high")
-
-  # Clean up
-  out$Parameter <- row.names(out)
-  out$CI <- ci
-  out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
+  out <- do.call(rbind, out)
   row.names(out) <- NULL
   out
+}
+
+
+
+#' @method ci lm
+#' @export
+ci.lm <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, component = "conditional")
+}
+
+
+
+#' @export
+ci.BBmm <- ci.lm
+
+
+
+#' @export
+ci.BBreg <- ci.lm
+
+
+
+#' @rdname ci.merMod
+#' @export
+ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+}
+
+
+
+#' @export
+ci.polr <- function(x, ci = .95, method = c("profile", "wald"), ...) {
+  method <- match.arg(method)
+  if (method == "profile") {
+    out <- lapply(ci, function(i) .ci_profiled2(model = x, ci = i))
+  } else {
+    out <- lapply(ci, function(i) ci_wald(model = x, ci = i, component = "conditional"))
+  }
+
+  out <- do.call(rbind, out)
+
+  # for polr, profiled CI do not return CI for response levels
+  # thus, we also calculate Wald CI and add missing rows to result
+
+  out_missing <- ci_wald(model = x, ci = ci, component = "conditional")
+  missing_rows <- out_missing$Parameter %in% setdiff(out_missing$Parameter, out$Parameter)
+  out <- rbind(out, out_missing[missing_rows, ])
+
+  # fix names, to match standard error and p_value
+
+  out$Parameter <- gsub("Intercept: ", "", out$Parameter, fixed = TRUE)
+  row.names(out) <- NULL
+
+  out
+}
+
+
+
+#' @rdname ci.merMod
+#' @export
+ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }

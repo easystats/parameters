@@ -18,14 +18,14 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 #' @importFrom insight get_parameters n_obs
 #' @importFrom stats qt
 #' @keywords internal
-.ci_wald <- function(x, ci, dof, component) {
-  params <- insight::get_parameters(x, effects = "fixed", component = component)
+.ci_wald <- function(model, ci, dof, component) {
+  params <- insight::get_parameters(model, effects = "fixed", component = component)
   estimates <- params$estimate
-  se <- standard_error(x, component = component)$SE
+  se <- standard_error(model, component = component)$SE
 
   if (is.null(dof)) {
     # residual df
-    dof <- insight::n_obs(x) - nrow(params)
+    dof <- insight::n_obs(model) - nrow(params)
   }
 
   alpha <- (1 + ci) / 2
@@ -41,41 +41,6 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
   if ("component" %in% names(params)) out$Component <- params$component
-
-  out
-}
-
-
-
-#' @importFrom insight get_parameters
-#' @importFrom stats confint
-.ci_profiled_wald <- function(x, ci) {
-  out <- as.data.frame(stats::confint(x, level = ci), stringsAsFactors = FALSE)
-  names(out) <- c("CI_low", "CI_high")
-
-  out$CI <- ci * 100
-  out$Parameter <- insight::get_parameters(x, effects = "fixed", component = "conditional")$parameter
-
-  out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
-  rownames(out) <- NULL
-
-  out
-}
-
-
-
-# we need this function for models where confint and get_parameters return
-# different length (e.g. as for "polr" models)
-#' @importFrom stats confint
-.ci_profiled_wald2 <- function(x, ci) {
-  out <- as.data.frame(stats::confint(x, level = ci), stringsAsFactors = FALSE)
-  names(out) <- c("CI_low", "CI_high")
-
-  out$CI <- ci * 100
-  out$Parameter <- rownames(out)
-
-  out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
-  rownames(out) <- NULL
 
   out
 }
