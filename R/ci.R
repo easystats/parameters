@@ -35,6 +35,13 @@ bayestestR::ci
 
 
 
+#' @export
+ci.default <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, ...)
+}
+
+
+
 #' @rdname ci.merMod
 #' @method ci glm
 #' @export
@@ -42,10 +49,10 @@ ci.glm <- function(x, ci = .95, method = c("profile", "wald"), ...) {
   method <- match.arg(method)
   if (method == "profile") {
     out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
+    out <- do.call(rbind, out)
   } else {
-    out <- lapply(ci, function(i) ci_wald(model = x, ci = i, component = "conditional"))
+    out <- ci_wald(model = x, ci = ci, component = "conditional")
   }
-  out <- do.call(rbind, out)
   row.names(out) <- NULL
   out
 }
@@ -84,11 +91,10 @@ ci.polr <- function(x, ci = .95, method = c("profile", "wald"), ...) {
   method <- match.arg(method)
   if (method == "profile") {
     out <- lapply(ci, function(i) .ci_profiled2(model = x, ci = i))
+    out <- do.call(rbind, out)
   } else {
-    out <- lapply(ci, function(i) ci_wald(model = x, ci = i, component = "conditional"))
+    out <- ci_wald(model = x, ci = ci, component = "conditional")
   }
-
-  out <- do.call(rbind, out)
 
   # for polr, profiled CI do not return CI for response levels
   # thus, we also calculate Wald CI and add missing rows to result
@@ -112,4 +118,24 @@ ci.polr <- function(x, ci = .95, method = c("profile", "wald"), ...) {
 ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
+}
+
+
+
+#' @export
+ci.lme <- function(x, ci = .95, ...) {
+  if (!requireNamespace("nlme", quietly = TRUE)) {
+    ci_wald(model = x, ci = ci, component = "conditional")
+  } else {
+    out <- lapply(ci, function(i) {
+      ci_list <- nlme::intervals(x, level = i, ...)
+      data_frame(
+        Parameter = rownames(ci_list$fixed),
+        CI = i * 100,
+        CI_low = as.vector(ci_list$fixed[, "lower"]),
+        CI_high = as.vector(ci_list$fixed[, "upper"])
+      )
+    })
+    do.call(rbind, out)
+  }
 }

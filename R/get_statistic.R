@@ -45,10 +45,10 @@
 
 
 
-.get_statistic.polr <- function(model, ...) {
+.get_statistic.default <- function(model, statistic_column = 3, ...) {
   cs <- stats::coef(summary(model))
   data_frame(
     Parameter = gsub("`", "", rownames(cs), fixed = TRUE),
-    Statistic = as.vector(cs[, 3])
+    Statistic = as.vector(cs[, statistic_column])
   )
 }

@@ -28,6 +28,19 @@ standard_error.lm <- function(model, ...) {
 
 
 #' @export
+standard_error.lme <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  se <- cs[, 2]
+
+  data_frame(
+    Parameter = names(se),
+    SE = as.vector(se)
+  )
+}
+
+
+
+#' @export
 standard_error.gam <- function(model, ...) {
   p.table <- summary(model)$p.table
 
