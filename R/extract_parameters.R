@@ -1,7 +1,8 @@
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), ...) {
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), statistic_column = 3, ...) {
   parameters <- insight::get_parameters(model, effects = "fixed", component = component)
+  .statistic <- .get_statistic(model, component = component, statistic_column = statistic_column)
 
   if (inherits(model, "polr")) {
     parameters$parameter <- gsub("Intercept: ", "", parameters$parameter, fixed = TRUE)
@@ -34,13 +35,13 @@
   parameters <- merge(parameters, standard_error(model, component = component), by = merge_by)
 
   # test statistic
-  parameters <- merge(parameters, .get_statistic(model, component = component), by = merge_by)
+  parameters <- merge(parameters, .statistic, by = merge_by)
 
   # Rematch order after merging
   parameters <- parameters[match(original_order, parameters$.id), ]
 
   # Renaming
-  names(parameters) <- gsub("Statistic", "z", names(parameters))
+  names(parameters) <- gsub("Statistic", attr(.statistic, "statistic", exact = TRUE), names(parameters))
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
   # Reorder

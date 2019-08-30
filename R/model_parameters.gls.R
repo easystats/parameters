@@ -1,11 +1,10 @@
-#' @rdname model_parameters.merMod
 #' @export
-model_parameters.lme <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
+model_parameters.gls <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = "Parameter", statistic_column = 4, ...)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = "Parameter", statistic_column = 3, ...)
   }
 
 
