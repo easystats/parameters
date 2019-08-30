@@ -3,10 +3,7 @@
 ## General
 
   - `parameters()` is an alias for `model_parameters()`.
-  - `p_value()` now supports more model objects.
-  - `ci()` now supports more model objects.
-  - `standard_error()` now supports more model objects.
-  - `model_parameters()` now supports more model objects.
+  - `p_value()`, `ci()`, `standard_error()` and `model_parameters()` now support more model objects, including mixed models from packages *nlme*, *glmmTMB* or *GLMMadaptive*. Along with these changes, functions for specific model objects with zero-inflated component get a `component`-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.
 
 ## New functions
 
@@ -15,6 +12,7 @@
 ## Changes to functions
 
   - `format_value()` and `format_ci()` get a `width`-argument to set the minimum length of the returned formatted string.
+  - `format_ci()` gets a `bracket`-argument include or remove brackets around the ci-values.
   - `eta_squared()`, `omega_squared()`, `epsilon_squared()` and `cohens_f()` now support more model objects.
   - The `print()`-method for `model_parameters()` now better aligns confidence intervals and p-values.
 
