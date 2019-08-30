@@ -60,9 +60,9 @@
     Statistic = as.vector(cs[, statistic_column])
   )
 
-  if (any(c("t val.", "t", "t-value", "t.value") %in% cs_names))
+  if (any(c("t val.", "t", "t-value", "t.value", "tvalue") %in% cs_names))
     attr(out, "statistic") <- "t"
-  else if (any(c("z val.", "z", "z-value", "z.value") %in% cs_names))
+  else if (any(c("z val.", "z", "z-value", "z.value", "z value") %in% cs_names))
     attr(out, "statistic") <- "z"
   else
     attr(out, "statistic") <- "statistic"
