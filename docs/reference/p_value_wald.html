@@ -152,7 +152,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>ci_wald</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>dof</span> <span class='kw'>=</span> <span class='fl'>Inf</span>)
+    <pre class="usage"><span class='fu'>ci_wald</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>dof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>,
+  <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>))
 
 <span class='fu'>p_value_wald</span>(<span class='no'>model</span>)</pre>
     
@@ -169,7 +170,14 @@
     </tr>
     <tr>
       <th>dof</th>
-      <td><p>Degrees of Freedom.</p></td>
+      <td><p>Degrees of Freedom. If not specified, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters).</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
+<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
     </table>
     
@@ -187,11 +195,11 @@
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>p_value_wald</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;      Parameter            p
 #&gt; 1  (Intercept) 9.561741e-01
-#&gt; 2 Sepal.Length 1.273754e-44</div><div class='input'><span class='fu'>ci_wald</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.90</span>, <span class='fl'>0.95</span>))</div><div class='output co'>#&gt;      Parameter   CI      CI_low   CI_high
-#&gt; 1  (Intercept) 0.90 -0.03387096 0.1389210
-#&gt; 2 Sepal.Length 0.90 -0.40892567 1.6772000
-#&gt; 3  (Intercept) 0.95 -0.05042214 0.1554722
-#&gt; 4 Sepal.Length 0.95 -0.60874886 1.8770232</div><div class='input'>
+#&gt; 2 Sepal.Length 1.273754e-44</div><div class='input'><span class='fu'>ci_wald</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.90</span>, <span class='fl'>0.95</span>))</div><div class='output co'>#&gt;      Parameter CI     CI_low   CI_high
+#&gt; 1  (Intercept) 90 -1.5294928 1.6345428
+#&gt; 2 Sepal.Length 90  0.5592401 0.7090343
+#&gt; 3  (Intercept) 95 -1.8362096 1.9412596
+#&gt; 4 Sepal.Length 95  0.5447193 0.7235551</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

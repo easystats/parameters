@@ -219,7 +219,7 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>Add standardized parameters. Can be FALSE or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize</a></code>), such as "refit", "2sd", "smart" or "classic". The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).</p></td>
+      <td><p>Add standardized parameters. Can be <code>FALSE</code> or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize</a></code>), such as <code>"refit"</code>, <code>"2sd"</code>, <code>"smart"</code> or <code>"classic"</code>. The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).</p></td>
     </tr>
     <tr>
       <th>standardize_robust</th>
@@ -252,14 +252,14 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"smart"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.85), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.78), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.85), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.78), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; Parameter                           | Median |         89% CI |     pd | % in ROPE | ESS |  Rhat |              Prior | Median (std.)
-#&gt; -------------------------------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                         |   4.04 | [ 3.46,  4.61] |   100% |        0% | 298 | 1.010 | Normal (0 +- 8.28) |          0.00
-#&gt; Petal.Length                        |   0.67 | [ 0.26,  1.04] | 99.60% |     0.60% | 296 | 1.010 | Normal (0 +- 1.17) |          1.42
-#&gt; Species (versicolor)                |  -1.55 | [-2.44, -0.72] | 99.50% |     0.30% | 506 | 1.007 | Normal (0 +- 2.07) |         -1.87
-#&gt; Species (virginica)                 |  -2.80 | [-3.68, -1.98] |   100% |        0% | 526 | 0.999 | Normal (0 +- 2.07) |         -3.38
-#&gt; Petal.Length * Species (versicolor) |   0.14 | [-0.27,  0.54] | 71.90% |    21.40% | 305 | 1.010 | Normal (0 +- 1.02) |          0.17
-#&gt; Petal.Length * Species (virginica)  |   0.30 | [-0.10,  0.68] | 89.40% |    12.40% | 352 | 1.006 | Normal (0 +- 0.78) |          0.36</div><div class='input'>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"smart"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.85), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.78), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.85), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.78), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; Parameter                           | Median |       89% CI |     pd | % in ROPE | ESS |  Rhat |              Prior | Median (std.)
+#&gt; -----------------------------------------------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |   4.04 |  3.46,  4.61 |   100% |        0% | 298 | 1.010 | Normal (0 +- 8.28) |          0.00
+#&gt; Petal.Length                        |   0.67 |  0.26,  1.04 | 99.60% |     0.60% | 296 | 1.010 | Normal (0 +- 1.17) |          1.42
+#&gt; Species (versicolor)                |  -1.55 | -2.44, -0.72 | 99.50% |     0.30% | 506 | 1.007 | Normal (0 +- 2.07) |         -1.87
+#&gt; Species (virginica)                 |  -2.80 | -3.68, -1.98 |   100% |        0% | 526 | 0.999 | Normal (0 +- 2.07) |         -3.38
+#&gt; Petal.Length * Species (versicolor) |   0.14 | -0.27,  0.54 | 71.90% |    21.40% | 305 | 1.010 | Normal (0 +- 1.02) |          0.17
+#&gt; Petal.Length * Species (virginica)  |   0.30 | -0.10,  0.68 | 89.40% |    12.40% | 352 | 1.006 | Normal (0 +- 0.78) |          0.36</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

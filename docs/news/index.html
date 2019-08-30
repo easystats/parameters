@@ -147,6 +147,16 @@
 <h1 class="page-header">
 <a href="#parameters-011" class="anchor"></a>parameters 0.1.1<small> Unreleased </small>
 </h1>
+<div id="general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general" class="anchor"></a>General</h2>
+<ul>
+<li>
+<code>parameters()</code> is an alias for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
+<li>
+<code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://www.rdocumentation.org/packages/bayestestR/topics/ci">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support more model objects, including mixed models from packages <em>nlme</em>, <em>glmmTMB</em> or <em>GLMMadaptive</em>. Along with these changes, functions for specific model objects with zero-inflated component get a <code>component</code>-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.</li>
+</ul>
+</div>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h2>
@@ -162,10 +172,17 @@
 <li>
 <code><a href="../reference/format_value.html">format_value()</a></code> and <code><a href="../reference/format_ci.html">format_ci()</a></code> get a <code>width</code>-argument to set the minimum length of the returned formatted string.</li>
 <li>
-<code><a href="../reference/p_value.html">p_value()</a></code> now support more model objects.</li>
+<code><a href="../reference/format_ci.html">format_ci()</a></code> gets a <code>bracket</code>-argument include or remove brackets around the ci-values.</li>
 <li>
 <code><a href="../reference/eta_squared.html">eta_squared()</a></code>, <code><a href="../reference/eta_squared.html">omega_squared()</a></code>, <code><a href="../reference/eta_squared.html">epsilon_squared()</a></code> and <code><a href="../reference/eta_squared.html">cohens_f()</a></code> now support more model objects.</li>
 <li>The <code><a href="https://www.rdocumentation.org/packages/base/topics/print">print()</a></code>-method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now better aligns confidence intervals and p-values.</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fixed issue with wrong computation of wald-approximated confidence intervals.</li>
 </ul>
 </div>
 </div>

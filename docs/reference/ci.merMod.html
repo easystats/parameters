@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Confidence Interval (CI) — ci.glm • parameters</title>
+<title>Confidence Interval (CI) — ci.merMod • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,7 +39,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Confidence Interval (CI) — ci.glm" />
+<meta property="og:title" content="Confidence Interval (CI) — ci.merMod" />
 
 <meta property="og:description" content="Compute confidence intervals (CI) for frequentist models." />
 
@@ -152,11 +152,19 @@
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for glm</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='co'># S3 method for merMod</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"boot"</span>), <span class='no'>...</span>)
 
-<span class='co'># S3 method for merMod</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"boot"</span>), <span class='no'>...</span>)</pre>
+<span class='co'># S3 method for glm</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"profile"</span>, <span class='st'>"wald"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for glmmTMB</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>,
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for MixMod</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/bayestestR/topics/ci'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>,
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,12 +178,19 @@
       <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
     </tr>
     <tr>
+      <th>method</th>
+      <td><p>For mixed models of class <code>merMod</code>, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default) or <code>"boot"</code> (see <code><a href='https://www.rdocumentation.org/packages/lme4/topics/confint.merMod'>lme4::confint.merMod</a></code>). For generalized linear models, can be <code>"profile"</code> (default) or <code>"wald"</code>.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>For mixed models, can be <a href='p_value_wald.html'>"wald"</a> (default) or "boot" (see <code><a href='https://www.rdocumentation.org/packages/lme4/topics/confint.merMod'>lme4::confint.merMod</a></code>).</p></td>
+      <th>component</th>
+      <td><p>Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
+<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
     </table>
     

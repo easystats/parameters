@@ -184,13 +184,13 @@
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Sepal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;                            Parameter Coefficient   SE         95% CI    t  df
-#&gt; 1                        (Intercept)        2.64 0.57 [ 1.51,  3.77] 4.62 144
-#&gt; 2               Species (versicolor)        0.90 0.80 [-0.68,  2.48] 1.13 144
-#&gt; 3                Species (virginica)        1.27 0.82 [-0.35,  2.88] 1.55 144
-#&gt; 4                        Sepal.Width        0.69 0.17 [ 0.36,  1.02] 4.17 144
-#&gt; 5 Species (versicolor) * Sepal.Width        0.17 0.26 [-0.34,  0.69] 0.67 144
-#&gt; 6  Species (virginica) * Sepal.Width        0.21 0.26 [-0.29,  0.72] 0.83 144
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;                            Parameter Coefficient   SE       95% CI    t  df
+#&gt; 1                        (Intercept)        2.64 0.57  1.51,  3.77 4.62 144
+#&gt; 2               Species (versicolor)        0.90 0.80 -0.68,  2.48 1.13 144
+#&gt; 3                Species (virginica)        1.27 0.82 -0.35,  2.88 1.55 144
+#&gt; 4                        Sepal.Width        0.69 0.17  0.36,  1.02 4.17 144
+#&gt; 5 Species (versicolor) * Sepal.Width        0.17 0.26 -0.34,  0.69 0.67 144
+#&gt; 6  Species (virginica) * Sepal.Width        0.21 0.26 -0.29,  0.72 0.83 144
 #&gt;        p Coefficient (std.)
 #&gt; 1 &lt; .001              -1.32
 #&gt; 2 &gt; .1                 1.73
@@ -219,15 +219,15 @@
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.069 seconds (Warm-up)
-#&gt; Chain 1:                0.075 seconds (Sampling)
-#&gt; Chain 1:                0.144 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.077 seconds (Warm-up)
+#&gt; Chain 1:                0.082 seconds (Sampling)
+#&gt; Chain 1:                0.159 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 0.001 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 10 seconds.
+#&gt; Chain 2: Gradient evaluation took 0 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -244,9 +244,9 @@
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.081 seconds (Warm-up)
-#&gt; Chain 2:                0.083 seconds (Sampling)
-#&gt; Chain 2:                0.164 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.084 seconds (Warm-up)
+#&gt; Chain 2:                0.091 seconds (Sampling)
+#&gt; Chain 2:                0.175 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -269,9 +269,9 @@
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.068 seconds (Warm-up)
-#&gt; Chain 3:                0.075 seconds (Sampling)
-#&gt; Chain 3:                0.143 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.079 seconds (Warm-up)
+#&gt; Chain 3:                0.08 seconds (Sampling)
+#&gt; Chain 3:                0.159 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -294,9 +294,9 @@
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.073 seconds (Warm-up)
-#&gt; Chain 4:                0.082 seconds (Sampling)
-#&gt; Chain 4:                0.155 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.08 seconds (Warm-up)
+#&gt; Chain 4:                0.088 seconds (Sampling)
+#&gt; Chain 4:                0.168 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; <span class='error'>Error in .subset2(x, i, exact = exact): recursive indexing failed at level 2</span></div><div class='input'>
 </div></pre>
   </div>
