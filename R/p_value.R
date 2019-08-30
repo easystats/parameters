@@ -21,6 +21,7 @@ p_value <- function(model, ...) {
 }
 
 
+
 #' @export
 p_value.default <- function(model, ...) {
   p <- tryCatch({
@@ -69,6 +70,7 @@ p_value.BBmm <- function(model, ...) {
 }
 
 
+
 #' @export
 p_value.BBreg <- function(model, ...) {
   data_frame(
@@ -76,6 +78,7 @@ p_value.BBreg <- function(model, ...) {
     p = as.data.frame(summary(model)$coefficients)$p.value
   )
 }
+
 
 
 #' @export
@@ -141,9 +144,9 @@ p_value.data.frame <- function(model, ...) {
 
 
 
-
 #' @export
 p_value.anova <- p_value.aov
+
 
 #' @export
 p_value.aovlist <- p_value.aov
@@ -203,7 +206,6 @@ p_value.pggls <- function(model, ...) {
     p = as.vector(p)
   )
 }
-
 
 
 
@@ -339,6 +341,7 @@ p_value.maxLik <- function(model, ...) {
 }
 
 
+
 #' @export
 p_value.pglm <- function(model, ...) {
   p <- summary(model)$estimate[, 4]
@@ -348,6 +351,7 @@ p_value.pglm <- function(model, ...) {
     p = as.vector(p)
   )
 }
+
 
 
 #' @export
