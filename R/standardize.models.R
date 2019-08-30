@@ -40,6 +40,9 @@ standardize.stanreg <- standardize.lm
 standardize.brmsfit <- standardize.lm
 
 #' @export
+standardize.lme <- standardize.lm
+
+#' @export
 standardize.wbm <- function(x, ...) {
   warning("Standardization of parameters not possible for models from package 'panelr'.", call. = FALSE)
   x

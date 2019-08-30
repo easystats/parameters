@@ -4,6 +4,7 @@
 #' @param CI_high Upper CI bound.
 #' @param ci CI level in percentage.
 #' @param digits Number of significant digits.
+#' @param brackets Logical, if \code{TRUE} (default), values are encompassed in square brackets.
 #' @inheritParams format_value
 #'
 #'
@@ -14,21 +15,21 @@
 #' format_ci(c(1.205645, 23.4), c(3.57, -1.35), ci = 0.90)
 #' format_ci(c(1.20, NA, NA), c(3.57, -1.35, NA), ci = 0.90)
 #' @export
-format_ci <- function(CI_low, CI_high, ci = 0.95, digits = 2, width = NULL) {
+format_ci <- function(CI_low, CI_high, ci = 0.95, digits = 2, width = NULL, brackets = TRUE) {
   if (!is.null(ci)) {
-    ifelse(is.na(CI_low) & is.na(CI_high), "", paste0(ci * 100, "% CI ", .format_ci(CI_low, CI_high, digits = digits, width = width)))
+    ifelse(is.na(CI_low) & is.na(CI_high), "", paste0(ci * 100, "% CI ", .format_ci(CI_low, CI_high, digits = digits, width = width, brackets = brackets)))
   } else {
-    ifelse(is.na(CI_low) & is.na(CI_high), "", .format_ci(CI_low, CI_high, digits = digits, width = width))
+    ifelse(is.na(CI_low) & is.na(CI_high), "", .format_ci(CI_low, CI_high, digits = digits, width = width, brackets = brackets))
   }
 }
 
 #' @keywords internal
-.format_ci <- function(CI_low, CI_high, digits = 2, width = NULL) {
+.format_ci <- function(CI_low, CI_high, digits = 2, width = NULL, brackets = TRUE) {
   paste0(
-    "[",
+    ifelse(isTRUE(brackets), "[", ""),
     format_value(CI_low, digits = digits, missing = "missing", width = width),
     ", ",
     format_value(CI_high, digits = digits, missing = "missing", width = width),
-    "]"
+    ifelse(isTRUE(brackets), "[", "")
   )
 }
