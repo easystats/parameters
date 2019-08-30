@@ -81,6 +81,7 @@ ci.BBreg <- ci.lm
 #' @export
 ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
+  if (is.null(.check_component(x, component))) return(NULL)
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
 
@@ -117,6 +118,7 @@ ci.polr <- function(x, ci = .95, method = c("profile", "wald"), ...) {
 #' @export
 ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
+  if (is.null(.check_component(x, component))) return(NULL)
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
 
@@ -155,4 +157,15 @@ ci.lme <- function(x, ci = .95, ...) {
     })
     do.call(rbind, out)
   }
+}
+
+
+
+
+.check_component <- function(m, x) {
+  if (!insight::model_info(m)$is_zero_inflated && x %in% c("zi", "zero_inflated")) {
+    insight::print_color("Model has no zero-inflation component!\n", "red")
+    x <- NULL
+  }
+  x
 }

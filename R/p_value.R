@@ -296,6 +296,7 @@ p_value.merMod <- function(model, ...) {
 #' @export
 p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
+  if (is.null(.check_component(model, component))) return(NULL)
 
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
@@ -319,6 +320,8 @@ p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "ze
 #' @export
 p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
+  if (is.null(.check_component(model, component))) return(NULL)
+
   s <- summary(model)
   cs <- list(s$coef_table, s$coef_table_zi)
   names(cs) <- c("conditional", "zero_inflated")

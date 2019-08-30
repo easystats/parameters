@@ -46,6 +46,8 @@ Suggests:
 	covr,
 	dplyr,
 	EGAnet (>= 0.7),
+	GLMMadaptive,
+	glmmTMB,
 	knitr,
 	lavaan,
 	lme4,

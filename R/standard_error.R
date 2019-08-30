@@ -70,6 +70,7 @@ standard_error.merMod <- standard_error.lm
 #' @export
 standard_error.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
+  if (is.null(.check_component(model, component))) return(NULL)
 
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
@@ -93,6 +94,8 @@ standard_error.glmmTMB <- function(model, component = c("all", "conditional", "z
 #' @export
 standard_error.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
+  if (is.null(.check_component(model, component))) return(NULL)
+
   s <- summary(model)
   cs <- list(s$coef_table, s$coef_table_zi)
   names(cs) <- c("conditional", "zero_inflated")
