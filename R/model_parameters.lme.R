@@ -24,3 +24,7 @@ model_parameters.lme <- function(model, ci = .95, standardize = "refit", standar
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
+
+
+#' @export
+model_parameters.gls <- model_parameters.lme

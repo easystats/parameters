@@ -123,6 +123,23 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
 
 
 #' @export
+ci.gls <- function(x, ci = .95, ...) {
+  out <- lapply(ci, function(i) {
+    ci_list <- stats::confint(x, level = i, ...)
+    data_frame(
+      Parameter = rownames(ci_list),
+      CI = i * 100,
+      CI_low = as.vector(ci_list[, 1]),
+      CI_high = as.vector(ci_list[, 2])
+    )
+  })
+
+  do.call(rbind, out)
+}
+
+
+
+#' @export
 ci.lme <- function(x, ci = .95, ...) {
   if (!requireNamespace("nlme", quietly = TRUE)) {
     ci_wald(model = x, ci = ci, component = "conditional")

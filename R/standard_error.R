@@ -39,6 +39,10 @@ standard_error.lme <- function(model, ...) {
 }
 
 
+#' @export
+standard_error.gls <- standard_error.lme
+
+
 
 #' @export
 standard_error.gam <- function(model, ...) {
