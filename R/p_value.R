@@ -175,14 +175,22 @@ p_value.BFBayesFactor <- p_value.brmsfit
 
 #' @export
 p_value.gam <- function(model, ...) {
-  sm <- summary(model)
-  lc <- length(sm$p.coeff)
-  p <- sm$p.pv[1:lc]
+  p.table <- summary(model)$p.table
+  s.table <- summary(model)$s.table
 
-  data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
+  d1 <- data_frame(
+    Parameter = rownames(p.table),
+    p = as.vector(p.table[, 4]),
+    Component = "conditional"
   )
+
+  d2 <- data_frame(
+    Parameter = rownames(s.table),
+    p = as.vector(s.table[, 4]),
+    Component = "smooth_terms"
+  )
+
+  rbind(d1, d2)
 }
 
 

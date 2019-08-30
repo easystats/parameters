@@ -26,11 +26,27 @@ standard_error.lm <- function(model, ...) {
 }
 
 
+
+#' @export
+standard_error.gam <- function(model, ...) {
+  p.table <- summary(model)$p.table
+
+  data_frame(
+    Parameter = rownames(p.table),
+    SE = as.vector(p.table[, 2]),
+    Component = "conditional"
+  )
+}
+
+
+
 #' @export
 standard_error.glm <- standard_error.lm
 
+
 #' @export
 standard_error.merMod <- standard_error.lm
+
 
 
 #' @rdname standard_error
@@ -55,6 +71,7 @@ standard_error.glmmTMB <- function(model, component = c("all", "conditional", "z
 }
 
 
+
 #' @rdname standard_error
 #' @export
 standard_error.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
@@ -76,6 +93,7 @@ standard_error.MixMod <- function(model, component = c("all", "conditional", "zi
 }
 
 
+
 #' @export
 standard_error.BBmm <- function(model, ...) {
   data_frame(
@@ -83,6 +101,7 @@ standard_error.BBmm <- function(model, ...) {
     SE = as.data.frame(summary(model)$fixed.coefficients)$StdErr
   )
 }
+
 
 
 #' @export
@@ -94,6 +113,7 @@ standard_error.BBreg <- function(model, ...) {
 }
 
 
+
 #' @export
 standard_error.wbm <- function(model, ...) {
   data_frame(
@@ -103,9 +123,11 @@ standard_error.wbm <- function(model, ...) {
 }
 
 
+
 #' @export
 standard_error.htest <- function(model, ...) {
 }
+
 
 
 #' @export
@@ -125,6 +147,7 @@ standard_error.anova <- standard_error.aov
 
 #' @export
 standard_error.aovlist <- standard_error.aov
+
 
 
 #' @export
@@ -194,6 +217,7 @@ standard_error.gmnl <- function(model, ...) {
 }
 
 
+
 #' @export
 standard_error.polr <- function(model, ...) {
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
@@ -205,6 +229,7 @@ standard_error.polr <- function(model, ...) {
     SE = as.vector(se)
   )
 }
+
 
 
 #' @importFrom stats coef
