@@ -66,7 +66,8 @@ Suggests:
 	see,
 	survey,
 	testthat,
-	VGAM
+	VGAM,
+	Zelig
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
