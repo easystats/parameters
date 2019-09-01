@@ -21,5 +21,6 @@ model_parameters <- function(model, ...) {
 }
 
 
+#' @rdname model_parameters
 #' @export
 parameters <- model_parameters

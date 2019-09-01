@@ -2,9 +2,12 @@
 % Please edit documentation in R/model_parameters.R
 \name{model_parameters}
 \alias{model_parameters}
+\alias{parameters}
 \title{Model Parameters}
 \usage{
 model_parameters(model, ...)
+
+parameters(model, ...)
 }
 \arguments{
 \item{model}{Statistical Model.}

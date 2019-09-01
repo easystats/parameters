@@ -31,9 +31,9 @@ format_standardize <- function(x, reference = x, robust = FALSE, digits = NULL, 
 
   # Round
   if (is.null(digits)) {
-    x <- parameters::format_value(x, round(1 / diff(range(x, na.rm = TRUE))), protect_integers = TRUE)
+    x <- format_value(x, round(1 / diff(range(x, na.rm = TRUE))), protect_integers = TRUE)
   } else {
-    x <- parameters::format_value(x, digits = digits, protect_integers = TRUE)
+    x <- format_value(x, digits = digits, protect_integers = TRUE)
   }
 
   # Complete
