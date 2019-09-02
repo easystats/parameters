@@ -3,7 +3,7 @@ language: r
 os:
   #- windows
   - linux
-  #- osx
+  - osx
 
 r:
   - oldrel
@@ -14,7 +14,7 @@ r:
 # Copied from broom
 # sudo: required
 # cache: packages
-bioc_required: true
+bioc_required: false
 warnings_are_errors: false
 
 env:
@@ -31,10 +31,11 @@ r_check_args: "--no-build-vignettes --as-cran"
 r_binary_packages:
   - rstanarm
   - rstan
+  - lme4
 
-r_packages:
-  - rlang
-  - bindrcpp
+# r_packages:
+#   - rlang
+#   - bindrcpp
 
 before_install:
   - mkdir -p ~/.R
