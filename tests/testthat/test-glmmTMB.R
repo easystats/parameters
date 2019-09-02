@@ -23,11 +23,11 @@ if (require("testthat") &&
       tolerance = 1e-4
     )
 
-    expect_equal(
-      ci(m2)$CI_low,
-      c(-0.47982, -1.85096, 0.76044),
-      tolerance = 1e-4
-    )
+    # expect_equal(
+    #   ci(m2)$CI_low,
+    #   c(-0.47982, -1.85096, 0.76044),
+    #   tolerance = 1e-4
+    # )
     expect_equal(
       ci(m2, component = "cond")$CI_low,
       c(-0.47982, -1.85096, 0.76044),
@@ -109,10 +109,10 @@ if (require("testthat") &&
       c(1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823),
       tolerance = 1e-4
     )
-    expect_equal(
-      model_parameters(m2)$Coefficient,
-      c(0.73785, -1.69166, 0.93516),
-      tolerance = 1e-4
-    )
+    # expect_equal(
+    #   model_parameters(m2)$Coefficient,
+    #   c(0.73785, -1.69166, 0.93516),
+    #   tolerance = 1e-4
+    # )
   })
 }

@@ -64,13 +64,13 @@ check_factorstructure <- function(x, silent = FALSE, ...) {
 #'   \item Kaiser, H. F., \& Rice, J. (1974). Little jiffy, mark IV. Educational and psychological measurement, 34(1), 111-117.
 #'   \item Kaiser, H. F. (1974). An index of factorial simplicity. Psychometrika, 39(1), 31-36.
 #' }
-#' @importFrom stats cov2cor
+#' @importFrom stats cor cov2cor
 #' @export
 check_kmo <- function(x, silent = FALSE, ...) {
-  cormatrix <- cor(x, use = "pairwise.complete.obs", ...)
+  cormatrix <- stats::cor(x, use = "pairwise.complete.obs", ...)
   Q <- solve(cormatrix)
 
-  Q <- cov2cor(Q)
+  Q <- stats::cov2cor(Q)
   diag(Q) <- 0
   diag(cormatrix) <- 0
 
@@ -124,13 +124,13 @@ check_kmo <- function(x, silent = FALSE, ...) {
 #'   \item Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 #' }
 #'
-#' @importFrom stats pchisq
+#' @importFrom stats pchisq cor
 #'
 #' @export
 check_sphericity <- function(x, silent = FALSE, ...) {
 
   # This could be improved using the correlation package to use different correlation methods
-  cormatrix <- cor(x, use = "pairwise.complete.obs", ...)
+  cormatrix <- stats::cor(x, use = "pairwise.complete.obs", ...)
 
   n <- nrow(x)
   p <- dim(cormatrix)[2]
@@ -138,7 +138,7 @@ check_sphericity <- function(x, silent = FALSE, ...) {
   detR <- det(cormatrix)
   statistic <- -log(detR) * (n - 1 - (2 * p + 5) / 6)
   df <- p * (p - 1) / 2
-  pval <- pchisq(statistic, df, lower.tail = FALSE)
+  pval <- stats::pchisq(statistic, df, lower.tail = FALSE)
 
   results <- list(chisq = statistic, p = pval, dof = df)
 

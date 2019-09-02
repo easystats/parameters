@@ -163,7 +163,7 @@ ci.lme <- function(x, ci = .95, ...) {
 
 
 .check_component <- function(m, x) {
-  if (!insight::model_info(m)$is_zero_inflated && x %in% c("zi", "zero_inflated")) {
+  if (!insight::model_info(m)$is_zeroinf && x %in% c("zi", "zero_inflated")) {
     insight::print_color("Model has no zero-inflation component!\n", "red")
     x <- NULL
   }

@@ -8,7 +8,9 @@
 #' @export
 ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "conditional", "zi", "zero_inflated")) {
   component <- match.arg(component)
-  out <- lapply(ci, function(ci, model, dof, component) .ci_wald(model, ci, dof, component), model = model, dof = dof, component = component)
+  out <- lapply(ci, function(i) {
+    .ci_wald(model = model, ci = i, dof = dof, component = component)
+  })
   out <- do.call(rbind, out)
   row.names(out) <- NULL
   out

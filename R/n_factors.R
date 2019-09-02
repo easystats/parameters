@@ -216,6 +216,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 
 
 
+#' @importFrom insight print_color
 #' @export
 print.n_factors <- function(x, ...) {
   results <- attributes(x)$by_factors
