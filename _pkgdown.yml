@@ -9,16 +9,30 @@ template:
     bootswatch: cosmo
 
 reference:
-- title: "Model Parameters"
+- title: "Comprehensive Model Parameters"
   contents:
-  - starts_with("model_parameters")
+  - model_parameters
+  - model_parameters.lm
+  - model_parameters.zeroinfl
+  - model_parameters.gam
+  - model_parameters.merMod
+  - model_parameters.lavaan
+  - model_parameters.stanreg
+  - model_parameters.BFBayesFactor
+  - model_parameters.principal
+  - model_parameters.htest
+
+- title: "Specific Model Parameters"
+  contents:
   - n_parameters
   - standard_error
   - p_value
   - p_value_kenward
+  - ci
   - ci_wald
   - ci.merMod
   - equivalence_test
+  - equivalence_test.lm
   - omega_squared
 
 - title: "Parameters Engineering"
@@ -28,7 +42,6 @@ reference:
   - model_simulate
   - parameters_simulate
   - parameters_standardize
-  - marginal_parameters
 
 - title: "Variable/Feature Reduction"
   contents:
@@ -48,12 +61,28 @@ reference:
 - title: "Miscellaneous"
   contents:
   - standardize
+  - standardize.lm
   - standardize.data.frame
   - normalize
   - describe_distribution
   - skewness
   - principal_components
+  - reshape_loadings
   - smoothness
+
+- title: "Table and Value Formatting"
+  contents:
+  - format_bf
+  - format_ci
+  - format_number
+  - format_order
+  - format_p
+  - format_parameters
+  - format_pd
+  - format_rope
+  - format_standardize
+  - parameters_table
+  - parameters_type
 
 
 navbar:

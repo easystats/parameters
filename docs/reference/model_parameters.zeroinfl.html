@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters bootstrapping — parameters_bootstrap • parameters</title>
+<title>Model Parameters for Zero-Inflated Models — model_parameters.zeroinfl • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Parameters bootstrapping — parameters_bootstrap" />
-<meta property="og:description" content="Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values." />
+<meta property="og:title" content="Model Parameters for Zero-Inflated Models — model_parameters.zeroinfl" />
+<meta property="og:description" content="Parameters of zero-inflated models." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -142,89 +142,99 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameters bootstrapping</h1>
+    <h1>Model Parameters for Zero-Inflated Models</h1>
     
-    <div class="hidden name"><code>parameters_bootstrap.Rd</code></div>
+    <div class="hidden name"><code>model_parameters.zeroinfl.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.</p>
+    <p>Parameters of zero-inflated models.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for zeroinfl</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>, <span class='kw'>standardize_robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>,
+  <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Statistical model.</p></td>
-    </tr>
-    <tr>
-      <th>iterations</th>
-      <td><p>The number of bootstrap replicates.</p></td>
-    </tr>
-    <tr>
-      <th>centrality</th>
-      <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
+      <td><p>A model with zero-inflation component.</p></td>
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code>.95</code> (95%) for frequentist models.</p></td>
+      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
     </tr>
     <tr>
-      <th>ci_method</th>
-      <td><p>The type of index used for Credible Interval. Can be
-<code>"HDI"</code> (default, see <code>hdi</code>) or <code>"ETI"</code>
-(see <code>eti</code>).</p></td>
+      <th>standardize</th>
+      <td><p>Add standardized parameters. Can be <code>FALSE</code> or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize()</a></code>), such as <code>"refit"</code>, <code>"2sd"</code>, <code>"smart"</code> or <code>"classic"</code>. The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).</p></td>
     </tr>
     <tr>
-      <th>test</th>
-      <td><p>The indices of effect existence to compute. Character (vector) or
-list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
-<code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
-<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.#'
-For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code>rope</code> or <code>p_direction</code>) and its results
-included in the summary output.</p></td>
+      <th>standardize_robust</th>
+      <td><p>Robust standardization. See <code><a href='parameters_standardize.html'>parameters_standardize</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>bootstrap</th>
+      <td><p>Should estimates be based on bootsrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>iterations</th>
+      <td><p>The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
+<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <td><p>Arguments passed to or from other methods (e.g., to <code><a href='standardize.lm.html'>standardize()</a></code>).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Bootstrapped parameters.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Davison, A. C., &amp; Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='model_bootstrap.html'>model_bootstrap</a></code>, <code><a href='parameters_simulate.html'>parameters_simulate</a></code>, <code><a href='model_simulate.html'>model_simulate</a></code></p></div>
+    <p>A data frame of indices related to the model's parameters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
-
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
-#&gt; 1                   (Intercept)   4.7728824  4.5208491 4.9709230 0.000000000
-#&gt; 3             Speciesversicolor  -0.7392530 -1.7145214 0.1147634 0.091908092
-#&gt; 5              Speciesvirginica   0.4581110 -0.7340341 1.6647893 0.407592408
-#&gt; 2                   Petal.Width   0.9379005  0.2817038 1.9379015 0.003996004
-#&gt; 4 Speciesversicolor:Petal.Width   0.4918373 -0.6827755 1.5164756 0.385614386
-#&gt; 6  Speciesvirginica:Petal.Width  -0.2610669 -1.4389681 0.5532715 0.575424575</div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>pscl</span>)</div><div class='output co'>#&gt; <span class='message'>Classes and Methods for R developed in the</span>
+#&gt; <span class='message'>Political Science Computational Laboratory</span>
+#&gt; <span class='message'>Department of Political Science</span>
+#&gt; <span class='message'>Stanford University</span>
+#&gt; <span class='message'>Simon Jackman</span>
+#&gt; <span class='message'>hurdle and zeroinfl functions by Achim Zeileis</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"bioChemists"</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/pscl/topics/zeroinfl'>zeroinfl</a></span>(<span class='no'>art</span> ~ <span class='no'>fem</span> + <span class='no'>mar</span> + <span class='no'>kid5</span> + <span class='no'>ment</span> <span class='kw'>|</span> <span class='no'>kid5</span> + <span class='no'>phd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>bioChemists</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
+#&gt; 
+#&gt; </span><span>Parameter         | Coefficient |   SE |       95% CI |     z |      p | Coefficient (std.)
+#&gt; -------------------------------------------------------------------------------------------
+#&gt; count_(Intercept) |        0.56 | 0.07 |  0.43,  0.69 |  8.26 | &lt; .001 |               0.67
+#&gt; count_femWomen    |       -0.23 | 0.06 | -0.34, -0.11 | -3.91 | &lt; .001 |              -0.23
+#&gt; count_marMarried  |        0.14 | 0.07 |  0.01,  0.27 |  2.07 | &lt; .05  |               0.14
+#&gt; count_kid5        |       -0.17 | 0.05 | -0.26, -0.07 | -3.43 | &lt; .001 |              -0.13
+#&gt; count_ment        |        0.02 | 0.00 |  0.02,  0.03 | 10.05 | &lt; .001 |               0.20
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
+#&gt; 
+#&gt; </span><span>Parameter        | Coefficient |   SE |       95% CI |     z |     p | Coefficient (std.)
+#&gt; -----------------------------------------------------------------------------------------
+#&gt; zero_(Intercept) |       -0.93 | 0.43 | -1.78, -0.08 | -2.14 | &lt; .05 |              -1.68
+#&gt; zero_kid5        |        0.05 | 0.22 | -0.38,  0.47 |  0.21 | &gt; .1  |               0.04
+#&gt; zero_phd         |       -0.25 | 0.14 | -0.51,  0.02 | -1.84 | 0.07  |              -0.25
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

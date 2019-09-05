@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -39,12 +41,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Simulated draws from model coefficients — model_simulate" />
-
 <meta property="og:description" content="Simulate draws a statistical model n times to return a data.frame of estimates." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -74,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -126,7 +128,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -147,17 +148,23 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Simulate draws a statistical model n times to return a data.frame of estimates.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>n_sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for glmmTMB</span>
 <span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>n_sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for MixMod</span>
+<span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>n_sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for zeroinfl</span>
+<span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>n_sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -181,53 +188,48 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>model_simulate()</code> is a computationally faster alternative
   to <code><a href='model_bootstrap.html'>model_bootstrap()</a></code>. Simulated draws for coefficients are based
   on a multivariate normal distribution (<code><a href='https://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>MASS::mvrnorm()</a></code> with mean
   <code><a href='https://www.rdocumentation.org/packages/stats/topics/coef'>coef(model)</a></code> and variance <code><a href='https://www.rdocumentation.org/packages/stats/topics/vcov'>vcov(model)</a></code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='parameters_simulate.html'>parameters_simulate</a></code>, <code><a href='model_bootstrap.html'>model_bootstrap</a></code>, <code><a href='parameters_bootstrap.html'>parameters_bootstrap</a></code></p></div>
-    
+    <div class='dont-index'><p><code><a href='parameters_simulate.html'>parameters_simulate()</a></code>,
+<code><a href='model_bootstrap.html'>model_bootstrap()</a></code>,
+<code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>model_simulate</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
-#&gt; 1    3.490212        -1.3821275        -2.175870   0.4619212    0.9495768
-#&gt; 2    3.809263        -1.6443443        -2.357484   0.1530034    0.8738285
-#&gt; 3    3.535979        -0.5986886        -2.571125   0.8282128    0.8782181
-#&gt; 4    3.452466        -0.9171241        -1.590942   0.6519571    0.9361557
-#&gt; 5    3.566214        -1.3826144        -1.598236   0.1875140    0.8911452
-#&gt; 6    3.729271        -1.2732424        -2.495559  -0.3373356    0.9359377
+#&gt; 1    3.455027        -1.1029496        -2.055278  0.43004572    0.9170157
+#&gt; 2    3.580491        -1.4924723        -1.853538  0.83712464    0.8474167
+#&gt; 3    3.883153        -1.8690442        -2.965383 -0.06087267    0.8603917
+#&gt; 4    3.523825        -0.8608767        -1.557897  0.34831353    0.9566848
+#&gt; 5    3.667670        -1.5993884        -2.814568 -0.41156600    0.9778487
+#&gt; 6    3.565952        -1.2408016        -2.299529  0.58433332    0.9040904
 #&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
-#&gt; 1                    -0.6480091                  -0.44946886
-#&gt; 2                    -0.1400418                  -0.02490191
-#&gt; 3                    -1.3360465                  -0.44865600
-#&gt; 4                    -1.1155244                  -0.89753792
-#&gt; 5                    -0.2319216                  -0.33975393
-#&gt; 6                    -0.1188659                   0.42877840</div></pre>
+#&gt; 1                    -0.6632498                   -0.3948490
+#&gt; 2                    -0.6954868                   -0.7808413
+#&gt; 3                     0.2664962                    0.5051029
+#&gt; 4                    -0.9150329                   -0.6874545
+#&gt; 5                     0.1409961                    0.5640837
+#&gt; 6                    -0.7971398                   -0.4464493</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

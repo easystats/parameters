@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -39,10 +41,11 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Function reference" />
 
+<meta property="og:title" content="Function reference" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -72,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -124,7 +127,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -153,46 +155,34 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-model-parameters" class="hasAnchor"><a href="#section-model-parameters" class="anchor"></a>Model Parameters</h2>
+          <h2 id="section-comprehensive-model-parameters" class="hasAnchor"><a href="#section-comprehensive-model-parameters" class="anchor"></a>Comprehensive Model Parameters</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="model_parameters.aov.html">model_parameters(<i>&lt;aov&gt;</i>)</a></code> <code><a href="model_parameters.aov.html">model_parameters(<i>&lt;anova&gt;</i>)</a></code> <code><a href="model_parameters.aov.html">model_parameters(<i>&lt;aovlist&gt;</i>)</a></code> </p>
+          <p><code><a href="model_parameters.html">model_parameters()</a></code> <code><a href="model_parameters.html">parameters()</a></code> </p>
         </td>
-        <td><p>ANOVAs Parameters</p></td>
+        <td><p>Model Parameters</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="model_parameters.befa.html">model_parameters(<i>&lt;befa&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Format PCA/FA from the psych package</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_parameters.BFBayesFactor.html">model_parameters(<i>&lt;BFBayesFactor&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>BayesFactor objects Parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_parameters.htest.html">model_parameters(<i>&lt;htest&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Correlations and t-test Parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_parameters.lavaan.html">model_parameters(<i>&lt;lavaan&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Format CFA/SEM from the lavaan package</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_parameters.lm.html">model_parameters(<i>&lt;lm&gt;</i>)</a></code> </p>
+          <p><code><a href="model_parameters.lm.html">model_parameters(<i>&lt;lm&gt;</i>)</a></code> <code><a href="model_parameters.lm.html">model_parameters(<i>&lt;polr&gt;</i>)</a></code> </p>
         </td>
         <td><p>Parameters of (General) Linear Models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.zeroinfl.html">model_parameters(<i>&lt;zeroinfl&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Model Parameters for Zero-Inflated Models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.gam.html">model_parameters(<i>&lt;gam&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Parameters of Generalized Additive (Mixed) Models</p></td>
       </tr><tr>
         
         <td>
@@ -202,15 +192,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="model_parameters.principal.html">model_parameters(<i>&lt;principal&gt;</i>)</a></code> </p>
+          <p><code><a href="model_parameters.lavaan.html">model_parameters(<i>&lt;lavaan&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Format PCA/FA from the psych package</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_parameters.html">model_parameters()</a></code> </p>
-        </td>
-        <td><p>Model Parameters</p></td>
+        <td><p>Format CFA/SEM from the lavaan package</p></td>
       </tr><tr>
         
         <td>
@@ -220,13 +204,39 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="model_parameters.BFBayesFactor.html">model_parameters(<i>&lt;BFBayesFactor&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>BayesFactor objects Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.principal.html">model_parameters(<i>&lt;principal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format PCA/FA from the psych package</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.htest.html">model_parameters(<i>&lt;htest&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Correlations and t-test Parameters</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-specific-model-parameters" class="hasAnchor"><a href="#section-specific-model-parameters" class="anchor"></a>Specific Model Parameters</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
           <p><code><a href="n_parameters.html">n_parameters()</a></code> </p>
         </td>
         <td><p>Count how many parameters in a model</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="standard_error.html">standard_error()</a></code> </p>
+          <p><code><a href="standard_error.html">standard_error()</a></code> <code><a href="standard_error.html">se()</a></code> </p>
         </td>
         <td><p>Extract standard errors</p></td>
       </tr><tr>
@@ -244,21 +254,27 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="reexports.html">reexports</a></code> </p>
+        </td>
+        <td><p>Objects exported from other packages</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="p_value_wald.html">ci_wald()</a></code> <code><a href="p_value_wald.html">p_value_wald()</a></code> </p>
         </td>
         <td><p>Wald-test approximation for CIs and p-values</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> </p>
+          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;zeroinfl&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;hurdle&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> </p>
         </td>
         <td><p>Confidence Interval (CI)</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="reexports.html">reexports</a></code> </p>
+          <p><code><a href="equivalence_test.lm.html">equivalence_test(<i>&lt;lm&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Objects exported from other packages</p></td>
+        <td><p>Equivalence test</p></td>
       </tr><tr>
         
         <td>
@@ -384,6 +400,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="standardize.lm.html">standardize(<i>&lt;lm&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Model Standardization</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="standardize.data.frame.html">standardize(<i>&lt;data.frame&gt;</i>)</a></code> </p>
         </td>
         <td><p>Data Standardization (Z-scores)</p></td>
@@ -414,9 +436,89 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="reshape_loadings.html">reshape_loadings()</a></code> </p>
+        </td>
+        <td><p>Reshape loadings between wide/long formats</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="check_smoothness.html">check_smoothness()</a></code> <code><a href="check_smoothness.html">smoothness()</a></code> </p>
         </td>
         <td><p>Quantify the smoothness of a vector</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-table-and-value-formatting" class="hasAnchor"><a href="#section-table-and-value-formatting" class="anchor"></a>Table and Value Formatting</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="format_bf.html">format_bf()</a></code> </p>
+        </td>
+        <td><p>Bayes Factor Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_ci.html">format_ci()</a></code> </p>
+        </td>
+        <td><p>Confidence/Credible Interval (CI) Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_number.html">format_number()</a></code> </p>
+        </td>
+        <td><p>Convert number to words</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_order.html">format_order()</a></code> </p>
+        </td>
+        <td><p>Order (first, second, ...) formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_p.html">format_p()</a></code> </p>
+        </td>
+        <td><p>p-values formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_parameters.html">format_parameters()</a></code> </p>
+        </td>
+        <td><p>Parameters Names Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_pd.html">format_pd()</a></code> </p>
+        </td>
+        <td><p>Probability of direction (pd) Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_rope.html">format_rope()</a></code> </p>
+        </td>
+        <td><p>Percentage in ROPE Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_standardize.html">format_standardize()</a></code> </p>
+        </td>
+        <td><p>Transform a standardized vector into character</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_table.html">parameters_table()</a></code> </p>
+        </td>
+        <td><p>Parameters Table Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_type.html">parameters_type()</a></code> </p>
+        </td>
+        <td><p>Type of Model Parameters</p></td>
       </tr>
     </tbody>
     </table>
@@ -425,11 +527,13 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-model-parameters">Model Parameters</a></li>
+      <li><a href="#section-comprehensive-model-parameters">Comprehensive Model Parameters</a></li>
+      <li><a href="#section-specific-model-parameters">Specific Model Parameters</a></li>
       <li><a href="#section-parameters-engineering">Parameters Engineering</a></li>
       <li><a href="#section-variable-feature-reduction">Variable/Feature Reduction</a></li>
       <li><a href="#section-index-conversion">Index Conversion</a></li>
       <li><a href="#section-miscellaneous">Miscellaneous</a></li>
+      <li><a href="#section-table-and-value-formatting">Table and Value Formatting</a></li>
     </ul>
   </div>
 </div>

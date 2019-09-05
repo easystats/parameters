@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Conversion between standardized difference d and correlation r — d_to_r • parameters</title>
+<title>Parameters of Generalized Additive (Mixed) Models — model_parameters.gam • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Conversion between standardized difference d and correlation r — d_to_r" />
-<meta property="og:description" content="Enables a conversion between standardized difference (Cohen's d) and correlation r." />
+<meta property="og:title" content="Parameters of Generalized Additive (Mixed) Models — model_parameters.gam" />
+<meta property="og:description" content="Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s)." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -142,58 +142,76 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Conversion between standardized difference d and correlation r</h1>
+    <h1>Parameters of Generalized Additive (Mixed) Models</h1>
     
-    <div class="hidden name"><code>d_to_r.Rd</code></div>
+    <div class="hidden name"><code>model_parameters.gam.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Enables a conversion between standardized difference (Cohen's d) and correlation r.</p>
+    <p>Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>d_to_r</span>(<span class='no'>d</span>, <span class='no'>...</span>)
-
-<span class='fu'>r_to_d</span>(<span class='no'>r</span>, <span class='no'>...</span>)
-
-<span class='fu'>convert_d_to_r</span>(<span class='no'>d</span>, <span class='no'>...</span>)
-
-<span class='fu'>convert_r_to_d</span>(<span class='no'>r</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for gam</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>d</th>
-      <td><p>A standardized difference value (Cohen's d).</p></td>
+      <th>model</th>
+      <td><p>A gam/gamm model.</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+    </tr>
+    <tr>
+      <th>bootstrap</th>
+      <td><p>Should estimates be based on bootsrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>iterations</th>
+      <td><p>The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr>
-    <tr>
-      <th>r</th>
-      <td><p>A correlation coefficient r.</p></td>
+      <td><p>Arguments passed to or from other methods (e.g., to <code><a href='standardize.lm.html'>standardize()</a></code>).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Converted index.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <ul>
-<li><p>Borenstein, Michael, et al. "Converting among effect sizes." Introduction to meta-analysis (2009): 45-49.</p></li>
-</ul>
+    <p>A data frame of indices related to the model's parameters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>d_to_r</span>(<span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>1.1547</span>)</div><div class='output co'>#&gt; [1] 0.4999998</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>mgcv</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: nlme</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'nlme'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:lme4':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    lmList</span></div><div class='output co'>#&gt; <span class='message'>This is mgcv 1.8-28. For overview type 'help("mgcv-package")'.</span></div><div class='input'>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/mgcv/topics/gamSim'>gamSim</a></span>(<span class='fl'>1</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>400</span>, <span class='kw'>dist</span> <span class='kw'>=</span> <span class='st'>"normal"</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Gu &amp; Wahba 4 term additive model</div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/mgcv/topics/gam'>gam</a></span>(<span class='no'>y</span> ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/mgcv/topics/s'>s</a></span>(<span class='no'>x0</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/mgcv/topics/s'>s</a></span>(<span class='no'>x1</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/mgcv/topics/s'>s</a></span>(<span class='no'>x2</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/mgcv/topics/s'>s</a></span>(<span class='no'>x3</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dat</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |   SE |     95% CI |      p
+#&gt; ------------------------------------------------------
+#&gt; (Intercept) |        7.91 | 0.10 | 7.71, 8.11 | &lt; .001
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Smooth Terms component
+#&gt; 
+#&gt; </span><span>Parameter | Coefficient |      p
+#&gt; --------------------------------
+#&gt;           |        3.60 | &lt; .001
+#&gt;           |        3.99 | &lt; .001
+#&gt;           |        8.38 | &lt; .001
+#&gt;           |        1.00 | 0.09  
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
