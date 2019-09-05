@@ -56,6 +56,8 @@ model_parameters.stanreg <- .model_parameters_bayesian
 #' @export
 model_parameters.brmsfit <- model_parameters.stanreg
 
+#' @export
+model_parameters.MCMCglmm <- model_parameters.stanreg
 
 
 
@@ -73,6 +75,10 @@ model_parameters.brmsfit <- model_parameters.stanreg
   # Bayesian Models
   if (insight::model_info(model)$is_bayesian) {
     parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
+
+    # MCMCglmm need special handling
+  } else if (inherits(model, "MCMCglmm")) {
+    parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, diagnostic = "ESS", ...)
 
     # Bootstrapped Models
   } else {

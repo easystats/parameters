@@ -485,6 +485,20 @@ p_value.vglm <- function(model, ...) {
 }
 
 
+#' @export
+p_value.MCMCglmm <- function(model, ...) {
+  nF <- model$Fixed$nfl
+  p <- 1 - colSums(model$Sol[, 1:nF, drop = FALSE] > 0) / dim(model$Sol)[1]
+
+  data_frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
+    p = p
+  )
+}
+
+
+
+
 
 #' @importFrom stats coef
 .get_pval_from_summary <- function(model) {
