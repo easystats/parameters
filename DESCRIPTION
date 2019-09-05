@@ -55,6 +55,7 @@ Suggests:
 	logspline,
 	MASS,
 	MCMCglmm,
+	mgcv,
 	MuMIn,
 	nFactors,
 	nlme,
