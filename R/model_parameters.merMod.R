@@ -10,18 +10,25 @@
 #' @examples
 #' library(parameters)
 #' library(lme4)
+#' library(glmmTMB)
 #'
-#' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
+#' model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #' model_parameters(model, standardize = "refit")
 #'
-#' model <- lme4::glmer(vs ~ wt + (1 | gear), data = mtcars, family = "binomial")
+#' model <- glmmTMB(
+#'   count ~ spp + mined + (1 | site),
+#'   ziformula =  ~ mined,
+#'   family = poisson(),
+#'   data = Salamanders
+#' )
 #' model_parameters(model)
+#'
 #' \donttest{
 #' model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #' model_parameters(model, standardize = "smart", bootstrap = TRUE, iterations = 50)
 #' }
 #'
-#' @return A data.frame of indices related to the model's parameters.
+#' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.merMod <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, ...) {
 

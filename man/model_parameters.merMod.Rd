@@ -45,7 +45,7 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 \item{ci_method}{Method for computing confidence intervals (CI). See \code{\link[=ci]{ci()}}.}
 }
 \value{
-A data.frame of indices related to the model's parameters.
+A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters of mixed models.
@@ -53,12 +53,19 @@ Parameters of mixed models.
 \examples{
 library(parameters)
 library(lme4)
+library(glmmTMB)
 
-model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
+model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
 model_parameters(model, standardize = "refit")
 
-model <- lme4::glmer(vs ~ wt + (1 | gear), data = mtcars, family = "binomial")
+model <- glmmTMB(
+  count ~ spp + mined + (1 | site),
+  ziformula =  ~ mined,
+  family = poisson(),
+  data = Salamanders
+)
 model_parameters(model)
+
 \donttest{
 model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
 model_parameters(model, standardize = "smart", bootstrap = TRUE, iterations = 50)
