@@ -16,6 +16,11 @@ standard_error <- function(model, ...) {
   UseMethod("standard_error")
 }
 
+#' @rdname standard_error
+#' @export
+se <- standard_error
+
+
 
 #' @export
 standard_error.lm <- function(model, ...) {
