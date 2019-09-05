@@ -114,6 +114,8 @@ standard_error.zeroinfl <- function(model, component = c("all", "conditional", "
 #' @export
 standard_error.hurdle <- standard_error.zeroinfl
 
+#' @export
+standard_error.zerocount <- standard_error.zeroinfl
 
 
 #' @rdname standard_error

@@ -3,12 +3,16 @@
 \name{model_simulate}
 \alias{model_simulate}
 \alias{model_simulate.glmmTMB}
+\alias{model_simulate.MixMod}
 \alias{model_simulate.zeroinfl}
 \title{Simulated draws from model coefficients}
 \usage{
 model_simulate(model, n_sims = 1000, ...)
 
 \method{model_simulate}{glmmTMB}(model, n_sims = 1000,
+  component = c("all", "conditional", "zi", "zero_inflated"), ...)
+
+\method{model_simulate}{MixMod}(model, n_sims = 1000,
   component = c("all", "conditional", "zi", "zero_inflated"), ...)
 
 \method{model_simulate}{zeroinfl}(model, n_sims = 1000,

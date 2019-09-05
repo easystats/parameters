@@ -53,6 +53,8 @@
 
 .get_statistic.hurdle <- .get_statistic.zeroinfl
 
+.get_statistic.zerocount <- .get_statistic.zeroinfl
+
 
 
 .get_statistic.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {

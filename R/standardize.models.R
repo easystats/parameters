@@ -65,3 +65,6 @@ standardize.zeroinfl <- function(x, robust = FALSE, method = "default", verbose 
 
 #' @export
 standardize.hurdle <- standardize.zeroinfl
+
+#' @export
+standardize.zerocount <- standardize.zeroinfl

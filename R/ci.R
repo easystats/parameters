@@ -112,6 +112,9 @@ ci.zeroinfl <- ci.glmmTMB
 ci.hurdle <- ci.glmmTMB
 
 
+#' @export
+ci.zerocount <- ci.glmmTMB
+
 
 #' @export
 ci.polr <- function(x, ci = .95, method = c("profile", "wald"), ...) {

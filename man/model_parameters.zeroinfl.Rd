@@ -2,15 +2,9 @@
 % Please edit documentation in R/model_parameters.zeroinfl.R
 \name{model_parameters.zeroinfl}
 \alias{model_parameters.zeroinfl}
-\alias{model_parameters.hurdle}
 \title{Model Parameters for Zero-Inflated Models}
 \usage{
 \method{model_parameters}{zeroinfl}(model, ci = 0.95,
-  standardize = "refit", standardize_robust = FALSE,
-  bootstrap = FALSE, iterations = 1000, component = c("all",
-  "conditional", "zi", "zero_inflated"), ...)
-
-\method{model_parameters}{hurdle}(model, ci = 0.95,
   standardize = "refit", standardize_robust = FALSE,
   bootstrap = FALSE, iterations = 1000, component = c("all",
   "conditional", "zi", "zero_inflated"), ...)

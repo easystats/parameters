@@ -87,6 +87,9 @@ p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "z
 #' @export
 p_value.hurdle <- p_value.zeroinfl
 
+#' @export
+p_value.zerocount <- p_value.zeroinfl
+
 
 
 #' @export

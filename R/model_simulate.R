@@ -57,11 +57,39 @@ model_simulate.lme <- model_simulate.lm
 model_simulate.merMod <- model_simulate.lm
 
 
+
+#' @export
+model_simulate.gam <- function(model, n_sims = 1000, ...) {
+  if (!requireNamespace("MASS", qquietly = TRUE)) {
+    stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  beta <- stats::coef(model)
+  varcov <- .get_varcov(model, "all")
+  as.data.frame(MASS::mvrnorm(n = n_sims, mu = beta, Sigma = varcov))
+}
+
+
+
+#' @export
+model_simulate.gamm <- function(model, n_sims = 1000, ...) {
+  model <- model$gam
+  class(model) <- c("gam", "lm", "glm")
+  model_simulate(model, n_sims = n_sims, ...)
+}
+
+
+
 #' @rdname model_simulate
 #' @export
 model_simulate.glmmTMB <- function(model, n_sims = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
 
+  if (component %in% c("zi", "zero_inflated", "all") && !insight::model_info(model)$is_zero_inflated) {
+    insight::print_color("Model has no zero-inflation component. Simulating from conditional parameters.\n", "red")
+    component <- "conditional"
+  }
+
   if (component == "all") {
     d1 <- .model_simulate(model, n_sims, component = "conditional")
     d2 <- .model_simulate(model, n_sims, component = "zero_inflated")
@@ -80,26 +108,17 @@ model_simulate.glmmTMB <- function(model, n_sims = 1000, component = c("all", "c
 
 #' @rdname model_simulate
 #' @export
-model_simulate.zeroinfl <- function(model, n_sims = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  component <- match.arg(component)
+model_simulate.MixMod <- model_simulate.glmmTMB
 
-  if (component == "all") {
-    d1 <- .model_simulate(model, n_sims, component = "conditional")
-    d2 <- .model_simulate(model, n_sims, component = "zero_inflated")
-    colnames(d2) <- paste0(colnames(d2), "_zi")
-    d <- cbind(d1, d2)
-  } else if (component == "conditional") {
-    d <- .model_simulate(model, n_sims, component = "conditional")
-  } else {
-    d <- .model_simulate(model, n_sims, component = "zero_inflated")
-  }
-
-  d
-}
-
+#' @rdname model_simulate
+#' @export
+model_simulate.zeroinfl <- model_simulate.glmmTMB
 
 #' @export
 model_simulate.hurdle <- model_simulate.zeroinfl
+
+#' @export
+model_simulate.zerocount <- model_simulate.zeroinfl
 
 
 
@@ -130,16 +149,22 @@ model_simulate.hurdle <- model_simulate.zeroinfl
 
 
 .get_varcov <- function(model, component) {
-  if (inherits(model, c("hurdle", "zeroinfl"))) {
+  if (inherits(model, c("hurdle", "zeroinfl", "zerocount"))) {
     vc <- switch(
       component,
       "conditional" = stats::vcov(object = model, model = "count"),
       "zero_inflated" = stats::vcov(object = model, model = "zero"),
       stats::vcov(object = model)
     )
+  } else if (inherits(model, "MixMod")) {
+    vc <- switch(
+      component,
+      "conditional" = stats::vcov(model, parm = "fixed-effects"),
+      "zero_inflated" = stats::vcov(model, parm = "zero_part"),
+      stats::vcov(model)
+    )
   } else {
     vc <- stats::vcov(model)
-
     if (is.list(vc)) {
       vc <- switch(
         component,

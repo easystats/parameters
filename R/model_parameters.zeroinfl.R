@@ -51,6 +51,8 @@ model_parameters.zeroinfl <- function(model, ci = .95, standardize = "refit", st
 }
 
 
-#' @rdname model_parameters.zeroinfl
 #' @export
 model_parameters.hurdle <- model_parameters.zeroinfl
+
+#' @export
+model_parameters.zerocount <- model_parameters.zeroinfl

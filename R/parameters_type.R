@@ -55,7 +55,7 @@ parameters_type <- function(model, ...) {
 
   ## TODO can we get rid of the count_ / zero_ prefix here?
 
-  # if (inherits(model, c("zeroinfl", "hurdle", "countreg"))) {
+  # if (inherits(model, c("zeroinfl", "hurdle", "zerocount"))) {
   #   params$Parameter <- gsub("^(count_|zero_)", "", params$Parameter)
   # }
 
