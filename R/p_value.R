@@ -235,6 +235,14 @@ p_value.gam <- function(model, ...) {
 }
 
 
+#' @export
+p_value.gamm <- function(model, ...) {
+  model <- model$gam
+  class(model) <- c("gam", "lm", "glm")
+  p_value(model)
+}
+
+
 
 #' @export
 p_value.gls <- function(model, ...) {

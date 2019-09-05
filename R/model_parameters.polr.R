@@ -1,3 +1,4 @@
+#' @rdname model_parameters.lm
 #' @export
 model_parameters.polr <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
   # Processing

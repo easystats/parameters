@@ -21,11 +21,11 @@
   iterations = 1000, ...)
 }
 \arguments{
-\item{model}{Statistical model.}
+\item{model}{A mixed model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{bootstrap}{Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.}
+\item{bootstrap}{Should estimates be based on bootsrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}.}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 
@@ -36,13 +36,13 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{standardize}{Add standardized parameters. Can be \code{FALSE} or a character indicating the standardization method (see \code{\link{parameters_standardize}}), such as \code{"refit"}, \code{"2sd"}, \code{"smart"} or \code{"classic"}. The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).}
+\item{standardize}{Add standardized parameters. Can be \code{FALSE} or a character indicating the standardization method (see \code{\link[=parameters_standardize]{parameters_standardize()}}), such as \code{"refit"}, \code{"2sd"}, \code{"smart"} or \code{"classic"}. The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).}
 
 \item{standardize_robust}{Robust standardization. See \code{\link{parameters_standardize}}.}
 
-\item{p_method}{Method for computing p values. See \link{p_value}.}
+\item{p_method}{Method for computing p values. See \code{\link[=p_value]{p_value()}}.}
 
-\item{ci_method}{Method for computing confidence intervals (CI). See \link{ci}.}
+\item{ci_method}{Method for computing confidence intervals (CI). See \code{\link[=ci]{ci()}}.}
 }
 \value{
 A data.frame of indices related to the model's parameters.

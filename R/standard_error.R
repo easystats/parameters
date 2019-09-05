@@ -59,6 +59,14 @@ standard_error.gam <- function(model, ...) {
 
 
 #' @export
+standard_error.gamm <- function(model, ...) {
+  model <- model$gam
+  class(model) <- c("gam", "lm", "glm")
+  standard_error(model)
+}
+
+
+#' @export
 standard_error.MCMCglmm <- function(model, ...) {
   nF <- model$Fixed$nfl
   parms <- as.data.frame(model$Sol[, 1:nF, drop = FALSE])

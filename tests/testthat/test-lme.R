@@ -3,7 +3,7 @@ if (require("testthat") &&
   require("nlme") &&
   require("lme4")) {
 
-  data(Orthodont)
+  data("sleepstudy")
   m1 <- lme(Reaction ~ Days,
     random = ~ 1 + Days | Subject,
     data = sleepstudy

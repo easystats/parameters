@@ -16,15 +16,15 @@
   "conditional", "zi", "zero_inflated"), ...)
 }
 \arguments{
-\item{model}{Frequentist regression object.}
+\item{model}{A model with zero-inflation component.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{standardize}{Add standardized parameters. Can be \code{FALSE} or a character indicating the standardization method (see \code{\link{parameters_standardize}}), such as \code{"refit"}, \code{"2sd"}, \code{"smart"} or \code{"classic"}. The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).}
+\item{standardize}{Add standardized parameters. Can be \code{FALSE} or a character indicating the standardization method (see \code{\link[=parameters_standardize]{parameters_standardize()}}), such as \code{"refit"}, \code{"2sd"}, \code{"smart"} or \code{"classic"}. The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).}
 
 \item{standardize_robust}{Robust standardization. See \code{\link{parameters_standardize}}.}
 
-\item{bootstrap}{Should estimates be based on bootsrapped model? If TRUE, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply.}
+\item{bootstrap}{Should estimates be based on bootsrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}.}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 
@@ -33,10 +33,10 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 
-\item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
+\item{...}{Arguments passed to or from other methods (e.g., to \code{\link[=standardize.lm]{standardize()}}).}
 }
 \value{
-A data.frame of indices related to the model's parameters.
+A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters of zero-inflated models.

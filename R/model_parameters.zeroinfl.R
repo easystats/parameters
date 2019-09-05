@@ -2,7 +2,9 @@
 #'
 #' Parameters of zero-inflated models.
 #'
+#' @param model A model with zero-inflation component.
 #' @inheritParams model_parameters.lm
+#' @inheritParams model_simulate
 #'
 #' @examples
 #' library(parameters)
@@ -11,7 +13,7 @@
 #' data("bioChemists")
 #' model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
 #' model_parameters(model)
-#' @return A data.frame of indices related to the model's parameters.
+#' @return A data frame of indices related to the model's parameters.
 #' @inheritParams model_simulate
 #' @export
 model_parameters.zeroinfl <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {

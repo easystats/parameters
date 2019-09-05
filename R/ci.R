@@ -48,6 +48,14 @@ ci.gam <- function(x, ci = .95, ...) {
 }
 
 
+#' @export
+ci.gamm <- function(x, ci = .95, ...) {
+  x <- x$gam
+  class(x) <- c("gam", "lm", "glm")
+  ci(x, ci = ci, ...)
+}
+
+
 
 #' @rdname ci.merMod
 #' @method ci glm

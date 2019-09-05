@@ -12,7 +12,9 @@
 #'
 #' @return A data.frame.
 #'
-#' @seealso \code{\link{parameters_simulate}}, \code{\link{model_bootstrap}}, \code{\link{parameters_bootstrap}}
+#' @seealso \code{\link[=parameters_simulate]{parameters_simulate()}},
+#' \code{\link[=model_bootstrap]{model_bootstrap()}},
+#' \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}
 #'
 #' @details \code{model_simulate()} is a computationally faster alternative
 #'   to \code{model_bootstrap()}. Simulated draws for coefficients are based
@@ -44,6 +46,14 @@ model_simulate.glm <- model_simulate.lm
 
 
 #' @export
+model_simulate.gls <- model_simulate.lm
+
+
+#' @export
+model_simulate.lme <- model_simulate.lm
+
+
+#' @export
 model_simulate.merMod <- model_simulate.lm
 
 
@@ -65,6 +75,31 @@ model_simulate.glmmTMB <- function(model, n_sims = 1000, component = c("all", "c
 
   d
 }
+
+
+
+#' @rdname model_simulate
+#' @export
+model_simulate.zeroinfl <- function(model, n_sims = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+
+  if (component == "all") {
+    d1 <- .model_simulate(model, n_sims, component = "conditional")
+    d2 <- .model_simulate(model, n_sims, component = "zero_inflated")
+    colnames(d2) <- paste0(colnames(d2), "_zi")
+    d <- cbind(d1, d2)
+  } else if (component == "conditional") {
+    d <- .model_simulate(model, n_sims, component = "conditional")
+  } else {
+    d <- .model_simulate(model, n_sims, component = "zero_inflated")
+  }
+
+  d
+}
+
+
+#' @export
+model_simulate.hurdle <- model_simulate.zeroinfl
 
 
 
@@ -95,15 +130,24 @@ model_simulate.glmmTMB <- function(model, n_sims = 1000, component = c("all", "c
 
 
 .get_varcov <- function(model, component) {
-  vc <- stats::vcov(model)
-
-  if (is.list(vc)) {
+  if (inherits(model, c("hurdle", "zeroinfl"))) {
     vc <- switch(
       component,
-      "conditional" = vc[["cond"]],
-      "zero_inflated" = vc[["zi"]],
-      vc[[1]]
+      "conditional" = stats::vcov(object = model, model = "count"),
+      "zero_inflated" = stats::vcov(object = model, model = "zero"),
+      stats::vcov(object = model)
     )
+  } else {
+    vc <- stats::vcov(model)
+
+    if (is.list(vc)) {
+      vc <- switch(
+        component,
+        "conditional" = vc[["cond"]],
+        "zero_inflated" = vc[["zi"]],
+        vc[[1]]
+      )
+    }
   }
 
   vc

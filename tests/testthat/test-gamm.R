@@ -1,17 +1,22 @@
 if (require("testthat") &&
   require("parameters") &&
-  require("nlme")) {
+  require("mgcv")) {
 
-  data(Ovary)
-  m1 <- gls(follicles ~ sin(2 * pi * Time) + cos(2 * pi * Time),
-    data = Ovary,
-    correlation = corAR1(form = ~ 1 | Mare)
-  )
+  set.seed(123)
+  dat <- gamSim(6, n = 200, scale = .2, dist = "poisson")
+  m1 <-
+    gamm(
+      y ~ s(x0) + s(x1) + s(x2),
+      family = poisson,
+      data = dat,
+      random = list(fac = ~1)
+    )
+
 
   test_that("ci", {
     expect_equal(
       ci(m1)$CI_low,
-      c(10.9137205623851, -4.03898261140754, -2.26675468048102),
+      c(2.361888, NA, NA, NA),
       tolerance = 1e-4
     )
   })
@@ -19,7 +24,7 @@ if (require("testthat") &&
   test_that("se", {
     expect_equal(
       standard_error(m1)$SE,
-      c(0.664643651063474, 0.645047778144975, 0.697538308948056),
+      c(0.3476989, NA, NA, NA),
       tolerance = 1e-4
     )
   })
@@ -27,7 +32,7 @@ if (require("testthat") &&
   test_that("p_value", {
     expect_equal(
       p_value(m1)$p,
-      c(2.6187369542827e-51, 2.28628382225752e-05, 0.198137111907874),
+      c(0, 0, 0, 0),
       tolerance = 1e-4
     )
   })
@@ -35,7 +40,7 @@ if (require("testthat") &&
   test_that("model_parameters", {
     expect_equal(
       model_parameters(m1)$Coefficient,
-      c(12.2163981810227, -2.77471219793581, -0.899604717105857),
+      c(3.0476, 3.84674, 3.17375, 8.51841),
       tolerance = 1e-4
     )
   })

@@ -2,9 +2,10 @@
 #'
 #' Parameters of mixed models.
 #'
+#' @param model A mixed model.
 #' @inheritParams model_parameters.lm
-#' @param p_method Method for computing p values. See \link{p_value}.
-#' @param ci_method Method for computing confidence intervals (CI). See \link{ci}.
+#' @param p_method Method for computing p values. See \code{\link[=p_value]{p_value()}}.
+#' @param ci_method Method for computing confidence intervals (CI). See \code{\link[=ci]{ci()}}.
 #'
 #' @examples
 #' library(parameters)

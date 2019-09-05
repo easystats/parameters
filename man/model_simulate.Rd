@@ -3,11 +3,15 @@
 \name{model_simulate}
 \alias{model_simulate}
 \alias{model_simulate.glmmTMB}
+\alias{model_simulate.zeroinfl}
 \title{Simulated draws from model coefficients}
 \usage{
 model_simulate(model, n_sims = 1000, ...)
 
 \method{model_simulate}{glmmTMB}(model, n_sims = 1000,
+  component = c("all", "conditional", "zi", "zero_inflated"), ...)
+
+\method{model_simulate}{zeroinfl}(model, n_sims = 1000,
   component = c("all", "conditional", "zi", "zero_inflated"), ...)
 }
 \arguments{
@@ -41,5 +45,7 @@ model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 head(model_simulate(model))
 }
 \seealso{
-\code{\link{parameters_simulate}}, \code{\link{model_bootstrap}}, \code{\link{parameters_bootstrap}}
+\code{\link[=parameters_simulate]{parameters_simulate()}},
+\code{\link[=model_bootstrap]{model_bootstrap()}},
+\code{\link[=parameters_bootstrap]{parameters_bootstrap()}}
 }
