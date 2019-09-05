@@ -1,5 +1,9 @@
 # parameters 0.1.1
 
+## Breaking changes
+
+  - `format_value()` and `format_table()` have been removed and are now re-implemented in the **insight** package.
+
 ## General
 
   - `parameters()` is an alias for `model_parameters()`.
