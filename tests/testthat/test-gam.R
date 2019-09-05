@@ -8,7 +8,7 @@ if (require("testthat") &&
   test_that("ci", {
     expect_equal(
       ci(m1)$CI_low,
-      c(10.9137205623851, -4.03898261140754, -2.26675468048102),
+      c(7.49622189706408, NA, NA, NA, NA),
       tolerance = 1e-4
     )
   })
@@ -16,7 +16,7 @@ if (require("testthat") &&
   test_that("se", {
     expect_equal(
       standard_error(m1)$SE,
-      c(0.664643651063474, 0.645047778144975, 0.697538308948056),
+      c(0.103747577565001, NA, NA, NA, NA),
       tolerance = 1e-4
     )
   })
@@ -24,7 +24,7 @@ if (require("testthat") &&
   test_that("p_value", {
     expect_equal(
       p_value(m1)$p,
-      c(2.6187369542827e-51, 2.28628382225752e-05, 0.198137111907874),
+      c(0, 0, 0, 0, 0.96301),
       tolerance = 1e-4
     )
   })
@@ -32,7 +32,7 @@ if (require("testthat") &&
   test_that("model_parameters", {
     expect_equal(
       model_parameters(m1)$Coefficient,
-      c(12.2163981810227, -2.77471219793581, -0.899604717105857),
+      c(7.70019, 2.51662, 2.01425, 8.32417, 1),
       tolerance = 1e-4
     )
   })
