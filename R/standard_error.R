@@ -47,11 +47,13 @@ standard_error.gls <- standard_error.lme
 #' @export
 standard_error.gam <- function(model, ...) {
   p.table <- summary(model)$p.table
+  s.table <- summary(model)$s.table
+  n_smooth <- nrow(s.table)
 
   data_frame(
-    Parameter = rownames(p.table),
-    SE = as.vector(p.table[, 2]),
-    Component = "conditional"
+    Parameter = c(rownames(p.table), rownames(s.table)),
+    SE = c(as.vector(p.table[, 2]), rep(NA, n_smooth)),
+    Component = c("conditional", rep("smooth_terms", n_smooth))
   )
 }
 

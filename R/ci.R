@@ -42,6 +42,13 @@ ci.default <- function(x, ci = .95, ...) {
 
 
 
+#' @export
+ci.gam <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, ...)
+}
+
+
+
 #' @rdname ci.merMod
 #' @method ci glm
 #' @export

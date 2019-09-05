@@ -78,6 +78,22 @@
 
 
 
+.get_statistic.gam <- function(model, statistic_column = 3, ...) {
+  cs <- summary(model)$p.table
+  cs.smooth <- summary(model)$s.table
+
+  out <- data_frame(
+    Parameter = c(rownames(cs), rownames(cs.smooth)),
+    Statistic = c(as.vector(cs[, statistic_column]), as.vector(cs.smooth[, statistic_column])),
+    Component = c(rep("conditional", nrow(cs)), rep("smooth_terms", nrow(cs.smooth)))
+  )
+
+  attr(out, "statistic") <- "t / F"
+  out
+}
+
+
+
 .get_statistic.default <- function(model, statistic_column = 3, ...) {
   cs <- stats::coef(summary(model))
   cs_names <- dimnames(cs)[[2]]
