@@ -1,5 +1,5 @@
 if (require("testthat") &&
-    require("insight") &&
+    require("parameters") &&
     require("pscl")) {
 
   data("bioChemists")

@@ -54,6 +54,7 @@ Suggests:
 	lmerTest,
 	logspline,
 	MASS,
+	MCMCglmm,
 	MuMIn,
 	nFactors,
 	nlme,
