@@ -23,6 +23,7 @@
 #' model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
 #' format_parameters(model)
 #' @return The formatted parameter names.
+#' @importFrom utils tail head
 #' @export
 format_parameters <- function(model) {
   UseMethod("format_parameters")
@@ -60,7 +61,7 @@ format_parameters.default <- function(model) {
         }
       }
       if (length(components) > 2) {
-        names[i] <- paste0("(", paste0(head(components, -1), collapse = " * "), ")", sep, tail(components, 1))
+        names[i] <- paste0("(", paste0(utils::head(components, -1), collapse = " * "), ")", sep, utils::tail(components, 1))
       } else {
         names[i] <- paste0(components, collapse = sep)
       }

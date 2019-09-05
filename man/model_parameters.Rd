@@ -23,6 +23,7 @@ Compute and extract model parameters. See the documentation for your object's cl
  \item{\link[=model_parameters.htest]{Correlations and t-tests}}
  \item{\link[=model_parameters.aov]{ANOVAs}}
  \item{\link[=model_parameters.lm]{Frequentist regressions} (\code{lm}, \code{glm}, ...)}
+ \item{\link[=model_parameters.zeroinfl]{Frequentist zero-inflated regressions} (\code{hurdle}, \code{zeroinfl})}
  \item{\link[=model_parameters.merMod]{Frequentist mixed models} (\code{lme4}, \code{nlme}, \code{glmmTMB}, ...)}
  \item{\link[=model_parameters.stanreg]{Bayesian models} (\code{rstanarm}, \code{brms})}
  \item{\link[=model_parameters.principal]{PCA and FA} (\code{psych})}

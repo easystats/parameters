@@ -28,6 +28,33 @@
 
 
 
+.get_statistic.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+
+  cs <- .compact_list(stats::coef(summary(model)))
+  x <- lapply(names(cs), function(i) {
+    comp <- ifelse(i == "count", "conditional", "zi")
+    data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
+      Statistic = as.vector(cs[[i]][, 3]),
+      Component = comp
+    )
+  })
+
+  stat <- do.call(rbind, x)
+  stat$Component <- .rename_values(stat$Component, "cond", "conditional")
+  stat$Component <- .rename_values(stat$Component, "zi", "zero_inflated")
+
+  stat <- .filter_component(stat, component)
+  attr(stat, "statistic") <- "z"
+
+  stat
+}
+
+.get_statistic.hurdle <- .get_statistic.zeroinfl
+
+
+
 .get_statistic.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
   s <- summary(model)

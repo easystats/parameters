@@ -87,6 +87,17 @@ ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "z
 
 
 
+#' @rdname ci.merMod
+#' @export
+ci.zeroinfl <- ci.glmmTMB
+
+
+#' @rdname ci.merMod
+#' @export
+ci.hurdle <- ci.glmmTMB
+
+
+
 #' @export
 ci.polr <- function(x, ci = .95, method = c("profile", "wald"), ...) {
   method <- match.arg(method)

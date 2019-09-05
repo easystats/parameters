@@ -7,7 +7,7 @@
 ## General
 
   - `parameters()` is an alias for `model_parameters()`.
-  - `p_value()`, `ci()`, `standard_error()` and `model_parameters()` now support more model objects, including mixed models from packages *nlme*, *glmmTMB* or *GLMMadaptive*. Along with these changes, functions for specific model objects with zero-inflated component get a `component`-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.
+  - `p_value()`, `ci()`, `standard_error()` and `model_parameters()` now support more model objects, including mixed models from packages *nlme*, *glmmTMB* or *GLMMadaptive* or zero-inflated models from package *pscl*. Along with these changes, functions for specific model objects with zero-inflated component get a `component`-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.
 
 ## New functions
 

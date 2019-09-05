@@ -53,6 +53,12 @@ parameters_type <- function(model, ...) {
     params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
   }
 
+  ## TODO can we get rid of the count_ / zero_ prefix here?
+
+  # if (inherits(model, c("zeroinfl", "hurdle", "countreg"))) {
+  #   params$Parameter <- gsub("^(count_|zero_)", "", params$Parameter)
+  # }
+
 
   data <- insight::get_data(model)
   reference <- .list_factors_numerics(data)

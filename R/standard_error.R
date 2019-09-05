@@ -66,6 +66,34 @@ standard_error.merMod <- standard_error.lm
 
 
 
+#' @export
+standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  if (is.null(.check_component(model, component))) return(NULL)
+
+  cs <- .compact_list(stats::coef(summary(model)))
+  x <- lapply(names(cs), function(i) {
+    comp <- ifelse(i == "count", "conditional", "zi")
+    data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
+      SE = as.vector(cs[[i]][, 2]),
+      Component = comp
+    )
+  })
+
+  se <- do.call(rbind, x)
+  se$Component <- .rename_values(se$Component, "cond", "conditional")
+  se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
+
+  .filter_component(se, component)
+}
+
+
+#' @export
+standard_error.hurdle <- standard_error.zeroinfl
+
+
+
 #' @rdname standard_error
 #' @export
 standard_error.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {

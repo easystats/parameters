@@ -62,6 +62,34 @@ p_value.rlm <- function(model, ...) {
 
 
 #' @export
+p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  if (is.null(.check_component(model, component))) return(NULL)
+
+  cs <- .compact_list(stats::coef(summary(model)))
+  x <- lapply(names(cs), function(i) {
+    comp <- ifelse(i == "count", "conditional", "zi")
+    data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
+      p = as.vector(cs[[i]][, 4]),
+      Component = comp
+    )
+  })
+
+  p <- do.call(rbind, x)
+  p$Component <- .rename_values(p$Component, "cond", "conditional")
+  p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
+
+  .filter_component(p, component)
+}
+
+
+#' @export
+p_value.hurdle <- p_value.zeroinfl
+
+
+
+#' @export
 p_value.lme <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- cs[, 5]

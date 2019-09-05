@@ -50,3 +50,18 @@ standardize.wbm <- function(x, ...) {
   warning("Standardization of parameters not possible for models from package 'panelr'.", call. = FALSE)
   x
 }
+
+
+#' @export
+standardize.zeroinfl <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
+  # dont standardize outcome!
+  d <- standardize(insight::get_data(x), robust = robust, method = method, verbose = verbose)
+  d[[insight::find_response(x)]] <- insight::get_response(x)
+
+  text <- utils::capture.output(model_std <- stats::update(x, data = d))
+
+  model_std
+}
+
+#' @export
+standardize.hurdle <- standardize.zeroinfl
