@@ -9,9 +9,9 @@ format_number(x, textual = TRUE, ...)
 \arguments{
 \item{x}{Number.}
 
-\item{textual}{Return words. If \code{FALSE}, will run \code{\link{format_value}}.}
+\item{textual}{Return words. If \code{FALSE}, will run \code{\link[insight]{format_value}}.}
 
-\item{...}{Arguments to be passed to \code{\link{format_value}} if \code{textual} is \code{FALSE}.}
+\item{...}{Arguments to be passed to \code{\link[insight]{format_value}} if \code{textual} is \code{FALSE}.}
 }
 \value{
 A formatted string.

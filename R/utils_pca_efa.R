@@ -32,9 +32,11 @@ summary.parameters_efa <- function(object, ...) {
   x
 }
 
+
+#' @importFrom insight format_table
 #' @export
 print.parameters_efa_summary <- function(x, digits = 3, ...) {
-  cat(format_table(x, digits = digits, ...))
+  cat(insight::format_table(x, digits = digits, ...))
 
   invisible(x)
 }
@@ -104,7 +106,7 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
     insight::print_color(sprintf("# Rotated loadings from Principal Component Analysis (%s-rotation)\n\n", .rotation), "blue")
   }
 
-  cat(format_table(x, digits = digits, ...))
+  cat(insight::format_table(x, digits = digits, ...))
 
   if (!is.null(attributes(x)$type)) {
     cat("\n")

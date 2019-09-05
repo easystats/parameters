@@ -5,24 +5,25 @@
 #' @param x A standardized numeric vector.
 #' @param reference The reference vector from which to compute the mean and SD.
 #' @inheritParams standardize
-#' @inheritParams format_value
+#' @inheritParams insight::format_value
 #'
 #' @examples
 #' format_standardize(c(-1, 0, 1))
 #' format_standardize(c(-1, 0, 1, 2), reference = rnorm(1000))
 #' format_standardize(c(-1, 0, 1, 2), reference = rnorm(1000), robust = TRUE)
-#' @import stats
+#' @importFrom stats median mad sd
+#' @importFrom insight format_value
 #' @export
 format_standardize <- function(x, reference = x, robust = FALSE, digits = NULL, ...) {
   if (robust) {
-    central <- median(reference, na.rm = TRUE)
+    central <- stats::median(reference, na.rm = TRUE)
     central_name <- "Median"
-    deviation <- mad(reference, na.rm = TRUE)
+    deviation <- stats::mad(reference, na.rm = TRUE)
     deviation_name <- "MAD"
   } else {
     central <- mean(reference, na.rm = TRUE)
     central_name <- "Mean"
-    deviation <- sd(reference, na.rm = TRUE)
+    deviation <- stats::sd(reference, na.rm = TRUE)
     deviation_name <- "SD"
   }
 
@@ -31,9 +32,9 @@ format_standardize <- function(x, reference = x, robust = FALSE, digits = NULL, 
 
   # Round
   if (is.null(digits)) {
-    x <- format_value(x, round(1 / diff(range(x, na.rm = TRUE))), protect_integers = TRUE)
+    x <- insight::format_value(x, round(1 / diff(range(x, na.rm = TRUE))), protect_integers = TRUE)
   } else {
-    x <- format_value(x, digits = digits, protect_integers = TRUE)
+    x <- insight::format_value(x, digits = digits, protect_integers = TRUE)
   }
 
   # Complete

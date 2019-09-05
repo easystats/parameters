@@ -136,10 +136,11 @@ n_parameters.lavaan <- function(x, ...) {
 }
 
 
+#' @importFrom insight format_table
 #' @export
 print.parameters_sem <- function(x, ...) {
   formatted_table <- parameters_table(x)
-  cat(format_table(formatted_table))
+  cat(insight::format_table(formatted_table))
 }
 
 

@@ -5,7 +5,7 @@
 #' @param ci CI level in percentage.
 #' @param digits Number of significant digits.
 #' @param brackets Logical, if \code{TRUE} (default), values are encompassed in square brackets.
-#' @inheritParams format_value
+#' @inheritParams insight::format_value
 #'
 #'
 #' @return A formatted string.
@@ -23,13 +23,14 @@ format_ci <- function(CI_low, CI_high, ci = 0.95, digits = 2, width = NULL, brac
   }
 }
 
+#' @importFrom insight format_value
 #' @keywords internal
 .format_ci <- function(CI_low, CI_high, digits = 2, width = NULL, brackets = TRUE) {
   paste0(
     ifelse(isTRUE(brackets), "[", ""),
-    format_value(CI_low, digits = digits, missing = "missing", width = width),
+    insight::format_value(CI_low, digits = digits, missing = "missing", width = width),
     ", ",
-    format_value(CI_high, digits = digits, missing = "missing", width = width),
+    insight::format_value(CI_high, digits = digits, missing = "missing", width = width),
     ifelse(isTRUE(brackets), "[", "")
   )
 }

@@ -18,6 +18,8 @@
 #'
 #' @return A data.frame.
 #'
+#' @importFrom tools toTitleCase
+#' @importFrom insight format_value
 #' @export
 parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   x <- as.data.frame(x)
@@ -28,10 +30,10 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   }
 
   # Format specific columns
-  if ("n_Obs" %in% names(x)) x$n_Obs <- format_value(x$n_Obs, protect_integers = TRUE)
-  if ("n_Missing" %in% names(x)) x$n_Missing <- format_value(x$n_Missing, protect_integers = TRUE)
-  if ("df" %in% names(x)) x$df <- format_value(x$df, protect_integers = TRUE)
-  if ("df_residual" %in% names(x)) x$df_residual <- format_value(x$df_residual, protect_integers = TRUE)
+  if ("n_Obs" %in% names(x)) x$n_Obs <- insight::format_value(x$n_Obs, protect_integers = TRUE)
+  if ("n_Missing" %in% names(x)) x$n_Missing <- insight::format_value(x$n_Missing, protect_integers = TRUE)
+  if ("df" %in% names(x)) x$df <- insight::format_value(x$df, protect_integers = TRUE)
+  if ("df_residual" %in% names(x)) x$df_residual <- insight::format_value(x$df_residual, protect_integers = TRUE)
   names(x)[names(x) == "df_residual"] <- "df"
   if ("p" %in% names(x)) {
     x$p <- format_p(x$p, name = NULL, stars = stars)
@@ -55,16 +57,16 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
 
   # Standardized
   std_cols <- names(x)[grepl("Std_", names(x))]
-  x[std_cols] <- format_value(x[std_cols])
+  x[std_cols] <- insight::format_value(x[std_cols])
   names(x)[grepl("Std_", names(x))] <- paste0(gsub("Std_", "", std_cols), " (std.)")
 
   # Partial
-  x[names(x)[grepl("_partial", names(x))]] <- format_value(x[names(x)[grepl("_partial", names(x))]])
+  x[names(x)[grepl("_partial", names(x))]] <- insight::format_value(x[names(x)[grepl("_partial", names(x))]])
   names(x)[grepl("_partial", names(x))] <- paste0(gsub("_partial", "", names(x)[grepl("_partial", names(x))]), " (partial)")
 
   # Bayesian
-  if ("Prior_Location" %in% names(x)) x$Prior_Location <- format_value(x$Prior_Location, protect_integers = TRUE)
-  if ("Prior_Scale" %in% names(x)) x$Prior_Scale <- format_value(x$Prior_Scale, protect_integers = TRUE)
+  if ("Prior_Location" %in% names(x)) x$Prior_Location <- insight::format_value(x$Prior_Location, protect_integers = TRUE)
+  if ("Prior_Scale" %in% names(x)) x$Prior_Scale <- insight::format_value(x$Prior_Scale, protect_integers = TRUE)
   if ("BF" %in% names(x)) x$BF <- format_bf(x$BF, name = NULL, stars = stars)
   if ("pd" %in% names(x)) x$pd <- format_pd(x$pd, name = NULL, stars = stars)
   if ("ROPE_Percentage" %in% names(x)) x$ROPE_Percentage <- format_rope(x$ROPE_Percentage, name = NULL)
@@ -86,12 +88,12 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
     x$Prior_Distribution <- x$Prior_Location <- x$Prior_Scale <- NULL
   }
 
-  if ("Rhat" %in% names(x)) x$Rhat <- format_value(x$Rhat, digits = 3)
-  if ("ESS" %in% names(x)) x$ESS <- format_value(x$ESS, protect_integers = TRUE)
+  if ("Rhat" %in% names(x)) x$Rhat <- insight::format_value(x$Rhat, digits = 3)
+  if ("ESS" %in% names(x)) x$ESS <- insight::format_value(x$ESS, protect_integers = TRUE)
 
   # Format remaining columns
   other_cols <- names(x)[sapply(x, is.numeric)]
-  x[other_cols[other_cols %in% names(x)]] <- format_value(x[other_cols[other_cols %in% names(x)]])
+  x[other_cols[other_cols %in% names(x)]] <- insight::format_value(x[other_cols[other_cols %in% names(x)]])
 
 
   # SEM links
@@ -108,6 +110,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
 
 
 
+#' @importFrom insight format_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, ...) {
   if ("Component" %in% names(x) && length(unique(x$Component)) > 1) {
@@ -117,11 +120,11 @@ print.parameters_model <- function(x, pretty_names = TRUE, ...) {
       insight::print_color(sprintf("# %s component\n\n", comp), "blue")
       l[[i]]$Component <- NULL
       formatted_table <- parameters_table(l[[i]], pretty_names = pretty_names, ...)
-      cat(format_table(formatted_table))
+      cat(insight::format_table(formatted_table))
       cat("\n")
     }
   } else {
     formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
-    cat(format_table(formatted_table))
+    cat(insight::format_table(formatted_table))
   }
 }

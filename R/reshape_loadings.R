@@ -128,9 +128,9 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 
 
 
-
+#' @importFrom insight format_table
 #' @export
 print.parameters_loadings <- function(x, ...) {
   formatted_table <- parameters_table(x)
-  cat(format_table(formatted_table))
+  cat(insight::format_table(formatted_table))
 }

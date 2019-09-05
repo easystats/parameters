@@ -3,7 +3,7 @@
 #' Format order.
 #'
 #' @param order value or vector of orders.
-#' @param textual Return number as words. If \code{FALSE}, will run \code{\link{format_value}}.
+#' @param textual Return number as words. If \code{FALSE}, will run \code{\link[insight]{format_value}}.
 #' @inheritParams format_number
 #'
 #' @return A formatted string.
@@ -11,12 +11,14 @@
 #' format_order(2)
 #' format_order(8)
 #' format_order(25, textual = FALSE)
+#' @importFrom insight format_value
+#' @importFrom utils tail
 #' @export
 format_order <- function(order, textual = TRUE, ...) {
   if (textual) {
     order <- format_number(order)
     parts <- unlist(strsplit(order, " ", fixed = TRUE))
-    parts[length(parts)] <- switch(tail(parts, 1),
+    parts[length(parts)] <- switch(utils::tail(parts, 1),
       "one" = "first",
       "two" = "second",
       "three" = "third",
@@ -29,7 +31,7 @@ format_order <- function(order, textual = TRUE, ...) {
     )
     out <- paste(parts, collapse = " ")
   } else {
-    number <- format_value(order, digits = 0, ...)
+    number <- insight::format_value(order, digits = 0, ...)
     last <- substr(number, nchar(number), nchar(number))
     out <- paste0(number, switch(last,
       "1" = "st",

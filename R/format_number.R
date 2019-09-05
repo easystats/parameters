@@ -3,8 +3,8 @@
 #' Convert number to words. The code has been adapted from here https://github.com/ateucher/useful_code/blob/master/R/numbers2words.r
 #'
 #' @param x Number.
-#' @param textual Return words. If \code{FALSE}, will run \code{\link{format_value}}.
-#' @param ... Arguments to be passed to \code{\link{format_value}} if \code{textual} is \code{FALSE}.
+#' @param textual Return words. If \code{FALSE}, will run \code{\link[insight]{format_value}}.
+#' @param ... Arguments to be passed to \code{\link[insight]{format_value}} if \code{textual} is \code{FALSE}.
 #'
 #'
 #' @return A formatted string.
@@ -12,12 +12,13 @@
 #' format_number(2)
 #' format_number(45)
 #' format_number(324.68765)
+#' @importFrom insight format_value
 #' @export
 format_number <- function(x, textual = TRUE, ...) {
   if (textual) {
     .format_number(x)
   } else {
-    format_value(x, ...)
+    insight::format_value(x, ...)
   }
 }
 

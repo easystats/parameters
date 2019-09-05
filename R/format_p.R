@@ -12,12 +12,13 @@
 #' format_p(c(.02, .065, 0, .23))
 #' format_p(c(.02, .065, 0, .23), name = NULL)
 #' format_p(c(.02, .065, 0, .23), stars_only = TRUE)
+#' @importFrom insight format_value
 #' @export
 format_p <- function(p, stars = FALSE, stars_only = FALSE, name = "p") {
   text <- ifelse(p < 0.001, "< .001***",
     ifelse(p < 0.01, "< .01**",
       ifelse(p < 0.05, "< .05*",
-        ifelse(p < 0.1, paste0("= ", format_value(p, 2)),
+        ifelse(p < 0.1, paste0("= ", insight::format_value(p, 2)),
           "> .1"
         )
       )
