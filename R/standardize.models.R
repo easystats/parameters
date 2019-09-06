@@ -84,6 +84,10 @@ standardize.zerocount <- standardize.zeroinfl
 
 #' @export
 standardize.coxph <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
+
+  # for some models, the DV cannot be standardized when using
+  # "update()", so we only standardize model predictors
+
   pred <- insight::find_predictors(x, flatten = TRUE)
   data <- insight::get_data(x)
 
