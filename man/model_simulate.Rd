@@ -3,23 +3,15 @@
 \name{model_simulate}
 \alias{model_simulate}
 \alias{model_simulate.glmmTMB}
-\alias{model_simulate.MixMod}
-\alias{model_simulate.zeroinfl}
 \title{Simulated draws from model coefficients}
 \usage{
 model_simulate(model, n_sims = 1000, ...)
 
 \method{model_simulate}{glmmTMB}(model, n_sims = 1000,
   component = c("all", "conditional", "zi", "zero_inflated"), ...)
-
-\method{model_simulate}{MixMod}(model, n_sims = 1000,
-  component = c("all", "conditional", "zi", "zero_inflated"), ...)
-
-\method{model_simulate}{zeroinfl}(model, n_sims = 1000,
-  component = c("all", "conditional", "zi", "zero_inflated"), ...)
 }
 \arguments{
-\item{model}{Statistical model.}
+\item{model}{Statistical model (no Bayesian models).}
 
 \item{n_sims}{The number of simulation draws to create.}
 
@@ -31,22 +23,41 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 }
 \value{
-A data.frame.
+A data frame.
 }
 \description{
-Simulate draws a statistical model n times to return a data.frame of estimates.
+Simulate draws a statistical model \code{n_sims} times to return a data.frame of estimates.
 }
 \details{
-\code{model_simulate()} is a computationally faster alternative
-  to \code{model_bootstrap()}. Simulated draws for coefficients are based
-  on a multivariate normal distribution (\code{MASS::mvrnorm()} with mean
-  \code{coef(model)} and variance \code{vcov(model)}.
+\subsection{Technical Details}{
+    \code{model_simulate()} is a computationally faster alternative
+    to \code{model_bootstrap()}. Simulated draws for coefficients are based
+    on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
+    \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
+  }
+  \subsection{Models with Zero-Inflation Component}{
+    For models from packages \pkg{glmmTMB}, \pkg{pscl}, \pkg{GLMMadaptive} and
+    \pkg{countreg}, the \code{component} argument can be used to specify
+    which parameters should be simulated. For all other models, parameters
+    from the conditional component (fixed effects) are simulated. This may
+    include smooth terms, but not random effects.
+  }
 }
 \examples{
 library(parameters)
+library(glmmTMB)
 
 model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 head(model_simulate(model))
+
+model <- glmmTMB(
+  count ~ spp + mined + (1 | site),
+  ziformula =  ~ mined,
+  family = poisson(),
+  data = Salamanders
+)
+head(model_simulate(model))
+head(model_simulate(model, component = "zero_inflated"))
 }
 \seealso{
 \code{\link[=parameters_simulate]{parameters_simulate()}},

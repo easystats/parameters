@@ -1,8 +1,8 @@
 #' Simulated draws from model coefficients
 #'
-#' Simulate draws a statistical model n times to return a data.frame of estimates.
+#' Simulate draws a statistical model \code{n_sims} times to return a data.frame of estimates.
 #'
-#' @param model Statistical model.
+#' @param model Statistical model (no Bayesian models).
 #' @param n_sims The number of simulation draws to create.
 #' @param component Should all parameters, parameters for the conditional model,
 #'   or for the zero-inflated part of the model be returned? Applies to models
@@ -10,22 +10,42 @@
 #'   \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @return A data.frame.
+#' @return A data frame.
 #'
 #' @seealso \code{\link[=parameters_simulate]{parameters_simulate()}},
 #' \code{\link[=model_bootstrap]{model_bootstrap()}},
 #' \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}
 #'
-#' @details \code{model_simulate()} is a computationally faster alternative
-#'   to \code{model_bootstrap()}. Simulated draws for coefficients are based
-#'   on a multivariate normal distribution (\code{MASS::mvrnorm()} with mean
-#'   \code{coef(model)} and variance \code{vcov(model)}.
+#' @details
+#'   \subsection{Technical Details}{
+#'     \code{model_simulate()} is a computationally faster alternative
+#'     to \code{model_bootstrap()}. Simulated draws for coefficients are based
+#'     on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
+#'     \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
+#'   }
+#'   \subsection{Models with Zero-Inflation Component}{
+#'     For models from packages \pkg{glmmTMB}, \pkg{pscl}, \pkg{GLMMadaptive} and
+#'     \pkg{countreg}, the \code{component} argument can be used to specify
+#'     which parameters should be simulated. For all other models, parameters
+#'     from the conditional component (fixed effects) are simulated. This may
+#'     include smooth terms, but not random effects.
+#'   }
 #'
 #' @examples
 #' library(parameters)
+#' library(glmmTMB)
 #'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 #' head(model_simulate(model))
+#'
+#' model <- glmmTMB(
+#'   count ~ spp + mined + (1 | site),
+#'   ziformula =  ~ mined,
+#'   family = poisson(),
+#'   data = Salamanders
+#' )
+#' head(model_simulate(model))
+#' head(model_simulate(model, component = "zero_inflated"))
 #' @export
 model_simulate <- function(model, n_sims = 1000, ...) {
   UseMethod("model_simulate")
@@ -102,6 +122,8 @@ model_simulate.gamm <- function(model, n_sims = 1000, ...) {
 # Models with zero-inflation components ---------------------------------------
 
 
+#' @importFrom stats vcov setNames
+#' @importFrom insight get_parameters
 #' @rdname model_simulate
 #' @export
 model_simulate.glmmTMB <- function(model, n_sims = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
@@ -128,11 +150,9 @@ model_simulate.glmmTMB <- function(model, n_sims = 1000, component = c("all", "c
 
 
 
-#' @rdname model_simulate
 #' @export
 model_simulate.MixMod <- model_simulate.glmmTMB
 
-#' @rdname model_simulate
 #' @export
 model_simulate.zeroinfl <- model_simulate.glmmTMB
 

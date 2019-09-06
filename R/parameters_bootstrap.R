@@ -28,9 +28,9 @@ parameters_bootstrap <- function(model, iterations = 1000, centrality = "median"
 
 .summary_bootstrap <- function(data, test, centrality, ci, ci_method, ...) {
   # Is the p-value requested?
-  if ("p-value" %in% c(test) | "p" %in% c(test) | "pval" %in% c(test)) {
+  if (any(test %in% c("p-value", "p", "pval"))) {
     p_value <- TRUE
-    test <- c(test)[!c(test) %in% c("p-value", "p", "pval")]
+    test <- setdiff(test, c("p-value", "p", "pval"))
     if (length(test) == 0) test <- NULL
   } else {
     p_value <- FALSE
@@ -50,10 +50,11 @@ parameters_bootstrap <- function(model, iterations = 1000, centrality = "median"
 
   # p-value
   if (p_value) {
-    col_order <- parameters$Parameter
+    parameters$.col_order <- 1:nrow(parameters)
     p <- p_value(data, ...)
     parameters <- merge(parameters, p, all = TRUE)
-    parameters <- parameters[match(col_order, parameters$Parameter), ]
+    parameters <- parameters[parameters$.col_order, ]
+    parameters$.col_order <- NULL
   }
 
   parameters
