@@ -124,7 +124,7 @@ model_simulate.svyglm.zip <- model_simulate.lm
 
 #' @export
 model_simulate.gam <- function(model, n_sims = 1000, ...) {
-  if (!requireNamespace("MASS", qquietly = TRUE)) {
+  if (!requireNamespace("MASS", quietly = TRUE)) {
     stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
   }
 
@@ -203,7 +203,7 @@ model_simulate.zerocount <- model_simulate.zeroinfl
 
 
 .model_simulate <- function(model, n_sims, component = "conditional") {
-  if (!requireNamespace("MASS", qquietly = TRUE)) {
+  if (!requireNamespace("MASS", quietly = TRUE)) {
     stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
   }
 
