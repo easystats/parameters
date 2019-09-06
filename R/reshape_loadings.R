@@ -74,7 +74,7 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
   }
 
   # Reshape to long
-  long <- reshape(loadings,
+  long <- stats::reshape(loadings,
     direction = "long",
     varying = list(names(loadings)[loadings_columns]),
     v.names = "Loading",

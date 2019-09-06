@@ -41,7 +41,7 @@ parameters_selection <- function(model, ...) {
 #' @importFrom stats step
 #' @export
 parameters_selection.lm <- function(model, direction = "both", steps = 1000, k = 2, ...) {
-  junk <- capture.output(best <- step(model,
+  junk <- capture.output(best <- stats::step(model,
     trace = 0,
     direction = direction,
     steps = steps,
@@ -110,6 +110,7 @@ parameters_selection.merMod <- function(model, direction = "backward", steps = 1
 #' @param method The method used in the variable selection. Can be NULL (default), "forward" or "L1". See \code{projpred::varsel}.
 #' @param cross_validation Select with cross-validation.
 #' @rdname parameters_selection
+#' @importFrom stats update
 #' @export
 parameters_selection.stanreg <- function(model, method = NULL, cross_validation = FALSE, ...) {
   if (!requireNamespace("projpred", quietly = TRUE)) {
@@ -134,7 +135,7 @@ parameters_selection.stanreg <- function(model, method = NULL, cross_validation 
   formula <- .reconstruct_formula(parameters, model)
 
   # Update model
-  junk <- capture.output(best <- update(model, formula = formula, ...))
+  junk <- capture.output(best <- stats::update(model, formula = formula, ...))
   best
 }
 
@@ -143,6 +144,7 @@ parameters_selection.stanreg <- function(model, method = NULL, cross_validation 
 
 
 
+#' @importFrom insight find_response
 #' @keywords internal
 .reconstruct_formula <- function(parameters, model) {
 
