@@ -53,7 +53,7 @@ parameters_bootstrap <- function(model, iterations = 1000, centrality = "median"
     parameters$.col_order <- 1:nrow(parameters)
     p <- p_value(data, ...)
     parameters <- merge(parameters, p, all = TRUE)
-    parameters <- parameters[parameters$.col_order, ]
+    parameters <- parameters[order(parameters$.col_order), ]
     parameters$.col_order <- NULL
   }
 

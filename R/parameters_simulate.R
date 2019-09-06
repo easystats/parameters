@@ -31,7 +31,7 @@
 #' library(glmmTMB)
 #'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
-#' parameters_simulate
+#' parameters_simulate(model)
 #'
 #' model <- glmmTMB(
 #'   count ~ spp + mined + (1 | site),
