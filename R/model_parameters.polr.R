@@ -21,3 +21,11 @@ model_parameters.clm <- model_parameters.polr
 
 #' @export
 model_parameters.clm2 <- model_parameters.polr
+
+
+#' @export
+model_parameters.svyglm.nb <- model_parameters.polr
+
+
+#' @export
+model_parameters.svyglm.zip <- model_parameters.polr

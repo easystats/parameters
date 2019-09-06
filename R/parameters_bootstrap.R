@@ -57,5 +57,6 @@ parameters_bootstrap <- function(model, iterations = 1000, centrality = "median"
     parameters$.col_order <- NULL
   }
 
+  rownames(parameters) <- NULL
   parameters
 }

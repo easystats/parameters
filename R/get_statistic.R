@@ -146,3 +146,20 @@
 .get_statistic.coxph <- function(model, ...) {
   .get_statistic.default(model, statistic_column = 4)
 }
+
+
+.get_statistic.svyglm.nb <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  se <- standard_error(model)
+
+  out <- data_frame(
+    Parameter = parms$parameter,
+    Statistic = parms$estimate / se$SE
+  )
+
+  attr(out, "statistic") <- "t"
+  out
+}
+
+
+.get_statistic.svyglm.zip <- .get_statistic.svyglm.nb

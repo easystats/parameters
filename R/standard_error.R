@@ -324,6 +324,9 @@ standard_error.svyglm.nb <- function(model, ...) {
 }
 
 
+#' @export
+standard_error.svyglm.zip <- standard_error.svyglm.nb
+
 
 #' @export
 standard_error.svyglm <- function(model, ...) {

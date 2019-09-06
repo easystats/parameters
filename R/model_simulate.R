@@ -107,6 +107,14 @@ model_simulate.polr <- model_simulate.lm
 model_simulate.coxph <- model_simulate.lm
 
 
+#' @export
+model_simulate.svyglm.nb <- model_simulate.lm
+
+
+#' @export
+model_simulate.svyglm.zip <- model_simulate.lm
+
+
 
 
 

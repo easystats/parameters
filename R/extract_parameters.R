@@ -4,6 +4,8 @@
   parameters <- insight::get_parameters(model, effects = "fixed", component = component)
   .statistic <- .get_statistic(model, component = component)
 
+  # clean parameter names
+
   if (inherits(model, "polr")) {
     parameters$parameter <- gsub("Intercept: ", "", parameters$parameter, fixed = TRUE)
   }
@@ -45,7 +47,7 @@
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
   # Reorder
-  col_order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "df", "df_residual", "p", "Component")
+  col_order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "t / F", "F", "df", "df_residual", "p", "Component")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   # remove Component column if not needed

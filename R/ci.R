@@ -54,36 +54,31 @@ ci.gamlss <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, dof = Inf, ...)
 }
 
-
+#' @export
+ci.plm <- ci.gamlss
 
 #' @export
-ci.plm <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = Inf, ...)
-}
-
-
+ci.coxph <- ci.gamlss
 
 #' @export
-ci.coxph <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = Inf, ...)
-}
-
-
-
-#' @export
-ci.clm <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = Inf, ...)
-}
+ci.clm <- ci.gamlss
 
 #' @export
 ci.clm2 <- ci.clm
 
+#' @export
+ci.feis <- ci.gamlss
+
+
 
 #' @export
-ci.feis <- function(x, ci = .95, ...) {
+ci.svyglm.nb <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, dof = Inf, ...)
 }
 
+
+#' @export
+ci.svyglm.zip <- ci.svyglm.nb
 
 
 #' @export

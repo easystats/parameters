@@ -509,14 +509,15 @@ p_value.svyglm.nb <- function(model, ...) {
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
   p <- 2 * stats::pnorm(abs(est / se), lower.tail = FALSE)
 
-  names(p) <- gsub("\\beta\\.", "", names(p), fixed = FALSE)
-
   data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
 }
 
+
+#' @export
+p_value.svyglm.zip <- p_value.svyglm.nb
 
 
 #' @export
