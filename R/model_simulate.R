@@ -235,7 +235,7 @@ model_simulate.zerocount <- model_simulate.zeroinfl
 
 
 
-
+#' @importFrom stats vcov
 .get_varcov <- function(model, component) {
   if (inherits(model, c("hurdle", "zeroinfl", "zerocount"))) {
     vc <- switch(
