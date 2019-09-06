@@ -13,12 +13,12 @@
 
 \item{pretty_names}{Pretty parameters' names.}
 
-\item{...}{Arguments passed to or from other methods.}
-
-\item{split_component}{Logical, if \code{TRUE} (default), For models with
+\item{split_components}{Logical, if \code{TRUE} (default), For models with
 multiple components (zero-inflation, smooth terms, ...), each component is
 printed in a separate table. If \code{FALSE}, model parameters are printed
 in a single table and a \code{Component} column is added to the output.}
+
+\item{...}{Arguments passed to or from other methods.}
 }
 \value{
 \code{NULL}

@@ -447,11 +447,12 @@ as.double.n_factors <- as.numeric.n_factors
 
 # Re-implementation of nBentler in nFactors ------------------------
 
+#' @importFrom stats lm
 #' @keywords internal
 .nBentler <-
   function(x, N, model = model, log = TRUE, alpha = 0.05, cor = TRUE, details = TRUE,
              minPar = c(min(lambda) - abs(min(lambda)) + .001, 0.001),
-             maxPar = c(max(lambda), lm(lambda ~ I(length(lambda):1))$coef[2]),
+             maxPar = c(max(lambda), stats::lm(lambda ~ I(length(lambda):1))$coef[2]),
              ...) {
     if (!requireNamespace("nFactors", quietly = TRUE)) {
       stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('lattice')`.")

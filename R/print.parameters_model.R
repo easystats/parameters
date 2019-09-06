@@ -4,7 +4,7 @@
 #' @description A \code{print()}-method for objects from \code{\link[=model_parameters]{model_parameters()}}.
 #'
 #' @param x An object returned by \code{\link[=model_parameters]{model_parameters()}}.
-#' @param split_component Logical, if \code{TRUE} (default), For models with
+#' @param split_components Logical, if \code{TRUE} (default), For models with
 #'   multiple components (zero-inflation, smooth terms, ...), each component is
 #'   printed in a separate table. If \code{FALSE}, model parameters are printed
 #'   in a single table and a \code{Component} column is added to the output.
