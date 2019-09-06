@@ -61,9 +61,6 @@ model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
 }
 
 
-
-
-
 #' @export
 model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ...) {
   if (!requireNamespace("lme4", quietly = TRUE)) {

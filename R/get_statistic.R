@@ -4,6 +4,27 @@
 
 
 
+.get_statistic.default <- function(model, statistic_column = 3, ...) {
+  cs <- stats::coef(summary(model))
+  cs_names <- dimnames(cs)[[2]]
+
+  out <- data_frame(
+    Parameter = gsub("`", "", rownames(cs), fixed = TRUE),
+    Statistic = as.vector(cs[, statistic_column])
+  )
+
+  if (any(c("t val.", "t", "t-value", "t.value", "tvalue") %in% cs_names))
+    attr(out, "statistic") <- "t"
+  else if (any(c("z val.", "z", "z-value", "z.value", "z value") %in% cs_names))
+    attr(out, "statistic") <- "z"
+  else
+    attr(out, "statistic") <- "statistic"
+
+  out
+}
+
+
+
 .get_statistic.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
 
@@ -112,27 +133,9 @@
 
 
 
-.get_statistic.default <- function(model, statistic_column = 3, ...) {
-  cs <- stats::coef(summary(model))
-  cs_names <- dimnames(cs)[[2]]
-
-  out <- data_frame(
-    Parameter = gsub("`", "", rownames(cs), fixed = TRUE),
-    Statistic = as.vector(cs[, statistic_column])
-  )
-
-  if (any(c("t val.", "t", "t-value", "t.value", "tvalue") %in% cs_names))
-    attr(out, "statistic") <- "t"
-  else if (any(c("z val.", "z", "z-value", "z.value", "z value") %in% cs_names))
-    attr(out, "statistic") <- "z"
-  else
-    attr(out, "statistic") <- "statistic"
-
-  out
-}
-
-
-
 .get_statistic.lme <- function(model, ...) {
   .get_statistic.default(model, statistic_column = 4)
 }
+
+
+.get_statistic.plm <- .get_statistic.default

@@ -49,9 +49,15 @@ ci.gam <- function(x, ci = .95, ...) {
 
 
 
-#' @importFrom utils capture.output
 #' @export
 ci.gamlss <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, dof = Inf, ...)
+}
+
+
+
+#' @export
+ci.plm <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, dof = Inf, ...)
 }
 

@@ -48,6 +48,18 @@ standard_error.gamlss <- function(model, ...) {
 
 
 #' @export
+standard_error.plm <- function(model, ...) {
+  p <- stats::coef(summary(model))
+
+  data_frame(
+    Parameter = names(p[, 2]),
+    SE = as.vector(p[, 2])
+  )
+}
+
+
+
+#' @export
 standard_error.lme <- function(model, ...) {
   cs <- stats::coef(summary(model))
   se <- cs[, 2]

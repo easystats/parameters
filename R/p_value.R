@@ -433,6 +433,18 @@ p_value.pglm <- function(model, ...) {
 
 
 #' @export
+p_value.plm <- function(model, ...) {
+  p <- stats::coef(summary(model))
+
+  data_frame(
+    Parameter = names(p[, 4]),
+    p = as.vector(p[, 4])
+  )
+}
+
+
+
+#' @export
 p_value.polr <- function(model, ...) {
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   tstat <- smry[[3]]

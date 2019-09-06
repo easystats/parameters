@@ -12,7 +12,7 @@
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{bootstrap}{Should estimates be based on bootsrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}.}
+\item{bootstrap}{Should estimates be based on bootsrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}).}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 

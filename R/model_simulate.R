@@ -32,6 +32,8 @@ model_simulate <- function(model, n_sims = 1000, ...) {
 }
 
 
+# Models with single component only -----------------------------------------
+
 
 #' @importFrom stats vcov setNames
 #' @importFrom insight get_parameters
@@ -54,11 +56,22 @@ model_simulate.lme <- model_simulate.lm
 
 
 #' @export
+model_simulate.plm <- model_simulate.lm
+
+
+#' @export
 model_simulate.merMod <- model_simulate.lm
 
 
 #' @export
 model_simulate.gamlss <- model_simulate.lm
+
+
+
+
+
+
+# gam models  -----------------------------------------
 
 
 #' @export
@@ -81,6 +94,12 @@ model_simulate.gamm <- function(model, n_sims = 1000, ...) {
   model_simulate(model, n_sims = n_sims, ...)
 }
 
+
+
+
+
+
+# Models with zero-inflation components ---------------------------------------
 
 
 #' @rdname model_simulate
@@ -125,6 +144,12 @@ model_simulate.zerocount <- model_simulate.zeroinfl
 
 
 
+
+
+
+# helper -----------------------------------------
+
+
 .model_simulate <- function(model, n_sims, component = "conditional") {
   if (!requireNamespace("MASS", qquietly = TRUE)) {
     stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
@@ -149,6 +174,8 @@ model_simulate.zerocount <- model_simulate.zeroinfl
   #   b[i,] <- MASS::mvrnorm(n = 1, mu = beta, Sigma = beta.cov * s[i] ^ 2)
   # }
 }
+
+
 
 
 .get_varcov <- function(model, component) {
