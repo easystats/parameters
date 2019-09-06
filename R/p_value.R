@@ -61,6 +61,21 @@ p_value.rlm <- function(model, ...) {
 
 
 
+#' @importFrom utils capture.output
+#' @export
+p_value.gamlss <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  utils::capture.output(cs <- summary(model))
+
+  data_frame(
+    Parameter = parms$parameter,
+    p = as.vector(cs[, 4]),
+    Component = parms$component
+  )
+}
+
+
+
 #' @export
 p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)

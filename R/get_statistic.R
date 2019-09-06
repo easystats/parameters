@@ -96,6 +96,22 @@
 
 
 
+.get_statistic.gamlss <- function(model, statistic_column = 3, ...) {
+  parms <- insight::get_parameters(model)
+  utils::capture.output(cs <- summary(model))
+
+  out <- data_frame(
+    Parameter = parms$parameter,
+    Statistic = as.vector(cs[, statistic_column]),
+    Component = parms$component
+  )
+
+  attr(out, "statistic") <- "t"
+  out
+}
+
+
+
 .get_statistic.default <- function(model, statistic_column = 3, ...) {
   cs <- stats::coef(summary(model))
   cs_names <- dimnames(cs)[[2]]

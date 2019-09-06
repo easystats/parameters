@@ -32,6 +32,21 @@ standard_error.lm <- function(model, ...) {
 
 
 
+#' @importFrom utils capture.output
+#' @export
+standard_error.gamlss <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  utils::capture.output(cs <- summary(model))
+
+  data_frame(
+    Parameter = parms$parameter,
+    SE = as.vector(cs[, 2]),
+    Component = parms$component
+  )
+}
+
+
+
 #' @export
 standard_error.lme <- function(model, ...) {
   cs <- stats::coef(summary(model))

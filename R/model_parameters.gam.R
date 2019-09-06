@@ -38,3 +38,7 @@ model_parameters.gamm <- function(model, ci = .95, bootstrap = FALSE, iterations
   model_parameters(model, ci = ci, bootstrap = bootstrap, iterations = iterations, ...)
 }
 
+
+#' @export
+model_parameters.gamlss <- model_parameters.gam
+

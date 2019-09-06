@@ -108,28 +108,3 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   x
 }
 
-
-
-#' @importFrom insight format_table
-#' @export
-print.parameters_model <- function(x, pretty_names = TRUE, ...) {
-  if ("Component" %in% names(x) && length(unique(x$Component)) > 1) {
-    l <- split(x, x$Component)
-    for (i in names(l)) {
-      comp <- switch(i, "conditional" = "Conditional", "zero_inflated" = "Zero-Inflated", "smooth_terms" = "Smooth Terms")
-      insight::print_color(sprintf("# %s component\n\n", comp), "blue")
-      # don't print Component column
-      l[[i]]$Component <- NULL
-      # don't print se and ci if all are missing
-      if (all(is.na(l[[i]]$SE))) l[[i]]$SE <- NULL
-      if (all(is.na(l[[i]]$CI_low))) l[[i]]$CI_low <- NULL
-      if (all(is.na(l[[i]]$CI_high))) l[[i]]$CI_high <- NULL
-      formatted_table <- parameters_table(l[[i]], pretty_names = pretty_names, ...)
-      cat(insight::format_table(formatted_table))
-      cat("\n")
-    }
-  } else {
-    formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
-    cat(insight::format_table(formatted_table))
-  }
-}
