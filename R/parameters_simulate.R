@@ -49,7 +49,8 @@ parameters_simulate <- function(model, n_sims = 1000, centrality = "median", ci 
   out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
 
   class(out) <- c(class(out), "parameters_simulate", "see_parameters_simulate")
-  attr(dat, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "n_sims") <- n_sims
 
   out
 }

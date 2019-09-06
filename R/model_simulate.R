@@ -128,6 +128,8 @@ model_simulate.gam <- function(model, n_sims = 1000, ...) {
     stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
   }
 
+  if (is.null(n_sims)) n_sims <- 1000
+
   beta <- stats::coef(model)
   varcov <- .get_varcov(model, "all")
   as.data.frame(MASS::mvrnorm(n = n_sims, mu = beta, Sigma = varcov))
@@ -161,6 +163,8 @@ model_simulate.glmmTMB <- function(model, n_sims = 1000, component = c("all", "c
     insight::print_color("Model has no zero-inflation component. Simulating from conditional parameters.\n", "red")
     component <- "conditional"
   }
+
+  if (is.null(n_sims)) n_sims <- 1000
 
   if (component == "all") {
     d1 <- .model_simulate(model, n_sims, component = "conditional")
@@ -203,11 +207,12 @@ model_simulate.zerocount <- model_simulate.zeroinfl
     stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
   }
 
+  if (is.null(n_sims)) n_sims <- 1000
+
   parms <- insight::get_parameters(model, effects = "fixed", component = component)
   beta <- stats::setNames(parms$estimate, parms$parameter)
 
   varcov <- .get_varcov(model, component)
-
   as.data.frame(MASS::mvrnorm(n = n_sims, mu = beta, Sigma = varcov))
 
   ## Alternative approach, similar to arm::sim()
