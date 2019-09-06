@@ -96,6 +96,10 @@ model_simulate.clm <- model_simulate.lm
 
 
 #' @export
+model_simulate.clm2 <- model_simulate.lm
+
+
+#' @export
 model_simulate.polr <- model_simulate.lm
 
 

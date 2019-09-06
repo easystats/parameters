@@ -68,6 +68,8 @@ ci.clm <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, dof = Inf, ...)
 }
 
+#' @export
+ci.clm2 <- ci.clm
 
 
 #' @export

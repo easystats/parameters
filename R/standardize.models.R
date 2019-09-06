@@ -57,6 +57,12 @@ standardize.wbm <- function(x, ...) {
   x
 }
 
+#' @export
+standardize.clm <- standardize.wbm
+
+#' @export
+standardize.clm2 <- standardize.wbm
+
 
 #' @export
 standardize.zeroinfl <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
