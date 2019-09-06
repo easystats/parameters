@@ -49,6 +49,9 @@ standardize.gls <- standardize.lm
 standardize.plm <- standardize.lm
 
 #' @export
+standardize.feis <- standardize.lm
+
+#' @export
 standardize.wbm <- function(x, ...) {
   warning("Standardization of parameters not possible for models from package 'panelr'.", call. = FALSE)
   x

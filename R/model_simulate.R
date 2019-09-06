@@ -80,6 +80,10 @@ model_simulate.plm <- model_simulate.lm
 
 
 #' @export
+model_simulate.feis <- model_simulate.lm
+
+
+#' @export
 model_simulate.merMod <- model_simulate.lm
 
 
@@ -213,6 +217,8 @@ model_simulate.zerocount <- model_simulate.zeroinfl
       "zero_inflated" = stats::vcov(model, parm = "zero_part"),
       stats::vcov(model)
     )
+  } else if (inherits(model, "feis")) {
+    vc <- model$vcov
   } else {
     vc <- suppressWarnings(stats::vcov(model))
     if (is.list(vc)) {

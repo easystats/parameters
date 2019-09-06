@@ -16,7 +16,7 @@ model_parameters.lme <- function(model, ci = .95, standardize = "refit", standar
   }
 
   if (!is.null(standardize) && !is.logical(standardize)) {
-    parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust)[2])
+    parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust, verbose = FALSE)[2])
   }
 
   attr(parameters, "pretty_names") <- format_parameters(model)
@@ -27,6 +27,9 @@ model_parameters.lme <- function(model, ci = .95, standardize = "refit", standar
 
 #' @export
 model_parameters.gls <- model_parameters.lme
+
+#' @export
+model_parameters.feis <- model_parameters.lme
 
 #' @export
 model_parameters.plm <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {

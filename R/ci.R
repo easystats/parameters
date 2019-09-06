@@ -64,6 +64,13 @@ ci.plm <- function(x, ci = .95, ...) {
 
 
 #' @export
+ci.feis <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, dof = Inf, ...)
+}
+
+
+
+#' @export
 ci.gamm <- function(x, ci = .95, ...) {
   x <- x$gam
   class(x) <- c("gam", "lm", "glm")

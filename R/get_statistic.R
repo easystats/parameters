@@ -139,3 +139,5 @@
 
 
 .get_statistic.plm <- .get_statistic.default
+
+.get_statistic.feis <- .get_statistic.default

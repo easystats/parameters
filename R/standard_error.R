@@ -23,6 +23,31 @@ se <- standard_error
 
 
 #' @export
+standard_error.default <- function(model, ...) {
+  se <- tryCatch({
+    if (grepl("^Zelig-", class(model)[1])) {
+      if (!requireNamespace("Zelig", quietly = TRUE))
+        stop("Package `Zelig` required. Please install", call. = FALSE)
+      unlist(Zelig::get_se(model))
+    } else {
+      stats::coef(summary(model))[, 2]
+    }
+  },
+  error = function(e) { NULL }
+  )
+
+  if (is.null(se)) {
+    insight::print_color("\nCould not extract standard errors from model object.\n", "red")
+  } else {
+    data_frame(
+      Parameter = names(se),
+      SE = as.vector(se)
+    )
+  }
+}
+
+
+#' @export
 standard_error.lm <- function(model, ...) {
   data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
@@ -49,11 +74,11 @@ standard_error.gamlss <- function(model, ...) {
 
 #' @export
 standard_error.plm <- function(model, ...) {
-  p <- stats::coef(summary(model))
+  se <- stats::coef(summary(model))
 
   data_frame(
-    Parameter = names(p[, 2]),
-    SE = as.vector(p[, 2])
+    Parameter = names(se[, 2]),
+    SE = as.vector(se[, 2])
   )
 }
 
