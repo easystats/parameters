@@ -13,3 +13,7 @@ model_parameters.polr <- function(model, ci = .95, bootstrap = FALSE, iterations
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
+
+
+#' @export
+model_parameters.clm <- model_parameters.polr

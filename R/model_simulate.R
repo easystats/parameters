@@ -91,6 +91,14 @@ model_simulate.merMod <- model_simulate.lm
 model_simulate.gamlss <- model_simulate.lm
 
 
+#' @export
+model_simulate.clm <- model_simulate.lm
+
+
+#' @export
+model_simulate.polr <- model_simulate.lm
+
+
 
 
 
