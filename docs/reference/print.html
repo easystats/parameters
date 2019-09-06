@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute Skewness and Kurtosis — skewness • parameters</title>
+<title>Print model parameters — print • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Compute Skewness and Kurtosis — skewness" />
-<meta property="og:description" content="Compute Skewness and Kurtosis" />
+<meta property="og:title" content="Print model parameters — print" />
+<meta property="og:description" content="A print()-method for objects from model_parameters()." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -142,29 +142,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute Skewness and Kurtosis</h1>
+    <h1>Print model parameters</h1>
     
-    <div class="hidden name"><code>skewness.Rd</code></div>
+    <div class="hidden name"><code>print.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute Skewness and Kurtosis</p>
+    <p>A <code>print()</code>-method for objects from <code><a href='model_parameters.html'>model_parameters()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>skewness</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
-
-<span class='fu'>kurtosis</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for parameters_model</span>
+<span class='fu'>print</span>(<span class='no'>x</span>, <span class='kw'>pretty_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>split_components</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A numeric vector or data.frame.</p></td>
+      <td><p>An object returned by <code><a href='model_parameters.html'>model_parameters()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>na.rm</th>
-      <td><p>Remove missing values.</p></td>
+      <th>pretty_names</th>
+      <td><p>Pretty parameters' names.</p></td>
+    </tr>
+    <tr>
+      <th>split_components</th>
+      <td><p>Logical, if <code>TRUE</code> (default), For models with
+multiple components (zero-inflation, smooth terms, ...), each component is
+printed in a separate table. If <code>FALSE</code>, model parameters are printed
+in a single table and a <code>Component</code> column is added to the output.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -174,38 +181,58 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Values of skewness or kurtosis.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p><strong>Skewness</strong>
-<br /> <br />
-Symmetric distributions have a <code>skewness</code> around zero, while
-a negative skewness values indicates a "left-skewed" distribution, and a
-positive skewness values indicates a "right-skewed" distribution. Examples
-for the relationship of skewness and distributions are:</p><ul>
-<li><p>Normal distribution (and other symmetric distribution) has a skewness of 0</p></li>
-<li><p>Half-normal distribution has a skewness just below 1</p></li>
-<li><p>Exponential distribution has a skewness of 2</p></li>
-<li><p>Lognormal distribution can have a skewness of any positive value, depending on its parameters</p></li>
-</ul><p>(<cite>https://en.wikipedia.org/wiki/Skewness</cite>)
-<br /> <br />
-<strong>Kurtosis</strong>
-<br /> <br />
-The <code>kurtosis</code> is a measure of "tailedness" of a distribution. A distribution
-with a kurtosis valus of about zero is called "mesokurtic". A kurtosis value
-larger than zero indicates a "leptokurtic" distribution with <em>fatter</em> tails.
-A kurtosis value below zero indicates a "platykurtic" distribution with <em>thinner</em>
-tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
+    <p><code>NULL</code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>skewness</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; [1] -0.0585882</div><div class='input'><span class='fu'>kurtosis</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; [1] 0.1840738</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>glmmTMB</span>)
+
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/glmmTMB/topics/glmmTMB'>glmmTMB</a></span>(
+  <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
+  <span class='kw'>ziformula</span> <span class='kw'>=</span>  ~ <span class='no'>mined</span>,
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/family'>poisson</a></span>(),
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
+)
+<span class='no'>mp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+
+<span class='fu'>print</span>(<span class='no'>mp</span>, <span class='kw'>pretty_names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |   SE |       95% CI |     z |      p
+#&gt; ----------------------------------------------------------------
+#&gt; (Intercept) |       -0.36 | 0.28 | -0.90,  0.18 | -1.30 | &gt; .1  
+#&gt; sppPR       |       -1.27 | 0.24 | -1.74, -0.80 | -5.27 | &lt; .001
+#&gt; sppDM       |        0.27 | 0.14 |  0.00,  0.54 |  1.95 | 0.05  
+#&gt; sppEC-A     |       -0.57 | 0.21 | -0.97, -0.16 | -2.75 | &lt; .01 
+#&gt; sppEC-L     |        0.67 | 0.13 |  0.41,  0.92 |  5.20 | &lt; .001
+#&gt; sppDES-L    |        0.63 | 0.13 |  0.38,  0.87 |  4.96 | &lt; .001
+#&gt; sppDF       |        0.12 | 0.15 | -0.17,  0.40 |  0.78 | &gt; .1  
+#&gt; minedno     |        1.27 | 0.27 |  0.74,  1.80 |  4.72 | &lt; .001
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |   SE |       95% CI |     z |      p
+#&gt; ----------------------------------------------------------------
+#&gt; (Intercept) |        0.79 | 0.27 |  0.26,  1.32 |  2.90 | &lt; .01 
+#&gt; minedno     |       -1.84 | 0.31 | -2.46, -1.23 | -5.87 | &lt; .001
+#&gt; </div><div class='input'>
+<span class='fu'>print</span>(<span class='no'>mp</span>, <span class='kw'>split_components</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |       95% CI |     z |      p |     Component
+#&gt; --------------------------------------------------------------------------------
+#&gt; (Intercept) |       -0.36 | 0.28 | -0.90,  0.18 | -1.30 | &gt; .1   |   conditional
+#&gt; spp (PR)    |       -1.27 | 0.24 | -1.74, -0.80 | -5.27 | &lt; .001 |   conditional
+#&gt; spp (DM)    |        0.27 | 0.14 |  0.00,  0.54 |  1.95 | 0.05   |   conditional
+#&gt; spp (EC-A)  |       -0.57 | 0.21 | -0.97, -0.16 | -2.75 | &lt; .01  |   conditional
+#&gt; spp (EC-L)  |        0.67 | 0.13 |  0.41,  0.92 |  5.20 | &lt; .001 |   conditional
+#&gt; spp (DES-L) |        0.63 | 0.13 |  0.38,  0.87 |  4.96 | &lt; .001 |   conditional
+#&gt; spp (DF)    |        0.12 | 0.15 | -0.17,  0.40 |  0.78 | &gt; .1   |   conditional
+#&gt; mined (no)  |        1.27 | 0.27 |  0.74,  1.80 |  4.72 | &lt; .001 |   conditional
+#&gt; (Intercept) |        0.79 | 0.27 |  0.26,  1.32 |  2.90 | &lt; .01  | zero_inflated
+#&gt; mined (no)  |       -1.84 | 0.31 | -2.46, -1.23 | -5.87 | &lt; .001 | zero_inflated</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

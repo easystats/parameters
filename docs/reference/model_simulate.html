@@ -43,7 +43,7 @@
   
 
 <meta property="og:title" content="Simulated draws from model coefficients — model_simulate" />
-<meta property="og:description" content="Simulate draws a statistical model n times to return a data.frame of estimates." />
+<meta property="og:description" content="Simulate draws a statistical model n_sims times to return a data.frame of estimates." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -148,20 +148,12 @@
     </div>
 
     <div class="ref-description">
-    <p>Simulate draws a statistical model n times to return a data.frame of estimates.</p>
+    <p>Simulate draws a statistical model <code>n_sims</code> times to return a data.frame of estimates.</p>
     </div>
 
     <pre class="usage"><span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>n_sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for glmmTMB</span>
-<span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>n_sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
-
-<span class='co'># S3 method for MixMod</span>
-<span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>n_sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
-
-<span class='co'># S3 method for zeroinfl</span>
 <span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>n_sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
 
@@ -170,7 +162,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Statistical model.</p></td>
+      <td><p>Statistical model (no Bayesian models).</p></td>
     </tr>
     <tr>
       <th>n_sims</th>
@@ -191,13 +183,20 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame.</p>
+    <p>A data frame.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>model_simulate()</code> is a computationally faster alternative
-  to <code><a href='model_bootstrap.html'>model_bootstrap()</a></code>. Simulated draws for coefficients are based
-  on a multivariate normal distribution (<code><a href='https://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>MASS::mvrnorm()</a></code> with mean
-  <code><a href='https://www.rdocumentation.org/packages/stats/topics/coef'>coef(model)</a></code> and variance <code><a href='https://www.rdocumentation.org/packages/stats/topics/vcov'>vcov(model)</a></code>.</p>
+    <h3>Technical Details</h3>
+    <code>model_simulate()</code> is a computationally faster alternative
+    to <code><a href='model_bootstrap.html'>model_bootstrap()</a></code>. Simulated draws for coefficients are based
+    on a multivariate normal distribution (<code><a href='https://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>MASS::mvrnorm()</a></code>) with mean
+    <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.
+  <p></p><h3>Models with Zero-Inflation Component</h3>
+    For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
+    <span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
+    which parameters should be simulated. For all other models, parameters
+    from the conditional component (fixed effects) are simulated. This may
+    include smooth terms, but not random effects.
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='parameters_simulate.html'>parameters_simulate()</a></code>,
@@ -206,6 +205,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>glmmTMB</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>model_simulate</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
@@ -221,7 +221,33 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 #&gt; 3                     0.2664962                    0.5051029
 #&gt; 4                    -0.9150329                   -0.6874545
 #&gt; 5                     0.1409961                    0.5640837
-#&gt; 6                    -0.7971398                   -0.4464493</div></pre>
+#&gt; 6                    -0.7971398                   -0.4464493</div><div class='input'>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/glmmTMB/topics/glmmTMB'>glmmTMB</a></span>(
+  <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
+  <span class='kw'>ziformula</span> <span class='kw'>=</span>  ~ <span class='no'>mined</span>,
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/family'>poisson</a></span>(),
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
+)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>model_simulate</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept)     sppPR     sppDM     sppEC-A   sppEC-L  sppDES-L       sppDF
+#&gt; 1 -0.67204492 -1.394162 0.4695762 -0.53451811 0.8112170 0.7628493  0.22797859
+#&gt; 2 -1.05441751 -0.941833 0.6356365 -0.01288753 0.9752585 0.9662561  0.37357400
+#&gt; 3  0.03562800 -1.194308 0.1952954 -0.84525856 0.6139604 0.6005609  0.02890172
+#&gt; 4 -0.16095966 -1.981485 0.1612835 -0.88192477 0.5545196 0.6245577 -0.04383800
+#&gt; 5 -0.19031865 -1.248176 0.1173594 -0.33711388 0.5007764 0.6406262  0.06291432
+#&gt; 6 -0.07682787 -1.291591 0.1249174 -0.86352643 0.5475300 0.4728020  0.25741877
+#&gt;     minedno (Intercept)_zi minedno_zi
+#&gt; 1 1.3668474      1.0196690  -2.201063
+#&gt; 2 1.7906669      0.6711210  -1.574992
+#&gt; 3 0.8179464      0.9700917  -1.890337
+#&gt; 4 1.1450382      0.9082645  -1.759289
+#&gt; 5 1.0557744      0.8175182  -1.798045
+#&gt; 6 1.1686885      0.4191659  -1.596359</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>))</div><div class='output co'>#&gt;   (Intercept)   minedno
+#&gt; 1   0.9193697 -1.714219
+#&gt; 2   1.0386701 -1.997039
+#&gt; 3   0.7739034 -1.746918
+#&gt; 4   0.8149933 -2.162096
+#&gt; 5   0.7555902 -1.769458
+#&gt; 6   0.8836169 -2.123902</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

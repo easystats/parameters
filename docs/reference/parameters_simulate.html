@@ -159,7 +159,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Statistical model.</p></td>
+      <td><p>Statistical model (no Bayesian models).</p></td>
     </tr>
     <tr>
       <th>n_sims</th>
@@ -185,7 +185,7 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
       <td><p>The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
-<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.#'
+<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
 (e.g. <code>rope</code> or <code>p_direction</code>) and its results
 included in the summary output.</p></td>
@@ -201,10 +201,17 @@ included in the summary output.</p></td>
     <p>A data frame with simulated parameters.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>parameters_simulate()</code> is a computationally faster alternative
-  to <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code>. Simulated draws for coefficients are based
-  on a multivariate normal distribution (<code><a href='https://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>MASS::mvrnorm()</a></code> with mean
-  <code><a href='https://www.rdocumentation.org/packages/stats/topics/coef'>coef(model)</a></code> and variance <code><a href='https://www.rdocumentation.org/packages/stats/topics/vcov'>vcov(model)</a></code>.</p>
+    <h3>Technical Details</h3>
+    <code><a href='model_simulate.html'>model_simulate()</a></code> is a computationally faster alternative
+    to <code><a href='model_bootstrap.html'>model_bootstrap()</a></code>. Simulated draws for coefficients are based
+    on a multivariate normal distribution (<code><a href='https://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>MASS::mvrnorm()</a></code>) with mean
+    <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.
+  <p></p><h3>Models with Zero-Inflation Component</h3>
+    For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
+    <span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
+    which parameters should be simulated. For all other models, parameters
+    from the conditional component (fixed effects) are simulated. This may
+    include smooth terms, but not random effects.
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge; New York: Cambridge University Press 2007: 140-143</p>
@@ -214,16 +221,38 @@ included in the summary output.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>parameters</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>glmmTMB</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_simulate</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high         p
-#&gt; 1                   (Intercept)   3.5370927  3.2274631  3.8292040 0.0000000
-#&gt; 4             Speciesversicolor  -1.1739030 -1.8978788 -0.4959412 0.0000000
-#&gt; 6              Speciesvirginica  -2.2584923 -3.1048818 -1.3503763 0.0000000
-#&gt; 3                   Petal.Width   0.3940228 -0.4485958  1.2774089 0.3716284
-#&gt; 2                  Petal.Length   0.9365924  0.7862262  1.0941120 0.0000000
-#&gt; 5 Speciesversicolor:Petal.Width  -0.7068025 -1.7093920  0.3170457 0.1538462
-#&gt; 7  Speciesvirginica:Petal.Width  -0.3612466 -1.3574535  0.5600066 0.4895105</div></pre>
+<span class='fu'>parameters_simulate</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high           p
+#&gt; 1                   (Intercept)   3.5291651  3.2026543  3.8481421 0.000000000
+#&gt; 4             Speciesversicolor  -1.1541920 -1.8471148 -0.4826065 0.001998002
+#&gt; 6              Speciesvirginica  -2.2293532 -3.1155210 -1.4045782 0.000000000
+#&gt; 3                   Petal.Width   0.4143481 -0.4959095  1.3357613 0.353646354
+#&gt; 2                  Petal.Length   0.9406770  0.7891260  1.0900810 0.000000000
+#&gt; 5 Speciesversicolor:Petal.Width  -0.7667890 -1.7285082  0.3051246 0.171828172
+#&gt; 7  Speciesvirginica:Petal.Width  -0.3692775 -1.3951537  0.5795459 0.423576424</div><div class='input'>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/glmmTMB/topics/glmmTMB'>glmmTMB</a></span>(
+  <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
+  <span class='kw'>ziformula</span> <span class='kw'>=</span>  ~ <span class='no'>mined</span>,
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/family'>poisson</a></span>(),
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
+)
+<span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt;         Parameter Coefficient       CI_low    CI_high           p
+#&gt; 1     (Intercept)  -0.3606631 -0.898176398  0.1798020 0.189810190
+#&gt; 10          sppPR  -1.2704593 -1.731652761 -0.8178404 0.000000000
+#&gt; 7           sppDM   0.2678054  0.001488994  0.5265815 0.049950050
+#&gt; 8         sppEC-A  -0.5686862 -0.988782861 -0.1634632 0.003996004
+#&gt; 9         sppEC-L   0.6647610  0.429755608  0.9050588 0.000000000
+#&gt; 5        sppDES-L   0.6263250  0.377223191  0.8761781 0.000000000
+#&gt; 6           sppDF   0.1211258 -0.166757937  0.4074449 0.435564436
+#&gt; 3         minedno   1.2686665  0.745682566  1.7798440 0.000000000
+#&gt; 2  (Intercept)_zi   0.7805382  0.258107620  1.3211320 0.007992008
+#&gt; 4      minedno_zi  -1.8428741 -2.462464996 -1.2228668 0.000000000</div><div class='input'><span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high           p
+#&gt; 1 (Intercept)   0.7773829 80  0.4249926  1.144516 0.003996004
+#&gt; 2 (Intercept)   0.7773829 95  0.2494981  1.360730 0.003996004
+#&gt; 3     minedno  -1.8333760 80 -2.2494140 -1.428800 0.000000000
+#&gt; 4     minedno  -1.8333760 95 -2.4820669 -1.187040 0.000000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

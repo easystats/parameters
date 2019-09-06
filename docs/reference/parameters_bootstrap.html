@@ -185,7 +185,7 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
       <td><p>The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
-<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.#'
+<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
 (e.g. <code>rope</code> or <code>p_direction</code>) and its results
 included in the summary output.</p></td>
@@ -211,12 +211,12 @@ included in the summary output.</p></td>
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
-#&gt; 1                   (Intercept)   4.7728824  4.5208491 4.9709230 0.000000000
-#&gt; 3             Speciesversicolor  -0.7392530 -1.7145214 0.1147634 0.091908092
-#&gt; 5              Speciesvirginica   0.4581110 -0.7340341 1.6647893 0.407592408
-#&gt; 2                   Petal.Width   0.9379005  0.2817038 1.9379015 0.003996004
-#&gt; 4 Speciesversicolor:Petal.Width   0.4918373 -0.6827755 1.5164756 0.385614386
-#&gt; 6  Speciesvirginica:Petal.Width  -0.2610669 -1.4389681 0.5532715 0.575424575</div></pre>
+#&gt; 1                   (Intercept)   4.7719541  4.5135511 4.9734149 0.000000000
+#&gt; 3             Speciesversicolor  -0.7309436 -1.6723006 0.1099670 0.091908092
+#&gt; 5              Speciesvirginica   0.4718643 -0.7561381 1.6863171 0.397602398
+#&gt; 2                   Petal.Width   0.9409103  0.2424254 1.9393910 0.001998002
+#&gt; 4 Speciesversicolor:Petal.Width   0.4642691 -0.7115033 1.4677545 0.393606394
+#&gt; 6  Speciesvirginica:Petal.Width  -0.2876091 -1.4380726 0.5768445 0.551448551</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

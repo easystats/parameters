@@ -180,7 +180,7 @@
     </tr>
     <tr>
       <th>bootstrap</th>
-      <td><p>Should estimates be based on bootsrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code>.</p></td>
+      <td><p>Should estimates be based on bootsrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code>).</p></td>
     </tr>
     <tr>
       <th>iterations</th>
@@ -258,8 +258,8 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 </div></span><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |       95% CI |      p | Coefficient (std.)
 #&gt; ----------------------------------------------------------------------
-#&gt; (Intercept) |       35.92 | 31.12, 40.25 | &lt; .001 |               0.00
-#&gt; wt          |       -4.85 | -6.38, -3.55 | &lt; .001 |              -0.82</div><div class='input'>
+#&gt; (Intercept) |       36.36 | 31.75, 39.95 | &lt; .001 |               0.00
+#&gt; wt          |       -5.01 | -6.02, -3.76 | &lt; .001 |              -0.82</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

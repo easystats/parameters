@@ -21,6 +21,7 @@ reference:
   - model_parameters.BFBayesFactor
   - model_parameters.principal
   - model_parameters.htest
+  - print.parameters_model
 
 - title: "Specific Model Parameters"
   contents:
