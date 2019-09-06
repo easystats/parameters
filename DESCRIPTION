@@ -71,6 +71,7 @@ Suggests:
 	rstanarm,
 	see,
 	survey,
+	survival,
 	testthat,
 	VGAM,
 	Zelig

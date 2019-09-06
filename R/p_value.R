@@ -121,6 +121,19 @@ p_value.lme <- function(model, ...) {
 
 
 #' @export
+p_value.coxph <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- cs[, 5]
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
 p_value.BBmm <- function(model, ...) {
   data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),

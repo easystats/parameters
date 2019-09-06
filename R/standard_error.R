@@ -102,6 +102,19 @@ standard_error.gls <- standard_error.lme
 
 
 #' @export
+standard_error.coxph <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  se <- cs[, 3]
+
+  data_frame(
+    Parameter = names(se),
+    SE = as.vector(se)
+  )
+}
+
+
+
+#' @export
 standard_error.gam <- function(model, ...) {
   p.table <- summary(model)$p.table
   s.table <- summary(model)$s.table

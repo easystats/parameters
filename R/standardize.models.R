@@ -80,3 +80,17 @@ standardize.hurdle <- standardize.zeroinfl
 
 #' @export
 standardize.zerocount <- standardize.zeroinfl
+
+
+#' @export
+standardize.coxph <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
+  pred <- insight::find_predictors(x, flatten = TRUE)
+  data <- insight::get_data(x)
+
+  data_std <- standardize(data[, pred, drop = FALSE], robust = robust, method = method, verbose = verbose)
+  data[pred] <- data_std
+
+  text <- utils::capture.output(model_std <- stats::update(x, data = data))
+
+  model_std
+}

@@ -103,6 +103,10 @@ model_simulate.clm2 <- model_simulate.lm
 model_simulate.polr <- model_simulate.lm
 
 
+#' @export
+model_simulate.coxph <- model_simulate.lm
+
+
 
 
 

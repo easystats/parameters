@@ -64,6 +64,13 @@ ci.plm <- function(x, ci = .95, ...) {
 
 
 #' @export
+ci.coxph <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, dof = Inf, ...)
+}
+
+
+
+#' @export
 ci.clm <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, dof = Inf, ...)
 }
