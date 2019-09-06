@@ -57,6 +57,9 @@ model_simulate.lme <- model_simulate.lm
 model_simulate.merMod <- model_simulate.lm
 
 
+#' @export
+model_simulate.gamlss <- model_simulate.lm
+
 
 #' @export
 model_simulate.gam <- function(model, n_sims = 1000, ...) {
@@ -164,7 +167,7 @@ model_simulate.zerocount <- model_simulate.zeroinfl
       stats::vcov(model)
     )
   } else {
-    vc <- stats::vcov(model)
+    vc <- suppressWarnings(stats::vcov(model))
     if (is.list(vc)) {
       vc <- switch(
         component,
