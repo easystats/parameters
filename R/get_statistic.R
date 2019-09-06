@@ -163,3 +163,17 @@
 
 
 .get_statistic.svyglm.zip <- .get_statistic.svyglm.nb
+
+
+.get_statistic.betareg <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  se <- standard_error(model)
+
+  out <- data_frame(
+    Parameter = parms$parameter,
+    Statistic = parms$estimate / se$SE
+  )
+
+  attr(out, "statistic") <- "z"
+  out
+}

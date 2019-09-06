@@ -69,6 +69,9 @@ ci.clm2 <- ci.clm
 #' @export
 ci.feis <- ci.gamlss
 
+#' @export
+ci.betareg <- ci.gamlss
+
 
 
 #' @export

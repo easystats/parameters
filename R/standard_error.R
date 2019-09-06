@@ -57,6 +57,19 @@ standard_error.lm <- function(model, ...) {
 
 
 
+#' @export
+standard_error.betareg <- function(model, ...) {
+  cs <- do.call(rbind, stats::coef(summary(model)))
+  se <- cs[, 2]
+
+  data_frame(
+    Parameter = names(se),
+    SE = as.vector(se)
+  )
+}
+
+
+
 #' @importFrom utils capture.output
 #' @export
 standard_error.gamlss <- function(model, ...) {

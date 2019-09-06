@@ -61,6 +61,19 @@ p_value.rlm <- function(model, ...) {
 
 
 
+#' @export
+p_value.betareg <- function(model, ...) {
+  cs <- do.call(rbind, stats::coef(summary(model)))
+  p <- cs[, 4]
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
 #' @importFrom utils capture.output
 #' @export
 p_value.gamlss <- function(model, ...) {
