@@ -126,3 +126,7 @@ standardize.betareg <- function(x, robust = FALSE, method = "default", verbose =
 
   model_std
 }
+
+
+#' @export
+standardize.truncreg <- standardize.betareg

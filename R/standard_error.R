@@ -30,7 +30,7 @@ standard_error.default <- function(model, ...) {
         stop("Package `Zelig` required. Please install", call. = FALSE)
       unlist(Zelig::get_se(model))
     } else {
-      stats::coef(summary(model))[, 2]
+      .get_se_from_summary(model)
     }
   },
   error = function(e) { NULL }
@@ -45,6 +45,10 @@ standard_error.default <- function(model, ...) {
     )
   }
 }
+
+
+#' @export
+standard_error.truncreg <- standard_error.default
 
 
 #' @export
@@ -393,12 +397,26 @@ standard_error.polr <- function(model, ...) {
 #' @importFrom stats coef
 .get_se_from_summary <- function(model, component = NULL) {
   cs <- stats::coef(summary(model))
+  se <- NULL
+
   if (is.list(cs) && !is.null(component)) cs <- cs[[component]]
 
-  if (!is.null(cs))
-    as.vector(cs[, 2])
-  else
-    NULL
+  if (!is.null(cs)) {
+    # do we have a se column?
+    se_col <- which(colnames(cs) == "Std. Error")
+
+    # if not, default to 2
+    if (length(se_col) == 0) se_col <- 2
+
+    se <- as.vector(cs[, se_col])
+
+    if (is.null(names(se))) {
+      coef_names <- rownames(cs)
+      if (length(coef_names) == length(se)) names(se) <- coef_names
+    }
+  }
+
+  se
 }
 
 

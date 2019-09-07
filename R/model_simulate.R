@@ -119,6 +119,10 @@ model_simulate.svyglm.zip <- model_simulate.lm
 model_simulate.betareg <- model_simulate.lm
 
 
+#' @export
+model_simulate.truncreg <- model_simulate.lm
+
+
 
 
 

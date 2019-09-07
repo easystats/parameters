@@ -165,6 +165,9 @@
 .get_statistic.svyglm.zip <- .get_statistic.svyglm.nb
 
 
+.get_statistic.truncreg <- .get_statistic.default
+
+
 .get_statistic.betareg <- function(model, ...) {
   parms <- insight::get_parameters(model)
   se <- standard_error(model)

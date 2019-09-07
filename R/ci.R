@@ -58,6 +58,9 @@ ci.gamlss <- function(x, ci = .95, ...) {
 ci.plm <- ci.gamlss
 
 #' @export
+ci.truncreg <- ci.gamlss
+
+#' @export
 ci.coxph <- ci.gamlss
 
 #' @export

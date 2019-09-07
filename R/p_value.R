@@ -30,7 +30,7 @@ p_value.default <- function(model, ...) {
         stop("Package `Zelig` required. Please install", call. = F)
       unlist(Zelig::get_pvalue(model))
     } else {
-      stats::coef(summary(model))[, 4]
+      .get_pval_from_summary(model)
     }
   },
   error = function(e) { NULL }
@@ -118,6 +118,10 @@ p_value.hurdle <- p_value.zeroinfl
 #' @export
 p_value.zerocount <- p_value.zeroinfl
 
+
+
+#' @export
+p_value.truncreg <- p_value.default
 
 
 #' @export
