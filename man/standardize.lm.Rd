@@ -5,7 +5,7 @@
 \title{Model Standardization}
 \usage{
 \method{standardize}{lm}(x, robust = FALSE, method = "default",
-  verbose = TRUE, ...)
+  include_response = TRUE, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Object.}
@@ -17,6 +17,11 @@ mean and divide it by the standard deviation (SD).
 the}
 
 \item{method}{The method of standardization. For data.frames, can be \code{"default"} (variables are divided by SD or MAD depending on \code{robust}) or \code{"2sd"} (divided by two times the deviation).}
+
+\item{include_response}{Logical, if \code{TRUE} (default), the response value
+will also be standardized. For certain models (logistic regression,
+count models, ...), the response value will never be standardized, to make
+re-fitting the model work.}
 
 \item{verbose}{Toggle warnings on or off.}
 

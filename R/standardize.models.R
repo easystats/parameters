@@ -2,6 +2,10 @@
 #'
 #' Refit the model after standardizing the data.
 #'
+#' @param include_response Logical, if \code{TRUE} (default), the response value
+#'   will also be standardized. For certain models (logistic regression,
+#'   count models, ...), the response value will never be standardized, to make
+#'   re-fitting the model work.
 #' @inheritParams standardize
 #'
 #'
@@ -14,7 +18,7 @@
 #' @importFrom insight get_data model_info find_response get_response
 #' @importFrom utils capture.output
 #' @export
-standardize.lm <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
+standardize.lm <- function(x, robust = FALSE, method = "default", include_response = TRUE, verbose = TRUE, ...) {
   m_info <- insight::model_info(x)
   data <- insight::get_data(x)
   resp <- NULL
@@ -23,7 +27,7 @@ standardize.lm <- function(x, robust = FALSE, method = "default", verbose = TRUE
     data[insight::find_response(x)] <- as.factor(insight::get_response(x))
   }
 
-  if (m_info$is_count || m_info$is_beta || m_info$is_censored) {
+  if (m_info$is_count || m_info$is_beta || m_info$is_censored || !include_response) {
     resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
   }
 
