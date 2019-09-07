@@ -82,6 +82,14 @@ standardize.hurdle <- standardize.zeroinfl
 standardize.zerocount <- standardize.zeroinfl
 
 
+
+
+
+
+
+# models with special handling of response variables ---------------------------
+
+
 #' @export
 standardize.coxph <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
 
@@ -100,5 +108,21 @@ standardize.coxph <- function(x, robust = FALSE, method = "default", verbose = T
 }
 
 
+
+#' @importFrom insight find_response get_response get_data
 #' @export
-standardize.betareg <- standardize.coxph
+standardize.betareg <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
+
+  # for some models, the DV cannot be standardized when using
+  # "update()", so we only standardize model predictors
+
+  resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
+  data <- insight::get_data(x)
+
+  data_std <- standardize(data, robust = robust, method = method, verbose = verbose)
+  data_std[resp] <- data[resp]
+
+  text <- utils::capture.output(model_std <- stats::update(x, data = data_std))
+
+  model_std
+}

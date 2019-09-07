@@ -80,6 +80,10 @@ standardize.factor <- function(x, force = FALSE, ...) {
 
 
 #' @export
+standardize.character <- standardize.factor
+
+
+#' @export
 standardize.Surv <- function(x, ...) {
   insight::print_color("'Surv' objects cannot be standardized.\n", "red")
   x
@@ -87,8 +91,7 @@ standardize.Surv <- function(x, ...) {
 
 
 #' @export
-standardize.character <- standardize.factor
-
+standardize.AsIs <- standardize.numeric
 
 
 
