@@ -11,20 +11,29 @@
 #' @return The model fitted on standardized data.
 #'
 #' @importFrom stats update
-#' @importFrom insight get_data model_info find_response
+#' @importFrom insight get_data model_info find_response get_response
 #' @importFrom utils capture.output
 #' @export
 standardize.lm <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
+  m_info <- insight::model_info(x)
   data <- insight::get_data(x)
+  resp <- NULL
 
-  if (insight::model_info(x)$is_binomial) {
+  if (m_info$is_binomial) {
     data[insight::find_response(x)] <- as.factor(insight::get_response(x))
   }
 
+  if (m_info$is_count || m_info$is_beta || m_info$is_censored) {
+    resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
+  }
+
+  data_std <- standardize(data, robust = robust, method = method, verbose = verbose)
+  if (!is.null(resp)) data_std[resp] <- data[resp]
+
   if (inherits(x, c("brmsfit"))) {
-    text <- utils::capture.output(model_std <- stats::update(x, newdata = standardize(data, robust = robust, method = method, verbose = verbose)))
+    text <- utils::capture.output(model_std <- stats::update(x, newdata = data_std))
   } else {
-    text <- utils::capture.output(model_std <- stats::update(x, data = standardize(data, robust = robust, method = method, verbose = verbose)))
+    text <- utils::capture.output(model_std <- stats::update(x, data = data_std))
   }
 
   model_std
@@ -52,6 +61,15 @@ standardize.plm <- standardize.lm
 standardize.feis <- standardize.lm
 
 #' @export
+standardize.negbin <- standardize.lm
+
+#' @export
+standardize.betareg <- standardize.lm
+
+#' @export
+standardize.truncreg <- standardize.lm
+
+#' @export
 standardize.wbm <- function(x, ...) {
   warning("Standardization of parameters not possible for models from package 'panelr'.", call. = FALSE)
   x
@@ -62,6 +80,14 @@ standardize.clm <- standardize.wbm
 
 #' @export
 standardize.clm2 <- standardize.wbm
+
+
+
+
+
+
+
+# Zero-Inflated models -------------------------------------------------------
 
 
 #' @export
@@ -106,27 +132,3 @@ standardize.coxph <- function(x, robust = FALSE, method = "default", verbose = T
 
   model_std
 }
-
-
-
-#' @importFrom insight find_response get_response get_data
-#' @export
-standardize.betareg <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
-
-  # for some models, the DV cannot be standardized when using
-  # "update()", so we only standardize model predictors
-
-  resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
-  data <- insight::get_data(x)
-
-  data_std <- standardize(data, robust = robust, method = method, verbose = verbose)
-  data_std[resp] <- data[resp]
-
-  text <- utils::capture.output(model_std <- stats::update(x, data = data_std))
-
-  model_std
-}
-
-
-#' @export
-standardize.truncreg <- standardize.betareg

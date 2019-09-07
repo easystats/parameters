@@ -125,6 +125,10 @@ p_value.truncreg <- p_value.default
 
 
 #' @export
+p_value.negbin <- p_value.default
+
+
+#' @export
 p_value.lme <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- cs[, 5]
@@ -345,13 +349,7 @@ p_value.htest <- function(model, ...) {
 
 
 #' @export
-p_value.lm <- function(model, ...) {
-  parms <- as.data.frame(stats::coef(summary(model)))
-  data_frame(
-    Parameter = rownames(parms),
-    p = as.vector(parms[, "Pr(>|t|)", drop = TRUE])
-  )
-}
+p_value.lm <- p_value.default
 
 
 

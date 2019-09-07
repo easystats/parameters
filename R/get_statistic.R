@@ -168,6 +168,9 @@
 .get_statistic.truncreg <- .get_statistic.default
 
 
+.get_statistic.negbin <- .get_statistic.default
+
+
 .get_statistic.betareg <- function(model, ...) {
   parms <- insight::get_parameters(model)
   se <- standard_error(model)

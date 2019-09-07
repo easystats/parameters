@@ -22,6 +22,10 @@ se <- standard_error
 
 
 
+
+# Default methods ---------------------------------------------------------
+
+
 #' @export
 standard_error.default <- function(model, ...) {
   se <- tryCatch({
@@ -52,6 +56,25 @@ standard_error.truncreg <- standard_error.default
 
 
 #' @export
+standard_error.negbin <- standard_error.default
+
+
+#' @export
+standard_error.lme <- standard_error.default
+
+
+#' @export
+standard_error.gls <- standard_error.default
+
+
+
+
+
+
+# Methods that work like simple linear models ----------------------------------
+
+
+#' @export
 standard_error.lm <- function(model, ...) {
   data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
@@ -59,6 +82,20 @@ standard_error.lm <- function(model, ...) {
   )
 }
 
+
+#' @export
+standard_error.glm <- standard_error.lm
+
+
+#' @export
+standard_error.merMod <- standard_error.lm
+
+
+
+
+
+
+# Other models ---------------------------------------------------------------
 
 
 #' @export
@@ -98,23 +135,6 @@ standard_error.plm <- function(model, ...) {
     SE = as.vector(se[, 2])
   )
 }
-
-
-
-#' @export
-standard_error.lme <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  se <- cs[, 2]
-
-  data_frame(
-    Parameter = names(se),
-    SE = as.vector(se)
-  )
-}
-
-
-#' @export
-standard_error.gls <- standard_error.lme
 
 
 
@@ -163,15 +183,6 @@ standard_error.MCMCglmm <- function(model, ...) {
     SE = unname(sapply(parms, stats::sd))
   )
 }
-
-
-
-#' @export
-standard_error.glm <- standard_error.lm
-
-
-#' @export
-standard_error.merMod <- standard_error.lm
 
 
 

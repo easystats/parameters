@@ -112,6 +112,10 @@ ci.glm <- function(x, ci = .95, method = c("profile", "wald"), ...) {
 }
 
 
+#' @export
+ci.negbin <- ci.glm
+
+
 
 #' @method ci lm
 #' @export
