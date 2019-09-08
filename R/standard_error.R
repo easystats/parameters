@@ -315,6 +315,12 @@ standard_error.lrm <- function(model, ...) {
   )
 }
 
+#' @export
+standard_error.ols <- standard_error.lrm
+
+#' @export
+standard_error.rms <- standard_error.lrm
+
 
 
 #' @export

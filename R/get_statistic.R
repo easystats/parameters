@@ -230,3 +230,8 @@
   attr(out, "statistic") <- "z"
   out
 }
+
+
+.get_statistic.ols <- .get_statistic.lrm
+
+.get_statistic.rms <- .get_statistic.lrm

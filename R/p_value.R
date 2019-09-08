@@ -392,6 +392,12 @@ p_value.lrm <- function(model, ...) {
   )
 }
 
+#' @export
+p_value.ols <- p_value.lrm
+
+#' @export
+p_value.rms <- p_value.lrm
+
 
 
 #' @export

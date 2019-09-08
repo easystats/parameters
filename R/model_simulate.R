@@ -131,6 +131,14 @@ model_simulate.lrm <- model_simulate.lm
 
 
 #' @export
+model_simulate.ols <- model_simulate.lm
+
+
+#' @export
+model_simulate.rms <- model_simulate.lm
+
+
+#' @export
 model_simulate.survreg <- model_simulate.lm
 
 
