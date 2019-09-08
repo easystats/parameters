@@ -86,6 +86,9 @@ standardize.truncreg <- standardize.lm
 standardize.lrm <- standardize.lm
 
 #' @export
+standardize.psm <- standardize.lm
+
+#' @export
 standardize.ols <- standardize.lm
 
 #' @export

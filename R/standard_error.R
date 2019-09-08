@@ -309,6 +309,10 @@ standard_error.glimML <- function(model, ...) {
 #' @export
 standard_error.lrm <- function(model, ...) {
   se <- sqrt(diag(stats::vcov(model)))
+
+  # psm-models returns vcov-matrix w/o dimnames
+  if (is.null(names(se))) names(se) <- names(stats::coef(model))
+
   data_frame(
     Parameter = names(se),
     SE = as.vector(se)
@@ -320,6 +324,9 @@ standard_error.ols <- standard_error.lrm
 
 #' @export
 standard_error.rms <- standard_error.lrm
+
+#' @export
+standard_error.psm <- standard_error.lrm
 
 
 

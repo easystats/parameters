@@ -131,6 +131,10 @@ model_simulate.lrm <- model_simulate.lm
 
 
 #' @export
+model_simulate.psm <- model_simulate.lm
+
+
+#' @export
 model_simulate.ols <- model_simulate.lm
 
 

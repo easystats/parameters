@@ -59,3 +59,6 @@ model_parameters.plm <- function(model, ci = .95, standardize = FALSE, standardi
 
 #' @export
 model_parameters.survreg <- model_parameters.plm
+
+#' @export
+model_parameters.psm <- model_parameters.plm
