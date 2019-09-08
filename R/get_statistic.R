@@ -197,3 +197,21 @@
   attr(out, "statistic") <- "z"
   out
 }
+
+
+.get_statistic.glimML <- function(model, ...) {
+  if (!requireNamespace("aod", quietly = TRUE)) {
+    stop("Package 'aod' required for this function to work. Please install it.")
+  }
+
+  parms <- insight::get_parameters(model)
+  s <- methods::slot(aod::summary(model), "Coef")
+
+  out <- data_frame(
+    Parameter = parms$parameter,
+    Statistic = s[, 3]
+  )
+
+  attr(out, "statistic") <- "z"
+  out
+}

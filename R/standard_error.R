@@ -279,6 +279,23 @@ standard_error.svyglm <- function(model, ...) {
 
 
 #' @export
+standard_error.glimML <- function(model, ...) {
+  if (!requireNamespace("aod", quietly = TRUE)) {
+    stop("Package 'aod' required for this function to work. Please install it.")
+  }
+
+  s <- methods::slot(aod::summary(model), "Coef")
+  se <- s[, 2]
+
+  data_frame(
+    Parameter = rownames(s),
+    SE = as.vector(se)
+  )
+}
+
+
+
+#' @export
 standard_error.betareg <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model)))
   se <- cs[, 2]

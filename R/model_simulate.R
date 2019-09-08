@@ -123,6 +123,10 @@ model_simulate.truncreg <- model_simulate.lm
 
 
 #' @export
+model_simulate.glimML <- model_simulate.lm
+
+
+#' @export
 model_simulate.survreg <- model_simulate.lm
 
 
@@ -260,6 +264,11 @@ model_simulate.zerocount <- model_simulate.zeroinfl
     )
   } else if (inherits(model, "feis")) {
     vc <- model$vcov
+  } else if (inherits(model, "glimML")) {
+    if (!requireNamespace("aod", quietly = TRUE)) {
+      stop("Package 'aod' required for this function to work. Please install it.")
+    }
+    vc <- aod::vcov(model)
   } else {
     vc <- suppressWarnings(stats::vcov(model))
     if (is.list(vc)) {
@@ -274,3 +283,5 @@ model_simulate.zerocount <- model_simulate.zeroinfl
 
   vc
 }
+
+

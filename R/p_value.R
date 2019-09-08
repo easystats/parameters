@@ -363,6 +363,24 @@ p_value.survreg <- function(model, ...) {
 # p-Values from Special Models -----------------------------------------------
 
 
+#' @importFrom methods slot
+#' @export
+p_value.glimML <- function(model, ...) {
+  if (!requireNamespace("aod", quietly = TRUE)) {
+    stop("Package 'aod' required for this function to work. Please install it.")
+  }
+
+  s <- methods::slot(aod::summary(model), "Coef")
+  p <- s[, 4]
+
+  data_frame(
+    Parameter = rownames(s),
+    p = as.vector(p)
+  )
+}
+
+
+
 #' @export
 p_value.rlm <- function(model, ...) {
   cs <- stats::coef(summary(model))
