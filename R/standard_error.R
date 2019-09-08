@@ -5,6 +5,7 @@
 #' @param model A model.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_simulate
+#' @inheritParams standardize
 #'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
@@ -24,6 +25,31 @@ se <- standard_error
 
 
 # Default methods ---------------------------------------------------------
+
+
+#' @export
+standard_error.factor <- function(model, verbose = TRUE, ...) {
+  if (verbose)
+    warning("Can't compute standard error of non-numeric variables.", call. = FALSE)
+  return(NA)
+}
+
+
+#' @export
+standard_error.character <- standard_error.factor
+
+
+#' @importFrom stats var na.omit
+#' @export
+standard_error.numeric <- function(model, ...) {
+  sqrt(stats::var(model, na.rm = TRUE) / length(stats::na.omit(model)))
+}
+
+
+#' @export
+standard_error.data.frame <- function(model, verbose = TRUE, ...) {
+  unlist(sapply(iris, standard_error, verbose = verbose))
+}
 
 
 #' @export
@@ -95,6 +121,160 @@ standard_error.merMod <- standard_error.lm
 
 
 
+# Mixed models ---------------------------------------------------------------
+
+
+#' @rdname standard_error
+#' @export
+standard_error.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  if (is.null(.check_component(model, component))) return(NULL)
+
+  cs <- .compact_list(stats::coef(summary(model)))
+  x <- lapply(names(cs), function(i) {
+    data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+      SE = as.vector(cs[[i]][, 2]),
+      Component = i
+    )
+  })
+
+  se <- do.call(rbind, x)
+  se$Component <- .rename_values(se$Component, "cond", "conditional")
+  se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
+
+  .filter_component(se, component)
+}
+
+
+
+#' @rdname standard_error
+#' @export
+standard_error.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  if (is.null(.check_component(model, component))) return(NULL)
+
+  s <- summary(model)
+  cs <- list(s$coef_table, s$coef_table_zi)
+  names(cs) <- c("conditional", "zero_inflated")
+  cs <- .compact_list(cs)
+  x <- lapply(names(cs), function(i) {
+    data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+      SE = as.vector(cs[[i]][, 2]),
+      Component = i
+    )
+  })
+
+  se <- do.call(rbind, x)
+  .filter_component(se, component)
+}
+
+
+
+
+
+
+# Zero-inflated models --------------------------------------------------------
+
+
+#' @export
+standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  if (is.null(.check_component(model, component))) return(NULL)
+
+  cs <- .compact_list(stats::coef(summary(model)))
+  x <- lapply(names(cs), function(i) {
+    comp <- ifelse(i == "count", "conditional", "zi")
+    data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
+      SE = as.vector(cs[[i]][, 2]),
+      Component = comp
+    )
+  })
+
+  se <- do.call(rbind, x)
+  se$Component <- .rename_values(se$Component, "cond", "conditional")
+  se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
+
+  .filter_component(se, component)
+}
+
+
+#' @export
+standard_error.hurdle <- standard_error.zeroinfl
+
+#' @export
+standard_error.zerocount <- standard_error.zeroinfl
+
+
+
+
+
+# ANOVA ---------------------------------------------------------------
+
+
+#' @export
+standard_error.aov <- function(model, ...) {
+  params <- model_parameters(model)
+
+  data.frame(
+    Parameter = params$Parameter,
+    SE = params$SE,
+    stringsAsFactors = FALSE
+  )
+}
+
+
+#' @export
+standard_error.anova <- standard_error.aov
+
+#' @export
+standard_error.aovlist <- standard_error.aov
+
+
+
+
+
+
+# Survey models ---------------------------------------------------------------
+
+
+#' @export
+standard_error.svyglm.nb <- function(model, ...) {
+  if (!isNamespaceLoaded("survey")) {
+    requireNamespace("survey", quietly = TRUE)
+  }
+
+  se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
+
+  data_frame(
+    Parameter = names(se),
+    SE = as.vector(se)
+  )
+}
+
+
+#' @export
+standard_error.svyglm.zip <- standard_error.svyglm.nb
+
+
+#' @export
+standard_error.svyglm <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  se <- cs[, 2]
+
+  data_frame(
+    Parameter = names(se),
+    SE = as.vector(se)
+  )
+}
+
+
+
+
+
+
 # Other models ---------------------------------------------------------------
 
 
@@ -152,6 +332,19 @@ standard_error.coxph <- function(model, ...) {
 
 
 #' @export
+standard_error.survreg <- function(model, ...) {
+  s <- summary(model)
+  se <- s$table[, 2]
+
+  data_frame(
+    Parameter = names(se),
+    SE = as.vector(se)
+  )
+}
+
+
+
+#' @export
 standard_error.gam <- function(model, ...) {
   p.table <- summary(model)$p.table
   s.table <- summary(model)$s.table
@@ -182,84 +375,6 @@ standard_error.MCMCglmm <- function(model, ...) {
     Parameter = colnames(parms),
     SE = unname(sapply(parms, stats::sd))
   )
-}
-
-
-
-#' @export
-standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  component <- match.arg(component)
-  if (is.null(.check_component(model, component))) return(NULL)
-
-  cs <- .compact_list(stats::coef(summary(model)))
-  x <- lapply(names(cs), function(i) {
-    comp <- ifelse(i == "count", "conditional", "zi")
-    data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
-      SE = as.vector(cs[[i]][, 2]),
-      Component = comp
-    )
-  })
-
-  se <- do.call(rbind, x)
-  se$Component <- .rename_values(se$Component, "cond", "conditional")
-  se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
-
-  .filter_component(se, component)
-}
-
-
-#' @export
-standard_error.hurdle <- standard_error.zeroinfl
-
-#' @export
-standard_error.zerocount <- standard_error.zeroinfl
-
-
-#' @rdname standard_error
-#' @export
-standard_error.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  component <- match.arg(component)
-  if (is.null(.check_component(model, component))) return(NULL)
-
-  cs <- .compact_list(stats::coef(summary(model)))
-  x <- lapply(names(cs), function(i) {
-    data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
-      SE = as.vector(cs[[i]][, 2]),
-      Component = i
-    )
-  })
-
-  se <- do.call(rbind, x)
-  se$Component <- .rename_values(se$Component, "cond", "conditional")
-  se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
-
-  .filter_component(se, component)
-}
-
-
-
-#' @rdname standard_error
-#' @export
-standard_error.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  component <- match.arg(component)
-  if (is.null(.check_component(model, component))) return(NULL)
-
-  s <- summary(model)
-  cs <- list(s$coef_table, s$coef_table_zi)
-  names(cs) <- c("conditional", "zero_inflated")
-  cs <- .compact_list(cs)
-  x <- lapply(names(cs), function(i) {
-    data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
-      SE = as.vector(cs[[i]][, 2]),
-      Component = i
-    )
-  })
-
-  se <- do.call(rbind, x)
-  .filter_component(se, component)
 }
 
 
@@ -301,64 +416,12 @@ standard_error.htest <- function(model, ...) {
 
 
 #' @export
-standard_error.aov <- function(model, ...) {
-  params <- model_parameters(model)
-
-  data.frame(
-    Parameter = params$Parameter,
-    SE = params$SE,
-    stringsAsFactors = FALSE
-  )
-}
-
-
-#' @export
-standard_error.anova <- standard_error.aov
-
-#' @export
-standard_error.aovlist <- standard_error.aov
-
-
-
-#' @export
 standard_error.vglm <- function(model, ...) {
   if (!requireNamespace("VGAM", quietly = TRUE)) {
     stop("Package `VGAM` required.", call. = FALSE)
   }
 
   cs <- VGAM::summary(model)@coef3
-  se <- cs[, 2]
-
-  data_frame(
-    Parameter = names(se),
-    SE = as.vector(se)
-  )
-}
-
-
-
-#' @export
-standard_error.svyglm.nb <- function(model, ...) {
-  if (!isNamespaceLoaded("survey")) {
-    requireNamespace("survey", quietly = TRUE)
-  }
-
-  se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
-
-  data_frame(
-    Parameter = names(se),
-    SE = as.vector(se)
-  )
-}
-
-
-#' @export
-standard_error.svyglm.zip <- standard_error.svyglm.nb
-
-
-#' @export
-standard_error.svyglm <- function(model, ...) {
-  cs <- stats::coef(summary(model))
   se <- cs[, 2]
 
   data_frame(
@@ -403,6 +466,9 @@ standard_error.polr <- function(model, ...) {
   )
 }
 
+
+
+# helper -----------------------------------------------------------------
 
 
 #' @importFrom stats coef

@@ -328,6 +328,38 @@ p_value.aovlist <- p_value.aov
 
 
 
+# p-Values from Survival Models -----------------------------------------------
+
+
+#' @export
+p_value.coxph <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- cs[, 5]
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.survreg <- function(model, ...) {
+  s <- summary(model)
+  p <- s$table[, "p"]
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+
+
+
 # p-Values from Special Models -----------------------------------------------
 
 
@@ -367,19 +399,6 @@ p_value.gamlss <- function(model, ...) {
     Parameter = parms$parameter,
     p = as.vector(cs[, 4]),
     Component = parms$component
-  )
-}
-
-
-
-#' @export
-p_value.coxph <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  p <- cs[, 5]
-
-  data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
   )
 }
 
