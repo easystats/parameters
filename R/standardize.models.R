@@ -23,9 +23,18 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
   data <- insight::get_data(x)
   resp <- NULL
 
+  # for models with binary outcome, make sure response is factor,
+  # so it's not standardized.
+
   if (m_info$is_binomial) {
     data[insight::find_response(x)] <- as.factor(insight::get_response(x))
   }
+
+
+  # for models with specific scale of the response value (e.g. count models
+  # with positive integers, or beta with ratio between 0 and 1), we need to
+  # make sure that the original response value will be restored after
+  # standardizing, as these models also require a non-standardized reponse.
 
   if (m_info$is_count || m_info$is_beta || m_info$is_censored || !include_response) {
     resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
