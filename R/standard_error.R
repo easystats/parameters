@@ -3,6 +3,11 @@
 #' This function attempts to return standard errors of model parameters.
 #'
 #' @param model A model.
+#' @param force Logical, if \code{TRUE}, factors are converted to numerical
+#'   values to calculate the standard error, with the lowest level being the
+#'   value \code{1} (unless the factor has numeric levels, which are converted
+#'   to the corresponding numeric value). By default, \code{NA} is returned
+#'   for factors or character vectors.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_simulate
 #' @inheritParams standardize
@@ -27,11 +32,16 @@ se <- standard_error
 # Default methods ---------------------------------------------------------
 
 
+#' @rdname standard_error
 #' @export
-standard_error.factor <- function(model, verbose = TRUE, ...) {
-  if (verbose)
-    warning("Can't compute standard error of non-numeric variables.", call. = FALSE)
-  return(NA)
+standard_error.factor <- function(model, force = FALSE, verbose = TRUE, ...) {
+  if (force) {
+    standard_error(as.numeric(model), ...)
+  } else {
+    if (verbose)
+      warning("Can't compute standard error of non-numeric variables.", call. = FALSE)
+    return(NA)
+  }
 }
 
 
