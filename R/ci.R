@@ -131,6 +131,9 @@ ci.survreg <- ci.gamlss
 ci.svyglm.nb <- ci.gamlss
 
 #' @export
+ci.lrm <- ci.gamlss
+
+#' @export
 ci.svyglm.zip <- ci.svyglm.nb
 
 #' @export

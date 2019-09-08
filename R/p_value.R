@@ -382,6 +382,19 @@ p_value.glimML <- function(model, ...) {
 
 
 #' @export
+p_value.lrm <- function(model, ...) {
+  stat <- .get_statistic(model)
+  p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+
+  data_frame(
+    Parameter = stat$Parameter,
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
 p_value.rlm <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)

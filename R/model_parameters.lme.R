@@ -38,6 +38,9 @@ model_parameters.coxph <- model_parameters.lme
 model_parameters.betareg <- model_parameters.lme
 
 #' @export
+model_parameters.lrm <- model_parameters.lme
+
+#' @export
 model_parameters.truncreg <- model_parameters.lme
 
 

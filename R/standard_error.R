@@ -295,6 +295,18 @@ standard_error.glimML <- function(model, ...) {
 
 
 
+#' @importFrom stats vcov
+#' @export
+standard_error.lrm <- function(model, ...) {
+  se <- sqrt(diag(stats::vcov(model)))
+  data_frame(
+    Parameter = names(se),
+    SE = as.vector(se)
+  )
+}
+
+
+
 #' @export
 standard_error.betareg <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model)))

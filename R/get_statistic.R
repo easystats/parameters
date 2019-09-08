@@ -215,3 +215,18 @@
   attr(out, "statistic") <- "z"
   out
 }
+
+
+
+.get_statistic.lrm <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  stat <- stats::coef(model) / sqrt(diag(stats::vcov(model)))
+
+  out <- data_frame(
+    Parameter = parms$parameter,
+    Statistic = as.vector(stat)
+  )
+
+  attr(out, "statistic") <- "z"
+  out
+}

@@ -127,6 +127,10 @@ model_simulate.glimML <- model_simulate.lm
 
 
 #' @export
+model_simulate.lrm <- model_simulate.lm
+
+
+#' @export
 model_simulate.survreg <- model_simulate.lm
 
 
