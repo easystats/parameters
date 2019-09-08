@@ -146,6 +146,9 @@ ci.rms <- ci.gamlss
 ci.svyglm.zip <- ci.svyglm.nb
 
 #' @export
+ci.vglm <- ci.svyglm.nb
+
+#' @export
 ci.svyglm.glimML <- ci.gamlss
 
 

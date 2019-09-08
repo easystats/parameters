@@ -47,6 +47,9 @@ model_parameters.ols <- model_parameters.lme
 model_parameters.rms <- model_parameters.lme
 
 #' @export
+model_parameters.vglm <- model_parameters.lme
+
+#' @export
 model_parameters.truncreg <- model_parameters.lme
 
 

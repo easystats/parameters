@@ -143,6 +143,10 @@ model_simulate.rms <- model_simulate.lm
 
 
 #' @export
+model_simulate.vglm <- model_simulate.lm
+
+
+#' @export
 model_simulate.survreg <- model_simulate.lm
 
 
@@ -175,6 +179,14 @@ model_simulate.gamm <- function(model, iterations = 1000, ...) {
   class(model) <- c("gam", "lm", "glm")
   model_simulate(model, iterations = iterations, ...)
 }
+
+
+
+#' @export
+model_simulate.vgam <- function(model, iterations = 1000, ...) {
+  .model_simulate(model, iterations, component = "all")
+}
+
 
 
 
@@ -285,6 +297,11 @@ model_simulate.zerocount <- model_simulate.zeroinfl
       stop("Package 'aod' required for this function to work. Please install it.")
     }
     vc <- aod::vcov(model)
+  } else if (inherits(model, c("vglm", "vgam"))) {
+    if (!requireNamespace("VGAM", quietly = TRUE)) {
+      stop("Package 'VGAM' required for this function to work. Please install it.")
+    }
+    vc <- VGAM::vcov(model)
   } else {
     vc <- suppressWarnings(stats::vcov(model))
     if (is.list(vc)) {
@@ -301,3 +318,6 @@ model_simulate.zerocount <- model_simulate.zeroinfl
 }
 
 
+if (!require("VGAM", quietly = TRUE)) {
+  stop("Package 'VGAM' needed for this function to work. Please install it.")
+}

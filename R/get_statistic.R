@@ -171,6 +171,23 @@
 .get_statistic.negbin <- .get_statistic.default
 
 
+.get_statistic.vglm <- function(model, ...) {
+  if (!require("VGAM", quietly = TRUE)) {
+    stop("Package 'VGAM' needed for this function to work. Please install it.")
+  }
+
+  cs <- VGAM::coef(VGAM::summary(model))
+
+  out <- data_frame(
+    Parameter = gsub("`", "", rownames(cs), fixed = TRUE),
+    Statistic = as.vector(cs[, 3])
+  )
+
+  attr(out, "statistic") <- "z"
+  out
+}
+
+
 .get_statistic.betareg <- function(model, ...) {
   parms <- insight::get_parameters(model)
   se <- standard_error(model)
