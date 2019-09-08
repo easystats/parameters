@@ -4,13 +4,13 @@
 \alias{parameters_simulate}
 \title{Parameters simulation}
 \usage{
-parameters_simulate(model, n_sims = 1000, centrality = "median",
+parameters_simulate(model, iterations = 1000, centrality = "median",
   ci = 0.95, ci_method = "quantile", test = "p-value", ...)
 }
 \arguments{
 \item{model}{Statistical model (no Bayesian models).}
 
-\item{n_sims}{The number of simulation draws to create.}
+\item{iterations}{The number of draws to simulate/bootstrap.}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
@@ -24,7 +24,7 @@ to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95}
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
-\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.#'
+\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
 For each "test", the corresponding \pkg{bayestestR} function is called
 (e.g. \code{\link{rope}} or \code{\link{p_direction}}) and its results
 included in the summary output.}
@@ -35,7 +35,7 @@ included in the summary output.}
 A data frame with simulated parameters.
 }
 \description{
-Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values.
+Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to boostrapping.
 }
 \details{
 \subsection{Technical Details}{

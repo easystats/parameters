@@ -27,7 +27,7 @@
 
 \item{bootstrap}{Should estimates be based on bootsrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}).}
 
-\item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
+\item{iterations}{The number of draws to simulate/bootstrap.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models

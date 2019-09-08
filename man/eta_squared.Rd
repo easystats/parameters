@@ -29,7 +29,7 @@ omega_squared(model, partial = TRUE, ci = NULL, iterations = 1000)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{iterations}{The number of bootstrap replicates.}
+\item{iterations}{The number of draws to simulate/bootstrap.}
 }
 \value{
 Data.frame containig the effect size values.

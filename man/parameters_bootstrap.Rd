@@ -10,7 +10,7 @@ parameters_bootstrap(model, iterations = 1000, centrality = "median",
 \arguments{
 \item{model}{Statistical model.}
 
-\item{iterations}{The number of bootstrap replicates.}
+\item{iterations}{The number of draws to simulate/bootstrap.}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
@@ -24,7 +24,7 @@ to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95}
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
-\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.#'
+\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
 For each "test", the corresponding \pkg{bayestestR} function is called
 (e.g. \code{\link{rope}} or \code{\link{p_direction}}) and its results
 included in the summary output.}
