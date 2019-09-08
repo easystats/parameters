@@ -22,6 +22,9 @@ p_value <- function(model, ...) {
 
 
 
+# p-Values from Standard Models -----------------------------------------------
+
+
 #' @export
 p_value.default <- function(model, ...) {
   p <- tryCatch({
@@ -47,46 +50,23 @@ p_value.default <- function(model, ...) {
 }
 
 
-
 #' @export
-p_value.rlm <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
-
-  data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
-  )
-}
-
+p_value.lm <- p_value.default
 
 
 #' @export
-p_value.betareg <- function(model, ...) {
-  cs <- do.call(rbind, stats::coef(summary(model)))
-  p <- cs[, 4]
-
-  data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
-  )
-}
+p_value.truncreg <- p_value.default
 
 
-
-#' @importFrom utils capture.output
 #' @export
-p_value.gamlss <- function(model, ...) {
-  parms <- insight::get_parameters(model)
-  utils::capture.output(cs <- summary(model))
+p_value.negbin <- p_value.default
 
-  data_frame(
-    Parameter = parms$parameter,
-    p = as.vector(cs[, 4]),
-    Component = parms$component
-  )
-}
 
+
+
+
+
+# p-Values from Zero-Inflated Models ------------------------------------------
 
 
 #' @export
@@ -120,12 +100,9 @@ p_value.zerocount <- p_value.zeroinfl
 
 
 
-#' @export
-p_value.truncreg <- p_value.default
 
 
-#' @export
-p_value.negbin <- p_value.default
+# p-Values from Mixed Models -----------------------------------------------
 
 
 #' @export
@@ -138,218 +115,6 @@ p_value.lme <- function(model, ...) {
     p = as.vector(p)
   )
 }
-
-
-
-#' @export
-p_value.coxph <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  p <- cs[, 5]
-
-  data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
-  )
-}
-
-
-
-#' @export
-p_value.BBmm <- function(model, ...) {
-  data_frame(
-    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
-    p = as.data.frame(summary(model)$fixed.coefficients)$p.value
-  )
-}
-
-
-
-#' @export
-p_value.BBreg <- function(model, ...) {
-  data_frame(
-    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
-    p = as.data.frame(summary(model)$coefficients)$p.value
-  )
-}
-
-
-
-#' @export
-p_value.wbm <- function(model, ...) {
-  p <- model@summ$coeftable[, "p"]
-  data_frame(
-    Parameter = gsub(pattern = "`", replacement = "", x = names(p), fixed = TRUE),
-    p = as.vector(p)
-  )
-}
-
-
-
-#' @export
-p_value.aov <- function(model, ...) {
-  params <- model_parameters(model)
-
-  if (nrow(params) == 0) {
-    return(NA)
-  }
-
-  if ("Group" %in% names(params)) {
-    params <- params[params$Group == "Within", ]
-  }
-
-  if ("Residuals" %in% params$Parameter) {
-    params <- params[params$Parameter != "Residuals", ]
-  }
-
-  if (!"p" %in% names(params)) {
-    return(NA)
-  }
-
-  data_frame(
-    Parameter = params$Parameter,
-    p = params$p
-  )
-}
-
-
-
-#' @seealso https://blogs.sas.com/content/iml/2011/11/02/how-to-compute-p-values-for-a-bootstrap-distribution.html
-#' @export
-p_value.numeric <- function(model, ...) {
-  2 * (1 - max(
-    c(
-      (1 + length(model[model > 0])) / (1 + length(model)),
-      (1 + length(model[model < 0])) / (1 + length(model))
-    )
-  ))
-}
-
-
-
-#' @export
-p_value.data.frame <- function(model, ...) {
-  data <- model[sapply(model, is.numeric)]
-  data_frame(
-    Parameter = names(data),
-    p = sapply(data, p_value)
-  )
-}
-
-
-
-#' @export
-p_value.anova <- p_value.aov
-
-
-#' @export
-p_value.aovlist <- p_value.aov
-
-
-
-#' @export
-p_value.brmsfit <- function(model, ...) {
-  p <- bayestestR::p_direction(model)
-
-  data_frame(
-    Parameter = p$Parameter,
-    p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE)
-  )
-}
-
-
-#' @export
-p_value.stanreg <- p_value.brmsfit
-
-
-#' @export
-p_value.BFBayesFactor <- p_value.brmsfit
-
-
-
-#' @export
-p_value.gam <- function(model, ...) {
-  p.table <- summary(model)$p.table
-  s.table <- summary(model)$s.table
-
-  d1 <- data_frame(
-    Parameter = rownames(p.table),
-    p = as.vector(p.table[, 4]),
-    Component = "conditional"
-  )
-
-  d2 <- data_frame(
-    Parameter = rownames(s.table),
-    p = as.vector(s.table[, 4]),
-    Component = "smooth_terms"
-  )
-
-  rbind(d1, d2)
-}
-
-
-#' @export
-p_value.gamm <- function(model, ...) {
-  model <- model$gam
-  class(model) <- c("gam", "lm", "glm")
-  p_value(model)
-}
-
-
-
-#' @export
-p_value.gls <- function(model, ...) {
-  p <- summary(model)$tTable[, 4]
-  data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
-  )
-}
-
-
-
-#' @export
-p_value.pggls <- function(model, ...) {
-  p <- summary(model)$CoefTable[, 4]
-  data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
-  )
-}
-
-
-
-#' @export
-p_value.gmnl <- function(model, ...) {
-  cs <- summary(model)$CoefTable
-  p <- cs[, 4]
-  # se <- cs[, 2]
-
-  pv <- data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
-  )
-
-  # rename intercepts
-  intercepts <- grepl(":(intercept)", pv$Parameter, fixed = TRUE)
-  pv$Parameter[intercepts] <- sprintf(
-    "(Intercept: %s)",
-    sub(":(intercept)", replacement = "", pv$Parameter[intercepts], fixed = TRUE)
-  )
-
-  pv
-}
-
-
-
-#' @export
-p_value.htest <- function(model, ...) {
-  model$p.value
-}
-
-
-
-#' @export
-p_value.lm <- p_value.default
 
 
 
@@ -422,6 +187,318 @@ p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zer
 
 
 
+
+
+
+
+# p-Values from Bayesian Models -----------------------------------------------
+
+
+#' @export
+p_value.MCMCglmm <- function(model, ...) {
+  nF <- model$Fixed$nfl
+  p <- 1 - colSums(model$Sol[, 1:nF, drop = FALSE] > 0) / dim(model$Sol)[1]
+
+  data_frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
+    p = p
+  )
+}
+
+
+#' @export
+p_value.brmsfit <- function(model, ...) {
+  p <- bayestestR::p_direction(model)
+
+  data_frame(
+    Parameter = p$Parameter,
+    p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE)
+  )
+}
+
+
+#' @export
+p_value.stanreg <- p_value.brmsfit
+
+
+#' @export
+p_value.BFBayesFactor <- p_value.brmsfit
+
+
+
+
+
+
+
+# p-Values from Survey Models -----------------------------------------------
+
+
+#' @export
+p_value.svyglm <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- cs[, 4]
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.svyolr <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.svyglm.nb <- function(model, ...) {
+  if (!isNamespaceLoaded("survey")) {
+    requireNamespace("survey", quietly = TRUE)
+  }
+
+  est <- stats::coef(model)
+  se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
+  p <- 2 * stats::pnorm(abs(est / se), lower.tail = FALSE)
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+#' @export
+p_value.svyglm.zip <- p_value.svyglm.nb
+
+
+
+
+
+
+
+# p-Values from ANOVA -----------------------------------------------
+
+
+#' @export
+p_value.aov <- function(model, ...) {
+  params <- model_parameters(model)
+
+  if (nrow(params) == 0) {
+    return(NA)
+  }
+
+  if ("Group" %in% names(params)) {
+    params <- params[params$Group == "Within", ]
+  }
+
+  if ("Residuals" %in% params$Parameter) {
+    params <- params[params$Parameter != "Residuals", ]
+  }
+
+  if (!"p" %in% names(params)) {
+    return(NA)
+  }
+
+  data_frame(
+    Parameter = params$Parameter,
+    p = params$p
+  )
+}
+
+
+#' @export
+p_value.anova <- p_value.aov
+
+
+#' @export
+p_value.aovlist <- p_value.aov
+
+
+
+
+
+
+
+# p-Values from Special Models -----------------------------------------------
+
+
+#' @export
+p_value.rlm <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.betareg <- function(model, ...) {
+  cs <- do.call(rbind, stats::coef(summary(model)))
+  p <- cs[, 4]
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @importFrom utils capture.output
+#' @export
+p_value.gamlss <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  utils::capture.output(cs <- summary(model))
+
+  data_frame(
+    Parameter = parms$parameter,
+    p = as.vector(cs[, 4]),
+    Component = parms$component
+  )
+}
+
+
+
+#' @export
+p_value.coxph <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- cs[, 5]
+
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.BBmm <- function(model, ...) {
+  data_frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    p = as.data.frame(summary(model)$fixed.coefficients)$p.value
+  )
+}
+
+
+
+#' @export
+p_value.BBreg <- function(model, ...) {
+  data_frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    p = as.data.frame(summary(model)$coefficients)$p.value
+  )
+}
+
+
+
+#' @export
+p_value.wbm <- function(model, ...) {
+  p <- model@summ$coeftable[, "p"]
+  data_frame(
+    Parameter = gsub(pattern = "`", replacement = "", x = names(p), fixed = TRUE),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.gam <- function(model, ...) {
+  p.table <- summary(model)$p.table
+  s.table <- summary(model)$s.table
+
+  d1 <- data_frame(
+    Parameter = rownames(p.table),
+    p = as.vector(p.table[, 4]),
+    Component = "conditional"
+  )
+
+  d2 <- data_frame(
+    Parameter = rownames(s.table),
+    p = as.vector(s.table[, 4]),
+    Component = "smooth_terms"
+  )
+
+  rbind(d1, d2)
+}
+
+
+
+#' @export
+p_value.gamm <- function(model, ...) {
+  model <- model$gam
+  class(model) <- c("gam", "lm", "glm")
+  p_value(model)
+}
+
+
+
+#' @export
+p_value.gls <- function(model, ...) {
+  p <- summary(model)$tTable[, 4]
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.pggls <- function(model, ...) {
+  p <- summary(model)$CoefTable[, 4]
+  data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.gmnl <- function(model, ...) {
+  cs <- summary(model)$CoefTable
+  p <- cs[, 4]
+  # se <- cs[, 2]
+
+  pv <- data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+
+  # rename intercepts
+  intercepts <- grepl(":(intercept)", pv$Parameter, fixed = TRUE)
+  pv$Parameter[intercepts] <- sprintf(
+    "(Intercept: %s)",
+    sub(":(intercept)", replacement = "", pv$Parameter[intercepts], fixed = TRUE)
+  )
+
+  pv
+}
+
+
+
+#' @export
+p_value.htest <- function(model, ...) {
+  model$p.value
+}
+
+
+
 #' @export
 p_value.multinom <- function(model, ...) {
   s <- summary(model)
@@ -489,53 +566,6 @@ p_value.polr <- function(model, ...) {
 
 
 #' @export
-p_value.svyglm <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  p <- cs[, 4]
-
-  data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
-  )
-}
-
-
-
-#' @export
-p_value.svyolr <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
-
-  data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
-  )
-}
-
-
-
-#' @export
-p_value.svyglm.nb <- function(model, ...) {
-  if (!isNamespaceLoaded("survey")) {
-    requireNamespace("survey", quietly = TRUE)
-  }
-
-  est <- stats::coef(model)
-  se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
-  p <- 2 * stats::pnorm(abs(est / se), lower.tail = FALSE)
-
-  data_frame(
-    Parameter = names(p),
-    p = as.vector(p)
-  )
-}
-
-
-#' @export
-p_value.svyglm.zip <- p_value.svyglm.nb
-
-
-#' @export
 p_value.vglm <- function(model, ...) {
   if (!requireNamespace("VGAM", quietly = TRUE)) {
     stop("Package `VGAM` required.", call. = FALSE)
@@ -552,19 +582,40 @@ p_value.vglm <- function(model, ...) {
 }
 
 
-#' @export
-p_value.MCMCglmm <- function(model, ...) {
-  nF <- model$Fixed$nfl
-  p <- 1 - colSums(model$Sol[, 1:nF, drop = FALSE] > 0) / dim(model$Sol)[1]
 
+
+
+# p-Values from standard classes ---------------------------------------------
+
+
+#' @seealso https://blogs.sas.com/content/iml/2011/11/02/how-to-compute-p-values-for-a-bootstrap-distribution.html
+#' @export
+p_value.numeric <- function(model, ...) {
+  2 * (1 - max(
+    c(
+      (1 + length(model[model > 0])) / (1 + length(model)),
+      (1 + length(model[model < 0])) / (1 + length(model))
+    )
+  ))
+}
+
+
+
+#' @export
+p_value.data.frame <- function(model, ...) {
+  data <- model[sapply(model, is.numeric)]
   data_frame(
-    Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
-    p = p
+    Parameter = names(data),
+    p = sapply(data, p_value)
   )
 }
 
 
 
+
+
+
+# helper --------------------------------------------------------
 
 
 #' @importFrom stats coef
