@@ -86,6 +86,12 @@ standardize.truncreg <- standardize.lm
 standardize.lrm <- standardize.lm
 
 #' @export
+standardize.ols <- standardize.lm
+
+#' @export
+standardize.rms <- standardize.lm
+
+#' @export
 standardize.wbm <- function(x, ...) {
   warning("Standardization of parameters not possible for models from package 'panelr'.", call. = FALSE)
   x
