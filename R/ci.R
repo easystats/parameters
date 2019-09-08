@@ -34,6 +34,8 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
 bayestestR::ci
 
 
+# Default Wald CI method ------------------------------------------------------
+
 
 #' @export
 ci.default <- function(x, ci = .95, ...) {
@@ -41,12 +43,59 @@ ci.default <- function(x, ci = .95, ...) {
 }
 
 
+#' @method ci lm
+#' @export
+ci.lm <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, component = "conditional")
+}
+
 
 #' @export
 ci.gam <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, ...)
 }
 
+
+#' @export
+ci.BBmm <- ci.lm
+
+
+#' @export
+ci.BBreg <- ci.lm
+
+
+
+
+
+
+# glm CI method with profiling -----------------------------------------------
+
+
+#' @rdname ci.merMod
+#' @method ci glm
+#' @export
+ci.glm <- function(x, ci = .95, method = c("profile", "wald"), ...) {
+  method <- match.arg(method)
+  if (method == "profile") {
+    out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
+    out <- do.call(rbind, out)
+  } else {
+    out <- ci_wald(model = x, ci = ci, component = "conditional")
+  }
+  row.names(out) <- NULL
+  out
+}
+
+
+#' @export
+ci.negbin <- ci.glm
+
+
+
+
+
+
+# Default Wald CI method with Inf dof -----------------------------------------
 
 
 #' @export
@@ -75,16 +124,17 @@ ci.feis <- ci.gamlss
 #' @export
 ci.betareg <- ci.gamlss
 
-
+#' @export
+ci.survreg <- ci.gamlss
 
 #' @export
-ci.svyglm.nb <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = Inf, ...)
-}
-
+ci.svyglm.nb <- ci.gamlss
 
 #' @export
 ci.svyglm.zip <- ci.svyglm.nb
+
+
+
 
 
 #' @export
@@ -96,42 +146,6 @@ ci.gamm <- function(x, ci = .95, ...) {
 
 
 
-#' @rdname ci.merMod
-#' @method ci glm
-#' @export
-ci.glm <- function(x, ci = .95, method = c("profile", "wald"), ...) {
-  method <- match.arg(method)
-  if (method == "profile") {
-    out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
-    out <- do.call(rbind, out)
-  } else {
-    out <- ci_wald(model = x, ci = ci, component = "conditional")
-  }
-  row.names(out) <- NULL
-  out
-}
-
-
-#' @export
-ci.negbin <- ci.glm
-
-
-
-#' @method ci lm
-#' @export
-ci.lm <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, component = "conditional")
-}
-
-
-
-#' @export
-ci.BBmm <- ci.lm
-
-
-
-#' @export
-ci.BBreg <- ci.lm
 
 
 
