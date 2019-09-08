@@ -91,104 +91,8 @@ ci.glm <- function(x, ci = .95, method = c("profile", "wald"), ...) {
 ci.negbin <- ci.glm
 
 
-
-
-
-
-# Default Wald CI method with Inf dof -----------------------------------------
-
-
 #' @export
-ci.gamlss <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = Inf, ...)
-}
-
-#' @export
-ci.plm <- ci.gamlss
-
-#' @export
-ci.truncreg <- ci.gamlss
-
-#' @export
-ci.coxph <- ci.gamlss
-
-#' @export
-ci.clm <- ci.gamlss
-
-#' @export
-ci.clm2 <- ci.clm
-
-#' @export
-ci.feis <- ci.gamlss
-
-#' @export
-ci.betareg <- ci.gamlss
-
-#' @export
-ci.survreg <- ci.gamlss
-
-#' @export
-ci.svyglm.nb <- ci.gamlss
-
-#' @export
-ci.lrm <- ci.gamlss
-
-#' @export
-ci.psm <- ci.gamlss
-
-#' @export
-ci.ols <- ci.gamlss
-
-#' @export
-ci.rms <- ci.gamlss
-
-#' @export
-ci.svyglm.zip <- ci.svyglm.nb
-
-#' @export
-ci.vglm <- ci.svyglm.nb
-
-#' @export
-ci.svyglm.glimML <- ci.gamlss
-
-
-
-
-
-#' @export
-ci.gamm <- function(x, ci = .95, ...) {
-  x <- x$gam
-  class(x) <- c("gam", "lm", "glm")
-  ci(x, ci = ci, ...)
-}
-
-
-
-
-
-
-#' @rdname ci.merMod
-#' @export
-ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  component <- match.arg(component)
-  if (is.null(.check_component(x, component))) return(NULL)
-  ci_wald(model = x, ci = ci, dof = Inf, component = component)
-}
-
-
-
-#' @rdname ci.merMod
-#' @export
-ci.zeroinfl <- ci.glmmTMB
-
-
-#' @rdname ci.merMod
-#' @export
-ci.hurdle <- ci.glmmTMB
-
-
-#' @export
-ci.zerocount <- ci.glmmTMB
+ci.logistf <- ci.glm
 
 
 #' @export
@@ -218,6 +122,105 @@ ci.polr <- function(x, ci = .95, method = c("profile", "wald"), ...) {
 
 
 
+
+
+
+# Default Wald CI method with Inf dof -----------------------------------------
+
+
+#' @export
+ci.gamlss <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, dof = Inf, ...)
+}
+
+#' @export
+ci.plm <- ci.gamlss
+
+#' @export
+ci.truncreg <- ci.gamlss
+
+#' @export
+ci.coxph <- ci.gamlss
+
+#' @export
+ci.clm <- ci.gamlss
+
+#' @export
+ci.clm2 <- ci.gamlss
+
+#' @export
+ci.feis <- ci.gamlss
+
+#' @export
+ci.betareg <- ci.gamlss
+
+#' @export
+ci.survreg <- ci.gamlss
+
+#' @export
+ci.svyglm.nb <- ci.gamlss
+
+#' @export
+ci.lrm <- ci.gamlss
+
+#' @export
+ci.psm <- ci.gamlss
+
+#' @export
+ci.ols <- ci.gamlss
+
+#' @export
+ci.rms <- ci.gamlss
+
+#' @export
+ci.svyglm.zip <- ci.gamlss
+
+#' @export
+ci.vglm <- ci.gamlss
+
+#' @export
+ci.svyglm.glimML <- ci.gamlss
+
+
+#' @export
+ci.gamm <- function(x, ci = .95, ...) {
+  x <- x$gam
+  class(x) <- c("gam", "lm", "glm")
+  ci(x, ci = ci, ...)
+}
+
+
+
+
+
+
+# Zero-Inflated and Mixed models -----------------------------------------
+
+
+#' @rdname ci.merMod
+#' @export
+ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  if (is.null(.check_component(x, component))) return(NULL)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+}
+
+
+
+#' @rdname ci.merMod
+#' @export
+ci.zeroinfl <- ci.glmmTMB
+
+
+#' @rdname ci.merMod
+#' @export
+ci.hurdle <- ci.glmmTMB
+
+
+#' @export
+ci.zerocount <- ci.glmmTMB
+
+
 #' @rdname ci.merMod
 #' @export
 ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
@@ -226,6 +229,12 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
 
+
+
+
+
+
+# Special models -----------------------------------------
 
 
 #' @export
@@ -242,7 +251,6 @@ ci.gls <- function(x, ci = .95, ...) {
 
   do.call(rbind, out)
 }
-
 
 
 #' @export
@@ -263,6 +271,12 @@ ci.lme <- function(x, ci = .95, ...) {
   }
 }
 
+
+
+
+
+
+# helper -----------------------------------------
 
 
 .check_component <- function(m, x) {

@@ -382,6 +382,18 @@ p_value.glimML <- function(model, ...) {
 
 
 #' @export
+p_value.logistf <- function(model, ...) {
+  utils::capture.output(s <- summary(model))
+
+  data_frame(
+    Parameter = names(s$prob),
+    p = as.vector(s$prob)
+  )
+}
+
+
+
+#' @export
 p_value.lrm <- function(model, ...) {
   stat <- .get_statistic(model)
   p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)

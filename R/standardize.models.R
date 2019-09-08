@@ -95,6 +95,9 @@ standardize.ols <- standardize.lm
 standardize.rms <- standardize.lm
 
 #' @export
+standardize.logistf <- standardize.lm
+
+#' @export
 standardize.vglm <- standardize.lm
 
 #' @export

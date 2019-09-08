@@ -254,3 +254,20 @@
 .get_statistic.rms <- .get_statistic.lrm
 
 .get_statistic.psm <- .get_statistic.lrm
+
+
+
+#' @importFrom stats qchisq
+#' @importFrom utils capture.output
+.get_statistic.logistf <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  utils::capture.output(s <- summary(model))
+
+  out <- data_frame(
+    Parameter = parms$parameter,
+    Statistic = as.vector(stats::qchisq(1 - s$prob, df = 1))
+  )
+
+  attr(out, "statistic") <- "chisq"
+  out
+}

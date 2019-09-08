@@ -47,7 +47,7 @@
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
   # Reorder
-  col_order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "t / F", "F", "df", "df_residual", "p", "Component")
+  col_order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "t / F", "F", "chisq", "df", "df_residual", "p", "Component")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   # remove Component column if not needed

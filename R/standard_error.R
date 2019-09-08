@@ -289,6 +289,19 @@ standard_error.svyglm <- function(model, ...) {
 
 
 #' @export
+standard_error.logistf <- function(model, ...) {
+  utils::capture.output(s <- summary(model))
+  se <- sqrt(diag(s$var))
+
+  data_frame(
+    Parameter = names(s$coefficients),
+    SE = as.vector(se)
+  )
+}
+
+
+
+#' @export
 standard_error.glimML <- function(model, ...) {
   if (!requireNamespace("aod", quietly = TRUE)) {
     stop("Package 'aod' required for this function to work. Please install it.")

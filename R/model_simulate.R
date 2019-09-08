@@ -115,6 +115,10 @@ model_simulate.svyglm.zip <- model_simulate.lm
 
 
 #' @export
+model_simulate.logistf <- model_simulate.lm
+
+
+#' @export
 model_simulate.betareg <- model_simulate.lm
 
 
