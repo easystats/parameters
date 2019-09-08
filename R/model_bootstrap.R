@@ -3,7 +3,7 @@
 #' Bootstrap a statistical model n times to return a data.frame of estimates.
 #'
 #' @param model Statistical model.
-#' @param iterations The number of bootstrap replicates.
+#' @param iterations The number of draws to simulate/bootstrap.
 #' @param verbose Hide possible refit messages.
 #' @param ... Arguments passed to or from other methods.
 #'

@@ -26,6 +26,7 @@ parameters_bootstrap <- function(model, iterations = 1000, centrality = "median"
 
 
 
+#' @keywords internal
 .summary_bootstrap <- function(data, test, centrality, ci, ci_method, ...) {
   # Is the p-value requested?
   if (any(test %in% c("p-value", "p", "pval"))) {

@@ -9,7 +9,7 @@ model_bootstrap(model, iterations = 1000, verbose = FALSE, ...)
 \arguments{
 \item{model}{Statistical model.}
 
-\item{iterations}{The number of bootstrap replicates.}
+\item{iterations}{The number of draws to simulate/bootstrap.}
 
 \item{verbose}{Hide possible refit messages.}
 

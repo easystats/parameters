@@ -5,15 +5,15 @@
 \alias{model_simulate.glmmTMB}
 \title{Simulated draws from model coefficients}
 \usage{
-model_simulate(model, n_sims = 1000, ...)
+model_simulate(model, iterations = 1000, ...)
 
-\method{model_simulate}{glmmTMB}(model, n_sims = 1000,
+\method{model_simulate}{glmmTMB}(model, iterations = 1000,
   component = c("all", "conditional", "zi", "zero_inflated"), ...)
 }
 \arguments{
 \item{model}{Statistical model (no Bayesian models).}
 
-\item{n_sims}{The number of simulation draws to create.}
+\item{iterations}{The number of draws to simulate/bootstrap.}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -26,7 +26,7 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 A data frame.
 }
 \description{
-Simulate draws a statistical model \code{n_sims} times to return a data.frame of estimates.
+Simulate draws from a statistical model to return a data.frame of estimates.
 }
 \details{
 \subsection{Technical Details}{
