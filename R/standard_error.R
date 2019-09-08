@@ -48,7 +48,7 @@ standard_error.numeric <- function(model, ...) {
 
 #' @export
 standard_error.data.frame <- function(model, verbose = TRUE, ...) {
-  unlist(sapply(iris, standard_error, verbose = verbose))
+  unlist(sapply(model, standard_error, verbose = verbose))
 }
 
 
