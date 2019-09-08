@@ -44,3 +44,8 @@ model_parameters.truncreg <- model_parameters.lme
 model_parameters.plm <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
   model_parameters.lme(model = model, ci = ci, standardize = standardize, standardize_robust = standardize_robust, bootstrap = bootstrap, iterations = iterations, ...)
 }
+
+#' @export
+model_parameters.survreg <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
+  model_parameters.lme(model = model, ci = ci, standardize = standardize, standardize_robust = standardize_robust, bootstrap = bootstrap, iterations = iterations, ...)
+}

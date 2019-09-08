@@ -183,3 +183,17 @@
   attr(out, "statistic") <- "z"
   out
 }
+
+
+
+.get_statistic.survreg <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  s <- summary(model)
+  out <- data_frame(
+    Parameter = parms$parameter,
+    Statistic = s$table[, 3]
+  )
+
+  attr(out, "statistic") <- "z"
+  out
+}
