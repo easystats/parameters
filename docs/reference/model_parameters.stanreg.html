@@ -241,6 +241,10 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame of indices related to the model's parameters.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
+  columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
@@ -248,7 +252,7 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'xts':</span>
 #&gt; <span class='message'>  method     from</span>
 #&gt; <span class='message'>  as.zoo.xts zoo </span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.18.2, packaged: 2018-11-08 22:19:38 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- Plotting theme set to bayesplot::theme_default().</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'rstanarm'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:parameters':</span>
+#&gt; <span class='message'>Attaching package: ‘rstanarm’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:parameters’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    se</span></div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> * <span class='no'>Species</span>,
@@ -258,14 +262,14 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"smart"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.88). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.88). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; Parameter                           | Median |       89% CI |     pd | % in ROPE | ESS |  Rhat |              Prior | Median (std.)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"smart"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; Parameter                           | Median |       89% CI |     pd | % in ROPE | ESS |  Rhat |              Prior | Median (std.)
 #&gt; -----------------------------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                         |   4.04 |  3.49,  4.63 |   100% |        0% | 201 | 1.028 | Normal (0 +- 8.28) |          0.00
-#&gt; Petal.Length                        |   0.66 |  0.26,  1.03 |   100% |     0.80% | 198 | 1.029 | Normal (0 +- 1.17) |          1.41
-#&gt; Species (versicolor)                |  -1.54 | -2.37, -0.78 | 99.80% |        0% | 282 | 1.016 | Normal (0 +- 2.07) |         -1.86
-#&gt; Species (virginica)                 |  -2.80 | -3.68, -1.85 |   100% |        0% | 301 | 1.012 | Normal (0 +- 2.07) |         -3.38
-#&gt; Petal.Length * Species (versicolor) |   0.15 | -0.22,  0.57 | 72.60% |    20.10% | 200 | 1.028 | Normal (0 +- 1.02) |          0.18
-#&gt; Petal.Length * Species (virginica)  |   0.30 | -0.13,  0.69 | 88.20% |    12.10% | 198 | 1.027 | Normal (0 +- 0.78) |          0.37</div><div class='input'># }
+#&gt; (Intercept)                         |   4.05 |  3.48,  4.68 |   100% |        0% | 231 | 1.005 | Normal (0 +- 8.28) |          0.00
+#&gt; Petal.Length                        |   0.65 |  0.21,  1.02 | 99.50% |     1.00% | 227 | 1.005 | Normal (0 +- 1.17) |          1.39
+#&gt; Species (versicolor)                |  -1.55 | -2.45, -0.69 | 99.80% |     0.30% | 282 | 1.004 | Normal (0 +- 2.07) |         -1.87
+#&gt; Species (virginica)                 |  -2.86 | -3.70, -1.90 |   100% |        0% | 355 | 1.006 | Normal (0 +- 2.07) |         -3.45
+#&gt; Petal.Length * Species (versicolor) |   0.16 | -0.24,  0.62 | 72.50% |    18.50% | 213 | 1.005 | Normal (0 +- 1.02) |          0.19
+#&gt; Petal.Length * Species (virginica)  |   0.33 | -0.13,  0.70 | 89.00% |    11.70% | 225 | 1.007 | Normal (0 +- 0.78) |          0.39</div><div class='input'># }
 
 </div></pre>
   </div>
@@ -274,6 +278,7 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
