@@ -51,6 +51,7 @@ standardize_names.parameters_model <- function(data, style = c("easystats", "bro
 
   if (style == "easystats") {
     cn[cn %in% c("t", "z", "F", "chisq", "t / F")] <- "Statistic"
+    cn[cn %in% c("Median", "Mean", "MAP")] <- "Coefficient"
   } else {
     cn[cn == "Parameter"] <- "term"
     cn[cn == "Coefficient"] <- "estimate"
