@@ -64,6 +64,16 @@ ci.BBmm <- ci.lm
 ci.BBreg <- ci.lm
 
 
+#' @export
+ci.list <- function(x, ci = .95, ...) {
+  if ("gam" %in% names(x)) {
+    x <- x$gam
+    class(x) <- c("gam", "lm", "glm")
+    ci(x, ci = ci, ...)
+  } else {
+    return(NULL)
+  }
+}
 
 
 
@@ -194,6 +204,10 @@ ci.gamm <- function(x, ci = .95, ...) {
   class(x) <- c("gam", "lm", "glm")
   ci(x, ci = ci, ...)
 }
+
+
+#' @export
+ci.gamm4 <- ci.gamm
 
 
 

@@ -523,6 +523,11 @@ p_value.gamm <- function(model, ...) {
 
 
 #' @export
+p_value.gamm4 <- p_value.gamm
+
+
+
+#' @export
 p_value.gls <- function(model, ...) {
   p <- summary(model)$tTable[, 4]
   data_frame(
@@ -683,6 +688,18 @@ p_value.data.frame <- function(model, ...) {
     Parameter = names(data),
     p = sapply(data, p_value)
   )
+}
+
+
+#' @export
+p_value.list <- function(model, ...) {
+  if ("gam" %in% names(model)) {
+    model <- model$gam
+    class(model) <- c("gam", "lm", "glm")
+    p_value(model)
+  } else {
+    insight::print_color("\nCould not extract p-values from model object.\n", "red")
+  }
 }
 
 

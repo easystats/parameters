@@ -40,5 +40,15 @@ model_parameters.gamm <- function(model, ci = .95, bootstrap = FALSE, iterations
 
 
 #' @export
+model_parameters.list <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
+  if ("gam" %in% names(model)) {
+    model <- model$gam
+    class(model) <- c("gam", "lm", "glm")
+    model_parameters(model, ci = ci, bootstrap = bootstrap, iterations = iterations, ...)
+  }
+}
+
+
+#' @export
 model_parameters.gamlss <- model_parameters.gam
 

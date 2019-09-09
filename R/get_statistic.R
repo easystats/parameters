@@ -117,6 +117,24 @@
 
 
 
+.get_statistic.gamm <- function(model, statistic_column = 3, ...) {
+  model <- model$gam
+  class(model) <- c("gam", "lm", "glm")
+  .get_statistic.gam(model, statistic_column = statistic_column)
+}
+
+
+
+.get_statistic.list <- function(model, statistic_column = 3, ...) {
+  if ("gam" %in% names(model)) {
+    model <- model$gam
+    class(model) <- c("gam", "lm", "glm")
+    .get_statistic.gam(model, statistic_column = statistic_column)
+  }
+}
+
+
+
 .get_statistic.gamlss <- function(model, statistic_column = 3, ...) {
   parms <- insight::get_parameters(model)
   utils::capture.output(cs <- summary(model))

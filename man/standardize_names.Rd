@@ -36,7 +36,7 @@ This method is in particular useful for package developers or users
   what kind of model was used in \code{model_parameters()}.
   \cr \cr
   For \code{style = "broom"}, column names are renamed to match \pkg{broom}'s
-  naming scheme, i.e. \coe{Parameter} is renamed to \code{term}, \code{Coefficient}
+  naming scheme, i.e. \code{Parameter} is renamed to \code{term}, \code{Coefficient}
   becomes \code{estimate} and so on.
 }
 \examples{

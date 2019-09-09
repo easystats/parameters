@@ -63,6 +63,18 @@ standard_error.data.frame <- function(model, verbose = TRUE, ...) {
 
 
 #' @export
+standard_error.list <- function(model, ...) {
+  if ("gam" %in% names(model)) {
+    model <- model$gam
+    class(model) <- c("gam", "lm", "glm")
+    standard_error(model)
+  } else {
+    insight::print_color("\nCould not extract standard errors from model object.\n", "red")
+  }
+}
+
+
+#' @export
 standard_error.default <- function(model, ...) {
   se <- tryCatch({
     if (grepl("^Zelig-", class(model)[1])) {
@@ -417,12 +429,13 @@ standard_error.survreg <- function(model, ...) {
 standard_error.gam <- function(model, ...) {
   p.table <- summary(model)$p.table
   s.table <- summary(model)$s.table
+  n_cond <- nrow(p.table)
   n_smooth <- nrow(s.table)
 
   data_frame(
     Parameter = c(rownames(p.table), rownames(s.table)),
     SE = c(as.vector(p.table[, 2]), rep(NA, n_smooth)),
-    Component = c("conditional", rep("smooth_terms", n_smooth))
+    Component = c(rep("conditional", n_cond), rep("smooth_terms", n_smooth))
   )
 }
 
@@ -433,6 +446,10 @@ standard_error.gamm <- function(model, ...) {
   class(model) <- c("gam", "lm", "glm")
   standard_error(model)
 }
+
+
+#' @export
+standard_error.gamm4 <- standard_error.gamm
 
 
 #' @export

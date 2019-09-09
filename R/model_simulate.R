@@ -191,6 +191,17 @@ model_simulate.gamm <- function(model, iterations = 1000, ...) {
 
 
 #' @export
+model_simulate.list <- function(model, iterations = 1000, ...) {
+  if ("gam" %in% names(model)) {
+    model <- model$gam
+    class(model) <- c("gam", "lm", "glm")
+    model_simulate(model, iterations = iterations, ...)
+  }
+}
+
+
+
+#' @export
 model_simulate.vgam <- function(model, iterations = 1000, ...) {
   .model_simulate(model, iterations, component = "all")
 }
