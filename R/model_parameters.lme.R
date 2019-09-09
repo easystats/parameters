@@ -65,6 +65,9 @@ model_parameters.coxme <- model_parameters.lme
 model_parameters.censReg <- model_parameters.lme
 
 #' @export
+model_parameters.crch <- model_parameters.lme
+
+#' @export
 model_parameters.truncreg <- model_parameters.lme
 
 

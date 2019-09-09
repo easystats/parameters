@@ -398,6 +398,18 @@ p_value.survreg <- function(model, ...) {
 
 
 #' @export
+p_value.crch <- function(model, ...) {
+  cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
+  params <- insight::get_parameters(model)
+
+  data_frame(
+    Parameter = params$parameter,
+    p = as.vector(cs[, 4])
+  )
+}
+
+
+#' @export
 p_value.gee <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- 2 * stats::pnorm(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), lower.tail = FALSE)

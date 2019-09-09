@@ -329,6 +329,18 @@ standard_error.svyglm <- function(model, ...) {
 
 
 #' @export
+standard_error.crch <- function(model, ...) {
+  cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
+  params <- insight::get_parameters(model)
+
+  data_frame(
+    Parameter = params$parameter,
+    SE = as.vector(cs[, 2])
+  )
+}
+
+
+#' @export
 standard_error.gee <- function(model, ...) {
   cs <- stats::coef(summary(model))
 

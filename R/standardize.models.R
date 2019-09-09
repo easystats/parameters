@@ -108,6 +108,9 @@ standardize.tobit <- standardize.lm
 standardize.censReg <- standardize.lm
 
 #' @export
+standardize.crch <- standardize.lm
+
+#' @export
 standardize.lrm <- standardize.lm
 
 #' @export

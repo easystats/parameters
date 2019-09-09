@@ -171,6 +171,9 @@ ci.clm <- ci.gamlss
 ci.clm2 <- ci.gamlss
 
 #' @export
+ci.crch <- ci.gamlss
+
+#' @export
 ci.feis <- ci.gamlss
 
 #' @export

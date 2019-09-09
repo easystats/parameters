@@ -330,3 +330,17 @@
 
   out
 }
+
+
+.get_statistic.crch <- function(model, ...) {
+  cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
+  params <- insight::get_parameters(model)
+
+  out <- data_frame(
+    Parameter = params$parameter,
+    Statistic = as.vector(cs[, 3])
+  )
+
+  attr(out, "statistic") <- "z"
+  out
+}
