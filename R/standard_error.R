@@ -29,7 +29,7 @@ se <- standard_error
 
 
 
-# Default methods ---------------------------------------------------------
+# Standard objects ---------------------------------------------------------
 
 
 #' @rdname standard_error
@@ -74,6 +74,13 @@ standard_error.list <- function(model, ...) {
 }
 
 
+
+
+
+
+# Default methods ---------------------------------------------------------
+
+
 #' @export
 standard_error.default <- function(model, ...) {
   se <- tryCatch({
@@ -113,6 +120,10 @@ standard_error.geeglm <- standard_error.default
 
 #' @export
 standard_error.negbin <- standard_error.default
+
+
+#' @export
+standard_error.ivreg <- standard_error.default
 
 
 #' @export

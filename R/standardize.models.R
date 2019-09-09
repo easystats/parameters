@@ -40,8 +40,24 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
     resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
   }
 
+
+  # if we standardize log-terms, standardization will fail (because log of
+  # negative value is NaN)
+
+  log_terms <- .log_terms(x)
+
+  # standardize data
+
   data_std <- standardize(data, robust = robust, method = method, verbose = verbose)
+
+
+  # restore data that should not be standardized
+
   if (!is.null(resp)) data_std[resp] <- data[resp]
+  if (length(log_terms)) data_std[log_terms] <- data[log_terms]
+
+
+  # update model with standardized data
 
   if (inherits(x, c("brmsfit"))) {
     text <- utils::capture.output(model_std <- stats::update(x, newdata = data_std))
@@ -78,6 +94,9 @@ standardize.negbin <- standardize.lm
 
 #' @export
 standardize.betareg <- standardize.lm
+
+#' @export
+standardize.ivreg <- standardize.lm
 
 #' @export
 standardize.truncreg <- standardize.lm

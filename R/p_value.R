@@ -67,6 +67,10 @@ p_value.censReg <- p_value.default
 
 
 #' @export
+p_value.ivreg <- p_value.default
+
+
+#' @export
 p_value.negbin <- p_value.default
 
 

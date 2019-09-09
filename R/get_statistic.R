@@ -158,6 +158,8 @@
 
 .get_statistic.plm <- .get_statistic.default
 
+.get_statistic.ivreg <- .get_statistic.default
+
 .get_statistic.geeglm <- .get_statistic.default
 
 .get_statistic.censReg <- .get_statistic.default

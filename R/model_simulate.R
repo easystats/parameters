@@ -139,6 +139,10 @@ model_simulate.glimML <- model_simulate.lm
 
 
 #' @export
+model_simulate.ivreg <- model_simulate.lm
+
+
+#' @export
 model_simulate.lrm <- model_simulate.lm
 
 

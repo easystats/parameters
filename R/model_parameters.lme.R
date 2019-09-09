@@ -80,3 +80,6 @@ model_parameters.survreg <- model_parameters.plm
 
 #' @export
 model_parameters.psm <- model_parameters.plm
+
+#' @export
+model_parameters.ivreg <- model_parameters.plm
