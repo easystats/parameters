@@ -104,10 +104,6 @@ standard_error.truncreg <- standard_error.default
 
 
 #' @export
-standard_error.tobit <- standard_error.default
-
-
-#' @export
 standard_error.censReg <- standard_error.default
 
 
@@ -121,6 +117,15 @@ standard_error.lme <- standard_error.default
 
 #' @export
 standard_error.gls <- standard_error.default
+
+
+#' @export
+standard_error.tobit <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  std.error <- standard_error.default(model, ...)
+  std.error[std.error$Parameter %in% params$parameter, ]
+}
+
 
 
 

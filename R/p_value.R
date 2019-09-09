@@ -59,15 +59,19 @@ p_value.truncreg <- p_value.default
 
 
 #' @export
-p_value.tobit <- p_value.default
-
-
-#' @export
 p_value.censReg <- p_value.default
 
 
 #' @export
 p_value.negbin <- p_value.default
+
+
+#' @export
+p_value.tobit <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  p <- p_value.default(model, ...)
+  p[p$Parameter %in% params$parameter, ]
+}
 
 
 

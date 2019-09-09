@@ -39,6 +39,7 @@ Imports:
 	tools,
 	utils
 Suggests:
+  AER,
   aod,
 	BayesFM,
 	BayesFactor,
