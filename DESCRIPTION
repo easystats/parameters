@@ -51,6 +51,7 @@ Suggests:
 	dplyr,
 	EGAnet (>= 0.7),
 	gamlss,
+	gee,
 	GLMMadaptive,
 	glmmTMB,
 	knitr,
