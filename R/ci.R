@@ -195,10 +195,6 @@ ci.vglm <- ci.gamlss
 ci.svyglm.glimML <- ci.gamlss
 
 #' @export
-ci.MCMCglmm <- ci.gamlss
-
-
-#' @export
 ci.gamm <- function(x, ci = .95, ...) {
   x <- x$gam
   class(x) <- c("gam", "lm", "glm")
