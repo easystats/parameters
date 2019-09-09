@@ -194,3 +194,7 @@ standardize.coxph <- function(x, robust = FALSE, method = "default", verbose = T
 
   model_std
 }
+
+
+#' @export
+standardize.coxme <- standardize.coxph
