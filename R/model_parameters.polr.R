@@ -33,3 +33,7 @@ model_parameters.svyglm.zip <- model_parameters.polr
 
 #' @export
 model_parameters.glimML <- model_parameters.polr
+
+
+#' @export
+model_parameters.tobit <- model_parameters.polr

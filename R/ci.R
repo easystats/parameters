@@ -150,6 +150,9 @@ ci.plm <- ci.gamlss
 ci.truncreg <- ci.gamlss
 
 #' @export
+ci.tobit <- ci.gamlss
+
+#' @export
 ci.coxph <- ci.gamlss
 
 #' @export

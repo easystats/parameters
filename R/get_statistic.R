@@ -188,6 +188,9 @@
 .get_statistic.truncreg <- .get_statistic.default
 
 
+.get_statistic.tobit <- .get_statistic.default
+
+
 .get_statistic.negbin <- .get_statistic.default
 
 

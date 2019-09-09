@@ -104,6 +104,10 @@ standard_error.truncreg <- standard_error.default
 
 
 #' @export
+standard_error.tobit <- standard_error.default
+
+
+#' @export
 standard_error.censReg <- standard_error.default
 
 

@@ -155,6 +155,10 @@ model_simulate.censReg <- model_simulate.lm
 
 
 #' @export
+model_simulate.tobit <- model_simulate.lm
+
+
+#' @export
 model_simulate.survreg <- model_simulate.lm
 
 
@@ -293,6 +297,7 @@ model_simulate.zerocount <- model_simulate.zeroinfl
 
 
 
+#' @importFrom insight find_parameters
 #' @importFrom stats vcov
 .get_varcov <- function(model, component) {
   if (inherits(model, c("hurdle", "zeroinfl", "zerocount"))) {
@@ -321,6 +326,9 @@ model_simulate.zerocount <- model_simulate.zeroinfl
       stop("Package 'VGAM' required for this function to work. Please install it.")
     }
     vc <- VGAM::vcov(model)
+  } else if (inherits(model, "tobit")) {
+    coef_names <- insight::find_parameters(model, flatten = TRUE)
+    vc <- stats::vcov(model)[coef_names, coef_names]
   } else {
     vc <- suppressWarnings(stats::vcov(model))
     if (is.list(vc)) {

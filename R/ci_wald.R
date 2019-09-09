@@ -23,7 +23,11 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 .ci_wald <- function(model, ci, dof, component) {
   params <- insight::get_parameters(model, effects = "fixed", component = component)
   estimates <- params$estimate
-  se <- standard_error(model, component = component)$SE
+  stderror <- standard_error(model, component = component)
+
+  # filter non-matching parameters
+  stderror <- stderror[match(params$parameter, stderror$Parameter), ]
+  se <- stderror$SE
 
   if (is.null(dof)) {
     # residual df
