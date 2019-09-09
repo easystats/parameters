@@ -59,6 +59,10 @@ p_value.truncreg <- p_value.default
 
 
 #' @export
+p_value.geeglm <- p_value.default
+
+
+#' @export
 p_value.censReg <- p_value.default
 
 

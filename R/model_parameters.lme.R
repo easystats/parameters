@@ -41,6 +41,12 @@ model_parameters.betareg <- model_parameters.lme
 model_parameters.lrm <- model_parameters.lme
 
 #' @export
+model_parameters.geeglm <- model_parameters.lme
+
+#' @export
+model_parameters.gee <- model_parameters.lme
+
+#' @export
 model_parameters.ols <- model_parameters.lme
 
 #' @export

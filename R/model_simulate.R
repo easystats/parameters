@@ -91,6 +91,10 @@ model_simulate.gamlss <- model_simulate.lm
 
 
 #' @export
+model_simulate.geeglm <- model_simulate.lm
+
+
+#' @export
 model_simulate.gee <- model_simulate.lm
 
 
@@ -333,6 +337,8 @@ model_simulate.zerocount <- model_simulate.zeroinfl
   } else if (inherits(model, "tobit")) {
     coef_names <- insight::find_parameters(model, flatten = TRUE)
     vc <- stats::vcov(model)[coef_names, coef_names]
+  } else if (inherits(model, "geeglm")) {
+    vc <- summary(model)$cov.unscaled
   } else if (inherits(model, "gee")) {
     vc <- model$naive.variance
   } else {

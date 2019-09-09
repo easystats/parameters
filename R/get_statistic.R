@@ -15,7 +15,7 @@
 
   if (any(c("t val.", "t", "t-value", "t.value", "t value", "tvalue") %in% cs_names))
     attr(out, "statistic") <- "t"
-  else if (any(c("z val.", "z", "z-value", "z.value", "z value", "zvalue") %in% cs_names))
+  else if (any(c("z val.", "z", "z-value", "z.value", "z value", "zvalue", "wald") %in% cs_names))
     attr(out, "statistic") <- "z"
   else
     attr(out, "statistic") <- "statistic"
@@ -157,6 +157,8 @@
 
 
 .get_statistic.plm <- .get_statistic.default
+
+.get_statistic.geeglm <- .get_statistic.default
 
 .get_statistic.censReg <- .get_statistic.default
 

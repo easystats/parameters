@@ -156,6 +156,9 @@ ci.gee <- ci.gamlss
 ci.tobit <- ci.gamlss
 
 #' @export
+ci.geeglm <- ci.gamlss
+
+#' @export
 ci.coxph <- ci.gamlss
 
 #' @export
