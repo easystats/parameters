@@ -84,6 +84,7 @@ reference:
   - format_standardize
   - parameters_table
   - parameters_type
+  - standardize_names
 
 
 navbar:

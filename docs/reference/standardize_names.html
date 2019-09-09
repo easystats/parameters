@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Conversion between (log)odds and standardized difference — odds_to_d • parameters</title>
+<title>Standardize column names — standardize_names • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Conversion between (log)odds and standardized difference — odds_to_d" />
-<meta property="og:description" content="Enables a conversion between (log)odds and standardized difference using Cohen's (1988) formula \(\frac{\log(odds)\times\sqrt{3}}{\pi}\)." />
+<meta property="og:title" content="Standardize column names — standardize_names" />
+<meta property="og:description" content="Standardize column names from data frames, in particular objects returned from
+model_parameters(), so column names are
+consistent and the same for any model object." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,61 +148,92 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Conversion between (log)odds and standardized difference</h1>
+    <h1>Standardize column names</h1>
     
-    <div class="hidden name"><code>odds_to_d.Rd</code></div>
+    <div class="hidden name"><code>standardize_names.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Enables a conversion between (log)odds and standardized difference using Cohen's (1988) formula \(\frac{\log(odds)\times\sqrt{3}}{\pi}\).</p>
+    <p>Standardize column names from data frames, in particular objects returned from
+<code><a href='model_parameters.html'>model_parameters()</a></code>, so column names are
+consistent and the same for any model object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>odds_to_d</span>(<span class='no'>odds</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>standardize_names</span>(<span class='no'>data</span>, <span class='no'>...</span>)
 
-<span class='fu'>convert_odds_to_d</span>(<span class='no'>odds</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='fu'>d_to_odds</span>(<span class='no'>d</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='fu'>convert_d_to_odds</span>(<span class='no'>d</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='co'># S3 method for parameters_model</span>
+<span class='fu'>standardize_names</span>(<span class='no'>data</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"easystats"</span>,
+  <span class='st'>"broom"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>odds</th>
-      <td><p>Odds values in vector or dataframe.</p></td>
+      <th>data</th>
+      <td><p>A data frame. Currently, only objects from <code><a href='model_parameters.html'>model_parameters()</a></code> are accepted.</p></td>
     </tr>
     <tr>
-      <th>log</th>
-      <td><p>Are these Log odds (such as in logistic models)?</p></td>
+      <th>...</th>
+      <td><p>Currently not used.</p></td>
     </tr>
     <tr>
-      <th>d</th>
-      <td><p>standardized difference values in vector or dataframe.</p></td>
+      <th>style</th>
+      <td><p>Standardization can either be based on the naming conventions from the easystats project, or on <span class="pkg">broom</span>'s naming scheme.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Converted index.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <p>A data frame, with standardized column names.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    
-<ul>
-<li><p>Sánchez-Meca, J., Marín-Martínez, F., &amp; Chacón-Moscoso, S. (2003). Effect-size indices for dichotomized outcomes in meta-analysis. Psychological methods, 8(4), 448.</p></li>
-<li><p>Borenstein, Michael, et al. "Converting among effect sizes." Introduction to meta-analysis (2009): 45-49.</p></li>
-</ul>
-
+    <p>This method is in particular useful for package developers or users
+  who use <code><a href='model_parameters.html'>model_parameters()</a></code> in their own
+  code or functions to retrieve model parameters for further processing. As
+  <code><a href='model_parameters.html'>model_parameters()</a></code> returns a data frame with varying column names
+  (depending on the input), accessing the required information is probably
+  not quite straightforward. In such cases, <code>standardize_names()</code> can
+  be used to get consistent, i.e. always the same column names, no matter
+  what kind of model was used in <code><a href='model_parameters.html'>model_parameters()</a></code>.
+  <br /> <br />
+  For <code>style = "broom"</code>, column names are renamed to match <span class="pkg">broom</span>'s
+  naming scheme, i.e. <code>Parameter</code> is renamed to <code>term</code>, <code>Coefficient</code>
+  becomes <code>estimate</code> and so on.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>odds_to_d</span>(<span class='fl'>0.2</span>)</div><div class='output co'>#&gt; [1] -0.8873296</div><div class='input'><span class='fu'>odds_to_d</span>(-<span class='fl'>1.45</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] -0.7994269</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='no'>mp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>mp</span>)</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high         t df_residual
+#&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893          29
+#&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808          29
+#&gt; 3         cyl   -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972          29
+#&gt;              p Std_Coefficient
+#&gt; 1 3.043182e-20    4.897987e-17
+#&gt; 2 2.220200e-04   -5.180450e-01
+#&gt; 3 1.064282e-03   -4.467939e-01</div><div class='input'><span class='fu'>standardize_names</span>(<span class='no'>mp</span>)</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high Statistic df_residual
+#&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893          29
+#&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808          29
+#&gt; 3         cyl   -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972          29
+#&gt;              p Std_Coefficient
+#&gt; 1 3.043182e-20    4.897987e-17
+#&gt; 2 2.220200e-04   -5.180450e-01
+#&gt; 3 1.064282e-03   -4.467939e-01</div><div class='input'><span class='fu'>standardize_names</span>(<span class='no'>mp</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"broom"</span>)</div><div class='output co'>#&gt;          term  estimate std.error  conf.low  conf.high statistic df.residual
+#&gt; 1 (Intercept) 39.686261 1.7149840 36.178725 43.1937976 23.140893          29
+#&gt; 2          wt -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808          29
+#&gt; 3         cyl -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972          29
+#&gt;        p.value Std_Coefficient
+#&gt; 1 3.043182e-20    4.897987e-17
+#&gt; 2 2.220200e-04   -5.180450e-01
+#&gt; 3 1.064282e-03   -4.467939e-01</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

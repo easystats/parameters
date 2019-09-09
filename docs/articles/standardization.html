@@ -13,8 +13,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Standardized parameters">
 <meta property="og:description" content="">
@@ -99,6 +100,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -127,10 +129,10 @@
 <h2 class="hasAnchor">
 <a href="#refit-re-fitting-the-model-with-standardized-data" class="anchor"></a><code>refit</code>: Re-fitting the model with standardized data</h2>
 <p><strong>This method is based on a complete model re-fit with a standardized version of data</strong>. Hence, this method is equal to standardizing the variables before fitting the model. It is the “purest” and the most accurate <span class="citation">(Neter, Wasserman, and Kutner 1989)</span>, but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (<em>e.g.</em>, polynomial or spline terms).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(parameters)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</a>
 <a class="sourceLine" id="cb1-2" title="2"></a>
 <a class="sourceLine" id="cb1-3" title="3">data &lt;-<span class="st"> </span>iris</a>
-<a class="sourceLine" id="cb1-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb1-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb1-5" title="5"></a>
 <a class="sourceLine" id="cb1-6" title="6"><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"refit"</span>)</a></code></pre></div>
 <table class="table">
@@ -176,10 +178,10 @@
 </tbody>
 </table>
 <p>This method is very flexible as it can be applied to all types of models (linear, logistic…).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(parameters)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</a>
 <a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3">data<span class="op">$</span>binary &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(data<span class="op">$</span>Sepal.Width <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb3-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(binary <span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Sepal.Length, <span class="dt">data =</span> data, <span class="dt">family=</span><span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3">data<span class="op">$</span>binary &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(data<span class="op">$</span>Sepal.Width <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(binary <span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Sepal.Length, <span class="dt">data =</span> data, <span class="dt">family=</span><span class="st">"binomial"</span>)</a>
 <a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"refit"</span>)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -215,7 +217,7 @@
 <h2 class="hasAnchor">
 <a href="#smart-scaling-by-the-variances-of-the-response-and-the-predictor" class="anchor"></a><code>smart</code>: Scaling by the variances of the response and the predictor</h2>
 <p>Post-hoc standardization of the model paramaters. The coefficients are divided by the standard deviation (or MAD if <code>robust</code>) of the outcome (which becomes their expression ‘unit’). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if <code>robust</code>) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of <code>x</code> is related to a change of 0.24 of the SD of <code>y</code>). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"smart"</span>)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -241,7 +243,7 @@
 <div id="classic-basic-scaling-of-all-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#classic-basic-scaling-of-all-parameters" class="anchor"></a><code>classic</code>: Basic scaling of all parameters</h2>
-<p>This method is similar to <code>method = "smart"</code>, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as <code><a href="https://www.rdocumentation.org/packages/sjstats/topics/std_beta">sjstats::std_beta()</a></code> or <code><a href="https://www.rdocumentation.org/packages/lm.beta/topics/lm.beta">lm.beta::lm.beta()</a></code>.</p>
+<p>This method is similar to <code>method = "smart"</code>, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as <code><a href="https://rdrr.io/pkg/sjstats/man/std_beta.html">sjstats::std_beta()</a></code> or <code><a href="https://rdrr.io/pkg/lm.beta/man/lm.beta.html">lm.beta::lm.beta()</a></code>.</p>
 </div>
 </div>
 <div id="methods-comparison" class="section level1">
@@ -251,35 +253,35 @@
 <blockquote>
 <p><strong>SPOILER ALERT: the standardization implemented in <code>parameters</code> is the most accurate and the most flexible.</strong></p>
 </blockquote>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(parameters)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sjstats)</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lm.beta)</a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(MuMIn)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sjstats)</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lm.beta)</a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(MuMIn)</a>
 <a class="sourceLine" id="cb5-5" title="5"></a>
 <a class="sourceLine" id="cb5-6" title="6">comparison &lt;-<span class="st"> </span><span class="cf">function</span>(model, <span class="dt">robust=</span><span class="ot">FALSE</span>){</a>
 <a class="sourceLine" id="cb5-7" title="7">  out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"refit"</span>, <span class="dt">robust=</span>robust)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a>
 <a class="sourceLine" id="cb5-8" title="8">  </a>
-<a class="sourceLine" id="cb5-9" title="9">  out<span class="op">$</span>smart &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb5-9" title="9">  out<span class="op">$</span>smart &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span>({</a>
 <a class="sourceLine" id="cb5-10" title="10">    out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"smart"</span>, <span class="dt">robust=</span>robust)[, <span class="dv">2</span>]</a>
 <a class="sourceLine" id="cb5-11" title="11">}, <span class="dt">error =</span> <span class="cf">function</span>(error_condition) {</a>
 <a class="sourceLine" id="cb5-12" title="12">    <span class="st">"Error"</span></a>
 <a class="sourceLine" id="cb5-13" title="13">})</a>
-<a class="sourceLine" id="cb5-14" title="14">  out<span class="op">$</span>classic &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb5-14" title="14">  out<span class="op">$</span>classic &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span>({</a>
 <a class="sourceLine" id="cb5-15" title="15">    out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/parameters_standardize.html">parameters_standardize</a></span>(model, <span class="dt">method=</span><span class="st">"classic"</span>, <span class="dt">robust=</span>robust)[, <span class="dv">2</span>]</a>
 <a class="sourceLine" id="cb5-16" title="16">}, <span class="dt">error =</span> <span class="cf">function</span>(error_condition) {</a>
 <a class="sourceLine" id="cb5-17" title="17">    <span class="st">"Error"</span></a>
 <a class="sourceLine" id="cb5-18" title="18">})</a>
-<a class="sourceLine" id="cb5-19" title="19">  out<span class="op">$</span>sjstats &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
-<a class="sourceLine" id="cb5-20" title="20">    <span class="cf">if</span>(insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/model_info">model_info</a></span>(model)<span class="op">$</span>is_bayesian){</a>
-<a class="sourceLine" id="cb5-21" title="21">      out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">NA</span>, bayestestR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayestestR/topics/describe_posterior">describe_posterior</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(sjstats<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sjstats/topics/std_beta">std_beta</a></span>(model)))[, <span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb5-19" title="19">  out<span class="op">$</span>sjstats &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb5-20" title="20">    <span class="cf">if</span>(insight<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/insight/man/model_info.html">model_info</a></span>(model)<span class="op">$</span>is_bayesian){</a>
+<a class="sourceLine" id="cb5-21" title="21">      out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="ot">NA</span>, bayestestR<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/bayestestR/man/describe_posterior.html">describe_posterior</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(sjstats<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sjstats/man/std_beta.html">std_beta</a></span>(model)))[, <span class="dv">2</span>])</a>
 <a class="sourceLine" id="cb5-22" title="22">    } <span class="cf">else</span>{</a>
-<a class="sourceLine" id="cb5-23" title="23">      out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">NA</span>, sjstats<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sjstats/topics/std_beta">std_beta</a></span>(model)[, <span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb5-23" title="23">      out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="ot">NA</span>, sjstats<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sjstats/man/std_beta.html">std_beta</a></span>(model)[, <span class="dv">2</span>])</a>
 <a class="sourceLine" id="cb5-24" title="24">    }</a>
 <a class="sourceLine" id="cb5-25" title="25">}, <span class="dt">error =</span> <span class="cf">function</span>(error_condition) {</a>
 <a class="sourceLine" id="cb5-26" title="26">    <span class="st">"Error"</span></a>
 <a class="sourceLine" id="cb5-27" title="27">})</a>
 <a class="sourceLine" id="cb5-28" title="28">  </a>
-<a class="sourceLine" id="cb5-29" title="29">  out<span class="op">$</span>lm.beta &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb5-29" title="29">  out<span class="op">$</span>lm.beta &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span>({</a>
 <a class="sourceLine" id="cb5-30" title="30">    out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>lm.beta<span class="op">::</span><span class="kw">lm.beta</span>(model)<span class="op">$</span>standardized.coefficients</a>
 <a class="sourceLine" id="cb5-31" title="31">}, <span class="dt">error =</span> <span class="cf">function</span>(error_condition) {</a>
 <a class="sourceLine" id="cb5-32" title="32">    <span class="st">"Error"</span></a>
@@ -287,8 +289,8 @@
 <a class="sourceLine" id="cb5-34" title="34">  <span class="st">"Error"</span></a>
 <a class="sourceLine" id="cb5-35" title="35">})</a>
 <a class="sourceLine" id="cb5-36" title="36">  </a>
-<a class="sourceLine" id="cb5-37" title="37">  out<span class="op">$</span>MuMIn &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
-<a class="sourceLine" id="cb5-38" title="38">    out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>MuMIn<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/MuMIn/topics/std.coef">std.coef</a></span>(model, <span class="dt">partial.sd=</span><span class="ot">FALSE</span>)[, <span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb5-37" title="37">  out<span class="op">$</span>MuMIn &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb5-38" title="38">    out[, <span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>MuMIn<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/MuMIn/man/std.coef.html">std.coef</a></span>(model, <span class="dt">partial.sd=</span><span class="ot">FALSE</span>)[, <span class="dv">1</span>]</a>
 <a class="sourceLine" id="cb5-39" title="39">}, <span class="dt">error =</span> <span class="cf">function</span>(error_condition) {</a>
 <a class="sourceLine" id="cb5-40" title="40">    <span class="st">"Error"</span></a>
 <a class="sourceLine" id="cb5-41" title="41">})</a>
@@ -303,10 +305,10 @@
 <h3 class="hasAnchor">
 <a href="#linear-model" class="anchor"></a>Linear Model</h3>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">data &lt;-<span class="st"> </span>iris</a>
-<a class="sourceLine" id="cb6-2" title="2">data<span class="op">$</span>Group_Sepal.Width &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(data<span class="op">$</span>Sepal.Width <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="st">"High"</span>, <span class="st">"Low"</span>))</a>
-<a class="sourceLine" id="cb6-3" title="3">data<span class="op">$</span>Binary_Sepal.Width &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(data<span class="op">$</span>Sepal.Width <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb6-2" title="2">data<span class="op">$</span>Group_Sepal.Width &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(data<span class="op">$</span>Sepal.Width <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="st">"High"</span>, <span class="st">"Low"</span>))</a>
+<a class="sourceLine" id="cb6-3" title="3">data<span class="op">$</span>Binary_Sepal.Width &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(data<span class="op">$</span>Sepal.Width <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>))</a>
 <a class="sourceLine" id="cb6-4" title="4"></a>
-<a class="sourceLine" id="cb6-5" title="5">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data) </a>
+<a class="sourceLine" id="cb6-5" title="5">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data) </a>
 <a class="sourceLine" id="cb6-6" title="6"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -349,7 +351,7 @@
 <div id="logistic-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#logistic-model" class="anchor"></a>Logistic Model</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(Binary_Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Length, <span class="dt">data=</span>data, <span class="dt">family=</span><span class="st">"binomial"</span>)</a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(Binary_Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Length, <span class="dt">data=</span>data, <span class="dt">family=</span><span class="st">"binomial"</span>)</a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -391,9 +393,9 @@
 <div id="linear-mixed-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#linear-mixed-model" class="anchor"></a>Linear Mixed Model</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</a>
 <a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3">model &lt;-<span class="st"> </span>lme4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb8-3" title="3">model &lt;-<span class="st"> </span>lme4<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -436,7 +438,7 @@
 <div id="interactions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#interactions" class="anchor"></a>Interactions</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">*</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">*</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -487,7 +489,7 @@
 <div id="transformation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#transformation" class="anchor"></a>Transformation</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/poly">poly</a></span>(Petal.Width, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/poly">poly</a></span>(Sepal.Width, <span class="dv">2</span>), <span class="dt">data=</span>data)</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span>(Petal.Width, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span>(Sepal.Width, <span class="dv">2</span>), <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb10-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -546,7 +548,7 @@
 <div id="bayesian-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bayesian-models" class="anchor"></a>Bayesian Models</h3>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb11-2" title="2"></a>
 <a class="sourceLine" id="cb11-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb11-4" title="4"><span class="kw">comparison</span>(model)</a></code></pre></div>
@@ -594,7 +596,7 @@
 <div id="linear-model-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#linear-model-1" class="anchor"></a>Linear Model</h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Group_Sepal.Width, <span class="dt">data=</span>data) </a>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Group_Sepal.Width, <span class="dt">data=</span>data) </a>
 <a class="sourceLine" id="cb12-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -637,7 +639,7 @@
 <div id="logistic-model-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#logistic-model-1" class="anchor"></a>Logistic Model</h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(Binary_Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Species, <span class="dt">data=</span>data, <span class="dt">family=</span><span class="st">"binomial"</span>)</a>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(Binary_Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Species, <span class="dt">data=</span>data, <span class="dt">family=</span><span class="st">"binomial"</span>)</a>
 <a class="sourceLine" id="cb13-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -687,9 +689,9 @@
 <div id="linear-mixed-model-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#linear-mixed-model-1" class="anchor"></a>Linear Mixed Model</h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</a>
 <a class="sourceLine" id="cb14-2" title="2"></a>
-<a class="sourceLine" id="cb14-3" title="3">model &lt;-<span class="st"> </span>lme4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Group_Sepal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data=</span>data)</a>
+<a class="sourceLine" id="cb14-3" title="3">model &lt;-<span class="st"> </span>lme4<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Group_Sepal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb14-4" title="4"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -731,7 +733,7 @@
 <div id="interactions-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#interactions-1" class="anchor"></a>Interactions</h3>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">*</span><span class="st"> </span>Group_Sepal.Width, <span class="dt">data=</span>data)</a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">*</span><span class="st"> </span>Group_Sepal.Width, <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb15-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -777,7 +779,7 @@
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Group_Sepal.Width <span class="op">*</span><span class="st"> </span>Petal.Width, <span class="dt">data=</span>data)</a>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Group_Sepal.Width <span class="op">*</span><span class="st"> </span>Petal.Width, <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb16-2" title="2"><span class="kw">comparison</span>(model)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -827,7 +829,7 @@
 <div id="bayesian-models-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bayesian-models-1" class="anchor"></a>Bayesian Models</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb17-2" title="2"></a>
 <a class="sourceLine" id="cb17-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Group_Sepal.Width, <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb17-4" title="4"><span class="kw">comparison</span>(model)</a></code></pre></div>
@@ -867,7 +869,7 @@
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb18-2" title="2"></a>
 <a class="sourceLine" id="cb18-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Group_Sepal.Width <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data=</span>data)</a>
 <a class="sourceLine" id="cb18-4" title="4"><span class="kw">comparison</span>(model)</a></code></pre></div>
@@ -971,17 +973,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
