@@ -53,6 +53,9 @@ model_parameters.vglm <- model_parameters.lme
 model_parameters.logistf <- model_parameters.lme
 
 #' @export
+model_parameters.censReg <- model_parameters.lme
+
+#' @export
 model_parameters.truncreg <- model_parameters.lme
 
 

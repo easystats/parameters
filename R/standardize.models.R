@@ -83,6 +83,9 @@ standardize.betareg <- standardize.lm
 standardize.truncreg <- standardize.lm
 
 #' @export
+standardize.censReg <- standardize.lm
+
+#' @export
 standardize.lrm <- standardize.lm
 
 #' @export

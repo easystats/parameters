@@ -92,6 +92,10 @@ standard_error.truncreg <- standard_error.default
 
 
 #' @export
+standard_error.censReg <- standard_error.default
+
+
+#' @export
 standard_error.negbin <- standard_error.default
 
 

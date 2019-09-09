@@ -155,6 +155,9 @@ ci.feis <- ci.gamlss
 ci.betareg <- ci.gamlss
 
 #' @export
+ci.censReg <- ci.gamlss
+
+#' @export
 ci.survreg <- ci.gamlss
 
 #' @export

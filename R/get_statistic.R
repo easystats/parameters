@@ -6,16 +6,16 @@
 
 .get_statistic.default <- function(model, statistic_column = 3, ...) {
   cs <- stats::coef(summary(model))
-  cs_names <- dimnames(cs)[[2]]
+  cs_names <- tolower(dimnames(cs)[[2]])
 
   out <- data_frame(
     Parameter = gsub("`", "", rownames(cs), fixed = TRUE),
     Statistic = as.vector(cs[, statistic_column])
   )
 
-  if (any(c("t val.", "t", "t-value", "t.value", "tvalue") %in% cs_names))
+  if (any(c("t val.", "t", "t-value", "t.value", "t value", "tvalue") %in% cs_names))
     attr(out, "statistic") <- "t"
-  else if (any(c("z val.", "z", "z-value", "z.value", "z value") %in% cs_names))
+  else if (any(c("z val.", "z", "z-value", "z.value", "z value", "zvalue") %in% cs_names))
     attr(out, "statistic") <- "z"
   else
     attr(out, "statistic") <- "statistic"
@@ -139,6 +139,8 @@
 
 
 .get_statistic.plm <- .get_statistic.default
+
+.get_statistic.censReg <- .get_statistic.default
 
 .get_statistic.feis <- .get_statistic.default
 

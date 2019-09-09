@@ -151,6 +151,10 @@ model_simulate.vglm <- model_simulate.lm
 
 
 #' @export
+model_simulate.censReg <- model_simulate.lm
+
+
+#' @export
 model_simulate.survreg <- model_simulate.lm
 
 
