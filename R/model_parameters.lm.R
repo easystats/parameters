@@ -12,6 +12,9 @@
 #'
 #' @note Standardization (argument \code{standardize}) is not supported by all model objects.
 #'
+#' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
+#'   columns into a consistent, standardized naming scheme.
+#'
 #' @examples
 #' library(parameters)
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)

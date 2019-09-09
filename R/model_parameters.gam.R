@@ -5,6 +5,9 @@
 #' @param model A gam/gamm model.
 #' @inheritParams model_parameters.lm
 #'
+#' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
+#'   columns into a consistent, standardized naming scheme.
+#'
 #' @return A data frame of indices related to the model's parameters.
 #'
 #' @examples

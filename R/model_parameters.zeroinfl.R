@@ -6,6 +6,9 @@
 #' @inheritParams model_parameters.lm
 #' @inheritParams model_simulate
 #'
+#' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
+#'   columns into a consistent, standardized naming scheme.
+#'
 #' @examples
 #' library(parameters)
 #' library(pscl)

@@ -71,3 +71,7 @@ model_parameters(model, standardize = "smart")
 }
 
 }
+\seealso{
+\code{\link[=standardize_names]{standardize_names()}} to rename
+  columns into a consistent, standardized naming scheme.
+}

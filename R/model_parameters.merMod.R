@@ -7,6 +7,9 @@
 #' @param p_method Method for computing p values. See \code{\link[=p_value]{p_value()}}.
 #' @param ci_method Method for computing confidence intervals (CI). See \code{\link[=ci]{ci()}}.
 #'
+#' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
+#'   columns into a consistent, standardized naming scheme.
+#'
 #' @examples
 #' library(parameters)
 #' library(lme4)

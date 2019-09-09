@@ -16,7 +16,10 @@
 #' @param model Statistical Model.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @return A data.frame of indices related to the model's parameters.
+#' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
+#'   columns into a consistent, standardized naming scheme.
+#'
+#' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters <- function(model, ...) {
   UseMethod("model_parameters")

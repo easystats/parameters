@@ -15,7 +15,7 @@ parameters(model, ...)
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame of indices related to the model's parameters.
+A data frame of indices related to the model's parameters.
 }
 \description{
 Compute and extract model parameters. See the documentation for your object's class:
@@ -30,4 +30,8 @@ Compute and extract model parameters. See the documentation for your object's cl
  \item{\link[=model_parameters.principal]{PCA and FA} (\pkg{psych})}
  \item{\link[=model_parameters.lavaan]{CFA and SEM} (\pkg{lavaan})}
  }
+}
+\seealso{
+\code{\link[=standardize_names]{standardize_names()}} to rename
+  columns into a consistent, standardized naming scheme.
 }
