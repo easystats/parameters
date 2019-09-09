@@ -54,13 +54,15 @@ standardize_names.parameters_model <- function(data, style = c("easystats", "bro
     cn[cn %in% c("Median", "Mean", "MAP")] <- "Coefficient"
   } else {
     cn[cn == "Parameter"] <- "term"
-    cn[cn == "Coefficient"] <- "estimate"
+    cn[cn %in% c("Coefficient", "Median", "Mean", "MAP")] <- "estimate"
     cn[cn == "SE"] <- "std.error"
+    cn[cn == "SD"] <- "std.dev"
     cn[cn == "p"] <- "p.value"
     cn[cn == "df_residual"] <- "df.residual"
     cn <- gsub("^CI_low", "conf.low", cn)
     cn <- gsub("^CI_high", "conf.high", cn)
     cn[cn %in% c("t", "z", "F", "chisq", "t / F")] <- "statistic"
+    cn[cn == "BF"] <- "bayes.factor"
   }
 
   colnames(data) <- cn
