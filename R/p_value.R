@@ -365,6 +365,20 @@ p_value.coxph <- function(model, ...) {
 
 
 #' @export
+p_value.coxme <- function(model, ...) {
+  stat <- .get_statistic.coxme(model)
+
+  if (!is.null(stat)) {
+    data_frame(
+      Parameter = stat$Parameter,
+      p = as.vector(1 - stats::pchisq(stat$Statistic^2, df = 1))
+    )
+  }
+}
+
+
+
+#' @export
 p_value.survreg <- function(model, ...) {
   s <- summary(model)
   p <- s$table[, "p"]

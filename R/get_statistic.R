@@ -312,3 +312,21 @@
   attr(out, "statistic") <- "z"
   out
 }
+
+
+
+.get_statistic.coxme <- function(model, ...) {
+  beta <- model$coefficients
+  out <- NULL
+
+  if (length(beta) > 0) {
+    out <- data_frame(
+      Parameter = names(beta),
+      Statistic = as.vector(beta / sqrt(diag(stats::vcov(model))))
+    )
+
+    attr(out, "statistic") <- "z"
+  }
+
+  out
+}

@@ -183,6 +183,9 @@ ci.censReg <- ci.gamlss
 ci.survreg <- ci.gamlss
 
 #' @export
+ci.coxme <- ci.gamlss
+
+#' @export
 ci.svyglm.nb <- ci.gamlss
 
 #' @export

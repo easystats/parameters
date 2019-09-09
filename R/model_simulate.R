@@ -91,6 +91,10 @@ model_simulate.gamlss <- model_simulate.lm
 
 
 #' @export
+model_simulate.coxme <- model_simulate.lm
+
+
+#' @export
 model_simulate.geeglm <- model_simulate.lm
 
 

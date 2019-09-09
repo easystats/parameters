@@ -436,6 +436,21 @@ standard_error.plm <- function(model, ...) {
 
 
 #' @export
+standard_error.coxme <- function(model, ...) {
+  beta <- model$coefficients
+
+  if (length(beta) > 0) {
+
+    data_frame(
+      Parameter = names(beta),
+      SE = sqrt(diag(stats::vcov(model)))
+    )
+  }
+}
+
+
+
+#' @export
 standard_error.coxph <- function(model, ...) {
   cs <- stats::coef(summary(model))
   se <- cs[, 3]
