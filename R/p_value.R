@@ -375,6 +375,18 @@ p_value.survreg <- function(model, ...) {
 # p-Values from Special Models -----------------------------------------------
 
 
+#' @export
+p_value.gee <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- 2 * stats::pnorm(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), lower.tail = FALSE)
+
+  data_frame(
+    Parameter = rownames(cs),
+    p = as.vector(p)
+  )
+}
+
+
 #' @importFrom methods slot
 #' @export
 p_value.glimML <- function(model, ...) {

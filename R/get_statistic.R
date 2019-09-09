@@ -294,3 +294,17 @@
   attr(out, "statistic") <- "chisq"
   out
 }
+
+
+.get_statistic.gee <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  cs <- stats::coef(summary(model))
+
+  out <- data_frame(
+    Parameter = parms$parameter,
+    Statistic = as.vector(cs[, "Naive z"])
+  )
+
+  attr(out, "statistic") <- "z"
+  out
+}

@@ -314,6 +314,18 @@ standard_error.svyglm <- function(model, ...) {
 
 
 #' @export
+standard_error.gee <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+
+  data_frame(
+    Parameter = rownames(cs),
+    SE = as.vector(cs[, "Naive S.E."])
+  )
+}
+
+
+
+#' @export
 standard_error.logistf <- function(model, ...) {
   utils::capture.output(s <- summary(model))
   se <- sqrt(diag(s$var))

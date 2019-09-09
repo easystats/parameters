@@ -98,6 +98,9 @@ standardize.psm <- standardize.lm
 standardize.ols <- standardize.lm
 
 #' @export
+standardize.gee <- standardize.lm
+
+#' @export
 standardize.rms <- standardize.lm
 
 #' @export
