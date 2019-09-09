@@ -320,8 +320,3 @@ model_simulate.zerocount <- model_simulate.zeroinfl
 
   vc
 }
-
-
-if (!require("VGAM", quietly = TRUE)) {
-  stop("Package 'VGAM' needed for this function to work. Please install it.")
-}
