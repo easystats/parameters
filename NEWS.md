@@ -1,4 +1,4 @@
-# parameters 0.1.1
+# parameters 0.2.0
 
 ## Breaking changes
 
@@ -23,6 +23,7 @@
 ## Bug fixes
 
   - Fixed issue with wrong computation of wald-approximated confidence intervals.
+  - `paramerers_standardize()` resp. `standardize()` for model objects now no longer standardizes `log()` terms, count or ratio response variables, or variables of class `Surv` and `AsIs`.
 
 # parameters 0.1.0
 
