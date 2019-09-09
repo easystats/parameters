@@ -172,7 +172,7 @@
 
 
 .get_statistic.vglm <- function(model, ...) {
-  if (!require("VGAM", quietly = TRUE)) {
+  if (!requireNamespace("VGAM", quietly = TRUE)) {
     stop("Package 'VGAM' needed for this function to work. Please install it.")
   }
 

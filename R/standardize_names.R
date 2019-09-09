@@ -6,8 +6,22 @@
 #'
 #' @param data A data frame. Currently, only objects from \code{\link[=model_parameters]{model_parameters()}} are accepted.
 #' @param style Standardization can either be based on the naming conventions from the easystats project, or on \pkg{broom}'s naming scheme.
+#' @param ... Currently not used.
 #'
 #' @return A data frame, with standardized column names.
+#'
+#' @details This method is in particular useful for package developers or users
+#'   who use \code{\link[=model_parameters]{model_parameters()}} in their own
+#'   code or functions to retrieve model parameters for further processing. As
+#'   \code{model_parameters()} returns a data frame with varying column names
+#'   (depending on the input), accessing the required information is probably
+#'   not quite straightforward. In such cases, \code{standardize_names()} can
+#'   be used to get consistent, i.e. always the same column names, no matter
+#'   what kind of model was used in \code{model_parameters()}.
+#'   \cr \cr
+#'   For \code{style = "broom"}, column names are renamed to match \pkg{broom}'s
+#'   naming scheme, i.e. \coe{Parameter} is renamed to \code{term}, \code{Coefficient}
+#'   becomes \code{estimate} and so on.
 #'
 #' @examples
 #' library(parameters)
