@@ -44,8 +44,7 @@ parameters_type <- function(model, ...) {
   # Get info
   params <- data_frame(
     Parameter = c(
-      insight::find_parameters(model)$conditional,
-      insight::find_parameters(model)$zero_inflated
+      insight::find_parameters(model, effects = "fixed", flatten = TRUE)
     )
   )
 
@@ -163,6 +162,10 @@ parameters_type <- function(model, ...) {
     degree <- vars[[2]]
     degree <- substr(vars[[2]], nchar(vars[[2]]), nchar(vars[[2]]))
     return(c(type, name, var, degree, NA))
+
+    # Smooth
+  } else if (grepl("s(x", name, fixed = TRUE)) {
+    return(c("smooth", name, NA, NA, NA))
   } else {
     return(c("unknown", NA, NA, NA, NA))
   }

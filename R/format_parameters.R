@@ -46,6 +46,11 @@ format_parameters.default <- function(model) {
       names[i] <- .format_poly(name = names[i], variable = types$Variable[i], type = types$Type[i], degree = types$Level[i])
     }
 
+    # Smooth
+    if (types$Type[i] == "smooth") {
+      names[i] <- gsub("s(", "Smooth term (", names[i], fixed = TRUE)
+    }
+
     # Interactions
     if (types$Type[i] %in% c("interaction", "nested")) {
       sep <- ifelse(types$Type[i] == "interaction", " * ", " / ")
