@@ -4,8 +4,8 @@
 \alias{format_ci}
 \title{Confidence/Credible Interval (CI) Formatting}
 \usage{
-format_ci(CI_low, CI_high, ci = 0.95, digits = 2, width = NULL,
-  brackets = TRUE)
+format_ci(CI_low, CI_high, ci = 0.95, digits = 2, brackets = TRUE,
+  width = NULL)
 }
 \arguments{
 \item{CI_low}{Lower CI bound.}
@@ -16,9 +16,9 @@ format_ci(CI_low, CI_high, ci = 0.95, digits = 2, width = NULL,
 
 \item{digits}{Number of significant digits.}
 
-\item{width}{Minimum width of the returned string. If not \code{NULL} and \code{width} is larger than the string's length, leading whitespaces are added to the string.}
-
 \item{brackets}{Logical, if \code{TRUE} (default), values are encompassed in square brackets.}
+
+\item{width}{Minimum width of the returned string. If not \code{NULL} and \code{width} is larger than the string's length, leading whitespaces are added to the string.}
 }
 \value{
 A formatted string.
@@ -29,6 +29,7 @@ Confidence/Credible Interval (CI) Formatting
 \examples{
 format_ci(1.20, 3.57, ci = 0.90)
 format_ci(1.20, 3.57, ci = NULL)
+format_ci(1.20, 3.57, ci = NULL, brackets = FALSE)
 format_ci(c(1.205645, 23.4), c(3.57, -1.35), ci = 0.90)
 format_ci(c(1.20, NA, NA), c(3.57, -1.35, NA), ci = 0.90)
 }
