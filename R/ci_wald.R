@@ -26,7 +26,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
   stderror <- standard_error(model, component = component)
 
   # filter non-matching parameters
-  stderror <- stderror[match(params$parameter, stderror$Parameter), ]
+  stderror <- stderror[1:nrow(params), ]
   se <- stderror$SE
 
   if (is.null(dof)) {
