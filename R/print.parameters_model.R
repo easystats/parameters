@@ -39,13 +39,35 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 }
 
 
-
+#' @keywords internal
 .print_model_parms_components <- function(x, pretty_names, ...) {
-  l <- split(x, x$Component)
+  tables <- split(x, x$Component)
 
-  for (i in names(l)) {
-    comp <- switch(
-      i,
+  for (type in names(tables)) {
+
+    # don't print Component column
+    tables[[type]]$Component <- NULL
+
+    # Smooth terms statistics
+    if("t / F" %in% names(tables[[type]])){
+      if(type == "smooth_terms"){
+        names(tables[[type]])[names(tables[[type]]) == "t / F"] <- "F"
+      }
+      if(type == "conditional"){
+        names(tables[[type]])[names(tables[[type]]) == "t / F"] <- "t"
+      }
+    }
+
+    # don't print se and ci if all are missing
+    if (all(is.na(tables[[type]]$SE))) tables[[type]]$SE <- NULL
+    if (all(is.na(tables[[type]]$CI_low))) tables[[type]]$CI_low <- NULL
+    if (all(is.na(tables[[type]]$CI_high))) tables[[type]]$CI_high <- NULL
+
+
+    formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, ...)
+
+    component_name <- switch(
+      type,
       "mu" = ,
       "conditional" = "Conditional",
       "zero_inflated" = "Zero-Inflated",
@@ -55,17 +77,8 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "tau" = "Tau"
     )
 
-    insight::print_color(sprintf("# %s component\n\n", comp), "blue")
-
-    # don't print Component column
-    l[[i]]$Component <- NULL
-
-    # don't print se and ci if all are missing
-    if (all(is.na(l[[i]]$SE))) l[[i]]$SE <- NULL
-    if (all(is.na(l[[i]]$CI_low))) l[[i]]$CI_low <- NULL
-    if (all(is.na(l[[i]]$CI_high))) l[[i]]$CI_high <- NULL
-
-    formatted_table <- parameters_table(l[[i]], pretty_names = pretty_names, ...)
+    # Print
+    insight::print_color(sprintf("# %s component\n\n", component_name), "blue")
     cat(insight::format_table(formatted_table))
     cat("\n")
   }
