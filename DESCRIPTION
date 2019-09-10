@@ -39,8 +39,8 @@ Imports:
 	tools,
 	utils
 Suggests:
-  AER,
-  aod,
+	AER,
+	aod,
 	BayesFM,
 	BayesFactor,
 	betareg,
@@ -52,6 +52,7 @@ Suggests:
 	EGAnet (>= 0.7),
 	gamlss,
 	gee,
+	geepack,
 	GLMMadaptive,
 	glmmTMB,
 	knitr,

@@ -13,8 +13,7 @@ parameters_standardize(model, robust = FALSE, method = "refit",
 \item{robust}{Logical, if \code{TRUE}, centering is done by substracting the
 median from the variables and divide it by the median absolute deviation
 (MAD). If \code{FALSE}, variables are standardized by substracting the
-mean and divide it by the standard deviation (SD).
-the}
+mean and divide it by the standard deviation (SD).}
 
 \item{method}{The method used for standardizing the parameters. Can be \code{"refit"} (default), \code{"2sd"}, \code{"smart"} or \code{"classic"}.}
 

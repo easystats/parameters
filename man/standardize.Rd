@@ -21,10 +21,9 @@ standardize(x, ...)
 \item{robust}{Logical, if \code{TRUE}, centering is done by substracting the
 median from the variables and divide it by the median absolute deviation
 (MAD). If \code{FALSE}, variables are standardized by substracting the
-mean and divide it by the standard deviation (SD).
-the}
+mean and divide it by the standard deviation (SD).}
 
-\item{method}{The method of standardization. For data.frames, can be \code{"default"} (variables are divided by SD or MAD depending on \code{robust}) or \code{"2sd"} (divided by two times the deviation).}
+\item{method}{The method of standardization. For data.frames, can be \code{"default"} (variables are divided by SD or MAD depending on \code{robust}) or \code{"2sd"} (divided by two times the deviation). For models, check \link[=standardize.lm]{corresponding documentation}.}
 
 \item{verbose}{Toggle warnings on or off.}
 
