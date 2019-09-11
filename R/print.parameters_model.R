@@ -49,12 +49,21 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     tables[[type]]$Component <- NULL
 
     # Smooth terms statistics
-    if("t / F" %in% names(tables[[type]])){
-      if(type == "smooth_terms"){
+    if ("t / F" %in% names(tables[[type]])) {
+      if (type == "smooth_terms") {
         names(tables[[type]])[names(tables[[type]]) == "t / F"] <- "F"
       }
-      if(type == "conditional"){
+      if (type == "conditional") {
         names(tables[[type]])[names(tables[[type]]) == "t / F"] <- "t"
+      }
+    }
+
+    if ("z / Chisq" %in% names(tables[[type]])) {
+      if (type == "smooth_terms") {
+        names(tables[[type]])[names(tables[[type]]) == "z / Chisq"] <- "Chisq"
+      }
+      if (type == "conditional") {
+        names(tables[[type]])[names(tables[[type]]) == "z / Chisq"] <- "z"
       }
     }
 

@@ -111,7 +111,12 @@
     Component = c(rep("conditional", nrow(cs)), rep("smooth_terms", nrow(cs.smooth)))
   )
 
-  attr(out, "statistic") <- "t / F"
+  if (insight::model_info(model)$is_binomial) {
+    attr(out, "statistic") <- "z / Chisq"
+  } else {
+    attr(out, "statistic") <- "t / F"
+  }
+
   out
 }
 

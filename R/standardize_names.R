@@ -50,7 +50,7 @@ standardize_names.parameters_model <- function(data, style = c("easystats", "bro
   cn <- colnames(data)
 
   if (style == "easystats") {
-    cn[cn %in% c("t", "z", "F", "chisq", "t / F")] <- "Statistic"
+    cn[cn %in% c("t", "z", "F", "chisq", "t / F", "z / Chisq")] <- "Statistic"
     cn[cn %in% c("Median", "Mean", "MAP")] <- "Coefficient"
   } else {
     cn[cn == "Parameter"] <- "term"
@@ -61,7 +61,7 @@ standardize_names.parameters_model <- function(data, style = c("easystats", "bro
     cn[cn == "df_residual"] <- "df.residual"
     cn <- gsub("^CI_low", "conf.low", cn)
     cn <- gsub("^CI_high", "conf.high", cn)
-    cn[cn %in% c("t", "z", "F", "chisq", "t / F")] <- "statistic"
+    cn[cn %in% c("t", "z", "F", "chisq", "t / F", "z / Chisq")] <- "statistic"
     cn[cn == "BF"] <- "bayes.factor"
   }
 
