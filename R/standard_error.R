@@ -131,6 +131,10 @@ standard_error.ivreg <- standard_error.default
 
 
 #' @export
+standard_error.LORgee <- standard_error.default
+
+
+#' @export
 standard_error.lme <- standard_error.default
 
 

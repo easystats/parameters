@@ -55,6 +55,10 @@ p_value.lm <- p_value.default
 
 
 #' @export
+p_value.LORgee <- p_value.default
+
+
+#' @export
 p_value.lm_robust <- p_value.default
 
 

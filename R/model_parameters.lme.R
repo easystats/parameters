@@ -92,3 +92,6 @@ model_parameters.psm <- model_parameters.plm
 
 #' @export
 model_parameters.ivreg <- model_parameters.plm
+
+#' @export
+model_parameters.LORgee <- model_parameters.plm

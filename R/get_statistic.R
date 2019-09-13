@@ -351,3 +351,11 @@
   attr(out, "statistic") <- "z"
   out
 }
+
+
+
+.get_statistic.LORgee <- function(model, ...) {
+  out <- .get_statistic.default(model)
+  attr(out, "statistic") <- "z"
+  out
+}

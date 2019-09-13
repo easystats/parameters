@@ -36,7 +36,7 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
   # make sure that the original response value will be restored after
   # standardizing, as these models also require a non-standardized reponse.
 
-  if (m_info$is_count || m_info$is_beta || m_info$is_censored || !include_response) {
+  if (m_info$is_count || m_info$is_ordinal || m_info$is_beta || m_info$is_censored || !include_response) {
     resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
   }
 
@@ -79,6 +79,9 @@ standardize.brmsfit <- standardize.lm
 
 #' @export
 standardize.lme <- standardize.lm
+
+#' @export
+standardize.LORgee <- standardize.lm
 
 #' @export
 standardize.gls <- standardize.lm

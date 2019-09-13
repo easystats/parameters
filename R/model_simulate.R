@@ -83,6 +83,10 @@ model_simulate.plm <- model_simulate.lm
 
 
 #' @export
+model_simulate.LORgee <- model_simulate.lm
+
+
+#' @export
 model_simulate.feis <- model_simulate.lm
 
 
@@ -355,7 +359,7 @@ model_simulate.zerocount <- model_simulate.zeroinfl
     vc <- stats::vcov(model)[coef_names, coef_names]
   } else if (inherits(model, "geeglm")) {
     vc <- summary(model)$cov.unscaled
-  } else if (inherits(model, "gee")) {
+  } else if (inherits(model, c("gee", "LORgee"))) {
     vc <- model$naive.variance
   } else {
     vc <- suppressWarnings(stats::vcov(model))
