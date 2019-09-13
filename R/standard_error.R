@@ -111,6 +111,10 @@ standard_error.truncreg <- standard_error.default
 
 
 #' @export
+standard_error.lm_robust <- standard_error.default
+
+
+#' @export
 standard_error.censReg <- standard_error.default
 
 

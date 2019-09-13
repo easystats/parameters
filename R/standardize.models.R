@@ -102,6 +102,9 @@ standardize.ivreg <- standardize.lm
 standardize.truncreg <- standardize.lm
 
 #' @export
+standardize.lm_robust <- standardize.lm
+
+#' @export
 standardize.tobit <- standardize.lm
 
 #' @export

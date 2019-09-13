@@ -57,6 +57,10 @@ ci.gam <- function(x, ci = .95, ...) {
 
 
 #' @export
+ci.lm_robust <- ci.lm
+
+
+#' @export
 ci.BBmm <- ci.lm
 
 

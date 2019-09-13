@@ -95,6 +95,10 @@ model_simulate.gamlss <- model_simulate.lm
 
 
 #' @export
+model_simulate.lm_robust <- model_simulate.lm
+
+
+#' @export
 model_simulate.coxme <- model_simulate.lm
 
 
