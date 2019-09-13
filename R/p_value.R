@@ -575,6 +575,19 @@ p_value.gam <- function(model, ...) {
 
 
 
+#' @importFrom stats na.omit
+#' @export
+p_value.Gam <- function(model, ...) {
+  p.aov <- stats::na.omit(summary(model)$parametric.anova)
+
+  data_frame(
+    Parameter = rownames(p.aov),
+    p = as.vector(p.aov[, 5])
+  )
+}
+
+
+
 #' @export
 p_value.gamm <- function(model, ...) {
   model <- model$gam
