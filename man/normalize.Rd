@@ -9,16 +9,26 @@
 \usage{
 normalize(x, ...)
 
-\method{normalize}{numeric}(x, verbose = TRUE, ...)
+\method{normalize}{numeric}(x, include_bounds = TRUE, verbose = TRUE,
+  ...)
 
-\method{normalize}{grouped_df}(x, select = NULL, exclude = NULL, ...)
+\method{normalize}{grouped_df}(x, select = NULL, exclude = NULL,
+  include_bounds = TRUE, ...)
 
-\method{normalize}{data.frame}(x, select = NULL, exclude = NULL, ...)
+\method{normalize}{data.frame}(x, select = NULL, exclude = NULL,
+  include_bounds = TRUE, ...)
 }
 \arguments{
 \item{x}{Object.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{include_bounds}{Logical, if \code{TRUE}, return value may include 0
+and 1. If \code{FALSE}, the return value is compressed, using the formula
+\code{(x * (n − 1) + 0.5) / n} (\cite{Smithson and Verkuilen 2006}), to
+avoid zeros and ones in the normalized variables. This can be useful in
+case of beta-regression, where the response variable is not allowed to
+include zeros and ones.}
 
 \item{verbose}{Toggle warnings on or off.}
 
@@ -30,9 +40,12 @@ standardized.}
 be excluded from standardization.}
 }
 \value{
-Standardized object.
+A normalized object.
 }
 \description{
 Performs a normalization of data. This scales all numeric
 variables in the range 0 - 1.
+}
+\references{
+Smithson M, Verkuilen J (2006). A Better Lemon Squeezer? Maximum-Likelihood Regression with Beta-Distributed Dependent Variables. Psychological Methods, 11(1), 54–71.
 }
