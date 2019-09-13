@@ -20,10 +20,10 @@ to automatically define this range based on properties of the model's data.}
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame.
+A data frame.
 }
 \description{
-Compte the equivalence test for frequentist models.
+Compute the equivalence test for frequentist models.
 }
 \examples{
 m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)

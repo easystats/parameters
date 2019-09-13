@@ -6,7 +6,7 @@ bayestestR::equivalence_test
 
 #' @title Equivalence test
 #'
-#' @description Compte the equivalence test for frequentist models.
+#' @description Compute the equivalence test for frequentist models.
 #'
 #' @param x A statistical model.
 #' @param range The range of practical equivalence of an effect. May be \code{"default"},
@@ -15,7 +15,7 @@ bayestestR::equivalence_test
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @return A data.frame.
+#' @return A data frame.
 #' @examples
 #' m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 #' equivalence_test(m)
