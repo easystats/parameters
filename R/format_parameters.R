@@ -31,9 +31,18 @@ format_parameters <- function(model) {
 
 #' @export
 format_parameters.default <- function(model) {
-  types <- parameters_type(model)
 
-  names <- types$Parameter
+  names <- insight::find_parameters(model, flatten = TRUE)
+  info <- insight::model_info(model)
+
+  # hurdle- and zeroinfl-models
+  if(info$is_zero_inflated | info$is_hurdle){
+    names <- gsub("count_", "", names)
+    names <- gsub("zero_", "", names)
+  }
+
+  # Type-specific changes
+  types <- parameters_type(model)
   for (i in 1:nrow(types)) {
 
     # Factors
