@@ -36,7 +36,7 @@ format_parameters.default <- function(model) {
   info <- insight::model_info(model)
 
   # hurdle- and zeroinfl-models
-  if(info$is_zero_inflated | info$is_hurdle){
+  if (info$is_zero_inflated | info$is_hurdle) {
     names <- gsub("count_", "", names)
     names <- gsub("zero_", "", names)
   }
@@ -57,6 +57,7 @@ format_parameters.default <- function(model) {
 
     # Smooth
     if (types$Type[i] == "smooth") {
+      names[i] <- gsub("^smooth_(.*)\\[(.*)\\]", "\\2", names[i])
       names[i] <- gsub("s(", "Smooth term (", names[i], fixed = TRUE)
     }
 

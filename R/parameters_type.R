@@ -164,8 +164,11 @@ parameters_type <- function(model, ...) {
     return(c(type, name, var, degree, NA))
 
     # Smooth
-  } else if (grepl("s(x", name, fixed = TRUE)) {
+  } else if (grepl("^s\\(", name)) {
     return(c("smooth", name, NA, NA, NA))
+    # Smooth
+  } else if (grepl("^smooth_", name)) {
+    return(c("smooth", gsub("^smooth_(.*)\\[(.*)\\]", "\\2", name), NA, NA, NA))
   } else {
     return(c("unknown", NA, NA, NA, NA))
   }

@@ -80,6 +80,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "mu" = ,
       "conditional" = "Conditional",
       "zero_inflated" = "Zero-Inflated",
+      "smooth_sd" = "Smooth Terms (SD)",
       "smooth_terms" = "Smooth Terms",
       "sigma" = "Sigma",
       "nu" = "Nu",
