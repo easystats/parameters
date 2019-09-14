@@ -36,7 +36,7 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
   # make sure that the original response value will be restored after
   # standardizing, as these models also require a non-standardized reponse.
 
-  if (m_info$is_count || m_info$is_ordinal || m_info$is_beta || m_info$is_censored || !include_response) {
+  if (.no_response_standardize(model) || !include_response) {
     resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
   }
 
@@ -67,6 +67,17 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 
   model_std
 }
+
+
+
+# check if model has a response variable that should not be standardized.
+.no_response_standardize <- function(model) {
+  m_info <- insight::model_info(model)
+  m_info$is_count | m_info$is_ordinal | m_info$is_beta | m_info$is_censored
+}
+
+
+
 
 #' @export
 standardize.merMod <- standardize.lm
@@ -162,21 +173,13 @@ standardize.clm2 <- standardize.wbm
 
 
 #' @export
-standardize.zeroinfl <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
-  # dont standardize outcome!
-  d <- standardize(insight::get_data(x), robust = robust, method = method, verbose = verbose)
-  d[[insight::find_response(x)]] <- insight::get_response(x)
-
-  text <- utils::capture.output(model_std <- stats::update(x, data = d))
-
-  model_std
-}
+standardize.zeroinfl <- standardize.lm
 
 #' @export
-standardize.hurdle <- standardize.zeroinfl
+standardize.hurdle <- standardize.lm
 
 #' @export
-standardize.zerocount <- standardize.zeroinfl
+standardize.zerocount <- standardize.lm
 
 
 
@@ -192,12 +195,27 @@ standardize.coxph <- function(x, robust = FALSE, method = "default", verbose = T
 
   # for some models, the DV cannot be standardized when using
   # "update()", so we only standardize model predictors
+  #
+  # survival models have some strange format for the response variable,
+  # so we don't use the default standardize.lm function here, but
+  # use a different approach that only retrieves predictors that should
+  # be standardized.
 
   pred <- insight::find_predictors(x, flatten = TRUE)
   data <- insight::get_data(x)
 
-  data_std <- standardize(data[, pred, drop = FALSE], robust = robust, method = method, verbose = verbose)
-  data[pred] <- data_std
+  # if we standardize log-terms, standardization will fail (because log of
+  # negative value is NaN)
+
+  log_terms <- .log_terms(x)
+  if (length(log_terms)) pred <- setdiff(pred, log_terms)
+
+  # standardize data, if we have anything left to standardize
+
+  if (length(pred)) {
+    data_std <- standardize(data[, pred, drop = FALSE], robust = robust, method = method, verbose = verbose)
+    data[pred] <- data_std
+  }
 
   text <- utils::capture.output(model_std <- stats::update(x, data = data))
 
