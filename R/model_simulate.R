@@ -79,6 +79,10 @@ model_simulate.crch <- model_simulate.lm
 
 
 #' @export
+model_simulate.biglm <- model_simulate.lm
+
+
+#' @export
 model_simulate.plm <- model_simulate.lm
 
 

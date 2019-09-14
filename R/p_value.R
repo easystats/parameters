@@ -406,6 +406,18 @@ p_value.survreg <- function(model, ...) {
 
 
 #' @export
+p_value.biglm <- function(model, ...) {
+  cs <- summary(model)$mat
+  params <- insight::get_parameters(model)
+
+  data_frame(
+    Parameter = params$parameter,
+    p = as.vector(cs[, 5])
+  )
+}
+
+
+#' @export
 p_value.crch <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
   params <- insight::get_parameters(model)

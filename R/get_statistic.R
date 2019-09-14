@@ -359,3 +359,32 @@
   attr(out, "statistic") <- "z"
   out
 }
+
+
+
+.get_statistic.bigglm <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  se <- standard_error(model)
+
+  out <- data_frame(
+    Parameter = parms$parameter,
+    Statistic = parms$estimate / se$SE
+  )
+
+  attr(out, "statistic") <- "z"
+  out
+}
+
+
+.get_statistic.biglm <- function(model, ...) {
+  parms <- insight::get_parameters(model)
+  se <- standard_error(model)
+
+  out <- data_frame(
+    Parameter = parms$parameter,
+    Statistic = parms$estimate / se$SE
+  )
+
+  attr(out, "statistic") <- "t"
+  out
+}

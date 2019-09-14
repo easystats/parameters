@@ -59,8 +59,10 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 
   # update model with standardized data
 
-  if (inherits(x, c("brmsfit"))) {
+  if (inherits(x, "brmsfit")) {
     text <- utils::capture.output(model_std <- stats::update(x, newdata = data_std))
+  } else if (inherits(x, "biglm")) {
+    text <- utils::capture.output(model_std <- stats::update(x, moredata = data_std))
   } else {
     text <- utils::capture.output(model_std <- stats::update(x, data = data_std))
   }
@@ -90,6 +92,9 @@ standardize.brmsfit <- standardize.lm
 
 #' @export
 standardize.lme <- standardize.lm
+
+#' @export
+standardize.biglm <- standardize.lm
 
 #' @export
 standardize.LORgee <- standardize.lm
