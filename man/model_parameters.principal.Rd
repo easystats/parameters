@@ -34,11 +34,9 @@ Format PCA/FA objects from the psych package (Revelle, 2016).
 library(parameters)
 library(psych)
 
-\donttest{
 # Principal Component Analysis (PCA) ---------
 pca <- psych::principal(attitude)
 model_parameters(pca)
-}
 
 pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
 model_parameters(pca, sort = TRUE, threshold = 0.2)

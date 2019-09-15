@@ -86,6 +86,7 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
     Variance = eigenvalues / sum(eigenvalues),
     Variance_Cumulative = cumsum(eigenvalues / sum(eigenvalues))
   )
+  data_summary$Variance_Proportion <- data_summary$Variance / sum(data_summary$Variance)
 
   model$sdev <- model$sdev[1:n]
   model$rotation <- model$rotation[, 1:n, drop = FALSE]
@@ -172,3 +173,17 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
 
   model_parameters(psych::principal(x, nfactors = n, rotate = rotation, ...), sort = sort, threshold = threshold)
 }
+
+
+
+
+
+
+
+#' @export
+principal_components.lm <- function(x, ...) {
+  principal_components(insight::get_predictors(x, ...), ...)
+}
+
+#' @export
+principal_components.merMod <- principal_components.lm

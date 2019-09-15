@@ -17,11 +17,9 @@
 #' library(parameters)
 #' library(psych)
 #'
-#' \donttest{
 #' # Principal Component Analysis (PCA) ---------
 #' pca <- psych::principal(attitude)
 #' model_parameters(pca)
-#' }
 #'
 #' pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
 #' model_parameters(pca, sort = TRUE, threshold = 0.2)
@@ -60,6 +58,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
       data_summary$Variance_Cumulative <- NA
     }
   }
+  data_summary$Variance_Proportion <- data_summary$Variance / sum(data_summary$Variance)
 
   # Get loadings
   loadings <- as.data.frame(unclass(model$loadings))
@@ -105,7 +104,11 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
   attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
 
   # add class-attribute for printing
-  class(loadings) <- c("parameters_efa", class(loadings))
+  if(model$fn == "principal"){
+    class(loadings) <- c("parameters_pca", class(loadings))
+  } else{
+    class(loadings) <- c("parameters_efa", class(loadings))
+  }
 
   loadings
 }
