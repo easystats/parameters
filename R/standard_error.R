@@ -74,6 +74,28 @@ standard_error.list <- function(model, ...) {
 }
 
 
+#' @export
+standard_error.table <- function(x, ...) {
+  # compute standard error of proportions
+  if (length(dim(x)) == 1) {
+    total.n <- as.vector(sum(x))
+    rel.frq <- as.vector(x) / total.n
+    out <- data_frame(
+      Value = names(x),
+      Proportion = rel.frq,
+      SE = suppressWarnings(sqrt(rel.frq * (1 - rel.frq) / total.n))
+    )
+  } else {
+    out <- NA
+  }
+
+  out
+}
+
+
+#' @export
+standard_error.xtabs <- standard_error.table
+
 
 
 
