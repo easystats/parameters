@@ -36,7 +36,7 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
   # make sure that the original response value will be restored after
   # standardizing, as these models also require a non-standardized reponse.
 
-  if (.no_response_standardize(model) || !include_response) {
+  if (.no_response_standardize(m_info) || !include_response) {
     resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
   }
 
@@ -72,10 +72,11 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 
 
 
-# check if model has a response variable that should not be standardized.
-.no_response_standardize <- function(model) {
-  m_info <- insight::model_info(model)
-  m_info$is_count | m_info$is_ordinal | m_info$is_beta | m_info$is_censored
+
+#' @keywords internal
+.no_response_standardize <- function(info) {
+  # check if model has a response variable that should not be standardized.
+  info$is_count | info$is_ordinal | info$is_beta | info$is_censored
 }
 
 
