@@ -4,7 +4,8 @@
 \alias{format_p}
 \title{p-values formatting}
 \usage{
-format_p(p, stars = FALSE, stars_only = FALSE, name = "p")
+format_p(p, stars = FALSE, stars_only = FALSE, name = "p",
+  missing = "")
 }
 \arguments{
 \item{p}{value or vector of p-values.}
@@ -14,6 +15,8 @@ format_p(p, stars = FALSE, stars_only = FALSE, name = "p")
 \item{stars_only}{Return only significance stars.}
 
 \item{name}{Name prefixing the text. Can be \code{NULL}.}
+
+\item{missing}{Value by which \code{NA} values are replaced. By default, an empty string (i.e. \code{""}) is returned for \code{NA}.}
 }
 \value{
 A formatted string.
