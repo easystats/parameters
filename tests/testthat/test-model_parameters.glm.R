@@ -12,7 +12,7 @@ test_that("model_parameters.lm", {
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 11))
 
   params <- model_parameters(model, dispersion = TRUE, bootstrap = TRUE, n = 500)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 7))
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 6))
 
   model <- insight::download_model("lm_2")
 
