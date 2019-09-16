@@ -139,7 +139,7 @@ p_value.lme <- function(model, ...) {
   p <- cs[, 5]
 
   data_frame(
-    Parameter = names(p),
+    Parameter = rownames(cs),
     p = as.vector(p)
   )
 }
@@ -267,7 +267,7 @@ p_value.svyglm <- function(model, ...) {
   p <- cs[, 4]
 
   data_frame(
-    Parameter = names(p),
+    Parameter = rownames(cs),
     p = as.vector(p)
   )
 }
@@ -280,7 +280,7 @@ p_value.svyolr <- function(model, ...) {
   p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
 
   data_frame(
-    Parameter = names(p),
+    Parameter = rownames(cs),
     p = as.vector(p)
   )
 }
@@ -616,9 +616,10 @@ p_value.gamm4 <- p_value.gamm
 
 #' @export
 p_value.gls <- function(model, ...) {
-  p <- summary(model)$tTable[, 4]
+  cs <- summary(model)$tTable
+  p <- cs[, 4]
   data_frame(
-    Parameter = names(p),
+    Parameter = rownames(cs),
     p = as.vector(p)
   )
 }
@@ -627,9 +628,10 @@ p_value.gls <- function(model, ...) {
 
 #' @export
 p_value.pggls <- function(model, ...) {
-  p <- summary(model)$CoefTable[, 4]
+  cs <- summary(model)$CoefTable
+  p <- cs[, 4]
   data_frame(
-    Parameter = names(p),
+    Parameter = rownames(cs),
     p = as.vector(p)
   )
 }
@@ -643,7 +645,7 @@ p_value.gmnl <- function(model, ...) {
   # se <- cs[, 2]
 
   pv <- data_frame(
-    Parameter = names(p),
+    Parameter = rownames(cs),
     p = as.vector(p)
   )
 
