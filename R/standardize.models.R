@@ -23,14 +23,6 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
   data <- insight::get_data(x)
   resp <- NULL
 
-  # for models with binary outcome, make sure response is factor,
-  # so it's not standardized.
-
-  if (m_info$is_binomial) {
-    data[insight::find_response(x)] <- as.factor(insight::get_response(x))
-  }
-
-
   # for models with specific scale of the response value (e.g. count models
   # with positive integers, or beta with ratio between 0 and 1), we need to
   # make sure that the original response value will be restored after
@@ -53,7 +45,11 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 
   # restore data that should not be standardized
 
-  if (!is.null(resp)) data_std[resp] <- data[resp]
+  if (!is.null(resp)) {
+    resp <- intersect(resp, colnames(data_std))
+    data_std[resp] <- data[resp]
+  }
+
   if (length(log_terms)) data_std[log_terms] <- data[log_terms]
 
 
@@ -76,7 +72,7 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 #' @keywords internal
 .no_response_standardize <- function(info) {
   # check if model has a response variable that should not be standardized.
-  info$is_count | info$is_ordinal | info$is_beta | info$is_censored
+  info$is_count | info$is_ordinal | info$is_beta | info$is_censored | info$is_binomial
 }
 
 
@@ -84,6 +80,12 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 
 #' @export
 standardize.merMod <- standardize.lm
+
+#' @export
+standardize.MixMod <- standardize.lm
+
+#' @export
+standardize.glmmTMB <- standardize.lm
 
 #' @export
 standardize.stanreg <- standardize.lm

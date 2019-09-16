@@ -33,7 +33,7 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.merMod <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, ...) {
+model_parameters.merMod <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, ...) {
 
   # Processing
   if (bootstrap) {

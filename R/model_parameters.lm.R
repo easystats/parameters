@@ -26,7 +26,7 @@
 #' model_parameters(model)
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.lm <- function(model, ci = .95, standardize = "refit", standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
+model_parameters.lm <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
 
   # Type of model
   info <- insight::model_info(model)

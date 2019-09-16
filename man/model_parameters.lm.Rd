@@ -6,7 +6,7 @@
 \alias{model_parameters.polr}
 \title{Parameters of (General) Linear Models}
 \usage{
-\method{model_parameters}{lm}(model, ci = 0.95, standardize = "refit",
+\method{model_parameters}{lm}(model, ci = 0.95, standardize = FALSE,
   standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000,
   ...)
 

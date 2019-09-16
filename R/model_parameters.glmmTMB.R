@@ -1,7 +1,7 @@
 #' @inheritParams model_simulate
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+model_parameters.glmmTMB <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
 
   # fix argument, if model has no zi-part
@@ -14,6 +14,16 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- .extract_parameters_generic(model, ci = ci, component = component, ...)
+  }
+
+  # Standardized
+  if (isTRUE(standardize)) {
+    warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
+    standardize <- "refit"
+  }
+
+  if (!is.null(standardize) && !is.logical(standardize)) {
+    parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust, verbose = FALSE)[2])
   }
 
   attr(parameters, "pretty_names") <- format_parameters(model)
