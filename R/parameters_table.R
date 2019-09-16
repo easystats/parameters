@@ -35,8 +35,10 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   if ("df" %in% names(x)) x$df <- insight::format_value(x$df, protect_integers = TRUE)
   if ("df_residual" %in% names(x)) x$df_residual <- insight::format_value(x$df_residual, protect_integers = TRUE)
   names(x)[names(x) == "df_residual"] <- "df"
+
+  # P values
   if ("p" %in% names(x)) {
-    x$p <- format_p(x$p, name = NULL, stars = stars)
+    x$p <- format_p(x$p, stars = stars, name = NULL, missing = "")
     x$p <- format(x$p, justify = "left")
   }
 

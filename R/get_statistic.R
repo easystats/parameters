@@ -1,9 +1,10 @@
+#' @keywords internal
 .get_statistic <- function(model, ...) {
   UseMethod(".get_statistic")
 }
 
 
-
+#' @keywords internal
 .get_statistic.default <- function(model, statistic_column = 3, ...) {
   cs <- stats::coef(summary(model))
   cs_names <- tolower(dimnames(cs)[[2]])
@@ -24,7 +25,7 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
 
@@ -48,7 +49,7 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
 
@@ -72,12 +73,14 @@
   stat
 }
 
+#' @keywords internal
 .get_statistic.hurdle <- .get_statistic.zeroinfl
 
+#' @keywords internal
 .get_statistic.zerocount <- .get_statistic.zeroinfl
 
 
-
+#' @keywords internal
 .get_statistic.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
   s <- summary(model)
@@ -100,7 +103,7 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.gam <- function(model, statistic_column = 3, ...) {
   cs <- summary(model)$p.table
   cs.smooth <- summary(model)$s.table
@@ -120,8 +123,7 @@
   out
 }
 
-
-
+#' @keywords internal
 .get_statistic.gamm <- function(model, statistic_column = 3, ...) {
   model <- model$gam
   class(model) <- c("gam", "lm", "glm")
@@ -129,7 +131,7 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.list <- function(model, statistic_column = 3, ...) {
   if ("gam" %in% names(model)) {
     model <- model$gam
@@ -139,7 +141,7 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.gamlss <- function(model, statistic_column = 3, ...) {
   parms <- insight::get_parameters(model)
   utils::capture.output(cs <- summary(model))
@@ -155,12 +157,12 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.lme <- function(model, ...) {
   .get_statistic.default(model, statistic_column = 4)
 }
 
-
+#' @keywords internal
 .get_statistic.plm <- .get_statistic.default
 
 .get_statistic.lm_robust <- .get_statistic.default
@@ -178,7 +180,7 @@
   .get_statistic.default(model, statistic_column = 4)
 }
 
-
+#' @keywords internal
 .get_statistic.svyglm.nb <- function(model, ...) {
   parms <- insight::get_parameters(model)
   se <- standard_error(model)
@@ -192,19 +194,21 @@
   out
 }
 
-
+#' @keywords internal
 .get_statistic.svyglm.zip <- .get_statistic.svyglm.nb
 
-
+#' @keywords internal
 .get_statistic.truncreg <- .get_statistic.default
 
-
+#' @keywords internal
 .get_statistic.tobit <- .get_statistic.default
 
-
+#' @keywords internal
 .get_statistic.negbin <- .get_statistic.default
 
 
+
+#' @keywords internal
 .get_statistic.vglm <- function(model, ...) {
   if (!requireNamespace("VGAM", quietly = TRUE)) {
     stop("Package 'VGAM' needed for this function to work. Please install it.")
@@ -221,7 +225,7 @@
   out
 }
 
-
+#' @keywords internal
 .get_statistic.betareg <- function(model, ...) {
   parms <- insight::get_parameters(model)
   se <- standard_error(model)
@@ -236,7 +240,7 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.survreg <- function(model, ...) {
   parms <- insight::get_parameters(model)
   s <- summary(model)
@@ -249,7 +253,7 @@
   out
 }
 
-
+#' @keywords internal
 .get_statistic.glimML <- function(model, ...) {
   if (!requireNamespace("aod", quietly = TRUE)) {
     stop("Package 'aod' required for this function to work. Please install it.")
@@ -268,7 +272,7 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.lrm <- function(model, ...) {
   parms <- insight::get_parameters(model)
   stat <- stats::coef(model) / sqrt(diag(stats::vcov(model)))
@@ -283,16 +287,20 @@
 }
 
 
+#' @keywords internal
 .get_statistic.ols <- .get_statistic.lrm
 
+#' @keywords internal
 .get_statistic.rms <- .get_statistic.lrm
 
+#' @keywords internal
 .get_statistic.psm <- .get_statistic.lrm
 
 
 
 #' @importFrom stats qchisq
 #' @importFrom utils capture.output
+#' @keywords internal
 .get_statistic.logistf <- function(model, ...) {
   parms <- insight::get_parameters(model)
   utils::capture.output(s <- summary(model))
@@ -307,6 +315,7 @@
 }
 
 
+#' @keywords internal
 .get_statistic.gee <- function(model, ...) {
   parms <- insight::get_parameters(model)
   cs <- stats::coef(summary(model))
@@ -321,7 +330,7 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.coxme <- function(model, ...) {
   beta <- model$coefficients
   out <- NULL
@@ -338,7 +347,7 @@
   out
 }
 
-
+#' @keywords internal
 .get_statistic.crch <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
   params <- insight::get_parameters(model)
@@ -353,7 +362,7 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.LORgee <- function(model, ...) {
   out <- .get_statistic.default(model)
   attr(out, "statistic") <- "z"
@@ -361,7 +370,7 @@
 }
 
 
-
+#' @keywords internal
 .get_statistic.bigglm <- function(model, ...) {
   parms <- insight::get_parameters(model)
   se <- standard_error(model)
@@ -376,6 +385,7 @@
 }
 
 
+#' @keywords internal
 .get_statistic.biglm <- function(model, ...) {
   parms <- insight::get_parameters(model)
   se <- standard_error(model)

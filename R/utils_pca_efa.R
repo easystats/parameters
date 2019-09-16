@@ -1,44 +1,34 @@
-#' @export
-sort.parameters_efa <- function(x, ...) {
-  .sort_loadings(x)
+# summary -----------------------------------------------------------------
+
+#' @keywords internal
+.transpose_summary_efa <- function(object, ...){
+
+
 }
 
-#' @export
-sort.parameters_pca <- sort.parameters_efa
 
 #' @export
 summary.parameters_efa <- function(object, ...) {
-  insight::print_color("# (Explained) Variance of Principal Components\n\n", "blue")
 
   x <- attributes(object)$summary
-  x$Variance_Explained <- x$Variance / sum(x$Variance)
-  x$Std_Dev <- attributes(object)$model$sdev
-
-  col_names <- x$Component
 
   cols <- intersect(
-    c("Std_Dev", "Eigenvalues", "Variance", "Variance_Cumulative", "Variance_Explained"),
+    c("Std_Dev", "Eigenvalues", "Variance", "Variance_Cumulative", "Variance_Proportion"),
     colnames(x)
   )
 
-  rows <- c("Eigenvalues", "Variance", "Cumulative Variance", "Explained Variance")
-  if ("Std_Dev" %in% cols) rows <- c("Standard Deviation", rows)
 
   x <- as.data.frame(t(x[, cols]))
-  x <- cbind(data.frame("Values" = rows, stringsAsFactors = FALSE), x)
+  x <- cbind(data.frame("Parameter" = row.names(x), stringsAsFactors = FALSE), x)
+  names(x) <- c("Parameter", attributes(object)$summary$Component)
+  row.names(x) <- NULL
 
-  colnames(x) <- c("", col_names)
-  class(x) <- c("parameters_efa_summary", class(x))
+  if("parameters_efa" %in% class(object)){
+    class(x) <- c("parameters_efa_summary", class(object))
+  } else{
+    class(x) <- c("parameters_pca_summary", class(object))
+  }
   x
-}
-
-
-#' @importFrom insight format_table
-#' @export
-print.parameters_efa_summary <- function(x, digits = 3, ...) {
-  cat(insight::format_table(x, digits = digits, ...))
-
-  invisible(x)
 }
 
 #' @export
@@ -46,14 +36,34 @@ summary.parameters_pca <- summary.parameters_efa
 
 
 
-
 #' @export
 model_parameters.parameters_efa <- function(model, ...) {
-  attributes(model)$summary
+  x <- attributes(model)$summary
+
+  if("parameters_efa" %in% class(model)){
+    class(x) <- c("parameters_efa_summary", class(model))
+  } else{
+    class(x) <- c("parameters_pca_summary", class(model))
+  }
+  x
+
 }
+
 #' @export
 model_parameters.parameters_pca <- model_parameters.parameters_efa
 
+
+
+
+
+
+
+
+
+
+
+
+# predict -----------------------------------------------------------------
 
 
 
@@ -72,6 +82,35 @@ predict.parameters_efa <- function(object, newdata = NULL, names = NULL, ...) {
 }
 #' @export
 predict.parameters_pca <- predict.parameters_efa
+
+
+
+
+
+
+
+# print -------------------------------------------------------------------
+
+
+#' @importFrom insight format_table
+#' @export
+print.parameters_efa_summary <- function(x, digits = 3, ...) {
+  insight::print_color("# (Explained) Variance of Components\n\n", "blue")
+
+  if("Parameter" %in% names(x)){
+    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+  } else if("Component" %in% names(x)){
+    names(x) <- c("Copmponent", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+  }
+
+  cat(insight::format_table(x, digits = digits, ...))
+
+  invisible(x)
+}
+
+#' @export
+print.parameters_pca_summary <- print.parameters_efa_summary
+
 
 
 
@@ -98,12 +137,12 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
 
 
 
-  .rotation <- attr(x, "rotation", exact = TRUE)
+  rotation_name <- attr(x, "rotation", exact = TRUE)
 
-  if (.rotation == "none") {
+  if (rotation_name == "none") {
     insight::print_color("# Loadings from Principal Component Analysis (no rotation)\n\n", "blue")
   } else {
-    insight::print_color(sprintf("# Rotated loadings from Principal Component Analysis (%s-rotation)\n\n", .rotation), "blue")
+    insight::print_color(sprintf("# Rotated loadings from Principal Component Analysis (%s-rotation)\n\n", rotation_name), "blue")
   }
 
   cat(insight::format_table(x, digits = digits, ...))
@@ -115,18 +154,6 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
 }
 #' @export
 print.parameters_pca <- print.parameters_efa
-
-
-
-
-
-#' @export
-principal_components.lm <- function(x, ...) {
-  principal_components(insight::get_predictors(x, ...), ...)
-}
-
-#' @export
-principal_components.merMod <- principal_components.lm
 
 
 
@@ -185,6 +212,18 @@ principal_components.merMod <- principal_components.lm
 
 
 
+
+
+# sort --------------------------------------------------------------------
+
+
+#' @export
+sort.parameters_efa <- function(x, ...) {
+  .sort_loadings(x)
+}
+
+#' @export
+sort.parameters_pca <- sort.parameters_efa
 
 
 
