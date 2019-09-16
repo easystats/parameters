@@ -11,7 +11,6 @@
 summary.parameters_efa <- function(object, ...) {
 
   x <- attributes(object)$summary
-  # x$Std_Dev <- attributes(object)$model$sdev
 
   cols <- intersect(
     c("Std_Dev", "Eigenvalues", "Variance", "Variance_Cumulative", "Variance_Proportion"),
@@ -155,6 +154,10 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
 }
 #' @export
 print.parameters_pca <- print.parameters_efa
+
+
+
+
 
 
 #' @keywords internal
