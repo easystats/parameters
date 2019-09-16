@@ -75,13 +75,13 @@ standard_error.list <- function(model, ...) {
 
 
 #' @export
-standard_error.table <- function(x, ...) {
+standard_error.table <- function(model, ...) {
   # compute standard error of proportions
-  if (length(dim(x)) == 1) {
-    total.n <- as.vector(sum(x))
-    rel.frq <- as.vector(x) / total.n
+  if (length(dim(model)) == 1) {
+    total.n <- as.vector(sum(model))
+    rel.frq <- as.vector(model) / total.n
     out <- data_frame(
-      Value = names(x),
+      Value = names(model),
       Proportion = rel.frq,
       SE = suppressWarnings(sqrt(rel.frq * (1 - rel.frq) / total.n))
     )
