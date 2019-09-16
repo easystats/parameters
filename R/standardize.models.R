@@ -40,18 +40,24 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 
   # standardize data
 
-  data_std <- standardize(data, robust = robust, method = method, verbose = verbose)
+  dont_standardize <- c(resp, log_terms)
+  do_standardize <- setdiff(colnames(data), dont_standardize)
+
+  if (length(do_standardize)) {
+    data_std <- standardize(data[do_standardize], robust = robust, method = method, verbose = verbose)
+  } else {
+    if (verbose) {
+      insight::print_color("No variables could be standardized.\n", "red")
+    }
+    return(x)
+  }
 
 
   # restore data that should not be standardized
 
-  if (!is.null(resp)) {
-    resp <- intersect(resp, colnames(data_std))
-    data_std[resp] <- data[resp]
+  if (length(dont_standardize)) {
+    data_std <- cbind(data[, dont_standardize, drop = FALSE], data_std)
   }
-
-  if (length(log_terms)) data_std[log_terms] <- data[log_terms]
-
 
   # update model with standardized data
 
