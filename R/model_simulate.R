@@ -95,6 +95,14 @@ model_simulate.feis <- model_simulate.lm
 
 
 #' @export
+model_simulate.lmrob <- model_simulate.lm
+
+
+#' @export
+model_simulate.glmrob <- model_simulate.lm
+
+
+#' @export
 model_simulate.merMod <- model_simulate.lm
 
 
