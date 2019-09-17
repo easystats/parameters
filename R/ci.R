@@ -148,6 +148,12 @@ ci.gamlss <- function(x, ci = .95, ...) {
 }
 
 #' @export
+ci.speedglm <- ci.gamlss
+
+#' @export
+ci.speedlm <- ci.gamlss
+
+#' @export
 ci.glmrob <- ci.gamlss
 
 #' @export
