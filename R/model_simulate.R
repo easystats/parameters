@@ -63,6 +63,10 @@ model_simulate.lm <- function(model, iterations = 1000, ...) {
 
 
 #' @export
+model_simulate.iv_robust <- model_simulate.lm
+
+
+#' @export
 model_simulate.glm <- model_simulate.lm
 
 

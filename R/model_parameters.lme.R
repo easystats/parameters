@@ -29,6 +29,9 @@ model_parameters.lme <- function(model, ci = .95, standardize = FALSE, standardi
 model_parameters.clm <- model_parameters.lme
 
 #' @export
+model_parameters.iv_robust <- model_parameters.lme
+
+#' @export
 model_parameters.glmRob <- model_parameters.lme
 
 #' @export

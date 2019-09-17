@@ -88,6 +88,9 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 standardize.merMod <- standardize.lm
 
 #' @export
+standardize.iv_robust <- standardize.lm
+
+#' @export
 standardize.lmrob <- standardize.lm
 
 #' @export
