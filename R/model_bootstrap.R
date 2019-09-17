@@ -55,10 +55,16 @@ model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
   results <- boot::boot(data = data, statistic = boot_function, R = iterations, model = model)
 
   df <- as.data.frame(results$t)
-  names(df) <- insight::find_parameters(model)$conditional
+  names(df) <- insight::get_parameters(model)$parameter
 
   return(df)
 }
+
+#' @export
+model_bootstrap.default <- model_bootstrap.lm
+
+#' @export
+model_bootstrap.glmmTMB <- model_bootstrap.lm
 
 
 #' @export

@@ -16,10 +16,6 @@ model_parameters.polr <- function(model, ci = .95, bootstrap = FALSE, iterations
 
 
 #' @export
-model_parameters.clm <- model_parameters.polr
-
-
-#' @export
 model_parameters.clm2 <- model_parameters.polr
 
 

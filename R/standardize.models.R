@@ -166,13 +166,13 @@ standardize.logistf <- standardize.lm
 standardize.vglm <- standardize.lm
 
 #' @export
+standardize.clm <- standardize.lm
+
+#' @export
 standardize.wbm <- function(x, ...) {
   warning("Standardization of parameters not possible for models from package 'panelr'.", call. = FALSE)
   x
 }
-
-#' @export
-standardize.clm <- standardize.wbm
 
 #' @export
 standardize.clm2 <- standardize.wbm
