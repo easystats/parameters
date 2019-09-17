@@ -94,6 +94,12 @@ standardize.lmrob <- standardize.lm
 standardize.glmrob <- standardize.lm
 
 #' @export
+standardize.glmRob <- standardize.lm
+
+#' @export
+standardize.lmRob <- standardize.lm
+
+#' @export
 standardize.MixMod <- standardize.lm
 
 #' @export

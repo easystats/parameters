@@ -67,6 +67,14 @@ model_simulate.glm <- model_simulate.lm
 
 
 #' @export
+model_simulate.glmRob <- model_simulate.lm
+
+
+#' @export
+model_simulate.lmRob <- model_simulate.lm
+
+
+#' @export
 model_simulate.gls <- model_simulate.lm
 
 
@@ -333,57 +341,4 @@ model_simulate.zerocount <- model_simulate.zeroinfl
   #   s[i] <- stats::sigma(model) * sqrt((n - k) / rchisq(1, n - k))
   #   b[i,] <- MASS::mvrnorm(n = 1, mu = beta, Sigma = beta.cov * s[i] ^ 2)
   # }
-}
-
-
-
-#' @importFrom insight find_parameters
-#' @importFrom stats vcov
-.get_varcov <- function(model, component) {
-  if (inherits(model, c("hurdle", "zeroinfl", "zerocount"))) {
-    vc <- switch(
-      component,
-      "conditional" = stats::vcov(object = model, model = "count"),
-      "zero_inflated" = stats::vcov(object = model, model = "zero"),
-      stats::vcov(object = model)
-    )
-  } else if (inherits(model, "MixMod")) {
-    vc <- switch(
-      component,
-      "conditional" = stats::vcov(model, parm = "fixed-effects"),
-      "zero_inflated" = stats::vcov(model, parm = "zero_part"),
-      stats::vcov(model)
-    )
-  } else if (inherits(model, "feis")) {
-    vc <- model$vcov
-  } else if (inherits(model, "glimML")) {
-    if (!requireNamespace("aod", quietly = TRUE)) {
-      stop("Package 'aod' required for this function to work. Please install it.")
-    }
-    vc <- aod::vcov(model)
-  } else if (inherits(model, c("vglm", "vgam"))) {
-    if (!requireNamespace("VGAM", quietly = TRUE)) {
-      stop("Package 'VGAM' required for this function to work. Please install it.")
-    }
-    vc <- VGAM::vcov(model)
-  } else if (inherits(model, "tobit")) {
-    coef_names <- insight::find_parameters(model, flatten = TRUE)
-    vc <- stats::vcov(model)[coef_names, coef_names]
-  } else if (inherits(model, "geeglm")) {
-    vc <- summary(model)$cov.unscaled
-  } else if (inherits(model, c("gee", "LORgee"))) {
-    vc <- model$naive.variance
-  } else {
-    vc <- suppressWarnings(stats::vcov(model))
-    if (is.list(vc)) {
-      vc <- switch(
-        component,
-        "conditional" = vc[["cond"]],
-        "zero_inflated" = vc[["zi"]],
-        vc[[1]]
-      )
-    }
-  }
-
-  vc
 }
