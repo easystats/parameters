@@ -1,10 +1,6 @@
 # summary -----------------------------------------------------------------
 
-#' @keywords internal
-.transpose_summary_efa <- function(object, ...){
 
-
-}
 
 
 #' @export
@@ -132,7 +128,7 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
 
   # Replace by NA all cells below threshold
   if (!is.null(threshold)) {
-    x <- .filer_loadings(x, threshold = threshold)
+    x <- .filter_loadings(x, threshold = threshold)
   }
 
 
@@ -273,3 +269,32 @@ sort.parameters_pca <- sort.parameters_efa
 
   loadings
 }
+
+# Filter --------------------------------------------------------------------
+
+
+#' @keywords internal
+.filter_loadings <- function(loadings, threshold = 0.2, loadings_columns = NULL) {
+  if (is.null(loadings_columns)) {
+    loadings_columns <- attributes(loadings)$loadings_columns
+  }
+
+
+  if (threshold == "max" | threshold >= 1) {
+    if(threshold == "max"){
+      for (row in 1:nrow(loadings)) {
+        maxi <- max(abs(loadings[row, loadings_columns, drop = FALSE]))
+        loadings[row, loadings_columns][abs(loadings[row, loadings_columns]) < maxi] <- NA
+      }
+    } else{
+      for(col in loadings_columns){
+        loadings[tail(order(abs(loadings[, col]), decreasing = TRUE), -round(threshold)), col] <- NA
+      }
+    }
+  } else {
+    loadings[, loadings_columns][abs(loadings[, loadings_columns]) < threshold] <- NA
+  }
+
+  loadings
+}
+

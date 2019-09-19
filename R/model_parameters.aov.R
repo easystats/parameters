@@ -3,9 +3,9 @@
 #' Parameters of ANOVAs.
 #'
 #' @param model Object of class \link{aov}, \link{anova} or \code{aovlist}.
-#' @param omega_squared Compute \link[=eta_squared]{omega squared} as index of effect size. Can be "partial" (adjusted for effect size) or "raw".
-#' @param eta_squared Compute \link[=eta_squared]{eta squared} as index of effect size. Can be "partial" (adjusted for effect size) or "raw".
-#' @param epsilon_squared Compute \link[=eta_squared]{epsilon squared} as index of effect size.
+#' @param omega_squared Compute \link[parameters:eta_squared]{omega squared} as index of effect size. Can be "partial" (adjusted for effect size) or "raw".
+#' @param eta_squared Compute \link[parameters:eta_squared]{eta squared} as index of effect size. Can be "partial" (adjusted for effect size) or "raw".
+#' @param epsilon_squared Compute \link[parameters:eta_squared]{epsilon squared} as index of effect size.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples

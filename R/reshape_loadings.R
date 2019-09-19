@@ -70,7 +70,7 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 
 
   if (!is.null(threshold)) {
-    loadings <- .filer_loadings(loadings, threshold = threshold, loadings_columns = loadings_columns)
+    loadings <- .filter_loadings(loadings, threshold = threshold, loadings_columns = loadings_columns)
   }
 
   # Reshape to long
@@ -106,25 +106,6 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 }
 
 
-
-#' @keywords internal
-.filer_loadings <- function(loadings, threshold = 0.2, loadings_columns = NULL) {
-  if (is.null(loadings_columns)) {
-    loadings_columns <- attributes(loadings)$loadings_columns
-  }
-
-
-  if (threshold == "max") {
-    for (i in 1:nrow(loadings)) {
-      maxi <- max(abs(loadings[i, loadings_columns, drop = FALSE]))
-      loadings[i, loadings_columns][abs(loadings[i, loadings_columns]) < maxi] <- NA
-    }
-  } else {
-    loadings[, loadings_columns][abs(loadings[, loadings_columns]) < threshold] <- NA
-  }
-
-  loadings
-}
 
 
 
