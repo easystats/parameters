@@ -97,7 +97,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
 
   # Replace by NA all cells below threshold
   if (!is.null(threshold)) {
-    loadings <- .filer_loadings(loadings, threshold = threshold)
+    loadings <- .filter_loadings(loadings, threshold = threshold)
   }
 
   # Add some more attributes
