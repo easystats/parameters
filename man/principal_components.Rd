@@ -20,7 +20,7 @@ PCA(x, n = NULL, rotation = "none", sort = FALSE, threshold = NULL,
 
 \item{sort}{Sort the loadings.}
 
-\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).}
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).}
 
 \item{standardize}{A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).}
 
@@ -45,6 +45,7 @@ library(parameters)
 
 principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
+principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 
 pca <- principal_components(mtcars[, 1:5], n = 2)
 summary(pca)
