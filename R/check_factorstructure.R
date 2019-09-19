@@ -144,9 +144,9 @@ check_sphericity <- function(x, silent = FALSE, ...) {
 
   if (!silent) {
     if (pval < 0.001) {
-      insight::print_color(sprintf("OK: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, p %s).", df, statistic, format_p(pval)), "green")
+      insight::print_color(sprintf("OK: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, %s).", df, statistic, format_p(pval)), "green")
     } else {
-      insight::print_color(sprintf("Warning: Bartlett's test of sphericity suggests that there is not enough significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, p %s).", df, statistic, format_p(pval)), "red")
+      insight::print_color(sprintf("Warning: Bartlett's test of sphericity suggests that there is not enough significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, %s).", df, statistic, format_p(pval)), "red")
     }
   }
 
