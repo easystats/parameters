@@ -20,15 +20,15 @@
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"HDI"} (default, see \code{\link{hdi}}) or \code{"ETI"}
-(see \code{\link{eti}}).}
+\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}) or \code{"ETI"}
+(see \code{\link[bayestestR:eti]{eti}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
 \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
 For each "test", the corresponding \pkg{bayestestR} function is called
-(e.g. \code{\link{rope}} or \code{\link{p_direction}}) and its results
+(e.g. \code{\link[bayestestR:rope]{rope}} or \code{\link[bayestestR:p_direction]{p_direction}}) and its results
 included in the summary output.}
 
 \item{rope_range}{ROPE's lower and higher bounds. Should be a list of two
@@ -44,13 +44,13 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{standardize}{Add standardized parameters. Can be \code{FALSE} or a character indicating the standardization method (see \code{\link[=parameters_standardize]{parameters_standardize()}}), such as \code{"refit"}, \code{"2sd"}, \code{"smart"} or \code{"classic"}. The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).}
+\item{standardize}{Add standardized parameters. Can be \code{FALSE} or a character indicating the standardization method (see \code{\link[parameters:parameters_standardize]{parameters_standardize()}}), such as \code{"refit"}, \code{"2sd"}, \code{"smart"} or \code{"classic"}. The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).}
 
-\item{standardize_robust}{Robust standardization. See \code{\link{parameters_standardize}}.}
+\item{standardize_robust}{Robust standardization. See \code{\link[parameters:parameters_standardize]{parameters_standardize}}.}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.}
 
-\item{...}{Arguments passed to or from other methods (e.g., to \code{\link[=standardize.lm]{standardize()}}).}
+\item{...}{Arguments passed to or from other methods (e.g., to \code{\link[parameters:standardize.lm]{standardize()}}).}
 }
 \value{
 A data.frame of indices related to the model's parameters.
@@ -72,6 +72,6 @@ model_parameters(model, standardize = "smart")
 
 }
 \seealso{
-\code{\link[=standardize_names]{standardize_names()}} to rename
+\code{\link[parameters:standardize_names]{standardize_names()}} to rename
   columns into a consistent, standardized naming scheme.
 }
