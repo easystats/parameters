@@ -155,7 +155,8 @@
     <p>Format p-values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>format_p</span>(<span class='no'>p</span>, <span class='kw'>stars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>stars_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"p"</span>)</pre>
+    <pre class="usage"><span class='fu'>format_p</span>(<span class='no'>p</span>, <span class='kw'>stars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>stars_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"p"</span>,
+  <span class='kw'>missing</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,6 +176,10 @@
     <tr>
       <th>name</th>
       <td><p>Name prefixing the text. Can be <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>missing</th>
+      <td><p>Value by which <code>NA</code> values are replaced. By default, an empty string (i.e. <code>""</code>) is returned for <code>NA</code>.</p></td>
     </tr>
     </table>
 
@@ -203,7 +208,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

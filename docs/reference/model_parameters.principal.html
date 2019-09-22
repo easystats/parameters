@@ -172,7 +172,7 @@
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).</p></td>
+      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).</p></td>
     </tr>
     <tr>
       <th>labels</th>
@@ -208,7 +208,6 @@
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>psych</span>)
 
-<span class='co'># \donttest{</span>
 <span class='co'># Principal Component Analysis (PCA) ---------</span>
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/principal.html'>principal</a></span>(<span class='no'>attitude</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (varimax-rotation)
@@ -223,8 +222,7 @@
 #&gt; critical   | 0.36 |       1.00 |       0.87
 #&gt; advance    | 0.58 |       1.00 |       0.66
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The unique principal component (varimax rotation) accounted for 53.09% of the total variance of the original data.</span><span></div><div class='input'><span class='co'># }</span>
-
+#&gt; </span><span style='color: #BBBB00;'>The unique principal component (varimax rotation) accounted for 53.09% of the total variance of the original data.</span><span></div><div class='input'>
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/principal.html'>principal</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='st'>"none"</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>pca</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
 #&gt; 
@@ -290,7 +288,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

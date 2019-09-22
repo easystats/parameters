@@ -187,8 +187,8 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
     <tr>
       <th>ci_method</th>
       <td><p>The type of index used for Credible Interval. Can be
-<code>"HDI"</code> (default, see <code>hdi</code>) or <code>"ETI"</code>
-(see <code>eti</code>).</p></td>
+<code>"HDI"</code> (default, see <code><a href='https://rdrr.io/pkg/bayestestR/man/hdi.html'>hdi</a></code>) or <code>"ETI"</code>
+(see <code><a href='https://rdrr.io/pkg/bayestestR/man/eti.html'>eti</a></code>).</p></td>
     </tr>
     <tr>
       <th>test</th>
@@ -197,7 +197,7 @@ list with one or more of these options: <code>"p_direction"</code> (or <code>"pd
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
 <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code>rope</code> or <code>p_direction</code>) and its results
+(e.g. <code><a href='https://rdrr.io/pkg/bayestestR/man/rope.html'>rope</a></code> or <code><a href='https://rdrr.io/pkg/bayestestR/man/p_direction.html'>p_direction</a></code>) and its results
 included in the summary output.</p></td>
     </tr>
     <tr>
@@ -238,7 +238,7 @@ included in the summary output.</p></td>
 #&gt;   100%
 #&gt; done with sampling!</div><div class='input'><span class='no'>results</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='no'>results</span></div><div class='output co'>#&gt; <span class='error'>Error in if (.rotation == "none") {    insight::print_color("# Loadings from Principal Component Analysis (no rotation)\n\n",         "blue")} else {    insight::print_color(sprintf("# Rotated loadings from Principal Component Analysis (%s-rotation)\n\n",         .rotation), "blue")}: argument is of length zero</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>results</span>)$<span class='no'>loadings_long</span></div><div class='output co'>#&gt;    Component Variable      Median      CI_low     CI_high
+<span class='no'>results</span></div><div class='output co'>#&gt; <span class='error'>Error in if (rotation_name == "none") {    insight::print_color("# Loadings from Principal Component Analysis (no rotation)\n\n",         "blue")} else {    insight::print_color(sprintf("# Rotated loadings from Principal Component Analysis (%s-rotation)\n\n",         rotation_name), "blue")}: argument is of length zero</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>results</span>)$<span class='no'>loadings_long</span></div><div class='output co'>#&gt;    Component Variable      Median      CI_low     CI_high
 #&gt; 1         F1       am   0.4661396   0.3121343   0.6233666
 #&gt; 2         F2     carb   2.8962850   2.2688717   3.6219137
 #&gt; 3         F2      cyl   6.2192914   4.9456329   7.4280836
@@ -274,7 +274,7 @@ included in the summary output.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

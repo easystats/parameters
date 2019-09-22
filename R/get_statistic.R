@@ -1,3 +1,5 @@
+## TODO remove once insight is updated
+
 #' @keywords internal
 .get_statistic <- function(model, ...) {
   UseMethod(".get_statistic")
