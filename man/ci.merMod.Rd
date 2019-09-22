@@ -40,8 +40,23 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 }
 \value{
-A data.frame containing the CI bounds.
+A data frame containing the CI bounds.
 }
 \description{
 Compute confidence intervals (CI) for frequentist models.
+}
+\examples{
+library(parameters)
+library(glmmTMB)
+
+model <- glmmTMB(
+  count ~ spp + mined + (1 | site),
+  ziformula =  ~ mined,
+  family = poisson(),
+  data = Salamanders
+)
+
+ci(model)
+
+ci(model, component = "zi")
 }

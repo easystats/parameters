@@ -8,8 +8,22 @@
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_simulate
 #'
-#' @return A data.frame containing the CI bounds.
+#' @return A data frame containing the CI bounds.
 #'
+#' @examples
+#' library(parameters)
+#' library(glmmTMB)
+#'
+#' model <- glmmTMB(
+#'   count ~ spp + mined + (1 | site),
+#'   ziformula =  ~ mined,
+#'   family = poisson(),
+#'   data = Salamanders
+#' )
+#'
+#' ci(model)
+#'
+#' ci(model, component = "zi")
 #' @importFrom insight find_parameters
 #' @export
 ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
