@@ -10,6 +10,7 @@
     parameters$parameter <- gsub("Intercept: ", "", parameters$parameter, fixed = TRUE)
   }
 
+  ## TODO remove, once fixed in insight
   if ("component" %in% names(parameters)) {
     cn <- c("Parameter", "Estimate", "Component")
   } else {
