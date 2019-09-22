@@ -76,56 +76,6 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
 }
 
 
-#' @keywords internal
-.extract_parameters_lavaan <- function(model, ci = 0.95, standardize = FALSE, ...) {
-  if (!requireNamespace("lavaan", quietly = TRUE)) {
-    stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
-  }
-
-  # CI
-  if (length(ci) > 1) {
-    ci <- ci[1]
-    warning(paste0("lavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`."))
-  }
-
-  # Get estimates
-  if (standardize == FALSE) {
-    data <- lavaan::parameterEstimates(model, se = TRUE, level = ci, ...)
-  } else {
-    data <- lavaan::standardizedsolution(model, se = TRUE, level = ci, ...)
-    names(data)[names(data) == "est.std"] <- "est"
-  }
-
-
-
-  params <- data.frame(
-    To = data$lhs,
-    Operator = data$op,
-    From = data$rhs,
-    Coefficient = data$est,
-    SE = data$se,
-    CI_low = data$ci.lower,
-    CI_high = data$ci.upper,
-    p = data$pvalue
-  )
-
-  params$Type <- ifelse(params$Operator == "=~", "Loading",
-    ifelse(params$Operator == "~", "Regression",
-      ifelse(params$Operator == "~~", "Correlation",
-        ifelse(params$Operator == "~1", "Mean", NA)
-      )
-    )
-  )
-  params$Type <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Type)
-  params$p <- ifelse(is.na(params$p), 0, params$p)
-
-  if ("group" %in% names(data)) {
-    params$Group <- data$group
-  }
-
-  params
-}
-
 
 #' @export
 n_parameters.lavaan <- function(x, ...) {

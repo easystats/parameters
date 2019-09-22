@@ -40,12 +40,15 @@ model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
   boot_function <- function(model, data, indices) {
     d <- data[indices, ] # allows boot to select sample
 
-    if (verbose) {
-      fit <- suppressMessages(stats::update(model, data = d))
+    if (inherits(model, "biglm")) {
+      fit <- suppressMessages(stats::update(model, moredata = d))
     } else {
-      fit <- stats::update(model, data = d)
+      if (verbose) {
+        fit <- stats::update(model, data = d)
+      } else {
+        fit <- suppressMessages(stats::update(model, data = d))
+      }
     }
-
 
     params <- insight::get_parameters(fit)
     ## TODO change to "$Estimate" and "$Parameter" once fixed in insight
@@ -55,11 +58,11 @@ model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
 
   results <- boot::boot(data = data, statistic = boot_function, R = iterations, model = model)
 
-  df <- as.data.frame(results$t)
+  out <- as.data.frame(results$t)
   ## TODO change to "$Parameter" once fixed in insight
-  names(df) <- insight::get_parameters(model)[[1]]
+  names(out) <- insight::get_parameters(model)[[1]]
 
-  return(df)
+  out
 }
 
 #' @export
@@ -88,10 +91,10 @@ model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
     results <- lme4::bootMer(model, boot_function, nsim = iterations, ...)
   }
 
-  df <- as.data.frame(results$t)
-  names(df) <- insight::find_parameters(model)$conditional
+  out <- as.data.frame(results$t)
+  names(out) <- insight::find_parameters(model)$conditional
 
-  return(df)
+  out
 }
 
 
@@ -133,11 +136,17 @@ model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
 
 #' @export
 as.data.frame.lm <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
-  return(model_bootstrap(x, iterations = iterations, verbose = verbose, ...))
+  model_bootstrap(x, iterations = iterations, verbose = verbose, ...)
 }
 
 
 #' @export
 as.data.frame.merMod <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
-  return(model_bootstrap(x, iterations = iterations, verbose = verbose, ...))
+  model_bootstrap(x, iterations = iterations, verbose = verbose, ...)
+}
+
+
+#' @export
+as.data.frame.glmmTMB <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
+  model_bootstrap(x, iterations = iterations, verbose = verbose, ...)
 }
