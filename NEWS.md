@@ -12,6 +12,7 @@
 ## New functions
 
 - `parameters_simulate()` and `model_simulate()`, as computational faster alternatives to `parameters_bootstrap()` and `model_bootstrap()`.
+- `standardize_names()` to standardize column names from data frames, in particular objects returned from `model_parameters()`.
 
 ## Changes to functions
 
