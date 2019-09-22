@@ -59,5 +59,6 @@ dof_kenward <- function(model) {
     stop("Package `pbkrtest` required for Kenward-Rogers approximation.", call. = FALSE)
   }
 
-  pbkrtest::get_ddf_Lb(model, insight::get_parameters(model, effects = "fixed")$estimate)
+  ## TODO change to "$Estimate" once fixed in insight
+  pbkrtest::get_ddf_Lb(model, insight::get_parameters(model, effects = "fixed")[[2]])
 }

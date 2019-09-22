@@ -86,7 +86,8 @@ p_value.negbin <- p_value.default
 p_value.tobit <- function(model, ...) {
   params <- insight::get_parameters(model)
   p <- p_value.default(model, ...)
-  p[p$Parameter %in% params$parameter, ]
+  ## TODO change to "$Parameter" once fixed in insight
+  p[p$Parameter %in% params[[1]], ]
 }
 
 
@@ -411,7 +412,8 @@ p_value.biglm <- function(model, ...) {
   params <- insight::get_parameters(model)
 
   data_frame(
-    Parameter = params$parameter,
+    ## TODO change to "$Parameter" once fixed in insight
+    Parameter = params[[1]],
     p = as.vector(cs[, 5])
   )
 }
@@ -423,7 +425,8 @@ p_value.crch <- function(model, ...) {
   params <- insight::get_parameters(model)
 
   data_frame(
-    Parameter = params$parameter,
+    ## TODO change to "$Parameter" once fixed in insight
+    Parameter = params[[1]],
     p = as.vector(cs[, 4])
   )
 }
@@ -526,9 +529,10 @@ p_value.gamlss <- function(model, ...) {
   utils::capture.output(cs <- summary(model))
 
   data_frame(
-    Parameter = parms$parameter,
+    ## TODO change to "$Parameter" and "$Component" once fixed in insight
+    Parameter = parms[[1]],
     p = as.vector(cs[, 4]),
-    Component = parms$component
+    Component = parms[[3]]
   )
 }
 

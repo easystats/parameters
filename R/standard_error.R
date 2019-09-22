@@ -168,7 +168,8 @@ standard_error.gls <- standard_error.default
 standard_error.tobit <- function(model, ...) {
   params <- insight::get_parameters(model)
   std.error <- standard_error.default(model, ...)
-  std.error[std.error$Parameter %in% params$parameter, ]
+  ## TODO change to "$Parameter" once fixed in insight
+  std.error[std.error$Parameter %in% params[[1]], ]
 }
 
 
@@ -364,7 +365,8 @@ standard_error.biglm <- function(model, ...) {
   params <- insight::get_parameters(model)
 
   data_frame(
-    Parameter = params$parameter,
+    ## TODO change to "$Parameter" once fixed in insight
+    Parameter = params[[1]],
     SE = as.vector(cs[, 4])
   )
 }
@@ -376,7 +378,8 @@ standard_error.crch <- function(model, ...) {
   params <- insight::get_parameters(model)
 
   data_frame(
-    Parameter = params$parameter,
+    ## TODO change to "$Parameter" once fixed in insight
+    Parameter = params[[1]],
     SE = as.vector(cs[, 2])
   )
 }
@@ -469,9 +472,10 @@ standard_error.gamlss <- function(model, ...) {
   utils::capture.output(cs <- summary(model))
 
   data_frame(
-    Parameter = parms$parameter,
+    ## TODO change to "$Parameter" and "$Component" once fixed in insight
+    Parameter = parms[[1]],
     SE = as.vector(cs[, 2]),
-    Component = parms$component
+    Component = parms[[3]]
   )
 }
 
