@@ -24,8 +24,6 @@ efa_to_cfa(model, ...)
 }
 \value{
 Converted index.
-
-Converted index.
 }
 \description{
 Enables a conversion betwen Exploratory Factor Analysis (EFA) and Confirmatory Factor Analysis (CFA) \code{lavaan}-ready structure.

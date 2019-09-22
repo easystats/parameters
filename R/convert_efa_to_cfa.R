@@ -6,7 +6,6 @@
 #' @inheritParams principal_components
 #' @param names Vector containing dimension names.
 #'
-#' @return Converted index.
 #' @examples
 #' library(psych)
 #' library(lavaan)

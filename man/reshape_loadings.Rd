@@ -14,7 +14,7 @@ reshape_loadings(x, ...)
   loadings_columns = NULL, ...)
 }
 \arguments{
-\item{x}{A dataframe.}
+\item{x}{A dataframe or a statistical model.}
 
 \item{...}{Arguments passed to or from other methods.}
 

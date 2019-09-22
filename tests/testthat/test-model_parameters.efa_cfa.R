@@ -5,7 +5,7 @@ test_that("principal_components", {
   set.seed(333)
 
   x <- principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
-  testthat::expect_equal(c(ncol(x), nrow(x)), c(9, 7))
+  testthat::expect_equal(c(ncol(x), nrow(x)), c(8, 7))
   x <- principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
   testthat::expect_equal(c(ncol(x), nrow(x)), c(5, 7))
 
