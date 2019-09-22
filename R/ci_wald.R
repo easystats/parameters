@@ -22,7 +22,8 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 #' @keywords internal
 .ci_wald <- function(model, ci, dof, component) {
   params <- insight::get_parameters(model, effects = "fixed", component = component)
-  estimates <- params$estimate
+  ## TODO change to "$Estimate" once fixed in insight
+  estimates <- params[[2]]
   stderror <- standard_error(model, component = component)
 
   # filter non-matching parameters
@@ -50,10 +51,13 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 
   out <- as.data.frame(out)
   out$CI <- ci * 100
-  out$Parameter <- params$parameter
+  ## TODO change to "$Parameter" once fixed in insight
+  out$Parameter <- params[[1]]
 
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
+  ## TODO remove once fixed in insight
   if ("component" %in% names(params)) out$Component <- params$component
+  if ("Component" %in% names(params)) out$Component <- params$Component
 
   out
 }
