@@ -61,7 +61,7 @@ parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...){
   # compute new features
   if(tolower(method) %in% c("pca", "principal")){
     features <- principal_components(x, n = nfac, ...)
-    features <- attributes(features)$scores
+    features <- as.data.frame(attributes(features)$scores)
   } else if(tolower(method) %in% c("cmds", "pcoa")){
     features <- cmds(x, n = nfac, ...)
   } else if(tolower(method) %in% c("drr")){
@@ -77,14 +77,11 @@ parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...){
   cormat <- cbind(data.frame(Variable = row.names(cormat)), cormat)
   weights <- as.data.frame(.sort_loadings(cormat, cols = 2:ncol(cormat)))
 
-#
-
-
   if(n == "max"){
     weights <- .filter_loadings(weights, threshold = "max", 2:ncol(weights))
     non_empty <- sapply(weights[2:ncol(weights)], function(x) !all(is.na(x)))
     weights <- weights[c(TRUE, non_empty)]
-    features <- features[non_empty]
+    features <- features[, non_empty]
     weights[is.na(weights)] <- 0
     weights <- .filter_loadings(.sort_loadings(weights, cols = 2:ncol(weights)), threshold = "max", 2:ncol(weights))
   }
