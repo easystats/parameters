@@ -42,9 +42,6 @@ principal_components <- function(x, n = "all", rotation = "none", sort = FALSE, 
   UseMethod("principal_components")
 }
 
-#' @rdname principal_components
-#' @export
-PCA <- principal_components
 
 
 #' @importFrom stats prcomp na.omit

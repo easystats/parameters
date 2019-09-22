@@ -2,13 +2,9 @@
 % Please edit documentation in R/principal_components.R
 \name{principal_components}
 \alias{principal_components}
-\alias{PCA}
 \title{Principal Component Analysis (PCA)}
 \usage{
 principal_components(x, n = "all", rotation = "none", sort = FALSE,
-  threshold = NULL, standardize = TRUE, ...)
-
-PCA(x, n = "all", rotation = "none", sort = FALSE,
   threshold = NULL, standardize = TRUE, ...)
 }
 \arguments{
