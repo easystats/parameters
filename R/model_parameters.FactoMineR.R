@@ -11,10 +11,23 @@
 #'
 #' @return A data.frame of indices related to the model's parameters.
 #' @export
-model_parameters.FactoMineR <- function(model, ...) {
+model_parameters.PCA <- function(model, ...) {
 
-  out <- NA
+  model$eig
+  scores <- model$var$contrib
 
-  class(out) <- c("parameters_model", class(out))
-  out
+
+  # Add attributes
+  # attr(loadings, "summary") <- data_summary
+  attr(loadings, "model") <- model
+  attr(loadings, "rotation") <- "none"
+  attr(loadings, "scores") <- scores
+  attr(loadings, "additional_arguments") <- list(...)
+  attr(loadings, "n") <- model$call$ncp
+  attr(loadings, "type") <- "principal"
+  # attr(loadings, "loadings_columns") <- loading_cols
+
+  class(loadings) <- c("parameters_pca", class(loadings))
+  loadings
 }
+

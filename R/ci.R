@@ -11,6 +11,7 @@
 #' @return A data frame containing the CI bounds.
 #'
 #' @examples
+#' \donttest{
 #' library(parameters)
 #' library(glmmTMB)
 #'
@@ -22,8 +23,8 @@
 #' )
 #'
 #' ci(model)
-#'
 #' ci(model, component = "zi")
+#' }
 #' @importFrom insight find_parameters
 #' @export
 ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {

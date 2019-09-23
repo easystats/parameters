@@ -46,6 +46,7 @@ A data frame containing the CI bounds.
 Compute confidence intervals (CI) for frequentist models.
 }
 \examples{
+\donttest{
 library(parameters)
 library(glmmTMB)
 
@@ -57,6 +58,6 @@ model <- glmmTMB(
 )
 
 ci(model)
-
 ci(model, component = "zi")
+}
 }

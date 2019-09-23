@@ -7,6 +7,7 @@
 #' @param names Vector containing dimension names.
 #'
 #' @examples
+#' \donttest{
 #' library(psych)
 #' library(lavaan)
 #' library(parameters)
@@ -20,6 +21,7 @@
 #'   lavaan::cfa(model1, data = attitude),
 #'   lavaan::cfa(model2, data = attitude)
 #' )
+#' }
 #'
 #' @return Converted index.
 #' @export

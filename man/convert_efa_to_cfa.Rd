@@ -29,6 +29,7 @@ Converted index.
 Enables a conversion betwen Exploratory Factor Analysis (EFA) and Confirmatory Factor Analysis (CFA) \code{lavaan}-ready structure.
 }
 \examples{
+\donttest{
 library(psych)
 library(lavaan)
 library(parameters)
@@ -42,5 +43,6 @@ anova(
   lavaan::cfa(model1, data = attitude),
   lavaan::cfa(model2, data = attitude)
 )
+}
 
 }
