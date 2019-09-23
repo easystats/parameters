@@ -360,6 +360,37 @@ standard_error.svyglm <- function(model, ...) {
 
 
 #' @export
+standard_error.rq <- function(model, ...) {
+
+  se <- tryCatch(
+    {
+      cs <- stats::coef(summary(model))
+      cs[, "Std Error"]
+    },
+    error = function(e) {
+      ## TODO replace with "insight::get_varcov()"
+      s <- summary(model, covariance = TRUE)
+      as.vector(sqrt(diag(s$cov)))
+    }
+  )
+
+  params <- insight::get_parameters(model)
+
+  data_frame(
+    ## TODO change to "$Parameter" once fixed in insight
+    Parameter = params[[1]],
+    SE = se
+  )
+}
+
+#' @export
+standard_error.crq <- standard_error.rq
+
+#' @export
+standard_error.nlrq <- standard_error.rq
+
+
+#' @export
 standard_error.biglm <- function(model, ...) {
   cs <- summary(model)$mat
   params <- insight::get_parameters(model)
