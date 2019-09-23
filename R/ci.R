@@ -76,6 +76,18 @@ ci.lm_robust <- ci.lm
 
 
 #' @export
+ci.rq <- ci.lm
+
+
+#' @export
+ci.crq <- ci.lm
+
+
+#' @export
+ci.nlrq <- ci.lm
+
+
+#' @export
 ci.BBmm <- ci.lm
 
 

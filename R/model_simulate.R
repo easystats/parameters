@@ -67,6 +67,18 @@ model_simulate.iv_robust <- model_simulate.lm
 
 
 #' @export
+model_simulate.rq <- model_simulate.lm
+
+
+#' @export
+model_simulate.crq <- model_simulate.lm
+
+
+#' @export
+model_simulate.nlrq <- model_simulate.lm
+
+
+#' @export
 model_simulate.speedglm <- model_simulate.lm
 
 

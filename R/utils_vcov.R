@@ -8,6 +8,9 @@
       "zero_inflated" = stats::vcov(object = model, model = "zero"),
       stats::vcov(object = model)
     )
+  } else if (inherits(model, c("rq", "crq", "nlrq"))) {
+    s <- summary(model, covariance = TRUE)
+    vc <- as.matrix(s$cov)
   } else if (inherits(model, "MixMod")) {
     vc <- switch(
       component,
@@ -51,7 +54,8 @@
   if (.is_negativ_matrix(vc)) {
     vc <- .fix_negative_matrix(vc)
   }
-  vc
+
+  as.matrix(vc)
 }
 
 

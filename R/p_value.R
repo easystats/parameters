@@ -416,6 +416,38 @@ p_value.survreg <- function(model, ...) {
 
 
 #' @export
+p_value.rq <- function(model, ...) {
+
+  p <- tryCatch(
+    {
+      cs <- suppressWarnings(stats::coef(summary(model)))
+      cs[, "Pr(>|t|)"]
+    },
+    error = function(e) {
+      .get_pval_from_summary(
+        model,
+        cs = suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
+      )
+    }
+  )
+
+  params <- insight::get_parameters(model)
+
+  data_frame(
+    ## TODO change to "$Parameter" once fixed in insight
+    Parameter = params[[1]],
+    p = p
+  )
+}
+
+#' @export
+p_value.crq <- p_value.rq
+
+#' @export
+p_value.nlrq <- p_value.rq
+
+
+#' @export
 p_value.biglm <- function(model, ...) {
   cs <- summary(model)$mat
   params <- insight::get_parameters(model)
@@ -813,8 +845,8 @@ p_value.list <- function(model, ...) {
 
 
 #' @importFrom stats coef
-.get_pval_from_summary <- function(model) {
-  cs <- stats::coef(summary(model))
+.get_pval_from_summary <- function(model, cs = NULL) {
+  if (is.null(cs)) cs <- stats::coef(summary(model))
   p <- NULL
 
   if (ncol(cs) >= 4) {
