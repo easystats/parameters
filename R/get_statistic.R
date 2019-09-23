@@ -149,7 +149,7 @@
   utils::capture.output(cs <- summary(model))
 
   out <- data_frame(
-    Parameter = parms$parameter,
+    Parameter = parms[[1]],
     Statistic = as.vector(cs[, statistic_column]),
     Component = parms$component
   )
@@ -188,8 +188,8 @@
   se <- standard_error(model)
 
   out <- data_frame(
-    Parameter = parms$parameter,
-    Statistic = parms$estimate / se$SE
+    Parameter = parms[[1]],
+    Statistic = parms[[2]] / se$SE
   )
 
   attr(out, "statistic") <- "t"
@@ -233,8 +233,8 @@
   se <- standard_error(model)
 
   out <- data_frame(
-    Parameter = parms$parameter,
-    Statistic = parms$estimate / se$SE
+    Parameter = parms[[1]],
+    Statistic = parms[[2]] / se$SE
   )
 
   attr(out, "statistic") <- "z"
@@ -247,7 +247,7 @@
   parms <- insight::get_parameters(model)
   s <- summary(model)
   out <- data_frame(
-    Parameter = parms$parameter,
+    Parameter = parms[[1]],
     Statistic = s$table[, 3]
   )
 
@@ -265,7 +265,7 @@
   s <- methods::slot(aod::summary(model), "Coef")
 
   out <- data_frame(
-    Parameter = parms$parameter,
+    Parameter = parms[[1]],
     Statistic = s[, 3]
   )
 
@@ -280,7 +280,7 @@
   stat <- stats::coef(model) / sqrt(diag(stats::vcov(model)))
 
   out <- data_frame(
-    Parameter = parms$parameter,
+    Parameter = parms[[1]],
     Statistic = as.vector(stat)
   )
 
@@ -308,7 +308,7 @@
   utils::capture.output(s <- summary(model))
 
   out <- data_frame(
-    Parameter = parms$parameter,
+    Parameter = parms[[1]],
     Statistic = as.vector(stats::qchisq(1 - s$prob, df = 1))
   )
 
@@ -323,7 +323,7 @@
   cs <- stats::coef(summary(model))
 
   out <- data_frame(
-    Parameter = parms$parameter,
+    Parameter = parms[[1]],
     Statistic = as.vector(cs[, "Naive z"])
   )
 
@@ -378,8 +378,8 @@
   se <- standard_error(model)
 
   out <- data_frame(
-    Parameter = parms$parameter,
-    Statistic = parms$estimate / se$SE
+    Parameter = parms[[1]],
+    Statistic = parms[[2]] / se$SE
   )
 
   attr(out, "statistic") <- "z"
@@ -393,10 +393,40 @@
   se <- standard_error(model)
 
   out <- data_frame(
-    Parameter = parms$parameter,
-    Statistic = parms$estimate / se$SE
+    Parameter = parms[[1]],
+    Statistic = parms[[2]] / se$SE
   )
 
   attr(out, "statistic") <- "t"
   out
 }
+
+
+.get_statistic.rq <- function(model, ...) {
+
+  stat <- tryCatch(
+    {
+      cs <- stats::coef(summary(model))
+      cs[, "t value"]
+    },
+    error = function(e) {
+      cs <- stats::coef(summary(model, covariance = TRUE))
+      cs[, "t value"]
+    }
+  )
+
+  params <- insight::get_parameters(model)
+
+  out <- data_frame(
+    Parameter = parms[[1]],
+    Statistic = stat
+  )
+
+  attr(out, "statistic") <- "t"
+  out
+}
+
+
+.get_statistic.crq <- .get_statistic.rq
+
+.get_statistic.nlrq <- .get_statistic.rq
