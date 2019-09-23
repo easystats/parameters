@@ -15,6 +15,8 @@ bayestestR::equivalence_test
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @seealso For more details, see \code{\link[bayestestR:equivalence_test]{equivalence_test}}.
+#'
 #' @return A data frame.
 #' @examples
 #' m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)

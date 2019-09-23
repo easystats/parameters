@@ -40,13 +40,13 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
 
 #' @keywords internal
-.print_model_parms_components <- function(x, pretty_names, ...) {
-  tables <- split(x, x$Component)
+.print_model_parms_components <- function(x, pretty_names, split_column = "Component", ...) {
+  tables <- split(x, x[[split_column]])
 
   for (type in names(tables)) {
 
     # don't print Component column
-    tables[[type]]$Component <- NULL
+    tables[[type]][[split_column]] <- NULL
 
     # Smooth terms statistics
     if ("t / F" %in% names(tables[[type]])) {
@@ -83,12 +83,15 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "smooth_sd" = "Smooth Terms (SD)",
       "smooth_terms" = "Smooth Terms",
       "sigma" = "Sigma",
+      "Correlation" = "Correlation",
+      "Loading" = "Loading",
       "nu" = "Nu",
-      "tau" = "Tau"
+      "tau" = "Tau",
+      type
     )
 
     # Print
-    insight::print_color(sprintf("# %s component\n\n", component_name), "blue")
+    insight::print_color(sprintf("# %s %s\n\n", component_name, tolower(split_column)), "blue")
     cat(insight::format_table(formatted_table))
     cat("\n")
   }

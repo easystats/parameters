@@ -47,6 +47,14 @@ standardize_names.default <- function(data, ...) {
 #' @export
 standardize_names.parameters_model <- function(data, style = c("easystats", "broom"), ...) {
   style <- match.arg(style)
+  .standardize_names(data, style, ...)
+}
+
+
+
+
+
+.standardize_names <- function(data, style, ...) {
   cn <- colnames(data)
 
   if (style == "easystats") {

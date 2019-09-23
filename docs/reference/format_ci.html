@@ -155,8 +155,8 @@
     <p>Confidence/Credible Interval (CI) Formatting</p>
     </div>
 
-    <pre class="usage"><span class='fu'>format_ci</span>(<span class='no'>CI_low</span>, <span class='no'>CI_high</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>brackets</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>format_ci</span>(<span class='no'>CI_low</span>, <span class='no'>CI_high</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>brackets</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,12 +178,12 @@
       <td><p>Number of significant digits.</p></td>
     </tr>
     <tr>
-      <th>width</th>
-      <td><p>Minimum width of the returned string. If not <code>NULL</code> and <code>width</code> is larger than the string's length, leading whitespaces are added to the string.</p></td>
-    </tr>
-    <tr>
       <th>brackets</th>
       <td><p>Logical, if <code>TRUE</code> (default), values are encompassed in square brackets.</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>Minimum width of the returned string. If not <code>NULL</code> and <code>width</code> is larger than the string's length, leading whitespaces are added to the string.</p></td>
     </tr>
     </table>
 
@@ -192,7 +192,7 @@
     <p>A formatted string.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>format_ci</span>(<span class='fl'>1.20</span>, <span class='fl'>3.57</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.90</span>)</div><div class='output co'>#&gt; [1] "90% CI [1.20, 3.57["</div><div class='input'><span class='fu'>format_ci</span>(<span class='fl'>1.20</span>, <span class='fl'>3.57</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] "[1.20, 3.57["</div><div class='input'><span class='fu'>format_ci</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1.205645</span>, <span class='fl'>23.4</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3.57</span>, -<span class='fl'>1.35</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.90</span>)</div><div class='output co'>#&gt; [1] "90% CI [1.21, 3.57["   "90% CI [23.40, -1.35["</div><div class='input'><span class='fu'>format_ci</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1.20</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3.57</span>, -<span class='fl'>1.35</span>, <span class='fl'>NA</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.90</span>)</div><div class='output co'>#&gt; [1] "90% CI [1.20, 3.57["     "90% CI [missing, -1.35["
+    <pre class="examples"><div class='input'><span class='fu'>format_ci</span>(<span class='fl'>1.20</span>, <span class='fl'>3.57</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.90</span>)</div><div class='output co'>#&gt; [1] "90% CI [1.20, 3.57]"</div><div class='input'><span class='fu'>format_ci</span>(<span class='fl'>1.20</span>, <span class='fl'>3.57</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] "[1.20, 3.57]"</div><div class='input'><span class='fu'>format_ci</span>(<span class='fl'>1.20</span>, <span class='fl'>3.57</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>brackets</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "1.20, 3.57"</div><div class='input'><span class='fu'>format_ci</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1.205645</span>, <span class='fl'>23.4</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3.57</span>, -<span class='fl'>1.35</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.90</span>)</div><div class='output co'>#&gt; [1] "90% CI [1.21, 3.57]"   "90% CI [23.40, -1.35]"</div><div class='input'><span class='fu'>format_ci</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1.20</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3.57</span>, -<span class='fl'>1.35</span>, <span class='fl'>NA</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.90</span>)</div><div class='output co'>#&gt; [1] "90% CI [1.20, 3.57]"     "90% CI [missing, -1.35]"
 #&gt; [3] ""                       </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -213,7 +213,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

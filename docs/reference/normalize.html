@@ -160,13 +160,16 @@ variables in the range 0 - 1.</p>
     <pre class="usage"><span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>include_bounds</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)
 
 <span class='co'># S3 method for grouped_df</span>
-<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>include_bounds</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>normalize</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>include_bounds</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,6 +181,15 @@ variables in the range 0 - 1.</p>
     <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
+      <th>include_bounds</th>
+      <td><p>Logical, if <code>TRUE</code>, return value may include 0
+and 1. If <code>FALSE</code>, the return value is compressed, using the formula
+<code>(x * (n − 1) + 0.5) / n</code> (<cite>Smithson and Verkuilen 2006</cite>), to
+avoid zeros and ones in the normalized variables. This can be useful in
+case of beta-regression, where the response variable is not allowed to
+include zeros and ones.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -198,7 +210,10 @@ be excluded from standardization.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Standardized object.</p>
+    <p>A normalized object.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Smithson M, Verkuilen J (2006). A Better Lemon Squeezer? Maximum-Likelihood Regression with Beta-Distributed Dependent Variables. Psychological Methods, 11(1), 54–71.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -206,6 +221,7 @@ be excluded from standardization.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#references">References</a></li>
     </ul>
 
   </div>
@@ -218,7 +234,7 @@ be excluded from standardization.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

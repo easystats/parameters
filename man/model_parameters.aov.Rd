@@ -2,17 +2,9 @@
 % Please edit documentation in R/model_parameters.aov.R
 \name{model_parameters.aov}
 \alias{model_parameters.aov}
-\alias{model_parameters.anova}
-\alias{model_parameters.aovlist}
 \title{ANOVAs Parameters}
 \usage{
 \method{model_parameters}{aov}(model, omega_squared = NULL,
-  eta_squared = NULL, epsilon_squared = NULL, ...)
-
-\method{model_parameters}{anova}(model, omega_squared = NULL,
-  eta_squared = NULL, epsilon_squared = NULL, ...)
-
-\method{model_parameters}{aovlist}(model, omega_squared = NULL,
   eta_squared = NULL, epsilon_squared = NULL, ...)
 }
 \arguments{

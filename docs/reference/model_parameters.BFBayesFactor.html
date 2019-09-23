@@ -184,8 +184,8 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
     <tr>
       <th>ci_method</th>
       <td><p>The type of index used for Credible Interval. Can be
-<code>"HDI"</code> (default, see <code>hdi</code>) or <code>"ETI"</code>
-(see <code>eti</code>).</p></td>
+<code>"HDI"</code> (default, see <code><a href='https://rdrr.io/pkg/bayestestR/man/hdi.html'>hdi</a></code>) or <code>"ETI"</code>
+(see <code><a href='https://rdrr.io/pkg/bayestestR/man/eti.html'>eti</a></code>).</p></td>
     </tr>
     <tr>
       <th>test</th>
@@ -194,7 +194,7 @@ list with one or more of these options: <code>"p_direction"</code> (or <code>"pd
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
 <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code>rope</code> or <code>p_direction</code>) and its results
+(e.g. <code><a href='https://rdrr.io/pkg/bayestestR/man/rope.html'>rope</a></code> or <code><a href='https://rdrr.io/pkg/bayestestR/man/p_direction.html'>p_direction</a></code>) and its results
 included in the summary output.</p></td>
     </tr>
     <tr>
@@ -229,9 +229,9 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>Type BFManual() to open the manual.</span>
 #&gt; <span class='message'>************</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter  | Median |     89% CI |   pd | % in ROPE |              Prior |    BF
-#&gt; --------------------------------------------------------------------------------
-#&gt; Difference |   0.85 | 0.66, 1.05 | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 999</div><div class='input'># }
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter  | Median |       89% CI |   pd | % in ROPE |              Prior |    BF
+#&gt; ----------------------------------------------------------------------------------
+#&gt; Difference |   0.85 | [0.66, 1.05] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 999</div><div class='input'># }
 
 </div></pre>
   </div>
@@ -253,7 +253,7 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

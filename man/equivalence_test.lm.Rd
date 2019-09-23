@@ -29,3 +29,6 @@ Compute the equivalence test for frequentist models.
 m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 equivalence_test(m)
 }
+\seealso{
+For more details, see \code{\link[bayestestR:equivalence_test]{equivalence_test}}.
+}

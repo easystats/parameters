@@ -182,7 +182,7 @@
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).</p></td>
+      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).</p></td>
     </tr>
     <tr>
       <th>standardize</th>
@@ -242,17 +242,28 @@
 #&gt; qsec     |       | -0.98 |       1.00 |       0.06
 #&gt; hp       |       |  0.61 |       1.97 |       0.10
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (TC1 = 63.90%, TC2 = 25.28%).</span><span></div><div class='input'>
-<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># (Explained) Variance of Principal Components
+#&gt; </span><span style='color: #BBBB00;'>The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (TC1 = 63.90%, TC2 = 25.28%).</span><span></div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
 #&gt; 
-#&gt; </span><span></div><div class='output co'>#&gt;                     |   PC1 |   PC2
-#&gt; -----------------------------------
-#&gt; Standard Deviation  | 2.009 | 0.750
-#&gt; Eigenvalues         | 4.038 | 0.562
-#&gt; Variance            | 0.808 | 0.112
-#&gt; Cumulative Variance | 0.808 | 0.920
-#&gt; Explained Variance  | 0.878 | 0.122</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;            PC1         PC2
+#&gt; </span><span>Variable |  PC1 |   PC2 | Complexity
+#&gt; ------------------------------------
+#&gt; cyl      | 0.96 |       |       1.02
+#&gt; disp     | 0.95 |       |       1.02
+#&gt; mpg      |      |       |       1.02
+#&gt; wt       |      |       |       1.30
+#&gt; hp       |      |       |       1.33
+#&gt; drat     |      |  0.48 |       1.71
+#&gt; qsec     |      | -0.81 |       1.75
+#&gt; 
+#&gt; </span><span style='color: #BBBB00;'>The 2 principal components accounted for 89.18% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%).</span><span></div><div class='input'>
+<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># (Explained) Variance of Components
+#&gt; 
+#&gt; </span><span>Parameter                       |   PC1 |   PC2
+#&gt; -----------------------------------------------
+#&gt; Eigenvalues                     | 4.038 | 0.562
+#&gt; Variance Explained              | 0.808 | 0.112
+#&gt; Variance Explained (Cumulative) | 0.808 | 0.920
+#&gt; Variance Explained (Proportion) | 0.808 | 0.112</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;            PC1         PC2
 #&gt; 1  -0.83958112 -0.12417860
 #&gt; 2  -0.83958112 -0.12417860
 #&gt; 3  -1.78076155  0.20357157
@@ -320,7 +331,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
