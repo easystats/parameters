@@ -4,10 +4,17 @@
 \alias{model_parameters.PCA}
 \title{FactoMineR objects Parameters}
 \usage{
-\method{model_parameters}{PCA}(model, ...)
+\method{model_parameters}{PCA}(model, sort = FALSE, threshold = NULL,
+  labels = NULL, ...)
 }
 \arguments{
 \item{model}{Object of class \code{FactoMineR}.}
+
+\item{sort}{Sort the loadings.}
+
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).}
+
+\item{labels}{A character vector containing labels to be added to the loadings data. Usually, the question related to the item.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -18,7 +25,14 @@ A data.frame of indices related to the model's parameters.
 Parameters of FactoMineR objects.
 }
 \examples{
+library(parameters)
 library(FactoMineR)
+
 model <- FactoMineR::PCA(iris[, 1:4], ncp = 2)
+model_parameters(model)
+attributes(model_parameters(model))$scores
+
+model <- FactoMineR::FAMD(iris, ncp = 2)
+model_parameters(model)
 
 }

@@ -39,7 +39,7 @@
 #' @export
 model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, labels = NULL, ...) {
 
-  # PCA
+  # n
   n <- model$factors
 
   # Get summary
@@ -101,7 +101,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
   }
 
   # Add some more attributes
-  attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
+  attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold, loadings_columns = loading_cols)
 
   # add class-attribute for printing
   if(model$fn == "principal"){
