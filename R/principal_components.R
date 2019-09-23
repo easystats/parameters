@@ -140,13 +140,13 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
 
 
 #' @keywords internal
-.get_n_factors <- function(x, n = NULL, type = "PCA", rotation = "PCA", ...){
+.get_n_factors <- function(x, n = NULL, type = "PCA", rotation = "PCA", ...) {
   # N factors
   if (is.null(n) || n == "auto") {
     n <- as.numeric(n_factors(x, type = type, rotation = rotation, ...))
-  } else if(n == "all"){
+  } else if (n == "all") {
     n <- ncol(x) - 1
-  } else if(n >=  ncol(x)){
+  } else if (n >= ncol(x)) {
     n <- ncol(x) - 1
   }
   n
@@ -178,10 +178,3 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
 
   model_parameters(psych::principal(x, nfactors = n, rotate = rotation, ...), sort = sort, threshold = threshold)
 }
-
-
-
-
-
-
-

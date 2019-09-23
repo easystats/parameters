@@ -59,12 +59,12 @@ efa_to_cfa <- convert_efa_to_cfa
   loadings <- attributes(loadings)$loadings_long
 
   # Get dimension names
-  if(is.null(names)){
+  if (is.null(names)) {
     names <- unique(loadings$Component)
   }
 
   # Catch error
-  if(length(names) != length(unique(loadings$Component))){
+  if (length(names) != length(unique(loadings$Component))) {
     stop(paste("The `names` vector must be of same length as the number of dimensions, in this case", length(unique(loadings$Component))))
   }
 

@@ -13,7 +13,7 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
 
   # Sanity checks
   check <- .check_standardize_numeric(x, name = NULL, verbose = verbose)
-  if(is.null(check)){
+  if (is.null(check)) {
     return(x)
   }
 
@@ -68,13 +68,13 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
 
 
 #' @keywords internal
-.check_standardize_numeric <- function(x, name = NULL, verbose = TRUE){
+.check_standardize_numeric <- function(x, name = NULL, verbose = TRUE) {
   # Warning if only one value
   if (length(unique(x)) == 1) {
     if (verbose) {
-      if(is.null(name)){
+      if (is.null(name)) {
         message("The variable contains only one unique value and will not be standardized.")
-      } else{
+      } else {
         message(paste0("The variable `", name, "` contains only one unique value and will not be standardized."))
       }
     }
@@ -84,9 +84,9 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
   # Warning if logical vector
   if (length(unique(x)) == 2 && !is.factor(x) && !is.character(x)) {
     if (verbose) {
-      if(is.null(name)){
+      if (is.null(name)) {
         message("The variable contains only two different values. Consider converting it to a factor.")
-      } else{
+      } else {
         message(paste0("Variable `", name, "` contains only two different values. Consider converting it to a factor."))
       }
     }
@@ -191,7 +191,7 @@ standardize.data.frame <- function(x, robust = FALSE, method = "default", select
     select <- setdiff(select, exclude)
   }
 
-  for(i in 1:length(select)){
+  for (i in 1:length(select)) {
     .check_standardize_numeric(x[[select[i]]], name = select[i], verbose = verbose)
   }
 

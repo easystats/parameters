@@ -61,7 +61,7 @@ model_parameters(model) %>%
 We can directly apply the function to do **PCA on the model**, from which it will select the predictors:
 
 ```{r message=FALSE, warning=FALSE}
-pca <- principal_components(model)
+pca <- principal_components(insight::get_data(model))
 pca
 ```
 

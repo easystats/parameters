@@ -5,7 +5,6 @@
 
 #' @export
 summary.parameters_efa <- function(object, ...) {
-
   x <- attributes(object)$summary
 
   cols <- intersect(
@@ -19,9 +18,9 @@ summary.parameters_efa <- function(object, ...) {
   names(x) <- c("Parameter", attributes(object)$summary$Component)
   row.names(x) <- NULL
 
-  if("parameters_efa" %in% class(object)){
+  if ("parameters_efa" %in% class(object)) {
     class(x) <- c("parameters_efa_summary", class(object))
-  } else{
+  } else {
     class(x) <- c("parameters_pca_summary", class(object))
   }
   x
@@ -36,13 +35,12 @@ summary.parameters_pca <- summary.parameters_efa
 model_parameters.parameters_efa <- function(model, ...) {
   x <- attributes(model)$summary
 
-  if("parameters_efa" %in% class(model)){
+  if ("parameters_efa" %in% class(model)) {
     class(x) <- c("parameters_efa_summary", class(model))
-  } else{
+  } else {
     class(x) <- c("parameters_pca_summary", class(model))
   }
   x
-
 }
 
 #' @export
@@ -93,9 +91,9 @@ predict.parameters_pca <- predict.parameters_efa
 print.parameters_efa_summary <- function(x, digits = 3, ...) {
   insight::print_color("# (Explained) Variance of Components\n\n", "blue")
 
-  if("Parameter" %in% names(x)){
+  if ("Parameter" %in% names(x)) {
     x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
-  } else if("Component" %in% names(x)){
+  } else if ("Component" %in% names(x)) {
     names(x) <- c("Copmponent", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
   }
 
@@ -116,7 +114,7 @@ print.parameters_pca_summary <- print.parameters_efa_summary
 print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
 
   # Labels
-  if(!is.null(labels)){
+  if (!is.null(labels)) {
     x$Label <- labels
     x <- x[c("Variable", "Label", names(x)[!names(x) %in% c("Variable", "Label")])]
   }
@@ -282,13 +280,13 @@ sort.parameters_pca <- sort.parameters_efa
 
 
   if (threshold == "max" | threshold >= 1) {
-    if(threshold == "max"){
+    if (threshold == "max") {
       for (row in 1:nrow(loadings)) {
         maxi <- max(abs(loadings[row, loadings_columns, drop = FALSE]))
         loadings[row, loadings_columns][abs(loadings[row, loadings_columns]) < maxi] <- NA
       }
-    } else{
-      for(col in loadings_columns){
+    } else {
+      for (col in loadings_columns) {
         loadings[tail(order(abs(loadings[, col]), decreasing = TRUE), -round(threshold)), col] <- NA
       }
     }
@@ -298,4 +296,3 @@ sort.parameters_pca <- sort.parameters_efa
 
   loadings
 }
-

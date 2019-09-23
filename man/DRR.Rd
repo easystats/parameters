@@ -21,7 +21,6 @@ Dimensionality Reduction via Regression (DRR) is a very recent technique extendi
 DRR(iris[, 1:4])
 }
 
-
 }
 \references{
 \itemize{

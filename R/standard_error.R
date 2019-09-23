@@ -38,8 +38,9 @@ standard_error.factor <- function(model, force = FALSE, verbose = TRUE, ...) {
   if (force) {
     standard_error(as.numeric(model), ...)
   } else {
-    if (verbose)
+    if (verbose) {
       warning("Can't compute standard error of non-numeric variables.", call. = FALSE)
+    }
     return(NA)
   }
 }
@@ -107,14 +108,17 @@ standard_error.xtabs <- standard_error.table
 standard_error.default <- function(model, ...) {
   se <- tryCatch({
     if (grepl("^Zelig-", class(model)[1])) {
-      if (!requireNamespace("Zelig", quietly = TRUE))
+      if (!requireNamespace("Zelig", quietly = TRUE)) {
         stop("Package `Zelig` required. Please install", call. = FALSE)
+      }
       unlist(Zelig::get_se(model))
     } else {
       .get_se_from_summary(model)
     }
   },
-  error = function(e) { NULL }
+  error = function(e) {
+    NULL
+  }
   )
 
   if (is.null(se)) {
@@ -209,7 +213,9 @@ standard_error.merMod <- standard_error.lm
 #' @export
 standard_error.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) return(NULL)
+  if (is.null(.check_component(model, component))) {
+    return(NULL)
+  }
 
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
@@ -233,7 +239,9 @@ standard_error.glmmTMB <- function(model, component = c("all", "conditional", "z
 #' @export
 standard_error.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) return(NULL)
+  if (is.null(.check_component(model, component))) {
+    return(NULL)
+  }
 
   s <- summary(model)
   cs <- list(s$coef_table, s$coef_table_zi)
@@ -262,7 +270,9 @@ standard_error.MixMod <- function(model, component = c("all", "conditional", "zi
 #' @export
 standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) return(NULL)
+  if (is.null(.check_component(model, component))) {
+    return(NULL)
+  }
 
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
@@ -361,17 +371,15 @@ standard_error.svyglm <- function(model, ...) {
 
 #' @export
 standard_error.rq <- function(model, ...) {
-
-  se <- tryCatch(
-    {
-      cs <- stats::coef(summary(model))
-      cs[, "Std Error"]
-    },
-    error = function(e) {
-      ## TODO replace with "insight::get_varcov()"
-      s <- summary(model, covariance = TRUE)
-      as.vector(sqrt(diag(s$cov)))
-    }
+  se <- tryCatch({
+    cs <- stats::coef(summary(model))
+    cs[, "Std Error"]
+  },
+  error = function(e) {
+    ## TODO replace with "insight::get_varcov()"
+    s <- summary(model, covariance = TRUE)
+    as.vector(sqrt(diag(s$cov)))
+  }
   )
 
   params <- insight::get_parameters(model)
@@ -529,7 +537,6 @@ standard_error.coxme <- function(model, ...) {
   beta <- model$coefficients
 
   if (length(beta) > 0) {
-
     data_frame(
       Parameter = names(beta),
       SE = sqrt(diag(stats::vcov(model)))

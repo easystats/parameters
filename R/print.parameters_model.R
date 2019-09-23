@@ -18,7 +18,7 @@
 #'
 #' model <- glmmTMB(
 #'   count ~ spp + mined + (1 | site),
-#'   ziformula =  ~ mined,
+#'   ziformula = ~mined,
 #'   family = poisson(),
 #'   data = Salamanders
 #' )

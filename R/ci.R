@@ -17,7 +17,7 @@
 #'
 #' model <- glmmTMB(
 #'   count ~ spp + mined + (1 | site),
-#'   ziformula =  ~ mined,
+#'   ziformula = ~mined,
 #'   family = poisson(),
 #'   data = Salamanders
 #' )
@@ -266,7 +266,9 @@ ci.gamm4 <- ci.gamm
 #' @export
 ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(x, component))) return(NULL)
+  if (is.null(.check_component(x, component))) {
+    return(NULL)
+  }
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
 
@@ -290,7 +292,9 @@ ci.zerocount <- ci.glmmTMB
 #' @export
 ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(x, component))) return(NULL)
+  if (is.null(.check_component(x, component))) {
+    return(NULL)
+  }
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
 

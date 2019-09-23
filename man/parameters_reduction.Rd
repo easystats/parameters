@@ -43,7 +43,6 @@ The different methods available are described below:
 }
 \examples{
 parameters_reduction(iris, method = "PCA", n = "max")
-
 }
 \references{
 \itemize{

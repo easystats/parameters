@@ -29,14 +29,17 @@ p_value <- function(model, ...) {
 p_value.default <- function(model, ...) {
   p <- tryCatch({
     if (grepl("^Zelig-", class(model)[1])) {
-      if (!requireNamespace("Zelig", quietly = T))
+      if (!requireNamespace("Zelig", quietly = T)) {
         stop("Package `Zelig` required. Please install", call. = F)
+      }
       unlist(Zelig::get_pvalue(model))
     } else {
       .get_pval_from_summary(model)
     }
   },
-  error = function(e) { NULL }
+  error = function(e) {
+    NULL
+  }
   )
 
   if (is.null(p)) {
@@ -101,7 +104,9 @@ p_value.tobit <- function(model, ...) {
 #' @export
 p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) return(NULL)
+  if (is.null(.check_component(model, component))) {
+    return(NULL)
+  }
 
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
@@ -172,7 +177,9 @@ p_value.merMod <- function(model, ...) {
 #' @export
 p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) return(NULL)
+  if (is.null(.check_component(model, component))) {
+    return(NULL)
+  }
 
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
@@ -196,7 +203,9 @@ p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "ze
 #' @export
 p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) return(NULL)
+  if (is.null(.check_component(model, component))) {
+    return(NULL)
+  }
 
   s <- summary(model)
   cs <- list(s$coef_table, s$coef_table_zi)

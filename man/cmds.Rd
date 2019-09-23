@@ -20,7 +20,6 @@ Also referred to as principal Coordinates Analysis (PCoA), Classical Multidimens
 }
 \examples{
 cmds(iris[, 1:4])
-
 }
 \references{
 \itemize{

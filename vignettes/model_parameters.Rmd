@@ -1,0 +1,185 @@
+---
+title: "Parameters Descritpion"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, parameters, variable selection, feature selection]
+vignette: >
+  %\VignetteIndexEntry{Variable selection (stepwise, projpred, ...)}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(comment=">")
+options(digits=2)
+
+library(parameters)
+library(dplyr)
+
+set.seed(333)
+```
+
+# Model's parameters description
+
+```{r, fig.align='center'}
+include_graphics("https://raw.githubusercontent.com/easystats/parameters/master/man/figures/figure1.png")
+```
+
+ 
+The `model_parameters()` function (also accessible via the shortcut `parameters()`) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
+
+- The names of the returned dataframe are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic*.
+- It is able to compute or extract indices not available by default, such as ***p*-values**, **CIs**, etc.
+- It includes **feature engineering** capabilities, including [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html) and [**standardization**](https://easystats.github.io/parameters/articles/standardization.html) of parameters.
+
+
+## Correlations, *t*-tests
+
+### Frequentist 
+
+```{r, warning=FALSE, message=FALSE}
+cor.test(iris$Sepal.Length, iris$Sepal.Width) %>% 
+  parameters()
+```
+
+```{r, warning=FALSE, message=FALSE}
+t.test(mpg ~ vs, data=mtcars) %>% 
+  parameters()
+```
+
+```{r, warning=FALSE, message=FALSE}
+t.test(mpg ~ vs, data=mtcars) %>% 
+  parameters()
+```
+
+
+### Bayesian
+
+```{r, warning=FALSE, message=FALSE}
+library(BayesFactor)
+
+BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width) %>% 
+  parameters()
+```
+
+```{r, warning=FALSE, message=FALSE}
+BayesFactor::ttestBF(formula = mpg ~ vs, data=mtcars) %>% 
+  parameters()
+```
+
+## ANOVAs
+
+Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared`, `epsilon_sqared` or `omega_squared` can be computed.
+
+### Simple
+
+```{r, warning=FALSE, message=FALSE}
+aov(Sepal.Length ~ Species, data = iris) %>% 
+  parameters(omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
+```
+
+### Repeated measures
+
+The function also works on repeated measures ANOVAs, whether computed from `aov` or from a mixed model.
+
+```{r, warning=FALSE, message=FALSE}
+aov(mpg ~ am + Error(gear), data = mtcars) %>% 
+  parameters()
+```
+
+
+## Regressions (GLMs, Mixed Models, GAMs, ...)
+
+This function was mainly built to work for regression models. It works for many types of models and packages, including mixed models and Bayesian models.
+
+### GLMs
+
+```{r, warning=FALSE, message=FALSE}
+library(lme4)
+
+glm(vs ~ poly(mpg, 2) + cyl, data = mtcars) %>% 
+  parameters(standardize = "smart")
+```
+
+### Mixed Models
+
+```{r, warning=FALSE, message=FALSE}
+library(lme4)
+
+lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) %>% 
+  parameters(standardize = "refit")
+```
+
+### Bayesian Models
+
+```{r, warning=FALSE, message=FALSE, eval = FALSE}
+library(rstanarm)
+
+stan_glm(mpg ~ wt + cyl, data = mtcars) %>% 
+  parameters(standardize = "smart")
+```
+```{r, warning=FALSE, message=FALSE, echo = FALSE}
+library(rstanarm)
+
+stan_glm(mpg ~ wt * cyl, data = mtcars, iter = 500, chains = 2, refresh = 0) %>% 
+  parameters(standardize = "smart")
+```
+
+
+## Structural Models (PCA, EFA, CFA, SEM...)
+
+The `parameters` package extends the support to structural models.
+
+### Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA) 
+
+```{r, warning=FALSE, message=FALSE}
+library(psych)
+
+psych::pca(mtcars, nfactors = 3) %>% 
+  parameters()
+```
+
+```{r, warning=FALSE, message=FALSE, eval = FALSE}
+library(FactoMineR)
+
+FactoMineR::FAMD(iris, ncp = 3) %>% 
+  parameters()
+```
+```{r, warning=FALSE, message=FALSE, echo = FALSE}
+library(FactoMineR)
+
+FactoMineR::FAMD(iris, ncp = 3, graph = FALSE) %>% 
+  parameters()
+```
+
+
+### Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)
+
+### Frequentist
+
+```{r, warning=FALSE, message=FALSE}
+library(lavaan)
+
+model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
+                       textual =~ x4 + x5 + x6
+                       speed   =~ x7 + x8 + x9 ', 
+                       data = HolzingerSwineford1939)
+
+model_parameters(model)
+```
+
+### Bayesian
+
+`blavaan` to be done.

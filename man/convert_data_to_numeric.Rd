@@ -24,5 +24,4 @@ Convert data to numeric by converting characters to factors and factors to eithe
 }
 \examples{
 convert_data_to_numeric(iris)
-
 }

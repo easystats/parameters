@@ -57,6 +57,9 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
+<li>
+  <a href="../reference/model_parameters.html">Parameters Description</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Parameters Engineering
@@ -72,9 +75,12 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../reference/parameters_selection.html">Parameters Selection</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Variable/Feature Reduction
+    Dimension Reduction
      
     <span class="caret"></span>
   </a>
@@ -84,9 +90,6 @@
     </li>
     <li>
       <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
-    </li>
-    <li>
-      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
     </li>
   </ul>
 </li>
@@ -215,20 +218,21 @@
 </tbody>
 </table>
 <p>We can directly apply the function to do <strong>PCA on the model</strong>, from which it will select the predictors:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/principal_components.html">principal_components</a></span>(model)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/principal_components.html">principal_components</a></span>(insight<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/insight/man/get_data.html">get_data</a></span>(model))</a>
 <a class="sourceLine" id="cb2-2" title="2">pca</a></code></pre></div>
 <pre><code>&gt; # Loadings from Principal Component Analysis (no rotation)
 &gt; 
 &gt; Variable   |  PC1 | Complexity
 &gt; ------------------------------
-&gt; complaints | 0.78 |       1.00
-&gt; privileges | 0.70 |       1.00
-&gt; learning   | 0.82 |       1.00
-&gt; raises     | 0.88 |       1.00
-&gt; critical   | 0.40 |       1.00
-&gt; advance    | 0.68 |       1.00
+&gt; rating     | 0.80 |       1.00
+&gt; complaints | 0.85 |       1.00
+&gt; privileges | 0.68 |       1.00
+&gt; learning   | 0.83 |       1.00
+&gt; raises     | 0.86 |       1.00
+&gt; critical   | 0.36 |       1.00
+&gt; advance    | 0.58 |       1.00
 &gt; 
-&gt; The unique principal component accounted for 52.82% of the total variance of the original data.</code></pre>
+&gt; The unique principal component accounted for 53.09% of the total variance of the original data.</code></pre>
 <p>The <code>principal_component()</code> function automatically selected one component (if the number of components is not specified, this function uses <a href="https://easystats.github.io/parameters/articles/n_factors.html"><code><a href="../reference/n_factors.html">n_factors()</a></code></a> to estimate the optimal number to keep) and returned the <strong>loadings</strong>, <em>i.e.</em>, the relationship with all of the original variables.</p>
 <p>As we can see here, it seems that our new component captured the essence of all our other variables together. We can extract the values of these components for each of our observation using the <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> method and merge it with our dataframe.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(df, <span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(pca))</a></code></pre></div>
@@ -249,21 +253,21 @@
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">64.6</td>
-<td align="right">1.7</td>
-<td align="right">61.2</td>
-<td align="right">68.0</td>
-<td align="right">38.8</td>
+<td align="right">65</td>
+<td align="right">1.4</td>
+<td align="right">61.8</td>
+<td align="right">67.4</td>
+<td align="right">47</td>
 <td align="right">28</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">PC1</td>
-<td align="right">4.6</td>
-<td align="right">1.0</td>
-<td align="right">2.7</td>
-<td align="right">6.6</td>
-<td align="right">4.9</td>
+<td align="right">5</td>
+<td align="right">0.7</td>
+<td align="right">3.5</td>
+<td align="right">6.5</td>
+<td align="right">7</td>
 <td align="right">28</td>
 <td align="right">0</td>
 </tr>
@@ -309,21 +313,21 @@
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">64.6</td>
-<td align="right">1.7</td>
-<td align="right">61.2</td>
-<td align="right">68.0</td>
-<td align="right">38.8</td>
+<td align="right">65</td>
+<td align="right">1.4</td>
+<td align="right">61.8</td>
+<td align="right">67.4</td>
+<td align="right">47</td>
 <td align="right">28</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">PC1</td>
-<td align="right">4.6</td>
-<td align="right">1.0</td>
-<td align="right">2.7</td>
-<td align="right">6.6</td>
-<td align="right">4.9</td>
+<td align="right">5</td>
+<td align="right">0.7</td>
+<td align="right">3.5</td>
+<td align="right">6.5</td>
+<td align="right">7</td>
 <td align="right">28</td>
 <td align="right">0</td>
 </tr>
@@ -630,7 +634,6 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -656,7 +659,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

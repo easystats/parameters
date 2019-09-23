@@ -1,7 +1,6 @@
 if (require("testthat") &&
   require("parameters") &&
   require("gee")) {
-
   data(warpbreaks)
   m1 <- gee(breaks ~ tension, id = wool, data = warpbreaks)
 

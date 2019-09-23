@@ -43,7 +43,6 @@
 #' model <- lavaan::sem(structure, data = PoliticalDemocracy)
 #' model_parameters(model)
 #' model_parameters(model, standardize = TRUE)
-#'
 #' \donttest{
 #' # blavaan ------------------------------------
 #' # library(blavaan)

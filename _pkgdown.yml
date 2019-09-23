@@ -3,6 +3,8 @@ authors:
     href: https://dominiquemakowski.github.io/
   Daniel Lüdecke:
     href: https://github.com/strengejacke
+  Mattan S. Ben-Shachar:
+    href: https://github.com/mattansb
 
 template:
   params:
@@ -17,9 +19,10 @@ reference:
   - model_parameters.gam
   - model_parameters.merMod
   - model_parameters.lavaan
+  - model_parameters.PCA
+  - model_parameters.principal
   - model_parameters.stanreg
   - model_parameters.BFBayesFactor
-  - model_parameters.principal
   - model_parameters.htest
   - print.parameters_model
 
@@ -96,18 +99,19 @@ navbar:
     href: news/index.html
   - text: Features
     href: reference/index.html
+  - text: Parameters Description
+    href: reference/model_parameters.html
   - text: Parameters Engineering
     menu:
       - text: 'Bootstrapped parameters'
         href: articles/bootstrapping.html
       - text: 'Standardized parameters'
         href: articles/standardization.html
-  - text: Variable/Feature Reduction
+  - text: Parameters Selection
+    href: reference/parameters_selection.html
+  - text: Dimension Reduction
     menu:
       - text: 'How many factors to retain in Factor Analysis (FA)'
         href: articles/n_factors.html
       - text: 'Variable extraction (PCA, FA, ...)'
         href: articles/variable_extraction.html
-      - text: 'Variable selection (stepwise, projpred, ...)'
-        href: articles/variable_selection.html
-

@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,12 +41,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Parameters simulation — parameters_simulate" />
+
 <meta property="og:description" content="Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to boostrapping." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -97,6 +95,9 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
+<li>
+  <a href="../reference/model_parameters.html">Parameters Description</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Parameters Engineering
@@ -112,9 +113,12 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../reference/parameters_selection.html">Parameters Selection</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Variable/Feature Reduction
+    Dimension Reduction
      
     <span class="caret"></span>
   </a>
@@ -125,12 +129,10 @@
     <li>
       <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
     </li>
-    <li>
-      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
-    </li>
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -152,12 +154,14 @@
     </div>
 
     <div class="ref-description">
+    
     <p>Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to boostrapping.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -199,10 +203,11 @@ included in the summary output.</p></td>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with simulated parameters.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
@@ -217,12 +222,15 @@ included in the summary output.</p></td>
     from the conditional component (fixed effects) are simulated. This may
     include smooth terms, but not random effects.</p>
 
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge; New York: Cambridge University Press 2007: 140-143</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='model_bootstrap.html'>model_bootstrap</a></code>, <code><a href='parameters_bootstrap.html'>parameters_bootstrap</a></code>, <code><a href='model_simulate.html'>model_simulate</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
@@ -230,43 +238,48 @@ included in the summary output.</p></td>
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>parameters_simulate</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high           p
-#&gt; 1                   (Intercept)   3.5291651  3.2026543  3.8481421 0.000000000
-#&gt; 2             Speciesversicolor  -1.1541920 -1.8471148 -0.4826065 0.001998002
-#&gt; 3              Speciesvirginica  -2.2293532 -3.1155210 -1.4045782 0.000000000
-#&gt; 4                   Petal.Width   0.4143481 -0.4959095  1.3357613 0.353646354
-#&gt; 5                  Petal.Length   0.9406770  0.7891260  1.0900810 0.000000000
-#&gt; 6 Speciesversicolor:Petal.Width  -0.7667890 -1.7285082  0.3051246 0.171828172
-#&gt; 7  Speciesvirginica:Petal.Width  -0.3692775 -1.3951537  0.5795459 0.423576424</div><div class='input'>
+#&gt; 1                   (Intercept)   3.5364233  3.2268395  3.8378348 0.000000000
+#&gt; 2             Speciesversicolor  -1.1523731 -1.8216471 -0.4537039 0.001998002
+#&gt; 3              Speciesvirginica  -2.2515092 -3.0831134 -1.3902813 0.000000000
+#&gt; 4                   Petal.Width   0.4257135 -0.4873885  1.2692800 0.333666334
+#&gt; 5                  Petal.Length   0.9363766  0.7858840  1.0840593 0.000000000
+#&gt; 6 Speciesversicolor:Petal.Width  -0.7586941 -1.7313382  0.3527203 0.149850150
+#&gt; 7  Speciesvirginica:Petal.Width  -0.3890504 -1.3009613  0.5959885 0.433566434</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
   <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
-  <span class='kw'>ziformula</span> <span class='kw'>=</span>  ~ <span class='no'>mined</span>,
+  <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
   <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
 )
 <span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt;         Parameter Coefficient       CI_low    CI_high           p
-#&gt; 1     (Intercept)  -0.3606631 -0.898176398  0.1798020 0.189810190
-#&gt; 2           sppPR  -1.2704593 -1.731652761 -0.8178404 0.000000000
-#&gt; 3           sppDM   0.2678054  0.001488994  0.5265815 0.049950050
-#&gt; 4         sppEC-A  -0.5686862 -0.988782861 -0.1634632 0.003996004
-#&gt; 5         sppEC-L   0.6647610  0.429755608  0.9050588 0.000000000
-#&gt; 6        sppDES-L   0.6263250  0.377223191  0.8761781 0.000000000
-#&gt; 7           sppDF   0.1211258 -0.166757937  0.4074449 0.435564436
-#&gt; 8         minedno   1.2686665  0.745682566  1.7798440 0.000000000
-#&gt; 9  (Intercept)_zi   0.7805382  0.258107620  1.3211320 0.007992008
-#&gt; 10     minedno_zi  -1.8428741 -2.462464996 -1.2228668 0.000000000</div><div class='input'><span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high           p
-#&gt; 1 (Intercept)   0.7773829 80  0.4249926  1.144516 0.003996004
-#&gt; 2 (Intercept)   0.7773829 95  0.2494981  1.360730 0.003996004
-#&gt; 3     minedno  -1.8333760 80 -2.2494140 -1.428800 0.000000000
-#&gt; 4     minedno  -1.8333760 95 -2.4820669 -1.187040 0.000000000</div></pre>
+#&gt; 1     (Intercept)  -0.3636823 -0.901843864  0.1663760 0.183816184
+#&gt; 2           sppPR  -1.2697754 -1.736432432 -0.8161457 0.000000000
+#&gt; 3           sppDM   0.2698372 -0.002687891  0.5502536 0.053946054
+#&gt; 4         sppEC-A  -0.5629384 -0.974841414 -0.1579270 0.007992008
+#&gt; 5         sppEC-L   0.6661930  0.412009306  0.9102256 0.000000000
+#&gt; 6        sppDES-L   0.6298525  0.395903307  0.8967228 0.000000000
+#&gt; 7           sppDF   0.1173846 -0.167104697  0.4251525 0.429570430
+#&gt; 8         minedno   1.2672247  0.755065425  1.7798265 0.000000000
+#&gt; 9  (Intercept)_zi   0.7781928  0.256441400  1.3332148 0.003996004
+#&gt; 10     minedno_zi  -1.8333270 -2.468013873 -1.2193143 0.000000000</div><div class='input'><span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high           p
+#&gt; 1 (Intercept)   0.8025891 80  0.4609569  1.151504 0.003996004
+#&gt; 2 (Intercept)   0.8025891 95  0.2702259  1.315113 0.003996004
+#&gt; 3     minedno  -1.8710923 80 -2.2653486 -1.468025 0.000000000
+#&gt; 4     minedno  -1.8710923 95 -2.4507043 -1.245865 0.000000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -280,7 +293,7 @@ included in the summary output.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

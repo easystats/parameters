@@ -18,5 +18,4 @@ Performs an Independent Component Analysis using the FastICA algorithm. Contrary
 }
 \examples{
 ICA(iris[, 1:4])
-
 }
