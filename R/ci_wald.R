@@ -39,7 +39,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
       error = function(e) { Inf }
     )
     # make sure we have a value for degrees of freedom
-    if (is.null(dof)) dof <- Inf
+    if (is.null(dof) || length(dof) == 0) dof <- Inf
   }
 
   alpha <- (1 + ci) / 2

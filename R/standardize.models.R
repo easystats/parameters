@@ -88,6 +88,15 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 standardize.merMod <- standardize.lm
 
 #' @export
+standardize.rq <- standardize.lm
+
+#' @export
+standardize.crq <- standardize.lm
+
+#' @export
+standardize.nlrq <- standardize.lm
+
+#' @export
 standardize.speedglm <- standardize.lm
 
 #' @export

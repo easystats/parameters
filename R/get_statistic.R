@@ -406,11 +406,11 @@
 
   stat <- tryCatch(
     {
-      cs <- stats::coef(summary(model))
+      cs <- suppressWarnings(stats::coef(summary(model)))
       cs[, "t value"]
     },
     error = function(e) {
-      cs <- stats::coef(summary(model, covariance = TRUE))
+      cs <- suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
       cs[, "t value"]
     }
   )
@@ -418,7 +418,7 @@
   params <- insight::get_parameters(model)
 
   out <- data_frame(
-    Parameter = parms[[1]],
+    Parameter = params[[1]],
     Statistic = stat
   )
 

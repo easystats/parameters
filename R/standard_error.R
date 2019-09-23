@@ -361,15 +361,20 @@ standard_error.svyglm <- function(model, ...) {
 
 #' @export
 standard_error.rq <- function(model, ...) {
-
   se <- tryCatch(
     {
-      cs <- stats::coef(summary(model))
-      cs[, "Std Error"]
+      cs <- suppressWarnings(stats::coef(summary(model)))
+      se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
+      if (length(se_column)) {
+        cs[, se_column]
+      } else {
+        s <- suppressWarnings(summary(model, covariance = TRUE))
+        as.vector(sqrt(diag(s$cov)))
+      }
     },
     error = function(e) {
       ## TODO replace with "insight::get_varcov()"
-      s <- summary(model, covariance = TRUE)
+      s <- suppressWarnings(summary(model, covariance = TRUE))
       as.vector(sqrt(diag(s$cov)))
     }
   )
