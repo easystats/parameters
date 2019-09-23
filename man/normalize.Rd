@@ -25,7 +25,7 @@ normalize(x, ...)
 
 \item{include_bounds}{Logical, if \code{TRUE}, return value may include 0
 and 1. If \code{FALSE}, the return value is compressed, using the formula
-\code{(x * (n − 1) + 0.5) / n} (\cite{Smithson and Verkuilen 2006}), to
+\code{(x * (n - 1) + 0.5) / n} (\cite{Smithson and Verkuilen 2006}), to
 avoid zeros and ones in the normalized variables. This can be useful in
 case of beta-regression, where the response variable is not allowed to
 include zeros and ones.}

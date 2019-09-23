@@ -148,6 +148,7 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
     insight::print_colour(.text_components_variance(x), "yellow")
   }
 }
+
 #' @export
 print.parameters_pca <- print.parameters_efa
 
@@ -159,7 +160,7 @@ print.parameters_pca <- print.parameters_efa
 #' @keywords internal
 .text_components_variance <- function(x) {
   type <- attributes(x)$type
-  if (type %in% c("prcomp", "principal")) {
+  if (type %in% c("prcomp", "principal", "pca")) {
     type <- "principal component"
   } else if (type %in% c("fa")) {
     type <- "latent factor"

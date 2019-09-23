@@ -1,9 +1,9 @@
 #' Principal Component Analysis (PCA)
 #'
-#' This function performs a principal component analysis (PCA) and returns the loadings (of the unrotated matrix) as dataframe.
+#' This function performs a principal component analysis (PCA) and returns the loadings as a dataframe.
 #'
-#' @param x A dataframe.
-#' @param n Number of components to extract. If \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}.
+#' @param x A dataframe or a statistical model.
+#' @param n Number of components to extract. If \code{n = "all"} (default), then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n = "auto"} or \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}. In \code{\link{parameters_reduction}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.
 #' @param rotation If not "none", the PCA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, and \code{"cluster"}. See \code{\link[psych]{fa}} for details.
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).
@@ -29,7 +29,7 @@
 #' predict(pca)
 #' \donttest{
 #' # Automated number of components
-#' principal_components(mtcars[, 1:4])
+#' principal_components(mtcars[, 1:4], n = "auto")
 #' }
 #'
 #' @return A data.frame of loadings.
@@ -38,13 +38,10 @@
 #' }
 #' @importFrom stats prcomp
 #' @export
-principal_components <- function(x, n = NULL, rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
+principal_components <- function(x, n = "all", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
   UseMethod("principal_components")
 }
 
-#' @rdname principal_components
-#' @export
-PCA <- principal_components
 
 
 #' @importFrom stats prcomp na.omit
@@ -53,7 +50,7 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
 
   # Standardize
   if (standardize) {
-    x <- standardize(x, ...)
+    x <- standardize(x, verbose = FALSE, ...)
   }
 
   # PCA
@@ -61,14 +58,9 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
 
 
   # N factors
-  if (is.null(n)) {
-    n <- as.numeric(n_factors(x, type = "PCA", rotation = rotation, ...))
-  } else if (n == "all") {
-    n <- length(model$sdev)
-  } else if (n > length(model$sdev)) {
-    n <- length(model$sdev)
-  }
+  n <- .get_n_factors(x, n = n, type = "PCA", rotation = rotation)
 
+  # Rotation
   if (rotation != "none") {
     return(.pca_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, ...))
   }
@@ -147,6 +139,18 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
 
 
 
+#' @keywords internal
+.get_n_factors <- function(x, n = NULL, type = "PCA", rotation = "PCA", ...){
+  # N factors
+  if (is.null(n) || n == "auto") {
+    n <- as.numeric(n_factors(x, type = type, rotation = rotation, ...))
+  } else if(n == "all"){
+    n <- ncol(x) - 1
+  } else if(n >=  ncol(x)){
+    n <- ncol(x) - 1
+  }
+  n
+}
 
 
 
@@ -181,10 +185,3 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
 
 
 
-#' @export
-principal_components.lm <- function(x, ...) {
-  principal_components(insight::get_predictors(x, ...), ...)
-}
-
-#' @export
-principal_components.merMod <- principal_components.lm

@@ -7,7 +7,7 @@ test_that("standardize.numeric", {
   x <- standardize(seq(0, 1, length.out = 100), robust = TRUE)
   testthat::expect_equal(median(0), 0, tol = 0.01)
 
-  testthat::expect_warning(standardize(c(0, 0, 0, 1, 1)))
+  testthat::expect_message(standardize(c(0, 0, 0, 1, 1)))
 })
 
 
