@@ -1,6 +1,6 @@
 #' Dimensionality reduction (DR) / Features Reduction
 #'
-#' This function performs a reduction in the parameters space (the number of variables). Altough this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a separate and dedicated stage, as this is a very important process in the data analysis workflow.
+#' This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is "PCA", but other are available via the \code{method} argument, such as "cMDS", "DRR" or "ICA"). Then, it names this new dimensions using the original variables that correlates the most with it. For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension. Altough this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a separate and dedicated stage, as this is a very important process in the data analysis workflow.
 #'
 #' @inheritParams principal_components
 #' @param method The features reduction method. Can be one of 'PCA', 'cMDS', 'DRR', 'ICA' (see the Details section).
@@ -35,10 +35,9 @@
 #'
 #' @examples
 #' parameters_reduction(iris, method = "PCA", n = "max")
-#'
 #' @importFrom stats dist
 #' @export
-parameters_reduction <- function(x, method = "PCA", n = "max", ...){
+parameters_reduction <- function(x, method = "PCA", n = "max", ...) {
   UseMethod("parameters_reduction")
 }
 
@@ -47,28 +46,27 @@ parameters_reduction <- function(x, method = "PCA", n = "max", ...){
 
 
 #' @export
-parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...){
-
+parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...) {
   x <- convert_data_to_numeric(x)
 
   # N factors
-  if(n == "max"){
+  if (n == "max") {
     nfac <- ncol(x) - 1
-  } else{
+  } else {
     nfac <- .get_n_factors(x, n = n, type = "PCA", rotation = "none")
   }
 
   # compute new features
-  if(tolower(method) %in% c("pca", "principal")){
+  if (tolower(method) %in% c("pca", "principal")) {
     features <- principal_components(x, n = nfac, ...)
     features <- as.data.frame(attributes(features)$scores)
-  } else if(tolower(method) %in% c("cmds", "pcoa")){
+  } else if (tolower(method) %in% c("cmds", "pcoa")) {
     features <- cmds(x, n = nfac, ...)
-  } else if(tolower(method) %in% c("drr")){
+  } else if (tolower(method) %in% c("drr")) {
     features <- DRR(x, n = nfac, ...)
-  } else if(tolower(method) %in% c("ica")){
+  } else if (tolower(method) %in% c("ica")) {
     features <- ICA(x, n = nfac, ...)
-  } else{
+  } else {
     stop("'method' must be one of 'PCA', 'cMDS', 'DRR' or 'ICA'.")
   }
 
@@ -77,7 +75,7 @@ parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...){
   cormat <- cbind(data.frame(Variable = row.names(cormat)), cormat)
   weights <- as.data.frame(.sort_loadings(cormat, cols = 2:ncol(cormat)))
 
-  if(n == "max"){
+  if (n == "max") {
     weights <- .filter_loadings(weights, threshold = "max", 2:ncol(weights))
     non_empty <- sapply(weights[2:ncol(weights)], function(x) !all(is.na(x)))
     weights <- weights[c(TRUE, non_empty)]
@@ -91,7 +89,7 @@ parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...){
     name <- weights$Variable[!is.na(x)]
     weight <- insight::format_value(x[!is.na(x)])
     paste0(paste(name, weight, sep = "_"), collapse = "/")
-    })
+  })
   names(features) <- as.character(varnames)
 
   # Attributes
@@ -104,13 +102,28 @@ parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...){
 
 
 
+#' @export
+parameters_reduction.lm <- function(x, method = "PCA", n = "max", ...) {
+  data <- parameters_reduction(convert_data_to_numeric(insight::get_predictors(x, ...), ...), method = method, n = n)
+
+  y <- data.frame(.row = 1:length(insight::get_response(x)))
+  y[insight::find_response(x)] <- insight::get_response(x)
+  y$.row <- NULL
+
+  formula <- paste(insight::find_response(x), "~", paste(paste0("`", names(data), "`"), collapse = " + "))
+  update(x, formula = formula, data = cbind(data, y))
+}
+
+#' @export
+parameters_reduction.merMod <- parameters_reduction.lm
+
 
 
 
 
 #' @export
 principal_components.lm <- function(x, ...) {
-  principal_components(convert_data_to_numeric(insight::get_predictors(x, ...), ...), ...)
+  parameters_reduction(x, method = "PCA", ...)
 }
 
 #' @export
@@ -135,11 +148,9 @@ principal_components.merMod <- principal_components.lm
 #'
 #' @examples
 #' cmds(iris[, 1:4])
-#'
 #' @importFrom stats dist
 #' @export
-cmds <- function(x, n = "all", distance = "euclidean", ...){
-
+cmds <- function(x, n = "all", distance = "euclidean", ...) {
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = "none")
 
   d <- stats::dist(x, method = distance)
@@ -173,11 +184,9 @@ cmds <- function(x, n = "all", distance = "euclidean", ...){
 #' DRR(iris[, 1:4])
 #' }
 #'
-#'
 #' @importFrom stats dist
 #' @export
-DRR <- function(x, n = "all", ...){
-
+DRR <- function(x, n = "all", ...) {
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = "none")
 
   if (!requireNamespace("DRR", quietly = TRUE)) {
@@ -203,20 +212,17 @@ DRR <- function(x, n = "all", ...){
 #'
 #' @examples
 #' ICA(iris[, 1:4])
-#'
 #' @export
-ICA <- function(x, n = "all", ...){
-
+ICA <- function(x, n = "all", ...) {
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = "none")
 
   if (!requireNamespace("fastICA", quietly = TRUE)) {
     stop("Package 'fastICA' required for this function to work. Please install it by running `install.packages('fastICA')`.")
   }
 
-  rez <- fastICA::fastICA(x, n.comp = ncol(x)-1)
+  rez <- fastICA::fastICA(x, n.comp = ncol(x) - 1)
 
   features <- as.data.frame(rez$S)
   names(features) <- paste0("ICA", 1:ncol(features))
   features
 }
-

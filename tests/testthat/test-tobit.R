@@ -1,7 +1,6 @@
 if (require("testthat") &&
   require("parameters") &&
   require("AER")) {
-
   data("Affairs", package = "AER")
   m1 <- AER::tobit(
     affairs ~ age + yearsmarried + religiousness + occupation + rating,

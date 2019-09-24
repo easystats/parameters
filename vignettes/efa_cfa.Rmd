@@ -9,7 +9,7 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
-tags: [r, parameters, variable extraction, feature extraction, dimension extraction]
+tags: [r, parameters, efa, cfa, factor analysis, sem]
 vignette: >
   %\VignetteIndexEntry{Variable extraction (PCA, FA, ...)}
   \usepackage[utf8]{inputenc}
@@ -28,61 +28,7 @@ options(digits=2)
 set.seed(333)
 ```
 
-# Variable Extraction
 
-Also known as [feature extraction](https://en.wikipedia.org/wiki/Feature_extraction) in machine learning, the goal of variable reduction is to **reduce the number of predictors** by derivating, from a set of measured data, new variables intended to be informative and non-redundant. This method can be used to **simplify models**, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
-
-## Principal Component Analysis (PCA)
-
-One of the way of reducing the number of predictors is to extract a new set of uncorrelated variables that will *represent* variance of your initial dataset. 
-
-Let's start by fitting a multiple regression with the `attitude` dataset, available is base R, to predict the overal `rating` by employees of their organization:
-
-```{r message=FALSE, warning=FALSE, eval=FALSE}
-library(dplyr)
-library(parameters)
-
-df <- attitude
-
-model <- lm(rating ~ ., data=df)
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-library(dplyr)
-library(parameters)
-
-df <- attitude
-
-model <- lm(rating ~ ., data=df)
-model_parameters(model) %>% 
-  knitr::kable(digits=1)
-```
-
-We can directly apply the function to do **PCA on the model**, from which it will select the predictors:
-
-```{r message=FALSE, warning=FALSE}
-pca <- principal_components(model)
-pca
-```
-
-The `principal_component()` function automatically selected one component (if the number of components is not specified, this function uses [`n_factors()`](https://easystats.github.io/parameters/articles/n_factors.html) to estimate the optimal number to keep) and returned the **loadings**, *i.e.*, the relationship with all of the original variables. 
-
-As we can see here, it seems that our new component captured the essence of all our other variables together. We can extract the values of these components for each of our observation using the `predict()` method and merge it with our dataframe.
-
-```{r message=FALSE, warning=FALSE}
-df <- cbind(df, predict(pca))
-```
-
-We can know update the model with this new component:
-```{r message=FALSE, warning=FALSE, eval=FALSE}
-update(model, rating ~ PC1) %>% 
-  model_parameters()
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-update(model, rating ~ PC1) %>% 
-  model_parameters() %>% 
-  knitr::kable(digits=1)
-```
 
 ## Using the `psych` package for PCA and EFA
 

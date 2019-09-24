@@ -1,32 +1,13 @@
-#' FactoMineR objects Parameters
-#'
-#' Parameters of FactoMineR objects.
-#'
-#' @param model Object of class \code{FactoMineR}.
-#' @inheritParams model_parameters.principal
-#'
-#' @examples
-#' library(parameters)
-#' library(FactoMineR)
-#'
-#' model <- FactoMineR::PCA(iris[, 1:4], ncp = 2)
-#' model_parameters(model)
-#' attributes(model_parameters(model))$scores
-#'
-#' model <- FactoMineR::FAMD(iris, ncp = 2)
-#' model_parameters(model)
-#'
-#' @return A data.frame of indices related to the model's parameters.
+#' @rdname model_parameters.principal
 #' @export
 model_parameters.PCA <- function(model, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-
   loadings <- as.data.frame(model$var$coord)
   n <- model$call$ncp
 
 
   # Get summary
   eig <- as.data.frame(model$eig[1:n, ])
-  data_summary <- data_frame(
+  data_summary <- .data_frame(
     Component = names(loadings),
     Eigenvalues = eig$eigenvalue,
     Variance = eig$`percentage of variance` / 100,
@@ -40,14 +21,15 @@ model_parameters.PCA <- function(model, sort = FALSE, threshold = NULL, labels =
   row.names(loadings) <- NULL
 
   # Labels
-  if(!is.null(labels)){
+  if (!is.null(labels)) {
     loadings$Label <- labels
     loadings <- loadings[c("Variable", "Label", names(loadings)[!names(loadings) %in% c("Variable", "Label")])]
     loading_cols <- 3:(n + 2)
-  } else{
+  } else {
     loading_cols <- 2:(n + 1)
   }
 
+  loadings$Complexity <- (apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^2)))^2 / apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^4))
 
   # Add attributes
   attr(loadings, "summary") <- data_summary
@@ -73,10 +55,10 @@ model_parameters.PCA <- function(model, sort = FALSE, threshold = NULL, labels =
 
 
   # add class-attribute for printing
-  if("PCA" %in% class(model)){
+  if ("PCA" %in% class(model)) {
     attr(loadings, "type") <- "pca"
     class(loadings) <- c("parameters_pca", class(loadings))
-  } else if("FAMD" %in% class(model)){
+  } else if ("FAMD" %in% class(model)) {
     attr(loadings, "type") <- "fa"
     class(loadings) <- c("parameters_efa", class(loadings))
   }

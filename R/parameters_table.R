@@ -46,9 +46,9 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   ci_low <- names(x)[grep("CI_low*", names(x))]
   ci_high <- names(x)[grep("CI_high*", names(x))]
   if (length(ci_low) >= 1 & length(ci_low) == length(ci_high)) {
-    if(is.null(attributes(x)$ci)){
+    if (is.null(attributes(x)$ci)) {
       ci_colname <- "CI"
-    } else{
+    } else {
       ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
     }
     # Get characters to align the CI
@@ -114,4 +114,3 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
 
   x
 }
-

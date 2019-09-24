@@ -34,4 +34,3 @@ model_parameters.glmmTMB <- function(model, ci = .95, standardize = FALSE, stand
 
 #' @export
 model_parameters.MixMod <- model_parameters.glmmTMB
-

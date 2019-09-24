@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,12 +41,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Parameters bootstrapping — parameters_bootstrap" />
+
 <meta property="og:description" content="Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -97,6 +95,9 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
+<li>
+  <a href="../reference/model_parameters.html">Parameters Description</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Parameters Engineering
@@ -112,9 +113,12 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../reference/parameters_selection.html">Parameters Selection</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Variable/Feature Reduction
+    Dimension Reduction
      
     <span class="caret"></span>
   </a>
@@ -125,12 +129,10 @@
     <li>
       <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
     </li>
-    <li>
-      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
-    </li>
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -152,12 +154,14 @@
     </div>
 
     <div class="ref-description">
+    
     <p>Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -199,36 +203,43 @@ included in the summary output.</p></td>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Bootstrapped parameters.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Davison, A. C., &amp; Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='model_bootstrap.html'>model_bootstrap</a></code>, <code><a href='parameters_simulate.html'>parameters_simulate</a></code>, <code><a href='model_simulate.html'>model_simulate</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
-#&gt; 1                   (Intercept)   4.7719541  4.5135511 4.9734149 0.000000000
-#&gt; 2             Speciesversicolor  -0.7309436 -1.6723006 0.1099670 0.091908092
-#&gt; 3              Speciesvirginica   0.4718643 -0.7561381 1.6863171 0.397602398
-#&gt; 4                   Petal.Width   0.9409103  0.2424254 1.9393910 0.001998002
-#&gt; 5 Speciesversicolor:Petal.Width   0.4642691 -0.7115033 1.4677545 0.393606394
-#&gt; 6  Speciesvirginica:Petal.Width  -0.2876091 -1.4380726 0.5768445 0.551448551</div></pre>
+#&gt; 1                   (Intercept)   4.7654525  4.5153928 4.9842317 0.000000000
+#&gt; 2             Speciesversicolor  -0.7218647 -1.5886178 0.0848500 0.075924076
+#&gt; 3              Speciesvirginica   0.4903276 -0.6704437 1.7689431 0.399600400
+#&gt; 4                   Petal.Width   0.9518984  0.2611881 1.9904204 0.007992008
+#&gt; 5 Speciesversicolor:Petal.Width   0.4440172 -0.6323702 1.4306422 0.395604396
+#&gt; 6  Speciesvirginica:Petal.Width  -0.2911310 -1.4480351 0.5935417 0.517482517</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -242,7 +253,7 @@ included in the summary output.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

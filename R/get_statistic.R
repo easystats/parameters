@@ -11,17 +11,18 @@
   cs <- stats::coef(summary(model))
   cs_names <- tolower(dimnames(cs)[[2]])
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = gsub("`", "", rownames(cs), fixed = TRUE),
     Statistic = as.vector(cs[, statistic_column])
   )
 
-  if (any(c("t val.", "t", "t-value", "t.value", "t value", "tvalue") %in% cs_names))
+  if (any(c("t val.", "t", "t-value", "t.value", "t value", "tvalue") %in% cs_names)) {
     attr(out, "statistic") <- "t"
-  else if (any(c("z val.", "z", "z-value", "z.value", "z value", "zvalue", "wald") %in% cs_names))
+  } else if (any(c("z val.", "z", "z-value", "z.value", "z value", "zvalue", "wald") %in% cs_names)) {
     attr(out, "statistic") <- "z"
-  else
+  } else {
     attr(out, "statistic") <- "statistic"
+  }
 
   out
 }
@@ -33,7 +34,7 @@
 
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
-    data_frame(
+    .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
       Statistic = as.vector(cs[[i]][, 3]),
       Component = i
@@ -58,7 +59,7 @@
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     comp <- ifelse(i == "count", "conditional", "zi")
-    data_frame(
+    .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
       Statistic = as.vector(cs[[i]][, 3]),
       Component = comp
@@ -90,7 +91,7 @@
   names(cs) <- c("conditional", "zero_inflated")
   cs <- .compact_list(cs)
   x <- lapply(names(cs), function(i) {
-    data_frame(
+    .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
       Statistic = as.vector(cs[[i]][, 3]),
       Component = i
@@ -110,7 +111,7 @@
   cs <- summary(model)$p.table
   cs.smooth <- summary(model)$s.table
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = c(rownames(cs), rownames(cs.smooth)),
     Statistic = c(as.vector(cs[, statistic_column]), as.vector(cs.smooth[, statistic_column])),
     Component = c(rep("conditional", nrow(cs)), rep("smooth_terms", nrow(cs.smooth)))
@@ -148,7 +149,7 @@
   parms <- insight::get_parameters(model)
   utils::capture.output(cs <- summary(model))
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = parms[[1]],
     Statistic = as.vector(cs[, statistic_column]),
     Component = parms$component
@@ -187,7 +188,7 @@
   parms <- insight::get_parameters(model)
   se <- standard_error(model)
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = parms[[1]],
     Statistic = parms[[2]] / se$SE
   )
@@ -218,7 +219,7 @@
 
   cs <- VGAM::coef(VGAM::summary(model))
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = gsub("`", "", rownames(cs), fixed = TRUE),
     Statistic = as.vector(cs[, 3])
   )
@@ -232,7 +233,7 @@
   parms <- insight::get_parameters(model)
   se <- standard_error(model)
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = parms[[1]],
     Statistic = parms[[2]] / se$SE
   )
@@ -246,7 +247,7 @@
 .get_statistic.survreg <- function(model, ...) {
   parms <- insight::get_parameters(model)
   s <- summary(model)
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = parms[[1]],
     Statistic = s$table[, 3]
   )
@@ -264,7 +265,7 @@
   parms <- insight::get_parameters(model)
   s <- methods::slot(aod::summary(model), "Coef")
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = parms[[1]],
     Statistic = s[, 3]
   )
@@ -279,7 +280,7 @@
   parms <- insight::get_parameters(model)
   stat <- stats::coef(model) / sqrt(diag(stats::vcov(model)))
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = parms[[1]],
     Statistic = as.vector(stat)
   )
@@ -307,7 +308,7 @@
   parms <- insight::get_parameters(model)
   utils::capture.output(s <- summary(model))
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = parms[[1]],
     Statistic = as.vector(stats::qchisq(1 - s$prob, df = 1))
   )
@@ -322,7 +323,7 @@
   parms <- insight::get_parameters(model)
   cs <- stats::coef(summary(model))
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = parms[[1]],
     Statistic = as.vector(cs[, "Naive z"])
   )
@@ -338,7 +339,7 @@
   out <- NULL
 
   if (length(beta) > 0) {
-    out <- data_frame(
+    out <- .data_frame(
       Parameter = names(beta),
       Statistic = as.vector(beta / sqrt(diag(stats::vcov(model))))
     )
@@ -354,7 +355,7 @@
   cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
   params <- insight::get_parameters(model)
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = params$parameter,
     Statistic = as.vector(cs[, 3])
   )
@@ -377,7 +378,7 @@
   parms <- insight::get_parameters(model)
   se <- standard_error(model)
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = parms[[1]],
     Statistic = parms[[2]] / se$SE
   )
@@ -392,7 +393,7 @@
   parms <- insight::get_parameters(model)
   se <- standard_error(model)
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = parms[[1]],
     Statistic = parms[[2]] / se$SE
   )
@@ -417,7 +418,7 @@
 
   params <- insight::get_parameters(model)
 
-  out <- data_frame(
+  out <- .data_frame(
     Parameter = params[[1]],
     Statistic = stat
   )

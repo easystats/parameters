@@ -17,7 +17,7 @@
 #'
 #' model <- glmmTMB(
 #'   count ~ spp + mined + (1 | site),
-#'   ziformula =  ~ mined,
+#'   ziformula = ~mined,
 #'   family = poisson(),
 #'   data = Salamanders
 #' )
@@ -278,7 +278,9 @@ ci.gamm4 <- ci.gamm
 #' @export
 ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(x, component))) return(NULL)
+  if (is.null(.check_component(x, component))) {
+    return(NULL)
+  }
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
 
@@ -302,7 +304,9 @@ ci.zerocount <- ci.glmmTMB
 #' @export
 ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(x, component))) return(NULL)
+  if (is.null(.check_component(x, component))) {
+    return(NULL)
+  }
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
 
@@ -318,7 +322,7 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
 ci.biglm <- function(x, ci = .95, ...) {
   out <- lapply(ci, function(i) {
     ci_list <- stats::confint(x, level = i, ...)
-    data_frame(
+    .data_frame(
       Parameter = rownames(ci_list),
       CI = i * 100,
       CI_low = as.vector(ci_list[, 1]),
@@ -334,7 +338,7 @@ ci.biglm <- function(x, ci = .95, ...) {
 ci.gls <- function(x, ci = .95, ...) {
   out <- lapply(ci, function(i) {
     ci_list <- stats::confint(x, level = i, ...)
-    data_frame(
+    .data_frame(
       Parameter = rownames(ci_list),
       CI = i * 100,
       CI_low = as.vector(ci_list[, 1]),
@@ -353,7 +357,7 @@ ci.lme <- function(x, ci = .95, ...) {
   } else {
     out <- lapply(ci, function(i) {
       ci_list <- nlme::intervals(x, level = i, ...)
-      data_frame(
+      .data_frame(
         Parameter = rownames(ci_list$fixed),
         CI = i * 100,
         CI_low = as.vector(ci_list$fixed[, "lower"]),

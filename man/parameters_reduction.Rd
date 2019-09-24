@@ -11,12 +11,12 @@ parameters_reduction(x, method = "PCA", n = "max", ...)
 
 \item{method}{The features reduction method. Can be one of 'PCA', 'cMDS', 'DRR', 'ICA' (see the Details section).}
 
-\item{n}{Number of components to extract. If \code{n = "all"} (default), then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n = "auto"} or \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}. In \code{\link{parameters_reduction}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.}
+\item{n}{Number of components to extract. If \code{n = "all"} =, then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n = "auto"} (default) or \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}. In \code{\link{parameters_reduction}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-This function performs a reduction in the parameters space (the number of variables). Altough this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a separate and dedicated stage, as this is a very important process in the data analysis workflow.
+This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is "PCA", but other are available via the \code{method} argument, such as "cMDS", "DRR" or "ICA"). Then, it names this new dimensions using the original variables that correlates the most with it. For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension. Altough this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a separate and dedicated stage, as this is a very important process in the data analysis workflow.
 }
 \details{
 The different methods available are described below:
@@ -43,7 +43,6 @@ The different methods available are described below:
 }
 \examples{
 parameters_reduction(iris, method = "PCA", n = "max")
-
 }
 \references{
 \itemize{

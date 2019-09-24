@@ -194,9 +194,9 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   class(out) <- c("n_factors", "see_n_factors", class(out))
 
   # Add summary
-  by_factors <- data_frame(
-    n_Factors = as.factor(unique(out$n_Factors)),
-    n_Methods = as.vector(by(out, as.factor(out$n_Factors), function(out) n <- nrow(out)))
+  by_factors <- .data_frame(
+    n_Factors = as.numeric(unique(out$n_Factors)),
+    n_Methods = as.numeric(by(out, as.factor(out$n_Factors), function(out) n <- nrow(out)))
   )
 
   attr(out, "by_factors") <- by_factors
@@ -427,33 +427,12 @@ as.double.n_factors <- as.numeric.n_factors
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Re-implementation of nBentler in nFactors ------------------------
 
 #' @importFrom stats lm
 #' @keywords internal
 .nBentler <-
-  function(x, N, model = model, log = TRUE, alpha = 0.05, cor = TRUE, details = TRUE,
-             minPar = c(min(lambda) - abs(min(lambda)) + .001, 0.001),
-             maxPar = c(max(lambda), stats::lm(lambda ~ I(length(lambda):1))$coef[2]),
-             ...) {
+  function(x, N, model = model, log = TRUE, alpha = 0.05, cor = TRUE, details = TRUE, ...) {
     if (!requireNamespace("nFactors", quietly = TRUE)) {
       stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('lattice')`.")
     }
@@ -462,6 +441,10 @@ as.double.n_factors <- as.numeric.n_factors
     if (length(which(lambda < 0)) > 0) {
       stop("These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted.")
     }
+
+    minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)
+    maxPar <- c(max(lambda), stats::lm(lambda ~ I(length(lambda):1))$coef[2])
+
 
     n <- N
     significance <- alpha

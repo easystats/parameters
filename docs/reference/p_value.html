@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,15 +41,15 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="p-values — p_value" />
+
 <meta property="og:description" content="This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
 Mixed models (lme4): TO BE IMPROVED.
 
 " />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -100,6 +98,9 @@ Mixed models (lme4): TO BE IMPROVED.
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
+<li>
+  <a href="../reference/model_parameters.html">Parameters Description</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Parameters Engineering
@@ -115,9 +116,12 @@ Mixed models (lme4): TO BE IMPROVED.
     </li>
   </ul>
 </li>
+<li>
+  <a href="../reference/parameters_selection.html">Parameters Selection</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Variable/Feature Reduction
+    Dimension Reduction
      
     <span class="caret"></span>
   </a>
@@ -128,12 +132,10 @@ Mixed models (lme4): TO BE IMPROVED.
     <li>
       <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
     </li>
-    <li>
-      <a href="../articles/variable_selection.html">Variable selection (stepwise, projpred, ...)</a>
-    </li>
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -155,10 +157,12 @@ Mixed models (lme4): TO BE IMPROVED.
     </div>
 
     <div class="ref-description">
+    
     <p>This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:</p><ul>
 <li><p>Mixed models (lme4): TO BE IMPROVED.</p></li>
 </ul>
 
+    
     </div>
 
     <pre class="usage"><span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='no'>...</span>)
@@ -173,7 +177,7 @@ Mixed models (lme4): TO BE IMPROVED.
 <span class='co'># S3 method for MixMod</span>
 <span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>,
   <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -197,10 +201,11 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The p-values.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
@@ -212,7 +217,9 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -226,7 +233,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

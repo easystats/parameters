@@ -8,7 +8,6 @@
 #'
 #' @examples
 #' convert_data_to_numeric(iris)
-#'
 #' @return Data.frame of numeric variables.
 #' @export
 convert_data_to_numeric <- function(x, dummy_factors = TRUE, ...) {
@@ -21,14 +20,14 @@ data_to_numeric <- convert_data_to_numeric
 
 
 #' @export
-convert_data_to_numeric.data.frame <- function(x, dummy_factors = TRUE, ...){
+convert_data_to_numeric.data.frame <- function(x, dummy_factors = TRUE, ...) {
   out <- sapply(x, convert_data_to_numeric, dummy_factors = dummy_factors, simplify = FALSE)
-  do.call(cbind, out)
+  as.data.frame(do.call(cbind, out))
 }
 
 
 #' @export
-convert_data_to_numeric.numeric <- function(x, ...){
+convert_data_to_numeric.numeric <- function(x, ...) {
   as.numeric(x)
 }
 
@@ -41,13 +40,12 @@ convert_data_to_numeric.logical <- convert_data_to_numeric.numeric
 
 
 #' @export
-convert_data_to_numeric.factor <- function(x, dummy_factors = TRUE, ...){
-  if(dummy_factors){
+convert_data_to_numeric.factor <- function(x, dummy_factors = TRUE, ...) {
+  if (dummy_factors) {
     out <- as.data.frame(model.matrix(~x))
     out[1] <- as.numeric(rowSums(out[2:ncol(out)]) == 0)
     names(out) <- levels(x)
-
-  } else{
+  } else {
     out <- as.numeric(x)
   }
   out
@@ -58,11 +56,11 @@ convert_data_to_numeric.factor <- function(x, dummy_factors = TRUE, ...){
 
 
 #' @export
-convert_data_to_numeric.character <- function(x, dummy_factors = FALSE, ...){
+convert_data_to_numeric.character <- function(x, dummy_factors = FALSE, ...) {
   nums <- grepl("[-]?[0-9]+[.]?[0-9]*|[-]?[0-9]+[L]?|[-]?[0-9]+[.]?[0-9]*[eE][0-9]+", x)
-  if(all(nums)){
+  if (all(nums)) {
     out <- as.numeric(nums)
-  } else{
+  } else {
     out <- convert_data_to_numeric(as.factor(nums), dummy_factors = dummy_factors)
   }
   out

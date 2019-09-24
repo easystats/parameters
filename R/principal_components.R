@@ -3,7 +3,7 @@
 #' This function performs a principal component analysis (PCA) and returns the loadings as a dataframe.
 #'
 #' @param x A dataframe or a statistical model.
-#' @param n Number of components to extract. If \code{n = "all"} (default), then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n = "auto"} or \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}. In \code{\link{parameters_reduction}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.
+#' @param n Number of components to extract. If \code{n = "all"} =, then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n = "auto"} (default) or \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}. In \code{\link{parameters_reduction}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.
 #' @param rotation If not "none", the PCA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, and \code{"cluster"}. See \code{\link[psych]{fa}} for details.
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per veriable (the most simple structure).
@@ -38,7 +38,7 @@
 #' }
 #' @importFrom stats prcomp
 #' @export
-principal_components <- function(x, n = "all", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
+principal_components <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
   UseMethod("principal_components")
 }
 
@@ -46,7 +46,7 @@ principal_components <- function(x, n = "all", rotation = "none", sort = FALSE, 
 
 #' @importFrom stats prcomp na.omit
 #' @export
-principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
+principal_components.data.frame <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
 
   # Standardize
   if (standardize) {
@@ -73,7 +73,7 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
 
   # Summary (cumulative variance etc.)
   eigenvalues <- model$sdev^2
-  data_summary <- data_frame(
+  data_summary <- .data_frame(
     Component = sprintf("PC%i", seq_len(length(model$sdev))),
     Eigenvalues = eigenvalues,
     Variance = eigenvalues / sum(eigenvalues),
@@ -110,7 +110,7 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
   attr(loadings, "model") <- model
   attr(loadings, "rotation") <- "none"
   attr(loadings, "scores") <- model$x
-  # attr(loadings, "standardize") <- standardize
+  attr(loadings, "standardize") <- standardize
   attr(loadings, "additional_arguments") <- list(...)
   attr(loadings, "n") <- n
   attr(loadings, "type") <- "prcomp"
@@ -140,13 +140,13 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
 
 
 #' @keywords internal
-.get_n_factors <- function(x, n = NULL, type = "PCA", rotation = "PCA", ...){
+.get_n_factors <- function(x, n = NULL, type = "PCA", rotation = "PCA", ...) {
   # N factors
   if (is.null(n) || n == "auto") {
     n <- as.numeric(n_factors(x, type = type, rotation = rotation, ...))
-  } else if(n == "all"){
+  } else if (n == "all") {
     n <- ncol(x) - 1
-  } else if(n >=  ncol(x)){
+  } else if (n >= ncol(x)) {
     n <- ncol(x) - 1
   }
   n
@@ -178,10 +178,3 @@ principal_components.data.frame <- function(x, n = NULL, rotation = "none", sort
 
   model_parameters(psych::principal(x, nfactors = n, rotate = rotation, ...), sort = sort, threshold = threshold)
 }
-
-
-
-
-
-
-

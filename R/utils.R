@@ -1,6 +1,6 @@
 #' help-functions
 #' @keywords internal
-data_frame <- function(...) {
+.data_frame <- function(...) {
   x <- data.frame(..., stringsAsFactors = FALSE)
   rownames(x) <- NULL
   x

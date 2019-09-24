@@ -1,7 +1,6 @@
 if (require("testthat") &&
   require("parameters") &&
   require("plm")) {
-
   data(Crime)
   data("Produc", package = "plm")
   set.seed(123)

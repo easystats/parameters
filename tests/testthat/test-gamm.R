@@ -1,7 +1,6 @@
 if (require("testthat") &&
   require("parameters") &&
   require("mgcv")) {
-
   set.seed(123)
   dat <- gamSim(6, n = 200, scale = .2, dist = "poisson")
   m1 <-

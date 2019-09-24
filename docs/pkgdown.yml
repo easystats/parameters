@@ -1,10 +1,11 @@
-pandoc: 2.7.2
-pkgdown: 1.4.1
+pandoc: 2.7.1
+pkgdown: 1.4.0
 pkgdown_sha: ~
 articles:
   bootstrapping: bootstrapping.html
+  model_parameters: model_parameters.html
   n_factors: n_factors.html
+  parameters_selection: parameters_selection.html
   standardization: standardization.html
   variable_extraction: variable_extraction.html
-  variable_selection: variable_selection.html
 

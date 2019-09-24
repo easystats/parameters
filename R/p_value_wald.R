@@ -44,7 +44,7 @@ p_value_wald.merMod <- function(model) {
     coef_names <- names(p)
   }
 
-  data_frame(
+  .data_frame(
     Parameter = coef_names,
     p = unname(p)
   )

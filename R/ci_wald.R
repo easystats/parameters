@@ -32,11 +32,12 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 
   if (is.null(dof)) {
     # residual df
-    dof <- tryCatch(
-      {
-        insight::n_obs(model) - nrow(params)
-      },
-      error = function(e) { Inf }
+    dof <- tryCatch({
+      insight::n_obs(model) - nrow(params)
+    },
+    error = function(e) {
+      Inf
+    }
     )
     # make sure we have a value for degrees of freedom
     if (is.null(dof) || length(dof) == 0) dof <- Inf

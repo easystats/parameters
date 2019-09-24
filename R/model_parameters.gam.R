@@ -54,4 +54,3 @@ model_parameters.list <- function(model, ci = .95, bootstrap = FALSE, iterations
 
 #' @export
 model_parameters.gamlss <- model_parameters.gam
-

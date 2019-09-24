@@ -2,7 +2,6 @@ if (require("testthat") &&
   require("parameters") &&
   require("nlme") &&
   require("lme4")) {
-
   data("sleepstudy")
   m1 <- lme(Reaction ~ Days,
     random = ~ 1 + Days | Subject,

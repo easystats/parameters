@@ -46,7 +46,6 @@ test_that("efa-cfa", {
   x <- lavaan::anova(m1, lavaan::cfa(model2, data = attitude))
   params <- parameters::model_parameters(x)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 6))
-
 })
 
 
@@ -55,11 +54,10 @@ test_that("FactoMineR", {
   library(FactoMineR)
 
   x <- model_parameters(FactoMineR::PCA(mtcars, ncp = 3), threshold = 0.2, sort = TRUE)
-  testthat::expect_equal(c(ncol(x), nrow(x)), c(4, 11))
+  testthat::expect_equal(c(ncol(x), nrow(x)), c(5, 11))
 
   x <- model_parameters(FactoMineR::FAMD(iris, ncp = 3), threshold = 0.2, sort = TRUE)
-  testthat::expect_equal(c(ncol(x), nrow(x)), c(4, 5))
-
+  testthat::expect_equal(c(ncol(x), nrow(x)), c(5, 5))
 })
 
 

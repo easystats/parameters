@@ -2,7 +2,6 @@ if (require("testthat") &&
   require("parameters") &&
   require("GLMMadaptive") &&
   require("insight")) {
-
   m1 <- download_model("GLMMadaptive_zi_1")
   m2 <- download_model("GLMMadaptive_1")
 

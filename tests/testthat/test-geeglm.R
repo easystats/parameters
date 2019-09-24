@@ -1,7 +1,6 @@
 if (require("testthat") &&
   require("parameters") &&
   require("geepack")) {
-
   data(warpbreaks)
   m1 <-
     geeglm(

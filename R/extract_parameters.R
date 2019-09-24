@@ -305,11 +305,11 @@
   )
 
   params$Type <- ifelse(params$Operator == "=~", "Loading",
-                        ifelse(params$Operator == "~", "Regression",
-                               ifelse(params$Operator == "~~", "Correlation",
-                                      ifelse(params$Operator == "~1", "Mean", NA)
-                               )
-                        )
+    ifelse(params$Operator == "~", "Regression",
+      ifelse(params$Operator == "~~", "Correlation",
+        ifelse(params$Operator == "~1", "Mean", NA)
+      )
+    )
   )
   params$Type <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Type)
   params$p <- ifelse(is.na(params$p), 0, params$p)

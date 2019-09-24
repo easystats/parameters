@@ -31,7 +31,6 @@ format_parameters <- function(model) {
 
 #' @export
 format_parameters.default <- function(model) {
-
   names <- insight::find_parameters(model, flatten = TRUE)
   info <- insight::model_info(model)
 
