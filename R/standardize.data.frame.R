@@ -171,6 +171,7 @@ standardize.grouped_df <- function(x, robust = FALSE, method = "default", select
 #'   or Median Absolute Deviance (median = 0, MAD = 1). A \code{normalization}
 #'   scales all numeric variables in the 0 - 1 range.
 #'
+#' @param x A (grouped) data frame.
 #' @inheritParams standardize
 #' @param select For a data frame, character vector of column names to be
 #'   standardized. If \code{NULL} (the default), all variables will be

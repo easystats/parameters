@@ -25,7 +25,7 @@ An approximate F-test based on the Kenward-Roger (1997) approach.
 }
 \details{
 \code{dof_kenward()} and \code{se_kenward()} are small helper-functions
-to calulate approximated degrees of freedom and standard errors for model
+to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Kenward-Roger (1997) approach.
 }
 \examples{

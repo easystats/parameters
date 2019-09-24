@@ -2,6 +2,7 @@
 #'
 #' Refit the model after standardizing the data.
 #'
+#' @param x A model object (of almost any class).
 #' @param include_response Logical, if \code{TRUE} (default), the response value
 #'   will also be standardized. For certain models (logistic regression,
 #'   count models, ...), the response value will never be standardized, to make

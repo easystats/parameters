@@ -9,7 +9,7 @@
   ...)
 }
 \arguments{
-\item{x}{Object.}
+\item{x}{A (grouped) data frame.}
 
 \item{robust}{Logical, if \code{TRUE}, centering is done by substracting the
 median from the variables and divide it by the median absolute deviation

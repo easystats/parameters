@@ -14,7 +14,7 @@ standardize(x, ...)
 \method{standardize}{factor}(x, force = FALSE, ...)
 }
 \arguments{
-\item{x}{Object.}
+\item{x}{An object.}
 
 \item{...}{Arguments passed to or from other methods.}
 
