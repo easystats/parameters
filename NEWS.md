@@ -25,6 +25,7 @@
 ## Bug fixes
 
 - Fixed issue with wrong computation of wald-approximated confidence intervals.
+- Fixed issue with wrong computation of degrees of freedom for `p_value_kenward()`.
 - `paramerers_standardize()` resp. `standardize()` for model objects now no longer standardizes `log()` terms, count or ratio response variables, or variables of class `Surv` and `AsIs`.
 
 # parameters 0.1.0

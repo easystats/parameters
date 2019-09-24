@@ -30,7 +30,7 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
   params <- as.data.frame(stats::coef(summary(model)))
 
   if ("t value" %in% names(params)) {
-    p <- 2 * stats::pt(abs(params[, "t value"]), dof, lower.tail = FALSE)
+    p <- 2 * stats::pt(abs(params[, "t value"]), df = dof, lower.tail = FALSE)
   } else {
     stop("Couldn't find any suitable statistic (t value) for Kenward-Roger approximation.")
   }
@@ -59,6 +59,7 @@ dof_kenward <- function(model) {
     stop("Package `pbkrtest` required for Kenward-Rogers approximation.", call. = FALSE)
   }
 
+  L <- as.data.frame(diag(rep(1, nrow(insight::get_parameters(model, effects = "fixed")))))
   ## TODO change to "$Estimate" once fixed in insight
-  pbkrtest::get_ddf_Lb(model, insight::get_parameters(model, effects = "fixed")[[2]])
+  sapply(L, pbkrtest::get_ddf_Lb, object = model)
 }
