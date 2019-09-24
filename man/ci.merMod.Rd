@@ -9,7 +9,8 @@
 \alias{ci.MixMod}
 \title{Confidence Interval (CI)}
 \usage{
-\method{ci}{merMod}(x, ci = 0.95, method = c("wald", "boot"), ...)
+\method{ci}{merMod}(x, ci = 0.95, method = c("wald", "kenward",
+  "boot"), ...)
 
 \method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald"), ...)
 
@@ -30,7 +31,7 @@
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{method}{For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default) or \code{"boot"} (see \code{lme4::confint.merMod}). For generalized linear models, can be \code{"profile"} (default) or \code{"wald"}.}
+\item{method}{For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"kenward"} or \code{"boot"} (see \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For generalized linear models, can be \code{"profile"} (default) or \code{"wald"}.}
 
 \item{...}{Arguments passed to or from other methods.}
 

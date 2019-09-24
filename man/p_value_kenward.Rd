@@ -3,11 +3,14 @@
 \name{p_value_kenward}
 \alias{p_value_kenward}
 \alias{dof_kenward}
+\alias{se_kenward}
 \title{p-values using Kenward-Roger approximation}
 \usage{
 p_value_kenward(model, dof = NULL)
 
 dof_kenward(model)
+
+se_kenward(model)
 }
 \arguments{
 \item{model}{A statistical model.}
@@ -19,6 +22,11 @@ The p-values.
 }
 \description{
 An approximate F-test based on the Kenward-Roger (1997) approach.
+}
+\details{
+\code{dof_kenward()} and \code{se_kenward()} are small helper-functions
+to calulate approximated degrees of freedom and standard errors for model
+parameters, based on the Kenward-Roger (1997) approach.
 }
 \examples{
 \donttest{

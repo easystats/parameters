@@ -196,6 +196,13 @@
     }
   }
 
+
+  # adjust standard errors as well
+  if (p_method == "kenward" || ci_method == "kenward") {
+    parameters[["Std. Error"]] <- se_kenward(model)
+  }
+
+
   # Rematch order after merging
   parameters <- parameters[match(parameters$Parameter, original_order), ]
   row.names(parameters) <- NULL

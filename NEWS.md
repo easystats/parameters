@@ -7,12 +7,13 @@
 ## General
 
 - `parameters()` is an alias for `model_parameters()`.
-- `p_value()`, `ci()`, `standard_error()` and `model_parameters()` now support more model objects, including mixed models from packages *nlme*, *glmmTMB* or *GLMMadaptive* or zero-inflated models from package *pscl*. Along with these changes, functions for specific model objects with zero-inflated component get a `component`-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.
+- `p_value()`, `ci()`, `standard_error()`, `standardize()` and `model_parameters()` now support many more model objects, including mixed models from packages *nlme*, *glmmTMB* or *GLMMadaptive*, zero-inflated models from package *pscl* or other modelling packages. Along with these changes, functions for specific model objects with zero-inflated component get a `component`-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.
 
 ## New functions
 
 - `parameters_simulate()` and `model_simulate()`, as computational faster alternatives to `parameters_bootstrap()` and `model_bootstrap()`.
 - `standardize_names()` to standardize column names from data frames, in particular objects returned from `model_parameters()`.
+- `se_kenward()` to calculate approximated standard errors for model parameters, based on the Kenward-Roger (1997) approach.
 
 ## Changes to functions
 
@@ -21,6 +22,7 @@
 - `eta_squared()`, `omega_squared()`, `epsilon_squared()` and `cohens_f()` now support more model objects.
 - The `print()`-method for `model_parameters()` now better aligns confidence intervals and p-values.
 - `normalize()` gets a `include_bounds`-argument, to compress normalized variables so they do not contain zeros or ones.
+- The `method`-argument for `ci.merMod()` can now also be `"kenward"` to compute confidence intervals with degrees of freedom based on the Kenward-Roger (1997) approach.
 
 ## Bug fixes
 

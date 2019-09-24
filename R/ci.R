@@ -4,7 +4,7 @@
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default) or \code{"boot"} (see \code{lme4::confint.merMod}). For generalized linear models, can be \code{"profile"} (default) or \code{"wald"}.
+#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"kenward"} or \code{"boot"} (see \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For generalized linear models, can be \code{"profile"} (default) or \code{"wald"}.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_simulate
 #'
@@ -27,14 +27,17 @@
 #' }
 #' @importFrom insight find_parameters
 #' @export
-ci.merMod <- function(x, ci = 0.95, method = c("wald", "boot"), ...) {
+ci.merMod <- function(x, ci = 0.95, method = c("wald", "kenward", "boot"), ...) {
   method <- match.arg(method)
 
   # Wald approx
   if (method == "wald") {
     out <- ci_wald(model = x, ci = ci, dof = Inf)
 
-    # Bootstrapped CIs
+    # Kenward approx
+  } else if (method == "kenward") {
+    out <- ci_wald(model = x, ci = ci, dof = dof_kenward(x))
+
   } else if (method == "boot") {
     out <- lapply(ci, function(ci, x) .ci_boot_merMod(x, ci, ...), x = x)
     out <- do.call(rbind, out)

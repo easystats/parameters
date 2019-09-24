@@ -5,6 +5,10 @@
 #' @param model A statistical model.
 #' @param dof Degrees of Freedom.
 #'
+#' @details \code{dof_kenward()} and \code{se_kenward()} are small helper-functions
+#' to calculate approximated degrees of freedom and standard errors for model
+#' parameters, based on the Kenward-Roger (1997) approach.
+#'
 #' @examples
 #' \donttest{
 #' library(lme4)
@@ -63,3 +67,26 @@ dof_kenward <- function(model) {
   ## TODO change to "$Estimate" once fixed in insight
   sapply(L, pbkrtest::get_ddf_Lb, object = model)
 }
+
+
+#' @rdname p_value_kenward
+#' @export
+se_kenward <- function(model) {
+  if (!requireNamespace("pbkrtest", quietly = TRUE)) {
+    stop("Package `pbkrtest` required for Kenward-Rogers approximation.", call. = FALSE)
+  }
+
+  vcov_adj <- pbkrtest::vcovAdj(model)
+
+  params <- insight::get_parameters(model, effects = "fixed")
+  le <- nrow(params)
+  Lmat <- diag(rep(1, le))
+
+  se <- sapply(1:le, function(i) sqrt(.qform(Lmat[i, ], as.matrix(vcov_adj))))
+  names(se) <- params[[1]]
+
+  se
+}
+
+
+.qform <- function(x, A) sum(x * (A %*% x))
