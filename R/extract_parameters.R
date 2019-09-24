@@ -111,7 +111,8 @@
 #' @keywords internal
 .extract_parameters_panelr <- function(model, ci = .95, ci_method = "wald", ...) {
   parameters <- as.data.frame(model@summ$coeftable, stringsAsFactors = FALSE)
-  parameters$Parameter <- insight::find_parameters(model, effects = "fixed", flatten = TRUE)
+  insight::find_parameters(model, effects = "fixed", flatten = TRUE)
+  parameters$Parameter <-
   original_order <- parameters$Parameter
 
   # CI

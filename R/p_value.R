@@ -617,10 +617,19 @@ p_value.BBreg <- function(model, ...) {
 
 #' @export
 p_value.wbm <- function(model, ...) {
-  p <- model@summ$coeftable[, "p"]
+  s <- summary(model)
+  p <- c(
+    s$within_table[, "p"],
+    s$between_table[, "p"],
+    s$ints_table[, "p"]
+  )
+  params <- insight::get_parameters(model, effects = "fixed")
+
   .data_frame(
-    Parameter = gsub(pattern = "`", replacement = "", x = names(p), fixed = TRUE),
-    p = as.vector(p)
+    ## TODO fix once insight is updated on CRAN
+    Parameter = params[[1]],
+    p = as.vector(p),
+    Component = params[[3]]
   )
 }
 

@@ -30,6 +30,27 @@
 
 
 #' @keywords internal
+.get_statistic.wbm <- function(model, ...) {
+  s <- summary(model)
+  stat <- c(
+    s$within_table[, "t val."],
+    s$between_table[, "t val."],
+    s$ints_table[, "t val."]
+  )
+  params <- insight::get_parameters(model, effects = "fixed")
+
+  out <- .data_frame(
+    Parameter = params[[1]],
+    Statistic = as.vector(stat),
+    Component = params[[3]]
+  )
+
+  attr(out, "statistic") <- "t"
+  out
+}
+
+
+#' @keywords internal
 .get_statistic.mlm <- function(model, ...) {
   cs <- stats::coef(summary(model))
 

@@ -657,9 +657,19 @@ standard_error.BBreg <- function(model, ...) {
 
 #' @export
 standard_error.wbm <- function(model, ...) {
+  s <- summary(model)
+  se <- c(
+    s$within_table[, "S.E."],
+    s$between_table[, "S.E."],
+    s$ints_table[, "S.E."]
+  )
+  params <- insight::get_parameters(model, effects = "fixed")
+
   .data_frame(
-    Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
-    SE = as.vector(as.data.frame(model@summ$coeftable, stringsAsFactors = FALSE)[["S.E."]])
+    ## TODO fix once insight is updated on CRAN
+    Parameter = params[[1]],
+    SE = as.vector(se),
+    Component = params[[3]]
   )
 }
 

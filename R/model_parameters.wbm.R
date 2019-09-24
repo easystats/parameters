@@ -1,11 +1,10 @@
 #' @export
 model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, ci_method = "wald", iterations = 1000, ...) {
-
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_panelr(model, ci = ci, ci_method = ci_method, ...)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = c("Parameter", "Component"))
   }
 
   attr(parameters, "pretty_names") <- format_parameters(model)
