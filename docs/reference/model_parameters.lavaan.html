@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Format CFA/SEM from the lavaan package — model_parameters.lavaan" />
-
 <meta property="og:description" content="Format CFA/SEM objects from the lavaan package (Rosseel, 2012)." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -77,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -124,15 +126,14 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
+      <a href="../articles/parameters_reduction.html">Exploratory parameters reduction</a>
     </li>
     <li>
-      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+      <a href="../articles/efa_cfa.html">Structural Models (EFA, CFA, SEM, ...)</a>
     </li>
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,16 +155,14 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Format CFA/SEM objects from the lavaan package (Rosseel, 2012).</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for lavaan</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"regression"</span>, <span class='st'>"correlation"</span>,
   <span class='st'>"loading"</span>), <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -188,11 +187,10 @@
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame of indices related to the model's parameters.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -200,7 +198,6 @@
 <li><p>Rosseel (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1-36.</p></li>
 </ul>
 
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
@@ -214,15 +211,7 @@
                textual =~ x4 + x5 + x6
                speed   =~ x7 + x8 + x9 "</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>cfa</a></span>(<span class='no'>structure</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HolzingerSwineford1939</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Correlation type
-#&gt; 
-#&gt; </span><span>Link              | Coefficient |   SE |       95% CI |      p
-#&gt; --------------------------------------------------------------
-#&gt; visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | &lt; .001
-#&gt; visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | &lt; .001
-#&gt; textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | &lt; .001
-#&gt; 
-#&gt; </span><span style='color: #0000BB;'># Loading type
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loading type
 #&gt; 
 #&gt; </span><span>Link          | Coefficient |   SE |       95% CI |      p
 #&gt; ----------------------------------------------------------
@@ -235,15 +224,15 @@
 #&gt; speed =~ x7   |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001
 #&gt; speed =~ x8   |        1.18 | 0.16 | [0.86, 1.50] | &lt; .001
 #&gt; speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001
-#&gt; </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Correlation type
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Correlation type
 #&gt; 
 #&gt; </span><span>Link              | Coefficient |   SE |       95% CI |      p
 #&gt; --------------------------------------------------------------
-#&gt; visual ~~ textual |        0.46 | 0.06 | [0.33, 0.58] | &lt; .001
-#&gt; visual ~~ speed   |        0.47 | 0.07 | [0.33, 0.61] | &lt; .001
-#&gt; textual ~~ speed  |        0.28 | 0.07 | [0.15, 0.42] | &lt; .001
-#&gt; 
-#&gt; </span><span style='color: #0000BB;'># Loading type
+#&gt; visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | &lt; .001
+#&gt; visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | &lt; .001
+#&gt; textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | &lt; .001
+#&gt; </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loading type
 #&gt; 
 #&gt; </span><span>Link          | Coefficient |   SE |       95% CI |      p
 #&gt; ----------------------------------------------------------
@@ -256,6 +245,14 @@
 #&gt; speed =~ x7   |        0.57 | 0.05 | [0.47, 0.67] | &lt; .001
 #&gt; speed =~ x8   |        0.72 | 0.05 | [0.62, 0.82] | &lt; .001
 #&gt; speed =~ x9   |        0.67 | 0.05 | [0.56, 0.77] | &lt; .001
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Correlation type
+#&gt; 
+#&gt; </span><span>Link              | Coefficient |   SE |       95% CI |      p
+#&gt; --------------------------------------------------------------
+#&gt; visual ~~ textual |        0.46 | 0.06 | [0.33, 0.58] | &lt; .001
+#&gt; visual ~~ speed   |        0.47 | 0.07 | [0.33, 0.61] | &lt; .001
+#&gt; textual ~~ speed  |        0.28 | 0.07 | [0.15, 0.42] | &lt; .001
 #&gt; </div><div class='input'>
 <span class='co'># Structural Equation Model (SEM) ------------</span>
 
@@ -275,18 +272,7 @@
     y6 ~~ y8
 "</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/sem.html'>sem</a></span>(<span class='no'>structure</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>PoliticalDemocracy</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Correlation type
-#&gt; 
-#&gt; </span><span>Link     | Coefficient |   SE |         95% CI |     p
-#&gt; ------------------------------------------------------
-#&gt; y1 ~~ y5 |        0.58 | 0.36 | [-0.11,  1.28] | &gt; .1 
-#&gt; y2 ~~ y4 |        1.44 | 0.69 | [ 0.09,  2.79] | &lt; .05
-#&gt; y2 ~~ y6 |        2.18 | 0.74 | [ 0.74,  3.63] | &lt; .01
-#&gt; y3 ~~ y7 |        0.71 | 0.61 | [-0.49,  1.91] | &gt; .1 
-#&gt; y4 ~~ y8 |        0.36 | 0.44 | [-0.51,  1.23] | &gt; .1 
-#&gt; y6 ~~ y8 |        1.37 | 0.58 | [ 0.24,  2.50] | &lt; .05
-#&gt; 
-#&gt; </span><span style='color: #0000BB;'># Loading type
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loading type
 #&gt; 
 #&gt; </span><span>Link        | Coefficient |   SE |       95% CI |      p
 #&gt; --------------------------------------------------------
@@ -309,18 +295,18 @@
 #&gt; dem60 ~ ind60 |        1.47 | 0.39 | [0.70, 2.24] | &lt; .001
 #&gt; dem65 ~ ind60 |        0.60 | 0.23 | [0.16, 1.04] | &lt; .01 
 #&gt; dem65 ~ dem60 |        0.87 | 0.07 | [0.72, 1.01] | &lt; .001
-#&gt; </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Correlation type
 #&gt; 
-#&gt; </span><span>Link     | Coefficient |   SE |         95% CI |      p
-#&gt; -------------------------------------------------------
-#&gt; y1 ~~ y5 |        0.28 | 0.14 | [ 0.00,  0.56] | &lt; .05 
-#&gt; y2 ~~ y4 |        0.29 | 0.11 | [ 0.07,  0.52] | &lt; .05 
-#&gt; y2 ~~ y6 |        0.36 | 0.10 | [ 0.17,  0.54] | &lt; .001
-#&gt; y3 ~~ y7 |        0.17 | 0.13 | [-0.09,  0.43] | &gt; .1  
-#&gt; y4 ~~ y8 |        0.11 | 0.13 | [-0.14,  0.36] | &gt; .1  
-#&gt; y6 ~~ y8 |        0.34 | 0.11 | [ 0.12,  0.55] | &lt; .01 
+#&gt; </span><span style='color: #0000BB;'># Correlation type
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Loading type
+#&gt; </span><span>Link     | Coefficient |   SE |         95% CI |     p
+#&gt; ------------------------------------------------------
+#&gt; y1 ~~ y5 |        0.58 | 0.36 | [-0.11,  1.28] | &gt; .1 
+#&gt; y2 ~~ y4 |        1.44 | 0.69 | [ 0.09,  2.79] | &lt; .05
+#&gt; y2 ~~ y6 |        2.18 | 0.74 | [ 0.74,  3.63] | &lt; .01
+#&gt; y3 ~~ y7 |        0.71 | 0.61 | [-0.49,  1.91] | &gt; .1 
+#&gt; y4 ~~ y8 |        0.36 | 0.44 | [-0.51,  1.23] | &gt; .1 
+#&gt; y6 ~~ y8 |        1.37 | 0.58 | [ 0.24,  2.50] | &lt; .05
+#&gt; </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loading type
 #&gt; 
 #&gt; </span><span>Link        | Coefficient |   SE |       95% CI |      p
 #&gt; --------------------------------------------------------
@@ -343,6 +329,17 @@
 #&gt; dem60 ~ ind60 |        0.45 | 0.10 | [0.25, 0.65] | &lt; .001
 #&gt; dem65 ~ ind60 |        0.19 | 0.07 | [0.05, 0.33] | &lt; .01 
 #&gt; dem65 ~ dem60 |        0.88 | 0.05 | [0.78, 0.98] | &lt; .001
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Correlation type
+#&gt; 
+#&gt; </span><span>Link     | Coefficient |   SE |         95% CI |      p
+#&gt; -------------------------------------------------------
+#&gt; y1 ~~ y5 |        0.28 | 0.14 | [ 0.00,  0.56] | &lt; .05 
+#&gt; y2 ~~ y4 |        0.29 | 0.11 | [ 0.07,  0.52] | &lt; .05 
+#&gt; y2 ~~ y6 |        0.36 | 0.10 | [ 0.17,  0.54] | &lt; .001
+#&gt; y3 ~~ y7 |        0.17 | 0.13 | [-0.09,  0.43] | &gt; .1  
+#&gt; y4 ~~ y8 |        0.11 | 0.13 | [-0.14,  0.36] | &gt; .1  
+#&gt; y6 ~~ y8 |        0.34 | 0.11 | [ 0.12,  0.55] | &lt; .01 
 #&gt; </div><div class='input'># \donttest{
 # blavaan ------------------------------------
 # library(blavaan)
@@ -358,11 +355,8 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -372,11 +366,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Correlations and t-test Parameters — model_parameters.htest • parameters</title>
+<title>help-functions — .data_frame • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Correlations and t-test Parameters — model_parameters.htest" />
-<meta property="og:description" content="Parameters of h-tests (correlations, t-tests)." />
+<meta property="og:title" content="help-functions — .data_frame" />
+<meta property="og:description" content="help-functions" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -149,63 +149,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Correlations and t-test Parameters</h1>
+    <h1>help-functions</h1>
     
-    <div class="hidden name"><code>model_parameters.htest.Rd</code></div>
+    <div class="hidden name"><code>dot-data_frame.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameters of h-tests (correlations, t-tests).</p>
+    <p>help-functions</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for htest</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>.data_frame</span>(<span class='no'>...</span>)</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>model</th>
-      <td><p>Object of class <code>htest</code>.</p></td>
-    </tr>
-    <tr>
-      <th>bootstrap</th>
-      <td><p>Should estimates be bootsrapped?</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods (e.g., to <a href='standardize.lm.html'>standardize</a>).</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame of indices related to the model's parameters.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></span>(<span class='no'>mtcars</span>$<span class='no'>mpg</span>, <span class='no'>mtcars</span>$<span class='no'>cyl</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter1 | Parameter2 |     r |     t | df |      p |         95% CI |  Method
-#&gt; --------------------------------------------------------------------------------
-#&gt; mtcars$mpg | mtcars$cyl | -0.85 | -8.92 | 30 | &lt; .001 | [-0.93, -0.72] | Pearson</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span>(<span class='no'>iris</span>$<span class='no'>Sepal.Width</span>, <span class='no'>iris</span>$<span class='no'>Sepal.Length</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference |      t |     df |      p |         95% CI |                  Method
-#&gt; -----------------------------------------------------------------------------------------------------------------------------------------------------------
-#&gt; iris$Sepal.Width | iris$Sepal.Length |            3.06 |            5.84 |       2.79 | -36.46 | 225.68 | &lt; .001 | [-2.94, -2.64] | Welch Two Sample t-test</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span>(<span class='no'>mtcars</span>$<span class='no'>mpg</span> ~ <span class='no'>mtcars</span>$<span class='no'>vs</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter  |     Group | Mean_Group1 | Mean_Group2 | Difference |     t |    df |      p |           95% CI |                  Method
-#&gt; -------------------------------------------------------------------------------------------------------------------------------------
-#&gt; mtcars$mpg | mtcars$vs |       16.62 |       24.56 |       7.94 | -4.67 | 22.72 | &lt; .001 | [-11.46,  -4.42] | Welch Two Sample t-test</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span>(<span class='no'>iris</span>$<span class='no'>Sepal.Width</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter        | Mean |   mu | Difference |     t |  df |      p |       95% CI |            Method
-#&gt; -----------------------------------------------------------------------------------------------------
-#&gt; iris$Sepal.Width | 3.06 | 1.00 |       2.06 | 57.81 | 149 | &lt; .001 | [2.99, 3.13] | One Sample t-test</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

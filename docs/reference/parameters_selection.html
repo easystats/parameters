@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Parameters Selection — parameters_selection" />
-
 <meta property="og:description" content="This function performs an automated selection of the 'best' parameters, udpating and returning the &quot;best&quot; model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the projpred package." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -77,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -124,15 +126,14 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
+      <a href="../articles/parameters_reduction.html">Exploratory parameters reduction</a>
     </li>
     <li>
-      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+      <a href="../articles/efa_cfa.html">Structural Models (EFA, CFA, SEM, ...)</a>
     </li>
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,9 +155,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>This function performs an automated selection of the 'best' parameters, udpating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the <code>projpred</code> package.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='no'>...</span>)
@@ -172,7 +171,7 @@
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -212,11 +211,10 @@
       <td><p>Select with cross-validation.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The model refitted with optimal number of parameters.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
@@ -313,9 +311,9 @@
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 1.372 seconds (Warm-up)
-#&gt; Chain 1:                1.43 seconds (Sampling)
-#&gt; Chain 1:                2.802 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 1.068 seconds (Warm-up)
+#&gt; Chain 1:                1.06 seconds (Sampling)
+#&gt; Chain 1:                2.128 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -338,9 +336,9 @@
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 1.539 seconds (Warm-up)
-#&gt; Chain 2:                1.265 seconds (Sampling)
-#&gt; Chain 2:                2.804 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 1.154 seconds (Warm-up)
+#&gt; Chain 2:                0.968 seconds (Sampling)
+#&gt; Chain 2:                2.122 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -363,9 +361,9 @@
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 1.58 seconds (Warm-up)
-#&gt; Chain 3:                1.44 seconds (Sampling)
-#&gt; Chain 3:                3.02 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 1.186 seconds (Warm-up)
+#&gt; Chain 3:                1.092 seconds (Sampling)
+#&gt; Chain 3:                2.278 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -388,9 +386,9 @@
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 1.405 seconds (Warm-up)
-#&gt; Chain 4:                1.351 seconds (Sampling)
-#&gt; Chain 4:                2.756 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 1.067 seconds (Warm-up)
+#&gt; Chain 4:                1.035 seconds (Sampling)
+#&gt; Chain 4:                2.102 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
 #&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp
@@ -422,9 +420,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -434,11 +430,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
