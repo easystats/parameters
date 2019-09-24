@@ -22,7 +22,7 @@ data_to_numeric <- convert_data_to_numeric
 #' @export
 convert_data_to_numeric.data.frame <- function(x, dummy_factors = TRUE, ...) {
   out <- sapply(x, convert_data_to_numeric, dummy_factors = dummy_factors, simplify = FALSE)
-  do.call(cbind, out)
+  as.data.frame(do.call(cbind, out))
 }
 
 

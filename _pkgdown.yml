@@ -111,7 +111,7 @@ navbar:
     href: reference/parameters_selection.html
   - text: Dimension Reduction
     menu:
-      - text: 'How many factors to retain in Factor Analysis (FA)'
-        href: articles/n_factors.html
-      - text: 'Variable extraction (PCA, FA, ...)'
-        href: articles/variable_extraction.html
+      - text: 'Exploratory parameters reduction'
+        href: articles/parameters_reduction.html
+      - text: 'Structural Models (EFA, CFA, SEM, ...)'
+        href: articles/efa_cfa.html

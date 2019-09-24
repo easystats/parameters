@@ -194,7 +194,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   class(out) <- c("n_factors", class(out))
 
   # Add summary
-  by_factors <- data_frame(
+  by_factors <- .data_frame(
     n_Factors = as.numeric(unique(out$n_Factors)),
     n_Methods = as.numeric(by(out, as.factor(out$n_Factors), function(out) n <- nrow(out)))
   )

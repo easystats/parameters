@@ -42,7 +42,7 @@
 parameters_type <- function(model, ...) {
 
   # Get info
-  params <- data_frame(
+  params <- .data_frame(
     Parameter = c(
       insight::find_parameters(model, effects = "fixed", flatten = TRUE)
     )

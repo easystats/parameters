@@ -81,7 +81,7 @@ standard_error.table <- function(model, ...) {
   if (length(dim(model)) == 1) {
     total.n <- as.vector(sum(model))
     rel.frq <- as.vector(model) / total.n
-    out <- data_frame(
+    out <- .data_frame(
       Value = names(model),
       Proportion = rel.frq,
       SE = suppressWarnings(sqrt(rel.frq * (1 - rel.frq) / total.n))
@@ -124,7 +124,7 @@ standard_error.default <- function(model, ...) {
   if (is.null(se)) {
     insight::print_color("\nCould not extract standard errors from model object.\n", "red")
   } else {
-    data_frame(
+    .data_frame(
       Parameter = names(se),
       SE = as.vector(se)
     )
@@ -187,7 +187,7 @@ standard_error.tobit <- function(model, ...) {
 
 #' @export
 standard_error.lm <- function(model, ...) {
-  data_frame(
+  .data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
     SE = .get_se_from_summary(model)
   )
@@ -219,7 +219,7 @@ standard_error.glmmTMB <- function(model, component = c("all", "conditional", "z
 
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
-    data_frame(
+    .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
       SE = as.vector(cs[[i]][, 2]),
       Component = i
@@ -248,7 +248,7 @@ standard_error.MixMod <- function(model, component = c("all", "conditional", "zi
   names(cs) <- c("conditional", "zero_inflated")
   cs <- .compact_list(cs)
   x <- lapply(names(cs), function(i) {
-    data_frame(
+    .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
       SE = as.vector(cs[[i]][, 2]),
       Component = i
@@ -277,7 +277,7 @@ standard_error.zeroinfl <- function(model, component = c("all", "conditional", "
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     comp <- ifelse(i == "count", "conditional", "zi")
-    data_frame(
+    .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
       SE = as.vector(cs[[i]][, 2]),
       Component = comp
@@ -339,7 +339,7 @@ standard_error.svyglm.nb <- function(model, ...) {
 
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
 
-  data_frame(
+  .data_frame(
     Parameter = names(se),
     SE = as.vector(se)
   )
@@ -355,7 +355,7 @@ standard_error.svyglm <- function(model, ...) {
   cs <- stats::coef(summary(model))
   se <- cs[, 2]
 
-  data_frame(
+  .data_frame(
     Parameter = names(se),
     SE = as.vector(se)
   )
@@ -391,7 +391,7 @@ standard_error.rq <- function(model, ...) {
 
   params <- insight::get_parameters(model)
 
-  data_frame(
+  .data_frame(
     ## TODO change to "$Parameter" once fixed in insight
     Parameter = params[[1]],
     SE = se
@@ -410,7 +410,7 @@ standard_error.biglm <- function(model, ...) {
   cs <- summary(model)$mat
   params <- insight::get_parameters(model)
 
-  data_frame(
+  .data_frame(
     ## TODO change to "$Parameter" once fixed in insight
     Parameter = params[[1]],
     SE = as.vector(cs[, 4])
@@ -423,7 +423,7 @@ standard_error.crch <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
   params <- insight::get_parameters(model)
 
-  data_frame(
+  .data_frame(
     ## TODO change to "$Parameter" once fixed in insight
     Parameter = params[[1]],
     SE = as.vector(cs[, 2])
@@ -435,7 +435,7 @@ standard_error.crch <- function(model, ...) {
 standard_error.gee <- function(model, ...) {
   cs <- stats::coef(summary(model))
 
-  data_frame(
+  .data_frame(
     Parameter = rownames(cs),
     SE = as.vector(cs[, "Naive S.E."])
   )
@@ -448,7 +448,7 @@ standard_error.logistf <- function(model, ...) {
   utils::capture.output(s <- summary(model))
   se <- sqrt(diag(s$var))
 
-  data_frame(
+  .data_frame(
     Parameter = names(s$coefficients),
     SE = as.vector(se)
   )
@@ -465,7 +465,7 @@ standard_error.glimML <- function(model, ...) {
   s <- methods::slot(aod::summary(model), "Coef")
   se <- s[, 2]
 
-  data_frame(
+  .data_frame(
     Parameter = rownames(s),
     SE = as.vector(se)
   )
@@ -481,7 +481,7 @@ standard_error.lrm <- function(model, ...) {
   # psm-models returns vcov-matrix w/o dimnames
   if (is.null(names(se))) names(se) <- names(stats::coef(model))
 
-  data_frame(
+  .data_frame(
     Parameter = names(se),
     SE = as.vector(se)
   )
@@ -503,7 +503,7 @@ standard_error.betareg <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model)))
   se <- cs[, 2]
 
-  data_frame(
+  .data_frame(
     Parameter = names(se),
     SE = as.vector(se)
   )
@@ -517,7 +517,7 @@ standard_error.gamlss <- function(model, ...) {
   parms <- insight::get_parameters(model)
   utils::capture.output(cs <- summary(model))
 
-  data_frame(
+  .data_frame(
     ## TODO change to "$Parameter" and "$Component" once fixed in insight
     Parameter = parms[[1]],
     SE = as.vector(cs[, 2]),
@@ -531,7 +531,7 @@ standard_error.gamlss <- function(model, ...) {
 standard_error.plm <- function(model, ...) {
   se <- stats::coef(summary(model))
 
-  data_frame(
+  .data_frame(
     Parameter = names(se[, 2]),
     SE = as.vector(se[, 2])
   )
@@ -544,7 +544,7 @@ standard_error.coxme <- function(model, ...) {
   beta <- model$coefficients
 
   if (length(beta) > 0) {
-    data_frame(
+    .data_frame(
       Parameter = names(beta),
       SE = sqrt(diag(stats::vcov(model)))
     )
@@ -558,7 +558,7 @@ standard_error.coxph <- function(model, ...) {
   cs <- stats::coef(summary(model))
   se <- cs[, 3]
 
-  data_frame(
+  .data_frame(
     Parameter = names(se),
     SE = as.vector(se)
   )
@@ -571,7 +571,7 @@ standard_error.survreg <- function(model, ...) {
   s <- summary(model)
   se <- s$table[, 2]
 
-  data_frame(
+  .data_frame(
     Parameter = names(se),
     SE = as.vector(se)
   )
@@ -586,7 +586,7 @@ standard_error.gam <- function(model, ...) {
   n_cond <- nrow(p.table)
   n_smooth <- nrow(s.table)
 
-  data_frame(
+  .data_frame(
     Parameter = c(rownames(p.table), rownames(s.table)),
     SE = c(as.vector(p.table[, 2]), rep(NA, n_smooth)),
     Component = c(rep("conditional", n_cond), rep("smooth_terms", n_smooth))
@@ -611,7 +611,7 @@ standard_error.MCMCglmm <- function(model, ...) {
   nF <- model$Fixed$nfl
   parms <- as.data.frame(model$Sol[, 1:nF, drop = FALSE])
 
-  data_frame(
+  .data_frame(
     Parameter = colnames(parms),
     SE = unname(sapply(parms, stats::sd))
   )
@@ -621,7 +621,7 @@ standard_error.MCMCglmm <- function(model, ...) {
 
 #' @export
 standard_error.BBmm <- function(model, ...) {
-  data_frame(
+  .data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
     SE = as.data.frame(summary(model)$fixed.coefficients)$StdErr
   )
@@ -631,7 +631,7 @@ standard_error.BBmm <- function(model, ...) {
 
 #' @export
 standard_error.BBreg <- function(model, ...) {
-  data_frame(
+  .data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
     SE = as.data.frame(summary(model)$coefficients)$StdErr
   )
@@ -641,7 +641,7 @@ standard_error.BBreg <- function(model, ...) {
 
 #' @export
 standard_error.wbm <- function(model, ...) {
-  data_frame(
+  .data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
     SE = as.vector(as.data.frame(model@summ$coeftable, stringsAsFactors = FALSE)[["S.E."]])
   )
@@ -664,7 +664,7 @@ standard_error.vglm <- function(model, ...) {
   cs <- VGAM::summary(model)@coef3
   se <- cs[, 2]
 
-  data_frame(
+  .data_frame(
     Parameter = names(se),
     SE = as.vector(se)
   )
@@ -677,7 +677,7 @@ standard_error.gmnl <- function(model, ...) {
   cs <- summary(model)$CoefTable
   se <- cs[, 2]
 
-  pv <- data_frame(
+  pv <- .data_frame(
     Parameter = names(se),
     SE = as.vector(se)
   )
@@ -700,7 +700,7 @@ standard_error.polr <- function(model, ...) {
   se <- smry[[2]]
   names(se) <- rownames(smry)
 
-  data_frame(
+  .data_frame(
     Parameter = names(se),
     SE = as.vector(se)
   )

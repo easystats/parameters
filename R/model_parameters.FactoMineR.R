@@ -7,7 +7,7 @@ model_parameters.PCA <- function(model, sort = FALSE, threshold = NULL, labels =
 
   # Get summary
   eig <- as.data.frame(model$eig[1:n, ])
-  data_summary <- data_frame(
+  data_summary <- .data_frame(
     Component = names(loadings),
     Eigenvalues = eig$eigenvalue,
     Variance = eig$`percentage of variance` / 100,
@@ -29,6 +29,7 @@ model_parameters.PCA <- function(model, sort = FALSE, threshold = NULL, labels =
     loading_cols <- 2:(n + 1)
   }
 
+  loadings$Complexity <- (apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^2)))^2 / apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^4))
 
   # Add attributes
   attr(loadings, "summary") <- data_summary

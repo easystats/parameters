@@ -1,6 +1,6 @@
 #' Dimensionality reduction (DR) / Features Reduction
 #'
-#' This function performs a reduction in the parameters space (the number of variables). Altough this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a separate and dedicated stage, as this is a very important process in the data analysis workflow.
+#' This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is "PCA", but other are available via the \code{method} argument, such as "cMDS", "DRR" or "ICA"). Then, it names this new dimensions using the original variables that correlates the most with it. For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension. Altough this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a separate and dedicated stage, as this is a very important process in the data analysis workflow.
 #'
 #' @inheritParams principal_components
 #' @param method The features reduction method. Can be one of 'PCA', 'cMDS', 'DRR', 'ICA' (see the Details section).
@@ -47,7 +47,7 @@ parameters_reduction <- function(x, method = "PCA", n = "max", ...) {
 
 #' @export
 parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...) {
-  x <- as.data.frame(convert_data_to_numeric(x))
+  x <- convert_data_to_numeric(x)
 
   # N factors
   if (n == "max") {
@@ -102,13 +102,28 @@ parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...) {
 
 
 
+#' @export
+parameters_reduction.lm <- function(x, method = "PCA", n = "max", ...) {
+  data <- parameters_reduction(convert_data_to_numeric(insight::get_predictors(x, ...), ...), method = method, n = n)
+
+  y <- data.frame(.row = 1:length(insight::get_response(x)))
+  y[insight::find_response(x)] <- insight::get_response(x)
+  y$.row <- NULL
+
+  formula <- paste(insight::find_response(x), "~", paste(paste0("`", names(data), "`"), collapse = " + "))
+  update(x, formula = formula, data = cbind(data, y))
+}
+
+#' @export
+parameters_reduction.merMod <- parameters_reduction.lm
+
 
 
 
 
 #' @export
 principal_components.lm <- function(x, ...) {
-  parameters_reduction(as.data.frame(convert_data_to_numeric(insight::get_predictors(x, ...), ...)), method = "PCA")
+  parameters_reduction(x, method = "PCA", ...)
 }
 
 #' @export

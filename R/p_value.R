@@ -45,7 +45,7 @@ p_value.default <- function(model, ...) {
   if (is.null(p)) {
     insight::print_color("\nCould not extract p-values from model object.\n", "red")
   } else {
-    data_frame(
+    .data_frame(
       Parameter = names(p),
       p = as.vector(p)
     )
@@ -111,7 +111,7 @@ p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "z
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     comp <- ifelse(i == "count", "conditional", "zi")
-    data_frame(
+    .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
       p = as.vector(cs[[i]][, 4]),
       Component = comp
@@ -144,7 +144,7 @@ p_value.lme <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- cs[, 5]
 
-  data_frame(
+  .data_frame(
     Parameter = rownames(cs),
     p = as.vector(p)
   )
@@ -183,7 +183,7 @@ p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "ze
 
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
-    data_frame(
+    .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
       p = as.vector(cs[[i]][, 4]),
       Component = i
@@ -212,7 +212,7 @@ p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zer
   names(cs) <- c("conditional", "zero_inflated")
   cs <- .compact_list(cs)
   x <- lapply(names(cs), function(i) {
-    data_frame(
+    .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
       p = as.vector(cs[[i]][, 4]),
       Component = i
@@ -237,7 +237,7 @@ p_value.MCMCglmm <- function(model, ...) {
   nF <- model$Fixed$nfl
   p <- 1 - colSums(model$Sol[, 1:nF, drop = FALSE] > 0) / dim(model$Sol)[1]
 
-  data_frame(
+  .data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
     p = p
   )
@@ -248,7 +248,7 @@ p_value.MCMCglmm <- function(model, ...) {
 p_value.brmsfit <- function(model, ...) {
   p <- bayestestR::p_direction(model)
 
-  data_frame(
+  .data_frame(
     Parameter = p$Parameter,
     p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE)
   )
@@ -276,7 +276,7 @@ p_value.svyglm <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- cs[, 4]
 
-  data_frame(
+  .data_frame(
     Parameter = rownames(cs),
     p = as.vector(p)
   )
@@ -289,7 +289,7 @@ p_value.svyolr <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
 
-  data_frame(
+  .data_frame(
     Parameter = rownames(cs),
     p = as.vector(p)
   )
@@ -307,7 +307,7 @@ p_value.svyglm.nb <- function(model, ...) {
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
   p <- 2 * stats::pnorm(abs(est / se), lower.tail = FALSE)
 
-  data_frame(
+  .data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
@@ -346,7 +346,7 @@ p_value.aov <- function(model, ...) {
     return(NA)
   }
 
-  data_frame(
+  .data_frame(
     Parameter = params$Parameter,
     p = params$p
   )
@@ -374,7 +374,7 @@ p_value.coxph <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- cs[, 5]
 
-  data_frame(
+  .data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
@@ -387,7 +387,7 @@ p_value.coxme <- function(model, ...) {
   stat <- .get_statistic.coxme(model)
 
   if (!is.null(stat)) {
-    data_frame(
+    .data_frame(
       Parameter = stat$Parameter,
       p = as.vector(1 - stats::pchisq(stat$Statistic^2, df = 1))
     )
@@ -401,7 +401,7 @@ p_value.survreg <- function(model, ...) {
   s <- summary(model)
   p <- s$table[, "p"]
 
-  data_frame(
+  .data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
@@ -433,7 +433,7 @@ p_value.rq <- function(model, ...) {
 
   params <- insight::get_parameters(model)
 
-  data_frame(
+  .data_frame(
     ## TODO change to "$Parameter" once fixed in insight
     Parameter = params[[1]],
     p = p
@@ -452,7 +452,7 @@ p_value.biglm <- function(model, ...) {
   cs <- summary(model)$mat
   params <- insight::get_parameters(model)
 
-  data_frame(
+  .data_frame(
     ## TODO change to "$Parameter" once fixed in insight
     Parameter = params[[1]],
     p = as.vector(cs[, 5])
@@ -465,7 +465,7 @@ p_value.crch <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
   params <- insight::get_parameters(model)
 
-  data_frame(
+  .data_frame(
     ## TODO change to "$Parameter" once fixed in insight
     Parameter = params[[1]],
     p = as.vector(cs[, 4])
@@ -478,7 +478,7 @@ p_value.gee <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- 2 * stats::pnorm(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), lower.tail = FALSE)
 
-  data_frame(
+  .data_frame(
     Parameter = rownames(cs),
     p = as.vector(p)
   )
@@ -495,7 +495,7 @@ p_value.glimML <- function(model, ...) {
   s <- methods::slot(aod::summary(model), "Coef")
   p <- s[, 4]
 
-  data_frame(
+  .data_frame(
     Parameter = rownames(s),
     p = as.vector(p)
   )
@@ -507,7 +507,7 @@ p_value.glimML <- function(model, ...) {
 p_value.logistf <- function(model, ...) {
   utils::capture.output(s <- summary(model))
 
-  data_frame(
+  .data_frame(
     Parameter = names(s$prob),
     p = as.vector(s$prob)
   )
@@ -520,7 +520,7 @@ p_value.lrm <- function(model, ...) {
   stat <- .get_statistic(model)
   p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
 
-  data_frame(
+  .data_frame(
     Parameter = stat$Parameter,
     p = as.vector(p)
   )
@@ -542,7 +542,7 @@ p_value.rlm <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
 
-  data_frame(
+  .data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
@@ -555,7 +555,7 @@ p_value.betareg <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model)))
   p <- cs[, 4]
 
-  data_frame(
+  .data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
@@ -569,7 +569,7 @@ p_value.gamlss <- function(model, ...) {
   parms <- insight::get_parameters(model)
   utils::capture.output(cs <- summary(model))
 
-  data_frame(
+  .data_frame(
     ## TODO change to "$Parameter" and "$Component" once fixed in insight
     Parameter = parms[[1]],
     p = as.vector(cs[, 4]),
@@ -581,7 +581,7 @@ p_value.gamlss <- function(model, ...) {
 
 #' @export
 p_value.BBmm <- function(model, ...) {
-  data_frame(
+  .data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
     p = as.data.frame(summary(model)$fixed.coefficients)$p.value
   )
@@ -591,7 +591,7 @@ p_value.BBmm <- function(model, ...) {
 
 #' @export
 p_value.BBreg <- function(model, ...) {
-  data_frame(
+  .data_frame(
     Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
     p = as.data.frame(summary(model)$coefficients)$p.value
   )
@@ -602,7 +602,7 @@ p_value.BBreg <- function(model, ...) {
 #' @export
 p_value.wbm <- function(model, ...) {
   p <- model@summ$coeftable[, "p"]
-  data_frame(
+  .data_frame(
     Parameter = gsub(pattern = "`", replacement = "", x = names(p), fixed = TRUE),
     p = as.vector(p)
   )
@@ -615,13 +615,13 @@ p_value.gam <- function(model, ...) {
   p.table <- summary(model)$p.table
   s.table <- summary(model)$s.table
 
-  d1 <- data_frame(
+  d1 <- .data_frame(
     Parameter = rownames(p.table),
     p = as.vector(p.table[, 4]),
     Component = "conditional"
   )
 
-  d2 <- data_frame(
+  d2 <- .data_frame(
     Parameter = rownames(s.table),
     p = as.vector(s.table[, 4]),
     Component = "smooth_terms"
@@ -637,7 +637,7 @@ p_value.gam <- function(model, ...) {
 p_value.Gam <- function(model, ...) {
   p.aov <- stats::na.omit(summary(model)$parametric.anova)
 
-  data_frame(
+  .data_frame(
     Parameter = rownames(p.aov),
     p = as.vector(p.aov[, 5])
   )
@@ -663,7 +663,7 @@ p_value.gamm4 <- p_value.gamm
 p_value.gls <- function(model, ...) {
   cs <- summary(model)$tTable
   p <- cs[, 4]
-  data_frame(
+  .data_frame(
     Parameter = rownames(cs),
     p = as.vector(p)
   )
@@ -675,7 +675,7 @@ p_value.gls <- function(model, ...) {
 p_value.pggls <- function(model, ...) {
   cs <- summary(model)$CoefTable
   p <- cs[, 4]
-  data_frame(
+  .data_frame(
     Parameter = rownames(cs),
     p = as.vector(p)
   )
@@ -689,7 +689,7 @@ p_value.gmnl <- function(model, ...) {
   p <- cs[, 4]
   # se <- cs[, 2]
 
-  pv <- data_frame(
+  pv <- .data_frame(
     Parameter = rownames(cs),
     p = as.vector(p)
   )
@@ -719,7 +719,7 @@ p_value.multinom <- function(model, ...) {
   stat <- s$coefficients / s$standard.errors
   p <- 2 * stats::pnorm(stat, lower.tail = FALSE)
 
-  data_frame(
+  .data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
@@ -731,7 +731,7 @@ p_value.multinom <- function(model, ...) {
 p_value.maxLik <- function(model, ...) {
   p <- summary(model)$estimate[, 4]
 
-  data_frame(
+  .data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
@@ -743,7 +743,7 @@ p_value.maxLik <- function(model, ...) {
 p_value.pglm <- function(model, ...) {
   p <- summary(model)$estimate[, 4]
 
-  data_frame(
+  .data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
@@ -755,7 +755,7 @@ p_value.pglm <- function(model, ...) {
 p_value.plm <- function(model, ...) {
   p <- stats::coef(summary(model))
 
-  data_frame(
+  .data_frame(
     Parameter = names(p[, 4]),
     p = as.vector(p[, 4])
   )
@@ -771,7 +771,7 @@ p_value.polr <- function(model, ...) {
   p <- 2 * stats::pnorm(abs(tstat), lower.tail = FALSE)
   names(p) <- rownames(smry)
 
-  data_frame(
+  .data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
@@ -789,7 +789,7 @@ p_value.vglm <- function(model, ...) {
   p <- cs[, 4]
   # se <- cs[, 2]
 
-  data_frame(
+  .data_frame(
     Parameter = names(p),
     p = as.vector(p)
   )
@@ -818,7 +818,7 @@ p_value.numeric <- function(model, ...) {
 #' @export
 p_value.data.frame <- function(model, ...) {
   data <- model[sapply(model, is.numeric)]
-  data_frame(
+  .data_frame(
     Parameter = names(data),
     p = sapply(data, p_value)
   )

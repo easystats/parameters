@@ -55,7 +55,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
 
   # Get summary
   variance <- as.data.frame(unclass(model$Vaccounted))
-  data_summary <- data_frame(
+  data_summary <- .data_frame(
     Component = names(variance),
     Eigenvalues = model$values[1:n],
     Variance = as.numeric(variance["Proportion Var", ])
