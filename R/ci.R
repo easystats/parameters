@@ -58,6 +58,24 @@ ci.default <- function(x, ci = .95, ...) {
 }
 
 
+#' @export
+ci.mlm <- function(x, ci = .95, ...) {
+  out <- lapply(ci, function(i) {
+    .ci <- stats::confint(x, level = i, ...)
+    rn <- rownames(.ci)
+    .data_frame(
+      Parameter = gsub("^(.*):(.*)", "\\2", rn),
+      CI = i,
+      CI_low = .ci[, 1],
+      CI_high = .ci[, 2],
+      Response = paste0("Response ", gsub("^(.*):(.*)", "\\1", rn))
+    )
+  })
+
+  do.call(rbind, out)
+}
+
+
 #' @method ci lm
 #' @export
 ci.lm <- function(x, ci = .95, ...) {

@@ -54,6 +54,22 @@ p_value.default <- function(model, ...) {
 
 
 #' @export
+p_value.mlm <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- lapply(names(cs), function(x) {
+    params <- cs[[x]]
+    .data_frame(
+      Parameter = rownames(params),
+      p = params[, "Pr(>|t|)"],
+      Response = x
+    )
+  })
+
+  do.call(rbind, p)
+}
+
+
+#' @export
 p_value.lm <- p_value.default
 
 

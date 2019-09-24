@@ -133,6 +133,22 @@ standard_error.default <- function(model, ...) {
 
 
 #' @export
+standard_error.mlm <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  se <- lapply(names(cs), function(x) {
+    params <- cs[[x]]
+    .data_frame(
+      Parameter = rownames(params),
+      SE = params[, "Std. Error"],
+      Response = x
+    )
+  })
+
+  do.call(rbind, se)
+}
+
+
+#' @export
 standard_error.truncreg <- standard_error.default
 
 
