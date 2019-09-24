@@ -32,6 +32,8 @@
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
   if ("Component" %in% names(x) && length(unique(x$Component)) > 1 && split_components) {
     .print_model_parms_components(x, pretty_names, ...)
+  } else if ("Response" %in% names(x) && length(unique(x$Response)) > 1 && split_components) {
+    .print_model_parms_components(x, pretty_names, split_column = "Response", ...)
   } else {
     formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
     cat(insight::format_table(formatted_table))
@@ -41,7 +43,8 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
 #' @keywords internal
 .print_model_parms_components <- function(x, pretty_names, split_column = "Component", ...) {
-  tables <- split(x, x[[split_column]])
+  # make sure we have correct sorting here...
+  tables <- split(x, factor(x[[split_column]], levels = unique(x[[split_column]])))
 
   for (type in names(tables)) {
 

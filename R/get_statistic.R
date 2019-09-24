@@ -28,6 +28,27 @@
 }
 
 
+
+#' @keywords internal
+.get_statistic.mlm <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+
+  out <- lapply(names(cs), function(i) {
+    params <- cs[[i]]
+    .data_frame(
+      Parameter = rownames(params),
+      Statistic = as.vector(params[, 3]),
+      Response = gsub("^Response (.*)", "\\1", i)
+    )
+  })
+
+  out <- do.call(rbind, out)
+  attr(out, "statistic") <- "t"
+  out
+}
+
+
+
 #' @keywords internal
 .get_statistic.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)

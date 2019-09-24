@@ -68,7 +68,7 @@ ci.mlm <- function(x, ci = .95, ...) {
       CI = i,
       CI_low = .ci[, 1],
       CI_high = .ci[, 2],
-      Response = paste0("Response ", gsub("^(.*):(.*)", "\\1", rn))
+      Response = gsub("^(.*):(.*)", "\\1", rn)
     )
   })
 

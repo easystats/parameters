@@ -14,13 +14,7 @@
   }
 
   ## TODO remove, once fixed in insight
-  if ("component" %in% names(parameters)) {
-    cn <- c("Parameter", "Estimate", "Component")
-  } else {
-    cn <- c("Parameter", "Estimate")
-  }
-
-  colnames(parameters) <- cn
+  colnames(parameters) <- .capitalize(colnames(parameters))
   original_order <- parameters$.id <- 1:nrow(parameters)
 
   # CI
@@ -51,7 +45,7 @@
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
   # Reorder
-  col_order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_residual", "p", "Component")
+  col_order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_residual", "p", "Component", "Response")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   # remove Component column if not needed

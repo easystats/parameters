@@ -1,11 +1,26 @@
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.lme <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
+  .model_parameters_generic(
+    model = model,
+    ci = ci,
+    standardize = standardize,
+    standardize_robust = standardize_robust,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    ...
+  )
+}
+
+
+
+.model_parameters_generic <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", ...) {
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = "Parameter", ...)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, ...)
   }
 
 
@@ -24,6 +39,9 @@ model_parameters.lme <- function(model, ci = .95, standardize = FALSE, standardi
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
+
+
+
 
 #' @export
 model_parameters.clm <- model_parameters.lme
@@ -131,3 +149,24 @@ model_parameters.ivreg <- model_parameters.plm
 
 #' @export
 model_parameters.LORgee <- model_parameters.plm
+
+
+
+
+
+# other special cases ------------------------------------------------
+
+
+#' @export
+model_parameters.mlm <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
+  .model_parameters_generic(
+    model = model,
+    ci = ci,
+    standardize = standardize,
+    standardize_robust = standardize_robust,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Response"),
+    ...
+  )
+}

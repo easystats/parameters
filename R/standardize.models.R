@@ -85,6 +85,11 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 
 
 #' @export
+standardize.mlm <- function(x, robust = FALSE, method = "default", verbose = TRUE, ...) {
+  standardize.lm(x = x, robust = robust, method = method, include_response = FALSE, verbose = verbose, ...)
+}
+
+#' @export
 standardize.merMod <- standardize.lm
 
 #' @export

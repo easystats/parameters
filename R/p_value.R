@@ -61,7 +61,7 @@ p_value.mlm <- function(model, ...) {
     .data_frame(
       Parameter = rownames(params),
       p = params[, "Pr(>|t|)"],
-      Response = x
+      Response = gsub("^Response (.*)", "\\1", x)
     )
   })
 

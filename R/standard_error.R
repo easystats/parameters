@@ -140,7 +140,7 @@ standard_error.mlm <- function(model, ...) {
     .data_frame(
       Parameter = rownames(params),
       SE = params[, "Std. Error"],
-      Response = x
+      Response =  gsub("^Response (.*)", "\\1", x)
     )
   })
 

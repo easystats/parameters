@@ -143,3 +143,11 @@
   x <- insight::find_terms(model, flatten = TRUE)
   gsub("^log\\((.*)\\)", "\\1", x[grepl("^log\\((.*)\\)", x)])
 }
+
+
+# capitalize first character in string
+.capitalize <- function(x) {
+  capped <- grep("^[A-Z]", x, invert = TRUE)
+  substr(x[capped], 1, 1) <- toupper(substr(x[capped], 1, 1))
+  x
+}
