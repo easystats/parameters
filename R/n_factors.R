@@ -191,7 +191,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 
   out <- out[order(out$n_Factors), ] # Arrange by n factors
   row.names(out) <- NULL # Reset row index
-  class(out) <- c("n_factors", class(out))
+  class(out) <- c("n_factors", "see_n_factors", class(out))
 
   # Add summary
   by_factors <- data_frame(
