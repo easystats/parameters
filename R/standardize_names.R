@@ -61,16 +61,23 @@ standardize_names.parameters_model <- function(data, style = c("easystats", "bro
     cn[cn %in% c("t", "z", "F", "chisq", "t / F", "z / Chisq")] <- "Statistic"
     cn[cn %in% c("Median", "Mean", "MAP")] <- "Coefficient"
   } else {
+    # easy replacements
     cn[cn == "Parameter"] <- "term"
-    cn[cn %in% c("Coefficient", "Median", "Mean", "MAP")] <- "estimate"
     cn[cn == "SE"] <- "std.error"
     cn[cn == "SD"] <- "std.dev"
     cn[cn == "p"] <- "p.value"
+    cn[cn == "BF"] <- "bayes.factor"
     cn[cn == "df_residual"] <- "df.residual"
+    cn[cn == "Component"] <- "component"
+    cn[cn == "Effects"] <- "effects"
+    # more sophisticated replacements
+    cn[cn %in% c("Coefficient", "Median", "Mean", "MAP")] <- "estimate"
+    cn[cn %in% c("t", "z", "F", "chisq", "t / F", "z / Chisq")] <- "statistic"
+    # fancy regex replacements
     cn <- gsub("^CI_low", "conf.low", cn)
     cn <- gsub("^CI_high", "conf.high", cn)
-    cn[cn %in% c("t", "z", "F", "chisq", "t / F", "z / Chisq")] <- "statistic"
-    cn[cn == "BF"] <- "bayes.factor"
+    # lowercase for everything
+    cn <- tolower(cn)
   }
 
   colnames(data) <- cn
