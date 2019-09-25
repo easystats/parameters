@@ -40,7 +40,7 @@ data_partition <- function(x, training_proportion = 0.7, group = NULL, ...){
 #' @keywords internal
 .data_partition <- function(x, training_proportion = 0.8){
   training_indices = sample(1:nrow(x), size = training_proportion * nrow(x))
-  test_indices <- (1:nrow(x))[!1:nrow(x) %in% training_indices]
+  test_indices <- (1:nrow(x))[-training_indices]
 
   list(training = training_indices,
        test = test_indices)
