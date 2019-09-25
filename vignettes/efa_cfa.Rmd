@@ -54,10 +54,12 @@ efa
 
 As we can see, the 25 items nicely spread on the 5 latent factors which are, you guessed it, the famous **big 5**. Based on this model, we can now predict back the scores for each individual for these new variables:
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"))
 ```
-
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+head(predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness")))
+```
 
 # How many factors to retain in Factor Analysis (FA)
 
@@ -98,6 +100,16 @@ library(see)
 plot(n) +
   theme_modern()
 ```
+
+
+# Confirmatory Factor Analysis (CFA)
+
+CFA bridges factor analysis with Structural Equation Modelling (SEM).
+
+Show `data_partition`.
+
+TO DO. 
+
 
 
 # References
