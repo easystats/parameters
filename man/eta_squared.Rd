@@ -25,14 +25,14 @@ omega_squared(model, partial = TRUE, ci = NULL, iterations = 1000)
 
 \item{partial}{If \code{TRUE}, return partial indices (adjusted for sample size).}
 
-\item{ci}{Confidence Interval (CI) level computed via boostrap.}
+\item{ci}{Confidence Interval (CI) level computed via bootstrap.}
 
 \item{...}{Arguments passed to or from other methods.}
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 }
 \value{
-Data.frame containig the effect size values.
+Data.frame containing the effect size values.
 }
 \description{
 Set of functions to compute (partial) indices for ANOVAs, such as omega squared, the eta squared or the epsilon squared (Kelly, 1935). They are measures of effect size, or the degree of association for a population. They are an estimate of how much variance in the response variables are accounted for by the explanatory variables.
@@ -48,7 +48,7 @@ Omega squared is considered as a lesser biased alternative to eta-squared, espec
 }
 
 } \subsection{Epsilon Squared}{
-It is one of the least common measures of effect sizes: omega squared and eta squared are used more frequently. Altough having a different name and a formula in appearance different, this index is equivalent to the adjusted R2 (Allen, 2017, p. 382).
+It is one of the least common measures of effect sizes: omega squared and eta squared are used more frequently. Although having a different name and a formula in appearance different, this index is equivalent to the adjusted R2 (Allen, 2017, p. 382).
 
 } \subsection{Cohen's f}{
 Cohen's f statistic is one appropriate effect size index to use for a oneway analysis of variance (ANOVA). Cohen's f can take on values between zero, when the population means are all equal, and an indefinitely large number as standard deviation of means increases relative to the average standard deviation within each group. Cohen has suggested that the values of 0.10, 0.25, and 0.40 represent small, medium, and large effect sizes, respectively.

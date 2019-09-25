@@ -2,7 +2,7 @@
 #'
 #' Format structural models from the \pkg{psych} or \pkg{FactoMineR} packages.
 #'
-#' @param model PCA or FA created by the \pkg{psych} or \pkg{FactoMineR} pacakges (e.g. through \code{psych::principal} or \code{psych::fa}).
+#' @param model PCA or FA created by the \pkg{psych} or \pkg{FactoMineR} packages (e.g. through \code{psych::principal} or \code{psych::fa}).
 #' @inheritParams principal_components
 #' @param labels A character vector containing labels to be added to the loadings data. Usually, the question related to the item.
 #' @param ... Arguments passed to or from other methods.

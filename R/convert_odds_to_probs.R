@@ -1,4 +1,4 @@
-#' Conversion between (log)odds and probabilies
+#' Conversion between (log)odds and probabilities
 #'
 #' Enables a conversion between (log)odds and probabilities.
 #'

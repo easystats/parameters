@@ -327,7 +327,7 @@ as.double.n_factors <- as.numeric.n_factors
 }
 
 
-#' Non Graphical Cattel's Scree Test
+#' Non Graphical Cattell's Scree Test
 #' @keywords internal
 .n_factors_scree <- function(eigen_values = NULL, model = "factors") {
   nfac <- unlist(nFactors::nScree(x = eigen_values, cor = TRUE, model = model)$Components)

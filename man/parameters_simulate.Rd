@@ -35,7 +35,7 @@ included in the summary output.}
 A data frame with simulated parameters.
 }
 \description{
-Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to boostrapping.
+Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping.
 }
 \details{
 \subsection{Technical Details}{

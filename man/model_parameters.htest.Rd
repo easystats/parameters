@@ -9,7 +9,7 @@
 \arguments{
 \item{model}{Object of class \code{htest}.}
 
-\item{bootstrap}{Should estimates be bootsrapped?}
+\item{bootstrap}{Should estimates be bootstrapped?}
 
 \item{...}{Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).}
 }

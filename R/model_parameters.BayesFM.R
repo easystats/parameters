@@ -2,7 +2,7 @@
 #'
 #' Format PCA/FA objects from the psych package (Revelle, 2016).
 #'
-#' @param model Bayesain EFA created by the \code{BayesFM::befa}.
+#' @param model Bayesian EFA created by the \code{BayesFM::befa}.
 #' @inheritParams principal_components
 #' @inheritParams bayestestR::describe_posterior
 #' @param ... Arguments passed to or from other methods.

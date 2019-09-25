@@ -50,7 +50,7 @@ parameters_selection(model, ...)
 The model refitted with optimal number of parameters.
 }
 \description{
-This function performs an automated selection of the 'best' parameters, udpating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
+This function performs an automated selection of the 'best' parameters, updating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
 }
 \examples{
 model <- lm(mpg ~ ., data = mtcars)

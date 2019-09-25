@@ -6,7 +6,7 @@
 \alias{probs_to_odds}
 \alias{convert_odds_to_probs}
 \alias{convert_probs_to_odds}
-\title{Conversion between (log)odds and probabilies}
+\title{Conversion between (log)odds and probabilities}
 \usage{
 odds_to_probs(x, log = FALSE, ...)
 

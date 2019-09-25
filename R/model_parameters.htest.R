@@ -3,7 +3,7 @@
 #' Parameters of h-tests (correlations, t-tests).
 #'
 #' @param model Object of class \code{htest}.
-#' @param bootstrap Should estimates be bootsrapped?
+#' @param bootstrap Should estimates be bootstrapped?
 #' @param ... Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).
 #'
 #' @examples

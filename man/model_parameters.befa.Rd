@@ -9,7 +9,7 @@
   ci_method = "hdi", test = NULL, ...)
 }
 \arguments{
-\item{model}{Bayesain EFA created by the \code{BayesFM::befa}.}
+\item{model}{Bayesian EFA created by the \code{BayesFM::befa}.}
 
 \item{sort}{Sort the loadings.}
 

@@ -21,7 +21,7 @@
 #' \strong{Kurtosis}
 #' \cr \cr
 #' The \code{kurtosis} is a measure of "tailedness" of a distribution. A distribution
-#' with a kurtosis valus of about zero is called "mesokurtic". A kurtosis value
+#' with a kurtosis values of about zero is called "mesokurtic". A kurtosis value
 #' larger than zero indicates a "leptokurtic" distribution with \emph{fatter} tails.
 #' A kurtosis value below zero indicates a "platykurtic" distribution with \emph{thinner}
 #' tails (\cite{https://en.wikipedia.org/wiki/Kurtosis}).
