@@ -266,14 +266,6 @@ model <- lavaan::cfa(" visual  =~ x1 + x2 + x3
 model_parameters(model)
 ```
 
-    # # Correlation type
-    # 
-    # Link              | Coefficient |   SE |       95% CI |      p
-    # --------------------------------------------------------------
-    # visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | < .001
-    # visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | < .001
-    # textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | < .001
-    # 
     # # Loading type
     # 
     # Link          | Coefficient |   SE |       95% CI |      p
@@ -287,6 +279,14 @@ model_parameters(model)
     # speed =~ x7   |        1.00 | 0.00 | [1.00, 1.00] | < .001
     # speed =~ x8   |        1.18 | 0.16 | [0.86, 1.50] | < .001
     # speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | < .001
+    # 
+    # # Correlation type
+    # 
+    # Link              | Coefficient |   SE |       95% CI |      p
+    # --------------------------------------------------------------
+    # visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | < .001
+    # visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | < .001
+    # textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | < .001
 
 ## Variable and parameters selection
 
@@ -359,7 +359,7 @@ n_factors(mtcars)
 
     # # Method Agreement Procedure:
     # 
-    # The choice of 2 dimensions is supported by 5 (31.25%) methods out of 16 (Optimal coordinates, Parallel analysis, Kaiser criterion, EGA (glasso), EGA (TMFG)).
+    # The choice of 3 dimensions is supported by 4 (28.57%) methods out of 14 (Bartlett, CNG, SE Scree, R2).
 
 ## Miscellaneous
 
@@ -376,7 +376,7 @@ knitr::kable(describe_distribution(rnorm(300)), digits = 1)
 
 | Mean | SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
 | ---: | -: | --: | --: | -------: | -------: | --: | ---------: |
-|    0 |  1 | \-2 |   3 |        0 |    \-0.4 | 300 |          0 |
+|  0.1 |  1 | \-3 |   3 |        0 |        0 | 300 |          0 |
 
 ### Standardization and normalization
 

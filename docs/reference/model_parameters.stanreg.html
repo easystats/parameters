@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Bayesian Models Parameters — model_parameters.stanreg" />
-
 <meta property="og:description" content="Parameters of Bayesian models." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -96,7 +98,7 @@
   <a href="../reference/index.html">Features</a>
 </li>
 <li>
-  <a href="../reference/model_parameters.html">Parameters Description</a>
+  <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -114,7 +116,7 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/parameters_selection.html">Parameters Selection</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -127,12 +129,11 @@
       <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA, ...)</a>
     </li>
     <li>
-      <a href="../articles/efa_cfa.html">Structural Models (EFA, CFA, SEM, ...)</a>
+      <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM, ...)</a>
     </li>
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,9 +155,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Parameters of Bayesian models.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for stanreg</span>
@@ -165,7 +164,7 @@
   <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>), <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>standardize_robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -226,7 +225,7 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>Add standardized parameters. Can be <code>FALSE</code> or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize()</a></code>), such as <code>"refit"</code>, <code>"2sd"</code>, <code>"smart"</code> or <code>"classic"</code>. The two formers are based on model refitting using a standardized version of data. It is the most accurate, altough computationnaly heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).</p></td>
+      <td><p>Add standardized parameters. Can be <code>FALSE</code> or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize()</a></code>), such as <code>"refit"</code>, <code>"2sd"</code>, <code>"smart"</code> or <code>"classic"</code>. The two former are based on model refitting using a standardized version of data. It is the most accurate, although computationally heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).</p></td>
     </tr>
     <tr>
       <th>standardize_robust</th>
@@ -234,28 +233,26 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     </tr>
     <tr>
       <th>iterations</th>
-      <td><p>The number of bootstrap replicates. This only apply in the case of bootsrapped frequentist models.</p></td>
+      <td><p>The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods (e.g., to <code><a href='standardize.html'>standardize()</a></code>).</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame of indices related to the model's parameters.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
   columns into a consistent, standardized naming scheme.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'rstanarm' was built under R version 3.6.1</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package 'Rcpp' was built under R version 3.6.1</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'xts':</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'xts':</span>
 #&gt; <span class='message'>  method     from</span>
 #&gt; <span class='message'>  as.zoo.xts zoo </span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.18.2, packaged: 2018-11-08 22:19:38 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- Plotting theme set to bayesplot::theme_default().</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'rstanarm'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:parameters':</span>
@@ -268,14 +265,14 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"smart"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.88). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.88). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; Parameter                           | Median |         89% CI |     pd | % in ROPE |  Rhat | ESS |              Prior | Median (std.)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"smart"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.79), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.79), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; Parameter                           | Median |         89% CI |     pd | % in ROPE |  Rhat | ESS |              Prior | Median (std.)
 #&gt; -------------------------------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                         |   4.03 | [ 3.40,  4.57] |   100% |        0% | 1.004 | 208 | Normal (0 +- 8.28) |          0.00
-#&gt; Petal.Length                        |   0.67 | [ 0.27,  1.06] | 99.80% |     0.90% | 1.003 | 212 | Normal (0 +- 1.17) |          1.44
-#&gt; Species (versicolor)                |  -1.57 | [-2.34, -0.63] | 99.80% |     0.10% | 1.001 | 328 | Normal (0 +- 2.07) |         -1.89
-#&gt; Species (virginica)                 |  -2.82 | [-3.73, -1.80] |   100% |        0% | 1.005 | 336 | Normal (0 +- 2.07) |         -3.41
-#&gt; Petal.Length * Species (versicolor) |   0.14 | [-0.27,  0.57] | 69.30% |    20.50% | 1.003 | 214 | Normal (0 +- 1.02) |          0.17
-#&gt; Petal.Length * Species (virginica)  |   0.30 | [-0.14,  0.70] | 85.90% |    13.70% | 1.005 | 204 | Normal (0 +- 0.78) |          0.36</div><div class='input'># }
+#&gt; (Intercept)                         |   3.98 | [ 3.42,  4.57] |   100% |        0% | 1.002 | 248 | Normal (0 +- 8.28) |          0.00
+#&gt; Petal.Length                        |   0.70 | [ 0.28,  1.05] | 99.40% |     0.50% | 1.002 | 245 | Normal (0 +- 1.17) |          1.50
+#&gt; Species (versicolor)                |  -1.50 | [-2.30, -0.56] | 99.70% |     0.40% | 1.003 | 328 | Normal (0 +- 2.07) |         -1.81
+#&gt; Species (virginica)                 |  -2.75 | [-3.63, -1.87] |   100% |        0% | 1.005 | 402 | Normal (0 +- 2.07) |         -3.32
+#&gt; Petal.Length * Species (versicolor) |   0.12 | [-0.24,  0.58] | 67.90% |    21.80% | 1.003 | 236 | Normal (0 +- 1.02) |          0.14
+#&gt; Petal.Length * Species (virginica)  |   0.25 | [-0.12,  0.69] | 87.30% |    13.20% | 1.004 | 239 | Normal (0 +- 0.78) |          0.31</div><div class='input'># }
 
 </div></pre>
   </div>
@@ -283,11 +280,8 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -301,7 +295,7 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

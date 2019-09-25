@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Format PCA/FA from the psych package — model_parameters.befa" />
-
 <meta property="og:description" content="Format PCA/FA objects from the psych package (Revelle, 2016)." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -96,7 +98,7 @@
   <a href="../reference/index.html">Features</a>
 </li>
 <li>
-  <a href="../reference/model_parameters.html">Parameters Description</a>
+  <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -114,7 +116,7 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/parameters_selection.html">Parameters Selection</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -127,12 +129,11 @@
       <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA, ...)</a>
     </li>
     <li>
-      <a href="../articles/efa_cfa.html">Structural Models (EFA, CFA, SEM, ...)</a>
+      <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM, ...)</a>
     </li>
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,22 +155,20 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Format PCA/FA objects from the psych package (Revelle, 2016).</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for befa</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
   <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Bayesain EFA created by the <code><a href='https://rdrr.io/pkg/BayesFM/man/befa.html'>BayesFM::befa</a></code>.</p></td>
+      <td><p>Bayesian EFA created by the <code><a href='https://rdrr.io/pkg/BayesFM/man/befa.html'>BayesFM::befa</a></code>.</p></td>
     </tr>
     <tr>
       <th>sort</th>
@@ -209,16 +208,16 @@ included in the summary output.</p></td>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame of loadings.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFM</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'BayesFM' was built under R version 3.6.1</span></div><div class='input'><span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>BayesFM</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/BayesFM/man/befa.html'>befa</a></span>(<span class='no'>mtcars</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; starting MCMC sampling...
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFM</span>)
+<span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>BayesFM</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/BayesFM/man/befa.html'>befa</a></span>(<span class='no'>mtcars</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; starting MCMC sampling...
 #&gt;     5%
 #&gt;    10%
 #&gt;    15%
@@ -243,17 +242,17 @@ included in the summary output.</p></td>
 #&gt; done with sampling!</div><div class='input'><span class='no'>results</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>results</span></div><div class='output co'>#&gt; <span class='error'>Error in if (rotation_name == "none") {    insight::print_color("# Loadings from Principal Component Analysis (no rotation)\n\n",         "blue")} else {    insight::print_color(sprintf("# Rotated loadings from Principal Component Analysis (%s-rotation)\n\n",         rotation_name), "blue")}: argument is of length zero</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>results</span>)$<span class='no'>loadings_long</span></div><div class='output co'>#&gt;    Component Variable      Median      CI_low     CI_high
-#&gt; 1         F1       am   0.4626151   0.3210374   0.6463278
-#&gt; 2         F2     carb   2.8797247   2.2322814   3.4970545
-#&gt; 3         F2      cyl   6.2133053   5.0617313   7.3176382
-#&gt; 4         F2     disp 246.0188779 200.1557539 294.5436274
-#&gt; 5         F3     drat   3.5104849   2.8674884   4.2005917
-#&gt; 6         F3     gear   3.5903807   2.9049626   4.3220006
-#&gt; 7         F2       hp 151.9736776 122.2210624 184.5791267
-#&gt; 8         F1      mpg  20.2804506  16.4516847  24.0496601
-#&gt; 9         F3     qsec  17.1881170  14.2436113  20.8816856
-#&gt; 10        F1       vs   0.5002343   0.3641802   0.6799611
-#&gt; 11        F2       wt   3.2018917   2.6408749   3.8820992</div><div class='input'><span class='fu'><a href='convert_efa_to_cfa.html'>efa_to_cfa</a></span>(<span class='no'>results</span>)</div><div class='output co'>#&gt; # Latent variables
+#&gt; 1         F1       am   0.4588648   0.3104045   0.6289219
+#&gt; 2         F2     carb   2.8981566   2.2137987   3.5228006
+#&gt; 3         F2      cyl   6.2118236   5.0587428   7.4962445
+#&gt; 4         F2     disp 247.8760416 201.0991269 302.2997179
+#&gt; 5         F3     drat   3.5170476   2.9173635   4.2686525
+#&gt; 6         F3     gear   3.6317185   2.9191840   4.3285466
+#&gt; 7         F2       hp 152.8337285 125.9435032 189.7966527
+#&gt; 8         F1      mpg  20.2921048  16.8670736  24.5807461
+#&gt; 9         F3     qsec  17.2726070  14.2062042  20.9628679
+#&gt; 10        F1       vs   0.4998572   0.3517771   0.6841314
+#&gt; 11        F2       wt   3.2294602   2.5996312   3.8789487</div><div class='input'><span class='fu'><a href='convert_efa_to_cfa.html'>efa_to_cfa</a></span>(<span class='no'>results</span>)</div><div class='output co'>#&gt; # Latent variables
 #&gt; F1 =~ am + mpg + vs
 #&gt; F2 =~ carb + cyl + disp + hp + wt
 #&gt; F3 =~ drat + gear + qsec</div><div class='input'># }
@@ -264,9 +263,7 @@ included in the summary output.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -280,7 +277,7 @@ included in the summary output.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

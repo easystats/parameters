@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Parameters Table Formatting — parameters_table" />
-
 <meta property="og:description" content="Parameters Table Formatting" />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -96,7 +98,7 @@
   <a href="../reference/index.html">Features</a>
 </li>
 <li>
-  <a href="../reference/model_parameters.html">Parameters Description</a>
+  <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -114,7 +116,7 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/parameters_selection.html">Parameters Selection</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -127,12 +129,11 @@
       <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA, ...)</a>
     </li>
     <li>
-      <a href="../articles/efa_cfa.html">Structural Models (EFA, CFA, SEM, ...)</a>
+      <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM, ...)</a>
     </li>
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,13 +155,11 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Parameters Table Formatting</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>parameters_table</span>(<span class='no'>x</span>, <span class='kw'>pretty_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>stars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -181,11 +180,10 @@
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
@@ -227,9 +225,9 @@
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.077 seconds (Warm-up)
-#&gt; Chain 1:                0.087 seconds (Sampling)
-#&gt; Chain 1:                0.164 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.071 seconds (Warm-up)
+#&gt; Chain 1:                0.085 seconds (Sampling)
+#&gt; Chain 1:                0.156 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -252,9 +250,9 @@
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.08 seconds (Warm-up)
-#&gt; Chain 2:                0.094 seconds (Sampling)
-#&gt; Chain 2:                0.174 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.073 seconds (Warm-up)
+#&gt; Chain 2:                0.074 seconds (Sampling)
+#&gt; Chain 2:                0.147 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -277,9 +275,9 @@
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.083 seconds (Warm-up)
+#&gt; Chain 3:  Elapsed Time: 0.069 seconds (Warm-up)
 #&gt; Chain 3:                0.079 seconds (Sampling)
-#&gt; Chain 3:                0.162 seconds (Total)
+#&gt; Chain 3:                0.148 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -302,9 +300,9 @@
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.085 seconds (Warm-up)
-#&gt; Chain 4:                0.08 seconds (Sampling)
-#&gt; Chain 4:                0.165 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.068 seconds (Warm-up)
+#&gt; Chain 4:                0.077 seconds (Sampling)
+#&gt; Chain 4:                0.145 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; <span class='error'>Error in .subset2(x, i, exact = exact): recursive indexing failed at level 2</span></div><div class='input'># }
 
 </div></pre>
@@ -313,9 +311,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -329,7 +325,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

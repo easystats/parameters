@@ -76,6 +76,7 @@ reference:
   - standardize.lm
   - standardize.data.frame
   - normalize
+  - data_partition
   - describe_distribution
   - skewness
   - reshape_loadings
@@ -96,8 +97,8 @@ reference:
   - parameters_table
   - parameters_type
   - standardize_names
-        
-        
+
+
 navbar:
   type: default
   left:

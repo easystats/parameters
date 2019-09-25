@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Parameters standardization — parameters_standardize" />
-
 <meta property="og:description" content="Compute standardized model parameters (coefficients)." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -96,7 +98,7 @@
   <a href="../reference/index.html">Features</a>
 </li>
 <li>
-  <a href="../reference/model_parameters.html">Parameters Description</a>
+  <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -114,7 +116,7 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/parameters_selection.html">Parameters Selection</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -127,12 +129,11 @@
       <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA, ...)</a>
     </li>
     <li>
-      <a href="../articles/efa_cfa.html">Structural Models (EFA, CFA, SEM, ...)</a>
+      <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM, ...)</a>
     </li>
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,14 +155,12 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Compute standardized model parameters (coefficients).</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"refit"</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -189,21 +188,19 @@ mean and divide it by the standard deviation (SD).</p></td>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Standardized parameters.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><strong>Methods:</strong></p><ul>
 <li><p><strong>refit</strong>: This method is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the "purest" and the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms). The <code>robust</code> (default to <code>FALSE</code>) argument enables a robust standardization of data, i.e., based on the <code>median</code> and <code>MAD</code> instead of the <code>mean</code> and <code>SD</code>.</p></li>
 <li><p><strong>2sd</strong>: Same as <code>method = "refit"</code>, however, standardization is done by dividing by two times the <code>SD</code> or <code>MAD</code> (depending on <code>robust</code>). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors (see Gelman, 2008).</p></li>
-<li><p><strong>smart</strong> (Standardization of Model's parameters with Adjustement, Reconnaissance and Transformation): Post-hoc standardization of the parameters, aiming at emulating the results obtained by "refit". The coefficients are divided by the standard deviation (or MAD if <code>robust</code>) of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionaly multiplied by the standard deviation (or MAD if <code>robust</code>) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of <code>x</code> is related to a change of 0.24 of the SD of <code>y</code>). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p></li>
-<li><p><strong>classic</strong>: This method is similar to <code>method = "smart"</code>, but treats all variables as continuous: it also scales the coefficient by the standard deviation of model's matrix' parameter of factors levels (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as <code><a href='https://rdrr.io/pkg/sjstats/man/std_beta.html'>sjstats::std_beta()</a></code> or <code><a href='https://rdrr.io/pkg/lm.beta/man/lm.beta.html'>lm.beta::lm.beta()</a></code>.</p></li>
+<li><p><strong>smart</strong> (Standardization of Model's parameters with Adjustment, Reconnaissance and Transformation): Post-hoc standardization of the parameters, aiming at emulating the results obtained by "refit". The coefficients are divided by the standard deviation (or MAD if <code>robust</code>) of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionally multiplied by the standard deviation (or MAD if <code>robust</code>) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of <code>x</code> is related to a change of 0.24 of the SD of <code>y</code>). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p></li>
+<li><p><strong>classic</strong>: This method is similar to <code>method = "smart"</code>, but treats all variables as continuous: it also scales the coefficient by the standard deviation of model's matrix' parameter of factors levels (transformed to integers) or binary predictors. Although being inappropriate for these cases, this method is the one implemented by default in other software packages, such as <code><a href='https://rdrr.io/pkg/sjstats/man/std_beta.html'>sjstats::std_beta()</a></code> or <code><a href='https://rdrr.io/pkg/lm.beta/man/lm.beta.html'>lm.beta::lm.beta()</a></code>.</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -212,7 +209,6 @@ mean and divide it by the standard deviation (SD).</p></td>
 <li><p>Gelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 </ul>
 
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
@@ -286,32 +282,30 @@ mean and divide it by the standard deviation (SD).</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Speciesversicolor:Petal.Width and Speciesversicolor (r = 0.73), Speciesversicolor:Petal.Width and Petal.Width (r = 0.88), Speciesvirginica:Petal.Width and Speciesversicolor:Petal.Width (r = 0.79). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt;                       Parameter Std_Median   Std_Mean    Std_MAP
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Speciesversicolor:Petal.Width and Petal.Width (r = 0.87), Speciesvirginica:Petal.Width and Speciesversicolor:Petal.Width (r = 0.8). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt;                       Parameter Std_Median   Std_Mean    Std_MAP
 #&gt; 1                   (Intercept)  0.0000000  0.0000000  0.0000000
-#&gt; 2             Speciesversicolor -0.8325343 -0.8314950 -0.8571897
-#&gt; 3              Speciesvirginica  0.5099582  0.5217041  0.4648499
-#&gt; 4                   Petal.Width  0.7917492  0.7875568  0.8782007
-#&gt; 5 Speciesversicolor:Petal.Width  0.4757839  0.4847671  0.3936637
-#&gt; 6  Speciesvirginica:Petal.Width -0.1491725 -0.1687888 -0.1644503</div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Speciesversicolor:Petal.Width and Speciesversicolor (r = 0.73), Speciesversicolor:Petal.Width and Petal.Width (r = 0.88), Speciesvirginica:Petal.Width and Speciesversicolor:Petal.Width (r = 0.79). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt;                       Parameter Std_Median   Std_Mean    Std_MAP
+#&gt; 2             Speciesversicolor -0.8492937 -0.8673102 -0.8176212
+#&gt; 3              Speciesvirginica  0.5505621  0.5768414  0.4588853
+#&gt; 4                   Petal.Width  0.8590041  0.8524707  0.8721036
+#&gt; 5 Speciesversicolor:Petal.Width  0.4159664  0.4480681  0.2927829
+#&gt; 6  Speciesvirginica:Petal.Width -0.2617619 -0.2480491 -0.3579348</div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Speciesversicolor:Petal.Width and Petal.Width (r = 0.87), Speciesvirginica:Petal.Width and Speciesversicolor:Petal.Width (r = 0.8). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt;                       Parameter Std_Median   Std_Mean    Std_MAP
 #&gt; 1                   (Intercept)  0.0000000  0.0000000  0.0000000
-#&gt; 2             Speciesversicolor -0.6642707 -0.6634415 -0.6839431
-#&gt; 3              Speciesvirginica  0.4068905  0.4162624  0.3708990
-#&gt; 4                   Petal.Width  0.8601263  0.8555719  0.9540439
-#&gt; 5 Speciesversicolor:Petal.Width  0.5168736  0.5266326  0.4276613
-#&gt; 6  Speciesvirginica:Petal.Width -0.1620554 -0.1833658 -0.1786526</div><div class='input'># }
+#&gt; 2             Speciesversicolor -0.6776429 -0.6920181 -0.6523717
+#&gt; 3              Speciesvirginica  0.4392879  0.4602559  0.3661400
+#&gt; 4                   Petal.Width  0.9331895  0.9260919  0.9474203
+#&gt; 5 Speciesversicolor:Petal.Width  0.4518901  0.4867642  0.3180683
+#&gt; 6  Speciesvirginica:Petal.Width -0.2843682 -0.2694711 -0.3888468</div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -325,7 +319,7 @@ mean and divide it by the standard deviation (SD).</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
