@@ -151,3 +151,9 @@
   substr(x[capped], 1, 1) <- toupper(substr(x[capped], 1, 1))
   x
 }
+
+
+
+.safe_deparse <- function(string) {
+  paste0(sapply(deparse(string, width.cutoff = 500), trimws, simplify = TRUE), collapse = " ")
+}
