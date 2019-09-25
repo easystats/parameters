@@ -155,7 +155,7 @@
 <p><img src="reference/figures/figure1.png" align="center"></p>
 <p>The <code><a href="reference/model_parameters.html">model_parameters()</a></code> function allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom"><code><a href="https://rdrr.io/pkg/broom/man/reexports.html">broom::tidy()</a></code></a>, with some notable differences:</p>
 <ul>
-<li>The names of the returned dataframe are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em>.</li>
+<li>The column names of the returned data frame are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (<strong>however</strong>, you can get standardized (generic) column names using <code><a href="reference/standardize_names.html">standardize_names()</a></code>).</li>
 <li>It is able to compute or extract indices not available by default, such as <strong><em>p</em>-values</strong>, <strong>CIs</strong>, etc.</li>
 <li>It includes <strong>feature engineering</strong> capabilities, including <a href="https://easystats.github.io/parameters/articles/bootstrapping.html"><strong>bootstrapping</strong></a> and <a href="https://easystats.github.io/parameters/articles/standardization.html"><strong>standardization</strong></a> of parameters.</li>
 </ul>

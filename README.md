@@ -69,10 +69,11 @@ can be considered as a lightweight alternative to
 [`broom::tidy()`](https://github.com/tidymodels/broom), with some
 notable differences:
 
-  - The names of the returned dataframe are **specific** to their
-    content. For instance, the column containing the statistic is named
-    following the statistic name, i.e., *t*, *z*, etc., instead of a
-    generic name such as *statistic*.
+  - The column names of the returned data frame are **specific** to
+    their content. For instance, the column containing the statistic is
+    named following the statistic name, i.e., *t*, *z*, etc., instead of
+    a generic name such as *statistic* (**however**, you can get
+    standardized (generic) column names using `standardize_names()`).
   - It is able to compute or extract indices not available by default,
     such as ***p*-values**, **CIs**, etc.
   - It includes **feature engineering** capabilities, including
