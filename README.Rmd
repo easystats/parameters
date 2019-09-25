@@ -63,17 +63,24 @@ library("parameters")
 
 Click on the buttons above to access the package [**documentation**](https://easystats.github.io/parameters/) and the [**easystats blog**](https://easystats.github.io/blog/posts/), and check-out these vignettes:
 
+
+#### Parameters Description
+
+- [Parameters description](https://easystats.github.io/parameters/articles/model_parameters.html)
+
 #### Parameters Engineering
 
 - [Bootstrapped parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
 - [Standardized parameters](https://easystats.github.io/parameters/articles/standardization.html)
 
-#### Variable/Feature Reduction
+#### Parameters Selection
 
-- [How many factors to retain in Factor Analysis (FA)](https://easystats.github.io/parameters/articles/n_factors.html)
-- [Variable extraction (PCA, FA, …)](https://easystats.github.io/parameters/articles/variable_extraction.html)
-- [Variable selection (stepwise, projpred, …)](https://easystats.github.io/parameters/articles/variable_selection.html)
+- [Parameters selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
 
+#### Dimension Reduction
+
+- [Feature reduction (PCA, cMDS, ICA...)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
+- [Structural models (EFA, CFA, SEM...)](https://easystats.github.io/parameters/articles/efa_cfa.html)
 
 # Features
  
@@ -86,121 +93,6 @@ The `model_parameters()` function allows you to extract the parameters and their
 - The column names of the returned data frame are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using `standardize_names()`).
 - It is able to compute or extract indices not available by default, such as ***p*-values**, **CIs**, etc.
 - It includes **feature engineering** capabilities, including [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html) and [**standardization**](https://easystats.github.io/parameters/articles/standardization.html) of parameters.
-
-### Correlations
-
-#### Frequentist 
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-model <- cor.test(iris$Sepal.Length, iris$Sepal.Width)
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-model <- cor.test(iris$Sepal.Length, iris$Sepal.Width)
-model_parameters(model)
-```
-
-#### Bayesian 
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-library(BayesFactor)
-
-model <- BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width)
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-library(BayesFactor)
-
-model <- BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width)
-model_parameters(model)
-```
-
-### *t*-tests
-
-#### Frequentist
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-df <- iris
-df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
-
-model <- t.test(Sepal.Length ~ Sepal.Big, data=df)
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-df <- iris
-df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
-
-model <- t.test(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model)
-```
-
-#### Bayesian 
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-model <- BayesFactor::ttestBF(formula = Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model)
-```
-
-### ANOVAs
-
-#### Simple
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
-```
-
-
-#### Repeated measures
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
-model_parameters(model)
-```
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-library(lme4)
-model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-library(lme4)
-model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
-model_parameters(model)
-```
-
-
-### General Linear Models (GLM)
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
-model_parameters(model, standardize = "refit")
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
-model_parameters(model, standardize = "refit")
-```
-
-### Bootstrapped models
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-model <- lm(mpg ~ drat * cyl, data = mtcars)
-model_parameters(model, bootstrap = TRUE, iterations = 500)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-model <- lm(mpg ~ drat * cyl, data = mtcars)
-model_parameters(model, bootstrap = TRUE, iterations = 500)
-```
 
 
 ### Mixed models

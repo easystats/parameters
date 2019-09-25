@@ -1,5 +1,5 @@
 ---
-title: "Exploratory parameters reduction"
+title: "Feature Reduction (PCA, cMDS, ICA...)"
 output: 
   github_document:
     toc: true
@@ -11,7 +11,7 @@ output:
     fig_height: 6
 tags: [r, parameters, variable extraction, feature extraction, dimension extraction]
 vignette: >
-  %\VignetteIndexEntry{Variable extraction (PCA, FA, ...)}
+  %\VignetteIndexEntry{Feature Reduction (PCA, cMDS, ICA, ...)}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -28,12 +28,11 @@ options(digits=2)
 set.seed(333)
 ```
 
-# Variable Extraction
 
 Also known as [**feature extraction** or **dimension reduction**](https://en.wikipedia.org/wiki/Feature_extraction) in machine learning, the goal of variable reduction is to **reduce the number of predictors** by derivating, from a set of measured data, new variables intended to be informative and non-redundant. This method can be used to **simplify models**, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
 
 
-## Quick and Exploratory Method
+# Quick and Exploratory Method
 
 Let's start by fitting a multiple regression with the `attitude` dataset, available is base R, to predict the overal **rating** by employees of their organization with the remaining variables (handling of employee **complaints**, special **privileges**, opportunity of **learning**, **raises**, a feedback considered too **critical** and opportunity of **advancement**).
 
@@ -68,7 +67,7 @@ A different method (**Classical Multidimensional Scaling - cMDS**) suggests that
 Altough this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a **separate and dedicated stage**, as this is a very important process in the data analysis workflow.
 
 
-## Principal Component Analysis (PCA)
+# Principal Component Analysis (PCA)
 
 PCA is a widely used procedure that lies in-between dimension reduction and structural modelling. Indeed, one of the way of reducing the number of predictors is to extract a new set of uncorrelated variables that will *represent* variance of your initial dataset. But how the original variables relate between themselves can also be a question on its own.
 

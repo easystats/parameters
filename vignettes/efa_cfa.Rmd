@@ -1,5 +1,5 @@
 ---
-title: "Structural Models (EFA, CFA, SEM, ...)"
+title: "Structural Models (EFA, CFA, SEM...)"
 output: 
   github_document:
     toc: true
@@ -11,7 +11,7 @@ output:
     fig_height: 6
 tags: [r, parameters, efa, cfa, factor analysis, sem, fa, pca, how many factors, n factors]
 vignette: >
-  %\VignetteIndexEntry{Variable extraction (PCA, FA, ...)}
+  %\VignetteIndexEntry{Structural Models (EFA, CFA, SEM, ...)}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
