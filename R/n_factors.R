@@ -6,21 +6,21 @@
 #' @param type Can be \code{"FA"} or \code{"PCA"}, depending on what you want to do.
 #' @param rotation Only used for VSS (Very Simple Structure criterion, see \code{\link[psych]{VSS}}. The rotation to apply. Can be \code{"none"}, \code{"varimax"}, \code{"quartimax"}, \code{"bentlerT"}, \code{"equamax"}, \code{"varimin"}, \code{"geominT"} and \code{"bifactor"} for orthogonal rotations, and \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, \code{"bentlerQ"}, \code{"geominQ"}, \code{"biquartimin"} and \code{"cluster"} for oblique transformations.
 #' @param algorithm Factoring method used by VSS. Can be \code{"pa"} for Principal Axis Factor Analysis, \code{"minres"} for minimum residual (OLS) factoring, \code{"mle"} for Maximum Likelihood FA and \code{"pc"} for Principal Components. \code{"default"} will select \code{"minres"} if \code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.
-#' @param package Can be \code{"all"} or a vector containing \code{"nFactors"}, \code{"EGAnet"} and \code{"psych"}. These are the packages from which methods are used.
+#' @param package These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"} and \code{"EGAnet"}. However, \code{"EGAnet"} can be very slow for bigger datasets. Thus, by default, \code{c("nFactors", "psych")} are selected.
 #' @param safe If \code{TRUE}, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
 #' library(parameters)
 #'
-#' n_factors(mtcars, type = "PCA", package = "nFactors")
+#' n_factors(mtcars, type = "PCA")
 #'
-#' result <- n_factors(mtcars[, 1:5], type = "FA", package = "psych")
+#' result <- n_factors(mtcars[, 1:5], type = "FA")
 #' as.numeric(result)
 #' summary(result)
 #' \donttest{
-#' n_factors(mtcars, type = "PCA")
-#' n_factors(mtcars, type = "FA", algorithm = "mle")
+#' n_factors(mtcars, type = "PCA", package = "all")
+#' n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
 #' }
 #'
 #' @return A data.frame.
@@ -39,7 +39,7 @@
 #' }
 #' @importFrom stats cor
 #' @export
-n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default", package = "all", safe = TRUE, ...) {
+n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default", package = c("nFactors", "psych"), safe = TRUE, ...) {
   if (package == "all") {
     package <- c("nFactors", "EGAnet", "psych")
   }

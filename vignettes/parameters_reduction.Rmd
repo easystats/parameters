@@ -95,5 +95,34 @@ update(model, rating ~ PC1, data = newdata) %>%
 ```
 
 
+## Using the `psych` package for PCA
+
+You can alo use different packages for models, such as [`psych`](https://cran.r-project.org/package=psych) [@revelle2018] or [`FactoMineR`](http://factominer.free.fr/) for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are **fully supported** by `parameters` through the `model_parameters()` function.
+
+As such, the above analysis can be fully reproduced as follows:
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(psych)
+library(parameters)
+
+# Fit the PCA
+pca <- psych::principal(attitude, nfactors = 2) %>% 
+  model_parameters()
+pca
+```
+
+*Note:* By default, `psych::principal()` uses a **varimax** rotation to extract rotated components, possibly leading to discrepancies in the results.
+
+Finally, refit the model:
+
+```{r message=FALSE, warning=FALSE}
+df <- cbind(attitude, predict(pca))
+
+update(model, rating ~ PC1) %>% 
+  model_parameters()
+```
+
+
 
 # References
