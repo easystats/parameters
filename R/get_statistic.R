@@ -398,7 +398,8 @@
   params <- insight::get_parameters(model)
 
   out <- .data_frame(
-    Parameter = params$parameter,
+    ## TODO change to "$Parameter" once fixed in insight
+    Parameter = params[[1]],
     Statistic = as.vector(cs[, 3])
   )
 

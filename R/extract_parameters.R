@@ -10,7 +10,8 @@
   # clean parameter names
 
   if (inherits(model, "polr")) {
-    parameters$parameter <- gsub("Intercept: ", "", parameters$parameter, fixed = TRUE)
+    ## TODO replace with "$Parameter" once insight update is on CRAN
+    parameters[[1]] <- gsub("Intercept: ", "", parameters[[1]], fixed = TRUE)
   }
 
   ## TODO remove, once fixed in insight
