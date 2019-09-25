@@ -30,12 +30,12 @@ set.seed(333)
 
 # Variable Extraction
 
-Also known as [feature extraction](https://en.wikipedia.org/wiki/Feature_extraction) in machine learning or **dimension reduction**, the goal of variable reduction is to **reduce the number of predictors** by derivating, from a set of measured data, new variables intended to be informative and non-redundant. This method can be used to **simplify models**, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
+Also known as [**feature extraction** or **dimension reduction**](https://en.wikipedia.org/wiki/Feature_extraction) in machine learning, the goal of variable reduction is to **reduce the number of predictors** by derivating, from a set of measured data, new variables intended to be informative and non-redundant. This method can be used to **simplify models**, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
 
 
 ## Quick and Exploratory Method
 
-Let's start by fitting a multiple regression with the `attitude` dataset, available is base R, to predict the overal `rating` by employees of their organization with the remaining variables (handling of employee *complaints*, special *privileges*, opportunity of *learning*, *raises*, a feedback considered too *critical* and opportunity of *advancement*).
+Let's start by fitting a multiple regression with the `attitude` dataset, available is base R, to predict the overal **rating** by employees of their organization with the remaining variables (handling of employee **complaints**, special **privileges**, opportunity of **learning**, **raises**, a feedback considered too **critical** and opportunity of **advancement**).
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
@@ -52,20 +52,20 @@ newmodel <- parameters_reduction(model)
 parameters(newmodel)
 ```
 
-This quickly *hints* toward the fact that the model could be represented via two "latent" dimensions, one correlated with all the positive things that a company has to offer, and the other one related to the amount of negative critique received by the employees. These two dimensions have a positive and negative relationship with the company rating, respectively.
+This quickly *hints* toward the fact that the model could be represented via **two "latent" dimensions**, one correlated with all the positive things that a company has to offer, and the other one related to the amount of negative critiques received by the employees. These two dimensions have a positive and negative relationship with the company rating, respectively.
 
-> What does **parameters_reduction** exactly do?
+> What does `parameters_reduction()` exactly do?
 
-This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is "PCA", but other are available via the `method` argument, such as "cMDS", "DRR" or "ICA"). Then, it names this new dimensions using the original variables that correlates the most with it. For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension.
+This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is "**PCA**", but other are available via the `method` argument, such as "**cMDS**", "**DRR**" or "**ICA**"). Then, it names this new dimensions using the original variables that *correlate* the most with it. For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension.
 
 ```{r message=FALSE, warning=FALSE}
 parameters_reduction(model, method = "cMDS") %>% 
   parameters()
 ```
 
-A different method (**Classical Multidimensional Scaling**) suggests that negative critiques do not have a significant impact on the rating, and that the lack of opportunities of career advancement is a separate dimension with an importance on its own.
+A different method (**Classical Multidimensional Scaling - cMDS**) suggests that negative critiques do not have a significant impact on the rating, and that the lack of opportunities of career advancement is a separate dimension with an importance on its own.
 
-Altough this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a separate and dedicated stage, as this is a very important process in the data analysis workflow.
+Altough this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a **separate and dedicated stage**, as this is a very important process in the data analysis workflow.
 
 
 ## Principal Component Analysis (PCA)

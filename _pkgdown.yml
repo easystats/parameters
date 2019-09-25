@@ -108,7 +108,7 @@ navbar:
   - text: Features
     href: reference/index.html
   - text: Parameters Description
-    href: reference/model_parameters.html
+    href: articles/model_parameters.html
   - text: Parameters Engineering
     menu:
       - text: 'Bootstrapped parameters'
@@ -116,7 +116,7 @@ navbar:
       - text: 'Standardized parameters'
         href: articles/standardization.html
   - text: Parameters Selection
-    href: reference/parameters_selection.html
+    href: articles/parameters_selection.html
   - text: Dimension Reduction
     menu:
       - text: 'Feature reduction (PCA, cMDS, ICA, ...)'
