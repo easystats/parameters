@@ -3,6 +3,7 @@
 #' The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5\% at p = 0.05.
 #'
 #' @param model A statistical model.
+#' @param ... Currently not used.
 #'
 #' @examples
 #' \donttest{
@@ -13,27 +14,29 @@
 #' }
 #'
 #' @return The p-values.
-#' @importFrom stats coef pnorm
+#' @importFrom stats coef pt
 #' @references Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.
 #' @export
-p_value_wald <- function(model) {
+p_value_wald <- function(model, ...) {
   UseMethod("p_value_wald")
 }
 
 
+#' @rdname p_value_wald
 #' @export
-p_value_wald.merMod <- function(model) {
+p_value_wald.merMod <- function(model, dof = Inf, ...) {
   params <- as.data.frame(stats::coef(summary(model)))
-  .p_value_wald(params)
+  .p_value_wald(params, dof)
 }
 
 
+.p_value_wald <- function(params, dof = NULL) {
+  if (is.null(dof)) dof <- Inf
 
-.p_value_wald <- function(params) {
   if ("t value" %in% names(params)) {
-    p <- 2 * stats::pnorm(abs(params[, "t value"]), lower.tail = FALSE)
+    p <- 2 * stats::pt(abs(params[, "t value"]), df = dof, lower.tail = FALSE)
   } else if ("z value" %in% names(params)) {
-    p <- 2 * stats::pnorm(abs(params[, "z value"]), lower.tail = FALSE)
+    p <- 2 * stats::pt(abs(params[, "z value"]), df = dof, lower.tail = FALSE)
   } else {
     stop("Couldn't find any suitable statistic (t or z value) for Wald-test approximation.")
   }

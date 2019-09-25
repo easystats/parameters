@@ -3,24 +3,29 @@
 \name{ci_wald}
 \alias{ci_wald}
 \alias{p_value_wald}
+\alias{p_value_wald.merMod}
 \title{Wald-test approximation for CIs and p-values}
 \usage{
 ci_wald(model, ci = 0.95, dof = NULL, component = c("all",
   "conditional", "zi", "zero_inflated"))
 
-p_value_wald(model)
+p_value_wald(model, ...)
+
+\method{p_value_wald}{merMod}(model, dof = Inf, ...)
 }
 \arguments{
 \item{model}{A statistical model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{dof}{Degrees of Freedom. If not specified, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters).}
+\item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+
+\item{...}{Currently not used.}
 }
 \value{
 The p-values.
