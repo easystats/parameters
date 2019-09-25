@@ -164,24 +164,8 @@ standardize.grouped_df <- function(x, robust = FALSE, method = "default", select
 }
 
 
-#' Data Standardization (Z-scores)
-#'
-#' Standardize (centering and scaling, Z-score) the data so that the
-#'   values are expressed in terms of standard deviation (i.e., mean = 0, SD = 1)
-#'   or Median Absolute Deviance (median = 0, MAD = 1). A \code{normalization}
-#'   scales all numeric variables in the 0 - 1 range.
-#'
-#' @param x A (grouped) data frame.
-#' @inheritParams standardize
-#' @param select For a data frame, character vector of column names to be
-#'   standardized. If \code{NULL} (the default), all variables will be
-#'   standardized.
-#' @param exclude For a data frame, character vector of column names to
-#'   be excluded from standardization.
-#'
-#' @examples
-#' summary(standardize(iris))
-#' @return A standardized data.frame.
+
+#' @rdname standardize
 #' @export
 standardize.data.frame <- function(x, robust = FALSE, method = "default", select = NULL, exclude = NULL, verbose = TRUE, force = FALSE, ...) {
   if (is.null(select)) {

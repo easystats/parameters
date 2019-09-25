@@ -1,7 +1,6 @@
 #' Normalization
 #'
-#' Performs a normalization of data. This scales all numeric
-#' variables in the range 0 - 1.
+#' Performs a normalization of data. This scales all numeric variables in the range 0 - 1.
 #'
 #' @inheritParams standardize.data.frame
 #'
