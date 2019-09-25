@@ -16,11 +16,19 @@ model_parameters.lme <- function(model, ci = .95, standardize = FALSE, standardi
 
 
 .model_parameters_generic <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", ...) {
+  # to avoid "match multiple argument error", check if "component" was
+  # already used as argument and passed via "...".
+  mc <- match.call()
+  comp_argument <- parse(text = .safe_deparse(mc))[[1]]$component
+
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, ...)
+    parameters <- if (is.null(comp_argument))
+      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, ...)
+    else
+      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, ...)
   }
 
 
