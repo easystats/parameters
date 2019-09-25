@@ -2,9 +2,9 @@
 #'
 #' Creates a training and a test set based on a dataframe. Can also be stratified (i.e., evenly spread a given factor) using the \code{group} argument.
 #'
-#' @param x A data.frame.
+#' @param x A data frame, or an object that can be coerced to a data frame.
 #' @param training_proportion The proportion (between 0 and 1) of the training set. The remaining part will be used for the test set.
-#' @param group A character vector indicating the name(s) of the column(s) used for stratified partionning.
+#' @param group A character vector indicating the name(s) of the column(s) used for stratified partioning.
 #'
 #' @examples
 #' df <- iris
@@ -14,7 +14,18 @@
 #' data_partition(df, group = "Species")
 #' data_partition(df, group = c("Species", "Smell"))
 #' @export
-data_partition <- function(x, training_proportion = 0.7, group = NULL, ...){
+data_partition <- function(x, training_proportion = 0.7, group = NULL) {
+
+  if (!is.data.frame(x)) {
+    x <- tryCatch(
+      expr = { as.data.frame(x) },
+      error = function(e) { NULL }
+    )
+
+    if (is.null(x)) {
+      stop("`x` needs to be a data frame, or an object that can be coerced to a data frame.")
+    }
+  }
 
   training <- data.frame()
   test <- data.frame()
@@ -37,7 +48,7 @@ data_partition <- function(x, training_proportion = 0.7, group = NULL, ...){
 
 
 #' @keywords internal
-.data_partition <- function(x, training_proportion = 0.8){
+.data_partition <- function(x, training_proportion = 0.8) {
   training_indices = sample(1:nrow(x), size = training_proportion * nrow(x))
   test_indices <- (1:nrow(x))[-training_indices]
 

@@ -4,14 +4,14 @@
 \alias{data_partition}
 \title{Partition data into a test and a training set}
 \usage{
-data_partition(x, training_proportion = 0.7, group = NULL, ...)
+data_partition(x, training_proportion = 0.7, group = NULL)
 }
 \arguments{
-\item{x}{A data.frame.}
+\item{x}{A data frame, or an object that can be coerced to a data frame.}
 
 \item{training_proportion}{The proportion (between 0 and 1) of the training set. The remaining part will be used for the test set.}
 
-\item{group}{A character vector indicating the name(s) of the column(s) used for stratified partionning.}
+\item{group}{A character vector indicating the name(s) of the column(s) used for stratified partioning.}
 }
 \description{
 Creates a training and a test set based on a dataframe. Can also be stratified (i.e., evenly spread a given factor) using the \code{group} argument.
