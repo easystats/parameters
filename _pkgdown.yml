@@ -116,7 +116,7 @@ navbar:
       - text: 'Standardized parameters'
         href: articles/standardization.html
   - text: Parameters Selection
-    href: reference/parameters_selection.html
+    href: articles/parameters_selection.html
   - text: Dimension Reduction
     menu:
       - text: 'Feature reduction (PCA, cMDS, ICA, ...)'
