@@ -36,7 +36,7 @@ The difference between PCA and EFA can be quite hard to intuitively grasp as the
 
 This is why PCA is popular for feature reduction, as it will try to best represent the variance contained in the original data, minimizing the loss of information. On the other hand, EFA is usually in the context of exploring the latent dimensions that might be hidden in the observed variables, without necessary striving at representing the whole dataset.
 
-To illustrate EFA, let us use the [International Personality Item Pool](ipip.ori.org) data available in the [ `psych`](https://www.personality-project.org/r/html/bfi.html) package. It includes 25 personality self report items. We will explore a factor structure made of 5 latent variables.
+To illustrate EFA, let us use the [International Personality Item Pool](ipip.ori.org) data available in the [ `psych`](https://www.personality-project.org/r/html/bfi.html) package. It includes 25 personality self report items. The authors built these items following the **big 5** personality structure. We will explore a factor structure made of 5 latent variables.
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
@@ -52,7 +52,7 @@ efa <- psych::fa(data, nfactors = 5) %>%
 efa
 ```
 
-As we can see, the 25 items nicely spread on the 5 latent factors which are, you guessed it, the famous **big 5**. Based on this model, we can now predict back the scores for each individual for these new variables:
+As we can see, the 25 items nicely spread on the 5 latent factors, the famous **big 5**. Based on this model, we can now predict back the scores for each individual for these new variables:
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"))
@@ -104,6 +104,7 @@ plot(n) +
 
 # Confirmatory Factor Analysis (CFA)
 
+We've seen above that while an EFA with 5 latent variables works great on our dataset, a structure with 6 latent factors might in fact be more appropriate. How can we statistically test if that's actually the case?
 CFA bridges factor analysis with Structural Equation Modelling (SEM).
 
 Show `data_partition`.
