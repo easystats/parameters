@@ -13,6 +13,9 @@ data_partition(x, training_proportion = 0.7, group = NULL)
 
 \item{group}{A character vector indicating the name(s) of the column(s) used for stratified partitioning.}
 }
+\value{
+A list of two data frames, named \code{test} and \code{training}.
+}
 \description{
 Creates a training and a test set based on a dataframe. Can also be stratified (i.e., evenly spread a given factor) using the \code{group} argument.
 }
