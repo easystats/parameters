@@ -13,20 +13,19 @@
 #' data_partition(df)
 #' data_partition(df, group = "Species")
 #' data_partition(df, group = c("Species", "Smell"))
-#'
-#'  @export
+#' @export
 data_partition <- function(x, training_proportion = 0.7, group = NULL, ...){
 
   training <- data.frame()
   test <- data.frame()
 
-  if(!is.null(group)){
-    for(i in split(x, x[group])){
+  if (!is.null(group)) {
+    for (i in split(x, x[group])) {
       out <- .data_partition(i, training_proportion)
-      training <- rbind(training, i[out$training, ])
-      test <- rbind(test, i[out$test, ])
+      training <- rbind(training, i[out$training,])
+      test <- rbind(test, i[out$test,])
     }
-  } else{
+  } else {
     out <- .data_partition(x, training_proportion)
     training <- rbind(training, x[out$training, ])
     test <- rbind(test, x[out$test, ])
@@ -34,8 +33,8 @@ data_partition <- function(x, training_proportion = 0.7, group = NULL, ...){
 
   list(training = training,
        test = test)
-
 }
+
 
 #' @keywords internal
 .data_partition <- function(x, training_proportion = 0.8){
