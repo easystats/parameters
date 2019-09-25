@@ -14,6 +14,8 @@ reference:
 - title: "Comprehensive Model Parameters"
   contents:
   - model_parameters
+  - model_parameters.aov
+  - model_parameters.befa
   - model_parameters.lm
   - model_parameters.zeroinfl
   - model_parameters.gam
@@ -49,11 +51,17 @@ reference:
 
 - title: "Variable/Feature Reduction"
   contents:
+  - parameters_reduction
   - check_factorstructure
   - check_kmo
   - check_sphericity
+  - convert_efa_to_cfa
   - n_factors
   - parameters_selection
+  - principal_components
+  - cmds
+  - DRR
+  - ICA
 
 
 - title: "Index Conversion"
@@ -70,9 +78,9 @@ reference:
   - normalize
   - describe_distribution
   - skewness
-  - principal_components
   - reshape_loadings
   - smoothness
+  - convert_data_to_numeric
 
 - title: "Table and Value Formatting"
   contents:
@@ -88,8 +96,8 @@ reference:
   - parameters_table
   - parameters_type
   - standardize_names
-
-
+        
+        
 navbar:
   type: default
   left:
@@ -111,7 +119,7 @@ navbar:
     href: reference/parameters_selection.html
   - text: Dimension Reduction
     menu:
-      - text: 'Exploratory parameters reduction'
+      - text: 'Feature reduction (PCA, cMDS, ICA, ...)'
         href: articles/parameters_reduction.html
-      - text: 'Structural Models (EFA, CFA, SEM, ...)'
+      - text: 'Structural models (EFA, CFA, SEM, ...)'
         href: articles/efa_cfa.html

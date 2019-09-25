@@ -1,5 +1,5 @@
 ---
-title: "Variable extraction (PCA, FA, ...)"
+title: "Structural Models (EFA, CFA, SEM, ...)"
 output: 
   github_document:
     toc: true
@@ -9,7 +9,7 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
-tags: [r, parameters, efa, cfa, factor analysis, sem]
+tags: [r, parameters, efa, cfa, factor analysis, sem, fa, pca, how many factors, n factors]
 vignette: >
   %\VignetteIndexEntry{Variable extraction (PCA, FA, ...)}
   \usepackage[utf8]{inputenc}
@@ -30,84 +30,74 @@ set.seed(333)
 
 
 
-## Using the `psych` package for PCA and EFA
-
-Nevertheless, we recommend using the [`psych`](https://cran.r-project.org/package=psych) [@revelle2018] package for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are **fully supported** by `parameters` through the `model_parameters()` function.
-
-As such, the above analysis can be fully reproduced as follows:
-
-```{r message=FALSE, warning=FALSE, eval=FALSE}
-library(psych)
-library(insight)  # To access data
-
-# Start by extracting the data from the model
-data <- insight::get_predictors(model)
-
-# How many factors to extract
-n <- n_factors(data, type = "PCA")
-n 
-
-# Fit the PCA
-pca <- psych::principal(data, nfactors = as.numeric(n)) %>% 
-  model_parameters()
-pca
-```
-
-*Note:* By default, `psych::principal()` uses a **varimax** rotation to extract rotated components, possibly leading to discrepancies in the results.
-
-Finally, refit the model:
-
-```{r message=FALSE, warning=FALSE, eval=FALSE}
-df <- cbind(df, predict(pca))
-
-update(model, rating ~ PC1) %>% 
-  model_parameters()
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-df <- cbind(df, predict(pca))
-
-update(model, rating ~  PC1) %>% 
-  model_parameters() %>% 
-  knitr::kable(digits=1)
-```
-
-
 ## Exploratory Factor Analysis (EFA)
 
 The difference between PCA and EFA can be quite hard to intuitively grasp as their output is very familiar. The idea is that PCA aims at extracting the most variance possible from all variables of the dataset, whereas EFA aims at creating consistent factors from the dataset without desperately trying to represent all the variables. 
 
 This is why PCA is popular for feature reduction, as it will try to best represent the variance contained in the original data, minimizing the loss of information. On the other hand, EFA is usually in the context of exploring the latent dimensions that might be hidden in the observed variables, without necessary striving at representing the whole dataset.
 
-To illustrate EFA, let us use the [International Personality Item Pool](ipip.ori.org) data available in the [ `psych`](https://www.personality-project.org/r/html/bfi.html) package. It includes 25 personality self report items.
+To illustrate EFA, let us use the [International Personality Item Pool](ipip.ori.org) data available in the [ `psych`](https://www.personality-project.org/r/html/bfi.html) package. It includes 25 personality self report items. We will explore a factor structure made of 5 latent variables.
 
 ```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(psych)
+library(parameters)
+
 data <- psych::bfi[, 1:25]  # Select only the 25 first columns corresponding to the items
 data <- na.omit(data)  # remove missing values
 
-# How many factors to extract
-n <- n_factors(data)
-n 
-```
-```{r message=FALSE, warning=FALSE, eval=FALSE}
 # Fit an EFA
 efa <- psych::fa(data, nfactors = 5) %>% 
   model_parameters(sort = TRUE, threshold = "max")
 efa
 ```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-efa <- psych::fa(data, nfactors = 5) %>% 
-  model_parameters(sort = TRUE, threshold = "max")
-efa %>% 
-  knitr::kable(digits=1)
-```
 
-As we can see, the 25 items correspond to 5 latent factors which are, you guessed it, the famous **big 5**. Based on this model, we can now predict back the scores for each individual for these new variables:
+As we can see, the 25 items nicely spread on the 5 latent factors which are, you guessed it, the famous **big 5**. Based on this model, we can now predict back the scores for each individual for these new variables:
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"))
 ```
-```{r message=FALSE, warning=FALSE, eval=FALSE}
-knitr::kable(head(predict(efa)), digits = 1, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"))
+
+
+# How many factors to retain in Factor Analysis (FA)
+
+
+When running a **factor analysis (FA)**, one often needs to specify **how many components** (or latent variables) to retain or to extract. This decision is often motivated or supported by some statistical indices and procedures aiming at finding the optimal number of factors. 
+
+Interestingly, a huge amount of methods exist to statistically adress this issue, giving sometimes very different results... Unfortunately, there is no consensus on **which method to use**, or which is the best.
+
+
+## The Method Agreement procedure
+
+The Method Agreement procedure, first implemented in the [`psycho`](https://neuropsychology.github.io/psycho.R/2018/05/24/n_factors.html) pacakge [@makowski2018psycho], proposes to rely on the consensus of methods, rather than on one method in particular.
+
+
+This procedure can be easily used via the `n_factors()` function, re-implemented and improved in the [**parameters**](https://github.com/easystats/parameters) package. One can provide a dataframe, and the function will run a large number of routines and reutrn the optimal number of factors based on the higher consensus.  
+
+
+```{r message=FALSE, warning=FALSE}
+n <- n_factors(data)
+n
 ```
+
+Interestingly, the smallest nubmer of factors that most methods suggest is 6... Which is consistent whith the newer models of personality (e.g., HEXACO).
+
+More details, as well as a summary table can be obtained as follows:
+
+```{r message=FALSE, warning=FALSE}
+as.data.frame(n)
+summary(n)
+```
+
+
+A plot can also be obtained (the `see` package must be loaded):
+
+```{r message=FALSE, warning=FALSE}
+library(see)
+
+plot(n) +
+  theme_modern()
+```
+
 
 # References

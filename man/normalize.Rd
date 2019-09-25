@@ -43,8 +43,7 @@ be excluded from standardization.}
 A normalized object.
 }
 \description{
-Performs a normalization of data. This scales all numeric
-variables in the range 0 - 1.
+Performs a normalization of data. This scales all numeric variables in the range 0 - 1.
 }
 \references{
 Smithson M, Verkuilen J (2006). A Better Lemon Squeezer? Maximum-Likelihood Regression with Beta-Distributed Dependent Variables. Psychological Methods, 11(1), 54–71.

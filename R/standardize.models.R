@@ -1,20 +1,4 @@
-#' Model Standardization
-#'
-#' Refit the model after standardizing the data.
-#'
-#' @param x A model object (of almost any class).
-#' @param include_response Logical, if \code{TRUE} (default), the response value
-#'   will also be standardized. For certain models (logistic regression,
-#'   count models, ...), the response value will never be standardized, to make
-#'   re-fitting the model work.
-#' @inheritParams standardize
-#'
-#'
-#' @examples
-#' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-#' coef(standardize(model))
-#' @return The model fitted on standardized data.
-#'
+#' @rdname standardize
 #' @importFrom stats update
 #' @importFrom insight get_data model_info find_response get_response
 #' @importFrom utils capture.output

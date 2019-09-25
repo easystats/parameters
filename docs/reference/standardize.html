@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Standardization — standardize • parameters</title>
+<title>Standardization (Z-scoring) — standardize • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,16 +41,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Standardization (Z-scoring) — standardize" />
 
-<meta property="og:title" content="Standardization — standardize" />
-<meta property="og:description" content="Performs a standardization of data or parameters. See the documentation for your object's class:
-Dataframes
-Regression models
+<meta property="og:description" content="Performs a standardization of data (Z-scoring), i.e., centred and scaled, so that the data is expressed in terms of standard deviation (i.e., mean = 0, SD = 1) or Median Absolute Deviance (median = 0, MAD = 1). When applied to a statistical model, this function extracts the dataset, standardizes it, and refits the model with this standardized version of the dataset. The normalize function can also be used to scale all numeric variables within the 0 - 1 range." />
 
-" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -130,7 +124,7 @@ Regression models
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/parameters_reduction.html">Exploratory parameters reduction</a>
+      <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA, ...)</a>
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural Models (EFA, CFA, SEM, ...)</a>
@@ -138,6 +132,7 @@ Regression models
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -153,17 +148,15 @@ Regression models
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Standardization</h1>
+    <h1>Standardization (Z-scoring)</h1>
     
     <div class="hidden name"><code>standardize.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Performs a standardization of data or parameters. See the documentation for your object's class:</p><ul>
-<li><p><a href='standardize.data.frame.html'>Dataframes</a></p></li>
-<li><p><a href='standardize.lm.html'>Regression models</a></p></li>
-</ul>
-
+    
+    <p>Performs a standardization of data (Z-scoring), i.e., centred and scaled, so that the data is expressed in terms of standard deviation (i.e., mean = 0, SD = 1) or Median Absolute Deviance (median = 0, MAD = 1). When applied to a statistical model, this function extracts the dataset, standardizes it, and refits the model with this standardized version of the dataset. The <code><a href='normalize.html'>normalize</a></code> function can also be used to scale all numeric variables within the 0 - 1 range.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>standardize</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -173,14 +166,23 @@ Regression models
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for factor</span>
-<span class='fu'>standardize</span>(<span class='no'>x</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>standardize</span>(<span class='no'>x</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>standardize</span>(<span class='no'>x</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>)
+
+<span class='co'># S3 method for lm</span>
+<span class='fu'>standardize</span>(<span class='no'>x</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>include_response</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An object.</p></td>
+      <td><p>A dataframe, a vector or a statistical model.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -195,7 +197,7 @@ mean and divide it by the standard deviation (SD).</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>The method of standardization. For data.frames, can be <code>"default"</code> (variables are divided by SD or MAD depending on <code>robust</code>) or <code>"2sd"</code> (divided by two times the deviation). For models, check <a href='standardize.lm.html'>corresponding documentation</a>.</p></td>
+      <td><p>The method of standardization. For data.frames, can be <code>"default"</code> (variables are centred by mean or median, and divided by SD or MAD, depending on <code>robust</code>) or <code>"2sd"</code>, in which case they are divided by two times the deviation (SD or MAD, again depending on <code>robust</code>).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -208,18 +210,70 @@ well. Factors are converted to numerical values, with the lowest level
 being the value <code>1</code> (unless the factor has numeric levels, which are
 converted to the corresponding numeric value).</p></td>
     </tr>
+    <tr>
+      <th>select</th>
+      <td><p>For a data frame, character vector of column names to be
+standardized. If <code>NULL</code> (the default), all variables will be
+standardized.</p></td>
+    </tr>
+    <tr>
+      <th>exclude</th>
+      <td><p>For a data frame, character vector of column names to
+be excluded from standardization.</p></td>
+    </tr>
+    <tr>
+      <th>include_response</th>
+      <td><p>For a model, if <code>TRUE</code> (default), the response value
+will also be standardized. If <code>FALSE</code>, only the predictors will be standardized.
+Note that for certain models (logistic regression, count models, ...), the
+response value will never be standardized, to make re-fitting the model work.</p></td>
+    </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The standardized object.</p>
+    <p>The standardized object (either a standardize dataframe or a statistical model fitted on standardized data).</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p><code><a href='normalize.html'>normalize</a></code> <code><a href='parameters_standardize.html'>parameters_standardize</a></code></p></div>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Dataframes</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='fu'>standardize</span>(<span class='no'>iris</span>))</div><div class='output co'>#&gt;   Sepal.Length       Sepal.Width       Petal.Length      Petal.Width     
+#&gt;  Min.   :-1.86378   Min.   :-2.4258   Min.   :-1.5623   Min.   :-1.4422  
+#&gt;  1st Qu.:-0.89767   1st Qu.:-0.5904   1st Qu.:-1.2225   1st Qu.:-1.1799  
+#&gt;  Median :-0.05233   Median :-0.1315   Median : 0.3354   Median : 0.1321  
+#&gt;  Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+#&gt;  3rd Qu.: 0.67225   3rd Qu.: 0.5567   3rd Qu.: 0.7602   3rd Qu.: 0.7880  
+#&gt;  Max.   : 2.48370   Max.   : 3.0805   Max.   : 1.7799   Max.   : 1.7064  
+#&gt;        Species  
+#&gt;  setosa    :50  
+#&gt;  versicolor:50  
+#&gt;  virginica :50  
+#&gt;                 
+#&gt;                 
+#&gt;                 </div><div class='input'>
+<span class='co'># Models</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='fu'>standardize</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;                   (Intercept)             Speciesversicolor 
+#&gt;                    0.05969491                   -0.16597410 
+#&gt;              Speciesvirginica                   Petal.Width 
+#&gt;                    0.18985849                    0.85622714 
+#&gt; Speciesversicolor:Petal.Width  Speciesvirginica:Petal.Width 
+#&gt;                    0.45674637                   -0.25713539 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
@@ -232,7 +286,7 @@ converted to the corresponding numeric value).</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

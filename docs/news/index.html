@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -122,10 +122,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
+      <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA, ...)</a>
     </li>
     <li>
-      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+      <a href="../articles/efa_cfa.html">Structural Models (EFA, CFA, SEM, ...)</a>
     </li>
   </ul>
 </li>
@@ -169,7 +169,7 @@
 <li>
 <code><a href="../reference/model_parameters.html">parameters()</a></code> is an alias for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
 <li>
-<code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support more model objects, including mixed models from packages <em>nlme</em>, <em>glmmTMB</em> or <em>GLMMadaptive</em> or zero-inflated models from package <em>pscl</em>. Along with these changes, functions for specific model objects with zero-inflated component get a <code>component</code>-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.</li>
+<code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="../reference/standardize.html">standardize()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support many more model objects, including mixed models from packages <em>nlme</em>, <em>glmmTMB</em> or <em>GLMMadaptive</em>, zero-inflated models from package <em>pscl</em> or other modelling packages. Along with these changes, functions for specific model objects with zero-inflated component get a <code>component</code>-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.</li>
 </ul>
 </div>
 <div id="new-functions" class="section level2">
@@ -180,6 +180,8 @@
 <code><a href="../reference/parameters_simulate.html">parameters_simulate()</a></code> and <code><a href="../reference/model_simulate.html">model_simulate()</a></code>, as computational faster alternatives to <code><a href="../reference/parameters_bootstrap.html">parameters_bootstrap()</a></code> and <code><a href="../reference/model_bootstrap.html">model_bootstrap()</a></code>.</li>
 <li>
 <code><a href="../reference/standardize_names.html">standardize_names()</a></code> to standardize column names from data frames, in particular objects returned from <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
+<li>
+<code><a href="../reference/p_value_kenward.html">se_kenward()</a></code> to calculate approximated standard errors for model parameters, based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
 <div id="changes-to-functions" class="section level2">
@@ -195,6 +197,7 @@
 <li>The <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now better aligns confidence intervals and p-values.</li>
 <li>
 <code><a href="../reference/normalize.html">normalize()</a></code> gets a <code>include_bounds</code>-argument, to compress normalized variables so they do not contain zeros or ones.</li>
+<li>The <code>method</code>-argument for <code><a href="../reference/ci.merMod.html">ci.merMod()</a></code> can now also be <code>"kenward"</code> to compute confidence intervals with degrees of freedom based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -202,6 +205,7 @@
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue with wrong computation of wald-approximated confidence intervals.</li>
+<li>Fixed issue with wrong computation of degrees of freedom for <code><a href="../reference/p_value_kenward.html">p_value_kenward()</a></code>.</li>
 <li>
 <code>paramerers_standardize()</code> resp. <code><a href="../reference/standardize.html">standardize()</a></code> for model objects now no longer standardizes <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> terms, count or ratio response variables, or variables of class <code>Surv</code> and <code>AsIs</code>.</li>
 </ul>
@@ -232,7 +236,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
 </div>
 
 <div class="pkgdown">
