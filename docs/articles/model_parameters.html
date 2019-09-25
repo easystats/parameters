@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -86,10 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a>
+      <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA, ...)</a>
     </li>
     <li>
-      <a href="../articles/variable_extraction.html">Variable extraction (PCA, FA, ...)</a>
+      <a href="../articles/efa_cfa.html">Structural Models (EFA, CFA, SEM, ...)</a>
     </li>
   </ul>
 </li>
@@ -273,13 +273,13 @@
 <a class="sourceLine" id="cb24-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
 <pre><code>&gt; # Loadings from Principal Component Analysis (no rotation)
 &gt; 
-&gt; Variable     | Dim.1 | Dim.2 | Dim.3
-&gt; ------------------------------------
-&gt; Sepal.Length |  0.75 |  0.07 |  0.10
-&gt; Sepal.Width  |  0.23 |  0.51 |  0.23
-&gt; Petal.Length |  0.98 |  0.00 |  0.00
-&gt; Petal.Width  |  0.94 |  0.01 |  0.00
-&gt; Species      |  0.96 |  0.75 |  0.26
+&gt; Variable     | Dim.1 | Dim.2 | Dim.3 | Complexity
+&gt; -------------------------------------------------
+&gt; Sepal.Length |  0.75 |  0.07 |  0.10 |       1.05
+&gt; Sepal.Width  |  0.23 |  0.51 |  0.23 |       1.86
+&gt; Petal.Length |  0.98 |  0.00 |  0.00 |       1.00
+&gt; Petal.Width  |  0.94 |  0.01 |  0.00 |       1.00
+&gt; Species      |  0.96 |  0.75 |  0.26 |       2.05
 &gt; 
 &gt; The 3 latent factors accounted for 96.73% of the total variance of the original data (Dim.1 = 64.50%, Dim.2 = 22.37%, Dim.3 = 9.86%).</code></pre>
 </div>
@@ -298,15 +298,7 @@
 <a class="sourceLine" id="cb26-6" title="6">                       <span class="dt">data =</span> HolzingerSwineford1939)</a>
 <a class="sourceLine" id="cb26-7" title="7"></a>
 <a class="sourceLine" id="cb26-8" title="8"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<pre><code>&gt; # Correlation type
-&gt; 
-&gt; Link              | Coefficient |   SE |       95% CI |      p
-&gt; --------------------------------------------------------------
-&gt; visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | &lt; .001
-&gt; visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | &lt; .001
-&gt; textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | &lt; .001
-&gt; 
-&gt; # Loading type
+<pre><code>&gt; # Loading type
 &gt; 
 &gt; Link          | Coefficient |   SE |       95% CI |      p
 &gt; ----------------------------------------------------------
@@ -318,7 +310,15 @@
 &gt; textual =~ x6 |        0.93 | 0.06 | [0.82, 1.03] | &lt; .001
 &gt; speed =~ x7   |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001
 &gt; speed =~ x8   |        1.18 | 0.16 | [0.86, 1.50] | &lt; .001
-&gt; speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001</code></pre>
+&gt; speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001
+&gt; 
+&gt; # Correlation type
+&gt; 
+&gt; Link              | Coefficient |   SE |       95% CI |      p
+&gt; --------------------------------------------------------------
+&gt; visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | &lt; .001
+&gt; visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | &lt; .001
+&gt; textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | &lt; .001</code></pre>
 </div>
 <div id="bayesian-1" class="section level3">
 <h3 class="hasAnchor">
@@ -351,7 +351,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -40,7 +40,7 @@
 #' @importFrom stats cor
 #' @export
 n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default", package = c("nFactors", "psych"), safe = TRUE, ...) {
-  if (package == "all") {
+  if (all(package == "all")) {
     package <- c("nFactors", "EGAnet", "psych")
   }
 
