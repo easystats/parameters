@@ -28,6 +28,10 @@ options(digits=2)
 set.seed(333)
 ```
 
+```{r, warning=FALSE, message=FALSE, fig.align='center', echo=FALSE}
+include_graphics("https://raw.githubusercontent.com/easystats/parameters/master/man/figures/figure2.png")
+```
+
 
 Also known as [**feature extraction** or **dimension reduction**](https://en.wikipedia.org/wiki/Feature_extraction) in machine learning, the goal of variable reduction is to **reduce the number of predictors** by derivating, from a set of measured data, new variables intended to be informative and non-redundant. This method can be used to **simplify models**, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
 

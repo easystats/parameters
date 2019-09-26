@@ -31,7 +31,6 @@ library(dplyr)
 set.seed(333)
 ```
 
-# Model's parameters description
 
 ```{r, warning=FALSE, message=FALSE, fig.align='center', echo=FALSE}
 include_graphics("https://raw.githubusercontent.com/easystats/parameters/master/man/figures/figure1.png")

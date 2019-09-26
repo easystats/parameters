@@ -66,21 +66,21 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 #### Parameters Description
 
-- [Parameters description](https://easystats.github.io/parameters/articles/model_parameters.html)
+- [Guide to parameters description](https://easystats.github.io/parameters/articles/model_parameters.html)
 
 #### Parameters Engineering
 
-- [Bootstrapped parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
-- [Standardized parameters](https://easystats.github.io/parameters/articles/standardization.html)
+- [Guide to bootstrapped parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
+- [Guide to standardized parameters](https://easystats.github.io/parameters/articles/standardization.html)
 
 #### Parameters Selection
 
-- [Parameters selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
+- [Guide to parameters selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
 
 #### Dimension Reduction
 
-- [Feature reduction (PCA, cMDS, ICA...)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
-- [Structural models (EFA, CFA, SEM...)](https://easystats.github.io/parameters/articles/efa_cfa.html)
+- [Guide to feature reduction (PCA, cMDS, ICA...)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
+- [Guide to structural models (EFA, CFA, SEM...)](https://easystats.github.io/parameters/articles/efa_cfa.html)
 
 # Features
  
@@ -88,21 +88,14 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 <img src='man/figures/figure1.png' align="center" />
  
-The `model_parameters()` function allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
+The [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html) function (that can be accessed via the `parameters()` shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
 
-- The column names of the returned data frame are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using `standardize_names()`).
+- The column names of the returned data frame are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using [`standardize_names()`](https://easystats.github.io/parameters/reference/standardize_names.html)).
 - It is able to compute or extract indices not available by default, such as ***p*-values**, **CIs**, etc.
 - It includes **feature engineering** capabilities, including [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html) and [**standardization**](https://easystats.github.io/parameters/articles/standardization.html) of parameters.
 
 
-### Mixed models
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-library(lme4)
-
-model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
-model_parameters(model, standardize = "refit")
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(lme4)
 
 model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
@@ -110,34 +103,9 @@ model_parameters(model, standardize = "refit")
 ```
 
 
+Besides many types of regression models and packages, it also works for other types of models, such as [**structural models**](https://easystats.github.io/parameters/articles/efa_cfa.html) (EFA, CFA, SEM...).
 
-### Bayesian models
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-library(rstanarm)
-
-model <- stan_glm(mpg ~ wt + cyl, data = mtcars)
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-library(rstanarm)
-
-model <- stan_glm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
-model_parameters(model)
-```
-
-
-
-
-### Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA)
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-library(psych)
-
-model <- psych::fa(attitude, nfactors = 3)
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(psych)
 
 model <- psych::fa(attitude, nfactors = 3)
@@ -145,41 +113,13 @@ model_parameters(model)
 ```
 
 
-### Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-library(lavaan)
-
-model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
-                       textual =~ x4 + x5 + x6
-                       speed   =~ x7 + x8 + x9 ', 
-                     data=HolzingerSwineford1939)
-model_parameters(model)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-library(lavaan)
-
-model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
-                       textual =~ x4 + x5 + x6
-                       speed   =~ x7 + x8 + x9 ', 
-                     data = HolzingerSwineford1939)
-model_parameters(model)
-```
 
 ## Variable and parameters selection
 
 <img src='man/figures/figure2.png' align="center" />
  
-### General Linear Models (GLM)
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-library(dplyr)
-
-lm(disp ~ ., data = mtcars) %>% 
-  parameters_selection() %>% 
-  model_parameters()
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(dplyr)
 
 lm(disp ~ ., data = mtcars) %>% 
@@ -187,25 +127,7 @@ lm(disp ~ ., data = mtcars) %>%
   model_parameters()
 ```
 
-### Mixed models
-
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-library(lme4)
-
-lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data = iris)  %>%
-  parameters_selection() %>%
-  model_parameters()
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-library(lme4)
-
-lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data = iris)  %>%
-  parameters_selection() %>%
-  model_parameters()
-```
-
-
-### Bayesian models
+The [`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can also help you quickly select and retain the most relevant predictors using methods tailored for the model type. This function also works for mixed or Bayesian models:
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 library(rstanarm)
@@ -215,6 +137,8 @@ model <- stan_glm(mpg ~ ., data = mtcars) %>%
   model_parameters()
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(rstanarm)
+
 model <- stan_glm(mpg ~ ., data = mtcars, refresh = 0, chains = 2)
   parameters_selection(model) %>% 
   model_parameters()
@@ -222,22 +146,9 @@ model <- stan_glm(mpg ~ ., data = mtcars, refresh = 0, chains = 2)
 
 
 
- 
-## Variable and features extraction
-
-
-### How many factors to retain in Factor Analysis (FA)
-
-```{r, warning=FALSE, message=FALSE, eval = FALSE}
-n_factors(mtcars)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-n_factors(mtcars)
-```
-
 ## Miscellaneous
 
-
+This packages also contains a lot of [**other useful functions**](https://easystats.github.io/parameters/reference/index.html):
 
 ### Describe a Distribution
 
@@ -252,10 +163,19 @@ knitr::kable(describe_distribution(rnorm(300)), digits = 1)
 
 ### Standardization and normalization
 
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+df <- standardize(iris)
+describe_distribution(df$Sepal.Length)
+```
 ```{r, warning=FALSE, message=FALSE}
 df <- standardize(iris)
-summary(df$Sepal.Length)
-
+knitr::kable(describe_distribution(df$Sepal.Length), digits = 1)
+```
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
 df <- normalize(iris)
-summary(df$Sepal.Length)
+describe_distribution(df$Sepal.Length)
+```
+```{r, warning=FALSE, message=FALSE}
+df <- normalize(iris)
+knitr::kable(describe_distribution(df$Sepal.Length), digits = 1)
 ```
