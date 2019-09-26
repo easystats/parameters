@@ -80,7 +80,6 @@ Suggests:
 	rmarkdown,
 	rstanarm,
 	see,
-	spelling,
 	survey,
 	survival,
 	testthat,
