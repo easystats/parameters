@@ -86,10 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA, ...)</a>
+      <a href="articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA...)</a>
     </li>
     <li>
-      <a href="articles/efa_cfa.html">Structural models (EFA, CFA, SEM, ...)</a>
+      <a href="articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
     </li>
   </ul>
 </li>
@@ -119,7 +119,7 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Run the following:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"easystats/parameters"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"easystats/parameters"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"parameters"</span>)</a></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
@@ -127,21 +127,34 @@
 <a href="#documentation" class="anchor"></a>Documentation</h2>
 <p><a href="https://easystats.github.io/parameters/"><img src="https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63" alt="Documentation"></a> <a href="https://easystats.github.io/blog/posts/"><img src="https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800" alt="Blog"></a> <a href="https://easystats.github.io/parameters/reference/index.html"><img src="https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3" alt="Features"></a></p>
 <p>Click on the buttons above to access the package <a href="https://easystats.github.io/parameters/"><strong>documentation</strong></a> and the <a href="https://easystats.github.io/blog/posts/"><strong>easystats blog</strong></a>, and check-out these vignettes:</p>
+<div id="parameters-description" class="section level4">
+<h4 class="hasAnchor">
+<a href="#parameters-description" class="anchor"></a>Parameters Description</h4>
+<ul>
+<li><a href="https://easystats.github.io/parameters/articles/model_parameters.html">Guide to parameters description</a></li>
+</ul>
+</div>
 <div id="parameters-engineering" class="section level4">
 <h4 class="hasAnchor">
 <a href="#parameters-engineering" class="anchor"></a>Parameters Engineering</h4>
 <ul>
-<li><a href="https://easystats.github.io/parameters/articles/bootstrapping.html">Bootstrapped parameters</a></li>
-<li><a href="https://easystats.github.io/parameters/articles/standardization.html">Standardized parameters</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/bootstrapping.html">Guide to bootstrapped parameters</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/standardization.html">Guide to standardized parameters</a></li>
 </ul>
 </div>
-<div id="variablefeature-reduction" class="section level4">
+<div id="parameters-selection" class="section level4">
 <h4 class="hasAnchor">
-<a href="#variablefeature-reduction" class="anchor"></a>Variable/Feature Reduction</h4>
+<a href="#parameters-selection" class="anchor"></a>Parameters Selection</h4>
 <ul>
-<li><a href="https://easystats.github.io/parameters/articles/n_factors.html">How many factors to retain in Factor Analysis (FA)</a></li>
-<li><a href="https://easystats.github.io/parameters/articles/variable_extraction.html">Variable extraction (PCA, FA, …)</a></li>
-<li><a href="https://easystats.github.io/parameters/articles/variable_selection.html">Variable selection (stepwise, projpred, …)</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/parameters_selection.html">Guide to parameters selection</a></li>
+</ul>
+</div>
+<div id="dimension-reduction" class="section level4">
+<h4 class="hasAnchor">
+<a href="#dimension-reduction" class="anchor"></a>Dimension Reduction</h4>
+<ul>
+<li><a href="https://easystats.github.io/parameters/articles/parameters_reduction.html">Guide to feature reduction (PCA, cMDS, ICA…)</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/efa_cfa.html">Guide to structural models (EFA, CFA, SEM…)</a></li>
 </ul>
 </div>
 </div>
@@ -153,275 +166,82 @@
 <h2 class="hasAnchor">
 <a href="#models-parameters-description" class="anchor"></a>Model’s parameters description</h2>
 <p><img src="reference/figures/figure1.png" align="center"></p>
-<p>The <code><a href="reference/model_parameters.html">model_parameters()</a></code> function allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom"><code><a href="https://rdrr.io/pkg/broom/man/reexports.html">broom::tidy()</a></code></a>, with some notable differences:</p>
+<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code><a href="reference/model_parameters.html">model_parameters()</a></code></a> function (that can be accessed via the <code><a href="reference/model_parameters.html">parameters()</a></code> shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom"><code><a href="https://rdrr.io/pkg/broom/man/reexports.html">broom::tidy()</a></code></a>, with some notable differences:</p>
 <ul>
-<li>The column names of the returned data frame are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (<strong>however</strong>, you can get standardized (generic) column names using <code><a href="reference/standardize_names.html">standardize_names()</a></code>).</li>
+<li>The column names of the returned data frame are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (<strong>however</strong>, you can get standardized (generic) column names using <a href="https://easystats.github.io/parameters/reference/standardize_names.html"><code><a href="reference/standardize_names.html">standardize_names()</a></code></a>).</li>
 <li>It is able to compute or extract indices not available by default, such as <strong><em>p</em>-values</strong>, <strong>CIs</strong>, etc.</li>
 <li>It includes <strong>feature engineering</strong> capabilities, including <a href="https://easystats.github.io/parameters/articles/bootstrapping.html"><strong>bootstrapping</strong></a> and <a href="https://easystats.github.io/parameters/articles/standardization.html"><strong>standardization</strong></a> of parameters.</li>
 </ul>
-<div id="correlations" class="section level3">
-<h3 class="hasAnchor">
-<a href="#correlations" class="anchor"></a>Correlations</h3>
-<div id="frequentist" class="section level4">
-<h4 class="hasAnchor">
-<a href="#frequentist" class="anchor"></a>Frequentist</h4>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># Parameter1        |       Parameter2 |     r |     t |  df |    p |         95% CI |  Method</span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="co"># --------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="co"># iris$Sepal.Length | iris$Sepal.Width | -0.12 | -1.44 | 148 | &gt; .1 | [-0.27,  0.04] | Pearson</span></a></code></pre></div>
-</div>
-<div id="bayesian" class="section level4">
-<h4 class="hasAnchor">
-<a href="#bayesian" class="anchor"></a>Bayesian</h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(BayesFactor)</a>
-<a class="sourceLine" id="cb5-2" title="2"></a>
-<a class="sourceLine" id="cb5-3" title="3">model &lt;-<span class="st"> </span>BayesFactor<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html">correlationBF</a></span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)</a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Parameter | Median |         89% CI |     pd | % in ROPE |              Prior |   BF</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="co"># ------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="co"># rho       |  -0.11 | [-0.23,  0.02] | 92.90% |    43.13% | Cauchy (0 +- 0.33) | 0.51</span></a></code></pre></div>
-</div>
-</div>
-<div id="t-tests" class="section level3">
-<h3 class="hasAnchor">
-<a href="#t-tests" class="anchor"></a><em>t</em>-tests</h3>
-<div id="frequentist-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#frequentist-1" class="anchor"></a>Frequentist</h4>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">df &lt;-<span class="st"> </span>iris</a>
-<a class="sourceLine" id="cb7-2" title="2">df<span class="op">$</span>Sepal.Big &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(df<span class="op">$</span>Sepal.Width <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>, <span class="st">"Yes"</span>, <span class="st">"No"</span>)</a>
-<a class="sourceLine" id="cb7-3" title="3"></a>
-<a class="sourceLine" id="cb7-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big, <span class="dt">data =</span> df)</a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># Parameter    |     Group | Mean_Group1 | Mean_Group2 | Difference |    t |     df |    p |         95% CI |                  Method</span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="co"># -----------------------------------------------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co"># Sepal.Length | Sepal.Big |        5.95 |        5.78 |      -0.18 | 1.36 | 142.15 | &gt; .1 | [-0.08,  0.43] | Welch Two Sample t-test</span></a></code></pre></div>
-</div>
-<div id="bayesian-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#bayesian-1" class="anchor"></a>Bayesian</h4>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">model &lt;-<span class="st"> </span>BayesFactor<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span>(<span class="dt">formula =</span> Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big, </a>
-<a class="sourceLine" id="cb9-2" title="2">    <span class="dt">data =</span> df)</a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Parameter  | Median |         89% CI |     pd | % in ROPE |              Prior |   BF</span></a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="co"># -------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="co"># Difference |   0.16 | [-0.05,  0.37] | 88.85% |    26.79% | Cauchy (0 +- 0.71) | 0.38</span></a></code></pre></div>
-</div>
-</div>
-<div id="anovas" class="section level3">
-<h3 class="hasAnchor">
-<a href="#anovas" class="anchor"></a>ANOVAs</h3>
-<div id="simple" class="section level4">
-<h4 class="hasAnchor">
-<a href="#simple" class="anchor"></a>Simple</h4>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big, <span class="dt">data =</span> df)</a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">omega_squared =</span> <span class="st">"partial"</span>, <span class="dt">eta_squared =</span> <span class="st">"partial"</span>, </a>
-<a class="sourceLine" id="cb11-3" title="3">    <span class="dt">epsilon_squared =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq</span></a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="co"># --------------------------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="co"># Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | &gt; .1 |               0.00 |             0.01 |       0.00</span></a>
-<a class="sourceLine" id="cb12-4" title="4"><span class="co"># Residuals |      101.07 | 148 |        0.68 |      |      |                    |                  |</span></a></code></pre></div>
-</div>
-<div id="repeated-measures" class="section level4">
-<h4 class="hasAnchor">
-<a href="#repeated-measures" class="anchor"></a>Repeated measures</h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span>(Species), <span class="dt">data =</span> df)</a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># Group   | Parameter | Sum_Squares |  df | Mean_Square |     F |      p</span></a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="co"># ----------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb14-3" title="3"><span class="co"># Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 | &gt; .1  </span></a>
-<a class="sourceLine" id="cb14-4" title="4"><span class="co"># Species | Residuals |       34.94 |   1 |       34.94 |       |       </span></a>
-<a class="sourceLine" id="cb14-5" title="5"><span class="co"># Within  | Sepal.Big |        4.74 |   1 |        4.74 | 20.24 | &lt; .001</span></a>
-<a class="sourceLine" id="cb14-6" title="6"><span class="co"># Within  | Residuals |       34.21 | 146 |        0.23 |       |</span></a></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</a>
-<a class="sourceLine" id="cb15-2" title="2">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span>(<span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Big <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), </a>
-<a class="sourceLine" id="cb15-3" title="3">    <span class="dt">data =</span> df))</a>
-<a class="sourceLine" id="cb15-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># Parameter | Sum_Squares | df | Mean_Square |     F</span></a>
-<a class="sourceLine" id="cb16-2" title="2"><span class="co"># --------------------------------------------------</span></a>
-<a class="sourceLine" id="cb16-3" title="3"><span class="co"># Sepal.Big |        4.64 |  1 |        4.64 | 19.82</span></a></code></pre></div>
-</div>
-</div>
-<div id="general-linear-models-glm" class="section level3">
-<h3 class="hasAnchor">
-<a href="#general-linear-models-glm" class="anchor"></a>General Linear Models (GLM)</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(vs <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars, <span class="dt">family =</span> <span class="st">"binomial"</span>)</a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"refit"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># Parameter   | Coefficient |   SE |         95% CI |     z | df |     p | Coefficient (std.)</span></a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="co"># -------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb18-3" title="3"><span class="co"># (Intercept) |       10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 29 | &lt; .05 |              -0.76</span></a>
-<a class="sourceLine" id="cb18-4" title="4"><span class="co"># wt          |        2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 29 | &gt; .1  |               2.05</span></a>
-<a class="sourceLine" id="cb18-5" title="5"><span class="co"># cyl         |       -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 29 | &lt; .05 |              -5.23</span></a></code></pre></div>
-</div>
-<div id="bootstrapped-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bootstrapped-models" class="anchor"></a>Bootstrapped models</h3>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>drat <span class="op">*</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
-<a class="sourceLine" id="cb19-2" title="2"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">bootstrap =</span> <span class="ot">TRUE</span>, <span class="dt">iterations =</span> <span class="dv">500</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># Parameter   | Coefficient |           95% CI |     p</span></a>
-<a class="sourceLine" id="cb20-2" title="2"><span class="co"># ----------------------------------------------------</span></a>
-<a class="sourceLine" id="cb20-3" title="3"><span class="co"># (Intercept) |       -0.94 | [-45.58,  32.09] | &gt; .1 </span></a>
-<a class="sourceLine" id="cb20-4" title="4"><span class="co"># drat        |        9.55 | [  0.55,  21.32] | &lt; .05</span></a>
-<a class="sourceLine" id="cb20-5" title="5"><span class="co"># cyl         |        2.18 | [ -2.50,   8.41] | &gt; .1 </span></a>
-<a class="sourceLine" id="cb20-6" title="6"><span class="co"># drat * cyl  |       -1.25 | [ -2.92,   0.12] | 0.06</span></a></code></pre></div>
-</div>
-<div id="mixed-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mixed-models" class="anchor"></a>Mixed models</h3>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</a>
-<a class="sourceLine" id="cb21-2" title="2"></a>
-<a class="sourceLine" id="cb21-3" title="3">model &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
-<a class="sourceLine" id="cb21-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"refit"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># Parameter    | Coefficient |   SE |       95% CI |    t |      p | Coefficient (std.)</span></a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="co"># -------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb22-3" title="3"><span class="co"># (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | &lt; .001 |               0.00</span></a>
-<a class="sourceLine" id="cb22-4" title="4"><span class="co"># Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | &lt; .001 |               1.14</span></a></code></pre></div>
-</div>
-<div id="bayesian-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bayesian-models" class="anchor"></a>Bayesian models</h3>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
-<a class="sourceLine" id="cb23-2" title="2"></a>
-<a class="sourceLine" id="cb23-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
-<a class="sourceLine" id="cb23-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co"># Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior</span></a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="co"># -----------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="co"># (Intercept) |  39.65 | [36.79, 42.34] |   100% |        0% | 1.000 | 4833 | Normal (0 +- 60.27)</span></a>
-<a class="sourceLine" id="cb24-4" title="4"><span class="co"># wt          |  -3.17 | [-4.39, -1.93] |   100% |     0.02% | 1.001 | 2206 | Normal (0 +- 15.40)</span></a>
-<a class="sourceLine" id="cb24-5" title="5"><span class="co"># cyl         |  -1.52 | [-2.24, -0.89] | 99.95% |     1.90% | 1.001 | 2209 |  Normal (0 +- 8.44)</span></a></code></pre></div>
-</div>
-<div id="exploratory-factor-analysis-efa-and-principal-component-analysis-pca" class="section level3">
-<h3 class="hasAnchor">
-<a href="#exploratory-factor-analysis-efa-and-principal-component-analysis-pca" class="anchor"></a>Exploratory Factor Analysis (EFA) and Principal Component Analysis (PCA)</h3>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(psych)</a>
-<a class="sourceLine" id="cb25-2" title="2"></a>
-<a class="sourceLine" id="cb25-3" title="3">model &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span>(attitude, <span class="dt">nfactors =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb25-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># # Rotated loadings from Principal Component Analysis (oblimin-rotation)</span></a>
-<a class="sourceLine" id="cb26-2" title="2"><span class="co"># </span></a>
-<a class="sourceLine" id="cb26-3" title="3"><span class="co"># Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness</span></a>
-<a class="sourceLine" id="cb26-4" title="4"><span class="co"># ------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb26-5" title="5"><span class="co"># rating     |  0.90 | -0.07 | -0.05 |       1.02 |       0.23</span></a>
-<a class="sourceLine" id="cb26-6" title="6"><span class="co"># complaints |  0.97 | -0.06 |  0.04 |       1.01 |       0.10</span></a>
-<a class="sourceLine" id="cb26-7" title="7"><span class="co"># privileges |  0.44 |  0.25 | -0.05 |       1.64 |       0.65</span></a>
-<a class="sourceLine" id="cb26-8" title="8"><span class="co"># learning   |  0.47 |  0.54 | -0.28 |       2.51 |       0.24</span></a>
-<a class="sourceLine" id="cb26-9" title="9"><span class="co"># raises     |  0.55 |  0.43 |  0.25 |       2.35 |       0.23</span></a>
-<a class="sourceLine" id="cb26-10" title="10"><span class="co"># critical   |  0.16 |  0.17 |  0.48 |       1.46 |       0.67</span></a>
-<a class="sourceLine" id="cb26-11" title="11"><span class="co"># advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22</span></a>
-<a class="sourceLine" id="cb26-12" title="12"><span class="co"># </span></a>
-<a class="sourceLine" id="cb26-13" title="13"><span class="co"># The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span></a></code></pre></div>
-</div>
-<div id="confirmatory-factor-analysis-cfa-and-structural-equation-models-sem" class="section level3">
-<h3 class="hasAnchor">
-<a href="#confirmatory-factor-analysis-cfa-and-structural-equation-models-sem" class="anchor"></a>Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)</h3>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lavaan)</a>
-<a class="sourceLine" id="cb27-2" title="2"></a>
-<a class="sourceLine" id="cb27-3" title="3">model &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(<span class="st">" visual  =~ x1 + x2 + x3</span></a>
-<a class="sourceLine" id="cb27-4" title="4"><span class="st">                       textual =~ x4 + x5 + x6</span></a>
-<a class="sourceLine" id="cb27-5" title="5"><span class="st">                       speed   =~ x7 + x8 + x9 "</span>, </a>
-<a class="sourceLine" id="cb27-6" title="6">    <span class="dt">data =</span> HolzingerSwineford1939)</a>
-<a class="sourceLine" id="cb27-7" title="7"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co"># # Loading type</span></a>
-<a class="sourceLine" id="cb28-2" title="2"><span class="co"># </span></a>
-<a class="sourceLine" id="cb28-3" title="3"><span class="co"># Link          | Coefficient |   SE |       95% CI |      p</span></a>
-<a class="sourceLine" id="cb28-4" title="4"><span class="co"># ----------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb28-5" title="5"><span class="co"># visual =~ x1  |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-6" title="6"><span class="co"># visual =~ x2  |        0.55 | 0.10 | [0.36, 0.75] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-7" title="7"><span class="co"># visual =~ x3  |        0.73 | 0.11 | [0.52, 0.94] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-8" title="8"><span class="co"># textual =~ x4 |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-9" title="9"><span class="co"># textual =~ x5 |        1.11 | 0.07 | [0.98, 1.24] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-10" title="10"><span class="co"># textual =~ x6 |        0.93 | 0.06 | [0.82, 1.03] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-11" title="11"><span class="co"># speed =~ x7   |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-12" title="12"><span class="co"># speed =~ x8   |        1.18 | 0.16 | [0.86, 1.50] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-13" title="13"><span class="co"># speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-14" title="14"><span class="co"># </span></a>
-<a class="sourceLine" id="cb28-15" title="15"><span class="co"># # Correlation type</span></a>
-<a class="sourceLine" id="cb28-16" title="16"><span class="co"># </span></a>
-<a class="sourceLine" id="cb28-17" title="17"><span class="co"># Link              | Coefficient |   SE |       95% CI |      p</span></a>
-<a class="sourceLine" id="cb28-18" title="18"><span class="co"># --------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb28-19" title="19"><span class="co"># visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-20" title="20"><span class="co"># visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | &lt; .001</span></a>
-<a class="sourceLine" id="cb28-21" title="21"><span class="co"># textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | &lt; .001</span></a></code></pre></div>
-</div>
+<!-- end list --><div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3">model &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data =</span> iris)</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"refit"</span>)</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co"># Parameter    | Coefficient |   SE |       95% CI |    t |      p | Coefficient (std.)</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co"># -------------------------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"># (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | &lt; .001 |               0.00</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co"># Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | &lt; .001 |               1.14</span></a></code></pre></div>
+<p>Besides many types of regression models and packages, it also works for other types of models, such as <a href="https://easystats.github.io/parameters/articles/efa_cfa.html"><strong>structural models</strong></a> (EFA, CFA, SEM…).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(psych)</a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3">model &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span>(attitude, <span class="dt">nfactors =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co"># # Rotated loadings from Principal Component Analysis (oblimin-rotation)</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co"># </span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co"># Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co"># ------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co"># rating     |  0.90 | -0.07 | -0.05 |       1.02 |       0.23</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co"># complaints |  0.97 | -0.06 |  0.04 |       1.01 |       0.10</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co"># privileges |  0.44 |  0.25 | -0.05 |       1.64 |       0.65</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co"># learning   |  0.47 |  0.54 | -0.28 |       2.51 |       0.24</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co"># raises     |  0.55 |  0.43 |  0.25 |       2.35 |       0.23</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co"># critical   |  0.16 |  0.17 |  0.48 |       1.46 |       0.67</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co"># advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co"># </span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co"># The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span></a></code></pre></div>
 </div>
 <div id="variable-and-parameters-selection" class="section level2">
 <h2 class="hasAnchor">
 <a href="#variable-and-parameters-selection" class="anchor"></a>Variable and parameters selection</h2>
 <p><img src="reference/figures/figure2.png" align="center"></p>
-<div id="general-linear-models-glm-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#general-linear-models-glm-1" class="anchor"></a>General Linear Models (GLM)</h3>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb29-2" title="2"></a>
-<a class="sourceLine" id="cb29-3" title="3"><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="co"># Parameter   | Coefficient |     SE |             95% CI |     t | df |      p</span></a>
-<a class="sourceLine" id="cb30-2" title="2"><span class="co"># -----------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb30-3" title="3"><span class="co"># (Intercept) |      141.70 | 125.67 | [-116.62,  400.02] |  1.13 | 26 | &gt; .1  </span></a>
-<a class="sourceLine" id="cb30-4" title="4"><span class="co"># cyl         |       13.14 |   7.90 | [  -3.10,   29.38] |  1.66 | 26 | &gt; .1  </span></a>
-<a class="sourceLine" id="cb30-5" title="5"><span class="co"># hp          |        0.63 |   0.20 | [   0.22,    1.03] |  3.18 | 26 | &lt; .01 </span></a>
-<a class="sourceLine" id="cb30-6" title="6"><span class="co"># wt          |       80.45 |  12.22 | [  55.33,  105.57] |  6.58 | 26 | &lt; .001</span></a>
-<a class="sourceLine" id="cb30-7" title="7"><span class="co"># qsec        |      -14.68 |   6.14 | [ -27.31,   -2.05] | -2.39 | 26 | &lt; .05 </span></a>
-<a class="sourceLine" id="cb30-8" title="8"><span class="co"># carb        |      -28.75 |   5.60 | [ -40.28,  -17.23] | -5.13 | 26 | &lt; .001</span></a></code></pre></div>
-</div>
-<div id="mixed-models-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mixed-models-1" class="anchor"></a>Mixed models</h3>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</a>
-<a class="sourceLine" id="cb31-2" title="2"></a>
-<a class="sourceLine" id="cb31-3" title="3"><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">*</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-4" title="4"><span class="st">    </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-5" title="5"><span class="st">    </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="co"># Parameter                                  | Coefficient |   SE |         95% CI |     t |     p</span></a>
-<a class="sourceLine" id="cb32-2" title="2"><span class="co"># ------------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb32-3" title="3"><span class="co"># (Intercept)                                |        1.78 | 0.91 | [-0.01,  3.57] |  1.95 | 0.05 </span></a>
-<a class="sourceLine" id="cb32-4" title="4"><span class="co"># Petal.Length * Petal.Width                 |        0.28 | 0.24 | [-0.20,  0.76] |  1.16 | &gt; .1 </span></a>
-<a class="sourceLine" id="cb32-5" title="5"><span class="co"># (Sepal.Width * Petal.Length) * Petal.Width |       -0.05 | 0.08 | [-0.20,  0.10] | -0.61 | &gt; .1 </span></a>
-<a class="sourceLine" id="cb32-6" title="6"><span class="co"># Petal.Width                                |       -2.04 | 1.52 | [-5.02,  0.94] | -1.34 | &gt; .1 </span></a>
-<a class="sourceLine" id="cb32-7" title="7"><span class="co"># Petal.Length                               |        0.88 | 0.50 | [-0.09,  1.85] |  1.77 | 0.08 </span></a>
-<a class="sourceLine" id="cb32-8" title="8"><span class="co"># Sepal.Width                                |        0.75 | 0.27 | [ 0.22,  1.28] |  2.80 | &lt; .01</span></a>
-<a class="sourceLine" id="cb32-9" title="9"><span class="co"># Sepal.Width * Petal.Width                  |        0.34 | 0.49 | [-0.62,  1.30] |  0.70 | &gt; .1 </span></a>
-<a class="sourceLine" id="cb32-10" title="10"><span class="co"># Sepal.Width * Petal.Length                 |       -0.10 | 0.16 | [-0.42,  0.21] | -0.63 | &gt; .1</span></a></code></pre></div>
-</div>
-<div id="bayesian-models-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bayesian-models-1" class="anchor"></a>Bayesian models</h3>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
-<a class="sourceLine" id="cb33-2" title="2"></a>
-<a class="sourceLine" id="cb33-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-4" title="4"><span class="st">    </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co"># Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior</span></a>
-<a class="sourceLine" id="cb34-2" title="2"><span class="co"># -----------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb34-3" title="3"><span class="co"># (Intercept) |  19.82 | [-1.20, 41.01] | 93.90% |     1.30% | 0.999 | 1254 | Normal (0 +- 60.27)</span></a>
-<a class="sourceLine" id="cb34-4" title="4"><span class="co"># wt          |  -3.96 | [-6.01, -1.79] | 99.65% |     0.60% | 0.999 | 1249 | Normal (0 +- 15.40)</span></a>
-<a class="sourceLine" id="cb34-5" title="5"><span class="co"># cyl         |  -0.50 | [-1.85,  0.74] | 72.90% |    45.90% | 1.000 | 1472 |  Normal (0 +- 8.44)</span></a>
-<a class="sourceLine" id="cb34-6" title="6"><span class="co"># hp          |  -0.02 | [-0.04,  0.01] | 88.20% |      100% | 0.999 | 1813 |  Normal (0 +- 0.22)</span></a>
-<a class="sourceLine" id="cb34-7" title="7"><span class="co"># am          |   2.93 | [ 0.24,  5.80] | 94.85% |     6.85% | 1.000 | 1500 | Normal (0 +- 15.07)</span></a>
-<a class="sourceLine" id="cb34-8" title="8"><span class="co"># qsec        |   0.80 | [-0.04,  1.79] | 92.15% |    35.40% | 0.999 | 1237 |  Normal (0 +- 8.43)</span></a>
-<a class="sourceLine" id="cb34-9" title="9"><span class="co"># disp        |   0.01 | [-0.01,  0.03] | 86.10% |      100% | 1.000 | 1409 |  Normal (0 +- 0.12)</span></a></code></pre></div>
-</div>
-</div>
-<div id="variable-and-features-extraction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#variable-and-features-extraction" class="anchor"></a>Variable and features extraction</h2>
-<div id="how-many-factors-to-retain-in-factor-analysis-fa" class="section level3">
-<h3 class="hasAnchor">
-<a href="#how-many-factors-to-retain-in-factor-analysis-fa" class="anchor"></a>How many factors to retain in Factor Analysis (FA)</h3>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw"><a href="reference/n_factors.html">n_factors</a></span>(mtcars)</a></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="co"># # Method Agreement Procedure:</span></a>
-<a class="sourceLine" id="cb36-2" title="2"><span class="co"># </span></a>
-<a class="sourceLine" id="cb36-3" title="3"><span class="co"># The choice of 3 dimensions is supported by 4 (28.57%) methods out of 14 (Bartlett, CNG, SE Scree, R2).</span></a></code></pre></div>
-</div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co"># Parameter   | Coefficient |     SE |             95% CI |     t | df |      p</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co"># -----------------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co"># (Intercept) |      141.70 | 125.67 | [-116.62,  400.02] |  1.13 | 26 | &gt; .1  </span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="co"># cyl         |       13.14 |   7.90 | [  -3.10,   29.38] |  1.66 | 26 | &gt; .1  </span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="co"># hp          |        0.63 |   0.20 | [   0.22,    1.03] |  3.18 | 26 | &lt; .01 </span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="co"># wt          |       80.45 |  12.22 | [  55.33,  105.57] |  6.58 | 26 | &lt; .001</span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="co"># qsec        |      -14.68 |   6.14 | [ -27.31,   -2.05] | -2.39 | 26 | &lt; .05 </span></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="co"># carb        |      -28.75 |   5.60 | [ -40.28,  -17.23] | -5.13 | 26 | &lt; .001</span></a></code></pre></div>
+<p>The <a href="https://easystats.github.io/parameters/articles/parameters_selection.html"><code><a href="reference/parameters_selection.html">parameters_selection()</a></code></a> can also help you quickly select and retain the most relevant predictors using methods tailored for the model type. This function also works for mixed or Bayesian models:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="co"># -----------------------------------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co"># (Intercept) |  19.31 | [-5.95, 41.92] | 90.55% |     1.15% | 1.001 | 1083 | Normal (0 +- 60.27)</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co"># wt          |  -3.97 | [-6.00, -1.91] | 99.70% |     0.90% | 1.000 | 1222 | Normal (0 +- 15.40)</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co"># cyl         |  -0.44 | [-1.66,  0.98] | 70.90% |    46.95% | 0.999 | 1250 |  Normal (0 +- 8.44)</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co"># hp          |  -0.02 | [-0.04,  0.00] | 89.70% |      100% | 1.003 | 1191 |  Normal (0 +- 0.22)</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co"># am          |   3.00 | [ 0.08,  6.08] | 94.70% |     6.55% | 0.999 | 1480 | Normal (0 +- 15.07)</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co"># qsec        |   0.83 | [-0.12,  1.91] | 90.80% |    33.35% | 1.002 | 1049 |  Normal (0 +- 8.43)</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co"># disp        |   0.01 | [-0.01,  0.03] | 86.10% |      100% | 0.999 | 1300 |  Normal (0 +- 0.12)</span></a></code></pre></div>
 </div>
 <div id="miscellaneous" class="section level2">
 <h2 class="hasAnchor">
 <a href="#miscellaneous" class="anchor"></a>Miscellaneous</h2>
+<p>This packages also contains a lot of <a href="https://easystats.github.io/parameters/reference/index.html"><strong>other useful functions</strong></a>:</p>
 <div id="describe-a-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#describe-a-distribution" class="anchor"></a>Describe a Distribution</h3>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">300</span>)</a>
-<a class="sourceLine" id="cb37-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(x)</a></code></pre></div>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">300</span>)), <span class="dt">digits =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">300</span>)</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">300</span>)), <span class="dt">digits =</span> <span class="dv">1</span>)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Mean</th>
@@ -434,12 +254,12 @@
 <th align="right">n_Missing</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="right">0.1</td>
+<td align="right">0</td>
 <td align="right">1</td>
-<td align="right">-3</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">0</td>
+<td align="right">-2</td>
+<td align="right">4</td>
+<td align="right">0.1</td>
+<td align="right">0.1</td>
 <td align="right">300</td>
 <td align="right">0</td>
 </tr></tbody>
@@ -448,15 +268,58 @@
 <div id="standardization-and-normalization" class="section level3">
 <h3 class="hasAnchor">
 <a href="#standardization-and-normalization" class="anchor"></a>Standardization and normalization</h3>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/standardize.html">standardize</a></span>(iris)</a>
-<a class="sourceLine" id="cb39-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(df<span class="op">$</span>Sepal.Length)</a>
-<a class="sourceLine" id="cb39-3" title="3"><span class="co">#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></a>
-<a class="sourceLine" id="cb39-4" title="4"><span class="co">#    -1.9    -0.9    -0.1     0.0     0.7     2.5</span></a>
-<a class="sourceLine" id="cb39-5" title="5"></a>
-<a class="sourceLine" id="cb39-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/normalize.html">normalize</a></span>(iris)</a>
-<a class="sourceLine" id="cb39-7" title="7"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(df<span class="op">$</span>Sepal.Length)</a>
-<a class="sourceLine" id="cb39-8" title="8"><span class="co">#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></a>
-<a class="sourceLine" id="cb39-9" title="9"><span class="co">#     0.0     0.2     0.4     0.4     0.6     1.0</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/standardize.html">standardize</a></span>(iris)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(df<span class="op">$</span>Sepal.Length)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/standardize.html">standardize</a></span>(iris)</a>
+<a class="sourceLine" id="cb11-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(df<span class="op">$</span>Sepal.Length), <span class="dt">digits =</span> <span class="dv">1</span>)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">Mean</th>
+<th align="right">SD</th>
+<th align="right">Min</th>
+<th align="right">Max</th>
+<th align="right">Skewness</th>
+<th align="right">Kurtosis</th>
+<th align="right">n</th>
+<th align="right">n_Missing</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">-2</td>
+<td align="right">2</td>
+<td align="right">0.3</td>
+<td align="right">-0.6</td>
+<td align="right">150</td>
+<td align="right">0</td>
+</tr></tbody>
+</table>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/normalize.html">normalize</a></span>(iris)</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(df<span class="op">$</span>Sepal.Length)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/normalize.html">normalize</a></span>(iris)</a>
+<a class="sourceLine" id="cb13-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(df<span class="op">$</span>Sepal.Length), <span class="dt">digits =</span> <span class="dv">1</span>)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">Mean</th>
+<th align="right">SD</th>
+<th align="right">Min</th>
+<th align="right">Max</th>
+<th align="right">Skewness</th>
+<th align="right">Kurtosis</th>
+<th align="right">n</th>
+<th align="right">n_Missing</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="right">0.4</td>
+<td align="right">0.2</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.3</td>
+<td align="right">-0.6</td>
+<td align="right">150</td>
+<td align="right">0</td>
+</tr></tbody>
+</table>
 </div>
 </div>
 </div>
@@ -516,7 +379,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

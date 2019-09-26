@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exploratory parameters reduction • parameters</title>
+<title>Feature Reduction (PCA, cMDS, ICA...) • parameters</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Exploratory parameters reduction">
+<meta property="og:title" content="Feature Reduction (PCA, cMDS, ICA...)">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -86,10 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA, ...)</a>
+      <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA...)</a>
     </li>
     <li>
-      <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM, ...)</a>
+      <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
     </li>
   </ul>
 </li>
@@ -107,7 +107,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Exploratory parameters reduction</h1>
+      <h1>Feature Reduction (PCA, cMDS, ICA…)</h1>
             
       
       
@@ -117,13 +117,11 @@
 
     
     
-<div id="variable-extraction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#variable-extraction" class="anchor"></a>Variable Extraction</h1>
+<p><img src="https://raw.githubusercontent.com/easystats/parameters/master/man/figures/figure2.png" style="display: block; margin: auto;"></p>
 <p>Also known as <a href="https://en.wikipedia.org/wiki/Feature_extraction"><strong>feature extraction</strong> or <strong>dimension reduction</strong></a> in machine learning, the goal of variable reduction is to <strong>reduce the number of predictors</strong> by derivating, from a set of measured data, new variables intended to be informative and non-redundant. This method can be used to <strong>simplify models</strong>, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).</p>
-<div id="quick-and-exploratory-method" class="section level2">
-<h2 class="hasAnchor">
-<a href="#quick-and-exploratory-method" class="anchor"></a>Quick and Exploratory Method</h2>
+<div id="quick-and-exploratory-method" class="section level1">
+<h1 class="hasAnchor">
+<a href="#quick-and-exploratory-method" class="anchor"></a>Quick and Exploratory Method</h1>
 <p>Let’s start by fitting a multiple regression with the <code>attitude</code> dataset, available is base R, to predict the overal <strong>rating</strong> by employees of their organization with the remaining variables (handling of employee <strong>complaints</strong>, special <strong>privileges</strong>, opportunity of <strong>learning</strong>, <strong>raises</strong>, a feedback considered too <strong>critical</strong> and opportunity of <strong>advancement</strong>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</a>
@@ -163,9 +161,9 @@
 <p>A different method (<strong>Classical Multidimensional Scaling - cMDS</strong>) suggests that negative critiques do not have a significant impact on the rating, and that the lack of opportunities of career advancement is a separate dimension with an importance on its own.</p>
 <p>Altough this function can be useful in exploratory data analysis, it’s best to perform the dimension reduction step in a <strong>separate and dedicated stage</strong>, as this is a very important process in the data analysis workflow.</p>
 </div>
-<div id="principal-component-analysis-pca" class="section level2">
-<h2 class="hasAnchor">
-<a href="#principal-component-analysis-pca" class="anchor"></a>Principal Component Analysis (PCA)</h2>
+<div id="principal-component-analysis-pca" class="section level1">
+<h1 class="hasAnchor">
+<a href="#principal-component-analysis-pca" class="anchor"></a>Principal Component Analysis (PCA)</h1>
 <p>PCA is a widely used procedure that lies in-between dimension reduction and structural modelling. Indeed, one of the way of reducing the number of predictors is to extract a new set of uncorrelated variables that will <em>represent</em> variance of your initial dataset. But how the original variables relate between themselves can also be a question on its own.</p>
 <p>We can apply the <code><a href="../reference/principal_components.html">principal_components()</a></code> function to do the the predictors of the model:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/principal_components.html">principal_components</a></span>(insight<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/insight/man/get_predictors.html">get_predictors</a></span>(model), <span class="dt">n =</span> <span class="st">"auto"</span>)</a>
@@ -193,7 +191,6 @@
 &gt; -----------------------------------------------------------------------
 &gt; (Intercept) |       64.63 | 1.67 | [61.22, 68.05] | 38.78 | 28 | &lt; .001
 &gt; PC1         |        4.62 | 0.95 | [ 2.67,  6.57] |  4.86 | 28 | &lt; .001</code></pre>
-</div>
 <div id="using-the-psych-package-for-pca" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-the-psych-package-for-pca" class="anchor"></a>Using the <code>psych</code> package for PCA</h2>
@@ -242,16 +239,14 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li>
-<a href="#variable-extraction">Variable Extraction</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#quick-and-exploratory-method">Quick and Exploratory Method</a></li>
-      <li><a href="#principal-component-analysis-pca">Principal Component Analysis (PCA)</a></li>
-      <li><a href="#using-the-psych-package-for-pca">Using the <code>psych</code> package for PCA</a></li>
+      <li>
+<a href="#principal-component-analysis-pca">Principal Component Analysis (PCA)</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#using-the-psych-package-for-pca">Using the <code>psych</code> package for PCA</a></li>
       </ul>
 </li>
       <li><a href="#references">References</a></li>
@@ -268,7 +263,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>
