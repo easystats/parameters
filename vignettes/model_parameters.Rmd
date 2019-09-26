@@ -11,7 +11,7 @@ output:
     fig_height: 6
 tags: [r, parameters, variable selection, feature selection]
 vignette: >
-  %\VignetteIndexEntry{Variable selection (stepwise, projpred, ...)}
+  %\VignetteIndexEntry{Parameters Descritpion}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -31,9 +31,8 @@ library(dplyr)
 set.seed(333)
 ```
 
-# Model's parameters description
 
-```{r, fig.align='center'}
+```{r, warning=FALSE, message=FALSE, fig.align='center', echo=FALSE}
 include_graphics("https://raw.githubusercontent.com/easystats/parameters/master/man/figures/figure1.png")
 ```
 
@@ -45,9 +44,9 @@ The `model_parameters()` function (also accessible via the shortcut `parameters(
 - It includes **feature engineering** capabilities, including [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html) and [**standardization**](https://easystats.github.io/parameters/articles/standardization.html) of parameters.
 
 
-## Correlations, *t*-tests
+## Correlations and *t*-tests
 
-### Frequentist 
+### Frequentist
 
 ```{r, warning=FALSE, message=FALSE}
 cor.test(iris$Sepal.Length, iris$Sepal.Width) %>% 
@@ -81,7 +80,7 @@ BayesFactor::ttestBF(formula = mpg ~ vs, data=mtcars) %>%
 
 ## ANOVAs
 
-Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared`, `epsilon_sqared` or `omega_squared` can be computed.
+Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared()`, `epsilon_sqared()` or `omega_squared()` can be computed.
 
 ### Simple
 
@@ -92,7 +91,7 @@ aov(Sepal.Length ~ Species, data = iris) %>%
 
 ### Repeated measures
 
-The function also works on repeated measures ANOVAs, whether computed from `aov` or from a mixed model.
+The function also works on repeated measures ANOVAs, whether computed from `aov()` or from a mixed model.
 
 ```{r, warning=FALSE, message=FALSE}
 aov(mpg ~ am + Error(gear), data = mtcars) %>% 

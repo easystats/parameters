@@ -17,7 +17,7 @@ if (require("testthat") &&
     expect_equal(
       ci(m1)$CI_low,
       c(0.976294, 0.034227),
-      tolerance = 1e-4
+      tolerance = 0.01
     )
   })
 
@@ -25,7 +25,7 @@ if (require("testthat") &&
     expect_equal(
       standard_error(m1)$SE,
       c(0.024089, 0.005111),
-      tolerance = 1e-4
+      tolerance = 0.01
     )
   })
 
@@ -33,7 +33,7 @@ if (require("testthat") &&
     expect_equal(
       p_value(m1)$p,
       c(0, 0),
-      tolerance = 1e-4
+      tolerance = 0.01
     )
   })
 
@@ -41,7 +41,7 @@ if (require("testthat") &&
     expect_equal(
       model_parameters(m1)$Median,
       c(1.013152, 0.042433),
-      tolerance = 1e-4
+      tolerance = 0.01
     )
   })
 }

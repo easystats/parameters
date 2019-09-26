@@ -120,7 +120,7 @@ navbar:
     href: articles/parameters_selection.html
   - text: Dimension Reduction
     menu:
-      - text: 'Feature reduction (PCA, cMDS, ICA, ...)'
+      - text: 'Feature reduction (PCA, cMDS, ICA...)'
         href: articles/parameters_reduction.html
-      - text: 'Structural models (EFA, CFA, SEM, ...)'
+      - text: 'Structural models (EFA, CFA, SEM...)'
         href: articles/efa_cfa.html

@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,12 +41,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Classical Multidimensional Scaling (cMDS) — cmds" />
+
 <meta property="og:description" content="Also referred to as principal Coordinates Analysis (PCoA), Classical Multidimensional Scaling (cMDS) takes a set of dissimilarities (i.e., a distance matrix) and returns a set of points such that the distances between the points are approximately equal to the dissimilarities." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -126,14 +124,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA, ...)</a>
+      <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA...)</a>
     </li>
     <li>
-      <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM, ...)</a>
+      <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
     </li>
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -155,11 +154,13 @@
     </div>
 
     <div class="ref-description">
+    
     <p>Also referred to as principal Coordinates Analysis (PCoA), Classical Multidimensional Scaling (cMDS) takes a set of dissimilarities (i.e., a distance matrix) and returns a set of points such that the distances between the points are approximately equal to the dissimilarities.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>cmds</span>(<span class='no'>x</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>distance</span> <span class='kw'>=</span> <span class='st'>"euclidean"</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -180,7 +181,7 @@
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -188,6 +189,7 @@
 <li><p>Nguyen, L. H., \&amp; Holmes, S. (2019). Ten quick tips for effective dimensionality reduction. PLOS Computational Biology, 15(6).</p></li>
 </ul>
 
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>cmds</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])</div><div class='output co'>#&gt;            CMDS1        CMDS2        CMDS3
@@ -346,7 +348,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -360,7 +364,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

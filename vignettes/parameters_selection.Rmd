@@ -1,5 +1,5 @@
 ---
-title: "Variable selection (stepwise, projpred, ...)"
+title: "Parameters Selection"
 output: 
   github_document:
     toc: true
@@ -11,7 +11,7 @@ output:
     fig_height: 6
 tags: [r, parameters, variable selection, feature selection]
 vignette: >
-  %\VignetteIndexEntry{Variable selection (stepwise, projpred, ...)}
+  %\VignetteIndexEntry{Parameters Selection}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -28,7 +28,6 @@ options(digits=2)
 set.seed(333)
 ```
 
-# Variable Selection
 
 Also known as [**feature selection**](https://en.wikipedia.org/wiki/Feature_selection) in machine learning, the goal of variable selection is to **identify a subset of predictors** to **simplify models**. This can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
 
