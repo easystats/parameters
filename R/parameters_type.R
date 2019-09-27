@@ -210,7 +210,7 @@ parameters_type <- function(model, ...) {
 
 .clean_parameter_names <- function(x, full = FALSE) {
   # return if x is empty
-  if (is.null(x) || length(x) == 0 || nchar(x) == 0) {
+  if (is.null(x) || length(x) == 0) {
     return("")
   }
 
