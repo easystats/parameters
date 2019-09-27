@@ -45,6 +45,8 @@ format_parameters.default <- function(model) {
 
   # Type-specific changes
   types <- parameters_type(model)
+  parameters <- .clean_parameter_names(types$Parameter, full = TRUE)
+
   for (i in 1:nrow(types)) {
 
     # Factors
@@ -71,9 +73,9 @@ format_parameters.default <- function(model) {
 
       for (j in 1:length(components)) {
         component <- components[j]
-        if (component %in% types$Parameter) {
-          if (types[types$Parameter == component, "Type"] == "factor") {
-            components[j] <- .format_factor(component, types[types$Parameter == component, "Variable"])
+        if (component %in% parameters) {
+          if (types[parameters == component, "Type"] == "factor") {
+            components[j] <- .format_factor(component, types[parameters == component, "Variable"])
           }
         }
       }
