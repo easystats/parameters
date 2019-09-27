@@ -55,7 +55,7 @@ parameters_type <- function(model, ...) {
   # remove "as.factor()", "log()" etc. from parameter names,
   # but save original parameter before
   original_parameter <- params$Parameter
-  params$Parameter <- .clean_parameter_names(params$Parameter)
+  params$Parameter <- .clean_parameter_names(params$Parameter, full = TRUE)
 
   ## TODO can we get rid of the count_ / zero_ prefix here?
 
@@ -231,7 +231,10 @@ parameters_type <- function(model, ...) {
     if (pattern[j] == "offset") {
       x <- trimws(unique(sub("offset\\(([^-+ )]*)\\)(.*)", "\\1\\2", x)))
     } else if (pattern[j] == "I") {
-      x <- trimws(unique(sub("I\\(((\\w|\\.|\\^)*).*", "\\1", x)))
+      if (full)
+        x <- trimws(unique(sub("I\\(((\\w|\\.)*).*", "\\1", x)))
+      else
+        x <- trimws(unique(sub("I\\(((\\w|\\.|\\^)*).*", "\\1", x)))
     } else {
       p <- paste0(pattern[j], "\\(((\\w|\\.)*)\\)(.*)")
       x <- trimws(unique(sub(p, "\\1\\3", x)))
