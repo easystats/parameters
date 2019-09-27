@@ -229,15 +229,15 @@ parameters_type <- function(model, ...) {
     # remove possible  namespace
     x <- sub("(.*)::(.*)", "\\2", x)
     if (pattern[j] == "offset") {
-      x <- trimws(unique(sub("offset\\(([^-+ )]*)\\)(.*)", "\\1\\2", x)))
+      x <- trimws(sub("offset\\(([^-+ )]*)\\)(.*)", "\\1\\2", x))
     } else if (pattern[j] == "I") {
       if (full)
-        x <- trimws(unique(sub("I\\(((\\w|\\.)*).*", "\\1", x)))
+        x <- trimws(sub("I\\(((\\w|\\.)*).*", "\\1", x))
       else
-        x <- trimws(unique(sub("I\\((.*)\\)(.*)", "\\1", x)))
+        x <- trimws(sub("I\\((.*)\\)(.*)", "\\1", x))
     } else {
       p <- paste0(pattern[j], "\\(((\\w|\\.)*)\\)(.*)")
-      x <- trimws(unique(sub(p, "\\1\\3", x)))
+      x <- trimws(sub(p, "\\1\\3", x))
     }
   }
 
