@@ -234,7 +234,7 @@ parameters_type <- function(model, ...) {
       if (full)
         x <- trimws(unique(sub("I\\(((\\w|\\.)*).*", "\\1", x)))
       else
-        x <- trimws(unique(sub("I\\(((\\w|\\.|\\^|\\/|\\*\\+\\-)*).*", "\\1", x)))
+        x <- trimws(unique(sub("I\\((.*)\\)(.*)", "\\1", x)))
     } else {
       p <- paste0(pattern[j], "\\(((\\w|\\.)*)\\)(.*)")
       x <- trimws(unique(sub(p, "\\1\\3", x)))
