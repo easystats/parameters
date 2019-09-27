@@ -40,6 +40,9 @@ format_parameters.default <- function(model) {
     names <- gsub("zero_", "", names)
   }
 
+  # remove "as.factor()", "log()" etc. from parameter names
+  names <- .clean_parameter_names(names)
+
   # Type-specific changes
   types <- parameters_type(model)
   for (i in 1:nrow(types)) {

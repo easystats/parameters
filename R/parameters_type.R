@@ -52,6 +52,11 @@ parameters_type <- function(model, ...) {
     params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
   }
 
+  # remove "as.factor()", "log()" etc. from parameter names,
+  # but save original parameter before
+  original_parameter <- params$Parameter
+  params$Parameter <- .clean_parameter_names(params$Parameter)
+
   ## TODO can we get rid of the count_ / zero_ prefix here?
 
   # if (inherits(model, c("zeroinfl", "hurdle", "zerocount"))) {
@@ -83,6 +88,7 @@ parameters_type <- function(model, ...) {
     }
   }
 
+  out$Parameter <- original_parameter
   # Out
   out
 }
@@ -128,18 +134,21 @@ parameters_type <- function(model, ...) {
 .parameters_type_basic <- function(name, data, reference) {
   if (is.na(name)) {
     return(c(NA, NA, NA, NA, NA))
+  }
 
-    # Intercept
-  } else if (name == "(Intercept)" | name == "b_Intercept") {
+  cleaned_name <- .clean_parameter_names(name, full = TRUE)
+
+  # Intercept
+  if (cleaned_name == "(Intercept)" | cleaned_name == "b_Intercept") {
     return(c("intercept", "(Intercept)", NA, NA, NA))
 
     # Numeric
-  } else if (name %in% reference$numeric) {
+  } else if (cleaned_name %in% reference$numeric) {
     return(c("numeric", name, name, NA, NA))
 
     # Factors
-  } else if (name %in% reference$levels) {
-    fac <- reference$levels_parent[match(name, reference$levels)]
+  } else if (cleaned_name %in% reference$levels) {
+    fac <- reference$levels_parent[match(cleaned_name, reference$levels)]
     return(c(
       "factor",
       name,
@@ -195,4 +204,39 @@ parameters_type <- function(model, ...) {
   out$levels_parent <- out$levels_parent[!is.na(out$levels_parent)]
 
   out
+}
+
+
+
+.clean_parameter_names <- function(x, full = FALSE) {
+  # return if x is empty
+  if (is.null(x) || length(x) == 0 || nchar(x) == 0) {
+    return("")
+  }
+
+  pattern <- if (full) {
+    c(
+      "as.factor", "factor", "offset", "log1p", "log10", "log2", "log", "lag",
+      "diff", "pspline", "poly", "catg", "asis", "matrx", "pol", "strata", "strat",
+      "scale", "scored", "interaction", "sqrt", "lsp", "rcs", "pb", "lo", "bs",
+      "ns", "t2", "te", "ti", "tt", "mi", "mo", "gp", "s", "I"
+    )
+  } else {
+    c("as.factor", "factor", "catg", "asis", "interaction", "I")
+  }
+
+  for (j in 1:length(pattern)) {
+    # remove possible  namespace
+    x <- sub("(.*)::(.*)", "\\2", x)
+    if (pattern[j] == "offset") {
+      x <- trimws(unique(sub("offset\\(([^-+ )]*)\\)(.*)", "\\1\\2", x)))
+    } else if (pattern[j] == "I") {
+      x <- trimws(unique(sub("I\\(((\\w|\\.|\\^)*).*", "\\1", x)))
+    } else {
+      p <- paste0(pattern[j], "\\(((\\w|\\.)*)\\)(.*)")
+      x <- trimws(unique(sub(p, "\\1\\3", x)))
+    }
+  }
+
+  x
 }

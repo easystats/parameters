@@ -1,3 +1,9 @@
+# parameters 0.2.1
+
+## Bug fixes
+
+- Interaction terms in `model_parameters()` were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. `as.factor()`, `log()` or `I()`.
+
 # parameters 0.2.0
 
 ## Breaking changes
