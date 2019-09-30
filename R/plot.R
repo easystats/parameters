@@ -32,3 +32,12 @@ plot.n_factors <- function(x, ...) {
   }
   NextMethod()
 }
+
+
+#' @export
+plot.parameters_pca <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot point-estimates. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
+}
