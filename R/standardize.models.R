@@ -1,6 +1,6 @@
 #' @rdname standardize
 #' @importFrom stats update
-#' @importFrom insight get_data model_info find_response get_response
+#' @importFrom insight get_data model_info find_response get_response find_weights
 #' @importFrom utils capture.output
 #' @export
 standardize.lm <- function(x, robust = FALSE, method = "default", include_response = TRUE, verbose = TRUE, ...) {
@@ -23,9 +23,14 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 
   log_terms <- .log_terms(x)
 
+  # Do not standardize weighting-variable, because negative weights will
+  # cause errors in "update()"
+
+  weight_variable <- insight::find_weights(x)
+
   # standardize data
 
-  dont_standardize <- c(resp, log_terms)
+  dont_standardize <- c(resp, log_terms, weight_variable)
   do_standardize <- setdiff(colnames(data), dont_standardize)
 
   if (length(do_standardize)) {

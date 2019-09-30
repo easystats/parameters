@@ -1,8 +1,13 @@
 # parameters 0.2.1
 
+## Changes to functions
+
+- Standard errors for standardized parameters in `parameters_standardize()` are added as attribute, when `method = "classic"` or `method = "smart"`.
+
 ## Bug fixes
 
 - Interaction terms in `model_parameters()` were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. `as.factor()`, `log()` or `I()`.
+- `parameters_standardize()` failed when model used weights.
 
 # parameters 0.2.0
 
