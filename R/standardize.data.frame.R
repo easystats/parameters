@@ -17,31 +17,6 @@ standardize.numeric <- function(x, robust = FALSE, method = "default", verbose =
     return(x)
   }
 
-  # # Warning if only one value
-  # if (length(unique(x)) == 1) {
-  #   if (is.null(names(x))) {
-  #     name <- deparse(substitute(x))
-  #   } else {
-  #     name <- names(x)
-  #   }
-  #   if (verbose) {
-  #     warning(paste0("This Variable contains only one unique value and will not be standardized."))
-  #   }
-  #   return(x)
-  # }
-  #
-  # # Warning if logical vector
-  # if (length(unique(x)) == 2 && !is.factor(x) && !is.character(x)) {
-  #   if (is.null(names(x))) {
-  #     name <- deparse(substitute(x))
-  #   } else {
-  #     name <- names(x)
-  #   }
-  #   if (verbose) {
-  #     warning(paste0("Variable `", name, "` contains only two different values. Consider converting it to a factor."))
-  #   }
-  # }
-
   if (is.factor(x) || is.character(x)) {
     x <- .factor_to_numeric(x)
   }

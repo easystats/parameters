@@ -125,14 +125,19 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
 
 # POST-HOC -------------------------------------------------------------------
+#' @importFrom insight model_info get_data
 #' @keywords internal
 .parameters_standardize_posthoc <- function(model, param_names = NULL, param_values = NULL, robust = FALSE, method = "smart", verbose = TRUE, ...) {
 
   # Get parameters
   if (is.null(param_names) | is.null(param_values) | length(param_names) != length(param_values)) {
-    params <- model_parameters(model, standardize = FALSE, ...)
+    params <- model_parameters(model, standardize = FALSE, component = "conditional", ...)
     param_values <- params[names(params) %in% c("Coefficient", "Median", "Mean", "MAP")]
     param_names <- params$Parameter
+
+    if (verbose && insight::model_info(model)$is_zero_inflated) {
+      warning("Post-hoc parameter standardization is ignoring the zero-inflation component.", call. = FALSE)
+    }
   }
 
   out <- data.frame(Parameter = param_names)
@@ -141,6 +146,14 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
   # Match order of parameters in param_table and params
   param_table <- param_table[match(param_table$Parameter, params$Parameter), ]
   row.names(param_table) <- NULL
+
+  std_error <- tryCatch({
+    se <- standard_error(model, component = "conditional")
+    se$SE[unique(match(se$Parameter, param_names))]
+  },
+  error = function(e) {
+    NULL
+  })
 
   for (param_name in names(param_values)) {
     # Get response variance
@@ -176,10 +189,18 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
       }
       new_coef <- param_table$Value[i] * sd_x / sd_y
       std_params <- c(std_params, new_coef)
+
+      # calculate SE for standardized coefficient
+      if (!is.null(std_error) && length(std_error) >= i) {
+        std_error[i] <- std_error[i] * sd_x / sd_y
+      }
     }
 
     out[[param_name]] <- std_params
   }
+
+  # add standardized standard errors as attribute
+  attr(out, "standard_error") <- std_error
 
   out
 }
