@@ -102,7 +102,7 @@ knitr::kable(parameters_standardize(model, method="smart"), digits=2)
 
 ## `classic`: Basic scaling of all parameters
 
-This method is similar to `method = "smart"`, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as `sjstats::std_beta()` or `lm.beta::lm.beta()`.
+This method is similar to `method = "smart"`, but treats all variables as continuous: it also scales the coefficient by the standard deviation of factors (transformed to integers) or binary predictors. Altough being inapropriate for these cases, this method is the one implemented by default in other softwares, such as `lm.beta::lm.beta()`.
 
 # Methods Comparison
 
@@ -112,7 +112,6 @@ We will use the "refit" method as the baseline. We will then compute the differe
 
 ```{r message=FALSE, warning=FALSE}
 library(parameters)
-library(sjstats)
 library(lm.beta)
 library(MuMIn)
 
@@ -129,16 +128,7 @@ comparison <- function(model, robust=FALSE){
 }, error = function(error_condition) {
     "Error"
 })
-  out$sjstats <- tryCatch({
-    if(insight::model_info(model)$is_bayesian){
-      out[, 2] - c(NA, bayestestR::describe_posterior(as.data.frame(sjstats::std_beta(model)))[, 2])
-    } else{
-      out[, 2] - c(NA, sjstats::std_beta(model)[, 2])
-    }
-}, error = function(error_condition) {
-    "Error"
-})
-  
+
   out$lm.beta <- tryCatch({
     out[, 2] - lm.beta::lm.beta(model)$standardized.coefficients
 }, error = function(error_condition) {
