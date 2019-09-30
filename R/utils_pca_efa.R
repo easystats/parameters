@@ -144,6 +144,7 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
   if (!is.null(attributes(x)$type)) {
     cat("\n")
     insight::print_colour(.text_components_variance(x), "yellow")
+    cat("\n")
   }
 }
 
