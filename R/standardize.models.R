@@ -13,7 +13,7 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
   # make sure that the original response value will be restored after
   # standardizing, as these models also require a non-standardized reponse.
 
-  if (.no_response_standardize(m_info) || !include_response || .is_survival(x)) {
+  if (.no_response_standardize(m_info) || !include_response) {
     resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
   }
 
@@ -68,13 +68,7 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 #' @keywords internal
 .no_response_standardize <- function(info) {
   # check if model has a response variable that should not be standardized.
-  info$is_count | info$is_ordinal | info$is_beta | info$is_censored | info$is_binomial
-}
-
-
-#' @keywords internal
-.is_survival <- function(model) {
-  inherits(model, c("survreg", "flexsurvreg", "coxph", "coxme"))
+  info$is_count | info$is_ordinal | info$is_beta | info$is_censored | info$is_binomial | info$is_survival
 }
 
 
