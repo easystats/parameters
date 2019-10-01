@@ -596,6 +596,19 @@ standard_error.survreg <- function(model, ...) {
 
 
 #' @export
+standard_error.flexsurvreg <- function(model, ...) {
+  params <- insight::find_parameters(model, flatten = TRUE)
+  se <- model$res[rownames(model$res) %in% params, "se"]
+
+  .data_frame(
+    Parameter = names(se),
+    SE = as.vector(se)
+  )
+}
+
+
+
+#' @export
 standard_error.gam <- function(model, ...) {
   p.table <- summary(model)$p.table
   s.table <- summary(model)$s.table

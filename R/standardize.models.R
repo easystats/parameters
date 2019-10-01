@@ -13,7 +13,7 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
   # make sure that the original response value will be restored after
   # standardizing, as these models also require a non-standardized reponse.
 
-  if (.no_response_standardize(m_info) || !include_response) {
+  if (.no_response_standardize(m_info) || !include_response || .is_survival(x)) {
     resp <- unique(c(insight::find_response(x), insight::find_response(x, combine = FALSE)))
   }
 
@@ -72,6 +72,12 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 }
 
 
+#' @keywords internal
+.is_survival <- function(model) {
+  inherits(model, c("survreg", "flexsurvreg", "coxph", "coxme"))
+}
+
+
 
 
 #' @export
@@ -123,6 +129,9 @@ standardize.stanreg <- standardize.lm
 
 #' @export
 standardize.brmsfit <- standardize.lm
+
+#' @export
+standardize.flexsurvreg <- standardize.lm
 
 #' @export
 standardize.lme <- standardize.lm
@@ -248,6 +257,9 @@ standardize.coxph <- function(x, robust = FALSE, method = "default", verbose = T
 
   log_terms <- .log_terms(x)
   if (length(log_terms)) pred <- setdiff(pred, log_terms)
+
+  weight_variable <- insight::find_weights(x)
+  if (length(weight_variable)) pred <- setdiff(pred, weight_variable)
 
   # standardize data, if we have anything left to standardize
 

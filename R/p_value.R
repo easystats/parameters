@@ -398,9 +398,10 @@ p_value.coxph <- function(model, ...) {
 
 
 
+#' @importFrom insight get_statistic
 #' @export
 p_value.coxme <- function(model, ...) {
-  stat <- .get_statistic.coxme(model)
+  stat <- insight::get_statistic(model)
 
   if (!is.null(stat)) {
     .data_frame(
@@ -423,6 +424,21 @@ p_value.survreg <- function(model, ...) {
   )
 }
 
+
+#' @export
+p_value.flexsurvreg <- function(model, ...) {
+  ## TODO change to "$Estimate" once insight on CRAN
+  params <- insight::get_parameters(model)
+  est <- params[[2]]
+  se <- standard_error(model)$SE
+  p <- 2 * stats::pnorm(abs(est / se), lower.tail = FALSE)
+
+  .data_frame(
+    ## TODO change to "$Parameter" once insight on CRAN
+    Parameter = params[[1]],
+    p = as.vector(p)
+  )
+}
 
 
 
@@ -533,7 +549,7 @@ p_value.logistf <- function(model, ...) {
 
 #' @export
 p_value.lrm <- function(model, ...) {
-  stat <- .get_statistic(model)
+  stat <- insight::get_statistic(model)
   p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
 
   .data_frame(
