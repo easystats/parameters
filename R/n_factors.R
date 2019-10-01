@@ -191,7 +191,6 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 
   out <- out[order(out$n_Factors), ] # Arrange by n factors
   row.names(out) <- NULL # Reset row index
-  class(out) <- c("n_factors", "see_n_factors", class(out))
 
   # Add summary
   by_factors <- .data_frame(
@@ -202,6 +201,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   attr(out, "by_factors") <- by_factors
   attr(out, "n") <- min(as.numeric(as.character(by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")])))
 
+  class(out) <- c("n_factors", "see_n_factors", class(out))
   out
 }
 
@@ -219,21 +219,29 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 #' @importFrom insight print_color
 #' @export
 print.n_factors <- function(x, ...) {
-  results <- attributes(x)$by_factors
+  results <- attributes(x)$summary
 
   # Extract info
   max_methods <- max(results$n_Methods)
   best_n <- attributes(x)$n
 
   # Extract methods
-  methods_text <- paste0(as.character(x[x$n_Factors == best_n, "Method"]), collapse = ", ")
+  if("n_Factors" %in% names(x)){
+    type <- "factor"
+    methods_text <- paste0(as.character(x[x$n_Factors == best_n, "Method"]), collapse = ", ")
+  } else{
+    type <- "cluster"
+    methods_text <- paste0(as.character(x[x$n_Clusters == best_n, "Method"]), collapse = ", ")
+  }
+
 
 
   # Text
   text <- paste0(
     "The choice of ",
     as.character(best_n),
-    " dimensions is supported by ",
+    ifelse(type == "factor", " dimensions ", " clusters "),
+    "is supported by ",
     max_methods,
     " (",
     sprintf("%.2f", max_methods / nrow(x) * 100),
@@ -251,7 +259,7 @@ print.n_factors <- function(x, ...) {
 
 #' @export
 summary.n_factors <- function(object, ...) {
-  attributes(object)$by_factors
+  attributes(object)$summary
 }
 
 #' @export
@@ -264,7 +272,17 @@ as.double.n_factors <- as.numeric.n_factors
 
 
 
+#' @export
+summary.n_clusters <- summary.n_factors
 
+#' @export
+as.numeric.n_clusters <- as.numeric.n_factors
+
+#' @export
+as.double.n_clusters <- as.double.n_factors
+
+#' @export
+print.n_clusters <- print.n_factors
 
 
 

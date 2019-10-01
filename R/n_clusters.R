@@ -2,29 +2,69 @@
 #'
 #' This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.
 #'
+#' @param package These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"clValid"}.
 #' @inheritParams n_factors
 #'
 #' @examples
-#' x <- iris[, 1:4]
+#' library(parameters)
+#'
+#' \donttest{
+#' n_clusters(standardize(iris[, 1:4]))
+#' }
 #' @export
-n_clusters <- function(x, ...) {
+n_clusters <- function(x, package = c("NbClust", "mclust", "clValid"), ...) {
+
+  if (all(package == "all")) {
+    package <- c("NbClust", "mclust", "clValid")
+  }
+
   x <- x[sapply(x, is.numeric)]
   x <- standardize(x)
 
-  # mclust <- .n_clusters_mclust(x)
-  # NbClust <- .n_clusters_NbClust(x)
+  out <- data.frame()
+  if("nbclust" %in% tolower(package)){
+    out <- rbind(out, .n_clusters_NbClust(x))
+  }
+  if("mclust" %in% tolower(package)){
+    out <- rbind(out, .n_clusters_mclust(x))
+  }
+  if("clvalid" %in% tolower(package)){
+    out <- rbind(out, .n_clusters_clValid(x))
+  }
+
+
+  out <- out[order(out$n_Clusters), ] # Arrange by n clusters
+  row.names(out) <- NULL # Reset row index
+  out$Method <- as.character(out$Method)
+
+  # Remove duplicate methods starting with the smallest
+  dupli <- c()
+  for(i in 1:nrow(out)){
+    if(i > 1 && out[i, "Method"] %in% out$Method[1:i-1]){
+      dupli <- c(dupli, i)
+    }
+  }
+  out <- out[-dupli, ]
+
 
   # Add summary
-  # by_factors <- .data_frame(
-  #   n_Factors = as.numeric(unique(out$n_Factors)),
-  #   n_Methods = as.numeric(by(out, as.factor(out$n_Factors), function(out) n <- nrow(out)))
-  # )
-  #
-  # attr(out, "by_factors") <- by_factors
-  # attr(out, "n") <- min(as.numeric(as.character(by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")])))
-  #
-  # out
+  by_clusters <- .data_frame(
+    n_Clusters = as.numeric(unique(out$n_Clusters)),
+    n_Methods = as.numeric(by(out, as.factor(out$n_Clusters), function(out) n <- nrow(out)))
+  )
+
+  attr(out, "summary") <- by_clusters
+  attr(out, "n") <- min(as.numeric(as.character(by_clusters[by_clusters$n_Methods == max(by_clusters$n_Methods), c("n_Clusters")])))
+
+  class(out) <- c("n_clusters", "see_n_clusters", class(out))
+  out
 }
+
+
+
+
+
+
 
 
 
@@ -38,7 +78,7 @@ n_clusters <- function(x, ...) {
   mclustBIC <- mclust::mclustBIC # this is needed as it is internally required by the following function
   BIC <- mclust::mclustBIC(x, verbose = FALSE)
   out <- data.frame(unclass(BIC))
-  n <- which(out == max(out), arr.ind = TRUE)[1]
+  n <- which(out == max(out, na.rm = TRUE), arr.ind = TRUE)[1]
   data.frame(n_Clusters = n, Method = "Mixture", Package = "mclust")
 }
 

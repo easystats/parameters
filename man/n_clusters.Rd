@@ -4,10 +4,12 @@
 \alias{n_clusters}
 \title{Number of Clusters to Extract}
 \usage{
-n_clusters(x, ...)
+n_clusters(x, package = c("NbClust", "mclust", "clValid"), ...)
 }
 \arguments{
 \item{x}{A dataframe.}
+
+\item{package}{These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"clValid"}.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -15,5 +17,9 @@ n_clusters(x, ...)
 This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.
 }
 \examples{
-x <- iris[, 1:4]
+library(parameters)
+
+\donttest{
+n_clusters(standardize(iris[, 1:4]))
+}
 }
