@@ -447,16 +447,14 @@
 
 
 .get_statistic.rq <- function(model, ...) {
-
-  stat <- tryCatch(
-    {
-      cs <- suppressWarnings(stats::coef(summary(model)))
-      cs[, "t value"]
-    },
-    error = function(e) {
-      cs <- suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
-      cs[, "t value"]
-    }
+  stat <- tryCatch({
+    cs <- suppressWarnings(stats::coef(summary(model)))
+    cs[, "t value"]
+  },
+  error = function(e) {
+    cs <- suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
+    cs[, "t value"]
+  }
   )
 
   params <- insight::get_parameters(model)

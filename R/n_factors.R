@@ -1,4 +1,4 @@
-#' Number of Components/Factors to Retain
+#' Number of Components/Factors to Retain in Factor Analysis
 #'
 #' This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus. In case of ties, it will select the solution with the less factors.
 #'

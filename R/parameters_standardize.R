@@ -153,7 +153,8 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
   },
   error = function(e) {
     NULL
-  })
+  }
+  )
 
   for (param_name in names(param_values)) {
     # Get response variance

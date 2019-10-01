@@ -140,7 +140,7 @@ standard_error.mlm <- function(model, ...) {
     .data_frame(
       Parameter = rownames(params),
       SE = params[, "Std. Error"],
-      Response =  gsub("^Response (.*)", "\\1", x)
+      Response = gsub("^Response (.*)", "\\1", x)
     )
   })
 
@@ -387,22 +387,21 @@ standard_error.svyglm <- function(model, ...) {
 
 #' @export
 standard_error.rq <- function(model, ...) {
-  se <- tryCatch(
-    {
-      cs <- suppressWarnings(stats::coef(summary(model)))
-      se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
-      if (length(se_column)) {
-        cs[, se_column]
-      } else {
-        s <- suppressWarnings(summary(model, covariance = TRUE))
-        as.vector(sqrt(diag(s$cov)))
-      }
-    },
-    error = function(e) {
-      ## TODO replace with "insight::get_varcov()"
+  se <- tryCatch({
+    cs <- suppressWarnings(stats::coef(summary(model)))
+    se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
+    if (length(se_column)) {
+      cs[, se_column]
+    } else {
       s <- suppressWarnings(summary(model, covariance = TRUE))
       as.vector(sqrt(diag(s$cov)))
     }
+  },
+  error = function(e) {
+    ## TODO replace with "insight::get_varcov()"
+    s <- suppressWarnings(summary(model, covariance = TRUE))
+    as.vector(sqrt(diag(s$cov)))
+  }
   )
 
   params <- insight::get_parameters(model)

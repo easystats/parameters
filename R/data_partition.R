@@ -17,11 +17,14 @@
 #' data_partition(df, group = c("Species", "Smell"))
 #' @export
 data_partition <- function(x, training_proportion = 0.7, group = NULL) {
-
   if (!is.data.frame(x)) {
     x <- tryCatch(
-      expr = { as.data.frame(x) },
-      error = function(e) { NULL }
+      expr = {
+        as.data.frame(x)
+      },
+      error = function(e) {
+        NULL
+      }
     )
 
     if (is.null(x)) {
@@ -35,8 +38,8 @@ data_partition <- function(x, training_proportion = 0.7, group = NULL) {
   if (!is.null(group)) {
     for (i in split(x, x[group])) {
       out <- .data_partition(i, training_proportion)
-      training <- rbind(training, i[out$training,])
-      test <- rbind(test, i[out$test,])
+      training <- rbind(training, i[out$training, ])
+      test <- rbind(test, i[out$test, ])
     }
   } else {
     out <- .data_partition(x, training_proportion)
@@ -44,16 +47,20 @@ data_partition <- function(x, training_proportion = 0.7, group = NULL) {
     test <- rbind(test, x[out$test, ])
   }
 
-  list(training = training,
-       test = test)
+  list(
+    training = training,
+    test = test
+  )
 }
 
 
 #' @keywords internal
 .data_partition <- function(x, training_proportion = 0.8) {
-  training_indices = sample(1:nrow(x), size = training_proportion * nrow(x))
+  training_indices <- sample(1:nrow(x), size = training_proportion * nrow(x))
   test_indices <- (1:nrow(x))[-training_indices]
 
-  list(training = training_indices,
-       test = test_indices)
+  list(
+    training = training_indices,
+    test = test_indices
+  )
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/n_factors.R
 \name{n_factors}
 \alias{n_factors}
-\title{Number of Components/Factors to Retain}
+\title{Number of Components/Factors to Retain in Factor Analysis}
 \usage{
 n_factors(x, type = "FA", rotation = "varimax",
   algorithm = "default", package = c("nFactors", "psych"),

@@ -8,7 +8,7 @@
 #'
 #' check_factorstructure(mtcars)
 #' @return A list of lists of indices related to sphericity and KMO.
-#' @seealso check_kmo check_sphericity
+#' @seealso check_kmo check_sphericity check_clusterstructure
 #' @export
 check_factorstructure <- function(x, silent = FALSE, ...) {
 

@@ -17,13 +17,17 @@
 #' # Multivariate
 #' \donttest{
 #' library(bayestestR)
-#' m <- data.frame(x = rnorm(200),
-#'                 y = rbeta(200, 2, 1))
+#' m <- data.frame(
+#'   x = rnorm(200),
+#'   y = rbeta(200, 2, 1)
+#' )
 #' plot(m$x, m$y)
 #' check_multimodal(m)
 #'
-#' m <- data.frame(x = c(rnorm(100), rnorm(100, 4)),
-#'                 y = c(rbeta(100, 2, 1), rbeta(100, 1, 4)))
+#' m <- data.frame(
+#'   x = c(rnorm(100), rnorm(100, 4)),
+#'   y = c(rbeta(100, 2, 1), rbeta(100, 1, 4))
+#' )
 #' plot(m$x, m$y)
 #' check_multimodal(m)
 #' }
@@ -31,44 +35,48 @@
 #'   \item Ameijeiras-Alonso, J., Crujeiras, R. M., \& Rodríguez-Casal, A. (2019). Mode testing, critical bandwidth and excess mass. Test, 28(3), 900-919.
 #' }
 #' @export
-check_multimodal <- function(x, ...){
+check_multimodal <- function(x, ...) {
   UseMethod("check_multimodal")
 }
 
 #' @importFrom stats logLik
 #' @export
-check_multimodal.data.frame <- function(x, ...){
+check_multimodal.data.frame <- function(x, ...) {
   if (!requireNamespace("mclust", quietly = TRUE)) {
     stop("Package 'mclust' required for this function to work. Please install it by running `install.packages('mclust')`.")
   }
 
-  mclustBIC <- mclust::mclustBIC  # this is needed as it is internally required by the following functions
-  model <- mclust::Mclust(x, verbose=FALSE)
-  model_h0 <- mclust::Mclust(x, G=1, verbose=FALSE)
+  mclustBIC <- mclust::mclustBIC # this is needed as it is internally required by the following functions
+  model <- mclust::Mclust(x, verbose = FALSE)
+  model_h0 <- mclust::Mclust(x, G = 1, verbose = FALSE)
 
   # Parametric
   loglik <- logLik(model)
   loglik0 <- logLik(model_h0)
-  rez <- list(Chisq = as.numeric(loglik-loglik0), df = attributes(loglik)$df-2)
-  rez$p <- 1-pchisq(rez$Chisq, df=rez$df)
+  rez <- list(Chisq = as.numeric(loglik - loglik0), df = attributes(loglik)$df - 2)
+  rez$p <- 1 - pchisq(rez$Chisq, df = rez$df)
 
   # Text
   text <- "The parametric mixture modelling test suggests that "
-  if(rez$p < .05){
-    text <- paste0(text,
-                   "the multivariate distribution is significantly multimodal (Chisq(",
-                   insight::format_value(rez$df, protect_integers = TRUE),
-                   ") = ",
-                   insight::format_value(rez$Chisq),
-                   ", ", format_p(rez$p), ")")
+  if (rez$p < .05) {
+    text <- paste0(
+      text,
+      "the multivariate distribution is significantly multimodal (Chisq(",
+      insight::format_value(rez$df, protect_integers = TRUE),
+      ") = ",
+      insight::format_value(rez$Chisq),
+      ", ", format_p(rez$p), ")"
+    )
     insight::print_color(text, "green")
-  } else{
-    text <- paste0(text,
-                   "the hypothesis of a multimodal multivariate distribution cannot be rejected (Chisq(",
-                   insight::format_value(rez$df, protect_integers = TRUE),
-                   ") = ",
-                   insight::format_value(rez$Chisq),
-                   ", ", format_p(rez$p), ")")
+  } else {
+    text <- paste0(
+      text,
+      "the hypothesis of a multimodal multivariate distribution cannot be rejected (Chisq(",
+      insight::format_value(rez$df, protect_integers = TRUE),
+      ") = ",
+      insight::format_value(rez$Chisq),
+      ", ", format_p(rez$p), ")"
+    )
     insight::print_color(text, "yellow")
   }
 
@@ -78,26 +86,30 @@ check_multimodal.data.frame <- function(x, ...){
 
 
 #' @export
-check_multimodal.numeric <- function(x, ...){
+check_multimodal.numeric <- function(x, ...) {
   if (!requireNamespace("multimode", quietly = TRUE)) {
     stop("Package 'multimode' required for this function to work. Please install it by running `install.packages('multimode')`.")
   }
 
-  rez <- multimode::modetest(x, mod0=1, method="ACR")
+  rez <- multimode::modetest(x, mod0 = 1, method = "ACR")
   rez <- list(p = rez$p.value, excess_mass = rez$statistic)
 
   text <- "The Ameijeiras-Alonso et al. (2018) excess mass test suggests that "
-  if(rez$p < .05){
-    text <- paste0(text,
-                   "the distribution is significantly multimodal (excess mass = ",
-                   insight::format_value(rez$excess_mass),
-                   ", ", format_p(rez$p), ")")
+  if (rez$p < .05) {
+    text <- paste0(
+      text,
+      "the distribution is significantly multimodal (excess mass = ",
+      insight::format_value(rez$excess_mass),
+      ", ", format_p(rez$p), ")"
+    )
     insight::print_color(text, "green")
-  } else{
-    text <- paste0(text,
-                   "the hypothesis of a multimodal distribution cannot be rejected (excess mass = ",
-                   insight::format_value(rez$excess_mass),
-                   ", ", format_p(rez$p), ")")
+  } else {
+    text <- paste0(
+      text,
+      "the hypothesis of a multimodal distribution cannot be rejected (excess mass = ",
+      insight::format_value(rez$excess_mass),
+      ", ", format_p(rez$p), ")"
+    )
     insight::print_color(text, "yellow")
   }
 

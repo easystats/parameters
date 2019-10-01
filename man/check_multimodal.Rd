@@ -25,13 +25,17 @@ check_multimodal(x)
 # Multivariate
 \donttest{
 library(bayestestR)
-m <- data.frame(x = rnorm(4000),
-                y = rbeta(4000, 2, 1))
+m <- data.frame(
+  x = rnorm(200),
+  y = rbeta(200, 2, 1)
+)
 plot(m$x, m$y)
 check_multimodal(m)
 
-m <- data.frame(x = c(rnorm(2000), rnorm(2000, 4)),
-                y = c(rbeta(2000, 2, 1), rbeta(2000, 1, 4)))
+m <- data.frame(
+  x = c(rnorm(100), rnorm(100, 4)),
+  y = c(rbeta(100, 2, 1), rbeta(100, 1, 4))
+)
 plot(m$x, m$y)
 check_multimodal(m)
 }
