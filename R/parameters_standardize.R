@@ -201,6 +201,7 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
   # add standardized standard errors as attribute
   attr(out, "standard_error") <- std_error
+  class(out) <- c("parameters_std_classic", class(out))
 
   out
 }

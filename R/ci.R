@@ -390,6 +390,31 @@ ci.lme <- function(x, ci = .95, ...) {
 }
 
 
+#' @importFrom insight print_color
+#' @importFrom stats qnorm
+#' @export
+ci.parameters_std_classic <- function(x, ci = .95, ...) {
+  se <- attr(x, "standard_error")
+
+  if (is.null(se)) {
+    insight::print_color("\nCould not extract standard errors of standardized coefficients.\n", "red")
+    return(NULL)
+  }
+
+  out <- lapply(ci, function(i) {
+    alpha <- (1 + i) / 2
+    fac <- stats::qnorm(alpha)
+    data.frame(
+      Parameter = x$Parameter,
+      CI = i * 100,
+      CI_low = x$Std_Coefficient - se * fac,
+      CI_high = x$Std_Coefficient + se * fac,
+      stringsAsFactors = FALSE
+    )
+  })
+
+  do.call(rbind, out)
+}
 
 
 
