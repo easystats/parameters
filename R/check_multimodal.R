@@ -61,7 +61,7 @@ check_multimodal.data.frame <- function(x, ...) {
   if (rez$p < .05) {
     text <- paste0(
       text,
-      "the multivariate distribution is significantly multimodal (Chisq(",
+      "the multivariate distribution is significantly multimodal (Chi2(",
       insight::format_value(rez$df, protect_integers = TRUE),
       ") = ",
       insight::format_value(rez$Chisq),
@@ -71,7 +71,7 @@ check_multimodal.data.frame <- function(x, ...) {
   } else {
     text <- paste0(
       text,
-      "the hypothesis of a multimodal multivariate distribution cannot be rejected (Chisq(",
+      "the hypothesis of a multimodal multivariate distribution cannot be rejected (Chi2(",
       insight::format_value(rez$df, protect_integers = TRUE),
       ") = ",
       insight::format_value(rez$Chisq),
