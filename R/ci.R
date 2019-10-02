@@ -249,6 +249,9 @@ ci.censReg <- ci.gamlss
 ci.survreg <- ci.gamlss
 
 #' @export
+ci.flexsurvreg <- ci.gamlss
+
+#' @export
 ci.coxme <- ci.gamlss
 
 #' @export

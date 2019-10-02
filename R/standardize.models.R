@@ -68,7 +68,7 @@ standardize.lm <- function(x, robust = FALSE, method = "default", include_respon
 #' @keywords internal
 .no_response_standardize <- function(info) {
   # check if model has a response variable that should not be standardized.
-  info$is_count | info$is_ordinal | info$is_beta | info$is_censored | info$is_binomial
+  info$is_count | info$is_ordinal | info$is_beta | info$is_censored | info$is_binomial | info$is_survival
 }
 
 
@@ -123,6 +123,9 @@ standardize.stanreg <- standardize.lm
 
 #' @export
 standardize.brmsfit <- standardize.lm
+
+#' @export
+standardize.flexsurvreg <- standardize.lm
 
 #' @export
 standardize.lme <- standardize.lm
@@ -248,6 +251,9 @@ standardize.coxph <- function(x, robust = FALSE, method = "default", verbose = T
 
   log_terms <- .log_terms(x)
   if (length(log_terms)) pred <- setdiff(pred, log_terms)
+
+  weight_variable <- insight::find_weights(x)
+  if (length(weight_variable)) pred <- setdiff(pred, weight_variable)
 
   # standardize data, if we have anything left to standardize
 

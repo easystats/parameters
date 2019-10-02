@@ -1,11 +1,12 @@
 # generic function ------------------------------------------------------
 
 
+#' @importFrom insight get_statistic get_parameters
 #' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), ...) {
   parameters <- insight::get_parameters(model, effects = "fixed", component = component)
-  .statistic <- .get_statistic(model, component = component)
+  .statistic <- insight::get_statistic(model, component = component)
 
   # clean parameter names
 

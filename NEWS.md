@@ -1,5 +1,9 @@
 # parameters 0.2.1
 
+## New supported models
+
+- `p_value()`, `ci()`, `standard_error()`, `standardize()` and `model_parameters()` now support *flexsurvreg* models (from package **flexsurv**).
+
 ## Changes to functions
 
 - Standard errors for standardized parameters in `parameters_standardize()` are added as attribute, when `method = "classic"` or `method = "smart"`. There is a `ci()` method for those objects that conveniently prints confidence intervals for standardized coefficients.
