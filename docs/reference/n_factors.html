@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Number of Components/Factors to Retain — n_factors • parameters</title>
+<title>Number of Components/Factors to Retain in Factor Analysis — n_factors • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Number of Components/Factors to Retain — n_factors" />
+<meta property="og:title" content="Number of Components/Factors to Retain in Factor Analysis — n_factors" />
 <meta property="og:description" content="This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus. In case of ties, it will select the solution with the less factors." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -149,7 +149,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Number of Components/Factors to Retain</h1>
+    <h1>Number of Components/Factors to Retain in Factor Analysis</h1>
     
     <div class="hidden name"><code>n_factors.Rd</code></div>
     </div>
@@ -231,7 +231,7 @@
 #&gt; <span class='message'>  plot.sim  BDgraph</span>
 #&gt; <span class='message'>  print.sim BDgraph</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
-#&gt; </span><span>The choice of 3 dimensions is supported by 5 (31.25%) methods out of 16 (Bartlett, CNG, SE Scree, R2, EGA (glasso)).</div><div class='input'><span class='fu'>n_factors</span>(<span class='no'>mtcars</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"FA"</span>, <span class='kw'>algorithm</span> <span class='kw'>=</span> <span class='st'>"mle"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Method Agreement Procedure:
+#&gt; </span><span>The choice of 2 dimensions is supported by 4 (25.00%) methods out of 16 (Optimal coordinates, Parallel analysis, Kaiser criterion, EGA (TMFG)).</div><div class='input'><span class='fu'>n_factors</span>(<span class='no'>mtcars</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"FA"</span>, <span class='kw'>algorithm</span> <span class='kw'>=</span> <span class='st'>"mle"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
 #&gt; </span><span>The choice of 3 dimensions is supported by 7 (33.33%) methods out of 21 (Bartlett, CNG, SE Scree, R2, EGA (glasso), Velicer's MAP, BIC).</div><div class='input'># }
 

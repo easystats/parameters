@@ -221,9 +221,9 @@
 #&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 29 | &lt; .001 |              -0.52
 #&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 29 | &lt; .01  |              -0.45</div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
-#&gt; (Intercept) |       39.50 | [35.29, 44.17] | &lt; .001
-#&gt; wt          |       -3.24 | [-4.95, -1.85] | &lt; .001
-#&gt; cyl         |       -1.47 | [-2.20, -0.69] | &lt; .001</div><div class='input'>
+#&gt; (Intercept) |       39.65 | [34.99, 43.64] | &lt; .001
+#&gt; wt          |       -3.18 | [-4.90, -1.77] | &lt; .001
+#&gt; cyl         |       -1.47 | [-2.21, -0.76] | &lt; .001</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span class='message'>Waiting for profiling to be done...</span></div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     z | df |     p
 #&gt; ----------------------------------------------------------------------

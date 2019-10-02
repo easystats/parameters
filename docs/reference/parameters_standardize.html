@@ -198,9 +198,10 @@ mean and divide it by the standard deviation (SD).</p></td>
 <li><p><strong>refit</strong>: This method is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the "purest" and the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms). The <code>robust</code> (default to <code>FALSE</code>) argument enables a robust standardization of data, i.e., based on the <code>median</code> and <code>MAD</code> instead of the <code>mean</code> and <code>SD</code>.</p></li>
 <li><p><strong>2sd</strong>: Same as <code>method = "refit"</code>, however, standardization is done by dividing by two times the <code>SD</code> or <code>MAD</code> (depending on <code>robust</code>). This method is useful to obtain coefficients of continuous parameters comparable to coefficients related to binary predictors (see Gelman, 2008).</p></li>
 <li><p><strong>smart</strong> (Standardization of Model's parameters with Adjustment, Reconnaissance and Transformation): Post-hoc standardization of the parameters, aiming at emulating the results obtained by "refit". The coefficients are divided by the standard deviation (or MAD if <code>robust</code>) of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionally multiplied by the standard deviation (or MAD if <code>robust</code>) of the related term, so that they correspond to changes of 1 SD of the predictor (e.g., "A change in 1 SD of <code>x</code> is related to a change of 0.24 of the SD of <code>y</code>). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p></li>
-<li><p><strong>classic</strong>: This method is similar to <code>method = "smart"</code>, but treats all variables as continuous: it also scales the coefficient by the standard deviation of model's matrix' parameter of factors levels (transformed to integers) or binary predictors. Although being inappropriate for these cases, this method is the one implemented by default in other software packages, such as <code><a href='https://rdrr.io/pkg/sjstats/man/overdisp.html'>sjstats::std_beta()</a></code> or <code><a href='https://rdrr.io/pkg/lm.beta/man/lm.beta.html'>lm.beta::lm.beta()</a></code>.</p></li>
-</ul>
-
+<li><p><strong>classic</strong>: This method is similar to <code>method = "smart"</code>, but treats all variables as continuous: it also scales the coefficient by the standard deviation of model's matrix' parameter of factors levels (transformed to integers) or binary predictors. Although being inappropriate for these cases, this method is the one implemented by default in other software packages, such as <code><a href='https://rdrr.io/pkg/lm.beta/man/lm.beta.html'>lm.beta::lm.beta()</a></code>.</p></li>
+</ul><p>When <code>method = "smart"</code> or <code>method = "classic"</code>, <code>parameters_standardize()</code>
+also returns the standard errors for the standardized coefficients. Then, <code><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci()</a></code> can be
+used to calculate confidence intervals for the standardized coefficients. See 'Examples'.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -252,6 +253,15 @@ mean and divide it by the standard deviation (SD).</p></td>
 #&gt; 4                   Petal.Width       0.9301727
 #&gt; 5 Speciesversicolor:Petal.Width       0.4961919
 #&gt; 6  Speciesvirginica:Petal.Width      -0.2793421</div><div class='input'>
+<span class='co'># show CI</span>
+<span class='no'>ps</span> <span class='kw'>&lt;-</span> <span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>ps</span>)</div><div class='output co'>#&gt;                       Parameter CI     CI_low   CI_high
+#&gt; 1                   (Intercept) 95  0.0000000 0.0000000
+#&gt; 2             Speciesversicolor 95 -1.6407881 0.2291039
+#&gt; 3              Speciesvirginica 95 -0.5415295 1.4901328
+#&gt; 4                   Petal.Width 95 -0.3421105 2.2024559
+#&gt; 5 Speciesversicolor:Petal.Width 95 -0.9454793 1.9378632
+#&gt; 6  Speciesvirginica:Petal.Width 95 -1.6420711 1.0833868</div><div class='input'>
 <span class='no'>iris</span>$<span class='no'>binary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>iris</span>$<span class='no'>Sepal.Width</span> <span class='kw'>&gt;</span> <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>0</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>binary</span> ~ <span class='no'>Species</span> * <span class='no'>Sepal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"refit"</span>)</div><div class='output co'>#&gt;                        Parameter Std_Coefficient
@@ -284,19 +294,19 @@ mean and divide it by the standard deviation (SD).</p></td>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Speciesversicolor:Petal.Width and Petal.Width (r = 0.87), Speciesvirginica:Petal.Width and Speciesversicolor:Petal.Width (r = 0.8). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt;                       Parameter Std_Median   Std_Mean    Std_MAP
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Speciesversicolor:Petal.Width and Speciesversicolor (r = 0.75), Speciesversicolor:Petal.Width and Petal.Width (r = 0.88), Speciesvirginica:Petal.Width and Speciesversicolor:Petal.Width (r = 0.83). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt;                       Parameter Std_Median   Std_Mean    Std_MAP
 #&gt; 1                   (Intercept)  0.0000000  0.0000000  0.0000000
-#&gt; 2             Speciesversicolor -0.8492937 -0.8673102 -0.8176212
-#&gt; 3              Speciesvirginica  0.5505621  0.5768414  0.4588853
-#&gt; 4                   Petal.Width  0.8590041  0.8524707  0.8721036
-#&gt; 5 Speciesversicolor:Petal.Width  0.4159664  0.4480681  0.2927829
-#&gt; 6  Speciesvirginica:Petal.Width -0.2617619 -0.2480491 -0.3579348</div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Speciesversicolor:Petal.Width and Petal.Width (r = 0.87), Speciesvirginica:Petal.Width and Speciesversicolor:Petal.Width (r = 0.8). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt;                       Parameter Std_Median   Std_Mean    Std_MAP
+#&gt; 2             Speciesversicolor -0.8597428 -0.8636266 -0.8275681
+#&gt; 3              Speciesvirginica  0.5004729  0.5173483  0.4460691
+#&gt; 4                   Petal.Width  0.7893111  0.8052395  0.6887231
+#&gt; 5 Speciesversicolor:Petal.Width  0.5081768  0.4875516  0.5986770
+#&gt; 6  Speciesvirginica:Petal.Width -0.1903425 -0.1839677 -0.2304626</div><div class='input'><span class='fu'>parameters_standardize</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Speciesversicolor:Petal.Width and Speciesversicolor (r = 0.75), Speciesversicolor:Petal.Width and Petal.Width (r = 0.88), Speciesvirginica:Petal.Width and Speciesversicolor:Petal.Width (r = 0.83). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt;                       Parameter Std_Median   Std_Mean    Std_MAP
 #&gt; 1                   (Intercept)  0.0000000  0.0000000  0.0000000
-#&gt; 2             Speciesversicolor -0.6776429 -0.6920181 -0.6523717
-#&gt; 3              Speciesvirginica  0.4392879  0.4602559  0.3661400
-#&gt; 4                   Petal.Width  0.9331895  0.9260919  0.9474203
-#&gt; 5 Speciesversicolor:Petal.Width  0.4518901  0.4867642  0.3180683
-#&gt; 6  Speciesvirginica:Petal.Width -0.2843682 -0.2694711 -0.3888468</div><div class='input'># }
+#&gt; 2             Speciesversicolor -0.6859801 -0.6890790 -0.6603083
+#&gt; 3              Speciesvirginica  0.3993223  0.4127870  0.3559140
+#&gt; 4                   Petal.Width  0.8574777  0.8747817  0.7482027
+#&gt; 5 Speciesversicolor:Petal.Width  0.5520640  0.5296576  0.6503801
+#&gt; 6  Speciesvirginica:Petal.Width -0.2067809 -0.1998555 -0.2503658</div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

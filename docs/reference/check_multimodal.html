@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model Parameters for Zero-Inflated Models — model_parameters.zeroinfl • parameters</title>
+<title>Check if a distribution is unimodal or multimodal — check_multimodal • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Model Parameters for Zero-Inflated Models — model_parameters.zeroinfl" />
-<meta property="og:description" content="Parameters of zero-inflated models." />
+<meta property="og:title" content="Check if a distribution is unimodal or multimodal — check_multimodal" />
+<meta property="og:description" content="For univariate distributions (one-dimensional vectors), this functions perfoms a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -149,104 +149,64 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Model Parameters for Zero-Inflated Models</h1>
+    <h1>Check if a distribution is unimodal or multimodal</h1>
     
-    <div class="hidden name"><code>model_parameters.zeroinfl.Rd</code></div>
+    <div class="hidden name"><code>check_multimodal.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameters of zero-inflated models.</p>
+    <p>For univariate distributions (one-dimensional vectors), this functions perfoms a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for zeroinfl</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>, <span class='kw'>standardize_robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>,
-  <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>check_multimodal</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>A model with zero-inflation component.</p></td>
-    </tr>
-    <tr>
-      <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
-    </tr>
-    <tr>
-      <th>standardize</th>
-      <td><p>Add standardized parameters. Can be <code>FALSE</code> or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize()</a></code>), such as <code>"refit"</code>, <code>"2sd"</code>, <code>"smart"</code> or <code>"classic"</code>. The two former are based on model refitting using a standardized version of data. It is the most accurate, although computationally heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).</p></td>
-    </tr>
-    <tr>
-      <th>standardize_robust</th>
-      <td><p>Robust standardization. See <code><a href='parameters_standardize.html'>parameters_standardize</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>iterations</th>
-      <td><p>The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.</p></td>
-    </tr>
-    <tr>
-      <th>component</th>
-      <td><p>Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
-<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
+      <th>x</th>
+      <td><p>A numeric vector or a dataframe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods (e.g., to <code><a href='standardize.html'>standardize()</a></code>).</p></td>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>A data frame of indices related to the model's parameters.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    
+<ul>
+<li><p>Ameijeiras-Alonso, J., Crujeiras, R. M., \&amp; Rodríguez-Casal, A. (2019). Mode testing, critical bandwidth and excess mass. Test, 28(3), 900-919.</p></li>
+</ul>
 
-    <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
-  columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>pscl</span>)</div><div class='output co'>#&gt; <span class='message'>Classes and Methods for R developed in the</span>
-#&gt; <span class='message'>Political Science Computational Laboratory</span>
-#&gt; <span class='message'>Department of Political Science</span>
-#&gt; <span class='message'>Stanford University</span>
-#&gt; <span class='message'>Simon Jackman</span>
-#&gt; <span class='message'>hurdle and zeroinfl functions by Achim Zeileis</span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"bioChemists"</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pscl/man/zeroinfl.html'>zeroinfl</a></span>(<span class='no'>art</span> ~ <span class='no'>fem</span> + <span class='no'>mar</span> + <span class='no'>kid5</span> + <span class='no'>ment</span> <span class='kw'>|</span> <span class='no'>kid5</span> + <span class='no'>phd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>bioChemists</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
-#&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |      p | Coefficient (std.)
-#&gt; -------------------------------------------------------------------------------
-#&gt; (Intercept) |        0.56 | 0.07 | [ 0.43,  0.69] | &lt; .001 |               0.67
-#&gt; femWomen    |       -0.23 | 0.06 | [-0.34, -0.11] | &lt; .001 |              -0.23
-#&gt; marMarried  |        0.14 | 0.07 | [ 0.01,  0.27] | &lt; .05  |               0.14
-#&gt; kid5        |       -0.17 | 0.05 | [-0.26, -0.07] | &lt; .001 |              -0.13
-#&gt; ment        |        0.02 | 0.00 | [ 0.02,  0.03] | &lt; .001 |               0.20
-#&gt; 
-#&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
-#&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     p | Coefficient (std.)
-#&gt; ------------------------------------------------------------------------------
-#&gt; (Intercept) |       -0.93 | 0.43 | [-1.78, -0.08] | &lt; .05 |              -1.68
-#&gt; kid5        |        0.05 | 0.22 | [-0.38,  0.47] | &gt; .1  |               0.04
-#&gt; phd         |       -0.25 | 0.14 | [-0.51,  0.02] | 0.07  |              -0.25
-#&gt; </div></span></pre>
+    <pre class="examples"><div class='input'><span class='co'># Univariate</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>2000</span>)
+<span class='fu'>check_multimodal</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in check_multimodal.numeric(x): Package 'multimode' required for this function to work. Please install it by running `install.packages('multimode')`.</span></div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>2</span>))
+<span class='fu'>check_multimodal</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in check_multimodal.numeric(x): Package 'multimode' required for this function to work. Please install it by running `install.packages('multimode')`.</span></div><div class='input'>
+<span class='co'># Multivariate</span>
+<span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
+<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>200</span>),
+  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Beta.html'>rbeta</a></span>(<span class='fl'>200</span>, <span class='fl'>2</span>, <span class='fl'>1</span>)
+)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>m</span>$<span class='no'>x</span>, <span class='no'>m</span>$<span class='no'>y</span>)</div><div class='img'><img src='check_multimodal-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>check_multimodal</span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; <span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chisq(6) = 31.24, p &lt; .001)</span><span></div><div class='input'>
+<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>4</span>)),
+  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Beta.html'>rbeta</a></span>(<span class='fl'>100</span>, <span class='fl'>2</span>, <span class='fl'>1</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Beta.html'>rbeta</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>4</span>))
+)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>m</span>$<span class='no'>x</span>, <span class='no'>m</span>$<span class='no'>y</span>)</div><div class='img'><img src='check_multimodal-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>check_multimodal</span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chisq(14) = 103.81, p &lt; .001)</span><span></div><div class='input'># }
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#references">References</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

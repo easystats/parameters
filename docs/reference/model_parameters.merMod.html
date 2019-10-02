@@ -248,29 +248,29 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 )
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |      p
-#&gt; ------------------------------------------------------------------
-#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | &gt; .1  
-#&gt; spp (PR)    |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | &lt; .001
-#&gt; spp (DM)    |        0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 0.05  
-#&gt; spp (EC-A)  |       -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | &lt; .01 
-#&gt; spp (EC-L)  |        0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | &lt; .001
-#&gt; spp (DES-L) |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | &lt; .001
-#&gt; spp (DF)    |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | &gt; .1  
-#&gt; mined (no)  |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |      p
+#&gt; ----------------------------------------------------------
+#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | &gt; .1  
+#&gt; spp (PR)    |       -1.27 | 0.24 | [-1.74, -0.80] | &lt; .001
+#&gt; spp (DM)    |        0.27 | 0.14 | [ 0.00,  0.54] | 0.05  
+#&gt; spp (EC-A)  |       -0.57 | 0.21 | [-0.97, -0.16] | &lt; .01 
+#&gt; spp (EC-L)  |        0.67 | 0.13 | [ 0.41,  0.92] | &lt; .001
+#&gt; spp (DES-L) |        0.63 | 0.13 | [ 0.38,  0.87] | &lt; .001
+#&gt; spp (DF)    |        0.12 | 0.15 | [-0.17,  0.40] | &gt; .1  
+#&gt; mined (no)  |        1.27 | 0.27 | [ 0.74,  1.80] | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |      p
-#&gt; ------------------------------------------------------------------
-#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | &lt; .01 
-#&gt; mined (no)  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |      p
+#&gt; ----------------------------------------------------------
+#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] | &lt; .01 
+#&gt; mined (no)  |       -1.84 | 0.31 | [-2.46, -1.23] | &lt; .001
 #&gt; </div><div class='input'><span class='co'># \donttest{</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"smart"</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p | Coefficient (std.)
 #&gt; ------------------------------------------------------------------------
-#&gt; (Intercept) |       35.82 | [31.57, 40.68] | &lt; .001 |               0.00
-#&gt; wt          |       -4.90 | [-6.71, -3.85] | &lt; .001 |              -0.82</div><div class='input'># }
+#&gt; (Intercept) |       36.64 | [32.98, 39.94] | &lt; .001 |               0.00
+#&gt; wt          |       -5.08 | [-6.11, -4.15] | &lt; .001 |              -0.82</div><div class='input'># }
 
 </div></span></pre>
   </div>

@@ -117,6 +117,7 @@
 
     
     
+<p><img src="https://raw.githubusercontent.com/easystats/parameters/master/man/figures/figure2.png" style="display: block; margin: auto;"></p>
 <p>Also known as <a href="https://en.wikipedia.org/wiki/Feature_selection"><strong>feature selection</strong></a> in machine learning, the goal of variable selection is to <strong>identify a subset of predictors</strong> to <strong>simplify models</strong>. This can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).</p>
 <p>There are many different methods. The one that is appropriate for a given problem depends on the model type, the data, the objective and the theorethical rationale.</p>
 <p>The <code>parameters</code> package implements a helper that will <strong>automatically pick a method deemed appropriate for the provided model</strong>, run the variables selection and return the <strong>optimal formula</strong>, which you can then re-use to update the model.</p>
@@ -173,8 +174,7 @@
 <a class="sourceLine" id="cb3-2" title="2"></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="kw">check_normality</span>(model)</a></code></pre></div>
 <pre><code>&gt; OK: Residuals appear as normally distributed (p = 0.612).</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># check_homogeneity(model)</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw">check_heteroscedasticity</span>(model)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">check_heteroscedasticity</span>(model)</a></code></pre></div>
 <pre><code>&gt; OK: Error variance appears to be homoscedastic (p = 0.118).</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">check_autocorrelation</span>(model)</a></code></pre></div>
 <pre><code>&gt; OK: Residuals appear to be independent and not autocorrelated (p = 0.574).</code></pre>

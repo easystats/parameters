@@ -49,20 +49,28 @@ reference:
   - parameters_simulate
   - parameters_standardize
 
+- title: "Data Standardization"
+  contents:
+  - standardize
+  - standardize.lm
+  - standardize.data.frame
+  - normalize
+
 - title: "Variable/Feature Reduction"
   contents:
   - parameters_reduction
   - check_factorstructure
+  - check_clusterstructure
   - check_kmo
   - check_sphericity
   - convert_efa_to_cfa
   - n_factors
+  - n_clusters
   - parameters_selection
   - principal_components
   - cmds
   - DRR
   - ICA
-
 
 - title: "Index Conversion"
   contents:
@@ -70,17 +78,17 @@ reference:
   - odds_to_d
   - odds_to_probs
 
+- title: "Data Properties"
+  contents:
+  - describe_distribution
+  - check_multimodal
+  - skewness
+  - smoothness
+
 - title: "Miscellaneous"
   contents:
-  - standardize
-  - standardize.lm
-  - standardize.data.frame
-  - normalize
   - data_partition
-  - describe_distribution
-  - skewness
   - reshape_loadings
-  - smoothness
   - convert_data_to_numeric
 
 - title: "Table and Value Formatting"

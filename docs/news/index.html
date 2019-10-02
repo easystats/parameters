@@ -156,11 +156,40 @@
 <h1 class="page-header">
 <a href="#parameters-021" class="anchor"></a>parameters 0.2.1<small> Unreleased </small>
 </h1>
+<div id="new-supported-models" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-supported-models" class="anchor"></a>New supported models</h2>
+<ul>
+<li>
+<code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="../reference/standardize.html">standardize()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support <em>flexsurvreg</em> models (from package <strong>flexsurv</strong>).</li>
+</ul>
+</div>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/check_clusterstructure.html">check_clusterstructure()</a></code> to check the suitability of data for clustering.</li>
+<li>
+<code><a href="../reference/n_clusters.html">n_clusters()</a></code> to determine the number of clusters to extract.</li>
+<li>
+<code><a href="../reference/check_multimodal.html">check_multimodal()</a></code> to check if a distribution is unimodal or multimodal.</li>
+</ul>
+</div>
+<div id="changes-to-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<ul>
+<li>Standard errors for standardized parameters in <code><a href="../reference/parameters_standardize.html">parameters_standardize()</a></code> are added as attribute, when <code>method = "classic"</code> or <code>method = "smart"</code>. There is a <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code> method for those objects that conveniently prints confidence intervals for standardized coefficients.</li>
+</ul>
+</div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Interaction terms in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
+<li>
+<code><a href="../reference/parameters_standardize.html">parameters_standardize()</a></code> failed when model used weights.</li>
 </ul>
 </div>
 </div>
@@ -186,21 +215,23 @@
 <code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="../reference/standardize.html">standardize()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support many more model objects, including mixed models from packages <em>nlme</em>, <em>glmmTMB</em> or <em>GLMMadaptive</em>, zero-inflated models from package <em>pscl</em> or other modelling packages. Along with these changes, functions for specific model objects with zero-inflated component get a <code>component</code>-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.</li>
 </ul>
 </div>
-<div id="new-functions" class="section level2">
+<div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions" class="anchor"></a>New functions</h2>
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/parameters_simulate.html">parameters_simulate()</a></code> and <code><a href="../reference/model_simulate.html">model_simulate()</a></code>, as computational faster alternatives to <code><a href="../reference/parameters_bootstrap.html">parameters_bootstrap()</a></code> and <code><a href="../reference/model_bootstrap.html">model_bootstrap()</a></code>.</li>
+<li>
+<code><a href="../reference/data_partition.html">data_partition()</a></code> to partition data into a test and a training set.</li>
 <li>
 <code><a href="../reference/standardize_names.html">standardize_names()</a></code> to standardize column names from data frames, in particular objects returned from <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
 <li>
 <code><a href="../reference/p_value_kenward.html">se_kenward()</a></code> to calculate approximated standard errors for model parameters, based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
-<div id="changes-to-functions" class="section level2">
+<div id="changes-to-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code>format_value()</code> and <code><a href="../reference/format_ci.html">format_ci()</a></code> get a <code>width</code>-argument to set the minimum length of the returned formatted string.</li>
