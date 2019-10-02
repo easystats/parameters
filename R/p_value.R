@@ -449,18 +449,16 @@ p_value.flexsurvreg <- function(model, ...) {
 
 #' @export
 p_value.rq <- function(model, ...) {
-
-  p <- tryCatch(
-    {
-      cs <- suppressWarnings(stats::coef(summary(model)))
-      cs[, "Pr(>|t|)"]
-    },
-    error = function(e) {
-      .get_pval_from_summary(
-        model,
-        cs = suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
-      )
-    }
+  p <- tryCatch({
+    cs <- suppressWarnings(stats::coef(summary(model)))
+    cs[, "Pr(>|t|)"]
+  },
+  error = function(e) {
+    .get_pval_from_summary(
+      model,
+      cs = suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
+    )
+  }
   )
 
   params <- insight::get_parameters(model)

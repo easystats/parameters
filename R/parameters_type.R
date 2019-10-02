@@ -231,10 +231,11 @@ parameters_type <- function(model, ...) {
     if (pattern[j] == "offset") {
       x <- trimws(sub("offset\\(([^-+ )]*)\\)(.*)", "\\1\\2", x))
     } else if (pattern[j] == "I") {
-      if (full)
+      if (full) {
         x <- trimws(sub("I\\(((\\w|\\.)*).*", "\\1", x))
-      else
+      } else {
         x <- trimws(sub("I\\((.*)\\)(.*)", "\\1", x))
+      }
     } else {
       p <- paste0(pattern[j], "\\(((\\w|\\.)*)\\)(.*)")
       x <- trimws(sub(p, "\\1\\3", x))

@@ -37,7 +37,6 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "kenward", "boot"), ...) 
     # Kenward approx
   } else if (method == "kenward") {
     out <- ci_wald(model = x, ci = ci, dof = dof_kenward(x))
-
   } else if (method == "boot") {
     out <- lapply(ci, function(ci, x) .ci_boot_merMod(x, ci, ...), x = x)
     out <- do.call(rbind, out)
