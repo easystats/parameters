@@ -3,7 +3,7 @@
 #' This checks whether the data is appropriate for clustering using the Hopkins' H statistic of given data. If the value of Hopkins statistic is close to 0 (below 0.5), then we can reject the null hypothesis and conclude that the dataset is significantly clusterable. A value for H lower than 0.25 indicates a clustering tendency at the 90\% confidence level. The visual assessment of cluster tendency (VAT) approach (Bezdek and Hathaway, 2002) consists in investigating the heatmap of the ordered dissimilarity matrix. Following this, one can potentially detect the clustering tendency by counting the number of square shaped blocks along the diagonal.
 #'
 #' @param x A data frame.
-#' @param standardize Standardize the dataframe before investigating the cluster tendency.
+#' @param standardize Standardize the dataframe before clustering (default).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -40,6 +40,7 @@ check_clusterstructure <- function(x, standardize = TRUE, ...) {
 
   out <- list(text = text,
               color = color,
+              title = "Clustering tendency",
               H = H,
               dissimilarity_matrix = .clusterstructure_dm(x))
   class(out) <- c("see_check_clusterstructure", "check_clusterstructure", class(out))

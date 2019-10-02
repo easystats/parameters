@@ -2,8 +2,9 @@
 #'
 #' This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.
 #'
+#' @inheritParams check_clusterstructure
 #' @param package These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"clValid"}.
-#' @inheritParams n_factors
+#' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationaly heavy.
 #'
 #' @examples
 #' library(parameters)
@@ -12,18 +13,20 @@
 #' n_clusters(standardize(iris[, 1:4]))
 #' }
 #' @export
-n_clusters <- function(x, package = c("NbClust", "mclust", "clValid"), ...) {
+n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "clValid"), fast = TRUE, ...) {
 
   if (all(package == "all")) {
     package <- c("NbClust", "mclust", "clValid")
   }
 
   x <- x[sapply(x, is.numeric)]
-  x <- standardize(x)
+  if (standardize){
+    x <- standardize(x)
+  }
 
   out <- data.frame()
   if("nbclust" %in% tolower(package)){
-    out <- rbind(out, .n_clusters_NbClust(x))
+    out <- rbind(out, .n_clusters_NbClust(x, fast = fast))
   }
   if("mclust" %in% tolower(package)){
     out <- rbind(out, .n_clusters_mclust(x))
@@ -103,7 +106,7 @@ n_clusters <- function(x, package = c("NbClust", "mclust", "clValid"), ...) {
 
 #' @importFrom grDevices png dev.off
 #' @keywords internal
-.n_clusters_NbClust <- function(x, ...) {
+.n_clusters_NbClust <- function(x, fast = TRUE, ...) {
   if (!requireNamespace("NbClust", quietly = TRUE)) {
     stop("Package 'NbClust' required for this function to work. Please install it by running `install.packages('NbClust')`.")
   }
@@ -111,7 +114,12 @@ n_clusters <- function(x, package = c("NbClust", "mclust", "clValid"), ...) {
   # Run the function and suppress output and automatic plotting
   ff <- tempfile()
   grDevices::png(filename = ff)
-  junk <- capture.output(n <- NbClust::NbClust(x, min.nc = 2, max.nc = 9, method = "ward.D2", index = "alllong"))
+  if(fast){
+    indices <- "all"
+  } else{
+    indices <- "allong"
+  }
+  junk <- capture.output(n <- NbClust::NbClust(x, min.nc = 2, max.nc = 9, method = "ward.D2", index = indices))
   grDevices::dev.off()
   unlink(ff)
 

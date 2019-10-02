@@ -4,12 +4,17 @@
 \alias{n_clusters}
 \title{Number of Clusters to Extract}
 \usage{
-n_clusters(x, package = c("NbClust", "mclust", "clValid"), ...)
+n_clusters(x, standardize = TRUE, package = c("NbClust", "mclust",
+  "clValid"), fast = TRUE, ...)
 }
 \arguments{
-\item{x}{A dataframe.}
+\item{x}{A data frame.}
+
+\item{standardize}{Standardize the dataframe before clustering (default).}
 
 \item{package}{These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"clValid"}.}
+
+\item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationaly heavy.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

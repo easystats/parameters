@@ -9,7 +9,7 @@ check_clusterstructure(x, standardize = TRUE, ...)
 \arguments{
 \item{x}{A data frame.}
 
-\item{standardize}{Standardize the dataframe before investigating the cluster tendency.}
+\item{standardize}{Standardize the dataframe before clustering (default).}
 
 \item{...}{Arguments passed to or from other methods.}
 }
