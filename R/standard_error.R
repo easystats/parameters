@@ -385,6 +385,7 @@ standard_error.svyglm <- function(model, ...) {
 # Other models ---------------------------------------------------------------
 
 
+#' @importFrom insight get_varcov
 #' @export
 standard_error.rq <- function(model, ...) {
   se <- tryCatch({
@@ -393,14 +394,13 @@ standard_error.rq <- function(model, ...) {
     if (length(se_column)) {
       cs[, se_column]
     } else {
-      s <- suppressWarnings(summary(model, covariance = TRUE))
-      as.vector(sqrt(diag(s$cov)))
+      vc <- insight::get_varcov(model)
+      as.vector(sqrt(diag(vc)))
     }
   },
   error = function(e) {
-    ## TODO replace with "insight::get_varcov()"
-    s <- suppressWarnings(summary(model, covariance = TRUE))
-    as.vector(sqrt(diag(s$cov)))
+    vc <- insight::get_varcov(model)
+    as.vector(sqrt(diag(vc)))
   }
   )
 
