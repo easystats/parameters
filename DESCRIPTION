@@ -47,7 +47,6 @@ Suggests:
 	boot,
 	brms,
 	cAIC4,
-	clustertend,
 	clValid,
 	covr,
 	dplyr,

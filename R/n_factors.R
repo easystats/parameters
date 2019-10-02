@@ -198,7 +198,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
     n_Methods = as.numeric(by(out, as.factor(out$n_Factors), function(out) n <- nrow(out)))
   )
 
-  attr(out, "by_factors") <- by_factors
+  attr(out, "summary") <- by_factors
   attr(out, "n") <- min(as.numeric(as.character(by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")])))
 
   class(out) <- c("n_factors", "see_n_factors", class(out))
