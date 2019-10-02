@@ -4,12 +4,12 @@
 \alias{check_clusterstructure}
 \title{Check suitability of data for Clustering}
 \usage{
-check_clusterstructure(x, silent = FALSE, ...)
+check_clusterstructure(x, standardize = TRUE, ...)
 }
 \arguments{
-\item{x}{A dataframe.}
+\item{x}{A data frame.}
 
-\item{silent}{Hide results printing.}
+\item{standardize}{Standardize the dataframe before investigating the cluster tendency.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -17,16 +17,20 @@ check_clusterstructure(x, silent = FALSE, ...)
 A list of lists of indices related to sphericity and KMO.
 }
 \description{
-This checks whether the data is appropriate for clustering using the Hopkins' H statistic of given data. If the value of Hopkins statistic is close to 0 (below 0.5), then we can reject the null hypothesis and conclude that the dataset is significantly clusterable. A value for H lower than 0.25 indicates a clustering tendency at the 90\% confidence level.
+This checks whether the data is appropriate for clustering using the Hopkins' H statistic of given data. If the value of Hopkins statistic is close to 0 (below 0.5), then we can reject the null hypothesis and conclude that the dataset is significantly clusterable. A value for H lower than 0.25 indicates a clustering tendency at the 90\% confidence level. The visual assessment of cluster tendency (VAT) approach (Bezdek and Hathaway, 2002) consists in investigating the heatmap of the ordered dissimilarity matrix. Following this, one can potentially detect the clustering tendency by counting the number of square shaped blocks along the diagonal.
 }
 \examples{
 library(parameters)
 
 check_clusterstructure(iris[, 1:4])
+plot(check_clusterstructure(iris[, 1:4]))
 
 }
 \references{
-Lawson, R. G., \& Jurs, P. C. (1990). New index for clustering tendency and its application to chemical problems. Journal of chemical information and computer sciences, 30(1), 36-41.
+\itemize{
+  \item Lawson, R. G., \& Jurs, P. C. (1990). New index for clustering tendency and its application to chemical problems. Journal of chemical information and computer sciences, 30(1), 36-41.
+  \item Bezdek, J. C., \& Hathaway, R. J. (2002, May). VAT: A tool for visual assessment of (cluster) tendency. In Proceedings of the 2002 International Joint Conference on Neural Networks. IJCNN02 (3), 2225-2230. IEEE.
+}
 }
 \seealso{
 check_kmo check_sphericity check_factorstructure

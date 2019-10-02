@@ -8,5 +8,5 @@ test_that("check_factorstructure", {
 
 test_that("check_clusterstructure", {
   set.seed(333)
-  testthat::expect_equal(check_clusterstructure(iris[, 1:4]), 0.166, tol = 0.01)
+  testthat::expect_equal(check_clusterstructure(iris[, 1:4])$H, 0.187, tol = 0.01)
 })
