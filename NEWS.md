@@ -4,6 +4,12 @@
 
 - `p_value()`, `ci()`, `standard_error()`, `standardize()` and `model_parameters()` now support *flexsurvreg* models (from package **flexsurv**).
 
+## New functions
+
+- `check_clusterstructure()` to check the suitability of data for clustering.
+- `n_clusters()` to determine the number of clusters to extract.
+- `check_multimodal()` to check if a distribution is unimodal or multimodal.
+
 ## Changes to functions
 
 - Standard errors for standardized parameters in `parameters_standardize()` are added as attribute, when `method = "classic"` or `method = "smart"`. There is a `ci()` method for those objects that conveniently prints confidence intervals for standardized coefficients.
@@ -27,6 +33,7 @@
 ## New functions
 
 - `parameters_simulate()` and `model_simulate()`, as computational faster alternatives to `parameters_bootstrap()` and `model_bootstrap()`.
+- `data_partition()` to partition data into a test and a training set.
 - `standardize_names()` to standardize column names from data frames, in particular objects returned from `model_parameters()`.
 - `se_kenward()` to calculate approximated standard errors for model parameters, based on the Kenward-Roger (1997) approach.
 
