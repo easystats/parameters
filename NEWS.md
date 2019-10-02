@@ -2,7 +2,7 @@
 
 ## Changes to functions
 
-- Standard errors for standardized parameters in `parameters_standardize()` are added as attribute, when `method = "classic"` or `method = "smart"`.
+- Standard errors for standardized parameters in `parameters_standardize()` are added as attribute, when `method = "classic"` or `method = "smart"`. There is a `ci()` method for those objects that conveniently prints confidence intervals for standardized coefficients.
 
 ## Bug fixes
 
