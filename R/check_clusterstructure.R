@@ -38,20 +38,16 @@ check_clusterstructure <- function(x, standardize = TRUE, ...) {
     color <- "red"
   }
 
-  out <- list(text = text,
-              color = color,
-              title = "Clustering tendency",
-              H = H,
+  out <- list(H = H,
               dissimilarity_matrix = .clusterstructure_dm(x))
-  class(out) <- c("see_check_clusterstructure", "check_clusterstructure", class(out))
+
+  attr(out, "text") <- text
+  attr(out, "color") <- color
+  attr(out, "title") <- "Clustering tendency"
+  class(out) <- c("see_check_clusterstructure", "check_clusterstructure", "easystats_check", class(out))
   out
 }
 
-
-#' @export
-print.check_clusterstructure <- function(x, ...){
-  insight::print_color(x$text, x$color)
-}
 
 
 #' @importFrom stats heatmap
