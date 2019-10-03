@@ -25,6 +25,6 @@ This function runs many existing procedures for determining how many clusters ar
 library(parameters)
 
 \donttest{
-n_clusters(standardize(iris[, 1:4]))
+n_clusters(iris[, 1:4])
 }
 }

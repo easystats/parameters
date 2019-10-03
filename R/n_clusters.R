@@ -10,7 +10,7 @@
 #' library(parameters)
 #'
 #' \donttest{
-#' n_clusters(standardize(iris[, 1:4]))
+#' n_clusters(iris[, 1:4])
 #' }
 #' @export
 n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "clValid"), fast = TRUE, ...) {
@@ -19,7 +19,7 @@ n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "
     package <- c("NbClust", "mclust", "clValid")
   }
 
-  x <- x[sapply(x, is.numeric)]
+  x <- as.data.frame(x[sapply(x, is.numeric)])
   if (standardize){
     x <- standardize(x)
   }
@@ -47,8 +47,9 @@ n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "
       dupli <- c(dupli, i)
     }
   }
-  out <- out[-dupli, ]
-
+  if(!is.null(dupli)){
+    out <- out[-dupli, ]
+  }
 
   # Add summary
   by_clusters <- .data_frame(
