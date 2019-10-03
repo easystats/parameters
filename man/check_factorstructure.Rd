@@ -4,12 +4,10 @@
 \alias{check_factorstructure}
 \title{Check suitability of data for Factor Analysis (FA)}
 \usage{
-check_factorstructure(x, silent = FALSE, ...)
+check_factorstructure(x, ...)
 }
 \arguments{
 \item{x}{A dataframe.}
-
-\item{silent}{Hide results printing.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

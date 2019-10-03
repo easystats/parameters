@@ -67,7 +67,7 @@ check_multimodal.data.frame <- function(x, ...) {
       insight::format_value(rez$Chisq),
       ", ", format_p(rez$p), ")"
     )
-    insight::print_color(text, "green")
+    color <- "green"
   } else {
     text <- paste0(
       text,
@@ -77,8 +77,14 @@ check_multimodal.data.frame <- function(x, ...) {
       insight::format_value(rez$Chisq),
       ", ", format_p(rez$p), ")"
     )
-    insight::print_color(text, "yellow")
+    color <- "yellow"
   }
+
+
+  attr(rez, "text") <- text
+  attr(rez, "color") <- color
+  attr(rez, "title") <- "Is the data multimodal?"
+  class(rez) <- c("easystats_check", class(rez))
 
   invisible(rez)
 }
@@ -102,7 +108,7 @@ check_multimodal.numeric <- function(x, ...) {
       insight::format_value(rez$excess_mass),
       ", ", format_p(rez$p), ")"
     )
-    insight::print_color(text, "green")
+    color <- "green"
   } else {
     text <- paste0(
       text,
@@ -110,8 +116,13 @@ check_multimodal.numeric <- function(x, ...) {
       insight::format_value(rez$excess_mass),
       ", ", format_p(rez$p), ")"
     )
-    insight::print_color(text, "yellow")
+    color <- "yellow"
   }
+
+  attr(rez, "text") <- text
+  attr(rez, "color") <- color
+  attr(rez, "title") <- "Is the variable multimodal?"
+  class(rez) <- c("easystats_check", class(rez))
 
   invisible(rez)
 }

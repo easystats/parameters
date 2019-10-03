@@ -4,12 +4,10 @@
 \alias{check_kmo}
 \title{Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA) for Factor Analysis}
 \usage{
-check_kmo(x, silent = FALSE, ...)
+check_kmo(x, ...)
 }
 \arguments{
 \item{x}{A dataframe.}
-
-\item{silent}{Hide results printing.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

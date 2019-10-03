@@ -10,28 +10,29 @@
 #' @return A list of lists of indices related to sphericity and KMO.
 #' @seealso check_kmo check_sphericity check_clusterstructure
 #' @export
-check_factorstructure <- function(x, silent = FALSE, ...) {
+check_factorstructure <- function(x, ...) {
 
-  # TODO: Avoid double computation of indices
   # TODO: detect (and remove?) factors
   # TODO: This could be improved using the correlation package to use different correlation methods
 
-  if (!silent) {
-    text_kmo <- capture.output(check_kmo(x, silent = FALSE, ...))
-    text_sphericity <- capture.output(check_sphericity(x, silent = FALSE, ...))
+  kmo <- check_kmo(x, ...)
+  sphericity <- check_sphericity(x, ...)
 
-    text <- paste0("  - KMO, ", text_kmo, "\n  - Sphericity, ", text_sphericity)
-    if (grepl("Warning:", text)) {
-      insight::print_color(text, "red")
-    } else {
-      insight::print_color(text, "green")
-    }
+  text <- paste0("  - KMO: ",  attributes(kmo)$text, "\n  - Sphericity: ", attributes(sphericity)$text)
+  if(attributes(kmo)$color == "red" | attributes(sphericity)$color == "red"){
+    color <- "red"
+  } else{
+    color <- "green"
   }
 
-  invisible(list(
-    KMO = check_kmo(x, silent = TRUE, ...),
-    sphericity = check_sphericity(x, silent = TRUE, ...)
-  ))
+  out <- list(KMO = kmo, sphericity = sphericity)
+
+  attr(out, "text") <- text
+  attr(out, "color") <- color
+  attr(out, "title") <- "Is the data suitable for Factor Analysis?"
+  class(out) <- c("easystats_check", class(out))
+
+  invisible(out)
 }
 
 
@@ -66,7 +67,7 @@ check_factorstructure <- function(x, silent = FALSE, ...) {
 #' }
 #' @importFrom stats cor cov2cor
 #' @export
-check_kmo <- function(x, silent = FALSE, ...) {
+check_kmo <- function(x, ...) {
   cormatrix <- stats::cor(x, use = "pairwise.complete.obs", ...)
   Q <- solve(cormatrix)
 
@@ -78,17 +79,22 @@ check_kmo <- function(x, silent = FALSE, ...) {
   sumr2 <- sum(cormatrix^2)
   MSA <- sumr2 / (sumr2 + sumQ2)
   MSA_variable <- colSums(cormatrix^2) / (colSums(cormatrix^2) + colSums(Q^2))
-  results <- list(MSA = MSA, MSA_variable = MSA_variable)
+  out <- list(MSA = MSA, MSA_variable = MSA_variable)
 
-  if (!silent) {
-    if (MSA < 0.5) {
-      insight::print_color(sprintf("Warning: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that factor analysis is likely to be inappropriate (KMO = %.2f).", MSA), "red")
-    } else {
-      insight::print_color(sprintf("OK: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = %.2f).", MSA), "green")
-    }
+  if (MSA < 0.5) {
+    text <- sprintf("The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that factor analysis is likely to be inappropriate (KMO = %.2f).", MSA)
+    color <- "red"
+  } else {
+    text <- sprintf("The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = %.2f).", MSA)
+    color <- "green"
   }
 
-  invisible(results)
+  attr(out, "text") <- text
+  attr(out, "color") <- color
+  attr(out, "title") <- "KMO Measure of Sampling Adequacy"
+  class(out) <- c("easystats_check", class(out))
+
+  invisible(out)
 }
 
 
@@ -108,7 +114,6 @@ check_kmo <- function(x, silent = FALSE, ...) {
 #'
 #'
 #' @param x A dataframe.
-#' @param silent Hide results printing.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -127,7 +132,7 @@ check_kmo <- function(x, silent = FALSE, ...) {
 #' @importFrom stats pchisq cor
 #'
 #' @export
-check_sphericity <- function(x, silent = FALSE, ...) {
+check_sphericity <- function(x, ...) {
 
   # This could be improved using the correlation package to use different correlation methods
   cormatrix <- stats::cor(x, use = "pairwise.complete.obs", ...)
@@ -140,15 +145,22 @@ check_sphericity <- function(x, silent = FALSE, ...) {
   df <- p * (p - 1) / 2
   pval <- stats::pchisq(statistic, df, lower.tail = FALSE)
 
-  results <- list(chisq = statistic, p = pval, dof = df)
+  out <- list(chisq = statistic, p = pval, dof = df)
 
-  if (!silent) {
-    if (pval < 0.001) {
-      insight::print_color(sprintf("OK: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, %s).", df, statistic, format_p(pval)), "green")
-    } else {
-      insight::print_color(sprintf("Warning: Bartlett's test of sphericity suggests that there is not enough significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, %s).", df, statistic, format_p(pval)), "red")
-    }
+  if (pval < 0.001) {
+    text <- sprintf("Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, %s).", df, statistic, format_p(pval))
+    color <- "green"
+  } else {
+    text <- sprintf("Bartlett's test of sphericity suggests that there is not enough significant correlation in the data for factor analaysis (Chisq(%i) = %.2f, %s).", df, statistic, format_p(pval))
+    color <- "red"
   }
 
-  invisible(results)
+
+
+  attr(out, "text") <- text
+  attr(out, "color") <- color
+  attr(out, "title") <- "Test of Sphericity"
+  class(out) <- c("easystats_check", class(out))
+
+  invisible(out)
 }
