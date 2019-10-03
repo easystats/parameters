@@ -29,6 +29,7 @@
 #'   \item Bartlett, M. S. (1950). Tests of significance in factor analysis. British Journal of statistical psychology, 3(2), 77-85.
 #'   \item Bentler, P. M., & Yuan, K. H. (1996). Test of linear trend in eigenvalues of a covariance matrix with application to data analysis. British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.
 #'   \item Cattell, R. B. (1966). The scree test for the number of factors. Multivariate behavioral research, 1(2), 245-276.
+#'   \item Finch, W. H. (2019). Using Fit Statistic Differences to Determine the Optimal Number of Factors to Retain in an Exploratory Factor Analysis. Educational and Psychological Measurement.
 #'   \item Zoski, K. W., & Jurs, S. (1996). An objective counterpart to the visual scree test for factor analysis: The standard error scree. Educational and Psychological Measurement, 56(3), 443-451.
 #'   \item Zoski, K., & Jurs, S. (1993). Using multiple regression to determine the number of factors to retain in factor analysis. Multiple Linear Regression Viewpoints, 20(1), 5-9.
 #'   \item Nasser, F., Benson, J., & Wisenbaker, J. (2002). The performance of regression-based variations of the visual scree for determining the number of common factors. Educational and psychological measurement, 62(3), 397-419.
@@ -437,6 +438,54 @@ print.n_clusters <- print.n_factors
 
 
 
+
+#' @keywords internal
+.n_factors_fit <- function(x = NULL, cormatrix = NULL, nobs = NULL, type = "FA", rotation = "varimax", algorithm = "default") {
+  if (algorithm == "default") {
+    if (tolower(type) %in% c("fa", "factor", "efa")) {
+      algorithm <- "minres"
+    } else {
+      algorithm <- "pc"
+    }
+  }
+
+  rez <- data.frame()
+  for(n in 1:(ncol(x)-1)){
+    efa <- tryCatch(psych::fa(cormatrix,
+                       nfactors = n,
+                       n.obs = nobs,
+                       rotate = rotation,
+                       fm = algorithm),
+             warning = function(w) NA,
+             error = function(e) NA
+    )
+
+    if(all(is.na(efa))){
+      next
+    }
+
+    rmsea <- ifelse(is.null(efa$RMSEA), NA, efa$RMSEA[1])
+    bic <- ifelse(is.null(efa$BIC), NA, efa$BIC)
+
+    rez <- rbind(rez,
+                 data.frame(n = n,
+                            TLI = efa$TLI,
+                            Fit = efa$fit.off,
+                            RMSEA = rmsea,
+                            BIC = bic))
+  }
+
+  TLI <- rez[rez$TLI == min(rez$TLI, na.rm = TRUE), "n"]
+  RMSEA <- rez[!is.na(rez$RMSEA) & rez$RMSEA == max(rez$RMSEA, na.rm = TRUE), "n"]
+  BIC <- rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"]
+
+  data.frame(
+    n_Factors = c(TLI, RMSEA, BIC),
+    Method = c("TLI", "RMSEA", "BIC"),
+    Family = c("Fit", "Fit", "Fit")
+  )
+
+}
 
 
 
