@@ -1,6 +1,6 @@
 #' Number of Components/Factors to Retain in Factor Analysis
 #'
-#' This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus. In case of ties, it will select the solution with the less factors.
+#' This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors.
 #'
 #' @param x A dataframe.
 #' @param type Can be \code{"FA"} or \code{"PCA"}, depending on what you want to do.
@@ -15,8 +15,8 @@
 #'
 #' n_factors(mtcars, type = "PCA")
 #'
-#' result <- n_factors(mtcars[, 1:5], type = "FA")
-#' as.numeric(result)
+#' result <- n_factors(mtcars[1:5], type = "FA")
+#' as.data.frame(result)
 #' summary(result)
 #' \donttest{
 #' n_factors(mtcars, type = "PCA", package = "all")
@@ -29,6 +29,7 @@
 #'   \item Bartlett, M. S. (1950). Tests of significance in factor analysis. British Journal of statistical psychology, 3(2), 77-85.
 #'   \item Bentler, P. M., & Yuan, K. H. (1996). Test of linear trend in eigenvalues of a covariance matrix with application to data analysis. British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.
 #'   \item Cattell, R. B. (1966). The scree test for the number of factors. Multivariate behavioral research, 1(2), 245-276.
+#'   \item Finch, W. H. (2019). Using Fit Statistic Differences to Determine the Optimal Number of Factors to Retain in an Exploratory Factor Analysis. Educational and Psychological Measurement.
 #'   \item Zoski, K. W., & Jurs, S. (1996). An objective counterpart to the visual scree test for factor analysis: The standard error scree. Educational and Psychological Measurement, 56(3), 443-451.
 #'   \item Zoski, K., & Jurs, S. (1993). Using multiple regression to determine the number of factors to retain in factor analysis. Multiple Linear Regression Viewpoints, 20(1), 5-9.
 #'   \item Nasser, F., Benson, J., & Wisenbaker, J. (2002). The performance of regression-based variations of the visual scree for determining the number of common factors. Educational and psychological measurement, 62(3), 397-419.
@@ -177,10 +178,21 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
           error = function(e) data.frame()
         )
       )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_fit(x, cormatrix, nobs, type, rotation, algorithm),
+                 warning = function(w) data.frame(),
+                 error = function(e) data.frame()
+        )
+      )
     } else {
       out <- rbind(
         out,
         .n_factors_vss(x, cormatrix, nobs, type, rotation, algorithm)
+      )
+      out <- rbind(
+        out,
+        .n_factors_fit(x, cormatrix, nobs, type, rotation, algorithm)
       )
     }
   }
@@ -188,7 +200,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   # OUTPUT ----------------------------------------------
   # TODO created weighted composite score
 
-
+  out <- out[!is.na(out$n_Factors), ] # Remove empty methods
   out <- out[order(out$n_Factors), ] # Arrange by n factors
   row.names(out) <- NULL # Reset row index
 
@@ -323,7 +335,12 @@ print.n_clusters <- print.n_factors
 #' Cattell-Nelson-Gorsuch CNG Indices
 #' @keywords internal
 .n_factors_cng <- function(eigen_values = NULL, model = "factors") {
-  nfac <- nFactors::nCng(x = eigen_values, cor = TRUE, model = model)$nFactors
+
+  if(length(eigen_values) < 6){
+    nfac <- NA
+  } else{
+    nfac <- nFactors::nCng(x = eigen_values, cor = TRUE, model = model)$nFactors
+  }
 
   data.frame(
     n_Factors = as.numeric(nfac),
@@ -336,7 +353,13 @@ print.n_clusters <- print.n_factors
 #' Multiple Regression Procedure
 #' @keywords internal
 .n_factors_mreg <- function(eigen_values = NULL, model = "factors") {
-  nfac <- nFactors::nMreg(x = eigen_values, cor = TRUE, model = model)$nFactors
+
+  if(length(eigen_values) < 6){
+    nfac <- NA
+  } else{
+    nfac <- nFactors::nMreg(x = eigen_values, cor = TRUE, model = model)$nFactors
+  }
+
   data.frame(
     n_Factors = as.numeric(nfac),
     Method = c("beta", "t", "p"),
@@ -427,6 +450,8 @@ print.n_clusters <- print.n_factors
   velicer_MAP <- which.min(stats$map)
   BIC_reg <- which.min(stats$BIC)
   BIC_adj <- which.min(stats$SABIC)
+  BIC_reg <- ifelse(length(BIC_reg) == 0, NA, BIC_reg)
+  BIC_adj <- ifelse(length(BIC_adj) == 0, NA, BIC_adj)
 
   data.frame(
     n_Factors = as.numeric(c(vss_1, vss_2, velicer_MAP, BIC_reg, BIC_adj)),
@@ -437,6 +462,71 @@ print.n_clusters <- print.n_factors
 
 
 
+
+#' @keywords internal
+.n_factors_fit <- function(x = NULL, cormatrix = NULL, nobs = NULL, type = "FA", rotation = "varimax", algorithm = "default") {
+  if (algorithm == "default") {
+    if (tolower(type) %in% c("fa", "factor", "efa")) {
+      algorithm <- "minres"
+    } else {
+      algorithm <- "pc"
+    }
+  }
+
+  rez <- data.frame()
+  for(n in 1:(ncol(x)-1)){
+
+    if(tolower(type) %in% c("fa", "factor", "efa")){
+      factors <- tryCatch(psych::fa(cormatrix,
+                                    nfactors = n,
+                                    n.obs = nobs,
+                                    rotate = rotation,
+                                    fm = algorithm),
+                          warning = function(w) NA,
+                          error = function(e) NA
+      )
+    } else{
+      factors <- tryCatch(psych::pca(cormatrix,
+                                    nfactors = n,
+                                    n.obs = nobs,
+                                    rotate = rotation),
+                          warning = function(w) NA,
+                          error = function(e) NA
+      )
+    }
+    if(all(is.na(factors))){
+      next
+    }
+
+    rmsea <- ifelse(is.null(factors$RMSEA), NA, factors$RMSEA[1])
+    rmsr <- ifelse(is.null(factors$rms), NA, factors$rms)
+    crms <- ifelse(is.null(factors$crms), NA, factors$crms)
+    bic <- ifelse(is.null(factors$BIC), NA, factors$BIC)
+    tli <- ifelse(is.null(factors$TLI), NA, factors$TLI)
+
+    rez <- rbind(rez,
+                 data.frame(n = n,
+                            TLI = tli,
+                            Fit = factors$fit.off,
+                            RMSEA = rmsea,
+                            RMSR = rmsr,
+                            CRMS = crms,
+                            BIC = bic))
+  }
+
+  TLI <- ifelse(all(is.na(rez$TLI)), NA, rez[!is.na(rez$TLI) & rez$TLI == min(rez$TLI, na.rm = TRUE), "n"])
+  RMSEA <- ifelse(all(is.na(rez$RMSEA)), NA, rez[!is.na(rez$RMSEA) & rez$RMSEA == max(rez$RMSEA, na.rm = TRUE), "n"])
+  RMSR <- ifelse(all(is.na(rez$RMSR)), NA, rez[!is.na(rez$RMSR) & rez$RMSR == min(rez$RMSR, na.rm = TRUE), "n"])
+  CRMS <- ifelse(all(is.na(rez$CRMS)), NA, rez[!is.na(rez$CRMS) & rez$CRMS == min(rez$CRMS, na.rm = TRUE), "n"])
+  BIC <- ifelse(all(is.na(rez$BIC)), NA, rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"])
+
+  data.frame(
+    n_Factors = c(TLI, RMSEA, CRMS, BIC),
+    Method = c("TLI", "RMSEA", "CRMS", "BIC"),
+    Family = c("Fit", "Fit", "Fit", "Fit")
+  )
+
+}
 
 
 
@@ -499,53 +589,3 @@ print.n_clusters <- print.n_factors
     res
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#   # Plot
-#   # -------------
-#   plot_data <- summary
-#   plot_data$n.Methods.Ratio <- plot_data$n.Methods / sum(plot_data$n.Methods)
-#   plot_data$n.Methods.Ratio <- plot_data$n.Methods.Ratio * (1 / max(plot_data$n.Methods.Ratio))
-#   plot_data$area <- plot_data$n.Methods.Ratio / (max(plot_data$n.Methods.Ratio) / max(plot_data$Eigenvalues))
-#   plot_data$var <- plot_data$Cum.Variance / (max(plot_data$Cum.Variance) / max(plot_data$Eigenvalues))
-#
-#   plot <- plot_data %>%
-#     ggplot(aes_string(x = "n.Factors", y = "Eigenvalues")) +
-#     geom_area(
-#       aes_string(y = "area"),
-#       fill = "#FFC107",
-#       alpha = 0.5
-#     ) +
-#     geom_line(
-#       colour = "#E91E63",
-#       size = 1
-#     ) +
-#     geom_hline(yintercept = 1, linetype = "dashed", colour = "#607D8B") +
-#     geom_line(
-#       aes_string(y = "var"),
-#       colour = "#2196F3",
-#       size = 1
-#     ) +
-#     scale_y_continuous(sec.axis = sec_axis(
-#       trans = ~ . * (max(plot_data$Cum.Variance) / max(plot_data$Eigenvalues)),
-#       name = "Cumulative Variance\n"
-#     )) +
-#     ylab("Eigenvalues\n") +
-#     xlab("\nNumber of Factors") +
-#     theme_minimal()

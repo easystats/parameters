@@ -48,7 +48,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
   for (type in names(tables)) {
 
-    # don't print Component column
+    # Don't print Component column
     tables[[type]][[split_column]] <- NULL
 
     # Smooth terms statistics
@@ -70,11 +70,13 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       }
     }
 
-    # don't print se and ci if all are missing
+    # Don't print se and ci if all are missing
     if (all(is.na(tables[[type]]$SE))) tables[[type]]$SE <- NULL
     if (all(is.na(tables[[type]]$CI_low))) tables[[type]]$CI_low <- NULL
     if (all(is.na(tables[[type]]$CI_high))) tables[[type]]$CI_high <- NULL
 
+    # Don't print if empty col
+    tables[[type]][sapply(tables[[type]], function(x){all(x == "") | all(is.na(x))})] <- NULL
 
     formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, ...)
 
