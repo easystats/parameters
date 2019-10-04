@@ -1,6 +1,6 @@
 #' Number of Components/Factors to Retain in Factor Analysis
 #'
-#' This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus. In case of ties, it will select the solution with the less factors.
+#' This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors.
 #'
 #' @param x A dataframe.
 #' @param type Can be \code{"FA"} or \code{"PCA"}, depending on what you want to do.
@@ -15,8 +15,8 @@
 #'
 #' n_factors(mtcars, type = "PCA")
 #'
-#' result <- n_factors(mtcars[, 1:5], type = "FA")
-#' as.numeric(result)
+#' result <- n_factors(mtcars[1:5], type = "FA")
+#' as.data.frame(result)
 #' summary(result)
 #' \donttest{
 #' n_factors(mtcars, type = "PCA", package = "all")
@@ -178,10 +178,21 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
           error = function(e) data.frame()
         )
       )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_fit(x, cormatrix, nobs, type, rotation, algorithm),
+                 warning = function(w) data.frame(),
+                 error = function(e) data.frame()
+        )
+      )
     } else {
       out <- rbind(
         out,
         .n_factors_vss(x, cormatrix, nobs, type, rotation, algorithm)
+      )
+      out <- rbind(
+        out,
+        .n_factors_fit(x, cormatrix, nobs, type, rotation, algorithm)
       )
     }
   }
@@ -189,7 +200,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   # OUTPUT ----------------------------------------------
   # TODO created weighted composite score
 
-
+  out <- out[!is.na(out$n_Factors), ] # Remove empty methods
   out <- out[order(out$n_Factors), ] # Arrange by n factors
   row.names(out) <- NULL # Reset row index
 
@@ -324,7 +335,12 @@ print.n_clusters <- print.n_factors
 #' Cattell-Nelson-Gorsuch CNG Indices
 #' @keywords internal
 .n_factors_cng <- function(eigen_values = NULL, model = "factors") {
-  nfac <- nFactors::nCng(x = eigen_values, cor = TRUE, model = model)$nFactors
+
+  if(length(eigen_values) < 6){
+    nfac <- NA
+  } else{
+    nfac <- nFactors::nCng(x = eigen_values, cor = TRUE, model = model)$nFactors
+  }
 
   data.frame(
     n_Factors = as.numeric(nfac),
@@ -337,7 +353,13 @@ print.n_clusters <- print.n_factors
 #' Multiple Regression Procedure
 #' @keywords internal
 .n_factors_mreg <- function(eigen_values = NULL, model = "factors") {
-  nfac <- nFactors::nMreg(x = eigen_values, cor = TRUE, model = model)$nFactors
+
+  if(length(eigen_values) < 6){
+    nfac <- NA
+  } else{
+    nfac <- nFactors::nMreg(x = eigen_values, cor = TRUE, model = model)$nFactors
+  }
+
   data.frame(
     n_Factors = as.numeric(nfac),
     Method = c("beta", "t", "p"),
@@ -428,6 +450,8 @@ print.n_clusters <- print.n_factors
   velicer_MAP <- which.min(stats$map)
   BIC_reg <- which.min(stats$BIC)
   BIC_adj <- which.min(stats$SABIC)
+  BIC_reg <- ifelse(length(BIC_reg) == 0, NA, BIC_reg)
+  BIC_adj <- ifelse(length(BIC_adj) == 0, NA, BIC_adj)
 
   data.frame(
     n_Factors = as.numeric(c(vss_1, vss_2, velicer_MAP, BIC_reg, BIC_adj)),
@@ -451,38 +475,55 @@ print.n_clusters <- print.n_factors
 
   rez <- data.frame()
   for(n in 1:(ncol(x)-1)){
-    efa <- tryCatch(psych::fa(cormatrix,
-                       nfactors = n,
-                       n.obs = nobs,
-                       rotate = rotation,
-                       fm = algorithm),
-             warning = function(w) NA,
-             error = function(e) NA
-    )
 
-    if(all(is.na(efa))){
+    if(tolower(type) %in% c("fa", "factor", "efa")){
+      factors <- tryCatch(psych::fa(cormatrix,
+                                    nfactors = n,
+                                    n.obs = nobs,
+                                    rotate = rotation,
+                                    fm = algorithm),
+                          warning = function(w) NA,
+                          error = function(e) NA
+      )
+    } else{
+      factors <- tryCatch(psych::pca(cormatrix,
+                                    nfactors = n,
+                                    n.obs = nobs,
+                                    rotate = rotation),
+                          warning = function(w) NA,
+                          error = function(e) NA
+      )
+    }
+    if(all(is.na(factors))){
       next
     }
 
-    rmsea <- ifelse(is.null(efa$RMSEA), NA, efa$RMSEA[1])
-    bic <- ifelse(is.null(efa$BIC), NA, efa$BIC)
+    rmsea <- ifelse(is.null(factors$RMSEA), NA, factors$RMSEA[1])
+    rmsr <- ifelse(is.null(factors$rms), NA, factors$rms)
+    crms <- ifelse(is.null(factors$crms), NA, factors$crms)
+    bic <- ifelse(is.null(factors$BIC), NA, factors$BIC)
+    tli <- ifelse(is.null(factors$TLI), NA, factors$TLI)
 
     rez <- rbind(rez,
                  data.frame(n = n,
-                            TLI = efa$TLI,
-                            Fit = efa$fit.off,
+                            TLI = tli,
+                            Fit = factors$fit.off,
                             RMSEA = rmsea,
+                            RMSR = rmsr,
+                            CRMS = crms,
                             BIC = bic))
   }
 
-  TLI <- rez[rez$TLI == min(rez$TLI, na.rm = TRUE), "n"]
-  RMSEA <- rez[!is.na(rez$RMSEA) & rez$RMSEA == max(rez$RMSEA, na.rm = TRUE), "n"]
-  BIC <- rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"]
+  TLI <- ifelse(all(is.na(rez$TLI)), NA, rez[!is.na(rez$TLI) & rez$TLI == min(rez$TLI, na.rm = TRUE), "n"])
+  RMSEA <- ifelse(all(is.na(rez$RMSEA)), NA, rez[!is.na(rez$RMSEA) & rez$RMSEA == max(rez$RMSEA, na.rm = TRUE), "n"])
+  RMSR <- ifelse(all(is.na(rez$RMSR)), NA, rez[!is.na(rez$RMSR) & rez$RMSR == min(rez$RMSR, na.rm = TRUE), "n"])
+  CRMS <- ifelse(all(is.na(rez$CRMS)), NA, rez[!is.na(rez$CRMS) & rez$CRMS == min(rez$CRMS, na.rm = TRUE), "n"])
+  BIC <- ifelse(all(is.na(rez$BIC)), NA, rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"])
 
   data.frame(
-    n_Factors = c(TLI, RMSEA, BIC),
-    Method = c("TLI", "RMSEA", "BIC"),
-    Family = c("Fit", "Fit", "Fit")
+    n_Factors = c(TLI, RMSEA, CRMS, BIC),
+    Method = c("TLI", "RMSEA", "CRMS", "BIC"),
+    Family = c("Fit", "Fit", "Fit", "Fit")
   )
 
 }

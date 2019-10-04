@@ -34,8 +34,8 @@ library(parameters)
 
 n_factors(mtcars, type = "PCA")
 
-result <- n_factors(mtcars[, 1:5], type = "FA")
-as.numeric(result)
+result <- n_factors(mtcars[1:5], type = "FA")
+as.data.frame(result)
 summary(result)
 \donttest{
 n_factors(mtcars, type = "PCA", package = "all")
