@@ -32,7 +32,7 @@ check_factorstructure <- function(x, ...) {
   attr(out, "title") <- "Is the data suitable for Factor Analysis?"
   class(out) <- c("easystats_check", class(out))
 
-  invisible(out)
+  out
 }
 
 
@@ -94,7 +94,7 @@ check_kmo <- function(x, ...) {
   attr(out, "title") <- "KMO Measure of Sampling Adequacy"
   class(out) <- c("easystats_check", class(out))
 
-  invisible(out)
+  out
 }
 
 
@@ -162,5 +162,5 @@ check_sphericity <- function(x, ...) {
   attr(out, "title") <- "Test of Sphericity"
   class(out) <- c("easystats_check", class(out))
 
-  invisible(out)
+  out
 }

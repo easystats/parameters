@@ -86,7 +86,7 @@ check_multimodal.data.frame <- function(x, ...) {
   attr(rez, "title") <- "Is the data multimodal?"
   class(rez) <- c("easystats_check", class(rez))
 
-  invisible(rez)
+  rez
 }
 
 
@@ -124,5 +124,5 @@ check_multimodal.numeric <- function(x, ...) {
   attr(rez, "title") <- "Is the variable multimodal?"
   class(rez) <- c("easystats_check", class(rez))
 
-  invisible(rez)
+  rez
 }
