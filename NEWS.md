@@ -7,7 +7,7 @@
 
 ## New functions
 
-- Added indices of model fit to `n_factors` ([Finch, 2019](https://journals.sagepub.com/doi/abs/10.1177/0013164419865769?casa_token=ryDjxXXI3PAAAAAA%3A_8GmHn9ztdo5V5Sgkb7mqiUsKekKG8Yz-epnrZybBMfDlaNu4QfC_ysrVQiz4nhr65EuiRpsdTrENg&journalCode=epma))
+- Added indices of model fit to `n_factors` ([Finch, 2019](https://doi.org/10.1177/0013164419865769))
 - `check_clusterstructure()` to check the suitability of data for clustering.
 - `n_clusters()` to determine the number of clusters to extract.
 - `check_multimodal()` to check if a distribution is unimodal or multimodal.
