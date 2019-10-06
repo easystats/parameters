@@ -58,12 +58,13 @@ summary.parameters_clusters <- function(object, ...){
 }
 
 
+#' @importFrom stats predict
 #' @export
 predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ...) {
   if (is.null(newdata)) {
     out <- attributes(object)$scores
   } else {
-    out <- predict(attributes(object)$model, newdata = newdata, ...)
+    out <- stats::predict(attributes(object)$model, newdata = newdata, ...)
   }
   out <- as.factor(out)
 
