@@ -28,6 +28,7 @@ model_parameters.Mclust <- function(model, ...){
 
   attr(params, "means") <- means
   attr(params, "scores") <- model$classification
+  attr(params, "model") <- model
   attr(params, "type") <- "mixture"
   attr(params, "title") <- "Gaussian finite mixture model fitted by EM algorithm"
 
