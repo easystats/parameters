@@ -30,6 +30,11 @@
 #' @importFrom insight format_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
+
+  if(!is.null(attributes(x)$title)){
+    insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
+  }
+
   if ("Component" %in% names(x) && length(unique(x$Component)) > 1 && split_components) {
     .print_model_parms_components(x, pretty_names, ...)
   } else if ("Response" %in% names(x) && length(unique(x$Response)) > 1 && split_components) {
@@ -43,6 +48,8 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
 #' @keywords internal
 .print_model_parms_components <- function(x, pretty_names, split_column = "Component", ...) {
+
+
   # make sure we have correct sorting here...
   tables <- split(x, factor(x[[split_column]], levels = unique(x[[split_column]])))
 
