@@ -2,15 +2,12 @@
 % Please edit documentation in R/standard_error.R
 \name{standard_error}
 \alias{standard_error}
-\alias{se}
 \alias{standard_error.factor}
 \alias{standard_error.glmmTMB}
 \alias{standard_error.MixMod}
 \title{Extract standard errors}
 \usage{
 standard_error(model, ...)
-
-se(model, ...)
 
 \method{standard_error}{factor}(model, force = FALSE, verbose = TRUE,
   ...)
