@@ -66,9 +66,6 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 
     # Posthoc
   } else if (method %in% c("default", "smart", "classic")) {
-    # params <- model_parameters(model, standardize = FALSE, ...)
-    # param_values <- params[names(params) %in% c("Coefficient", "Median", "Mean", "MAP")]
-    # param_names <- params$Parameter
     std_params <- .parameters_standardize_posthoc(model, param_names = NULL, param_values = NULL, robust = robust, method = method, verbose = verbose, ...)
 
     # Partial
@@ -147,63 +144,32 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
   }
 
   out <- data.frame(Parameter = param_names)
-  param_table <- parameters_type(model)
 
-  # Match order of parameters in param_table and params
-  param_table <- param_table[match(param_table$Parameter, params$Parameter), ]
-  row.names(param_table) <- NULL
+  # Get info
+  deviations <- standardize_info(model, robust = robust)
+  if (method == "classic") {
+    relevant_col <- "Deviation_Classic"
+  } else {
+    relevant_col <- "Deviation_Smart"
+  }
 
+  # Loop over all parameters
+  for (param_name in names(param_values)) {
+    out[[param_name]] <- param_values[[param_name]] * deviations[[relevant_col]] / deviations$Deviation_Response
+  }
+
+
+  # Standardize SE if possible
   std_error <- tryCatch({
     se <- standard_error(model, component = "conditional")
     se$SE[unique(match(se$Parameter, param_names))]
   },
   error = function(e) {
     NULL
-  }
-  )
+  })
 
-  for (param_name in names(param_values)) {
-    # Get response variance
-    sd_y <- .variance_response(model, robust = robust, ...)
-
-    # Create parameter table
-    param_table$Value <- param_values[[param_name]]
-
-    # Loop over all parameters
-    std_params <- c()
-    for (i in 1:nrow(param_table)) {
-
-      # Classic
-      if (method == "classic") {
-        sd_x <- .variance_predictor_classic(
-          parameter = param_table$Parameter[i],
-          type = param_table$Type[i],
-          model_matrix = as.data.frame(stats::model.matrix(model)),
-          robust = robust,
-          ...
-        )
-
-        # Smart
-      } else {
-        sd_x <- .variance_predictor_smart(
-          type = param_table$Type[i],
-          variable = param_table$Variable[i],
-          data = insight::get_data(model),
-          param_table = param_table,
-          robust = robust,
-          ...
-        )
-      }
-      new_coef <- param_table$Value[i] * sd_x / sd_y
-      std_params <- c(std_params, new_coef)
-
-      # calculate SE for standardized coefficient
-      if (!is.null(std_error) && length(std_error) >= i) {
-        std_error[i] <- std_error[i] * sd_x / sd_y
-      }
-    }
-
-    out[[param_name]] <- std_params
+  if (!is.null(std_error)) {
+    std_error <- std_error * deviations[[relevant_col]] / deviations$Deviation_Response
   }
 
   # add standardized standard errors as attribute
@@ -214,82 +180,3 @@ parameters_standardize <- function(model, robust = FALSE, method = "refit", verb
 }
 
 
-
-
-#' @keywords internal
-.variance_response <- function(model, robust = FALSE, ...) {
-  info <- insight::model_info(model)
-  response <- insight::get_response(model)
-
-  if (info$is_linear) {
-    if (robust == FALSE) {
-      sd_y <- stats::sd(response)
-    } else {
-      sd_y <- stats::mad(response)
-    }
-  } else {
-    sd_y <- 1
-  }
-  sd_y
-}
-
-
-
-
-#' @keywords internal
-.variance_predictor_classic <- function(parameter, type, model_matrix, robust = FALSE, ...) {
-  if (type == "intercept") {
-    0
-  } else {
-    .get_deviation(model_matrix, parameter, robust)
-  }
-}
-
-
-
-
-
-
-#' @keywords internal
-.variance_predictor_smart <- function(type, variable, data, param_table, robust = FALSE, ...) {
-  if (type == "intercept") {
-    sd_x <- 0
-  } else if (type == "numeric") {
-    sd_x <- .get_deviation(data, variable, robust)
-  } else if (type == "factor") {
-    sd_x <- 1
-
-    # Adjust if involved in interactions
-    # interactions <- param_table[param_table$Type %in% c("interaction"), ]
-    # if(variable %in% interactions$Secondary_Variable){
-    #   interac_var <- unique(interactions[interactions$Secondary_Variable == variable, "Variable"])
-    #   for(i in interac_var){
-    #     if(param_table[param_table$Parameter == i, "Type"] == "numeric"){
-    #       sd_x <- sd_x * .get_deviation(data, i, robust)
-    #     }
-    #   }
-    # }
-  } else if (type %in% c("interaction", "nested")) {
-    if (is.numeric(data[, variable])) {
-      sd_x <- .get_deviation(data, variable, robust)
-    } else if (is.factor(data[, variable])) {
-      sd_x <- 1
-    } else {
-      sd_x <- 1
-    }
-  } else {
-    sd_x <- 1
-  }
-  sd_x
-}
-
-
-
-#' @keywords internal
-.get_deviation <- function(data, variable, robust = FALSE) {
-  if (robust == FALSE) {
-    stats::sd(as.numeric(data[, variable]))
-  } else {
-    stats::mad(as.numeric(data[, variable]))
-  }
-}

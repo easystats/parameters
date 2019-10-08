@@ -48,6 +48,7 @@ parameters_type <- function(model, ...) {
     )
   )
 
+  # Special case
   if (inherits(model, "polr")) {
     params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
   }
@@ -88,6 +89,7 @@ parameters_type <- function(model, ...) {
     }
   }
 
+  out$Secondary_Factor <- NULL
   out$Parameter <- original_parameter
   # Out
   out
@@ -99,7 +101,7 @@ parameters_type <- function(model, ...) {
 .parameters_type_table <- function(names, data, reference) {
   out <- lapply(names, .parameters_type, data = data, reference = reference)
   out <- as.data.frame(do.call(rbind, out), stringsAsFactors = FALSE)
-  names(out) <- c("Type", "Term", "Variable", "Level", "Secondary_Parameter")
+  names(out) <- c("Type", "Term", "Variable", "Level", "Factor", "Secondary_Parameter")
   out
 }
 
@@ -119,8 +121,12 @@ parameters_type <- function(model, ...) {
       var <- rev(var)
     }
 
+    # Check if any is factor
+    types <- unlist(lapply(var, function(x, data, reference) .parameters_type_basic(x, data, reference)[1], data = data, reference = reference))
+
+    # Get type
     main <- .parameters_type_basic(var[1], data, reference)
-    return(c("interaction", main[2], main[3], main[4], var[2]))
+    return(c("interaction", main[2], main[3], main[4], "factor" %in% types, var[2]))
   } else {
     .parameters_type_basic(name, data, reference)
   }
@@ -133,18 +139,18 @@ parameters_type <- function(model, ...) {
 #' @keywords internal
 .parameters_type_basic <- function(name, data, reference) {
   if (is.na(name)) {
-    return(c(NA, NA, NA, NA, NA))
+    return(c(NA, NA, NA, NA, NA, NA))
   }
 
   cleaned_name <- .clean_parameter_names(name, full = TRUE)
 
   # Intercept
   if (cleaned_name == "(Intercept)" | cleaned_name == "b_Intercept") {
-    return(c("intercept", "(Intercept)", NA, NA, NA))
+    return(c("intercept", "(Intercept)", NA, NA, NA, NA))
 
     # Numeric
   } else if (cleaned_name %in% reference$numeric) {
-    return(c("numeric", name, name, NA, NA))
+    return(c("numeric", name, name, NA, FALSE, NA))
 
     # Factors
   } else if (cleaned_name %in% reference$levels) {
@@ -154,6 +160,7 @@ parameters_type <- function(model, ...) {
       name,
       fac,
       gsub(fac, "", name, fixed = TRUE),
+      TRUE,
       NA
     ))
 
@@ -170,16 +177,16 @@ parameters_type <- function(model, ...) {
     var <- vars[[1]]
     degree <- vars[[2]]
     degree <- substr(vars[[2]], nchar(vars[[2]]), nchar(vars[[2]]))
-    return(c(type, name, var, degree, NA))
+    return(c(type, name, var, degree, FALSE, NA))
 
     # Smooth
   } else if (grepl("^s\\(", name)) {
-    return(c("smooth", name, NA, NA, NA))
+    return(c("smooth", name, NA, NA, FALSE, NA))
     # Smooth
   } else if (grepl("^smooth_", name)) {
-    return(c("smooth", gsub("^smooth_(.*)\\[(.*)\\]", "\\2", name), NA, NA, NA))
+    return(c("smooth", gsub("^smooth_(.*)\\[(.*)\\]", "\\2", name), NA, NA, FALSE, NA))
   } else {
-    return(c("unknown", NA, NA, NA, NA))
+    return(c("unknown", NA, NA, NA, NA, NA))
   }
 }
 
