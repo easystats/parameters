@@ -4,6 +4,7 @@
 #'
 #' @param d Standardized difference value (Cohen's d).
 #' @param r Correlation coefficient r.
+#' @param percentage Percentage value (e.g., \code{0.01} for one percent).
 #' @param odds Odds values in vector or dataframe.
 #' @param log Take in or output log odds (such as in logistic models).
 #' @param ... Arguments passed to or from other methods.
@@ -32,14 +33,14 @@
 #'   \item Borenstein, M., Hedges, L. V., Higgins, J. P. T., & Rothstein, H. R. (2009). Converting among effect sizes. Introduction to meta-analysis, 45-49.
 #' }
 #' @export
-d_to_r <- function(d, ...) {
+d_to_r <- function(d = 1, ...) {
   d / (sqrt(d^2 + 4))
 }
 
 
 #' @rdname d_to_r
 #' @export
-r_to_d <- function(r, ...) {
+r_to_d <- function(r = 0.5, ...) {
   2 * r / sqrt(1 - r^2)
 }
 
@@ -52,3 +53,27 @@ convert_d_to_r <- d_to_r
 #' @rdname d_to_r
 #' @export
 convert_r_to_d <- r_to_d
+
+
+
+#' @rdname d_to_r
+#' @export
+percentage_to_d <- function(percentage = 0.01, ...) {
+  range_distribution <- (qnorm(0.999) - qnorm(0.001))
+  percentage * range_distribution
+}
+
+#' @rdname d_to_r
+#' @export
+d_to_percentage <- function(d = 1, ...) {
+  range_distribution <- (qnorm(0.999) - qnorm(0.001))
+  d / range_distribution
+}
+
+#' @rdname d_to_r
+#' @export
+convert_percentage_to_d <- percentage_to_d
+
+#' @rdname d_to_r
+#' @export
+convert_d_to_percentage <- d_to_percentage

@@ -5,6 +5,10 @@
 \alias{r_to_d}
 \alias{convert_d_to_r}
 \alias{convert_r_to_d}
+\alias{percentage_to_d}
+\alias{d_to_percentage}
+\alias{convert_percentage_to_d}
+\alias{convert_d_to_percentage}
 \alias{odds_to_d}
 \alias{convert_odds_to_d}
 \alias{d_to_odds}
@@ -15,13 +19,21 @@
 \alias{convert_odds_to_r}
 \title{Effect Size Conversion}
 \usage{
-d_to_r(d, ...)
+d_to_r(d = 1, ...)
 
-r_to_d(r, ...)
+r_to_d(r = 0.5, ...)
 
-convert_d_to_r(d, ...)
+convert_d_to_r(d = 1, ...)
 
-convert_r_to_d(r, ...)
+convert_r_to_d(r = 0.5, ...)
+
+percentage_to_d(percentage = 0.01, ...)
+
+d_to_percentage(d = 1, ...)
+
+convert_percentage_to_d(percentage = 0.01, ...)
+
+convert_d_to_percentage(d = 1, ...)
 
 odds_to_d(odds, log = FALSE)
 
@@ -45,6 +57,8 @@ convert_odds_to_r(odds, log = FALSE)
 \item{...}{Arguments passed to or from other methods.}
 
 \item{r}{Correlation coefficient r.}
+
+\item{percentage}{Percentage value (e.g., \code{0.01} for one percent).}
 
 \item{odds}{Odds values in vector or dataframe.}
 
