@@ -74,11 +74,11 @@ predict.parameters_efa <- function(object, newdata = NULL, names = NULL, ...) {
   row.names(out) <- NULL
   out
 }
+
 #' @export
 predict.parameters_pca <- predict.parameters_efa
 
-#' @export
-predict.parameters_clusters <- predict.parameters_efa
+
 
 
 

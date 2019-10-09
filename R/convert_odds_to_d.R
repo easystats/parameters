@@ -1,19 +1,4 @@
-#' Conversion between (log)odds and standardized difference
-#'
-#' Enables a conversion between (log)odds and standardized difference using Cohen's (1988) formula \eqn{\frac{\log(odds)\times\sqrt{3}}{\pi}}.
-#'
-#' @param odds Odds values in vector or dataframe.
-#' @param log Are these Log odds (such as in logistic models)?
-#' @param d standardized difference values in vector or dataframe.
-#'
-#' @examples
-#' odds_to_d(0.2)
-#' odds_to_d(-1.45, log = TRUE)
-#' @return Converted index.
-#' @references \itemize{
-#'   \item Sánchez-Meca, J., Marín-Martínez, F., & Chacón-Moscoso, S. (2003). Effect-size indices for dichotomized outcomes in meta-analysis. Psychological methods, 8(4), 448.
-#'   \item Borenstein, Michael, et al. "Converting among effect sizes." Introduction to meta-analysis (2009): 45-49.
-#' }
+#' @rdname d_to_r
 #' @export
 odds_to_d <- function(odds, log = FALSE) {
   if (log == FALSE) {
@@ -25,14 +10,14 @@ odds_to_d <- function(odds, log = FALSE) {
   log_odds * (sqrt(3) / pi)
 }
 
-#' @rdname odds_to_d
+#' @rdname d_to_r
 #' @export
 convert_odds_to_d <- odds_to_d
 
 
 
 
-#' @rdname odds_to_d
+#' @rdname d_to_r
 #' @export
 d_to_odds <- function(d, log = FALSE) {
   if (log == TRUE) {
@@ -42,6 +27,30 @@ d_to_odds <- function(d, log = FALSE) {
   }
 }
 
-#' @rdname odds_to_d
+#' @rdname d_to_r
 #' @export
 convert_d_to_odds <- d_to_odds
+
+
+
+#' @rdname d_to_r
+#' @export
+r_to_odds <- function(r, log = FALSE) {
+  convert_d_to_odds(convert_r_to_d(r), log = log)
+}
+
+#' @rdname d_to_r
+#' @export
+convert_r_to_odds <- r_to_odds
+
+
+
+#' @rdname d_to_r
+#' @export
+odds_to_r <- function(odds, log = FALSE) {
+  convert_d_to_r(convert_odds_to_d(odds, log = log))
+}
+
+#' @rdname d_to_r
+#' @export
+convert_odds_to_r <- odds_to_r

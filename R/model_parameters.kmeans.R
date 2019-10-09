@@ -27,6 +27,7 @@ model_parameters.kmeans <- function(model, ...){
 
   attr(params, "variance") <- model$betweenss / model$totss
   attr(params, "means") <- means
+  attr(params, "model") <- model
   attr(params, "iterations") <- model$iter
   attr(params, "scores") <- model$cluster
   attr(params, "type") <- "kmeans"
@@ -55,3 +56,35 @@ print.parameters_clusters <- function(x, digits = 2, ...) {
 summary.parameters_clusters <- function(object, ...){
   object[1:3]
 }
+
+
+#' @importFrom stats predict
+#' @export
+predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ...) {
+  if (is.null(newdata)) {
+    out <- attributes(object)$scores
+  } else {
+    out <- stats::predict(attributes(object)$model, newdata = newdata, ...)
+  }
+  out <- as.factor(out)
+
+  # Add labels
+  if (!is.null(names)) {
+
+    # List
+    if(is.list(names)){
+      for(i in names(names)){
+        levels(out)[levels(out) == i] <- names[[i]]
+      }
+
+    # Vector
+    } else if(is.character(names)){
+      levels(out) <- names[1:length(levels(out))]
+    } else{
+      stop("'names' must be a character vector or a list.")
+    }
+
+  }
+  out
+}
+

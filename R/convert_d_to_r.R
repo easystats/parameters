@@ -1,38 +1,46 @@
-#' Conversion between standardized difference d and correlation r
+#' Effect Size Conversion
 #'
-#' Enables a conversion between standardized difference (Cohen's d) and correlation r.
+#' Enables a conversion between different indices of effect size, such as standardized difference (Cohen's d), correlation r or (log) odds ratios.
 #'
-#' @param d A standardized difference value (Cohen's d).
-#' @param r A correlation coefficient r.
+#' @param d Standardized difference value (Cohen's d).
+#' @param r Correlation coefficient r.
+#' @param percentage Percentage value (e.g., \code{0.01} for one percent).
+#' @param odds Odds values in vector or dataframe.
+#' @param log Take in or output log odds (such as in logistic models).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
-#' d_to_r(d = 1.1547)
+#' r_to_d(0.5)
+#' d_to_odds(d = 1.154701)
+#' odds_to_r(odds = 8.120534)
+#'
+#' d_to_r(d = 1)
+#' r_to_odds(0.4472136, log = TRUE)
+#' odds_to_d(1.813799, log = TRUE)
+#'
 #' @return Converted index.
+#'
+#' @details \itemize{
+#'   \item \emph{d to r}: \code{d = 2 * r / sqrt(1 - r^2)}
+#'   \item \emph{r to d}: \code{r = d / (sqrt(d^2 + 4))}
+#'   \item \emph{odds to d}: \eqn{d = \frac{\log(odds)\times\sqrt{3}}{\pi}}
+#'   \item \emph{d to odds}: \eqn{log(odds) = d * \frac{\pi}{\sqrt(3)}}
+#' }
+#'
+#'
 #' @references \itemize{
-#'   \item Borenstein, Michael, et al. "Converting among effect sizes." Introduction to meta-analysis (2009): 45-49.
+#'   \item Sánchez-Meca, J., Marín-Martínez, F., & Chacón-Moscoso, S. (2003). Effect-size indices for dichotomized outcomes in meta-analysis. Psychological methods, 8(4), 448.
+#'   \item Borenstein, M., Hedges, L. V., Higgins, J. P. T., & Rothstein, H. R. (2009). Converting among effect sizes. Introduction to meta-analysis, 45-49.
 #' }
 #' @export
-d_to_r <- function(d, ...) {
-  # if(is.null(n1) & is.null(n2)){
-  #   n1 <- n2 <- 1
-  # }
-  # if(is.null(n1) & !is.null(n2)){
-  #   n1 <- n2
-  # }
-  # if(!is.null(n1) & is.null(n2)){
-  #   n2 <- n1
-  # }
-  # a <- (n1+n2)^2/(n1*n2)
-
-  a <- 4
-  d / (sqrt(d^2 + a))
+d_to_r <- function(d = 1, ...) {
+  d / (sqrt(d^2 + 4))
 }
 
 
 #' @rdname d_to_r
 #' @export
-r_to_d <- function(r, ...) {
+r_to_d <- function(r = 0.5, ...) {
   2 * r / sqrt(1 - r^2)
 }
 
@@ -45,3 +53,27 @@ convert_d_to_r <- d_to_r
 #' @rdname d_to_r
 #' @export
 convert_r_to_d <- r_to_d
+
+
+
+#' @rdname d_to_r
+#' @export
+percentage_to_d <- function(percentage = 0.01, ...) {
+  range_distribution <- (qnorm(0.999) - qnorm(0.001))
+  percentage * range_distribution
+}
+
+#' @rdname d_to_r
+#' @export
+d_to_percentage <- function(d = 1, ...) {
+  range_distribution <- (qnorm(0.999) - qnorm(0.001))
+  d / range_distribution
+}
+
+#' @rdname d_to_r
+#' @export
+convert_percentage_to_d <- percentage_to_d
+
+#' @rdname d_to_r
+#' @export
+convert_d_to_percentage <- d_to_percentage

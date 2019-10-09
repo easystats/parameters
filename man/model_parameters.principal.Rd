@@ -4,6 +4,7 @@
 \name{model_parameters.PCA}
 \alias{model_parameters.PCA}
 \alias{model_parameters.principal}
+\alias{model_parameters.omega}
 \title{Structural Models (PCA, EFA, ...)}
 \usage{
 \method{model_parameters}{PCA}(model, sort = FALSE, threshold = NULL,
@@ -11,9 +12,12 @@
 
 \method{model_parameters}{principal}(model, sort = FALSE,
   threshold = NULL, labels = NULL, ...)
+
+\method{model_parameters}{omega}(model, sort = FALSE, threshold = NULL,
+  labels = NULL, ...)
 }
 \arguments{
-\item{model}{PCA or FA created by the \pkg{psych} or \pkg{FactoMineR} packages (e.g. through \code{psych::principal} or \code{psych::fa}).}
+\item{model}{PCA or FA created by the \pkg{psych} or \pkg{FactoMineR} packages (e.g. through \code{psych::principal},  \code{psych::fa} or \code{psych::omega}).}
 
 \item{sort}{Sort the loadings.}
 
@@ -53,7 +57,6 @@ principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 efa <- psych::fa(attitude, nfactors = 3)
 model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
 }
-
 
 # FactoMineR ---------
 library(FactoMineR)

@@ -2,7 +2,7 @@
 #'
 #' Format structural models from the \pkg{psych} or \pkg{FactoMineR} packages.
 #'
-#' @param model PCA or FA created by the \pkg{psych} or \pkg{FactoMineR} packages (e.g. through \code{psych::principal} or \code{psych::fa}).
+#' @param model PCA or FA created by the \pkg{psych} or \pkg{FactoMineR} packages (e.g. through \code{psych::principal},  \code{psych::fa} or \code{psych::omega}).
 #' @inheritParams principal_components
 #' @param labels A character vector containing labels to be added to the loadings data. Usually, the question related to the item.
 #' @param ... Arguments passed to or from other methods.
@@ -31,7 +31,6 @@
 #' efa <- psych::fa(attitude, nfactors = 3)
 #' model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
 #' }
-#'
 #'
 #' # FactoMineR ---------
 #' library(FactoMineR)
@@ -129,3 +128,22 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
 
 #' @export
 model_parameters.fa <- model_parameters.principal
+
+
+
+
+#' @rdname model_parameters.principal
+#' @export
+model_parameters.omega <- function(model, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+
+  # TODO: TO BE SERVERLY IMPROVED
+  # https://github.com/cran/psych/blob/master/R/print.psych.omega.R
+
+  # Get loadings
+  loadings <- as.data.frame(unclass(model$schmid$sl))
+
+  # Format
+  loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
+  row.names(loadings) <- NULL
+  loadings
+}
