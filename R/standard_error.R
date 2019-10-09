@@ -8,9 +8,9 @@
 #'   value \code{1} (unless the factor has numeric levels, which are converted
 #'   to the corresponding numeric value). By default, \code{NA} is returned
 #'   for factors or character vectors.
+#' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_simulate
-#' @inheritParams standardize
 #'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)

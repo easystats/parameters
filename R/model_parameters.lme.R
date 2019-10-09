@@ -1,11 +1,9 @@
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.lme <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
+model_parameters.lme <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
   .model_parameters_generic(
     model = model,
     ci = ci,
-    standardize = standardize,
-    standardize_robust = standardize_robust,
     bootstrap = bootstrap,
     iterations = iterations,
     merge_by = "Parameter",
@@ -15,7 +13,7 @@ model_parameters.lme <- function(model, ci = .95, standardize = FALSE, standardi
 
 
 
-.model_parameters_generic <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", ...) {
+.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", ...) {
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -33,15 +31,6 @@ model_parameters.lme <- function(model, ci = .95, standardize = FALSE, standardi
   }
 
 
-  # Standardized
-  if (isTRUE(standardize)) {
-    warning("Please set the `standardize` method explicitly. Set to \"refit\" by default.")
-    standardize <- "refit"
-  }
-
-  if (!is.null(standardize) && !is.logical(standardize)) {
-    parameters <- cbind(parameters, parameters_standardize(model, method = standardize, robust = standardize_robust, verbose = FALSE)[2])
-  }
 
   attr(parameters, "pretty_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
@@ -146,8 +135,8 @@ model_parameters.truncreg <- model_parameters.lme
 # objects that set standardize to FALSE by default ---------------------------
 
 #' @export
-model_parameters.plm <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
-  model_parameters.lme(model = model, ci = ci, standardize = standardize, standardize_robust = standardize_robust, bootstrap = bootstrap, iterations = iterations, ...)
+model_parameters.plm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
+  model_parameters.lme(model = model, ci = ci, bootstrap = bootstrap, iterations = iterations, ...)
 }
 
 #' @export
@@ -170,12 +159,10 @@ model_parameters.LORgee <- model_parameters.plm
 
 
 #' @export
-model_parameters.mlm <- function(model, ci = .95, standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000, ...) {
+model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
   .model_parameters_generic(
     model = model,
     ci = ci,
-    standardize = standardize,
-    standardize_robust = standardize_robust,
     bootstrap = bootstrap,
     iterations = iterations,
     merge_by = c("Parameter", "Response"),

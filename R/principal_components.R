@@ -50,7 +50,7 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
 
   # Standardize
   if (standardize) {
-    x <- standardize(x, verbose = FALSE, ...)
+    x <- as.data.frame(scale(x))
   }
 
   # PCA

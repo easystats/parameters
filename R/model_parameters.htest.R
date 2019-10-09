@@ -4,7 +4,7 @@
 #'
 #' @param model Object of class \code{htest}.
 #' @param bootstrap Should estimates be bootstrapped?
-#' @param ... Arguments passed to or from other methods (e.g., to \link[=standardize.lm]{standardize}).
+#' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
 #' model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")

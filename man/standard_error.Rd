@@ -29,7 +29,7 @@ value \code{1} (unless the factor has numeric levels, which are converted
 to the corresponding numeric value). By default, \code{NA} is returned
 for factors or character vectors.}
 
-\item{verbose}{Toggle warnings on or off.}
+\item{verbose}{Toggle off warnings.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models

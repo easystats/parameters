@@ -22,7 +22,7 @@
 check_clusterstructure <- function(x, standardize = TRUE, ...) {
 
   if(standardize){
-    x <- standardize(x)
+    x <- as.data.frame(scale(x))
   }
 
   H <- .clusterstructure_hopkins(x)
