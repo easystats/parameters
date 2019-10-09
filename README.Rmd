@@ -64,23 +64,11 @@ library("parameters")
 Click on the buttons above to access the package [**documentation**](https://easystats.github.io/parameters/) and the [**easystats blog**](https://easystats.github.io/blog/posts/), and check-out these vignettes:
 
 
-#### Parameters Description
-
-- [Guide to parameters description](https://easystats.github.io/parameters/articles/model_parameters.html)
-
-#### Parameters Engineering
-
-- [Guide to bootstrapped parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
-- [Guide to standardized parameters](https://easystats.github.io/parameters/articles/standardization.html)
-
-#### Parameters Selection
-
-- [Guide to parameters selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
-
-#### Dimension Reduction
-
-- [Guide to feature reduction (PCA, cMDS, ICA...)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
-- [Guide to structural models (EFA, CFA, SEM...)](https://easystats.github.io/parameters/articles/efa_cfa.html)
+- [**Parameters description**](https://easystats.github.io/parameters/articles/model_parameters.html)
+- [**Bootstrapped parameters**](https://easystats.github.io/parameters/articles/bootstrapping.html)
+- [**Parameters selection**](https://easystats.github.io/parameters/articles/parameters_selection.html)
+- [**Feature reduction (PCA, cMDS, ICA...)**](https://easystats.github.io/parameters/articles/parameters_reduction.html)
+- [**Structural models (EFA, CFA, SEM...)**](https://easystats.github.io/parameters/articles/efa_cfa.html)
 
 # Features
  
@@ -92,14 +80,14 @@ The [`model_parameters()`](https://easystats.github.io/parameters/articles/model
 
 - The column names of the returned data frame are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using [`standardize_names()`](https://easystats.github.io/parameters/reference/standardize_names.html)).
 - It is able to compute or extract indices not available by default, such as ***p*-values**, **CIs**, etc.
-- It includes **feature engineering** capabilities, including [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html) and [**standardization**](https://easystats.github.io/parameters/articles/standardization.html) of parameters.
+- It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html).
 
 
 ```{r, warning=FALSE, message=FALSE}
 library(lme4)
 
 model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
-model_parameters(model, standardize = "refit")
+model_parameters(model)
 ```
 
 
@@ -161,21 +149,4 @@ knitr::kable(describe_distribution(rnorm(300)), digits = 1)
 ```
 
 
-### Standardization and normalization
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-df <- standardize(iris)
-describe_distribution(df$Sepal.Length)
-```
-```{r, warning=FALSE, message=FALSE}
-df <- standardize(iris)
-knitr::kable(describe_distribution(df$Sepal.Length), digits = 1)
-```
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-df <- normalize(iris)
-describe_distribution(df$Sepal.Length)
-```
-```{r, warning=FALSE, message=FALSE}
-df <- normalize(iris)
-knitr::kable(describe_distribution(df$Sepal.Length), digits = 1)
-```

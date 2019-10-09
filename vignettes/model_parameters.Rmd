@@ -41,7 +41,7 @@ The `model_parameters()` function (also accessible via the shortcut `parameters(
 
 - The names of the returned dataframe are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using [`standardize_names()`](https://easystats.github.io/parameters/reference/standardize_names.html)).
 - It is able to compute or extract indices not available by default, such as ***p*-values**, **CIs**, etc.
-- It includes **feature engineering** capabilities, including [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html) and [**standardization**](https://easystats.github.io/parameters/articles/standardization.html) of parameters.
+- It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html).
 
 
 ## Correlations and *t*-tests
@@ -109,7 +109,7 @@ This function was mainly built to work for regression models. It works for many 
 library(lme4)
 
 glm(vs ~ poly(mpg, 2) + cyl, data = mtcars) %>% 
-  parameters(standardize = "smart")
+  parameters()
 ```
 
 ### Mixed Models
@@ -118,7 +118,7 @@ glm(vs ~ poly(mpg, 2) + cyl, data = mtcars) %>%
 library(lme4)
 
 lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) %>% 
-  parameters(standardize = "refit")
+  parameters()
 ```
 
 ### Bayesian Models
@@ -127,13 +127,13 @@ lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) %>%
 library(rstanarm)
 
 stan_glm(mpg ~ wt + cyl, data = mtcars) %>% 
-  parameters(standardize = "smart")
+  parameters()
 ```
 ```{r, warning=FALSE, message=FALSE, echo = FALSE}
 library(rstanarm)
 
 stan_glm(mpg ~ wt * cyl, data = mtcars, iter = 500, chains = 2, refresh = 0) %>% 
-  parameters(standardize = "smart")
+  parameters()
 ```
 
 

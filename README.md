@@ -41,29 +41,16 @@ Click on the buttons above to access the package
 [**easystats blog**](https://easystats.github.io/blog/posts/), and
 check-out these vignettes:
 
-#### Parameters Description
-
-  - [Guide to parameters
-    description](https://easystats.github.io/parameters/articles/model_parameters.html)
-
-#### Parameters Engineering
-
-  - [Guide to bootstrapped
-    parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
-  - [Guide to standardized
-    parameters](https://easystats.github.io/parameters/articles/standardization.html)
-
-#### Parameters Selection
-
-  - [Guide to parameters
-    selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
-
-#### Dimension Reduction
-
-  - [Guide to feature reduction (PCA, cMDS,
-    ICA…)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
-  - [Guide to structural models (EFA, CFA,
-    SEM…)](https://easystats.github.io/parameters/articles/efa_cfa.html)
+  - [**Parameters
+    description**](https://easystats.github.io/parameters/articles/model_parameters.html)
+  - [**Bootstrapped
+    parameters**](https://easystats.github.io/parameters/articles/bootstrapping.html)
+  - [**Parameters
+    selection**](https://easystats.github.io/parameters/articles/parameters_selection.html)
+  - [**Feature reduction (PCA, cMDS,
+    ICA…)**](https://easystats.github.io/parameters/articles/parameters_reduction.html)
+  - [**Structural models (EFA, CFA,
+    SEM…)**](https://easystats.github.io/parameters/articles/efa_cfa.html)
 
 # Features
 
@@ -88,10 +75,8 @@ with some notable differences:
   - It is able to compute or extract indices not available by default,
     such as ***p*-values**, **CIs**, etc.
   - It includes **feature engineering** capabilities, including
-    [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html)
-    and
-    [**standardization**](https://easystats.github.io/parameters/articles/standardization.html)
-    of parameters.
+    parameters
+    [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html).
 
 <!-- end list -->
 
@@ -99,11 +84,11 @@ with some notable differences:
 library(lme4)
 
 model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
-model_parameters(model, standardize = "refit")
-# Parameter    | Coefficient |   SE |       95% CI |    t |      p | Coefficient (std.)
-# -------------------------------------------------------------------------------------
-# (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | < .001 |               0.00
-# Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | < .001 |               1.14
+model_parameters(model)
+# Parameter    | Coefficient |   SE |       95% CI |    t |      p
+# ----------------------------------------------------------------
+# (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | < .001
+# Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | < .001
 ```
 
 Besides many types of regression models and packages, it also works for
@@ -194,33 +179,3 @@ knitr::kable(describe_distribution(rnorm(300)), digits = 1)
 | Mean | SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
 | ---: | -: | --: | --: | -------: | -------: | --: | ---------: |
 |    0 |  1 | \-2 |   4 |      0.1 |      0.1 | 300 |          0 |
-
-### Standardization and normalization
-
-``` r
-df <- standardize(iris)
-describe_distribution(df$Sepal.Length)
-```
-
-``` r
-df <- standardize(iris)
-knitr::kable(describe_distribution(df$Sepal.Length), digits = 1)
-```
-
-| Mean | SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
-| ---: | -: | --: | --: | -------: | -------: | --: | ---------: |
-|    0 |  1 | \-2 |   2 |      0.3 |    \-0.6 | 150 |          0 |
-
-``` r
-df <- normalize(iris)
-describe_distribution(df$Sepal.Length)
-```
-
-``` r
-df <- normalize(iris)
-knitr::kable(describe_distribution(df$Sepal.Length), digits = 1)
-```
-
-| Mean |  SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
-| ---: | --: | --: | --: | -------: | -------: | --: | ---------: |
-|  0.4 | 0.2 |   0 |   1 |      0.3 |    \-0.6 | 150 |          0 |
