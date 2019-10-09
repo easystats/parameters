@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,11 +41,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Function reference" />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -78,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -133,6 +130,7 @@
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -217,7 +215,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="model_parameters.principal.html">model_parameters(<i>&lt;PCA&gt;</i>)</a></code> <code><a href="model_parameters.principal.html">model_parameters(<i>&lt;principal&gt;</i>)</a></code> </p>
+          <p><code><a href="model_parameters.principal.html">model_parameters(<i>&lt;PCA&gt;</i>)</a></code> <code><a href="model_parameters.principal.html">model_parameters(<i>&lt;principal&gt;</i>)</a></code> <code><a href="model_parameters.principal.html">model_parameters(<i>&lt;omega&gt;</i>)</a></code> </p>
         </td>
         <td><p>Structural Models (PCA, EFA, ...)</p></td>
       </tr><tr>
@@ -261,7 +259,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="standard_error.html">standard_error()</a></code> <code><a href="standard_error.html">se()</a></code> </p>
+          <p><code><a href="standard_error.html">standard_error()</a></code> </p>
         </td>
         <td><p>Extract standard errors</p></td>
       </tr><tr>
@@ -338,12 +336,6 @@
           <p><code><a href="parameters_simulate.html">parameters_simulate()</a></code> </p>
         </td>
         <td><p>Parameters simulation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="parameters_standardize.html">parameters_standardize()</a></code> </p>
-        </td>
-        <td><p>Parameters standardization</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -355,15 +347,363 @@
       <tr>
         
         <td>
-          <p><code><a href="standardize.html">standardize()</a></code> </p>
+          <p><code><a href="check_clusterstructure.html">check_clusterstructure()</a></code> </p>
         </td>
-        <td><p>Standardization (Z-scoring)</p></td>
+        <td><p>Check suitability of data for Clustering</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="normalize.html">normalize()</a></code> </p>
+          <p><code><a href="check_factorstructure.html">check_factorstructure()</a></code> </p>
         </td>
-        <td><p>Normalization</p></td>
+        <td><p>Check suitability of data for Factor Analysis (FA)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_kmo.html">check_kmo()</a></code> </p>
+        </td>
+        <td><p>Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA) for Factor Analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_multimodal.html">check_multimodal()</a></code> </p>
+        </td>
+        <td><p>Check if a distribution is unimodal or multimodal</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_sphericity.html">check_sphericity()</a></code> </p>
+        </td>
+        <td><p>Bartlett's Test of Sphericity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;zeroinfl&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;hurdle&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Confidence Interval (CI)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cmds.html">cmds()</a></code> </p>
+        </td>
+        <td><p>Classical Multidimensional Scaling (cMDS)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="convert_data_to_numeric.html">convert_data_to_numeric()</a></code> <code><a href="convert_data_to_numeric.html">data_to_numeric()</a></code> </p>
+        </td>
+        <td><p>Convert data to numeric</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="convert_efa_to_cfa.html">convert_efa_to_cfa()</a></code> <code><a href="convert_efa_to_cfa.html">efa_to_cfa()</a></code> </p>
+        </td>
+        <td><p>Conversion between EFA results and CFA structure</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="data_partition.html">data_partition()</a></code> </p>
+        </td>
+        <td><p>Partition data into a test and a training set</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="describe_distribution.html">describe_distribution()</a></code> </p>
+        </td>
+        <td><p>Describe a Distribution</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="DRR.html">DRR()</a></code> </p>
+        </td>
+        <td><p>Dimensionality Reduction via Regression (DRR)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="equivalence_test.lm.html">equivalence_test(<i>&lt;lm&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Equivalence test</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="eta_squared.html">cohens_f()</a></code> <code><a href="eta_squared.html">epsilon_squared()</a></code> <code><a href="eta_squared.html">eta_squared()</a></code> <code><a href="eta_squared.html">omega_squared()</a></code> </p>
+        </td>
+        <td><p>ANOVA Effect Size (Omega Squared, Eta Squared, Epsilon Squared)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_algorithm.html">format_algorithm()</a></code> </p>
+        </td>
+        <td><p>Model Algorithm Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_bf.html">format_bf()</a></code> </p>
+        </td>
+        <td><p>Bayes Factor Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_ci.html">format_ci()</a></code> </p>
+        </td>
+        <td><p>Confidence/Credible Interval (CI) Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_model.html">format_model()</a></code> </p>
+        </td>
+        <td><p>Model Name Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_number.html">format_number()</a></code> </p>
+        </td>
+        <td><p>Convert number to words</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_order.html">format_order()</a></code> </p>
+        </td>
+        <td><p>Order (first, second, ...) formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_p.html">format_p()</a></code> </p>
+        </td>
+        <td><p>p-values formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_parameters.html">format_parameters()</a></code> </p>
+        </td>
+        <td><p>Parameters Names Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_pd.html">format_pd()</a></code> </p>
+        </td>
+        <td><p>Probability of direction (pd) Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_rope.html">format_rope()</a></code> </p>
+        </td>
+        <td><p>Percentage in ROPE Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ICA.html">ICA()</a></code> </p>
+        </td>
+        <td><p>Independent Component Analysis (ICA)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_bootstrap.html">model_bootstrap()</a></code> </p>
+        </td>
+        <td><p>Model bootstrapping</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.aov.html">model_parameters(<i>&lt;aov&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>ANOVAs Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.befa.html">model_parameters(<i>&lt;befa&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format PCA/FA from the psych package</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.BFBayesFactor.html">model_parameters(<i>&lt;BFBayesFactor&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>BayesFactor objects Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.gam.html">model_parameters(<i>&lt;gam&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Parameters of Generalized Additive (Mixed) Models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.htest.html">model_parameters(<i>&lt;htest&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Correlations and t-test Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.kmeans.html">model_parameters(<i>&lt;kmeans&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Cluster Models (k-means, ...)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.lavaan.html">model_parameters(<i>&lt;lavaan&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format CFA/SEM from the lavaan package</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.lm.html">model_parameters(<i>&lt;lm&gt;</i>)</a></code> <code><a href="model_parameters.lm.html">model_parameters(<i>&lt;polr&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Parameters of (General) Linear Models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.Mclust.html">model_parameters(<i>&lt;Mclust&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mixture Models Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;lme&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;merMod&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mixed Model Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.principal.html">model_parameters(<i>&lt;PCA&gt;</i>)</a></code> <code><a href="model_parameters.principal.html">model_parameters(<i>&lt;principal&gt;</i>)</a></code> <code><a href="model_parameters.principal.html">model_parameters(<i>&lt;omega&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Structural Models (PCA, EFA, ...)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.html">model_parameters()</a></code> <code><a href="model_parameters.html">parameters()</a></code> </p>
+        </td>
+        <td><p>Model Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.stanreg.html">model_parameters(<i>&lt;stanreg&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Bayesian Models Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.zeroinfl.html">model_parameters(<i>&lt;zeroinfl&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Model Parameters for Zero-Inflated Models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_simulate.html">model_simulate()</a></code> </p>
+        </td>
+        <td><p>Simulated draws from model coefficients</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="n_clusters.html">n_clusters()</a></code> </p>
+        </td>
+        <td><p>Number of Clusters to Extract</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="n_factors.html">n_factors()</a></code> </p>
+        </td>
+        <td><p>Number of Components/Factors to Retain in Factor Analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="n_parameters.html">n_parameters()</a></code> </p>
+        </td>
+        <td><p>Count how many parameters in a model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_bootstrap.html">parameters_bootstrap()</a></code> </p>
+        </td>
+        <td><p>Parameters bootstrapping</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_reduction.html">parameters_reduction()</a></code> </p>
+        </td>
+        <td><p>Dimensionality reduction (DR) / Features Reduction</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_selection.html">parameters_selection()</a></code> </p>
+        </td>
+        <td><p>Parameters Selection</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_simulate.html">parameters_simulate()</a></code> </p>
+        </td>
+        <td><p>Parameters simulation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_table.html">parameters_table()</a></code> </p>
+        </td>
+        <td><p>Parameters Table Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_type.html">parameters_type()</a></code> </p>
+        </td>
+        <td><p>Type of Model Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="principal_components.html">principal_components()</a></code> </p>
+        </td>
+        <td><p>Principal Component Analysis (PCA)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="print.html">print(<i>&lt;parameters_model&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print model parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value.html">p_value()</a></code> </p>
+        </td>
+        <td><p>p-values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value_kenward.html">p_value_kenward()</a></code> <code><a href="p_value_kenward.html">dof_kenward()</a></code> <code><a href="p_value_kenward.html">se_kenward()</a></code> </p>
+        </td>
+        <td><p>p-values using Kenward-Roger approximation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value_wald.html">ci_wald()</a></code> <code><a href="p_value_wald.html">p_value_wald()</a></code> </p>
+        </td>
+        <td><p>Wald-test approximation for CIs and p-values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="reshape_loadings.html">reshape_loadings()</a></code> </p>
+        </td>
+        <td><p>Reshape loadings between wide/long formats</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="skewness.html">skewness()</a></code> <code><a href="skewness.html">kurtosis()</a></code> </p>
+        </td>
+        <td><p>Compute Skewness and Kurtosis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="smoothness.html">smoothness()</a></code> </p>
+        </td>
+        <td><p>Quantify the smoothness of a vector</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="standardize_names.html">standardize_names()</a></code> </p>
+        </td>
+        <td><p>Standardize column names</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="standard_error.html">standard_error()</a></code> </p>
+        </td>
+        <td><p>Extract standard errors</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -461,21 +801,363 @@
       <tr>
         
         <td>
-          <p><code><a href="d_to_r.html">d_to_r()</a></code> <code><a href="d_to_r.html">r_to_d()</a></code> <code><a href="d_to_r.html">convert_d_to_r()</a></code> <code><a href="d_to_r.html">convert_r_to_d()</a></code> </p>
+          <p><code><a href="check_clusterstructure.html">check_clusterstructure()</a></code> </p>
         </td>
-        <td><p>Conversion between standardized difference d and correlation r</p></td>
+        <td><p>Check suitability of data for Clustering</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="odds_to_d.html">odds_to_d()</a></code> <code><a href="odds_to_d.html">convert_odds_to_d()</a></code> <code><a href="odds_to_d.html">d_to_odds()</a></code> <code><a href="odds_to_d.html">convert_d_to_odds()</a></code> </p>
+          <p><code><a href="check_factorstructure.html">check_factorstructure()</a></code> </p>
         </td>
-        <td><p>Conversion between (log)odds and standardized difference</p></td>
+        <td><p>Check suitability of data for Factor Analysis (FA)</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="odds_to_probs.html">odds_to_probs()</a></code> <code><a href="odds_to_probs.html">probs_to_odds()</a></code> <code><a href="odds_to_probs.html">convert_odds_to_probs()</a></code> <code><a href="odds_to_probs.html">convert_probs_to_odds()</a></code> </p>
+          <p><code><a href="check_kmo.html">check_kmo()</a></code> </p>
         </td>
-        <td><p>Conversion between (log)odds and probabilities</p></td>
+        <td><p>Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA) for Factor Analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_multimodal.html">check_multimodal()</a></code> </p>
+        </td>
+        <td><p>Check if a distribution is unimodal or multimodal</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_sphericity.html">check_sphericity()</a></code> </p>
+        </td>
+        <td><p>Bartlett's Test of Sphericity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;zeroinfl&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;hurdle&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Confidence Interval (CI)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cmds.html">cmds()</a></code> </p>
+        </td>
+        <td><p>Classical Multidimensional Scaling (cMDS)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="convert_data_to_numeric.html">convert_data_to_numeric()</a></code> <code><a href="convert_data_to_numeric.html">data_to_numeric()</a></code> </p>
+        </td>
+        <td><p>Convert data to numeric</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="convert_efa_to_cfa.html">convert_efa_to_cfa()</a></code> <code><a href="convert_efa_to_cfa.html">efa_to_cfa()</a></code> </p>
+        </td>
+        <td><p>Conversion between EFA results and CFA structure</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="data_partition.html">data_partition()</a></code> </p>
+        </td>
+        <td><p>Partition data into a test and a training set</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="describe_distribution.html">describe_distribution()</a></code> </p>
+        </td>
+        <td><p>Describe a Distribution</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="DRR.html">DRR()</a></code> </p>
+        </td>
+        <td><p>Dimensionality Reduction via Regression (DRR)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="equivalence_test.lm.html">equivalence_test(<i>&lt;lm&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Equivalence test</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="eta_squared.html">cohens_f()</a></code> <code><a href="eta_squared.html">epsilon_squared()</a></code> <code><a href="eta_squared.html">eta_squared()</a></code> <code><a href="eta_squared.html">omega_squared()</a></code> </p>
+        </td>
+        <td><p>ANOVA Effect Size (Omega Squared, Eta Squared, Epsilon Squared)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_algorithm.html">format_algorithm()</a></code> </p>
+        </td>
+        <td><p>Model Algorithm Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_bf.html">format_bf()</a></code> </p>
+        </td>
+        <td><p>Bayes Factor Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_ci.html">format_ci()</a></code> </p>
+        </td>
+        <td><p>Confidence/Credible Interval (CI) Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_model.html">format_model()</a></code> </p>
+        </td>
+        <td><p>Model Name Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_number.html">format_number()</a></code> </p>
+        </td>
+        <td><p>Convert number to words</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_order.html">format_order()</a></code> </p>
+        </td>
+        <td><p>Order (first, second, ...) formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_p.html">format_p()</a></code> </p>
+        </td>
+        <td><p>p-values formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_parameters.html">format_parameters()</a></code> </p>
+        </td>
+        <td><p>Parameters Names Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_pd.html">format_pd()</a></code> </p>
+        </td>
+        <td><p>Probability of direction (pd) Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="format_rope.html">format_rope()</a></code> </p>
+        </td>
+        <td><p>Percentage in ROPE Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ICA.html">ICA()</a></code> </p>
+        </td>
+        <td><p>Independent Component Analysis (ICA)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_bootstrap.html">model_bootstrap()</a></code> </p>
+        </td>
+        <td><p>Model bootstrapping</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.aov.html">model_parameters(<i>&lt;aov&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>ANOVAs Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.befa.html">model_parameters(<i>&lt;befa&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format PCA/FA from the psych package</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.BFBayesFactor.html">model_parameters(<i>&lt;BFBayesFactor&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>BayesFactor objects Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.gam.html">model_parameters(<i>&lt;gam&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Parameters of Generalized Additive (Mixed) Models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.htest.html">model_parameters(<i>&lt;htest&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Correlations and t-test Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.kmeans.html">model_parameters(<i>&lt;kmeans&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Cluster Models (k-means, ...)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.lavaan.html">model_parameters(<i>&lt;lavaan&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format CFA/SEM from the lavaan package</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.lm.html">model_parameters(<i>&lt;lm&gt;</i>)</a></code> <code><a href="model_parameters.lm.html">model_parameters(<i>&lt;polr&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Parameters of (General) Linear Models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.Mclust.html">model_parameters(<i>&lt;Mclust&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mixture Models Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;lme&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;merMod&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mixed Model Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.principal.html">model_parameters(<i>&lt;PCA&gt;</i>)</a></code> <code><a href="model_parameters.principal.html">model_parameters(<i>&lt;principal&gt;</i>)</a></code> <code><a href="model_parameters.principal.html">model_parameters(<i>&lt;omega&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Structural Models (PCA, EFA, ...)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.html">model_parameters()</a></code> <code><a href="model_parameters.html">parameters()</a></code> </p>
+        </td>
+        <td><p>Model Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.stanreg.html">model_parameters(<i>&lt;stanreg&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Bayesian Models Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.zeroinfl.html">model_parameters(<i>&lt;zeroinfl&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Model Parameters for Zero-Inflated Models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_simulate.html">model_simulate()</a></code> </p>
+        </td>
+        <td><p>Simulated draws from model coefficients</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="n_clusters.html">n_clusters()</a></code> </p>
+        </td>
+        <td><p>Number of Clusters to Extract</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="n_factors.html">n_factors()</a></code> </p>
+        </td>
+        <td><p>Number of Components/Factors to Retain in Factor Analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="n_parameters.html">n_parameters()</a></code> </p>
+        </td>
+        <td><p>Count how many parameters in a model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_bootstrap.html">parameters_bootstrap()</a></code> </p>
+        </td>
+        <td><p>Parameters bootstrapping</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_reduction.html">parameters_reduction()</a></code> </p>
+        </td>
+        <td><p>Dimensionality reduction (DR) / Features Reduction</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_selection.html">parameters_selection()</a></code> </p>
+        </td>
+        <td><p>Parameters Selection</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_simulate.html">parameters_simulate()</a></code> </p>
+        </td>
+        <td><p>Parameters simulation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_table.html">parameters_table()</a></code> </p>
+        </td>
+        <td><p>Parameters Table Formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parameters_type.html">parameters_type()</a></code> </p>
+        </td>
+        <td><p>Type of Model Parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="principal_components.html">principal_components()</a></code> </p>
+        </td>
+        <td><p>Principal Component Analysis (PCA)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="print.html">print(<i>&lt;parameters_model&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print model parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value.html">p_value()</a></code> </p>
+        </td>
+        <td><p>p-values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value_kenward.html">p_value_kenward()</a></code> <code><a href="p_value_kenward.html">dof_kenward()</a></code> <code><a href="p_value_kenward.html">se_kenward()</a></code> </p>
+        </td>
+        <td><p>p-values using Kenward-Roger approximation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value_wald.html">ci_wald()</a></code> <code><a href="p_value_wald.html">p_value_wald()</a></code> </p>
+        </td>
+        <td><p>Wald-test approximation for CIs and p-values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="reshape_loadings.html">reshape_loadings()</a></code> </p>
+        </td>
+        <td><p>Reshape loadings between wide/long formats</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="skewness.html">skewness()</a></code> <code><a href="skewness.html">kurtosis()</a></code> </p>
+        </td>
+        <td><p>Compute Skewness and Kurtosis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="smoothness.html">smoothness()</a></code> </p>
+        </td>
+        <td><p>Quantify the smoothness of a vector</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="standardize_names.html">standardize_names()</a></code> </p>
+        </td>
+        <td><p>Standardize column names</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="standard_error.html">standard_error()</a></code> </p>
+        </td>
+        <td><p>Extract standard errors</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -505,7 +1187,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="check_smoothness.html">check_smoothness()</a></code> <code><a href="check_smoothness.html">smoothness()</a></code> </p>
+          <p><code><a href="smoothness.html">smoothness()</a></code> </p>
         </td>
         <td><p>Quantify the smoothness of a vector</p></td>
       </tr>
@@ -593,12 +1275,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="format_standardize.html">format_standardize()</a></code> </p>
-        </td>
-        <td><p>Transform a standardized vector into character</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="parameters_table.html">parameters_table()</a></code> </p>
         </td>
         <td><p>Parameters Table Formatting</p></td>
@@ -642,7 +1318,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

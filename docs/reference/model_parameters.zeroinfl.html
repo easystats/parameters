@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,12 +41,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Model Parameters for Zero-Inflated Models — model_parameters.zeroinfl" />
+
 <meta property="og:description" content="Parameters of zero-inflated models." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -79,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -134,6 +132,7 @@
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -155,15 +154,16 @@
     </div>
 
     <div class="ref-description">
+    
     <p>Parameters of zero-inflated models.</p>
+    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for zeroinfl</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>, <span class='kw'>standardize_robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>,
   <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -174,14 +174,6 @@
     <tr>
       <th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
-    </tr>
-    <tr>
-      <th>standardize</th>
-      <td><p>Add standardized parameters. Can be <code>FALSE</code> or a character indicating the standardization method (see <code><a href='parameters_standardize.html'>parameters_standardize()</a></code>), such as <code>"refit"</code>, <code>"2sd"</code>, <code>"smart"</code> or <code>"classic"</code>. The two former are based on model refitting using a standardized version of data. It is the most accurate, although computationally heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).</p></td>
-    </tr>
-    <tr>
-      <th>standardize_robust</th>
-      <td><p>Robust standardization. See <code><a href='parameters_standardize.html'>parameters_standardize</a></code>.</p></td>
     </tr>
     <tr>
       <th>bootstrap</th>
@@ -200,21 +192,23 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods (e.g., to <code><a href='standardize.html'>standardize()</a></code>).</p></td>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of indices related to the model's parameters.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
   columns into a consistent, standardized naming scheme.</p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>pscl</span>)</div><div class='output co'>#&gt; <span class='message'>Classes and Methods for R developed in the</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>pscl</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'pscl' was built under R version 3.6.1</span></div><div class='output co'>#&gt; <span class='message'>Classes and Methods for R developed in the</span>
 #&gt; <span class='message'>Political Science Computational Laboratory</span>
 #&gt; <span class='message'>Department of Political Science</span>
 #&gt; <span class='message'>Stanford University</span>
@@ -224,29 +218,32 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pscl/man/zeroinfl.html'>zeroinfl</a></span>(<span class='no'>art</span> ~ <span class='no'>fem</span> + <span class='no'>mar</span> + <span class='no'>kid5</span> + <span class='no'>ment</span> <span class='kw'>|</span> <span class='no'>kid5</span> + <span class='no'>phd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>bioChemists</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |      p | Coefficient (std.)
-#&gt; -------------------------------------------------------------------------------
-#&gt; (Intercept) |        0.56 | 0.07 | [ 0.43,  0.69] | &lt; .001 |               0.67
-#&gt; femWomen    |       -0.23 | 0.06 | [-0.34, -0.11] | &lt; .001 |              -0.23
-#&gt; marMarried  |        0.14 | 0.07 | [ 0.01,  0.27] | &lt; .05  |               0.14
-#&gt; kid5        |       -0.17 | 0.05 | [-0.26, -0.07] | &lt; .001 |              -0.13
-#&gt; ment        |        0.02 | 0.00 | [ 0.02,  0.03] | &lt; .001 |               0.20
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |      p
+#&gt; ----------------------------------------------------------
+#&gt; (Intercept) |        0.56 | 0.07 | [ 0.43,  0.69] | &lt; .001
+#&gt; femWomen    |       -0.23 | 0.06 | [-0.34, -0.11] | &lt; .001
+#&gt; marMarried  |        0.14 | 0.07 | [ 0.01,  0.27] | &lt; .05 
+#&gt; kid5        |       -0.17 | 0.05 | [-0.26, -0.07] | &lt; .001
+#&gt; ment        |        0.02 | 0.00 | [ 0.02,  0.03] | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     p | Coefficient (std.)
-#&gt; ------------------------------------------------------------------------------
-#&gt; (Intercept) |       -0.93 | 0.43 | [-1.78, -0.08] | &lt; .05 |              -1.68
-#&gt; kid5        |        0.05 | 0.22 | [-0.38,  0.47] | &gt; .1  |               0.04
-#&gt; phd         |       -0.25 | 0.14 | [-0.51,  0.02] | 0.07  |              -0.25
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     p
+#&gt; ---------------------------------------------------------
+#&gt; (Intercept) |       -0.93 | 0.43 | [-1.78, -0.08] | &lt; .05
+#&gt; kid5        |        0.05 | 0.22 | [-0.38,  0.47] | &gt; .1 
+#&gt; phd         |       -0.25 | 0.14 | [-0.51,  0.02] | 0.07 
 #&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -260,7 +257,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

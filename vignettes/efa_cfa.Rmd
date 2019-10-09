@@ -112,10 +112,10 @@ summary(n)
 A plot can also be obtained (the `see` package must be loaded):
 
 ```{r message=FALSE, warning=FALSE}
-library(see)
+# library(see)
 
-plot(n) +
-  theme_modern()
+# plot(n) +
+#   theme_modern()
 ```
 
 

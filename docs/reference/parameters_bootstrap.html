@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,12 +41,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Parameters bootstrapping — parameters_bootstrap" />
+
 <meta property="og:description" content="Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -79,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -134,6 +132,7 @@
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -155,12 +154,14 @@
     </div>
 
     <div class="ref-description">
+    
     <p>Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -202,36 +203,43 @@ included in the summary output.</p></td>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Bootstrapped parameters.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Davison, A. C., &amp; Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='model_bootstrap.html'>model_bootstrap</a></code>, <code><a href='parameters_simulate.html'>parameters_simulate</a></code>, <code><a href='model_simulate.html'>model_simulate</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high           p
-#&gt; 1                   (Intercept)   4.7766023  4.5233049 5.00337153 0.000000000
-#&gt; 2             Speciesversicolor  -0.7377855 -1.5538639 0.06132485 0.075924076
-#&gt; 3              Speciesvirginica   0.4810061 -0.6558117 1.65943768 0.453546454
-#&gt; 4                   Petal.Width   0.9343375  0.2385451 1.88732113 0.003996004
-#&gt; 5 Speciesversicolor:Petal.Width   0.4917113 -0.6032043 1.43995275 0.365634366
-#&gt; 6  Speciesvirginica:Petal.Width  -0.2817534 -1.4950994 0.64614728 0.575424575</div></pre>
+<span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
+#&gt; 1                   (Intercept)   4.7664072  4.5194337 4.9744341 0.000000000
+#&gt; 2             Speciesversicolor  -0.7603375 -1.6772919 0.1216784 0.095904096
+#&gt; 3              Speciesvirginica   0.5207725 -0.7823481 1.5721400 0.389610390
+#&gt; 4                   Petal.Width   0.9504125  0.2591997 1.9359747 0.003996004
+#&gt; 5 Speciesversicolor:Petal.Width   0.5196818 -0.6266926 1.4545744 0.345654346
+#&gt; 6  Speciesvirginica:Petal.Width  -0.3160007 -1.4321301 0.5754448 0.523476523</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -245,7 +253,7 @@ included in the summary output.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

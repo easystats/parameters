@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,12 +41,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Principal Component Analysis (PCA) — principal_components" />
+
 <meta property="og:description" content="This function performs a principal component analysis (PCA) and returns the loadings as a dataframe." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -79,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -134,6 +132,7 @@
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -155,12 +154,14 @@
     </div>
 
     <div class="ref-description">
+    
     <p>This function performs a principal component analysis (PCA) and returns the loadings as a dataframe.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>principal_components</span>(<span class='no'>x</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -193,10 +194,11 @@
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame of loadings.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
@@ -204,9 +206,11 @@
 <li><p><strong>Complexity</strong> (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.</p></li>
 </ul>
 
+    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>There is a <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code>-method that prints the Eigenvalues and (explained) variance for each extracted component.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -214,6 +218,7 @@
 <li><p>Pettersson, E., &amp; Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.</p></li>
 </ul>
 
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
@@ -314,10 +319,15 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#note">Note</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -331,7 +341,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>
