@@ -1,7 +1,7 @@
 Package: parameters
 Type: Package
 Title: Processing of Model Parameters
-Version: 0.2.1
+Version: 0.2.5
 Authors@R: c(
 	person("Dominique", 
 		"Makowski", 
@@ -25,7 +25,7 @@ Authors@R: c(
 		"Stanley", 
 		role = c("ctb"))
 	)
-Maintainer: Dominique Makowski <dom.makowski@gmail.com>
+Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Utilities for processing the parameters of various statistical models. Beyond computing p values, CIs, and other indices for a wide variety of models (see support list of insight; Lüdecke, Waggoner & Makowski (2019) <doi:10.21105/joss.01412>), this package implements features like standardization or bootstrapping of parameters and models, feature reduction (feature extraction and variable selection) as well as conversion between indices of effect size.
 URL: https://easystats.github.io/parameters/
 BugReports: https://github.com/easystats/parameters/issues

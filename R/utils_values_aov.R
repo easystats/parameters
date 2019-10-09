@@ -2,8 +2,6 @@
 .values_aov <- function(params) {
 
   # number of observations
-
-
   if ("Group" %in% names(params) && ("Within" %in% params$Group)) {
     lapply(split(params, params$Group), function(.i) {
       N <- sum(.i$df) + 1
@@ -16,7 +14,7 @@
 }
 
 
-
+#' @keywords internal
 .prepare_values_aov <- function(params, N) {
   # get mean squared of residuals
   Mean_Square_residuals <- sum(params[params$Parameter == "Residuals", ]$Mean_Square)
