@@ -4,12 +4,15 @@
 \alias{check_clusterstructure}
 \title{Check suitability of data for Clustering}
 \usage{
-check_clusterstructure(x, standardize = TRUE, ...)
+check_clusterstructure(x, standardize = TRUE, distance = "euclidean",
+  ...)
 }
 \arguments{
 \item{x}{A data frame.}
 
 \item{standardize}{Standardize the dataframe before clustering (default).}
+
+\item{distance}{Distance method used. Other methods than "euclidean" (default) are exploratory in the context of clustering tendency. See \code{\link{dist}} for list of available methods.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
