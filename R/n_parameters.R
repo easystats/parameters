@@ -13,5 +13,5 @@ n_parameters <- function(x, ...) {
 
 #' @export
 n_parameters.default <- function(x, ...) {
-  length(insight::find_parameters(x, flatten = TRUE, ...))
+  length(insight::find_parameters(x, effects = "fixed", flatten = TRUE, ...))
 }
