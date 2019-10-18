@@ -52,7 +52,17 @@ ci_robust <- function(model,
                       vcov_args = NULL,
                       ...) {
   vcov_type <- match.arg(vcov_type)
-  ci_wald(model = model, ci = ci, component = "conditional", robust = TRUE, vcov_estimation, vcov_type, vcov_args, ...)
+
+  ci_wald(
+    model = model,
+    ci = ci,
+    component = "conditional",
+    robust = TRUE,
+    vcov_estimation = vcov_estimation,
+    vcov_type = vcov_type,
+    vcov_args = vcov_args,
+    ...
+  )
 }
 
 
