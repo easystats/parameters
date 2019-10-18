@@ -8,7 +8,7 @@ standard_error_robust <- function(model,
   # match arguments
   vcov_type <- match.arg(vcov_type)
 
-  robust <- .robust_se(
+  robust <- .robust_covariance_matrix(
     model,
     vcov_fun = paste0("vcov", vcov_estimation),
     vcov_type = vcov_type,
@@ -30,7 +30,7 @@ p_value_robust <- function(model,
   # match arguments
   vcov_type <- match.arg(vcov_type)
 
-  robust <- .robust_se(
+  robust <- .robust_covariance_matrix(
     model,
     vcov_fun = paste0("vcov", vcov_estimation),
     vcov_type = vcov_type,
@@ -44,8 +44,8 @@ p_value_robust <- function(model,
 
 
 #' @importFrom insight n_obs
-#' @importFrom stats coef df.residual pnorm qnorm pt qt
-.robust_se <- function(x,
+#' @importFrom stats coef df.residual pnorm pt
+.robust_covariance_matrix <- function(x,
                        vcov_fun = "vcovHC",
                        vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5"),
                        vcov_args = NULL) {
@@ -90,14 +90,11 @@ p_value_robust <- function(model,
   }
 
 
-  # create tidy data frame
-  result <- .data_frame(
+  .data_frame(
     Parameter = names(est),
     Estimate = est,
     SE = se,
     Statistic = t.stat,
     p = p.value
   )
-
-  result
 }
