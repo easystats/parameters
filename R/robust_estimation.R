@@ -43,6 +43,21 @@ p_value_robust <- function(model,
 
 
 
+#' @rdname ci.merMod
+#' @export
+ci_robust <- function(model,
+                      ci = 0.95,
+                      vcov_estimation = "HC",
+                      vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5"),
+                      vcov_args = NULL,
+                      ...) {
+  vcov_type <- match.arg(vcov_type)
+  ci_wald(model = model, ci = ci, component = "conditional", robust = TRUE, vcov_estimation, vcov_type, vcov_args, ...)
+}
+
+
+
+
 #' @importFrom insight n_obs
 #' @importFrom stats coef df.residual pnorm pt
 .robust_covariance_matrix <- function(x,
