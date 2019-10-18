@@ -1,6 +1,6 @@
 #' Extract standard errors
 #'
-#' This function attempts to return standard errors of model parameters.
+#' \code{standard_error()} attempts to return standard errors of model parameters, while \code{standard_error_robust()} attempts to return robust standard errors.
 #'
 #' @param model A model.
 #' @param force Logical, if \code{TRUE}, factors are converted to numerical
@@ -8,9 +8,29 @@
 #'   value \code{1} (unless the factor has numeric levels, which are converted
 #'   to the corresponding numeric value). By default, \code{NA} is returned
 #'   for factors or character vectors.
-#' @param verbose Toggle off warnings.
-#' @param ... Arguments passed to or from other methods.
+#' @param robust Logical, if \code{TRUE}, robust standard errors are computed
+#'   by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
+#'   \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
+#'   from the \pkg{sandwich}-package for robust covariance matrix estimators.
+#' @param vcov_estimation String, indicating the suffix of the \code{vcov*()}-function
+#'   from the \pkg{sandwich}-package, e.g. \code{vcov_estimation = "CL"} (which
+#'   calls \code{\link[sandwich]{vcovCL}} to compute clustered covariance matrix
+#'   estimators), or \code{vcov_estimation = "HC"} (which calls
+#'   \code{\link[sandwich]{vcovHC}} to compute heteroskedasticity-consistent
+#'   covariance matrix estimators).
+#' @param vcov_type Character vector, specifying the estimation type for the
+#'   robust covariance matrix estimation (see \code{\link[sandwich]{vcovHC}} for
+#'   details).
+#' @param vcov_args List of named vectors, used as additional arguments that
+#'   are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.
+#' @param ... Arguments passed to or from other methods. For \code{standard_error()},
+#'   if \code{robust = TRUE}, arguments \code{vcov_estimation}, \code{vcov_type}
+#'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
 #' @inheritParams model_simulate
+#'
+#' @note \code{standard_error_robust()} resp. \code{standard_error(robust = TRUE)}
+#'   rely on the \pkg{sandwich}-package and will thus only work for those models
+#'   supported by that package.
 #'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
@@ -100,30 +120,35 @@ standard_error.xtabs <- standard_error.table
 # Default methods ---------------------------------------------------------
 
 
+#' @rdname standard_error
 #' @export
-standard_error.default <- function(model, ...) {
-  se <- tryCatch({
-    if (grepl("^Zelig-", class(model)[1])) {
-      if (!requireNamespace("Zelig", quietly = TRUE)) {
-        stop("Package `Zelig` required. Please install", call. = FALSE)
-      }
-      unlist(Zelig::get_se(model))
-    } else {
-      .get_se_from_summary(model)
-    }
-  },
-  error = function(e) {
-    NULL
-  }
-  )
-
-  if (is.null(se)) {
-    insight::print_color("\nCould not extract standard errors from model object.\n", "red")
+standard_error.default <- function(model, robust = FALSE, ...) {
+  if (isTRUE(robust)) {
+    standard_error_robust(model, ...)
   } else {
-    .data_frame(
-      Parameter = names(se),
-      SE = as.vector(se)
+    se <- tryCatch({
+      if (grepl("^Zelig-", class(model)[1])) {
+        if (!requireNamespace("Zelig", quietly = TRUE)) {
+          stop("Package `Zelig` required. Please install", call. = FALSE)
+        }
+        unlist(Zelig::get_se(model))
+      } else {
+        .get_se_from_summary(model)
+      }
+    },
+    error = function(e) {
+      NULL
+    }
     )
+
+    if (is.null(se)) {
+      insight::print_color("\nCould not extract standard errors from model object.\n", "red")
+    } else {
+      .data_frame(
+        Parameter = names(se),
+        SE = as.vector(se)
+      )
+    }
   }
 }
 
@@ -198,11 +223,15 @@ standard_error.tobit <- function(model, ...) {
 
 
 #' @export
-standard_error.lm <- function(model, ...) {
-  .data_frame(
-    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
-    SE = .get_se_from_summary(model)
-  )
+standard_error.lm <- function(model, robust = FALSE, ...) {
+  if (isTRUE(robust)) {
+    standard_error_robust(model, ...)
+  } else {
+    .data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+      SE = .get_se_from_summary(model)
+    )
+  }
 }
 
 
@@ -806,3 +835,10 @@ standard_error.polr <- function(model, ...) {
 #
 #   se.merMod
 # }
+
+
+## TODO remove? once sjstats is updated
+
+#' @rdname standard_error
+#' @export
+se <- standard_error

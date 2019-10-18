@@ -2,12 +2,13 @@
 #'
 #' This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
 #' \itemize{
-#' \item Mixed models (lme4): TO BE IMPROVED.
+#' \item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called.
 #' }
 #'
 #' @param model A statistical model.
-#' @param ... Arguments passed to or from other methods.
+#' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams model_simulate
+#' @inheritParams standard_error
 #'
 #' @examples
 #' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
