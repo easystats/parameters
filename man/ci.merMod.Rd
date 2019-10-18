@@ -2,6 +2,7 @@
 % Please edit documentation in R/ci.R
 \name{ci.merMod}
 \alias{ci.merMod}
+\alias{ci.default}
 \alias{ci.glm}
 \alias{ci.glmmTMB}
 \alias{ci.zeroinfl}
@@ -12,7 +13,10 @@
 \method{ci}{merMod}(x, ci = 0.95, method = c("wald", "kenward",
   "boot"), ...)
 
-\method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald"), ...)
+\method{ci}{default}(x, ci = 0.95, method = NULL, ...)
+
+\method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald", "robust"),
+  ...)
 
 \method{ci}{glmmTMB}(x, ci = 0.95, component = c("all", "conditional",
   "zi", "zero_inflated"), ...)
@@ -31,9 +35,9 @@
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{method}{For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"kenward"} or \code{"boot"} (see \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For generalized linear models, can be \code{"profile"} (default) or \code{"wald"}.}
+\item{method}{For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"kenward"} or \code{"boot"} (see \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models

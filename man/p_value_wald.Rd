@@ -7,7 +7,7 @@
 \title{Wald-test approximation for CIs and p-values}
 \usage{
 ci_wald(model, ci = 0.95, dof = NULL, component = c("all",
-  "conditional", "zi", "zero_inflated"))
+  "conditional", "zi", "zero_inflated"), robust = FALSE, ...)
 
 p_value_wald(model, ...)
 
@@ -25,7 +25,12 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 
-\item{...}{Currently not used.}
+\item{robust}{Logical, if \code{TRUE}, robust standard errors are computed
+by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
+\code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
+from the \pkg{sandwich}-package for robust covariance matrix estimators.}
+
+\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 }
 \value{
 The p-values.

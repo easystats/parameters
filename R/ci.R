@@ -4,9 +4,10 @@
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"kenward"} or \code{"boot"} (see \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For generalized linear models, can be \code{"profile"} (default) or \code{"wald"}.
-#' @param ... Arguments passed to or from other methods.
+#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"kenward"} or \code{"boot"} (see \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
+#' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams model_simulate
+#' @inheritParams standard_error
 #'
 #' @return A data frame containing the CI bounds.
 #'
@@ -54,9 +55,11 @@ bayestestR::ci
 # Default Wald CI method ------------------------------------------------------
 
 
+#' @rdname ci.merMod
 #' @export
-ci.default <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, ...)
+ci.default <- function(x, ci = .95, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  ci_wald(model = x, ci = ci, robust = robust, ...)
 }
 
 
@@ -80,8 +83,9 @@ ci.mlm <- function(x, ci = .95, ...) {
 
 #' @method ci lm
 #' @export
-ci.lm <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, component = "conditional")
+ci.lm <- function(x, ci = .95, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  ci_wald(model = x, ci = ci, component = "conditional", robust = robust, ...)
 }
 
 
@@ -135,11 +139,13 @@ ci.list <- function(x, ci = .95, ...) {
 #' @rdname ci.merMod
 #' @method ci glm
 #' @export
-ci.glm <- function(x, ci = .95, method = c("profile", "wald"), ...) {
+ci.glm <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
   method <- match.arg(method)
   if (method == "profile") {
     out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
     out <- do.call(rbind, out)
+  } else if (method == "robust") {
+    out <- ci_wald(model = x, ci = ci, component = "conditional", robust = TRUE, ...)
   } else {
     out <- ci_wald(model = x, ci = ci, component = "conditional")
   }
@@ -157,11 +163,13 @@ ci.logistf <- ci.glm
 
 
 #' @export
-ci.polr <- function(x, ci = .95, method = c("profile", "wald"), ...) {
+ci.polr <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
   method <- match.arg(method)
   if (method == "profile") {
     out <- lapply(ci, function(i) .ci_profiled2(model = x, ci = i))
     out <- do.call(rbind, out)
+  } else if (method == "robust") {
+    out <- ci_wald(model = x, ci = ci, component = "conditional", robust = TRUE, ...)
   } else {
     out <- ci_wald(model = x, ci = ci, component = "conditional")
   }
@@ -190,8 +198,9 @@ ci.polr <- function(x, ci = .95, method = c("profile", "wald"), ...) {
 
 
 #' @export
-ci.gamlss <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = Inf, ...)
+ci.gamlss <- function(x, ci = .95, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  ci_wald(model = x, ci = ci, dof = Inf, robust = robust, ...)
 }
 
 #' @export
