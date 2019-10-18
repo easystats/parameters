@@ -806,3 +806,9 @@ standard_error.polr <- function(model, ...) {
 #
 #   se.merMod
 # }
+
+
+## TODO remove? once sjstats is updated
+
+#' @export
+se <- standard_error
