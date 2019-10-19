@@ -39,7 +39,6 @@ reference:
   - ci.merMod
   - equivalence_test
   - equivalence_test.lm
-  - omega_squared
 
 - title: "Parameters Engineering"
   contents:
