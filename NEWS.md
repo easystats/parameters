@@ -2,9 +2,11 @@
 
 ## Breaking changes
 
-- Functions for computing effect sizes (`cohens_f()`, `eta_squared()` etc.) have been removed and are now re-implemented in the [**effectsize**-package](https://github.com/easystats/effectsize).
-- Functions for converting effect sizes (`d_to_odds()` etc.) have been removed and are now re-implemented in the [**effectsize**-package](https://github.com/easystats/effectsize).
-- `standardize()` and `normalize()` (and hence, also `parameters_standardize()`) have been removed ;-( and are now re-implemented in the [**effectsize**-package](https://github.com/easystats/effectsize).
+Parts of the **parameter** package are restructured and functions focussing on anything related to effect sizes are now re-implemented in a new package, [**effectsize**](https://github.com/easystats/effectsize). In details, following breaking changes have been made:
+
+- Functions for computing effect sizes (`cohens_f()`, `eta_squared()` etc.) have been removed and are now re-implemented in the **effectsize**-package.
+- Functions for converting effect sizes (`d_to_odds()` etc.) have been removed and are now re-implemented in the **effectsize**-package.
+- `standardize()` and `normalize()` (and hence, also `parameters_standardize()`) have been removed ;-( and are now re-implemented in the **effectsize**-package.
 
 ## New supported models
 
@@ -13,15 +15,18 @@
 
 ## New functions
 
-- `n_parameters()`: function to get number of parameters.
-- `degrees_of_freedom()`: function to get DoFs.
-- Added indices of model fit to `n_factors` ([Finch, 2019](https://doi.org/10.1177/0013164419865769))
+- `n_parameters()` to get number of parameters.
+- `degrees_of_freedom()` to get DoFs.
 - `check_clusterstructure()` to check the suitability of data for clustering.
 - `n_clusters()` to determine the number of clusters to extract.
 - `check_multimodal()` to check if a distribution is unimodal or multimodal.
 - `p_value_robust()`, `ci_robust()` and `standard_error_robust()` to compute robust standard errors, and p-values or confidence intervals based on robust standard errors.
-- The `method`-argument for `ci()` gets a new option, `"robust"`, to compute confidence intervals based on robust standard errors. Furthermore, `ci_wald()` gets a `robust`-argument to do the same.
 - Add `plot()`-methods for `principal_components()`.
+
+## Changes to functions
+
+- Added indices of model fit to `n_factors()` ([Finch, 2019](https://doi.org/10.1177/0013164419865769))
+- The `method`-argument for `ci()` gets a new option, `"robust"`, to compute confidence intervals based on robust standard errors. Furthermore, `ci_wald()` gets a `robust`-argument to do the same.
 
 ## Bug fixes
 
