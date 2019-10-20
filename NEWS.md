@@ -12,6 +12,7 @@
 
 ## New functions
 
+- `degrees_of_freedom`: function to get DoFs.
 - Added indices of model fit to `n_factors` ([Finch, 2019](https://doi.org/10.1177/0013164419865769))
 - `check_clusterstructure()` to check the suitability of data for clustering.
 - `n_clusters()` to determine the number of clusters to extract.
