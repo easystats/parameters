@@ -31,7 +31,7 @@
 #'
 #'
 #' @export
-degrees_of_freedom <- function(model, method = "analytical", data = NULL){
+degrees_of_freedom <- function(model, method = "analytical", data = NULL) {
 
   if (method == "analytical") {
     dof <- .degrees_of_freedom_analytical(model, data = NULL)
@@ -54,7 +54,7 @@ dof <- degrees_of_freedom
 
 
 #' @keywords internal
-.degrees_of_freedom_analytical <- function(model, data = NULL){
+.degrees_of_freedom_analytical <- function(model, data = NULL) {
   if (is.null(data)) {
     data <- insight::get_data(model)
   }
@@ -81,7 +81,7 @@ dof <- degrees_of_freedom
 
 
 #' @keywords internal
-.degrees_of_freedom_fit <- function(model){
+.degrees_of_freedom_fit <- function(model) {
   info <- insight::model_info(model)
 
   if (info$is_bayesian) {
