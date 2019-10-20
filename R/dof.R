@@ -18,13 +18,13 @@
 #'
 #' \donttest{
 #' library(rstanarm)
-#' model <- stan_glm(Sepal.Length ~ Petal.Length * Species,
-#'                   data = iris, chains = 2, refresh = 0)
+#' model <- stan_glm(
+#'   Sepal.Length ~ Petal.Length * Species,
+#'   data = iris,
+#'   chains = 2,
+#'   refresh = 0
+#' )
 #' dof(model)
-#'
-#' # model <- stan_glmer(Sepal.Length ~ Petal.Length + (1|Species),
-#' #                     data = iris, chains = 2, refresh = 0)
-#' # dof(model)
 #' }
 #'
 #'
@@ -33,7 +33,7 @@
 #' @export
 degrees_of_freedom <- function(model, method = "analytical", data = NULL){
 
-  if(method == "analytical"){
+  if (method == "analytical") {
     dof <- .degrees_of_freedom_analytical(model, data = NULL)
   } else{
     dof <- .degrees_of_freedom_fit(model)
@@ -55,7 +55,7 @@ dof <- degrees_of_freedom
 
 #' @keywords internal
 .degrees_of_freedom_analytical <- function(model, data = NULL){
-  if(is.null(data)){
+  if (is.null(data)) {
     data <- insight::get_data(model)
   }
 
@@ -63,8 +63,8 @@ dof <- degrees_of_freedom
   nparam <- n_parameters(model)
   n <- nrow(data)
 
-  if(info$is_mixed){
-    if(info$is_bayesian){
+  if (info$is_mixed) {
+    if (info$is_bayesian) {
       stop("Cannot estimate DoFs for Bayesian mixed models yet.")
     } else{
       dof <- as.numeric(t(dof_kenward(model)))
@@ -84,7 +84,7 @@ dof <- degrees_of_freedom
 .degrees_of_freedom_fit <- function(model){
   info <- insight::model_info(model)
 
-  if(info$is_bayesian){
+  if (info$is_bayesian) {
     # model <- bayestestR::refit_as_frequentist(model)
     stop("Method 'fit' is not yet available.")
   }
