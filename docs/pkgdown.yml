@@ -1,5 +1,5 @@
-pandoc: 2.7.2
-pkgdown: 1.4.1
+pandoc: 2.7.1
+pkgdown: 1.4.0
 pkgdown_sha: ~
 articles:
   bootstrapping: bootstrapping.html
@@ -7,5 +7,4 @@ articles:
   model_parameters: model_parameters.html
   parameters_reduction: parameters_reduction.html
   parameters_selection: parameters_selection.html
-  standardization: standardization.html
 

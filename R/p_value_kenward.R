@@ -51,3 +51,4 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
     stringsAsFactors = FALSE
   )
 }
+

@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,12 +41,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Check if a distribution is unimodal or multimodal — check_multimodal" />
+
 <meta property="og:description" content="For univariate distributions (one-dimensional vectors), this functions perfoms a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -79,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -134,6 +132,7 @@
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -155,11 +154,13 @@
     </div>
 
     <div class="ref-description">
+    
     <p>For univariate distributions (one-dimensional vectors), this functions perfoms a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>check_multimodal</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -172,7 +173,7 @@
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -180,13 +181,18 @@
 <li><p>Ameijeiras-Alonso, J., Crujeiras, R. M., \&amp; Rodríguez-Casal, A. (2019). Mode testing, critical bandwidth and excess mass. Test, 28(3), 900-919.</p></li>
 </ul>
 
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Univariate</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>2000</span>)
-<span class='fu'>check_multimodal</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in check_multimodal.numeric(x): Package 'multimode' required for this function to work. Please install it by running `install.packages('multimode')`.</span></div><div class='input'>
+<span class='fu'>check_multimodal</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Is the variable multimodal?
+#&gt; 
+#&gt; </span><span style='color: #BBBB00;'>The Ameijeiras-Alonso et al. (2018) excess mass test suggests that the hypothesis of a multimodal distribution cannot be rejected (excess mass = 0.01, p &gt; .1)</span><span></div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>2</span>))
-<span class='fu'>check_multimodal</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in check_multimodal.numeric(x): Package 'multimode' required for this function to work. Please install it by running `install.packages('multimode')`.</span></div><div class='input'>
+<span class='fu'>check_multimodal</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Is the variable multimodal?
+#&gt; 
+#&gt; </span><span style='color: #00BB00;'>The Ameijeiras-Alonso et al. (2018) excess mass test suggests that the distribution is significantly multimodal (excess mass = 0.02, p &lt; .05)</span><span></div><div class='input'>
 <span class='co'># Multivariate</span>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
@@ -194,19 +200,25 @@
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>200</span>),
   <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Beta.html'>rbeta</a></span>(<span class='fl'>200</span>, <span class='fl'>2</span>, <span class='fl'>1</span>)
 )
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>m</span>$<span class='no'>x</span>, <span class='no'>m</span>$<span class='no'>y</span>)</div><div class='img'><img src='check_multimodal-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>check_multimodal</span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; <span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chisq(6) = 31.24, p &lt; .001)</span><span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>m</span>$<span class='no'>x</span>, <span class='no'>m</span>$<span class='no'>y</span>)</div><div class='img'><img src='check_multimodal-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>check_multimodal</span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Is the data multimodal?
+#&gt; 
+#&gt; </span><span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chi2(7) = 26.15, p &lt; .001)</span><span></div><div class='input'>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>4</span>)),
   <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Beta.html'>rbeta</a></span>(<span class='fl'>100</span>, <span class='fl'>2</span>, <span class='fl'>1</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Beta.html'>rbeta</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>4</span>))
 )
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>m</span>$<span class='no'>x</span>, <span class='no'>m</span>$<span class='no'>y</span>)</div><div class='img'><img src='check_multimodal-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>check_multimodal</span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; </span><span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chisq(14) = 103.81, p &lt; .001)</span><span></div><div class='input'># }
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>m</span>$<span class='no'>x</span>, <span class='no'>m</span>$<span class='no'>y</span>)</div><div class='img'><img src='check_multimodal-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>check_multimodal</span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Is the data multimodal?
+#&gt; 
+#&gt; </span><span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chi2(11) = 68.89, p &lt; .001)</span><span></div><div class='input'># }
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -220,7 +232,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

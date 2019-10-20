@@ -4,6 +4,7 @@
 #'
 #' @param x A data frame.
 #' @param standardize Standardize the dataframe before clustering (default).
+#' @param distance Distance method used. Other methods than "euclidean" (default) are exploratory in the context of clustering tendency. See \code{\link{dist}} for list of available methods.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -19,13 +20,13 @@
 #'   \item Bezdek, J. C., \& Hathaway, R. J. (2002, May). VAT: A tool for visual assessment of (cluster) tendency. In Proceedings of the 2002 International Joint Conference on Neural Networks. IJCNN02 (3), 2225-2230. IEEE.
 #' }
 #' @export
-check_clusterstructure <- function(x, standardize = TRUE, ...) {
+check_clusterstructure <- function(x, standardize = TRUE, distance = "euclidean", ...) {
 
   if(standardize){
-    x <- standardize(x)
+    x <- as.data.frame(scale(x))
   }
 
-  H <- .clusterstructure_hopkins(x)
+  H <- .clusterstructure_hopkins(x, distance = distance)
   if(H < 0.5){
     text <- paste0("The dataset is suitable for clustering (Hopkins' H = ",
                    insight::format_value(H),
@@ -39,7 +40,7 @@ check_clusterstructure <- function(x, standardize = TRUE, ...) {
   }
 
   out <- list(H = H,
-              dissimilarity_matrix = .clusterstructure_dm(x))
+              dissimilarity_matrix = .clusterstructure_dm(x, distance = distance, method = "ward.D2"))
 
   attr(out, "text") <- text
   attr(out, "color") <- color
@@ -64,9 +65,9 @@ plot.check_clusterstructure <- function(x, ...){
 
 #' @importFrom stats hclust dist
 #' @keywords internal
-.clusterstructure_dm <- function(x) {
-  d <- stats::dist(x, method = "euclidean")
-  hc <- stats::hclust(d, method = "ward.D2")
+.clusterstructure_dm <- function(x, distance = "euclidean", method = "ward.D2") {
+  d <- stats::dist(x, method = distance)
+  hc <- stats::hclust(d, method = method)
   as.matrix(d)[hc$order, hc$order]
 }
 
@@ -74,7 +75,7 @@ plot.check_clusterstructure <- function(x, ...){
 
 #' @importFrom stats runif
 #' @keywords internal
-.clusterstructure_hopkins <- function(x) {
+.clusterstructure_hopkins <- function(x, distance = "euclidean") {
   # This is based on the hopkins() function from the clustertend package
   if (is.data.frame(x)) {
     x <- as.matrix(x)
@@ -98,15 +99,15 @@ plot.check_clusterstructure <- function(x, ...){
   minq <- rep(0, n)
   for (i in 1:n)
   {
-    distp[1] <- dist(rbind(p[i, ], x[1, ]))
-    minqi <- dist(rbind(q[i, ], x[1, ]))
+    distp[1] <- dist(rbind(p[i, ], x[1, ]), method = distance)
+    minqi <- dist(rbind(q[i, ], x[1, ]), method = distance)
     for (j in 2:nrow(x))
     {
-      distp[j] <- dist(rbind(p[i, ], x[j, ]))
+      distp[j] <- dist(rbind(p[i, ], x[j, ]), method = distance)
       error <- q[i, ] - x[j, ]
       if (sum(abs(error)) != 0) {
         # distq[j]<-dist(rbind(q[i,],x[j,]))
-        distq <- dist(rbind(q[i, ], x[j, ]))
+        distq <- dist(rbind(q[i, ], x[j, ]), method = distance)
         if (distq < minqi) {
           minqi <- distq
         }

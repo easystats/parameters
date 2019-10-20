@@ -42,10 +42,9 @@
 parameters_type <- function(model, ...) {
 
   # Get info
-  params <- .data_frame(
-    Parameter = c(
-      insight::find_parameters(model, effects = "fixed", flatten = TRUE)
-    )
+  params <- data.frame(
+    Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
+    stringsAsFactors = FALSE
   )
 
   # Special case
@@ -53,13 +52,11 @@ parameters_type <- function(model, ...) {
     params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
   }
 
-  # remove "as.factor()", "log()" etc. from parameter names,
-  # but save original parameter before
+  # Remove "as.factor()", "log()" etc. from parameter names but save original parameter before
   original_parameter <- params$Parameter
   params$Parameter <- .clean_parameter_names(params$Parameter, full = TRUE)
 
-  ## TODO can we get rid of the count_ / zero_ prefix here?
-
+  # TODO can we get rid of the count_ / zero_ prefix here?
   # if (inherits(model, c("zeroinfl", "hurdle", "zerocount"))) {
   #   params$Parameter <- gsub("^(count_|zero_)", "", params$Parameter)
   # }
@@ -89,7 +86,6 @@ parameters_type <- function(model, ...) {
     }
   }
 
-  out$Secondary_Factor <- NULL
   out$Parameter <- original_parameter
   # Out
   out
@@ -101,7 +97,7 @@ parameters_type <- function(model, ...) {
 .parameters_type_table <- function(names, data, reference) {
   out <- lapply(names, .parameters_type, data = data, reference = reference)
   out <- as.data.frame(do.call(rbind, out), stringsAsFactors = FALSE)
-  names(out) <- c("Type", "Term", "Variable", "Level", "Factor", "Secondary_Parameter")
+  names(out) <- c("Type", "Link", "Term", "Variable", "Level", "Secondary_Parameter")
   out
 }
 
@@ -123,10 +119,10 @@ parameters_type <- function(model, ...) {
 
     # Check if any is factor
     types <- unlist(lapply(var, function(x, data, reference) .parameters_type_basic(x, data, reference)[1], data = data, reference = reference))
-
+    link <- ifelse(any("factor" %in% types), "Difference", "Association")
     # Get type
     main <- .parameters_type_basic(var[1], data, reference)
-    return(c("interaction", main[2], main[3], main[4], "factor" %in% types, var[2]))
+    return(c("interaction", link, main[3], main[4], main[5], var[2]))
   } else {
     .parameters_type_basic(name, data, reference)
   }
@@ -146,21 +142,21 @@ parameters_type <- function(model, ...) {
 
   # Intercept
   if (cleaned_name == "(Intercept)" | cleaned_name == "b_Intercept") {
-    return(c("intercept", "(Intercept)", NA, NA, NA, NA))
+    return(c("intercept", "Mean", "(Intercept)", NA, NA, NA))
 
     # Numeric
   } else if (cleaned_name %in% reference$numeric) {
-    return(c("numeric", name, name, NA, FALSE, NA))
+    return(c("numeric", "Association", name, name, NA, NA))
 
     # Factors
   } else if (cleaned_name %in% reference$levels) {
     fac <- reference$levels_parent[match(cleaned_name, reference$levels)]
     return(c(
       "factor",
+      "Difference",
       name,
       fac,
       gsub(fac, "", name, fixed = TRUE),
-      TRUE,
       NA
     ))
 
@@ -177,14 +173,14 @@ parameters_type <- function(model, ...) {
     var <- vars[[1]]
     degree <- vars[[2]]
     degree <- substr(vars[[2]], nchar(vars[[2]]), nchar(vars[[2]]))
-    return(c(type, name, var, degree, FALSE, NA))
+    return(c(type, "Association", name, var, degree, NA))
 
     # Smooth
   } else if (grepl("^s\\(", name)) {
-    return(c("smooth", name, NA, NA, FALSE, NA))
+    return(c("smooth", "Association", name, NA, NA, NA))
     # Smooth
   } else if (grepl("^smooth_", name)) {
-    return(c("smooth", gsub("^smooth_(.*)\\[(.*)\\]", "\\2", name), NA, NA, FALSE, NA))
+    return(c("smooth", "Association", gsub("^smooth_(.*)\\[(.*)\\]", "\\2", name), NA, NA, NA))
   } else {
     return(c("unknown", NA, NA, NA, NA, NA))
   }
@@ -214,7 +210,7 @@ parameters_type <- function(model, ...) {
 }
 
 
-
+#' @keywords internal
 .clean_parameter_names <- function(x, full = FALSE) {
   # return if x is empty
   if (is.null(x) || length(x) == 0) {

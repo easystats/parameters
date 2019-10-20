@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,14 +41,14 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Standardize column names — standardize_names" />
+
 <meta property="og:description" content="Standardize column names from data frames, in particular objects returned from
 model_parameters(), so column names are
 consistent and the same for any model object." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -81,7 +79,7 @@ consistent and the same for any model object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -136,6 +134,7 @@ consistent and the same for any model object." />
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -157,9 +156,11 @@ consistent and the same for any model object." />
     </div>
 
     <div class="ref-description">
+    
     <p>Standardize column names from data frames, in particular objects returned from
 <code><a href='model_parameters.html'>model_parameters()</a></code>, so column names are
 consistent and the same for any model object.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>standardize_names</span>(<span class='no'>data</span>, <span class='no'>...</span>)
@@ -167,7 +168,7 @@ consistent and the same for any model object.</p>
 <span class='co'># S3 method for parameters_model</span>
 <span class='fu'>standardize_names</span>(<span class='no'>data</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"easystats"</span>,
   <span class='st'>"broom"</span>), <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -184,10 +185,11 @@ consistent and the same for any model object.</p>
       <td><p>Standardization can either be based on the naming conventions from the easystats project, or on <span class="pkg">broom</span>'s naming scheme.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame, with standardized column names.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This method is in particular useful for package developers or users
@@ -202,6 +204,7 @@ consistent and the same for any model object.</p>
   For <code>style = "broom"</code>, column names are renamed to match <span class="pkg">broom</span>'s
   naming scheme, i.e. <code>Parameter</code> is renamed to <code>term</code>, <code>Coefficient</code>
   becomes <code>estimate</code> and so on.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
@@ -235,8 +238,11 @@ consistent and the same for any model object.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -250,7 +256,7 @@ consistent and the same for any model object.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

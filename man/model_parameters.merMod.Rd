@@ -7,27 +7,20 @@
 \alias{model_parameters.merMod}
 \title{Mixed Model Parameters}
 \usage{
-\method{model_parameters}{glmmTMB}(model, ci = 0.95,
-  standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE,
+\method{model_parameters}{glmmTMB}(model, ci = 0.95, bootstrap = FALSE,
   iterations = 1000, component = c("all", "conditional", "zi",
   "zero_inflated"), ...)
 
-\method{model_parameters}{lme}(model, ci = 0.95, standardize = FALSE,
-  standardize_robust = FALSE, bootstrap = FALSE, iterations = 1000,
-  ...)
+\method{model_parameters}{lme}(model, ci = 0.95, bootstrap = FALSE,
+  iterations = 1000, ...)
 
-\method{model_parameters}{merMod}(model, ci = 0.95,
-  standardize = FALSE, standardize_robust = FALSE, bootstrap = FALSE,
+\method{model_parameters}{merMod}(model, ci = 0.95, bootstrap = FALSE,
   p_method = "wald", ci_method = "wald", iterations = 1000, ...)
 }
 \arguments{
 \item{model}{A mixed model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
-
-\item{standardize}{Add standardized parameters. Can be \code{FALSE} or a character indicating the standardization method (see \code{\link[=parameters_standardize]{parameters_standardize()}}), such as \code{"refit"}, \code{"2sd"}, \code{"smart"} or \code{"classic"}. The two former are based on model refitting using a standardized version of data. It is the most accurate, although computationally heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).}
-
-\item{standardize_robust}{Robust standardization. See \code{\link[=parameters_standardize]{parameters_standardize}}.}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}).}
 
@@ -56,7 +49,7 @@ library(lme4)
 library(glmmTMB)
 
 model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
-model_parameters(model, standardize = "refit")
+model_parameters(model)
 
 model <- glmmTMB(
   count ~ spp + mined + (1 | site),
@@ -67,7 +60,7 @@ model <- glmmTMB(
 model_parameters(model)
 \donttest{
 model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
-model_parameters(model, standardize = "smart", bootstrap = TRUE, iterations = 50)
+model_parameters(model, bootstrap = TRUE, iterations = 50)
 }
 
 }

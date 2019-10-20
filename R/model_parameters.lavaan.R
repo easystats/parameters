@@ -3,6 +3,7 @@
 #' Format CFA/SEM objects from the lavaan package (Rosseel, 2012).
 #'
 #' @param model CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions.
+#' @param standardize Return standardized parameters (standardized coefficients). See \code{lavaan::standardizedsolution}.
 #' @inheritParams model_parameters.lm
 #' @param type What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.
 #' @param ... Arguments passed to or from other methods.

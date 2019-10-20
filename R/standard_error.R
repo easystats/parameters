@@ -27,7 +27,6 @@
 #'   if \code{robust = TRUE}, arguments \code{vcov_estimation}, \code{vcov_type}
 #'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
 #' @inheritParams model_simulate
-#' @inheritParams standardize
 #'
 #' @note \code{standard_error_robust()} resp. \code{standard_error(robust = TRUE)}
 #'   rely on the \pkg{sandwich}-package and will thus only work for those models

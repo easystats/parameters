@@ -13,7 +13,7 @@
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{standardize}{Add standardized parameters. Can be \code{FALSE} or a character indicating the standardization method (see \code{\link[=parameters_standardize]{parameters_standardize()}}), such as \code{"refit"}, \code{"2sd"}, \code{"smart"} or \code{"classic"}. The two former are based on model refitting using a standardized version of data. It is the most accurate, although computationally heavy (as it must re-fit a second model). The "smart" and "classic" are post-hoc methods, fast, but inaccurate (especially if the model includes interactions).}
+\item{standardize}{Return standardized parameters (standardized coefficients). See \code{lavaan::standardizedsolution}.}
 
 \item{type}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
 

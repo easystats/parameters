@@ -9,6 +9,7 @@
 #' @examples
 #' convert_data_to_numeric(iris)
 #' @return Data.frame of numeric variables.
+#' @importFrom stats model.matrix
 #' @export
 convert_data_to_numeric <- function(x, dummy_factors = TRUE, ...) {
   UseMethod("convert_data_to_numeric")

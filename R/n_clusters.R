@@ -21,7 +21,7 @@ n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "
 
   x <- as.data.frame(x[sapply(x, is.numeric)])
   if (standardize){
-    x <- standardize(x)
+    x <- as.data.frame(scale(x))
   }
 
   out <- data.frame()

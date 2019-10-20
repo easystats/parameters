@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find most common occurence — .find_most_common • parameters</title>
+<title>Cluster Models (k-means, ...) — model_parameters.kmeans • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,9 +41,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Find most common occurence — .find_most_common" />
+<meta property="og:title" content="Cluster Models (k-means, ...) — model_parameters.kmeans" />
 
-<meta property="og:description" content="Find most common occurence" />
+<meta property="og:description" content="Format cluster models obtained for example by kmeans." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -148,25 +148,57 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find most common occurence</h1>
+    <h1>Cluster Models (k-means, ...)</h1>
     
-    <div class="hidden name"><code>dot-find_most_common.Rd</code></div>
+    <div class="hidden name"><code>model_parameters.kmeans.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Find most common occurence</p>
+    <p>Format cluster models obtained for example by <code><a href='https://rdrr.io/r/stats/kmeans.html'>kmeans</a></code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>.find_most_common</span>(<span class='no'>x</span>)</pre>
-        
+    <pre class="usage"><span class='co'># S3 method for kmeans</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>model</th>
+      <td><p>Cluster model.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    </table>
+    
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
+
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/kmeans.html'>kmeans</a></span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>centers</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># K-means Cluster Means</span><span>
+#&gt; 
+#&gt; </span><span style='color: #BBBB00;'>The 3 clusters accounted for 88.43% of the total variance of the original data.</span><span>
+#&gt; 
+#&gt; Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width
+#&gt; ---------------------------------------------------------------------------------------
+#&gt; 1       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25
+#&gt; 2       |    62 |       39.82 |         5.90 |        2.75 |         4.39 |        1.43
+#&gt; 3       |    38 |       23.88 |         6.85 |        3.07 |         5.74 |        2.07</div><div class='input'>
+
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

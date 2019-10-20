@@ -16,7 +16,7 @@
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.}
 
-\item{...}{Arguments passed to or from other methods (e.g., to \code{\link[=standardize.lm]{standardize()}}).}
+\item{...}{Arguments passed to or from other methods.}
 }
 \value{
 A data frame of indices related to the model's parameters.

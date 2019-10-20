@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -43,12 +41,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Type of Model Parameters — parameters_type" />
+
 <meta property="og:description" content="Type of Model Parameters" />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -79,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -134,6 +132,7 @@
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -155,11 +154,13 @@
     </div>
 
     <div class="ref-description">
+    
     <p>Type of Model Parameters</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>parameters_type</span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -172,193 +173,207 @@
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;           Parameter      Type              Term     Variable      Level
-#&gt; 1       (Intercept) intercept       (Intercept)         &lt;NA&gt;       &lt;NA&gt;
-#&gt; 2      Petal.Length   numeric      Petal.Length Petal.Length       &lt;NA&gt;
-#&gt; 3 Speciesversicolor    factor Speciesversicolor      Species versicolor
-#&gt; 4  Speciesvirginica    factor  Speciesvirginica      Species  virginica
-#&gt;   Secondary_Parameter Secondary_Type Secondary_Term Secondary_Variable
-#&gt; 1                &lt;NA&gt;             NA             NA                 NA
-#&gt; 2                &lt;NA&gt;             NA             NA                 NA
-#&gt; 3                &lt;NA&gt;             NA             NA                 NA
-#&gt; 4                &lt;NA&gt;             NA             NA                 NA
-#&gt;   Secondary_Level Tertiary_Parameter
-#&gt; 1              NA                 NA
-#&gt; 2              NA                 NA
-#&gt; 3              NA                 NA
-#&gt; 4              NA                 NA</div><div class='input'>
+<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;           Parameter      Type        Link              Term     Variable
+#&gt; 1       (Intercept) intercept        Mean       (Intercept)         &lt;NA&gt;
+#&gt; 2      Petal.Length   numeric Association      Petal.Length Petal.Length
+#&gt; 3 Speciesversicolor    factor  Difference Speciesversicolor      Species
+#&gt; 4  Speciesvirginica    factor  Difference  Speciesvirginica      Species
+#&gt;        Level Secondary_Parameter Secondary_Type Secondary_Link Secondary_Term
+#&gt; 1       &lt;NA&gt;                &lt;NA&gt;             NA             NA             NA
+#&gt; 2       &lt;NA&gt;                &lt;NA&gt;             NA             NA             NA
+#&gt; 3 versicolor                &lt;NA&gt;             NA             NA             NA
+#&gt; 4  virginica                &lt;NA&gt;             NA             NA             NA
+#&gt;   Secondary_Variable Secondary_Level Tertiary_Parameter
+#&gt; 1                 NA              NA                 NA
+#&gt; 2                 NA              NA                 NA
+#&gt; 3                 NA              NA                 NA
+#&gt; 4                 NA              NA                 NA</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='no'>Sepal.Width</span>, <span class='fl'>2</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;               Parameter      Type                  Term    Variable      Level
-#&gt; 1           (Intercept) intercept           (Intercept)        &lt;NA&gt;       &lt;NA&gt;
-#&gt; 2     Speciesversicolor    factor     Speciesversicolor     Species versicolor
-#&gt; 3      Speciesvirginica    factor      Speciesvirginica     Species  virginica
-#&gt; 4 poly(Sepal.Width, 2)1      poly poly(Sepal.Width, 2)1 Sepal.Width          1
-#&gt; 5 poly(Sepal.Width, 2)2      poly poly(Sepal.Width, 2)2 Sepal.Width          2
-#&gt;   Secondary_Parameter Secondary_Type Secondary_Term Secondary_Variable
-#&gt; 1                &lt;NA&gt;             NA             NA                 NA
-#&gt; 2                &lt;NA&gt;             NA             NA                 NA
-#&gt; 3                &lt;NA&gt;             NA             NA                 NA
-#&gt; 4                &lt;NA&gt;             NA             NA                 NA
-#&gt; 5                &lt;NA&gt;             NA             NA                 NA
-#&gt;   Secondary_Level Tertiary_Parameter
-#&gt; 1              NA                 NA
-#&gt; 2              NA                 NA
-#&gt; 3              NA                 NA
-#&gt; 4              NA                 NA
-#&gt; 5              NA                 NA</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='no'>Sepal.Width</span>, <span class='fl'>2</span>, <span class='kw'>raw</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                           Parameter      Type                  Term    Variable
-#&gt; 1                       (Intercept) intercept           (Intercept)        &lt;NA&gt;
-#&gt; 2                 Speciesversicolor    factor     Speciesversicolor     Species
-#&gt; 3                  Speciesvirginica    factor      Speciesvirginica     Species
-#&gt; 4 poly(Sepal.Width, 2, raw = TRUE)1  poly_raw poly(Sepal.Width, 2)1 Sepal.Width
-#&gt; 5 poly(Sepal.Width, 2, raw = TRUE)2  poly_raw poly(Sepal.Width, 2)2 Sepal.Width
-#&gt;        Level Secondary_Parameter Secondary_Type Secondary_Term
-#&gt; 1       &lt;NA&gt;                &lt;NA&gt;             NA             NA
-#&gt; 2 versicolor                &lt;NA&gt;             NA             NA
-#&gt; 3  virginica                &lt;NA&gt;             NA             NA
-#&gt; 4          1                &lt;NA&gt;             NA             NA
-#&gt; 5          2                &lt;NA&gt;             NA             NA
+<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;               Parameter      Type        Link                  Term    Variable
+#&gt; 1           (Intercept) intercept        Mean           (Intercept)        &lt;NA&gt;
+#&gt; 2     Speciesversicolor    factor  Difference     Speciesversicolor     Species
+#&gt; 3      Speciesvirginica    factor  Difference      Speciesvirginica     Species
+#&gt; 4 poly(Sepal.Width, 2)1      poly Association poly(Sepal.Width, 2)1 Sepal.Width
+#&gt; 5 poly(Sepal.Width, 2)2      poly Association poly(Sepal.Width, 2)2 Sepal.Width
+#&gt;        Level Secondary_Parameter Secondary_Type Secondary_Link Secondary_Term
+#&gt; 1       &lt;NA&gt;                &lt;NA&gt;             NA             NA             NA
+#&gt; 2 versicolor                &lt;NA&gt;             NA             NA             NA
+#&gt; 3  virginica                &lt;NA&gt;             NA             NA             NA
+#&gt; 4          1                &lt;NA&gt;             NA             NA             NA
+#&gt; 5          2                &lt;NA&gt;             NA             NA             NA
 #&gt;   Secondary_Variable Secondary_Level Tertiary_Parameter
 #&gt; 1                 NA              NA                 NA
 #&gt; 2                 NA              NA                 NA
 #&gt; 3                 NA              NA                 NA
 #&gt; 4                 NA              NA                 NA
 #&gt; 5                 NA              NA                 NA</div><div class='input'>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='no'>Sepal.Width</span>, <span class='fl'>2</span>, <span class='kw'>raw</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                           Parameter      Type        Link                  Term
+#&gt; 1                       (Intercept) intercept        Mean           (Intercept)
+#&gt; 2                 Speciesversicolor    factor  Difference     Speciesversicolor
+#&gt; 3                  Speciesvirginica    factor  Difference      Speciesvirginica
+#&gt; 4 poly(Sepal.Width, 2, raw = TRUE)1  poly_raw Association poly(Sepal.Width, 2)1
+#&gt; 5 poly(Sepal.Width, 2, raw = TRUE)2  poly_raw Association poly(Sepal.Width, 2)2
+#&gt;      Variable      Level Secondary_Parameter Secondary_Type Secondary_Link
+#&gt; 1        &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;             NA             NA
+#&gt; 2     Species versicolor                &lt;NA&gt;             NA             NA
+#&gt; 3     Species  virginica                &lt;NA&gt;             NA             NA
+#&gt; 4 Sepal.Width          1                &lt;NA&gt;             NA             NA
+#&gt; 5 Sepal.Width          2                &lt;NA&gt;             NA             NA
+#&gt;   Secondary_Term Secondary_Variable Secondary_Level Tertiary_Parameter
+#&gt; 1             NA                 NA              NA                 NA
+#&gt; 2             NA                 NA              NA                 NA
+#&gt; 3             NA                 NA              NA                 NA
+#&gt; 4             NA                 NA              NA                 NA
+#&gt; 5             NA                 NA              NA                 NA</div><div class='input'>
 <span class='co'># Interactions</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Width</span> * <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter        Type              Term    Variable
-#&gt; 1                   (Intercept)   intercept       (Intercept)        &lt;NA&gt;
-#&gt; 2                   Sepal.Width     numeric       Sepal.Width Sepal.Width
-#&gt; 3             Speciesversicolor      factor Speciesversicolor     Species
-#&gt; 4              Speciesvirginica      factor  Speciesvirginica     Species
-#&gt; 5 Sepal.Width:Speciesversicolor interaction Speciesversicolor     Species
-#&gt; 6  Sepal.Width:Speciesvirginica interaction  Speciesvirginica     Species
-#&gt;        Level Secondary_Parameter Secondary_Type Secondary_Term
-#&gt; 1       &lt;NA&gt;                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
-#&gt; 2       &lt;NA&gt;                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
-#&gt; 3 versicolor                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
-#&gt; 4  virginica                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
-#&gt; 5 versicolor         Sepal.Width        numeric    Sepal.Width
-#&gt; 6  virginica         Sepal.Width        numeric    Sepal.Width
-#&gt;   Secondary_Variable Secondary_Level Tertiary_Parameter
-#&gt; 1               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 2               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 3               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 4               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 5        Sepal.Width            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 6        Sepal.Width            &lt;NA&gt;               &lt;NA&gt;</div><div class='input'>
+<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter        Type        Link              Term
+#&gt; 1                   (Intercept)   intercept        Mean       (Intercept)
+#&gt; 2                   Sepal.Width     numeric Association       Sepal.Width
+#&gt; 3             Speciesversicolor      factor  Difference Speciesversicolor
+#&gt; 4              Speciesvirginica      factor  Difference  Speciesvirginica
+#&gt; 5 Sepal.Width:Speciesversicolor interaction  Difference Speciesversicolor
+#&gt; 6  Sepal.Width:Speciesvirginica interaction  Difference  Speciesvirginica
+#&gt;      Variable      Level Secondary_Parameter Secondary_Type Secondary_Link
+#&gt; 1        &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 2 Sepal.Width       &lt;NA&gt;                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 3     Species versicolor                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 4     Species  virginica                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 5     Species versicolor         Sepal.Width        numeric    Association
+#&gt; 6     Species  virginica         Sepal.Width        numeric    Association
+#&gt;   Secondary_Term Secondary_Variable Secondary_Level Tertiary_Parameter
+#&gt; 1           &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 2           &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 3           &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 4           &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 5    Sepal.Width        Sepal.Width            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 6    Sepal.Width        Sepal.Width            &lt;NA&gt;               &lt;NA&gt;</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Width</span> * <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                                     Parameter        Type              Term
-#&gt; 1                                 (Intercept)   intercept       (Intercept)
-#&gt; 2                                 Sepal.Width     numeric       Sepal.Width
-#&gt; 3                           Speciesversicolor      factor Speciesversicolor
-#&gt; 4                            Speciesvirginica      factor  Speciesvirginica
-#&gt; 5                                Petal.Length     numeric      Petal.Length
-#&gt; 6               Sepal.Width:Speciesversicolor interaction Speciesversicolor
-#&gt; 7                Sepal.Width:Speciesvirginica interaction  Speciesvirginica
-#&gt; 8                    Sepal.Width:Petal.Length interaction      Petal.Length
-#&gt; 9              Speciesversicolor:Petal.Length interaction      Petal.Length
-#&gt; 10              Speciesvirginica:Petal.Length interaction      Petal.Length
-#&gt; 11 Sepal.Width:Speciesversicolor:Petal.Length interaction      Petal.Length
-#&gt; 12  Sepal.Width:Speciesvirginica:Petal.Length interaction      Petal.Length
-#&gt;        Variable      Level           Secondary_Parameter Secondary_Type
-#&gt; 1          &lt;NA&gt;       &lt;NA&gt;                          &lt;NA&gt;           &lt;NA&gt;
-#&gt; 2   Sepal.Width       &lt;NA&gt;                          &lt;NA&gt;           &lt;NA&gt;
-#&gt; 3       Species versicolor                          &lt;NA&gt;           &lt;NA&gt;
-#&gt; 4       Species  virginica                          &lt;NA&gt;           &lt;NA&gt;
-#&gt; 5  Petal.Length       &lt;NA&gt;                          &lt;NA&gt;           &lt;NA&gt;
-#&gt; 6       Species versicolor                   Sepal.Width        numeric
-#&gt; 7       Species  virginica                   Sepal.Width        numeric
-#&gt; 8  Petal.Length       &lt;NA&gt;                   Sepal.Width        numeric
-#&gt; 9  Petal.Length       &lt;NA&gt;             Speciesversicolor         factor
-#&gt; 10 Petal.Length       &lt;NA&gt;              Speciesvirginica         factor
-#&gt; 11 Petal.Length       &lt;NA&gt; Sepal.Width:Speciesversicolor    interaction
-#&gt; 12 Petal.Length       &lt;NA&gt;  Sepal.Width:Speciesvirginica    interaction
-#&gt;       Secondary_Term Secondary_Variable Secondary_Level Tertiary_Parameter
-#&gt; 1               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 2               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 3               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 4               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 5               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 6        Sepal.Width        Sepal.Width            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 7        Sepal.Width        Sepal.Width            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 8        Sepal.Width        Sepal.Width            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 9  Speciesversicolor            Species      versicolor               &lt;NA&gt;
-#&gt; 10  Speciesvirginica            Species       virginica               &lt;NA&gt;
-#&gt; 11 Speciesversicolor            Species      versicolor        Sepal.Width
-#&gt; 12  Speciesvirginica            Species       virginica        Sepal.Width</div><div class='input'>
+<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                                     Parameter        Type        Link
+#&gt; 1                                 (Intercept)   intercept        Mean
+#&gt; 2                                 Sepal.Width     numeric Association
+#&gt; 3                           Speciesversicolor      factor  Difference
+#&gt; 4                            Speciesvirginica      factor  Difference
+#&gt; 5                                Petal.Length     numeric Association
+#&gt; 6               Sepal.Width:Speciesversicolor interaction  Difference
+#&gt; 7                Sepal.Width:Speciesvirginica interaction  Difference
+#&gt; 8                    Sepal.Width:Petal.Length interaction Association
+#&gt; 9              Speciesversicolor:Petal.Length interaction  Difference
+#&gt; 10              Speciesvirginica:Petal.Length interaction  Difference
+#&gt; 11 Sepal.Width:Speciesversicolor:Petal.Length interaction Association
+#&gt; 12  Sepal.Width:Speciesvirginica:Petal.Length interaction Association
+#&gt;                 Term     Variable      Level           Secondary_Parameter
+#&gt; 1        (Intercept)         &lt;NA&gt;       &lt;NA&gt;                          &lt;NA&gt;
+#&gt; 2        Sepal.Width  Sepal.Width       &lt;NA&gt;                          &lt;NA&gt;
+#&gt; 3  Speciesversicolor      Species versicolor                          &lt;NA&gt;
+#&gt; 4   Speciesvirginica      Species  virginica                          &lt;NA&gt;
+#&gt; 5       Petal.Length Petal.Length       &lt;NA&gt;                          &lt;NA&gt;
+#&gt; 6  Speciesversicolor      Species versicolor                   Sepal.Width
+#&gt; 7   Speciesvirginica      Species  virginica                   Sepal.Width
+#&gt; 8       Petal.Length Petal.Length       &lt;NA&gt;                   Sepal.Width
+#&gt; 9       Petal.Length Petal.Length       &lt;NA&gt;             Speciesversicolor
+#&gt; 10      Petal.Length Petal.Length       &lt;NA&gt;              Speciesvirginica
+#&gt; 11      Petal.Length Petal.Length       &lt;NA&gt; Sepal.Width:Speciesversicolor
+#&gt; 12      Petal.Length Petal.Length       &lt;NA&gt;  Sepal.Width:Speciesvirginica
+#&gt;    Secondary_Type Secondary_Link    Secondary_Term Secondary_Variable
+#&gt; 1            &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
+#&gt; 2            &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
+#&gt; 3            &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
+#&gt; 4            &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
+#&gt; 5            &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
+#&gt; 6         numeric    Association       Sepal.Width        Sepal.Width
+#&gt; 7         numeric    Association       Sepal.Width        Sepal.Width
+#&gt; 8         numeric    Association       Sepal.Width        Sepal.Width
+#&gt; 9          factor     Difference Speciesversicolor            Species
+#&gt; 10         factor     Difference  Speciesvirginica            Species
+#&gt; 11    interaction     Difference Speciesversicolor            Species
+#&gt; 12    interaction     Difference  Speciesvirginica            Species
+#&gt;    Secondary_Level Tertiary_Parameter
+#&gt; 1             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 2             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 3             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 4             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 5             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 6             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 7             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 8             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 9       versicolor               &lt;NA&gt;
+#&gt; 10       virginica               &lt;NA&gt;
+#&gt; 11      versicolor        Sepal.Width
+#&gt; 12       virginica        Sepal.Width</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Sepal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter        Type              Term    Variable
-#&gt; 1                   (Intercept)   intercept       (Intercept)        &lt;NA&gt;
-#&gt; 2             Speciesversicolor      factor Speciesversicolor     Species
-#&gt; 3              Speciesvirginica      factor  Speciesvirginica     Species
-#&gt; 4                   Sepal.Width     numeric       Sepal.Width Sepal.Width
-#&gt; 5 Speciesversicolor:Sepal.Width interaction       Sepal.Width Sepal.Width
-#&gt; 6  Speciesvirginica:Sepal.Width interaction       Sepal.Width Sepal.Width
-#&gt;        Level Secondary_Parameter Secondary_Type    Secondary_Term
-#&gt; 1       &lt;NA&gt;                &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;
-#&gt; 2 versicolor                &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;
-#&gt; 3  virginica                &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;
-#&gt; 4       &lt;NA&gt;                &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;
-#&gt; 5       &lt;NA&gt;   Speciesversicolor         factor Speciesversicolor
-#&gt; 6       &lt;NA&gt;    Speciesvirginica         factor  Speciesvirginica
-#&gt;   Secondary_Variable Secondary_Level Tertiary_Parameter
-#&gt; 1               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 2               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 3               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 4               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 5            Species      versicolor               &lt;NA&gt;
-#&gt; 6            Species       virginica               &lt;NA&gt;</div><div class='input'>
+<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter        Type        Link              Term
+#&gt; 1                   (Intercept)   intercept        Mean       (Intercept)
+#&gt; 2             Speciesversicolor      factor  Difference Speciesversicolor
+#&gt; 3              Speciesvirginica      factor  Difference  Speciesvirginica
+#&gt; 4                   Sepal.Width     numeric Association       Sepal.Width
+#&gt; 5 Speciesversicolor:Sepal.Width interaction  Difference       Sepal.Width
+#&gt; 6  Speciesvirginica:Sepal.Width interaction  Difference       Sepal.Width
+#&gt;      Variable      Level Secondary_Parameter Secondary_Type Secondary_Link
+#&gt; 1        &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 2     Species versicolor                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 3     Species  virginica                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 4 Sepal.Width       &lt;NA&gt;                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 5 Sepal.Width       &lt;NA&gt;   Speciesversicolor         factor     Difference
+#&gt; 6 Sepal.Width       &lt;NA&gt;    Speciesvirginica         factor     Difference
+#&gt;      Secondary_Term Secondary_Variable Secondary_Level Tertiary_Parameter
+#&gt; 1              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 2              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 3              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 4              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 5 Speciesversicolor            Species      versicolor               &lt;NA&gt;
+#&gt; 6  Speciesvirginica            Species       virginica               &lt;NA&gt;</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> / <span class='no'>Sepal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter      Type              Term    Variable
-#&gt; 1                   (Intercept) intercept       (Intercept)        &lt;NA&gt;
-#&gt; 2             Speciesversicolor    factor Speciesversicolor     Species
-#&gt; 3              Speciesvirginica    factor  Speciesvirginica     Species
-#&gt; 4     Speciessetosa:Sepal.Width    nested       Sepal.Width Sepal.Width
-#&gt; 5 Speciesversicolor:Sepal.Width    nested       Sepal.Width Sepal.Width
-#&gt; 6  Speciesvirginica:Sepal.Width    nested       Sepal.Width Sepal.Width
-#&gt;        Level Secondary_Parameter Secondary_Type    Secondary_Term
-#&gt; 1       &lt;NA&gt;                &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;
-#&gt; 2 versicolor                &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;
-#&gt; 3  virginica                &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;
-#&gt; 4       &lt;NA&gt;       Speciessetosa         factor     Speciessetosa
-#&gt; 5       &lt;NA&gt;   Speciesversicolor         factor Speciesversicolor
-#&gt; 6       &lt;NA&gt;    Speciesvirginica         factor  Speciesvirginica
-#&gt;   Secondary_Variable Secondary_Level Tertiary_Parameter
-#&gt; 1               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 2               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 3               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 4            Species          setosa               &lt;NA&gt;
-#&gt; 5            Species      versicolor               &lt;NA&gt;
-#&gt; 6            Species       virginica               &lt;NA&gt;</div><div class='input'>
+<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter      Type       Link              Term
+#&gt; 1                   (Intercept) intercept       Mean       (Intercept)
+#&gt; 2             Speciesversicolor    factor Difference Speciesversicolor
+#&gt; 3              Speciesvirginica    factor Difference  Speciesvirginica
+#&gt; 4     Speciessetosa:Sepal.Width    nested Difference       Sepal.Width
+#&gt; 5 Speciesversicolor:Sepal.Width    nested Difference       Sepal.Width
+#&gt; 6  Speciesvirginica:Sepal.Width    nested Difference       Sepal.Width
+#&gt;      Variable      Level Secondary_Parameter Secondary_Type Secondary_Link
+#&gt; 1        &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 2     Species versicolor                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 3     Species  virginica                &lt;NA&gt;           &lt;NA&gt;           &lt;NA&gt;
+#&gt; 4 Sepal.Width       &lt;NA&gt;       Speciessetosa         factor     Difference
+#&gt; 5 Sepal.Width       &lt;NA&gt;   Speciesversicolor         factor     Difference
+#&gt; 6 Sepal.Width       &lt;NA&gt;    Speciesvirginica         factor     Difference
+#&gt;      Secondary_Term Secondary_Variable Secondary_Level Tertiary_Parameter
+#&gt; 1              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 2              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 3              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
+#&gt; 4     Speciessetosa            Species          setosa               &lt;NA&gt;
+#&gt; 5 Speciesversicolor            Species      versicolor               &lt;NA&gt;
+#&gt; 6  Speciesvirginica            Species       virginica               &lt;NA&gt;</div><div class='input'>
 
 <span class='co'># Complex interactions</span>
 <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>
 <span class='no'>data</span>$<span class='no'>fac2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>data</span>$<span class='no'>Sepal.Width</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>data</span>$<span class='no'>Sepal.Width</span>), <span class='st'>"A"</span>, <span class='st'>"B"</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> / <span class='no'>fac2</span> / <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>)
-<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                               Parameter      Type              Term
-#&gt; 1                           (Intercept) intercept       (Intercept)
-#&gt; 2                     Speciesversicolor    factor Speciesversicolor
-#&gt; 3                      Speciesvirginica    factor  Speciesvirginica
-#&gt; 4                   Speciessetosa:fac2B    nested             fac2B
-#&gt; 5               Speciesversicolor:fac2B    nested             fac2B
-#&gt; 6                Speciesvirginica:fac2B    nested             fac2B
-#&gt; 7      Speciessetosa:fac2A:Petal.Length    nested      Petal.Length
-#&gt; 8  Speciesversicolor:fac2A:Petal.Length    nested      Petal.Length
-#&gt; 9   Speciesvirginica:fac2A:Petal.Length    nested      Petal.Length
-#&gt; 10     Speciessetosa:fac2B:Petal.Length    nested      Petal.Length
-#&gt; 11 Speciesversicolor:fac2B:Petal.Length    nested      Petal.Length
-#&gt; 12  Speciesvirginica:fac2B:Petal.Length    nested      Petal.Length
+<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                               Parameter      Type        Link              Term
+#&gt; 1                           (Intercept) intercept        Mean       (Intercept)
+#&gt; 2                     Speciesversicolor    factor  Difference Speciesversicolor
+#&gt; 3                      Speciesvirginica    factor  Difference  Speciesvirginica
+#&gt; 4                   Speciessetosa:fac2B    nested  Difference             fac2B
+#&gt; 5               Speciesversicolor:fac2B    nested  Difference             fac2B
+#&gt; 6                Speciesvirginica:fac2B    nested  Difference             fac2B
+#&gt; 7      Speciessetosa:fac2A:Petal.Length    nested Association      Petal.Length
+#&gt; 8  Speciesversicolor:fac2A:Petal.Length    nested Association      Petal.Length
+#&gt; 9   Speciesvirginica:fac2A:Petal.Length    nested Association      Petal.Length
+#&gt; 10     Speciessetosa:fac2B:Petal.Length    nested Association      Petal.Length
+#&gt; 11 Speciesversicolor:fac2B:Petal.Length    nested Association      Petal.Length
+#&gt; 12  Speciesvirginica:fac2B:Petal.Length    nested Association      Petal.Length
 #&gt;        Variable      Level     Secondary_Parameter Secondary_Type
 #&gt; 1          &lt;NA&gt;       &lt;NA&gt;                    &lt;NA&gt;           &lt;NA&gt;
 #&gt; 2       Species versicolor                    &lt;NA&gt;           &lt;NA&gt;
@@ -372,65 +387,93 @@
 #&gt; 10 Petal.Length       &lt;NA&gt;     Speciessetosa:fac2B         nested
 #&gt; 11 Petal.Length       &lt;NA&gt; Speciesversicolor:fac2B         nested
 #&gt; 12 Petal.Length       &lt;NA&gt;  Speciesvirginica:fac2B         nested
-#&gt;       Secondary_Term Secondary_Variable Secondary_Level Tertiary_Parameter
-#&gt; 1               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 2               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 3               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 4      Speciessetosa            Species          setosa               &lt;NA&gt;
-#&gt; 5  Speciesversicolor            Species      versicolor               &lt;NA&gt;
-#&gt; 6   Speciesvirginica            Species       virginica               &lt;NA&gt;
-#&gt; 7              fac2A               fac2               A      Speciessetosa
-#&gt; 8              fac2A               fac2               A  Speciesversicolor
-#&gt; 9              fac2A               fac2               A   Speciesvirginica
-#&gt; 10             fac2B               fac2               B      Speciessetosa
-#&gt; 11             fac2B               fac2               B  Speciesversicolor
-#&gt; 12             fac2B               fac2               B   Speciesvirginica</div><div class='input'>
+#&gt;    Secondary_Link    Secondary_Term Secondary_Variable Secondary_Level
+#&gt; 1            &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;
+#&gt; 2            &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;
+#&gt; 3            &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;
+#&gt; 4      Difference     Speciessetosa            Species          setosa
+#&gt; 5      Difference Speciesversicolor            Species      versicolor
+#&gt; 6      Difference  Speciesvirginica            Species       virginica
+#&gt; 7      Difference             fac2A               fac2               A
+#&gt; 8      Difference             fac2A               fac2               A
+#&gt; 9      Difference             fac2A               fac2               A
+#&gt; 10     Difference             fac2B               fac2               B
+#&gt; 11     Difference             fac2B               fac2               B
+#&gt; 12     Difference             fac2B               fac2               B
+#&gt;    Tertiary_Parameter
+#&gt; 1                &lt;NA&gt;
+#&gt; 2                &lt;NA&gt;
+#&gt; 3                &lt;NA&gt;
+#&gt; 4                &lt;NA&gt;
+#&gt; 5                &lt;NA&gt;
+#&gt; 6                &lt;NA&gt;
+#&gt; 7       Speciessetosa
+#&gt; 8   Speciesversicolor
+#&gt; 9    Speciesvirginica
+#&gt; 10      Speciessetosa
+#&gt; 11  Speciesversicolor
+#&gt; 12   Speciesvirginica</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> / <span class='no'>fac2</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>)
-<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                               Parameter        Type              Term
-#&gt; 1                           (Intercept)   intercept       (Intercept)
-#&gt; 2                     Speciesversicolor      factor Speciesversicolor
-#&gt; 3                      Speciesvirginica      factor  Speciesvirginica
-#&gt; 4                          Petal.Length     numeric      Petal.Length
-#&gt; 5                   Speciessetosa:fac2B      nested             fac2B
-#&gt; 6               Speciesversicolor:fac2B      nested             fac2B
-#&gt; 7                Speciesvirginica:fac2B      nested             fac2B
-#&gt; 8        Speciesversicolor:Petal.Length interaction      Petal.Length
-#&gt; 9         Speciesvirginica:Petal.Length interaction      Petal.Length
-#&gt; 10     Speciessetosa:fac2B:Petal.Length interaction      Petal.Length
-#&gt; 11 Speciesversicolor:fac2B:Petal.Length interaction      Petal.Length
-#&gt; 12  Speciesvirginica:fac2B:Petal.Length interaction      Petal.Length
-#&gt;        Variable      Level     Secondary_Parameter Secondary_Type
-#&gt; 1          &lt;NA&gt;       &lt;NA&gt;                    &lt;NA&gt;           &lt;NA&gt;
-#&gt; 2       Species versicolor                    &lt;NA&gt;           &lt;NA&gt;
-#&gt; 3       Species  virginica                    &lt;NA&gt;           &lt;NA&gt;
-#&gt; 4  Petal.Length       &lt;NA&gt;                    &lt;NA&gt;           &lt;NA&gt;
-#&gt; 5          fac2          B           Speciessetosa         factor
-#&gt; 6          fac2          B       Speciesversicolor         factor
-#&gt; 7          fac2          B        Speciesvirginica         factor
-#&gt; 8  Petal.Length       &lt;NA&gt;       Speciesversicolor         factor
-#&gt; 9  Petal.Length       &lt;NA&gt;        Speciesvirginica         factor
-#&gt; 10 Petal.Length       &lt;NA&gt;     Speciessetosa:fac2B         nested
-#&gt; 11 Petal.Length       &lt;NA&gt; Speciesversicolor:fac2B         nested
-#&gt; 12 Petal.Length       &lt;NA&gt;  Speciesvirginica:fac2B         nested
-#&gt;       Secondary_Term Secondary_Variable Secondary_Level Tertiary_Parameter
-#&gt; 1               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 2               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 3               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 4               &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;
-#&gt; 5      Speciessetosa            Species          setosa               &lt;NA&gt;
-#&gt; 6  Speciesversicolor            Species      versicolor               &lt;NA&gt;
-#&gt; 7   Speciesvirginica            Species       virginica               &lt;NA&gt;
-#&gt; 8  Speciesversicolor            Species      versicolor               &lt;NA&gt;
-#&gt; 9   Speciesvirginica            Species       virginica               &lt;NA&gt;
-#&gt; 10             fac2B               fac2               B      Speciessetosa
-#&gt; 11             fac2B               fac2               B  Speciesversicolor
-#&gt; 12             fac2B               fac2               B   Speciesvirginica</div></pre>
+<span class='fu'>parameters_type</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                               Parameter        Type        Link
+#&gt; 1                           (Intercept)   intercept        Mean
+#&gt; 2                     Speciesversicolor      factor  Difference
+#&gt; 3                      Speciesvirginica      factor  Difference
+#&gt; 4                          Petal.Length     numeric Association
+#&gt; 5                   Speciessetosa:fac2B      nested  Difference
+#&gt; 6               Speciesversicolor:fac2B      nested  Difference
+#&gt; 7                Speciesvirginica:fac2B      nested  Difference
+#&gt; 8        Speciesversicolor:Petal.Length interaction  Difference
+#&gt; 9         Speciesvirginica:Petal.Length interaction  Difference
+#&gt; 10     Speciessetosa:fac2B:Petal.Length interaction Association
+#&gt; 11 Speciesversicolor:fac2B:Petal.Length interaction Association
+#&gt; 12  Speciesvirginica:fac2B:Petal.Length interaction Association
+#&gt;                 Term     Variable      Level     Secondary_Parameter
+#&gt; 1        (Intercept)         &lt;NA&gt;       &lt;NA&gt;                    &lt;NA&gt;
+#&gt; 2  Speciesversicolor      Species versicolor                    &lt;NA&gt;
+#&gt; 3   Speciesvirginica      Species  virginica                    &lt;NA&gt;
+#&gt; 4       Petal.Length Petal.Length       &lt;NA&gt;                    &lt;NA&gt;
+#&gt; 5              fac2B         fac2          B           Speciessetosa
+#&gt; 6              fac2B         fac2          B       Speciesversicolor
+#&gt; 7              fac2B         fac2          B        Speciesvirginica
+#&gt; 8       Petal.Length Petal.Length       &lt;NA&gt;       Speciesversicolor
+#&gt; 9       Petal.Length Petal.Length       &lt;NA&gt;        Speciesvirginica
+#&gt; 10      Petal.Length Petal.Length       &lt;NA&gt;     Speciessetosa:fac2B
+#&gt; 11      Petal.Length Petal.Length       &lt;NA&gt; Speciesversicolor:fac2B
+#&gt; 12      Petal.Length Petal.Length       &lt;NA&gt;  Speciesvirginica:fac2B
+#&gt;    Secondary_Type Secondary_Link    Secondary_Term Secondary_Variable
+#&gt; 1            &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
+#&gt; 2            &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
+#&gt; 3            &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
+#&gt; 4            &lt;NA&gt;           &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
+#&gt; 5          factor     Difference     Speciessetosa            Species
+#&gt; 6          factor     Difference Speciesversicolor            Species
+#&gt; 7          factor     Difference  Speciesvirginica            Species
+#&gt; 8          factor     Difference Speciesversicolor            Species
+#&gt; 9          factor     Difference  Speciesvirginica            Species
+#&gt; 10         nested     Difference             fac2B               fac2
+#&gt; 11         nested     Difference             fac2B               fac2
+#&gt; 12         nested     Difference             fac2B               fac2
+#&gt;    Secondary_Level Tertiary_Parameter
+#&gt; 1             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 2             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 3             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 4             &lt;NA&gt;               &lt;NA&gt;
+#&gt; 5           setosa               &lt;NA&gt;
+#&gt; 6       versicolor               &lt;NA&gt;
+#&gt; 7        virginica               &lt;NA&gt;
+#&gt; 8       versicolor               &lt;NA&gt;
+#&gt; 9        virginica               &lt;NA&gt;
+#&gt; 10               B      Speciessetosa
+#&gt; 11               B  Speciesversicolor
+#&gt; 12               B   Speciesvirginica</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -444,7 +487,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

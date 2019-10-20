@@ -13,33 +13,33 @@ testthat::test_that("model_parameters.stanreg", {
   testthat::expect_equal(ncol(p_value(insight::download_model("stanreg_lm_1"))), 2)
 
   # GLM
-  params <- model_parameters(insight::download_model("stanreg_lm_1"), standardize = "smart", centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 21))
+  params <- model_parameters(insight::download_model("stanreg_lm_1"), centrality = "all", test = "all", dispersion = TRUE)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
 
-  params <- model_parameters(insight::download_model("stanreg_lm_2"), standardize = "smart", centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 21))
+  params <- model_parameters(insight::download_model("stanreg_lm_2"), centrality = "all", test = "all", dispersion = TRUE)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 18))
 
-  params <- model_parameters(insight::download_model("stanreg_lm_3"), standardize = "smart", centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 21))
+  params <- model_parameters(insight::download_model("stanreg_lm_3"), centrality = "all", test = "all", dispersion = TRUE)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 18))
 
-  params <- model_parameters(insight::download_model("stanreg_glm_1"), standardize = "refit", centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 21))
+  params <- model_parameters(insight::download_model("stanreg_glm_1"), centrality = "all", test = "all", dispersion = TRUE)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
 
-  params <- model_parameters(insight::download_model("stanreg_glm_2"), standardize = "refit", centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 21))
+  params <- model_parameters(insight::download_model("stanreg_glm_2"), centrality = "all", test = "all", dispersion = TRUE)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 18))
 
   # Mixed
-  params <- model_parameters(insight::download_model("stanreg_lmerMod_1"), standardize = "smart", centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 21))
+  params <- model_parameters(insight::download_model("stanreg_lmerMod_1"), centrality = "all", test = "all", dispersion = TRUE)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
 
-  params <- model_parameters(insight::download_model("stanreg_merMod_1"), standardize = "refit", centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 21))
+  params <- model_parameters(insight::download_model("stanreg_merMod_1"), centrality = "all", test = "all", dispersion = TRUE)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
 
-  params <- model_parameters(insight::download_model("stanreg_merMod_2"), standardize = "refit", centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 21))
+  params <- model_parameters(insight::download_model("stanreg_merMod_2"), centrality = "all", test = "all", dispersion = TRUE)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 18))
 
   # GAM
-  params <- model_parameters(insight::download_model("stanreg_gam_1"), standardize = "refit", centrality = "all", test = "all", dispersion = TRUE)
+  params <- model_parameters(insight::download_model("stanreg_gam_1"), centrality = "all", test = "all", dispersion = TRUE)
   # testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 22)) # skip on travis and CRAN for now until new insight
 })
 
