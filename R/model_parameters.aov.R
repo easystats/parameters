@@ -3,9 +3,9 @@
 #' Parameters of ANOVAs.
 #'
 #' @param model Object of class \link{aov}, \link{anova} or \code{aovlist}.
-#' @param omega_squared Compute \link[parameters:eta_squared]{omega squared} as index of effect size. Can be "partial" (adjusted for effect size) or "raw".
-#' @param eta_squared Compute \link[parameters:eta_squared]{eta squared} as index of effect size. Can be "partial" (adjusted for effect size) or "raw".
-#' @param epsilon_squared Compute \link[parameters:eta_squared]{epsilon squared} as index of effect size.
+#' @param omega_squared Compute omega squared as index of effect size. Can be "partial" (adjusted for effect size) or "raw".
+#' @param eta_squared Compute eta squared as index of effect size. Can be "partial" (adjusted for effect size) or "raw".
+#' @param epsilon_squared Compute epsilon squared as index of effect size.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -30,6 +30,11 @@
 #' @return A data.frame of indices related to the model's parameters.
 #' @export
 model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, ...) {
+
+  if (!requireNamespace("effectsize", quietly = TRUE)) {
+    stop("Package 'effectsize' required for this function to work. Please install it.")
+  }
+
   parameters <- .extract_parameters_anova(model)
 
   # Sanity checks
@@ -50,24 +55,24 @@ model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL
   # Omega squared
   if (!is.null(omega_squared)) {
     if (omega_squared == "partial") {
-      parameters$Omega_Sq_partial <- omega_squared(model, partial = TRUE)$Omega_Sq_partial
+      parameters$Omega_Sq_partial <- effectsize::omega_squared(model, partial = TRUE)$Omega_Sq_partial
     } else {
-      parameters$Omega_Sq <- omega_squared(model, partial = FALSE)$Omega_Sq
+      parameters$Omega_Sq <- effectsize::omega_squared(model, partial = FALSE)$Omega_Sq
     }
   }
 
   # Eta squared
   if (!is.null(eta_squared)) {
     if (eta_squared == "partial") {
-      parameters$Eta_Sq_partial <- eta_squared(model, partial = TRUE)$Eta_Sq_partial
+      parameters$Eta_Sq_partial <- effectsize::eta_squared(model, partial = TRUE)$Eta_Sq_partial
     } else {
-      parameters$Eta_Sq <- eta_squared(model, partial = FALSE)$Eta_Sq
+      parameters$Eta_Sq <- effectsize::eta_squared(model, partial = FALSE)$Eta_Sq
     }
   }
 
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
-    parameters$Epsilon_sq <- epsilon_squared(model)$Epsilon_sq
+    parameters$Epsilon_sq <- effectsize::epsilon_squared(model)$Epsilon_sq
   }
 
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))

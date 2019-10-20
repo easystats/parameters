@@ -5,16 +5,14 @@
 \alias{dof}
 \title{Degrees of Freedom (DoF)}
 \usage{
-degrees_of_freedom(model, method = "analytical", data = NULL)
+degrees_of_freedom(model, method = "analytical")
 
-dof(model, method = "analytical", data = NULL)
+dof(model, method = "analytical")
 }
 \arguments{
 \item{model}{A statistical model.}
 
-\item{method}{Can be 'analytical' (default, DoFs are estimated based on the model type) or 'fit'. In which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs).}
-
-\item{data}{Data used by the model. If \code{NULL}, will try to extract it from the model.}
+\item{method}{Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.}
 }
 \description{
 Estimate or extract degrees of freedom of models.
@@ -22,6 +20,7 @@ Estimate or extract degrees of freedom of models.
 \examples{
 model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
 dof(model)
+
 model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 dof(model)
 
@@ -31,13 +30,13 @@ dof(model)
 
 \donttest{
 library(rstanarm)
-model <- stan_glm(Sepal.Length ~ Petal.Length * Species,
-                  data = iris, chains = 2, refresh = 0)
+model <- stan_glm(
+  Sepal.Length ~ Petal.Length * Species,
+  data = iris,
+  chains = 2,
+  refresh = 0
+)
 dof(model)
-
-# model <- stan_glmer(Sepal.Length ~ Petal.Length + (1|Species),
-#                     data = iris, chains = 2, refresh = 0)
-# dof(model)
 }
 
 

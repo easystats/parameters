@@ -69,7 +69,7 @@ ci_robust <- function(model,
 
 
 #' @importFrom insight n_obs
-#' @importFrom stats coef df.residual pnorm pt
+#' @importFrom stats coef pnorm pt
 .robust_covariance_matrix <- function(x,
                        vcov_fun = "vcovHC",
                        vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5"),
@@ -90,22 +90,7 @@ ci_robust <- function(model,
   .vcov <- do.call(vcov_fun, c(list(x = x, type = vcov_type), vcov_args))
 
   se <- sqrt(diag(.vcov))
-
-  dendf <- try(stats::df.residual(x), silent = TRUE)
-
-  # 2nd try
-  if (inherits(dendf, "try-error")) {
-    dendf <- try(summary(x)$df[2], silent = TRUE)
-  }
-
-  # 3rd try
-  if (inherits(dendf, "try-error")) {
-    dendf <- try(insight::n_obs(x) - length(est), silent = TRUE)
-  }
-
-  if (inherits(dendf, "try-error")) dendf <- NULL
-
-
+  dendf <- degrees_of_freedom(x, method = "any")
   t.stat <- est / se
 
   if (is.null(dendf)) {

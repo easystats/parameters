@@ -39,11 +39,11 @@ convert_data_to_numeric.double <- convert_data_to_numeric.numeric
 convert_data_to_numeric.logical <- convert_data_to_numeric.numeric
 
 
-
+#' @importFrom stats model.matrix
 #' @export
 convert_data_to_numeric.factor <- function(x, dummy_factors = TRUE, ...) {
   if (dummy_factors) {
-    out <- as.data.frame(model.matrix(~x))
+    out <- as.data.frame(stats::model.matrix(~x))
     out[1] <- as.numeric(rowSums(out[2:ncol(out)]) == 0)
     names(out) <- levels(x)
   } else {

@@ -5,10 +5,8 @@ dof_kenward <- function(model) {
     stop("Package `pbkrtest` required for Kenward-Rogers approximation.", call. = FALSE)
   }
 
-  # L <- as.data.frame(diag(rep(1, nrow(insight::get_parameters(model, effects = "fixed")))))
-  L <- as.data.frame(diag(rep(1, n_parameters(model))))
+  L <- as.data.frame(diag(rep(1, n_parameters(model, effects = "fixed"))))
 
   ## TODO change to "$Estimate" once fixed in insight
   sapply(L, pbkrtest::get_ddf_Lb, object = model)
 }
-
