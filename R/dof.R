@@ -3,12 +3,12 @@
 #' Estimate or extract degrees of freedom of models.
 #'
 #' @param model A statistical model.
-#' @param method Can be 'analytical' (default, DoFs are estimated based on the model type) or 'fit'. In which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs).
-#' @param data Data used by the model. If \code{NULL}, will try to extract it from the model.
+#' @param method Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
 #' dof(model)
+#'
 #' model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 #' dof(model)
 #'
@@ -31,13 +31,23 @@
 #'
 #'
 #' @export
-degrees_of_freedom <- function(model, method = "analytical", data = NULL) {
+degrees_of_freedom <- function(model, method = "analytical") {
 
-  if (method == "analytical") {
-    dof <- .degrees_of_freedom_analytical(model, data = NULL)
+  method <- match.arg(method, c("analytical", "any", "fit", "nokr"))
+
+  if (method == "any") {
+    dof <- .degrees_of_freedom_fit(model, verbose = FALSE)
+    if (is.null(dof)) {
+      dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
+    }
+  } else if (method == "analytical") {
+    dof <- .degrees_of_freedom_analytical(model)
+  } else if (method == "nokr") {
+    dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
   } else{
     dof <- .degrees_of_freedom_fit(model)
   }
+
   dof
 }
 
@@ -54,16 +64,12 @@ dof <- degrees_of_freedom
 
 
 #' @keywords internal
-.degrees_of_freedom_analytical <- function(model, data = NULL) {
-  if (is.null(data)) {
-    data <- insight::get_data(model)
-  }
-
+.degrees_of_freedom_analytical <- function(model, kenward = TRUE) {
   info <- insight::model_info(model)
   nparam <- n_parameters(model)
-  n <- nrow(data)
+  n <- insight::n_obs(model)
 
-  if (info$is_mixed) {
+  if (info$is_mixed && isTRUE(kenward)) {
     if (info$is_bayesian) {
       stop("Cannot estimate DoFs for Bayesian mixed models yet.")
     } else{
@@ -80,8 +86,9 @@ dof <- degrees_of_freedom
 
 
 
+#' @importFrom stats df.residual
 #' @keywords internal
-.degrees_of_freedom_fit <- function(model) {
+.degrees_of_freedom_fit <- function(model, verbose = TRUE) {
   info <- insight::model_info(model)
 
   if (info$is_bayesian) {
@@ -89,6 +96,21 @@ dof <- degrees_of_freedom
     stop("Method 'fit' is not yet available.")
   }
 
-  dof <- model_parameters(model)$df_residual
+  # 1st try
+  dof <- try(stats::df.residual(model), silent = TRUE)
+
+  # 2nd try
+  if (inherits(dof, "try-error")) {
+    dof <- try(summary(model)$df[2], silent = TRUE)
+  }
+
+  # 2nd try
+  if (inherits(dof, "try-error")) {
+    dof <- NULL
+    if (verbose) {
+      insight::print_color("Could not extract degrees of freedom.\n", "red")
+    }
+  }
+
   dof
 }

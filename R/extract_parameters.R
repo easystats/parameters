@@ -39,6 +39,12 @@
   # test statistic
   parameters <- merge(parameters, .statistic, by = merge_by)
 
+  # dof
+  df_residual <- degrees_of_freedom(model, method = "any")
+  if (!is.null(df_residual) && (length(df_residual) == 1 || length(df_residual) == nrow(parameters))) {
+    parameters$df_residual <- df_residual
+  }
+
   # Rematch order after merging
   parameters <- parameters[match(original_order, parameters$.id), ]
 
@@ -75,7 +81,7 @@
   }
 
 
-  parameters$df_residual <- model$df.residual
+  parameters$df_residual <- degrees_of_freedom(model, method = "any")
   parameters$Parameter <- row.names(parameters)
 
   # CI
@@ -149,6 +155,15 @@
   # adjust standard errors as well
   if (p_method == "kenward" || ci_method == "kenward") {
     parameters[["Std. Error"]] <- se_kenward(model)
+  }
+
+
+  # dof
+  if (p_method != "kenward" && !"df" %in% names(parameters)) {
+    df_residual <- degrees_of_freedom(model, method = "any")
+    if (!is.null(df_residual) && (length(df_residual) == 1 || length(df_residual) == nrow(parameters))) {
+      parameters$df_residual <- df_residual
+    }
   }
 
 
