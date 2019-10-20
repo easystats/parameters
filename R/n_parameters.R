@@ -1,4 +1,4 @@
-#' Count how many parameters in a model
+#' Count number parameters in a model
 #'
 #' Returns the number of parameters of a model.
 #'
@@ -21,7 +21,7 @@ n_parameters <- function(x, ...) {
 #' @rdname n_parameters
 #' @export
 n_parameters.default <- function(x, ...) {
-  length(insight::find_parameters(x, flatten = TRUE, ...))
+  length(insight::find_parameters(x, effects = "fixed", flatten = TRUE, ...))
 }
 
 

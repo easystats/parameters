@@ -8,7 +8,7 @@
 \alias{n_parameters.zeroinfl}
 \alias{n_parameters.gam}
 \alias{n_parameters.brmsfit}
-\title{Count how many parameters in a model}
+\title{Count number parameters in a model}
 \usage{
 n_parameters(x, ...)
 
