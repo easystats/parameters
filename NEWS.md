@@ -3,6 +3,7 @@
 ## Breaking changes
 
 - Functions for computing effect sizes (`cohens_f()`, `eta_squared()` etc.) have been removed and are now re-implemented in the [**effectsize**-package](https://github.com/easystats/effectsize).
+- Functions for converting effect sizes (`d_to_odds()` etc.) have been removed and are now re-implemented in the [**effectsize**-package](https://github.com/easystats/effectsize).
 - `standardize()` and `normalize()` (and hence, also `parameters_standardize()`) have been removed ;-( and are now re-implemented in the [**effectsize**-package](https://github.com/easystats/effectsize).
 
 ## New supported models
