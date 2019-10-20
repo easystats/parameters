@@ -92,4 +92,3 @@ dof <- degrees_of_freedom
   dof <- model_parameters(model)$df_residual
   dof
 }
-

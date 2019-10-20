@@ -1,5 +1,10 @@
 # parameters 0.3.0
 
+## Breaking changes
+
+- Functions for computing effect sizes (`cohens_f()`, `eta_squared()` etc.) have been removed and are now re-implemented in the [**effectsize**-package](https://github.com/easystats/effectsize).
+- `standardize()` and `normalize()` (and hence, also `parameters_standardize()`) have been removed ;-( and are now re-implemented in the [**effectsize**-package](https://github.com/easystats/effectsize).
+
 ## New supported models
 
 - `model_parameters()` for `kmeans`
@@ -14,10 +19,7 @@
 - `check_multimodal()` to check if a distribution is unimodal or multimodal.
 - `p_value_robust()`, `ci_robust()` and `standard_error_robust()` to compute robust standard errors, and p-values or confidence intervals based on robust standard errors.
 - The `method`-argument for `ci()` gets a new option, `"robust"`, to compute confidence intervals based on robust standard errors. Furthermore, `ci_wald()` gets a `robust`-argument to do the same.
-
-## Changes to functions
-
-- Standard errors for standardized parameters in `parameters_standardize()` are added as attribute, when `method = "classic"` or `method = "smart"`. There is a `ci()` method for those objects that conveniently prints confidence intervals for standardized coefficients.
+- Add `plot()`-methods for `principal_components()`.
 
 ## Bug fixes
 
