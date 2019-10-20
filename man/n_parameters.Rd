@@ -2,14 +2,47 @@
 % Please edit documentation in R/n_parameters.R
 \name{n_parameters}
 \alias{n_parameters}
+\alias{n_parameters.default}
+\alias{n_parameters.merMod}
+\alias{n_parameters.glmmTMB}
+\alias{n_parameters.zeroinfl}
+\alias{n_parameters.gam}
+\alias{n_parameters.brmsfit}
 \title{Count how many parameters in a model}
 \usage{
 n_parameters(x, ...)
+
+\method{n_parameters}{default}(x, ...)
+
+\method{n_parameters}{merMod}(x, effects = c("all", "fixed", "random"),
+  ...)
+
+\method{n_parameters}{glmmTMB}(x, effects = c("all", "fixed", "random"),
+  component = c("all", "conditional", "zi", "zero_inflated"), ...)
+
+\method{n_parameters}{zeroinfl}(x, component = c("all", "conditional",
+  "zi", "zero_inflated"), ...)
+
+\method{n_parameters}{gam}(x, component = c("all", "conditional",
+  "smooth_terms"), ...)
+
+\method{n_parameters}{brmsfit}(x, effects = c("all", "fixed", "random"),
+  component = c("all", "conditional", "zi", "zero_inflated",
+  "dispersion", "simplex", "sigma", "smooth_terms"), ...)
 }
 \arguments{
 \item{x}{A statistical model.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{effects}{Should number of parameters for fixed effects, random effects
+or both be returned? Only applies to mixed models. May be abbreviated.}
+
+\item{component}{Should total number of parameters, number parameters for the
+conditional model, the zero-inflated part of the model, the dispersion
+term or the instrumental variables be returned? Applies to models
+with zero-inflated and/or dispersion formula, or to models with instrumental
+variable (so called fixed-effects regressions). May be abbreviated.}
 }
 \value{
 The number of parameters in the model.
