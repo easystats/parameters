@@ -51,6 +51,7 @@ Suggests:
 	covr,
 	dplyr,
 	DRR,
+	effectsize,
 	EGAnet (>= 0.7),
 	FactoMineR,
 	fastICA,

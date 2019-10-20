@@ -7,8 +7,8 @@
 
 ## New supported models
 
-- `model_parameters()` for `kmeans`
-- `p_value()`, `ci()`, `standard_error()`, `standardize()` and `model_parameters()` now support *flexsurvreg* models (from package **flexsurv**).
+- `model_parameters()` for `kmeans`.
+- `p_value()`, `ci()`, `standard_error()` and `model_parameters()` now support *flexsurvreg* models (from package **flexsurv**).
 
 ## New functions
 
@@ -24,7 +24,6 @@
 ## Bug fixes
 
 - Interaction terms in `model_parameters()` were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. `as.factor()`, `log()` or `I()`.
-- `parameters_standardize()` failed when model used weights.
 
 # parameters 0.2.0
 
