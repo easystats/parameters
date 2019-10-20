@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Mixed Model Parameters — model_parameters.glmmTMB" />
-
 <meta property="og:description" content="Parameters of mixed models." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -132,7 +134,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,9 +155,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Parameters of mixed models.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for glmmTMB</span>
@@ -171,7 +170,7 @@
 <span class='co'># S3 method for merMod</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>p_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -211,16 +210,14 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
       <td><p>Method for computing confidence intervals (CI). See <code><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci()</a></code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of indices related to the model's parameters.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
   columns into a consistent, standardized naming scheme.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
@@ -228,10 +225,10 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>glmmTMB</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |      p
-#&gt; ------------------------------------------------------------------
-#&gt; (Intercept) |       36.19 | 2.19 | [31.90, 40.48] | 16.52 | &lt; .001
-#&gt; wt          |       -5.05 | 0.64 | [-6.30, -3.79] | -7.89 | &lt; .001</div><div class='input'>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
+#&gt; -----------------------------------------------------------------------
+#&gt; (Intercept) |       36.19 | 2.19 | [31.90, 40.48] | 16.52 | 28 | &lt; .001
+#&gt; wt          |       -5.05 | 0.64 | [-6.30, -3.79] | -7.89 | 28 | &lt; .001</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
   <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
   <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
@@ -240,29 +237,29 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 )
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |      p
-#&gt; ----------------------------------------------------------
-#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | &gt; .1  
-#&gt; spp (PR)    |       -1.27 | 0.24 | [-1.74, -0.80] | &lt; .001
-#&gt; spp (DM)    |        0.27 | 0.14 | [ 0.00,  0.54] | 0.05  
-#&gt; spp (EC-A)  |       -0.57 | 0.21 | [-0.97, -0.16] | &lt; .01 
-#&gt; spp (EC-L)  |        0.67 | 0.13 | [ 0.41,  0.92] | &lt; .001
-#&gt; spp (DES-L) |        0.63 | 0.13 | [ 0.38,  0.87] | &lt; .001
-#&gt; spp (DF)    |        0.12 | 0.15 | [-0.17,  0.40] | &gt; .1  
-#&gt; mined (no)  |        1.27 | 0.27 | [ 0.74,  1.80] | &lt; .001
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |  df |      p
+#&gt; ----------------------------------------------------------------
+#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | 633 | 0.19  
+#&gt; spp (PR)    |       -1.27 | 0.24 | [-1.74, -0.80] | 633 | &lt; .001
+#&gt; spp (DM)    |        0.27 | 0.14 | [ 0.00,  0.54] | 633 | 0.05  
+#&gt; spp (EC-A)  |       -0.57 | 0.21 | [-0.97, -0.16] | 633 | &lt; .01 
+#&gt; spp (EC-L)  |        0.67 | 0.13 | [ 0.41,  0.92] | 633 | &lt; .001
+#&gt; spp (DES-L) |        0.63 | 0.13 | [ 0.38,  0.87] | 633 | &lt; .001
+#&gt; spp (DF)    |        0.12 | 0.15 | [-0.17,  0.40] | 633 | 0.44  
+#&gt; mined (no)  |        1.27 | 0.27 | [ 0.74,  1.80] | 633 | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |      p
-#&gt; ----------------------------------------------------------
-#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] | &lt; .01 
-#&gt; mined (no)  |       -1.84 | 0.31 | [-2.46, -1.23] | &lt; .001
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |  df |      p
+#&gt; ----------------------------------------------------------------
+#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] | 633 | &lt; .01 
+#&gt; mined (no)  |       -1.84 | 0.31 | [-2.46, -1.23] | 633 | &lt; .001
 #&gt; </div><div class='input'><span class='co'># \donttest{</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
-#&gt; (Intercept) |       36.35 | [31.73, 40.61] | &lt; .001
-#&gt; wt          |       -5.11 | [-6.30, -3.70] | &lt; .001</div><div class='input'># }
+#&gt; (Intercept) |       36.78 | [32.27, 39.76] | &lt; .001
+#&gt; wt          |       -5.14 | [-6.18, -3.77] | &lt; .001</div><div class='input'># }
 
 </div></span></pre>
   </div>
@@ -270,11 +267,8 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -288,7 +282,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

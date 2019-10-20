@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA) for Factor Analysis — check_kmo • parameters</title>
+<title>Degrees of Freedom (DoF) — degrees_of_freedom • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA) for Factor Analysis — check_kmo" />
-<meta property="og:description" content="Kaiser (1970) introduced a Measure of Sampling Adequacy (MSA), later modified by Kaiser and Rice (1974). The Kaiser-Meyer-Olkin (KMO) statistic, which can vary from 0 to 1, indicates the degree to which each variable in a set is predicted without error by the other variables." />
+<meta property="og:title" content="Degrees of Freedom (DoF) — degrees_of_freedom" />
+<meta property="og:description" content="Estimate or extract degrees of freedom of models." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -149,63 +149,65 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA) for Factor Analysis</h1>
+    <h1>Degrees of Freedom (DoF)</h1>
     
-    <div class="hidden name"><code>check_kmo.Rd</code></div>
+    <div class="hidden name"><code>degrees_of_freedom.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Kaiser (1970) introduced a Measure of Sampling Adequacy (MSA), later modified by Kaiser and Rice (1974). The Kaiser-Meyer-Olkin (KMO) statistic, which can vary from 0 to 1, indicates the degree to which each variable in a set is predicted without error by the other variables.</p>
+    <p>Estimate or extract degrees of freedom of models.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_kmo</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>degrees_of_freedom</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"analytical"</span>)
+
+<span class='fu'>dof</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"analytical"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A dataframe.</p></td>
+      <th>model</th>
+      <td><p>A statistical model.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <th>method</th>
+      <td><p>Can be <code>"analytical"</code> (default, DoFs are estimated based on the model type), <code>"fit"</code>, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), or <code>"any"</code>, which tries to extract DoF by any of those methods, whichever succeeds.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A list of indices related to KMO.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>A value of 0 indicates that the sum of partial correlations is large relative to the sum correlations, indicating factor analysis is likely to be inappropriate. A KMO value close to 1 indicates that the sum of partial correlations is not large relative to the sum of correlations and so factor analysis should yield distinct and reliable factors.</p>
-<p>Kaiser (1975) suggested that KMO &gt; .9 were marvelous, in the .80s, meritourious, in the .70s, middling, in the .60s, mediocre, in the 50s, miserable, and less than .5, unacceptable. Hair et al. (2006) suggest accepting a value &gt; 0.5. Values between 0.5 and 0.7 are mediocre, and values between 0.7 and 0.8 are good.</p>
-<p>This function is strongly inspired by the <code>KMO</code> function in the <code>psych</code> package (Revelle, 2016). All credits go to its author.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    
-<ul>
-<li><p>Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.</p></li>
-<li><p>Kaiser, H. F. (1970). A second generation little jiffy. Psychometrika, 35(4), 401-415.</p></li>
-<li><p>Kaiser, H. F., \&amp; Rice, J. (1974). Little jiffy, mark IV. Educational and psychological measurement, 34(1), 111-117.</p></li>
-<li><p>Kaiser, H. F. (1974). An index of factorial simplicity. Psychometrika, 39(1), 31-36.</p></li>
-</ul>
-
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
+    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> * <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>dof</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; [1] 144 144 144 144 144 144</div><div class='input'>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>mpg</span> * <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='fu'>dof</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; [1] 28 28 28 28</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='fl'>1</span><span class='kw'>|</span><span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>dof</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; [1]   2.53354 144.66692</div><div class='input'>
+<span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'xts':</span>
+#&gt; <span class='message'>  method     from</span>
+#&gt; <span class='message'>  as.zoo.xts zoo </span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'rstanarm':</span>
+#&gt; <span class='message'>  method         from   </span>
+#&gt; <span class='message'>  nobs.stanmvreg insight</span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.19.2, packaged: 2019-10-01 20:20:33 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- bayesplot theme set to bayesplot::theme_default()</span></div><div class='output co'>#&gt; <span class='message'>   * Does _not_ affect other ggplot2 plots</span></div><div class='output co'>#&gt; <span class='message'>   * See ?bayesplot_theme_set for details on theme setting</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'rstanarm'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:parameters':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    se</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(
+  <span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> * <span class='no'>Species</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
+  <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
+)
+<span class='fu'>dof</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; [1] 144 144 144 144 144 144</div><div class='input'># }
 
-<span class='fu'>check_kmo</span>(<span class='no'>mtcars</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># KMO Measure of Sampling Adequacy
-#&gt; 
-#&gt; </span><span style='color: #00BB00;'>The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = 0.83).</span><span></div></span></pre>
+
+
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#references">References</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

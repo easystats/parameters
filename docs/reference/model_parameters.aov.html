@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="ANOVAs Parameters — model_parameters.aov" />
-
 <meta property="og:description" content="Parameters of ANOVAs." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -132,7 +134,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,15 +155,13 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Parameters of ANOVAs.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for aov</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -172,26 +171,25 @@
     </tr>
     <tr>
       <th>omega_squared</th>
-      <td><p>Compute <a href='eta_squared.html'>omega squared</a> as index of effect size. Can be "partial" (adjusted for effect size) or "raw".</p></td>
+      <td><p>Compute omega squared as index of effect size. Can be "partial" (adjusted for effect size) or "raw".</p></td>
     </tr>
     <tr>
       <th>eta_squared</th>
-      <td><p>Compute <a href='eta_squared.html'>eta squared</a> as index of effect size. Can be "partial" (adjusted for effect size) or "raw".</p></td>
+      <td><p>Compute eta squared as index of effect size. Can be "partial" (adjusted for effect size) or "raw".</p></td>
     </tr>
     <tr>
       <th>epsilon_squared</th>
-      <td><p>Compute <a href='eta_squared.html'>epsilon squared</a> as index of effect size.</p></td>
+      <td><p>Compute epsilon squared as index of effect size.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame of indices related to the model's parameters.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>
@@ -200,24 +198,25 @@
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
 #&gt; --------------------------------------------------------------------------------------------------------------
-#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | &gt; .1 |               0.00 |             0.01 |       0.00
+#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.21 |               0.00 |             0.01 |       0.00
 #&gt; Residuals |      101.07 | 148 |        0.68 |      |      |                    |                  |           </div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>))
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |    p
 #&gt; ---------------------------------------------------------
-#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | &gt; .1
+#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.21
 #&gt; Residuals |      101.07 | 148 |        0.68 |      |     </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
 #&gt; --------------------------------------------------------------------------------------------------------------
-#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | &gt; .1 |               0.00 |             0.01 |       0.00
+#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.21 |               0.00 |             0.01 |       0.00
 #&gt; Residuals |      101.07 | 148 |        0.68 |      |      |                    |                  |           </div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>Error</a></span>(<span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Group   | Parameter | Sum_Squares |  df | Mean_Square |     F |      p
 #&gt; ----------------------------------------------------------------------
-#&gt; Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 | &gt; .1  
+#&gt; Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 | 0.53  
 #&gt; Species | Residuals |       34.94 |   1 |       34.94 |       |       
 #&gt; Within  | Sepal.Big |        4.74 |   1 |        4.74 | 20.24 | &lt; .001
 #&gt; Within  | Residuals |       34.21 | 146 |        0.23 |       |       </div><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)
+
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>))
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares | df | Mean_Square |     F
 #&gt; --------------------------------------------------
@@ -228,9 +227,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -244,7 +241,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

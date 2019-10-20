@@ -129,13 +129,13 @@
 <a class="sourceLine" id="cb1-5" title="5"><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>(model)</a></code></pre></div>
 <pre><code>&gt; Parameter   | Coefficient |    SE |           95% CI |     t | df |      p
 &gt; --------------------------------------------------------------------------
-&gt; (Intercept) |       10.79 | 11.59 | [-13.19,  34.76] |  0.93 | 23 | &gt; .1  
+&gt; (Intercept) |       10.79 | 11.59 | [-13.19,  34.76] |  0.93 | 23 | 0.36  
 &gt; complaints  |        0.61 |  0.16 | [  0.28,   0.95] |  3.81 | 23 | &lt; .001
-&gt; privileges  |       -0.07 |  0.14 | [ -0.35,   0.21] | -0.54 | 23 | &gt; .1  
+&gt; privileges  |       -0.07 |  0.14 | [ -0.35,   0.21] | -0.54 | 23 | 0.60  
 &gt; learning    |        0.32 |  0.17 | [ -0.03,   0.67] |  1.90 | 23 | 0.07  
-&gt; raises      |        0.08 |  0.22 | [ -0.38,   0.54] |  0.37 | 23 | &gt; .1  
-&gt; critical    |        0.04 |  0.15 | [ -0.27,   0.34] |  0.26 | 23 | &gt; .1  
-&gt; advance     |       -0.22 |  0.18 | [ -0.59,   0.15] | -1.22 | 23 | &gt; .1</code></pre>
+&gt; raises      |        0.08 |  0.22 | [ -0.38,   0.54] |  0.37 | 23 | 0.72  
+&gt; critical    |        0.04 |  0.15 | [ -0.27,   0.34] |  0.26 | 23 | 0.80  
+&gt; advance     |       -0.22 |  0.18 | [ -0.59,   0.15] | -1.22 | 23 | 0.24</code></pre>
 <p>We can explore a reduction of the number of parameters with the <code><a href="../reference/parameters_reduction.html">parameters_reduction()</a></code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">newmodel &lt;-<span class="st"> </span><span class="kw"><a href="../reference/parameters_reduction.html">parameters_reduction</a></span>(model)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>(newmodel)</a></code></pre></div>
@@ -156,7 +156,7 @@
 &gt; (Intercept)                                                 |       64.63 | 1.41 | [61.73, 67.53] | 45.80 | 26 | &lt; .001
 &gt; `raises_0.85/complaints_0.84/learning_0.83/privileges_0.74` |        0.43 | 0.07 | [ 0.28,  0.57] |  6.14 | 26 | &lt; .001
 &gt; `advance_-0.60`                                             |        0.32 | 0.13 | [ 0.04,  0.59] |  2.36 | 26 | &lt; .05 
-&gt; `critical_-0.65`                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 26 | &gt; .1</code></pre>
+&gt; `critical_-0.65`                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 26 | 0.12</code></pre>
 <p>A different method (<strong>Classical Multidimensional Scaling - cMDS</strong>) suggests that negative critiques do not have a significant impact on the rating, and that the lack of opportunities of career advancement is a separate dimension with an importance on its own.</p>
 <p>Altough this function can be useful in exploratory data analysis, it’s best to perform the dimension reduction step in a <strong>separate and dedicated stage</strong>, as this is a very important process in the data analysis workflow.</p>
 </div>
@@ -238,6 +238,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -262,7 +263,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

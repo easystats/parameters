@@ -113,13 +113,13 @@
 </h1></div>
 
 <p><strong><em>Describe and understand your model’s parameters!</em></strong></p>
-<p><code>parameters</code>’ primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing <strong><em>p</em>-values</strong>, <strong>CIs</strong>, <strong>Bayesian indices</strong> and other measures for a wide variety of models, this package implements features like <strong>standardization</strong> or <strong>bootstrapping</strong> of parameters and models, <strong>feature reduction</strong> (feature extraction and variable selection) as well as conversion between indices of <strong>effect size</strong>.</p>
+<p><code>parameters</code>’ primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing <strong><em>p</em>-values</strong>, <strong>CIs</strong>, <strong>Bayesian indices</strong> and other measures for a wide variety of models, this package implements features like <strong>bootstrapping</strong> of parameters and models, <strong>feature reduction</strong> (feature extraction and variable selection).</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Run the following:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"easystats/parameters"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"easystats/parameters"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"parameters"</span>)</a></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
@@ -151,12 +151,12 @@
 </ul>
 <!-- end list --><div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</a>
 <a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3">model &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data =</span> iris)</a>
+<a class="sourceLine" id="cb3-3" title="3">model &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co"># Parameter    | Coefficient |   SE |       95% CI |    t |      p</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co"># ----------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co"># (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | &lt; .001</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co"># Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | &lt; .001</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co"># Parameter    | Coefficient |   SE |       95% CI |    t |  df |      p</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co"># ----------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"># (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | 146 | &lt; .001</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co"># Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | 146 | &lt; .001</span></a></code></pre></div>
 <p>Besides many types of regression models and packages, it also works for other types of models, such as <a href="https://easystats.github.io/parameters/articles/efa_cfa.html"><strong>structural models</strong></a> (EFA, CFA, SEM…).</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(psych)</a>
 <a class="sourceLine" id="cb4-2" title="2"></a>
@@ -182,32 +182,29 @@
 <p><img src="reference/figures/figure2.png" align="center"></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb5-2" title="2"></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co"># Parameter   | Coefficient |     SE |             95% CI |     t | df |      p</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="co"># -----------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co"># (Intercept) |      141.70 | 125.67 | [-116.62,  400.02] |  1.13 | 26 | &gt; .1  </span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="co"># cyl         |       13.14 |   7.90 | [  -3.10,   29.38] |  1.66 | 26 | &gt; .1  </span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="co"># hp          |        0.63 |   0.20 | [   0.22,    1.03] |  3.18 | 26 | &lt; .01 </span></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="co"># wt          |       80.45 |  12.22 | [  55.33,  105.57] |  6.58 | 26 | &lt; .001</span></a>
-<a class="sourceLine" id="cb5-12" title="12"><span class="co"># qsec        |      -14.68 |   6.14 | [ -27.31,   -2.05] | -2.39 | 26 | &lt; .05 </span></a>
-<a class="sourceLine" id="cb5-13" title="13"><span class="co"># carb        |      -28.75 |   5.60 | [ -40.28,  -17.23] | -5.13 | 26 | &lt; .001</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co"># Parameter   | Coefficient |     SE |             95% CI |     t | df |      p</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co"># -----------------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co"># (Intercept) |      141.70 | 125.67 | [-116.62,  400.02] |  1.13 | 26 | 0.27  </span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co"># cyl         |       13.14 |   7.90 | [  -3.10,   29.38] |  1.66 | 26 | 0.11  </span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co"># hp          |        0.63 |   0.20 | [   0.22,    1.03] |  3.18 | 26 | &lt; .01 </span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="co"># wt          |       80.45 |  12.22 | [  55.33,  105.57] |  6.58 | 26 | &lt; .001</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="co"># qsec        |      -14.68 |   6.14 | [ -27.31,   -2.05] | -2.39 | 26 | &lt; .05 </span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="co"># carb        |      -28.75 |   5.60 | [ -40.28,  -17.23] | -5.13 | 26 | &lt; .001</span></a></code></pre></div>
 <p>The <a href="https://easystats.github.io/parameters/articles/parameters_selection.html"><code><a href="reference/parameters_selection.html">parameters_selection()</a></code></a> can also help you quickly select and retain the most relevant predictors using methods tailored for the model type. This function also works for mixed or Bayesian models:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb6-2" title="2"></a>
-<a class="sourceLine" id="cb6-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb6-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">    </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior</span></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="co"># -----------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="co"># (Intercept) |  19.31 | [-5.95, 41.92] | 90.55% |     1.15% | 1.001 | 1083 | Normal (0 +- 60.27)</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="co"># wt          |  -3.97 | [-6.00, -1.91] | 99.70% |     0.90% | 1.000 | 1222 | Normal (0 +- 15.40)</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co"># cyl         |  -0.44 | [-1.66,  0.98] | 70.90% |    46.95% | 0.999 | 1250 |  Normal (0 +- 8.44)</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co"># hp          |  -0.02 | [-0.04,  0.00] | 89.70% |      100% | 1.003 | 1191 |  Normal (0 +- 0.22)</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co"># am          |   3.00 | [ 0.08,  6.08] | 94.70% |     6.55% | 0.999 | 1480 | Normal (0 +- 15.07)</span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co"># qsec        |   0.83 | [-0.12,  1.91] | 90.80% |    33.35% | 1.002 | 1049 |  Normal (0 +- 8.43)</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co"># disp        |   0.01 | [-0.01,  0.03] | 86.10% |      100% | 0.999 | 1300 |  Normal (0 +- 0.12)</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co"># (Intercept) |  19.82 | [-4.53, 40.21] | 91.65% |     1.25% | 1.002 | 1068 | Normal (0 +- 60.27)</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co"># wt          |  -3.99 | [-6.00, -1.95] |   100% |     0.55% | 1.003 | 1353 | Normal (0 +- 15.40)</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co"># cyl         |  -0.48 | [-1.80,  0.83] | 73.50% |    46.35% | 1.003 | 1220 |  Normal (0 +- 8.44)</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co"># hp          |  -0.02 | [-0.04,  0.00] | 89.90% |      100% | 1.001 | 1604 |  Normal (0 +- 0.22)</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co"># am          |   2.94 | [-0.08,  5.76] | 94.90% |     7.40% | 1.000 | 1253 | Normal (0 +- 15.07)</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co"># qsec        |   0.82 | [-0.17,  1.77] | 91.00% |    33.95% | 1.003 | 1096 |  Normal (0 +- 8.43)</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co"># disp        |   0.01 | [ 0.00,  0.03] | 86.90% |      100% | 1.003 | 1453 |  Normal (0 +- 0.12)</span></a></code></pre></div>
 </div>
 <div id="miscellaneous" class="section level2">
 <h2 class="hasAnchor">
@@ -300,7 +297,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

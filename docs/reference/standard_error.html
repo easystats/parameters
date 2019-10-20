@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract standard errors — standard_error • parameters</title>
+<title>Extract standard errors — standard_error_robust • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Extract standard errors — standard_error" />
 
-<meta property="og:description" content="This function attempts to return standard errors of model parameters." />
-
+<meta property="og:title" content="Extract standard errors — standard_error_robust" />
+<meta property="og:description" content="standard_error() attempts to return standard errors of model parameters, while standard_error_robust() attempts to return robust standard errors." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -132,7 +134,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,16 +155,21 @@
     </div>
 
     <div class="ref-description">
-    
-    <p>This function attempts to return standard errors of model parameters.</p>
-    
+    <p><code>standard_error()</code> attempts to return standard errors of model parameters, while <code>standard_error_robust()</code> attempts to return robust standard errors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>standard_error_robust</span>(<span class='no'>model</span>, <span class='kw'>vcov_estimation</span> <span class='kw'>=</span> <span class='st'>"HC"</span>,
+  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HC3"</span>, <span class='st'>"const"</span>, <span class='st'>"HC"</span>, <span class='st'>"HC0"</span>, <span class='st'>"HC1"</span>, <span class='st'>"HC2"</span>, <span class='st'>"HC4"</span>, <span class='st'>"HC4m"</span>,
+  <span class='st'>"HC5"</span>), <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for factor</span>
 <span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for glmmTMB</span>
 <span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>,
@@ -171,8 +177,10 @@
 
 <span class='co'># S3 method for MixMod</span>
 <span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>,
-  <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
-    
+  <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
+
+<span class='fu'>se</span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -181,8 +189,30 @@
       <td><p>A model.</p></td>
     </tr>
     <tr>
+      <th>vcov_estimation</th>
+      <td><p>String, indicating the suffix of the <code>vcov*()</code>-function
+from the <span class="pkg">sandwich</span>-package, e.g. <code>vcov_estimation = "CL"</code> (which
+calls <code><a href='https://rdrr.io/pkg/sandwich/man/vcovCL.html'>vcovCL</a></code> to compute clustered covariance matrix
+estimators), or <code>vcov_estimation = "HC"</code> (which calls
+<code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC</a></code> to compute heteroskedasticity-consistent
+covariance matrix estimators).</p></td>
+    </tr>
+    <tr>
+      <th>vcov_type</th>
+      <td><p>Character vector, specifying the estimation type for the
+robust covariance matrix estimation (see <code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC</a></code> for
+details).</p></td>
+    </tr>
+    <tr>
+      <th>vcov_args</th>
+      <td><p>List of named vectors, used as additional arguments that
+are passed down to the <span class="pkg">sandwich</span>-function specified in <code>vcov_estimation</code>.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <td><p>Arguments passed to or from other methods. For <code>standard_error()</code>,
+if <code>robust = TRUE</code>, arguments <code>vcov_estimation</code>, <code>vcov_type</code>
+and <code>vcov_args</code> can be passed down to <code>standard_error_robust()</code>.</p></td>
     </tr>
     <tr>
       <th>force</th>
@@ -193,8 +223,11 @@ to the corresponding numeric value). By default, <code>NA</code> is returned
 for factors or character vectors.</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>Toggle off warnings.</p></td>
+      <th>robust</th>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are computed
+by calling <code>standard_error_robust()</code>.
+<code>standard_error_robust()</code>, in turn, calls one of the <code>vcov*()</code>-functions
+from the <span class="pkg">sandwich</span>-package for robust covariance matrix estimators.</p></td>
     </tr>
     <tr>
       <th>component</th>
@@ -204,11 +237,15 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame.</p>
-    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p><code>standard_error_robust()</code> resp. <code>standard_error(robust = TRUE)</code>
+  rely on the <span class="pkg">sandwich</span>-package and will thus only work for those models
+  supported by that package.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> * <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
@@ -224,9 +261,8 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
+      <li><a href="#note">Note</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -240,7 +276,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Simulated draws from model coefficients — model_simulate" />
-
 <meta property="og:description" content="Simulate draws from a statistical model to return a data.frame of estimates." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -132,7 +134,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,9 +155,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Simulate draws from a statistical model to return a data.frame of estimates.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
@@ -164,7 +163,7 @@
 <span class='co'># S3 method for glmmTMB</span>
 <span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -188,11 +187,10 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
@@ -207,13 +205,11 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     from the conditional component (fixed effects) are simulated. This may
     include smooth terms, but not random effects.</p>
 
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='parameters_simulate.html'>parameters_simulate()</a></code>,
 <code><a href='model_bootstrap.html'>model_bootstrap()</a></code>,
 <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
@@ -221,57 +217,53 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>model_simulate</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
-#&gt; 1    3.561619        -1.4450994        -2.754011  0.20158058    0.9686251
-#&gt; 2    3.575301        -1.3132494        -2.116774  0.32730181    0.9440946
-#&gt; 3    3.606830        -1.2764069        -2.292468 -0.01415741    0.9048281
-#&gt; 4    3.562925        -0.9626576        -2.218339  0.41095809    0.9075996
-#&gt; 5    3.587195        -1.5422215        -2.843319  0.34797734    0.9465649
-#&gt; 6    3.627936        -1.5378466        -3.047232 -0.11765835    1.0022881
+#&gt; 1    3.564858        -0.8980089        -2.138136  0.39608562    0.9140819
+#&gt; 2    3.488743        -1.4322936        -2.172328  0.81927643    0.9023507
+#&gt; 3    3.570134        -0.9550377        -1.773624  0.06149346    0.9827443
+#&gt; 4    3.597156        -0.9012921        -2.252597  0.88712914    0.7908708
+#&gt; 5    3.491918        -1.0972890        -1.905188  0.89132788    0.8869857
+#&gt; 6    3.481365        -0.7458291        -1.598995  0.71684084    0.8796279
 #&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
-#&gt; 1                    -0.4241126                  -0.01885151
-#&gt; 2                    -0.6123246                  -0.38469617
-#&gt; 3                    -0.2417026                   0.15212179
-#&gt; 4                    -0.8007951                  -0.34396581
-#&gt; 5                    -0.4298185                  -0.08352370
-#&gt; 6                    -0.2113083                   0.33800757</div><div class='input'>
+#&gt; 1                    -0.8634093                   -0.3482874
+#&gt; 2                    -0.7685970                   -0.6458963
+#&gt; 3                    -0.7263107                   -0.3737387
+#&gt; 4                    -0.9718373                   -0.4768612
+#&gt; 5                    -1.1181333                   -0.8533230
+#&gt; 6                    -1.1091156                   -0.8063477</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
   <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
   <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
   <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
 )
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>model_simulate</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept)     sppPR     sppDM    sppEC-A   sppEC-L  sppDES-L       sppDF
-#&gt; 1  -0.6433033 -1.175814 0.2647391 -0.7820794 0.7359391 0.6629130  0.07273863
-#&gt; 2  -0.8265625 -1.134054 0.4810264 -0.4309703 0.7018300 0.6802545  0.26536709
-#&gt; 3  -0.2954338 -1.181282 0.2937259 -0.7358731 0.5834739 0.5884592  0.06460223
-#&gt; 4  -0.3789517 -1.231842 0.2751081 -0.3006320 0.6785117 0.5105397 -0.13315010
-#&gt; 5  -0.6354849 -1.253481 0.3582720 -0.2259863 0.7493073 0.7418349  0.44860532
-#&gt; 6  -0.7289476 -1.710293 0.1921363 -0.7505304 0.7345841 0.5994279  0.11239612
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>model_simulate</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept)     sppPR     sppDM    sppEC-A   sppEC-L  sppDES-L        sppDF
+#&gt; 1 -0.37832312 -1.231932 0.2517983 -0.6217688 0.6018742 0.6490666 -0.027139555
+#&gt; 2 -0.21240122 -1.763037 0.1490136 -0.5642927 0.5863652 0.6319802  0.005554372
+#&gt; 3 -0.39193539 -1.053375 0.4594751 -0.4938787 0.6413534 0.7237459  0.305435743
+#&gt; 4 -0.47891273 -1.025596 0.1922853 -0.6125271 0.4927446 0.6183645  0.158142303
+#&gt; 5 -0.02053848 -1.409081 0.1477560 -0.6500247 0.6018259 0.5039693 -0.206989590
+#&gt; 6 -0.17272274 -1.305275 0.1323623 -0.7393124 0.4758273 0.5719329 -0.092396931
 #&gt;    minedno (Intercept)_zi minedno_zi
-#&gt; 1 1.681676      0.9144424  -1.577623
-#&gt; 2 1.674329      1.0326665  -2.228147
-#&gt; 3 1.262330      0.5796883  -1.537926
-#&gt; 4 1.229172      0.9939999  -2.235261
-#&gt; 5 1.393182      0.7824275  -1.906110
-#&gt; 6 1.811556      0.5063654  -1.865922</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>))</div><div class='output co'>#&gt;   (Intercept)   minedno
-#&gt; 1   0.3927318 -1.727125
-#&gt; 2   0.9828138 -2.036150
-#&gt; 3   0.4788650 -1.352338
-#&gt; 4   0.4267722 -1.675456
-#&gt; 5   0.9107228 -1.914281
-#&gt; 6   0.5558437 -1.719137</div></pre>
+#&gt; 1 1.257162      1.6770885  -2.750422
+#&gt; 2 1.135993      1.0228428  -1.883202
+#&gt; 3 1.330737      0.2783426  -1.481078
+#&gt; 4 1.361708      0.7035451  -1.673040
+#&gt; 5 1.069467      0.6253500  -1.695942
+#&gt; 6 1.300902      0.5999974  -1.263890</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>))</div><div class='output co'>#&gt;   (Intercept)   minedno
+#&gt; 1   0.6983614 -1.836415
+#&gt; 2   0.5452731 -1.462036
+#&gt; 3   1.0083155 -2.164969
+#&gt; 4   1.0421315 -2.173951
+#&gt; 5   0.6259439 -1.642013
+#&gt; 6   0.8101661 -1.712980</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -285,7 +277,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

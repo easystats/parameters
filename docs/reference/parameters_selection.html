@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Parameters Selection — parameters_selection" />
-
 <meta property="og:description" content="This function performs an automated selection of the 'best' parameters, updating and returning the &quot;best&quot; model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the projpred package." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -132,7 +134,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -154,9 +155,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>This function performs an automated selection of the 'best' parameters, updating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the <code>projpred</code> package.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='no'>...</span>)
@@ -172,7 +171,7 @@
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -212,11 +211,10 @@
       <td><p>Select with cross-validation.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The model refitted with optimal number of parameters.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
@@ -269,28 +267,21 @@
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
-#&gt;  formula:      mpg ~ wt + cyl
+#&gt;  formula:      mpg ~ wt
 #&gt;  observations: 32
-#&gt;  predictors:   3
+#&gt;  predictors:   2
 #&gt; ------
 #&gt;             Median MAD_SD
-#&gt; (Intercept) 39.7    1.7  
-#&gt; wt          -3.2    0.8  
-#&gt; cyl         -1.5    0.4  
+#&gt; (Intercept) 37.4    1.9  
+#&gt; wt          -5.4    0.6  
 #&gt; 
 #&gt; Auxiliary parameter(s):
 #&gt;       Median MAD_SD
-#&gt; sigma 2.6    0.4   
-#&gt; 
-#&gt; Sample avg. posterior predictive distribution of y:
-#&gt;          Median MAD_SD
-#&gt; mean_PPD 20.1    0.7  
+#&gt; sigma 3.1    0.4   
 #&gt; 
 #&gt; ------
 #&gt; * For help interpreting the printed output see ?print.stanreg
@@ -316,9 +307,9 @@
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 1.255 seconds (Warm-up)
-#&gt; Chain 1:                1.151 seconds (Sampling)
-#&gt; Chain 1:                2.406 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 1.052 seconds (Warm-up)
+#&gt; Chain 1:                1.207 seconds (Sampling)
+#&gt; Chain 1:                2.259 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -341,9 +332,9 @@
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 1.265 seconds (Warm-up)
-#&gt; Chain 2:                1.247 seconds (Sampling)
-#&gt; Chain 2:                2.512 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 1.005 seconds (Warm-up)
+#&gt; Chain 2:                0.998 seconds (Sampling)
+#&gt; Chain 2:                2.003 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -366,9 +357,9 @@
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 1.306 seconds (Warm-up)
-#&gt; Chain 3:                1.64 seconds (Sampling)
-#&gt; Chain 3:                2.946 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 1.26 seconds (Warm-up)
+#&gt; Chain 3:                1.002 seconds (Sampling)
+#&gt; Chain 3:                2.262 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -391,29 +382,26 @@
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 1.285 seconds (Warm-up)
-#&gt; Chain 4:                1.237 seconds (Sampling)
-#&gt; Chain 4:                2.522 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 1.165 seconds (Warm-up)
+#&gt; Chain 4:                0.912 seconds (Sampling)
+#&gt; Chain 4:                2.077 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
-#&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp
+#&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp + cyl:hp
 #&gt;  observations: 32
-#&gt;  predictors:   5
+#&gt;  predictors:   6
 #&gt; ------
 #&gt;             Median MAD_SD
-#&gt; (Intercept) 46.1    4.6  
-#&gt; cyl         -2.6    0.8  
+#&gt; (Intercept) 51.1    5.7  
+#&gt; cyl         -3.2    0.9  
 #&gt; disp        -0.1    0.0  
-#&gt; hp           0.0    0.0  
+#&gt; hp          -0.1    0.1  
 #&gt; cyl:disp     0.0    0.0  
+#&gt; cyl:hp       0.0    0.0  
 #&gt; 
 #&gt; Auxiliary parameter(s):
 #&gt;       Median MAD_SD
 #&gt; sigma 2.6    0.4   
-#&gt; 
-#&gt; Sample avg. posterior predictive distribution of y:
-#&gt;          Median MAD_SD
-#&gt; mean_PPD 20.1    0.7  
 #&gt; 
 #&gt; ------
 #&gt; * For help interpreting the printed output see ?print.stanreg
@@ -425,9 +413,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -441,7 +427,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

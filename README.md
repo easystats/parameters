@@ -13,9 +13,8 @@ Status](https://travis-ci.org/easystats/parameters.svg?branch=master)](https://t
 parameters of various statistical models. Beyond computing
 ***p*-values**, **CIs**, **Bayesian indices** and other measures for a
 wide variety of models, this package implements features like
-**standardization** or **bootstrapping** of parameters and models,
-**feature reduction** (feature extraction and variable selection) as
-well as conversion between indices of **effect size**.
+**bootstrapping** of parameters and models, **feature reduction**
+(feature extraction and variable selection).
 
 ## Installation
 
@@ -83,12 +82,12 @@ with some notable differences:
 ``` r
 library(lme4)
 
-model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+model <- lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris)
 model_parameters(model)
-# Parameter    | Coefficient |   SE |       95% CI |    t |      p
-# ----------------------------------------------------------------
-# (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | < .001
-# Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | < .001
+# Parameter    | Coefficient |   SE |       95% CI |    t |  df |      p
+# ----------------------------------------------------------------------
+# (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | 146 | < .001
+# Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | 146 | < .001
 ```
 
 Besides many types of regression models and packages, it also works for
@@ -123,13 +122,11 @@ model_parameters(model)
 ``` r
 library(dplyr)
 
-lm(disp ~ ., data = mtcars) %>% 
-  parameters_selection() %>% 
-  model_parameters()
+lm(disp ~ ., data = mtcars) %>% parameters_selection() %>% model_parameters()
 # Parameter   | Coefficient |     SE |             95% CI |     t | df |      p
 # -----------------------------------------------------------------------------
-# (Intercept) |      141.70 | 125.67 | [-116.62,  400.02] |  1.13 | 26 | > .1  
-# cyl         |       13.14 |   7.90 | [  -3.10,   29.38] |  1.66 | 26 | > .1  
+# (Intercept) |      141.70 | 125.67 | [-116.62,  400.02] |  1.13 | 26 | 0.27  
+# cyl         |       13.14 |   7.90 | [  -3.10,   29.38] |  1.66 | 26 | 0.11  
 # hp          |        0.63 |   0.20 | [   0.22,    1.03] |  3.18 | 26 | < .01 
 # wt          |       80.45 |  12.22 | [  55.33,  105.57] |  6.58 | 26 | < .001
 # qsec        |      -14.68 |   6.14 | [ -27.31,   -2.05] | -2.39 | 26 | < .05 
@@ -145,20 +142,19 @@ mixed or Bayesian models:
 ``` r
 library(rstanarm)
 
-model <- stan_glm(mpg ~ ., data = mtcars) %>% 
-  parameters_selection() %>% 
-  model_parameters()
+model <- stan_glm(mpg ~ ., data = mtcars) %>% parameters_selection() %>% 
+    model_parameters()
 ```
 
     # Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior
     # -----------------------------------------------------------------------------------------------
-    # (Intercept) |  19.31 | [-5.95, 41.92] | 90.55% |     1.15% | 1.001 | 1083 | Normal (0 +- 60.27)
-    # wt          |  -3.97 | [-6.00, -1.91] | 99.70% |     0.90% | 1.000 | 1222 | Normal (0 +- 15.40)
-    # cyl         |  -0.44 | [-1.66,  0.98] | 70.90% |    46.95% | 0.999 | 1250 |  Normal (0 +- 8.44)
-    # hp          |  -0.02 | [-0.04,  0.00] | 89.70% |      100% | 1.003 | 1191 |  Normal (0 +- 0.22)
-    # am          |   3.00 | [ 0.08,  6.08] | 94.70% |     6.55% | 0.999 | 1480 | Normal (0 +- 15.07)
-    # qsec        |   0.83 | [-0.12,  1.91] | 90.80% |    33.35% | 1.002 | 1049 |  Normal (0 +- 8.43)
-    # disp        |   0.01 | [-0.01,  0.03] | 86.10% |      100% | 0.999 | 1300 |  Normal (0 +- 0.12)
+    # (Intercept) |  19.82 | [-4.53, 40.21] | 91.65% |     1.25% | 1.002 | 1068 | Normal (0 +- 60.27)
+    # wt          |  -3.99 | [-6.00, -1.95] |   100% |     0.55% | 1.003 | 1353 | Normal (0 +- 15.40)
+    # cyl         |  -0.48 | [-1.80,  0.83] | 73.50% |    46.35% | 1.003 | 1220 |  Normal (0 +- 8.44)
+    # hp          |  -0.02 | [-0.04,  0.00] | 89.90% |      100% | 1.001 | 1604 |  Normal (0 +- 0.22)
+    # am          |   2.94 | [-0.08,  5.76] | 94.90% |     7.40% | 1.000 | 1253 | Normal (0 +- 15.07)
+    # qsec        |   0.82 | [-0.17,  1.77] | 91.00% |    33.95% | 1.003 | 1096 |  Normal (0 +- 8.43)
+    # disp        |   0.01 | [ 0.00,  0.03] | 86.90% |      100% | 1.003 | 1453 |  Normal (0 +- 0.12)
 
 ## Miscellaneous
 

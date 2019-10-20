@@ -21,6 +21,8 @@ reference:
   - model_parameters.gam
   - model_parameters.merMod
   - model_parameters.lavaan
+  - model_parameters.kmeans
+  - model_parameters.Mclust
   - model_parameters.PCA
   - model_parameters.principal
   - model_parameters.stanreg
@@ -30,15 +32,16 @@ reference:
 
 - title: "Specific Model Parameters"
   contents:
-  - n_parameters
-  - standard_error
-  - p_value
-  - p_value_kenward
   - ci
   - ci_wald
   - ci.merMod
+  - degrees_of_freedom
+  - p_value
+  - p_value_kenward
+  - standard_error
   - equivalence_test
   - equivalence_test.lm
+  - n_parameters
 
 - title: "Parameters Engineering"
   contents:
@@ -46,14 +49,6 @@ reference:
   - parameters_bootstrap
   - model_simulate
   - parameters_simulate
-  - parameters_standardize
-
-- title: "Data Standardization"
-  contents:
-  - standardize
-  - standardize.lm
-  - standardize.data.frame
-  - normalize
 
 - title: "Variable/Feature Reduction"
   contents:
@@ -71,12 +66,6 @@ reference:
   - DRR
   - ICA
 
-- title: "Index Conversion"
-  contents:
-  - d_to_r
-  - odds_to_d
-  - odds_to_probs
-
 - title: "Data Properties"
   contents:
   - describe_distribution
@@ -92,15 +81,16 @@ reference:
 
 - title: "Table and Value Formatting"
   contents:
+  - format_algorithm
   - format_bf
   - format_ci
+  - format_model
   - format_number
   - format_order
   - format_p
   - format_parameters
   - format_pd
   - format_rope
-  - format_standardize
   - parameters_table
   - parameters_type
   - standardize_names
@@ -121,8 +111,6 @@ navbar:
     menu:
       - text: 'Bootstrapped parameters'
         href: articles/bootstrapping.html
-      - text: 'Standardized parameters'
-        href: articles/standardization.html
   - text: Parameters Selection
     href: articles/parameters_selection.html
   - text: Dimension Reduction
