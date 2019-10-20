@@ -18,6 +18,7 @@
 - `check_multimodal()` to check if a distribution is unimodal or multimodal.
 - `p_value_robust()`, `ci_robust()` and `standard_error_robust()` to compute robust standard errors, and p-values or confidence intervals based on robust standard errors.
 - The `method`-argument for `ci()` gets a new option, `"robust"`, to compute confidence intervals based on robust standard errors. Furthermore, `ci_wald()` gets a `robust`-argument to do the same.
+- Add `plot()`-methods for `principal_components()`.
 
 ## Bug fixes
 

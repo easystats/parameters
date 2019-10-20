@@ -57,10 +57,10 @@ model_parameters.PCA <- function(model, sort = FALSE, threshold = NULL, labels =
   # add class-attribute for printing
   if ("PCA" %in% class(model)) {
     attr(loadings, "type") <- "pca"
-    class(loadings) <- c("parameters_pca", class(loadings))
+    class(loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(loadings)))
   } else if ("FAMD" %in% class(model)) {
     attr(loadings, "type") <- "fa"
-    class(loadings) <- c("parameters_efa", class(loadings))
+    class(loadings) <- unique(c("parameters_efa", "see_parameters_efa", class(loadings)))
   }
 
   loadings

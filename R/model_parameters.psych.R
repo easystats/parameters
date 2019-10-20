@@ -115,9 +115,9 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
 
   # add class-attribute for printing
   if (model$fn == "principal") {
-    class(loadings) <- c("parameters_pca", class(loadings))
+    class(loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(loadings)))
   } else {
-    class(loadings) <- c("parameters_efa", class(loadings))
+    class(loadings) <- unique(c("parameters_efa", "see_parameters_efa", class(loadings)))
   }
 
   loadings
