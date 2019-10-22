@@ -404,7 +404,7 @@ ci.lme <- function(x, ci = .95, ...) {
 #' @importFrom insight print_color
 #' @importFrom stats qnorm
 #' @export
-ci.parameters_std_classic <- function(x, ci = .95, ...) {
+ci.effectsize_std_params <- function(x, ci = .95, ...) {
   se <- attr(x, "standard_error")
 
   if (is.null(se)) {
