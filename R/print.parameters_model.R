@@ -9,7 +9,7 @@
 #'   printed in a separate table. If \code{FALSE}, model parameters are printed
 #'   in a single table and a \code{Component} column is added to the output.
 #' @inheritParams parameters_table
-#'
+#' @inheritParams format_p
 #' @return \code{NULL}
 #'
 #' @examples
@@ -29,25 +29,25 @@
 #' print(mp, split_components = FALSE)
 #' @importFrom insight format_table
 #' @export
-print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
+print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, digits = 3, ...) {
 
-  if(!is.null(attributes(x)$title)){
+  if (!is.null(attributes(x)$title)) {
     insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
   }
 
   if ("Component" %in% names(x) && length(unique(x$Component)) > 1 && split_components) {
-    .print_model_parms_components(x, pretty_names, ...)
+    .print_model_parms_components(x, pretty_names, digits = digits, ...)
   } else if ("Response" %in% names(x) && length(unique(x$Response)) > 1 && split_components) {
-    .print_model_parms_components(x, pretty_names, split_column = "Response", ...)
+    .print_model_parms_components(x, pretty_names, split_column = "Response", digits = digits, ...)
   } else {
-    formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
+    formatted_table <- parameters_table(x, pretty_names = pretty_names, digits = digits, ...)
     cat(insight::format_table(formatted_table))
   }
 }
 
 
 #' @keywords internal
-.print_model_parms_components <- function(x, pretty_names, split_column = "Component", ...) {
+.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = digits, ...) {
 
 
   # make sure we have correct sorting here...
@@ -85,7 +85,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     # Don't print if empty col
     tables[[type]][sapply(tables[[type]], function(x){all(x == "") | all(is.na(x))})] <- NULL
 
-    formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, ...)
+    formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, digits = digits, ...)
 
     component_name <- switch(
       type,

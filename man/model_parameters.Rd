@@ -33,6 +33,9 @@ Compute and extract model parameters. See the documentation for your object's cl
   \item{\link[=model_parameters.kmeans]{Cluster models (k-means, ...)}}
  }
 }
+\note{
+The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output.
+}
 \seealso{
 \code{\link[=standardize_names]{standardize_names()}} to rename
   columns into a consistent, standardized naming scheme.

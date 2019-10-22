@@ -27,6 +27,7 @@ Parts of the **parameter** package are restructured and functions focussing on a
 
 - Added indices of model fit to `n_factors()` ([Finch, 2019](https://doi.org/10.1177/0013164419865769))
 - The `method`-argument for `ci()` gets a new option, `"robust"`, to compute confidence intervals based on robust standard errors. Furthermore, `ci_wald()` gets a `robust`-argument to do the same.
+- `format_p()` and `print.parameters_model()` get a `digits`-argument to set the amount of digits for p-values.
 
 ## Bug fixes
 

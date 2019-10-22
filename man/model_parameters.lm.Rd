@@ -31,8 +31,15 @@ model <- lm(mpg ~ wt + cyl, data = mtcars)
 model_parameters(model)
 model_parameters(model, bootstrap = TRUE)
 
+# different p-value style in output
+mp <- model_parameters(model)
+print(mp, digits = 5)
+print(mp, digits = "scientific")
+
+# logistic regression model
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 model_parameters(model)
+
 }
 \seealso{
 \code{\link[=standardize_names]{standardize_names()}} to rename
