@@ -23,6 +23,7 @@
 #'   details).
 #' @param vcov_args List of named vectors, used as additional arguments that
 #'   are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.
+#' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
 #'   if \code{robust = TRUE}, arguments \code{vcov_estimation}, \code{vcov_type}
 #'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.

@@ -43,7 +43,7 @@ convert_data_to_numeric.logical <- convert_data_to_numeric.numeric
 #' @export
 convert_data_to_numeric.factor <- function(x, dummy_factors = TRUE, ...) {
   if (dummy_factors) {
-    out <- as.data.frame(stats::model.matrix(~x))
+    out <- as.data.frame(stats::model.matrix(~x, contrasts.arg = list(x = "contr.treatment")))
     out[1] <- as.numeric(rowSums(out[2:ncol(out)]) == 0)
     names(out) <- levels(x)
   } else {
