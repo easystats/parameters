@@ -49,7 +49,7 @@
   parameters <- parameters[match(original_order, parameters$.id), ]
 
   # Renaming
-  names(parameters) <- gsub("Statistic", attr(.statistic, "statistic", exact = TRUE), names(parameters))
+  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(.statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters))
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
   # Reorder

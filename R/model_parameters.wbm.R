@@ -1,5 +1,5 @@
 #' @export
-model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, ci_method = "wald", iterations = 1000, ...) {
+model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)

@@ -446,6 +446,33 @@ standard_error.nlrq <- standard_error.rq
 
 
 #' @export
+standard_error.multinom <- function(model, ...) {
+  se <- tryCatch({
+    tmp <- summary(model)$standard.errors
+    if (is.null(tmp)) {
+      vc <- insight::get_varcov(model)
+      tmp <- as.vector(sqrt(diag(vc)))
+    }
+    tmp
+  },
+  error = function(e) {
+    vc <- insight::get_varcov(model)
+    as.vector(sqrt(diag(vc)))
+  }
+  )
+
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    ## TODO change to "$Parameter" once fixed in insight
+    Parameter = params[[1]],
+    SE = se
+  )
+}
+
+
+
+#' @export
 standard_error.biglm <- function(model, ...) {
   cs <- summary(model)$mat
   params <- insight::get_parameters(model)

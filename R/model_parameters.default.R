@@ -42,6 +42,24 @@ model_parameters.lme <- function(model, ci = .95, bootstrap = FALSE, iterations 
 
 
 #' @export
+model_parameters.clm2 <- model_parameters.lme
+
+#' @export
+model_parameters.svyglm.nb <- model_parameters.lme
+
+#' @export
+model_parameters.svyglm.zip <- model_parameters.lme
+
+#' @export
+model_parameters.glimML <- model_parameters.lme
+
+#' @export
+model_parameters.tobit <- model_parameters.lme
+
+#' @export
+model_parameters.polr <- model_parameters.lme
+
+#' @export
 model_parameters.clm <- model_parameters.lme
 
 #' @export
@@ -128,29 +146,23 @@ model_parameters.crch <- model_parameters.lme
 #' @export
 model_parameters.truncreg <- model_parameters.lme
 
-
-
-
-
-# objects that set standardize to FALSE by default ---------------------------
+#' @export
+model_parameters.plm <- model_parameters.lme
 
 #' @export
-model_parameters.plm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
-  model_parameters.lme(model = model, ci = ci, bootstrap = bootstrap, iterations = iterations, ...)
-}
+model_parameters.survreg <- model_parameters.lme
 
 #' @export
-model_parameters.survreg <- model_parameters.plm
+model_parameters.psm <- model_parameters.lme
 
 #' @export
-model_parameters.psm <- model_parameters.plm
+model_parameters.ivreg <- model_parameters.lme
 
 #' @export
-model_parameters.ivreg <- model_parameters.plm
+model_parameters.LORgee <- model_parameters.lme
 
 #' @export
-model_parameters.LORgee <- model_parameters.plm
-
+model_parameters.multinom <- model_parameters.lme
 
 
 

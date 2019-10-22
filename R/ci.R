@@ -285,6 +285,9 @@ ci.svyglm.zip <- ci.gamlss
 ci.vglm <- ci.gamlss
 
 #' @export
+ci.multinom <- ci.gamlss
+
+#' @export
 ci.svyglm.glimML <- ci.gamlss
 
 #' @export
