@@ -6,6 +6,7 @@
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param bootstrap Should estimates be based on bootstrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}).
 #' @param iterations The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.
+#' @param standardize The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[=effectsize::standardize_parameters]{standardize_parameters()}}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
@@ -28,7 +29,7 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.lm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
+model_parameters.lm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, ...) {
 
   # Type of model
   info <- insight::model_info(model)
@@ -37,7 +38,7 @@ model_parameters.lm <- function(model, ci = .95, bootstrap = FALSE, iterations =
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_glm(model, ci = ci, linear = info$is_linear)
+    parameters <- .extract_parameters_glm(model, ci = ci, linear = info$is_linear, standardize = standardize)
   }
 
 

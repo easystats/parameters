@@ -71,7 +71,7 @@
 
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_glm <- function(model, ci = .95, linear = FALSE) {
+.extract_parameters_glm <- function(model, ci = .95, linear = FALSE, standardize = NULL) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
 
   if (linear) {
@@ -99,7 +99,7 @@
 
 
   # Reorder
-  order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "df_residual", "p")
+  order <- c("Parameter", "Coefficient", "Std_Coefficient", "SE", ci_cols, "t", "z", "df_residual", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   rownames(parameters) <- NULL
