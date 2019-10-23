@@ -19,9 +19,8 @@
 #' model_parameters(model, bootstrap = TRUE)
 #'
 #' # different p-value style in output
-#' mp <- model_parameters(model)
-#' print(mp, digits = 5)
-#' print(mp, digits = "scientific")
+#' model_parameters(model, p_digits = 5)
+#' model_parameters(model, digits = 3, ci_digits = 4, p_digits = "scientific")
 #'
 #' # logistic regression model
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
@@ -42,8 +41,7 @@ model_parameters.lm <- function(model, ci = .95, bootstrap = FALSE, iterations =
   }
 
 
-  attr(parameters, "pretty_names") <- format_parameters(model)
-  attr(parameters, "ci") <- ci
+  parameters <- .add_model_parameters_attributes(parameters, model, ci, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }

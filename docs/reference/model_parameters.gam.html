@@ -197,22 +197,22 @@
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mgcv</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: nlme</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'nlme'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:lme4':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    lmList</span></div><div class='output co'>#&gt; <span class='message'>This is mgcv 1.8-29. For overview type 'help("mgcv-package")'.</span></div><div class='input'>
+#&gt; <span class='message'>    lmList</span></div><div class='output co'>#&gt; <span class='message'>This is mgcv 1.8-28. For overview type 'help("mgcv-package")'.</span></div><div class='input'>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/gamSim.html'>gamSim</a></span>(<span class='fl'>1</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>400</span>, <span class='kw'>dist</span> <span class='kw'>=</span> <span class='st'>"normal"</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Gu &amp; Wahba 4 term additive model</div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/gam.html'>gam</a></span>(<span class='no'>y</span> ~ <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x0</span>) + <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x1</span>) + <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x2</span>) + <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x3</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dat</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |       95% CI |     df |      p
-#&gt; -----------------------------------------------------------------
-#&gt; (Intercept) |        7.99 | 0.10 | [7.79, 8.20] | 384.65 | &lt; .001
+#&gt; </span><span>Parameter   | Coefficient |   SE |       95% CI |     t |     df |      p
+#&gt; -------------------------------------------------------------------------
+#&gt; (Intercept) |        7.99 | 0.10 | [7.79, 8.20] | 76.94 | 384.65 | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Smooth Terms component
 #&gt; 
-#&gt; </span><span>Parameter | Coefficient |     df |      p
-#&gt; -----------------------------------------
-#&gt; s(x0)     |        2.72 | 384.65 | &lt; .001
-#&gt; s(x1)     |        2.87 | 384.65 | &lt; .001
-#&gt; s(x2)     |        7.72 | 384.65 | &lt; .001
-#&gt; s(x3)     |        1.05 | 384.65 | &lt; .05 
+#&gt; </span><span>Parameter | Coefficient |     t |     df |      p
+#&gt; -------------------------------------------------
+#&gt; s(x0)     |        2.72 | 11.67 | 384.65 | &lt; .001
+#&gt; s(x1)     |        2.87 | 76.70 | 384.65 | &lt; .001
+#&gt; s(x2)     |        7.72 | 78.38 | 384.65 | &lt; .001
+#&gt; s(x3)     |        1.05 |  3.78 | 384.65 | 0.044 
 #&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

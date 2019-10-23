@@ -36,9 +36,7 @@ model_parameters.zeroinfl <- function(model, ci = .95, bootstrap = FALSE, iterat
   }
 
 
-
-  attr(parameters, "pretty_names") <- format_parameters(model)
-  attr(parameters, "ci") <- ci
+  parameters <- .add_model_parameters_attributes(parameters, model, ci, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }

@@ -32,9 +32,8 @@ model_parameters(model)
 model_parameters(model, bootstrap = TRUE)
 
 # different p-value style in output
-mp <- model_parameters(model)
-print(mp, digits = 5)
-print(mp, digits = "scientific")
+model_parameters(model, p_digits = 5)
+model_parameters(model, digits = 3, ci_digits = 4, p_digits = "scientific")
 
 # logistic regression model
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")

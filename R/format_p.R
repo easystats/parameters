@@ -6,7 +6,7 @@
 #' @param stars Add significance stars (e.g., p < .001***).
 #' @param stars_only Return only significance stars.
 #' @param name Name prefixing the text. Can be \code{NULL}.
-#' @param digits Number of significant digits. May also be \code{"scientific"} to return exact p-values in scientific notation.
+#' @param digits Number of significant digits. May also be \code{"scientific"} to return exact p-values in scientific notation, or \code{"apa"} to use an APA-style for p-values.
 #' @param ... Arguments from other methods.
 #' @inherit insight::format_value
 #'
@@ -22,7 +22,17 @@
 #' @importFrom insight format_value
 #' @export
 format_p <- function(p, stars = FALSE, stars_only = FALSE, name = "p", missing = "", digits = 3, ...) {
-  if (digits == "scientific") {
+  if (digits == "apa") {
+    text <- ifelse(is.na(p), NA,
+      ifelse(p < 0.001, "< .001***",
+        ifelse(p < 0.01, "< .01**",
+          ifelse(p < 0.05, "< .05*",
+            paste0("= ", insight::format_value(p, digits))
+          )
+        )
+      )
+    )
+  } else if (digits == "scientific") {
     text <- ifelse(is.na(p), NA,
       ifelse(p < 0.001, sprintf("= %.5e***", p),
         ifelse(p < 0.01, sprintf("= %.5e**", p),

@@ -157,10 +157,6 @@
 
     <pre class="usage"><span class='co'># S3 method for lm</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for polr</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -204,17 +200,29 @@
 #&gt; -----------------------------------------------------------------------
 #&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 29 | &lt; .001
 #&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 29 | &lt; .001
-#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 29 | &lt; .01 </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
+#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 29 | 0.001 </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
 #&gt; (Intercept) |       39.74 | [35.33, 44.19] | &lt; .001
 #&gt; wt          |       -3.25 | [-4.87, -1.92] | &lt; .001
-#&gt; cyl         |       -1.46 | [-2.25, -0.72] | &lt; .01 </div><div class='input'>
+#&gt; cyl         |       -1.46 | [-2.25, -0.72] | 0.002 </div><div class='input'>
+<span class='co'># different p-value style in output</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>p_digits</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |       p
+#&gt; ------------------------------------------------------------------------
+#&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 29 | 0.00000
+#&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 29 | 0.00022
+#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 29 | 0.00106</div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>ci_digits</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>p_digits</span> <span class='kw'>=</span> <span class='st'>"scientific"</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |    SE |             95% CI |      t | df |           p
+#&gt; ----------------------------------------------------------------------------------
+#&gt; (Intercept) |      39.686 | 1.715 | [36.1787, 43.1938] | 23.141 | 29 | 3.04318e-20
+#&gt; wt          |      -3.191 | 0.757 | [-4.7390, -1.6429] | -4.216 | 29 | 2.22020e-04
+#&gt; cyl         |      -1.508 | 0.415 | [-2.3559, -0.6597] | -3.636 | 29 | 1.06428e-03</div><div class='input'>
+<span class='co'># logistic regression model</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span class='message'>Waiting for profiling to be done...</span></div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     z | df |     p
 #&gt; ----------------------------------------------------------------------
-#&gt; (Intercept) |       10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 29 | &lt; .05
-#&gt; wt          |        2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 29 | 0.17 
-#&gt; cyl         |       -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 29 | &lt; .05</div></pre>
+#&gt; (Intercept) |       10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 29 | 0.011
+#&gt; wt          |        2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 29 | 0.174
+#&gt; cyl         |       -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 29 | 0.034</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

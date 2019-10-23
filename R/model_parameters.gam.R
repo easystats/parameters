@@ -26,8 +26,7 @@ model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations 
     parameters <- .extract_parameters_generic(model, ci = ci, component = "all", merge_by = c("Parameter", "Component"))
   }
 
-  attr(parameters, "pretty_names") <- format_parameters(model)
-  attr(parameters, "ci") <- ci
+  parameters <- .add_model_parameters_attributes(parameters, model, ci, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }

@@ -56,6 +56,8 @@ value \code{1} (unless the factor has numeric levels, which are converted
 to the corresponding numeric value). By default, \code{NA} is returned
 for factors or character vectors.}
 
+\item{verbose}{Toggle warnings.}
+
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are computed
 by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions

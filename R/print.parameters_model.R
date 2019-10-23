@@ -9,7 +9,6 @@
 #'   printed in a separate table. If \code{FALSE}, model parameters are printed
 #'   in a single table and a \code{Component} column is added to the output.
 #' @inheritParams parameters_table
-#' @inheritParams format_p
 #' @return \code{NULL}
 #'
 #' @examples
@@ -29,25 +28,30 @@
 #' print(mp, split_components = FALSE)
 #' @importFrom insight format_table
 #' @export
-print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, digits = 3, ...) {
+print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
 
   if (!is.null(attributes(x)$title)) {
     insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
   }
 
   if ("Component" %in% names(x) && length(unique(x$Component)) > 1 && split_components) {
-    .print_model_parms_components(x, pretty_names, digits = digits, ...)
+    .print_model_parms_components(x, pretty_names, ...)
   } else if ("Response" %in% names(x) && length(unique(x$Response)) > 1 && split_components) {
-    .print_model_parms_components(x, pretty_names, split_column = "Response", digits = digits, ...)
+    .print_model_parms_components(x, pretty_names, split_column = "Response", ...)
   } else {
-    formatted_table <- parameters_table(x, pretty_names = pretty_names, digits = digits, ...)
+    formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
     cat(insight::format_table(formatted_table))
   }
 }
 
 
 #' @keywords internal
-.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = digits, ...) {
+.print_model_parms_components <- function(x, pretty_names, split_column = "Component", ...) {
+
+  # check if user supplied digits attributes
+  digits <- attributes(x)$digits
+  ci_digits <- attributes(x)$ci_digits
+  p_digits <- attributes(x)$p_digits
 
 
   # make sure we have correct sorting here...
@@ -85,7 +89,11 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     # Don't print if empty col
     tables[[type]][sapply(tables[[type]], function(x){all(x == "") | all(is.na(x))})] <- NULL
 
-    formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, digits = digits, ...)
+    attr(tables[[type]], "digits") <- digits
+    attr(tables[[type]], "ci_digits") <- ci_digits
+    attr(tables[[type]], "p_digits") <- p_digits
+
+    formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, ...)
 
     component_name <- switch(
       type,

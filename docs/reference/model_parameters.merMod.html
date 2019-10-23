@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mixed Model Parameters — model_parameters.glmmTMB • parameters</title>
+<title>Mixed Model Parameters — model_parameters.lme • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Mixed Model Parameters — model_parameters.glmmTMB" />
+<meta property="og:title" content="Mixed Model Parameters — model_parameters.lme" />
 <meta property="og:description" content="Parameters of mixed models." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -155,14 +155,14 @@
     <p>Parameters of mixed models.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for glmmTMB</span>
+    <pre class="usage"><span class='co'># S3 method for lme</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for glmmTMB</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>,
   <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
-
-<span class='co'># S3 method for lme</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for merMod</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -188,15 +188,15 @@
       <td><p>The number of draws to simulate/bootstrap.</p></td>
     </tr>
     <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
       <th>component</th>
       <td><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     <tr>
       <th>p_method</th>
@@ -234,23 +234,23 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 )
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |  df |      p
-#&gt; ----------------------------------------------------------------
-#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | 633 | 0.19  
-#&gt; spp (PR)    |       -1.27 | 0.24 | [-1.74, -0.80] | 633 | &lt; .001
-#&gt; spp (DM)    |        0.27 | 0.14 | [ 0.00,  0.54] | 633 | 0.05  
-#&gt; spp (EC-A)  |       -0.57 | 0.21 | [-0.97, -0.16] | 633 | &lt; .01 
-#&gt; spp (EC-L)  |        0.67 | 0.13 | [ 0.41,  0.92] | 633 | &lt; .001
-#&gt; spp (DES-L) |        0.63 | 0.13 | [ 0.38,  0.87] | 633 | &lt; .001
-#&gt; spp (DF)    |        0.12 | 0.15 | [-0.17,  0.40] | 633 | 0.44  
-#&gt; mined (no)  |        1.27 | 0.27 | [ 0.74,  1.80] | 633 | &lt; .001
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
+#&gt; ------------------------------------------------------------------------
+#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 633 | 0.194 
+#&gt; spp (PR)    |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | 633 | &lt; .001
+#&gt; spp (DM)    |        0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 633 | 0.051 
+#&gt; spp (EC-A)  |       -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 633 | 0.006 
+#&gt; spp (EC-L)  |        0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | 633 | &lt; .001
+#&gt; spp (DES-L) |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | 633 | &lt; .001
+#&gt; spp (DF)    |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 633 | 0.435 
+#&gt; mined (no)  |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | 633 | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |  df |      p
-#&gt; ----------------------------------------------------------------
-#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] | 633 | &lt; .01 
-#&gt; mined (no)  |       -1.84 | 0.31 | [-2.46, -1.23] | 633 | &lt; .001
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
+#&gt; ------------------------------------------------------------------------
+#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 633 | 0.004 
+#&gt; mined (no)  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | 633 | &lt; .001
 #&gt; </div><div class='input'><span class='co'># \donttest{</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p

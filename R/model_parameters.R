@@ -33,3 +33,34 @@ model_parameters <- function(model, ...) {
 #' @rdname model_parameters
 #' @export
 parameters <- model_parameters
+
+
+
+
+.add_model_parameters_attributes <- function(parameters, model, ci, ...) {
+  dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
+
+  attr(parameters, "pretty_names") <- format_parameters(model)
+  attr(parameters, "ci") <- ci
+
+
+  if ("digits" %in% names(dot.arguments)) {
+    attr(parameters, "digits") <- eval(dot.arguments[["digits"]])
+  } else {
+    attr(parameters, "digits") <- 2
+  }
+
+  if ("ci_digits" %in% names(dot.arguments)) {
+    attr(parameters, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
+  } else {
+    attr(parameters, "ci_digits") <- 2
+  }
+
+  if ("p_digits" %in% names(dot.arguments)) {
+    attr(parameters, "p_digits") <- eval(dot.arguments[["p_digits"]])
+  } else {
+    attr(parameters, "p_digits") <- 3
+  }
+
+  parameters
+}

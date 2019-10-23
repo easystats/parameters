@@ -18,7 +18,7 @@ format_p(p, stars = FALSE, stars_only = FALSE, name = "p",
 
 \item{missing}{Value by which \code{NA} values are replaced. By default, an empty string (i.e. \code{""}) is returned for \code{NA}.}
 
-\item{digits}{Number of significant digits. May also be \code{"scientific"} to return exact p-values in scientific notation.}
+\item{digits}{Number of significant digits. May also be \code{"scientific"} to return exact p-values in scientific notation, or \code{"apa"} to use an APA-style for p-values.}
 
 \item{...}{Arguments from other methods.}
 }
