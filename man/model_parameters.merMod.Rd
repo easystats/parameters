@@ -8,7 +8,7 @@
 \title{Mixed Model Parameters}
 \usage{
 \method{model_parameters}{lme}(model, ci = 0.95, bootstrap = FALSE,
-  iterations = 1000, ...)
+  iterations = 1000, standardize = NULL, ...)
 
 \method{model_parameters}{glmmTMB}(model, ci = 0.95, bootstrap = FALSE,
   iterations = 1000, component = c("all", "conditional", "zi",
@@ -25,6 +25,8 @@
 \item{bootstrap}{Should estimates be based on bootstrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}).}
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
+
+\item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[=effectsize::standardize_parameters]{standardize_parameters()}}.}
 
 \item{...}{Arguments passed to or from other methods.}
 

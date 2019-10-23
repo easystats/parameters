@@ -4,7 +4,7 @@
 #' @importFrom insight get_statistic get_parameters
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), ...) {
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, ...) {
   parameters <- insight::get_parameters(model, effects = "fixed", component = component)
   .statistic <- insight::get_statistic(model, component = component)
 
@@ -30,6 +30,15 @@
   }
 
 
+  # Std Coefficients
+  if (!is.null(standardize)) {
+    if (!requireNamespace("effectsize", quietly = TRUE)) {
+      insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
+    } else {
+      parameters <- merge(parameters, effectsize::standardize_parameters(model, method = standardize), by = merge_by)
+    }
+  }
+
   # p value
   parameters <- merge(parameters, p_value(model, component = component), by = merge_by)
 
@@ -53,7 +62,7 @@
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
   # Reorder
-  col_order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_residual", "p", "Component", "Response")
+  col_order <- c("Parameter", "Coefficient", "Std_Coefficient", "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_residual", "p", "Component", "Response")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   # remove Component column if not needed
@@ -97,6 +106,16 @@
     ci_cols <- c()
   }
 
+  # Std Coefficients
+  if (!is.null(standardize)) {
+    if (!requireNamespace("effectsize", quietly = TRUE)) {
+      insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
+    } else {
+      col_order <- parameters$Parameter
+      parameters <- merge(parameters, effectsize::standardize_parameters(model, method = standardize), by = "Parameter")
+      parameters <- parameters[match(col_order, parameters$Parameter), ]
+    }
+  }
 
   # Reorder
   order <- c("Parameter", "Coefficient", "Std_Coefficient", "SE", ci_cols, "t", "z", "df_residual", "p")

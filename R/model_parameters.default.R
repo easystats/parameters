@@ -1,19 +1,20 @@
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.lme <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
+model_parameters.lme <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, ...) {
   .model_parameters_generic(
     model = model,
     ci = ci,
     bootstrap = bootstrap,
     iterations = iterations,
     merge_by = "Parameter",
+    standardize = standardize,
     ...
   )
 }
 
 
 
-.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", ...) {
+.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, ...) {
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -24,9 +25,9 @@ model_parameters.lme <- function(model, ci = .95, bootstrap = FALSE, iterations 
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- if (is.null(comp_argument)) {
-      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, ...)
+      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, ...)
     } else {
-      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, ...)
+      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, ...)
     }
   }
 
@@ -169,13 +170,14 @@ model_parameters.multinom <- model_parameters.lme
 
 
 #' @export
-model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
+model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, ...) {
   .model_parameters_generic(
     model = model,
     ci = ci,
     bootstrap = bootstrap,
     iterations = iterations,
     merge_by = c("Parameter", "Response"),
+    standardize = standardize,
     ...
   )
 }
