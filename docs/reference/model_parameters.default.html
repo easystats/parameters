@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mixed Model Parameters — model_parameters.merMod • parameters</title>
+<title>Parameters of (General) Linear Models — model_parameters.default • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Mixed Model Parameters — model_parameters.merMod" />
-<meta property="og:description" content="Parameters of (linear) mixed models." />
+<meta property="og:title" content="Parameters of (General) Linear Models — model_parameters.default" />
+<meta property="og:description" content="Extract and compute indices and measures to describe parameters of (general) linear models (GLMs)." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,30 +146,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mixed Model Parameters</h1>
+    <h1>Parameters of (General) Linear Models</h1>
     
-    <div class="hidden name"><code>model_parameters.merMod.Rd</code></div>
+    <div class="hidden name"><code>model_parameters.default.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameters of (linear) mixed models.</p>
+    <p>Extract and compute indices and measures to describe parameters of (general) linear models (GLMs).</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for merMod</span>
+    <pre class="usage"><span class='co'># S3 method for default</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>p_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for glmmTMB</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>,
-  <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>A mixed model.</p></td>
+      <td><p>Model object.</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -180,27 +175,20 @@
       <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code>).</p></td>
     </tr>
     <tr>
-      <th>p_method</th>
-      <td><p>Method for computing p values. See <code><a href='p_value.html'>p_value()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>ci_method</th>
-      <td><p>Method for computing confidence intervals (CI). See <code><a href='ci.merMod.html'>ci()</a></code>.</p></td>
-    </tr>
-    <tr>
       <th>iterations</th>
       <td><p>The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <th>standardize</th>
+      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code>standardize_parameters()</code>.</p></td>
     </tr>
     <tr>
-      <th>component</th>
-      <td><p>Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
-<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
+      <th>exponentiate</th>
+      <td><p>Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
 
@@ -214,47 +202,43 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>glmmTMB</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
 #&gt; -----------------------------------------------------------------------
-#&gt; (Intercept) |       36.19 | 2.19 | [31.90, 40.48] | 16.52 | 28 | &lt; .001
-#&gt; wt          |       -5.05 | 0.64 | [-6.30, -3.79] | -7.89 | 28 | &lt; .001</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
-  <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
-  <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
-)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
-#&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
-#&gt; ------------------------------------------------------------------------
-#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 633 | 0.194 
-#&gt; spp (PR)    |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | 633 | &lt; .001
-#&gt; spp (DM)    |        0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 633 | 0.051 
-#&gt; spp (EC-A)  |       -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 633 | 0.006 
-#&gt; spp (EC-L)  |        0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | 633 | &lt; .001
-#&gt; spp (DES-L) |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | 633 | &lt; .001
-#&gt; spp (DF)    |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 633 | 0.435 
-#&gt; mined (no)  |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | 633 | &lt; .001
-#&gt; 
-#&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
-#&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
-#&gt; ------------------------------------------------------------------------
-#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 633 | 0.004 
-#&gt; mined (no)  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | 633 | &lt; .001
-#&gt; </div><div class='input'><span class='co'># \donttest{</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
+#&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 29 | &lt; .001
+#&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 29 | &lt; .001
+#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 29 | 0.001 </div><div class='input'>
+<span class='co'># bootstrapped parameters</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
-#&gt; (Intercept) |       36.78 | [32.27, 39.76] | &lt; .001
-#&gt; wt          |       -5.14 | [-6.18, -3.77] | &lt; .001</div><div class='input'># }
-
-</div></span></pre>
+#&gt; (Intercept) |       39.73 | [35.43, 44.02] | &lt; .001
+#&gt; wt          |       -3.21 | [-4.98, -1.97] | &lt; .001
+#&gt; cyl         |       -1.47 | [-2.17, -0.70] | 0.004 </div><div class='input'>
+<span class='co'># standardized parameters</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient (std.) |   SE |         95% CI |     t | df |      p
+#&gt; ------------------------------------------------------------------------------
+#&gt; (Intercept) |               0.00 | 0.08 | [-0.15,  0.15] | 23.14 | 29 | 1.000 
+#&gt; wt          |              -0.52 | 0.12 | [-0.77, -0.27] | -4.22 | 29 | &lt; .001
+#&gt; cyl         |              -0.45 | 0.12 | [-0.70, -0.20] | -3.64 | 29 | 0.001 </div><div class='input'>
+<span class='co'># different p-value style in output</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>p_digits</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |       p
+#&gt; ------------------------------------------------------------------------
+#&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 29 | 0.00000
+#&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 29 | 0.00022
+#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 29 | 0.00106</div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>ci_digits</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>p_digits</span> <span class='kw'>=</span> <span class='st'>"scientific"</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |    SE |             95% CI |      t | df |           p
+#&gt; ----------------------------------------------------------------------------------
+#&gt; (Intercept) |      39.686 | 1.715 | [36.1787, 43.1938] | 23.141 | 29 | 3.04318e-20
+#&gt; wt          |      -3.191 | 0.757 | [-4.7390, -1.6429] | -4.216 | 29 | 2.22020e-04
+#&gt; cyl         |      -1.508 | 0.415 | [-2.3559, -0.6597] | -3.636 | 29 | 1.06428e-03</div><div class='input'>
+<span class='co'># logistic regression model</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     z | df |     p
+#&gt; ----------------------------------------------------------------------
+#&gt; (Intercept) |       10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 29 | 0.011
+#&gt; wt          |        2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 29 | 0.174
+#&gt; cyl         |       -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 29 | 0.034</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -168,7 +168,7 @@ Cluster models (k-means, ...)
     <p>Compute and extract model parameters. See the documentation for your object's class:</p><ul>
 <li><p><a href='model_parameters.htest.html'>Correlations and t-tests</a></p></li>
 <li><p><a href='model_parameters.aov.html'>ANOVAs</a></p></li>
-<li><p><a href='model_parameters.lm.html'>Regression models</a> (<code>lm</code>, <code>glm</code>, <span class="pkg">survey</span>, ...)</p></li>
+<li><p><a href='model_parameters.default.html'>Regression models</a> (<code>lm</code>, <code>glm</code>, <span class="pkg">survey</span>, ...)</p></li>
 <li><p><a href='model_parameters.gam.html'>Additive models</a> (<code>gam</code>, <code>gamm</code>, ...)</p></li>
 <li><p><a href='model_parameters.zeroinfl.html'>Zero-inflated models</a> (<code>hurdle</code>, <code>zeroinfl</code>, <code>zerocount</code>)</p></li>
 <li><p><a href='model_parameters.merMod.html'>Mixed models</a> (<span class="pkg">lme4</span>, <span class="pkg">nlme</span>, <span class="pkg">glmmTMB</span>, ...)</p></li>
@@ -201,6 +201,15 @@ Cluster models (k-means, ...)
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of indices related to the model's parameters.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Standardization is based on <code>standardize_parameters()</code>.
+  In case of <code>standardize = "refit"</code>, the data used to fit the model
+  will be standardized and the model is completely refitted. In such cases,
+  standard errors and confidence intervals refer to the standardized coefficient.
+  For other methods of standardizing, unstandardized and standardized coefficients
+  are shown, where standard errors and confidence intervals relate to the
+  unstandardized coefficients.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The <code><a href='print.html'>print()</a></code> method has several arguments to tweak the output.</p>
@@ -215,6 +224,7 @@ Cluster models (k-means, ...)
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#note">Note</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>

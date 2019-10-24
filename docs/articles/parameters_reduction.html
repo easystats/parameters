@@ -136,11 +136,11 @@
 <p>We can explore a reduction of the number of parameters with the <code><a href="../reference/parameters_reduction.html">parameters_reduction()</a></code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">newmodel &lt;-<span class="st"> </span><span class="kw"><a href="../reference/parameters_reduction.html">parameters_reduction</a></span>(model)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>(newmodel)</a></code></pre></div>
-<pre><code>&gt; Parameter                                                                | Coefficient |   SE |         95% CI |     t | df |      p
-&gt; ------------------------------------------------------------------------------------------------------------------------------------
-&gt; (Intercept)                                                              |       64.63 | 1.57 | [61.41, 67.85] | 41.19 | 27 | &lt; .001
-&gt; `raises_0.88/learning_0.82/complaints_0.78/privileges_0.70/advance_0.68` |        4.62 | 0.90 | [ 2.78,  6.46] |  5.16 | 27 | &lt; .001
-&gt; critical_0.80                                                            |       -3.41 | 1.59 | [-6.67, -0.14] | -2.14 | 27 | 0.041</code></pre>
+<pre><code>&gt; Parameter     | Coefficient |   SE |             95% CI |     t | df |      p
+&gt; -----------------------------------------------------------------------------
+&gt; (Intercept)   |       64.63 | 1.57 | [  61.41,   67.85] | 41.19 | 27 | &lt; .001
+&gt;               |             |      |                    |       |    |       
+&gt; critical_0.80 |       -3.41 | 1.59 | [  -6.67,   -0.14] | -2.14 | 27 | 0.041</code></pre>
 <p>This quickly <em>hints</em> toward the fact that the model could be represented via <strong>two “latent” dimensions</strong>, one correlated with all the positive things that a company has to offer, and the other one related to the amount of negative critiques received by the employees. These two dimensions have a positive and negative relationship with the company rating, respectively.</p>
 <blockquote>
 <p>What does <code><a href="../reference/parameters_reduction.html">parameters_reduction()</a></code> exactly do?</p>
@@ -148,12 +148,12 @@
 <p>This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is “<strong>PCA</strong>”, but other are available via the <code>method</code> argument, such as “<strong>cMDS</strong>”, “<strong>DRR</strong>” or “<strong>ICA</strong>”). Then, it names this new dimensions using the original variables that <em>correlate</em> the most with it. For instance, a variable named ‘V1_0.97/V4_-0.88’ means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/parameters_reduction.html">parameters_reduction</a></span>(model, <span class="dt">method =</span> <span class="st">"cMDS"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
-<pre><code>&gt; Parameter                                                   | Coefficient |   SE |         95% CI |     t | df |      p
-&gt; -----------------------------------------------------------------------------------------------------------------------
-&gt; (Intercept)                                                 |       64.63 | 1.41 | [61.73, 67.53] | 45.80 | 26 | &lt; .001
-&gt; `raises_0.85/complaints_0.84/learning_0.83/privileges_0.74` |        0.43 | 0.07 | [ 0.28,  0.57] |  6.14 | 26 | &lt; .001
-&gt; `advance_-0.60`                                             |        0.32 | 0.13 | [ 0.04,  0.59] |  2.36 | 26 | 0.026 
-&gt; `critical_-0.65`                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 26 | 0.120</code></pre>
+<pre><code>&gt; Parameter   | Coefficient |   SE |             95% CI |     t | df |      p
+&gt; ---------------------------------------------------------------------------
+&gt; (Intercept) |       64.63 | 1.41 | [  61.73,   67.53] | 45.80 | 26 | &lt; .001
+&gt;             |             |      |                    |       |    |       
+&gt;             |             |      |                    |       |    |       
+&gt;             |             |      |                    |       |    |</code></pre>
 <p>A different method (<strong>Classical Multidimensional Scaling - cMDS</strong>) suggests that negative critiques do not have a significant impact on the rating, and that the lack of opportunities of career advancement is a separate dimension with an importance on its own.</p>
 <p>Altough this function can be useful in exploratory data analysis, it’s best to perform the dimension reduction step in a <strong>separate and dedicated stage</strong>, as this is a very important process in the data analysis workflow.</p>
 </div>

@@ -1,8 +1,8 @@
 authors:
-  Dominique Makowski:
-    href: https://dominiquemakowski.github.io/
   Daniel Lüdecke:
     href: https://github.com/strengejacke
+  Dominique Makowski:
+    href: https://dominiquemakowski.github.io/
   Mattan S. Ben-Shachar:
     href: https://github.com/mattansb
 
@@ -16,7 +16,7 @@ reference:
   - model_parameters
   - model_parameters.aov
   - model_parameters.befa
-  - model_parameters.lm
+  - model_parameters.default
   - model_parameters.zeroinfl
   - model_parameters.gam
   - model_parameters.merMod

@@ -71,7 +71,7 @@ standardize_names.parameters_model <- function(data, style = c("easystats", "bro
     cn[cn == "Component"] <- "component"
     cn[cn == "Effects"] <- "effects"
     # more sophisticated replacements
-    cn[cn %in% c("Coefficient", "Median", "Mean", "MAP")] <- "estimate"
+    cn[cn %in% c("Coefficient", "Std_Coefficient", "Median", "Mean", "MAP")] <- "estimate"
     cn[cn %in% c("t", "z", "F", "chisq", "t / F", "z / Chisq")] <- "statistic"
     # fancy regex replacements
     cn <- gsub("^CI_low", "conf.low", cn)
