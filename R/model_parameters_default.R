@@ -7,6 +7,7 @@
 #' @param bootstrap Should estimates be based on bootstrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}).
 #' @param iterations The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.
 #' @param standardize The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[=effectsize::standardize_parameters]{standardize_parameters()}}.
+#' @param exponentiate Logical, indicating whether or not to exponentiate the the coefficients. This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
@@ -34,7 +35,7 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, ...) {
+model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
   .model_parameters_generic(
     model = model,
     ci = ci,
@@ -42,13 +43,14 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     iterations = iterations,
     merge_by = "Parameter",
     standardize = standardize,
+    exponentiate = exponentiate,
     ...
   )
 }
 
 
 
-.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, ...) {
+.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, ...) {
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -65,7 +67,8 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     }
   }
 
-  parameters <- .add_model_parameters_attributes(parameters, model, ci, ...)
+  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
+  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
   parameters

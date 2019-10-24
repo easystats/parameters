@@ -83,11 +83,27 @@ The [`model_parameters()`](https://easystats.github.io/parameters/articles/model
 - It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html).
 
 
+### Clasiccal Regression Models
+
+```{r, warning=FALSE, message=FALSE}
+model <- lm(Sepal.Width ~ Petal.Length * Species + Petal.Width, data = iris)
+
+# regular model parameters
+model_parameters(model)
+
+# standardized parameters
+model_parameters(model, standardize = "refit")
+```
+
+### Mixed Models
+
 ```{r, warning=FALSE, message=FALSE}
 library(lme4)
 
 model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
-model_parameters(model)
+
+# model parameters with p-values based on Kenward-Roger approximation
+model_parameters(model, p_method = "kenward", ci_method = "kenward")
 ```
 
 

@@ -45,12 +45,12 @@ parameters <- model_parameters
 
 
 
-.add_model_parameters_attributes <- function(parameters, model, ci, ...) {
+.add_model_parameters_attributes <- function(parameters, model, ci, exponentiate = FALSE, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
 
   attr(parameters, "pretty_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
-
+  attr(parameters, "exponentiate") <- exponentiate
 
   if ("digits" %in% names(dot.arguments)) {
     attr(parameters, "digits") <- eval(dot.arguments[["digits"]])
@@ -70,5 +70,14 @@ parameters <- model_parameters
     attr(parameters, "p_digits") <- 3
   }
 
+  parameters
+}
+
+
+
+
+.exponentiate_parameters <- function(parameters) {
+  columns <- grepl(pattern = "^(Coefficient|Std_Coefficient|CI_)", colnames(parameters))
+  parameters[columns] <- exp(parameters[columns])
   parameters
 }

@@ -40,7 +40,7 @@
 
   # CI
   if (!is.null(ci)) {
-    ci_df <- ci(model, ci = ci, component = component)
+    ci_df <- suppressMessages(ci(model, ci = ci, component = component))
     if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
     parameters <- merge(parameters, ci_df, by = merge_by)

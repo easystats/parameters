@@ -21,7 +21,7 @@
 
 \item{p_method}{Method for computing p values. See \code{\link[=p_value]{p_value()}}.}
 
-\item{ci_method}{Method for computing confidence intervals (CI). See \code{\link[=ci]{ci()}}.}
+\item{ci_method}{Method for computing confidence intervals (CI). See \code{\link[=ci.merMod]{ci()}}.}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.}
 
