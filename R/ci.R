@@ -85,7 +85,7 @@ ci.mlm <- function(x, ci = .95, ...) {
 #' @export
 ci.lm <- function(x, ci = .95, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
-  ci_wald(model = x, ci = ci, component = "conditional", robust = robust, ...)
+  ci_wald(model = x, ci = ci, robust = robust, ...)
 }
 
 
@@ -145,9 +145,9 @@ ci.glm <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
     out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
     out <- do.call(rbind, out)
   } else if (method == "robust") {
-    out <- ci_wald(model = x, ci = ci, component = "conditional", robust = TRUE, ...)
+    out <- ci_wald(model = x, ci = ci, robust = TRUE, ...)
   } else {
-    out <- ci_wald(model = x, ci = ci, component = "conditional")
+    out <- ci_wald(model = x, ci = ci)
   }
   row.names(out) <- NULL
   out
@@ -169,15 +169,15 @@ ci.polr <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
     out <- lapply(ci, function(i) .ci_profiled2(model = x, ci = i))
     out <- do.call(rbind, out)
   } else if (method == "robust") {
-    out <- ci_wald(model = x, ci = ci, component = "conditional", robust = TRUE, ...)
+    out <- ci_wald(model = x, ci = ci, robust = TRUE, ...)
   } else {
-    out <- ci_wald(model = x, ci = ci, component = "conditional")
+    out <- ci_wald(model = x, ci = ci)
   }
 
   # for polr, profiled CI do not return CI for response levels
   # thus, we also calculate Wald CI and add missing rows to result
 
-  out_missing <- ci_wald(model = x, ci = ci, component = "conditional")
+  out_missing <- ci_wald(model = x, ci = ci)
   missing_rows <- out_missing$Parameter %in% setdiff(out_missing$Parameter, out$Parameter)
   out <- rbind(out, out_missing[missing_rows, ])
 
@@ -388,7 +388,7 @@ ci.gls <- function(x, ci = .95, ...) {
 #' @export
 ci.lme <- function(x, ci = .95, ...) {
   if (!requireNamespace("nlme", quietly = TRUE)) {
-    ci_wald(model = x, ci = ci, component = "conditional")
+    ci_wald(model = x, ci = ci)
   } else {
     out <- lapply(ci, function(i) {
       ci_list <- nlme::intervals(x, level = i, ...)

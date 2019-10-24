@@ -19,6 +19,25 @@
   colnames(parameters) <- .capitalize(colnames(parameters))
   original_order <- parameters$.id <- 1:nrow(parameters)
 
+  # column name for coefficients, non-standardized
+  coef_col <- "Coefficient"
+
+  # Std Coefficients
+  if (!is.null(standardize)) {
+    if (!requireNamespace("effectsize", quietly = TRUE)) {
+      insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
+    } else {
+      parameters <- merge(parameters, effectsize::standardize_parameters(model, method = standardize), by = merge_by)
+      if (standardize == "refit") {
+        model <- effectsize::standardize(model)
+        coef_col <- "Std_Coefficient"
+      } else {
+        coef_col <- c("Coefficient", "Std_Coefficient")
+      }
+    }
+  }
+
+
   # CI
   if (!is.null(ci)) {
     ci_df <- ci(model, ci = ci, component = component)
@@ -29,15 +48,6 @@
     ci_cols <- c()
   }
 
-
-  # Std Coefficients
-  if (!is.null(standardize)) {
-    if (!requireNamespace("effectsize", quietly = TRUE)) {
-      insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
-    } else {
-      parameters <- merge(parameters, effectsize::standardize_parameters(model, method = standardize), by = merge_by)
-    }
-  }
 
   # p value
   parameters <- merge(parameters, p_value(model, component = component), by = merge_by)
@@ -62,7 +72,7 @@
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
   # Reorder
-  col_order <- c("Parameter", "Coefficient", "Std_Coefficient", "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_residual", "p", "Component", "Response")
+  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_residual", "p", "Component", "Response")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   # remove Component column if not needed
@@ -71,61 +81,6 @@
   rownames(parameters) <- NULL
   parameters
 }
-
-
-
-
-# glm function ------------------------------------------------------
-
-
-#' @importFrom stats confint
-#' @keywords internal
-.extract_parameters_glm <- function(model, ci = .95, linear = FALSE, standardize = NULL) {
-  parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
-
-  if (linear) {
-    names(parameters) <- c("Coefficient", "SE", "t", "p")
-  } else {
-    names(parameters) <- c("Coefficient", "SE", "z", "p")
-  }
-
-
-  parameters$df_residual <- degrees_of_freedom(model, method = "any")
-  parameters$Parameter <- row.names(parameters)
-
-  # CI
-  if (!is.null(ci)) {
-    ci_df <- ci(model, ci = ci)
-    if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
-    ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
-
-    col_order <- parameters$Parameter
-    parameters <- merge(parameters, ci_df, by = "Parameter")
-    parameters <- parameters[match(col_order, parameters$Parameter), ]
-  } else {
-    ci_cols <- c()
-  }
-
-  # Std Coefficients
-  if (!is.null(standardize)) {
-    if (!requireNamespace("effectsize", quietly = TRUE)) {
-      insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
-    } else {
-      col_order <- parameters$Parameter
-      parameters <- merge(parameters, effectsize::standardize_parameters(model, method = standardize), by = "Parameter")
-      parameters <- parameters[match(col_order, parameters$Parameter), ]
-    }
-  }
-
-  # Reorder
-  order <- c("Parameter", "Coefficient", "Std_Coefficient", "SE", ci_cols, "t", "z", "df_residual", "p")
-  parameters <- parameters[order[order %in% names(parameters)]]
-
-  rownames(parameters) <- NULL
-  parameters
-}
-
-
 
 
 

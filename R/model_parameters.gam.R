@@ -3,7 +3,7 @@
 #' Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s).
 #'
 #' @param model A gam/gamm model.
-#' @inheritParams model_parameters.lm
+#' @inheritParams model_parameters.default
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.

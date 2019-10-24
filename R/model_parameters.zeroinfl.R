@@ -3,7 +3,7 @@
 #' Parameters of zero-inflated models.
 #'
 #' @param model A model with zero-inflation component.
-#' @inheritParams model_parameters.lm
+#' @inheritParams model_parameters.default
 #' @inheritParams model_simulate
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename

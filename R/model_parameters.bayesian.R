@@ -20,7 +20,7 @@
 #' Parameters of Bayesian models.
 #'
 #' @param model Bayesian model.
-#' @inheritParams model_parameters.lm
+#' @inheritParams model_parameters.default
 #' @inheritParams bayestestR::describe_posterior
 #'
 #' @seealso \code{\link[parameters:standardize_names]{standardize_names()}} to rename
