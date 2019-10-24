@@ -131,17 +131,17 @@
 <a class="sourceLine" id="cb1-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
 <pre><code>&gt; Parameter1        |       Parameter2 |     r |     t |  df |     p |         95% CI |  Method
 &gt; ---------------------------------------------------------------------------------------------
-&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 | -1.44 | 148 | 0.152 | [   NA,    NA] | Pearson</code></pre>
+&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 | -1.44 | 148 | 0.152 | [-0.27,  0.04] | Pearson</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(mpg <span class="op">~</span><span class="st"> </span>vs, <span class="dt">data=</span>mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
 <pre><code>&gt; Parameter | Group | Mean_Group1 | Mean_Group2 | Difference |     t |    df |      p |           95% CI |                  Method
 &gt; --------------------------------------------------------------------------------------------------------------------------------
-&gt; mpg       |    vs |       16.62 |       24.56 |       7.94 | -4.67 | 22.72 | &lt; .001 | [    NA,     NA] | Welch Two Sample t-test</code></pre>
+&gt; mpg       |    vs |       16.62 |       24.56 |       7.94 | -4.67 | 22.72 | &lt; .001 | [-11.46,  -4.42] | Welch Two Sample t-test</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(mpg <span class="op">~</span><span class="st"> </span>vs, <span class="dt">data=</span>mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
 <pre><code>&gt; Parameter | Group | Mean_Group1 | Mean_Group2 | Difference |     t |    df |      p |           95% CI |                  Method
 &gt; --------------------------------------------------------------------------------------------------------------------------------
-&gt; mpg       |    vs |       16.62 |       24.56 |       7.94 | -4.67 | 22.72 | &lt; .001 | [    NA,     NA] | Welch Two Sample t-test</code></pre>
+&gt; mpg       |    vs |       16.62 |       24.56 |       7.94 | -4.67 | 22.72 | &lt; .001 | [-11.46,  -4.42] | Welch Two Sample t-test</code></pre>
 </div>
 <div id="bayesian" class="section level3">
 <h3 class="hasAnchor">
@@ -152,12 +152,12 @@
 <a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
 <pre><code>&gt; Parameter | Median |         89% CI |     pd | % in ROPE |              Prior |   BF
 &gt; ------------------------------------------------------------------------------------
-&gt; rho       |  -0.11 | [   NA,    NA] | 92.90% |    43.13% | Cauchy (0 +- 0.33) | 0.51</code></pre>
+&gt; rho       |  -0.11 | [-0.23,  0.02] | 92.90% |    43.13% | Cauchy (0 +- 0.33) | 0.51</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">BayesFactor<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span>(<span class="dt">formula =</span> mpg <span class="op">~</span><span class="st"> </span>vs, <span class="dt">data=</span>mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
 <pre><code>&gt; Parameter  | Median |           89% CI |     pd | % in ROPE |              Prior |     BF
 &gt; -----------------------------------------------------------------------------------------
-&gt; Difference |  -7.30 | [    NA,     NA] | 99.98% |        0% | Cauchy (0 +- 0.71) | 529.27</code></pre>
+&gt; Difference |  -7.30 | [-10.15,  -4.58] | 99.98% |        0% | Cauchy (0 +- 0.71) | 529.27</code></pre>
 </div>
 </div>
 <div id="anovas" class="section level2">
@@ -226,10 +226,10 @@
 <a class="sourceLine" id="cb19-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
 <pre><code>&gt; Parameter   | Median |           89% CI |     pd | % in ROPE |  Rhat | ESS |               Prior
 &gt; ------------------------------------------------------------------------------------------------
-&gt; (Intercept) |  53.16 | [    NA,     NA] |   100% |        0% | 1.002 | 188 | Normal (0 +- 60.27)
-&gt; wt          |  -8.19 | [    NA,     NA] |   100% |     0.20% | 1.006 | 184 | Normal (0 +- 15.40)
-&gt; cyl         |  -3.71 | [    NA,     NA] |   100% |     0.20% | 1.000 | 206 |  Normal (0 +- 8.44)
-&gt; wt * cyl    |   0.76 | [    NA,     NA] | 98.40% |    32.00% | 1.004 | 179 |  Normal (0 +- 1.36)</code></pre>
+&gt; (Intercept) |  53.16 | [ 42.36,  61.52] |   100% |        0% | 1.002 | 188 | Normal (0 +- 60.27)
+&gt; wt          |  -8.19 | [-11.59,  -4.40] |   100% |     0.20% | 1.006 | 184 | Normal (0 +- 15.40)
+&gt; cyl         |  -3.71 | [ -4.88,  -1.77] |   100% |     0.20% | 1.000 | 206 |  Normal (0 +- 8.44)
+&gt; wt * cyl    |   0.76 | [  0.19,   1.25] | 98.40% |    32.00% | 1.004 | 179 |  Normal (0 +- 1.36)</code></pre>
 </div>
 </div>
 <div id="structural-models-pca-efa-cfa-sem" class="section level2">
@@ -295,23 +295,23 @@
 &gt; 
 &gt; Link          | Coefficient |   SE |       95% CI |      p
 &gt; ----------------------------------------------------------
-&gt; visual =~ x1  |        1.00 | 0.00 | [  NA,   NA] | &lt; .001
-&gt; visual =~ x2  |        0.55 | 0.10 | [  NA,   NA] | &lt; .001
-&gt; visual =~ x3  |        0.73 | 0.11 | [  NA,   NA] | &lt; .001
-&gt; textual =~ x4 |        1.00 | 0.00 | [  NA,   NA] | &lt; .001
-&gt; textual =~ x5 |        1.11 | 0.07 | [  NA,   NA] | &lt; .001
-&gt; textual =~ x6 |        0.93 | 0.06 | [  NA,   NA] | &lt; .001
-&gt; speed =~ x7   |        1.00 | 0.00 | [  NA,   NA] | &lt; .001
-&gt; speed =~ x8   |        1.18 | 0.16 | [  NA,   NA] | &lt; .001
-&gt; speed =~ x9   |        1.08 | 0.15 | [  NA,   NA] | &lt; .001
+&gt; visual =~ x1  |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001
+&gt; visual =~ x2  |        0.55 | 0.10 | [0.36, 0.75] | &lt; .001
+&gt; visual =~ x3  |        0.73 | 0.11 | [0.52, 0.94] | &lt; .001
+&gt; textual =~ x4 |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001
+&gt; textual =~ x5 |        1.11 | 0.07 | [0.98, 1.24] | &lt; .001
+&gt; textual =~ x6 |        0.93 | 0.06 | [0.82, 1.03] | &lt; .001
+&gt; speed =~ x7   |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001
+&gt; speed =~ x8   |        1.18 | 0.16 | [0.86, 1.50] | &lt; .001
+&gt; speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001
 &gt; 
 &gt; # Correlation type
 &gt; 
 &gt; Link              | Coefficient |   SE |       95% CI |      p
 &gt; --------------------------------------------------------------
-&gt; visual ~~ textual |        0.41 | 0.07 | [  NA,   NA] | &lt; .001
-&gt; visual ~~ speed   |        0.26 | 0.06 | [  NA,   NA] | &lt; .001
-&gt; textual ~~ speed  |        0.17 | 0.05 | [  NA,   NA] | &lt; .001</code></pre>
+&gt; visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | &lt; .001
+&gt; visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | &lt; .001
+&gt; textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | &lt; .001</code></pre>
 </div>
 <div id="bayesian-1" class="section level3">
 <h3 class="hasAnchor">
