@@ -15,7 +15,7 @@
 #' p_value(model)
 #' @return The p-values.
 #' @importFrom bayestestR p_direction convert_pd_to_p
-#' @importFrom stats coef vcov pnorm
+#' @importFrom stats coef vcov pt
 #' @export
 p_value <- function(model, ...) {
   UseMethod("p_value")
@@ -304,7 +304,7 @@ p_value.svyglm <- function(model, ...) {
 #' @export
 p_value.svyolr <- function(model, ...) {
   cs <- stats::coef(summary(model))
-  p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(cs[, 3]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
     Parameter = rownames(cs),
@@ -322,7 +322,7 @@ p_value.svyglm.nb <- function(model, ...) {
 
   est <- stats::coef(model)
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
-  p <- 2 * stats::pnorm(abs(est / se), lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(est / se), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
     Parameter = names(p),
@@ -432,7 +432,7 @@ p_value.flexsurvreg <- function(model, ...) {
   params <- insight::get_parameters(model)
   est <- params[[2]]
   se <- standard_error(model)$SE
-  p <- 2 * stats::pnorm(abs(est / se), lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(est / se), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
     ## TODO change to "$Parameter" once insight on CRAN
@@ -507,7 +507,7 @@ p_value.crch <- function(model, ...) {
 #' @export
 p_value.gee <- function(model, ...) {
   cs <- stats::coef(summary(model))
-  p <- 2 * stats::pnorm(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
     Parameter = rownames(cs),
@@ -549,7 +549,7 @@ p_value.logistf <- function(model, ...) {
 #' @export
 p_value.lrm <- function(model, ...) {
   stat <- insight::get_statistic(model)
-  p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(stat$Statistic), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
     Parameter = stat$Parameter,
@@ -571,7 +571,7 @@ p_value.psm <- p_value.lrm
 #' @export
 p_value.rlm <- function(model, ...) {
   cs <- stats::coef(summary(model))
-  p <- 2 * stats::pnorm(abs(cs[, 3]), lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(cs[, 3]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
     Parameter = names(p),
@@ -757,7 +757,7 @@ p_value.htest <- function(model, ...) {
 p_value.multinom <- function(model, ...) {
   s <- summary(model)
   stat <- s$coefficients / s$standard.errors
-  p <- 2 * stats::pnorm(stat, lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(stat), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
     Parameter = names(p),
@@ -808,7 +808,7 @@ p_value.polr <- function(model, ...) {
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   tstat <- smry[[3]]
   # se <- smry[[2]]
-  p <- 2 * stats::pnorm(abs(tstat), lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(tstat), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
   names(p) <- rownames(smry)
 
   .data_frame(

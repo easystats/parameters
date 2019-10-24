@@ -193,22 +193,22 @@
 <span class='no'>df</span>$<span class='no'>Sepal.Big</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>df</span>$<span class='no'>Sepal.Width</span> <span class='kw'>&gt;=</span> <span class='fl'>3</span>, <span class='st'>"Yes"</span>, <span class='st'>"No"</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
-#&gt; --------------------------------------------------------------------------------------------------------------
-#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.21 |               0.00 |             0.01 |       0.00
-#&gt; Residuals |      101.07 | 148 |        0.68 |      |      |                    |                  |           </div><div class='input'>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |     p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
+#&gt; ---------------------------------------------------------------------------------------------------------------
+#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207 |               0.00 |             0.01 |       0.00
+#&gt; Residuals |      101.07 | 148 |        0.68 |      |       |                    |                  |           </div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>))
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |    p
-#&gt; ---------------------------------------------------------
-#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.21
-#&gt; Residuals |      101.07 | 148 |        0.68 |      |     </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |    p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
-#&gt; --------------------------------------------------------------------------------------------------------------
-#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.21 |               0.00 |             0.01 |       0.00
-#&gt; Residuals |      101.07 | 148 |        0.68 |      |      |                    |                  |           </div><div class='input'>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |     p
+#&gt; ----------------------------------------------------------
+#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207
+#&gt; Residuals |      101.07 | 148 |        0.68 |      |      </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |     p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_sq
+#&gt; ---------------------------------------------------------------------------------------------------------------
+#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207 |               0.00 |             0.01 |       0.00
+#&gt; Residuals |      101.07 | 148 |        0.68 |      |       |                    |                  |           </div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>Error</a></span>(<span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Group   | Parameter | Sum_Squares |  df | Mean_Square |     F |      p
 #&gt; ----------------------------------------------------------------------
-#&gt; Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 | 0.53  
+#&gt; Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 | 0.534 
 #&gt; Species | Residuals |       34.94 |   1 |       34.94 |       |       
 #&gt; Within  | Sepal.Big |        4.74 |   1 |        4.74 | 20.24 | &lt; .001
 #&gt; Within  | Residuals |       34.21 | 146 |        0.23 |       |       </div><div class='input'><span class='co'># \donttest{</span>

@@ -4,7 +4,7 @@
 #' \itemize{
 #'  \item{\link[=model_parameters.htest]{Correlations and t-tests}}
 #'  \item{\link[=model_parameters.aov]{ANOVAs}}
-#'  \item{\link[=model_parameters.lm]{Regression models} (\code{lm}, \code{glm}, \pkg{survey}, ...)}
+#'  \item{\link[=model_parameters.default]{Regression models} (\code{lm}, \code{glm}, \pkg{survey}, ...)}
 #'  \item{\link[=model_parameters.gam]{Additive models} (\code{gam}, \code{gamm}, ...)}
 #'  \item{\link[=model_parameters.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount})}
 #'  \item{\link[=model_parameters.merMod]{Mixed models} (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, ...)}
@@ -21,6 +21,16 @@
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
+#' @note The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output.
+#'
+#' @details Standardization is based on \code{\link[=effectsize::standardize_parameters]{standardize_parameters()}}.
+#'   In case of \code{standardize = "refit"}, the data used to fit the model
+#'   will be standardized and the model is completely refitted. In such cases,
+#'   standard errors and confidence intervals refer to the standardized coefficient.
+#'   For other methods of standardizing, unstandardized and standardized coefficients
+#'   are shown, where standard errors and confidence intervals relate to the
+#'   unstandardized coefficients.
+#'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters <- function(model, ...) {
@@ -33,26 +43,41 @@ model_parameters <- function(model, ...) {
 parameters <- model_parameters
 
 
-# Templates for adding new object classes to model_paramaters.
-#
-# model_parameters.lm() is suitable for the generic lm and glm classes. It
-# should _not_ be used as a template, because it's likely to fail for other
-# model classes.
-#
-# model_parameters.merMod() is speficic to lme4, because it allows for KR-approximation
-# of the df for p-values.
-#
-# model_parameters.lme() can be used for (mixed) models that have a working "update()"
-# method, so standardization is possible. Can be used for mixed or "normal" models.
-#
-# model_parameters.glmmTMB() can be used for (mixed) models where standardization
-# is not possible due to non-working "update()". The "component" argument may be removed,
-# but can also be used for non-mixed models.
-#
-# model_parameters.polr() is the most generic method for non-mixed models w/o
-# standardization, where "update()" does not work.
-#
-# Summary
-# -------
-# In most cases model_parameters.polr() or model_parameters.lme() can be called
-# for new model objects. A ".get_statistic()" function might be added.
+
+
+.add_model_parameters_attributes <- function(parameters, model, ci, exponentiate = FALSE, ...) {
+  dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
+
+  attr(parameters, "pretty_names") <- format_parameters(model)
+  attr(parameters, "ci") <- ci
+  attr(parameters, "exponentiate") <- exponentiate
+
+  if ("digits" %in% names(dot.arguments)) {
+    attr(parameters, "digits") <- eval(dot.arguments[["digits"]])
+  } else {
+    attr(parameters, "digits") <- 2
+  }
+
+  if ("ci_digits" %in% names(dot.arguments)) {
+    attr(parameters, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
+  } else {
+    attr(parameters, "ci_digits") <- 2
+  }
+
+  if ("p_digits" %in% names(dot.arguments)) {
+    attr(parameters, "p_digits") <- eval(dot.arguments[["p_digits"]])
+  } else {
+    attr(parameters, "p_digits") <- 3
+  }
+
+  parameters
+}
+
+
+
+
+.exponentiate_parameters <- function(parameters) {
+  columns <- grepl(pattern = "^(Coefficient|Std_Coefficient|CI_)", colnames(parameters))
+  parameters[columns] <- exp(parameters[columns])
+  parameters
+}

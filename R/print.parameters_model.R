@@ -9,7 +9,6 @@
 #'   printed in a separate table. If \code{FALSE}, model parameters are printed
 #'   in a single table and a \code{Component} column is added to the output.
 #' @inheritParams parameters_table
-#'
 #' @return \code{NULL}
 #'
 #' @examples
@@ -31,7 +30,7 @@
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
 
-  if(!is.null(attributes(x)$title)){
+  if (!is.null(attributes(x)$title)) {
     insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
   }
 
@@ -48,6 +47,11 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
 #' @keywords internal
 .print_model_parms_components <- function(x, pretty_names, split_column = "Component", ...) {
+
+  # check if user supplied digits attributes
+  digits <- attributes(x)$digits
+  ci_digits <- attributes(x)$ci_digits
+  p_digits <- attributes(x)$p_digits
 
 
   # make sure we have correct sorting here...
@@ -84,6 +88,10 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
     # Don't print if empty col
     tables[[type]][sapply(tables[[type]], function(x){all(x == "") | all(is.na(x))})] <- NULL
+
+    attr(tables[[type]], "digits") <- digits
+    attr(tables[[type]], "ci_digits") <- ci_digits
+    attr(tables[[type]], "p_digits") <- p_digits
 
     formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, ...)
 

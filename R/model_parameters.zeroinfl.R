@@ -3,7 +3,7 @@
 #' Parameters of zero-inflated models.
 #'
 #' @param model A model with zero-inflation component.
-#' @inheritParams model_parameters.lm
+#' @inheritParams model_parameters.default
 #' @inheritParams model_simulate
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
@@ -36,9 +36,7 @@ model_parameters.zeroinfl <- function(model, ci = .95, bootstrap = FALSE, iterat
   }
 
 
-
-  attr(parameters, "pretty_names") <- format_parameters(model)
-  attr(parameters, "ci") <- ci
+  parameters <- .add_model_parameters_attributes(parameters, model, ci, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }

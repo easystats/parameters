@@ -82,7 +82,11 @@ parameters_type <- function(model, ...) {
   }
   for (i in unique(out$Secondary_Parameter)) {
     if (!is.na(i) && i %in% out$Parameter) {
-      out[!is.na(out$Secondary_Parameter) & out$Secondary_Parameter == i, "Secondary_Type"] <- out[!is.na(out$Parameter) & out$Parameter == i, "Type"]
+      .param_type <- out[!is.na(out$Parameter) & out$Parameter == i, "Type"]
+      .param_secondary_type <- out[!is.na(out$Secondary_Parameter) & out$Secondary_Parameter == i, "Secondary_Type"]
+      if (length(.param_type) == length(.param_secondary_type) || length(.param_type) == 1) {
+        out[!is.na(out$Secondary_Parameter) & out$Secondary_Parameter == i, "Secondary_Type"] <- .param_type
+      }
     }
   }
 

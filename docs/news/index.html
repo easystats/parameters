@@ -199,6 +199,10 @@
 <ul>
 <li>Added indices of model fit to <code><a href="../reference/n_factors.html">n_factors()</a></code> (<a href="https://doi.org/10.1177/0013164419865769">Finch, 2019</a>)</li>
 <li>The <code>method</code>-argument for <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code> gets a new option, <code>"robust"</code>, to compute confidence intervals based on robust standard errors. Furthermore, <code><a href="../reference/p_value_wald.html">ci_wald()</a></code> gets a <code>robust</code>-argument to do the same.</li>
+<li>
+<code><a href="../reference/format_p.html">format_p()</a></code> gets a <code>digits</code>-argument to set the amount of digits for p-values.</li>
+<li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> now accepts (non-documented) arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> to change the amount and style of formatting values. See <a href="https://easystats.github.io/parameters/reference/model_parameters.lm.html">examples in <code>model_parameters.lm()</code></a>.</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -206,6 +210,7 @@
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Interaction terms in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
+<li>Fixed bug in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when a parameter occured multiple times in a model.</li>
 </ul>
 </div>
 </div>

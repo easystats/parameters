@@ -5,7 +5,7 @@
 \title{p-values formatting}
 \usage{
 format_p(p, stars = FALSE, stars_only = FALSE, name = "p",
-  missing = "")
+  missing = "", digits = 3, ...)
 }
 \arguments{
 \item{p}{value or vector of p-values.}
@@ -17,6 +17,10 @@ format_p(p, stars = FALSE, stars_only = FALSE, name = "p",
 \item{name}{Name prefixing the text. Can be \code{NULL}.}
 
 \item{missing}{Value by which \code{NA} values are replaced. By default, an empty string (i.e. \code{""}) is returned for \code{NA}.}
+
+\item{digits}{Number of significant digits. May also be \code{"scientific"} to return exact p-values in scientific notation, or \code{"apa"} to use an APA-style for p-values.}
+
+\item{...}{Arguments from other methods.}
 }
 \value{
 A formatted string.
@@ -28,4 +32,8 @@ Format p-values.
 format_p(c(.02, .065, 0, .23))
 format_p(c(.02, .065, 0, .23), name = NULL)
 format_p(c(.02, .065, 0, .23), stars_only = TRUE)
+
+model <- lm(mpg ~ wt + cyl, data = mtcars)
+format_p(p_value(model)$p, digits = "scientific")
+
 }

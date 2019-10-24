@@ -27,10 +27,13 @@ Parts of the **parameter** package are restructured and functions focussing on a
 
 - Added indices of model fit to `n_factors()` ([Finch, 2019](https://doi.org/10.1177/0013164419865769))
 - The `method`-argument for `ci()` gets a new option, `"robust"`, to compute confidence intervals based on robust standard errors. Furthermore, `ci_wald()` gets a `robust`-argument to do the same.
+- `format_p()` gets a `digits`-argument to set the amount of digits for p-values.
+- `model_parameters()` now accepts (non-documented) arguments `digits`, `ci_digits` and `p_digits` to change the amount and style of formatting values. See [examples in `model_parameters.lm()`](https://easystats.github.io/parameters/reference/model_parameters.lm.html).
 
 ## Bug fixes
 
 - Interaction terms in `model_parameters()` were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. `as.factor()`, `log()` or `I()`.
+- Fixed bug in `parameters_type()` when a parameter occured multiple times in a model.
 
 # parameters 0.2.0
 
