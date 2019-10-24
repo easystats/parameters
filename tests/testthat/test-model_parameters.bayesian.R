@@ -15,6 +15,7 @@ testthat::test_that("model_parameters.stanreg", {
   # GLM
   params <- model_parameters(insight::download_model("stanreg_lm_1"), centrality = "all", test = "all", dispersion = TRUE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
+  testthat::expect_equal(params$CI_high, c(40.2985874345282, -4.46283763262213), tolerance = 1e-3)
 
   params <- model_parameters(insight::download_model("stanreg_lm_2"), centrality = "all", test = "all", dispersion = TRUE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 18))
@@ -31,6 +32,7 @@ testthat::test_that("model_parameters.stanreg", {
   # Mixed
   params <- model_parameters(insight::download_model("stanreg_lmerMod_1"), centrality = "all", test = "all", dispersion = TRUE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
+  testthat::expect_equal(params$CI_high, c(1.54338200856639, 0.532327852257708), tolerance = 1e-3)
 
   params <- model_parameters(insight::download_model("stanreg_merMod_1"), centrality = "all", test = "all", dispersion = TRUE)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
