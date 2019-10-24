@@ -30,6 +30,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   p_digits <- attributes(x)$p_digits
 
   if (is.null(digits)) digits <- 2
+  if (is.null(ci_digits)) ci_digits <- 2
   if (is.null(p_digits)) p_digits <- 3
 
   x <- as.data.frame(x)
