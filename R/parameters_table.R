@@ -63,7 +63,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
       ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
     }
     # Get characters to align the CI
-    max_len <- max(nchar(stats::na.omit(c(round(x[[ci_low]], 2), round(x[[ci_high]], 2)))))
+    max_len <- max(unlist(lapply(stats::na.omit(c(round(x[ci_low], 2), round(x[ci_high], 2))), function(.i) nchar(as.character(.i)))))
     for (i in 1:length(ci_colname)) {
       x[ci_colname[i]] <- format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL, digits = ci_digits, width = max_len, brackets = TRUE)
     }
