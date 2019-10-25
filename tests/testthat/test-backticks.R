@@ -57,4 +57,32 @@ if (require("testthat") && require("parameters")) {
         "log(Sepal.Length)", "Speciesversicolor:log(Sepal.Length)", "Speciesvirginica:log(Sepal.Length)")
     )
   })
+
+
+  test_that("model_parameters, backticks", {
+    expect_equal(
+      model_parameters(m1)$Parameter,
+      c("(Intercept)", "Petal.Length", "a mversicolor", "a mvirginica",
+        "log(Sepal.Length)", "a mversicolor:log(Sepal.Length)", "a mvirginica:log(Sepal.Length)")
+    )
+    expect_equal(
+      model_parameters(m2)$Parameter,
+      c("(Intercept)", "Petal.Length", "Speciesversicolor", "Speciesvirginica",
+        "log(Sepal.Length)", "Speciesversicolor:log(Sepal.Length)", "Speciesvirginica:log(Sepal.Length)")
+    )
+  })
+
+
+  test_that("model_parameters-2, backticks", {
+    expect_equal(
+      model_parameters(parameters_selection(m1))$Parameter,
+      c("(Intercept)", "Petal.Length", "a mversicolor", "a mvirginica",
+        "log(Sepal.Length)", "a mversicolor:log(Sepal.Length)", "a mvirginica:log(Sepal.Length)")
+    )
+    expect_equal(
+      model_parameters(parameters_selection(m2))$Parameter,
+      c("(Intercept)", "Petal.Length", "Speciesversicolor", "Speciesvirginica",
+        "log(Sepal.Length)", "Speciesversicolor:log(Sepal.Length)", "Speciesvirginica:log(Sepal.Length)")
+    )
+  })
 }
