@@ -344,7 +344,7 @@
   order <- c("Group", "Parameter", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_df", "RSS", "Sum_Squares", "df", "df_residual", "Mean_Square", "F", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
-  parameters
+  .remove_backticks_from_parameter_names(parameters)
 }
 
 
