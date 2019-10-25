@@ -20,6 +20,7 @@ if (require("testthat") && require("parameters")) {
     )
   })
 
+
   test_that("ci, backticks", {
     expect_equal(
       ci(m1)$Parameter,
@@ -38,6 +39,20 @@ if (require("testthat") && require("parameters")) {
     )
     expect_equal(
       ci_wald(m2)$Parameter,
+      c("(Intercept)", "Petal.Length", "Speciesversicolor", "Speciesvirginica",
+        "log(Sepal.Length)", "Speciesversicolor:log(Sepal.Length)", "Speciesvirginica:log(Sepal.Length)")
+    )
+  })
+
+
+  test_that("p, backticks", {
+    expect_equal(
+      p_value(m1)$Parameter,
+      c("(Intercept)", "Petal.Length", "a mversicolor", "a mvirginica",
+        "log(Sepal.Length)", "a mversicolor:log(Sepal.Length)", "a mvirginica:log(Sepal.Length)")
+    )
+    expect_equal(
+      p_value(m2)$Parameter,
       c("(Intercept)", "Petal.Length", "Speciesversicolor", "Speciesvirginica",
         "log(Sepal.Length)", "Speciesversicolor:log(Sepal.Length)", "Speciesvirginica:log(Sepal.Length)")
     )

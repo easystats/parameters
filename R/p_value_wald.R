@@ -48,7 +48,7 @@ p_value_wald.merMod <- function(model, dof = Inf, ...) {
   }
 
   .data_frame(
-    Parameter = coef_names,
+    Parameter = .remove_backticks_from_string(coef_names),
     p = unname(p)
   )
 }
