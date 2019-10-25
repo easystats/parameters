@@ -38,11 +38,14 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "kenward", "boot"), ...) 
     # Kenward approx
   } else if (method == "kenward") {
     out <- ci_wald(model = x, ci = ci, dof = dof_kenward(x))
+
+    # bootstrapping
   } else if (method == "boot") {
     out <- lapply(ci, function(ci, x) .ci_boot_merMod(x, ci, ...), x = x)
     out <- do.call(rbind, out)
     row.names(out) <- NULL
   }
+
   out
 }
 
@@ -77,7 +80,7 @@ ci.mlm <- function(x, ci = .95, ...) {
     )
   })
 
-  do.call(rbind, out)
+  .remove_backticks_from_parameter_names(do.call(rbind, out))
 }
 
 
@@ -149,6 +152,7 @@ ci.glm <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
   } else {
     out <- ci_wald(model = x, ci = ci)
   }
+
   row.names(out) <- NULL
   out
 }
@@ -365,24 +369,12 @@ ci.biglm <- function(x, ci = .95, ...) {
     )
   })
 
-  do.call(rbind, out)
+  .remove_backticks_from_parameter_names(do.call(rbind, out))
 }
 
 
 #' @export
-ci.gls <- function(x, ci = .95, ...) {
-  out <- lapply(ci, function(i) {
-    ci_list <- stats::confint(x, level = i, ...)
-    .data_frame(
-      Parameter = rownames(ci_list),
-      CI = i * 100,
-      CI_low = as.vector(ci_list[, 1]),
-      CI_high = as.vector(ci_list[, 2])
-    )
-  })
-
-  do.call(rbind, out)
-}
+ci.gls <- ci.biglm
 
 
 #' @export
@@ -399,7 +391,7 @@ ci.lme <- function(x, ci = .95, ...) {
         CI_high = as.vector(ci_list$fixed[, "upper"])
       )
     })
-    do.call(rbind, out)
+    .remove_backticks_from_parameter_names(do.call(rbind, out))
   }
 }
 
@@ -427,7 +419,7 @@ ci.effectsize_std_params <- function(x, ci = .95, ...) {
     )
   })
 
-  do.call(rbind, out)
+  .remove_backticks_from_parameter_names(do.call(rbind, out))
 }
 
 

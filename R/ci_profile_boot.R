@@ -24,7 +24,7 @@
   names(out) <- c("CI_low", "CI_high")
 
   out$CI <- ci * 100
-  out$Parameter <- rownames(out)
+  out$Parameter <- .remove_backticks_from_string(rownames(out))
 
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
   rownames(out) <- NULL
