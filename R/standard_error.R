@@ -98,6 +98,7 @@ standard_error.table <- function(model, ...) {
   if (length(dim(model)) == 1) {
     total.n <- as.vector(sum(model))
     rel.frq <- as.vector(model) / total.n
+
     out <- .data_frame(
       Value = names(model),
       Proportion = rel.frq,
@@ -166,7 +167,7 @@ standard_error.mlm <- function(model, ...) {
     )
   })
 
-  do.call(rbind, se)
+  .remove_backticks_from_parameter_names(do.call(rbind, se))
 }
 
 
@@ -382,7 +383,7 @@ standard_error.svyglm.nb <- function(model, ...) {
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
 
   .data_frame(
-    Parameter = names(se),
+    Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 }
@@ -398,7 +399,7 @@ standard_error.svyglm <- function(model, ...) {
   se <- cs[, 2]
 
   .data_frame(
-    Parameter = names(se),
+    Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 }
@@ -504,7 +505,7 @@ standard_error.gee <- function(model, ...) {
   cs <- stats::coef(summary(model))
 
   .data_frame(
-    Parameter = rownames(cs),
+    Parameter = .remove_backticks_from_string(rownames(cs)),
     SE = as.vector(cs[, "Naive S.E."])
   )
 }
@@ -517,7 +518,7 @@ standard_error.logistf <- function(model, ...) {
   se <- sqrt(diag(s$var))
 
   .data_frame(
-    Parameter = names(s$coefficients),
+    Parameter = .remove_backticks_from_string(names(s$coefficients)),
     SE = as.vector(se)
   )
 }
@@ -534,7 +535,7 @@ standard_error.glimML <- function(model, ...) {
   se <- s[, 2]
 
   .data_frame(
-    Parameter = rownames(s),
+    Parameter = .remove_backticks_from_string(rownames(s)),
     SE = as.vector(se)
   )
 }
@@ -550,7 +551,7 @@ standard_error.lrm <- function(model, ...) {
   if (is.null(names(se))) names(se) <- names(stats::coef(model))
 
   .data_frame(
-    Parameter = names(se),
+    Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 }
@@ -572,7 +573,7 @@ standard_error.betareg <- function(model, ...) {
   se <- cs[, 2]
 
   .data_frame(
-    Parameter = names(se),
+    Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 }
@@ -600,7 +601,7 @@ standard_error.plm <- function(model, ...) {
   se <- stats::coef(summary(model))
 
   .data_frame(
-    Parameter = names(se[, 2]),
+    Parameter = .remove_backticks_from_string(names(se[, 2])),
     SE = as.vector(se[, 2])
   )
 }
@@ -613,7 +614,7 @@ standard_error.coxme <- function(model, ...) {
 
   if (length(beta) > 0) {
     .data_frame(
-      Parameter = names(beta),
+      Parameter = .remove_backticks_from_string(names(beta)),
       SE = sqrt(diag(stats::vcov(model)))
     )
   }
@@ -627,7 +628,7 @@ standard_error.coxph <- function(model, ...) {
   se <- cs[, 3]
 
   .data_frame(
-    Parameter = names(se),
+    Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 }
@@ -640,7 +641,7 @@ standard_error.survreg <- function(model, ...) {
   se <- s$table[, 2]
 
   .data_frame(
-    Parameter = names(se),
+    Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 }
@@ -653,7 +654,7 @@ standard_error.flexsurvreg <- function(model, ...) {
   se <- model$res[rownames(model$res) %in% params, "se"]
 
   .data_frame(
-    Parameter = names(se),
+    Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 }
@@ -668,7 +669,7 @@ standard_error.gam <- function(model, ...) {
   n_smooth <- nrow(s.table)
 
   .data_frame(
-    Parameter = c(rownames(p.table), rownames(s.table)),
+    Parameter = .remove_backticks_from_string(c(rownames(p.table), rownames(s.table))),
     SE = c(as.vector(p.table[, 2]), rep(NA, n_smooth)),
     Component = c(rep("conditional", n_cond), rep("smooth_terms", n_smooth))
   )
@@ -693,7 +694,7 @@ standard_error.MCMCglmm <- function(model, ...) {
   parms <- as.data.frame(model$Sol[, 1:nF, drop = FALSE])
 
   .data_frame(
-    Parameter = colnames(parms),
+    Parameter = .remove_backticks_from_string(colnames(parms)),
     SE = unname(sapply(parms, stats::sd))
   )
 }
@@ -756,7 +757,7 @@ standard_error.vglm <- function(model, ...) {
   se <- cs[, 2]
 
   .data_frame(
-    Parameter = names(se),
+    Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 }
@@ -769,7 +770,7 @@ standard_error.gmnl <- function(model, ...) {
   se <- cs[, 2]
 
   pv <- .data_frame(
-    Parameter = names(se),
+    Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 
@@ -792,7 +793,7 @@ standard_error.polr <- function(model, ...) {
   names(se) <- rownames(smry)
 
   .data_frame(
-    Parameter = names(se),
+    Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 }
@@ -824,6 +825,7 @@ standard_error.polr <- function(model, ...) {
     }
   }
 
+  names(se) <- .remove_backticks_from_string(names(se))
   se
 }
 
