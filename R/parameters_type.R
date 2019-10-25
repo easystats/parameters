@@ -249,5 +249,5 @@ parameters_type <- function(model, ...) {
     }
   }
 
-  x
+  gsub("`", "", x, fixed = TRUE)
 }
