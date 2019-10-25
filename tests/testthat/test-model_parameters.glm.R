@@ -7,6 +7,7 @@ test_that("model_parameters.lm", {
 
   params <- model_parameters(model)
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 8))
+  testthat::expect_equal(params$CI_high, c(41.119752761418, -4.20263490802709), tolerance = 1e-3)
 
   params <- model_parameters(model, ci = c(0.8, 0.9))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 10))
