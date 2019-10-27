@@ -15,12 +15,13 @@ Parts of the **parameter** package are restructured and functions focussing on a
 
 ## New functions
 
-- `n_parameters()` to get number of parameters.
 - `degrees_of_freedom()` to get DoFs.
-- `check_clusterstructure()` to check the suitability of data for clustering.
-- `n_clusters()` to determine the number of clusters to extract.
-- `check_multimodal()` to check if a distribution is unimodal or multimodal.
 - `p_value_robust()`, `ci_robust()` and `standard_error_robust()` to compute robust standard errors, and p-values or confidence intervals based on robust standard errors.
+- `demean()` to calculate de-meaned and group-meaned variables (for panel-data regression).
+- `n_parameters()` to get number of parameters.
+- `n_clusters()` to determine the number of clusters to extract.
+- `check_clusterstructure()` to check the suitability of data for clustering.
+- `check_multimodal()` to check if a distribution is unimodal or multimodal.
 - Add `plot()`-methods for `principal_components()`.
 
 ## Changes to functions
