@@ -66,7 +66,7 @@ p_value.mlm <- function(model, ...) {
     )
   })
 
-  do.call(rbind, p)
+  .remove_backticks_from_parameter_names(do.call(rbind, p))
 }
 
 
@@ -162,7 +162,7 @@ p_value.lme <- function(model, ...) {
   p <- cs[, 5]
 
   .data_frame(
-    Parameter = rownames(cs),
+    Parameter = .remove_backticks_from_string(rownames(cs)),
     p = as.vector(p)
   )
 }
@@ -266,7 +266,7 @@ p_value.brmsfit <- function(model, ...) {
   p <- bayestestR::p_direction(model)
 
   .data_frame(
-    Parameter = p$Parameter,
+    Parameter = .remove_backticks_from_string(p$Parameter),
     p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE)
   )
 }
@@ -294,7 +294,7 @@ p_value.svyglm <- function(model, ...) {
   p <- cs[, 4]
 
   .data_frame(
-    Parameter = rownames(cs),
+    Parameter = .remove_backticks_from_string(rownames(cs)),
     p = as.vector(p)
   )
 }
@@ -307,7 +307,7 @@ p_value.svyolr <- function(model, ...) {
   p <- 2 * stats::pt(abs(cs[, 3]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
-    Parameter = rownames(cs),
+    Parameter = .remove_backticks_from_string(rownames(cs)),
     p = as.vector(p)
   )
 }
@@ -325,7 +325,7 @@ p_value.svyglm.nb <- function(model, ...) {
   p <- 2 * stats::pt(abs(est / se), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
-    Parameter = names(p),
+    Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
   )
 }
@@ -392,7 +392,7 @@ p_value.coxph <- function(model, ...) {
   p <- cs[, 5]
 
   .data_frame(
-    Parameter = names(p),
+    Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
   )
 }
@@ -420,7 +420,7 @@ p_value.survreg <- function(model, ...) {
   p <- s$table[, "p"]
 
   .data_frame(
-    Parameter = names(p),
+    Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
   )
 }
@@ -510,7 +510,7 @@ p_value.gee <- function(model, ...) {
   p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
-    Parameter = rownames(cs),
+    Parameter = .remove_backticks_from_string(rownames(cs)),
     p = as.vector(p)
   )
 }
@@ -527,7 +527,7 @@ p_value.glimML <- function(model, ...) {
   p <- s[, 4]
 
   .data_frame(
-    Parameter = rownames(s),
+    Parameter = .remove_backticks_from_string(rownames(s)),
     p = as.vector(p)
   )
 }
@@ -539,7 +539,7 @@ p_value.logistf <- function(model, ...) {
   utils::capture.output(s <- summary(model))
 
   .data_frame(
-    Parameter = names(s$prob),
+    Parameter = .remove_backticks_from_string(names(s$prob)),
     p = as.vector(s$prob)
   )
 }
@@ -552,7 +552,7 @@ p_value.lrm <- function(model, ...) {
   p <- 2 * stats::pt(abs(stat$Statistic), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
-    Parameter = stat$Parameter,
+    Parameter = .remove_backticks_from_string(stat$Parameter),
     p = as.vector(p)
   )
 }
@@ -574,7 +574,7 @@ p_value.rlm <- function(model, ...) {
   p <- 2 * stats::pt(abs(cs[, 3]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
-    Parameter = names(p),
+    Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
   )
 }
@@ -587,7 +587,7 @@ p_value.betareg <- function(model, ...) {
   p <- cs[, 4]
 
   .data_frame(
-    Parameter = names(p),
+    Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
   )
 }
@@ -667,7 +667,7 @@ p_value.gam <- function(model, ...) {
     Component = "smooth_terms"
   )
 
-  rbind(d1, d2)
+  .remove_backticks_from_parameter_names(rbind(d1, d2))
 }
 
 
@@ -678,7 +678,7 @@ p_value.Gam <- function(model, ...) {
   p.aov <- stats::na.omit(summary(model)$parametric.anova)
 
   .data_frame(
-    Parameter = rownames(p.aov),
+    Parameter = .remove_backticks_from_string(rownames(p.aov)),
     p = as.vector(p.aov[, 5])
   )
 }
@@ -704,7 +704,7 @@ p_value.gls <- function(model, ...) {
   cs <- summary(model)$tTable
   p <- cs[, 4]
   .data_frame(
-    Parameter = rownames(cs),
+    Parameter = .remove_backticks_from_string(rownames(cs)),
     p = as.vector(p)
   )
 }
@@ -716,7 +716,7 @@ p_value.pggls <- function(model, ...) {
   cs <- summary(model)$CoefTable
   p <- cs[, 4]
   .data_frame(
-    Parameter = rownames(cs),
+    Parameter = .remove_backticks_from_string(rownames(cs)),
     p = as.vector(p)
   )
 }
@@ -730,7 +730,7 @@ p_value.gmnl <- function(model, ...) {
   # se <- cs[, 2]
 
   pv <- .data_frame(
-    Parameter = rownames(cs),
+    Parameter = .remove_backticks_from_string(rownames(cs)),
     p = as.vector(p)
   )
 
@@ -760,7 +760,7 @@ p_value.multinom <- function(model, ...) {
   p <- 2 * stats::pt(abs(stat), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
-    Parameter = names(p),
+    Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
   )
 }
@@ -772,7 +772,7 @@ p_value.maxLik <- function(model, ...) {
   p <- summary(model)$estimate[, 4]
 
   .data_frame(
-    Parameter = names(p),
+    Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
   )
 }
@@ -784,7 +784,7 @@ p_value.pglm <- function(model, ...) {
   p <- summary(model)$estimate[, 4]
 
   .data_frame(
-    Parameter = names(p),
+    Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
   )
 }
@@ -796,7 +796,7 @@ p_value.plm <- function(model, ...) {
   p <- stats::coef(summary(model))
 
   .data_frame(
-    Parameter = names(p[, 4]),
+    Parameter = .remove_backticks_from_string(names(p[, 4])),
     p = as.vector(p[, 4])
   )
 }
@@ -807,12 +807,11 @@ p_value.plm <- function(model, ...) {
 p_value.polr <- function(model, ...) {
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   tstat <- smry[[3]]
-  # se <- smry[[2]]
   p <- 2 * stats::pt(abs(tstat), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
   names(p) <- rownames(smry)
 
   .data_frame(
-    Parameter = names(p),
+    Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
   )
 }
@@ -830,7 +829,7 @@ p_value.vglm <- function(model, ...) {
   # se <- cs[, 2]
 
   .data_frame(
-    Parameter = names(p),
+    Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
   )
 }
@@ -910,5 +909,6 @@ p_value.list <- function(model, ...) {
     }
   }
 
+  names(p) <- .remove_backticks_from_string(names(p))
   p
 }

@@ -101,7 +101,7 @@ ci_robust <- function(model,
 
 
   .data_frame(
-    Parameter = names(est),
+    Parameter = .remove_backticks_from_string(names(est)),
     Estimate = est,
     SE = se,
     Statistic = t.stat,
