@@ -251,8 +251,8 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
-#&gt; (Intercept) |       36.78 | [32.27, 39.76] | &lt; .001
-#&gt; wt          |       -5.14 | [-6.18, -3.77] | &lt; .001</div><div class='input'># }
+#&gt; (Intercept) |       36.29 | [32.81, 41.01] | &lt; .001
+#&gt; wt          |       -5.07 | [-6.26, -4.00] | &lt; .001</div><div class='input'># }
 
 </div></span></pre>
   </div>

@@ -214,13 +214,13 @@ included in the summary output.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high           p
-#&gt; 1                   (Intercept)   4.7637996  4.5119986 4.98084585 0.000000000
-#&gt; 2             Speciesversicolor  -0.7569605 -1.6309012 0.09728687 0.097902098
-#&gt; 3              Speciesvirginica   0.5354085 -0.7880714 1.58412432 0.401598402
-#&gt; 4                   Petal.Width   0.9540470  0.2466062 1.92820612 0.003996004
-#&gt; 5 Speciesversicolor:Petal.Width   0.5153606 -0.6805879 1.45105459 0.379620380
-#&gt; 6  Speciesvirginica:Petal.Width  -0.3282446 -1.4264382 0.58431446 0.537462537</div></pre>
+<span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
+#&gt; 1                   (Intercept)   4.7670523  4.5283331 4.9768341 0.000000000
+#&gt; 2             Speciesversicolor  -0.7575934 -1.6638855 0.1037973 0.087912088
+#&gt; 3              Speciesvirginica   0.5368487 -0.7441750 1.5909076 0.393606394
+#&gt; 4                   Petal.Width   0.9546243  0.2770804 1.9157959 0.001998002
+#&gt; 5 Speciesversicolor:Petal.Width   0.5212839 -0.6464137 1.4535801 0.363636364
+#&gt; 6  Speciesvirginica:Petal.Width  -0.3178423 -1.3930458 0.5776456 0.517482517</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
