@@ -50,9 +50,14 @@ reference:
   - model_simulate
   - parameters_simulate
 
+- title: "Generate Specific Variables"
+  contents:
+  - demean
+
 - title: "Variable/Feature Reduction"
   contents:
   - parameters_reduction
+  - parameters_selection
   - check_factorstructure
   - check_clusterstructure
   - check_kmo
@@ -60,7 +65,6 @@ reference:
   - convert_efa_to_cfa
   - n_factors
   - n_clusters
-  - parameters_selection
   - principal_components
   - cmds
   - DRR

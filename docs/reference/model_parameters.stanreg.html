@@ -250,14 +250,14 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.79), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.89). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; Parameter                           | Median |         89% CI |     pd | % in ROPE |  Rhat | ESS |              Prior
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.88), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.79), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; Parameter                           | Median |         89% CI |     pd | % in ROPE |  Rhat | ESS |              Prior
 #&gt; ---------------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                         |   4.01 | [ 3.48,  4.71] |   100% |        0% | 1.016 | 275 | Normal (0 +- 8.28)
-#&gt; Petal.Length                        |   0.68 | [ 0.23,  1.06] | 99.40% |     0.90% | 1.015 | 272 | Normal (0 +- 1.17)
-#&gt; Species (versicolor)                |  -1.54 | [-2.46, -0.70] |   100% |     0.10% | 1.004 | 362 | Normal (0 +- 2.07)
-#&gt; Species (virginica)                 |  -2.79 | [-3.65, -1.89] |   100% |        0% | 1.015 | 336 | Normal (0 +- 2.07)
-#&gt; Petal.Length * Species (versicolor) |   0.13 | [-0.32,  0.54] | 68.70% |    20.00% | 1.013 | 264 | Normal (0 +- 1.02)
-#&gt; Petal.Length * Species (virginica)  |   0.29 | [-0.11,  0.73] | 85.90% |    14.30% | 1.019 | 248 | Normal (0 +- 0.78)</div><div class='input'># }
+#&gt; (Intercept)                         |   3.98 | [ 3.38,  4.52] |   100% |        0% | 1.015 | 230 | Normal (0 +- 8.28)
+#&gt; Petal.Length                        |   0.70 | [ 0.30,  1.08] |   100% |     0.10% | 1.016 | 223 | Normal (0 +- 1.17)
+#&gt; Species (versicolor)                |  -1.50 | [-2.39, -0.67] | 99.50% |     0.10% | 1.004 | 354 | Normal (0 +- 2.07)
+#&gt; Species (virginica)                 |  -2.74 | [-3.62, -1.76] |   100% |        0% | 1.009 | 347 | Normal (0 +- 2.07)
+#&gt; Petal.Length * Species (versicolor) |   0.11 | [-0.34,  0.51] | 68.30% |    24.60% | 1.012 | 236 | Normal (0 +- 1.02)
+#&gt; Petal.Length * Species (virginica)  |   0.27 | [-0.12,  0.66] | 83.40% |    15.30% | 1.017 | 217 | Normal (0 +- 0.78)</div><div class='input'># }
 
 </div></pre>
   </div>
