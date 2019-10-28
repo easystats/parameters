@@ -16,34 +16,70 @@
 #'
 #' @return A data frame with the group-/de-meaned variables.
 #'
-#' @details \code{demean()} is intended to create group- and de-meaned variables
-#'    for complex random-effect-within-between models (see \cite{Bell et al. 2018}),
-#'    where group-effects (random effects) and fixed effects correlate (see
-#'    \cite{Bafumi and Gelman 2006)}). This violation of one of the
-#'    \emph{Gauss-Markov-assumptions} can happen, for instance, when analysing panel
-#'    data. To control for correlating predictors and group effects, it is
-#'    recommended to include the group-meaned and de-meaned version of
-#'    \emph{time-varying covariates} in the model. By this, one can fit
-#'    complex multilevel models for panel data, including time-varying predictors,
-#'    time-invariant predictors and random effects. This approach is superior to
-#'    classic fixed-effects models, which lack information of variation in the
-#'    group-effects or between-subject effects.
-#'    \cr \cr
-#'    A description of how to translate the
-#'    formulas described in \emph{Bell et al. 2018} into R using \code{lmer()}
-#'    from \pkg{lme4} or \code{glmmTMB()} from \pkg{glmmTMB} can be found here:
-#'    \href{https://strengejacke.github.io/mixed-models-snippets/random-effects-within-between-effects-model.html}{for lmer()}
-#'    and \href{https://strengejacke.github.io/mixed-models-snippets/random-effects-within-between-effects-model-glmmtmb.html}{for glmmTMB()}.
+#' @details
+#'   \subsection{Panel data and correlating fixed and group effects}{
+#'     \code{demean()} is intended to create group- and de-meaned variables
+#'     for panel regression models (fixed effects models), or for complex
+#'     random-effect-within-between models (see \cite{Bell et al. 2018}),
+#'     where group-effects (random effects) and fixed effects correlate (see
+#'     \cite{Bafumi and Gelman 2006)}). This violation of one of the
+#'     \emph{Gauss-Markov-assumptions} can happen, for instance, when analysing panel
+#'     data. To control for correlating predictors and group effects, it is
+#'     recommended to include the group-meaned and de-meaned version of
+#'     \emph{time-varying covariates} in the model. By this, one can fit
+#'     complex multilevel models for panel data, including time-varying predictors,
+#'     time-invariant predictors and random effects. This approach is superior to
+#'     classic fixed-effects models, which lack information of variation in the
+#'     group-effects or between-subject effects.
+#'   }
+#'   \subsection{Terminology}{
+#'     The group-meaned variable is simply the mean of an independent variable
+#'     within each group (or id-level or cluster) represented by \code{group}.
+#'     It represents the cluster-mean of an independent variable. De-meaning
+#'     is sometimes also called person-mean centering or centering within clusters.
+#'   }
+#'   \subsection{De-meaning with continuous predictors}{
+#'     For continuous time-varying predictors, the recommendation is to include
+#'     both their de-meaned and group-meaned versions as fixed effects, but not
+#'     the raw (untransformed) time-varying predictors themselves. The de-meaned
+#'     predictor should also be included as random effect (random slope). In
+#'     regression models, the coefficient of the de-meaned predictors indicates
+#'     the within-subject effect, while the coefficient of the group-meaned
+#'     predictor indicates the between-subject effect.
+#'   }
+#'   \subsection{De-meaning with binary predictors}{
+#'     For binary time-varying predictors, the recommendation is to include
+#'     the raw (untransformed) binary predictor as fixed effect only and the
+#'     \emph{de-meaned} variable as random effect (random slope)
+#'     (\cite{Hoffmann 2015, chapter 8-2.I}). \code{demean()} will thus coerce
+#'     categorical time-varying predictors to numeric to compute the de- and
+#'     group-meaned versions for these variables.
+#'   }
+#'   \subsection{Analysing panel data with mixed models using lme4}{
+#'     A description of how to translate the
+#'     formulas described in \emph{Bell et al. 2018} into R using \code{lmer()}
+#'     from \pkg{lme4} or \code{glmmTMB()} from \pkg{glmmTMB} can be found here:
+#'     \href{https://strengejacke.github.io/mixed-models-snippets/random-effects-within-between-effects-model.html}{for lmer()}
+#'     and \href{https://strengejacke.github.io/mixed-models-snippets/random-effects-within-between-effects-model-glmmtmb.html}{for glmmTMB()}.
+#'   }
 #'
 #' @references
 #'   Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
 #'   \cr \cr
 #'   Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity. \doi{10.1007/s11135-018-0802-x}
+#'   \cr \cr
+#'   Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
 #'
 #' @examples
 #' data(iris)
 #' iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
-#' demean(iris, Sepal.Length, Petal.Length, group = ID)
+#' iris$binary <- as.factor(rbinom(150, 1, .35)) # binary variable
+#'
+#' x <- demean(iris, Sepal.Length, Petal.Length, group = ID)
+#' head(x)
+#'
+#' x <- demean(iris, Sepal.Length, binary, Species, group = ID)
+#' head(x)
 #' @export
 demean <- function(x, ..., group, suffix_demean = "_dm", suffix_groupmean = "_gm") {
   # evaluate arguments, get variables from dots
@@ -55,6 +91,26 @@ demean <- function(x, ..., group, suffix_demean = "_dm", suffix_groupmean = "_gm
 
   # get data to demean...
   dat <- x[, c(vars, group)]
+
+
+  # find categorical predictors that are coded as factors
+  categorical_predictors <- sapply(dat[vars], is.factor)
+
+  # convert binrary predictors to numeric
+  if (any(categorical_predictors)) {
+    dat[vars[categorical_predictors]] <- lapply(
+      dat[vars[categorical_predictors]],
+      function(i) as.numeric(i) - 1
+    )
+    insight::print_color(
+      sprintf(
+        "Categorical predictors (%s) have been coerced to numeric values to compute de- and group-meaned variables.\n",
+        paste0(names(categorical_predictors)[categorical_predictors], collapse = ", ")
+      ),
+      "yellow"
+    )
+  }
+
 
   # group variables, then calculate the mean-value
   # for variables within each group (the group means). assign
