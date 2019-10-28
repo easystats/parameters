@@ -4,29 +4,23 @@
 \alias{demean}
 \title{Compute group-meaned and de-meaned variables}
 \usage{
-demean(x, ..., cluster_id, append = TRUE, suffix_dm = "_dm",
-  suffix_gm = "_gm")
+demean(x, ..., group, suffix_demean = "_dm", suffix_groupmean = "_gm")
 }
 \arguments{
 \item{x}{A data frame.}
 
 \item{...}{Names of variables that should be group- and de-meaned.}
 
-\item{cluster_id}{Quoted or unquoted name of the variable that indicates the
+\item{group}{Quoted or unquoted name of the variable that indicates the
 group- or cluster-ID.}
 
-\item{append}{Logical, if \code{TRUE}, new created variables including \code{x}
-are returned, else only the new created variables are returned.}
-
-\item{suffix_dm, suffix_gm}{String value, will be appended to the names of the
+\item{suffix_demean, suffix_groupmean}{String value, will be appended to the names of the
 group-meaned and de-meaned variables of \code{x}. By default, de-meaned
 variables will be suffixed with \code{"_dm"} and grouped-meaned variables
 with \code{"_gm"}.}
 }
 \value{
-For \code{append = TRUE}, \code{x} including the group-/de-meaned
-  variables as new columns is returned; if \code{append = FALSE}, only the
-  group-/de-meaned variables will be returned.
+A data frame with the group-/de-meaned variables.
 }
 \description{
 \code{demean()} computes group- and de-meaned versions of a
@@ -56,7 +50,7 @@ For \code{append = TRUE}, \code{x} including the group-/de-meaned
 \examples{
 data(iris)
 iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
-demean(iris, Sepal.Length, Petal.Length, cluster_id = ID, append = FALSE)
+demean(iris, Sepal.Length, Petal.Length, group = ID)
 }
 \references{
 Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.

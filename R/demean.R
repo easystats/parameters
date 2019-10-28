@@ -7,18 +7,14 @@
 #'
 #' @param x A data frame.
 #' @param ... Names of variables that should be group- and de-meaned.
-#' @param cluster_id Quoted or unquoted name of the variable that indicates the
+#' @param group Quoted or unquoted name of the variable that indicates the
 #'    group- or cluster-ID.
-#' @param suffix_dm,suffix_gm String value, will be appended to the names of the
+#' @param suffix_demean,suffix_groupmean String value, will be appended to the names of the
 #'   group-meaned and de-meaned variables of \code{x}. By default, de-meaned
 #'   variables will be suffixed with \code{"_dm"} and grouped-meaned variables
 #'   with \code{"_gm"}.
-#' @param append Logical, if \code{TRUE}, new created variables including \code{x}
-#'   are returned, else only the new created variables are returned.
 #'
-#' @return For \code{append = TRUE}, \code{x} including the group-/de-meaned
-#'   variables as new columns is returned; if \code{append = FALSE}, only the
-#'   group-/de-meaned variables will be returned.
+#' @return A data frame with the group-/de-meaned variables.
 #'
 #' @details \code{demean()} is intended to create group- and de-meaned variables
 #'    for complex random-effect-within-between models (see \cite{Bell et al. 2018}),
@@ -47,28 +43,28 @@
 #' @examples
 #' data(iris)
 #' iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
-#' demean(iris, Sepal.Length, Petal.Length, cluster_id = ID, append = FALSE)
+#' demean(iris, Sepal.Length, Petal.Length, group = ID)
 #' @export
-demean <- function(x, ..., cluster_id, append = TRUE, suffix_dm = "_dm", suffix_gm = "_gm") {
+demean <- function(x, ..., group, suffix_demean = "_dm", suffix_groupmean = "_gm") {
   # evaluate arguments, get variables from dots
   dots <- as.character(match.call(expand.dots = FALSE)$`...`)
   vars <- .dot_variables(x, dots)
 
-  # parse cluster-id to string
-  cluster_id <- gsub("\"", "", deparse(substitute(cluster_id)), fixed = TRUE)
+  # parse group-variable name to string
+  group <- gsub("\"", "", deparse(substitute(group)), fixed = TRUE)
 
   # get data to demean...
-  dat <- x[, c(vars, cluster_id)]
+  dat <- x[, c(vars, group)]
 
-  # group variables by cluster-id, then calculate the mean-value
+  # group variables, then calculate the mean-value
   # for variables within each group (the group means). assign
   # mean values to a vector of same length as the data
 
   x_gm_list <- lapply(vars, function(i) {
-    group_means <- tapply(dat[[i]], dat[[cluster_id]], mean, na.rm = TRUE)
+    group_means <- tapply(dat[[i]], dat[[group]], mean, na.rm = TRUE)
     group_vector <- vector("numeric", nrow(dat))
     for (j in names(group_means)) {
-      group_vector[dat[[cluster_id]] == j] <- group_means[j]
+      group_vector[dat[[group]] == j] <- group_means[j]
     }
     group_vector
   })
@@ -87,14 +83,8 @@ demean <- function(x, ..., cluster_id, append = TRUE, suffix_dm = "_dm", suffix_
   x_gm <- as.data.frame(x_gm_list)
   x_dm <- as.data.frame(x_dm_list)
 
-  colnames(x_dm) <- sprintf("%s%s", colnames(x_dm), suffix_dm)
-  colnames(x_gm) <- sprintf("%s%s", colnames(x_gm), suffix_gm)
+  colnames(x_dm) <- sprintf("%s%s", colnames(x_dm), suffix_demean)
+  colnames(x_gm) <- sprintf("%s%s", colnames(x_gm), suffix_groupmean)
 
-
-  if (append)
-    dat <- cbind(dat, x_gm, x_dm)
-  else
-    dat <- cbind(x_gm, x_dm)
-
-  dat
+  cbind(x_gm, x_dm)
 }
