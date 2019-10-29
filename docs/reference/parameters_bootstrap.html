@@ -215,12 +215,12 @@ included in the summary output.</p></td>
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
-#&gt; 1                   (Intercept)   4.7670523  4.5283331 4.9768341 0.000000000
-#&gt; 2             Speciesversicolor  -0.7575934 -1.6638855 0.1037973 0.087912088
-#&gt; 3              Speciesvirginica   0.5368487 -0.7441750 1.5909076 0.393606394
-#&gt; 4                   Petal.Width   0.9546243  0.2770804 1.9157959 0.001998002
-#&gt; 5 Speciesversicolor:Petal.Width   0.5212839 -0.6464137 1.4535801 0.363636364
-#&gt; 6  Speciesvirginica:Petal.Width  -0.3178423 -1.3930458 0.5776456 0.517482517</div></pre>
+#&gt; 1                   (Intercept)   4.7639059  4.5168267 4.9817870 0.000000000
+#&gt; 2             Speciesversicolor  -0.7572565 -1.6348486 0.1054610 0.099900100
+#&gt; 3              Speciesvirginica   0.5358377 -0.7940337 1.5941668 0.397602398
+#&gt; 4                   Petal.Width   0.9558432  0.2455357 1.9339315 0.003996004
+#&gt; 5 Speciesversicolor:Petal.Width   0.5162276 -0.6805879 1.4506309 0.379620380
+#&gt; 6  Speciesvirginica:Petal.Width  -0.3321584 -1.4264382 0.5843145 0.535464535</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

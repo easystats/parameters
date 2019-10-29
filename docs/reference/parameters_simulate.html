@@ -230,34 +230,34 @@ included in the summary output.</p></td>
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>parameters_simulate</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high         p
-#&gt; 1                   (Intercept)   3.5249177  3.2163383  3.8219112 0.0000000
-#&gt; 2             Speciesversicolor  -1.1704980 -1.8929784 -0.4815901 0.0000000
-#&gt; 3              Speciesvirginica  -2.2567628 -3.1359722 -1.4434790 0.0000000
-#&gt; 4                   Petal.Width   0.4135931 -0.4578392  1.3236606 0.3716284
-#&gt; 5                  Petal.Length   0.9441060  0.8004395  1.0942790 0.0000000
-#&gt; 6 Speciesversicolor:Petal.Width  -0.7570192 -1.7441805  0.3095378 0.1418581
-#&gt; 7  Speciesvirginica:Petal.Width  -0.3694592 -1.3276796  0.5716419 0.4315684</div><div class='input'>
+#&gt; 1                   (Intercept)   3.5304423  3.2173124  3.8312450 0.0000000
+#&gt; 2             Speciesversicolor  -1.1674520 -1.8239459 -0.4691905 0.0000000
+#&gt; 3              Speciesvirginica  -2.2745410 -3.1409685 -1.3275372 0.0000000
+#&gt; 4                   Petal.Width   0.3911002 -0.4324144  1.2636154 0.3716284
+#&gt; 5                  Petal.Length   0.9439102  0.7984474  1.1043657 0.0000000
+#&gt; 6 Speciesversicolor:Petal.Width  -0.7519771 -1.7725762  0.2628040 0.1458541
+#&gt; 7  Speciesvirginica:Petal.Width  -0.3626511 -1.3100517  0.5738657 0.4575425</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
   <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
   <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
   <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
 )
-<span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt;         Parameter Coefficient     CI_low    CI_high           p
-#&gt; 1     (Intercept)  -0.3696111 -0.8966886  0.1883534 0.175824176
-#&gt; 2           sppPR  -1.2790242 -1.7318009 -0.7865153 0.000000000
-#&gt; 3           sppDM   0.2700482  0.0123903  0.5434156 0.041958042
-#&gt; 4         sppEC-A  -0.5655040 -0.9665810 -0.1631690 0.007992008
-#&gt; 5         sppEC-L   0.6699371  0.4136745  0.9211933 0.000000000
-#&gt; 6        sppDES-L   0.6312014  0.3965939  0.8770451 0.000000000
-#&gt; 7           sppDF   0.1185520 -0.1681876  0.4172775 0.421578422
-#&gt; 8         minedno   1.2851456  0.7717021  1.7774196 0.000000000
-#&gt; 9  (Intercept)_zi   0.7746058  0.2436178  1.3835116 0.007992008
-#&gt; 10     minedno_zi  -1.8209279 -2.4628559 -1.1918071 0.000000000</div><div class='input'><span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high p
-#&gt; 1 (Intercept)   0.8134076 80  0.4657332  1.142061 0
-#&gt; 2 (Intercept)   0.8134076 95  0.2817655  1.333089 0
-#&gt; 3     minedno  -1.8684364 80 -2.2391082 -1.471750 0
-#&gt; 4     minedno  -1.8684364 95 -2.4756697 -1.258482 0</div></pre>
+<span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt;         Parameter Coefficient      CI_low    CI_high           p
+#&gt; 1     (Intercept)  -0.3575685 -0.90874566  0.1760746 0.183816184
+#&gt; 2           sppPR  -1.2764394 -1.78968969 -0.8230826 0.000000000
+#&gt; 3           sppDM   0.2721434  0.01210524  0.5416206 0.043956044
+#&gt; 4         sppEC-A  -0.5652618 -0.96817051 -0.1703202 0.001998002
+#&gt; 5         sppEC-L   0.6738165  0.44416978  0.9264206 0.000000000
+#&gt; 6        sppDES-L   0.6317972  0.38984837  0.8700098 0.000000000
+#&gt; 7           sppDF   0.1195349 -0.16715350  0.4287058 0.403596404
+#&gt; 8         minedno   1.2606423  0.75656489  1.7975631 0.000000000
+#&gt; 9  (Intercept)_zi   0.7851063  0.24956286  1.3147222 0.000000000
+#&gt; 10     minedno_zi  -1.8366079 -2.44706658 -1.2356787 0.000000000</div><div class='input'><span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high           p
+#&gt; 1 (Intercept)   0.7856517 80  0.4413131  1.112494 0.001998002
+#&gt; 2 (Intercept)   0.7856517 95  0.2637466  1.263026 0.001998002
+#&gt; 3     minedno  -1.8418146 80 -2.2293771 -1.448562 0.000000000
+#&gt; 4     minedno  -1.8418146 95 -2.4112671 -1.237645 0.000000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

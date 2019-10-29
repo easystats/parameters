@@ -264,7 +264,9 @@
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
@@ -273,8 +275,8 @@
 #&gt;  predictors:   2
 #&gt; ------
 #&gt;             Median MAD_SD
-#&gt; (Intercept) 37.2    2.1  
-#&gt; wt          -5.4    0.6  
+#&gt; (Intercept) 37.3    1.8  
+#&gt; wt          -5.3    0.5  
 #&gt; 
 #&gt; Auxiliary parameter(s):
 #&gt;       Median MAD_SD
@@ -304,9 +306,9 @@
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 1.16 seconds (Warm-up)
-#&gt; Chain 1:                1.016 seconds (Sampling)
-#&gt; Chain 1:                2.176 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.855 seconds (Warm-up)
+#&gt; Chain 1:                0.909 seconds (Sampling)
+#&gt; Chain 1:                1.764 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -329,9 +331,9 @@
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 1.206 seconds (Warm-up)
-#&gt; Chain 2:                1.161 seconds (Sampling)
-#&gt; Chain 2:                2.367 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.865 seconds (Warm-up)
+#&gt; Chain 2:                0.746 seconds (Sampling)
+#&gt; Chain 2:                1.611 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -354,9 +356,9 @@
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 1.19 seconds (Warm-up)
-#&gt; Chain 3:                1.265 seconds (Sampling)
-#&gt; Chain 3:                2.455 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.88 seconds (Warm-up)
+#&gt; Chain 3:                1.083 seconds (Sampling)
+#&gt; Chain 3:                1.963 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -379,22 +381,21 @@
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 1.118 seconds (Warm-up)
-#&gt; Chain 4:                0.914 seconds (Sampling)
-#&gt; Chain 4:                2.032 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.91 seconds (Warm-up)
+#&gt; Chain 4:                0.904 seconds (Sampling)
+#&gt; Chain 4:                1.814 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
-#&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp + cyl:hp
+#&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp
 #&gt;  observations: 32
-#&gt;  predictors:   6
+#&gt;  predictors:   5
 #&gt; ------
 #&gt;             Median MAD_SD
-#&gt; (Intercept) 51.0    5.8  
-#&gt; cyl         -3.2    0.9  
+#&gt; (Intercept) 46.2    4.7  
+#&gt; cyl         -2.6    0.8  
 #&gt; disp        -0.1    0.0  
-#&gt; hp          -0.1    0.1  
+#&gt; hp           0.0    0.0  
 #&gt; cyl:disp     0.0    0.0  
-#&gt; cyl:hp       0.0    0.0  
 #&gt; 
 #&gt; Auxiliary parameter(s):
 #&gt;       Median MAD_SD
