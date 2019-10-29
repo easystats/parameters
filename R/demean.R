@@ -5,9 +5,8 @@
 #'    and within-subject effect.
 #'
 #' @param x A data frame.
-#' @param ... Names of variables that should be group- and de-meaned.
-#' @param group Quoted or unquoted name of the variable that indicates the
-#'    group- or cluster-ID.
+#' @param vars Character vector with names of variables that should be group- and de-meaned.
+#' @param group Name of the variable that indicates the group- or cluster-ID.
 #' @param suffix_demean,suffix_groupmean String value, will be appended to the names of the
 #'   group-meaned and de-meaned variables of \code{x}. By default, de-meaned
 #'   variables will be suffixed with \code{"_dm"} and grouped-meaned variables
@@ -73,16 +72,26 @@
 #' iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
 #' iris$binary <- as.factor(rbinom(150, 1, .35)) # binary variable
 #'
-#' x <- demean(iris, Sepal.Length, Petal.Length, group = ID)
+#' x <- demean(iris, vars = c("Sepal.Length", "Petal.Length"), group = ID)
 #' head(x)
 #'
-#' x <- demean(iris, Sepal.Length, binary, Species, group = ID)
+#' x <- demean(iris, vars = c("Sepal.Length", "binary", "Species"), group = ID)
 #' head(x)
 #' @export
-demean <- function(x, ..., group, suffix_demean = "_DM", suffix_groupmean = "_GM") {
-  # evaluate arguments, get variables from dots
-  dots <- as.character(match.call(expand.dots = FALSE)$`...`)
-  vars <- .dot_variables(x, dots)
+demean <- function(x, vars, group, suffix_demean = "_DM", suffix_groupmean = "_GM") {
+
+  not_found <- setdiff(vars, colnames(x))
+
+  if (length(not_found)) {
+    insight::print_color(sprintf(
+      "%i variables were not found in the dataset: %s\n",
+      length(not_found),
+      paste0(not_found, collapse = ", ")
+    ),
+    color = "red")
+  }
+
+  vars <- intersect(colnames(x), vars)
 
   # parse group-variable name to string
   group <- gsub("\"", "", deparse(substitute(group)), fixed = TRUE)
