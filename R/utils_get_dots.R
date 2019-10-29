@@ -49,8 +49,9 @@
   intersect(x, columns)
 }
 
+#' @importFrom stats na.omit
 .is_num_chr <- function(x) {
-  is.character(x) && !anyNA(suppressWarnings(as.numeric(na.omit(x))))
+  is.character(x) && !anyNA(suppressWarnings(as.numeric(stats::na.omit(x))))
 }
 
 .is_num_fac <- function(x) {
