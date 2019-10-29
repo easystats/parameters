@@ -5,7 +5,7 @@
 #'    and within-subject effect.
 #'
 #' @param x A data frame.
-#' @param vars Character vector with names of variables that should be group- and de-meaned.
+#' @param select Character vector with names of variables to select that should be group- and de-meaned.
 #' @param group Name of the variable that indicates the group- or cluster-ID.
 #' @param suffix_demean,suffix_groupmean String value, will be appended to the names of the
 #'   group-meaned and de-meaned variables of \code{x}. By default, de-meaned
@@ -72,15 +72,15 @@
 #' iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
 #' iris$binary <- as.factor(rbinom(150, 1, .35)) # binary variable
 #'
-#' x <- demean(iris, vars = c("Sepal.Length", "Petal.Length"), group = ID)
+#' x <- demean(iris, select = c("Sepal.Length", "Petal.Length"), group = ID)
 #' head(x)
 #'
-#' x <- demean(iris, vars = c("Sepal.Length", "binary", "Species"), group = ID)
+#' x <- demean(iris, select = c("Sepal.Length", "binary", "Species"), group = ID)
 #' head(x)
 #' @export
-demean <- function(x, vars, group, suffix_demean = "_DM", suffix_groupmean = "_GM") {
+demean <- function(x, select, group, suffix_demean = "_DM", suffix_groupmean = "_GM") {
 
-  not_found <- setdiff(vars, colnames(x))
+  not_found <- setdiff(select, colnames(x))
 
   if (length(not_found)) {
     insight::print_color(sprintf(
@@ -91,22 +91,22 @@ demean <- function(x, vars, group, suffix_demean = "_DM", suffix_groupmean = "_G
     color = "red")
   }
 
-  vars <- intersect(colnames(x), vars)
+  select <- intersect(colnames(x), select)
 
   # parse group-variable name to string
   group <- gsub("\"", "", deparse(substitute(group)), fixed = TRUE)
 
   # get data to demean...
-  dat <- x[, c(vars, group)]
+  dat <- x[, c(select, group)]
 
 
   # find categorical predictors that are coded as factors
-  categorical_predictors <- sapply(dat[vars], is.factor)
+  categorical_predictors <- sapply(dat[select], is.factor)
 
   # convert binrary predictors to numeric
   if (any(categorical_predictors)) {
-    dat[vars[categorical_predictors]] <- lapply(
-      dat[vars[categorical_predictors]],
+    dat[select[categorical_predictors]] <- lapply(
+      dat[select[categorical_predictors]],
       function(i) as.numeric(i) - 1
     )
     insight::print_color(
@@ -123,7 +123,7 @@ demean <- function(x, vars, group, suffix_demean = "_DM", suffix_groupmean = "_G
   # for variables within each group (the group means). assign
   # mean values to a vector of same length as the data
 
-  x_gm_list <- lapply(vars, function(i) {
+  x_gm_list <- lapply(select, function(i) {
     group_means <- tapply(dat[[i]], dat[[group]], mean, na.rm = TRUE)
     group_vector <- vector("numeric", nrow(dat))
     for (j in names(group_means)) {
@@ -132,13 +132,13 @@ demean <- function(x, vars, group, suffix_demean = "_DM", suffix_groupmean = "_G
     group_vector
   })
 
-  names(x_gm_list) <- vars
+  names(x_gm_list) <- select
 
 
   # create de-meaned variables by substracting the group mean from each individual value
 
-  x_dm_list <- lapply(vars, function(i) dat[[i]] - x_gm_list[[i]])
-  names(x_dm_list) <- vars
+  x_dm_list <- lapply(select, function(i) dat[[i]] - x_gm_list[[i]])
+  names(x_dm_list) <- select
 
 
   # convert to data frame and add suffix to column names

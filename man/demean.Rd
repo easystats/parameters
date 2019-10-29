@@ -4,12 +4,13 @@
 \alias{demean}
 \title{Compute group-meaned and de-meaned variables}
 \usage{
-demean(x, vars, group, suffix_demean = "_DM", suffix_groupmean = "_GM")
+demean(x, select, group, suffix_demean = "_DM",
+  suffix_groupmean = "_GM")
 }
 \arguments{
 \item{x}{A data frame.}
 
-\item{vars}{Character vector with names of variables that should be group- and de-meaned.}
+\item{select}{Character vector with names of variables to select that should be group- and de-meaned.}
 
 \item{group}{Name of the variable that indicates the group- or cluster-ID.}
 
@@ -78,10 +79,10 @@ data(iris)
 iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
 iris$binary <- as.factor(rbinom(150, 1, .35)) # binary variable
 
-x <- demean(iris, vars = c("Sepal.Length", "Petal.Length"), group = ID)
+x <- demean(iris, select = c("Sepal.Length", "Petal.Length"), group = ID)
 head(x)
 
-x <- demean(iris, vars = c("Sepal.Length", "binary", "Species"), group = ID)
+x <- demean(iris, select = c("Sepal.Length", "binary", "Species"), group = ID)
 head(x)
 }
 \references{
