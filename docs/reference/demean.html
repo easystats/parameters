@@ -159,7 +159,8 @@
    and within-subject effect.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>demean</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>group</span>, <span class='kw'>suffix_demean</span> <span class='kw'>=</span> <span class='st'>"_dm"</span>, <span class='kw'>suffix_groupmean</span> <span class='kw'>=</span> <span class='st'>"_gm"</span>)</pre>
+    <pre class="usage"><span class='fu'>demean</span>(<span class='no'>x</span>, <span class='no'>select</span>, <span class='no'>group</span>, <span class='kw'>suffix_demean</span> <span class='kw'>=</span> <span class='st'>"_DM"</span>,
+  <span class='kw'>suffix_groupmean</span> <span class='kw'>=</span> <span class='st'>"_GM"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,13 +170,12 @@
       <td><p>A data frame.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Names of variables that should be group- and de-meaned.</p></td>
+      <th>select</th>
+      <td><p>Character vector with names of variables to select that should be group- and de-meaned.</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>Quoted or unquoted name of the variable that indicates the
-group- or cluster-ID.</p></td>
+      <td><p>Name of the variable that indicates the group- or cluster-ID.</p></td>
     </tr>
     <tr>
       <th>suffix_demean, suffix_groupmean</th>
@@ -231,34 +231,35 @@ with <code>"_gm"</code>.</p></td>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
-  <br /> <br />
-  Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality &amp; Quantity. doi: <a href='https://doi.org/10.1007/s11135-018-0802-x'>10.1007/s11135-018-0802-x</a>
+    
+<ul>
+<li><p>Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.</p></li>
+<li><p>Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality &amp; Quantity. doi: <a href='https://doi.org/10.1007/s11135-018-0802-x'>10.1007/s11135-018-0802-x</a></p></li>
+<li><p>Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge</p></li>
+</ul>
 
-  <br /> <br />
-  Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>iris</span>)
 <span class='no'>iris</span>$<span class='no'>ID</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>iris</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># fake-ID</span>
 <span class='no'>iris</span>$<span class='no'>binary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span>(<span class='fl'>150</span>, <span class='fl'>1</span>, <span class='fl'>.35</span>)) <span class='co'># binary variable</span>
 
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='no'>Sepal.Length</span>, <span class='no'>Petal.Length</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_gm Petal.Length_gm Sepal.Length_dm Petal.Length_dm
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_GM Petal.Length_GM Sepal.Length_DM Petal.Length_DM
 #&gt; 1        5.843590        3.889744      -0.7435897       -2.489744
 #&gt; 2        5.931250        3.909375      -1.0312500       -2.509375
 #&gt; 3        5.931250        3.909375      -1.2312500       -2.609375
 #&gt; 4        5.843590        3.889744      -1.2435897       -2.389744
 #&gt; 5        5.843590        3.889744      -0.8435897       -2.489744
 #&gt; 6        5.822222        3.655556      -0.4222222       -1.955556</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='no'>Sepal.Length</span>, <span class='no'>binary</span>, <span class='no'>Species</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (binary, Species) have been coerced to numeric values to compute de- and group-meaned variables.
-#&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_gm binary_gm Species_gm Sepal.Length_dm  binary_dm Species_dm
-#&gt; 1        5.843590 0.3333333  1.0769231      -0.7435897  0.6666667 -1.0769231
-#&gt; 2        5.931250 0.3125000  1.0625000      -1.0312500 -0.3125000 -1.0625000
-#&gt; 3        5.931250 0.3125000  1.0625000      -1.2312500  0.6875000 -1.0625000
-#&gt; 4        5.843590 0.3333333  1.0769231      -1.2435897  0.6666667 -1.0769231
-#&gt; 5        5.843590 0.3333333  1.0769231      -0.8435897  0.6666667 -1.0769231
-#&gt; 6        5.822222 0.2500000  0.9166667      -0.4222222 -0.2500000 -0.9166667</div></span></pre>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.
+#&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_GM Species_GM binary_GM Sepal.Length_DM Species_DM  binary_DM
+#&gt; 1        5.843590  1.0769231 0.3333333      -0.7435897 -1.0769231  0.6666667
+#&gt; 2        5.931250  1.0625000 0.3125000      -1.0312500 -1.0625000 -0.3125000
+#&gt; 3        5.931250  1.0625000 0.3125000      -1.2312500 -1.0625000  0.6875000
+#&gt; 4        5.843590  1.0769231 0.3333333      -1.2435897 -1.0769231  0.6666667
+#&gt; 5        5.843590  1.0769231 0.3333333      -0.8435897 -1.0769231  0.6666667
+#&gt; 6        5.822222  0.9166667 0.2500000      -0.4222222 -0.9166667 -0.2500000</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
