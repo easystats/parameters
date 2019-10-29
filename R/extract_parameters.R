@@ -90,10 +90,29 @@
 
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method = "wald", ...) {
+.extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method = "wald", standardize = NULL, ...) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
   parameters$Parameter <- row.names(parameters)
   original_order <- parameters$Parameter
+
+  # column name for coefficients, non-standardized
+  coef_col <- "Coefficient"
+
+  # Std Coefficients
+  if (!is.null(standardize)) {
+    if (!requireNamespace("effectsize", quietly = TRUE)) {
+      insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
+    } else {
+      parameters <- merge(parameters, effectsize::standardize_parameters(model, method = standardize), by = "Parameter")
+      if (standardize == "refit") {
+        model <- effectsize::standardize(model)
+        coef_col <- "Std_Coefficient"
+      } else {
+        coef_col <- c("Coefficient", "Std_Coefficient")
+      }
+    }
+  }
+
 
   # CI
   if (!is.null(ci)) {
@@ -152,7 +171,7 @@
   names(parameters) <- gsub("z value", "z", names(parameters))
 
   # Reorder
-  order <- c("Parameter", "Coefficient", "SE", ci_cols, "t", "z", "df", "df_residual", "p")
+  order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_residual", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   rownames(parameters) <- NULL

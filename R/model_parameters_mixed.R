@@ -32,7 +32,7 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, ...) {
+model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
 
   # Processing
   if (bootstrap) {
@@ -42,8 +42,10 @@ model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, p_method
   }
 
 
-  parameters <- .add_model_parameters_attributes(parameters, model, ci, ...)
+  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
+  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+
   parameters
 }
 
@@ -55,7 +57,7 @@ model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, p_method
 #' @inheritParams model_simulate
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)
 
   # fix argument, if model has no zi-part
@@ -67,12 +69,14 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = component, ...)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, ...)
   }
 
 
-  parameters <- .add_model_parameters_attributes(parameters, model, ci, ...)
+  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
+  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+
   parameters
 }
 

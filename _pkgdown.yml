@@ -50,7 +50,7 @@ reference:
   - model_simulate
   - parameters_simulate
 
-- title: "Variable Preparation and Centering"
+- title: "Variable Preparation/Centering"
   contents:
   - demean
 

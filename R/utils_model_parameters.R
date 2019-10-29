@@ -31,6 +31,6 @@
 
 .exponentiate_parameters <- function(parameters) {
   columns <- grepl(pattern = "^(Coefficient|Std_Coefficient|CI_)", colnames(parameters))
-  parameters[columns] <- exp(parameters[columns])
+  if (any(columns)) parameters[columns] <- exp(parameters[columns])
   parameters
 }

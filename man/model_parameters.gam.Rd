@@ -5,7 +5,7 @@
 \title{Parameters of Generalized Additive (Mixed) Models}
 \usage{
 \method{model_parameters}{gam}(model, ci = 0.95, bootstrap = FALSE,
-  iterations = 1000, ...)
+  iterations = 1000, standardize = NULL, exponentiate = FALSE, ...)
 }
 \arguments{
 \item{model}{A gam/gamm model.}
@@ -15,6 +15,10 @@
 \item{bootstrap}{Should estimates be based on bootstrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}).}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.}
+
+\item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[=effectsize::standardize_parameters]{standardize_parameters()}}.}
+
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

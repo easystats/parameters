@@ -6,11 +6,12 @@
 \title{Mixed Model Parameters}
 \usage{
 \method{model_parameters}{merMod}(model, ci = 0.95, bootstrap = FALSE,
-  p_method = "wald", ci_method = "wald", iterations = 1000, ...)
+  p_method = "wald", ci_method = "wald", iterations = 1000,
+  standardize = NULL, exponentiate = FALSE, ...)
 
 \method{model_parameters}{glmmTMB}(model, ci = 0.95, bootstrap = FALSE,
   iterations = 1000, component = c("all", "conditional", "zi",
-  "zero_inflated"), ...)
+  "zero_inflated"), standardize = NULL, exponentiate = FALSE, ...)
 }
 \arguments{
 \item{model}{A mixed model.}
@@ -24,6 +25,10 @@
 \item{ci_method}{Method for computing confidence intervals (CI). See \code{\link[=ci.merMod]{ci()}}.}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.}
+
+\item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[=effectsize::standardize_parameters]{standardize_parameters()}}.}
+
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.}
 
 \item{...}{Arguments passed to or from other methods.}
 
