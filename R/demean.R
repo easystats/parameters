@@ -1,7 +1,6 @@
-#' @title Compute group-meaned and de-meaned variables
-#' @name demean
+#' Compute group-meaned and de-meaned variables
 #'
-#' @description \code{demean()} computes group- and de-meaned versions of a
+#' \code{demean()} computes group- and de-meaned versions of a
 #'    variable that can be used in regression analysis to model the between-
 #'    and within-subject effect.
 #'
@@ -63,13 +62,12 @@
 #'     and \href{https://strengejacke.github.io/mixed-models-snippets/random-effects-within-between-effects-model-glmmtmb.html}{for glmmTMB()}.
 #'   }
 #'
-#' @references
-#'   Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
-#'   \cr \cr
-#'   Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity. \doi{10.1007/s11135-018-0802-x}
-#'   \cr \cr
-#'   Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
-#'
+#' @references \itemize{
+#'   \item Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
+#'   \item Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity. \doi{10.1007/s11135-018-0802-x}
+#'   \item Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
+#' }
+
 #' @examples
 #' data(iris)
 #' iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
@@ -81,7 +79,7 @@
 #' x <- demean(iris, Sepal.Length, binary, Species, group = ID)
 #' head(x)
 #' @export
-demean <- function(x, ..., group, suffix_demean = "_dm", suffix_groupmean = "_gm") {
+demean <- function(x, ..., group, suffix_demean = "_DM", suffix_groupmean = "_GM") {
   # evaluate arguments, get variables from dots
   dots <- as.character(match.call(expand.dots = FALSE)$`...`)
   vars <- .dot_variables(x, dots)
