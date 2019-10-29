@@ -66,25 +66,44 @@ predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ..
   } else {
     out <- stats::predict(attributes(object)$model, newdata = newdata, ...)
   }
-  out <- as.factor(out)
 
   # Add labels
   if (!is.null(names)) {
 
     # List
     if(is.list(names)){
+      out <- as.factor(out)
       for(i in names(names)){
         levels(out)[levels(out) == i] <- names[[i]]
       }
 
     # Vector
     } else if(is.character(names)){
-      levels(out) <- names[1:length(levels(out))]
+      out <- names[as.numeric(out)]
     } else{
       stop("'names' must be a character vector or a list.")
     }
-
+    out <- as.character(out)
   }
   out
 }
 
+
+#' @export
+predict.kmeans <- function(object, newdata = NULL, ...) {
+
+  if(is.null(newdata)){
+    return(object$cluster)
+  }
+
+  # compute squared euclidean distance from each sample to each cluster center
+  centers <- object$centers
+  sumsquares_by_center <- apply(centers, 1, function(x) {
+    colSums((t(newdata) - x) ^ 2)
+  })
+  if(is.null(nrow(sumsquares_by_center))){
+    as.vector(which.min(sumsquares_by_center))
+  } else{
+    as.vector(apply(as.data.frame(sumsquares_by_center), 1, which.min))
+  }
+}

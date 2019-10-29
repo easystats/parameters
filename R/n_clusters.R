@@ -87,6 +87,10 @@ n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "
 }
 
 
+
+
+
+
 #' @keywords internal
 .n_clusters_clValid <- function(x, ...) {
   if (!requireNamespace("clValid", quietly = TRUE)) {
@@ -98,11 +102,17 @@ n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "
     nClust = 2:9,
     # clMethods = c("hierarchical", "kmeans", "pam", "diana", "fanny", "som", "model", "sota", "clara", "agnes"),
     clMethods = c("hierarchical", "kmeans", "pam", "diana", "clara", "agnes"),
-    validation = c("internal", "stability")
+    validation = c("internal", "stability"),
+    maxitems = nrow(x)
   )
   out <- clValid::optimalScores(rez)
   data.frame(n_Clusters = out$Clusters, Method = row.names(out), Package = "clValid")
 }
+
+
+
+
+
 
 
 #' @importFrom grDevices png dev.off

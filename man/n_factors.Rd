@@ -6,7 +6,7 @@
 \usage{
 n_factors(x, type = "FA", rotation = "varimax",
   algorithm = "default", package = c("nFactors", "psych"),
-  safe = TRUE, ...)
+  cor = NULL, safe = TRUE, ...)
 }
 \arguments{
 \item{x}{A dataframe.}
@@ -18,6 +18,8 @@ n_factors(x, type = "FA", rotation = "varimax",
 \item{algorithm}{Factoring method used by VSS. Can be \code{"pa"} for Principal Axis Factor Analysis, \code{"minres"} for minimum residual (OLS) factoring, \code{"mle"} for Maximum Likelihood FA and \code{"pc"} for Principal Components. \code{"default"} will select \code{"minres"} if \code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.}
 
 \item{package}{These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"} and \code{"EGAnet"}. However, \code{"EGAnet"} can be very slow for bigger datasets. Thus, by default, \code{c("nFactors", "psych")} are selected.}
+
+\item{cor}{An optional correlation matrix that can be used. If \code{NULL}, will compute it by running \code{cor()} on the passed data.}
 
 \item{safe}{If \code{TRUE}, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.}
 

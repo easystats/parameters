@@ -4,7 +4,7 @@
 \alias{demean}
 \title{Compute group-meaned and de-meaned variables}
 \usage{
-demean(x, ..., group, suffix_demean = "_dm", suffix_groupmean = "_gm")
+demean(x, ..., group, suffix_demean = "_DM", suffix_groupmean = "_GM")
 }
 \arguments{
 \item{x}{A data frame.}
@@ -86,9 +86,9 @@ x <- demean(iris, Sepal.Length, binary, Species, group = ID)
 head(x)
 }
 \references{
-Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
-  \cr \cr
-  Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity. \doi{10.1007/s11135-018-0802-x}
-  \cr \cr
-  Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
+\itemize{
+  \item Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
+  \item Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity. \doi{10.1007/s11135-018-0802-x}
+  \item Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
+}
 }

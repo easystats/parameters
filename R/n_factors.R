@@ -8,6 +8,7 @@
 #' @param algorithm Factoring method used by VSS. Can be \code{"pa"} for Principal Axis Factor Analysis, \code{"minres"} for minimum residual (OLS) factoring, \code{"mle"} for Maximum Likelihood FA and \code{"pc"} for Principal Components. \code{"default"} will select \code{"minres"} if \code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.
 #' @param package These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"} and \code{"EGAnet"}. However, \code{"EGAnet"} can be very slow for bigger datasets. Thus, by default, \code{c("nFactors", "psych")} are selected.
 #' @param safe If \code{TRUE}, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.
+#' @param cor An optional correlation matrix that can be used. If \code{NULL}, will compute it by running \code{cor()} on the passed data.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -40,7 +41,7 @@
 #' }
 #' @importFrom stats cor
 #' @export
-n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default", package = c("nFactors", "psych"), safe = TRUE, ...) {
+n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default", package = c("nFactors", "psych"), cor = NULL, safe = TRUE, ...) {
   if (all(package == "all")) {
     package <- c("nFactors", "EGAnet", "psych")
   }
@@ -48,9 +49,11 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   # Initialize parameters
   nobs <- nrow(x)
 
-  # TODO: this could be improved with better correlation
-  cormatrix <- stats::cor(x, use = "pairwise.complete.obs")
-  eigen_values <- eigen(cormatrix)$values
+  # Correlation matrix
+  if(is.null(cor)){
+    cor <- stats::cor(x, use = "pairwise.complete.obs")
+  }
+  eigen_values <- eigen(cor)$values
 
 
   # Initialize dataframe
@@ -150,7 +153,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_ega(x, cormatrix, nobs, eigen_values, type),
+        tryCatch(.n_factors_ega(x, cor, nobs, eigen_values, type),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
@@ -158,7 +161,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
     } else {
       out <- rbind(
         out,
-        .n_factors_ega(x, cormatrix, nobs, eigen_values, type)
+        .n_factors_ega(x, cor, nobs, eigen_values, type)
       )
     }
   }
@@ -173,14 +176,14 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_vss(x, cormatrix, nobs, type, rotation, algorithm),
+        tryCatch(.n_factors_vss(x, cor, nobs, type, rotation, algorithm),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_fit(x, cormatrix, nobs, type, rotation, algorithm),
+        tryCatch(.n_factors_fit(x, cor, nobs, type, rotation, algorithm),
                  warning = function(w) data.frame(),
                  error = function(e) data.frame()
         )
@@ -188,11 +191,11 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
     } else {
       out <- rbind(
         out,
-        .n_factors_vss(x, cormatrix, nobs, type, rotation, algorithm)
+        .n_factors_vss(x, cor, nobs, type, rotation, algorithm)
       )
       out <- rbind(
         out,
-        .n_factors_fit(x, cormatrix, nobs, type, rotation, algorithm)
+        .n_factors_fit(x, cor, nobs, type, rotation, algorithm)
       )
     }
   }
@@ -399,7 +402,7 @@ print.n_clusters <- print.n_factors
 # EGAnet ------------------------
 
 #' @keywords internal
-.n_factors_ega <- function(x = NULL, cormatrix = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
+.n_factors_ega <- function(x = NULL, cor = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
 
   # Replace with own corelation matrix
   junk <- capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(x, model = "glasso", plot.EGA = FALSE)$n.dim)))
@@ -418,7 +421,7 @@ print.n_clusters <- print.n_factors
 # psych ------------------------
 
 #' @keywords internal
-.n_factors_vss <- function(x = NULL, cormatrix = NULL, nobs = NULL, type = "FA", rotation = "varimax", algorithm = "default") {
+.n_factors_vss <- function(x = NULL, cor = NULL, nobs = NULL, type = "FA", rotation = "varimax", algorithm = "default") {
   if (algorithm == "default") {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
       algorithm <- "minres"
@@ -430,7 +433,7 @@ print.n_clusters <- print.n_factors
 
   # Compute VSS
   vss <- psych::VSS(
-    cormatrix,
+    cor,
     n = ncol(x) - 1,
     n.obs = nobs,
     rotate = rotation,
@@ -464,7 +467,7 @@ print.n_clusters <- print.n_factors
 
 
 #' @keywords internal
-.n_factors_fit <- function(x = NULL, cormatrix = NULL, nobs = NULL, type = "FA", rotation = "varimax", algorithm = "default") {
+.n_factors_fit <- function(x = NULL, cor = NULL, nobs = NULL, type = "FA", rotation = "varimax", algorithm = "default") {
   if (algorithm == "default") {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
       algorithm <- "minres"
@@ -474,10 +477,10 @@ print.n_clusters <- print.n_factors
   }
 
   rez <- data.frame()
-  for(n in 1:(ncol(x)-1)){
+  for(n in 1:(ncol(cor)-1)){
 
     if(tolower(type) %in% c("fa", "factor", "efa")){
-      factors <- tryCatch(psych::fa(cormatrix,
+      factors <- tryCatch(psych::fa(cor,
                                     nfactors = n,
                                     n.obs = nobs,
                                     rotate = rotation,
@@ -486,7 +489,7 @@ print.n_clusters <- print.n_factors
                           error = function(e) NA
       )
     } else{
-      factors <- tryCatch(psych::pca(cormatrix,
+      factors <- tryCatch(psych::pca(cor,
                                     nfactors = n,
                                     n.obs = nobs,
                                     rotate = rotation),
