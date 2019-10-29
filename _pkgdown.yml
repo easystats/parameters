@@ -50,7 +50,7 @@ reference:
   - model_simulate
   - parameters_simulate
 
-- title: "Generate Specific Variables"
+- title: "Variable Preparation and Centering"
   contents:
   - demean
 
