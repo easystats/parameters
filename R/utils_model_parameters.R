@@ -1,9 +1,12 @@
 .add_model_parameters_attributes <- function(parameters, model, ci, exponentiate = FALSE, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
+  info <- insight::model_info(model)
 
   attr(parameters, "pretty_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
   attr(parameters, "exponentiate") <- exponentiate
+  attr(parameters, "ordinal_model") <- info$is_ordinal
+
 
   if ("digits" %in% names(dot.arguments)) {
     attr(parameters, "digits") <- eval(dot.arguments[["digits"]])

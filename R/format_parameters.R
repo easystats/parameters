@@ -40,6 +40,11 @@ format_parameters.default <- function(model) {
     names <- gsub("zero_", "", names)
   }
 
+  if (inherits(model, "bracl")) {
+    names <- gsub("(.*):(.*)", "\\2", names)
+  }
+
+
   # remove "as.factor()", "log()" etc. from parameter names
   names <- .clean_parameter_names(names)
 

@@ -52,6 +52,7 @@ parameters_type <- function(model, ...) {
     params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
   }
 
+
   # Remove "as.factor()", "log()" etc. from parameter names but save original parameter before
   original_parameter <- params$Parameter
   params$Parameter <- .clean_parameter_names(params$Parameter, full = TRUE)
@@ -91,7 +92,6 @@ parameters_type <- function(model, ...) {
   }
 
   out$Parameter <- original_parameter
-  # Out
   out
 }
 
@@ -223,13 +223,13 @@ parameters_type <- function(model, ...) {
 
   pattern <- if (full) {
     c(
-      "as.factor", "factor", "offset", "log1p", "log10", "log2", "log", "lag",
+      "as.factor", "as.numeric", "factor", "offset", "log1p", "log10", "log2", "log", "lag",
       "diff", "pspline", "poly", "catg", "asis", "matrx", "pol", "strata", "strat",
       "scale", "scored", "interaction", "sqrt", "lsp", "rcs", "pb", "lo", "bs",
       "ns", "t2", "te", "ti", "tt", "mi", "mo", "gp", "s", "I"
     )
   } else {
-    c("as.factor", "factor", "catg", "asis", "interaction", "I")
+    c("as.factor", "as.numeric", "factor", "catg", "asis", "interaction", "I")
   }
 
   for (j in 1:length(pattern)) {

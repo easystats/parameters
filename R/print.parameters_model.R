@@ -52,7 +52,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   digits <- attributes(x)$digits
   ci_digits <- attributes(x)$ci_digits
   p_digits <- attributes(x)$p_digits
-
+  is_ordinal_model <- attributes(x)$ordinal_model
 
   # make sure we have correct sorting here...
   tables <- split(x, factor(x[[split_column]], levels = unique(x[[split_column]])))
@@ -110,8 +110,18 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       type
     )
 
+
+    if (split_column == "Response" && is_ordinal_model) {
+      s1 <- "Response level:"
+      s2 <- component_name
+    } else {
+      s1 <- component_name
+      s2 <- split_column
+    }
+
+
     # Print
-    insight::print_color(sprintf("# %s %s\n\n", component_name, tolower(split_column)), "blue")
+    insight::print_color(sprintf("# %s %s\n\n", s1, tolower(s2)), "blue")
     cat(insight::format_table(formatted_table))
     cat("\n")
   }
