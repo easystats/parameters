@@ -416,6 +416,18 @@ p_value.coxph <- function(model, ...) {
 }
 
 
+#' @export
+p_value.aareg <- function(model, ...) {
+  s <- summary(model)
+  p <- s$table[, "p"]
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(names(p)),
+    p = as.vector(p)
+  )
+}
+
+
 
 #' @export
 p_value.coxme <- function(model, ...) {

@@ -683,6 +683,19 @@ standard_error.flexsurvreg <- function(model, ...) {
 }
 
 
+#' @export
+standard_error.aareg <- function(model, ...) {
+  s <- summary(model)
+  se <- s$table[, "se(coef)"]
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(names(se)),
+    SE = as.vector(se)
+  )
+}
+
+
+
 
 #' @export
 standard_error.gam <- function(model, ...) {

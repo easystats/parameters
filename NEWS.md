@@ -10,7 +10,7 @@ Parts of the **parameter** package are restructured and functions focussing on a
 
 ## New supported models
 
-- `model_parameters()` for `kmeans`.
+- `model_parameters()` for `kmeans` and `aareg`.
 - `p_value()`, `ci()`, `standard_error()` and `model_parameters()` now support *flexsurvreg* models (from package **flexsurv**).
 
 ## New functions
