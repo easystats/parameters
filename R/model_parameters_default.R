@@ -229,3 +229,11 @@ model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations 
 
 #' @export
 model_parameters.multinom <- model_parameters.mlm
+
+
+#' @export
+model_parameters.brmultinom <- model_parameters.mlm
+
+
+#' @export
+model_parameters.bracl <- model_parameters.mlm

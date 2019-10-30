@@ -792,6 +792,27 @@ p_value.multinom <- function(model, ...) {
 }
 
 
+#' @export
+p_value.brmultinom <- p_value.multinom
+
+
+#' @export
+p_value.bracl <- function(model, ...) {
+  smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
+  p <- smry[[4]]
+  names(p) <- rownames(smry)
+
+  params <- insight::get_parameters(model)
+
+  ## TODO change once insight is updated
+  .data_frame(
+    Parameter = params[[1]],
+    p = as.vector(p),
+    Response = params[[3]]
+  )
+}
+
+
 
 #' @export
 p_value.maxLik <- function(model, ...) {

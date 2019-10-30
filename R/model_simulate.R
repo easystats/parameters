@@ -237,8 +237,17 @@ model_simulate.tobit <- model_simulate.lm
 #' @export
 model_simulate.survreg <- model_simulate.lm
 
+
 #' @export
 model_simulate.multinom <- model_simulate.lm
+
+
+#' @export
+model_simulate.brmultinom <- model_simulate.lm
+
+
+#' @export
+model_simulate.bracl <- model_simulate.lm
 
 
 

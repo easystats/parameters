@@ -424,41 +424,82 @@ standard_error.svyglm <- function(model, ...) {
 
 
 
-# Other models ---------------------------------------------------------------
+
+# Survival Models -------------------------------------------------------
 
 
 #' @export
-standard_error.rq <- function(model, ...) {
-  se <- tryCatch({
-    cs <- suppressWarnings(stats::coef(summary(model)))
-    se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
-    if (length(se_column)) {
-      cs[, se_column]
-    } else {
-      vc <- insight::get_varcov(model)
-      as.vector(sqrt(diag(vc)))
-    }
-  },
-  error = function(e) {
-    vc <- insight::get_varcov(model)
-    as.vector(sqrt(diag(vc)))
-  }
-  )
+standard_error.coxme <- function(model, ...) {
+  beta <- model$coefficients
 
-  params <- insight::get_parameters(model)
+  if (length(beta) > 0) {
+    .data_frame(
+      Parameter = .remove_backticks_from_string(names(beta)),
+      SE = sqrt(diag(stats::vcov(model)))
+    )
+  }
+}
+
+
+
+#' @export
+standard_error.coxph <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  se <- cs[, 3]
 
   .data_frame(
-    ## TODO change to "$Parameter" once fixed in insight
-    Parameter = params[[1]],
-    SE = se
+    Parameter = .remove_backticks_from_string(names(se)),
+    SE = as.vector(se)
   )
 }
 
-#' @export
-standard_error.crq <- standard_error.rq
+
 
 #' @export
-standard_error.nlrq <- standard_error.rq
+standard_error.survreg <- function(model, ...) {
+  s <- summary(model)
+  se <- s$table[, 2]
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(names(se)),
+    SE = as.vector(se)
+  )
+}
+
+
+
+#' @export
+standard_error.flexsurvreg <- function(model, ...) {
+  params <- insight::find_parameters(model, flatten = TRUE)
+  se <- model$res[rownames(model$res) %in% params, "se"]
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(names(se)),
+    SE = as.vector(se)
+  )
+}
+
+
+#' @export
+standard_error.aareg <- function(model, ...) {
+  s <- summary(model)
+  se <- s$table[, "se(coef)"]
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(names(se)),
+    SE = as.vector(se)
+  )
+}
+
+
+
+
+
+
+
+
+
+# Ordinal Models ---------------------------------------------------------
 
 
 #' @export
@@ -497,6 +538,84 @@ standard_error.multinom <- function(model, ...) {
   )
 }
 
+
+#' @export
+standard_error.brmultinom <- standard_error.multinom
+
+
+#' @export
+standard_error.polr <- function(model, ...) {
+  smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
+  se <- smry[[2]]
+  names(se) <- rownames(smry)
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(names(se)),
+    SE = as.vector(se)
+  )
+}
+
+
+
+#' @export
+standard_error.bracl <- function(model, ...) {
+  smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
+  se <- smry[[2]]
+  names(se) <- rownames(smry)
+
+  params <- insight::get_parameters(model)
+
+  ## TODO change once insight is updated
+  .data_frame(
+    Parameter = params[[1]],
+    SE = as.vector(se),
+    Response = params[[3]]
+  )
+}
+
+
+
+
+
+
+
+
+
+# Other models ---------------------------------------------------------------
+
+
+#' @export
+standard_error.rq <- function(model, ...) {
+  se <- tryCatch({
+    cs <- suppressWarnings(stats::coef(summary(model)))
+    se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
+    if (length(se_column)) {
+      cs[, se_column]
+    } else {
+      vc <- insight::get_varcov(model)
+      as.vector(sqrt(diag(vc)))
+    }
+  },
+  error = function(e) {
+    vc <- insight::get_varcov(model)
+    as.vector(sqrt(diag(vc)))
+  }
+  )
+
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    ## TODO change to "$Parameter" once fixed in insight
+    Parameter = params[[1]],
+    SE = se
+  )
+}
+
+#' @export
+standard_error.crq <- standard_error.rq
+
+#' @export
+standard_error.nlrq <- standard_error.rq
 
 
 #' @export
@@ -630,73 +749,6 @@ standard_error.plm <- function(model, ...) {
 }
 
 
-
-#' @export
-standard_error.coxme <- function(model, ...) {
-  beta <- model$coefficients
-
-  if (length(beta) > 0) {
-    .data_frame(
-      Parameter = .remove_backticks_from_string(names(beta)),
-      SE = sqrt(diag(stats::vcov(model)))
-    )
-  }
-}
-
-
-
-#' @export
-standard_error.coxph <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  se <- cs[, 3]
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(names(se)),
-    SE = as.vector(se)
-  )
-}
-
-
-
-#' @export
-standard_error.survreg <- function(model, ...) {
-  s <- summary(model)
-  se <- s$table[, 2]
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(names(se)),
-    SE = as.vector(se)
-  )
-}
-
-
-
-#' @export
-standard_error.flexsurvreg <- function(model, ...) {
-  params <- insight::find_parameters(model, flatten = TRUE)
-  se <- model$res[rownames(model$res) %in% params, "se"]
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(names(se)),
-    SE = as.vector(se)
-  )
-}
-
-
-#' @export
-standard_error.aareg <- function(model, ...) {
-  s <- summary(model)
-  se <- s$table[, "se(coef)"]
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(names(se)),
-    SE = as.vector(se)
-  )
-}
-
-
-
-
 #' @export
 standard_error.gam <- function(model, ...) {
   p.table <- summary(model)$p.table
@@ -822,17 +874,8 @@ standard_error.gmnl <- function(model, ...) {
 
 
 
-#' @export
-standard_error.polr <- function(model, ...) {
-  smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
-  se <- smry[[2]]
-  names(se) <- rownames(smry)
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(names(se)),
-    SE = as.vector(se)
-  )
-}
+
 
 
 

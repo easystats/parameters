@@ -317,6 +317,15 @@ ci.multinom <- function(x, ci = .95, method = NULL, ...) {
 }
 
 
+#' @export
+ci.brmultinom <- ci.multinom
+
+
+#' @export
+ci.bracl <- ci.multinom
+
+
+
 
 
 
