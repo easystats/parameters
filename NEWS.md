@@ -17,7 +17,7 @@ Parts of the **parameter** package are restructured and functions focussing on a
 
 - `degrees_of_freedom()` to get DoFs.
 - `p_value_robust()`, `ci_robust()` and `standard_error_robust()` to compute robust standard errors, and p-values or confidence intervals based on robust standard errors.
-- `demean()` to calculate de-meaned and group-meaned variables (for panel-data regression).
+- `demean()` to calculate de-meaned and group-meaned variables (centering within groups, for panel-data regression).
 - `n_parameters()` to get number of parameters.
 - `n_clusters()` to determine the number of clusters to extract.
 - `check_clusterstructure()` to check the suitability of data for clustering.
@@ -35,6 +35,7 @@ Parts of the **parameter** package are restructured and functions focussing on a
 
 - Interaction terms in `model_parameters()` were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. `as.factor()`, `log()` or `I()`.
 - Fixed bug in `parameters_type()` when a parameter occured multiple times in a model.
+- Fixed bug with *multinom*-support.
 
 # parameters 0.2.0
 

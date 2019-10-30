@@ -18,6 +18,10 @@ n_parameters <- function(x, ...) {
   UseMethod("n_parameters")
 }
 
+
+
+# Default models -------------------------------------
+
 #' @rdname n_parameters
 #' @export
 n_parameters.default <- function(x, ...) {
@@ -143,3 +147,14 @@ n_parameters.stanreg <- function(x, effects = c("all", "fixed", "random"), compo
 
 #' @export
 n_parameters.stanmvreg <- n_parameters.stanreg
+
+
+
+
+
+# Other models -------------------------------------
+
+#' @export
+n_parameters.multinom <- function(x, ...) {
+  nrow(insight::get_parameters(x))
+}

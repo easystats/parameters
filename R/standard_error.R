@@ -37,7 +37,9 @@
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
 #' @return A data frame.
-#' @importFrom stats coef vcov setNames
+#' @importFrom stats coef vcov setNames var na.omit
+#' @importFrom insight get_varcov print_color get_parameters find_parameters
+#' @importFrom utils capture.output
 #' @export
 standard_error <- function(model, ...) {
   UseMethod("standard_error")
@@ -67,7 +69,6 @@ standard_error.factor <- function(model, force = FALSE, verbose = TRUE, ...) {
 standard_error.character <- standard_error.factor
 
 
-#' @importFrom stats var na.omit
 #' @export
 standard_error.numeric <- function(model, ...) {
   sqrt(stats::var(model, na.rm = TRUE) / length(stats::na.omit(model)))
@@ -142,6 +143,20 @@ standard_error.default <- function(model, robust = FALSE, ...) {
       NULL
     }
     )
+
+    # if all fails, try to get se from varcov
+    if (is.null(se)) {
+      se <- tryCatch({
+        varcov <- insight::get_varcov(model)
+        se <- sqrt(diag(varcov))
+        names(se) <- colnames(varcov)
+      },
+      error = function(e) {
+        NULL
+      }
+      )
+    }
+
 
     if (is.null(se)) {
       insight::print_color("\nCould not extract standard errors from model object.\n", "red")
@@ -412,7 +427,6 @@ standard_error.svyglm <- function(model, ...) {
 # Other models ---------------------------------------------------------------
 
 
-#' @importFrom insight get_varcov
 #' @export
 standard_error.rq <- function(model, ...) {
   se <- tryCatch({
@@ -450,12 +464,22 @@ standard_error.nlrq <- standard_error.rq
 #' @export
 standard_error.multinom <- function(model, ...) {
   se <- tryCatch({
-    tmp <- summary(model)$standard.errors
-    if (is.null(tmp)) {
+    stderr <- summary(model)$standard.errors
+    if (is.null(stderr)) {
       vc <- insight::get_varcov(model)
-      tmp <- as.vector(sqrt(diag(vc)))
+      stderr <- as.vector(sqrt(diag(vc)))
+    } else {
+      if (is.matrix(stderr)) {
+        tmp <- c()
+        for (i in 1:nrow(stderr)) {
+          tmp <- c(tmp, as.vector(stderr[i, ]))
+        }
+      } else {
+        tmp <- as.vector(stderr)
+      }
+      stderr <- tmp
     }
-    tmp
+    stderr
   },
   error = function(e) {
     vc <- insight::get_varcov(model)
@@ -468,7 +492,8 @@ standard_error.multinom <- function(model, ...) {
   .data_frame(
     ## TODO change to "$Parameter" once fixed in insight
     Parameter = params[[1]],
-    SE = se
+    SE = se,
+    Response = params[[3]]
   )
 }
 
@@ -542,7 +567,6 @@ standard_error.glimML <- function(model, ...) {
 
 
 
-#' @importFrom stats vcov
 #' @export
 standard_error.lrm <- function(model, ...) {
   se <- sqrt(diag(stats::vcov(model)))
@@ -580,7 +604,6 @@ standard_error.betareg <- function(model, ...) {
 
 
 
-#' @importFrom utils capture.output
 #' @export
 standard_error.gamlss <- function(model, ...) {
   parms <- insight::get_parameters(model)
@@ -803,7 +826,6 @@ standard_error.polr <- function(model, ...) {
 # helper -----------------------------------------------------------------
 
 
-#' @importFrom stats coef
 .get_se_from_summary <- function(model, component = NULL) {
   cs <- stats::coef(summary(model))
   se <- NULL

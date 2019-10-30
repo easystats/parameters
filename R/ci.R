@@ -289,9 +289,6 @@ ci.svyglm.zip <- ci.gamlss
 ci.vglm <- ci.gamlss
 
 #' @export
-ci.multinom <- ci.gamlss
-
-#' @export
 ci.svyglm.glimML <- ci.gamlss
 
 #' @export
@@ -301,9 +298,21 @@ ci.gamm <- function(x, ci = .95, ...) {
   ci(x, ci = ci, ...)
 }
 
-
 #' @export
 ci.gamm4 <- ci.gamm
+
+#' @export
+ci.multinom <- function(x, ci = .95, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  params <- insight::get_parameters(x)
+
+  out <- ci_wald(model = x, ci = ci, dof = Inf, robust = robust, ...)
+  ## TODO fix once insight is updated
+  out$Response <- params[[3]]
+
+  out
+}
+
 
 
 

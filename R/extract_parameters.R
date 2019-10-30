@@ -6,7 +6,7 @@
 #' @keywords internal
 .extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, ...) {
   parameters <- insight::get_parameters(model, effects = "fixed", component = component)
-  .statistic <- insight::get_statistic(model, component = component)
+  statistic <- insight::get_statistic(model, component = component)
 
   # clean parameter names
 
@@ -56,7 +56,7 @@
   parameters <- merge(parameters, standard_error(model, component = component), by = merge_by)
 
   # test statistic
-  parameters <- merge(parameters, .statistic, by = merge_by)
+  parameters <- merge(parameters, statistic, by = merge_by)
 
   # dof
   df_residual <- degrees_of_freedom(model, method = "any")
@@ -68,7 +68,7 @@
   parameters <- parameters[match(original_order, parameters$.id), ]
 
   # Renaming
-  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(.statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters))
+  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters))
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
   # Reorder

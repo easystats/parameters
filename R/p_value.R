@@ -15,7 +15,10 @@
 #' p_value(model)
 #' @return The p-values.
 #' @importFrom bayestestR p_direction convert_pd_to_p
-#' @importFrom stats coef vcov pt
+#' @importFrom stats coef vcov pt pnorm na.omit
+#' @importFrom insight get_statistic get_parameters find_parameters print_color
+#' @importFrom methods slot
+#' @importFrom utils capture.output
 #' @export
 p_value <- function(model, ...) {
   UseMethod("p_value")
@@ -28,6 +31,7 @@ p_value <- function(model, ...) {
 
 #' @export
 p_value.default <- function(model, ...) {
+  # first, we need some special handling for Zelig-models
   p <- tryCatch({
     if (grepl("^Zelig-", class(model)[1])) {
       if (!requireNamespace("Zelig", quietly = T)) {
@@ -35,6 +39,7 @@ p_value.default <- function(model, ...) {
       }
       unlist(Zelig::get_pvalue(model))
     } else {
+      # try to get p-value from classical summary for default models
       .get_pval_from_summary(model)
     }
   },
@@ -42,6 +47,19 @@ p_value.default <- function(model, ...) {
     NULL
   }
   )
+
+  # if all fails, try to get p-value from test-statistic
+  if (is.null(p)) {
+    p <- tryCatch({
+      stat <- insight::get_statistic(model)
+      p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+      names(p) <- stat$Parameter
+    },
+    error = function(e) {
+      NULL
+    }
+    )
+  }
 
   if (is.null(p)) {
     insight::print_color("\nCould not extract p-values from model object.\n", "red")
@@ -399,7 +417,6 @@ p_value.coxph <- function(model, ...) {
 
 
 
-#' @importFrom insight get_statistic
 #' @export
 p_value.coxme <- function(model, ...) {
   stat <- insight::get_statistic(model)
@@ -516,7 +533,6 @@ p_value.gee <- function(model, ...) {
 }
 
 
-#' @importFrom methods slot
 #' @export
 p_value.glimML <- function(model, ...) {
   if (!requireNamespace("aod", quietly = TRUE)) {
@@ -594,7 +610,6 @@ p_value.betareg <- function(model, ...) {
 
 
 
-#' @importFrom utils capture.output
 #' @export
 p_value.gamlss <- function(model, ...) {
   parms <- insight::get_parameters(model)
@@ -672,7 +687,6 @@ p_value.gam <- function(model, ...) {
 
 
 
-#' @importFrom stats na.omit
 #' @export
 p_value.Gam <- function(model, ...) {
   p.aov <- stats::na.omit(summary(model)$parametric.anova)
@@ -755,13 +769,13 @@ p_value.htest <- function(model, ...) {
 
 #' @export
 p_value.multinom <- function(model, ...) {
-  s <- summary(model)
-  stat <- s$coefficients / s$standard.errors
-  p <- 2 * stats::pt(abs(stat), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+  stat <- insight::get_statistic(model)
+  p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(p)),
-    p = as.vector(p)
+    Parameter = stat$Parameter,
+    p = as.vector(p),
+    Response = stat$Response
   )
 }
 
@@ -883,7 +897,6 @@ p_value.list <- function(model, ...) {
 # helper --------------------------------------------------------
 
 
-#' @importFrom stats coef
 .get_pval_from_summary <- function(model, cs = NULL) {
   if (is.null(cs)) cs <- stats::coef(summary(model))
   p <- NULL

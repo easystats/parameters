@@ -205,8 +205,6 @@ model_parameters.ivreg <- model_parameters.default
 #' @export
 model_parameters.LORgee <- model_parameters.default
 
-#' @export
-model_parameters.multinom <- model_parameters.default
 
 
 
@@ -215,7 +213,7 @@ model_parameters.multinom <- model_parameters.default
 
 
 #' @export
-model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, ...) {
+model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
   .model_parameters_generic(
     model = model,
     ci = ci,
@@ -223,6 +221,11 @@ model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations 
     iterations = iterations,
     merge_by = c("Parameter", "Response"),
     standardize = standardize,
+    exponentiate = exponentiate,
     ...
   )
 }
+
+
+#' @export
+model_parameters.multinom <- model_parameters.mlm
