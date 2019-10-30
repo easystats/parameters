@@ -5,7 +5,7 @@
 \title{Confidence/Credible Interval (CI) Formatting}
 \usage{
 format_ci(CI_low, CI_high, ci = 0.95, digits = 2, brackets = TRUE,
-  width = NULL)
+  width = NULL, width_low = width, width_high = width)
 }
 \arguments{
 \item{CI_low}{Lower CI bound.}
@@ -19,6 +19,8 @@ format_ci(CI_low, CI_high, ci = 0.95, digits = 2, brackets = TRUE,
 \item{brackets}{Logical, if \code{TRUE} (default), values are encompassed in square brackets.}
 
 \item{width}{Minimum width of the returned string. If not \code{NULL} and \code{width} is larger than the string's length, leading whitespaces are added to the string.}
+
+\item{width_low, witdh_high}{Like \code{width}, but only applies to the lower or higher confidence interval value. This can be used when the values for the lower and upper CI are of very different length.}
 }
 \value{
 A formatted string.
