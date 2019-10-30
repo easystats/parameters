@@ -44,9 +44,36 @@
 #' @importFrom bayestestR describe_posterior
 #' @importFrom tools toTitleCase
 #' @export
-parameters_simulate <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+parameters_simulate <- function(model, ...) {
+  UseMethod("parameters_simulate")
+}
+
+
+
+#' @rdname parameters_simulate
+#' @export
+parameters_simulate.default <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
   data <- model_simulate(model, iterations = iterations, ...)
   out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
+
+  class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "iterations") <- iterations
+
+  out
+}
+
+
+
+#' @export
+parameters_simulate.multinom <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+  data <- model_simulate(model, iterations = iterations, ...)
+  out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
+
+  params <- insight::get_parameters(model)
+  ## TODO change once fixed in insight
+  out$Parameter <- params[[1]]
+  out$Response <- params[[3]]
 
   class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)

@@ -2,13 +2,19 @@
 % Please edit documentation in R/parameters_simulate.R
 \name{parameters_simulate}
 \alias{parameters_simulate}
+\alias{parameters_simulate.default}
 \title{Parameters simulation}
 \usage{
-parameters_simulate(model, iterations = 1000, centrality = "median",
-  ci = 0.95, ci_method = "quantile", test = "p-value", ...)
+parameters_simulate(model, ...)
+
+\method{parameters_simulate}{default}(model, iterations = 1000,
+  centrality = "median", ci = 0.95, ci_method = "quantile",
+  test = "p-value", ...)
 }
 \arguments{
 \item{model}{Statistical model (no Bayesian models).}
+
+\item{...}{Arguments passed to or from other methods.}
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 
@@ -28,8 +34,6 @@ list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 For each "test", the corresponding \pkg{bayestestR} function is called
 (e.g. \code{\link[bayestestR:rope]{rope}} or \code{\link[bayestestR:p_direction]{p_direction}}) and its results
 included in the summary output.}
-
-\item{...}{Arguments passed to or from other methods.}
 }
 \value{
 A data frame with simulated parameters.
