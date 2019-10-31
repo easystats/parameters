@@ -1,5 +1,5 @@
 #' @export
-model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
+model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, exponentiate = TRUE, ...) {
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
@@ -7,7 +7,9 @@ model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations 
     parameters <- .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = c("Parameter", "Component"))
   }
 
-  parameters <- .add_model_parameters_attributes(parameters, model, ci, ...)
+  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
+  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
+
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
