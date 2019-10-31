@@ -676,6 +676,9 @@ p_value.wbm <- function(model, ...) {
 }
 
 
+#' @export
+p_value.wbgee <- p_value.wbm
+
 
 #' @export
 p_value.gam <- function(model, ...) {

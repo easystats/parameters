@@ -830,6 +830,10 @@ standard_error.wbm <- function(model, ...) {
 
 
 #' @export
+standard_error.wbgee <- standard_error.wbm
+
+
+#' @export
 standard_error.htest <- function(model, ...) {
 }
 
