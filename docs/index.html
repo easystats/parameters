@@ -217,14 +217,14 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb6-2" title="2"></a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/parameters_selection.html">parameters_selection</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co"># Parameter   | Coefficient |     SE |             95% CI |     t | df |      p</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co"># -----------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co"># (Intercept) |      141.70 | 125.67 | [-116.62,  400.02] |  1.13 | 26 | 0.270 </span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="co"># cyl         |       13.14 |   7.90 | [  -3.10,   29.38] |  1.66 | 26 | 0.108 </span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="co"># hp          |        0.63 |   0.20 | [   0.22,    1.03] |  3.18 | 26 | 0.004 </span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="co"># wt          |       80.45 |  12.22 | [  55.33,  105.57] |  6.58 | 26 | &lt; .001</span></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="co"># qsec        |      -14.68 |   6.14 | [ -27.31,   -2.05] | -2.39 | 26 | 0.024 </span></a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="co"># carb        |      -28.75 |   5.60 | [ -40.28,  -17.23] | -5.13 | 26 | &lt; .001</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co"># Parameter   | Coefficient |     SE |            95% CI |     t | df |      p</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co"># ----------------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co"># (Intercept) |      141.70 | 125.67 | [-116.62, 400.02] |  1.13 | 26 | 0.270 </span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co"># cyl         |       13.14 |   7.90 | [  -3.10,  29.38] |  1.66 | 26 | 0.108 </span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co"># hp          |        0.63 |   0.20 | [   0.22,   1.03] |  3.18 | 26 | 0.004 </span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co"># wt          |       80.45 |  12.22 | [  55.33, 105.57] |  6.58 | 26 | &lt; .001</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co"># qsec        |      -14.68 |   6.14 | [ -27.31,  -2.05] | -2.39 | 26 | 0.024 </span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co"># carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | 26 | &lt; .001</span></a></code></pre></div>
 <p>The <a href="https://easystats.github.io/parameters/articles/parameters_selection.html"><code><a href="reference/parameters_selection.html">parameters_selection()</a></code></a> can also help you quickly select and retain the most relevant predictors using methods tailored for the model type. This function also works for mixed or Bayesian models:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb7-2" title="2"></a>
