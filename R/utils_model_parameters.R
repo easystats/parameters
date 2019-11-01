@@ -37,3 +37,41 @@
   if (any(columns)) parameters[columns] <- exp(parameters[columns])
   parameters
 }
+
+
+
+
+#' @importFrom insight clean_parameters
+.add_pretty_names <- function(parameters, model, ...) {
+  attr(parameters, "model_class") <- class(model)
+
+  clean_params <- insight::clean_parameters(model)
+  elements <- sapply(eval(substitute(alist(...))), deparse)
+
+  if (length(elements)) elements <- gsub("\"", "", elements, fixed = TRUE)
+
+  if (!length(elements)) {
+    component <- "conditional"
+    effects <- "fixed"
+  } else {
+    if ("effects" %in% names(elements)) {
+      effects <- switch(
+        elements["effects"],
+        all = c("fixed", "random"),
+        effects
+      )
+    }
+    if ("component" %in% names(elements)) {
+      component <- switch(
+        elements["component"],
+        all = c("conditional", "zi", "zero_inflated", "dispersion"),
+        component
+      )
+    }
+  }
+
+  clean_params <- subset(clean_params, subset = Component %in% component & Effects %in% effects)
+  attr(parameters, "cleaned_parameters") <- clean_params$Cleaned_Parameter
+
+  parameters
+}

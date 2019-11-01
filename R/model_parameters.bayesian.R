@@ -5,9 +5,10 @@
   # Processing
   parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, iterations = iterations, ...)
 
-  attr(parameters, "pretty_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
+  parameters <- .add_pretty_names(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+
   parameters
 }
 
@@ -45,6 +46,7 @@ model_parameters.stanreg <- .model_parameters_bayesian
 
 #' @export
 model_parameters.brmsfit <- model_parameters.stanreg
+
 
 #' @export
 model_parameters.MCMCglmm <- model_parameters.stanreg
