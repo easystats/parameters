@@ -189,9 +189,9 @@
 #&gt; -----------------------------------------------------------------------------------------------------------------------------------------------------------
 #&gt; iris$Sepal.Width | iris$Sepal.Length |            3.06 |            5.84 |       2.79 | -36.46 | 225.68 | &lt; .001 | [-2.94, -2.64] | Welch Two Sample t-test</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span>(<span class='no'>mtcars</span>$<span class='no'>mpg</span> ~ <span class='no'>mtcars</span>$<span class='no'>vs</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter  |     Group | Mean_Group1 | Mean_Group2 | Difference |     t |    df |      p |           95% CI |                  Method
-#&gt; -------------------------------------------------------------------------------------------------------------------------------------
-#&gt; mtcars$mpg | mtcars$vs |       16.62 |       24.56 |       7.94 | -4.67 | 22.72 | &lt; .001 | [-11.46,  -4.42] | Welch Two Sample t-test</div><div class='input'>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter  |     Group | Mean_Group1 | Mean_Group2 | Difference |     t |    df |      p |          95% CI |                  Method
+#&gt; ------------------------------------------------------------------------------------------------------------------------------------
+#&gt; mtcars$mpg | mtcars$vs |       16.62 |       24.56 |       7.94 | -4.67 | 22.72 | &lt; .001 | [-11.46, -4.42] | Welch Two Sample t-test</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span>(<span class='no'>iris</span>$<span class='no'>Sepal.Width</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter        | Mean |   mu | Difference |     t |  df |      p |       95% CI |            Method
 #&gt; -----------------------------------------------------------------------------------------------------

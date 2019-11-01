@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Principal Component Analysis (PCA) — principal_components • parameters</title>
+<title>Factor Analysis (FA) — factor_analysis • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Principal Component Analysis (PCA) — principal_components" />
-<meta property="og:description" content="This function performs a principal component analysis (PCA) and returns the loadings as a dataframe." />
+<meta property="og:title" content="Factor Analysis (FA) — factor_analysis" />
+<meta property="og:description" content="This function performs a Factor Analysis (FA)." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,17 +146,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Principal Component Analysis (PCA)</h1>
+    <h1>Factor Analysis (FA)</h1>
     
-    <div class="hidden name"><code>principal_components.Rd</code></div>
+    <div class="hidden name"><code>factor_analysis.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function performs a principal component analysis (PCA) and returns the loadings as a dataframe.</p>
+    <p>This function performs a Factor Analysis (FA).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>principal_components</span>(<span class='no'>x</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>factor_analysis</span>(<span class='no'>x</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,10 +172,6 @@
     <tr>
       <th>rotation</th>
       <td><p>If not "none", the PCA will be computed using the <span class="pkg">psych</span> package. Possible options include <code>"varimax"</code>, <code>"quartimax"</code>, <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>, and <code>"cluster"</code>. See <code><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></code> for details.</p></td>
-    </tr>
-    <tr>
-      <th>sort</th>
-      <td><p>Sort the loadings.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
@@ -202,11 +198,11 @@
    for the observed variables. Whereas a perfect simple structure solution
    has a complexity of 1 in that each item would only load on one factor,
    a solution with evenly distributed items has a complexity greater than 1
-   (<cite>Hofman, 1978; Pettersson and Turkheimer, 2010</cite>) .</p><p></p><h3>PCA or FA?</h3>
+   (<cite>Hofman, 1978; Pettersson and Turkheimer, 2010</cite>) .</p><p></p><h3>FA or PCA?</h3>
 <p>There is a simplified rule of thumb that may help do decide whether to run
- a factor analysis or a principal component analysis:</p><ul>
-<li><p>Run factor analysis if you assume or wish to test a theoretical model of latent factors causing observed variables.</p></li>
-<li><p>Run principal component analysis If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.</p></li>
+ a principal component analysis or a factor analysis:</p><ul>
+<li><p>Run principal component analysis if you assume or wish to test a theoretical model of latent factors causing observed variables.</p></li>
+<li><p>Run factor analysis If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.</p></li>
 </ul><p>(Source: <a href='https://stats.stackexchange.com/q/1576/54740'>CrossValidated</a>)</p>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -224,97 +220,12 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 
-<span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
-#&gt; 
-#&gt; </span><span>Variable |   PC1 |   PC2 |  PC3 |   PC4 |  PC5 |   PC6 | Complexity
-#&gt; -------------------------------------------------------------------
-#&gt; mpg      | -0.93 |       |      | -0.30 |      |       |       1.30
-#&gt; cyl      |  0.96 |       |      |       |      | -0.21 |       1.18
-#&gt; disp     |  0.95 |       |      | -0.23 |      |       |       1.16
-#&gt; hp       |  0.87 |  0.36 |      |       | 0.30 |       |       1.64
-#&gt; drat     | -0.75 |  0.48 | 0.44 |       |      |       |       2.47
-#&gt; wt       |  0.88 | -0.35 | 0.26 |       |      |       |       1.54
-#&gt; qsec     | -0.54 | -0.81 |      |       |      |       |       1.96
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 6 principal components accounted for 99.30% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%).</span><span></div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"oblimin"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (oblimin-rotation)
-#&gt; 
-#&gt; </span><span>Variable |   TC1 |   TC2 | Complexity | Uniqueness
-#&gt; --------------------------------------------------
-#&gt; wt       |  0.98 |       |       1.03 |       0.10
-#&gt; drat     | -0.95 |       |       1.19 |       0.21
-#&gt; disp     |  0.89 |       |       1.07 |       0.08
-#&gt; mpg      | -0.87 |       |       1.07 |       0.13
-#&gt; cyl      |  0.78 |       |       1.38 |       0.08
-#&gt; qsec     |       | -0.98 |       1.00 |       0.06
-#&gt; hp       |       |  0.61 |       1.97 |       0.10
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (TC1 = 63.90%, TC2 = 25.28%).</span><span></div><div class='input'><span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
-#&gt; 
-#&gt; </span><span>Variable |  PC1 |   PC2 | Complexity
-#&gt; ------------------------------------
-#&gt; cyl      | 0.96 |       |       1.02
-#&gt; disp     | 0.95 |       |       1.02
-#&gt; mpg      |      |       |       1.02
-#&gt; wt       |      |       |       1.30
-#&gt; hp       |      |       |       1.33
-#&gt; drat     |      |  0.48 |       1.71
-#&gt; qsec     |      | -0.81 |       1.75
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 2 principal components accounted for 89.18% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%).</span><span></div><div class='input'>
-<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># (Explained) Variance of Components
-#&gt; 
-#&gt; </span><span>Parameter                       |   PC1 |   PC2
-#&gt; -----------------------------------------------
-#&gt; Eigenvalues                     | 4.038 | 0.562
-#&gt; Variance Explained              | 0.808 | 0.112
-#&gt; Variance Explained (Cumulative) | 0.808 | 0.920
-#&gt; Variance Explained (Proportion) | 0.808 | 0.112</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;            PC1         PC2
-#&gt; 1  -0.83958112 -0.12417860
-#&gt; 2  -0.83958112 -0.12417860
-#&gt; 3  -1.78076155  0.20357157
-#&gt; 4   0.09834476  1.10598482
-#&gt; 5   1.58552749  0.32873919
-#&gt; 6   0.42628595  1.61371418
-#&gt; 7   2.31798915 -0.38579468
-#&gt; 8  -1.83392218  0.71554314
-#&gt; 9  -1.69378203  0.07797675
-#&gt; 10 -0.60554684 -0.27702188
-#&gt; 11 -0.49812301 -0.28570556
-#&gt; 12  1.52990575  0.40014511
-#&gt; 13  1.46084757  0.40572748
-#&gt; 14  1.62198332  0.39270195
-#&gt; 15  2.99730327  0.34308959
-#&gt; 16  2.96336452  0.15336639
-#&gt; 17  2.48424862 -0.29287006
-#&gt; 18 -2.96506160  0.14911053
-#&gt; 19 -3.52699413 -1.02550272
-#&gt; 20 -3.21693607 -0.04349485
-#&gt; 21 -1.50101897  0.38651333
-#&gt; 22  1.79695027  1.11397253
-#&gt; 23  1.48376642  0.52524948
-#&gt; 24  1.97953272 -1.17526822
-#&gt; 25  1.75060571  0.43376680
-#&gt; 26 -2.57258674  0.11744981
-#&gt; 27 -2.41238961 -0.63531022
-#&gt; 28 -2.22991874  0.20202457
-#&gt; 29  1.55523735 -2.06076910
-#&gt; 30 -0.18704672 -0.26276186
-#&gt; 31  2.36338454 -1.64100466
-#&gt; 32 -1.71202696 -0.33478623</div><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in if (sort) {    loadings &lt;- .sort_loadings(loadings)}: argument is not interpretable as logical</span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"oblimin"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in .FA_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold,     ...): formal argument "sort" matched by multiple actual arguments</span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in .FA_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold,     ...): formal argument "sort" matched by multiple actual arguments</span></div><div class='input'>
+<span class='no'>FA</span> <span class='kw'>&lt;-</span> <span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in if (sort) {    loadings &lt;- .sort_loadings(loadings)}: argument is not interpretable as logical</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>FA</span>)</div><div class='output co'>#&gt; <span class='error'>Error in summary(FA): object 'FA' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>FA</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(FA): object 'FA' not found</span></div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Automated number of components</span>
-<span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
-#&gt; 
-#&gt; </span><span>Variable |   PC1 | Complexity
-#&gt; -----------------------------
-#&gt; mpg      | -0.93 |       1.00
-#&gt; cyl      |  0.96 |       1.00
-#&gt; disp     |  0.95 |       1.00
-#&gt; hp       |  0.91 |       1.00
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The unique principal component accounted for 87.55% of the total variance of the original data.</span><span></div><div class='input'># }
+<span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in if (sort) {    loadings &lt;- .sort_loadings(loadings)}: argument is not interpretable as logical</span></div><div class='input'># }
 
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

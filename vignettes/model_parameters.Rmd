@@ -123,10 +123,12 @@ lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) %>%
 
 ### Bayesian Models
 
+`model_parameters()` works fine with Bayesian models from the **rstanarm** package...
+
 ```{r, warning=FALSE, message=FALSE, eval = FALSE}
 library(rstanarm)
 
-stan_glm(mpg ~ wt + cyl, data = mtcars) %>% 
+stan_glm(mpg ~ wt * cyl, data = mtcars) %>% 
   parameters()
 ```
 ```{r, warning=FALSE, message=FALSE, echo = FALSE}
@@ -136,6 +138,26 @@ stan_glm(mpg ~ wt * cyl, data = mtcars, iter = 500, chains = 2, refresh = 0) %>%
   parameters()
 ```
 
+... as well as for more complex models from the **brms** package. For more complex models, other model components can be printed using the arguments `effects` and `component` arguments. See details for these arguments under [`? insight::get_parameter](https://easystats.github.io/insight/reference/get_parameters.html).
+
+```{r, warning=FALSE, message=FALSE}
+# We download the model to save computation time. Here is the code
+# to refit the exact model used below...
+
+# zinb <- read.csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
+# set.seed(123)
+# model <- brm(bf(
+#     count ~ persons + child + camper + (1 | persons),
+#     zi ~ child + camper + (1 | persons)
+#   ),
+#   data = zinb,
+#   family = zero_inflated_poisson()
+# )
+model <- insight::download_model("brms_zi_2")
+parameters(model)
+
+parameters(model, effects = "all", component = "all")
+```
 
 ## Structural Models (PCA, EFA, CFA, SEM...)
 

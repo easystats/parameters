@@ -168,6 +168,7 @@
 <h2 class="hasAnchor">
 <a href="#new-supported-models" class="anchor"></a>New supported models</h2>
 <ul>
+<li>Added support for <code>aareg</code> (<em>survival</em>), <code>bracl</code>, <code>brmultinom</code> (<em>brglm2</em>) and <code>multinom</code> (nnet) to various functions.</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>kmeans</code>.</li>
 <li>
@@ -183,7 +184,7 @@
 <li>
 <code><a href="../reference/p_value.html">p_value_robust()</a></code>, <code><a href="../reference/ci.merMod.html">ci_robust()</a></code> and <code><a href="../reference/standard_error.html">standard_error_robust()</a></code> to compute robust standard errors, and p-values or confidence intervals based on robust standard errors.</li>
 <li>
-<code><a href="../reference/demean.html">demean()</a></code> to calculate de-meaned and group-meaned variables (for panel-data regression).</li>
+<code><a href="../reference/demean.html">demean()</a></code> to calculate de-meaned and group-meaned variables (centering within groups, for panel-data regression).</li>
 <li>
 <code><a href="../reference/n_parameters.html">n_parameters()</a></code> to get number of parameters.</li>
 <li>
@@ -213,6 +214,7 @@
 <ul>
 <li>Interaction terms in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
 <li>Fixed bug in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when a parameter occured multiple times in a model.</li>
+<li>Fixed bug with <em>multinom</em>-support.</li>
 </ul>
 </div>
 </div>

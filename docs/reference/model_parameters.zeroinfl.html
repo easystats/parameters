@@ -158,7 +158,8 @@
     <pre class="usage"><span class='co'># S3 method for zeroinfl</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>,
-  <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)</pre>
+  <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,6 +188,14 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
     <tr>
+      <th>standardize</th>
+      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code>standardize_parameters()</code>.</p></td>
+    </tr>
+    <tr>
+      <th>exponentiate</th>
+      <td><p>Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
@@ -212,21 +221,21 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pscl/man/zeroinfl.html'>zeroinfl</a></span>(<span class='no'>art</span> ~ <span class='no'>fem</span> + <span class='no'>mar</span> + <span class='no'>kid5</span> + <span class='no'>ment</span> <span class='kw'>|</span> <span class='no'>kid5</span> + <span class='no'>phd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>bioChemists</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conditional component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
-#&gt; ------------------------------------------------------------------------
-#&gt; (Intercept) |        0.56 | 0.07 | [ 0.43,  0.69] |  8.26 | 907 | &lt; .001
-#&gt; femWomen    |       -0.23 | 0.06 | [-0.34, -0.11] | -3.91 | 907 | &lt; .001
-#&gt; marMarried  |        0.14 | 0.07 | [ 0.01,  0.27] |  2.07 | 907 | 0.038 
-#&gt; kid5        |       -0.17 | 0.05 | [-0.26, -0.07] | -3.43 | 907 | &lt; .001
-#&gt; ment        |        0.02 | 0.00 | [ 0.02,  0.03] | 10.05 | 907 | &lt; .001
+#&gt; </span><span>Parameter   | Coefficient |   SE |        95% CI |     z |  df |      p
+#&gt; -----------------------------------------------------------------------
+#&gt; (Intercept) |        0.56 | 0.07 | [ 0.43, 0.69] |  8.26 | 907 | &lt; .001
+#&gt; marMarried  |        0.14 | 0.07 | [ 0.01, 0.27] |  2.07 | 907 | 0.038 
+#&gt; ment        |        0.02 | 0.00 | [ 0.02, 0.03] | 10.05 | 907 | &lt; .001
+#&gt; kid5        |        0.05 | 0.22 | [-0.38, 0.47] |  0.21 | 907 | 0.831 
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |     p
-#&gt; -----------------------------------------------------------------------
-#&gt; (Intercept) |       -0.93 | 0.43 | [-1.78, -0.08] | -2.14 | 907 | 0.032
-#&gt; kid5        |        0.05 | 0.22 | [-0.38,  0.47] |  0.21 | 907 | 0.831
-#&gt; phd         |       -0.25 | 0.14 | [-0.51,  0.02] | -1.84 | 907 | 0.065
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
+#&gt; ------------------------------------------------------------------------
+#&gt; femWomen    |       -0.23 | 0.06 | [-0.34, -0.11] | -3.91 | 907 | &lt; .001
+#&gt; kid5        |       -0.17 | 0.05 | [-0.26, -0.07] | -3.43 | 907 | &lt; .001
+#&gt; (Intercept) |       -0.93 | 0.43 | [-1.78, -0.08] | -2.14 | 907 | 0.032 
+#&gt; phd         |       -0.25 | 0.14 | [-0.51,  0.02] | -1.84 | 907 | 0.065 
 #&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
