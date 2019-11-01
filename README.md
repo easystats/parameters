@@ -77,7 +77,7 @@ with some notable differences:
     parameters
     [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html).
 
-### Clasiccal Regression Models
+### Classical Regression Models
 
 ``` r
 model <- lm(Sepal.Width ~ Petal.Length * Species + Petal.Width, 
