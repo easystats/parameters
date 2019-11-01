@@ -154,7 +154,7 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
 
 
 #' @keywords internal
-.get_n_factors <- function(x, n = NULL, type = "PCA", rotation = "PCA", ...) {
+.get_n_factors <- function(x, n = NULL, type = "PCA", rotation = "varimax", ...) {
   # N factors
   if (is.null(n) || n == "auto") {
     n <- as.numeric(n_factors(x, type = type, rotation = rotation, ...))

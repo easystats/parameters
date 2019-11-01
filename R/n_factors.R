@@ -4,7 +4,7 @@
 #'
 #' @param x A dataframe.
 #' @param type Can be \code{"FA"} or \code{"PCA"}, depending on what you want to do.
-#' @param rotation Only used for VSS (Very Simple Structure criterion, see \code{\link[psych]{VSS}}. The rotation to apply. Can be \code{"none"}, \code{"varimax"}, \code{"quartimax"}, \code{"bentlerT"}, \code{"equamax"}, \code{"varimin"}, \code{"geominT"} and \code{"bifactor"} for orthogonal rotations, and \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, \code{"bentlerQ"}, \code{"geominQ"}, \code{"biquartimin"} and \code{"cluster"} for oblique transformations.
+#' @param rotation Only used for VSS (Very Simple Structure criterion, see \code{\link[psych]{VSS}}). The rotation to apply. Can be \code{"none"}, \code{"varimax"}, \code{"quartimax"}, \code{"bentlerT"}, \code{"equamax"}, \code{"varimin"}, \code{"geominT"} and \code{"bifactor"} for orthogonal rotations, and \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, \code{"bentlerQ"}, \code{"geominQ"}, \code{"biquartimin"} and \code{"cluster"} for oblique transformations.
 #' @param algorithm Factoring method used by VSS. Can be \code{"pa"} for Principal Axis Factor Analysis, \code{"minres"} for minimum residual (OLS) factoring, \code{"mle"} for Maximum Likelihood FA and \code{"pc"} for Principal Components. \code{"default"} will select \code{"minres"} if \code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.
 #' @param package These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"} and \code{"EGAnet"}. However, \code{"EGAnet"} can be very slow for bigger datasets. Thus, by default, \code{c("nFactors", "psych")} are selected.
 #' @param safe If \code{TRUE}, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.
@@ -50,7 +50,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   nobs <- nrow(x)
 
   # Correlation matrix
-  if(is.null(cor)){
+  if (is.null(cor)) {
     cor <- stats::cor(x, use = "pairwise.complete.obs")
   }
   eigen_values <- eigen(cor)$values
@@ -241,7 +241,7 @@ print.n_factors <- function(x, ...) {
   best_n <- attributes(x)$n
 
   # Extract methods
-  if("n_Factors" %in% names(x)){
+  if ("n_Factors" %in% names(x)) {
     type <- "factor"
     methods_text <- paste0(as.character(x[x$n_Factors == best_n, "Method"]), collapse = ", ")
   } else{
@@ -339,7 +339,7 @@ print.n_clusters <- print.n_factors
 #' @keywords internal
 .n_factors_cng <- function(eigen_values = NULL, model = "factors") {
 
-  if(length(eigen_values) < 6){
+  if (length(eigen_values) < 6) {
     nfac <- NA
   } else{
     nfac <- nFactors::nCng(x = eigen_values, cor = TRUE, model = model)$nFactors
@@ -357,7 +357,7 @@ print.n_clusters <- print.n_factors
 #' @keywords internal
 .n_factors_mreg <- function(eigen_values = NULL, model = "factors") {
 
-  if(length(eigen_values) < 6){
+  if (length(eigen_values) < 6) {
     nfac <- NA
   } else{
     nfac <- nFactors::nMreg(x = eigen_values, cor = TRUE, model = model)$nFactors
@@ -477,9 +477,10 @@ print.n_clusters <- print.n_factors
   }
 
   rez <- data.frame()
-  for(n in 1:(ncol(cor)-1)){
+  for (n in 1:(ncol(cor) - 1)) {
 
-    if(tolower(type) %in% c("fa", "factor", "efa")){
+    if (tolower(type) %in% c("fa", "factor", "efa")) {
+
       factors <- tryCatch(psych::fa(cor,
                                     nfactors = n,
                                     n.obs = nobs,
@@ -497,7 +498,8 @@ print.n_clusters <- print.n_factors
                           error = function(e) NA
       )
     }
-    if(all(is.na(factors))){
+
+    if (all(is.na(factors))) {
       next
     }
 
@@ -542,53 +544,52 @@ print.n_clusters <- print.n_factors
 
 #' @importFrom stats lm
 #' @keywords internal
-.nBentler <-
-  function(x, N, model = model, log = TRUE, alpha = 0.05, cor = TRUE, details = TRUE, ...) {
-    if (!requireNamespace("nFactors", quietly = TRUE)) {
-      stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('lattice')`.")
-    }
-
-    lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
-    if (length(which(lambda < 0)) > 0) {
-      stop("These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted.")
-    }
-
-    minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)
-    maxPar <- c(max(lambda), stats::lm(lambda ~ I(length(lambda):1))$coef[2])
-
-
-    n <- N
-    significance <- alpha
-    min.k <- 3
-    LRT <- data.frame(
-      q = numeric(length(lambda) - min.k), k = numeric(length(lambda) - min.k),
-      LRT = numeric(length(lambda) - min.k), a = numeric(length(lambda) - min.k),
-      b = numeric(length(lambda) - min.k),
-      p = numeric(length(lambda) - min.k),
-      convergence = numeric(length(lambda) - min.k)
-    )
-    bentler.n <- 0
-    for (i in 1:(length(lambda) - min.k)) {
-      temp <- nFactors::bentlerParameters(x = lambda, N = n, nFactors = i, log = log, cor = cor, minPar = minPar, maxPar = maxPar, graphic = FALSE)
-      LRT[i, 3] <- temp$lrt
-      LRT[i, 4] <- ifelse(is.null(temp$coef[1]), NA, temp$coef[1])
-      LRT[i, 5] <- ifelse(is.null(temp$coef[2]), NA, temp$coef[2])
-      LRT[i, 6] <- ifelse(is.null(temp$p.value), NA, temp$p.value)
-      LRT[i, 7] <- ifelse(is.null(temp$convergence), NA, temp$convergence)
-      LRT[i, 2] <- i
-      LRT[i, 1] <- length(lambda) - i
-    }
-    # LRT     <- LRT[order(LRT[,1],decreasing = TRUE),]
-    for (i in 1:(length(lambda) - min.k)) {
-      if (i == 1) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
-      if (i > 1) {
-        if (LRT$p[i - 1] <= 0.05) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
-      }
-    }
-    if (bentler.n == 0) bentler.n <- length(lambda)
-    if (details == TRUE) details <- LRT else details <- NULL
-    res <- list(detail = details, nFactors = bentler.n)
-    class(res) <- c("nFactors", "list")
-    res
+.nBentler <- function(x, N, model = model, log = TRUE, alpha = 0.05, cor = TRUE, details = TRUE, ...) {
+  if (!requireNamespace("nFactors", quietly = TRUE)) {
+    stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('lattice')`.")
   }
+
+  lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
+  if (length(which(lambda < 0)) > 0) {
+    stop("These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted.")
+  }
+
+  minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)
+  maxPar <- c(max(lambda), stats::lm(lambda ~ I(length(lambda):1))$coef[2])
+
+
+  n <- N
+  significance <- alpha
+  min.k <- 3
+  LRT <- data.frame(
+    q = numeric(length(lambda) - min.k), k = numeric(length(lambda) - min.k),
+    LRT = numeric(length(lambda) - min.k), a = numeric(length(lambda) - min.k),
+    b = numeric(length(lambda) - min.k),
+    p = numeric(length(lambda) - min.k),
+    convergence = numeric(length(lambda) - min.k)
+  )
+  bentler.n <- 0
+  for (i in 1:(length(lambda) - min.k)) {
+    temp <- nFactors::bentlerParameters(x = lambda, N = n, nFactors = i, log = log, cor = cor, minPar = minPar, maxPar = maxPar, graphic = FALSE)
+    LRT[i, 3] <- temp$lrt
+    LRT[i, 4] <- ifelse(is.null(temp$coef[1]), NA, temp$coef[1])
+    LRT[i, 5] <- ifelse(is.null(temp$coef[2]), NA, temp$coef[2])
+    LRT[i, 6] <- ifelse(is.null(temp$p.value), NA, temp$p.value)
+    LRT[i, 7] <- ifelse(is.null(temp$convergence), NA, temp$convergence)
+    LRT[i, 2] <- i
+    LRT[i, 1] <- length(lambda) - i
+  }
+  # LRT     <- LRT[order(LRT[,1],decreasing = TRUE),]
+  for (i in 1:(length(lambda) - min.k)) {
+    if (i == 1) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+    if (i > 1) {
+      if (LRT$p[i - 1] <= 0.05) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+    }
+  }
+  if (bentler.n == 0) bentler.n <- length(lambda)
+  if (details == TRUE) details <- LRT else details <- NULL
+  res <- list(detail = details, nFactors = bentler.n)
+  class(res) <- c("nFactors", "list")
+  res
+}
 
