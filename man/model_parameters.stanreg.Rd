@@ -8,7 +8,7 @@
   dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_ci = 1, bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000,
-  ...)
+  effects = "fixed", ...)
 }
 \arguments{
 \item{model}{Bayesian model.}
@@ -45,6 +45,9 @@ proportion of HDI, to use for the percentage in ROPE.}
 \item{priors}{Add the prior used for each parameter.}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.}
+
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

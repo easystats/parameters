@@ -42,32 +42,20 @@
 
 
 #' @importFrom insight clean_parameters
-.add_pretty_names <- function(parameters, model, ...) {
+.add_pretty_names <- function(parameters, model, effects = NULL, component = NULL) {
   attr(parameters, "model_class") <- class(model)
-
   clean_params <- insight::clean_parameters(model)
-  elements <- sapply(eval(substitute(alist(...))), deparse)
 
-  if (length(elements)) elements <- gsub("\"", "", elements, fixed = TRUE)
-
-  if (!length(elements)) {
-    component <- "conditional"
+  if (is.null(effects)) {
     effects <- "fixed"
-  } else {
-    if ("effects" %in% names(elements)) {
-      effects <- switch(
-        elements["effects"],
-        all = c("fixed", "random"),
-        effects
-      )
-    }
-    if ("component" %in% names(elements)) {
-      component <- switch(
-        elements["component"],
-        all = c("conditional", "zi", "zero_inflated", "dispersion"),
-        component
-      )
-    }
+  } else if (effects == "all") {
+    effects <- c("fixed", "random")
+  }
+
+  if (is.null(component)) {
+    component <- "conditional"
+  } else if (component == "all") {
+    component <- c("conditional", "zi", "zero_inflated", "dispersion")
   }
 
   clean_params <- subset(clean_params, subset = Component %in% component & Effects %in% effects)

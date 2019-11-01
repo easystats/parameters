@@ -70,12 +70,13 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   p_digits <- attributes(x)$p_digits
   is_ordinal_model <- attributes(x)$ordinal_model
 
+  # set up split-factor
   if (length(split_column) > 1) {
     split_by <- lapply(split_column, function(i) x[[i]])
-    names(split_by) <- split_column
   } else {
-    split_by <- unique(x[[split_column]])
+    split_by <- list(x[[split_column]])
   }
+  names(split_by) <- split_column
 
   # make sure we have correct sorting here...
   tables <- split(x, f = split_by)
