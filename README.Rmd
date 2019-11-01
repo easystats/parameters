@@ -83,7 +83,7 @@ The [`model_parameters()`](https://easystats.github.io/parameters/articles/model
 - It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html).
 
 
-### Clasiccal Regression Models
+### Classical Regression Models
 
 ```{r, warning=FALSE, message=FALSE}
 model <- lm(Sepal.Width ~ Petal.Length * Species + Petal.Width, data = iris)
