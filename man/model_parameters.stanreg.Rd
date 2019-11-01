@@ -2,6 +2,7 @@
 % Please edit documentation in R/model_parameters.bayesian.R
 \name{model_parameters.stanreg}
 \alias{model_parameters.stanreg}
+\alias{model_parameters.brmsfit}
 \title{Bayesian Models Parameters}
 \usage{
 \method{model_parameters}{stanreg}(model, centrality = "median",
@@ -9,6 +10,12 @@
   "rope"), rope_range = "default", rope_ci = 1, bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000,
   effects = "fixed", ...)
+
+\method{model_parameters}{brmsfit}(model, centrality = "median",
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  "rope"), rope_range = "default", rope_ci = 1, bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000,
+  effects = "fixed", component = "all", ...)
 }
 \arguments{
 \item{model}{Bayesian model.}
@@ -50,6 +57,10 @@ proportion of HDI, to use for the percentage in ROPE.}
 Only applies to mixed models. May be abbreviated.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \value{
 A data.frame of indices related to the model's parameters.

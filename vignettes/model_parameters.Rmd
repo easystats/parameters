@@ -138,7 +138,7 @@ stan_glm(mpg ~ wt * cyl, data = mtcars, iter = 500, chains = 2, refresh = 0) %>%
   parameters()
 ```
 
-... as well as for more complex models from the **brms** package. For more complex models, other model components can be printed using the arguments `effects` and `component` arguments. See details for these arguments under [`? insight::get_parameter](https://easystats.github.io/insight/reference/get_parameters.html).
+... as well as for (more complex) models from the **brms** package. For more complex models, other model components can be printed using the arguments `effects` and `component` arguments.
 
 ```{r, warning=FALSE, message=FALSE}
 # We download the model to save computation time. Here is the code

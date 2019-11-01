@@ -42,7 +42,7 @@ model_parameters.stanreg <- function(model, centrality = "median", dispersion = 
 }
 
 
-#' @rdname model_parameters
+#' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
 model_parameters.brmsfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000, effects = "fixed", component = "all", ...) {
