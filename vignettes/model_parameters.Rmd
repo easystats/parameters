@@ -154,7 +154,7 @@ stan_glm(mpg ~ wt * cyl, data = mtcars, iter = 500, chains = 2, refresh = 0) %>%
 #   family = zero_inflated_poisson()
 # )
 model <- insight::download_model("brms_zi_2")
-parameters(model)
+parameters(model, component = "conditional")
 
 parameters(model, effects = "all", component = "all")
 ```
