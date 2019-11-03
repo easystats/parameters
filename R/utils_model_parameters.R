@@ -6,6 +6,7 @@
   attr(parameters, "ci") <- ci
   attr(parameters, "exponentiate") <- exponentiate
   attr(parameters, "ordinal_model") <- info$is_ordinal
+  attr(parameters, "model_class") <- class(model)
 
 
   if ("digits" %in% names(dot.arguments)) {
