@@ -10,7 +10,7 @@ Parts of the **parameter** package are restructured and functions focussing on a
 
 ## New supported models
 
-- Added support for `aareg` (*survival*), `bracl`, `brmultinom` (*brglm2*) and `multinom` (nnet) to various functions.
+- Added support for `aareg` (*survival*), `bracl`, `brmultinom` (*brglm2*), `rma` (*metafor*) and `multinom` (*nnet*) to various functions.
 - `model_parameters()` for `kmeans`.
 - `p_value()`, `ci()`, `standard_error()` and `model_parameters()` now support *flexsurvreg* models (from package **flexsurv**).
 

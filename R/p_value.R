@@ -886,6 +886,19 @@ p_value.vglm <- function(model, ...) {
 
 
 
+#' @export
+p_value.rma <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  .data_frame(
+    ## TODO fix when insight on CRAN
+    Parameter = .remove_backticks_from_string(params[[1]]),
+    p = model$pval
+  )
+}
+
+
+
+
 
 
 # p-Values from standard classes ---------------------------------------------

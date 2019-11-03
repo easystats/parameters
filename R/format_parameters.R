@@ -96,6 +96,13 @@ format_parameters.default <- function(model) {
 }
 
 
+#' @export
+format_parameters.rma <- function(model) {
+  params <- insight::find_parameters(model, flatten = TRUE)
+  names(params) <- params
+  params
+}
+
 
 #' @export
 format_parameters.parameters_model <- function(model) {

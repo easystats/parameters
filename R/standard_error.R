@@ -878,6 +878,17 @@ standard_error.gmnl <- function(model, ...) {
 
 
 
+#' @export
+standard_error.rma <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  .data_frame(
+    Parameter = .remove_backticks_from_string(params[[1]]),
+    SE = model[["se"]]
+  )
+}
+
+
+
 
 
 

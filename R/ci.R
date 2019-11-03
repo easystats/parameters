@@ -444,6 +444,24 @@ ci.effectsize_std_params <- function(x, ci = .95, ...) {
 }
 
 
+#' @export
+ci.rma <- function(model, ci = .95, ...) {
+  params <- insight::get_parameters(model)
+  out <- lapply(ci, function(i) {
+    x <- stats::update(model, level = i, ...)
+    .data_frame(
+      Parameter = params[[1]],
+      CI = i * 100,
+      CI_low = as.vector(x$ci.lb),
+      CI_high = as.vector(x$ci.ub)
+    )
+  })
+  .remove_backticks_from_parameter_names(do.call(rbind, out))
+}
+
+
+
+
 
 
 # helper -----------------------------------------
