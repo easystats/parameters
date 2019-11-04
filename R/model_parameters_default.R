@@ -237,3 +237,56 @@ model_parameters.brmultinom <- model_parameters.mlm
 
 #' @export
 model_parameters.bracl <- model_parameters.mlm
+
+
+#' @importFrom stats qt setNames
+#' @export
+model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+
+  meta_analysis_overall <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
+
+  alpha <- (1 + ci) / 2
+
+  rma_parameters <- if (!is.null(model$slab)) {
+    model$slab
+  } else {
+    sprintf("Study %i", 1:model[["k"]])
+  }
+
+  rma_coeffients <- as.vector(model$yi)
+  rma_se <- as.vector(sqrt(model$vi))
+  rma_ci_low <- rma_coeffients - rma_se * stats::qt(alpha, df = Inf)
+  rma_ci_high <- rma_coeffients + rma_se * stats::qt(alpha, df = Inf)
+  rma_statistic <- rma_coeffients / rma_se
+  rma_ci_p <- 2 * stats::pt(abs(rma_statistic), df = Inf, lower.tail = FALSE)
+
+  meta_analysis_studies <- data.frame(
+    Parameter = rma_parameters,
+    Coefficient = rma_coeffients,
+    SE = rma_se,
+    CI_low = rma_ci_low,
+    CI_high = rma_ci_high,
+    z = rma_statistic,
+    df_residual = NA,
+    p = rma_ci_p,
+    stringsAsFactors = FALSE
+  )
+
+  original_attributes <- attributes(meta_analysis_overall)
+  out <- merge(meta_analysis_studies, meta_analysis_overall, all = TRUE, sort = FALSE)
+
+  original_attributes$row.names <- 1:nrow(out)
+  original_attributes$pretty_names <- stats::setNames(out$Parameter, out$Parameter)
+  attributes(out) <- original_attributes
+
+  out
+}
