@@ -336,10 +336,9 @@
 <div id="confirmatory-factor-analysis-cfa-and-structural-equation-models-sem" class="section level3">
 <h3 class="hasAnchor">
 <a href="#confirmatory-factor-analysis-cfa-and-structural-equation-models-sem" class="anchor"></a>Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)</h3>
-</div>
-<div id="frequentist-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#frequentist-1" class="anchor"></a>Frequentist</h3>
+<div id="frequentist-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#frequentist-1" class="anchor"></a>Frequentist</h4>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lavaan)</a>
 <a class="sourceLine" id="cb29-2" title="2"></a>
 <a class="sourceLine" id="cb29-3" title="3">model &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(<span class="st">' visual  =~ x1 + x2 + x3</span></a>
@@ -370,11 +369,33 @@
 &gt; speed =~ x8   |        1.18 | 0.16 | [0.86, 1.50] | &lt; .001
 &gt; speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001</code></pre>
 </div>
-<div id="bayesian-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bayesian-1" class="anchor"></a>Bayesian</h3>
+<div id="bayesian-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#bayesian-1" class="anchor"></a>Bayesian</h4>
 <p><code>blavaan</code> to be done.</p>
 </div>
+</div>
+</div>
+<div id="meta-analysis" class="section level2">
+<h2 class="hasAnchor">
+<a href="#meta-analysis" class="anchor"></a>Meta-Analysis</h2>
+<p><code>parameters</code> also works with <code>rma</code>-objects from the <em>metafor</em>-package.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(metafor)</a>
+<a class="sourceLine" id="cb31-2" title="2"></a>
+<a class="sourceLine" id="cb31-3" title="3">mydat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(</a>
+<a class="sourceLine" id="cb31-4" title="4">  <span class="dt">effectsize =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">0.393</span>, <span class="fl">0.675</span>, <span class="fl">0.282</span>, <span class="fl">-1.398</span>),</a>
+<a class="sourceLine" id="cb31-5" title="5">  <span class="dt">standarderror =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.317</span>, <span class="fl">0.317</span>, <span class="fl">0.13</span>, <span class="fl">0.36</span>)</a>
+<a class="sourceLine" id="cb31-6" title="6">)</a>
+<a class="sourceLine" id="cb31-7" title="7"></a>
+<a class="sourceLine" id="cb31-8" title="8"><span class="kw">rma</span>(<span class="dt">yi =</span> effectsize, <span class="dt">sei =</span> standarderror, <span class="dt">method =</span> <span class="st">"REML"</span>, <span class="dt">data =</span> mydat) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-9" title="9"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
+<pre><code>&gt; Parameter   | Coefficient |   SE |         95% CI |     z |      p | Weight
+&gt; ---------------------------------------------------------------------------
+&gt; Study 1     |       -0.39 | 0.32 | [-1.01,  0.23] | -1.24 | 0.215  |   9.95
+&gt; Study 2     |        0.68 | 0.32 | [ 0.05,  1.30] |  2.13 | 0.033  |   9.95
+&gt; Study 3     |        0.28 | 0.13 | [ 0.03,  0.54] |  2.17 | 0.030  |  59.17
+&gt; Study 4     |       -1.40 | 0.36 | [-2.10, -0.69] | -3.88 | &lt; .001 |   7.72
+&gt; (Intercept) |       -0.18 | 0.44 | [-1.05,  0.68] | -0.42 | 0.676  |</code></pre>
 </div>
   </div>
 
@@ -388,6 +409,7 @@
       <li><a href="#anovas">ANOVAs</a></li>
       <li><a href="#regressions-glms-mixed-models-gams">Regressions (GLMs, Mixed Models, GAMs, …)</a></li>
       <li><a href="#structural-models-pca-efa-cfa-sem">Structural Models (PCA, EFA, CFA, SEM…)</a></li>
+      <li><a href="#meta-analysis">Meta-Analysis</a></li>
       </ul>
 </div>
       </div>
