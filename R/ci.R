@@ -448,7 +448,7 @@ ci.effectsize_std_params <- function(x, ci = .95, ...) {
 ci.rma <- function(model, ci = .95, ...) {
   params <- insight::get_parameters(model)
   out <- lapply(ci, function(i) {
-    x <- stats::update(model, level = i, ...)
+    x <- stats::update(model, level = i)
     .data_frame(
       Parameter = params[[1]],
       CI = i * 100,
