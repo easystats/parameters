@@ -9,6 +9,10 @@
   attr(parameters, "model_class") <- class(model)
 
 
+  if (inherits(model, c("rma", "rma.uni"))) {
+    attr(parameters, "data") <- insight::get_data(model)
+  }
+
   if ("digits" %in% names(dot.arguments)) {
     attr(parameters, "digits") <- eval(dot.arguments[["digits"]])
   } else {
