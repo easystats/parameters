@@ -188,7 +188,7 @@ FactoMineR::FAMD(iris, ncp = 3, graph = FALSE) %>%
 
 ### Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)
 
-### Frequentist
+#### Frequentist
 
 ```{r, warning=FALSE, message=FALSE}
 library(lavaan)
@@ -201,6 +201,22 @@ model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
 model_parameters(model)
 ```
 
-### Bayesian
+#### Bayesian
 
 `blavaan` to be done.
+
+## Meta-Analysis
+
+`parameters` also works with `rma`-objects from the *metafor*-package.
+
+```{r, warning=FALSE, message=FALSE}
+library(metafor)
+
+mydat <- data.frame(
+  effectsize = c(-0.393, 0.675, 0.282, -1.398),
+  standarderror = c(0.317, 0.317, 0.13, 0.36)
+)
+
+rma(yi = effectsize, sei = standarderror, method = "REML", data = mydat) %>% 
+  model_parameters()
+```
