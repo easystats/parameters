@@ -257,7 +257,7 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
   alpha <- (1 + ci) / 2
 
   rma_parameters <- if (!is.null(model$slab)) {
-    model$slab
+    sprintf("Study %s", model$slab)
   } else {
     sprintf("Study %i", 1:model[["k"]])
   }
@@ -278,15 +278,20 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
     z = rma_statistic,
     df_residual = NA,
     p = rma_ci_p,
+    Weight = 1 / as.vector(model$vi),
     stringsAsFactors = FALSE
   )
 
   original_attributes <- attributes(meta_analysis_overall)
   out <- merge(meta_analysis_studies, meta_analysis_overall, all = TRUE, sort = FALSE)
 
+  original_attributes$names <- names(out)
   original_attributes$row.names <- 1:nrow(out)
   original_attributes$pretty_names <- stats::setNames(out$Parameter, out$Parameter)
   attributes(out) <- original_attributes
+
+  # no df
+  out$df_residual <- NULL
 
   out
 }

@@ -11,6 +11,7 @@
 
   if (inherits(model, c("rma", "rma.uni"))) {
     attr(parameters, "data") <- insight::get_data(model)
+    attr(parameters, "study_weights") <- 1 / model$vi
   }
 
   if ("digits" %in% names(dot.arguments)) {
