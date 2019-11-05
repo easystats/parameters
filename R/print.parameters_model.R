@@ -124,8 +124,9 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     component_name <- switch(
       type,
       "mu" = ,
-      "conditional" = "Conditional",
-      "conditional" = "Random Effects",
+      "fixed" = ,
+      "conditional" = "Fixed Effects",
+      "random" = "Random Effects",
       "conditional.fixed" = "Fixed Effects (Count Model)",
       "conditional.random" = "Random Effects (Count Model)",
       "zero_inflated" = "Zero-Inflated",
