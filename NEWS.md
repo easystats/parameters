@@ -38,6 +38,7 @@ Parts of the **parameter** package are restructured and functions focussing on a
 - Interaction terms in `model_parameters()` were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. `as.factor()`, `log()` or `I()`.
 - Fixed bug in `parameters_type()` when a parameter occured multiple times in a model.
 - Fixed bug with *multinom*-support.
+- Fixed bug in `model_parameters()` for non-estimable GLMs.
 
 # parameters 0.2.0
 
