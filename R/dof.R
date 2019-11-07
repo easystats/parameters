@@ -65,16 +65,11 @@ dof <- degrees_of_freedom
 
 #' @keywords internal
 .degrees_of_freedom_analytical <- function(model, kenward = TRUE) {
-  info <- insight::model_info(model)
   nparam <- n_parameters(model)
   n <- insight::n_obs(model)
 
-  if (info$is_mixed && isTRUE(kenward)) {
-    if (info$is_bayesian) {
-      stop("Cannot estimate DoFs for Bayesian mixed models yet.")
-    } else{
-      dof <- as.numeric(t(dof_kenward(model)))
-    }
+  if (isTRUE(kenward) && inherits(model, "lmerMod")) {
+    dof <- as.numeric(t(dof_kenward(model)))
   } else{
     dof <- rep(n - nparam, nparam)
   }
