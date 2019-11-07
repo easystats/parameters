@@ -4,8 +4,8 @@
 \alias{demean}
 \title{Compute group-meaned and de-meaned variables}
 \usage{
-demean(x, select, group, suffix_demean = "_DM",
-  suffix_groupmean = "_GM")
+demean(x, select, group, suffix_demean = "_within",
+  suffix_groupmean = "_between")
 }
 \arguments{
 \item{x}{A data frame.}
@@ -16,11 +16,13 @@ demean(x, select, group, suffix_demean = "_DM",
 
 \item{suffix_demean, suffix_groupmean}{String value, will be appended to the names of the
 group-meaned and de-meaned variables of \code{x}. By default, de-meaned
-variables will be suffixed with \code{"_dm"} and grouped-meaned variables
-with \code{"_gm"}.}
+variables will be suffixed with \code{"_within"} and grouped-meaned variables
+with \code{"_between"}.}
 }
 \value{
-A data frame with the group-/de-meaned variables.
+A data frame with the group-/de-meaned variables, which get the suffix
+  \code{"_between"} (for the group-meaned variable) and \code{"_within"} (for
+  the de-meaned variable) by default.
 }
 \description{
 \code{demean()} computes group- and de-meaned versions of a
@@ -46,7 +48,8 @@ A data frame with the group-/de-meaned variables.
   \subsection{Terminology}{
     The group-meaned variable is simply the mean of an independent variable
     within each group (or id-level or cluster) represented by \code{group}.
-    It represents the cluster-mean of an independent variable. De-meaning
+    It represents the cluster-mean of an independent variable. The de-meaned
+    variable is then the centered version of the group-meaned variable. De-meaning
     is sometimes also called person-mean centering or centering within clusters.
   }
   \subsection{De-meaning with continuous predictors}{

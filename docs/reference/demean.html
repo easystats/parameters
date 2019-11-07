@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.1</span>
       </span>
     </div>
 
@@ -159,8 +159,8 @@
    and within-subject effect.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>demean</span>(<span class='no'>x</span>, <span class='no'>select</span>, <span class='no'>group</span>, <span class='kw'>suffix_demean</span> <span class='kw'>=</span> <span class='st'>"_DM"</span>,
-  <span class='kw'>suffix_groupmean</span> <span class='kw'>=</span> <span class='st'>"_GM"</span>)</pre>
+    <pre class="usage"><span class='fu'>demean</span>(<span class='no'>x</span>, <span class='no'>select</span>, <span class='no'>group</span>, <span class='kw'>suffix_demean</span> <span class='kw'>=</span> <span class='st'>"_within"</span>,
+  <span class='kw'>suffix_groupmean</span> <span class='kw'>=</span> <span class='st'>"_between"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,14 +181,16 @@
       <th>suffix_demean, suffix_groupmean</th>
       <td><p>String value, will be appended to the names of the
 group-meaned and de-meaned variables of <code>x</code>. By default, de-meaned
-variables will be suffixed with <code>"_dm"</code> and grouped-meaned variables
-with <code>"_gm"</code>.</p></td>
+variables will be suffixed with <code>"_within"</code> and grouped-meaned variables
+with <code>"_between"</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with the group-/de-meaned variables.</p>
+    <p>A data frame with the group-/de-meaned variables, which get the suffix
+  <code>"_between"</code> (for the group-meaned variable) and <code>"_within"</code> (for
+  the de-meaned variable) by default.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
@@ -208,7 +210,8 @@ with <code>"_gm"</code>.</p></td>
     group-effects or between-subject effects.</p><p></p><h3>Terminology</h3>
 <p>The group-meaned variable is simply the mean of an independent variable
     within each group (or id-level or cluster) represented by <code>group</code>.
-    It represents the cluster-mean of an independent variable. De-meaning
+    It represents the cluster-mean of an independent variable. The de-meaned
+    variable is then the centered version of the group-meaned variable. De-meaning
     is sometimes also called person-mean centering or centering within clusters.</p><p></p><h3>De-meaning with continuous predictors</h3>
 <p>For continuous time-varying predictors, the recommendation is to include
     both their de-meaned and group-meaned versions as fixed effects, but not
@@ -245,21 +248,35 @@ with <code>"_gm"</code>.</p></td>
 <span class='no'>iris</span>$<span class='no'>binary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span>(<span class='fl'>150</span>, <span class='fl'>1</span>, <span class='fl'>.35</span>)) <span class='co'># binary variable</span>
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_GM Petal.Length_GM Sepal.Length_DM Petal.Length_DM
-#&gt; 1        5.848718        3.710256      -0.7487179       -2.310256
-#&gt; 2        5.902439        4.009756      -1.0024390       -2.609756
-#&gt; 3        5.848718        3.710256      -1.1487179       -2.410256
-#&gt; 4        5.848718        3.710256      -1.2487179       -2.210256
-#&gt; 5        5.848718        3.710256      -0.8487179       -2.310256
-#&gt; 6        5.848718        3.710256      -0.4487179       -2.010256</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Petal.Length_between Sepal.Length_within
+#&gt; 1             5.843590             3.889744          -0.7435897
+#&gt; 2             5.931250             3.909375          -1.0312500
+#&gt; 3             5.931250             3.909375          -1.2312500
+#&gt; 4             5.843590             3.889744          -1.2435897
+#&gt; 5             5.843590             3.889744          -0.8435897
+#&gt; 6             5.822222             3.655556          -0.4222222
+#&gt;   Petal.Length_within
+#&gt; 1           -2.489744
+#&gt; 2           -2.509375
+#&gt; 3           -2.609375
+#&gt; 4           -2.389744
+#&gt; 5           -2.489744
+#&gt; 6           -1.955556</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.
-#&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_GM Species_GM binary_GM Sepal.Length_DM Species_DM  binary_DM
-#&gt; 1        5.848718  0.9487179 0.4102564      -0.7487179 -0.9487179  0.5897436
-#&gt; 2        5.902439  1.1219512 0.2682927      -1.0024390 -1.1219512  0.7317073
-#&gt; 3        5.848718  0.9487179 0.4102564      -1.1487179 -0.9487179 -0.4102564
-#&gt; 4        5.848718  0.9487179 0.4102564      -1.2487179 -0.9487179 -0.4102564
-#&gt; 5        5.848718  0.9487179 0.4102564      -0.8487179 -0.9487179  0.5897436
-#&gt; 6        5.848718  0.9487179 0.4102564      -0.4487179 -0.9487179  0.5897436</div></span></pre>
+#&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Species_between binary_between Sepal.Length_within
+#&gt; 1             5.843590       1.0769231      0.3333333          -0.7435897
+#&gt; 2             5.931250       1.0625000      0.3125000          -1.0312500
+#&gt; 3             5.931250       1.0625000      0.3125000          -1.2312500
+#&gt; 4             5.843590       1.0769231      0.3333333          -1.2435897
+#&gt; 5             5.843590       1.0769231      0.3333333          -0.8435897
+#&gt; 6             5.822222       0.9166667      0.2500000          -0.4222222
+#&gt;   Species_within binary_within
+#&gt; 1     -1.0769231     0.6666667
+#&gt; 2     -1.0625000    -0.3125000
+#&gt; 3     -1.0625000     0.6875000
+#&gt; 4     -1.0769231     0.6666667
+#&gt; 5     -1.0769231     0.6666667
+#&gt; 6     -0.9166667    -0.2500000</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
