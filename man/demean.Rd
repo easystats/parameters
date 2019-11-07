@@ -69,6 +69,27 @@ A data frame with the group-/de-meaned variables, which get the suffix
     categorical time-varying predictors to numeric to compute the de- and
     group-meaned versions for these variables.
   }
+  \subsection{De-meaning interaction terms}{
+    There are multiple ways to deal with interaction terms of within- and
+    between-effects. A classical approach is to simply use the product
+    term of the de-meaned variables (i.e. introducing the de-meaned variables
+    as interaction term in the model formula, e.g. \code{y ~ x_within * time_within}).
+    This approach, however, might be subject to bias (see \cite{Giesselmann & Schmidt-Catran 2018}).
+    \cr \cr
+    Another option is to first calculate the product term and then apply the
+    de-meaning to it. This approach produces an estimator \dQuote{that reflects
+    unit-level differences of interacted variables whose moderators vary
+    within units}, which is desirable if \emph{no} within interaction of
+    two time-dependent variables is required. \cr \cr
+    A third option, when the interaction should result in a genuine within
+    estimator, is to "double de-mean" the interaction terms
+    (\cite{Giesselmann & Schmidt-Catran 2018}), however, this is currently
+    not supported by \code{demean()}. If this is required, the \code{wmb()}
+    function from the \pkg{panelr} package should be used. \cr \cr
+    To de-mean interaction terms for within-between models, simply specify
+    the term as interaction for the \code{select}-argument, e.g.
+    \code{select = "a*b"} (see 'Examples').
+  }
   \subsection{Analysing panel data with mixed models using lme4}{
     A description of how to translate the
     formulas described in \emph{Bell et al. 2018} into R using \code{lmer()}
@@ -87,11 +108,21 @@ head(x)
 
 x <- demean(iris, select = c("Sepal.Length", "binary", "Species"), group = ID)
 head(x)
+
+# demean interaction term x*y
+dat <- data.frame(
+  a = c(1, 2, 3, 4, 1, 2, 3, 4),
+  x = c(4, 3, 3, 4, 1, 2, 1, 2),
+  y = c(1, 2, 1, 2, 4, 3, 2, 1),
+  ID = c(1, 2, 3, 1, 2, 3, 1, 2)
+)
+demean(dat, select = c("a", "x*y"), group = "ID")
 }
 \references{
 \itemize{
   \item Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
   \item Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity. \doi{10.1007/s11135-018-0802-x}
+  \item Giesselmann M, Schmidt-Catran A. (2018). Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html
   \item Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
 }
 }

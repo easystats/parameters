@@ -225,7 +225,26 @@ with <code>"_between"</code>.</p></td>
     <em>de-meaned</em> variable as random effect (random slope)
     (<cite>Hoffmann 2015, chapter 8-2.I</cite>). <code>demean()</code> will thus coerce
     categorical time-varying predictors to numeric to compute the de- and
-    group-meaned versions for these variables.</p><p></p><h3>Analysing panel data with mixed models using lme4</h3>
+    group-meaned versions for these variables.</p><p></p><h3>De-meaning interaction terms</h3>
+<p>There are multiple ways to deal with interaction terms of within- and
+    between-effects. A classical approach is to simply use the product
+    term of the de-meaned variables (i.e. introducing the de-meaned variables
+    as interaction term in the model formula, e.g. <code>y ~ x_within * time_within</code>).
+    This approach, however, might be subject to bias (see <cite>Giesselmann &amp; Schmidt-Catran 2018</cite>).
+    <br /> <br />
+    Another option is to first calculate the product term and then apply the
+    de-meaning to it. This approach produces an estimator &#8220;that reflects
+    unit-level differences of interacted variables whose moderators vary
+    within units&#8221;, which is desirable if <em>no</em> within interaction of
+    two time-dependent variables is required. <br /> <br />
+    A third option, when the interaction should result in a genuine within
+    estimator, is to "double de-mean" the interaction terms
+    (<cite>Giesselmann &amp; Schmidt-Catran 2018</cite>), however, this is currently
+    not supported by <code>demean()</code>. If this is required, the <code>wmb()</code>
+    function from the <span class="pkg">panelr</span> package should be used. <br /> <br />
+    To de-mean interaction terms for within-between models, simply specify
+    the term as interaction for the <code>select</code>-argument, e.g.
+    <code>select = "a*b"</code> (see 'Examples').</p><p></p><h3>Analysing panel data with mixed models using lme4</h3>
 <p>A description of how to translate the
     formulas described in <em>Bell et al. 2018</em> into R using <code>lmer()</code>
     from <span class="pkg">lme4</span> or <code>glmmTMB()</code> from <span class="pkg">glmmTMB</span> can be found here:
@@ -238,6 +257,7 @@ with <code>"_between"</code>.</p></td>
 <ul>
 <li><p>Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.</p></li>
 <li><p>Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality &amp; Quantity. doi: <a href='https://doi.org/10.1007/s11135-018-0802-x'>10.1007/s11135-018-0802-x</a></p></li>
+<li><p>Giesselmann M, Schmidt-Catran A. (2018). Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html</p></li>
 <li><p>Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge</p></li>
 </ul>
 
@@ -249,34 +269,50 @@ with <code>"_between"</code>.</p></td>
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Petal.Length_between Sepal.Length_within
-#&gt; 1             5.843590             3.889744          -0.7435897
-#&gt; 2             5.931250             3.909375          -1.0312500
-#&gt; 3             5.931250             3.909375          -1.2312500
-#&gt; 4             5.843590             3.889744          -1.2435897
-#&gt; 5             5.843590             3.889744          -0.8435897
-#&gt; 6             5.822222             3.655556          -0.4222222
+#&gt; 1             5.883333             3.952381          -0.7833333
+#&gt; 2             5.802564             3.482051          -0.9025641
+#&gt; 3             5.946667             3.920000          -1.2466667
+#&gt; 4             5.802564             3.482051          -1.2025641
+#&gt; 5             5.883333             3.952381          -0.8833333
+#&gt; 6             5.761538             3.700000          -0.3615385
 #&gt;   Petal.Length_within
-#&gt; 1           -2.489744
-#&gt; 2           -2.509375
-#&gt; 3           -2.609375
-#&gt; 4           -2.389744
-#&gt; 5           -2.489744
-#&gt; 6           -1.955556</div><div class='input'>
+#&gt; 1           -2.552381
+#&gt; 2           -2.082051
+#&gt; 3           -2.620000
+#&gt; 4           -1.982051
+#&gt; 5           -2.552381
+#&gt; 6           -2.000000</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.
 #&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Species_between binary_between Sepal.Length_within
-#&gt; 1             5.843590       1.0769231      0.3333333          -0.7435897
-#&gt; 2             5.931250       1.0625000      0.3125000          -1.0312500
-#&gt; 3             5.931250       1.0625000      0.3125000          -1.2312500
-#&gt; 4             5.843590       1.0769231      0.3333333          -1.2435897
-#&gt; 5             5.843590       1.0769231      0.3333333          -0.8435897
-#&gt; 6             5.822222       0.9166667      0.2500000          -0.4222222
+#&gt; 1             5.883333       1.1190476      0.4285714          -0.7833333
+#&gt; 2             5.802564       0.8974359      0.3589744          -0.9025641
+#&gt; 3             5.946667       1.0333333      0.6333333          -1.2466667
+#&gt; 4             5.802564       0.8974359      0.3589744          -1.2025641
+#&gt; 5             5.883333       1.1190476      0.4285714          -0.8833333
+#&gt; 6             5.761538       0.9487179      0.4102564          -0.3615385
 #&gt;   Species_within binary_within
-#&gt; 1     -1.0769231     0.6666667
-#&gt; 2     -1.0625000    -0.3125000
-#&gt; 3     -1.0625000     0.6875000
-#&gt; 4     -1.0769231     0.6666667
-#&gt; 5     -1.0769231     0.6666667
-#&gt; 6     -0.9166667    -0.2500000</div></span></pre>
+#&gt; 1     -1.1190476     0.5714286
+#&gt; 2     -0.8974359    -0.3589744
+#&gt; 3     -1.0333333     0.3666667
+#&gt; 4     -0.8974359    -0.3589744
+#&gt; 5     -1.1190476    -0.4285714
+#&gt; 6     -0.9487179    -0.4102564</div><div class='input'>
+<span class='co'># demean interaction term x*y</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span>),
+  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>1</span>),
+  <span class='kw'>ID</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)
+)
+<span class='fu'>demean</span>(<span class='no'>dat</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"x*y"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>)</div><div class='output co'>#&gt;   a_between x_y_between   a_within x_y_within
+#&gt; 1  2.666667    4.666667 -1.6666667 -0.6666667
+#&gt; 2  2.333333    4.000000 -0.3333333  2.0000000
+#&gt; 3  2.500000    4.500000  0.5000000 -1.5000000
+#&gt; 4  2.666667    4.666667  1.3333333  3.3333333
+#&gt; 5  2.333333    4.000000 -1.3333333  0.0000000
+#&gt; 6  2.500000    4.500000 -0.5000000  1.5000000
+#&gt; 7  2.666667    4.666667  0.3333333 -2.6666667
+#&gt; 8  2.333333    4.000000  1.6666667 -2.0000000</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
