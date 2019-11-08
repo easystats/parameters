@@ -12,12 +12,10 @@ editor_options:
   chunk_output_type: console
 ---
 
-# parameters <img src='man/figures/logo.png' align="right" height="139" />
-
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  dpi=450,
+  dpi=300,
   tidy.opts=list(width.cutoff=60),
   tidy=TRUE,
   fig.path = "man/figures/"
@@ -29,6 +27,8 @@ options(knitr.kable.NA = '',
 
 set.seed(333)
 ```
+
+# parameters <img src='man/figures/logo.png' align="right" height="139" />
 
 [![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
 [![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
