@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model bootstrapping — model_bootstrap • parameters</title>
+<title>Compute cluster analysis and return group indices — cluster_groups • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Model bootstrapping — model_bootstrap" />
-<meta property="og:description" content="Bootstrap a statistical model n times to return a data.frame of estimates." />
+<meta property="og:title" content="Compute cluster analysis and return group indices — cluster_groups" />
+<meta property="og:description" content="Compute hierarchical or kmeans cluster analysis and return the group
+               assignment for each observation as vector." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,61 +147,96 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Model bootstrapping</h1>
+    <h1>Compute cluster analysis and return group indices</h1>
     
-    <div class="hidden name"><code>model_bootstrap.Rd</code></div>
+    <div class="hidden name"><code>cluster_groups.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Bootstrap a statistical model n times to return a data.frame of estimates.</p>
+    <p>Compute hierarchical or kmeans cluster analysis and return the group
+               assignment for each observation as vector.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>model_bootstrap</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>cluster_groups</span>(<span class='no'>x</span>, <span class='kw'>n_clusters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"hclust"</span>, <span class='st'>"kmeans"</span>),
+  <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"euclidean"</span>, <span class='st'>"maximum"</span>, <span class='st'>"manhattan"</span>, <span class='st'>"canberra"</span>, <span class='st'>"binary"</span>,
+  <span class='st'>"minkowski"</span>), <span class='kw'>agglomeration</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ward"</span>, <span class='st'>"ward.D"</span>, <span class='st'>"ward.D2"</span>, <span class='st'>"single"</span>,
+  <span class='st'>"complete"</span>, <span class='st'>"average"</span>, <span class='st'>"mcquitty"</span>, <span class='st'>"median"</span>, <span class='st'>"centroid"</span>),
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>algorithm</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Hartigan-Wong"</span>, <span class='st'>"Lloyd"</span>, <span class='st'>"MacQueen"</span>),
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>Statistical model.</p></td>
+      <th>x</th>
+      <td><p>A data frame.</p></td>
+    </tr>
+    <tr>
+      <th>n_clusters</th>
+      <td><p>Number of clusters used for the cluster solution. By default,
+the number of clusters to extract is determined by calling <code><a href='n_clusters.html'>n_clusters</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>Method for computing the cluster analysis. By default (<code>"hclust"</code>), a
+hierarchical cluster analysis, will be computed. Use <code>"kmeans"</code> to
+compute a kmeans cluster analysis. You can specify the initial letters only.</p></td>
+    </tr>
+    <tr>
+      <th>distance</th>
+      <td><p>Distance measure to be used when <code>method = "hclust"</code> (for hierarchical
+clustering). Must be one of <code>"euclidean"</code>, <code>"maximum"</code>, <code>"manhattan"</code>,
+<code>"canberra"</code>, <code>"binary"</code> or <code>"minkowski"</code>. See <code><a href='https://rdrr.io/r/stats/dist.html'>dist</a></code>.
+If is <code>method = "kmeans"</code> this argument will be ignored.</p></td>
+    </tr>
+    <tr>
+      <th>agglomeration</th>
+      <td><p>Agglomeration method to be used when <code>method = "hclust"</code> (for hierarchical
+clustering). This should be one of <code>"ward"</code>, <code>"single"</code>, <code>"complete"</code>, <code>"average"</code>,
+<code>"mcquitty"</code>, <code>"median"</code> or <code>"centroid"</code>. Default is <code>"ward"</code> (see <code><a href='https://rdrr.io/r/stats/hclust.html'>hclust</a></code>).
+If <code>method = "kmeans"</code> this argument will be ignored.</p></td>
     </tr>
     <tr>
       <th>iterations</th>
-      <td><p>The number of draws to simulate/bootstrap.</p></td>
+      <td><p>Maximum number of iterations allowed. Only applies, if
+<code>method = "kmeans"</code>. See <code><a href='https://rdrr.io/r/stats/kmeans.html'>kmeans</a></code> for details on this argument.</p></td>
+    </tr>
+    <tr>
+      <th>algorithm</th>
+      <td><p>Algorithm used for calculating kmeans cluster. Only applies, if
+<code>method = "kmeans"</code>. May be one of <code>"Hartigan-Wong"</code> (default),
+<code>"Lloyd"</code> (used by SPSS), or <code>"MacQueen"</code>. See <code><a href='https://rdrr.io/r/stats/kmeans.html'>kmeans</a></code>
+for details on this argument.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>Hide possible refit messages.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <td><p>Toggle off warnings.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>The group classification for each observation as vector. The
+  returned vector includes missing values, so it has the same length
+  as <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(x)</a></code>.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <div class='dont-index'><p><code><a href='parameters_bootstrap.html'>parameters_bootstrap</a></code>, <code><a href='model_simulate.html'>model_simulate</a></code>, <code><a href='parameters_simulate.html'>parameters_simulate</a></code></p></div>
+    <p>Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>model_bootstrap</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept)        wt        cyl
-#&gt; 1    33.99844 -2.507671 -1.0759403
-#&gt; 2    42.34820 -5.554904 -0.8669103
-#&gt; 3    40.90487 -2.840387 -1.8000708
-#&gt; 4    42.10194 -4.258112 -1.4629397
-#&gt; 5    42.60371 -2.842593 -2.0338732
-#&gt; 6    37.27375 -2.095913 -1.7402428</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Hierarchical clustering of mtcars-dataset</span>
+<span class='no'>groups</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_groups</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='fl'>3</span>)
+
+<span class='co'># K-means clustering of mtcars-dataset, auto-detection of cluster-groups</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>groups</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_groups</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"k"</span>)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#references">References</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

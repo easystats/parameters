@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model bootstrapping — model_bootstrap • parameters</title>
+<title>Compute a linear discriminant analysis on classified cluster groups — cluster_discrimination • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Model bootstrapping — model_bootstrap" />
-<meta property="og:description" content="Bootstrap a statistical model n times to return a data.frame of estimates." />
+<meta property="og:title" content="Compute a linear discriminant analysis on classified cluster groups — cluster_discrimination" />
+<meta property="og:description" content="Computes linear discriminant analysis on classified cluster groups,
+  and determines the goodness of classification for each cluster group." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,61 +147,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Model bootstrapping</h1>
+    <h1>Compute a linear discriminant analysis on classified cluster groups</h1>
     
-    <div class="hidden name"><code>model_bootstrap.Rd</code></div>
+    <div class="hidden name"><code>cluster_discrimination.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Bootstrap a statistical model n times to return a data.frame of estimates.</p>
+    <p>Computes linear discriminant analysis on classified cluster groups,
+  and determines the goodness of classification for each cluster group.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>model_bootstrap</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>cluster_discrimination</span>(<span class='no'>x</span>, <span class='kw'>cluster_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>Statistical model.</p></td>
+      <th>x</th>
+      <td><p>A data frame</p></td>
     </tr>
     <tr>
-      <th>iterations</th>
-      <td><p>The number of draws to simulate/bootstrap.</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>Hide possible refit messages.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <th>cluster_groups</th>
+      <td><p>Group classification of the cluster analysis, which can
+be retrieved from the <code><a href='cluster_groups.html'>cluster_groups</a></code> function.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A data.frame.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='parameters_bootstrap.html'>parameters_bootstrap</a></code>, <code><a href='model_simulate.html'>model_simulate</a></code>, <code><a href='parameters_simulate.html'>parameters_simulate</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>model_bootstrap</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept)        wt        cyl
-#&gt; 1    33.99844 -2.507671 -1.0759403
-#&gt; 2    42.34820 -5.554904 -0.8669103
-#&gt; 3    40.90487 -2.840387 -1.8000708
-#&gt; 4    42.10194 -4.258112 -1.4629397
-#&gt; 5    42.60371 -2.842593 -2.0338732
-#&gt; 6    37.27375 -2.095913 -1.7402428</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># retrieve group classification from hierarchical cluster analysis</span>
+<span class='no'>groups</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cluster_groups.html'>cluster_groups</a></span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])
+
+<span class='co'># goodness of group classificatoin</span>
+<span class='fu'>cluster_discrimination</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>cluster_groups</span> <span class='kw'>=</span> <span class='no'>groups</span>)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
