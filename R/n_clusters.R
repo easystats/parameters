@@ -101,9 +101,8 @@ n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "
   # listwise deletion of missing
   x <- stats::na.omit(x)
   # Gap Statistic for Estimating the Number of Clusters
-  junk <- utils::capture.output(gap <- cluster::clusGap(x, kmeans, K.max = 10, B = 100))
+  junk <- utils::capture.output(gap <- cluster::clusGap(x, kmeans, K.max = 10, B = 100)$Tab)
   # Gap Statistic for Estimating the Number of Clusters
-  n <- cluster::maxSE(f = gap[, "gap"], SE.f = gap[, "SE.sim"], method = "Tibs2001SEmax", SE.factor = 1)
   n <- cluster::maxSE(f = gap[, "gap"], SE.f = gap[, "SE.sim"], method = "Tibs2001SEmax", SE.factor = 1)
   data.frame(n_Clusters = n, Method = "Tibs2001SEmax", Package = "cluster")
 }

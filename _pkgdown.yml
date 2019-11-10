@@ -65,6 +65,7 @@ reference:
   - convert_efa_to_cfa
   - n_factors
   - n_clusters
+  - cluster_groups
   - principal_components
   - cmds
   - DRR

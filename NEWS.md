@@ -21,6 +21,7 @@ Parts of the **parameter** package are restructured and functions focussing on a
 - `demean()` to calculate de-meaned and group-meaned variables (centering within groups, for panel-data regression).
 - `n_parameters()` to get number of parameters.
 - `n_clusters()` to determine the number of clusters to extract.
+- `cluster_groups()` to return group indices based on cluster analysis.
 - `check_clusterstructure()` to check the suitability of data for clustering.
 - `check_multimodal()` to check if a distribution is unimodal or multimodal.
 - Add `plot()`-methods for `principal_components()`.
