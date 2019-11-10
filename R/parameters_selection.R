@@ -41,7 +41,7 @@ parameters_selection <- function(model, ...) {
 #' @importFrom stats step
 #' @export
 parameters_selection.lm <- function(model, direction = "both", steps = 1000, k = 2, ...) {
-  junk <- capture.output(best <- stats::step(model,
+  junk <- utils::capture.output(best <- stats::step(model,
     trace = 0,
     direction = direction,
     steps = steps,
@@ -119,7 +119,7 @@ parameters_selection.stanreg <- function(model, method = NULL, cross_validation 
 
   if (cross_validation) {
     message("Cross-validating best parameters...")
-    junk <- capture.output(selection <- projpred::cv_varsel(model, method = method), ...)
+    junk <- utils::capture.output(selection <- projpred::cv_varsel(model, method = method), ...)
   } else {
     selection <- projpred::varsel(model, method = method, ...)
   }
@@ -135,7 +135,7 @@ parameters_selection.stanreg <- function(model, method = NULL, cross_validation 
   formula <- .reconstruct_formula(parameters, model)
 
   # Update model
-  junk <- capture.output(best <- stats::update(model, formula = formula, ...))
+  junk <- utils::capture.output(best <- stats::update(model, formula = formula, ...))
   best
 }
 

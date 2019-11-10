@@ -56,9 +56,11 @@ check_clusterstructure <- function(x, standardize = TRUE, distance = "euclidean"
 #' @export
 plot.check_clusterstructure <- function(x, ...){
   # Can be reimplemented with ggplot in see
-  heatmap(x$dissimilarity_matrix, Rowv = NA, Colv = NA,
-          labRow = FALSE, labCol = FALSE,
-          col = grDevices::colorRampPalette(c("#2196F3", "#FAFAFA", "#E91E63"))(100))
+  stats::heatmap(
+    x$dissimilarity_matrix, Rowv = NA, Colv = NA,
+    labRow = FALSE, labCol = FALSE,
+    col = grDevices::colorRampPalette(c("#2196F3", "#FAFAFA", "#E91E63"))(100)
+  )
 }
 
 

@@ -41,6 +41,7 @@ Suggests:
 	boot,
 	brms,
 	cAIC4,
+	cluster,
 	clValid,
 	covr,
 	dplyr,

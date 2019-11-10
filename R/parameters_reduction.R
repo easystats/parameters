@@ -193,7 +193,7 @@ DRR <- function(x, n = "all", ...) {
     stop("Package 'DRR' required for this function to work. Please install it by running `install.packages('DRR')`.")
   }
 
-  junk <- capture.output(suppressMessages(rez <- DRR::drr(x, n)))
+  junk <- utils::capture.output(suppressMessages(rez <- DRR::drr(x, n)))
 
   features <- as.data.frame(rez$fitted.data)
   names(features) <- paste0("DRR", 1:ncol(features))

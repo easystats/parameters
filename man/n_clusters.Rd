@@ -5,14 +5,14 @@
 \title{Number of Clusters to Extract}
 \usage{
 n_clusters(x, standardize = TRUE, package = c("NbClust", "mclust",
-  "clValid"), fast = TRUE, ...)
+  "clValid", "cluster"), fast = TRUE, ...)
 }
 \arguments{
 \item{x}{A data frame.}
 
 \item{standardize}{Standardize the dataframe before clustering (default).}
 
-\item{package}{These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"clValid"}.}
+\item{package}{These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.}
 
 \item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationaly heavy.}
 
@@ -23,8 +23,6 @@ This function runs many existing procedures for determining how many clusters ar
 }
 \examples{
 library(parameters)
-
 \donttest{
-n_clusters(iris[, 1:4])
-}
+n_clusters(iris[, 1:4])}
 }

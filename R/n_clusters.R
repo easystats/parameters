@@ -3,36 +3,37 @@
 #' This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.
 #'
 #' @inheritParams check_clusterstructure
-#' @param package These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"clValid"}.
+#' @param package These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.
 #' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationaly heavy.
 #'
 #' @examples
 #' library(parameters)
-#'
 #' \donttest{
-#' n_clusters(iris[, 1:4])
-#' }
+#' n_clusters(iris[, 1:4])}
 #' @export
-n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "clValid"), fast = TRUE, ...) {
+n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "clValid", "cluster"), fast = TRUE, ...) {
 
   if (all(package == "all")) {
-    package <- c("NbClust", "mclust", "clValid")
+    package <- c("NbClust", "mclust", "clValid", "cluster")
   }
 
   x <- as.data.frame(x[sapply(x, is.numeric)])
-  if (standardize){
+  if (standardize) {
     x <- as.data.frame(scale(x))
   }
 
   out <- data.frame()
-  if("nbclust" %in% tolower(package)){
+  if ("nbclust" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_NbClust(x, fast = fast))
   }
-  if("mclust" %in% tolower(package)){
+  if ("mclust" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_mclust(x))
   }
-  if("clvalid" %in% tolower(package)){
+  if ("clvalid" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_clValid(x))
+  }
+  if ("cluster" %in% tolower(package)) {
+    out <- rbind(out, .n_clusters_cluster(x))
   }
 
 
@@ -42,12 +43,12 @@ n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "
 
   # Remove duplicate methods starting with the smallest
   dupli <- c()
-  for(i in 1:nrow(out)){
-    if(i > 1 && out[i, "Method"] %in% out$Method[1:i-1]){
+  for (i in 1:nrow(out)) {
+    if (i > 1 && out[i, "Method"] %in% out$Method[1:i - 1]) {
       dupli <- c(dupli, i)
     }
   }
-  if(!is.null(dupli)){
+  if (!is.null(dupli)) {
     out <- out[-dupli, ]
   }
 
@@ -90,6 +91,27 @@ n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "
 
 
 
+#' @importFrom utils capture.output
+#' @keywords internal
+.n_clusters_cluster <- function(x, ...) {
+  if (!requireNamespace("cluster", quietly = TRUE)) {
+    stop("Package 'cluster' required for this function to work. Please install it by running `install.packages('cluster')`.")
+  }
+
+  # listwise deletion of missing
+  x <- stats::na.omit(x)
+  # Gap Statistic for Estimating the Number of Clusters
+  junk <- utils::capture.output(gap <- cluster::clusGap(x, kmeans, K.max = 10, B = 100))
+  # Gap Statistic for Estimating the Number of Clusters
+  n <- cluster::maxSE(f = gap[, "gap"], SE.f = gap[, "SE.sim"], method = "Tibs2001SEmax", SE.factor = 1)
+  n <- cluster::maxSE(f = gap[, "gap"], SE.f = gap[, "SE.sim"], method = "Tibs2001SEmax", SE.factor = 1)
+  data.frame(n_Clusters = n, Method = "Tibs2001SEmax", Package = "cluster")
+}
+
+
+
+
+
 
 #' @keywords internal
 .n_clusters_clValid <- function(x, ...) {
@@ -125,12 +147,12 @@ n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "
   # Run the function and suppress output and automatic plotting
   ff <- tempfile()
   grDevices::png(filename = ff)
-  if(fast){
+  if (fast) {
     indices <- "all"
   } else{
     indices <- "allong"
   }
-  junk <- capture.output(n <- NbClust::NbClust(x, min.nc = 2, max.nc = 9, method = "ward.D2", index = indices))
+  junk <- utils::capture.output(n <- NbClust::NbClust(x, min.nc = 2, max.nc = 9, method = "ward.D2", index = indices))
   grDevices::dev.off()
   unlink(ff)
 

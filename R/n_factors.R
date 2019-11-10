@@ -401,14 +401,15 @@ print.n_clusters <- print.n_factors
 
 # EGAnet ------------------------
 
+#' @importFrom utils capture.output
 #' @keywords internal
 .n_factors_ega <- function(x = NULL, cor = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
 
   # Replace with own corelation matrix
-  junk <- capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(x, model = "glasso", plot.EGA = FALSE)$n.dim)))
-  junk <- capture.output(suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(x, model = "TMFG", plot.EGA = FALSE)$n.dim)))
-  # junk <- capture.output(suppressWarnings(suppressMessages(nfac_glasso_boot <- EGAnet::bootEGA(x, model = "glasso", n = 500, plot.typicalStructure = FALSE)$n.dim)))
-  # junk <- capture.output(suppressWarnings(suppressMessages(nfac_TMFG_boot <- EGAnet::bootEGA(x, model = "TMFG", n = 500, plot.typicalStructure = FALSE)$n.dim)))
+  junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(x, model = "glasso", plot.EGA = FALSE)$n.dim)))
+  junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(x, model = "TMFG", plot.EGA = FALSE)$n.dim)))
+  # junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_glasso_boot <- EGAnet::bootEGA(x, model = "glasso", n = 500, plot.typicalStructure = FALSE)$n.dim)))
+  # junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_TMFG_boot <- EGAnet::bootEGA(x, model = "TMFG", n = 500, plot.typicalStructure = FALSE)$n.dim)))
 
   data.frame(
     n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
