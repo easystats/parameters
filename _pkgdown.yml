@@ -54,18 +54,25 @@ reference:
   contents:
   - demean
 
-- title: "Variable/Feature Reduction"
+- title: "Feature Reduction"
   contents:
   - parameters_reduction
   - parameters_selection
-  - check_factorstructure
+
+- title: "Data Reduction: Cluster Analysis"
+  contents:
   - check_clusterstructure
+  - cluster_discrimination
+  - cluster_groups
+  - n_clusters
+
+- title: "Data Reduction: Factors and Principal Components"
+  contents:
+  - check_factorstructure
   - check_kmo
   - check_sphericity
   - convert_efa_to_cfa
   - n_factors
-  - n_clusters
-  - cluster_groups
   - principal_components
   - cmds
   - DRR
