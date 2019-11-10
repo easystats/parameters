@@ -22,6 +22,7 @@ Parts of the **parameter** package are restructured and functions focussing on a
 - `n_parameters()` to get number of parameters.
 - `n_clusters()` to determine the number of clusters to extract.
 - `cluster_groups()` to return group indices based on cluster analysis.
+- `cluster_discrimination()` to determine the goodness of classification of cluster groups.
 - `check_clusterstructure()` to check the suitability of data for clustering.
 - `check_multimodal()` to check if a distribution is unimodal or multimodal.
 - Add `plot()`-methods for `principal_components()`.
