@@ -445,10 +445,10 @@ ci.effectsize_std_params <- function(x, ci = .95, ...) {
 
 
 #' @export
-ci.rma <- function(model, ci = .95, ...) {
-  params <- insight::get_parameters(model)
+ci.rma <- function(x, ci = .95, ...) {
+  params <- insight::get_parameters(x)
   out <- lapply(ci, function(i) {
-    x <- stats::update(model, level = i)
+    x <- stats::update(x, level = i)
     .data_frame(
       Parameter = params[[1]],
       CI = i * 100,
@@ -466,7 +466,7 @@ ci.rma <- function(model, ci = .95, ...) {
 
 # helper -----------------------------------------
 
-
+#' @keywords internal
 .check_component <- function(m, x) {
   if (!insight::model_info(m)$is_zero_inflated && x %in% c("zi", "zero_inflated")) {
     insight::print_color("Model has no zero-inflation component!\n", "red")

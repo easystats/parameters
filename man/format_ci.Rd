@@ -20,7 +20,7 @@ format_ci(CI_low, CI_high, ci = 0.95, digits = 2, brackets = TRUE,
 
 \item{width}{Minimum width of the returned string. If not \code{NULL} and \code{width} is larger than the string's length, leading whitespaces are added to the string.}
 
-\item{width_low, witdh_high}{Like \code{width}, but only applies to the lower or higher confidence interval value. This can be used when the values for the lower and upper CI are of very different length.}
+\item{width_low, width_high}{Like \code{width}, but only applies to the lower or higher confidence interval value. This can be used when the values for the lower and upper CI are of very different length.}
 }
 \value{
 A formatted string.

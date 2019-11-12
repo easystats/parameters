@@ -21,6 +21,9 @@ library(parameters)
 model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
 format_parameters(model)
 
+model <- lm(Sepal.Length ~ Petal.Length + (Species / Sepal.Width), data = iris)
+format_parameters(model)
+
 model <- lm(Sepal.Length ~ Species / Petal.Length, data = iris)
 format_parameters(model)
 
