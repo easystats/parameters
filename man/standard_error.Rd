@@ -5,6 +5,7 @@
 \alias{standard_error}
 \alias{standard_error.factor}
 \alias{standard_error.default}
+\alias{standard_error.merMod}
 \alias{standard_error.glmmTMB}
 \alias{standard_error.MixMod}
 \alias{se}
@@ -21,11 +22,14 @@ standard_error(model, ...)
 
 \method{standard_error}{default}(model, robust = FALSE, ...)
 
-\method{standard_error}{glmmTMB}(model, component = c("all",
-  "conditional", "zi", "zero_inflated"), ...)
+\method{standard_error}{merMod}(model, effects = c("fixed", "random"),
+  robust = FALSE, ...)
 
-\method{standard_error}{MixMod}(model, component = c("all",
-  "conditional", "zi", "zero_inflated"), ...)
+\method{standard_error}{glmmTMB}(model, effects = c("fixed", "random"),
+  component = c("all", "conditional", "zi", "zero_inflated"), ...)
+
+\method{standard_error}{MixMod}(model, effects = c("fixed", "random"),
+  component = c("all", "conditional", "zi", "zero_inflated"), ...)
 
 se(model, ...)
 }
@@ -62,6 +66,12 @@ for factors or character vectors.}
 by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
 from the \pkg{sandwich}-package for robust covariance matrix estimators.}
+
+\item{effects}{Should standard errors for fixed effects or random effects
+be returned? Only applies to mixed models. May be abbreviated. When
+standard errors for random effects are requested, for each grouping factor
+a list of standard errors (per group level) for random intercepts and slopes
+is returned.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models

@@ -84,6 +84,7 @@ Suggests:
 	survey,
 	survival,
 	testthat,
+	TMB,
 	VGAM,
 	Zelig
 License: GPL-3

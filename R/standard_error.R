@@ -27,6 +27,11 @@
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
 #'   if \code{robust = TRUE}, arguments \code{vcov_estimation}, \code{vcov_type}
 #'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
+#' @param effects Should standard errors for fixed effects or random effects
+#'    be returned? Only applies to mixed models. May be abbreviated. When
+#'    standard errors for random effects are requested, for each grouping factor
+#'    a list of standard errors (per group level) for random intercepts and slopes
+#'    is returned.
 #' @inheritParams model_simulate
 #'
 #' @note \code{standard_error_robust()} resp. \code{standard_error(robust = TRUE)}
@@ -256,9 +261,6 @@ standard_error.lm <- function(model, robust = FALSE, ...) {
 standard_error.glm <- standard_error.lm
 
 
-#' @export
-standard_error.merMod <- standard_error.lm
-
 
 
 
@@ -269,52 +271,142 @@ standard_error.merMod <- standard_error.lm
 
 #' @rdname standard_error
 #' @export
-standard_error.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  component <- match.arg(component)
-  if (is.null(.check_component(model, component))) {
-    return(NULL)
+standard_error.merMod <- function(model, effects = c("fixed", "random"), robust = FALSE, ...) {
+  effects <- match.arg(effects)
+
+  if (effects == "random") {
+    if (!requireNamespace("lme4", quietly = TRUE)) {
+      stop("Package 'lme4' required to calculate standard errors for random effects. Please install it.")
+    }
+
+    rand.se <- lme4::ranef(model, condVar = TRUE)
+    n.groupings <- length(rand.se)
+
+    for (m in 1:n.groupings) {
+
+      vars.m <- attr(rand.se[[m]], "postVar")
+
+      K <- dim(vars.m)[1]
+      J <- dim(vars.m)[3]
+
+      names.full <- dimnames(rand.se[[m]])
+      rand.se[[m]] <- array(NA, c(J, K))
+
+      for (j in 1:J) {
+        rand.se[[m]][j, ] <- sqrt(diag(as.matrix(vars.m[, , j])))
+      }
+      dimnames(rand.se[[m]]) <- list(names.full[[1]], names.full[[2]])
+    }
+    rand.se
+  } else {
+    if (isTRUE(robust)) {
+      standard_error_robust(model, ...)
+    } else {
+      .data_frame(
+        Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+        SE = .get_se_from_summary(model)
+      )
+    }
   }
-
-  cs <- .compact_list(stats::coef(summary(model)))
-  x <- lapply(names(cs), function(i) {
-    .data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
-      SE = as.vector(cs[[i]][, 2]),
-      Component = i
-    )
-  })
-
-  se <- do.call(rbind, x)
-  se$Component <- .rename_values(se$Component, "cond", "conditional")
-  se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
-
-  .filter_component(se, component)
 }
 
 
 
 #' @rdname standard_error
 #' @export
-standard_error.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+standard_error.glmmTMB <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) {
-    return(NULL)
+  effects <- match.arg(effects)
+
+  if (effects == "random") {
+    if (requireNamespace("TMB", quietly = TRUE) && requireNamespace("glmmTMB", quietly = TRUE)) {
+      s1 <- TMB::sdreport(model$obj, getJointPrecision = TRUE)
+      s2 <- sqrt(s1$diag.cov.random)
+      rand.ef <- glmmTMB::ranef(model)[[1]]
+      rand.se <- lapply(rand.ef, function(.x) {
+        cnt <- nrow(.x) * ncol(.x)
+        s3 <- s2[1:cnt]
+        s2 <- s2[-(1:cnt)]
+        d <- as.data.frame(matrix(sqrt(s3), ncol = ncol(.x), byrow = TRUE))
+        colnames(d) <- colnames(.x)
+        d
+      })
+      rand.se
+    } else {
+      return(NULL)
+    }
+  } else {
+    if (is.null(.check_component(model, component))) {
+      return(NULL)
+    }
+
+    cs <- .compact_list(stats::coef(summary(model)))
+    x <- lapply(names(cs), function(i) {
+      .data_frame(
+        Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+        SE = as.vector(cs[[i]][, 2]),
+        Component = i
+      )
+    })
+
+    se <- do.call(rbind, x)
+    se$Component <- .rename_values(se$Component, "cond", "conditional")
+    se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
+
+    .filter_component(se, component)
   }
+}
 
-  s <- summary(model)
-  cs <- list(s$coef_table, s$coef_table_zi)
-  names(cs) <- c("conditional", "zero_inflated")
-  cs <- .compact_list(cs)
-  x <- lapply(names(cs), function(i) {
-    .data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
-      SE = as.vector(cs[[i]][, 2]),
-      Component = i
-    )
-  })
 
-  se <- do.call(rbind, x)
-  .filter_component(se, component)
+
+#' @rdname standard_error
+#' @importFrom insight find_random
+#' @export
+standard_error.MixMod <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  component <- match.arg(component)
+  effects <- match.arg(effects)
+
+  if (effects == "random") {
+    if (!requireNamespace("lme4", quietly = TRUE)) {
+      stop("Package 'lme4' required to calculate standard errors for random effects. Please install it.")
+    }
+    rand.se <- lme4::ranef(model, post_vars = TRUE)
+    vars.m <- attr(rand.se, "post_vars")
+    all_names <- attributes(rand.se)$dimnames
+
+    if (dim(vars.m[[1]])[1] == 1)
+      rand.se <- sqrt(unlist(vars.m))
+    else {
+      rand.se <- do.call(
+        rbind,
+        lapply(vars.m, function(.x) t(as.data.frame(sqrt(diag(.x)))))
+      )
+      rownames(rand.se) <- all_names[[1]]
+      colnames(rand.se) <- all_names[[2]]
+      rand.se <- list(rand.se)
+      names(rand.se) <- insight::find_random(model, flatten = TRUE)
+    }
+    rand.se
+  } else {
+    if (is.null(.check_component(model, component))) {
+      return(NULL)
+    }
+
+    s <- summary(model)
+    cs <- list(s$coef_table, s$coef_table_zi)
+    names(cs) <- c("conditional", "zero_inflated")
+    cs <- .compact_list(cs)
+    x <- lapply(names(cs), function(i) {
+      .data_frame(
+        Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+        SE = as.vector(cs[[i]][, 2]),
+        Component = i
+      )
+    })
+
+    se <- do.call(rbind, x)
+    .filter_component(se, component)
+  }
 }
 
 
