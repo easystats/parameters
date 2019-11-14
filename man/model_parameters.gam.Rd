@@ -4,8 +4,15 @@
 \alias{model_parameters.gam}
 \title{Parameters of Generalized Additive (Mixed) Models}
 \usage{
-\method{model_parameters}{gam}(model, ci = 0.95, bootstrap = FALSE,
-  iterations = 1000, standardize = NULL, exponentiate = FALSE, ...)
+\method{model_parameters}{gam}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = FALSE,
+  ...
+)
 }
 \arguments{
 \item{model}{A gam/gamm model.}

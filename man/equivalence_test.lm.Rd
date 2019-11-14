@@ -4,8 +4,7 @@
 \alias{equivalence_test.lm}
 \title{Equivalence test}
 \usage{
-\method{equivalence_test}{lm}(x, range = "default", ci = 0.95,
-  verbose = TRUE, ...)
+\method{equivalence_test}{lm}(x, range = "default", ci = 0.95, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{A statistical model.}

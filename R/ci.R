@@ -445,15 +445,15 @@ ci.effectsize_std_params <- function(x, ci = .95, ...) {
 
 
 #' @export
-ci.rma <- function(model, ci = .95, ...) {
-  params <- insight::get_parameters(model)
+ci.rma <- function(x, ci = .95, ...) {
+  params <- insight::get_parameters(x)
   out <- lapply(ci, function(i) {
-    x <- stats::update(model, level = i)
+    model <- stats::update(x, level = i)
     .data_frame(
       Parameter = params[[1]],
       CI = i * 100,
-      CI_low = as.vector(x$ci.lb),
-      CI_high = as.vector(x$ci.ub)
+      CI_low = as.vector(model$ci.lb),
+      CI_high = as.vector(model$ci.ub)
     )
   })
   .remove_backticks_from_parameter_names(do.call(rbind, out))

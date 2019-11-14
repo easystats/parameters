@@ -4,9 +4,16 @@
 \alias{model_parameters.befa}
 \title{Format PCA/FA from the psych package}
 \usage{
-\method{model_parameters}{befa}(model, sort = FALSE,
-  centrality = "median", dispersion = FALSE, ci = 0.89,
-  ci_method = "hdi", test = NULL, ...)
+\method{model_parameters}{befa}(
+  model,
+  sort = FALSE,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.89,
+  ci_method = "hdi",
+  test = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{Bayesian EFA created by the \code{BayesFM::befa}.}
