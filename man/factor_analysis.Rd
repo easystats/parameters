@@ -4,8 +4,14 @@
 \alias{factor_analysis}
 \title{Factor Analysis (FA)}
 \usage{
-factor_analysis(x, n = "auto", rotation = "none", threshold = NULL,
-  standardize = TRUE, ...)
+factor_analysis(
+  x,
+  n = "auto",
+  rotation = "none",
+  threshold = NULL,
+  standardize = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A dataframe or a statistical model.}

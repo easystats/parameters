@@ -30,6 +30,7 @@ Parts of the **parameter** package are restructured and functions focussing on a
 ## Changes to functions
 
 - Added indices of model fit to `n_factors()` ([Finch, 2019](https://doi.org/10.1177/0013164419865769))
+- `standard_error()` for mixed models gets an `effects` argument, to return standard errors for random effects.
 - The `method`-argument for `ci()` gets a new option, `"robust"`, to compute confidence intervals based on robust standard errors. Furthermore, `ci_wald()` gets a `robust`-argument to do the same.
 - `format_p()` gets a `digits`-argument to set the amount of digits for p-values.
 - `model_parameters()` now accepts (non-documented) arguments `digits`, `ci_digits` and `p_digits` to change the amount and style of formatting values. See [examples in `model_parameters.lm()`](https://easystats.github.io/parameters/reference/model_parameters.lm.html).

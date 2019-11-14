@@ -7,8 +7,12 @@
 \usage{
 model_simulate(model, iterations = 1000, ...)
 
-\method{model_simulate}{glmmTMB}(model, iterations = 1000,
-  component = c("all", "conditional", "zi", "zero_inflated"), ...)
+\method{model_simulate}{glmmTMB}(
+  model,
+  iterations = 1000,
+  component = c("all", "conditional", "zi", "zero_inflated"),
+  ...
+)
 }
 \arguments{
 \item{model}{Statistical model (no Bayesian models).}

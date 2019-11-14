@@ -4,8 +4,15 @@
 \alias{parameters_bootstrap}
 \title{Parameters bootstrapping}
 \usage{
-parameters_bootstrap(model, iterations = 1000, centrality = "median",
-  ci = 0.95, ci_method = "quantile", test = "p-value", ...)
+parameters_bootstrap(
+  model,
+  iterations = 1000,
+  centrality = "median",
+  ci = 0.95,
+  ci_method = "quantile",
+  test = "p-value",
+  ...
+)
 }
 \arguments{
 \item{model}{Statistical model.}
