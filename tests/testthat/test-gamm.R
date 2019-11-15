@@ -15,7 +15,7 @@ if (require("testthat") &&
   test_that("ci", {
     expect_equal(
       ci(m1)$CI_low,
-      c(2.361888, NA, NA, NA),
+      c(2.361598, NA, NA, NA),
       tolerance = 1e-4
     )
   })

@@ -23,7 +23,7 @@ if (require("testthat") &&
   test_that("p_value", {
     expect_equal(
       p_value(m1)$p,
-      c(0, 0.01157, 2e-04),
+      c(0, 0.014717, 0.000501),
       tolerance = 1e-4
     )
   })
