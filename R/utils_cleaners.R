@@ -8,9 +8,9 @@
   pattern <- if (full) {
     c(
       "as.factor", "as.numeric", "factor", "offset", "log1p", "log10", "log2", "log", "lag",
-      "diff", "pspline", "poly", "catg", "asis", "matrx", "pol", "strata", "strat",
-      "scale", "scored", "interaction", "sqrt", "lsp", "rcs", "pb", "lo", "bs",
-      "ns", "t2", "te", "ti", "tt", "mi", "mo", "gp", "s", "I"
+      "diff", "catg", "asis", "matrx", "pol", "strata", "strat",
+      "scale", "scored", "interaction", "sqrt", "lsp", "rcs", "pb", "lo",
+      "t2", "te", "ti", "tt", "mi", "mo", "gp", "I"
     )
   } else {
     c("as.factor", "as.numeric", "factor", "catg", "asis", "interaction", "I")

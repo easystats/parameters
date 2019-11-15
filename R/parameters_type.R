@@ -179,6 +179,13 @@ parameters_type <- function(model, ...) {
     degree <- substr(vars[[2]], nchar(vars[[2]]), nchar(vars[[2]]))
     return(c(type, "Association", name, var, degree, NA))
 
+    # Splines
+  } else if (grepl("(bs|ns|psline)\\(", name)) {
+    type <- "spline"
+    var <- gsub("(bs|ns|psline)\\((.*)\\)(\\d)", "\\1", name)
+    degree <- gsub("(bs|ns|psline)\\((.*)\\)(\\d)", "\\3", name)
+    return(c(type, "Association", name, var, degree, NA))
+
     # Smooth
   } else if (grepl("^s\\(", name)) {
     return(c("smooth", "Association", name, NA, NA, NA))
