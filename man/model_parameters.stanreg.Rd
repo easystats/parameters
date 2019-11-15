@@ -5,40 +5,17 @@
 \alias{model_parameters.brmsfit}
 \title{Bayesian Models Parameters}
 \usage{
-\method{model_parameters}{stanreg}(
-  model,
-  centrality = "median",
-  dispersion = FALSE,
-  ci = 0.89,
-  ci_method = "hdi",
-  test = c("pd", "rope"),
-  rope_range = "default",
-  rope_ci = 1,
-  bf_prior = NULL,
-  diagnostic = c("ESS", "Rhat"),
-  priors = TRUE,
-  iterations = 1000,
-  effects = "fixed",
-  ...
-)
+\method{model_parameters}{stanreg}(model, centrality = "median",
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  "rope"), rope_range = "default", rope_ci = 1, bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000,
+  effects = "fixed", ...)
 
-\method{model_parameters}{brmsfit}(
-  model,
-  centrality = "median",
-  dispersion = FALSE,
-  ci = 0.89,
-  ci_method = "hdi",
-  test = c("pd", "rope"),
-  rope_range = "default",
-  rope_ci = 1,
-  bf_prior = NULL,
-  diagnostic = c("ESS", "Rhat"),
-  priors = TRUE,
-  iterations = 1000,
-  effects = "fixed",
-  component = "all",
-  ...
-)
+\method{model_parameters}{brmsfit}(model, centrality = "median",
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  "rope"), rope_range = "default", rope_ci = 1, bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000,
+  effects = "fixed", component = "all", ...)
 }
 \arguments{
 \item{model}{Bayesian model.}

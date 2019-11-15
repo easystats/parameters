@@ -6,14 +6,8 @@
 \alias{p_value_wald.merMod}
 \title{Wald-test approximation for CIs and p-values}
 \usage{
-ci_wald(
-  model,
-  ci = 0.95,
-  dof = NULL,
-  component = c("all", "conditional", "zi", "zero_inflated"),
-  robust = FALSE,
-  ...
-)
+ci_wald(model, ci = 0.95, dof = NULL, component = c("all",
+  "conditional", "zi", "zero_inflated"), robust = FALSE, ...)
 
 p_value_wald(model, ...)
 

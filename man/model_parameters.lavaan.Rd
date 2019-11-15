@@ -4,13 +4,9 @@
 \alias{model_parameters.lavaan}
 \title{Format CFA/SEM from the lavaan package}
 \usage{
-\method{model_parameters}{lavaan}(
-  model,
-  ci = 0.95,
-  standardize = FALSE,
-  type = c("regression", "correlation", "loading"),
-  ...
-)
+\method{model_parameters}{lavaan}(model, ci = 0.95,
+  standardize = FALSE, type = c("regression", "correlation",
+  "loading"), ...)
 }
 \arguments{
 \item{model}{CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions.}

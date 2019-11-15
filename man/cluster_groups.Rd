@@ -4,17 +4,12 @@
 \alias{cluster_groups}
 \title{Compute cluster analysis and return group indices}
 \usage{
-cluster_groups(
-  x,
-  n_clusters = NULL,
-  method = c("hclust", "kmeans"),
-  distance = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
-  agglomeration = c("ward", "ward.D", "ward.D2", "single", "complete", "average",
-    "mcquitty", "median", "centroid"),
-  iterations = 20,
-  algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
-  verbose = TRUE
-)
+cluster_groups(x, n_clusters = NULL, method = c("hclust", "kmeans"),
+  distance = c("euclidean", "maximum", "manhattan", "canberra", "binary",
+  "minkowski"), agglomeration = c("ward", "ward.D", "ward.D2", "single",
+  "complete", "average", "mcquitty", "median", "centroid"),
+  iterations = 20, algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{A data frame.}

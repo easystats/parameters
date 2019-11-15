@@ -5,7 +5,8 @@
 \alias{print.parameters_model}
 \title{Print model parameters}
 \usage{
-\method{print}{parameters_model}(x, pretty_names = TRUE, split_components = TRUE, ...)
+\method{print}{parameters_model}(x, pretty_names = TRUE,
+  split_components = TRUE, ...)
 }
 \arguments{
 \item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}

@@ -4,16 +4,10 @@
 \alias{model_parameters.zeroinfl}
 \title{Model Parameters for Zero-Inflated Models}
 \usage{
-\method{model_parameters}{zeroinfl}(
-  model,
-  ci = 0.95,
-  bootstrap = FALSE,
-  iterations = 1000,
-  component = c("all", "conditional", "zi", "zero_inflated"),
-  standardize = NULL,
-  exponentiate = FALSE,
-  ...
-)
+\method{model_parameters}{zeroinfl}(model, ci = 0.95,
+  bootstrap = FALSE, iterations = 1000, component = c("all",
+  "conditional", "zi", "zero_inflated"), standardize = NULL,
+  exponentiate = FALSE, ...)
 }
 \arguments{
 \item{model}{A model with zero-inflation component.}

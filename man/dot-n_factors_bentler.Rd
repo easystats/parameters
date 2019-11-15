@@ -4,7 +4,8 @@
 \alias{.n_factors_bentler}
 \title{Bentler and Yuan's Procedure}
 \usage{
-.n_factors_bentler(eigen_values = NULL, model = "factors", nobs = NULL)
+.n_factors_bentler(eigen_values = NULL, model = "factors",
+  nobs = NULL)
 }
 \description{
 Bentler and Yuan's Procedure

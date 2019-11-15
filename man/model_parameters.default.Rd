@@ -4,15 +4,8 @@
 \alias{model_parameters.default}
 \title{Parameters of (General) Linear Models}
 \usage{
-\method{model_parameters}{default}(
-  model,
-  ci = 0.95,
-  bootstrap = FALSE,
-  iterations = 1000,
-  standardize = NULL,
-  exponentiate = FALSE,
-  ...
-)
+\method{model_parameters}{default}(model, ci = 0.95, bootstrap = FALSE,
+  iterations = 1000, standardize = NULL, exponentiate = FALSE, ...)
 }
 \arguments{
 \item{model}{Model object.}

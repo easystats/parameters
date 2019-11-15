@@ -10,7 +10,8 @@ reshape_loadings(x, ...)
 
 \method{reshape_loadings}{parameters_efa}(x, threshold = NULL, ...)
 
-\method{reshape_loadings}{data.frame}(x, threshold = NULL, loadings_columns = NULL, ...)
+\method{reshape_loadings}{data.frame}(x, threshold = NULL,
+  loadings_columns = NULL, ...)
 }
 \arguments{
 \item{x}{A dataframe or a statistical model.}

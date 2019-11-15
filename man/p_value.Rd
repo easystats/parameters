@@ -12,17 +12,15 @@ p_value(model, ...)
 
 \method{p_value}{lmerMod}(model, method = "wald", ...)
 
-\method{p_value}{glmmTMB}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
+\method{p_value}{glmmTMB}(model, component = c("all", "conditional",
+  "zi", "zero_inflated"), ...)
 
-\method{p_value}{MixMod}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
+\method{p_value}{MixMod}(model, component = c("all", "conditional", "zi",
+  "zero_inflated"), ...)
 
-p_value_robust(
-  model,
-  vcov_estimation = "HC",
-  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5"),
-  vcov_args = NULL,
-  ...
-)
+p_value_robust(model, vcov_estimation = "HC", vcov_type = c("HC3",
+  "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5"),
+  vcov_args = NULL, ...)
 }
 \arguments{
 \item{model}{A statistical model.}

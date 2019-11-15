@@ -4,16 +4,8 @@
 \alias{format_ci}
 \title{Confidence/Credible Interval (CI) Formatting}
 \usage{
-format_ci(
-  CI_low,
-  CI_high,
-  ci = 0.95,
-  digits = 2,
-  brackets = TRUE,
-  width = NULL,
-  width_low = width,
-  width_high = width
-)
+format_ci(CI_low, CI_high, ci = 0.95, digits = 2, brackets = TRUE,
+  width = NULL, width_low = width, width_high = width)
 }
 \arguments{
 \item{CI_low}{Lower CI bound.}

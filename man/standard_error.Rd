@@ -10,35 +10,25 @@
 \alias{standard_error.MixMod}
 \title{Extract standard errors}
 \usage{
-standard_error_robust(
-  model,
-  vcov_estimation = "HC",
-  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5"),
-  vcov_args = NULL,
-  ...
-)
+standard_error_robust(model, vcov_estimation = "HC",
+  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m",
+  "HC5"), vcov_args = NULL, ...)
 
 standard_error(model, ...)
 
-\method{standard_error}{factor}(model, force = FALSE, verbose = TRUE, ...)
+\method{standard_error}{factor}(model, force = FALSE, verbose = TRUE,
+  ...)
 
 \method{standard_error}{default}(model, robust = FALSE, ...)
 
-\method{standard_error}{merMod}(model, effects = c("fixed", "random"), robust = FALSE, ...)
+\method{standard_error}{merMod}(model, effects = c("fixed", "random"),
+  robust = FALSE, ...)
 
-\method{standard_error}{glmmTMB}(
-  model,
-  effects = c("fixed", "random"),
-  component = c("all", "conditional", "zi", "zero_inflated"),
-  ...
-)
+\method{standard_error}{glmmTMB}(model, effects = c("fixed", "random"),
+  component = c("all", "conditional", "zi", "zero_inflated"), ...)
 
-\method{standard_error}{MixMod}(
-  model,
-  effects = c("fixed", "random"),
-  component = c("all", "conditional", "zi", "zero_inflated"),
-  ...
-)
+\method{standard_error}{MixMod}(model, effects = c("fixed", "random"),
+  component = c("all", "conditional", "zi", "zero_inflated"), ...)
 }
 \arguments{
 \item{model}{A model.}

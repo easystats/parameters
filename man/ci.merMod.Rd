@@ -11,48 +11,29 @@
 \alias{ci_robust}
 \title{Confidence Interval (CI)}
 \usage{
-\method{ci}{merMod}(x, ci = 0.95, method = c("wald", "kenward", "boot"), ...)
+\method{ci}{merMod}(x, ci = 0.95, method = c("wald", "kenward",
+  "boot"), ...)
 
 \method{ci}{default}(x, ci = 0.95, method = NULL, ...)
 
-\method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald", "robust"), ...)
+\method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald", "robust"),
+  ...)
 
-\method{ci}{glmmTMB}(
-  x,
-  ci = 0.95,
-  component = c("all", "conditional", "zi", "zero_inflated"),
-  ...
-)
+\method{ci}{glmmTMB}(x, ci = 0.95, component = c("all", "conditional",
+  "zi", "zero_inflated"), ...)
 
-\method{ci}{zeroinfl}(
-  x,
-  ci = 0.95,
-  component = c("all", "conditional", "zi", "zero_inflated"),
-  ...
-)
+\method{ci}{zeroinfl}(x, ci = 0.95, component = c("all", "conditional",
+  "zi", "zero_inflated"), ...)
 
-\method{ci}{hurdle}(
-  x,
-  ci = 0.95,
-  component = c("all", "conditional", "zi", "zero_inflated"),
-  ...
-)
+\method{ci}{hurdle}(x, ci = 0.95, component = c("all", "conditional",
+  "zi", "zero_inflated"), ...)
 
-\method{ci}{MixMod}(
-  x,
-  ci = 0.95,
-  component = c("all", "conditional", "zi", "zero_inflated"),
-  ...
-)
+\method{ci}{MixMod}(x, ci = 0.95, component = c("all", "conditional",
+  "zi", "zero_inflated"), ...)
 
-ci_robust(
-  model,
-  ci = 0.95,
-  vcov_estimation = "HC",
-  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5"),
-  vcov_args = NULL,
-  ...
-)
+ci_robust(model, ci = 0.95, vcov_estimation = "HC",
+  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m",
+  "HC5"), vcov_args = NULL, ...)
 }
 \arguments{
 \item{x}{A statistical model.}

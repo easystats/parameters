@@ -7,15 +7,9 @@
 \usage{
 parameters_simulate(model, ...)
 
-\method{parameters_simulate}{default}(
-  model,
-  iterations = 1000,
-  centrality = "median",
-  ci = 0.95,
-  ci_method = "quantile",
-  test = "p-value",
-  ...
-)
+\method{parameters_simulate}{default}(model, iterations = 1000,
+  centrality = "median", ci = 0.95, ci_method = "quantile",
+  test = "p-value", ...)
 }
 \arguments{
 \item{model}{Statistical model (no Bayesian models).}

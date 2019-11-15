@@ -4,13 +4,8 @@
 \alias{describe_distribution}
 \title{Describe a Distribution}
 \usage{
-describe_distribution(
-  x,
-  centrality = "mean",
-  dispersion = TRUE,
-  range = TRUE,
-  ...
-)
+describe_distribution(x, centrality = "mean", dispersion = TRUE,
+  range = TRUE, ...)
 }
 \arguments{
 \item{x}{A numeric vector.}

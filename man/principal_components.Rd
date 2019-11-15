@@ -4,15 +4,8 @@
 \alias{principal_components}
 \title{Principal Component Analysis (PCA)}
 \usage{
-principal_components(
-  x,
-  n = "auto",
-  rotation = "none",
-  sort = FALSE,
-  threshold = NULL,
-  standardize = TRUE,
-  ...
-)
+principal_components(x, n = "auto", rotation = "none", sort = FALSE,
+  threshold = NULL, standardize = TRUE, ...)
 }
 \arguments{
 \item{x}{A dataframe or a statistical model.}
