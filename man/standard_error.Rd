@@ -8,7 +8,6 @@
 \alias{standard_error.merMod}
 \alias{standard_error.glmmTMB}
 \alias{standard_error.MixMod}
-\alias{se}
 \title{Extract standard errors}
 \usage{
 standard_error_robust(
@@ -40,8 +39,6 @@ standard_error(model, ...)
   component = c("all", "conditional", "zi", "zero_inflated"),
   ...
 )
-
-se(model, ...)
 }
 \arguments{
 \item{model}{A model.}
