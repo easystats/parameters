@@ -156,18 +156,41 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for stanreg</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pd"</span>,
-  <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>), <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>, <span class='no'>...</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+  <span class='no'>model</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
+  <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pd"</span>,
-  <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>), <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+  <span class='no'>model</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
+  <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>,
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -272,10 +295,10 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; ---------------------------------------------------------------------------------------------------------------------
 #&gt; (Intercept)                         |   3.98 | [ 3.45,  4.58] |   100% |        0% | 1.036 | 162 | Normal (0 +- 8.28)
 #&gt; Petal.Length                        |   0.69 | [ 0.27,  1.05] | 99.60% |     0.70% | 1.038 | 160 | Normal (0 +- 1.17)
-#&gt; Species (versicolor)                |  -1.48 | [-2.31, -0.60] | 99.50% |     0.40% | 1.023 | 223 | Normal (0 +- 2.07)
-#&gt; Species (virginica)                 |  -2.77 | [-3.70, -1.91] |   100% |        0% | 1.010 | 336 | Normal (0 +- 2.07)
-#&gt; Petal.Length * Species (versicolor) |   0.11 | [-0.31,  0.52] | 68.90% |    23.60% | 1.040 | 149 | Normal (0 +- 1.02)
-#&gt; Petal.Length * Species (virginica)  |   0.28 | [-0.08,  0.71] | 87.00% |    15.30% | 1.034 | 166 | Normal (0 +- 0.78)</div><div class='input'># }
+#&gt; Species [versicolor]                |  -1.48 | [-2.31, -0.60] | 99.50% |     0.40% | 1.023 | 223 | Normal (0 +- 2.07)
+#&gt; Species [virginica]                 |  -2.77 | [-3.70, -1.91] |   100% |        0% | 1.010 | 336 | Normal (0 +- 2.07)
+#&gt; Petal.Length * Species [versicolor] |   0.11 | [-0.31,  0.52] | 68.90% |    23.60% | 1.040 | 149 | Normal (0 +- 1.02)
+#&gt; Petal.Length * Species [virginica]  |   0.28 | [-0.08,  0.71] | 87.00% |    15.30% | 1.034 | 166 | Normal (0 +- 0.78)</div><div class='input'># }
 
 </div></pre>
   </div>

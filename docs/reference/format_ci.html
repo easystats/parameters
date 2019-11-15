@@ -155,8 +155,16 @@
     <p>Confidence/Credible Interval (CI) Formatting</p>
     </div>
 
-    <pre class="usage"><span class='fu'>format_ci</span>(<span class='no'>CI_low</span>, <span class='no'>CI_high</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>brackets</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>width_low</span> <span class='kw'>=</span> <span class='no'>width</span>, <span class='kw'>width_high</span> <span class='kw'>=</span> <span class='no'>width</span>)</pre>
+    <pre class="usage"><span class='fu'>format_ci</span>(
+  <span class='no'>CI_low</span>,
+  <span class='no'>CI_high</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>brackets</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>width_low</span> <span class='kw'>=</span> <span class='no'>width</span>,
+  <span class='kw'>width_high</span> <span class='kw'>=</span> <span class='no'>width</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,7 +194,7 @@
       <td><p>Minimum width of the returned string. If not <code>NULL</code> and <code>width</code> is larger than the string's length, leading whitespaces are added to the string.</p></td>
     </tr>
     <tr>
-      <th>width_low, witdh_high</th>
+      <th>width_low, width_high</th>
       <td><p>Like <code>width</code>, but only applies to the lower or higher confidence interval value. This can be used when the values for the lower and upper CI are of very different length.</p></td>
     </tr>
     </table>

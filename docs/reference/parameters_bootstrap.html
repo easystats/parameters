@@ -155,8 +155,15 @@
     <p>Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>parameters_bootstrap</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

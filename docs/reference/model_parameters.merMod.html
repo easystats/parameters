@@ -156,14 +156,29 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for merMod</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>p_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+  <span class='no'>model</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>p_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for glmmTMB</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>,
-  <span class='st'>"zero_inflated"</span>), <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+  <span class='no'>model</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -242,20 +257,20 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 #&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
 #&gt; ------------------------------------------------------------------------
 #&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 633 | 0.194 
-#&gt; spp (PR)    |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | 633 | &lt; .001
-#&gt; spp (DM)    |        0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 633 | 0.051 
-#&gt; spp (EC-A)  |       -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 633 | 0.006 
-#&gt; spp (EC-L)  |        0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | 633 | &lt; .001
-#&gt; spp (DES-L) |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | 633 | &lt; .001
-#&gt; spp (DF)    |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 633 | 0.435 
-#&gt; mined (no)  |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | 633 | &lt; .001
+#&gt; spp [PR]    |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | 633 | &lt; .001
+#&gt; spp [DM]    |        0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 633 | 0.051 
+#&gt; spp [EC-A]  |       -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 633 | 0.006 
+#&gt; spp [EC-L]  |        0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | 633 | &lt; .001
+#&gt; spp [DES-L] |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | 633 | &lt; .001
+#&gt; spp [DF]    |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 633 | 0.435 
+#&gt; mined [no]  |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | 633 | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
 #&gt; 
 #&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
 #&gt; ------------------------------------------------------------------------
 #&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 633 | 0.004 
-#&gt; mined (no)  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | 633 | &lt; .001
+#&gt; mined [no]  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | 633 | &lt; .001
 #&gt; </div><div class='input'><span class='co'># \donttest{</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p

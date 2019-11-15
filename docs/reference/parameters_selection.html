@@ -158,16 +158,13 @@
     <pre class="usage"><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for lm</span>
-<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"both"</span>,
-  <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
+<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"both"</span>, <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for merMod</span>
-<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"backward"</span>,
-  <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
+<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"backward"</span>, <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -304,9 +301,9 @@
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 1.132 seconds (Warm-up)
-#&gt; Chain 1:                1.395 seconds (Sampling)
-#&gt; Chain 1:                2.527 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.881 seconds (Warm-up)
+#&gt; Chain 1:                1.094 seconds (Sampling)
+#&gt; Chain 1:                1.975 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -329,9 +326,9 @@
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 1.073 seconds (Warm-up)
-#&gt; Chain 2:                0.928 seconds (Sampling)
-#&gt; Chain 2:                2.001 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.838 seconds (Warm-up)
+#&gt; Chain 2:                0.726 seconds (Sampling)
+#&gt; Chain 2:                1.564 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -354,9 +351,9 @@
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 1.218 seconds (Warm-up)
-#&gt; Chain 3:                1.162 seconds (Sampling)
-#&gt; Chain 3:                2.38 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.95 seconds (Warm-up)
+#&gt; Chain 3:                0.9 seconds (Sampling)
+#&gt; Chain 3:                1.85 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -379,9 +376,9 @@
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 1.06 seconds (Warm-up)
-#&gt; Chain 4:                0.985 seconds (Sampling)
-#&gt; Chain 4:                2.045 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.838 seconds (Warm-up)
+#&gt; Chain 4:                0.748 seconds (Sampling)
+#&gt; Chain 4:                1.586 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
 #&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp + cyl:hp

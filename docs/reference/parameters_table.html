@@ -188,11 +188,11 @@
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Sepal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>))
 <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
 #&gt; 1                        (Intercept)        2.64 0.57 [ 1.51, 3.77] 4.62 144
-#&gt; 2               Species (versicolor)        0.90 0.80 [-0.68, 2.48] 1.13 144
-#&gt; 3                Species (virginica)        1.27 0.82 [-0.35, 2.88] 1.55 144
+#&gt; 2               Species [versicolor]        0.90 0.80 [-0.68, 2.48] 1.13 144
+#&gt; 3                Species [virginica]        1.27 0.82 [-0.35, 2.88] 1.55 144
 #&gt; 4                        Sepal.Width        0.69 0.17 [ 0.36, 1.02] 4.17 144
-#&gt; 5 Species (versicolor) * Sepal.Width        0.17 0.26 [-0.34, 0.69] 0.67 144
-#&gt; 6  Species (virginica) * Sepal.Width        0.21 0.26 [-0.29, 0.72] 0.83 144
+#&gt; 5 Species [versicolor] * Sepal.Width        0.17 0.26 [-0.34, 0.69] 0.67 144
+#&gt; 6  Species [virginica] * Sepal.Width        0.21 0.26 [-0.29, 0.72] 0.83 144
 #&gt;        p
 #&gt; 1 &lt; .001
 #&gt; 2 0.261 
@@ -222,9 +222,9 @@
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.048 seconds (Warm-up)
-#&gt; Chain 1:                0.061 seconds (Sampling)
-#&gt; Chain 1:                0.109 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.031 seconds (Warm-up)
+#&gt; Chain 1:                0.041 seconds (Sampling)
+#&gt; Chain 1:                0.072 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -247,9 +247,9 @@
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.042 seconds (Warm-up)
-#&gt; Chain 2:                0.053 seconds (Sampling)
-#&gt; Chain 2:                0.095 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.031 seconds (Warm-up)
+#&gt; Chain 2:                0.04 seconds (Sampling)
+#&gt; Chain 2:                0.071 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -272,9 +272,9 @@
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.039 seconds (Warm-up)
-#&gt; Chain 3:                0.054 seconds (Sampling)
-#&gt; Chain 3:                0.093 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.031 seconds (Warm-up)
+#&gt; Chain 3:                0.039 seconds (Sampling)
+#&gt; Chain 3:                0.07 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -297,13 +297,13 @@
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.042 seconds (Warm-up)
-#&gt; Chain 4:                0.053 seconds (Sampling)
-#&gt; Chain 4:                0.095 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.034 seconds (Warm-up)
+#&gt; Chain 4:                0.039 seconds (Sampling)
+#&gt; Chain 4:                0.073 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;              Parameter Median       69% CI       89% CI       95% CI   pd
 #&gt; 1          (Intercept)   5.01 [4.93, 5.08] [4.89, 5.12] [4.86, 5.16] 100%
-#&gt; 2 Species (versicolor)   0.93 [0.84, 1.05] [0.75, 1.09] [0.73, 1.14] 100%
-#&gt; 3  Species (virginica)   1.58 [1.47, 1.68] [1.41, 1.74] [1.38, 1.79] 100%
+#&gt; 2 Species [versicolor]   0.93 [0.84, 1.05] [0.75, 1.09] [0.73, 1.14] 100%
+#&gt; 3  Species [virginica]   1.58 [1.47, 1.68] [1.41, 1.74] [1.38, 1.79] 100%
 #&gt;   % in ROPE  Rhat  ESS              Prior
 #&gt; 1        0% 0.999 3475 Normal (0 +- 8.28)
 #&gt; 2        0% 1.000 3475 Normal (0 +- 2.07)
