@@ -46,7 +46,7 @@
 #' }
 #' @importFrom stats prcomp
 #' @export
-factor_analysis <- function(x, n = "auto", rotation = "none", threshold = NULL, standardize = TRUE, ...) {
+factor_analysis <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
   UseMethod("factor_analysis")
 }
 
@@ -54,7 +54,7 @@ factor_analysis <- function(x, n = "auto", rotation = "none", threshold = NULL, 
 
 #' @importFrom stats prcomp na.omit
 #' @export
-factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", threshold = NULL, standardize = TRUE, ...) {
+factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
 
   # Standardize
   if (standardize) {

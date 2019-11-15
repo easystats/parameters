@@ -131,7 +131,7 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
   attr(loadings, "loadings_columns") <- loading_cols
 
   # Sorting
-  if (sort) {
+  if (isTRUE(sort)) {
     loadings <- .sort_loadings(loadings)
   }
 

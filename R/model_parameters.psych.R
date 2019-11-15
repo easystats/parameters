@@ -101,7 +101,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
   attr(loadings, "loadings_columns") <- loading_cols
 
   # Sorting
-  if (sort) {
+  if (isTRUE(sort)) {
     loadings <- .sort_loadings(loadings)
   }
 

@@ -98,7 +98,7 @@ model_parameters.befa <- function(model, sort = FALSE, centrality = "median", di
   attr(loadings, "ci") <- ci
 
   # Sorting
-  if (sort) {
+  if (isTRUE(sort)) {
     loadings <- .sort_loadings(loadings)
   }
 

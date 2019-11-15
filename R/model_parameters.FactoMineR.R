@@ -41,7 +41,7 @@ model_parameters.PCA <- function(model, sort = FALSE, threshold = NULL, labels =
   attr(loadings, "loadings_columns") <- loading_cols
 
   # Sorting
-  if (sort) {
+  if (isTRUE(sort)) {
     loadings <- .sort_loadings(loadings)
   }
 

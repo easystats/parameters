@@ -121,7 +121,7 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
   }
 
   # Sorting
-  if (sort) {
+  if (isTRUE(sort)) {
     x <- .sort_loadings(x)
   }
 
