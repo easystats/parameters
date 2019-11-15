@@ -51,16 +51,14 @@ model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
     }
 
     params <- insight::get_parameters(fit)
-    ## TODO change to "$Estimate" and "$Parameter" once fixed in insight
-    params <- stats::setNames(params[[2]], params[[1]]) # Transform to named vector
+    params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
     return(params)
   }
 
   results <- boot::boot(data = data, statistic = boot_function, R = iterations, model = model)
 
   out <- as.data.frame(results$t)
-  ## TODO change to "$Parameter" once fixed in insight
-  names(out) <- insight::get_parameters(model)[[1]]
+  names(out) <- insight::get_parameters(model)$Parameter
 
   out
 }
@@ -80,8 +78,7 @@ model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
 
   boot_function <- function(model) {
     params <- insight::get_parameters(model)
-    ## TODO change to "$Estimate" and "$Parameter" once fixed in insight
-    params <- stats::setNames(params[[2]], params[[1]]) # Transform to named vector
+    params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
     return(params)
   }
 

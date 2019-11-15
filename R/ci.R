@@ -310,8 +310,10 @@ ci.multinom <- function(x, ci = .95, method = NULL, ...) {
   params <- insight::get_parameters(x)
 
   out <- ci_wald(model = x, ci = ci, dof = Inf, robust = robust, ...)
-  ## TODO fix once insight is updated
-  out$Response <- params[[3]]
+
+  if ("Response" %in% colnames(params)) {
+    out$Response <- params$Response
+  }
 
   out
 }

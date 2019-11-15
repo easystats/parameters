@@ -11,12 +11,9 @@
   # clean parameter names
 
   if (inherits(model, "polr")) {
-    ## TODO replace with "$Parameter" once insight update is on CRAN
-    parameters[[1]] <- gsub("Intercept: ", "", parameters[[1]], fixed = TRUE)
+    parameters$Parameter <- gsub("Intercept: ", "", parameters$Parameter, fixed = TRUE)
   }
 
-  ## TODO remove, once fixed in insight
-  colnames(parameters) <- .capitalize(colnames(parameters))
   original_order <- parameters$.id <- 1:nrow(parameters)
 
   # column name for coefficients, non-standardized

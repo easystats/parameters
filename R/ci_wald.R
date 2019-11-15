@@ -23,8 +23,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 #' @keywords internal
 .ci_wald <- function(model, ci, dof, component, robust = FALSE, ...) {
   params <- insight::get_parameters(model, effects = "fixed", component = component)
-  ## TODO change to "$Estimate" once fixed in insight
-  estimates <- params[[2]]
+  estimates <- params$Estimate
 
   stderror <- if (isTRUE(robust)) {
     standard_error_robust(model, ...)
@@ -52,12 +51,9 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 
   out <- as.data.frame(out)
   out$CI <- ci * 100
-  ## TODO change to "$Parameter" once fixed in insight
-  out$Parameter <- params[[1]]
+  out$Parameter <- params$Parameter
 
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
-  ## TODO remove once fixed in insight
-  if ("component" %in% names(params)) out$Component <- params$component
   if ("Component" %in% names(params)) out$Component <- params$Component
 
   out

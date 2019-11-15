@@ -6,8 +6,7 @@
     names(out) <- c("CI_low", "CI_high")
 
     out$CI <- ci * 100
-    ## TODO change to "$Parameter" once fixed in insight
-    out$Parameter <- insight::get_parameters(model, effects = "fixed", component = "conditional")[[1]]
+    out$Parameter <- insight::get_parameters(model, effects = "fixed", component = "conditional")$Parameter
 
     out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
     rownames(out) <- NULL

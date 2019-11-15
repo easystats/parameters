@@ -366,8 +366,7 @@ model_simulate.zerocount <- model_simulate.zeroinfl
   if (is.null(iterations)) iterations <- 1000
 
   params <- insight::get_parameters(model, effects = "fixed", component = component)
-  ## TODO change to "$Estimate" and "$Parameter" once fixed in insight
-  beta <- stats::setNames(params[[2]], params[[1]]) # Transform to named vector
+  beta <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
 
   varcov <- insight::get_varcov(model, component)
   as.data.frame(MASS::mvrnorm(n = iterations, mu = beta, Sigma = varcov))

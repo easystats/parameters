@@ -71,9 +71,10 @@ parameters_simulate.multinom <- function(model, iterations = 1000, centrality = 
   out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
 
   params <- insight::get_parameters(model)
-  ## TODO change once fixed in insight
-  out$Parameter <- params[[1]]
-  out$Response <- params[[3]]
+  out$Parameter <- params$Parameter
+  if ("Response" %in% colnames(params)) {
+    out$Response <- params$Response
+  }
 
   class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
