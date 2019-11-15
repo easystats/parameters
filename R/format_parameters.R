@@ -8,25 +8,10 @@
 #' model <- lm(Sepal.Length ~ Species * Sepal.Width, data = iris)
 #' format_parameters(model)
 #'
-#' model <- lm(Sepal.Length ~ Sepal.Width * Species, data = iris)
-#' format_parameters(model)
-#'
-#' model <- lm(Sepal.Length ~ Species * Sepal.Width * Petal.Length, data = iris)
-#' format_parameters(model)
-#'
 #' model <- lm(Sepal.Length ~ Species / Petal.Length, data = iris)
 #' format_parameters(model)
 #'
 #' model <- lm(Sepal.Length ~ Petal.Length + (Species / Sepal.Width), data = iris)
-#' format_parameters(model)
-#'
-#' model <- lm(Sepal.Length ~ Species / Petal.Length * Sepal.Width, data = iris)
-#' format_parameters(model)
-#'
-#' model <- lm(Sepal.Length ~ Species / (Petal.Length * Sepal.Width), data = iris)
-#' format_parameters(model)
-#'
-#' model <- lm(Sepal.Length ~ Petal.Length + (Species / (Sepal.Width * Petal.Width)), data = iris)
 #' format_parameters(model)
 #'
 #' model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2), data = iris)
@@ -77,11 +62,11 @@ format_parameters.default <- function(model) {
     # Interaction or nesting
     } else{
       components <- unlist(strsplit(name, ":", fixed = TRUE))
-      for(j in 1:length(components)){
-        if(components[j] %in% types$Parameter){
+      for (j in 1:length(components)) {
+        if (components[j] %in% types$Parameter) {
           type <- types[types$Parameter == components[j], ]
           components[j] <- .format_parameter(components[j], variable = type$Variable, type = type$Type, level = type$Level)
-        } else if (components[j] %in% types$Secondary_Parameter){
+        } else if (components[j] %in% types$Secondary_Parameter) {
           type <- types[!is.na(types$Secondary_Parameter) & types$Secondary_Parameter == components[j], ]
           components[j] <- .format_parameter(components[j], variable = type[1, ]$Secondary_Variable, type = type[1, ]$Secondary_Type, level = type[1, ]$Secondary_Level)
         }
@@ -147,7 +132,7 @@ format_parameters.parameters_model <- function(model) {
   # sep <- ifelse(type == "interaction", " * ", " / ")
 
   if (length(components) > 2) {
-    if(type == "interaction"){
+    if (type == "interaction") {
       components <- paste0("(", paste0(utils::head(components, -1), collapse = " * "), ")", " * ", utils::tail(components, 1))
     } else{
       components <- paste0(components, collapse = " * ")
