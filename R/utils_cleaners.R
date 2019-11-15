@@ -9,13 +9,14 @@
   # in a particular style. However, these patterns will not be shown in the output
   # from "model_parameters()". If certain patterns contain useful information,
   # remove them here and clean/prepare them in ".parameters_type_basic()".
+  # for formatting / printing, refer to ".format_parameter()".
 
   pattern <- if (full) {
     c(
-      "as.factor", "as.numeric", "factor", "offset", "log1p", "log10", "log2",
-      "log", "lag", "diff", "catg", "asis", "matrx", "pol", "strata", "strat",
-      "scale", "scored", "interaction", "sqrt", "lsp", "pb", "lo", "t2",
-      "te", "ti", "tt", "mi", "mo", "gp"
+      "as.factor", "as.numeric", "factor", "offset", "lag", "diff", "catg",
+      "asis", "matrx", "pol", "strata", "strat", "scale", "scored",
+      "interaction", "sqrt", "lsp", "pb", "lo", "t2", "te", "ti", "tt",
+      "mi", "mo", "gp"
     )
   } else {
     c("as.factor", "as.numeric", "factor", "catg", "asis", "interaction")

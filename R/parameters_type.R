@@ -142,6 +142,11 @@ parameters_type <- function(model, ...) {
     return(c(NA, NA, NA, NA, NA, NA))
   }
 
+  # parameter type is determined here. for formatting / printing,
+  # refer to ".format_parameter()". Make sure that pattern
+  # processed here are not "cleaned" (i.e. removed) in
+  # ".clean_parameter_names()"
+
   cleaned_name <- .clean_parameter_names(name, full = TRUE)
 
   # Intercept
@@ -188,6 +193,15 @@ parameters_type <- function(model, ...) {
     }
     degree <- gsub("(bs|ns|psline|rcs)\\((.*)\\)(\\d)", "\\3", name)
     return(c(type, "Association", name, var, degree, NA))
+
+    # log-transformation
+  } else if (grepl("(log|logb|log1p|log2|log10)\\(", name)) {
+    type <- "logarithm"
+    var <- gsub("(log|logb|log1p|log2|log10)\\((.*)\\)", "\\2", name)
+    if (grepl(",", var, fixed = TRUE)) {
+      var <- substr(var, start = 0, stop = regexpr(",", var, fixed = TRUE) - 1)
+    }
+    return(c(type, "Association", name, var, NA, NA))
 
     # As Is
   } else if (grepl("^I\\(", name)) {

@@ -134,6 +134,11 @@ format_parameters.parameters_model <- function(model) {
     name <- .format_poly(name = name, variable = variable, type = type, degree = level)
   }
 
+  # log-transformation
+  if (type == "logarithm") {
+    name <- .format_log(name = name, variable = variable, type = type)
+  }
+
   # As Is
   if (type == "asis") {
     name <- variable
@@ -175,4 +180,9 @@ format_parameters.parameters_model <- function(model) {
 #' @keywords internal
 .format_poly <- function(name, variable, type, degree) {
   paste0(variable, " [", format_order(as.numeric(degree), textual = FALSE), " degree]")
+}
+
+#' @keywords internal
+.format_log <- function(name, variable, type) {
+  paste0(variable, " [", gsub("(.*)\\((.*)\\)", "\\1", name), "]")
 }
