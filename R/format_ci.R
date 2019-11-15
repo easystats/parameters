@@ -5,7 +5,7 @@
 #' @param ci CI level in percentage.
 #' @param digits Number of significant digits.
 #' @param brackets Logical, if \code{TRUE} (default), values are encompassed in square brackets.
-#' @param width_low,witdh_high Like \code{width}, but only applies to the lower or higher confidence interval value. This can be used when the values for the lower and upper CI are of very different length.
+#' @param width_low,width_high Like \code{width}, but only applies to the lower or higher confidence interval value. This can be used when the values for the lower and upper CI are of very different length.
 #' @inheritParams insight::format_value
 #'
 #'

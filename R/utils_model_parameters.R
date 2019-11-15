@@ -1,3 +1,4 @@
+#' @keywords internal
 .add_model_parameters_attributes <- function(parameters, model, ci, exponentiate = FALSE, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   info <- insight::model_info(model)
@@ -37,7 +38,7 @@
 
 
 
-
+#' @keywords internal
 .exponentiate_parameters <- function(parameters) {
   columns <- grepl(pattern = "^(Coefficient|Std_Coefficient|CI_)", colnames(parameters))
   if (any(columns)) parameters[columns] <- exp(parameters[columns])
