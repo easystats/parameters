@@ -231,8 +231,7 @@ standard_error.gls <- standard_error.default
 standard_error.tobit <- function(model, ...) {
   params <- insight::get_parameters(model)
   std.error <- standard_error.default(model, ...)
-  ## TODO change to "$Parameter" once fixed in insight
-  std.error[std.error$Parameter %in% params[[1]], ]
+  std.error[std.error$Parameter %in% params$Parameter, ]
 }
 
 
@@ -622,12 +621,18 @@ standard_error.multinom <- function(model, ...) {
 
   params <- insight::get_parameters(model)
 
-  .data_frame(
-    ## TODO change to "$Parameter" once fixed in insight
-    Parameter = params[[1]],
-    SE = se,
-    Response = params[[3]]
-  )
+  if ("Response" %in% colnames(params)) {
+    .data_frame(
+      Parameter = params$Parameter,
+      SE = se,
+      Response = params$Response
+    )
+  } else {
+    .data_frame(
+      Parameter = params$Parameter,
+      SE = se
+    )
+  }
 }
 
 
@@ -657,11 +662,10 @@ standard_error.bracl <- function(model, ...) {
 
   params <- insight::get_parameters(model)
 
-  ## TODO change once insight is updated
   .data_frame(
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     SE = as.vector(se),
-    Response = params[[3]]
+    Response = params$Response
   )
 }
 
@@ -697,8 +701,7 @@ standard_error.rq <- function(model, ...) {
   params <- insight::get_parameters(model)
 
   .data_frame(
-    ## TODO change to "$Parameter" once fixed in insight
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     SE = se
   )
 }
@@ -716,8 +719,7 @@ standard_error.biglm <- function(model, ...) {
   params <- insight::get_parameters(model)
 
   .data_frame(
-    ## TODO change to "$Parameter" once fixed in insight
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     SE = as.vector(cs[, 4])
   )
 }
@@ -729,8 +731,7 @@ standard_error.crch <- function(model, ...) {
   params <- insight::get_parameters(model)
 
   .data_frame(
-    ## TODO change to "$Parameter" once fixed in insight
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     SE = as.vector(cs[, 2])
   )
 }
@@ -821,10 +822,9 @@ standard_error.gamlss <- function(model, ...) {
   utils::capture.output(cs <- summary(model))
 
   .data_frame(
-    ## TODO change to "$Parameter" and "$Component" once fixed in insight
-    Parameter = parms[[1]],
+    Parameter = parms$Parameter,
     SE = as.vector(cs[, 2]),
-    Component = parms[[3]]
+    Component = parms$Component
   )
 }
 
@@ -913,7 +913,7 @@ standard_error.wbm <- function(model, ...) {
 
   .data_frame(
     ## TODO fix once insight is updated on CRAN
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     SE = as.vector(se),
     Component = params[[3]]
   )
@@ -974,7 +974,7 @@ standard_error.gmnl <- function(model, ...) {
 standard_error.rma <- function(model, ...) {
   params <- insight::get_parameters(model)
   .data_frame(
-    Parameter = .remove_backticks_from_string(params[[1]]),
+    Parameter = .remove_backticks_from_string(params$Parameter),
     SE = model[["se"]]
   )
 }
@@ -1050,10 +1050,3 @@ standard_error.rma <- function(model, ...) {
 #
 #   se.merMod
 # }
-
-
-## TODO remove? once sjstats is updated
-
-#' @rdname standard_error
-#' @export
-se <- standard_error

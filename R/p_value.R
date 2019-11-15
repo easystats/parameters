@@ -124,8 +124,7 @@ p_value.negbin <- p_value.default
 p_value.tobit <- function(model, ...) {
   params <- insight::get_parameters(model)
   p <- p_value.default(model, ...)
-  ## TODO change to "$Parameter" once fixed in insight
-  p[p$Parameter %in% params[[1]], ]
+  p[p$Parameter %in% params$Parameter, ]
 }
 
 
@@ -457,15 +456,13 @@ p_value.survreg <- function(model, ...) {
 
 #' @export
 p_value.flexsurvreg <- function(model, ...) {
-  ## TODO change to "$Estimate" once insight on CRAN
   params <- insight::get_parameters(model)
-  est <- params[[2]]
+  est <- params$Estimate
   se <- standard_error(model)$SE
   p <- 2 * stats::pt(abs(est / se), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
-    ## TODO change to "$Parameter" once insight on CRAN
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     p = as.vector(p)
   )
 }
@@ -494,8 +491,7 @@ p_value.rq <- function(model, ...) {
   params <- insight::get_parameters(model)
 
   .data_frame(
-    ## TODO change to "$Parameter" once fixed in insight
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     p = p
   )
 }
@@ -513,8 +509,7 @@ p_value.biglm <- function(model, ...) {
   params <- insight::get_parameters(model)
 
   .data_frame(
-    ## TODO change to "$Parameter" once fixed in insight
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     p = as.vector(cs[, 5])
   )
 }
@@ -526,8 +521,7 @@ p_value.crch <- function(model, ...) {
   params <- insight::get_parameters(model)
 
   .data_frame(
-    ## TODO change to "$Parameter" once fixed in insight
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     p = as.vector(cs[, 4])
   )
 }
@@ -628,10 +622,9 @@ p_value.gamlss <- function(model, ...) {
   utils::capture.output(cs <- summary(model))
 
   .data_frame(
-    ## TODO change to "$Parameter" and "$Component" once fixed in insight
-    Parameter = parms[[1]],
+    Parameter = parms$Parameter,
     p = as.vector(cs[, 4]),
-    Component = parms[[3]]
+    Component = parms$Component
   )
 }
 
@@ -668,10 +661,9 @@ p_value.wbm <- function(model, ...) {
   params <- insight::get_parameters(model, effects = "fixed")
 
   .data_frame(
-    ## TODO fix once insight is updated on CRAN
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     p = as.vector(p),
-    Component = params[[3]]
+    Component = params$Component
   )
 }
 
@@ -807,11 +799,10 @@ p_value.bracl <- function(model, ...) {
 
   params <- insight::get_parameters(model)
 
-  ## TODO change once insight is updated
   .data_frame(
-    Parameter = params[[1]],
+    Parameter = params$Parameter,
     p = as.vector(p),
-    Response = params[[3]]
+    Response = params$Response
   )
 }
 
@@ -890,8 +881,7 @@ p_value.vglm <- function(model, ...) {
 p_value.rma <- function(model, ...) {
   params <- insight::get_parameters(model)
   .data_frame(
-    ## TODO fix when insight on CRAN
-    Parameter = .remove_backticks_from_string(params[[1]]),
+    Parameter = .remove_backticks_from_string(params$Parameter),
     p = model$pval
   )
 }
