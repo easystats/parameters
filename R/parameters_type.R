@@ -189,6 +189,13 @@ parameters_type <- function(model, ...) {
     # Smooth
   } else if (grepl("^s\\(", name)) {
     return(c("smooth", "Association", name, NA, NA, NA))
+
+    # As Is
+  } else if (grepl("^I\\(", name)) {
+    type <- "asis"
+    var <- gsub("^I\\((.*)\\)", "\\1", name)
+    return(c(type, "Association", name, var, NA, NA))
+
     # Smooth
   } else if (grepl("^smooth_", name)) {
     return(c("smooth", "Association", gsub("^smooth_(.*)\\[(.*)\\]", "\\2", name), NA, NA, NA))

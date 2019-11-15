@@ -7,13 +7,13 @@
 
   pattern <- if (full) {
     c(
-      "as.factor", "as.numeric", "factor", "offset", "log1p", "log10", "log2", "log", "lag",
-      "diff", "catg", "asis", "matrx", "pol", "strata", "strat",
-      "scale", "scored", "interaction", "sqrt", "lsp", "rcs", "pb", "lo",
-      "t2", "te", "ti", "tt", "mi", "mo", "gp", "I"
+      "as.factor", "as.numeric", "factor", "offset", "log1p", "log10", "log2",
+      "log", "lag", "diff", "catg", "asis", "matrx", "pol", "strata", "strat",
+      "scale", "scored", "interaction", "sqrt", "lsp", "rcs", "pb", "lo", "t2",
+      "te", "ti", "tt", "mi", "mo", "gp"
     )
   } else {
-    c("as.factor", "as.numeric", "factor", "catg", "asis", "interaction", "I")
+    c("as.factor", "as.numeric", "factor", "catg", "asis", "interaction")
   }
 
   for (j in 1:length(pattern)) {

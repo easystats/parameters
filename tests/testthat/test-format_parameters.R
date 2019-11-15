@@ -37,4 +37,10 @@ test_that("format_parameters", {
 
   model <- lm(Sepal.Length ~ Petal.Length * ns(Petal.Width, df = 3), data = iris)
   fp <- format_parameters(model)
+
+  model <- lm(Sepal.Length ~ Petal.Length * I(Petal.Width^2), data = iris)
+  fp <- format_parameters(model)
+
+  model <- lm(Sepal.Length ~ Petal.Length * as.factor(Species), data = iris)
+  fp <- format_parameters(model)
 })

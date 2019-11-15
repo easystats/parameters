@@ -29,7 +29,7 @@ format_parameters <- function(model) {
 
 #' @export
 format_parameters.default <- function(model) {
-  names <- insight::find_parameters(model, flatten = TRUE)
+  original_names <- names <- insight::find_parameters(model, flatten = TRUE)
   info <- insight::model_info(model)
 
   # hurdle- and zeroinfl-models
@@ -74,7 +74,15 @@ format_parameters.default <- function(model) {
       names[i] <- .format_interaction(components, type = types[i, "Type"])
     }
   }
-  names(names) <- types$Parameter
+
+  # "types$Parameter" here is cleaned, i.e. patterns like "log()", "as.factor()"
+  # etc. are removed. However, these patterns are needed in "parameters_table()",
+  # code-line x$Parameter <- attributes(x)$pretty_names[x$Parameter]
+  # when we use "types$Parameter" here, matching of pretty names does not work,
+  # so output will be NA resp. blank fields... Thus, I think we should use
+  # the original paramter-names here.
+
+  names(names) <- original_names # types$Parameter
   names
 }
 
@@ -120,6 +128,11 @@ format_parameters.parameters_model <- function(model) {
   # Splines
   if (type == "spline") {
     name <- .format_spline(name = name, variable = variable, type = type, knot = level)
+  }
+
+  # As Is
+  if (type == "asis") {
+    name <- variable
   }
 
   # Smooth
