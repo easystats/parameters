@@ -912,10 +912,9 @@ standard_error.wbm <- function(model, ...) {
   params <- insight::get_parameters(model, effects = "fixed")
 
   .data_frame(
-    ## TODO fix once insight is updated on CRAN
     Parameter = params$Parameter,
     SE = as.vector(se),
-    Component = params[[3]]
+    Component = params$Component
   )
 }
 
