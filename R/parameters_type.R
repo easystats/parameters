@@ -145,7 +145,7 @@ parameters_type <- function(model, ...) {
   cleaned_name <- .clean_parameter_names(name, full = TRUE)
 
   # Intercept
-  if (cleaned_name == "(Intercept)" | cleaned_name == "b_Intercept") {
+  if (.in_intercepts(cleaned_name)) {
     return(c("intercept", "Mean", "(Intercept)", NA, NA, NA))
 
     # Numeric

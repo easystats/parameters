@@ -1,4 +1,5 @@
 test_that("format_parameters", {
+  library(splines)
   data(iris)
   set.seed(123)
   iris$cat <- sample(LETTERS[1:4], nrow(iris), replace = TRUE)
@@ -167,4 +168,13 @@ test_that("format_parameters", {
                      `Petal.Length:as.factor(Species)virginica` = "Petal.Length * Species [virginica]"
   ))
 
+  if (require("pscl")) {
+    data("bioChemists")
+    model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
+    fp <- format_parameters(model)
+    expect_equal(fp, c(`count_(Intercept)` = "(Intercept)", count_femWomen = "fem [Women]",
+                       count_marMarried = "mar [Married]", count_kid5 = "kid5", count_ment = "ment",
+                       `zero_(Intercept)` = "(Intercept)", zero_kid5 = "kid5", zero_phd = "phd"
+    ))
+  }
 })

@@ -60,7 +60,7 @@ format_parameters.default <- function(model) {
 
     # No interaction
     if (!types$Type[i] %in% c("interaction", "nested")) {
-      type <- types[types$Parameter == name, ]
+      type <- types[i, ]
       names[i] <- .format_parameter(name, variable = type$Variable, type = type$Type, level = type$Level)
 
     # Interaction or nesting

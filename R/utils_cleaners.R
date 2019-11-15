@@ -80,3 +80,13 @@
   }
   x
 }
+
+#' @keywords internal
+.intercepts <- function() {
+  c("(intercept)_zi", "intercept (zero-inflated)", "intercept", "zi_intercept", "(intercept)", "b_intercept", "b_zi_intercept")
+}
+
+#' @keywords internal
+.in_intercepts <- function(x) {
+  tolower(x) %in% .intercepts() | grepl("^intercept", tolower(x))
+}
