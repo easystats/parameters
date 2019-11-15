@@ -127,7 +127,7 @@ format_parameters.parameters_model <- function(model) {
 
   # Splines
   if (type == "spline") {
-    name <- .format_spline(name = name, variable = variable, type = type, knot = level)
+    name <- .format_poly(name = name, variable = variable, type = type, degree = level)
   }
 
   # As Is
@@ -171,9 +171,4 @@ format_parameters.parameters_model <- function(model) {
 #' @keywords internal
 .format_poly <- function(name, variable, type, degree) {
   paste0(variable, " [", format_order(as.numeric(degree), textual = FALSE), " degree]")
-}
-
-#' @keywords internal
-.format_spline <- function(name, variable, type, knot) {
-  paste0(variable, " [", format_order(as.numeric(knot), textual = FALSE), " knot]")
 }
