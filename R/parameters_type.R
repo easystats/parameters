@@ -180,21 +180,21 @@ parameters_type <- function(model, ...) {
     return(c(type, "Association", name, var, degree, NA))
 
     # Splines
-  } else if (grepl("(bs|ns|psline)\\(", name)) {
+  } else if (grepl("(bs|ns|psline|rcs)\\(", name)) {
     type <- "spline"
-    var <- gsub("(bs|ns|psline)\\((.*)\\)(\\d)", "\\1", name)
-    degree <- gsub("(bs|ns|psline)\\((.*)\\)(\\d)", "\\3", name)
+    var <- gsub("(bs|ns|psline|rcs)\\((.*)\\)(\\d)", "\\1", name)
+    degree <- gsub("(bs|ns|psline|rcs)\\((.*)\\)(\\d)", "\\3", name)
     return(c(type, "Association", name, var, degree, NA))
-
-    # Smooth
-  } else if (grepl("^s\\(", name)) {
-    return(c("smooth", "Association", name, NA, NA, NA))
 
     # As Is
   } else if (grepl("^I\\(", name)) {
     type <- "asis"
     var <- gsub("^I\\((.*)\\)", "\\1", name)
     return(c(type, "Association", name, var, NA, NA))
+
+    # Smooth
+  } else if (grepl("^s\\(", name)) {
+    return(c("smooth", "Association", name, NA, NA, NA))
 
     # Smooth
   } else if (grepl("^smooth_", name)) {

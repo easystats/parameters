@@ -12,7 +12,7 @@
     c(
       "as.factor", "as.numeric", "factor", "offset", "log1p", "log10", "log2",
       "log", "lag", "diff", "catg", "asis", "matrx", "pol", "strata", "strat",
-      "scale", "scored", "interaction", "sqrt", "lsp", "rcs", "pb", "lo", "t2",
+      "scale", "scored", "interaction", "sqrt", "lsp", "pb", "lo", "t2",
       "te", "ti", "tt", "mi", "mo", "gp"
     )
   } else {
