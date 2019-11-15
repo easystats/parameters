@@ -5,6 +5,9 @@
     return("")
   }
 
+  # here we need to capture only those patterns that we do *not* want to format
+  # in a particular style.
+
   pattern <- if (full) {
     c(
       "as.factor", "as.numeric", "factor", "offset", "log1p", "log10", "log2",
