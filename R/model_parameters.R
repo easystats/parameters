@@ -24,7 +24,7 @@
 #'
 #' @note The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output.
 #'
-#' @details Standardization is based on \code{\link[=effectsize::standardize_parameters]{standardize_parameters()}}.
+#' @details Standardization is based on \code{\link[effectsize]{standardize_parameters}}.
 #'   In case of \code{standardize = "refit"}, the data used to fit the model
 #'   will be standardized and the model is completely refitted. In such cases,
 #'   standard errors and confidence intervals refer to the standardized coefficient.

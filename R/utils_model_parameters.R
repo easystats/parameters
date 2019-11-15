@@ -65,7 +65,7 @@
     component <- c("conditional", "zi", "zero_inflated", "dispersion")
   }
 
-  clean_params <- subset(clean_params, subset = Component %in% component & Effects %in% effects)
+  clean_params <- clean_params[clean_params$Component %in% component & clean_params$Effects %in% effects, ]
   attr(parameters, "cleaned_parameters") <- clean_params$Cleaned_Parameter
 
   parameters
