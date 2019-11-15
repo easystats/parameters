@@ -6,7 +6,9 @@
   }
 
   # here we need to capture only those patterns that we do *not* want to format
-  # in a particular style.
+  # in a particular style. However, these patterns will not be shown in the output
+  # from "model_parameters()". If certain patterns contain useful information,
+  # remove them here and clean/prepare them in ".parameters_type_basic()".
 
   pattern <- if (full) {
     c(

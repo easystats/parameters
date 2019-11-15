@@ -34,8 +34,7 @@ format_parameters.default <- function(model) {
 
   # hurdle- and zeroinfl-models
   if (info$is_zero_inflated | info$is_hurdle) {
-    names <- gsub("count_", "", names)
-    names <- gsub("zero_", "", names)
+    names <- gsub("^(count_|zero_)", "", names)
   }
 
   if (inherits(model, "bracl")) {
@@ -49,6 +48,11 @@ format_parameters.default <- function(model) {
   # Type-specific changes
   types <- parameters_type(model)
   types$Parameter <- .clean_parameter_names(types$Parameter, full = TRUE)
+
+  # hurdle- and zeroinfl-models
+  if (info$is_zero_inflated | info$is_hurdle) {
+    types$Parameter <- gsub("^(count_|zero_)", "", types$Parameter)
+  }
 
   for (i in 1:nrow(types)) {
 

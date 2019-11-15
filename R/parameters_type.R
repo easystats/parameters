@@ -57,10 +57,10 @@ parameters_type <- function(model, ...) {
   original_parameter <- params$Parameter
   params$Parameter <- .clean_parameter_names(params$Parameter, full = TRUE)
 
-  # TODO can we get rid of the count_ / zero_ prefix here?
-  # if (inherits(model, c("zeroinfl", "hurdle", "zerocount"))) {
-  #   params$Parameter <- gsub("^(count_|zero_)", "", params$Parameter)
-  # }
+  ## TODO can we get rid of the count_ / zero_ prefix here?
+  if (inherits(model, c("zeroinfl", "hurdle", "zerocount"))) {
+    params$Parameter <- gsub("^(count_|zero_)", "", params$Parameter)
+  }
 
 
   data <- insight::get_data(model)
