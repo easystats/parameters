@@ -3,7 +3,7 @@
 #' This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.
 #'
 #' @inheritParams check_clusterstructure
-#' @param package These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.
+#' @param package These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.
 #' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationaly heavy.
 #'
 #' @examples
@@ -17,7 +17,7 @@ n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "
     package <- c("NbClust", "mclust", "clValid", "cluster")
   }
 
-  x <- as.data.frame(x[sapply(x, is.numeric)])
+  x <- stats::na.omit(as.data.frame(x[sapply(x, is.numeric)]))
   if (standardize) {
     x <- as.data.frame(scale(x))
   }

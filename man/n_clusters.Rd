@@ -12,7 +12,7 @@ n_clusters(x, standardize = TRUE, package = c("NbClust", "mclust",
 
 \item{standardize}{Standardize the dataframe before clustering (default).}
 
-\item{package}{These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.}
+\item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.}
 
 \item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationaly heavy.}
 

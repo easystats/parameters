@@ -25,11 +25,15 @@
 #'   \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
 #'   \code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link{kmeans}}
 #'   for details on this argument.
+#'
 #' @inheritParams equivalence_test.lm
+#' @inheritParams n_clusters
 #'
 #' @return The group classification for each observation as vector. The
 #'   returned vector includes missing values, so it has the same length
 #'   as \code{nrow(x)}.
+#'
+#' @seealso \code{\link{n_clusters}} to determine the number of clusters to extract,
 #'
 #' @examples
 #' # Hierarchical clustering of mtcars-dataset
@@ -38,19 +42,21 @@
 #' # K-means clustering of mtcars-dataset, auto-detection of cluster-groups
 #' \dontrun{
 #' groups <- cluster_analysis(iris[, 1:4], method = "k")}
-#' @importFrom stats dist na.omit hclust kmeans cutree
+#' @importFrom stats dist na.omit hclust kmeans cutree complete.cases
 #' @export
 cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"),
                              distance = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
                              agglomeration = c("ward", "ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid"),
                              iterations = 20,
                              algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
+                             package = c("NbClust", "mclust"),
                              verbose = TRUE) {
   # match arguments
   distance <- match.arg(distance)
   method <- match.arg(method)
   agglomeration <- match.arg(agglomeration)
   algorithm <- match.arg(algorithm)
+
 
   # check number of clusters
   if (is.null(n_clusters)) {
@@ -62,16 +68,11 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
     }
   }
 
-  # save original data frame
-  data.origin <- x
-  data.origin$.grp.id <- seq_len(nrow(data.origin))
-
   # create NA-vector of same length as data frame
-  complete.groups <- rep(NA, times = nrow(data.origin))
-
-  # remove missings
+  complete.groups <- rep(NA, times = nrow(x))
+  # save IDs from non-missing data
+  non_missing <- stats::complete.cases(x)
   x <- stats::na.omit(x)
-  data.origin <- stats::na.omit(data.origin)
 
   # Ward Hierarchical Clustering
   if (method == "hclust") {
@@ -92,6 +93,6 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
   # create vector with cluster group classification,
   # including missings
 
-  complete.groups[data.origin$.grp.id] <- groups
+  complete.groups[non_missing] <- groups
   complete.groups
 }
