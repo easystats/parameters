@@ -24,7 +24,7 @@ n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClus
   # convert factors to numeric
   if (force) {
     factors <- sapply(x, function(i) is.character(i) | is.factor(i))
-    x[factors] <- sapply(x[factors], .factor_to_numeric)
+    if (any(factors)) x[factors] <- sapply(x[factors], .factor_to_numeric)
   }
 
   # remove all missing values from data, only use numerics

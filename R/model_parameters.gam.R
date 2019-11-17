@@ -28,7 +28,9 @@ model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations 
 
   if (exponentiate) parameters <- .exponentiate_parameters(parameters)
   parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
+  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+
   parameters
 }
 

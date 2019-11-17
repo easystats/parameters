@@ -61,6 +61,8 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
   agglomeration <- match.arg(agglomeration)
   algorithm <- match.arg(algorithm)
 
+  # save name of data frame
+  original_data <- x
 
   # check number of clusters
   if (is.null(n_clusters)) {
@@ -98,5 +100,35 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
   # including missings
 
   complete.groups[non_missing] <- groups
+  attr(complete.groups, "data") <- original_data
+  class(complete.groups) <- c("cluster_analysis", "see_cluster_analysis", class(complete.groups))
+
   complete.groups
+}
+
+
+
+
+#' @export
+print.cluster_analysis <- function(x, digits = 2, ...) {
+  # retrieve data
+  dat <- attr(x, "data", exact = TRUE)
+
+  if (is.null(dat)) {
+    stop("Could not find data frame that was used for cluster analysis.", call. = FALSE)
+  }
+
+  # factors to numeric
+  factors <- sapply(dat, function(i) is.character(i) | is.factor(i))
+  if (any(factors)) dat[factors] <- sapply(dat[factors], .factor_to_numeric)
+
+  # scale data
+  dat <- as.data.frame(scale(dat))
+
+  # create mean of z-score for each variable in data
+  out <- round(as.data.frame(do.call(rbind, lapply(dat, function(i) tapply(i, x, mean)))), digits = digits)
+  colnames(out) <- sprintf("Cluster %s", colnames(out))
+
+  insight::print_color("# Cluster Analyis (mean z-score by cluster)\n\n", "blue")
+  print.data.frame(out)
 }

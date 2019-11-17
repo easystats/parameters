@@ -59,3 +59,12 @@ plot.parameters_efa <- function(x, ...) {
   }
   NextMethod()
 }
+
+
+#' @export
+plot.cluster_analysis <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot results from cluster analysis. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
+}

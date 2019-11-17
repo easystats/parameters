@@ -34,6 +34,8 @@ model_parameters.BFBayesFactor <- function(model, centrality = "median", dispers
   }
 
   attr(out, "ci") <- ci
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(out) <- c("parameters_model", class(out))
+
   out
 }

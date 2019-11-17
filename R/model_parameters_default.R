@@ -36,7 +36,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
-  .model_parameters_generic(
+  out <- .model_parameters_generic(
     model = model,
     ci = ci,
     bootstrap = bootstrap,
@@ -46,6 +46,9 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     exponentiate = exponentiate,
     ...
   )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
 }
 
 
@@ -214,7 +217,7 @@ model_parameters.LORgee <- model_parameters.default
 
 #' @export
 model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
-  .model_parameters_generic(
+  out <- .model_parameters_generic(
     model = model,
     ci = ci,
     bootstrap = bootstrap,
@@ -224,6 +227,9 @@ model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations 
     exponentiate = exponentiate,
     ...
   )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
 }
 
 
@@ -292,6 +298,7 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
 
   # no df
   out$df_residual <- NULL
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
 
   out
 }

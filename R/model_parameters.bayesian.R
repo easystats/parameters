@@ -36,6 +36,7 @@ model_parameters.stanreg <- function(model, centrality = "median", dispersion = 
     parameters <- .add_pretty_names(parameters, model, effects = effects, component = NULL)
 
   attr(parameters, "ci") <- ci
+  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
   parameters
@@ -56,6 +57,7 @@ model_parameters.brmsfit <- function(model, centrality = "median", dispersion = 
     parameters <- .add_pretty_names(parameters, model, effects = effects, component = component)
 
   attr(parameters, "ci") <- ci
+  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
   parameters
@@ -70,6 +72,7 @@ model_parameters.MCMCglmm <- function(model, centrality = "median", dispersion =
 
   attr(parameters, "pretty_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
+  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
   parameters

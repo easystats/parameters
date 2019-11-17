@@ -1,6 +1,6 @@
 #' @export
 model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, exponentiate = FALSE, ...) {
-  .model_parameters_generic(
+  out <- .model_parameters_generic(
     model = model,
     ci = ci,
     bootstrap = bootstrap,
@@ -10,6 +10,9 @@ model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations 
     exponentiate = exponentiate,
     ...
   )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
 }
 
 
