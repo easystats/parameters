@@ -81,6 +81,34 @@
 
 
 
+#' Safe transformation from factor/character to numeric
+#'
+#' @importFrom stats na.omit
+#' @keywords internal
+.factor_to_dummy <- function(x) {
+  if (is.numeric(x)) {
+    return(x)
+  }
+
+  # get unique levels / values
+  values <- if (is.factor(x)) {
+      levels(x)
+    } else {
+      stats::na.omit(unique(x))
+    }
+
+  dummy <- as.data.frame(do.call(cbind, lapply(values, function(i) {
+    out <- rep(0, length(x))
+    out[is.na(x)] <- NA
+    out[x == i] <- 1
+    out
+  })))
+
+  colnames(dummy) <- values
+  dummy
+}
+
+
 #' Find most common occurence
 #'
 #' @keywords internal

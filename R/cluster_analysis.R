@@ -25,6 +25,13 @@
 #'   \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
 #'   \code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link{kmeans}}
 #'   for details on this argument.
+#' @param force Logical, if \code{TRUE}, ordered factors (ordinal variables) are
+#'   converted to numeric values, while character vectors and factors are converted
+#'   to dummy-variables (numeric 0/1) and are included in the cluster analysis.
+#'   If \code{FALSE}, factors and character vectors are removed before computing
+#'   the cluster analysis. For \code{method = "kmeans"} and \code{force = TRUE},
+#'   only ordered factors are used, because \code{\link{kmeans}} fails for dummy
+#'   variables.
 #'
 #' @inheritParams equivalence_test.lm
 #' @inheritParams n_clusters
@@ -57,6 +64,7 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
                              agglomeration = c("ward", "ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid"),
                              iterations = 20,
                              algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
+                             force = TRUE,
                              package = c("NbClust", "mclust"),
                              verbose = TRUE) {
   # match arguments
@@ -65,12 +73,34 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
   agglomeration <- match.arg(agglomeration)
   algorithm <- match.arg(algorithm)
 
-  # save name of data frame
-  original_data <- x
+
+  # include factors?
+  if (force) {
+    # ordered factors to numeric
+    factors <- sapply(x, is.ordered)
+    if (any(factors)) {
+      x[factors] <- sapply(x[factors], .factor_to_numeric)
+    }
+
+    # character and factors to dummies
+    factors <- sapply(x, function(i) is.character(i) | is.factor(i))
+    if (any(factors)) {
+      if (method == "kmeans") {
+        x <- x[sapply(x, is.numeric)]
+      } else {
+        dummies <- lapply(x[factors], .factor_to_dummy)
+        x <- cbind(x[!factors], dummies)
+      }
+    }
+  } else {
+    # remove factors
+    x <- x[sapply(x, is.numeric)]
+  }
+
 
   # check number of clusters
   if (is.null(n_clusters)) {
-    nc <- n_clusters(x, package = package, force = TRUE)
+    nc <- n_clusters(x, package = package, force = force)
     ncs <- attributes(nc)$summary
     n_clusters <- ncs$n_Clusters[which.max(ncs$n_Methods)][1]
     if (verbose) {
@@ -78,8 +108,12 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
     }
   }
 
+  # save original data, standardized, for later use
+  original_data <- as.data.frame(scale(x))
+
   # create NA-vector of same length as data frame
   complete.groups <- rep(NA, times = nrow(x))
+
   # save IDs from non-missing data
   non_missing <- stats::complete.cases(x)
   x <- stats::na.omit(x)
@@ -90,7 +124,7 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
     if (agglomeration == "ward") agglomeration <- "ward.D2"
     # distance matrix
     d <- stats::dist(x, method = distance)
-    # hierarchical clustering, using ward
+    # hierarchical clustering
     hc <- stats::hclust(d, method = agglomeration)
     # cut tree into x clusters
     groups <- stats::cutree(hc, k = n_clusters)
@@ -102,9 +136,19 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
 
   # create vector with cluster group classification,
   # including missings
-
   complete.groups[non_missing] <- groups
-  attr(complete.groups, "data") <- original_data
+
+  # create mean of z-score for each variable in data
+  out <- as.data.frame(do.call(rbind, lapply(original_data, tapply, complete.groups, mean)))
+  colnames(out) <- sprintf("Group %s", colnames(out))
+
+  attr(complete.groups, "data") <- out
+  attr(complete.groups, "accuracy") <- tryCatch({
+    cluster_discrimination(original_data, complete.groups)
+  }, error = function(e) {
+    NULL
+  })
+
   class(complete.groups) <- c("cluster_analysis", "see_cluster_analysis", class(complete.groups))
 
   complete.groups
@@ -122,17 +166,13 @@ print.cluster_analysis <- function(x, digits = 2, ...) {
     stop("Could not find data frame that was used for cluster analysis.", call. = FALSE)
   }
 
-  # factors to numeric
-  factors <- sapply(dat, function(i) is.character(i) | is.factor(i))
-  if (any(factors)) dat[factors] <- sapply(dat[factors], .factor_to_numeric)
-
-  # scale data
-  dat <- as.data.frame(scale(dat))
-
-  # create mean of z-score for each variable in data
-  out <- round(as.data.frame(do.call(rbind, lapply(dat, function(i) tapply(i, x, mean)))), digits = digits)
-  colnames(out) <- sprintf("Cluster %s", colnames(out))
+  accuracy <- attributes(x)$accuracy
 
   insight::print_color("# Cluster Analysis (mean z-score by cluster)\n\n", "blue")
-  print.data.frame(out)
+  print.data.frame(round(dat, digits = digits))
+
+  if (!is.null(accuracy)) {
+    cat("\n")
+    print(accuracy)
+  }
 }

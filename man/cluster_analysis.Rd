@@ -9,7 +9,7 @@ cluster_analysis(x, n_clusters = NULL, method = c("hclust", "kmeans"),
   "minkowski"), agglomeration = c("ward", "ward.D", "ward.D2", "single",
   "complete", "average", "mcquitty", "median", "centroid"),
   iterations = 20, algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
-  package = c("NbClust", "mclust"), verbose = TRUE)
+  force = TRUE, package = c("NbClust", "mclust"), verbose = TRUE)
 }
 \arguments{
 \item{x}{A data frame.}
@@ -38,6 +38,14 @@ If \code{method = "kmeans"} this argument will be ignored.}
 \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
 \code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link{kmeans}}
 for details on this argument.}
+
+\item{force}{Logical, if \code{TRUE}, ordered factors (ordinal variables) are
+converted to numeric values, while character vectors and factors are converted
+to dummy-variables (numeric 0/1) and are included in the cluster analysis.
+If \code{FALSE}, factors and character vectors are removed before computing
+the cluster analysis. For \code{method = "kmeans"} and \code{force = TRUE},
+only ordered factors are used, because \code{\link{kmeans}} fails for dummy
+variables.}
 
 \item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.}
 
