@@ -52,6 +52,11 @@ The group classification for each observation as vector. The
 Compute hierarchical or kmeans cluster analysis and return the group
                assignment for each observation as vector.
 }
+\details{
+If \code{n_clusters = NULL}, \code{n_clusters()} is called to determine
+  the number of clusters, where factors are converted to numeric (i.e.
+  \code{n_clusters(force = TRUE)}).
+}
 \examples{
 # Hierarchical clustering of mtcars-dataset
 groups <- cluster_analysis(iris[, 1:4], 3)
@@ -64,5 +69,5 @@ groups <- cluster_analysis(iris[, 1:4], method = "k")}
 Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.
 }
 \seealso{
-\code{\link{n_clusters}} to determine the number of clusters to extract,
+\code{\link{n_clusters}} to determine the number of clusters to extract, \code{\link{cluster_discrimination}} to determine the accuracy of cluster group classification.
 }

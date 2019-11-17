@@ -4,13 +4,19 @@
 \alias{n_clusters}
 \title{Number of Clusters to Extract}
 \usage{
-n_clusters(x, standardize = TRUE, package = c("NbClust", "mclust",
-  "clValid", "cluster"), fast = TRUE, ...)
+n_clusters(x, standardize = TRUE, force = FALSE,
+  package = c("NbClust", "mclust", "clValid", "cluster"), fast = TRUE,
+  ...)
 }
 \arguments{
 \item{x}{A data frame.}
 
 \item{standardize}{Standardize the dataframe before clustering (default).}
+
+\item{force}{Logical, if \code{TRUE}, factors are converted to numerical
+values in order to be included in the data for determining the number of
+clusters. By default, factors are removed, because most methods that determine
+the number of clusters need numeric input only.}
 
 \item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.}
 

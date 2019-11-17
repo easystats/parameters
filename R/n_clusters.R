@@ -3,6 +3,10 @@
 #' This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.
 #'
 #' @inheritParams check_clusterstructure
+#' @param force Logical, if \code{TRUE}, factors are converted to numerical
+#'   values in order to be included in the data for determining the number of
+#'   clusters. By default, factors are removed, because most methods that determine
+#'   the number of clusters need numeric input only.
 #' @param package These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.
 #' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationaly heavy.
 #'
@@ -11,12 +15,19 @@
 #' \donttest{
 #' n_clusters(iris[, 1:4])}
 #' @export
-n_clusters <- function(x, standardize = TRUE, package = c("NbClust", "mclust", "clValid", "cluster"), fast = TRUE, ...) {
+n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClust", "mclust", "clValid", "cluster"), fast = TRUE, ...) {
 
   if (all(package == "all")) {
     package <- c("NbClust", "mclust", "clValid", "cluster")
   }
 
+  # convert factors to numeric
+  if (force) {
+    factors <- sapply(x, function(i) is.character(i) | is.factor(i))
+    x[factors] <- sapply(x[factors], .factor_to_numeric)
+  }
+
+  # remove all missing values from data, only use numerics
   x <- stats::na.omit(as.data.frame(x[sapply(x, is.numeric)]))
   if (standardize) {
     x <- as.data.frame(scale(x))

@@ -33,7 +33,11 @@
 #'   returned vector includes missing values, so it has the same length
 #'   as \code{nrow(x)}.
 #'
-#' @seealso \code{\link{n_clusters}} to determine the number of clusters to extract,
+#' @details If \code{n_clusters = NULL}, \code{n_clusters()} is called to determine
+#'   the number of clusters, where factors are converted to numeric (i.e.
+#'   \code{n_clusters(force = TRUE)}).
+#'
+#' @seealso \code{\link{n_clusters}} to determine the number of clusters to extract, \code{\link{cluster_discrimination}} to determine the accuracy of cluster group classification.
 #'
 #' @examples
 #' # Hierarchical clustering of mtcars-dataset
@@ -60,7 +64,7 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
 
   # check number of clusters
   if (is.null(n_clusters)) {
-    nc <- n_clusters(x)
+    nc <- n_clusters(x, package = package, force = TRUE)
     ncs <- attributes(nc)$summary
     n_clusters <- ncs$n_Clusters[which.max(ncs$n_Methods)][1]
     if (verbose) {
