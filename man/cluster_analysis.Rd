@@ -55,7 +55,11 @@ Compute hierarchical or kmeans cluster analysis and return the group
 \details{
 If \code{n_clusters = NULL}, \code{n_clusters()} is called to determine
   the number of clusters, where factors are converted to numeric (i.e.
-  \code{n_clusters(force = TRUE)}).
+  \code{n_clusters(force = TRUE)}). The \code{print()} and \code{plot()}
+  methods show the (standardized) mean value for each variable within
+  each cluster. Thus, a higher absolute value indicates that a certain
+  variable characteristic is more pronounced within that specific cluster
+  (as compared to other cluster groups with lower absolute mean values).
 }
 \examples{
 # Hierarchical clustering of mtcars-dataset
