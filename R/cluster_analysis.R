@@ -139,6 +139,8 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
   # create mean of z-score for each variable in data
   out <- as.data.frame(do.call(rbind, lapply(original_data, tapply, complete.groups, mean)))
   colnames(out) <- sprintf("Group %s", colnames(out))
+  out <- cbind(data.frame(Term = rownames(out), stringsAsFactors = FALSE), out)
+  rownames(out) <- NULL
 
   attr(complete.groups, "data") <- out
   attr(complete.groups, "accuracy") <- tryCatch({
@@ -164,10 +166,15 @@ print.cluster_analysis <- function(x, digits = 2, ...) {
     stop("Could not find data frame that was used for cluster analysis.", call. = FALSE)
   }
 
+  # save output from cluster_discrimination()
   accuracy <- attributes(x)$accuracy
 
+  # headline
   insight::print_color("# Cluster Analysis (mean z-score by cluster)\n\n", "blue")
-  print.data.frame(round(dat, digits = digits))
+
+  # round numeric variables (i.e. all but first term column)
+  dat[2:ncol(dat)] <- sapply(dat[2:ncol(dat)], round, digits = digits)
+  print.data.frame(dat, row.names = FALSE)
 
   if (!is.null(accuracy)) {
     cat("\n")
