@@ -155,16 +155,9 @@
     <p>This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>n_factors</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"FA"</span>,
-  <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"varimax"</span>,
-  <span class='kw'>algorithm</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>package</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"nFactors"</span>, <span class='st'>"psych"</span>),
-  <span class='kw'>cor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>safe</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>n_factors</span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"FA"</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"varimax"</span>,
+  <span class='kw'>algorithm</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"nFactors"</span>, <span class='st'>"psych"</span>),
+  <span class='kw'>cor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>safe</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

@@ -169,15 +169,18 @@
     <tr>
       <th>cluster_groups</th>
       <td><p>Group classification of the cluster analysis, which can
-be retrieved from the <code><a href='cluster_groups.html'>cluster_groups</a></code> function.</p></td>
+be retrieved from the <code>cluster_groups</code> function.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='n_clusters.html'>n_clusters</a></code> to determine the number of clusters to extract, <code><a href='cluster_analysis.html'>cluster_analysis</a></code> to compute a cluster analysis and <code><a href='check_clusterstructure.html'>check_clusterstructure</a></code> to check suitability of data for clustering.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># retrieve group classification from hierarchical cluster analysis</span>
-<span class='no'>groups</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cluster_groups.html'>cluster_groups</a></span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])
+<span class='no'>groups</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_groups</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])
 
 <span class='co'># goodness of group classificatoin</span>
 <span class='fu'>cluster_discrimination</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>cluster_groups</span> <span class='kw'>=</span> <span class='no'>groups</span>)}</div></pre>
@@ -186,6 +189,7 @@ be retrieved from the <code><a href='cluster_groups.html'>cluster_groups</a></co
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

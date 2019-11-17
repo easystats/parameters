@@ -155,14 +155,8 @@
     <p>This function performs a Factor Analysis (FA).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>factor_analysis</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>factor_analysis</span>(<span class='no'>x</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,6 +172,10 @@
     <tr>
       <th>rotation</th>
       <td><p>If not "none", the PCA will be computed using the <span class="pkg">psych</span> package. Possible options include <code>"varimax"</code>, <code>"quartimax"</code>, <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>, and <code>"cluster"</code>. See <code><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></code> for details.</p></td>
+    </tr>
+    <tr>
+      <th>sort</th>
+      <td><p>Sort the loadings.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
@@ -226,12 +224,97 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 
-<span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in if (sort) {    loadings &lt;- .sort_loadings(loadings)}: argument is not interpretable as logical</span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"oblimin"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in .FA_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold,     ...): formal argument "sort" matched by multiple actual arguments</span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in .FA_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold,     ...): formal argument "sort" matched by multiple actual arguments</span></div><div class='input'>
-<span class='no'>FA</span> <span class='kw'>&lt;-</span> <span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in if (sort) {    loadings &lt;- .sort_loadings(loadings)}: argument is not interpretable as logical</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>FA</span>)</div><div class='output co'>#&gt; <span class='error'>Error in summary(FA): object 'FA' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>FA</span>)</div><div class='output co'>#&gt; <span class='error'>Error in predict(FA): object 'FA' not found</span></div><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
+#&gt; 
+#&gt; </span><span>Variable |   MR1 |   MR2 |  MR3 |  MR4 | MR5 | MR6 | Complexity | Uniqueness
+#&gt; ----------------------------------------------------------------------------
+#&gt; mpg      | -0.92 |       |      | 0.22 |     |     |       1.16 |       0.08
+#&gt; cyl      |  0.96 |       |      |      |     |     |       1.14 |       0.01
+#&gt; disp     |  0.95 |       |      | 0.20 |     |     |       1.13 |       0.03
+#&gt; hp       |  0.86 | -0.35 |      |      |     |     |       1.38 |       0.12
+#&gt; drat     | -0.72 | -0.40 | 0.29 |      |     |     |       1.96 |       0.24
+#&gt; wt       |  0.89 |  0.38 | 0.24 |      |     |     |       1.53 |       0.00
+#&gt; qsec     | -0.53 |  0.76 |      |      |     |     |       1.81 |       0.14
+#&gt; 
+#&gt; </span><span style='color: #BBBB00;'>The 6 latent factors accounted for 90.99% of the total variance of the original data (MR1 = 71.60%, MR2 = 14.55%, MR3 = 2.91%, MR4 = 1.35%, MR5 = 0.45%, MR6 = 0.12%).</span><span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"oblimin"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (oblimin-rotation)
+#&gt; 
+#&gt; </span><span>Variable |   MR1 |  MR2 | Complexity | Uniqueness
+#&gt; -------------------------------------------------
+#&gt; wt       |  1.00 |      |       1.07 |       0.10
+#&gt; disp     |  0.92 |      |       1.02 |       0.09
+#&gt; mpg      | -0.88 |      |       1.02 |       0.15
+#&gt; drat     | -0.84 |      |       1.14 |       0.39
+#&gt; cyl      |  0.82 |      |       1.23 |       0.08
+#&gt; hp       |  0.60 |      |       1.94 |       0.18
+#&gt; qsec     |       | 1.00 |       1.00 |       0.00
+#&gt; 
+#&gt; </span><span style='color: #BBBB00;'>The 2 latent factors (oblimin rotation) accounted for 85.83% of the total variance of the original data (MR1 = 63.85%, MR2 = 21.99%).</span><span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
+#&gt; 
+#&gt; </span><span>Variable |  MR1 |  MR2 | Complexity | Uniqueness
+#&gt; ------------------------------------------------
+#&gt; cyl      | 0.96 |      |       1.01 |       0.08
+#&gt; disp     | 0.95 |      |       1.03 |       0.09
+#&gt; mpg      |      |      |       1.03 |       0.15
+#&gt; wt       |      | 0.36 |       1.33 |       0.10
+#&gt; hp       |      |      |       1.23 |       0.18
+#&gt; drat     |      |      |       1.49 |       0.39
+#&gt; qsec     |      | 0.83 |       1.74 |       0.00
+#&gt; 
+#&gt; </span><span style='color: #BBBB00;'>The 2 latent factors accounted for 85.83% of the total variance of the original data (MR1 = 70.67%, MR2 = 15.16%).</span><span></div><div class='input'>
+<span class='no'>FA</span> <span class='kw'>&lt;-</span> <span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>FA</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># (Explained) Variance of Components
+#&gt; 
+#&gt; </span><span>Parameter                       |   MR1 |   MR2
+#&gt; -----------------------------------------------
+#&gt; Eigenvalues                     | 3.908 | 0.398
+#&gt; Variance Explained              | 0.782 | 0.080
+#&gt; Variance Explained (Cumulative) | 0.782 | 0.861
+#&gt; Variance Explained (Proportion) | 0.908 | 0.092</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>FA</span>)</div><div class='output co'>#&gt;            MR1         MR2
+#&gt; 1  -0.41953471 -0.35544083
+#&gt; 2  -0.41953471 -0.35544083
+#&gt; 3  -0.93451791  0.05188420
+#&gt; 4  -0.02247401 -1.06704187
+#&gt; 5   0.80423811 -0.57723722
+#&gt; 6   0.05132529 -1.40382795
+#&gt; 7   1.17796287  0.82565287
+#&gt; 8  -0.97981546 -0.77961043
+#&gt; 9  -0.87835186  0.02703875
+#&gt; 10 -0.31368972 -0.16476124
+#&gt; 11 -0.28032337 -0.23570818
+#&gt; 12  0.73053450 -0.34851886
+#&gt; 13  0.70908470 -0.30291012
+#&gt; 14  0.75913424 -0.40933052
+#&gt; 15  1.40523363 -0.78714835
+#&gt; 16  1.40381792 -0.48501471
+#&gt; 17  1.26324243  0.25588537
+#&gt; 18 -1.39062136  0.13411535
+#&gt; 19 -1.62307787  0.15402661
+#&gt; 20 -1.48149201  0.28280884
+#&gt; 21 -0.82463188 -0.03789222
+#&gt; 22  0.79425443 -1.37121293
+#&gt; 23  0.67357950 -1.14361360
+#&gt; 24  1.04878537  1.07073183
+#&gt; 25  0.89062471 -0.71650907
+#&gt; 26 -1.26846941 -0.12530276
+#&gt; 27 -1.14242028  0.42262235
+#&gt; 28 -1.03993655  0.89398689
+#&gt; 29  0.94311149  1.87551864
+#&gt; 30 -0.08324543  0.96674422
+#&gt; 31  1.32372015  3.27012728
+#&gt; 32 -0.87651282  0.43537850</div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Automated number of components</span>
-<span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in if (sort) {    loadings &lt;- .sort_loadings(loadings)}: argument is not interpretable as logical</span></div><div class='input'># }
+<span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
+#&gt; 
+#&gt; </span><span>Variable |   MR1 | Complexity | Uniqueness
+#&gt; ------------------------------------------
+#&gt; mpg      | -0.90 |       1.00 |       0.19
+#&gt; cyl      |  0.96 |       1.00 |       0.08
+#&gt; disp     |  0.93 |       1.00 |       0.13
+#&gt; hp       |  0.86 |       1.00 |       0.26
+#&gt; 
+#&gt; </span><span style='color: #BBBB00;'>The unique latent factor accounted for 83.55% of the total variance of the original data.</span><span></div><div class='input'># }
 
-</div></pre>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
