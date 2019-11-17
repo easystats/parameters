@@ -20,7 +20,7 @@
 #' @export
 cluster_discrimination <- function(x, cluster_groups = NULL) {
   if (is.null(cluster_groups)) {
-    cluster_groups <- cluster_groups(x)
+    cluster_groups <- cluster_analysis(x)
   }
 
   x <- stats::na.omit(x)

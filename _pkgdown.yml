@@ -62,8 +62,8 @@ reference:
 - title: "Data Reduction: Cluster Analysis"
   contents:
   - check_clusterstructure
+  - cluster_analysis
   - cluster_discrimination
-  - cluster_groups
   - n_clusters
 
 - title: "Data Reduction: Factors and Principal Components"

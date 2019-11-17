@@ -1,5 +1,5 @@
 #' @title Compute cluster analysis and return group indices
-#' @name cluster_groups
+#' @name cluster_analysis
 #' @description Compute hierarchical or kmeans cluster analysis and return the group
 #'                assignment for each observation as vector.
 #'
@@ -33,19 +33,19 @@
 #'
 #' @examples
 #' # Hierarchical clustering of mtcars-dataset
-#' groups <- cluster_groups(iris[, 1:4], 3)
+#' groups <- cluster_analysis(iris[, 1:4], 3)
 #'
 #' # K-means clustering of mtcars-dataset, auto-detection of cluster-groups
 #' \dontrun{
-#' groups <- cluster_groups(iris[, 1:4], method = "k")}
+#' groups <- cluster_analysis(iris[, 1:4], method = "k")}
 #' @importFrom stats dist na.omit hclust kmeans cutree
 #' @export
-cluster_groups <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"),
-                           distance = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
-                           agglomeration = c("ward", "ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid"),
-                           iterations = 20,
-                           algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
-                           verbose = TRUE) {
+cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"),
+                             distance = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
+                             agglomeration = c("ward", "ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid"),
+                             iterations = 20,
+                             algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
+                             verbose = TRUE) {
   # match arguments
   distance <- match.arg(distance)
   method <- match.arg(method)
