@@ -129,6 +129,6 @@ print.cluster_analysis <- function(x, digits = 2, ...) {
   out <- round(as.data.frame(do.call(rbind, lapply(dat, function(i) tapply(i, x, mean)))), digits = digits)
   colnames(out) <- sprintf("Cluster %s", colnames(out))
 
-  insight::print_color("# Cluster Analyis (mean z-score by cluster)\n\n", "blue")
+  insight::print_color("# Cluster Analysis (mean z-score by cluster)\n\n", "blue")
   print.data.frame(out)
 }
