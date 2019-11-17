@@ -46,7 +46,7 @@
 #'   within that specific cluster (as compared to other cluster groups with lower
 #'   absolute mean values).
 #'
-#' @seealso \code{\link{n_clusters}} to determine the number of clusters to extract, \code{\link{cluster_discrimination}} to determine the accuracy of cluster group classification.
+#' @seealso \code{\link{n_clusters}} to determine the number of clusters to extract, \code{\link{cluster_discrimination}} to determine the accuracy of cluster group classification and \code{\link{check_clusterstructure}} to check suitability of data for clustering.
 #'
 #' @examples
 #' # Hierarchical clustering of mtcars-dataset

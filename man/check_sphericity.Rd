@@ -22,7 +22,6 @@ This function is strongly inspired by the \code{cortest.bartlett} function in th
 }
 \examples{
 library(parameters)
-
 check_sphericity(mtcars)
 }
 \references{

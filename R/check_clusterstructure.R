@@ -9,20 +9,20 @@
 #'
 #' @examples
 #' library(parameters)
-#'
 #' check_clusterstructure(iris[, 1:4])
 #' plot(check_clusterstructure(iris[, 1:4]))
+#' @return The H statistic (numeric)
 #'
-#' @return A list of lists of indices related to sphericity and KMO.
-#' @seealso check_kmo check_sphericity check_factorstructure
+#' @seealso \code{\link{check_kmo}}, \code{\link{check_sphericity}} and \code{\link{check_factorstructure}}.
+#'
 #' @references \itemize{
-#'   \item Lawson, R. G., \& Jurs, P. C. (1990). New index for clustering tendency and its application to chemical problems. Journal of chemical information and computer sciences, 30(1), 36-41.
-#'   \item Bezdek, J. C., \& Hathaway, R. J. (2002, May). VAT: A tool for visual assessment of (cluster) tendency. In Proceedings of the 2002 International Joint Conference on Neural Networks. IJCNN02 (3), 2225-2230. IEEE.
+#'   \item Lawson, R. G., & Jurs, P. C. (1990). New index for clustering tendency and its application to chemical problems. Journal of chemical information and computer sciences, 30(1), 36-41.
+#'   \item Bezdek, J. C., & Hathaway, R. J. (2002, May). VAT: A tool for visual assessment of (cluster) tendency. In Proceedings of the 2002 International Joint Conference on Neural Networks. IJCNN02 (3), 2225-2230. IEEE.
 #' }
 #' @export
 check_clusterstructure <- function(x, standardize = TRUE, distance = "euclidean", ...) {
 
-  if(standardize){
+  if (standardize) {
     x <- as.data.frame(scale(x))
   }
 

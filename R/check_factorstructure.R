@@ -19,7 +19,7 @@ check_factorstructure <- function(x, ...) {
   sphericity <- check_sphericity(x, ...)
 
   text <- paste0("  - KMO: ",  attributes(kmo)$text, "\n  - Sphericity: ", attributes(sphericity)$text)
-  if(attributes(kmo)$color == "red" | attributes(sphericity)$color == "red"){
+  if (attributes(kmo)$color == "red" | attributes(sphericity)$color == "red") {
     color <- "red"
   } else{
     color <- "green"
@@ -53,7 +53,6 @@ check_factorstructure <- function(x, ...) {
 #'
 #' @examples
 #' library(parameters)
-#'
 #' check_kmo(mtcars)
 #' @return A list of indices related to KMO.
 #'
@@ -62,7 +61,7 @@ check_factorstructure <- function(x, ...) {
 #' @references \itemize{
 #'   \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
 #'   \item Kaiser, H. F. (1970). A second generation little jiffy. Psychometrika, 35(4), 401-415.
-#'   \item Kaiser, H. F., \& Rice, J. (1974). Little jiffy, mark IV. Educational and psychological measurement, 34(1), 111-117.
+#'   \item Kaiser, H. F., & Rice, J. (1974). Little jiffy, mark IV. Educational and psychological measurement, 34(1), 111-117.
 #'   \item Kaiser, H. F. (1974). An index of factorial simplicity. Psychometrika, 39(1), 31-36.
 #' }
 #' @importFrom stats cor cov2cor
@@ -118,7 +117,6 @@ check_kmo <- function(x, ...) {
 #'
 #' @examples
 #' library(parameters)
-#'
 #' check_sphericity(mtcars)
 #' @details This function is strongly inspired by the \code{cortest.bartlett} function in the \code{psych} package (Revelle, 2016). All credits go to its author.
 #'
