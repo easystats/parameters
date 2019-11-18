@@ -89,11 +89,11 @@ model_parameters(model)
 # ------------------------------------------------------------------------------------------------
 # (Intercept)                         |        2.89 | 0.36 | [ 2.18,  3.60] |  8.01 | 143 | < .001
 # Petal.Length                        |        0.26 | 0.25 | [-0.22,  0.75] |  1.07 | 143 | 0.287 
-# Species (versicolor)                |       -1.66 | 0.53 | [-2.71, -0.62] | -3.14 | 143 | 0.002 
-# Species (virginica)                 |       -1.92 | 0.59 | [-3.08, -0.76] | -3.28 | 143 | 0.001 
+# Species [versicolor]                |       -1.66 | 0.53 | [-2.71, -0.62] | -3.14 | 143 | 0.002 
+# Species [virginica]                 |       -1.92 | 0.59 | [-3.08, -0.76] | -3.28 | 143 | 0.001 
 # Petal.Width                         |        0.62 | 0.14 | [ 0.34,  0.89] |  4.41 | 143 | < .001
-# Petal.Length * Species (versicolor) |       -0.09 | 0.26 | [-0.61,  0.42] | -0.36 | 143 | 0.721 
-# Petal.Length * Species (virginica)  |       -0.13 | 0.26 | [-0.64,  0.38] | -0.50 | 143 | 0.618
+# Petal.Length * Species [versicolor] |       -0.09 | 0.26 | [-0.61,  0.42] | -0.36 | 143 | 0.721 
+# Petal.Length * Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] | -0.50 | 143 | 0.618
 
 # standardized parameters
 model_parameters(model, standardize = "refit")
@@ -101,11 +101,11 @@ model_parameters(model, standardize = "refit")
 # -------------------------------------------------------------------------------------------------------
 # (Intercept)                         |               3.59 | 1.30 | [ 1.01,  6.17] |  8.01 | 143 | 0.007 
 # Petal.Length                        |               1.07 | 1.00 | [-0.91,  3.04] |  1.07 | 143 | 0.287 
-# Species (versicolor)                |              -4.62 | 1.31 | [-7.21, -2.03] | -3.14 | 143 | < .001
-# Species (virginica)                 |              -5.51 | 1.38 | [-8.23, -2.79] | -3.28 | 143 | < .001
+# Species [versicolor]                |              -4.62 | 1.31 | [-7.21, -2.03] | -3.14 | 143 | < .001
+# Species [virginica]                 |              -5.51 | 1.38 | [-8.23, -2.79] | -3.28 | 143 | < .001
 # Petal.Width                         |               1.08 | 0.24 | [ 0.59,  1.56] |  4.41 | 143 | < .001
-# Petal.Length * Species (versicolor) |              -0.38 | 1.06 | [-2.48,  1.72] | -0.36 | 143 | 0.721 
-# Petal.Length * Species (virginica)  |              -0.52 | 1.04 | [-2.58,  1.54] | -0.50 | 143 | 0.618
+# Petal.Length * Species [versicolor] |              -0.38 | 1.06 | [-2.48,  1.72] | -0.36 | 143 | 0.721 
+# Petal.Length * Species [virginica]  |              -0.52 | 1.04 | [-2.58,  1.54] | -0.50 | 143 | 0.618
 ```
 
 ### Mixed Models
