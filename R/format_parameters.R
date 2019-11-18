@@ -158,11 +158,11 @@ format_parameters.parameters_model <- function(model) {
 #' @importFrom utils tail head
 #' @keywords internal
 .format_interaction <- function(components, type, is_nested = FALSE) {
-  sep <- ifelse(is_nested, " / ", " * ")
+  sep <- ifelse(is_nested, " : ", " * ")
 
   if (length(components) > 2) {
     if (type == "interaction") {
-      components <- paste0("(", paste0(utils::head(components, -1), collapse = sep), ")", sep, utils::tail(components, 1))
+      components <- paste0("(", paste0(utils::head(components, -1), collapse = " * "), ")", sep, utils::tail(components, 1))
     } else{
       components <- paste0(components, collapse = sep)
     }
