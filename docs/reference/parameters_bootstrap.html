@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -215,12 +215,12 @@ included in the summary output.</p></td>
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>parameters_bootstrap</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
-#&gt; 1                   (Intercept)   4.7717498  4.5415360 4.9782191 0.000000000
-#&gt; 2             Speciesversicolor  -0.7507518 -1.6477581 0.1375870 0.097902098
-#&gt; 3              Speciesvirginica   0.5259851 -0.7971411 1.7474927 0.371628372
-#&gt; 4                   Petal.Width   0.9555197  0.2590781 1.8881133 0.003996004
-#&gt; 5 Speciesversicolor:Petal.Width   0.5117956 -0.6307533 1.4452318 0.361638362
-#&gt; 6  Speciesvirginica:Petal.Width  -0.3033599 -1.3808297 0.6090834 0.533466533</div></pre>
+#&gt; 1                   (Intercept)   4.7746378  4.5312611 4.9785191 0.000000000
+#&gt; 2             Speciesversicolor  -0.7465287 -1.6771507 0.1355528 0.095904096
+#&gt; 3              Speciesvirginica   0.5277087 -0.7748083 1.7081300 0.375624376
+#&gt; 4                   Petal.Width   0.9495847  0.2636416 1.8768238 0.007992008
+#&gt; 5 Speciesversicolor:Petal.Width   0.5015877 -0.6644840 1.4975041 0.353646354
+#&gt; 6  Speciesvirginica:Petal.Width  -0.2991131 -1.3499278 0.6431709 0.495504496</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

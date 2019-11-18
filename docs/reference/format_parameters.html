@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -184,18 +184,18 @@
 <span class='fu'>format_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                           (Intercept)                     Speciesversicolor 
 #&gt;                         "(Intercept)"                "Species [versicolor]" 
 #&gt;                      Speciesvirginica            Speciessetosa:Petal.Length 
-#&gt;                 "Species [virginica]"     "Species [setosa] * Petal.Length" 
+#&gt;                 "Species [virginica]"     "Species [setosa] : Petal.Length" 
 #&gt;        Speciesversicolor:Petal.Length         Speciesvirginica:Petal.Length 
-#&gt; "Species [versicolor] * Petal.Length"  "Species [virginica] * Petal.Length" </div><div class='input'>
+#&gt; "Species [versicolor] : Petal.Length"  "Species [virginica] : Petal.Length" </div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Species</span> / <span class='no'>Sepal.Width</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>format_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                          (Intercept)                         Petal.Length 
 #&gt;                        "(Intercept)"                       "Petal.Length" 
 #&gt;                    Speciesversicolor                     Speciesvirginica 
 #&gt;               "Species [versicolor]"                "Species [virginica]" 
 #&gt;            Speciessetosa:Sepal.Width        Speciesversicolor:Sepal.Width 
-#&gt;     "Species [setosa] * Sepal.Width" "Species [versicolor] * Sepal.Width" 
+#&gt;     "Species [setosa] : Sepal.Width" "Species [versicolor] : Sepal.Width" 
 #&gt;         Speciesvirginica:Sepal.Width 
-#&gt;  "Species [virginica] * Sepal.Width" </div><div class='input'>
+#&gt;  "Species [virginica] : Sepal.Width" </div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='no'>Sepal.Width</span>, <span class='fl'>2</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>format_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                (Intercept)          Speciesversicolor 
 #&gt;              "(Intercept)"     "Species [versicolor]" 
