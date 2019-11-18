@@ -55,10 +55,10 @@ principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 \donttest{
 # Exploratory Factor Analysis (EFA) ---------
 efa <- psych::fa(attitude, nfactors = 3)
-model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
-}
+model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))}
 
 # FactoMineR ---------
+\dontrun{
 library(FactoMineR)
 
 model <- FactoMineR::PCA(iris[, 1:4], ncp = 2)
@@ -66,7 +66,7 @@ model_parameters(model)
 attributes(model_parameters(model))$scores
 
 model <- FactoMineR::FAMD(iris, ncp = 2)
-model_parameters(model)
+model_parameters(model)}
 }
 \references{
 \itemize{

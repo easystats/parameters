@@ -29,10 +29,10 @@
 #' \donttest{
 #' # Exploratory Factor Analysis (EFA) ---------
 #' efa <- psych::fa(attitude, nfactors = 3)
-#' model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
-#' }
+#' model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))}
 #'
 #' # FactoMineR ---------
+#' \dontrun{
 #' library(FactoMineR)
 #'
 #' model <- FactoMineR::PCA(iris[, 1:4], ncp = 2)
@@ -40,7 +40,7 @@
 #' attributes(model_parameters(model))$scores
 #'
 #' model <- FactoMineR::FAMD(iris, ncp = 2)
-#' model_parameters(model)
+#' model_parameters(model)}
 #' @return A data.frame of loadings.
 #' @references \itemize{
 #'   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
