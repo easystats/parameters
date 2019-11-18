@@ -53,27 +53,27 @@ test_that("format_parameters", {
   model <- lm(Sepal.Length ~ Species / Petal.Length, data = iris)
   fp <- format_parameters(model)
   expect_equal(fp, c(`(Intercept)` = "(Intercept)", Speciesversicolor = "Species [versicolor]",
-                     Speciesvirginica = "Species [virginica]", `Speciessetosa:Petal.Length` = "Species [setosa] * Petal.Length",
-                     `Speciesversicolor:Petal.Length` = "Species [versicolor] * Petal.Length",
-                     `Speciesvirginica:Petal.Length` = "Species [virginica] * Petal.Length"
+                     Speciesvirginica = "Species [virginica]", `Speciessetosa:Petal.Length` = "Species [setosa] / Petal.Length",
+                     `Speciesversicolor:Petal.Length` = "Species [versicolor] / Petal.Length",
+                     `Speciesvirginica:Petal.Length` = "Species [virginica] / Petal.Length"
   ))
 
   model <- lm(Sepal.Length ~ Petal.Length + (Species / Sepal.Width), data = iris)
   fp <- format_parameters(model)
   expect_equal(fp, c(`(Intercept)` = "(Intercept)", Petal.Length = "Petal.Length",
                      Speciesversicolor = "Species [versicolor]", Speciesvirginica = "Species [virginica]",
-                     `Speciessetosa:Sepal.Width` = "Species [setosa] * Sepal.Width",
-                     `Speciesversicolor:Sepal.Width` = "Species [versicolor] * Sepal.Width",
-                     `Speciesvirginica:Sepal.Width` = "Species [virginica] * Sepal.Width"
+                     `Speciessetosa:Sepal.Width` = "Species [setosa] / Sepal.Width",
+                     `Speciesversicolor:Sepal.Width` = "Species [versicolor] / Sepal.Width",
+                     `Speciesvirginica:Sepal.Width` = "Species [virginica] / Sepal.Width"
   ))
 
   model <- lm(Sepal.Length ~ Species / Petal.Length * Sepal.Width, data = iris)
   fp <- format_parameters(model)
   expect_equal(fp, c(`(Intercept)` = "(Intercept)", Speciesversicolor = "Species [versicolor]",
                      Speciesvirginica = "Species [virginica]", Sepal.Width = "Sepal.Width",
-                     `Speciessetosa:Petal.Length` = "Species [setosa] * Petal.Length",
-                     `Speciesversicolor:Petal.Length` = "Species [versicolor] * Petal.Length",
-                     `Speciesvirginica:Petal.Length` = "Species [virginica] * Petal.Length",
+                     `Speciessetosa:Petal.Length` = "Species [setosa] / Petal.Length",
+                     `Speciesversicolor:Petal.Length` = "Species [versicolor] / Petal.Length",
+                     `Speciesvirginica:Petal.Length` = "Species [virginica] / Petal.Length",
                      `Speciesversicolor:Sepal.Width` = "Species [versicolor] * Sepal.Width",
                      `Speciesvirginica:Sepal.Width` = "Species [virginica] * Sepal.Width",
                      `Speciessetosa:Petal.Length:Sepal.Width` = "(Species [setosa] * Petal.Length) * Sepal.Width",
@@ -84,30 +84,30 @@ test_that("format_parameters", {
   model <- lm(Sepal.Length ~ Species / (Petal.Length * Sepal.Width), data = iris)
   fp <- format_parameters(model)
   expect_equal(fp, c(`(Intercept)` = "(Intercept)", Speciesversicolor = "Species [versicolor]",
-                     Speciesvirginica = "Species [virginica]", `Speciessetosa:Petal.Length` = "Species [setosa] * Petal.Length",
-                     `Speciesversicolor:Petal.Length` = "Species [versicolor] * Petal.Length",
-                     `Speciesvirginica:Petal.Length` = "Species [virginica] * Petal.Length",
-                     `Speciessetosa:Sepal.Width` = "Species [setosa] * Sepal.Width",
-                     `Speciesversicolor:Sepal.Width` = "Species [versicolor] * Sepal.Width",
-                     `Speciesvirginica:Sepal.Width` = "Species [virginica] * Sepal.Width",
-                     `Speciessetosa:Petal.Length:Sepal.Width` = "Species [setosa] * Petal.Length * Sepal.Width",
-                     `Speciesversicolor:Petal.Length:Sepal.Width` = "Species [versicolor] * Petal.Length * Sepal.Width",
-                     `Speciesvirginica:Petal.Length:Sepal.Width` = "Species [virginica] * Petal.Length * Sepal.Width"
+                     Speciesvirginica = "Species [virginica]", `Speciessetosa:Petal.Length` = "Species [setosa] / Petal.Length",
+                     `Speciesversicolor:Petal.Length` = "Species [versicolor] / Petal.Length",
+                     `Speciesvirginica:Petal.Length` = "Species [virginica] / Petal.Length",
+                     `Speciessetosa:Sepal.Width` = "Species [setosa] / Sepal.Width",
+                     `Speciesversicolor:Sepal.Width` = "Species [versicolor] / Sepal.Width",
+                     `Speciesvirginica:Sepal.Width` = "Species [virginica] / Sepal.Width",
+                     `Speciessetosa:Petal.Length:Sepal.Width` = "Species [setosa] / Petal.Length / Sepal.Width",
+                     `Speciesversicolor:Petal.Length:Sepal.Width` = "Species [versicolor] / Petal.Length / Sepal.Width",
+                     `Speciesvirginica:Petal.Length:Sepal.Width` = "Species [virginica] / Petal.Length / Sepal.Width"
   ))
 
   model <- lm(Sepal.Length ~ Petal.Length + (Species / (Sepal.Width * Petal.Width)), data = iris)
   fp <- format_parameters(model)
   expect_equal(fp, c(`(Intercept)` = "(Intercept)", Petal.Length = "Petal.Length",
                      Speciesversicolor = "Species [versicolor]", Speciesvirginica = "Species [virginica]",
-                     `Speciessetosa:Sepal.Width` = "Species [setosa] * Sepal.Width",
-                     `Speciesversicolor:Sepal.Width` = "Species [versicolor] * Sepal.Width",
-                     `Speciesvirginica:Sepal.Width` = "Species [virginica] * Sepal.Width",
-                     `Speciessetosa:Petal.Width` = "Species [setosa] * Petal.Width",
-                     `Speciesversicolor:Petal.Width` = "Species [versicolor] * Petal.Width",
-                     `Speciesvirginica:Petal.Width` = "Species [virginica] * Petal.Width",
-                     `Speciessetosa:Sepal.Width:Petal.Width` = "Species [setosa] * Sepal.Width * Petal.Width",
-                     `Speciesversicolor:Sepal.Width:Petal.Width` = "Species [versicolor] * Sepal.Width * Petal.Width",
-                     `Speciesvirginica:Sepal.Width:Petal.Width` = "Species [virginica] * Sepal.Width * Petal.Width"
+                     `Speciessetosa:Sepal.Width` = "Species [setosa] / Sepal.Width",
+                     `Speciesversicolor:Sepal.Width` = "Species [versicolor] / Sepal.Width",
+                     `Speciesvirginica:Sepal.Width` = "Species [virginica] / Sepal.Width",
+                     `Speciessetosa:Petal.Width` = "Species [setosa] / Petal.Width",
+                     `Speciesversicolor:Petal.Width` = "Species [versicolor] / Petal.Width",
+                     `Speciesvirginica:Petal.Width` = "Species [virginica] / Petal.Width",
+                     `Speciessetosa:Sepal.Width:Petal.Width` = "Species [setosa] / Sepal.Width / Petal.Width",
+                     `Speciesversicolor:Sepal.Width:Petal.Width` = "Species [versicolor] / Sepal.Width / Petal.Width",
+                     `Speciesvirginica:Sepal.Width:Petal.Width` = "Species [virginica] / Sepal.Width / Petal.Width"
   ))
 
   model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2), data = iris)

@@ -66,6 +66,7 @@ format_parameters.default <- function(model) {
     # Interaction or nesting
     } else{
       components <- unlist(strsplit(name, ":", fixed = TRUE))
+      is_nested <- types$Type[i] %in% "nested"
       for (j in 1:length(components)) {
         if (components[j] %in% types$Parameter) {
           type <- types[types$Parameter == components[j], ]
@@ -75,7 +76,7 @@ format_parameters.default <- function(model) {
           components[j] <- .format_parameter(components[j], variable = type[1, ]$Secondary_Variable, type = type[1, ]$Secondary_Type, level = type[1, ]$Secondary_Level)
         }
       }
-      names[i] <- .format_interaction(components, type = types[i, "Type"])
+      names[i] <- .format_interaction(components, type = types[i, "Type"], is_nested = is_nested)
     }
   }
 
@@ -154,18 +155,19 @@ format_parameters.parameters_model <- function(model) {
 }
 
 
+#' @importFrom utils tail head
 #' @keywords internal
-.format_interaction <- function(components, type) {
-  # sep <- ifelse(type == "interaction", " * ", " / ")
+.format_interaction <- function(components, type, is_nested = FALSE) {
+  sep <- ifelse(is_nested, " / ", " * ")
 
   if (length(components) > 2) {
     if (type == "interaction") {
-      components <- paste0("(", paste0(utils::head(components, -1), collapse = " * "), ")", " * ", utils::tail(components, 1))
+      components <- paste0("(", paste0(utils::head(components, -1), collapse = sep), ")", sep, utils::tail(components, 1))
     } else{
-      components <- paste0(components, collapse = " * ")
+      components <- paste0(components, collapse = sep)
     }
   } else {
-    components <- paste0(components, collapse = " * ")
+    components <- paste0(components, collapse = sep)
   }
   components
 }
