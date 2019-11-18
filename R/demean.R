@@ -87,7 +87,7 @@
 #'
 #' @references \itemize{
 #'   \item Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
-#'   \item Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity. \doi{10.1007/s11135-018-0802-x}
+#'   \item Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity.
 #'   \item Giesselmann M, Schmidt-Catran A. (2018). Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html
 #'   \item Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
 #' }

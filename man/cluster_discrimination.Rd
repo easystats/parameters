@@ -10,7 +10,7 @@ cluster_discrimination(x, cluster_groups = NULL)
 \item{x}{A data frame}
 
 \item{cluster_groups}{Group classification of the cluster analysis, which can
-be retrieved from the \code{\link{cluster_groups}} function.}
+be retrieved from the \code{\link{cluster_analysis}} function.}
 }
 \description{
 Computes linear discriminant analysis on classified cluster groups,
@@ -19,7 +19,7 @@ Computes linear discriminant analysis on classified cluster groups,
 \examples{
 \dontrun{
 # retrieve group classification from hierarchical cluster analysis
-groups <- cluster_groups(iris[, 1:4])
+groups <- cluster_analysis(iris[, 1:4])
 
 # goodness of group classificatoin
 cluster_discrimination(iris[, 1:4], cluster_groups = groups)}
