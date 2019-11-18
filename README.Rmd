@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   dpi=300,
   tidy.opts=list(width.cutoff=60),
-  tidy=TRUE,
+  # tidy=TRUE,
   fig.path = "man/figures/"
 )
 knitr::opts_chunk$set(comment="#")
@@ -133,22 +133,13 @@ lm(disp ~ ., data = mtcars) %>%
 
 The [`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can also help you quickly select and retain the most relevant predictors using methods tailored for the model type. This function also works for mixed or Bayesian models:
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(rstanarm)
 
-model <- stan_glm(mpg ~ ., data = mtcars) %>% 
+stan_glm(mpg ~ ., data = mtcars, refresh = 0) %>% 
   parameters_selection() %>% 
   model_parameters()
 ```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-library(rstanarm)
-
-model <- stan_glm(mpg ~ ., data = mtcars, refresh = 0, chains = 2)
-  parameters_selection(model) %>% 
-  model_parameters()
-```
-
-
 
 ## Miscellaneous
 

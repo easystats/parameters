@@ -80,8 +80,7 @@ with some notable differences:
 ### Classical Regression Models
 
 ``` r
-model <- lm(Sepal.Width ~ Petal.Length * Species + Petal.Width, 
-    data = iris)
+model <- lm(Sepal.Width ~ Petal.Length * Species + Petal.Width, data = iris)
 
 # regular model parameters
 model_parameters(model)
@@ -113,10 +112,9 @@ model_parameters(model, standardize = "refit")
 ``` r
 library(lme4)
 
-model <- lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris)
+model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 
-# model parameters with p-values based on Kenward-Roger
-# approximation
+# model parameters with p-values based on Kenward-Roger approximation
 model_parameters(model, p_method = "kenward", ci_method = "kenward")
 # Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p
 # -------------------------------------------------------------------------
@@ -156,7 +154,9 @@ model_parameters(model)
 ``` r
 library(dplyr)
 
-lm(disp ~ ., data = mtcars) %>% parameters_selection() %>% model_parameters()
+lm(disp ~ ., data = mtcars) %>% 
+  parameters_selection() %>% 
+  model_parameters()
 # Parameter   | Coefficient |     SE |            95% CI |     t | df |      p
 # ----------------------------------------------------------------------------
 # (Intercept) |      141.70 | 125.67 | [-116.62, 400.02] |  1.13 | 26 | 0.270 
@@ -176,19 +176,19 @@ mixed or Bayesian models:
 ``` r
 library(rstanarm)
 
-model <- stan_glm(mpg ~ ., data = mtcars) %>% parameters_selection() %>% 
-    model_parameters()
+stan_glm(mpg ~ ., data = mtcars, refresh = 0) %>% 
+  parameters_selection() %>% 
+  model_parameters()
+# Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior
+# -----------------------------------------------------------------------------------------------
+# (Intercept) |  19.90 | [-0.59, 44.44] | 92.62% |     1.23% | 1.000 | 2348 | Normal (0 +- 60.27)
+# wt          |  -3.98 | [-5.92, -1.88] | 99.75% |     0.32% | 1.001 | 2159 | Normal (0 +- 15.40)
+# cyl         |  -0.48 | [-1.91,  0.76] | 71.43% |    46.02% | 1.000 | 2651 |  Normal (0 +- 8.44)
+# hp          |  -0.02 | [-0.04,  0.01] | 89.22% |      100% | 1.000 | 2766 |  Normal (0 +- 0.22)
+# am          |   2.93 | [-0.01,  5.77] | 94.90% |     7.42% | 1.000 | 2813 | Normal (0 +- 15.07)
+# qsec        |   0.80 | [-0.18,  1.73] | 91.33% |    35.23% | 1.000 | 2273 |  Normal (0 +- 8.43)
+# disp        |   0.01 | [-0.01,  0.03] | 87.08% |      100% | 1.002 | 2601 |  Normal (0 +- 0.12)
 ```
-
-    # Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior
-    # -----------------------------------------------------------------------------------------------
-    # (Intercept) |  19.82 | [-4.53, 40.21] | 91.65% |     1.25% | 1.002 | 1068 | Normal (0 +- 60.27)
-    # wt          |  -3.99 | [-6.00, -1.95] |   100% |     0.55% | 1.003 | 1353 | Normal (0 +- 15.40)
-    # cyl         |  -0.48 | [-1.80,  0.83] | 73.50% |    46.35% | 1.003 | 1220 |  Normal (0 +- 8.44)
-    # hp          |  -0.02 | [-0.04,  0.00] | 89.90% |      100% | 1.001 | 1604 |  Normal (0 +- 0.22)
-    # am          |   2.94 | [-0.08,  5.76] | 94.90% |     7.40% | 1.000 | 1253 | Normal (0 +- 15.07)
-    # qsec        |   0.82 | [-0.17,  1.77] | 91.00% |    33.95% | 1.003 | 1096 |  Normal (0 +- 8.43)
-    # disp        |   0.01 | [ 0.00,  0.03] | 86.90% |      100% | 1.003 | 1453 |  Normal (0 +- 0.12)
 
 ## Miscellaneous
 
@@ -206,6 +206,6 @@ describe_distribution(x)
 knitr::kable(describe_distribution(rnorm(300)), digits = 1)
 ```
 
-| Mean | SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
-| ---: | -: | --: | --: | -------: | -------: | --: | ---------: |
-|    0 |  1 | \-2 |   4 |      0.1 |      0.1 | 300 |          0 |
+|  Mean | SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
+| ----: | -: | --: | --: | -------: | -------: | --: | ---------: |
+| \-0.1 |  1 | \-3 |   3 |        0 |    \-0.3 | 300 |          0 |
