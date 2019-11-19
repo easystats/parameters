@@ -1,10 +1,3 @@
-# parameters 0.3.1
-
-## Bug fixes
-
-* Fixed bug in `p_value()` for *MASS::rlm* models.
-* Fixed bug in `reshape_loadings()` when converting loadings from wide to long and back again.
-
 # parameters 0.3.0
 
 ## Breaking changes
@@ -50,6 +43,8 @@ Parts of the **parameter** package are restructured and functions focussing on a
 - Fixed bug in `parameters_type()` when a parameter occured multiple times in a model.
 - Fixed bug with *multinom*-support.
 - Fixed bug in `model_parameters()` for non-estimable GLMs.
+- Fixed bug in `p_value()` for *MASS::rlm* models.
+- Fixed bug in `reshape_loadings()` when converting loadings from wide to long and back again.
 
 # parameters 0.2.0
 
