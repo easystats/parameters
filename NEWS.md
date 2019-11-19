@@ -2,6 +2,7 @@
 
 ## Bug fixes
 
+* Fixed bug in `p_value()` for *MASS::rlm* models.
 * Fixed bug in `reshape_loadings()` when converting loadings from wide to long and back again.
 
 # parameters 0.3.0

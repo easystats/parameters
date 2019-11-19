@@ -31,7 +31,7 @@ degrees_of_freedom <- function(model, method = "analytical") {
 
   if (method == "any") {
     dof <- .degrees_of_freedom_fit(model, verbose = FALSE)
-    if (is.null(dof) || is.infinite(dof)) {
+    if (is.null(dof) || is.infinite(dof) || anyNA(dof)) {
       dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
     }
   } else if (method == "analytical") {
