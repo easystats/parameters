@@ -84,6 +84,5 @@ model <- glmmTMB(
 )
 
 ci(model)
-ci(model, component = "zi")
-}
+ci(model, component = "zi")}
 }

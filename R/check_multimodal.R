@@ -16,7 +16,6 @@
 #'
 #' # Multivariate
 #' \donttest{
-#' library(bayestestR)
 #' m <- data.frame(
 #'   x = rnorm(200),
 #'   y = rbeta(200, 2, 1)
@@ -29,8 +28,7 @@
 #'   y = c(rbeta(100, 2, 1), rbeta(100, 1, 4))
 #' )
 #' plot(m$x, m$y)
-#' check_multimodal(m)
-#' }
+#' check_multimodal(m)}
 #' @references \itemize{
 #'   \item Ameijeiras-Alonso, J., Crujeiras, R. M., \& Rodríguez-Casal, A. (2019). Mode testing, critical bandwidth and excess mass. Test, 28(3), 900-919.
 #' }
@@ -65,7 +63,7 @@ check_multimodal.data.frame <- function(x, ...) {
       insight::format_value(rez$df, protect_integers = TRUE),
       ") = ",
       insight::format_value(rez$Chisq),
-      ", ", format_p(rez$p), ")"
+      ", ", format_p(rez$p), ").\n"
     )
     color <- "green"
   } else {
@@ -75,7 +73,7 @@ check_multimodal.data.frame <- function(x, ...) {
       insight::format_value(rez$df, protect_integers = TRUE),
       ") = ",
       insight::format_value(rez$Chisq),
-      ", ", format_p(rez$p), ")"
+      ", ", format_p(rez$p), ").\n"
     )
     color <- "yellow"
   }
@@ -106,7 +104,7 @@ check_multimodal.numeric <- function(x, ...) {
       text,
       "the distribution is significantly multimodal (excess mass = ",
       insight::format_value(rez$excess_mass),
-      ", ", format_p(rez$p), ")"
+      ", ", format_p(rez$p), ").\n"
     )
     color <- "green"
   } else {
@@ -114,7 +112,7 @@ check_multimodal.numeric <- function(x, ...) {
       text,
       "the hypothesis of a multimodal distribution cannot be rejected (excess mass = ",
       insight::format_value(rez$excess_mass),
-      ", ", format_p(rez$p), ")"
+      ", ", format_p(rez$p), ").\n"
     )
     color <- "yellow"
   }

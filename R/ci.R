@@ -24,8 +24,7 @@
 #' )
 #'
 #' ci(model)
-#' ci(model, component = "zi")
-#' }
+#' ci(model, component = "zi")}
 #' @importFrom insight find_parameters
 #' @export
 ci.merMod <- function(x, ci = 0.95, method = c("wald", "kenward", "boot"), ...) {

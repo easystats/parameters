@@ -24,7 +24,6 @@ check_multimodal(x)
 
 # Multivariate
 \donttest{
-library(bayestestR)
 m <- data.frame(
   x = rnorm(200),
   y = rbeta(200, 2, 1)
@@ -37,8 +36,7 @@ m <- data.frame(
   y = c(rbeta(100, 2, 1), rbeta(100, 1, 4))
 )
 plot(m$x, m$y)
-check_multimodal(m)
-}
+check_multimodal(m)}
 }
 \references{
 \itemize{
