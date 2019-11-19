@@ -10,18 +10,18 @@ convert_data_to_numeric(x, dummy_factors = TRUE, ...)
 data_to_numeric(x, dummy_factors = TRUE, ...)
 }
 \arguments{
-\item{x}{A data.frame or a vector.}
+\item{x}{A data frame or a vector.}
 
 \item{dummy_factors}{Transform factors to dummy factors (all factor levels as different columns filled with a binary 0-1 value).}
 
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-Data.frame of numeric variables.
+A data frame of numeric variables.
 }
 \description{
 Convert data to numeric by converting characters to factors and factors to either numeric levels or dummy variables.
 }
 \examples{
-convert_data_to_numeric(iris)
+head(convert_data_to_numeric(iris))
 }

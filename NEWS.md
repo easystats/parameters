@@ -1,3 +1,9 @@
+# parameters 0.3.1
+
+## Bug fixes
+
+* Fixed bug in `reshape_loadings()` when converting loadings from wide to long and back again.
+
 # parameters 0.3.0
 
 ## Breaking changes

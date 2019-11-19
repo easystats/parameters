@@ -5,7 +5,6 @@
 #'
 #' @examples
 #' library(parameters)
-#' \donttest{
 #' library(psych)
 #'
 #' pca <- model_parameters(psych::fa(attitude, nfactors = 3))
@@ -13,7 +12,6 @@
 #'
 #' loadings
 #' reshape_loadings(loadings)
-#' }
 #' @export
 reshape_loadings <- function(x, ...) {
   UseMethod("reshape_loadings")
@@ -23,7 +21,12 @@ reshape_loadings <- function(x, ...) {
 #' @inheritParams principal_components
 #' @export
 reshape_loadings.parameters_efa <- function(x, threshold = NULL, ...) {
-  .long_loadings(x, threshold = threshold)
+  current_format <- attributes(x)$loadings_format
+
+  if (is.null(current_format) || current_format == "wide")
+    .long_loadings(x, threshold = threshold)
+  else
+    .wide_loadings(x)
 }
 
 
@@ -46,18 +49,27 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
     loadings[[component_column]] <- paste0("F", loadings[[component_column]])
   }
 
+  complexity_column <- if ("Complexity" %in% colnames(loadings)) "Complexity" else NULL
+  uniqueness_column <- if ("Uniqueness" %in% colnames(loadings)) "Uniqueness" else NULL
+
+  reshape_columns <- c(loadings_columns, component_column, variable_column, complexity_column, uniqueness_column)
+
   loadings <- stats::reshape(
-    loadings[c(loadings_columns, component_column, variable_column)],
+    loadings[reshape_columns],
     idvar = variable_column,
     timevar = component_column,
     direction = "wide",
     v.names = c(loadings_columns),
     sep = "_"
   )
-  row.names(loadings) <- NULL
   names(loadings) <- gsub(paste0(loadings_columns, "_"), "", names(loadings))
-  class(loadings) <- c("parameters_loadings", class(loadings))
-  loadings
+  attr(loadings, "loadings_format") <- "wide"
+  class(loadings) <- unique(c("parameters_loadings", class(loadings)))
+
+  # clean-up, column-order
+  row.names(loadings) <- NULL
+  column_order <- c(setdiff(colnames(loadings), c("Complexity", "Uniqueness")), c("Complexity", "Uniqueness"))
+  loadings[column_order[column_order %in% colnames(loadings)]]
 }
 
 
@@ -101,7 +113,8 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
     names(loadings)[-loadings_columns][!names(loadings)[-loadings_columns] %in% c("Component", "Variable", "Loading")]
   )]
 
-  class(loadings) <- c("parameters_loadings", class(loadings))
+  attr(loadings, "loadings_format") <- "long"
+  class(loadings) <- unique(c("parameters_loadings", class(loadings)))
   loadings
 }
 

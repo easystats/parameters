@@ -2,13 +2,13 @@
 #'
 #' Convert data to numeric by converting characters to factors and factors to either numeric levels or dummy variables.
 #'
-#' @param x A data.frame or a vector.
+#' @param x A data frame or a vector.
 #' @param dummy_factors Transform factors to dummy factors (all factor levels as different columns filled with a binary 0-1 value).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
-#' convert_data_to_numeric(iris)
-#' @return Data.frame of numeric variables.
+#' head(convert_data_to_numeric(iris))
+#' @return A data frame of numeric variables.
 #' @importFrom stats model.matrix
 #' @export
 convert_data_to_numeric <- function(x, dummy_factors = TRUE, ...) {
