@@ -34,7 +34,8 @@
 #' }
 #'
 #' @examples
-#' parameters_reduction(iris, method = "PCA", n = "max")
+#' out <- parameters_reduction(iris, method = "PCA", n = "max")
+#' head(out)
 #' @importFrom stats dist
 #' @export
 parameters_reduction <- function(x, method = "PCA", n = "max", ...) {

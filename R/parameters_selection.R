@@ -23,10 +23,9 @@
 #' model <- stan_glm(mpg ~ ., data = mtcars, iter = 500, refresh = 0)
 #' parameters_selection(model, cross_validation = TRUE)
 #'
-#' model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars)
+#' model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars, iter = 500, refresh = 0)
 #' parameters_selection(model, cross_validation = FALSE)
 #' }
-#'
 #' @return The model refitted with optimal number of parameters.
 #'
 #' @export

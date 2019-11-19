@@ -42,7 +42,8 @@ The different methods available are described below:
 }
 }
 \examples{
-parameters_reduction(iris, method = "PCA", n = "max")
+out <- parameters_reduction(iris, method = "PCA", n = "max")
+head(out)
 }
 \references{
 \itemize{
