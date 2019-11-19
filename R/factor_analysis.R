@@ -31,9 +31,9 @@
 #' factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
 #' factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 #'
-#' FA <- factor_analysis(mtcars[, 1:5], n = 2)
-#' summary(FA)
-#' predict(FA)
+#' efa <- factor_analysis(mtcars[, 1:5], n = 2)
+#' summary(efa)
+#' predict(efa)
 #' \donttest{
 #' # Automated number of components
 #' factor_analysis(mtcars[, 1:4], n = "auto")
@@ -66,6 +66,10 @@ factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = 
 
   .FA_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, ...)
 }
+
+
+
+
 
 
 #' @keywords internal
