@@ -867,7 +867,6 @@ p_value.vglm <- function(model, ...) {
 
   cs <- VGAM::summary(model)@coef3
   p <- cs[, 4]
-  # se <- cs[, 2]
 
   .data_frame(
     Parameter = .remove_backticks_from_string(names(p)),
@@ -875,6 +874,19 @@ p_value.vglm <- function(model, ...) {
   )
 }
 
+
+#' @export
+p_value.vgam <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  stat <- insight::get_statistic(model)
+  p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(stat$Parameter),
+    p = as.vector(p),
+    Component = params$Component
+  )
+}
 
 
 #' @export

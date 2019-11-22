@@ -939,6 +939,17 @@ standard_error.vglm <- function(model, ...) {
   )
 }
 
+#' @importFrom insight get_varcov
+#' @export
+standard_error.vgam <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  se <- sqrt(diag(insight::get_varcov(model)))
+  .data_frame(
+    Parameter = .remove_backticks_from_string(names(se)),
+    SE = as.vector(se),
+    Component = params$Component
+  )
+}
 
 
 #' @export

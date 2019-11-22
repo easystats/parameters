@@ -35,6 +35,9 @@ model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations 
 }
 
 
+#' @export
+model_parameters.vgam <- model_parameters.gam
+
 
 #' @export
 model_parameters.gamm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {

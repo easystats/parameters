@@ -1,3 +1,9 @@
+# parameters 0.3.1
+
+## New supported models
+
+- Added support for `vgam` (*VGAM*). 
+
 # parameters 0.3.0
 
 ## Breaking changes
