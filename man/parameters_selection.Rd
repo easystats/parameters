@@ -9,14 +9,11 @@
 \usage{
 parameters_selection(model, ...)
 
-\method{parameters_selection}{lm}(model, direction = "both",
-  steps = 1000, k = 2, ...)
+\method{parameters_selection}{lm}(model, direction = "both", steps = 1000, k = 2, ...)
 
-\method{parameters_selection}{merMod}(model, direction = "backward",
-  steps = 1000, ...)
+\method{parameters_selection}{merMod}(model, direction = "backward", steps = 1000, ...)
 
-\method{parameters_selection}{stanreg}(model, method = NULL,
-  cross_validation = FALSE, ...)
+\method{parameters_selection}{stanreg}(model, method = NULL, cross_validation = FALSE, ...)
 }
 \arguments{
 \item{model}{A statistical model.}

@@ -5,13 +5,28 @@
 \alias{model_parameters.glmmTMB}
 \title{Mixed Model Parameters}
 \usage{
-\method{model_parameters}{merMod}(model, ci = 0.95, bootstrap = FALSE,
-  p_method = "wald", ci_method = "wald", iterations = 1000,
-  standardize = NULL, exponentiate = FALSE, ...)
+\method{model_parameters}{merMod}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  p_method = "wald",
+  ci_method = "wald",
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = FALSE,
+  ...
+)
 
-\method{model_parameters}{glmmTMB}(model, ci = 0.95, bootstrap = FALSE,
-  iterations = 1000, component = c("all", "conditional", "zi",
-  "zero_inflated"), standardize = NULL, exponentiate = FALSE, ...)
+\method{model_parameters}{glmmTMB}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = c("all", "conditional", "zi", "zero_inflated"),
+  standardize = NULL,
+  exponentiate = FALSE,
+  ...
+)
 }
 \arguments{
 \item{model}{A mixed model.}

@@ -4,8 +4,13 @@
 \alias{demean}
 \title{Compute group-meaned and de-meaned variables}
 \usage{
-demean(x, select, group, suffix_demean = "_within",
-  suffix_groupmean = "_between")
+demean(
+  x,
+  select,
+  group,
+  suffix_demean = "_within",
+  suffix_groupmean = "_between"
+)
 }
 \arguments{
 \item{x}{A data frame.}

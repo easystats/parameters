@@ -4,8 +4,13 @@
 \alias{model_parameters.aov}
 \title{ANOVAs Parameters}
 \usage{
-\method{model_parameters}{aov}(model, omega_squared = NULL,
-  eta_squared = NULL, epsilon_squared = NULL, ...)
+\method{model_parameters}{aov}(
+  model,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{Object of class \link{aov}, \link{anova} or \code{aovlist}.}

@@ -4,8 +4,15 @@
 \alias{format_p}
 \title{p-values formatting}
 \usage{
-format_p(p, stars = FALSE, stars_only = FALSE, name = "p",
-  missing = "", digits = 3, ...)
+format_p(
+  p,
+  stars = FALSE,
+  stars_only = FALSE,
+  name = "p",
+  missing = "",
+  digits = 3,
+  ...
+)
 }
 \arguments{
 \item{p}{value or vector of p-values.}

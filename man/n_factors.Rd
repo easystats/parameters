@@ -4,9 +4,16 @@
 \alias{n_factors}
 \title{Number of Components/Factors to Retain in Factor Analysis}
 \usage{
-n_factors(x, type = "FA", rotation = "varimax",
-  algorithm = "default", package = c("nFactors", "psych"),
-  cor = NULL, safe = TRUE, ...)
+n_factors(
+  x,
+  type = "FA",
+  rotation = "varimax",
+  algorithm = "default",
+  package = c("nFactors", "psych"),
+  cor = NULL,
+  safe = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A dataframe.}

@@ -929,16 +929,10 @@ standard_error.htest <- function(model, ...) {
 }
 
 
-
+#' @importFrom insight get_varcov
 #' @export
 standard_error.vglm <- function(model, ...) {
-  if (!requireNamespace("VGAM", quietly = TRUE)) {
-    stop("Package `VGAM` required.", call. = FALSE)
-  }
-
-  cs <- VGAM::summary(model)@coef3
-  se <- cs[, 2]
-
+  se <- sqrt(diag(insight::get_varcov(model)))
   .data_frame(
     Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)

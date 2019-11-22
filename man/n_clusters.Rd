@@ -4,9 +4,14 @@
 \alias{n_clusters}
 \title{Number of Clusters to Extract}
 \usage{
-n_clusters(x, standardize = TRUE, force = FALSE,
-  package = c("NbClust", "mclust", "clValid", "cluster"), fast = TRUE,
-  ...)
+n_clusters(
+  x,
+  standardize = TRUE,
+  force = FALSE,
+  package = c("NbClust", "mclust", "clValid", "cluster"),
+  fast = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A data frame.}

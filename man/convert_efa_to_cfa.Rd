@@ -8,8 +8,7 @@
 \usage{
 convert_efa_to_cfa(model, ...)
 
-\method{convert_efa_to_cfa}{fa}(model, threshold = "max", names = NULL,
-  ...)
+\method{convert_efa_to_cfa}{fa}(model, threshold = "max", names = NULL, ...)
 
 efa_to_cfa(model, ...)
 }

@@ -4,8 +4,15 @@
 \alias{factor_analysis}
 \title{Factor Analysis (FA)}
 \usage{
-factor_analysis(x, n = "auto", rotation = "none", sort = FALSE,
-  threshold = NULL, standardize = TRUE, ...)
+factor_analysis(
+  x,
+  n = "auto",
+  rotation = "none",
+  sort = FALSE,
+  threshold = NULL,
+  standardize = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A dataframe or a statistical model.}
@@ -56,9 +63,9 @@ factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
 factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
 factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 
-FA <- factor_analysis(mtcars[, 1:5], n = 2)
-summary(FA)
-predict(FA)
+efa <- factor_analysis(mtcars[, 1:5], n = 2)
+summary(efa)
+predict(efa)
 \donttest{
 # Automated number of components
 factor_analysis(mtcars[, 1:4], n = "auto")
