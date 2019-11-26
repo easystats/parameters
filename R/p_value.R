@@ -503,6 +503,7 @@ p_value.crq <- p_value.rq
 p_value.nlrq <- p_value.rq
 
 
+
 #' @export
 p_value.biglm <- function(model, ...) {
   cs <- summary(model)$mat
@@ -513,6 +514,20 @@ p_value.biglm <- function(model, ...) {
     p = as.vector(cs[, 5])
   )
 }
+
+
+
+#' @export
+p_value.complmrob <- function(model, ...) {
+  stats <- summary(model)$stats
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = as.vector(stats[, "Pr(>|t|)"])
+  )
+}
+
 
 
 #' @export
@@ -527,6 +542,7 @@ p_value.crch <- function(model, ...) {
 }
 
 
+
 #' @export
 p_value.gee <- function(model, ...) {
   cs <- stats::coef(summary(model))
@@ -537,6 +553,7 @@ p_value.gee <- function(model, ...) {
     p = as.vector(p)
   )
 }
+
 
 
 #' @export
@@ -587,6 +604,7 @@ p_value.rms <- p_value.lrm
 
 #' @export
 p_value.psm <- p_value.lrm
+
 
 
 
@@ -667,9 +685,9 @@ p_value.wbm <- function(model, ...) {
   )
 }
 
-
 #' @export
 p_value.wbgee <- p_value.wbm
+
 
 
 #' @export
@@ -786,9 +804,9 @@ p_value.multinom <- function(model, ...) {
   )
 }
 
-
 #' @export
 p_value.brmultinom <- p_value.multinom
+
 
 
 #' @export
@@ -875,6 +893,7 @@ p_value.vglm <- function(model, ...) {
 }
 
 
+
 #' @export
 p_value.vgam <- function(model, ...) {
   params <- insight::get_parameters(model)
@@ -887,6 +906,7 @@ p_value.vgam <- function(model, ...) {
     Component = params$Component
   )
 }
+
 
 
 #' @export

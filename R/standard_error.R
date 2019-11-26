@@ -713,6 +713,20 @@ standard_error.crq <- standard_error.rq
 standard_error.nlrq <- standard_error.rq
 
 
+
+#' @export
+standard_error.complmrob <- function(model, ...) {
+  stats <- summary(model)$stats
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, "Std. Error"])
+  )
+}
+
+
+
 #' @export
 standard_error.biglm <- function(model, ...) {
   cs <- summary(model)$mat
@@ -725,6 +739,7 @@ standard_error.biglm <- function(model, ...) {
 }
 
 
+
 #' @export
 standard_error.crch <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
@@ -735,6 +750,7 @@ standard_error.crch <- function(model, ...) {
     SE = as.vector(cs[, 2])
   )
 }
+
 
 
 #' @export

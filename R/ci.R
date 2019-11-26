@@ -90,35 +90,32 @@ ci.lm <- function(x, ci = .95, method = NULL, ...) {
   ci_wald(model = x, ci = ci, robust = robust, ...)
 }
 
+#' @export
+ci.lm_robust <- ci.lm
+
+#' @export
+ci.comlmrob <- ci.lm
+
+#' @export
+ci.rq <- ci.lm
+
+#' @export
+ci.crq <- ci.lm
+
+#' @export
+ci.nlrq <- ci.lm
+
+#' @export
+ci.BBmm <- ci.lm
+
+#' @export
+ci.BBreg <- ci.lm
+
 
 #' @export
 ci.gam <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, ...)
 }
-
-
-#' @export
-ci.lm_robust <- ci.lm
-
-
-#' @export
-ci.rq <- ci.lm
-
-
-#' @export
-ci.crq <- ci.lm
-
-
-#' @export
-ci.nlrq <- ci.lm
-
-
-#' @export
-ci.BBmm <- ci.lm
-
-
-#' @export
-ci.BBreg <- ci.lm
 
 
 #' @export
@@ -131,6 +128,7 @@ ci.list <- function(x, ci = .95, ...) {
     return(NULL)
   }
 }
+
 
 
 
@@ -156,10 +154,8 @@ ci.glm <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
   out
 }
 
-
 #' @export
 ci.negbin <- ci.glm
-
 
 #' @export
 ci.logistf <- ci.glm
@@ -293,6 +289,7 @@ ci.vglm <- ci.gamlss
 #' @export
 ci.svyglm.glimML <- ci.gamlss
 
+
 #' @export
 ci.gamm <- function(x, ci = .95, ...) {
   x <- x$gam
@@ -302,6 +299,7 @@ ci.gamm <- function(x, ci = .95, ...) {
 
 #' @export
 ci.gamm4 <- ci.gamm
+
 
 #' @export
 ci.multinom <- function(x, ci = .95, method = NULL, ...) {
@@ -317,10 +315,8 @@ ci.multinom <- function(x, ci = .95, method = NULL, ...) {
   out
 }
 
-
 #' @export
 ci.brmultinom <- ci.multinom
-
 
 #' @export
 ci.bracl <- ci.multinom
@@ -345,17 +341,13 @@ ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "z
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
 
-
-
 #' @rdname ci.merMod
 #' @export
 ci.zeroinfl <- ci.glmmTMB
 
-
 #' @rdname ci.merMod
 #' @export
 ci.hurdle <- ci.glmmTMB
-
 
 #' @export
 ci.zerocount <- ci.glmmTMB
@@ -394,9 +386,9 @@ ci.biglm <- function(x, ci = .95, ...) {
   .remove_backticks_from_parameter_names(do.call(rbind, out))
 }
 
-
 #' @export
 ci.gls <- ci.biglm
+
 
 
 #' @export
@@ -416,6 +408,7 @@ ci.lme <- function(x, ci = .95, ...) {
     .remove_backticks_from_parameter_names(do.call(rbind, out))
   }
 }
+
 
 
 #' @importFrom insight print_color
@@ -443,6 +436,7 @@ ci.effectsize_std_params <- function(x, ci = .95, ...) {
 
   .remove_backticks_from_parameter_names(do.call(rbind, out))
 }
+
 
 
 #' @export
