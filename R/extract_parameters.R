@@ -90,7 +90,7 @@
 .extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method = "wald", standardize = NULL, ...) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
   parameters$Parameter <- row.names(parameters)
-  original_order <- parameters$Parameter
+  original_order <- parameters$.id <- 1:nrow(parameters)
 
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
@@ -116,10 +116,7 @@
     ci_df <- ci(model, ci = ci, method = ci_method)
     if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
-
-    col_order <- parameters$Parameter
     parameters <- merge(parameters, ci_df, by = "Parameter")
-    parameters <- parameters[match(col_order, parameters$Parameter), ]
   } else {
     ci_cols <- c()
   }
@@ -158,8 +155,7 @@
 
 
   # Rematch order after merging
-  parameters <- parameters[match(parameters$Parameter, original_order), ]
-  row.names(parameters) <- NULL
+  parameters <- parameters[match(original_order, parameters$.id), ]
 
   # Renaming
   names(parameters) <- gsub("Std. Error", "SE", names(parameters))

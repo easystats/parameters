@@ -4,6 +4,10 @@
 
 - Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*), `fixest` (*fixest*). 
 
+## Bug fixes
+
+- Fixed issue in `model_parameters()` with non-typical ordering of coefficients for mixed models.
+
 # parameters 0.3.0
 
 ## Breaking changes
