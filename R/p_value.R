@@ -531,6 +531,19 @@ p_value.complmrob <- function(model, ...) {
 
 
 #' @export
+p_value.fixest <- function(model, ...) {
+  stats <- summary(model)$coeftable
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = as.vector(stats[, "Pr(>|z|)"])
+  )
+}
+
+
+
+#' @export
 p_value.crch <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
   params <- insight::get_parameters(model)

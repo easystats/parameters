@@ -2,7 +2,7 @@
 
 ## New supported models
 
-- Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*). 
+- Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*), `fixest` (*fixest*). 
 
 # parameters 0.3.0
 

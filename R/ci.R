@@ -206,6 +206,9 @@ ci.gamlss <- function(x, ci = .95, method = NULL, ...) {
 ci.speedglm <- ci.gamlss
 
 #' @export
+ci.fixest <- ci.gamlss
+
+#' @export
 ci.speedlm <- ci.gamlss
 
 #' @export

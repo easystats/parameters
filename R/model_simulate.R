@@ -67,6 +67,10 @@ model_simulate.iv_robust <- model_simulate.lm
 
 
 #' @export
+model_simulate.fixest <- model_simulate.lm
+
+
+#' @export
 model_simulate.rq <- model_simulate.lm
 
 
