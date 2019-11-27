@@ -9,8 +9,7 @@
   model,
   ci = 0.95,
   bootstrap = FALSE,
-  p_method = "wald",
-  ci_method = "wald",
+  df_method = "wald",
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
@@ -35,9 +34,7 @@
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}).}
 
-\item{p_method}{Method for computing p values. See \code{\link[=p_value]{p_value()}}.}
-
-\item{ci_method}{Method for computing confidence intervals (CI). See \code{\link[=ci.merMod]{ci()}}.}
+\item{df_method}{Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}) or \code{"kenward"} (see \code{\link{dof_kenward}}).}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.}
 

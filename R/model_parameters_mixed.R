@@ -4,8 +4,7 @@
 #'
 #' @param model A mixed model.
 #' @inheritParams model_parameters.default
-#' @param p_method Method for computing p values. See \code{\link[=p_value]{p_value()}}.
-#' @param ci_method Method for computing confidence intervals (CI). See \code{\link[=ci.merMod]{ci()}}.
+#' @param df_method Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}) or \code{"kenward"} (see \code{\link{dof_kenward}}).
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
@@ -32,13 +31,15 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, p_method = "wald", ci_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+  # p-values, CI and se might be based of wald, or KR
+  df_method <- match.arg(df_method, choices = c("wald", "kenward"))
 
   # Processing
   if (bootstrap) {
     parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_mixed(model, ci = ci, p_method = p_method, ci_method = ci_method, ...)
+    parameters <- .extract_parameters_mixed(model, ci = ci, df_method = df_method, ...)
   }
 
 

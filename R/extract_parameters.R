@@ -87,13 +87,20 @@
 
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_mixed <- function(model, ci = .95, p_method = "wald", ci_method = "wald", standardize = NULL, ...) {
+.extract_parameters_mixed <- function(model, ci = .95, df_method = "wald", standardize = NULL, ...) {
   parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
   parameters$Parameter <- row.names(parameters)
   original_order <- parameters$.id <- 1:nrow(parameters)
 
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
+
+  if (df_method == "wald" || !insight::model_info(model)$is_linear) {
+    df <- Inf
+  } else {
+    df <- dof_kenward(model)
+    parameters$df <- df
+  }
 
   # Std Coefficients
   if (!is.null(standardize)) {
@@ -113,7 +120,7 @@
 
   # CI
   if (!is.null(ci)) {
-    ci_df <- ci(model, ci = ci, method = ci_method)
+    ci_df <- ci_wald(model, ci = ci, dof = df)
     if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
     parameters <- merge(parameters, ci_df, by = "Parameter")
@@ -126,27 +133,23 @@
   if ("Pr(>|z|)" %in% names(parameters)) {
     names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
   } else {
-    if (insight::model_info(model)$is_linear) {
-      if (p_method == "kenward") {
-        parameters$df <- dof_kenward(model)
-        parameters <- merge(parameters, p_value(model, method = "kenward", dof = parameters$DoF), by = "Parameter")
-      } else {
-        parameters <- merge(parameters, p_value(model, method = p_method), by = "Parameter")
+    parameters <- merge(parameters, p_value(model, dof = df), by = "Parameter")
+  }
+
+
+  # adjust standard errors and test-statistic as well
+  if (df_method == "kenward") {
+    parameters[["Std. Error"]] <- se_kenward(model)
+    for (test_statistic in c("t value", "z value")) {
+      if (test_statistic %in% colnames(parameters)) {
+        parameters[[test_statistic]] <- parameters[["Estimate"]] / parameters[["Std. Error"]]
       }
-    } else {
-      parameters <- merge(parameters, p_value(model), by = "Parameter")
     }
   }
 
 
-  # adjust standard errors as well
-  if (p_method == "kenward" || ci_method == "kenward") {
-    parameters[["Std. Error"]] <- se_kenward(model)
-  }
-
-
   # dof
-  if (p_method != "kenward" && !"df" %in% names(parameters)) {
+  if (df_method != "kenward" && !"df" %in% names(parameters)) {
     df_residual <- degrees_of_freedom(model, method = "any")
     if (!is.null(df_residual) && (length(df_residual) == 1 || length(df_residual) == nrow(parameters))) {
       parameters$df_residual <- df_residual
