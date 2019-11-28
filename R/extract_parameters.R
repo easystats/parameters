@@ -139,10 +139,11 @@
 
   # adjust standard errors and test-statistic as well
   if (df_method == "kenward") {
-    parameters[["Std. Error"]] <- se_kenward(model)
+    parameters[["Std. Error"]] <- NULL
+    parameters <- merge(parameters, se_kenward(model), by = "Parameter")
     for (test_statistic in c("t value", "z value")) {
       if (test_statistic %in% colnames(parameters)) {
-        parameters[[test_statistic]] <- parameters[["Estimate"]] / parameters[["Std. Error"]]
+        parameters[[test_statistic]] <- parameters[["Estimate"]] / parameters[["SE"]]
       }
     }
   }
