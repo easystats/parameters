@@ -1,7 +1,7 @@
-#' @rdname p_value_satterthwaite
+#' @rdname p_value_ml1
 #' @importFrom insight get_random find_predictors find_parameters get_data has_intercept
 #' @export
-dof_satterthwaite <- function(model) {
+dof_ml1 <- function(model) {
   re_groups <- insight::get_random(model)
 
   parameters <- insight::find_parameters(model)[["conditional"]]
@@ -14,7 +14,7 @@ dof_satterthwaite <- function(model) {
   term_assignment <- .find_term_assignment(model_data, predictors, parameters)
 
   ddf <- sapply(model_data, function(.x) {
-    min(sapply(re_groups, .get_df_satter_approx, x = .x))
+    min(sapply(re_groups, .get_df_ml1_approx, x = .x))
   })
 
   ltab <- table(ddf)
@@ -37,7 +37,7 @@ dof_satterthwaite <- function(model) {
 
 
 #' @importFrom stats ave var
-.get_df_satter_approx <- function(x, g){
+.get_df_ml1_approx <- function(x, g){
   m <- nlevels(g)
   n <- length(x)
   x <- as.numeric(x)
