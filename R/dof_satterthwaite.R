@@ -1,15 +1,15 @@
 #' @rdname p_value_satterthwaite
+#' @importFrom insight get_random find_predictors find_parameters get_data has_intercept
 #' @export
 dof_satterthwaite <- function(model) {
   re_groups <- insight::get_random(model)
 
+  parameters <- insight::find_parameters(model)[["conditional"]]
   predictors <- insight::find_predictors(model, effects = "fixed", component = "conditional", flatten = TRUE)
   predictors <- setdiff(predictors, names(re_groups))
 
-  parameters <- insight::find_parameters(model)[["conditional"]]
-
   model_data <- insight::get_data(model)[predictors]
-  has.intcp <- insight::has_intercept(model)
+  has_intcp <- insight::has_intercept(model)
 
   term_assignment <- .find_term_assignment(model_data, predictors, parameters)
 
@@ -21,17 +21,19 @@ dof_satterthwaite <- function(model) {
   ltab <- list(m = as.integer(names(ltab)), l = as.vector(ltab))
 
   ltab$ddf <- ltab$m - ltab$l
-  if (has.intcp) ltab$ddf <- ltab$ddf - 1
+  if (has_intcp) ltab$ddf <- ltab$ddf - 1
 
   ii <- match(ddf, ltab$m)
   ddf[] <- ltab$ddf[ii]
 
   out <- numeric(length = length(parameters))
   out[which("(Intercept)" != parameters)] <- ddf[term_assignment]
-  if (has.intcp) out[which("(Intercept)" == parameters)] <- min(ddf)
+  if (has_intcp) out[which("(Intercept)" == parameters)] <- min(ddf)
 
   unname(out)
 }
+
+
 
 
 #' @importFrom stats ave var
@@ -49,7 +51,10 @@ dof_satterthwaite <- function(model) {
 }
 
 
+
+
 #' @importFrom stats na.omit
+#' @importFrom insight clean_names
 .find_term_assignment <- function(model_data, predictors, parameters) {
   parms <- unlist(lapply(1:length(predictors), function(i) {
     p <- predictors[i]

@@ -14,5 +14,3 @@ se_kenward <- function(model) {
     stringsAsFactors = FALSE
   )
 }
-
-.qform <- function(x, A) sum(x * (A %*% x))
