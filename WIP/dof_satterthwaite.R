@@ -1,39 +1,36 @@
 #' @rdname p_value_satterthwaite
 #' @export
 dof_satterthwaite <- function(model) {
-  X <- stats::model.matrix(model)
+  re_groups <- insight::get_random(model)
 
-  grps <- insight::get_random(model)
+  predictors <- insight::find_predictors(model, effects = "fixed", component = "conditional", flatten = TRUE)
+  predictors <- setdiff(predictors, names(re_groups))
 
-  tms <- insight::find_predictors(model, effects = "fixed", component = "conditional", flatten = TRUE)
-  mf <- insight::get_data(model)
+  parameters <- insight::find_parameters(model)[["conditional"]]
 
-  names.xvars <- tms <- setdiff(tms, names(grps))
-
+  model_data <- insight::get_data(model)[predictors]
   has.intcp <- insight::has_intercept(model)
-  xmf <- mf[names.xvars]
 
-  xddf <- sapply(xmf, function(.x) {
-    min(sapply(grps, .get_df_satter_approx, x = .x))
+  term_assignment <- .find_term_assignment(model_data, predictors, parameters)
+
+  ddf <- sapply(model_data, function(.x) {
+    min(sapply(re_groups, .get_df_satter_approx, x = .x))
   })
 
-  ltab <- table(xddf)
+  ltab <- table(ddf)
   ltab <- list(m = as.integer(names(ltab)), l = as.vector(ltab))
-  ltab$ddf <- ltab$m - ltab$l
 
+  ltab$ddf <- ltab$m - ltab$l
   if (has.intcp) ltab$ddf <- ltab$ddf - 1
 
-  ii <- match(xddf, ltab$m)
-  xddf[] <- ltab$ddf[ii]
+  ii <- match(ddf, ltab$m)
+  ddf[] <- ltab$ddf[ii]
 
-  ddf <- structure(numeric(length = ncol(X)), names = colnames(X))
-  assgn <- attr(X, "assign")
+  out <- numeric(length = length(parameters))
+  out[which("(Intercept)" != parameters)] <- ddf[term_assignment]
+  if (has.intcp) out[which("(Intercept)" == parameters)] <- min(ddf)
 
-  ii <- which("(Intercept)" != names(ddf))
-  ddf[ii] <- xddf[assgn]
-  if (has.intcp) ddf["(Intercept)"] <- min(xddf)
-
-  ddf
+  unname(out)
 }
 
 
@@ -49,4 +46,21 @@ dof_satterthwaite <- function(model) {
     return(n)
   else
     return(m)
+}
+
+
+#' @importFrom stats na.omit
+.find_term_assignment <- function(model_data, predictors, parameters) {
+  parms <- unlist(lapply(1:length(predictors), function(i) {
+    p <- predictors[i]
+    if (is.factor(model_data[[p]])) {
+      ps <- paste0(p, levels(model_data[[p]]))
+      names(ps)[1:length(ps)] <- i
+      ps
+    } else {
+      names(p) <- i
+      p
+    }
+  }))
+  stats::na.omit(as.numeric(names(parms)[match(insight::clean_names(parameters), parms)]))
 }
