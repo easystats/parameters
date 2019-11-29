@@ -100,6 +100,14 @@
     parameters$df <- df
   } else if (df_method == "wald") {
     df <- Inf
+  } else if (df_method == "satterthwaite") {
+    if (insight::model_info(model)$is_linear) {
+      df <- dof_satterthwaite(model)
+      parameters$df <- df
+    } else {
+      warning("df_method = 'satterthwaite' is only available for linear mixed models.", call. = FALSE)
+      df <- Inf
+    }
   } else {
     if (insight::model_info(model)$is_linear) {
       df <- dof_kenward(model)

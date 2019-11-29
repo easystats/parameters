@@ -3,7 +3,7 @@
 #' Estimate or extract degrees of freedom of models.
 #'
 #' @param model A statistical model.
-#' @param method Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"kenward"} (see \code{\link{dof_kenward}}) or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.
+#' @param method Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}), \code{"kenward"} (see \code{\link{dof_kenward}}) or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
@@ -27,7 +27,7 @@
 #' @export
 degrees_of_freedom <- function(model, method = "analytical") {
 
-  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "kenward", "nokr"))
+  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "satterthwaite", "kenward", "nokr"))
 
   if (method == "any") {
     dof <- .degrees_of_freedom_fit(model, verbose = FALSE)
@@ -36,6 +36,8 @@ degrees_of_freedom <- function(model, method = "analytical") {
     }
   } else if (method == "ml1") {
     dof <- dof_ml1(model)
+  } else if (method == "satterthwaite") {
+    dof <- dof_satterthwaite(model)
   } else if (method == "kenward") {
     dof <- dof_kenward(model)
   } else if (method == "analytical") {

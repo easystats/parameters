@@ -4,6 +4,10 @@
 
 - Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*), `fixest` (*fixest*). 
 
+## New functions
+
+- `dof_satterthwaite()` and `dof_ml1()` to compute degrees of freedom based on different approximation methods (and related to that, `p_value_*()` and `se_*()` for these methods were added as well).
+
 ## Bug fixes
 
 - Fixed issue in `model_parameters()` with non-typical ordering of coefficients for mixed models.

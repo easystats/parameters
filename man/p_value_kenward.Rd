@@ -51,4 +51,7 @@ Kenward, M. G., & Roger, J. H. (1997). Small sample inference for fixed effects 
 \code{dof_kenward()} and \code{se_kenward()} are small helper-functions
 to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Kenward-Roger (1997) approach.
+\cr \cr
+\code{\link{dof_sattherthwaite}} and \code{\link{dof_ml1}} approximate degrees
+of freedom bases on Satterthwaite's method or the "m-l-1" rule.
 }

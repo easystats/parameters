@@ -2,11 +2,11 @@
 #'
 #' This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
 #' \itemize{
-#' \item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called.
+#' \item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
 #' }
 #'
 #' @param model A statistical model.
-#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}} or \code{\link[=p_value_kenward]{"kenward"}}.
+#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams model_simulate
 #' @inheritParams standard_error
@@ -190,9 +190,11 @@ p_value.lme <- function(model, ...) {
 #' @rdname p_value
 #' @export
 p_value.lmerMod <- function(model, method = "wald", ...) {
-  method <- match.arg(method, c("wald", "kr", "kenward"))
+  method <- match.arg(method, c("wald", "satterthwaite", "kr", "kenward"))
   if (method == "wald") {
     p_value_wald(model, ...)
+  } else if (method == "satterthwaite") {
+    p_value_satterthwaite(model, ...)
   } else if (method %in% c("kr", "kenward")) {
     p_value_kenward(model, ...)
   }

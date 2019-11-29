@@ -4,7 +4,7 @@
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"kenward"} or \code{"boot"} (see \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
+#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams model_simulate
 #' @inheritParams standard_error
@@ -27,7 +27,7 @@
 #' ci(model, component = "zi")}
 #' @importFrom insight find_parameters
 #' @export
-ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "kenward", "boot"), ...) {
+ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "satterthwaite", "kenward", "boot"), ...) {
   method <- match.arg(method)
 
   # Wald approx
@@ -37,6 +37,10 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "kenward", "boot")
     # ml1 approx
   } else if (method == "ml1") {
     out <- ci_wald(model = x, ci = ci, dof = dof_ml1(x))
+
+    # Satterthwaite
+  } else if (method == "satterthwaite") {
+    out <- ci_wald(model = x, ci = ci, dof = dof_satterthwaite(x))
 
     # Kenward approx
   } else if (method == "kenward") {
