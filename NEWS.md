@@ -8,6 +8,10 @@
 
 - `dof_satterthwaite()` and `dof_ml1()` to compute degrees of freedom based on different approximation methods (and related to that, `p_value_*()` and `se_*()` for these methods were added as well).
 
+## Changes to functions
+
+- Arguments `p_method` and `ci_method` in `model_parameters.merMod()` were replaced by a single argument `df_method`.
+
 ## Bug fixes
 
 - Fixed issue in `model_parameters()` with non-typical ordering of coefficients for mixed models.
