@@ -154,11 +154,13 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (df_method %in% c("ml1", "kenward")) {
+  if (df_method %in% c("ml1", "satterthwaite", "kenward")) {
     parameters[["Std. Error"]] <- NULL
 
     if (df_method == "kenward")
       parameters <- merge(parameters, se_kenward(model), by = "Parameter")
+    else if (df_method == "satterthwaite")
+      parameters <- merge(parameters, se_satterthwaite(model), by = "Parameter")
     else
       parameters <- merge(parameters, se_ml1(model), by = "Parameter")
 
@@ -171,7 +173,7 @@
 
 
   # dof
-  if (!(df_method %in% c("ml1", "kenward")) && !"df" %in% names(parameters)) {
+  if (!(df_method %in% c("ml1", "satterthwaite", "kenward")) && !"df" %in% names(parameters)) {
     df_residual <- degrees_of_freedom(model, method = "any")
     if (!is.null(df_residual) && (length(df_residual) == 1 || length(df_residual) == nrow(parameters))) {
       parameters$df_residual <- df_residual
