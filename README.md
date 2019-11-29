@@ -129,6 +129,8 @@ model_parameters(model, df_method = "kenward")
 # Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.99 | < .001
 ```
 
+### Structural Models
+
 Besides many types of regression models and packages, it also works for
 other types of models, such as [**structural
 models**](https://easystats.github.io/parameters/articles/efa_cfa.html)
