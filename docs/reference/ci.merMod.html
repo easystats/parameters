@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -156,7 +156,12 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for merMod</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"kenward"</span>, <span class='st'>"boot"</span>), <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(
+  <span class='no'>x</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"satterthwaite"</span>, <span class='st'>"kenward"</span>, <span class='st'>"boot"</span>),
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
@@ -218,7 +223,7 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models of class <code>merMod</code>, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default), <code>"ml1"</code>, <code>"kenward"</code> or <code>"boot"</code> (see <code><a href='p_value_kenward.html'>p_value_kenward</a></code> and <code><a href='https://rdrr.io/pkg/lme4/man/confint.merMod.html'>lme4::confint.merMod</a></code>). For (generalized) linear models, can be <code>"robust"</code> to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be <code>"profile"</code> (default) or <code>"wald"</code>.</p></td>
+      <td><p>For mixed models of class <code>merMod</code>, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default), <code>"ml1"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code> or <code>"boot"</code> (see also <code><a href='p_value_kenward.html'>p_value_kenward</a></code> and <code><a href='https://rdrr.io/pkg/lme4/man/confint.merMod.html'>lme4::confint.merMod</a></code>). For (generalized) linear models, can be <code>"robust"</code> to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be <code>"profile"</code> (default) or <code>"wald"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>

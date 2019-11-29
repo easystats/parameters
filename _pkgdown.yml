@@ -39,6 +39,7 @@ reference:
   - p_value
   - p_value_kenward
   - p_value_ml1
+  - p_value_satterthwaite
   - standard_error
   - equivalence_test
   - equivalence_test.lm

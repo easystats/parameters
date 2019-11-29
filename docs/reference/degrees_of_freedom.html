@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>Can be <code>"analytical"</code> (default, DoFs are estimated based on the model type), <code>"fit"</code>, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), <code>"ml1"</code> (see <code><a href='p_value_ml1.html'>dof_ml1</a></code>), <code>"kenward"</code> (see <code><a href='p_value_kenward.html'>dof_kenward</a></code>) or <code>"any"</code>, which tries to extract DoF by any of those methods, whichever succeeds.</p></td>
+      <td><p>Can be <code>"analytical"</code> (default, DoFs are estimated based on the model type), <code>"fit"</code>, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), <code>"ml1"</code> (see <code><a href='p_value_ml1.html'>dof_ml1</a></code>), <code>"satterthwaite"</code> (see <code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code>), <code>"kenward"</code> (see <code><a href='p_value_kenward.html'>dof_kenward</a></code>) or <code>"any"</code>, which tries to extract DoF by any of those methods, whichever succeeds.</p></td>
     </tr>
     </table>
 

@@ -46,7 +46,7 @@
 
 <meta property="og:title" content="p-values — p_value" />
 <meta property="og:description" content="This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
-Mixed models (lme4): By default, p-values are based on Wald-test approximations (see p_value_wald). For certain situations, the &quot;m-l-1&quot; rule might be a better approximation. That is, for method = &quot;ml1&quot;, p_value_ml1 is called. For lmerMod objects, if method = &quot;kenward&quot;, p-values are based on Kenward-Roger approximations, i.e. p_value_kenward is called.
+Mixed models (lme4): By default, p-values are based on Wald-test approximations (see p_value_wald). For certain situations, the &quot;m-l-1&quot; rule might be a better approximation. That is, for method = &quot;ml1&quot;, p_value_ml1 is called. For lmerMod objects, if method = &quot;kenward&quot;, p-values are based on Kenward-Roger approximations, i.e. p_value_kenward is called, and method = &quot;satterthwaite&quot; calls p_value_satterthwaite.
 
 " />
 <meta property="og:image" content="/logo.png" />
@@ -82,7 +82,7 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -156,7 +156,7 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
 
     <div class="ref-description">
     <p>This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:</p><ul>
-<li><p>Mixed models (lme4): By default, p-values are based on Wald-test approximations (see <code><a href='p_value_wald.html'>p_value_wald</a></code>). For certain situations, the "m-l-1" rule might be a better approximation. That is, for <code>method = "ml1"</code>, <code><a href='p_value_ml1.html'>p_value_ml1</a></code> is called. For <code>lmerMod</code> objects, if <code>method = "kenward"</code>, p-values are based on Kenward-Roger approximations, i.e. <code><a href='p_value_kenward.html'>p_value_kenward</a></code> is called.</p></li>
+<li><p>Mixed models (lme4): By default, p-values are based on Wald-test approximations (see <code><a href='p_value_wald.html'>p_value_wald</a></code>). For certain situations, the "m-l-1" rule might be a better approximation. That is, for <code>method = "ml1"</code>, <code><a href='p_value_ml1.html'>p_value_ml1</a></code> is called. For <code>lmerMod</code> objects, if <code>method = "kenward"</code>, p-values are based on Kenward-Roger approximations, i.e. <code><a href='p_value_kenward.html'>p_value_kenward</a></code> is called, and <code>method = "satterthwaite"</code> calls <code><a href='p_value_satterthwaite.html'>p_value_satterthwaite</a></code>.</p></li>
 </ul>
 
     </div>
@@ -196,7 +196,7 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default), <code><a href='p_value_ml1.html'>"ml1"</a></code> or <code><a href='p_value_kenward.html'>"kenward"</a></code>.</p></td>
+      <td><p>For mixed models, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default), <code><a href='p_value_ml1.html'>"ml1"</a></code>, <code><a href='p_value_satterthwaite.html'>"satterthwaite"</a></code> or <code><a href='p_value_kenward.html'>"kenward"</a></code>.</p></td>
     </tr>
     <tr>
       <th>component</th>

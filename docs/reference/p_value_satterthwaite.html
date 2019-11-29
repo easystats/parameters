@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Number of Clusters to Extract — n_clusters • parameters</title>
+<title>p-values using Satterthwaite approximation — dof_satterthwaite • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Number of Clusters to Extract — n_clusters" />
-<meta property="og:description" content="This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters." />
+<meta property="og:title" content="p-values using Satterthwaite approximation — dof_satterthwaite" />
+<meta property="og:description" content="An approximate F-test based on the Satterthwaite (1946) approach." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,68 +146,78 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Number of Clusters to Extract</h1>
+    <h1>p-values using Satterthwaite approximation</h1>
     
-    <div class="hidden name"><code>n_clusters.Rd</code></div>
+    <div class="hidden name"><code>p_value_satterthwaite.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.</p>
+    <p>An approximate F-test based on the Satterthwaite (1946) approach.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>n_clusters</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>package</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"NbClust"</span>, <span class='st'>"mclust"</span>, <span class='st'>"clValid"</span>, <span class='st'>"cluster"</span>),
-  <span class='kw'>fast</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>dof_satterthwaite</span>(<span class='no'>model</span>)
+
+<span class='fu'>p_value_satterthwaite</span>(<span class='no'>model</span>, <span class='kw'>dof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>se_satterthwaite</span>(<span class='no'>model</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A data frame.</p></td>
+      <th>model</th>
+      <td><p>A statistical model.</p></td>
     </tr>
     <tr>
-      <th>standardize</th>
-      <td><p>Standardize the dataframe before clustering (default).</p></td>
-    </tr>
-    <tr>
-      <th>force</th>
-      <td><p>Logical, if <code>TRUE</code>, factors are converted to numerical
-values in order to be included in the data for determining the number of
-clusters. By default, factors are removed, because most methods that determine
-the number of clusters need numeric input only.</p></td>
-    </tr>
-    <tr>
-      <th>package</th>
-      <td><p>These are the packages from which methods are used to determine the number of clusters. Can be <code>"all"</code> or a vector containing <code>"NbClust"</code>, <code>"mclust"</code>, <code>"clValid"</code> and <code>"cluster"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>fast</th>
-      <td><p>If <code>FALSE</code>, will compute 4 more indices (sets <code>index = "allong"</code> in <code>NbClust</code>). This has been deactivated by default as it is computationaly heavy.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <th>dof</th>
+      <td><p>Degrees of Freedom.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The p-values.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Inferential statistics (like p-values, confidence intervals and
+standard errors) may be biased in mixed models when the number of clusters
+is small (even if the sample size of level-1 units is high). In such cases
+it is recommended to approximate a more accurate number of degrees of freedom
+for such inferential statitics. Unlike simpler approximation heuristics
+like the "m-l-1" rule (<code>dof_ml1</code>), the Satterthwaite approximation is
+also applicable in more complex multilevel designs. However, the "m-l-1"
+heuristic also applies to generalized mixed models, while approaches like
+Kenward-Roger or Satterthwaite are limited to linear mixed models only.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Satterthwaite FE (1946) An approximate distribution of estimates of variance components. Biometrics Bulletin 2 (6):110–4.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code>dof_satterthwaite()</code> and <code>se_satterthwaite()</code> are small helper-functions
+to calculate approximated degrees of freedom and standard errors for model
+parameters, based on the Satterthwaite (1946) approach.
+<br /> <br />
+<code><a href='p_value_kenward.html'>dof_kenward</a></code> and <code><a href='p_value_ml1.html'>dof_ml1</a></code> approximate degrees
+of freedom bases on Kenward-Roger's method or the "m-l-1" rule.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='co'># \donttest{</span>
-<span class='fu'>n_clusters</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])<span class='co'># }</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
-#&gt; 
-#&gt; </span><span>The choice of 2 clusters is supported by 15 (45.45%) methods out of 33 (CH, Cindex, DB, Silhouette, Beale, Ratkowsky, PtBiserial, McClain, Dunn, SDindex, Mixture, APN, ADM, Connectivity, Tibs2001SEmax).</div></span></pre>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>p_value_satterthwaite</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;      Parameter            p
+#&gt; 1  (Intercept) 9.605150e-01
+#&gt; 2 Sepal.Length 7.881906e-29</div><div class='input'># }
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#references">References</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
