@@ -293,15 +293,17 @@
 <a class="sourceLine" id="cb17-5" title="5">big6 &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(structure_big6, <span class="dt">data =</span> test)</a>
 <a class="sourceLine" id="cb17-6" title="6"></a>
 <a class="sourceLine" id="cb17-7" title="7">performance<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/performance/man/model_performance.html">compare_performance</a></span>(big5, big6)</a></code></pre></div>
-<pre><code>&gt;   Model   Type Chisq Chisq_df Chisq_p Baseline Baseline_df Baseline_p  GFI AGFI
-&gt; 1  big5 lavaan  1357      265       0     5822         300          0 0.86 0.82
-&gt; 2  big6 lavaan  1530      265       0     5822         300          0 0.84 0.81
-&gt;    NFI NNFI  CFI RMSEA RMSEA_CI_low RMSEA_CI_high RMSEA_p  RMR  SRMR  RFI PNFI
-&gt; 1 0.77 0.78 0.80 0.075        0.071         0.079 0.0e+00 0.16 0.077 0.74 0.68
-&gt; 2 0.74 0.74 0.77 0.081        0.077         0.085 8.8e-14 0.18 0.085 0.70 0.65
-&gt;    IFI  RNI Loglikelihood   AIC   BIC BIC_adjusted      BF
-&gt; 1 0.80 0.80        -29897 59914 60190        59999      NA
-&gt; 2 0.77 0.77        -29983 60087 60362        60172 3.2e-38</code></pre>
+<pre><code>&gt; # Comparison of Model Performance Indices
+&gt; 
+&gt;  Model   Type Chisq Chisq_df Chisq_p Baseline Baseline_df Baseline_p  GFI AGFI
+&gt;   big5 lavaan  1357      265       0     5822         300          0 0.86 0.82
+&gt;   big6 lavaan  1530      265       0     5822         300          0 0.84 0.81
+&gt;   NFI NNFI  CFI RMSEA RMSEA_CI_low RMSEA_CI_high RMSEA_p  RMR  SRMR  RFI PNFI
+&gt;  0.77 0.78 0.80 0.075        0.071         0.079       0 0.16 0.077 0.74 0.68
+&gt;  0.74 0.74 0.77 0.081        0.077         0.085       0 0.18 0.085 0.70 0.65
+&gt;   IFI  RNI Loglikelihood   AIC   BIC BIC_adjusted BF
+&gt;  0.80 0.80        -29897 59914 60190        59999 NA
+&gt;  0.77 0.77        -29983 60087 60362        60172  0</code></pre>
 <p>All in all, it seems that the big 5 structure remains quite reliable.</p>
 </div>
 </div>

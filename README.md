@@ -114,12 +114,19 @@ library(lme4)
 
 model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 
-# model parameters with p-values based on Kenward-Roger approximation
-model_parameters(model, p_method = "kenward", ci_method = "kenward")
+# model parameters with CI, df and p-values based on Wald approximation
+model_parameters(model)
+# Parameter    | Coefficient |   SE |       95% CI |    t |  df |      p
+# ----------------------------------------------------------------------
+# (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | 146 | < .001
+# Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | 146 | < .001
+
+# model parameters with CI, df and p-values based on Kenward-Roger approximation
+model_parameters(model, df_method = "kenward")
 # Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p
 # -------------------------------------------------------------------------
-# (Intercept)  |        2.00 | 0.57 | [0.08, 3.92] | 3.56 |   2.67 | 0.046 
-# Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.75 | 140.99 | < .001
+# (Intercept)  |        2.00 | 0.57 | [0.08, 3.92] | 3.53 |   2.67 | 0.046 
+# Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.99 | < .001
 ```
 
 Besides many types of regression models and packages, it also works for

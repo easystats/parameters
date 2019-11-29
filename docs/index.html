@@ -182,12 +182,19 @@
 <a class="sourceLine" id="cb4-2" title="2"></a>
 <a class="sourceLine" id="cb4-3" title="3">model &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Species), <span class="dt">data =</span> iris)</a>
 <a class="sourceLine" id="cb4-4" title="4"></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co"># model parameters with p-values based on Kenward-Roger approximation</span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">p_method =</span> <span class="st">"kenward"</span>, <span class="dt">ci_method =</span> <span class="st">"kenward"</span>)</a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co"># Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co"># -------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co"># (Intercept)  |        2.00 | 0.57 | [0.08, 3.92] | 3.56 |   2.67 | 0.046 </span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co"># Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.75 | 140.99 | &lt; .001</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co"># model parameters with CI, df and p-values based on Wald approximation</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model)</a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co"># Parameter    | Coefficient |   SE |       95% CI |    t |  df |      p</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co"># ----------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co"># (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | 146 | &lt; .001</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co"># Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | 146 | &lt; .001</span></a>
+<a class="sourceLine" id="cb4-11" title="11"></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co"># model parameters with CI, df and p-values based on Kenward-Roger approximation</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">df_method =</span> <span class="st">"kenward"</span>)</a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co"># Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co"># -------------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co"># (Intercept)  |        2.00 | 0.57 | [0.08, 3.92] | 3.53 |   2.67 | 0.046 </span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co"># Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.99 | &lt; .001</span></a></code></pre></div>
 <p>Besides many types of regression models and packages, it also works for other types of models, such as <a href="https://easystats.github.io/parameters/articles/efa_cfa.html"><strong>structural models</strong></a> (EFA, CFA, SEM…).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(psych)</a>
 <a class="sourceLine" id="cb5-2" title="2"></a>

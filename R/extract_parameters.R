@@ -95,11 +95,19 @@
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
 
-  if (df_method == "wald" || !insight::model_info(model)$is_linear) {
+  if (df_method == "ml1") {
+    df <- dof_ml1(model)
+    parameters$df <- df
+  } else if (df_method == "wald") {
     df <- Inf
   } else {
-    df <- dof_kenward(model)
-    parameters$df <- df
+    if (insight::model_info(model)$is_linear) {
+      df <- dof_kenward(model)
+      parameters$df <- df
+    } else {
+      warning("df_method = 'kenward' is only available for linear mixed models.", call. = FALSE)
+      df <- Inf
+    }
   }
 
   # Std Coefficients
@@ -138,9 +146,14 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (df_method == "kenward") {
+  if (df_method %in% c("ml1", "kenward")) {
     parameters[["Std. Error"]] <- NULL
-    parameters <- merge(parameters, se_kenward(model), by = "Parameter")
+
+    if (df_method == "kenward")
+      parameters <- merge(parameters, se_kenward(model), by = "Parameter")
+    else
+      parameters <- merge(parameters, se_ml1(model), by = "Parameter")
+
     for (test_statistic in c("t value", "z value")) {
       if (test_statistic %in% colnames(parameters)) {
         parameters[[test_statistic]] <- parameters[["Estimate"]] / parameters[["SE"]]
@@ -150,7 +163,7 @@
 
 
   # dof
-  if (df_method != "kenward" && !"df" %in% names(parameters)) {
+  if (!(df_method %in% c("ml1", "kenward")) && !"df" %in% names(parameters)) {
     df_residual <- degrees_of_freedom(model, method = "any")
     if (!is.null(df_residual) && (length(df_residual) == 1 || length(df_residual) == nrow(parameters))) {
       parameters$df_residual <- df_residual

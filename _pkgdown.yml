@@ -38,6 +38,7 @@ reference:
   - degrees_of_freedom
   - p_value
   - p_value_kenward
+  - p_value_ml1
   - standard_error
   - equivalence_test
   - equivalence_test.lm
@@ -72,6 +73,7 @@ reference:
   - check_kmo
   - check_sphericity
   - convert_efa_to_cfa
+  - factor_analysis
   - n_factors
   - principal_components
   - cmds

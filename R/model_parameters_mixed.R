@@ -4,7 +4,7 @@
 #'
 #' @param model A mixed model.
 #' @inheritParams model_parameters.default
-#' @param df_method Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}) or \code{"kenward"} (see \code{\link{dof_kenward}}).
+#' @param df_method Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}) or \code{"kenward"} (see \code{\link{dof_kenward}}).
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
@@ -33,7 +33,7 @@
 #' @export
 model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
   # p-values, CI and se might be based of wald, or KR
-  df_method <- match.arg(df_method, choices = c("wald", "kenward"))
+  df_method <- match.arg(df_method, choices = c("wald", "ml1", "kenward"))
 
   # Processing
   if (bootstrap) {

@@ -149,6 +149,25 @@
       
     </div>
 
+    <div id="parameters-031" class="section level1">
+<h1 class="page-header">
+<a href="#parameters-031" class="anchor"></a>parameters 0.3.1<small> Unreleased </small>
+</h1>
+<div id="new-supported-models" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-supported-models" class="anchor"></a>New supported models</h2>
+<ul>
+<li>Added support for <code>vgam</code> (<em>VGAM</em>), <code>complmrob</code> (<em>complmrob</em>), <code>fixest</code> (<em>fixest</em>).</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with non-typical ordering of coefficients for mixed models.</li>
+</ul>
+</div>
+</div>
     <div id="parameters-030" class="section level1">
 <h1 class="page-header">
 <a href="#parameters-030" class="anchor"></a>parameters 0.3.0<small> 2019-11-20 </small>
@@ -164,9 +183,9 @@
 <code>standardize()</code> and <code>normalize()</code> (and hence, also <code>parameters_standardize()</code>) have been removed ;-( and are now re-implemented in the <strong>effectsize</strong>-package.</li>
 </ul>
 </div>
-<div id="new-supported-models" class="section level2">
+<div id="new-supported-models-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-supported-models" class="anchor"></a>New supported models</h2>
+<a href="#new-supported-models-1" class="anchor"></a>New supported models</h2>
 <ul>
 <li>Added support for <code>aareg</code> (<em>survival</em>), <code>bracl</code>, <code>brmultinom</code> (<em>brglm2</em>), <code>rma</code> (<em>metafor</em>) and <code>multinom</code> (<em>nnet</em>) to various functions.</li>
 <li>
@@ -216,9 +235,9 @@
 <li>Added further method (gap-statistic) to <code><a href="../reference/n_clusters.html">n_clusters()</a></code>.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Interaction terms in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
 <li>Fixed bug in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when a parameter occured multiple times in a model.</li>
@@ -281,9 +300,9 @@
 <li>The <code>method</code>-argument for <code><a href="../reference/ci.merMod.html">ci.merMod()</a></code> can now also be <code>"kenward"</code> to compute confidence intervals with degrees of freedom based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue with wrong computation of wald-approximated confidence intervals.</li>
 <li>Fixed issue with wrong computation of degrees of freedom for <code><a href="../reference/p_value_kenward.html">p_value_kenward()</a></code>.</li>
@@ -306,6 +325,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#parameters-031">0.3.1</a></li>
         <li><a href="#parameters-030">0.3.0</a></li>
         <li><a href="#parameters-020">0.2.0</a></li>
         <li><a href="#parameters-010">0.1.0</a></li>

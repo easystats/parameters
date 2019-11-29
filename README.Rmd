@@ -102,8 +102,11 @@ library(lme4)
 
 model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 
-# model parameters with p-values based on Kenward-Roger approximation
-model_parameters(model, p_method = "kenward", ci_method = "kenward")
+# model parameters with CI, df and p-values based on Wald approximation
+model_parameters(model)
+
+# model parameters with CI, df and p-values based on Kenward-Roger approximation
+model_parameters(model, df_method = "kenward")
 ```
 
 
