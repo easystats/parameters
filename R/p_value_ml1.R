@@ -1,14 +1,27 @@
-#' p-values using m-l-1 heuristic
+#' p-values using the "m-l-1" heuristic
 #'
-#' An approximate F-test based on a m-l-1 as suggested by Giesbrecht and Burns (1985).
+#' Approximation of degrees of freedom based on a "m-l-1" heuristic as suggested by Elff et al. (2019).
 #'
-#' @param model A statistical model.
+#' @param model A mixed model.
 #' @param dof Degrees of Freedom.
 #'
-#' @details \code{dof_ml1()} and \code{se_ml1()} are small helper-functions
+#' @details Inferential statistics (like p-values, confidence intervals and
+#' standard errors) may be biased in mixed models when the number of clusters
+#' is small (even if the sample size of level-1 units is high). In such cases
+#' it is recommended to approximate a more accurate number of degrees of freedom
+#' for such inferential statitics. The \emph{m-l-1} heuristic is such an approach
+#' that uses a t-distribution with fewer degrees of freedom (\code{dof_ml1}) to
+#' calculate p-values (\code{p_value_ml1}), standard errors (\code{se_ml1})
+#' and confidence intervals (\code{ci(method = "ml1")}).
+#' \strong{Note} that the "m-l-1" heuristic is not applicable for complex
+#' multilevel designs, e.g. with cross-classified clusters. In such cases,
+#' more accurate approaches like the Kenward-Roger approximation (\code{dof_kenward()})
+#' is recommended. However, the "m-l-1" heuristic also applies to generalized
+#' mixed models, while approaches like Kenward-Roger or Satterthwaite are limited
+#' to linear mixed models only.'
+#' @seealso \code{dof_ml1()} and \code{se_ml1()} are small helper-functions
 #' to calculate approximated degrees of freedom and standard errors of model
-#' parameters, based on the m-l-1 heuristic as suggested by Giesbrecht and
-#' Burns.
+#' parameters, based on the "m-l-1" heuristic.
 #'
 #' @examples
 #' \donttest{
@@ -18,7 +31,7 @@
 #' }
 #'
 #' @return The p-values.
-#' @references Giesbrecht, F.G. and Burns, J.C. (1985), "Two-Stage Analysis Based on a Mixed Model: Large-sample Asymptotic Theory and Small-Sample Simulation Results", Biometrics 41: 853-862.
+#' @references Elff, M.; Heisig, J.P.; Schaeffer, M.; Shikano, S. (2019): Multilevel Analysis with Few Clusters: Improving Likelihood-based Methods to Provide Unbiased Estimates and Accurate Inference, British Journal of Political Science.
 #' @importFrom stats pt coef
 #' @export
 p_value_ml1 <- function(model, dof = NULL) {

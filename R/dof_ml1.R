@@ -2,6 +2,11 @@
 #' @importFrom insight get_random find_predictors find_parameters get_data has_intercept
 #' @export
 dof_ml1 <- function(model) {
+
+  if (!insight::model_info(model)$is_mixed) {
+    stop("Model must be a mixed model.")
+  }
+
   re_groups <- insight::get_random(model)
 
   parameters <- insight::find_parameters(model)[["conditional"]]
@@ -30,7 +35,7 @@ dof_ml1 <- function(model) {
   out[which("(Intercept)" != parameters)] <- ddf[term_assignment]
   if (has_intcp) out[which("(Intercept)" == parameters)] <- min(ddf)
 
-  unname(out)
+  stats::setNames(out, parameters)
 }
 
 

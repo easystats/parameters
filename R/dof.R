@@ -3,7 +3,7 @@
 #' Estimate or extract degrees of freedom of models.
 #'
 #' @param model A statistical model.
-#' @param method Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.
+#' @param method Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"kenward"} (see \code{\link{dof_kenward}}) or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
@@ -27,13 +27,17 @@
 #' @export
 degrees_of_freedom <- function(model, method = "analytical") {
 
-  method <- match.arg(method, c("analytical", "any", "fit", "nokr"))
+  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "kenward", "nokr"))
 
   if (method == "any") {
     dof <- .degrees_of_freedom_fit(model, verbose = FALSE)
     if (is.null(dof) || is.infinite(dof) || anyNA(dof)) {
       dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
     }
+  } else if (method == "ml1") {
+    dof <- dof_ml1(model)
+  } else if (method == "kenward") {
+    dof <- dof_kenward(model)
   } else if (method == "analytical") {
     dof <- .degrees_of_freedom_analytical(model)
   } else if (method == "nokr") {
@@ -63,7 +67,7 @@ dof <- degrees_of_freedom
   n <- insight::n_obs(model)
 
   if (isTRUE(kenward) && inherits(model, "lmerMod")) {
-    dof <- as.numeric(t(dof_kenward(model)))
+    dof <- as.numeric(dof_kenward(model))
   } else{
     dof <- rep(n - nparam, nparam)
   }

@@ -2,10 +2,11 @@
 #'
 #' This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
 #' \itemize{
-#' \item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called.
+#' \item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called.
 #' }
 #'
 #' @param model A statistical model.
+#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}} or \code{\link[=p_value_kenward]{"kenward"}}.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams model_simulate
 #' @inheritParams standard_error
@@ -187,7 +188,6 @@ p_value.lme <- function(model, ...) {
 
 
 #' @rdname p_value
-#' @param method For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.
 #' @export
 p_value.lmerMod <- function(model, method = "wald", ...) {
   method <- match.arg(method, c("wald", "kr", "kenward"))
@@ -200,9 +200,16 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 
 
 
+#' @rdname p_value
 #' @export
-p_value.merMod <- function(model, ...) {
-  p_value_wald(model, ...)
+p_value.merMod <- function(model, method = "wald", ...) {
+  method <- match.arg(method, c("wald", "ml1"))
+  if (method == "wald") {
+    dof <- Inf
+  } else {
+    dof <- dof_ml1(model)
+  }
+  p_value_wald(model, dof, ...)
 }
 
 

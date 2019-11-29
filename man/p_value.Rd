@@ -3,6 +3,7 @@
 \name{p_value}
 \alias{p_value}
 \alias{p_value.lmerMod}
+\alias{p_value.merMod}
 \alias{p_value.glmmTMB}
 \alias{p_value.MixMod}
 \alias{p_value_robust}
@@ -11,6 +12,8 @@
 p_value(model, ...)
 
 \method{p_value}{lmerMod}(model, method = "wald", ...)
+
+\method{p_value}{merMod}(model, method = "wald", ...)
 
 \method{p_value}{glmmTMB}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
 
@@ -29,7 +32,7 @@ p_value_robust(
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 
-\item{method}{For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.}
+\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}} or \code{\link[=p_value_kenward]{"kenward"}}.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
@@ -56,7 +59,7 @@ The p-values.
 \description{
 This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
 \itemize{
-\item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called.
+\item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called.
 }
 }
 \examples{
