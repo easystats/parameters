@@ -14,11 +14,11 @@ n_parameters(x, ...)
 
 \method{n_parameters}{default}(x, ...)
 
-\method{n_parameters}{merMod}(x, effects = c("all", "fixed", "random"), ...)
+\method{n_parameters}{merMod}(x, effects = c("fixed", "random"), ...)
 
 \method{n_parameters}{glmmTMB}(
   x,
-  effects = c("all", "fixed", "random"),
+  effects = c("fixed", "random"),
   component = c("all", "conditional", "zi", "zero_inflated"),
   ...
 )

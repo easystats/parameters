@@ -35,7 +35,7 @@ n_parameters.default <- function(x, ...) {
 
 #' @rdname n_parameters
 #' @export
-n_parameters.merMod <- function(x, effects = c("all", "fixed", "random"), ...) {
+n_parameters.merMod <- function(x, effects = c("fixed", "random"), ...) {
   effects <- match.arg(effects)
   length(insight::find_parameters(x, effects = effects, flatten = TRUE, ...))
 }
@@ -73,7 +73,7 @@ n_parameters.wbm <- n_parameters.merMod
 # Models with random effects and other components ----------------------------
 
 #' @export
-n_parameters.MixMod <- function(x, effects = c("all", "fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+n_parameters.MixMod <- function(x, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
   length(insight::find_parameters(x, effects = effects, component = component, flatten = TRUE, ...))

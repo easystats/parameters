@@ -19,6 +19,7 @@
 ## Bug fixes
 
 - Fixed issue in `model_parameters()` with non-typical ordering of coefficients for mixed models.
+- Fixed issues with models of class `rlmerMod`.
 
 # parameters 0.3.0
 

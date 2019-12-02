@@ -220,6 +220,20 @@ p_value.merMod <- function(model, method = "wald", ...) {
 
 #' @rdname p_value
 #' @export
+p_value.rlmerMod <- function(model, method = "wald", ...) {
+  method <- match.arg(method, c("wald", "ml1"))
+  if (method == "wald") {
+    dof <- Inf
+  } else {
+    dof <- dof_ml1(model)
+  }
+  p_value_wald(model, dof, ...)
+}
+
+
+
+#' @rdname p_value
+#' @export
 p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
   if (is.null(.check_component(model, component))) {
