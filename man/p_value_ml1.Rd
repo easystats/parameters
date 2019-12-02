@@ -37,7 +37,7 @@ multilevel designs, e.g. with cross-classified clusters. In such cases,
 more accurate approaches like the Kenward-Roger approximation (\code{dof_kenward()})
 is recommended. However, the "m-l-1" heuristic also applies to generalized
 mixed models, while approaches like Kenward-Roger or Satterthwaite are limited
-to linear mixed models only.'
+to linear mixed models only.
 }
 \examples{
 \donttest{

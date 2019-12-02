@@ -18,7 +18,7 @@
 #' more accurate approaches like the Kenward-Roger approximation (\code{dof_kenward()})
 #' is recommended. However, the "m-l-1" heuristic also applies to generalized
 #' mixed models, while approaches like Kenward-Roger or Satterthwaite are limited
-#' to linear mixed models only.'
+#' to linear mixed models only.
 #' @seealso \code{dof_ml1()} and \code{se_ml1()} are small helper-functions
 #' to calculate approximated degrees of freedom and standard errors of model
 #' parameters, based on the "m-l-1" heuristic.

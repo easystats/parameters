@@ -27,7 +27,11 @@
 #' @export
 degrees_of_freedom <- function(model, method = "analytical") {
 
-  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "satterthwaite", "kenward", "nokr"))
+  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "satterthwaite", "kenward", "nokr", "wald"))
+
+  if (!.dof_method_ok(model, method)) {
+    method <- "any"
+  }
 
   if (method == "any") {
     dof <- .degrees_of_freedom_fit(model, verbose = FALSE)
@@ -36,6 +40,8 @@ degrees_of_freedom <- function(model, method = "analytical") {
     }
   } else if (method == "ml1") {
     dof <- dof_ml1(model)
+  } else if (method == "wald") {
+    dof <- Inf
   } else if (method == "satterthwaite") {
     dof <- dof_satterthwaite(model)
   } else if (method == "kenward") {
@@ -108,4 +114,15 @@ dof <- degrees_of_freedom
   }
 
   dof
+}
+
+
+
+
+.dof_method_ok <- function(model, method) {
+  if (!insight::model_info(model)$is_linear && method %in% c("satterthwaite", "kenward")) {
+    warning(sprintf("'%s'-degrees of freedoms are only available for linear mixed models.", method), call. = FALSE)
+    return(FALSE)
+  }
+  return(TRUE)
 }

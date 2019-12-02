@@ -190,9 +190,11 @@ p_value.lme <- function(model, ...) {
 #' @rdname p_value
 #' @export
 p_value.lmerMod <- function(model, method = "wald", ...) {
-  method <- match.arg(method, c("wald", "satterthwaite", "kr", "kenward"))
+  method <- match.arg(method, c("wald", "ml1", "satterthwaite", "kr", "kenward"))
   if (method == "wald") {
     p_value_wald(model, ...)
+  } else if (method == "ml1") {
+    p_value_ml1(model, ...)
   } else if (method == "satterthwaite") {
     p_value_satterthwaite(model, ...)
   } else if (method %in% c("kr", "kenward")) {

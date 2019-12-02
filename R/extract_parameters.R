@@ -95,28 +95,14 @@
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
 
-  if (df_method == "ml1") {
-    df <- dof_ml1(model)
-    parameters$df <- df
-  } else if (df_method == "wald") {
-    df <- Inf
-  } else if (df_method == "satterthwaite") {
-    if (insight::model_info(model)$is_linear) {
-      df <- dof_satterthwaite(model)
-      parameters$df <- df
-    } else {
-      warning("df_method = 'satterthwaite' is only available for linear mixed models.", call. = FALSE)
-      df <- Inf
-    }
+
+  # Degrees of freedom
+  if (.dof_method_ok(model, df_method)) {
+    df <- degrees_of_freedom(model, method)
   } else {
-    if (insight::model_info(model)$is_linear) {
-      df <- dof_kenward(model)
-      parameters$df <- df
-    } else {
-      warning("df_method = 'kenward' is only available for linear mixed models.", call. = FALSE)
-      df <- Inf
-    }
+    df <- Inf
   }
+
 
   # Std Coefficients
   if (!is.null(standardize)) {
