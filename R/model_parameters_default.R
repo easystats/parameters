@@ -149,9 +149,6 @@ model_parameters.feis <- model_parameters.default
 model_parameters.coxph <- model_parameters.default
 
 #' @export
-model_parameters.betareg <- model_parameters.default
-
-#' @export
 model_parameters.lrm <- model_parameters.default
 
 #' @export
@@ -213,6 +210,25 @@ model_parameters.LORgee <- model_parameters.default
 
 
 # other special cases ------------------------------------------------
+
+
+#' @export
+model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
 
 
 #' @export

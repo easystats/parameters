@@ -139,6 +139,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "Loading" = "Loading",
       "nu" = "Nu",
       "tau" = "Tau",
+      "precision" = "Precision",
       type
     )
 

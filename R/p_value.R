@@ -661,11 +661,13 @@ p_value.rlm <- function(model, ...) {
 
 #' @export
 p_value.betareg <- function(model, ...) {
+  params <- insight::get_parameters(model)
   cs <- do.call(rbind, stats::coef(summary(model)))
   p <- cs[, 4]
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(p)),
+    Parameter = params$Parameter,
+    Component = params$Component,
     p = as.vector(p)
   )
 }
