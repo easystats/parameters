@@ -10,7 +10,7 @@ ci_wald(
   model,
   ci = 0.95,
   dof = NULL,
-  component = c("all", "conditional", "zi", "zero_inflated"),
+  component = c("all", "conditional", "zi", "zero_inflated", "precision"),
   robust = FALSE,
   ...
 )

@@ -213,10 +213,17 @@ model_parameters.LORgee <- model_parameters.default
 
 
 #' @export
-model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "precision", "all"), standardize = NULL, exponentiate = FALSE, ...) {
+  component <- match.arg(component)
+  if (component == "all")
+    merge_by <- c("Parameter", "Component")
+  else
+    merge_by <- "Parameter"
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
+    component = component,
     bootstrap = bootstrap,
     iterations = iterations,
     merge_by = c("Parameter", "Component"),

@@ -195,10 +195,6 @@ model_simulate.logistf <- model_simulate.lm
 
 
 #' @export
-model_simulate.betareg <- model_simulate.lm
-
-
-#' @export
 model_simulate.truncreg <- model_simulate.lm
 
 
@@ -353,6 +349,19 @@ model_simulate.hurdle <- model_simulate.zeroinfl
 #' @export
 model_simulate.zerocount <- model_simulate.zeroinfl
 
+
+
+
+
+# Other models ---------------------------------------
+
+
+#' @importFrom insight get_parameters
+#' @export
+model_simulate.betareg <- function(model, iterations = 1000, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  .model_simulate(model, iterations, component = component)
+}
 
 
 

@@ -262,9 +262,6 @@ ci.crch <- ci.gamlss
 ci.feis <- ci.gamlss
 
 #' @export
-ci.betareg <- ci.gamlss
-
-#' @export
 ci.censReg <- ci.gamlss
 
 #' @export
@@ -380,6 +377,13 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
 
 
 # Special models -----------------------------------------
+
+
+#' @export
+ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+}
 
 
 #' @export
