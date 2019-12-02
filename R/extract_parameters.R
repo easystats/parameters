@@ -56,9 +56,9 @@
   parameters <- merge(parameters, statistic, by = merge_by)
 
   # dof
-  df_residual <- degrees_of_freedom(model, method = "any")
-  if (!is.null(df_residual) && (length(df_residual) == 1 || length(df_residual) == nrow(parameters))) {
-    parameters$df_residual <- df_residual
+  df_error <- degrees_of_freedom(model, method = "any")
+  if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
+    parameters$df_error <- df_error
   }
 
   # Rematch order after merging
@@ -69,7 +69,7 @@
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
   # Reorder
-  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_residual", "p", "Component", "Response")
+  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_error", "p", "Component", "Response")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   # remove Component column if not needed
@@ -98,7 +98,7 @@
 
   # Degrees of freedom
   if (.dof_method_ok(model, df_method)) {
-    df <- degrees_of_freedom(model, method)
+    df <- degrees_of_freedom(model, df_method)
   } else {
     df <- Inf
   }
@@ -160,9 +160,9 @@
 
   # dof
   if (!(df_method %in% c("ml1", "satterthwaite", "kenward")) && !"df" %in% names(parameters)) {
-    df_residual <- degrees_of_freedom(model, method = "any")
-    if (!is.null(df_residual) && (length(df_residual) == 1 || length(df_residual) == nrow(parameters))) {
-      parameters$df_residual <- df_residual
+    df_error <- degrees_of_freedom(model, method = "any")
+    if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
+      parameters$df_error <- df_error
     }
   }
 
@@ -177,7 +177,7 @@
   names(parameters) <- gsub("z value", "z", names(parameters))
 
   # Reorder
-  order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_residual", "p")
+  order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   rownames(parameters) <- NULL

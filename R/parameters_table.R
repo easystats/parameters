@@ -43,9 +43,14 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   # Format specific columns
   if ("n_Obs" %in% names(x)) x$n_Obs <- insight::format_value(x$n_Obs, protect_integers = TRUE)
   if ("n_Missing" %in% names(x)) x$n_Missing <- insight::format_value(x$n_Missing, protect_integers = TRUE)
+  # generic df
   if ("df" %in% names(x)) x$df <- insight::format_value(x$df, protect_integers = TRUE)
+  # residual df
   if ("df_residual" %in% names(x)) x$df_residual <- insight::format_value(x$df_residual, protect_integers = TRUE)
   names(x)[names(x) == "df_residual"] <- "df"
+  # df for errors
+  if ("df_error" %in% names(x)) x$df_error <- insight::format_value(x$df_error, protect_integers = TRUE)
+  names(x)[names(x) == "df_error"] <- "df"
 
   # P values
   if ("p" %in% names(x)) {

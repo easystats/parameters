@@ -282,7 +282,7 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
     CI_low = rma_ci_low,
     CI_high = rma_ci_high,
     z = rma_statistic,
-    df_residual = NA,
+    df_error = NA,
     p = rma_ci_p,
     Weight = 1 / as.vector(model$vi),
     stringsAsFactors = FALSE
@@ -297,7 +297,7 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
   attributes(out) <- original_attributes
 
   # no df
-  out$df_residual <- NULL
+  out$df_error <- NULL
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
 
   out
