@@ -52,6 +52,11 @@ parameters_type <- function(model, ...) {
     params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
   }
 
+  # Special case
+  if (inherits(model, "bracl")) {
+    params$Parameter <- gsub("(.*):(.*)", "\\2", params$Parameter)
+  }
+
 
   # Remove "as.factor()", "log()" etc. from parameter names but save original parameter before
   original_parameter <- params$Parameter
