@@ -833,16 +833,24 @@ standard_error.psm <- standard_error.lrm
 
 
 #' @export
-standard_error.betareg <- function(model, ...) {
+standard_error.betareg <- function(model, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+
   params <- insight::get_parameters(model)
   cs <- do.call(rbind, stats::coef(summary(model)))
   se <- cs[, 2]
 
-  .data_frame(
+  out <- .data_frame(
     Parameter = .remove_backticks_from_string(names(se)),
     Component = params$Component,
     SE = as.vector(se)
   )
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
 }
 
 

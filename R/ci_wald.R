@@ -7,7 +7,7 @@
 #'
 #' @importFrom stats qt coef
 #' @export
-ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "conditional", "zi", "zero_inflated"), robust = FALSE, ...) {
+ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "conditional", "zi", "zero_inflated", "precision"), robust = FALSE, ...) {
   component <- match.arg(component)
   out <- lapply(ci, function(i) {
     .ci_wald(model = model, ci = i, dof = dof, component = component, robust = robust, ...)

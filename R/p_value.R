@@ -660,16 +660,24 @@ p_value.rlm <- function(model, ...) {
 
 
 #' @export
-p_value.betareg <- function(model, ...) {
+p_value.betareg <- function(model, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+
   params <- insight::get_parameters(model)
   cs <- do.call(rbind, stats::coef(summary(model)))
   p <- cs[, 4]
 
-  .data_frame(
+  out <- .data_frame(
     Parameter = params$Parameter,
     Component = params$Component,
     p = as.vector(p)
   )
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
 }
 
 
