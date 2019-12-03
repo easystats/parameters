@@ -153,11 +153,18 @@
 <h1 class="page-header">
 <a href="#parameters-031" class="anchor"></a>parameters 0.3.1<small> Unreleased </small>
 </h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>The column for degrees of freedom in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> was renamed from <code>df_residuals</code> to <code>df_error</code> for regression model objects, because these degrees of freedom actually were not always referring to <em>residuals</em> - we consider <code>df_error</code> as a more generic name.</li>
+</ul>
+</div>
 <div id="new-supported-models" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-supported-models" class="anchor"></a>New supported models</h2>
 <ul>
-<li>Added support for <code>vgam</code> (<em>VGAM</em>), <code>complmrob</code> (<em>complmrob</em>), <code>fixest</code> (<em>fixest</em>).</li>
+<li>Added support for <code>vgam</code> (<em>VGAM</em>), <code>complmrob</code> (<em>complmrob</em>), <code>fixest</code> (<em>fixest</em>), <code>glmmadmb</code> (<em>glmmADMB</em>).</li>
 </ul>
 </div>
 <div id="new-functions" class="section level2">
@@ -180,6 +187,7 @@
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with non-typical ordering of coefficients for mixed models.</li>
+<li>Fixed issues with models of class <code>rlmerMod</code>.</li>
 </ul>
 </div>
 </div>
@@ -187,9 +195,9 @@
 <h1 class="page-header">
 <a href="#parameters-030" class="anchor"></a>parameters 0.3.0<small> 2019-11-20 </small>
 </h1>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <p>Parts of the <strong>parameter</strong> package are restructured and functions focussing on anything related to effect sizes are now re-implemented in a new package, <a href="https://github.com/easystats/effectsize"><strong>effectsize</strong></a>. In details, following breaking changes have been made:</p>
 <ul>
 <li>Functions for computing effect sizes (<code>cohens_f()</code>, <code>eta_squared()</code> etc.) have been removed and are now re-implemented in the <strong>effectsize</strong>-package.</li>
@@ -267,9 +275,9 @@
 <h1 class="page-header">
 <a href="#parameters-020" class="anchor"></a>parameters 0.2.0<small> 2019-09-26 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code>format_value()</code> and <code>format_table()</code> have been removed and are now re-implemented in the <strong>insight</strong> package.</li>
