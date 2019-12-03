@@ -46,8 +46,7 @@ set.seed(333)
 Run the following:
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-install.packages("devtools")
-devtools::install_github("easystats/parameters")
+install.packages("parameters")
 ```
 ```{r message=FALSE, warning=FALSE}
 library("parameters")
@@ -61,14 +60,14 @@ library("parameters")
 [![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
 [![Features](https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3)](https://easystats.github.io/parameters/reference/index.html)
 
-Click on the buttons above to access the package [**documentation**](https://easystats.github.io/parameters/) and the [**easystats blog**](https://easystats.github.io/blog/posts/), and check-out these vignettes:
+Click on the buttons above to access the package [documentation](https://easystats.github.io/parameters/) and the [easystats blog](https://easystats.github.io/blog/posts/), and check-out these vignettes:
 
 
-- [**Parameters description**](https://easystats.github.io/parameters/articles/model_parameters.html)
-- [**Bootstrapped parameters**](https://easystats.github.io/parameters/articles/bootstrapping.html)
-- [**Parameters selection**](https://easystats.github.io/parameters/articles/parameters_selection.html)
-- [**Feature reduction (PCA, cMDS, ICA...)**](https://easystats.github.io/parameters/articles/parameters_reduction.html)
-- [**Structural models (EFA, CFA, SEM...)**](https://easystats.github.io/parameters/articles/efa_cfa.html)
+- [Parameters description](https://easystats.github.io/parameters/articles/model_parameters.html)
+- [Bootstrapped parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
+- [Parameters selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
+- [Feature reduction (PCA, cMDS, ICA...)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
+- [Structural models (EFA, CFA, SEM...)](https://easystats.github.io/parameters/articles/efa_cfa.html)
 
 # Features
  
@@ -126,6 +125,7 @@ model_parameters(model)
 
 <img src='man/figures/figure2.png' align="center" />
  
+[`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can help you quickly select and retain the most relevant predictors using methods tailored for the model type.
 
 ```{r, warning=FALSE, message=FALSE}
 library(dplyr)
@@ -135,7 +135,7 @@ lm(disp ~ ., data = mtcars) %>%
   model_parameters()
 ```
 
-The [`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can also help you quickly select and retain the most relevant predictors using methods tailored for the model type. This function also works for mixed or Bayesian models:
+This function also works for mixed or Bayesian models:
 
 ```{r, warning=FALSE, message=FALSE}
 library(rstanarm)
@@ -147,7 +147,7 @@ stan_glm(mpg ~ ., data = mtcars, refresh = 0) %>%
 
 ## Miscellaneous
 
-This packages also contains a lot of [**other useful functions**](https://easystats.github.io/parameters/reference/index.html):
+This packages also contains a lot of [other useful functions](https://easystats.github.io/parameters/reference/index.html):
 
 ### Describe a Distribution
 
@@ -155,9 +155,6 @@ This packages also contains a lot of [**other useful functions**](https://easyst
 x <- rnorm(300)
 describe_distribution(x)
 ```
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 knitr::kable(describe_distribution(rnorm(300)), digits = 1)
 ```
-
-
-

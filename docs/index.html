@@ -115,21 +115,20 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Run the following:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"easystats/parameters"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"parameters"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"parameters"</span>)</a></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation" class="anchor"></a>Documentation</h2>
 <p><a href="https://easystats.github.io/parameters/"><img src="https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63" alt="Documentation"></a> <a href="https://easystats.github.io/blog/posts/"><img src="https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800" alt="Blog"></a> <a href="https://easystats.github.io/parameters/reference/index.html"><img src="https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3" alt="Features"></a></p>
-<p>Click on the buttons above to access the package <a href="https://easystats.github.io/parameters/"><strong>documentation</strong></a> and the <a href="https://easystats.github.io/blog/posts/"><strong>easystats blog</strong></a>, and check-out these vignettes:</p>
+<p>Click on the buttons above to access the package <a href="https://easystats.github.io/parameters/">documentation</a> and the <a href="https://easystats.github.io/blog/posts/">easystats blog</a>, and check-out these vignettes:</p>
 <ul>
-<li><a href="https://easystats.github.io/parameters/articles/model_parameters.html"><strong>Parameters description</strong></a></li>
-<li><a href="https://easystats.github.io/parameters/articles/bootstrapping.html"><strong>Bootstrapped parameters</strong></a></li>
-<li><a href="https://easystats.github.io/parameters/articles/parameters_selection.html"><strong>Parameters selection</strong></a></li>
-<li><a href="https://easystats.github.io/parameters/articles/parameters_reduction.html"><strong>Feature reduction (PCA, cMDS, ICA…)</strong></a></li>
-<li><a href="https://easystats.github.io/parameters/articles/efa_cfa.html"><strong>Structural models (EFA, CFA, SEM…)</strong></a></li>
+<li><a href="https://easystats.github.io/parameters/articles/model_parameters.html">Parameters description</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/bootstrapping.html">Bootstrapped parameters</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/parameters_selection.html">Parameters selection</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA…)</a></li>
+<li><a href="https://easystats.github.io/parameters/articles/efa_cfa.html">Structural models (EFA, CFA, SEM…)</a></li>
 </ul>
 </div>
 </div>
@@ -223,6 +222,7 @@
 <h2 class="hasAnchor">
 <a href="#variable-and-parameters-selection" class="anchor"></a>Variable and parameters selection</h2>
 <p><img src="reference/figures/figure2.png" align="center"></p>
+<p><a href="https://easystats.github.io/parameters/articles/parameters_selection.html"><code><a href="reference/parameters_selection.html">parameters_selection()</a></code></a> can help you quickly select and retain the most relevant predictors using methods tailored for the model type.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb6-2" title="2"></a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(disp <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -236,7 +236,7 @@
 <a class="sourceLine" id="cb6-11" title="11"><span class="co"># wt          |       80.45 |  12.22 | [  55.33, 105.57] |  6.58 | 26 | &lt; .001</span></a>
 <a class="sourceLine" id="cb6-12" title="12"><span class="co"># qsec        |      -14.68 |   6.14 | [ -27.31,  -2.05] | -2.39 | 26 | 0.024 </span></a>
 <a class="sourceLine" id="cb6-13" title="13"><span class="co"># carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | 26 | &lt; .001</span></a></code></pre></div>
-<p>The <a href="https://easystats.github.io/parameters/articles/parameters_selection.html"><code><a href="reference/parameters_selection.html">parameters_selection()</a></code></a> can also help you quickly select and retain the most relevant predictors using methods tailored for the model type. This function also works for mixed or Bayesian models:</p>
+<p>This function also works for mixed or Bayesian models:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb7-2" title="2"></a>
 <a class="sourceLine" id="cb7-3" title="3"><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars, <span class="dt">refresh =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -255,13 +255,12 @@
 <div id="miscellaneous" class="section level2">
 <h2 class="hasAnchor">
 <a href="#miscellaneous" class="anchor"></a>Miscellaneous</h2>
-<p>This packages also contains a lot of <a href="https://easystats.github.io/parameters/reference/index.html"><strong>other useful functions</strong></a>:</p>
+<p>This packages also contains a lot of <a href="https://easystats.github.io/parameters/reference/index.html">other useful functions</a>:</p>
 <div id="describe-a-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#describe-a-distribution" class="anchor"></a>Describe a Distribution</h3>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">300</span>)</a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(x)</a></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">300</span>)), <span class="dt">digits =</span> <span class="dv">1</span>)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Mean</th>
