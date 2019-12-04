@@ -6,7 +6,7 @@
 
 ## New supported models
 
-- Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*), `fixest` (*fixest*), `glmmadmb` (*glmmADMB*). 
+- Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*), `fixest` (*fixest*), `glmmadmb` (*glmmADMB*), `mcmc` (*coda*).
 
 ## New functions
 
