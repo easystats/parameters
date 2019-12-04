@@ -55,16 +55,9 @@ if (require("testthat") &&
   test_that("model_parameters", {
     expect_equal(
       model_parameters(m1)$Coefficient,
-      c(
-        -6.15957, 1.72773, 1.3226, 1.57231, 1.05971, 1.13375, 1.04016,
-        0.54369, 0.4959, 0.38579, 0.01097, 440.27839
-      ),
+      c(-6.15957, 1.72773, 1.3226, 1.57231, 1.05971, 1.13375, 1.04016, 0.54369, 0.4959, 0.38579, 0.01097),
       tolerance = 1e-4
     )
-    expect_equal(
-      model_parameters(m2)$Coefficient,
-      c(-0.62255, -0.0123, 0.11846, 35.60975),
-      tolerance = 1e-4
-    )
+    expect_equal(model_parameters(m2)$Coefficient, c(-0.62255, -0.0123, 0.11846), tolerance = 1e-4)
   })
 }
