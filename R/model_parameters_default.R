@@ -223,6 +223,8 @@ model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterati
   else
     merge_by <- "Parameter"
 
+  ## TODO check merge by
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -230,6 +232,32 @@ model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterati
     bootstrap = bootstrap,
     iterations = iterations,
     merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+
+#' @export
+model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "extra"), standardize = NULL, exponentiate = FALSE, ...) {
+  component <- match.arg(component)
+  if (component == "all")
+    merge_by <- c("Parameter", "Component")
+  else
+    merge_by <- "Parameter"
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    component = component,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
     ...

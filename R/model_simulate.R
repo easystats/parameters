@@ -67,6 +67,10 @@ model_simulate.glmmadmb <- model_simulate.lm
 
 
 #' @export
+model_simulate.glmx <- model_simulate.lm
+
+
+#' @export
 model_simulate.feglm <- model_simulate.lm
 
 

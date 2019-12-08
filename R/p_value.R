@@ -500,6 +500,20 @@ p_value.flexsurvreg <- function(model, ...) {
 
 
 #' @export
+p_value.glmx <- function(model, ...) {
+  stats <- stats::coef(summary(model))
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = c(as.vector(stats$glm[, "Pr(>|z|)"]), as.vector(stats$extra[, "Pr(>|z|)"])),
+    Component = params$Component
+  )
+}
+
+
+
+#' @export
 p_value.rq <- function(model, ...) {
   p <- tryCatch({
     cs <- suppressWarnings(stats::coef(summary(model)))
@@ -569,13 +583,13 @@ p_value.fixest <- function(model, ...) {
 
 
 #' @export
-standard_error.feglm <- function(model, ...) {
+p_value.feglm <- function(model, ...) {
   stats <- stats::coef(summary(model))
   params <- insight::get_parameters(model)
 
   .data_frame(
     Parameter = params$Parameter,
-    SE = as.vector(stats[, 4])
+    p = as.vector(stats[, 4])
   )
 }
 

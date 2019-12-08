@@ -728,6 +728,20 @@ standard_error.complmrob <- function(model, ...) {
 
 
 #' @export
+standard_error.glmx <- function(model, ...) {
+  stats <- stats::coef(summary(model))
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = c(as.vector(stats$glm[, "Std. Error"]), as.vector(stats$extra[, "Std. Error"])),
+    Component = params$Component
+  )
+}
+
+
+
+#' @export
 standard_error.fixest <- function(model, ...) {
   stats <- summary(model)
   params <- insight::get_parameters(model)
