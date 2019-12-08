@@ -137,6 +137,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "sigma" = "Sigma",
       "Correlation" = "Correlation",
       "Loading" = "Loading",
+      "extra" = "Extra Parameters",
       "nu" = "Nu",
       "tau" = "Tau",
       "precision" = "Precision",

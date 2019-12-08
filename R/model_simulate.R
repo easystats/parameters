@@ -67,10 +67,6 @@ model_simulate.glmmadmb <- model_simulate.lm
 
 
 #' @export
-model_simulate.glmx <- model_simulate.lm
-
-
-#' @export
 model_simulate.feglm <- model_simulate.lm
 
 
@@ -368,12 +364,19 @@ model_simulate.zerocount <- model_simulate.zeroinfl
 # Other models ---------------------------------------
 
 
-#' @importFrom insight get_parameters
 #' @export
 model_simulate.betareg <- function(model, iterations = 1000, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
   .model_simulate(model, iterations, component = component)
 }
+
+
+#' @export
+model_simulate.glmx <- function(model, iterations = 1000, component = c("all", "conditional", "extra"), ...) {
+  component <- match.arg(component)
+  .model_simulate(model, iterations, component = component)
+}
+
 
 
 
