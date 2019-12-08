@@ -128,6 +128,9 @@ model_parameters.speedlm <- model_parameters.default
 model_parameters.iv_robust <- model_parameters.default
 
 #' @export
+model_parameters.feglm <- model_parameters.default
+
+#' @export
 model_parameters.glmRob <- model_parameters.default
 
 #' @export

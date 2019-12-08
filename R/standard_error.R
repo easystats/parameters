@@ -741,6 +741,19 @@ standard_error.fixest <- function(model, ...) {
 
 
 #' @export
+standard_error.feglm <- function(model, ...) {
+  stats <- stats::coef(summary(model))
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, "Std. error"])
+  )
+}
+
+
+
+#' @export
 standard_error.biglm <- function(model, ...) {
   cs <- summary(model)$mat
   params <- insight::get_parameters(model)

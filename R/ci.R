@@ -220,6 +220,9 @@ ci.glmmadmb <- ci.gamlss
 ci.fixest <- ci.gamlss
 
 #' @export
+ci.feglm <- ci.gamlss
+
+#' @export
 ci.speedlm <- ci.gamlss
 
 #' @export

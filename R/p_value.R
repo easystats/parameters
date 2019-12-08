@@ -569,6 +569,19 @@ p_value.fixest <- function(model, ...) {
 
 
 #' @export
+standard_error.feglm <- function(model, ...) {
+  stats <- stats::coef(summary(model))
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, 4])
+  )
+}
+
+
+
+#' @export
 p_value.crch <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model), model = "full"))
   params <- insight::get_parameters(model)
