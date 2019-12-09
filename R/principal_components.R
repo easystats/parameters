@@ -61,6 +61,8 @@ principal_components <- function(x, n = "auto", rotation = "none", sort = FALSE,
 #' @importFrom stats prcomp na.omit
 #' @export
 principal_components.data.frame <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
+  # save name of data set
+  data_name <- deparse(substitute(x))
 
   # remove missings
   x <- stats::na.omit(x)
@@ -145,6 +147,7 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
 
   # Add some more attributes
   attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
+  attr(loadings, "data") <- data_name
 
   # add class-attribute for printing
   class(loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(loadings)))
