@@ -62,6 +62,9 @@ principal_components <- function(x, n = "auto", rotation = "none", sort = FALSE,
 #' @export
 principal_components.data.frame <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
 
+  # remove missings
+  x <- stats::na.omit(x)
+
   # Standardize
   if (standardize) {
     x <- as.data.frame(scale(x))
