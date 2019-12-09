@@ -18,14 +18,14 @@
 
 \item{sort}{Sort the loadings.}
 
-\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per variable (the most simple structure).}
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).}
 
 \item{labels}{A character vector containing labels to be added to the loadings data. Usually, the question related to the item.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame of loadings.
+A data frame of loadings.
 }
 \description{
 Format structural models from the \pkg{psych} or \pkg{FactoMineR} packages.
@@ -33,8 +33,9 @@ Format structural models from the \pkg{psych} or \pkg{FactoMineR} packages.
 \details{
 For the structural models obtained with \pkg{psych}, the following indices are present:
  \itemize{
-   \item \strong{Complexity} (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.
+   \item \strong{Complexity} (\cite{Hoffman's, 1978; Pettersson and Turkheimer, 2010}) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.
    \item \strong{Uniqueness} represents the variance that is 'unique' to the variable and not shared with other variables. It is equal to \code{1 – communality} (variance that is shared with other variables). A uniqueness of \code{0.20} suggests that 20\% or that variable's variance is not shared with other variables in the overall factor model. The greater 'uniqueness' the lower the relevance of the variable in the factor model.
+   \item \strong{MSA} represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy (\cite{Kaiser and Rice, 1974}) for each item. It indicates whether there is enough data for each factor give reliable results for the PCA. The value should be > 0.6, and desirable values are > 0.8 (\cite{Tabachnick and Fidell, 2013}).
 }
 }
 \examples{
@@ -67,7 +68,9 @@ model_parameters(model)}
 }
 \references{
 \itemize{
+  \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and Psychological Measurement, 34(1):111–117
   \item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.
   \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
+  \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate statistics (6th ed.). Boston: Pearson Education.
 }
 }

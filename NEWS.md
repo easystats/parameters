@@ -15,6 +15,7 @@
 ## Changes to functions
 
 - Arguments `p_method` and `ci_method` in `model_parameters.merMod()` were replaced by a single argument `df_method`.
+- `model_parameters.principal()` includes a `MSA` column for objects from `principal_components()`.
 
 ## Bug fixes
 
