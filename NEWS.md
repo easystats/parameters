@@ -11,6 +11,7 @@
 - `model_simulate()` was renamed to `simulate_model()`. `model_simulate()` will remain as alias.
 - `parameters_simulate()` was renamed to `simulate_parameters()`. `parameters_simulate()` will remain as alias.
 - `parameters_selection()` was renamed to `select_parameters()`. `parameters_selection()` will remain as alias.
+- `parameters_reduction()` was renamed to `reduce_parameters()`. `parameters_reduction()` will remain as alias.
 
 ## New supported models
 

@@ -42,25 +42,25 @@ Let's start by fitting a multiple regression with the `attitude` dataset, availa
 library(dplyr)
 library(parameters)
 
-model <- lm(rating ~ ., data=attitude)
+model <- lm(rating ~ ., data = attitude)
 parameters(model)
 ```
 
-We can explore a reduction of the number of parameters with the `parameters_reduction()` function. 
+We can explore a reduction of the number of parameters with the `reduce_parameters()` function. 
 
 ```{r message=FALSE, warning=FALSE}
-newmodel <- parameters_reduction(model)
+newmodel <- reduce_parameters(model)
 parameters(newmodel)
 ```
 
 This quickly *hints* toward the fact that the model could be represented via **two "latent" dimensions**, one correlated with all the positive things that a company has to offer, and the other one related to the amount of negative critiques received by the employees. These two dimensions have a positive and negative relationship with the company rating, respectively.
 
-> What does `parameters_reduction()` exactly do?
+> What does `reduce_parameters()` exactly do?
 
 This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is "**PCA**", but other are available via the `method` argument, such as "**cMDS**", "**DRR**" or "**ICA**"). Then, it names this new dimensions using the original variables that *correlate* the most with it. For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension.
 
 ```{r message=FALSE, warning=FALSE}
-parameters_reduction(model, method = "cMDS") %>% 
+reduce_parameters(model, method = "cMDS") %>% 
   parameters()
 ```
 

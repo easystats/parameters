@@ -73,7 +73,7 @@ The main issue of the model seems to be the high [multicollinearity](https://en.
 
 ### Parameters selection
 
-Time to do some variables selection. This can be easily done using the `parameters_selection()` function, that will **automatically select the best variables** and update the model accordingly. One way of using that is in a tidy pipeline (using [`%>%`](https://cran.r-project.org/web/packages/magrittr/README.html)), using this output to update a new model.
+Time to do some variables selection. This can be easily done using the `select_parameters()` function, that will **automatically select the best variables** and update the model accordingly. One way of using that is in a tidy pipeline (using [`%>%`](https://cran.r-project.org/web/packages/magrittr/README.html)), using this output to update a new model.
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -81,7 +81,7 @@ library(dplyr)
 library(parameters)
 
 lm(Sepal.Length ~ .*., data=iris) %>% 
-  parameters_selection() %>% 
+  select_parameters() %>% 
   summary()
 ```
 
@@ -103,6 +103,6 @@ For simple linear regressions as above, the selection is made using the `step()`
 library(lme4)
 
 lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data=iris) %>%
-  parameters_selection() %>%
+  select_parameters() %>%
   summary()
 ```
