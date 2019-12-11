@@ -192,7 +192,7 @@
     </tr>
     <tr>
       <th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code>).</p></td>
+      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>parameters_bootstrap()</a></code>).</p></td>
     </tr>
     <tr>
       <th>df_method</th>
@@ -270,8 +270,8 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
-#&gt; (Intercept) |       36.41 | [32.94, 41.13] | &lt; .001
-#&gt; wt          |       -5.08 | [-6.45, -4.23] | &lt; .001</div><div class='input'># }
+#&gt; (Intercept) |       36.40 | [32.30, 41.02] | &lt; .001
+#&gt; wt          |       -5.17 | [-6.48, -3.79] | &lt; .001</div><div class='input'># }
 
 </div></span></pre>
   </div>

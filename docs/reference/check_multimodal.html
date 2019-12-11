@@ -183,12 +183,12 @@
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>2000</span>)
 <span class='fu'>check_multimodal</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Is the variable multimodal?
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The Ameijeiras-Alonso et al. (2018) excess mass test suggests that the hypothesis of a multimodal distribution cannot be rejected (excess mass = 0.01, p = 0.908).
+#&gt; </span><span style='color: #BBBB00;'>The Ameijeiras-Alonso et al. (2018) excess mass test suggests that the hypothesis of a multimodal distribution cannot be rejected (excess mass = 0.01, p = 0.150).
 #&gt; </span><span></div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>2</span>))
 <span class='fu'>check_multimodal</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Is the variable multimodal?
 #&gt; 
-#&gt; </span><span style='color: #00BB00;'>The Ameijeiras-Alonso et al. (2018) excess mass test suggests that the distribution is significantly multimodal (excess mass = 0.02, p = 0.036).
+#&gt; </span><span style='color: #BBBB00;'>The Ameijeiras-Alonso et al. (2018) excess mass test suggests that the hypothesis of a multimodal distribution cannot be rejected (excess mass = 0.01, p = 0.982).
 #&gt; </span><span></div><div class='input'>
 <span class='co'># Multivariate</span>
 <span class='co'># \donttest{</span>
@@ -198,7 +198,7 @@
 )
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>m</span>$<span class='no'>x</span>, <span class='no'>m</span>$<span class='no'>y</span>)</div><div class='img'><img src='check_multimodal-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>check_multimodal</span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Is the data multimodal?
 #&gt; 
-#&gt; </span><span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chi2(7) = 26.15, p &lt; .001).
+#&gt; </span><span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chi2(7) = 21.63, p = 0.003).
 #&gt; </span><span></div><div class='input'>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>4</span>)),
@@ -206,7 +206,7 @@
 )
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>m</span>$<span class='no'>x</span>, <span class='no'>m</span>$<span class='no'>y</span>)</div><div class='img'><img src='check_multimodal-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>check_multimodal</span>(<span class='no'>m</span>)<span class='co'># }</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Is the data multimodal?
 #&gt; 
-#&gt; </span><span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chi2(11) = 68.89, p &lt; .001).
+#&gt; </span><span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chi2(11) = 73.50, p &lt; .001).
 #&gt; </span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

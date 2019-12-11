@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model Parameters for Zero-Inflated Models — model_parameters.zeroinfl • parameters</title>
+<title>Simulated draws from model coefficients — simulate_model • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Model Parameters for Zero-Inflated Models — model_parameters.zeroinfl" />
-<meta property="og:description" content="Parameters of zero-inflated models." />
+<meta property="og:title" content="Simulated draws from model coefficients — simulate_model" />
+<meta property="og:description" content="Simulate draws from a statistical model to return a data.frame of estimates." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,24 +146,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Model Parameters for Zero-Inflated Models</h1>
+    <h1>Simulated draws from model coefficients</h1>
     
-    <div class="hidden name"><code>model_parameters.zeroinfl.Rd</code></div>
+    <div class="hidden name"><code>simulate_model.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameters of zero-inflated models.</p>
+    <p>Simulate draws from a statistical model to return a data.frame of estimates.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for zeroinfl</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+    <pre class="usage"><span class='fu'>simulate_model</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
+
+<span class='fu'>model_simulate</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for glmmTMB</span>
+<span class='fu'>simulate_model</span>(
   <span class='no'>model</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
-  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -172,19 +172,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>A model with zero-inflation component.</p></td>
-    </tr>
-    <tr>
-      <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
-    </tr>
-    <tr>
-      <th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>parameters_bootstrap()</a></code>).</p></td>
+      <td><p>Statistical model (no Bayesian models).</p></td>
     </tr>
     <tr>
       <th>iterations</th>
-      <td><p>The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.</p></td>
+      <td><p>The number of draws to simulate/bootstrap.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     <tr>
       <th>component</th>
@@ -193,62 +189,83 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
-    <tr>
-      <th>standardize</th>
-      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://rdrr.io/pkg/effectsize/man/standardize_parameters.html'>standardize_parameters</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>exponentiate</th>
-      <td><p>Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of indices related to the model's parameters.</p>
+    <p>A data frame.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    
+<h3>Technical Details</h3>
+<p><code>simulate_model()</code> is a computationally faster alternative
+    to <code><a href='bootstrap_model.html'>bootstrap_model()</a></code>. Simulated draws for coefficients are based
+    on a multivariate normal distribution (<code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>MASS::mvrnorm()</a></code>) with mean
+    <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p><p></p><h3>Models with Zero-Inflation Component</h3>
+<p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
+    <span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
+    which parameters should be simulated. For all other models, parameters
+    from the conditional component (fixed effects) are simulated. This may
+    include smooth terms, but not random effects.</p>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
-  columns into a consistent, standardized naming scheme.</p></div>
+    <div class='dont-index'><p><code><a href='simulate_parameters.html'>simulate_parameters()</a></code>,
+<code><a href='bootstrap_model.html'>bootstrap_model()</a></code>,
+<code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>pscl</span>)</div><div class='output co'>#&gt; <span class='message'>Classes and Methods for R developed in the</span>
-#&gt; <span class='message'>Political Science Computational Laboratory</span>
-#&gt; <span class='message'>Department of Political Science</span>
-#&gt; <span class='message'>Stanford University</span>
-#&gt; <span class='message'>Simon Jackman</span>
-#&gt; <span class='message'>hurdle and zeroinfl functions by Achim Zeileis</span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"bioChemists"</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pscl/man/zeroinfl.html'>zeroinfl</a></span>(<span class='no'>art</span> ~ <span class='no'>fem</span> + <span class='no'>mar</span> + <span class='no'>kid5</span> + <span class='no'>ment</span> <span class='kw'>|</span> <span class='no'>kid5</span> + <span class='no'>phd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>bioChemists</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
-#&gt; 
-#&gt; </span><span>Parameter     | Coefficient |   SE |         95% CI |     z |  df |      p
-#&gt; --------------------------------------------------------------------------
-#&gt; (Intercept)   |        0.56 | 0.07 | [ 0.43,  0.69] |  8.26 | 907 | &lt; .001
-#&gt; fem [Women]   |       -0.23 | 0.06 | [-0.34, -0.11] | -3.91 | 907 | &lt; .001
-#&gt; mar [Married] |        0.14 | 0.07 | [ 0.01,  0.27] |  2.07 | 907 | 0.038 
-#&gt; kid5          |       -0.17 | 0.05 | [-0.26, -0.07] | -3.43 | 907 | &lt; .001
-#&gt; ment          |        0.02 | 0.00 | [ 0.02,  0.03] | 10.05 | 907 | &lt; .001
-#&gt; 
-#&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
-#&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |     p
-#&gt; -----------------------------------------------------------------------
-#&gt; (Intercept) |       -0.93 | 0.43 | [-1.78, -0.08] | -2.14 | 907 | 0.032
-#&gt; kid5        |        0.05 | 0.22 | [-0.38,  0.47] |  0.21 | 907 | 0.831
-#&gt; phd         |       -0.25 | 0.14 | [-0.51,  0.02] | -1.84 | 907 | 0.065
-#&gt; </div></span></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>glmmTMB</span>)
+
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
+#&gt; 1    3.477800         -1.100042        -1.650753   0.8613331    0.8673646
+#&gt; 2    3.339773         -0.821275        -2.585874   0.2354248    1.0438662
+#&gt; 3    3.227401         -1.271530        -2.775289   1.0499625    1.0381349
+#&gt; 4    3.898565         -1.284933        -2.062805  -0.6295069    0.8786853
+#&gt; 5    3.460539         -1.419151        -2.722116  -0.1290633    1.0848056
+#&gt; 6    3.719594         -1.756277        -1.294521   0.7555580    0.7667266
+#&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
+#&gt; 1                    -1.0105265                  -0.86121341
+#&gt; 2                    -1.0367369                  -0.23288148
+#&gt; 3                    -1.4021334                  -0.90483831
+#&gt; 4                     0.3197725                   0.53387066
+#&gt; 5                    -0.4545711                   0.02889233
+#&gt; 6                    -0.2972529                  -0.83257724</div><div class='input'>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
+  <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
+  <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
+)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept)     sppPR       sppDM    sppEC-A   sppEC-L  sppDES-L       sppDF
+#&gt; 1 -0.26334222 -1.552747  0.35849946 -0.6225720 0.4628961 0.4190927 -0.03844777
+#&gt; 2 -0.85014245 -1.163187 -0.01537845 -0.4380014 0.6054221 0.4799746  0.22475510
+#&gt; 3 -0.03491835 -1.383506  0.33925201 -0.7417919 0.6484625 0.5912209  0.18135893
+#&gt; 4 -0.62246002 -1.246795  0.04572176 -0.8998526 0.6158391 0.4043438 -0.11786300
+#&gt; 5 -0.40095441 -1.487786  0.30547569 -0.8382810 0.6710861 0.6107590  0.20338737
+#&gt; 6 -0.31129236 -1.672634  0.01532667 -0.6062330 0.5122990 0.4482887 -0.04101846
+#&gt;     minedno (Intercept)_zi minedno_zi
+#&gt; 1 1.4026186      0.8997506  -1.950767
+#&gt; 2 1.7380679      1.3063531  -2.395193
+#&gt; 3 0.8684755      0.9109446  -1.779862
+#&gt; 4 1.6478462      0.7696153  -1.778931
+#&gt; 5 1.3090852      0.6493970  -1.697941
+#&gt; 6 1.2737600      0.7311969  -1.858400</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>))</div><div class='output co'>#&gt;   (Intercept)   minedno
+#&gt; 1   0.8836636 -1.854584
+#&gt; 2   0.8617341 -2.151215
+#&gt; 3   0.7870524 -2.113692
+#&gt; 4   0.4824277 -1.456766
+#&gt; 5   1.1759076 -2.500519
+#&gt; 6   1.0901337 -2.265194</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

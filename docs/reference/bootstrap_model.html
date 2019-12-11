@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cluster Models (k-means, ...) — model_parameters.kmeans • parameters</title>
+<title>Model bootstrapping — bootstrap_model • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Cluster Models (k-means, ...) — model_parameters.kmeans" />
-<meta property="og:description" content="Format cluster models obtained for example by kmeans." />
+<meta property="og:title" content="Model bootstrapping — bootstrap_model" />
+<meta property="og:description" content="Bootstrap a statistical model n times to return a data.frame of estimates." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,24 +146,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cluster Models (k-means, ...)</h1>
+    <h1>Model bootstrapping</h1>
     
-    <div class="hidden name"><code>model_parameters.kmeans.Rd</code></div>
+    <div class="hidden name"><code>bootstrap_model.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Format cluster models obtained for example by <code><a href='https://rdrr.io/r/stats/kmeans.html'>kmeans</a></code>.</p>
+    <p>Bootstrap a statistical model n times to return a data.frame of estimates.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for kmeans</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>bootstrap_model</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='fu'>model_bootstrap</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Cluster model.</p></td>
+      <td><p>Statistical model.</p></td>
+    </tr>
+    <tr>
+      <th>iterations</th>
+      <td><p>The number of draws to simulate/bootstrap.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Hide possible refit messages.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -171,27 +180,29 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='bootstrap_parameters.html'>bootstrap_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code>, <code><a href='simulate_parameters.html'>simulate_parameters</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/kmeans.html'>kmeans</a></span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>centers</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># K-means Cluster Means</span><span>
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 3 clusters accounted for 88.43% of the total variance of the original data.</span><span>
-#&gt; 
-#&gt; Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width
-#&gt; ---------------------------------------------------------------------------------------
-#&gt; 1       |    62 |       39.82 |         5.90 |        2.75 |         4.39 |        1.43
-#&gt; 2       |    38 |       23.88 |         6.85 |        3.07 |         5.74 |        2.07
-#&gt; 3       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25</div><div class='input'>
-
-</div></span></pre>
+    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>bootstrap_model</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept)        wt       cyl
+#&gt; 1    38.32019 -3.268411 -1.387621
+#&gt; 2    38.59563 -3.205922 -1.295143
+#&gt; 3    39.07240 -2.661856 -1.735625
+#&gt; 4    39.38798 -3.009443 -1.501663
+#&gt; 5    35.80019 -2.238742 -1.375777
+#&gt; 6    38.98068 -2.394357 -1.834231</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

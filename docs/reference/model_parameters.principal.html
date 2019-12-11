@@ -177,7 +177,7 @@
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per variable (the most simple structure).</p></td>
+      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be <code>"max"</code>, in which case it will only display the maximum loading per variable (the most simple structure).</p></td>
     </tr>
     <tr>
       <th>labels</th>
@@ -191,20 +191,23 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame of loadings.</p>
+    <p>A data frame of loadings.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For the structural models obtained with <span class="pkg">psych</span>, the following indices are present:</p><ul>
-<li><p><strong>Complexity</strong> (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.</p></li>
+<li><p><strong>Complexity</strong> (<cite>Hoffman's, 1978; Pettersson and Turkheimer, 2010</cite>) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.</p></li>
 <li><p><strong>Uniqueness</strong> represents the variance that is 'unique' to the variable and not shared with other variables. It is equal to <code>1 – communality</code> (variance that is shared with other variables). A uniqueness of <code>0.20</code> suggests that 20% or that variable's variance is not shared with other variables in the overall factor model. The greater 'uniqueness' the lower the relevance of the variable in the factor model.</p></li>
+<li><p><strong>MSA</strong> represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy (<cite>Kaiser and Rice, 1974</cite>) for each item. It indicates whether there is enough data for each factor give reliable results for the PCA. The value should be &gt; 0.6, and desirable values are &gt; 0.8 (<cite>Tabachnick and Fidell, 2013</cite>).</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
+<li><p>Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and Psychological Measurement, 34(1):111–117</p></li>
 <li><p>Pettersson, E., \&amp; Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.</p></li>
 <li><p>Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.</p></li>
+<li><p>Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate statistics (6th ed.). Boston: Pearson Education.</p></li>
 </ul>
 
 

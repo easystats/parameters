@@ -47,10 +47,10 @@ reference:
 
 - title: "Parameters Engineering"
   contents:
-  - model_bootstrap
-  - parameters_bootstrap
-  - model_simulate
-  - parameters_simulate
+  - bootstrap_model
+  - bootstrap_parameters
+  - simulate_model
+  - simulate_parameters
 
 - title: "Variable Preparation/Centering"
   contents:
@@ -58,8 +58,8 @@ reference:
 
 - title: "Feature Reduction"
   contents:
-  - parameters_reduction
-  - parameters_selection
+  - reduce_parameters
+  - select_parameters
 
 - title: "Data Reduction: Cluster Analysis"
   contents:

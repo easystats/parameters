@@ -179,7 +179,7 @@
     </tr>
     <tr>
       <th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='parameters_bootstrap.html'>parameters_bootstrap()</a></code>).</p></td>
+      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>parameters_bootstrap()</a></code>).</p></td>
     </tr>
     <tr>
       <th>iterations</th>
@@ -219,9 +219,9 @@
 <span class='co'># bootstrapped parameters</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
-#&gt; (Intercept) |       39.74 | [35.60, 44.09] | &lt; .001
-#&gt; wt          |       -3.21 | [-4.86, -1.92] | &lt; .001
-#&gt; cyl         |       -1.47 | [-2.24, -0.78] | 0.002 </div><div class='input'>
+#&gt; (Intercept) |       39.76 | [35.30, 43.77] | &lt; .001
+#&gt; wt          |       -3.21 | [-4.87, -1.89] | &lt; .001
+#&gt; cyl         |       -1.48 | [-2.23, -0.76] | &lt; .001</div><div class='input'>
 <span class='co'># standardized parameters</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient (std.) |   SE |         95% CI |     t | df |      p
 #&gt; ------------------------------------------------------------------------------

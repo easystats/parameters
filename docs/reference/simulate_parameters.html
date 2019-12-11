@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BayesFactor objects Parameters — model_parameters.BFBayesFactor • parameters</title>
+<title>Parameters simulation — simulate_parameters • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="BayesFactor objects Parameters — model_parameters.BFBayesFactor" />
-<meta property="og:description" content="Parameters of BayesFactor objects." />
+<meta property="og:title" content="Parameters simulation — simulate_parameters" />
+<meta property="og:description" content="Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,26 +146,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>BayesFactor objects Parameters</h1>
+    <h1>Parameters simulation</h1>
     
-    <div class="hidden name"><code>model_parameters.BFBayesFactor.Rd</code></div>
+    <div class="hidden name"><code>simulate_parameters.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameters of BayesFactor objects.</p>
+    <p>Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+    <pre class="usage"><span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+
+<span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>simulate_parameters</span>(
   <span class='no'>model</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
-  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -174,15 +175,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Object of class <code>BFBayesFactor</code>.</p></td>
+      <td><p>Statistical model (no Bayesian models).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
+      <th>iterations</th>
+      <td><p>The number of draws to simulate/bootstrap.</p></td>
     </tr>
     <tr>
       <th>centrality</th>
       <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>dispersion</th>
-      <td><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -205,49 +210,75 @@ For each "test", the corresponding <span class="pkg">bayestestR</span> function 
 (e.g. <code><a href='https://rdrr.io/pkg/bayestestR/man/rope.html'>rope</a></code> or <code><a href='https://rdrr.io/pkg/bayestestR/man/p_direction.html'>p_direction</a></code>) and its results
 included in the summary output.</p></td>
     </tr>
-    <tr>
-      <th>rope_range</th>
-      <td><p>ROPE's lower and higher bounds. Should be a list of two
-values (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>,
-the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
-    </tr>
-    <tr>
-      <th>rope_ci</th>
-      <td><p>The Credible Interval (CI) probability, corresponding to the
-proportion of HDI, to use for the percentage in ROPE.</p></td>
-    </tr>
-    <tr>
-      <th>priors</th>
-      <td><p>Add the prior used for each parameter.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments to be passed to or from methods.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame of indices related to the model's parameters.</p>
+    <p>A data frame with simulated parameters.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    
+<h3>Technical Details</h3>
+<p><code><a href='simulate_model.html'>simulate_model()</a></code> is a computationally faster alternative
+    to <code><a href='bootstrap_model.html'>bootstrap_model()</a></code>. Simulated draws for coefficients are based
+    on a multivariate normal distribution (<code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>MASS::mvrnorm()</a></code>) with mean
+    <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p><p></p><h3>Models with Zero-Inflation Component</h3>
+<p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
+    <span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
+    which parameters should be simulated. For all other models, parameters
+    from the conditional component (fixed effects) are simulated. This may
+    include smooth terms, but not random effects.</p>
+
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge; New York: Cambridge University Press 2007: 140-143</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='bootstrap_model.html'>bootstrap_model</a></code>, <code><a href='bootstrap_parameters.html'>bootstrap_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: coda</span></div><div class='output co'>#&gt; <span class='message'>************</span>
-#&gt; <span class='message'>Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>Type BFManual() to open the manual.</span>
-#&gt; <span class='message'>************</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter  | Median |       89% CI |   pd | % in ROPE |              Prior |    BF
-#&gt; ----------------------------------------------------------------------------------
-#&gt; Difference |   0.94 | [0.72, 1.15] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 999</div><div class='input'># }
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>glmmTMB</span>)
 
-</div></pre>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>simulate_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high           p
+#&gt; 1                   (Intercept)   3.5284178  3.2062455  3.8624354 0.000000000
+#&gt; 2             Speciesversicolor  -1.1531106 -1.8077936 -0.4978578 0.001998002
+#&gt; 3              Speciesvirginica  -2.2501388 -3.1073087 -1.3975844 0.000000000
+#&gt; 4                   Petal.Width   0.4117286 -0.4668826  1.3212562 0.355644356
+#&gt; 5                  Petal.Length   0.9418990  0.7957040  1.0889821 0.000000000
+#&gt; 6 Speciesversicolor:Petal.Width  -0.7330585 -1.8367166  0.2348297 0.159840160
+#&gt; 7  Speciesvirginica:Petal.Width  -0.3694773 -1.4165314  0.5600944 0.423576424</div><div class='input'>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
+  <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
+  <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
+)
+<span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt;         Parameter Coefficient      CI_low    CI_high           p
+#&gt; 1     (Intercept)  -0.3618549 -0.92521263  0.1741156 0.185814186
+#&gt; 2           sppPR  -1.2602986 -1.75081929 -0.7693395 0.000000000
+#&gt; 3           sppDM   0.2678564  0.01355088  0.5480817 0.039960040
+#&gt; 4         sppEC-A  -0.5582286 -0.93701979 -0.1496809 0.005994006
+#&gt; 5         sppEC-L   0.6704696  0.43478923  0.9069486 0.000000000
+#&gt; 6        sppDES-L   0.6273870  0.38308796  0.8802319 0.000000000
+#&gt; 7           sppDF   0.1190586 -0.15457258  0.3958122 0.405594406
+#&gt; 8         minedno   1.2695018  0.73835218  1.7833134 0.000000000
+#&gt; 9  (Intercept)_zi   0.7932094  0.28927800  1.2821302 0.000000000
+#&gt; 10     minedno_zi  -1.8416667 -2.48984112 -1.2731391 0.000000000</div><div class='input'><span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high           p
+#&gt; 1 (Intercept)   0.7975917 80  0.4290829  1.144443 0.003996004
+#&gt; 2 (Intercept)   0.7975917 95  0.2260494  1.322215 0.003996004
+#&gt; 3     minedno  -1.8386463 80 -2.2581487 -1.438269 0.000000000
+#&gt; 4     minedno  -1.8386463 95 -2.4424867 -1.235278 0.000000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#references">References</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
