@@ -123,9 +123,7 @@ navbar:
   - text: Parameters Description
     href: articles/model_parameters.html
   - text: Parameters Engineering
-    menu:
-      - text: 'Bootstrapped parameters'
-        href: articles/bootstrapping.html
+    href: articles/bootstrapping.html
   - text: Parameters Selection
     href: articles/parameters_selection.html
   - text: Dimension Reduction
