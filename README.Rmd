@@ -131,7 +131,7 @@ model_parameters(model)
 library(dplyr)
 
 lm(disp ~ ., data = mtcars) %>% 
-  parameters_selection() %>% 
+  select_parameters() %>% 
   model_parameters()
 ```
 
@@ -141,7 +141,7 @@ This function also works for mixed or Bayesian models:
 library(rstanarm)
 
 stan_glm(mpg ~ ., data = mtcars, refresh = 0) %>% 
-  parameters_selection() %>% 
+  select_parameters() %>% 
   model_parameters()
 ```
 
