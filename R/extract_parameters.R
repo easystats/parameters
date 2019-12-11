@@ -205,7 +205,7 @@
 
     # Bootstrapped Models
   } else {
-    data <- model_bootstrap(model, iterations = iterations)
+    data <- bootstrap_model(model, iterations = iterations)
     parameters <- bayestestR::describe_posterior(data, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
   }
 

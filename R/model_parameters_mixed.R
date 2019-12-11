@@ -37,7 +37,7 @@ model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_metho
 
   # Processing
   if (bootstrap) {
-    parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
+    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- .extract_parameters_mixed(model, ci = ci, df_method = df_method, ...)
   }
@@ -56,7 +56,7 @@ model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_metho
 
 # Mixed Models with zero inflation ------------------------------------
 
-#' @inheritParams model_simulate
+#' @inheritParams simulate_model
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, ...) {
@@ -69,7 +69,7 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
 
   # Processing
   if (bootstrap) {
-    parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
+    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, ...)
   }

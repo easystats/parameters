@@ -6,7 +6,7 @@
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
-#' @inheritParams model_simulate
+#' @inheritParams simulate_model
 #' @inheritParams standard_error
 #'
 #' @return A data frame containing the CI bounds.

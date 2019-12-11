@@ -4,6 +4,13 @@
 
 - The column for degrees of freedom in `model_parameters()` was renamed from `df_residuals` to `df_error` for regression model objects, because these degrees of freedom actually were not always referring to _residuals_ - we consider `df_error` as a more generic name.
 
+## Renaming
+
+- `model_bootstrap()` was renamed to `bootstrap_model()`. `model_bootstrap()` will remain as alias.
+- `parameters_bootstrap()` was renamed to `bootstrap_parameters()`. `parameters_bootstrap()` will remain as alias.
+- `model_simulate()` was renamed to `simulate_model()`. `model_simulate()` will remain as alias.
+- `parameters_simulate()` was renamed to `simulate_parameters()`. `parameters_simulate()` will remain as alias.
+
 ## New supported models
 
 - Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*), `fixest` (*fixest*), `feglm` (*alpaca*), `glmx` (*glmx*), `glmmadmb` (*glmmADMB*), `mcmc` (*coda*).

@@ -7,18 +7,18 @@
 #'   or for the zero-inflated part of the model be returned? Applies to models
 #'   with zero-inflated component. \code{component} may be one of \code{"conditional"},
 #'   \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.
-#' @inheritParams model_bootstrap
+#' @inheritParams bootstrap_model
 #'
 #' @return A data frame.
 #'
-#' @seealso \code{\link[=parameters_simulate]{parameters_simulate()}},
-#' \code{\link[=model_bootstrap]{model_bootstrap()}},
-#' \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}
+#' @seealso \code{\link[=parameters_simulate]{simulate_parameters()}},
+#' \code{\link[=bootstrap_model]{bootstrap_model()}},
+#' \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}
 #'
 #' @details
 #'   \subsection{Technical Details}{
-#'     \code{model_simulate()} is a computationally faster alternative
-#'     to \code{model_bootstrap()}. Simulated draws for coefficients are based
+#'     \code{simulate_model()} is a computationally faster alternative
+#'     to \code{bootstrap_model()}. Simulated draws for coefficients are based
 #'     on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
 #'     \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
 #'   }
@@ -35,7 +35,7 @@
 #' library(glmmTMB)
 #'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
-#' head(model_simulate(model))
+#' head(simulate_model(model))
 #'
 #' model <- glmmTMB(
 #'   count ~ spp + mined + (1 | site),
@@ -43,12 +43,16 @@
 #'   family = poisson(),
 #'   data = Salamanders
 #' )
-#' head(model_simulate(model))
-#' head(model_simulate(model, component = "zero_inflated"))
+#' head(simulate_model(model))
+#' head(simulate_model(model, component = "zero_inflated"))
 #' @export
-model_simulate <- function(model, iterations = 1000, ...) {
-  UseMethod("model_simulate")
+simulate_model <- function(model, iterations = 1000, ...) {
+  UseMethod("simulate_model")
 }
+
+#' @rdname simulate_model
+#' @export
+model_simulate <- simulate_model
 
 
 # Models with single component only -----------------------------------------
@@ -57,205 +61,205 @@ model_simulate <- function(model, iterations = 1000, ...) {
 #' @importFrom stats vcov setNames
 #' @importFrom insight get_parameters
 #' @export
-model_simulate.lm <- function(model, iterations = 1000, ...) {
-  .model_simulate(model, iterations, component = "conditional")
+simulate_model.lm <- function(model, iterations = 1000, ...) {
+  .simulate_model(model, iterations, component = "conditional")
 }
 
 
 #' @export
-model_simulate.glmmadmb <- model_simulate.lm
+simulate_model.glmmadmb <- simulate_model.lm
 
 
 #' @export
-model_simulate.feglm <- model_simulate.lm
+simulate_model.feglm <- simulate_model.lm
 
 
 #' @export
-model_simulate.iv_robust <- model_simulate.lm
+simulate_model.iv_robust <- simulate_model.lm
 
 
 #' @export
-model_simulate.fixest <- model_simulate.lm
+simulate_model.fixest <- simulate_model.lm
 
 
 #' @export
-model_simulate.rq <- model_simulate.lm
+simulate_model.rq <- simulate_model.lm
 
 
 #' @export
-model_simulate.crq <- model_simulate.lm
+simulate_model.crq <- simulate_model.lm
 
 
 #' @export
-model_simulate.nlrq <- model_simulate.lm
+simulate_model.nlrq <- simulate_model.lm
 
 
 #' @export
-model_simulate.speedglm <- model_simulate.lm
+simulate_model.speedglm <- simulate_model.lm
 
 
 #' @export
-model_simulate.speedlm <- model_simulate.lm
+simulate_model.speedlm <- simulate_model.lm
 
 
 #' @export
-model_simulate.glm <- model_simulate.lm
+simulate_model.glm <- simulate_model.lm
 
 
 #' @export
-model_simulate.glmRob <- model_simulate.lm
+simulate_model.glmRob <- simulate_model.lm
 
 
 #' @export
-model_simulate.lmRob <- model_simulate.lm
+simulate_model.lmRob <- simulate_model.lm
 
 
 #' @export
-model_simulate.gls <- model_simulate.lm
+simulate_model.gls <- simulate_model.lm
 
 
 #' @export
-model_simulate.lme <- model_simulate.lm
+simulate_model.lme <- simulate_model.lm
 
 
 #' @export
-model_simulate.crch <- model_simulate.lm
+simulate_model.crch <- simulate_model.lm
 
 
 #' @export
-model_simulate.biglm <- model_simulate.lm
+simulate_model.biglm <- simulate_model.lm
 
 
 #' @export
-model_simulate.plm <- model_simulate.lm
+simulate_model.plm <- simulate_model.lm
 
 
 #' @export
-model_simulate.flexsurvreg <- model_simulate.lm
+simulate_model.flexsurvreg <- simulate_model.lm
 
 
 #' @export
-model_simulate.LORgee <- model_simulate.lm
+simulate_model.LORgee <- simulate_model.lm
 
 
 #' @export
-model_simulate.feis <- model_simulate.lm
+simulate_model.feis <- simulate_model.lm
 
 
 #' @export
-model_simulate.lmrob <- model_simulate.lm
+simulate_model.lmrob <- simulate_model.lm
 
 
 #' @export
-model_simulate.glmrob <- model_simulate.lm
+simulate_model.glmrob <- simulate_model.lm
 
 
 #' @export
-model_simulate.merMod <- model_simulate.lm
+simulate_model.merMod <- simulate_model.lm
 
 
 #' @export
-model_simulate.gamlss <- model_simulate.lm
+simulate_model.gamlss <- simulate_model.lm
 
 
 #' @export
-model_simulate.lm_robust <- model_simulate.lm
+simulate_model.lm_robust <- simulate_model.lm
 
 
 #' @export
-model_simulate.coxme <- model_simulate.lm
+simulate_model.coxme <- simulate_model.lm
 
 
 #' @export
-model_simulate.geeglm <- model_simulate.lm
+simulate_model.geeglm <- simulate_model.lm
 
 
 #' @export
-model_simulate.gee <- model_simulate.lm
+simulate_model.gee <- simulate_model.lm
 
 
 #' @export
-model_simulate.clm <- model_simulate.lm
+simulate_model.clm <- simulate_model.lm
 
 
 #' @export
-model_simulate.clm2 <- model_simulate.lm
+simulate_model.clm2 <- simulate_model.lm
 
 
 #' @export
-model_simulate.polr <- model_simulate.lm
+simulate_model.polr <- simulate_model.lm
 
 
 #' @export
-model_simulate.coxph <- model_simulate.lm
+simulate_model.coxph <- simulate_model.lm
 
 
 #' @export
-model_simulate.svyglm.nb <- model_simulate.lm
+simulate_model.svyglm.nb <- simulate_model.lm
 
 
 #' @export
-model_simulate.svyglm.zip <- model_simulate.lm
+simulate_model.svyglm.zip <- simulate_model.lm
 
 
 #' @export
-model_simulate.logistf <- model_simulate.lm
+simulate_model.logistf <- simulate_model.lm
 
 
 #' @export
-model_simulate.truncreg <- model_simulate.lm
+simulate_model.truncreg <- simulate_model.lm
 
 
 #' @export
-model_simulate.glimML <- model_simulate.lm
+simulate_model.glimML <- simulate_model.lm
 
 
 #' @export
-model_simulate.ivreg <- model_simulate.lm
+simulate_model.ivreg <- simulate_model.lm
 
 
 #' @export
-model_simulate.lrm <- model_simulate.lm
+simulate_model.lrm <- simulate_model.lm
 
 
 #' @export
-model_simulate.psm <- model_simulate.lm
+simulate_model.psm <- simulate_model.lm
 
 
 #' @export
-model_simulate.ols <- model_simulate.lm
+simulate_model.ols <- simulate_model.lm
 
 
 #' @export
-model_simulate.rms <- model_simulate.lm
+simulate_model.rms <- simulate_model.lm
 
 
 #' @export
-model_simulate.vglm <- model_simulate.lm
+simulate_model.vglm <- simulate_model.lm
 
 
 #' @export
-model_simulate.censReg <- model_simulate.lm
+simulate_model.censReg <- simulate_model.lm
 
 
 #' @export
-model_simulate.tobit <- model_simulate.lm
+simulate_model.tobit <- simulate_model.lm
 
 
 #' @export
-model_simulate.survreg <- model_simulate.lm
+simulate_model.survreg <- simulate_model.lm
 
 
 #' @export
-model_simulate.multinom <- model_simulate.lm
+simulate_model.multinom <- simulate_model.lm
 
 
 #' @export
-model_simulate.brmultinom <- model_simulate.lm
+simulate_model.brmultinom <- simulate_model.lm
 
 
 #' @export
-model_simulate.bracl <- model_simulate.lm
+simulate_model.bracl <- simulate_model.lm
 
 
 
@@ -267,7 +271,7 @@ model_simulate.bracl <- model_simulate.lm
 
 #' @importFrom insight get_varcov
 #' @export
-model_simulate.gam <- function(model, iterations = 1000, ...) {
+simulate_model.gam <- function(model, iterations = 1000, ...) {
   if (!requireNamespace("MASS", quietly = TRUE)) {
     stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -282,28 +286,28 @@ model_simulate.gam <- function(model, iterations = 1000, ...) {
 
 
 #' @export
-model_simulate.gamm <- function(model, iterations = 1000, ...) {
+simulate_model.gamm <- function(model, iterations = 1000, ...) {
   model <- model$gam
   class(model) <- c("gam", "lm", "glm")
-  model_simulate(model, iterations = iterations, ...)
+  simulate_model(model, iterations = iterations, ...)
 }
 
 
 
 #' @export
-model_simulate.list <- function(model, iterations = 1000, ...) {
+simulate_model.list <- function(model, iterations = 1000, ...) {
   if ("gam" %in% names(model)) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
-    model_simulate(model, iterations = iterations, ...)
+    simulate_model(model, iterations = iterations, ...)
   }
 }
 
 
 
 #' @export
-model_simulate.vgam <- function(model, iterations = 1000, ...) {
-  .model_simulate(model, iterations, component = "all")
+simulate_model.vgam <- function(model, iterations = 1000, ...) {
+  .simulate_model(model, iterations, component = "all")
 }
 
 
@@ -317,9 +321,9 @@ model_simulate.vgam <- function(model, iterations = 1000, ...) {
 
 #' @importFrom stats vcov setNames
 #' @importFrom insight get_parameters
-#' @rdname model_simulate
+#' @rdname simulate_model
 #' @export
-model_simulate.glmmTMB <- function(model, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   component <- match.arg(component)
 
   if (component %in% c("zi", "zero_inflated", "all") && !insight::model_info(model)$is_zero_inflated) {
@@ -330,14 +334,14 @@ model_simulate.glmmTMB <- function(model, iterations = 1000, component = c("all"
   if (is.null(iterations)) iterations <- 1000
 
   if (component == "all") {
-    d1 <- .model_simulate(model, iterations, component = "conditional")
-    d2 <- .model_simulate(model, iterations, component = "zero_inflated")
+    d1 <- .simulate_model(model, iterations, component = "conditional")
+    d2 <- .simulate_model(model, iterations, component = "zero_inflated")
     colnames(d2) <- paste0(colnames(d2), "_zi")
     d <- cbind(d1, d2)
   } else if (component == "conditional") {
-    d <- .model_simulate(model, iterations, component = "conditional")
+    d <- .simulate_model(model, iterations, component = "conditional")
   } else {
-    d <- .model_simulate(model, iterations, component = "zero_inflated")
+    d <- .simulate_model(model, iterations, component = "zero_inflated")
   }
 
   d
@@ -346,16 +350,16 @@ model_simulate.glmmTMB <- function(model, iterations = 1000, component = c("all"
 
 
 #' @export
-model_simulate.MixMod <- model_simulate.glmmTMB
+simulate_model.MixMod <- simulate_model.glmmTMB
 
 #' @export
-model_simulate.zeroinfl <- model_simulate.glmmTMB
+simulate_model.zeroinfl <- simulate_model.glmmTMB
 
 #' @export
-model_simulate.hurdle <- model_simulate.zeroinfl
+simulate_model.hurdle <- simulate_model.zeroinfl
 
 #' @export
-model_simulate.zerocount <- model_simulate.zeroinfl
+simulate_model.zerocount <- simulate_model.zeroinfl
 
 
 
@@ -365,16 +369,16 @@ model_simulate.zerocount <- model_simulate.zeroinfl
 
 
 #' @export
-model_simulate.betareg <- function(model, iterations = 1000, component = c("all", "conditional", "precision"), ...) {
+simulate_model.betareg <- function(model, iterations = 1000, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
-  .model_simulate(model, iterations, component = component)
+  .simulate_model(model, iterations, component = component)
 }
 
 
 #' @export
-model_simulate.glmx <- function(model, iterations = 1000, component = c("all", "conditional", "extra"), ...) {
+simulate_model.glmx <- function(model, iterations = 1000, component = c("all", "conditional", "extra"), ...) {
   component <- match.arg(component)
-  .model_simulate(model, iterations, component = component)
+  .simulate_model(model, iterations, component = component)
 }
 
 
@@ -386,7 +390,7 @@ model_simulate.glmx <- function(model, iterations = 1000, component = c("all", "
 
 
 #' @importFrom insight get_varcov
-.model_simulate <- function(model, iterations, component = "conditional") {
+.simulate_model <- function(model, iterations, component = "conditional") {
   if (!requireNamespace("MASS", quietly = TRUE)) {
     stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
   }

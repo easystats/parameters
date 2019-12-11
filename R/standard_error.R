@@ -32,7 +32,7 @@
 #'    standard errors for random effects are requested, for each grouping factor
 #'    a list of standard errors (per group level) for random intercepts and slopes
 #'    is returned.
-#' @inheritParams model_simulate
+#' @inheritParams simulate_model
 #'
 #' @note \code{standard_error_robust()} resp. \code{standard_error(robust = TRUE)}
 #'   rely on the \pkg{sandwich}-package and will thus only work for those models

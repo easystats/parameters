@@ -2,7 +2,7 @@
 #'
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param dof Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.
-#' @inheritParams model_simulate
+#' @inheritParams simulate_model
 #' @inheritParams standard_error
 #'
 #' @importFrom stats qt coef
