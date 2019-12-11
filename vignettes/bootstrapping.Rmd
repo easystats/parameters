@@ -51,20 +51,20 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bootstrapped
 
 ### Visualisation
 ```{r message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
-# library(see)
+library(see)
 
 df_long <- df %>%
   select(Coefficient, Bootstrapped_1000, Bootstrapped_4000) %>%
   gather(Type, Distance) %>%
   mutate(Type = forcats::fct_relevel(Type, c("Coefficient", "Bootstrapped_1000", "Bootstrapped_4000")))
-# 
-# df_long %>% 
-#   ggplot(aes(y=Distance, x=Type, fill=Type)) +
-#   geom_violin() +
-#   geom_hline(yintercept=0, linetype="dashed") +
-#   scale_fill_manual(values=c("#2196F3", "#FF9800", "#f44336")) +
-#   theme_modern() +
-#   ylab("Distance (0 is the parent / true effect)")
+
+df_long %>% 
+  ggplot(aes(y = Distance, x = Type, fill = Type)) +
+  geom_violin() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  scale_fill_manual(values = c("#2196F3", "#FF9800", "#f44336")) +
+  theme_modern() +
+  ylab("Distance (0 is the parent / true effect)")
 ```
 
 

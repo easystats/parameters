@@ -132,20 +132,21 @@
 <div id="visualisation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualisation" class="anchor"></a>Visualisation</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># library(see)</span></a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(see)</a>
 <a class="sourceLine" id="cb2-2" title="2"></a>
 <a class="sourceLine" id="cb2-3" title="3">df_long &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">select</span>(Coefficient, Bootstrapped_<span class="dv">1000</span>, Bootstrapped_<span class="dv">4000</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span><span class="kw">gather</span>(Type, Distance) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Type =</span> forcats<span class="op">::</span><span class="kw"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span>(Type, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Coefficient"</span>, <span class="st">"Bootstrapped_1000"</span>, <span class="st">"Bootstrapped_4000"</span>)))</a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="co"># </span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="co"># df_long %&gt;% </span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="co">#   ggplot(aes(y=Distance, x=Type, fill=Type)) +</span></a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="co">#   geom_violin() +</span></a>
-<a class="sourceLine" id="cb2-11" title="11"><span class="co">#   geom_hline(yintercept=0, linetype="dashed") +</span></a>
-<a class="sourceLine" id="cb2-12" title="12"><span class="co">#   scale_fill_manual(values=c("#2196F3", "#FF9800", "#f44336")) +</span></a>
-<a class="sourceLine" id="cb2-13" title="13"><span class="co">#   theme_modern() +</span></a>
-<a class="sourceLine" id="cb2-14" title="14"><span class="co">#   ylab("Distance (0 is the parent / true effect)")</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8">df_long <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Distance, <span class="dt">x =</span> Type, <span class="dt">fill =</span> Type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="st">  </span><span class="kw">geom_violin</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#2196F3"</span>, <span class="st">"#FF9800"</span>, <span class="st">"#f44336"</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="st">  </span><span class="kw">theme_modern</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Distance (0 is the parent / true effect)"</span>)</a></code></pre></div>
+<p><img src="bootstrapping_files/figure-html/unnamed-chunk-3-1.png" width="960"></p>
 </div>
 <div id="testing" class="section level3">
 <h3 class="hasAnchor">
