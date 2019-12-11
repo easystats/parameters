@@ -50,7 +50,7 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bootstrapped
 
 
 ### Visualisation
-```{r message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
+```{r message=FALSE, warning=FALSE, fig.height=10, fig.width=8}
 library(see)
 
 df_long <- df %>%
