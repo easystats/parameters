@@ -167,7 +167,7 @@ using methods tailored for the model type.
 library(dplyr)
 
 lm(disp ~ ., data = mtcars) %>% 
-  parameters_selection() %>% 
+  select_parameters() %>% 
   model_parameters()
 # Parameter   | Coefficient |     SE |            95% CI |     t | df |      p
 # ----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ This function also works for mixed or Bayesian models:
 library(rstanarm)
 
 stan_glm(mpg ~ ., data = mtcars, refresh = 0) %>% 
-  parameters_selection() %>% 
+  select_parameters() %>% 
   model_parameters()
 # Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior
 # -----------------------------------------------------------------------------------------------
