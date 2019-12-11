@@ -8,38 +8,42 @@
 #'
 #' @examples
 #' model <- lm(mpg ~ ., data = mtcars)
-#' parameters_selection(model)
+#' select_parameters(model)
 #'
 #' model <- lm(mpg ~ cyl * disp * hp * wt, data = mtcars)
-#' parameters_selection(model)
+#' select_parameters(model)
 #' \donttest{
 #' # lme4 -------------------------------------------
 #' library(lme4)
 #' model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species), data = iris)
-#' parameters_selection(model)
+#' select_parameters(model)
 #'
 #' # rstanarm -------------------------------------------
 #' library(rstanarm)
 #' model <- stan_glm(mpg ~ ., data = mtcars, iter = 500, refresh = 0)
-#' parameters_selection(model, cross_validation = TRUE)
+#' select_parameters(model, cross_validation = TRUE)
 #'
 #' model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars, iter = 500, refresh = 0)
-#' parameters_selection(model, cross_validation = FALSE)
+#' select_parameters(model, cross_validation = FALSE)
 #' }
 #' @return The model refitted with optimal number of parameters.
 #'
 #' @export
-parameters_selection <- function(model, ...) {
-  UseMethod("parameters_selection")
+select_parameters <- function(model, ...) {
+  UseMethod("select_parameters")
 }
 
+#' @rdname select_parameters
+#' @export
+parameters_selection <- select_parameters
 
 
-#' @rdname parameters_selection
+
+#' @rdname select_parameters
 #' @inheritParams stats::step
 #' @importFrom stats step
 #' @export
-parameters_selection.lm <- function(model, direction = "both", steps = 1000, k = 2, ...) {
+select_parameters.lm <- function(model, direction = "both", steps = 1000, k = 2, ...) {
   junk <- utils::capture.output(best <- stats::step(model,
     trace = 0,
     direction = direction,
@@ -59,9 +63,9 @@ parameters_selection.lm <- function(model, direction = "both", steps = 1000, k =
 
 
 
-#' @rdname parameters_selection
+#' @rdname select_parameters
 #' @export
-parameters_selection.merMod <- function(model, direction = "backward", steps = 1000, ...) {
+select_parameters.merMod <- function(model, direction = "backward", steps = 1000, ...) {
 
   # Using cAIC4's stepcAIC()
   if (!requireNamespace("cAIC4", quietly = TRUE)) {
@@ -108,10 +112,10 @@ parameters_selection.merMod <- function(model, direction = "backward", steps = 1
 
 #' @param method The method used in the variable selection. Can be NULL (default), "forward" or "L1". See \code{projpred::varsel}.
 #' @param cross_validation Select with cross-validation.
-#' @rdname parameters_selection
+#' @rdname select_parameters
 #' @importFrom stats update
 #' @export
-parameters_selection.stanreg <- function(model, method = NULL, cross_validation = FALSE, ...) {
+select_parameters.stanreg <- function(model, method = NULL, cross_validation = FALSE, ...) {
   if (!requireNamespace("projpred", quietly = TRUE)) {
     stop("Package 'projpred' required for this function to work. Please install it by running `install.packages('projpred')`.")
   }

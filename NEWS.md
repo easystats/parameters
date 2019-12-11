@@ -10,6 +10,7 @@
 - `parameters_bootstrap()` was renamed to `bootstrap_parameters()`. `parameters_bootstrap()` will remain as alias.
 - `model_simulate()` was renamed to `simulate_model()`. `model_simulate()` will remain as alias.
 - `parameters_simulate()` was renamed to `simulate_parameters()`. `parameters_simulate()` will remain as alias.
+- `parameters_selection()` was renamed to `select_parameters()`. `parameters_selection()` will remain as alias.
 
 ## New supported models
 
