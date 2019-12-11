@@ -19,7 +19,7 @@ test_that("principal_components", {
 
   testthat::expect_equal(
     colnames(x),
-    c("Variable", "RC1", "RC2", "Complexity", "Uniqueness")
+    c("Variable", "RC1", "RC2", "Complexity", "Uniqueness", "MSA")
   )
 })
 
