@@ -84,13 +84,8 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
   # remove missings
   x <- stats::na.omit(x)
 
-  # Standardize
-  if (standardize) {
-    x <- as.data.frame(scale(x))
-  }
-
   # PCA
-  model <- stats::prcomp(x, retx = TRUE, center = TRUE, scale. = TRUE, ...)
+  model <- stats::prcomp(x, retx = TRUE, center = TRUE, scale. = standardize, ...)
 
 
   # N factors
