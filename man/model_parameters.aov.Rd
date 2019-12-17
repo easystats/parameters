@@ -15,21 +15,18 @@
 \arguments{
 \item{model}{Object of class \link{aov}, \link{anova} or \code{aovlist}.}
 
-\item{omega_squared}{Compute omega squared as index of effect size. Can be "partial" (adjusted for effect size) or "raw".}
+\item{omega_squared}{Compute omega squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.}
 
-\item{eta_squared}{Compute eta squared as index of effect size. Can be "partial" (adjusted for effect size) or "raw".}
+\item{eta_squared}{Compute eta squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.}
 
 \item{epsilon_squared}{Compute epsilon squared as index of effect size.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame of indices related to the model's parameters.
-}
-\description{
-Parameters of ANOVAs.
-}
-\examples{
+A data frame of indices related to the model's parameters.
+
+ @examples
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
@@ -46,6 +43,8 @@ model_parameters(model)
 library(lme4)
 
 model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
-model_parameters(model)
+model_parameters(model)}
 }
+\description{
+Parameters of ANOVAs.
 }

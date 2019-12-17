@@ -27,15 +27,15 @@ check_clusterstructure <- function(x, standardize = TRUE, distance = "euclidean"
   }
 
   H <- .clusterstructure_hopkins(x, distance = distance)
-  if(H < 0.5){
+  if (H < 0.5) {
     text <- paste0("The dataset is suitable for clustering (Hopkins' H = ",
                    insight::format_value(H),
-                   ").")
+                   ").\n")
     color <- "green"
   } else{
     text <- paste0("The dataset is not suitable for clustering (Hopkins' H = ",
                    insight::format_value(H),
-                   ").")
+                   ").\n")
     color <- "red"
   }
 
