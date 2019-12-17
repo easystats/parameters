@@ -485,6 +485,7 @@ ci.rma <- function(x, ci = .95, ...) {
 
 # helper -----------------------------------------
 
+
 #' @keywords internal
 .check_component <- function(m, x) {
   if (!insight::model_info(m)$is_zero_inflated && x %in% c("zi", "zero_inflated")) {
@@ -492,4 +493,20 @@ ci.rma <- function(x, ci = .95, ...) {
     x <- NULL
   }
   x
+}
+
+
+#' @keywords internal
+.ci_from_refit <- function(std_coef, ci) {
+  se <- attributes(std_coef)$standard_error$SE
+  alpha <- (1 + ci) / 2
+  fac <- stats::qnorm(alpha)
+  out <- data.frame(
+    Parameter = std_coef$Parameter,
+    CI = ci * 100,
+    CI_low = std_coef$Std_Coefficient - se * fac,
+    CI_high = std_coef$Std_Coefficient + se * fac,
+    stringsAsFactors = FALSE
+  )
+  .remove_backticks_from_parameter_names(out)
 }

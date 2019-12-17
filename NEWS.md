@@ -3,6 +3,7 @@
 ## Breaking changes
 
 - The column for degrees of freedom in `model_parameters()` was renamed from `df_residuals` to `df_error` for regression model objects, because these degrees of freedom actually were not always referring to _residuals_ - we consider `df_error` as a more generic name.
+- `model_parameters()` for standardized parameters (i.e. `standardize` is not `NULL`) only returns standardized coefficients, CI and standard errors (and not both, unstandardized and standardized values).
 
 ## Renaming
 

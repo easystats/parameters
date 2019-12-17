@@ -122,6 +122,27 @@ standard_error.table <- function(model, ...) {
 standard_error.xtabs <- standard_error.table
 
 
+#' @importFrom insight print_color
+#' @export
+standard_error.effectsize_std_params <- function(model, ...) {
+  se <- attr(model, "standard_error")
+
+  if (is.null(se)) {
+    insight::print_color("\nCould not extract standard errors of standardized coefficients.\n", "red")
+    return(NULL)
+  }
+
+  out <- .data_frame(
+    Parameter = model$Parameter,
+    SE = as.vector(se)
+  )
+
+  .remove_backticks_from_parameter_names(out)
+}
+
+
+
+
 
 
 

@@ -24,33 +24,45 @@
     if (!requireNamespace("effectsize", quietly = TRUE)) {
       insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
     } else {
-      parameters <- merge(parameters, effectsize::standardize_parameters(model, method = standardize), by = merge_by)
+      # standardize model parameters and calculate related CI and SE
+      std_coef <- effectsize::standardize_parameters(model, method = standardize)
+      parameters <- merge(parameters, std_coef, by = merge_by)
+      coef_col <- "Std_Coefficient"
+      # merge all data, including CI and SE for std. parameters
       if (standardize == "refit") {
-        model <- effectsize::standardize(model)
-        coef_col <- "Std_Coefficient"
-      } else {
-        coef_col <- c("Coefficient", "Std_Coefficient")
+        parameters <- merge(parameters, .ci_from_refit(std_coef, ci), by = merge_by)
+        parameters <- merge(parameters, attributes(std_coef)$standard_error, by = merge_by)
+      } else if (inherits(std_coef, "effectsize_std_params")) {
+        parameters <- merge(parameters, ci(std_coef, ci = ci), by = merge_by)
+        parameters <- merge(parameters, standard_error(std_coef), by = merge_by)
       }
+      # if we have CIs, remember columns names to select later
+      if (!is.null(ci))
+        ci_cols <- c("CI_low", "CI_high")
+      else
+        ci_cols <- c()
     }
   }
 
 
-  # CI
-  if (!is.null(ci)) {
-    ci_df <- suppressMessages(ci(model, ci = ci, component = component))
-    if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
-    ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
-    parameters <- merge(parameters, ci_df, by = merge_by)
-  } else {
-    ci_cols <- c()
+  # CI - only if we don't already have CI for std. parameters
+  if (is.null(standardize)) {
+    if (!is.null(ci)) {
+      ci_df <- suppressMessages(ci(model, ci = ci, component = component))
+      if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+      ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
+      parameters <- merge(parameters, ci_df, by = merge_by)
+    } else {
+      ci_cols <- c()
+    }
   }
 
 
   # p value
   parameters <- merge(parameters, p_value(model, component = component), by = merge_by)
 
-  # standard error
-  parameters <- merge(parameters, standard_error(model, component = component), by = merge_by)
+  # standard error - only if we don't already have SE for std. parameters
+  if (is.null(standardize)) parameters <- merge(parameters, standard_error(model, component = component), by = merge_by)
 
   # test statistic
   parameters <- merge(parameters, statistic, by = merge_by)
@@ -109,25 +121,39 @@
     if (!requireNamespace("effectsize", quietly = TRUE)) {
       insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
     } else {
-      parameters <- merge(parameters, effectsize::standardize_parameters(model, method = standardize), by = "Parameter")
+      # remove SE column
+      parameters[["Std. Error"]] <- NULL
+      # standardize model parameters and calculate related CI and SE
+      std_coef <- effectsize::standardize_parameters(model, method = standardize)
+      parameters <- merge(parameters, std_coef, by = "Parameter")
+      coef_col <- "Std_Coefficient"
+      # merge all data, including CI and SE for std. parameters
       if (standardize == "refit") {
-        model <- effectsize::standardize(model)
-        coef_col <- "Std_Coefficient"
-      } else {
-        coef_col <- c("Coefficient", "Std_Coefficient")
+        parameters <- merge(parameters, .ci_from_refit(std_coef, ci), by = "Parameter")
+        parameters <- merge(parameters, attributes(std_coef)$standard_error, by = "Parameter")
+      } else if (inherits(std_coef, "effectsize_std_params")) {
+        parameters <- merge(parameters, ci(std_coef), by = "Parameter")
+        parameters <- merge(parameters, standard_error(std_coef), by = "Parameter")
       }
+      # if we have CIs, remember columns names to select later
+      if (!is.null(ci))
+        ci_cols <- c("CI_low", "CI_high")
+      else
+        ci_cols <- c()
     }
   }
 
 
-  # CI
-  if (!is.null(ci)) {
-    ci_df <- ci_wald(model, ci = ci, dof = df)
-    if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
-    ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
-    parameters <- merge(parameters, ci_df, by = "Parameter")
-  } else {
-    ci_cols <- c()
+  # CI - only if we don't already have CI for std. parameters
+  if (is.null(standardize)) {
+    if (!is.null(ci)) {
+      ci_df <- ci_wald(model, ci = ci, dof = df)
+      if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+      ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
+      parameters <- merge(parameters, ci_df, by = "Parameter")
+    } else {
+      ci_cols <- c()
+    }
   }
 
 
@@ -140,7 +166,7 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (df_method %in% c("ml1", "satterthwaite", "kenward")) {
+  if (is.null(standardize) && df_method %in% c("ml1", "satterthwaite", "kenward")) {
     parameters[["Std. Error"]] <- NULL
 
     if (df_method == "kenward")
