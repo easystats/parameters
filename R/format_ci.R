@@ -30,9 +30,9 @@ format_ci <- function(CI_low, CI_high, ci = 0.95, digits = 2, brackets = TRUE, w
 .format_ci <- function(CI_low, CI_high, digits = 2, brackets = TRUE, width_low = NULL, width_high = NULL) {
   paste0(
     ifelse(isTRUE(brackets), "[", ""),
-    insight::format_value(CI_low, digits = digits, missing = "missing", width = width_low),
+    insight::format_value(CI_low, digits = digits, missing = "NA", width = width_low),
     ", ",
-    insight::format_value(CI_high, digits = digits, missing = "missing", width = width_high),
+    insight::format_value(CI_high, digits = digits, missing = "NA", width = width_high),
     ifelse(isTRUE(brackets), "]", "")
   )
 }
