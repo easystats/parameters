@@ -31,6 +31,7 @@
 
 - Fixed issue in `model_parameters()` with non-typical ordering of coefficients for mixed models.
 - Fixed issues with models of class `rlmerMod`.
+- Fixed minor issues `model_parameters.BFBayesFactor()`.
 
 # parameters 0.3.0
 
