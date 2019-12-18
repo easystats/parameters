@@ -674,6 +674,21 @@ standard_error.polr <- function(model, ...) {
 }
 
 
+#' @rdname standard_error
+#' @importFrom insight get_parameters
+#' @export
+standard_error.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  stats <- model$Model[, "Std. Error"]
+  parms <- get_parameters(model, effects = effects)
+
+  .data_frame(
+    Parameter = parms$Parameter,
+    SE = stats[parms$Parameter],
+    Effects = parms$Effects
+  )
+}
+
 
 #' @export
 standard_error.bracl <- function(model, ...) {

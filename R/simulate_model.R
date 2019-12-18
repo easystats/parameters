@@ -62,7 +62,7 @@ model_simulate <- simulate_model
 #' @importFrom insight get_parameters
 #' @export
 simulate_model.lm <- function(model, iterations = 1000, ...) {
-  .simulate_model(model, iterations, component = "conditional")
+  .simulate_model(model, iterations, component = "conditional", effects = "fixed")
 }
 
 
@@ -382,6 +382,15 @@ simulate_model.glmx <- function(model, iterations = 1000, component = c("all", "
 }
 
 
+#' @export
+simulate_model.mixor <- function(model, iterations = 1000, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  .simulate_model(model, iterations, component = "conditional", effects = effects)
+}
+
+
+
+
 
 
 
@@ -390,17 +399,17 @@ simulate_model.glmx <- function(model, iterations = 1000, component = c("all", "
 
 
 #' @importFrom insight get_varcov
-.simulate_model <- function(model, iterations, component = "conditional") {
+.simulate_model <- function(model, iterations, component = "conditional", effects = "fixed") {
   if (!requireNamespace("MASS", quietly = TRUE)) {
     stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
   }
 
   if (is.null(iterations)) iterations <- 1000
 
-  params <- insight::get_parameters(model, effects = "fixed", component = component)
+  params <- insight::get_parameters(model, effects = effects, component = component)
   beta <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
 
-  varcov <- insight::get_varcov(model, component)
+  varcov <- insight::get_varcov(model, component = component, effects = effects)
   as.data.frame(MASS::mvrnorm(n = iterations, mu = beta, Sigma = varcov))
 
   ## Alternative approach, similar to arm::sim()

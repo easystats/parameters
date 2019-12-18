@@ -7,10 +7,11 @@
 #'
 #' @importFrom stats qt coef
 #' @export
-ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "conditional", "zi", "zero_inflated", "precision"), robust = FALSE, ...) {
+ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", "all"), component = c("all", "conditional", "zi", "zero_inflated", "precision"), robust = FALSE, ...) {
+  effects <- match.arg(effects)
   component <- match.arg(component)
   out <- lapply(ci, function(i) {
-    .ci_wald(model = model, ci = i, dof = dof, component = component, robust = robust, ...)
+    .ci_wald(model = model, ci = i, dof = dof, effects = effects, component = component, robust = robust, ...)
   })
   out <- do.call(rbind, out)
   row.names(out) <- NULL
@@ -21,8 +22,8 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 #' @importFrom insight get_parameters n_obs
 #' @importFrom stats qt
 #' @keywords internal
-.ci_wald <- function(model, ci, dof, component, robust = FALSE, ...) {
-  params <- insight::get_parameters(model, effects = "fixed", component = component)
+.ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, ...) {
+  params <- insight::get_parameters(model, effects = effects, component = component)
   estimates <- params$Estimate
 
   stderror <- if (isTRUE(robust)) {
@@ -55,6 +56,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
   if ("Component" %in% names(params)) out$Component <- params$Component
+  if ("Effects" %in% names(params) && effects != "fixed") out$Effects <- params$Effects
 
   out
 }

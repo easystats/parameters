@@ -61,6 +61,11 @@ simulate_parameters.default <- function(model, iterations = 1000, centrality = "
   data <- simulate_model(model, iterations = iterations, ...)
   out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
 
+  params <- insight::get_parameters(model)
+  if ("Effects" %in% colnames(params) && length(unique(params$Effects)) > 1) {
+    out$Effects <- params$Effects
+  }
+
   class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(out, "iterations") <- iterations

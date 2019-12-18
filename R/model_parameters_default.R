@@ -44,6 +44,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
+    effects = "fixed",
     ...
   )
 
@@ -53,7 +54,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
-.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, ...) {
+.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", ...) {
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -64,9 +65,9 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- if (is.null(comp_argument)) {
-      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, ...)
+      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, effects = effects, ...)
     } else {
-      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, ...)
+      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, effects = effects, ...)
     }
   }
 
@@ -213,6 +214,26 @@ model_parameters.LORgee <- model_parameters.default
 
 
 # other special cases ------------------------------------------------
+
+
+#' @export
+model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", "random"), bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+  effects <- match.arg(effects)
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Effects"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    effects = effects,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
 
 
 #' @export

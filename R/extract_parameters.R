@@ -4,8 +4,8 @@
 #' @importFrom insight get_statistic get_parameters
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, ...) {
-  parameters <- insight::get_parameters(model, effects = "fixed", component = component)
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", ...) {
+  parameters <- insight::get_parameters(model, effects = effects, component = component)
   statistic <- insight::get_statistic(model, component = component)
 
   # clean parameter names
@@ -48,7 +48,7 @@
   # CI - only if we don't already have CI for std. parameters
   if (is.null(standardize)) {
     if (!is.null(ci)) {
-      ci_df <- suppressMessages(ci(model, ci = ci, component = component))
+      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
       if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
       parameters <- merge(parameters, ci_df, by = merge_by)
@@ -59,10 +59,10 @@
 
 
   # p value
-  parameters <- merge(parameters, p_value(model, component = component), by = merge_by)
+  parameters <- merge(parameters, p_value(model, effects = effects, component = component), by = merge_by)
 
   # standard error - only if we don't already have SE for std. parameters
-  if (is.null(standardize)) parameters <- merge(parameters, standard_error(model, component = component), by = merge_by)
+  if (is.null(standardize)) parameters <- merge(parameters, standard_error(model, effects = effects, component = component), by = merge_by)
 
   # test statistic
   parameters <- merge(parameters, statistic, by = merge_by)
@@ -81,11 +81,12 @@
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
   # Reorder
-  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_error", "p", "Component", "Response")
+  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_error", "p", "Component", "Response", "Effects")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   # remove Component column if not needed
   if (length(unique(parameters$Component)) == 1) parameters$Component <- NULL
+  if (length(unique(parameters$Effects)) == 1 || effects == "fixed") parameters$Effects <- NULL
 
   rownames(parameters) <- NULL
   parameters

@@ -8,6 +8,7 @@
 \alias{standard_error.merMod}
 \alias{standard_error.glmmTMB}
 \alias{standard_error.MixMod}
+\alias{standard_error.mixor}
 \title{Extract standard errors}
 \usage{
 standard_error_robust(
@@ -39,6 +40,8 @@ standard_error(model, ...)
   component = c("all", "conditional", "zi", "zero_inflated"),
   ...
 )
+
+\method{standard_error}{mixor}(model, effects = c("all", "fixed", "random"), ...)
 }
 \arguments{
 \item{model}{A model.}

@@ -283,6 +283,22 @@ p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zer
 }
 
 
+#' @rdname p_value
+#' @importFrom insight get_parameters
+#' @export
+p_value.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  stats <- model$Model[, "P(>|z|)"]
+  parms <- get_parameters(model, effects = effects)
+
+  .data_frame(
+    Parameter = parms$Parameter,
+    p = stats[parms$Parameter],
+    Effects = parms$Effects
+  )
+}
+
+
 
 
 

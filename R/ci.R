@@ -307,6 +307,14 @@ ci.vglm <- ci.gamlss
 ci.svyglm.glimML <- ci.gamlss
 
 
+#' @rdname ci.merMod
+#' @export
+ci.mixor <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  ci_wald(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE, ...)
+}
+
+
 #' @export
 ci.gamm <- function(x, ci = .95, ...) {
   x <- x$gam

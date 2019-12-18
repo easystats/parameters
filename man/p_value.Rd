@@ -7,6 +7,7 @@
 \alias{p_value.rlmerMod}
 \alias{p_value.glmmTMB}
 \alias{p_value.MixMod}
+\alias{p_value.mixor}
 \alias{p_value_robust}
 \title{p-values}
 \usage{
@@ -21,6 +22,8 @@ p_value(model, ...)
 \method{p_value}{glmmTMB}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
 
 \method{p_value}{MixMod}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
+
+\method{p_value}{mixor}(model, effects = c("all", "fixed", "random"), ...)
 
 p_value_robust(
   model,
@@ -41,6 +44,12 @@ p_value_robust(
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+
+\item{effects}{Should standard errors for fixed effects or random effects
+be returned? Only applies to mixed models. May be abbreviated. When
+standard errors for random effects are requested, for each grouping factor
+a list of standard errors (per group level) for random intercepts and slopes
+is returned.}
 
 \item{vcov_estimation}{String, indicating the suffix of the \code{vcov*()}-function
 from the \pkg{sandwich}-package, e.g. \code{vcov_estimation = "CL"} (which

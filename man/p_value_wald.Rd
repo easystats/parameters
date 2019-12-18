@@ -10,6 +10,7 @@ ci_wald(
   model,
   ci = 0.95,
   dof = NULL,
+  effects = c("fixed", "random", "all"),
   component = c("all", "conditional", "zi", "zero_inflated", "precision"),
   robust = FALSE,
   ...
@@ -25,6 +26,12 @@ p_value_wald(model, ...)
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
 \item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.}
+
+\item{effects}{Should standard errors for fixed effects or random effects
+be returned? Only applies to mixed models. May be abbreviated. When
+standard errors for random effects are requested, for each grouping factor
+a list of standard errors (per group level) for random intercepts and slopes
+is returned.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models

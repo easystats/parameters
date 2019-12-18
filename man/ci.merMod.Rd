@@ -4,6 +4,7 @@
 \alias{ci.merMod}
 \alias{ci.default}
 \alias{ci.glm}
+\alias{ci.mixor}
 \alias{ci.glmmTMB}
 \alias{ci.zeroinfl}
 \alias{ci.hurdle}
@@ -21,6 +22,8 @@
 \method{ci}{default}(x, ci = 0.95, method = NULL, ...)
 
 \method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald", "robust"), ...)
+
+\method{ci}{mixor}(x, ci = 0.95, effects = c("all", "fixed", "random"), ...)
 
 \method{ci}{glmmTMB}(
   x,
@@ -67,6 +70,12 @@ ci_robust(
 \item{method}{For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
+
+\item{effects}{Should standard errors for fixed effects or random effects
+be returned? Only applies to mixed models. May be abbreviated. When
+standard errors for random effects are requested, for each grouping factor
+a list of standard errors (per group level) for random intercepts and slopes
+is returned.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
