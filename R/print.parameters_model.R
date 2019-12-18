@@ -81,6 +81,9 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   # make sure we have correct sorting here...
   tables <- split(x, f = split_by)
 
+  # sanity check - only preserve tables with any data in data frames
+  tables <- tables[sapply(tables, nrow) > 0]
+
   for (type in names(tables)) {
 
     # Don't print Component column
@@ -137,7 +140,8 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "sigma" = "Sigma",
       "Correlation" = "Correlation",
       "Loading" = "Loading",
-      "extra" = "Extra Parameters",
+      "extra" = ,
+      "extra.fixed" = "Extra Parameters",
       "nu" = "Nu",
       "tau" = "Tau",
       "precision" = "Precision",

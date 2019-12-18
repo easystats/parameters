@@ -51,7 +51,7 @@ proportion of HDI, to use for the percentage in ROPE.}
 \item{...}{Additional arguments to be passed to or from methods.}
 }
 \value{
-A data.frame of indices related to the model's parameters.
+A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters of BayesFactor objects.
