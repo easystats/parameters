@@ -87,14 +87,14 @@ dof <- degrees_of_freedom
 
 
 
+#' @importFrom bayestestR bayesian_as_frequentist
 #' @importFrom stats df.residual
 #' @keywords internal
 .degrees_of_freedom_fit <- function(model, verbose = TRUE) {
   info <- insight::model_info(model)
 
   if (info$is_bayesian) {
-    # model <- bayestestR::refit_as_frequentist(model)
-    stop("Method 'fit' is not yet available.")
+    model <- bayestestR::bayesian_as_frequentist(model)
   }
 
   # 1st try
