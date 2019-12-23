@@ -39,11 +39,10 @@ model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsi
 
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
-\donttest{
-library(lme4)
 
+library(lme4)
 model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
-model_parameters(model)}
+model_parameters(model)
 }
 \description{
 Parameters of ANOVAs.

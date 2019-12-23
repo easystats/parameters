@@ -23,11 +23,10 @@
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 #' model_parameters(model)
-#' \donttest{
-#' library(lme4)
 #'
+#' library(lme4)
 #' model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
-#' model_parameters(model)}
+#' model_parameters(model)
 #' @export
 model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, ...) {
 
