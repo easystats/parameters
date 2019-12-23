@@ -43,6 +43,7 @@ Suggests:
 	cluster,
 	clValid,
 	covr,
+	cplm,
 	dplyr,
 	DRR,
 	effectsize,

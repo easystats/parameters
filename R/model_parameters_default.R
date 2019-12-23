@@ -86,6 +86,12 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 model_parameters.lme <- model_parameters.default
 
 #' @export
+model_parameters.cpglm <- model_parameters.default
+
+#' @export
+model_parameters.cpglmm <- model_parameters.default
+
+#' @export
 model_parameters.lm <- model_parameters.default
 
 #' @export

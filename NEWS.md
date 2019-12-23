@@ -16,7 +16,7 @@
 
 ## New supported models
 
-- Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*), `fixest` (*fixest*), `feglm` (*alpaca*), `glmx` (*glmx*), `glmmadmb` (*glmmADMB*), `mcmc` (*coda*), `mixor` (*mixor*).
+- Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*), `cpglm`, `cpglmm` (*cplm*), `fixest` (*fixest*), `feglm` (*alpaca*), `glmx` (*glmx*), `glmmadmb` (*glmmADMB*), `mcmc` (*coda*), `mixor` (*mixor*).
 
 ## New functions
 

@@ -47,6 +47,9 @@ n_parameters.BBmm <- n_parameters.merMod
 n_parameters.glimML <- n_parameters.merMod
 
 #' @export
+n_parameters.cpglmm <- n_parameters.merMod
+
+#' @export
 n_parameters.rlmerMod <- n_parameters.merMod
 
 #' @export

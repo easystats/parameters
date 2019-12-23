@@ -721,6 +721,41 @@ standard_error.bracl <- function(model, ...) {
 # Other models ---------------------------------------------------------------
 
 
+#' @importFrom utils capture.output
+#' @export
+standard_error.cpglm <- function(model, ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, "Std. Error"])
+  )
+}
+
+
+
+#' @export
+standard_error.cpglmm <- function(model, ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  stats <- cplm::summary(model)$coefs
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, "Std. Error"])
+  )
+}
+
+
+
 #' @export
 standard_error.rq <- function(model, ...) {
   se <- tryCatch({

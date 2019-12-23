@@ -216,6 +216,8 @@ p_value.merMod <- function(model, method = "wald", ...) {
   p_value_wald(model, dof, ...)
 }
 
+#' @export
+p_value.cpglmm <- p_value.merMod
 
 
 #' @rdname p_value
@@ -513,6 +515,24 @@ p_value.flexsurvreg <- function(model, ...) {
 
 
 # p-Values from Special Models -----------------------------------------------
+
+
+#' @importFrom utils capture.output
+#' @export
+p_value.cpglm <- function(model, ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = as.vector(stats[, "Pr(>|t|)"])
+  )
+}
+
 
 
 #' @export
