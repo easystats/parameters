@@ -223,11 +223,11 @@ Makowski D, Ben-Sachar M, Lüdecke D (2019). "Describe and understand your model'
 Corresponding BibTeX entry:
 
 @Article{,
-title = {Describe and understand your model's parameters},
-author = {Dominique Makowski and Mattan S. Ben-Sachar and Daniel
-Lüdecke},
-journal = {CRAN},
-year = {2019},
-note = {R package},
-url = {https://github.com/easystats/parameters},
+  title = {Describe and understand your model's parameters},
+  author = {Dominique Makowski and Mattan S. Ben-Sachar and Daniel
+  Lüdecke},
+  journal = {CRAN},
+  year = {2019},
+  note = {R package},
+  url = {https://github.com/easystats/parameters},
 }
