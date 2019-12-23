@@ -213,3 +213,21 @@ describe_distribution(x)
 |  Mean | SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
 | ----: | -: | --: | --: | -------: | -------: | --: | ---------: |
 | \-0.1 |  1 | \-3 |   3 |        0 |    \-0.3 | 300 |          0 |
+
+### Citation
+
+In order to cite this package, please use the following citation:
+
+Makowski D, Ben-Sachar M, Lüdecke D (2019). "Describe and understand your model's parameters." CRAN. R package, https://github.com/easystats/parameters.
+
+Corresponding BibTeX entry:
+
+@Article{,
+title = {Describe and understand your model's parameters},
+author = {Dominique Makowski and Mattan S. Ben-Sachar and Daniel
+Lüdecke},
+journal = {CRAN},
+year = {2019},
+note = {R package},
+url = {https://github.com/easystats/parameters},
+}
