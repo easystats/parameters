@@ -8,7 +8,7 @@ bibentry(
 	url="https://github.com/easystats/parameters",
 
 	textVersion =
-  	paste("Makowski, Ben-Sachar & Lüdecke (2019). Describe and understand your model’s parameters. CRAN.",
+  	paste("Makowski, Ben-Shachar & Lüdecke (2019). Describe and understand your model’s parameters. CRAN.",
 		"Available from https://github.com/easystats/parameters."
 		),
 	mheader = "To cite parameters in publications use:")
