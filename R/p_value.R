@@ -6,7 +6,7 @@
 #' }
 #'
 #' @param model A statistical model.
-#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}.
+#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For certain models, like \pkg{gee}, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
@@ -624,10 +624,16 @@ p_value.crch <- function(model, ...) {
 
 
 
+#' @rdname p_value
 #' @export
-p_value.gee <- function(model, ...) {
+p_value.gee <- function(model, method = NULL, ...) {
   cs <- stats::coef(summary(model))
-  p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+
+  if (!is.null(method) && method == "robust") {
+    p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Robust S.E."]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+  } else {
+    p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+  }
 
   .data_frame(
     Parameter = .remove_backticks_from_string(rownames(cs)),

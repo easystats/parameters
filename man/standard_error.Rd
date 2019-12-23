@@ -25,7 +25,7 @@ standard_error(model, ...)
 
 \method{standard_error}{default}(model, robust = FALSE, ...)
 
-\method{standard_error}{merMod}(model, effects = c("fixed", "random"), robust = FALSE, ...)
+\method{standard_error}{merMod}(model, effects = c("fixed", "random"), method = NULL, ...)
 
 \method{standard_error}{glmmTMB}(
   model,
@@ -61,7 +61,7 @@ details).}
 are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.}
 
 \item{...}{Arguments passed to or from other methods. For \code{standard_error()},
-if \code{robust = TRUE}, arguments \code{vcov_estimation}, \code{vcov_type}
+if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
 and \code{vcov_args} can be passed down to \code{standard_error_robust()}.}
 
 \item{force}{Logical, if \code{TRUE}, factors are converted to numerical
@@ -72,16 +72,16 @@ for factors or character vectors.}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are computed
-by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
-\code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
-from the \pkg{sandwich}-package for robust covariance matrix estimators.}
-
 \item{effects}{Should standard errors for fixed effects or random effects
 be returned? Only applies to mixed models. May be abbreviated. When
 standard errors for random effects are requested, for each grouping factor
 a list of standard errors (per group level) for random intercepts and slopes
 is returned.}
+
+\item{method}{If \code{"robust"}, robust standard errors are computed
+by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
+\code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
+from the \pkg{sandwich}-package for robust covariance matrix estimators.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models

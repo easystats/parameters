@@ -8,7 +8,7 @@
 #'   value \code{1} (unless the factor has numeric levels, which are converted
 #'   to the corresponding numeric value). By default, \code{NA} is returned
 #'   for factors or character vectors.
-#' @param robust Logical, if \code{TRUE}, robust standard errors are computed
+#' @param method If \code{"robust"}, robust standard errors are computed
 #'   by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 #'   \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
 #'   from the \pkg{sandwich}-package for robust covariance matrix estimators.
@@ -25,7 +25,7 @@
 #'   are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
-#'   if \code{robust = TRUE}, arguments \code{vcov_estimation}, \code{vcov_type}
+#'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
 #'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
 #' @param effects Should standard errors for fixed effects or random effects
 #'    be returned? Only applies to mixed models. May be abbreviated. When
@@ -291,8 +291,9 @@ standard_error.glm <- standard_error.lm
 
 #' @rdname standard_error
 #' @export
-standard_error.merMod <- function(model, effects = c("fixed", "random"), robust = FALSE, ...) {
+standard_error.merMod <- function(model, effects = c("fixed", "random"), method = NULL, ...) {
   effects <- match.arg(effects)
+  robust <- !is.null(method) && method == "robust"
 
   if (effects == "random") {
     if (!requireNamespace("lme4", quietly = TRUE)) {
@@ -830,13 +831,17 @@ standard_error.crch <- function(model, ...) {
 
 
 #' @export
-standard_error.gee <- function(model, ...) {
+standard_error.gee <- function(model, method = NULL, ...) {
   cs <- stats::coef(summary(model))
+  robust <- !is.null(method) && method == "robust"
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(cs)),
-    SE = as.vector(cs[, "Naive S.E."])
-  )
+  if (isTRUE(robust)) {
+    se <- as.vector(cs[, "Robust S.E."])
+  } else {
+    se <- as.vector(cs[, "Naive S.E."])
+  }
+
+  .data_frame(Parameter = .remove_backticks_from_string(rownames(cs)), SE = se)
 }
 
 

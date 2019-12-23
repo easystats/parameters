@@ -5,6 +5,12 @@ standard_error_robust <- function(model,
                                   vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5"),
                                   vcov_args = NULL,
                                   ...) {
+
+  # exceptions
+  if (inherits(model, "gee")) {
+    return(standard_error(model, method = "robust", ...))
+  }
+
   # match arguments
   vcov_type <- match.arg(vcov_type)
 

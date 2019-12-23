@@ -4,9 +4,10 @@
 #' @importFrom insight get_statistic get_parameters
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", ...) {
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, ...) {
   parameters <- insight::get_parameters(model, effects = effects, component = component)
   statistic <- insight::get_statistic(model, component = component)
+  robust <- if (isTRUE(robust)) "robust" else NULL
 
   # clean parameter names
 
@@ -48,7 +49,7 @@
   # CI - only if we don't already have CI for std. parameters
   if (is.null(standardize)) {
     if (!is.null(ci)) {
-      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
+      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = robust))
       if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
       parameters <- merge(parameters, ci_df, by = merge_by)
@@ -59,10 +60,10 @@
 
 
   # p value
-  parameters <- merge(parameters, p_value(model, effects = effects, component = component), by = merge_by)
+  parameters <- merge(parameters, p_value(model, effects = effects, component = component, method = robust), by = merge_by)
 
   # standard error - only if we don't already have SE for std. parameters
-  if (is.null(standardize)) parameters <- merge(parameters, standard_error(model, effects = effects, component = component), by = merge_by)
+  if (is.null(standardize)) parameters <- merge(parameters, standard_error(model, effects = effects, component = component, method = robust), by = merge_by)
 
   # test statistic
   parameters <- merge(parameters, statistic, by = merge_by)

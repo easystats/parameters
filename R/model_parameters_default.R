@@ -8,6 +8,7 @@
 #' @param iterations The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.
 #' @param standardize The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.
+#' @param robust Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
@@ -35,7 +36,7 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -45,6 +46,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     standardize = standardize,
     exponentiate = exponentiate,
     effects = "fixed",
+    robust = robust,
     ...
   )
 
@@ -54,7 +56,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
-.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", ...) {
+.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", robust = FALSE, ...) {
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -65,9 +67,9 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- if (is.null(comp_argument)) {
-      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, effects = effects, ...)
+      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, ...)
     } else {
-      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, effects = effects, ...)
+      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, ...)
     }
   }
 

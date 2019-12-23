@@ -24,6 +24,7 @@
 
 ## Changes to functions
 
+- `model_parameters()` gets a `robust`-argument, to compute robust standard errors, and confidence intervals and p-values based on robust standard errors.
 - Arguments `p_method` and `ci_method` in `model_parameters.merMod()` were replaced by a single argument `df_method`.
 - `model_parameters.principal()` includes a `MSA` column for objects from `principal_components()`.
 
