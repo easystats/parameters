@@ -10,8 +10,9 @@ if (require("testthat") &&
     model <- BayesFactor::correlationBF(iris$Sepal.Width, iris$Petal.Length)
     testthat::expect_equal(parameters::model_parameters(model)$BF, 348853.6, tolerance = 10)
 
+    set.seed(123)
     model <- BayesFactor::anovaBF(Sepal.Length ~ Species, data = iris)
-    testthat::expect_equal(parameters::model_parameters(model)$Median, c(5.8438, -0.8264, 0.0909, 0.7361, 0.2675, 2.0675), tolerance = 1e-3)
+    testthat::expect_equal(parameters::model_parameters(model)$Median, c(5.8431, -0.8266, 0.092, 0.734, 0.2681, 2.0415), tolerance = 1e-3)
 
     df <- mtcars
     df$gear <- as.factor(df$gear)
@@ -20,7 +21,8 @@ if (require("testthat") &&
     model <- BayesFactor::ttestBF(formula = mpg ~ am, data = df)
     testthat::expect_equal(parameters::model_parameters(model)$BF, 86, tolerance = 2)
 
+    set.seed(123)
     model <- BayesFactor::anovaBF(mpg ~ gear * am, data = df)
-    testthat::expect_equal(parameters::model_parameters(model)$Median, c(20.6879, -3.2436, 3.2436, 25.5268, 0.7841), tolerance = 1e-3)
+    testthat::expect_equal(parameters::model_parameters(model)$Median, c(20.6928, -3.2401, 3.2401, 25.2808, 0.7933), tolerance = 1e-3)
   })
 }

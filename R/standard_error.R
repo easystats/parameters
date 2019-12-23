@@ -34,7 +34,7 @@
 #'    is returned.
 #' @inheritParams simulate_model
 #'
-#' @note \code{standard_error_robust()} resp. \code{standard_error(robust = TRUE)}
+#' @note \code{standard_error_robust()} resp. \code{standard_error(method = "robust")}
 #'   rely on the \pkg{sandwich}-package and will thus only work for those models
 #'   supported by that package.
 #'
@@ -151,7 +151,9 @@ standard_error.effectsize_std_params <- function(model, ...) {
 
 #' @rdname standard_error
 #' @export
-standard_error.default <- function(model, robust = FALSE, ...) {
+standard_error.default <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+
   if (isTRUE(robust)) {
     standard_error_robust(model, ...)
   } else {
@@ -265,7 +267,9 @@ standard_error.tobit <- function(model, ...) {
 
 
 #' @export
-standard_error.lm <- function(model, robust = FALSE, ...) {
+standard_error.lm <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+
   if (isTRUE(robust)) {
     standard_error_robust(model, ...)
   } else {
