@@ -65,7 +65,8 @@
   # standard error - only if we don't already have SE for std. parameters
   if (is.null(standardize)) parameters <- merge(parameters, standard_error(model, effects = effects, component = component, method = robust), by = merge_by)
 
-  # test statistic
+  # test statistic - fix values for robust estimation
+  if (!is.null(robust) && robust == "robust") statistic$Statistic <- parameters$Estimate / parameters$SE
   parameters <- merge(parameters, statistic, by = merge_by)
 
   # dof
