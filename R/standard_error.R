@@ -695,6 +695,24 @@ standard_error.mixor <- function(model, effects = c("all", "fixed", "random"), .
 }
 
 
+
+#' @rdname standard_error
+#' @importFrom insight get_parameters
+#' @export
+standard_error.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
+  component <- match.arg(component)
+  stats <- .get_se_from_summary(model)
+  parms <- get_parameters(model, component = component)
+
+  .data_frame(
+    Parameter = parms$Parameter,
+    SE = stats[parms$Parameter],
+    Component = parms$Component
+  )
+}
+
+
+
 #' @export
 standard_error.bracl <- function(model, ...) {
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))

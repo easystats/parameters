@@ -18,6 +18,10 @@
 
 - Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*), `cpglm`, `cpglmm` (*cplm*), `fixest` (*fixest*), `feglm` (*alpaca*), `glmx` (*glmx*), `glmmadmb` (*glmmADMB*), `mcmc` (*coda*), `mixor` (*mixor*).
 
+## General
+
+- Better handling of `clm2`-models.
+
 ## New functions
 
 - `dof_satterthwaite()` and `dof_ml1()` to compute degrees of freedom based on different approximation methods (and related to that, `p_value_*()` and `se_*()` for these methods were added as well).

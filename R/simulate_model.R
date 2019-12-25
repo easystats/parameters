@@ -191,10 +191,6 @@ simulate_model.clm <- simulate_model.lm
 
 
 #' @export
-simulate_model.clm2 <- simulate_model.lm
-
-
-#' @export
 simulate_model.polr <- simulate_model.lm
 
 
@@ -378,6 +374,13 @@ simulate_model.zerocount <- simulate_model.zeroinfl
 
 #' @export
 simulate_model.betareg <- function(model, iterations = 1000, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  .simulate_model(model, iterations, component = component)
+}
+
+
+#' @export
+simulate_model.clm2 <- function(model, iterations = 1000, component = c("all", "conditional", "scale"), ...) {
   component <- match.arg(component)
   .simulate_model(model, iterations, component = component)
 }

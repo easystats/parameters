@@ -517,6 +517,29 @@ p_value.flexsurvreg <- function(model, ...) {
 # p-Values from Special Models -----------------------------------------------
 
 
+#' @export
+p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
+  component <- match.arg(component)
+
+  params <- insight::get_parameters(model)
+  cs <- stats::coef(summary(model))
+  p <- cs[, 4]
+
+  out <- .data_frame(
+    Parameter = params$Parameter,
+    Component = params$Component,
+    p = as.vector(p)
+  )
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
+}
+
+
+
 #' @importFrom utils capture.output
 #' @export
 p_value.cpglm <- function(model, ...) {

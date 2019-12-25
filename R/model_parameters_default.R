@@ -98,9 +98,6 @@ model_parameters.lm <- model_parameters.default
 model_parameters.glm <- model_parameters.default
 
 #' @export
-model_parameters.clm2 <- model_parameters.default
-
-#' @export
 model_parameters.svyglm.nb <- model_parameters.default
 
 #' @export
@@ -244,8 +241,38 @@ model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", 
 }
 
 
+#' @rdname model_parameters
 #' @export
 model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "precision", "all"), standardize = NULL, exponentiate = FALSE, ...) {
+  component <- match.arg(component)
+  if (component == "all")
+    merge_by <- c("Parameter", "Component")
+  else
+    merge_by <- "Parameter"
+
+  ## TODO check merge by
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    component = component,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+
+#' @rdname model_parameters
+#' @export
+model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "scale"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)
   if (component == "all")
     merge_by <- c("Parameter", "Component")

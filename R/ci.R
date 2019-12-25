@@ -268,9 +268,6 @@ ci.aareg <- ci.gamlss
 ci.clm <- ci.gamlss
 
 #' @export
-ci.clm2 <- ci.gamlss
-
-#' @export
 ci.crch <- ci.gamlss
 
 #' @export
@@ -404,6 +401,13 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
 
 #' @export
 ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+}
+
+
+#' @export
+ci.clm2 <- function(x, ci = .95, component = c("all", "conditional", "scale"), ...) {
   component <- match.arg(component)
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
