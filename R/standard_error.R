@@ -712,6 +712,10 @@ standard_error.clm2 <- function(model, component = c("all", "conditional", "scal
 }
 
 
+#' @export
+standard_error.clmm2 <- standard_error.clm2
+
+
 
 #' @export
 standard_error.bracl <- function(model, ...) {

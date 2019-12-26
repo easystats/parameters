@@ -387,6 +387,10 @@ simulate_model.clm2 <- function(model, iterations = 1000, component = c("all", "
 
 
 #' @export
+simulate_model.clmm2 <- simulate_model.clm2
+
+
+#' @export
 simulate_model.glmx <- function(model, iterations = 1000, component = c("all", "conditional", "extra"), ...) {
   component <- match.arg(component)
   .simulate_model(model, iterations, component = component)

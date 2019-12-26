@@ -298,6 +298,9 @@ model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations
 }
 
 
+#' @export
+model_parameters.clmm2 <- model_parameters.clm2
+
 
 #' @export
 model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "extra"), standardize = NULL, exponentiate = FALSE, ...) {

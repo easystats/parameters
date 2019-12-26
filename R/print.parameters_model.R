@@ -140,6 +140,8 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "sigma" = "Sigma",
       "Correlation" = "Correlation",
       "Loading" = "Loading",
+      "scale" = ,
+      "scale.fixed" = "Scale Parameters",
       "extra" = ,
       "extra.fixed" = "Extra Parameters",
       "nu" = "Nu",

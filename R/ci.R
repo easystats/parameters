@@ -412,6 +412,9 @@ ci.clm2 <- function(x, ci = .95, component = c("all", "conditional", "scale"), .
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
 
+#' @export
+ci.clmm2 <- ci.clm2
+
 
 #' @export
 ci.biglm <- function(x, ci = .95, ...) {

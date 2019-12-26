@@ -539,6 +539,9 @@ p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ..
 }
 
 
+#' @export
+p_value.clmm2 <- p_value.clm2
+
 
 #' @importFrom utils capture.output
 #' @export
