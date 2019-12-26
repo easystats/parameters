@@ -221,6 +221,7 @@ model_parameters.LORgee <- model_parameters.default
 # other special cases ------------------------------------------------
 
 
+#' @rdname model_parameters.merMod
 #' @export
 model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", "random"), bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
   effects <- match.arg(effects)
@@ -302,6 +303,7 @@ model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations
 model_parameters.clmm2 <- model_parameters.clm2
 
 
+#' @rdname model_parameters
 #' @export
 model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "extra"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)

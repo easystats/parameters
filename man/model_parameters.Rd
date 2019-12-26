@@ -6,6 +6,7 @@
 \alias{parameters}
 \alias{model_parameters.betareg}
 \alias{model_parameters.clm2}
+\alias{model_parameters.glmx}
 \title{Model Parameters}
 \usage{
 model_parameters(model, ...)
@@ -29,6 +30,17 @@ parameters(model, ...)
   bootstrap = FALSE,
   iterations = 1000,
   component = c("all", "conditional", "scale"),
+  standardize = NULL,
+  exponentiate = FALSE,
+  ...
+)
+
+\method{model_parameters}{glmx}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = c("all", "conditional", "extra"),
   standardize = NULL,
   exponentiate = FALSE,
   ...
