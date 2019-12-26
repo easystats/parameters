@@ -32,6 +32,12 @@ format_parameters.default <- function(model) {
   original_names <- names <- insight::find_parameters(model, flatten = TRUE)
   info <- insight::model_info(model)
 
+  # quick fix, for multivariate response models, we use
+  # info from first model only
+  if (insight::is_multivariate(model)) {
+    info <- info[[1]]
+  }
+
   # hurdle- and zeroinfl-models
   if (info$is_zero_inflated | info$is_hurdle) {
     names <- gsub("^(count_|zero_)", "", names)
