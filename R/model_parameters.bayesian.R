@@ -43,6 +43,26 @@ model_parameters.stanreg <- function(model, centrality = "median", dispersion = 
 }
 
 
+#' @export
+model_parameters.stanmvreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = "pd", rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000, effects = "fixed", ...) {
+
+  # Processing
+  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, iterations = iterations, effects = effects, ...)
+
+  if (effects == "fixed")
+    attr(parameters, "pretty_names") <- format_parameters(model)
+  else
+    parameters <- .add_pretty_names(parameters, model, effects = effects, component = NULL)
+
+  attr(parameters, "ci") <- ci
+  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+
+  parameters
+}
+
+
+
 #' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
