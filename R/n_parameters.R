@@ -103,7 +103,7 @@ n_parameters.zeroinfl <- function(x, component = c("all", "conditional", "zi", "
 n_parameters.hurdle <- n_parameters.zeroinfl
 
 #' @export
-n_parameters.zerotrunc <- n_parameters.zeroinfl
+n_parameters.zerotrunc <- n_parameters.default
 
 
 
