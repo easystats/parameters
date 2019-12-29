@@ -5,6 +5,7 @@
 \alias{model_parameters}
 \alias{parameters}
 \alias{model_parameters.betareg}
+\alias{model_parameters.rqss}
 \alias{model_parameters.clm2}
 \alias{model_parameters.glmx}
 \title{Model Parameters}
@@ -19,6 +20,17 @@ parameters(model, ...)
   bootstrap = FALSE,
   iterations = 1000,
   component = c("conditional", "precision", "all"),
+  standardize = NULL,
+  exponentiate = FALSE,
+  ...
+)
+
+\method{model_parameters}{rqss}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = c("conditional", "smooth_terms", "all"),
   standardize = NULL,
   exponentiate = FALSE,
   ...
