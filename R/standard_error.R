@@ -813,6 +813,38 @@ standard_error.nlrq <- standard_error.rq
 
 
 #' @export
+standard_error.rqss <- function(model, component = c("all", "conditional", "smooth_terms"), ...) {
+  component <- match.arg(component)
+
+  cs <- summary(model)$coef
+  se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
+  se <- cs[, se_column]
+
+  params_cond <- insight::get_parameters(model, component = "conditional")
+  params_smooth <- insight::get_parameters(model, component = "smooth_terms")
+
+  out_cond <- .data_frame(
+    Parameter = params_cond$Parameter,
+    SE = se,
+    Component = "conditional"
+  )
+
+  out_smooth <- .data_frame(
+    Parameter = params_smooth$Parameter,
+    SE = NA,
+    Component = "smooth_terms"
+  )
+
+  switch(
+    component,
+    "all" = rbind(out_cond, out_smooth),
+    "conditional" = out_cond,
+    "smooth_terms" = out_smooth
+  )
+}
+
+
+#' @export
 standard_error.complmrob <- function(model, ...) {
   stats <- summary(model)$stats
   params <- insight::get_parameters(model)

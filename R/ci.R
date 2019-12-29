@@ -108,6 +108,9 @@ ci.comlmrob <- ci.lm
 ci.rq <- ci.lm
 
 #' @export
+ci.rqss <- ci.lm
+
+#' @export
 ci.crq <- ci.lm
 
 #' @export

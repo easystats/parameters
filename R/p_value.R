@@ -606,6 +606,42 @@ p_value.nlrq <- p_value.rq
 
 
 #' @export
+p_value.rqss <- function(model, component = c("all", "conditional", "smooth_terms"), ...) {
+  component <- match.arg(component)
+
+  cs <- summary(model)$coef
+  p_column <- intersect(c("Pr(>|t|)", "Pr(>|z|)"), colnames(cs))
+  p_cond <- cs[, p_column]
+
+  cs <- summary(model)$qsstab
+  p_smooth <- cs[, "Pr(>F)"]
+
+  params_cond <- insight::get_parameters(model, component = "conditional")
+  params_smooth <- insight::get_parameters(model, component = "smooth_terms")
+
+  out_cond <- .data_frame(
+    Parameter = params_cond$Parameter,
+    p = as.vector(p_cond),
+    Component = "conditional"
+  )
+
+  out_smooth <- .data_frame(
+    Parameter = params_smooth$Parameter,
+    p = as.vector(p_smooth),
+    Component = "smooth_terms"
+  )
+
+  switch(
+    component,
+    "all" = rbind(out_cond, out_smooth),
+    "conditional" = out_cond,
+    "smooth_terms" = out_smooth
+  )
+}
+
+
+
+#' @export
 p_value.biglm <- function(model, ...) {
   cs <- summary(model)$mat
   params <- insight::get_parameters(model)
