@@ -41,6 +41,17 @@
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
+#'
+#' # robust standard errors, calling sandwich::vcovHC(type="HC3") by default
+#' standard_error_robust(model)
+#'
+#' # cluster-robust standard errors, using clubSandwich
+#' iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
+#' standard_error_robust(
+#'   model,
+#'   vcov_type = "CR2",
+#'   vcov_args = list(cluster = iris$cluster)
+#' )
 #' @return A data frame.
 #' @importFrom stats coef vcov setNames var na.omit
 #' @importFrom insight get_varcov print_color get_parameters find_parameters

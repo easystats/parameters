@@ -15,7 +15,8 @@
 standard_error_robust(
   model,
   vcov_estimation = "HC",
-  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5"),
+  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0",
+    "CR1", "CR1p", "CR1S", "CR2", "CR3"),
   vcov_args = NULL,
   ...
 )
@@ -105,4 +106,15 @@ A data frame.
 \examples{
 model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 standard_error(model)
+
+# robust standard errors, calling sandwich::vcovHC(type="HC3") by default
+standard_error_robust(model)
+
+# cluster-robust standard errors, using clubSandwich
+iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
+standard_error_robust(
+  model,
+  vcov_type = "CR2",
+  vcov_args = list(cluster = iris$cluster)
+)
 }

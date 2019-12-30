@@ -40,6 +40,7 @@ Suggests:
 	boot,
 	brms,
 	cAIC4,
+	clubSandwich,
 	cluster,
 	clValid,
 	covr,
