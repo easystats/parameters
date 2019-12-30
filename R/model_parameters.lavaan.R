@@ -1,6 +1,6 @@
-#' Format CFA/SEM from the lavaan package
+#' Format CFA/SEM from the (b)lavaan package
 #'
-#' Format CFA/SEM objects from the lavaan package (Rosseel, 2012).
+#' Format CFA/SEM objects from the (b)lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).
 #'
 #' @param model CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions.
 #' @param standardize Return standardized parameters (standardized coefficients). See \code{lavaan::standardizedsolution}.
@@ -56,11 +56,31 @@
 #' @return A data.frame of indices related to the model's parameters.
 #'
 #' @references \itemize{
-#'   \item Rosseel (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1-36.
+#'   \item Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1-36.
+#'   \item Merkle EC , Rosseel Y (2018). blavaan: Bayesian Structural Equation Models via Parameter Expansion. Journal of Statistical Software, 85(4), 1-30. http://www.jstatsoft.org/v85/i04/
 #' }
 #' @export
 model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type = c("regression", "correlation", "loading"), ...) {
   params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, ...)
+
+  # Filter
+  if (all(type == "all")) {
+    type <- c("regression", "correlation", "loading", "variance", "mean")
+  }
+  params <- params[tolower(params$Type) %in% type, ]
+
+  # add class-attribute for printing
+  class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
+  attr(params, "ci") <- ci
+  attr(params, "model") <- model
+  params
+}
+
+
+
+#' @export
+model_parameters.blavaan <- function(model, ci = 0.95, standardize = FALSE, type = c("regression", "correlation", "loading"), ...) {
+  params <- .extract_parameters_blavaan(model, ci = ci, standardize = standardize, ...)
 
   # Filter
   if (all(type == "all")) {
