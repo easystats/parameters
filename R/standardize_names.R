@@ -70,6 +70,7 @@ standardize_names.parameters_model <- function(data, style = c("easystats", "bro
     cn[cn == "BF"] <- "bayes.factor"
     cn[cn == "Component"] <- "component"
     cn[cn == "Effects"] <- "effects"
+    cn[cn == "Response"] <- "response"
     # more sophisticated replacements
     cn[cn %in% c("df_residual", "df_error")] <- "df.error"
     cn[cn %in% c("Coefficient", "Std_Coefficient", "Median", "Mean", "MAP")] <- "estimate"

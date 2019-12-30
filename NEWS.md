@@ -1,4 +1,4 @@
-# parameters 0.3.1
+# parameters 0.4.0
 
 ## Breaking changes
 
