@@ -68,7 +68,7 @@
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{effects}{Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.}
+\item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}) or \code{"all"}.}
 }
 \value{
 A data frame of indices related to the model's parameters.
