@@ -70,6 +70,8 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   p_digits <- attributes(x)$p_digits
   is_ordinal_model <- attributes(x)$ordinal_model
 
+  if (is.null(is_ordinal_model)) is_ordinal_model <- FALSE
+
   # set up split-factor
   if (length(split_column) > 1) {
     split_by <- lapply(split_column, function(i) x[[i]])
