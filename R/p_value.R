@@ -75,6 +75,14 @@ p_value.default <- function(model, ...) {
 #' @export
 p_value.geeglm <- p_value.default
 
+#' @export
+p_value.negbin <- p_value.default
+
+#' @export
+p_value.censReg <- p_value.default
+
+
+
 
 #' @export
 p_value.mlm <- function(model, ...) {

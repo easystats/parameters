@@ -211,6 +211,14 @@ standard_error.default <- function(model, method = NULL, ...) {
 #' @export
 standard_error.geeglm <- standard_error.default
 
+#' @export
+standard_error.negbin <- standard_error.default
+
+#' @export
+standard_error.censReg <- standard_error.default
+
+
+
 
 #' @export
 standard_error.mlm <- function(model, ...) {
