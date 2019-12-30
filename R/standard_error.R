@@ -226,42 +226,6 @@ standard_error.mlm <- function(model, ...) {
 
 
 #' @export
-standard_error.truncreg <- standard_error.default
-
-
-#' @export
-standard_error.lm_robust <- standard_error.default
-
-
-#' @export
-standard_error.censReg <- standard_error.default
-
-
-#' @export
-standard_error.geeglm <- standard_error.default
-
-
-#' @export
-standard_error.negbin <- standard_error.default
-
-
-#' @export
-standard_error.ivreg <- standard_error.default
-
-
-#' @export
-standard_error.LORgee <- standard_error.default
-
-
-#' @export
-standard_error.lme <- standard_error.default
-
-
-#' @export
-standard_error.gls <- standard_error.default
-
-
-#' @export
 standard_error.tobit <- function(model, ...) {
   params <- insight::get_parameters(model)
   std.error <- standard_error.default(model, ...)

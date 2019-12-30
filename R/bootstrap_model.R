@@ -33,7 +33,7 @@ model_bootstrap <- bootstrap_model
 #' @importFrom stats coef update setNames
 #' @importFrom insight get_data find_parameters get_parameters
 #' @export
-bootstrap_model.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
+bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, ...) {
   if (!requireNamespace("boot", quietly = TRUE)) {
     stop("Package 'boot' needed for this function to work. Please install it.")
   }
@@ -66,11 +66,6 @@ bootstrap_model.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
   out
 }
 
-#' @export
-bootstrap_model.default <- bootstrap_model.lm
-
-#' @export
-bootstrap_model.glmmTMB <- bootstrap_model.lm
 
 
 #' @export
