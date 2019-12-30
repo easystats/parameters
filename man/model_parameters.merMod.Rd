@@ -45,6 +45,8 @@
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
+\item{effects}{Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.}
+
 \item{bootstrap}{Should estimates be based on bootstrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=parameters_bootstrap]{parameters_bootstrap()}}).}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.}

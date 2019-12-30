@@ -2,6 +2,9 @@
 % Please edit documentation in R/model_parameters_default.R
 \name{model_parameters.default}
 \alias{model_parameters.default}
+\alias{model_parameters.betareg}
+\alias{model_parameters.clm2}
+\alias{model_parameters.glmx}
 \title{Parameters of (General) Linear Models}
 \usage{
 \method{model_parameters}{default}(
@@ -12,6 +15,39 @@
   standardize = NULL,
   exponentiate = FALSE,
   robust = FALSE,
+  ...
+)
+
+\method{model_parameters}{betareg}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = c("conditional", "precision", "all"),
+  standardize = NULL,
+  exponentiate = FALSE,
+  ...
+)
+
+\method{model_parameters}{clm2}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = c("all", "conditional", "scale"),
+  standardize = NULL,
+  exponentiate = FALSE,
+  ...
+)
+
+\method{model_parameters}{glmx}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = c("all", "conditional", "extra"),
+  standardize = NULL,
+  exponentiate = FALSE,
   ...
 )
 }
@@ -31,6 +67,8 @@
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{effects}{Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.}
 }
 \value{
 A data frame of indices related to the model's parameters.

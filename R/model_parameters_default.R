@@ -9,6 +9,7 @@
 #' @param standardize The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.
 #' @param robust Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors.
+#' @param effects Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
@@ -242,7 +243,7 @@ model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", 
 }
 
 
-#' @rdname model_parameters
+#' @rdname model_parameters.default
 #' @export
 model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "precision", "all"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)
@@ -271,36 +272,7 @@ model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
-#' @rdname model_parameters
-#' @export
-model_parameters.rqss <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "smooth_terms", "all"), standardize = NULL, exponentiate = FALSE, ...) {
-  component <- match.arg(component)
-  if (component == "all")
-    merge_by <- c("Parameter", "Component")
-  else
-    merge_by <- "Parameter"
-
-  ## TODO check merge by
-
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    component = component,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = merge_by,
-    standardize = standardize,
-    exponentiate = exponentiate,
-    ...
-  )
-
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  out
-}
-
-
-
-#' @rdname model_parameters
+#' @rdname model_parameters.default
 #' @export
 model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "scale"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)
@@ -332,7 +304,7 @@ model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations
 model_parameters.clmm2 <- model_parameters.clm2
 
 
-#' @rdname model_parameters
+#' @rdname model_parameters.default
 #' @export
 model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "extra"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)
