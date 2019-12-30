@@ -53,6 +53,7 @@ format_parameters.default <- function(model) {
 
   # Type-specific changes
   types <- parameters_type(model)
+  if (is.null(types)) return(NULL)
   types$Parameter <- .clean_parameter_names(types$Parameter, full = TRUE)
 
   # hurdle- and zeroinfl-models
