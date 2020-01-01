@@ -30,7 +30,8 @@
 #' \donttest{
 #' # Exploratory Factor Analysis (EFA) ---------
 #' efa <- psych::fa(attitude, nfactors = 3)
-#' model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))}
+#' model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
+#' }
 #'
 #' # FactoMineR ---------
 #' \dontrun{
@@ -41,7 +42,8 @@
 #' attributes(model_parameters(model))$scores
 #'
 #' model <- FactoMineR::FAMD(iris, ncp = 2)
-#' model_parameters(model)}
+#' model_parameters(model)
+#' }
 #' @return A data frame of loadings.
 #' @references \itemize{
 #'   \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and Psychological Measurement, 34(1):111–117

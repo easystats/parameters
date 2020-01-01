@@ -21,18 +21,24 @@ model_parameters.BFBayesFactor <- function(model, centrality = "median", dispers
   out <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, priors = priors, ...)
 
   # Add components and effects columns
-  tryCatch({
-    params <- insight::clean_parameters(model)[, c("Parameter", "Effects", "Component")]
-    out <- merge(out, params, sort = FALSE)
-  }  ,
-  error = function(e) { NULL }
+  tryCatch(
+    {
+      params <- insight::clean_parameters(model)[, c("Parameter", "Effects", "Component")]
+      out <- merge(out, params, sort = FALSE)
+    },
+    error = function(e) {
+      NULL
+    }
   )
 
   # Extract BF
-  tryCatch({
-    out$BF <- as.data.frame(bayestestR::bayesfactor_models(model)[-1, ])$BF
-  },
-  error = function(e) { NULL }
+  tryCatch(
+    {
+      out$BF <- as.data.frame(bayestestR::bayesfactor_models(model)[-1, ])$BF
+    },
+    error = function(e) {
+      NULL
+    }
   )
 
   # Remove unecessary columns

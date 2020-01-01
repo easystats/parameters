@@ -10,7 +10,7 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'
-#'  @examples
+#' @examples
 #' df <- iris
 #' df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 #'
@@ -29,7 +29,6 @@
 #' model_parameters(model)
 #' @export
 model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, ...) {
-
   if (!requireNamespace("effectsize", quietly = TRUE)) {
     stop("Package 'effectsize' required for this function to work. Please install it.")
   }

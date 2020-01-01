@@ -11,14 +11,15 @@
 #'
 #' model <- mclust::Mclust(iris[1:4], verbose = FALSE)
 #' model_parameters(model)
-#'
-#'
 #' @export
-model_parameters.Mclust <- function(model, ...){
-
-  params <- cbind(data.frame(Cluster = as.data.frame(table(model$classification))$Var1,
-                             n_Obs = as.data.frame(table(model$classification))$Freq),
-                  t(model$parameters$mean))
+model_parameters.Mclust <- function(model, ...) {
+  params <- cbind(
+    data.frame(
+      Cluster = as.data.frame(table(model$classification))$Var1,
+      n_Obs = as.data.frame(table(model$classification))$Freq
+    ),
+    t(model$parameters$mean)
+  )
 
 
   # Long means
@@ -35,4 +36,3 @@ model_parameters.Mclust <- function(model, ...){
   class(params) <- c("parameters_model", "parameters_clusters", class(params))
   params
 }
-

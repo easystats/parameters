@@ -64,4 +64,3 @@ p_value_satterthwaite.lmerMod <- function(model, dof = NULL) {
     stringsAsFactors = FALSE
   )
 }
-

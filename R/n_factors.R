@@ -184,8 +184,8 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
       out <- rbind(
         out,
         tryCatch(.n_factors_fit(x, cor, nobs, type, rotation, algorithm),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
     } else {
@@ -244,7 +244,7 @@ print.n_factors <- function(x, ...) {
   if ("n_Factors" %in% names(x)) {
     type <- "factor"
     methods_text <- paste0(as.character(x[x$n_Factors == best_n, "Method"]), collapse = ", ")
-  } else{
+  } else {
     type <- "cluster"
     methods_text <- paste0(as.character(x[x$n_Clusters == best_n, "Method"]), collapse = ", ")
   }
@@ -338,10 +338,9 @@ print.n_clusters <- print.n_factors
 #' Cattell-Nelson-Gorsuch CNG Indices
 #' @keywords internal
 .n_factors_cng <- function(eigen_values = NULL, model = "factors") {
-
   if (length(eigen_values) < 6) {
     nfac <- NA
-  } else{
+  } else {
     nfac <- nFactors::nCng(x = eigen_values, cor = TRUE, model = model)$nFactors
   }
 
@@ -356,10 +355,9 @@ print.n_clusters <- print.n_factors
 #' Multiple Regression Procedure
 #' @keywords internal
 .n_factors_mreg <- function(eigen_values = NULL, model = "factors") {
-
   if (length(eigen_values) < 6) {
     nfac <- NA
-  } else{
+  } else {
     nfac <- nFactors::nMreg(x = eigen_values, cor = TRUE, model = model)$nFactors
   }
 
@@ -479,24 +477,24 @@ print.n_clusters <- print.n_factors
 
   rez <- data.frame()
   for (n in 1:(ncol(cor) - 1)) {
-
     if (tolower(type) %in% c("fa", "factor", "efa")) {
-
       factors <- tryCatch(psych::fa(cor,
-                                    nfactors = n,
-                                    n.obs = nobs,
-                                    rotate = rotation,
-                                    fm = algorithm),
-                          warning = function(w) NA,
-                          error = function(e) NA
+        nfactors = n,
+        n.obs = nobs,
+        rotate = rotation,
+        fm = algorithm
+      ),
+      warning = function(w) NA,
+      error = function(e) NA
       )
-    } else{
+    } else {
       factors <- tryCatch(psych::pca(cor,
-                                    nfactors = n,
-                                    n.obs = nobs,
-                                    rotate = rotation),
-                          warning = function(w) NA,
-                          error = function(e) NA
+        nfactors = n,
+        n.obs = nobs,
+        rotate = rotation
+      ),
+      warning = function(w) NA,
+      error = function(e) NA
       )
     }
 
@@ -510,14 +508,18 @@ print.n_clusters <- print.n_factors
     bic <- ifelse(is.null(factors$BIC), NA, factors$BIC)
     tli <- ifelse(is.null(factors$TLI), NA, factors$TLI)
 
-    rez <- rbind(rez,
-                 data.frame(n = n,
-                            TLI = tli,
-                            Fit = factors$fit.off,
-                            RMSEA = rmsea,
-                            RMSR = rmsr,
-                            CRMS = crms,
-                            BIC = bic))
+    rez <- rbind(
+      rez,
+      data.frame(
+        n = n,
+        TLI = tli,
+        Fit = factors$fit.off,
+        RMSEA = rmsea,
+        RMSR = rmsr,
+        CRMS = crms,
+        BIC = bic
+      )
+    )
   }
 
   TLI <- ifelse(all(is.na(rez$TLI)), NA, rez[!is.na(rez$TLI) & rez$TLI == min(rez$TLI, na.rm = TRUE), "n"])
@@ -531,7 +533,6 @@ print.n_clusters <- print.n_factors
     Method = c("TLI", "RMSEA", "CRMS", "BIC"),
     Family = c("Fit", "Fit", "Fit", "Fit")
   )
-
 }
 
 
@@ -593,4 +594,3 @@ print.n_clusters <- print.n_factors
   class(res) <- c("nFactors", "list")
   res
 }
-

@@ -1,94 +1,110 @@
-Package: parameters
 Type: Package
+Package: parameters
 Title: Processing of Model Parameters
 Version: 0.3.0.1
-Authors@R: c(
-	person("Daniel", 
-		"Lüdecke", 
-		role = c("aut", "cre"), 
-		email = "d.luedecke@uke.de", 
-		comment = c(ORCID = "0000-0002-8895-3206")),
-	person("Dominique", 
-		"Makowski", 
-		email = "dom.makowski@gmail.com",
-		role = c("aut"), 
-		comment = c(ORCID = "0000-0001-5375-9967")),
-	person("Mattan S.", 
-		"Ben-Shachar", 
-		role = c("aut"), 
-		email = "matanshm@post.bgu.ac.il", 
-		comment = c(ORCID = "0000-0002-4287-4801"))
-	)
-Description: Utilities for processing the parameters of various statistical models. Beyond computing p values, CIs, and other indices for a wide variety of models (see support list of insight; Lüdecke, Waggoner & Makowski (2019) <doi:10.21105/joss.01412>), this package implements features like bootstrapping or simulating of parameters and models, feature reduction (feature extraction and variable selection) as well as functions to describe data and variable characteristics (e.g. skewness, kurtosis, smoothness or distribution).
+Authors@R: 
+  c(
+    person("Daniel", 
+           "Lüdecke", 
+           role = c("aut", "cre"), 
+           email = "d.luedecke@uke.de", 
+           comment = c(ORCID = "0000-0002-8895-3206")),
+    person("Dominique", 
+           "Makowski", 
+           email = "dom.makowski@gmail.com",
+           role = c("aut"), 
+           comment = c(ORCID = "0000-0001-5375-9967")),
+    person("Mattan S.", 
+           "Ben-Shachar", 
+           role = c("aut"), 
+           email = "matanshm@post.bgu.ac.il", 
+           comment = c(ORCID = "0000-0002-4287-4801")),
+    person(given = "Indrajeet",
+           family = "Patil",
+           role = c("aut"),
+           email = "patilindrajeet.science@gmail.com",
+           comment = c(ORCID = "0000-0003-1995-6531"))
+  )
+Description: Utilities for processing the parameters of various
+    statistical models. Beyond computing p values, CIs, and other indices
+    for a wide variety of models (see support list of insight; Lüdecke,
+    Waggoner & Makowski (2019) <doi:10.21105/joss.01412>), this package
+    implements features like bootstrapping or simulating of parameters and
+    models, feature reduction (feature extraction and variable selection)
+    as well as functions to describe data and variable characteristics
+    (e.g. skewness, kurtosis, smoothness or distribution).
+License: GPL-3
 URL: https://easystats.github.io/parameters/
 BugReports: https://github.com/easystats/parameters/issues
 Depends:
-	R (>= 3.0)
+    R (>= 3.0)
 Imports:
-	insight (>= 0.7.0),
-	bayestestR (>= 0.4.0),
-	methods,
-	stats,
-	tools,
-	utils
+    bayestestR (>= 0.4.0),
+    insight (>= 0.7.0),
+    methods,
+    stats,
+    tools,
+    utils
 Suggests:
-	AER,
-	aod,
-	BayesFM,
-	BayesFactor,
-	betareg,
-	boot,
-	brms,
-	cAIC4,
-	clubSandwich,
-	cluster,
-	clValid,
-	covr,
-	cplm,
-	dplyr,
-	DRR,
-	effectsize,
-	EGAnet (>= 0.7),
-	FactoMineR,
-	fastICA,
-	gamlss,
-	gee,
-	geepack,
-	GLMMadaptive,
-	glmmTMB,
-	knitr,
-	lavaan,
-	lme4,
-	lmerTest,
-	logspline,
-	MASS,
-	Matrix,
-	MCMCglmm,
-	mclust,
-	mgcv,
-	multimode,
-	MuMIn,
-	NbClust,
-	nFactors,
-	nlme,
-	panelr,
-	pbkrtest,
-	plm,
-	projpred,
-	pscl,
-	psych,
-	randomForest,
-	rmarkdown,
-	rstanarm,
-	sandwich,
-	see,
-	survey,
-	survival,
-	testthat,
-	TMB,
-	VGAM,
-	Zelig
-License: GPL-3
+    AER,
+    aod,
+    BayesFactor,
+    BayesFM,
+    betareg,
+    boot,
+    brms,
+    cAIC4,
+    clubSandwich,
+    cluster,
+    clValid,
+    covr,
+    cplm,
+    dplyr,
+    DRR,
+    effectsize,
+    EGAnet (>= 0.7),
+    FactoMineR,
+    fastICA,
+    gamlss,
+    gee,
+    geepack,
+    GLMMadaptive,
+    glmmTMB,
+    knitr,
+    lavaan,
+    lme4,
+    lmerTest,
+    logspline,
+    MASS,
+    Matrix,
+    mclust,
+    MCMCglmm,
+    mgcv,
+    multimode,
+    MuMIn,
+    NbClust,
+    nFactors,
+    nlme,
+    panelr,
+    pbkrtest,
+    plm,
+    projpred,
+    pscl,
+    psych,
+    randomForest,
+    rmarkdown,
+    rstanarm,
+    sandwich,
+    see,
+    spelling,
+    survey,
+    survival,
+    testthat,
+    TMB,
+    VGAM,
+    Zelig
 Encoding: UTF-8
+Language: en-US
 LazyData: true
 RoxygenNote: 7.0.2
+VignetteBuilder: knitr

@@ -25,16 +25,20 @@
     if (is.null(names(object))) {
       as.data.frame(t(sapply(object, rbind)))
     } else {
-      tryCatch({
-        rn <- names(object)
-        object <- do.call(rbind, object)
-        object[name] <- rn
-        object[c(name, setdiff(names(object), name))]
-      }, warning = function(w) {
-        object
-      }, error = function(e) {
-        object
-      })
+      tryCatch(
+        {
+          rn <- names(object)
+          object <- do.call(rbind, object)
+          object[name] <- rn
+          object[c(name, setdiff(names(object), name))]
+        },
+        warning = function(w) {
+          object
+        },
+        error = function(e) {
+          object
+        }
+      )
     }
   } else {
     object
@@ -92,10 +96,10 @@
 
   # get unique levels / values
   values <- if (is.factor(x)) {
-      levels(x)
-    } else {
-      stats::na.omit(unique(x))
-    }
+    levels(x)
+  } else {
+    stats::na.omit(unique(x))
+  }
 
   dummy <- as.data.frame(do.call(cbind, lapply(values, function(i) {
     out <- rep(0, length(x))
@@ -176,5 +180,3 @@
 .safe_deparse <- function(string) {
   paste0(sapply(deparse(string, width.cutoff = 500), trimws, simplify = TRUE), collapse = " ")
 }
-
-

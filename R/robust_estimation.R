@@ -77,9 +77,9 @@ ci_robust <- function(model,
 #' @importFrom insight n_obs
 #' @importFrom stats coef pnorm pt
 .robust_covariance_matrix <- function(x,
-                       vcov_fun = "vcovHC",
-                       vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"),
-                       vcov_args = NULL) {
+                                      vcov_fun = "vcovHC",
+                                      vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+                                      vcov_args = NULL) {
 
   # match arguments
   vcov_type <- match.arg(vcov_type)

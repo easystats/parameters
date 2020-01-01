@@ -34,7 +34,6 @@
 #' # logistic regression model
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' model_parameters(model)
-#'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, ...) {
@@ -112,10 +111,11 @@ model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", 
 #' @export
 model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "precision", "all"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)
-  if (component == "all")
+  if (component == "all") {
     merge_by <- c("Parameter", "Component")
-  else
+  } else {
     merge_by <- "Parameter"
+  }
 
   ## TODO check merge by
 
@@ -141,10 +141,11 @@ model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterati
 #' @export
 model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "scale"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)
-  if (component == "all")
+  if (component == "all") {
     merge_by <- c("Parameter", "Component")
-  else
+  } else {
     merge_by <- "Parameter"
+  }
 
   ## TODO check merge by
 
@@ -173,10 +174,11 @@ model_parameters.clmm2 <- model_parameters.clm2
 #' @export
 model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "extra"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)
-  if (component == "all")
+  if (component == "all") {
     merge_by <- c("Parameter", "Component")
-  else
+  } else {
     merge_by <- "Parameter"
+  }
 
   out <- .model_parameters_generic(
     model = model,
@@ -229,7 +231,6 @@ model_parameters.bracl <- model_parameters.mlm
 #' @importFrom stats qt setNames
 #' @export
 model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
-
   meta_analysis_overall <- .model_parameters_generic(
     model = model,
     ci = ci,

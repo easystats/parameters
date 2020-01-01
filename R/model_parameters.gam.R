@@ -66,10 +66,11 @@ model_parameters.gamlss <- model_parameters.gam
 #' @export
 model_parameters.rqss <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "smooth_terms", "all"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)
-  if (component == "all")
+  if (component == "all") {
     merge_by <- c("Parameter", "Component")
-  else
+  } else {
     merge_by <- "Parameter"
+  }
 
   ## TODO check merge by
 

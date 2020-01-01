@@ -1,8 +1,8 @@
 if (require("testthat") && require("insight") && require("parameters") && require("nlme") && require("lme4")) {
   data("sleepstudy")
   model <- lme(Reaction ~ Days,
-            random = ~ 1 + Days | Subject,
-            data = sleepstudy
+    random = ~ 1 + Days | Subject,
+    data = sleepstudy
   )
 
   test_that("model_parameters.lme", {

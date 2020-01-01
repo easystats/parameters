@@ -69,7 +69,9 @@ parameters_type <- function(model, ...) {
 
 
   data <- insight::get_data(model)
-  if (is.null(data)) return(NULL)
+  if (is.null(data)) {
+    return(NULL)
+  }
   reference <- .list_factors_numerics(data)
 
   # Get types
@@ -249,5 +251,3 @@ parameters_type <- function(model, ...) {
 
   out
 }
-
-

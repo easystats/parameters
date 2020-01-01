@@ -17,7 +17,8 @@
 #' groups <- cluster_analysis(iris[, 1:4])
 #'
 #' # goodness of group classificatoin
-#' cluster_discrimination(iris[, 1:4], cluster_groups = groups)}
+#' cluster_discrimination(iris[, 1:4], cluster_groups = groups)
+#' }
 #' @importFrom stats na.omit
 #' @export
 cluster_discrimination <- function(x, cluster_groups = NULL) {

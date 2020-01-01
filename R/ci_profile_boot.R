@@ -1,19 +1,22 @@
 #' @importFrom insight get_parameters
 #' @importFrom stats confint
 .ci_profiled <- function(model, ci) {
-  glm_ci <- tryCatch({
-    out <- as.data.frame(stats::confint(model, level = ci), stringsAsFactors = FALSE)
-    names(out) <- c("CI_low", "CI_high")
+  glm_ci <- tryCatch(
+    {
+      out <- as.data.frame(stats::confint(model, level = ci), stringsAsFactors = FALSE)
+      names(out) <- c("CI_low", "CI_high")
 
-    out$CI <- ci * 100
-    out$Parameter <- insight::get_parameters(model, effects = "fixed", component = "conditional")$Parameter
+      out$CI <- ci * 100
+      out$Parameter <- insight::get_parameters(model, effects = "fixed", component = "conditional")$Parameter
 
-    out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
-    rownames(out) <- NULL
+      out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
+      rownames(out) <- NULL
 
-    out
-  },
-  error = function(e) { NULL }
+      out
+    },
+    error = function(e) {
+      NULL
+    }
   )
 
   if (is.null(glm_ci)) {
@@ -29,19 +32,22 @@
 # different length (e.g. as for "polr" models)
 #' @importFrom stats confint
 .ci_profiled2 <- function(model, ci) {
-  glm_ci <- tryCatch({
-    out <- as.data.frame(stats::confint(model, level = ci), stringsAsFactors = FALSE)
-    names(out) <- c("CI_low", "CI_high")
+  glm_ci <- tryCatch(
+    {
+      out <- as.data.frame(stats::confint(model, level = ci), stringsAsFactors = FALSE)
+      names(out) <- c("CI_low", "CI_high")
 
-    out$CI <- ci * 100
-    out$Parameter <- .remove_backticks_from_string(rownames(out))
+      out$CI <- ci * 100
+      out$Parameter <- .remove_backticks_from_string(rownames(out))
 
-    out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
-    rownames(out) <- NULL
+      out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
+      rownames(out) <- NULL
 
-    out
-  },
-  error = function(e) { NULL }
+      out
+    },
+    error = function(e) {
+      NULL
+    }
   )
 
   if (is.null(glm_ci)) {

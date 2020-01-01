@@ -30,10 +30,11 @@ model_parameters.stanreg <- function(model, centrality = "median", dispersion = 
   # Processing
   parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, iterations = iterations, effects = effects, ...)
 
-  if (effects == "fixed")
+  if (effects == "fixed") {
     attr(parameters, "pretty_names") <- format_parameters(model)
-  else
+  } else {
     parameters <- .add_pretty_names(parameters, model, effects = effects, component = NULL)
+  }
 
   attr(parameters, "ci") <- ci
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -50,10 +51,11 @@ model_parameters.stanmvreg <- function(model, centrality = "median", dispersion 
   parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, iterations = iterations, effects = effects, ...)
   parameters$Parameter <- gsub("^(.*)\\|(.*)", "\\2", parameters$Parameter)
 
-  if (effects == "fixed")
+  if (effects == "fixed") {
     attr(parameters, "pretty_names") <- format_parameters(model)
-  else
+  } else {
     parameters <- .add_pretty_names(parameters, model, effects = effects, component = NULL)
+  }
 
   attr(parameters, "ci") <- ci
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -72,10 +74,11 @@ model_parameters.brmsfit <- function(model, centrality = "median", dispersion = 
   # Processing
   parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, iterations = iterations, effects = effects, component = component, ...)
 
-  if (effects == "fixed" && component == "conditional")
+  if (effects == "fixed" && component == "conditional") {
     attr(parameters, "pretty_names") <- format_parameters(model)
-  else
+  } else {
     parameters <- .add_pretty_names(parameters, model, effects = effects, component = component)
+  }
 
   attr(parameters, "ci") <- ci
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)

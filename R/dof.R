@@ -13,7 +13,7 @@
 #' dof(model)
 #'
 #' library(lme4)
-#' model <- lmer(Sepal.Length ~ Petal.Length + (1|Species), data = iris)
+#' model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
 #' dof(model)
 #' \donttest{
 #' library(rstanarm)
@@ -23,10 +23,10 @@
 #'   chains = 2,
 #'   refresh = 0
 #' )
-#' dof(model)}
+#' dof(model)
+#' }
 #' @export
 degrees_of_freedom <- function(model, method = "analytical") {
-
   method <- match.arg(method, c("analytical", "any", "fit", "ml1", "satterthwaite", "kenward", "nokr", "wald"))
 
   if (!.dof_method_ok(model, method)) {
@@ -50,7 +50,7 @@ degrees_of_freedom <- function(model, method = "analytical") {
     dof <- .degrees_of_freedom_analytical(model)
   } else if (method == "nokr") {
     dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
-  } else{
+  } else {
     dof <- .degrees_of_freedom_fit(model)
   }
 
@@ -76,7 +76,7 @@ dof <- degrees_of_freedom
 
   if (isTRUE(kenward) && inherits(model, "lmerMod")) {
     dof <- as.numeric(dof_kenward(model))
-  } else{
+  } else {
     dof <- rep(n - nparam, nparam)
   }
 

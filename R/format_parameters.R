@@ -53,7 +53,9 @@ format_parameters.default <- function(model) {
 
   # Type-specific changes
   types <- parameters_type(model)
-  if (is.null(types)) return(NULL)
+  if (is.null(types)) {
+    return(NULL)
+  }
   types$Parameter <- .clean_parameter_names(types$Parameter, full = TRUE)
 
   # hurdle- and zeroinfl-models
@@ -62,7 +64,6 @@ format_parameters.default <- function(model) {
   }
 
   for (i in 1:nrow(types)) {
-
     name <- types$Parameter[i]
 
     # No interaction
@@ -70,8 +71,8 @@ format_parameters.default <- function(model) {
       type <- types[i, ]
       names[i] <- .format_parameter(name, variable = type$Variable, type = type$Type, level = type$Level)
 
-    # Interaction or nesting
-    } else{
+      # Interaction or nesting
+    } else {
       components <- unlist(strsplit(name, ":", fixed = TRUE))
       is_nested <- types$Type[i] %in% "nested"
       for (j in 1:length(components)) {
@@ -125,7 +126,7 @@ format_parameters.parameters_model <- function(model) {
 
 
 #' @keywords internal
-.format_parameter <- function(name, variable, type, level){
+.format_parameter <- function(name, variable, type, level) {
 
   # Factors
   if (type == "factor") {
@@ -170,7 +171,7 @@ format_parameters.parameters_model <- function(model) {
   if (length(components) > 2) {
     if (type == "interaction") {
       components <- paste0("(", paste0(utils::head(components, -1), collapse = " * "), ")", sep, utils::tail(components, 1))
-    } else{
+    } else {
       components <- paste0(components, collapse = sep)
     }
   } else {
