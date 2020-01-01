@@ -37,7 +37,7 @@ The basic idea of bootstrapping is that inference about a parent population from
 
 In order to compare point-estimates with bootstrapped parameters for frequentist models. We generated one large sample (the **parent population**, size `1000000`) of two continuous variables producing a regression coefficient of `0.5`. We then iteratively extracted a subsample of size `30`, computed 3 types of coefficient (regular, bootstrapped median with 1000 and 4000 iterations) that were substracted from the "parent" coefficient. The closer the value is from 0, and the closer it is from the "true" effect.
 
-The data is available on githuband the code to generate it is abailable [here](https://easystats.github.io/circus/articles/bootstrapped.html).
+The data is available on githuband the code to generate it is available [here](https://easystats.github.io/circus/articles/bootstrapped.html).
 
 
 ```{r message=FALSE, warning=FALSE}

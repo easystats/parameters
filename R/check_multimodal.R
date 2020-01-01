@@ -1,6 +1,6 @@
 #' Check if a distribution is unimodal or multimodal
 #'
-#' For univariate distributions (one-dimensional vectors), this functions perfoms a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.
+#' For univariate distributions (one-dimensional vectors), this functions performs a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.
 #'
 #'
 #' @param x A numeric vector or a dataframe.
@@ -28,7 +28,8 @@
 #'   y = c(rbeta(100, 2, 1), rbeta(100, 1, 4))
 #' )
 #' plot(m$x, m$y)
-#' check_multimodal(m)}
+#' check_multimodal(m)
+#' }
 #' @references \itemize{
 #'   \item Ameijeiras-Alonso, J., Crujeiras, R. M., \& Rodríguez-Casal, A. (2019). Mode testing, critical bandwidth and excess mass. Test, 28(3), 900-919.
 #' }

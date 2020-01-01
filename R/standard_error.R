@@ -168,31 +168,33 @@ standard_error.default <- function(model, method = NULL, ...) {
   if (isTRUE(robust)) {
     standard_error_robust(model, ...)
   } else {
-    se <- tryCatch({
-      if (grepl("^Zelig-", class(model)[1])) {
-        if (!requireNamespace("Zelig", quietly = TRUE)) {
-          stop("Package `Zelig` required. Please install", call. = FALSE)
+    se <- tryCatch(
+      {
+        if (grepl("^Zelig-", class(model)[1])) {
+          if (!requireNamespace("Zelig", quietly = TRUE)) {
+            stop("Package `Zelig` required. Please install", call. = FALSE)
+          }
+          unlist(Zelig::get_se(model))
+        } else {
+          .get_se_from_summary(model)
         }
-        unlist(Zelig::get_se(model))
-      } else {
-        .get_se_from_summary(model)
-      }
-    },
-    error = function(e) {
-      NULL
-    }
-    )
-
-    # if all fails, try to get se from varcov
-    if (is.null(se)) {
-      se <- tryCatch({
-        varcov <- insight::get_varcov(model)
-        se <- sqrt(diag(varcov))
-        names(se) <- colnames(varcov)
       },
       error = function(e) {
         NULL
       }
+    )
+
+    # if all fails, try to get se from varcov
+    if (is.null(se)) {
+      se <- tryCatch(
+        {
+          varcov <- insight::get_varcov(model)
+          se <- sqrt(diag(varcov))
+          names(se) <- colnames(varcov)
+        },
+        error = function(e) {
+          NULL
+        }
       )
     }
 
@@ -294,7 +296,6 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
     n.groupings <- length(rand.se)
 
     for (m in 1:n.groupings) {
-
       vars.m <- attr(rand.se[[m]], "postVar")
 
       K <- dim(vars.m)[1]
@@ -385,9 +386,9 @@ standard_error.MixMod <- function(model, effects = c("fixed", "random"), compone
     vars.m <- attr(rand.se, "post_vars")
     all_names <- attributes(rand.se)$dimnames
 
-    if (dim(vars.m[[1]])[1] == 1)
+    if (dim(vars.m[[1]])[1] == 1) {
       rand.se <- sqrt(unlist(vars.m))
-    else {
+    } else {
       rand.se <- do.call(
         rbind,
         lapply(vars.m, function(.x) t(as.data.frame(sqrt(diag(.x)))))
@@ -607,28 +608,29 @@ standard_error.aareg <- function(model, ...) {
 
 #' @export
 standard_error.multinom <- function(model, ...) {
-  se <- tryCatch({
-    stderr <- summary(model)$standard.errors
-    if (is.null(stderr)) {
-      vc <- insight::get_varcov(model)
-      stderr <- as.vector(sqrt(diag(vc)))
-    } else {
-      if (is.matrix(stderr)) {
-        tmp <- c()
-        for (i in 1:nrow(stderr)) {
-          tmp <- c(tmp, as.vector(stderr[i, ]))
-        }
+  se <- tryCatch(
+    {
+      stderr <- summary(model)$standard.errors
+      if (is.null(stderr)) {
+        vc <- insight::get_varcov(model)
+        stderr <- as.vector(sqrt(diag(vc)))
       } else {
-        tmp <- as.vector(stderr)
+        if (is.matrix(stderr)) {
+          tmp <- c()
+          for (i in 1:nrow(stderr)) {
+            tmp <- c(tmp, as.vector(stderr[i, ]))
+          }
+        } else {
+          tmp <- as.vector(stderr)
+        }
+        stderr <- tmp
       }
-      stderr <- tmp
+      stderr
+    },
+    error = function(e) {
+      vc <- insight::get_varcov(model)
+      as.vector(sqrt(diag(vc)))
     }
-    stderr
-  },
-  error = function(e) {
-    vc <- insight::get_varcov(model)
-    as.vector(sqrt(diag(vc)))
-  }
   )
 
   params <- insight::get_parameters(model)
@@ -766,20 +768,21 @@ standard_error.cpglmm <- function(model, ...) {
 
 #' @export
 standard_error.rq <- function(model, ...) {
-  se <- tryCatch({
-    cs <- suppressWarnings(stats::coef(summary(model)))
-    se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
-    if (length(se_column)) {
-      cs[, se_column]
-    } else {
+  se <- tryCatch(
+    {
+      cs <- suppressWarnings(stats::coef(summary(model)))
+      se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
+      if (length(se_column)) {
+        cs[, se_column]
+      } else {
+        vc <- insight::get_varcov(model)
+        as.vector(sqrt(diag(vc)))
+      }
+    },
+    error = function(e) {
       vc <- insight::get_varcov(model)
       as.vector(sqrt(diag(vc)))
     }
-  },
-  error = function(e) {
-    vc <- insight::get_varcov(model)
-    as.vector(sqrt(diag(vc)))
-  }
   )
 
   params <- insight::get_parameters(model)

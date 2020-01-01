@@ -1,7 +1,6 @@
 if (require("testthat") &&
-    require("parameters") &&
-    require("insight")) {
-
+  require("parameters") &&
+  require("insight")) {
   data(mtcars)
   mtcars$am <- as.factor(mtcars$am)
   model <- lm(mpg ~ wt * am, data = mtcars)

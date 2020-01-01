@@ -38,10 +38,11 @@
         parameters <- merge(parameters, standard_error(std_coef), by = merge_by)
       }
       # if we have CIs, remember columns names to select later
-      if (!is.null(ci))
+      if (!is.null(ci)) {
         ci_cols <- c("CI_low", "CI_high")
-      else
+      } else {
         ci_cols <- c()
+      }
     }
   }
 
@@ -139,10 +140,11 @@
         parameters <- merge(parameters, standard_error(std_coef), by = "Parameter")
       }
       # if we have CIs, remember columns names to select later
-      if (!is.null(ci))
+      if (!is.null(ci)) {
         ci_cols <- c("CI_low", "CI_high")
-      else
+      } else {
         ci_cols <- c()
+      }
     }
   }
 
@@ -172,12 +174,13 @@
   if (is.null(standardize) && df_method %in% c("ml1", "satterthwaite", "kenward")) {
     parameters[["Std. Error"]] <- NULL
 
-    if (df_method == "kenward")
+    if (df_method == "kenward") {
       parameters <- merge(parameters, se_kenward(model), by = "Parameter")
-    else if (df_method == "satterthwaite")
+    } else if (df_method == "satterthwaite") {
       parameters <- merge(parameters, se_satterthwaite(model), by = "Parameter")
-    else
+    } else {
       parameters <- merge(parameters, se_ml1(model), by = "Parameter")
+    }
 
     for (test_statistic in c("t value", "z value")) {
       if (test_statistic %in% colnames(parameters)) {
@@ -350,11 +353,11 @@
   )
 
   params$Type <- ifelse(params$Operator == "=~", "Loading",
-                        ifelse(params$Operator == "~", "Regression",
-                               ifelse(params$Operator == "~~", "Correlation",
-                                      ifelse(params$Operator == "~1", "Mean", NA)
-                               )
-                        )
+    ifelse(params$Operator == "~", "Regression",
+      ifelse(params$Operator == "~~", "Correlation",
+        ifelse(params$Operator == "~1", "Mean", NA)
+      )
+    )
   )
   params$Type <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Type)
 

@@ -168,10 +168,10 @@ print.parameters_pca <- print.parameters_efa
     type <- paste0(type, " component")
   }
 
-  if(type == "cluster"){
+  if (type == "cluster") {
     summary <- as.data.frame(x)
     variance <- attributes(x)$variance * 100
-  } else{
+  } else {
     summary <- attributes(x)$summary
     variance <- max(summary$Variance_Cumulative) * 100
   }

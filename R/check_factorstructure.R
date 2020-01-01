@@ -17,10 +17,10 @@ check_factorstructure <- function(x, ...) {
   kmo <- check_kmo(x, ...)
   sphericity <- check_sphericity(x, ...)
 
-  text <- paste0("  - KMO: ",  attributes(kmo)$text, "\n  - Sphericity: ", attributes(sphericity)$text)
+  text <- paste0("  - KMO: ", attributes(kmo)$text, "\n  - Sphericity: ", attributes(sphericity)$text)
   if (attributes(kmo)$color == "red" | attributes(sphericity)$color == "red") {
     color <- "red"
-  } else{
+  } else {
     color <- "green"
   }
 

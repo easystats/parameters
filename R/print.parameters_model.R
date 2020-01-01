@@ -29,7 +29,6 @@
 #' @importFrom insight format_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
-
   if (!is.null(attributes(x)$title)) {
     insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
   }
@@ -118,7 +117,9 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     if (all(is.na(tables[[type]]$CI_high))) tables[[type]]$CI_high <- NULL
 
     # Don't print if empty col
-    tables[[type]][sapply(tables[[type]], function(x){all(x == "") | all(is.na(x))})] <- NULL
+    tables[[type]][sapply(tables[[type]], function(x) {
+      all(x == "") | all(is.na(x))
+    })] <- NULL
 
     attr(tables[[type]], "digits") <- digits
     attr(tables[[type]], "ci_digits") <- ci_digits

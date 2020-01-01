@@ -114,7 +114,6 @@
 #' @importFrom stats ave
 #' @export
 demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean = "_between") {
-
   interactions_no <- select[!grepl("(\\*|\\:)", select)]
   interactions_yes <- select[grepl("(\\*|\\:)", select)]
 
@@ -134,7 +133,8 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
       length(not_found),
       paste0(not_found, collapse = ", ")
     ),
-    color = "red")
+    color = "red"
+    )
   }
 
   select <- intersect(colnames(x), select)

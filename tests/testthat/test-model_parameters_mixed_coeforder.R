@@ -11,7 +11,7 @@ dat <- data.frame(
   Kennung = as.factor(sample(1:5, 100, TRUE))
 )
 
-m <- lme4::lmer(TST.diff~ Exposition + Gruppe + Gruppe:Exposition + (1|Kennung), data = dat)
+m <- lme4::lmer(TST.diff ~ Exposition + Gruppe + Gruppe:Exposition + (1 | Kennung), data = dat)
 
 test_that("model_parameters.mixed.coeforder", {
   cs <- coef(summary(m))

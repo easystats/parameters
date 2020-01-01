@@ -1,7 +1,7 @@
 if (require("testthat") &&
-    require("parameters") &&
-    require("BayesFactor") &&
-    require("logspline")) {
+  require("parameters") &&
+  require("BayesFactor") &&
+  require("logspline")) {
   test_that("model_parameters.BFBayesFactor", {
     # testthat::skip_on_travis()
     model <- BayesFactor::ttestBF(iris$Sepal.Width, iris$Petal.Length, paired = TRUE)
