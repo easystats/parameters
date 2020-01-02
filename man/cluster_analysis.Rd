@@ -80,7 +80,8 @@ groups <- cluster_analysis(iris[, 1:4], 3)
 
 # K-means clustering of mtcars-dataset, auto-detection of cluster-groups
 \dontrun{
-groups <- cluster_analysis(iris[, 1:4], method = "k")}
+groups <- cluster_analysis(iris[, 1:4], method = "k")
+}
 }
 \references{
 Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.

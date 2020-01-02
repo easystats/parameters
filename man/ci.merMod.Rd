@@ -68,7 +68,7 @@ ci_robust(
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{method}{For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.}
+\item{method}{For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 
@@ -118,5 +118,6 @@ model <- glmmTMB(
 )
 
 ci(model)
-ci(model, component = "zi")}
+ci(model, component = "zi")
+}
 }

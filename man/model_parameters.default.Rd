@@ -95,7 +95,6 @@ model_parameters(model, digits = 3, ci_digits = 4, p_digits = "scientific")
 # logistic regression model
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 model_parameters(model)
-
 }
 \seealso{
 \code{\link[=standardize_names]{standardize_names()}} to rename

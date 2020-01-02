@@ -211,13 +211,31 @@ standard_error.default <- function(model, method = NULL, ...) {
 }
 
 #' @export
+standard_error.truncreg <- standard_error.default
+
+#' @export
+standard_error.lm_robust <- standard_error.default
+
+#' @export
+standard_error.censReg <- standard_error.default
+
+#' @export
 standard_error.geeglm <- standard_error.default
 
 #' @export
 standard_error.negbin <- standard_error.default
 
 #' @export
-standard_error.censReg <- standard_error.default
+standard_error.ivreg <- standard_error.default
+
+#' @export
+standard_error.LORgee <- standard_error.default
+
+#' @export
+standard_error.lme <- standard_error.default
+
+#' @export
+standard_error.gls <- standard_error.default
 
 
 

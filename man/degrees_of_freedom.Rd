@@ -25,7 +25,7 @@ model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 dof(model)
 
 library(lme4)
-model <- lmer(Sepal.Length ~ Petal.Length + (1|Species), data = iris)
+model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
 dof(model)
 \donttest{
 library(rstanarm)
@@ -35,5 +35,6 @@ model <- stan_glm(
   chains = 2,
   refresh = 0
 )
-dof(model)}
+dof(model)
+}
 }

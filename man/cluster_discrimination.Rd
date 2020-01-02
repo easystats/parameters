@@ -22,7 +22,8 @@ Computes linear discriminant analysis on classified cluster groups,
 groups <- cluster_analysis(iris[, 1:4])
 
 # goodness of group classificatoin
-cluster_discrimination(iris[, 1:4], cluster_groups = groups)}
+cluster_discrimination(iris[, 1:4], cluster_groups = groups)
+}
 }
 \seealso{
 \code{\link{n_clusters}} to determine the number of clusters to extract, \code{\link{cluster_analysis}} to compute a cluster analysis and \code{\link{check_clusterstructure}} to check suitability of data for clustering.

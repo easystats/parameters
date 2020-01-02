@@ -25,8 +25,11 @@
 }
 \value{
 A data frame of indices related to the model's parameters.
-
- @examples
+}
+\description{
+Parameters of ANOVAs.
+}
+\examples{
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
@@ -43,7 +46,4 @@ model_parameters(model)
 library(lme4)
 model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
 model_parameters(model)
-}
-\description{
-Parameters of ANOVAs.
 }

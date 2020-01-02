@@ -42,5 +42,4 @@ format_p(c(.02, .065, 0, .23), stars_only = TRUE)
 
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 format_p(p_value(model)$p, digits = "scientific")
-
 }

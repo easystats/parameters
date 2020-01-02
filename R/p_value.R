@@ -75,14 +75,28 @@ p_value.default <- function(model, ...) {
 }
 
 #' @export
-p_value.geeglm <- p_value.default
+p_value.lm <- p_value.default
 
 #' @export
-p_value.negbin <- p_value.default
+p_value.LORgee <- p_value.default
+
+#' @export
+p_value.lm_robust <- p_value.default
+
+#' @export
+p_value.truncreg <- p_value.default
+
+#' @export
+p_value.geeglm <- p_value.default
 
 #' @export
 p_value.censReg <- p_value.default
 
+#' @export
+p_value.ivreg <- p_value.default
+
+#' @export
+p_value.negbin <- p_value.default
 
 
 
