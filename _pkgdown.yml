@@ -98,7 +98,6 @@ reference:
   contents:
   - format_algorithm
   - format_bf
-  - format_ci
   - format_model
   - format_number
   - format_order
