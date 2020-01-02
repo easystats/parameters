@@ -749,6 +749,24 @@ standard_error.bracl <- function(model, ...) {
 # Other models ---------------------------------------------------------------
 
 
+#' @export
+standard_error.cgam <- function(model, ...) {
+  sc <- summary(model)
+  se <- as.vector(sc$coefficients[, "StdErr"])
+
+  params <- insight::get_parameters(model, component = "all")
+
+  if (!is.null(sc$coefficients2)) se <- c(se, rep(NA, nrow(sc$coefficients2)))
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = se,
+    Component = params$Component
+  )
+}
+
+
+
 #' @importFrom utils capture.output
 #' @export
 standard_error.cpglm <- function(model, ...) {

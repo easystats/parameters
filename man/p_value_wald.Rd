@@ -11,7 +11,8 @@ ci_wald(
   ci = 0.95,
   dof = NULL,
   effects = c("fixed", "random", "all"),
-  component = c("all", "conditional", "zi", "zero_inflated", "precision", "scale"),
+  component = c("all", "conditional", "zi", "zero_inflated", "precision", "scale",
+    "smooth_terms"),
   robust = FALSE,
   ...
 )

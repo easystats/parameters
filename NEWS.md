@@ -16,7 +16,7 @@
 
 ## New supported models
 
-- Added support for `vgam` (*VGAM*), `complmrob` (*complmrob*), `cpglm`, `cpglmm` (*cplm*), `fixest` (*fixest*), `feglm` (*alpaca*), `glmx` (*glmx*), `glmmadmb` (*glmmADMB*), `mcmc` (*coda*), `mixor` (*mixor*).
+- Added support for `vgam` (*VGAM*), `cgam` (*cgam*), `complmrob` (*complmrob*), `cpglm`, `cpglmm` (*cplm*), `fixest` (*fixest*), `feglm` (*alpaca*), `glmx` (*glmx*), `glmmadmb` (*glmmADMB*), `mcmc` (*coda*), `mixor` (*mixor*).
 - `model_parameters()` now supports `blavaan` models (*blavaan*).
 
 ## General

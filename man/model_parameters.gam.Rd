@@ -3,6 +3,7 @@
 \name{model_parameters.gam}
 \alias{model_parameters.gam}
 \alias{model_parameters.rqss}
+\alias{model_parameters.cgam}
 \title{Parameters of Generalized Additive (Mixed) Models}
 \usage{
 \method{model_parameters}{gam}(
@@ -16,6 +17,17 @@
 )
 
 \method{model_parameters}{rqss}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = c("conditional", "smooth_terms", "all"),
+  standardize = NULL,
+  exponentiate = FALSE,
+  ...
+)
+
+\method{model_parameters}{cgam}(
   model,
   ci = 0.95,
   bootstrap = FALSE,

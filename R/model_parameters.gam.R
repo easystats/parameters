@@ -89,3 +89,8 @@ model_parameters.rqss <- function(model, ci = .95, bootstrap = FALSE, iterations
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
+
+
+#' @rdname model_parameters.gam
+#' @export
+model_parameters.cgam <- model_parameters.rqss
