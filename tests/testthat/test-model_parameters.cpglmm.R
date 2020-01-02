@@ -2,7 +2,7 @@ if (require("testthat") && require("insight") && require("parameters") && requir
   data("FineRoot")
   model <- cpglmm(RLD ~ Stock + Spacing + (1 | Plant), data = FineRoot)
 
-  test_that("model_parameters.lme", {
+  test_that("model_parameters.cpglmm", {
     params <- model_parameters(model)
     testthat::expect_equal(params$SE, c(0.1308, 0.2514, 0.2, 0.1921), tolerance = 1e-3)
     testthat::expect_equal(

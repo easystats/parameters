@@ -150,7 +150,9 @@
   <span class='no'>model</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>dof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"precision"</span>),
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"precision"</span>, <span class='st'>"scale"</span>,
+    <span class='st'>"smooth_terms"</span>),
   <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
@@ -176,6 +178,14 @@
       <td><p>Degrees of Freedom. If not specified, for <code>ci_wald()</code>, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters). For <code>p_value_wald()</code>, defaults to <code>Inf</code>.</p></td>
     </tr>
     <tr>
+      <th>effects</th>
+      <td><p>Should standard errors for fixed effects or random effects
+be returned? Only applies to mixed models. May be abbreviated. When
+standard errors for random effects are requested, for each grouping factor
+a list of standard errors (per group level) for random intercepts and slopes
+is returned.</p></td>
+    </tr>
+    <tr>
       <th>component</th>
       <td><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
@@ -184,10 +194,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     </tr>
     <tr>
       <th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, robust standard errors are computed
-by calling <code><a href='standard_error.html'>standard_error_robust()</a></code>.
-<code><a href='standard_error.html'>standard_error_robust()</a></code>, in turn, calls one of the <code>vcov*()</code>-functions
-from the <span class="pkg">sandwich</span>-package for robust covariance matrix estimators.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are computed by calling <code><a href='standard_error.html'>standard_error_robust()</a></code>. <code><a href='standard_error.html'>standard_error_robust()</a></code>, in turn, calls one of the <code>vcov*()</code>-functions from the <span class="pkg">sandwich</span>-package for robust covariance matrix estimators.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -231,7 +238,7 @@ from the <span class="pkg">sandwich</span>-package for robust covariance matrix 
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

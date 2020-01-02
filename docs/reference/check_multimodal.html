@@ -45,7 +45,7 @@
   
 
 <meta property="og:title" content="Check if a distribution is unimodal or multimodal — check_multimodal" />
-<meta property="og:description" content="For univariate distributions (one-dimensional vectors), this functions perfoms a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here." />
+<meta property="og:description" content="For univariate distributions (one-dimensional vectors), this functions performs a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -143,7 +143,7 @@
     </div>
 
     <div class="ref-description">
-    <p>For univariate distributions (one-dimensional vectors), this functions perfoms a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.</p>
+    <p>For univariate distributions (one-dimensional vectors), this functions performs a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.</p>
     </div>
 
     <pre class="usage"><span class='fu'>check_multimodal</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -195,10 +195,11 @@
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>4</span>)),
   <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Beta.html'>rbeta</a></span>(<span class='fl'>100</span>, <span class='fl'>2</span>, <span class='fl'>1</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Beta.html'>rbeta</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>4</span>))
 )
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>m</span>$<span class='no'>x</span>, <span class='no'>m</span>$<span class='no'>y</span>)</div><div class='img'><img src='check_multimodal-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>check_multimodal</span>(<span class='no'>m</span>)<span class='co'># }</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Is the data multimodal?
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>m</span>$<span class='no'>x</span>, <span class='no'>m</span>$<span class='no'>y</span>)</div><div class='img'><img src='check_multimodal-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>check_multimodal</span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Is the data multimodal?
 #&gt; 
 #&gt; </span><span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chi2(11) = 73.50, p &lt; .001).
-#&gt; </span><span></div></span></pre>
+#&gt; </span><span></div><div class='input'># }
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -214,7 +215,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

@@ -109,7 +109,7 @@
 <div id="quick-and-exploratory-method" class="section level1">
 <h1 class="hasAnchor">
 <a href="#quick-and-exploratory-method" class="anchor"></a>Quick and Exploratory Method</h1>
-<p>Let’s start by fitting a multiple regression with the <code>attitude</code> dataset, available is base R, to predict the overal <strong>rating</strong> by employees of their organization with the remaining variables (handling of employee <strong>complaints</strong>, special <strong>privileges</strong>, opportunity of <strong>learning</strong>, <strong>raises</strong>, a feedback considered too <strong>critical</strong> and opportunity of <strong>advancement</strong>).</p>
+<p>Let’s start by fitting a multiple regression with the <code>attitude</code> dataset, available is base R, to predict the overall <strong>rating</strong> by employees of their organization with the remaining variables (handling of employee <strong>complaints</strong>, special <strong>privileges</strong>, opportunity of <strong>learning</strong>, <strong>raises</strong>, a feedback considered too <strong>critical</strong> and opportunity of <strong>advancement</strong>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</a>
 <a class="sourceLine" id="cb1-3" title="3"></a>
@@ -146,7 +146,7 @@
 &gt; advance_-0.60                                             |        0.32 | 0.13 | [ 0.04,  0.59] |  2.36 | 26 | 0.026 
 &gt; critical_-0.65                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 26 | 0.120</code></pre>
 <p>A different method (<strong>Classical Multidimensional Scaling - cMDS</strong>) suggests that negative critiques do not have a significant impact on the rating, and that the lack of opportunities of career advancement is a separate dimension with an importance on its own.</p>
-<p>Altough this function can be useful in exploratory data analysis, it’s best to perform the dimension reduction step in a <strong>separate and dedicated stage</strong>, as this is a very important process in the data analysis workflow.</p>
+<p>Although this function can be useful in exploratory data analysis, it’s best to perform the dimension reduction step in a <strong>separate and dedicated stage</strong>, as this is a very important process in the data analysis workflow.</p>
 </div>
 <div id="principal-component-analysis-pca" class="section level1">
 <h1 class="hasAnchor">
@@ -181,7 +181,7 @@
 <div id="using-the-psych-package-for-pca" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-the-psych-package-for-pca" class="anchor"></a>Using the <code>psych</code> package for PCA</h2>
-<p>You can alo use different packages for models, such as <a href="https://cran.r-project.org/package=psych"><code>psych</code></a> <span class="citation">(Revelle 2018)</span> or <a href="http://factominer.free.fr/"><code>FactoMineR</code></a> for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are <strong>fully supported</strong> by <code>parameters</code> through the <code><a href="../reference/model_parameters.html">model_parameters()</a></code> function.</p>
+<p>You can also use different packages for models, such as <a href="https://cran.r-project.org/package=psych"><code>psych</code></a> <span class="citation">(Revelle 2018)</span> or <a href="http://factominer.free.fr/"><code>FactoMineR</code></a> for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are <strong>fully supported</strong> by <code>parameters</code> through the <code><a href="../reference/model_parameters.html">model_parameters()</a></code> function.</p>
 <p>As such, the above analysis can be fully reproduced as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(psych)</a>
 <a class="sourceLine" id="cb12-2" title="2"></a>
@@ -247,7 +247,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

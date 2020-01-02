@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Parameters Descritpion • parameters</title>
+<title>Parameters Description • parameters</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parameters Descritpion">
+<meta property="og:title" content="Parameters Description">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -95,7 +95,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Parameters Descritpion</h1>
+      <h1>Parameters Description</h1>
             
       
       
@@ -136,14 +136,14 @@
 <a class="sourceLine" id="cb5-2" title="2"></a>
 <a class="sourceLine" id="cb5-3" title="3">BayesFactor<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html">correlationBF</a></span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
-<pre><code>&gt; Parameter | Median |        89% CI |     pd | % in ROPE |              Prior |   BF
-&gt; -----------------------------------------------------------------------------------
-&gt; rho       |  -0.11 | [-0.23, 0.02] | 92.90% |    43.13% | Cauchy (0 +- 0.33) | 0.51</code></pre>
+<pre><code>&gt; Parameter | Median |        89% CI |     pd | % in ROPE |              Prior | Effects |   Component |   BF
+&gt; -----------------------------------------------------------------------------------------------------------
+&gt; rho       |  -0.11 | [-0.23, 0.02] | 92.90% |    43.13% | Cauchy (0 +- 0.33) |   fixed | conditional | 0.51</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">BayesFactor<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span>(<span class="dt">formula =</span> mpg <span class="op">~</span><span class="st"> </span>vs, <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
-<pre><code>&gt; Parameter  | Median |          89% CI |     pd | % in ROPE |              Prior |     BF
-&gt; ----------------------------------------------------------------------------------------
-&gt; Difference |  -7.30 | [-10.15, -4.58] | 99.98% |        0% | Cauchy (0 +- 0.71) | 529.27</code></pre>
+<pre><code>&gt; Parameter  | Median |          89% CI |     pd | % in ROPE |              Prior | Effects |   Component |     BF
+&gt; ----------------------------------------------------------------------------------------------------------------
+&gt; Difference |  -7.30 | [-10.15, -4.58] | 99.98% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | 529.27</code></pre>
 </div>
 </div>
 <div id="anovas" class="section level2">
@@ -403,7 +403,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

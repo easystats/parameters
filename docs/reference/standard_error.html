@@ -149,7 +149,8 @@
     <pre class="usage"><span class='fu'>standard_error_robust</span>(
   <span class='no'>model</span>,
   <span class='kw'>vcov_estimation</span> <span class='kw'>=</span> <span class='st'>"HC"</span>,
-  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HC3"</span>, <span class='st'>"const"</span>, <span class='st'>"HC"</span>, <span class='st'>"HC0"</span>, <span class='st'>"HC1"</span>, <span class='st'>"HC2"</span>, <span class='st'>"HC4"</span>, <span class='st'>"HC4m"</span>, <span class='st'>"HC5"</span>),
+  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HC3"</span>, <span class='st'>"const"</span>, <span class='st'>"HC"</span>, <span class='st'>"HC0"</span>, <span class='st'>"HC1"</span>, <span class='st'>"HC2"</span>, <span class='st'>"HC4"</span>, <span class='st'>"HC4m"</span>, <span class='st'>"HC5"</span>, <span class='st'>"CR0"</span>,
+    <span class='st'>"CR1"</span>, <span class='st'>"CR1p"</span>, <span class='st'>"CR1S"</span>, <span class='st'>"CR2"</span>, <span class='st'>"CR3"</span>),
   <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )
@@ -160,10 +161,10 @@
 <span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for merMod</span>
-<span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for glmmTMB</span>
 <span class='fu'>standard_error</span>(
@@ -179,7 +180,13 @@
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>),
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
   <span class='no'>...</span>
-)</pre>
+)
+
+<span class='co'># S3 method for mixor</span>
+<span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for clm2</span>
+<span class='fu'>standard_error</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,7 +218,7 @@ are passed down to the <span class="pkg">sandwich</span>-function specified in <
     <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods. For <code>standard_error()</code>,
-if <code>robust = TRUE</code>, arguments <code>vcov_estimation</code>, <code>vcov_type</code>
+if <code>method = "robust"</code>, arguments <code>vcov_estimation</code>, <code>vcov_type</code>
 and <code>vcov_args</code> can be passed down to <code>standard_error_robust()</code>.</p></td>
     </tr>
     <tr>
@@ -227,8 +234,8 @@ for factors or character vectors.</p></td>
       <td><p>Toggle off warnings.</p></td>
     </tr>
     <tr>
-      <th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, robust standard errors are computed
+      <th>method</th>
+      <td><p>If <code>"robust"</code>, robust standard errors are computed
 by calling <code>standard_error_robust()</code>.
 <code>standard_error_robust()</code>, in turn, calls one of the <code>vcov*()</code>-functions
 from the <span class="pkg">sandwich</span>-package for robust covariance matrix estimators.</p></td>
@@ -255,7 +262,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <p>A data frame.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code>standard_error_robust()</code> resp. <code>standard_error(robust = TRUE)</code>
+    <p><code>standard_error_robust()</code> resp. <code>standard_error(method = "robust")</code>
   rely on the <span class="pkg">sandwich</span>-package and will thus only work for those models
   supported by that package.</p>
 
@@ -267,7 +274,30 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 #&gt; 3              Speciesversicolor 0.6836543
 #&gt; 4               Speciesvirginica 0.6578142
 #&gt; 5 Sepal.Length:Speciesversicolor 0.1281447
-#&gt; 6  Sepal.Length:Speciesvirginica 0.1209952</div></pre>
+#&gt; 6  Sepal.Length:Speciesvirginica 0.1209952</div><div class='input'>
+<span class='co'># robust standard errors, calling sandwich::vcovHC(type="HC3") by default</span>
+<span class='fu'>standard_error_robust</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                        Parameter         SE
+#&gt; 1                    (Intercept) 0.42486667
+#&gt; 2                   Sepal.Length 0.08504442
+#&gt; 3              Speciesversicolor 0.67252996
+#&gt; 4               Speciesvirginica 0.58942889
+#&gt; 5 Sepal.Length:Speciesversicolor 0.12045791
+#&gt; 6  Sepal.Length:Speciesvirginica 0.10558799</div><div class='input'>
+<span class='co'># cluster-robust standard errors, using clubSandwich</span>
+<span class='no'>iris</span>$<span class='no'>cluster</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>8</span>], <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>iris</span>)))
+<span class='fu'>standard_error_robust</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='st'>"CR2"</span>,
+  <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>cluster</span> <span class='kw'>=</span> <span class='no'>iris</span>$<span class='no'>cluster</span>)
+)</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'clubSandwich':</span>
+#&gt; <span class='message'>  method    from    </span>
+#&gt; <span class='message'>  bread.mlm sandwich</span></div><div class='output co'>#&gt;                        Parameter         SE
+#&gt; 1                    (Intercept) 0.31972491
+#&gt; 2                   Sepal.Length 0.06451833
+#&gt; 3              Speciesversicolor 0.47235519
+#&gt; 4               Speciesvirginica 0.34252942
+#&gt; 5 Sepal.Length:Speciesversicolor 0.08746672
+#&gt; 6  Sepal.Length:Speciesvirginica 0.06624836</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -284,7 +314,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

@@ -113,7 +113,7 @@
 <h3 class="hasAnchor">
 <a href="#data" class="anchor"></a>Data</h3>
 <p>In order to compare point-estimates with bootstrapped parameters for frequentist models. We generated one large sample (the <strong>parent population</strong>, size <code>1000000</code>) of two continuous variables producing a regression coefficient of <code>0.5</code>. We then iteratively extracted a subsample of size <code>30</code>, computed 3 types of coefficient (regular, bootstrapped median with 1000 and 4000 iterations) that were substracted from the “parent” coefficient. The closer the value is from 0, and the closer it is from the “true” effect.</p>
-<p>The data is available on githuband the code to generate it is abailable <a href="https://easystats.github.io/circus/articles/bootstrapped.html">here</a>.</p>
+<p>The data is available on githuband the code to generate it is available <a href="https://easystats.github.io/circus/articles/bootstrapped.html">here</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</a>
@@ -151,24 +151,24 @@
 <a class="sourceLine" id="cb3-4" title="4">bayestestR<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/bayestestR/man/bayesfactor.html">bayesfactor</a></span>(BayesFactor<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span>(df<span class="op">$</span>Coefficient))</a></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt;   Model             Bayes Factor
-&gt;   [2] Alt., r=0.707         0.02
+&gt;   Model               BF
+&gt;   [2] Alt., r=0.707 0.02
 &gt; 
 &gt; * Against Denominator: [1] Null, mu=0
 &gt; *   Bayes Factor Type: JZS (BayesFactor)</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">bayestestR<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/bayestestR/man/bayesfactor.html">bayesfactor</a></span>(BayesFactor<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span>(df<span class="op">$</span>Bootstrapped_<span class="dv">1000</span>))</a></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt;   Model             Bayes Factor
-&gt;   [2] Alt., r=0.707         0.02
+&gt;   Model               BF
+&gt;   [2] Alt., r=0.707 0.02
 &gt; 
 &gt; * Against Denominator: [1] Null, mu=0
 &gt; *   Bayes Factor Type: JZS (BayesFactor)</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">bayestestR<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/bayestestR/man/bayesfactor.html">bayesfactor</a></span>(BayesFactor<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span>(df<span class="op">$</span>Bootstrapped_<span class="dv">4000</span>))</a></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt;   Model             Bayes Factor
-&gt;   [2] Alt., r=0.707         0.02
+&gt;   Model               BF
+&gt;   [2] Alt., r=0.707 0.02
 &gt; 
 &gt; * Against Denominator: [1] Null, mu=0
 &gt; *   Bayes Factor Type: JZS (BayesFactor)</code></pre>
@@ -212,7 +212,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

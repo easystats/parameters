@@ -250,7 +250,7 @@
 #&gt; </span><span style='color: #BBBB00;'>The 3 principal components accounted for 81.49% of the total variance of the original data (PC1 = 53.09%, PC2 = 16.30%, PC3 = 12.10%).</span><span></div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Exploratory Factor Analysis (EFA) ---------</span>
 <span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>attitude</span>)))<span class='co'># }</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (oblimin-rotation)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>attitude</span>)))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (oblimin-rotation)
 #&gt; 
 #&gt; </span><span>Variable   | Label |  MR1 |  MR2 |  MR3 | Complexity | Uniqueness
 #&gt; -----------------------------------------------------------------
@@ -262,7 +262,8 @@
 #&gt; learning   |     4 |      | 0.54 |      |       2.51 |       0.24
 #&gt; critical   |     6 |      |      | 0.48 |       1.46 |       0.67
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span><span></div><div class='input'>
+#&gt; </span><span style='color: #BBBB00;'>The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span><span></div><div class='input'><span class='co'># }</span>
+
 <span class='co'># FactoMineR ---------</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>FactoMineR</span>)
@@ -272,7 +273,8 @@
 <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>))$<span class='no'>scores</span>
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>FactoMineR</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/FactoMineR/man/FAMD.html'>FAMD</a></span>(<span class='no'>iris</span>, <span class='kw'>ncp</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)}</div></span></pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+}</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -290,7 +292,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">
