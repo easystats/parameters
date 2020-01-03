@@ -27,6 +27,7 @@
 ## New functions
 
 - `dof_satterthwaite()` and `dof_ml1()` to compute degrees of freedom based on different approximation methods (and related to that, `p_value_*()` and `se_*()` for these methods were added as well).
+- `rescale_weights()` to rescale design (probability or sampling) weights for use in multilevel-models without survey-design.
 
 ## Changes to functions
 

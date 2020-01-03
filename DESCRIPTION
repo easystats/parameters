@@ -96,6 +96,7 @@ Suggests:
     rstanarm,
     sandwich,
     see,
+    sjstats,
     spelling,
     survey,
     survival,

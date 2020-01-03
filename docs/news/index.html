@@ -177,7 +177,7 @@
 <h2 class="hasAnchor">
 <a href="#new-supported-models" class="anchor"></a>New supported models</h2>
 <ul>
-<li>Added support for <code>vgam</code> (<em>VGAM</em>), <code>cgam</code> (<em>cgam</em>), <code>complmrob</code> (<em>complmrob</em>), <code>cpglm</code>, <code>cpglmm</code> (<em>cplm</em>), <code>fixest</code> (<em>fixest</em>), <code>feglm</code> (<em>alpaca</em>), <code>glmx</code> (<em>glmx</em>), <code>glmmadmb</code> (<em>glmmADMB</em>), <code>mcmc</code> (<em>coda</em>), <code>mixor</code> (<em>mixor</em>).</li>
+<li>Added support for <code>vgam</code> (<em>VGAM</em>), <code>cgam</code>, <code>cgamm</code> (<em>cgam</em>), <code>complmrob</code> (<em>complmrob</em>), <code>cpglm</code>, <code>cpglmm</code> (<em>cplm</em>), <code>fixest</code> (<em>fixest</em>), <code>feglm</code> (<em>alpaca</em>), <code>glmx</code> (<em>glmx</em>), <code>glmmadmb</code> (<em>glmmADMB</em>), <code>mcmc</code> (<em>coda</em>), <code>mixor</code> (<em>mixor</em>).</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now supports <code>blavaan</code> models (<em>blavaan</em>).</li>
 </ul>
@@ -195,6 +195,8 @@
 <ul>
 <li>
 <code><a href="../reference/p_value_satterthwaite.html">dof_satterthwaite()</a></code> and <code><a href="../reference/p_value_ml1.html">dof_ml1()</a></code> to compute degrees of freedom based on different approximation methods (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for these methods were added as well).</li>
+<li>
+<code><a href="../reference/rescale_weights.html">rescale_weights()</a></code> to rescale design (probability or sampling) weights for use in multilevel-models without survey-design.</li>
 </ul>
 </div>
 <div id="changes-to-functions" class="section level2">

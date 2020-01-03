@@ -55,6 +55,7 @@ reference:
 - title: "Variable Preparation/Centering"
   contents:
   - demean
+  - rescale_weights
 
 - title: "Feature Reduction"
   contents:
