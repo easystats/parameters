@@ -158,7 +158,7 @@
    multilevel modelling.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rescale_weights</span>(<span class='no'>data</span>, <span class='no'>cluster</span>, <span class='no'>probability_weights</span>)</pre>
+    <pre class="usage"><span class='fu'>rescale_weights</span>(<span class='no'>data</span>, <span class='no'>group</span>, <span class='no'>probability_weights</span>, <span class='kw'>nest</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,45 +168,52 @@
       <td><p>A data frame.</p></td>
     </tr>
     <tr>
-      <th>cluster</th>
-      <td><p>Variable indicating the grouping structure (strata) of
-the survey data (level-2-cluster variable).</p></td>
+      <th>group</th>
+      <td><p>Variable names (as character vector),  indicating the grouping
+structure (strata) of the survey data (level-2-cluster variable). It is
+also possible to create weights for multiple group variables; in such cases,
+each created weighting variable will be suffixed by the name of the group
+variable.</p></td>
     </tr>
     <tr>
       <th>probability_weights</th>
       <td><p>Variable indicating the probability (design or sampling)
 weights of the survey data (level-1-weight).</p></td>
     </tr>
+    <tr>
+      <th>nest</th>
+      <td><p>Logical, if <code>TRUE</code> and <code>group</code> indicates at least two
+group variables, then groups are "nested", i.e. groups are now a combination
+from each group level of the variables in <code>group</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Two new weighting variables: <code>pweights_a</code> and <code>pweights_b</code>,
-   which represent the rescaled design weights to use in multilevel models
-   (use these variables for the <code>weights</code> argument).</p>
+    <p><code>data</code>, including the new weighting variables: <code>pweights_a</code> and <code>pweights_b</code>, which represent the rescaled design weights to use in multilevel models (use these variables for the <code>weights</code> argument).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Rescaling is based on two methods: For <code>pweights_a</code>, the sample
    weights <code>probability_weights</code> are adjusted by a factor that represents the proportion
-   of cluster size divided by the sum of sampling weights within each cluster.
+   of group size divided by the sum of sampling weights within each group.
    The adjustment factor for <code>pweights_b</code> is the sum of sample weights
-   within each cluster devided by the sum of squared sample weights within
-   each cluster (see <cite>Carle (2009)</cite>, Appendix B).
+   within each group divided by the sum of squared sample weights within
+   each group (see <cite>Carle (2009)</cite>, Appendix B).
    <br /> <br />
    Regarding the choice between scaling methods A and B, Carle suggests
    that "analysts who wish to discuss point estimates should report results
    based on weighting method A. For analysts more interested in residual
-   between-cluster variance, method B may generally provide the least biased
+   between-group variance, method B may generally provide the least biased
    estimates". In general, it is recommended to fit a non-weighted model
    and weighted models with both scaling methods and when comparing the
    models, see whether the "inferential decisions converge", to gain
    confidence in the results.
    <br /> <br />
-   Though the bias of scaled weights decreases with increasing cluster size,
-   method A is preferred when insufficient or low cluster size is a concern.
+   Though the bias of scaled weights decreases with increasing group size,
+   method A is preferred when insufficient or low group size is a concern.
    <br /> <br />
-   The cluster ID and probably PSU may be used as random effects (e.g.
-   nested design, or cluster and PSU as varying intercepts), depending
+   The group ID and probably PSU may be used as random effects (e.g.
+   nested design, or group and PSU as varying intercepts), depending
    on the survey design that should be mimicked.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -219,22 +226,51 @@ weights of the survey data (level-1-weight).</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sjstats</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘sjstats’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:parameters’:</span>
+#&gt; <span class='message'>Attaching package: 'sjstats'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:rstanarm':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    se</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:psych':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    phi</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:parameters':</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    p_value</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>nhanes_sample</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sjstats"</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 2</span><span>
-#&gt;   pweights_a pweights_b
-#&gt;        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>      1.57       1.20 
-#&gt; </span><span style='color: #555555;'>2</span><span>      1.63       1.24 
-#&gt; </span><span style='color: #555555;'>3</span><span>      0.725      0.553
-#&gt; </span><span style='color: #555555;'>4</span><span>      0.725      0.553
-#&gt; </span><span style='color: #555555;'>5</span><span>      0.510      0.389
-#&gt; </span><span style='color: #555555;'>6</span><span>      1.28       0.975</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='input'><span class='no'>nhanes_sample</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(
-  <span class='no'>nhanes_sample</span>,
-  <span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>))</div><div class='output co'>#&gt;   total  age RIAGENDR RIDRETH1 SDMVPSU SDMVSTRA WTINT2YR pweights_a pweights_b
+#&gt; 1     1 2.20        1        3       2       31 97593.68  1.5733612  1.2005159
+#&gt; 2     7 2.08        2        3       1       29 39599.36  0.6231745  0.5246593
+#&gt; 3     3 1.48        2        1       2       42 26619.83  0.8976966  0.5439111
+#&gt; 4     4 1.32        2        4       2       33 34998.53  0.7083628  0.5498944
+#&gt; 5     1 2.00        2        1       1       41 14746.45  0.4217782  0.3119698
+#&gt; 6     6 2.20        2        4       1       38 28232.10  0.6877550  0.5155503</div><div class='input'>
+<span class='co'># also works with multiple group-variables...</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>), <span class='st'>"WTINT2YR"</span>))</div><div class='output co'>#&gt;   total  age RIAGENDR RIDRETH1 SDMVPSU SDMVSTRA WTINT2YR pweight_a_SDMVSTRA
+#&gt; 1     1 2.20        1        3       2       31 97593.68          1.5733612
+#&gt; 2     7 2.08        2        3       1       29 39599.36          0.6231745
+#&gt; 3     3 1.48        2        1       2       42 26619.83          0.8976966
+#&gt; 4     4 1.32        2        4       2       33 34998.53          0.7083628
+#&gt; 5     1 2.00        2        1       1       41 14746.45          0.4217782
+#&gt; 6     6 2.20        2        4       1       38 28232.10          0.6877550
+#&gt;   pweight_b_SDMVSTRA pweight_a_SDMVPSU pweight_b_SDMVPSU
+#&gt; 1          1.2005159         1.8458164         1.3699952
+#&gt; 2          0.5246593         0.8217570         0.5780808
+#&gt; 3          0.5439111         0.5034683         0.3736824
+#&gt; 4          0.5498944         0.6619369         0.4913004
+#&gt; 5          0.3119698         0.3060151         0.2152722
+#&gt; 6          0.5155503         0.5858662         0.4121388</div><div class='input'>
+<span class='co'># or nested structures.</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>rescale_weights</span>(
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes_sample</span>,
+  <span class='kw'>group</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>),
+  <span class='kw'>probability_weights</span> <span class='kw'>=</span> <span class='st'>"WTINT2YR"</span>,
+  <span class='kw'>nest</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   total  age RIAGENDR RIDRETH1 SDMVPSU SDMVSTRA WTINT2YR pweights_a pweights_b
+#&gt; 1     1 2.20        1        3       2       31 97593.68  1.6532834  1.3583967
+#&gt; 2     7 2.08        2        3       1       29 39599.36  0.5492655  0.4875798
+#&gt; 3     3 1.48        2        1       2       42 26619.83  0.8341084  0.5891700
+#&gt; 4     4 1.32        2        4       2       33 34998.53  0.7937824  0.5941006
+#&gt; 5     1 2.00        2        1       1       41 14746.45  0.4285939  0.3068214
+#&gt; 6     6 2.20        2        4       1       38 28232.10  0.6215579  0.4759935</div><div class='input'>
+ <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)
+<span class='no'>nhanes_sample</span> <span class='kw'>&lt;-</span> <span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>)
 <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>glmer</a></span>(
   <span class='no'>total</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>RIAGENDR</span>) * (<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>age</span>) + <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>RIDRETH1</span>)) + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>SDMVPSU</span>),
   <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
@@ -248,24 +284,24 @@ weights of the survey data (level-1-weight).</p></td>
 #&gt;    Data: nhanes_sample
 #&gt; Weights: pweights_a
 #&gt;       AIC       BIC    logLik  deviance  df.resid 
-#&gt;  90928.41  91004.61 -45451.20  90902.41      2582 
+#&gt;  78844.27  78920.47 -39409.14  78818.27      2582 
 #&gt; Random effects:
 #&gt;  Groups  Name        Std.Dev.
-#&gt;  SDMVPSU (Intercept) 0.09507 
+#&gt;  SDMVPSU (Intercept) 0.1018  
 #&gt; Number of obs: 2595, groups:  SDMVPSU, 2
 #&gt; Fixed Effects:
 #&gt;                         (Intercept)                    factor(RIAGENDR)2  
-#&gt;                              2.6688                              -1.3736  
+#&gt;                            2.491801                            -1.021308  
 #&gt;                            log(age)                    factor(RIDRETH1)2  
-#&gt;                              0.9187                              -0.3641  
+#&gt;                            0.838726                            -0.088627  
 #&gt;                   factor(RIDRETH1)3                    factor(RIDRETH1)4  
-#&gt;                             -0.2102                               0.5311  
+#&gt;                           -0.013333                             0.722511  
 #&gt;                   factor(RIDRETH1)5           factor(RIAGENDR)2:log(age)  
-#&gt;                             -0.4563                              -1.1487  
+#&gt;                           -0.106521                            -1.012695  
 #&gt; factor(RIAGENDR)2:factor(RIDRETH1)2  factor(RIAGENDR)2:factor(RIDRETH1)3  
-#&gt;                              0.5024                               1.1413  
+#&gt;                           -0.009086                             0.732985  
 #&gt; factor(RIAGENDR)2:factor(RIDRETH1)4  factor(RIAGENDR)2:factor(RIDRETH1)5  
-#&gt;                              0.5401                               0.9673  </div></span></pre>
+#&gt;                            0.275967                             0.542074  </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
