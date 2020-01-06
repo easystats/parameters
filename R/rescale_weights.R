@@ -10,36 +10,34 @@
 #'    multilevel modelling.
 #'
 #' @param data A data frame.
-#' @param cluster Variable indicating the grouping structure (strata) of
+#' @param group Variable indicating the grouping structure (strata) of
 #'    the survey data (level-2-cluster variable).
 #' @param probability_weights Variable indicating the probability (design or sampling)
 #'    weights of the survey data (level-1-weight).
 #'
-#' @return Two new weighting variables: \code{pweights_a} and \code{pweights_b},
-#'    which represent the rescaled design weights to use in multilevel models
-#'    (use these variables for the \code{weights} argument).
+#' @return \code{data}, including the two new weighting variables: \code{pweights_a} and \code{pweights_b}, which represent the rescaled design weights to use in multilevel models (use these variables for the \code{weights} argument).
 #'
 #' @details Rescaling is based on two methods: For \code{pweights_a}, the sample
 #'    weights \code{probability_weights} are adjusted by a factor that represents the proportion
-#'    of cluster size divided by the sum of sampling weights within each cluster.
+#'    of group size divided by the sum of sampling weights within each group.
 #'    The adjustment factor for \code{pweights_b} is the sum of sample weights
-#'    within each cluster devided by the sum of squared sample weights within
-#'    each cluster (see \cite{Carle (2009)}, Appendix B).
+#'    within each group divided by the sum of squared sample weights within
+#'    each group (see \cite{Carle (2009)}, Appendix B).
 #'    \cr \cr
 #'    Regarding the choice between scaling methods A and B, Carle suggests
 #'    that "analysts who wish to discuss point estimates should report results
 #'    based on weighting method A. For analysts more interested in residual
-#'    between-cluster variance, method B may generally provide the least biased
+#'    between-group variance, method B may generally provide the least biased
 #'    estimates". In general, it is recommended to fit a non-weighted model
 #'    and weighted models with both scaling methods and when comparing the
 #'    models, see whether the "inferential decisions converge", to gain
 #'    confidence in the results.
 #'    \cr \cr
-#'    Though the bias of scaled weights decreases with increasing cluster size,
-#'    method A is preferred when insufficient or low cluster size is a concern.
+#'    Though the bias of scaled weights decreases with increasing group size,
+#'    method A is preferred when insufficient or low group size is a concern.
 #'    \cr \cr
-#'    The cluster ID and probably PSU may be used as random effects (e.g.
-#'    nested design, or cluster and PSU as varying intercepts), depending
+#'    The group ID and probably PSU may be used as random effects (e.g.
+#'    nested design, or group and PSU as varying intercepts), depending
 #'    on the survey design that should be mimicked.
 #'
 #' @references \itemize{
@@ -53,10 +51,7 @@
 #' head(rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR"))
 #'
 #' library(lme4)
-#' nhanes_sample <- cbind(
-#'   nhanes_sample,
-#'   rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR")
-#' )
+#' nhanes_sample <- rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR")
 #' glmer(
 #'   total ~ factor(RIAGENDR) * (log(age) + factor(RIDRETH1)) + (1 | SDMVPSU),
 #'   family = poisson(),
@@ -64,7 +59,7 @@
 #'   weights = pweights_a
 #' )
 #' @export
-rescale_weights <- function(data, cluster, probability_weights) {
+rescale_weights <- function(data, group, probability_weights) {
 
   # check if weight has missings. we need to remove them first,
   # and add back weights to correct cases later
@@ -78,30 +73,45 @@ rescale_weights <- function(data, cluster, probability_weights) {
     data_tmp <- data
   }
 
+  out <- lapply(group, function(i) {
+    x <- .rescale_weights(data_tmp, i, probability_weights, nrow(data), weight_non_na)
+    if (length(group) > 1) {
+      colnames(x) <- sprintf(c("pweight_a_%s", "pweight_b_%s"), i)
+    }
+    x
+  })
 
-  # compute sum of weights per cluster
+  do.call(cbind, list(data, out))
+}
+
+
+
+.rescale_weights <- function(x, group, probability_weights, n, weight_non_na) {
+  # compute sum of weights per group
   design_weights <- data.frame(
-    cluster = sort(unique(data_tmp[[cluster]])),
-    sum_weights_by_cluster = tapply(data_tmp[[probability_weights]], as.factor(data_tmp[[cluster]]), sum),
-    sum_squared_weights_by_cluster = tapply(data_tmp[[probability_weights]]^2, as.factor(data_tmp[[cluster]]), sum),
-    n_per_group = as.vector(table(data_tmp[[cluster]])),
+    group = sort(unique(x[[group]])),
+    sum_weights_by_group = tapply(x[[probability_weights]], as.factor(x[[group]]), sum),
+    sum_squared_weights_by_group = tapply(x[[probability_weights]]^2, as.factor(x[[group]]), sum),
+    n_per_group = as.vector(table(x[[group]])),
     stringsAsFactors = FALSE
   )
 
-  colnames(design_weights)[1] <- cluster
-  data_tmp <- merge(data_tmp, design_weights, by = cluster, sort = FALSE)
+  colnames(design_weights)[1] <- group
+  x <- merge(x, design_weights, by = group, sort = FALSE)
 
   # multiply the original weight by the fraction of the
   # sampling unit total population based on Carle 2009
 
-  w_a <- data_tmp[[probability_weights]] * data_tmp$n_per_group / data_tmp$sum_weights_by_cluster
-  w_b <- data_tmp[[probability_weights]] * data_tmp$sum_weights_by_cluster / data_tmp$sum_squared_weights_by_cluster
+  w_a <- x[[probability_weights]] * x$n_per_group / x$sum_weights_by_group
+  w_b <- x[[probability_weights]] * x$sum_weights_by_group / x$sum_squared_weights_by_group
 
-  data$pweights_a <- NA
-  data$pweights_b <- NA
+  out <- data.frame(
+    pweights_a = rep(as.numeric(NA), times = n),
+    pweights_b = rep(as.numeric(NA), times = n)
+  )
 
-  data$pweights_a[weight_non_na] <- w_a
-  data$pweights_b[weight_non_na] <- w_b
+  out$pweights_a[weight_non_na] <- w_a
+  out$pweights_b[weight_non_na] <- w_b
 
-  data[, c("pweights_a", "pweights_b")]
+  out
 }

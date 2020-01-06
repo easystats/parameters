@@ -4,21 +4,19 @@
 \alias{rescale_weights}
 \title{Rescale design weights for multilevel analysis}
 \usage{
-rescale_weights(data, cluster, probability_weights)
+rescale_weights(data, group, probability_weights)
 }
 \arguments{
 \item{data}{A data frame.}
 
-\item{cluster}{Variable indicating the grouping structure (strata) of
+\item{group}{Variable indicating the grouping structure (strata) of
 the survey data (level-2-cluster variable).}
 
 \item{probability_weights}{Variable indicating the probability (design or sampling)
 weights of the survey data (level-1-weight).}
 }
 \value{
-Two new weighting variables: \code{pweights_a} and \code{pweights_b},
-   which represent the rescaled design weights to use in multilevel models
-   (use these variables for the \code{weights} argument).
+\code{data}, including the two new weighting variables: \code{pweights_a} and \code{pweights_b}, which represent the rescaled design weights to use in multilevel models (use these variables for the \code{weights} argument).
 }
 \description{
 Most functions to fit multilevel and mixed effects models only
@@ -32,25 +30,25 @@ Most functions to fit multilevel and mixed effects models only
 \details{
 Rescaling is based on two methods: For \code{pweights_a}, the sample
    weights \code{probability_weights} are adjusted by a factor that represents the proportion
-   of cluster size divided by the sum of sampling weights within each cluster.
+   of group size divided by the sum of sampling weights within each group.
    The adjustment factor for \code{pweights_b} is the sum of sample weights
-   within each cluster devided by the sum of squared sample weights within
-   each cluster (see \cite{Carle (2009)}, Appendix B).
+   within each group divided by the sum of squared sample weights within
+   each group (see \cite{Carle (2009)}, Appendix B).
    \cr \cr
    Regarding the choice between scaling methods A and B, Carle suggests
    that "analysts who wish to discuss point estimates should report results
    based on weighting method A. For analysts more interested in residual
-   between-cluster variance, method B may generally provide the least biased
+   between-group variance, method B may generally provide the least biased
    estimates". In general, it is recommended to fit a non-weighted model
    and weighted models with both scaling methods and when comparing the
    models, see whether the "inferential decisions converge", to gain
    confidence in the results.
    \cr \cr
-   Though the bias of scaled weights decreases with increasing cluster size,
-   method A is preferred when insufficient or low cluster size is a concern.
+   Though the bias of scaled weights decreases with increasing group size,
+   method A is preferred when insufficient or low group size is a concern.
    \cr \cr
-   The cluster ID and probably PSU may be used as random effects (e.g.
-   nested design, or cluster and PSU as varying intercepts), depending
+   The group ID and probably PSU may be used as random effects (e.g.
+   nested design, or group and PSU as varying intercepts), depending
    on the survey design that should be mimicked.
 }
 \examples{
@@ -59,10 +57,7 @@ data(nhanes_sample, package = "sjstats")
 head(rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR"))
 
 library(lme4)
-nhanes_sample <- cbind(
-  nhanes_sample,
-  rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR")
-)
+nhanes_sample <- rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR")
 glmer(
   total ~ factor(RIAGENDR) * (log(age) + factor(RIDRETH1)) + (1 | SDMVPSU),
   family = poisson(),
