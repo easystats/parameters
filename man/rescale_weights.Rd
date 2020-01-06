@@ -9,14 +9,17 @@ rescale_weights(data, group, probability_weights)
 \arguments{
 \item{data}{A data frame.}
 
-\item{group}{Variable indicating the grouping structure (strata) of
-the survey data (level-2-cluster variable).}
+\item{group}{Variable names (as character vector),  indicating the grouping
+structure (strata) of the survey data (level-2-cluster variable). It is
+also possible to create weights for multiple group variables; in such cases,
+each created weighting variable will be suffixed by the name of the group
+variable.}
 
 \item{probability_weights}{Variable indicating the probability (design or sampling)
 weights of the survey data (level-1-weight).}
 }
 \value{
-\code{data}, including the two new weighting variables: \code{pweights_a} and \code{pweights_b}, which represent the rescaled design weights to use in multilevel models (use these variables for the \code{weights} argument).
+\code{data}, including the new weighting variables: \code{pweights_a} and \code{pweights_b}, which represent the rescaled design weights to use in multilevel models (use these variables for the \code{weights} argument).
 }
 \description{
 Most functions to fit multilevel and mixed effects models only
@@ -55,6 +58,9 @@ Rescaling is based on two methods: For \code{pweights_a}, the sample
 library(sjstats)
 data(nhanes_sample, package = "sjstats")
 head(rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR"))
+
+# also works with multiple group-variables
+head(rescale_weights(nhanes_sample, c("SDMVSTRA", "SDMVPSU"), "WTINT2YR"))
 
 library(lme4)
 nhanes_sample <- rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR")

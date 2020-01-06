@@ -10,12 +10,15 @@
 #'    multilevel modelling.
 #'
 #' @param data A data frame.
-#' @param group Variable indicating the grouping structure (strata) of
-#'    the survey data (level-2-cluster variable).
+#' @param group Variable names (as character vector),  indicating the grouping
+#'   structure (strata) of the survey data (level-2-cluster variable). It is
+#'   also possible to create weights for multiple group variables; in such cases,
+#'   each created weighting variable will be suffixed by the name of the group
+#'   variable.
 #' @param probability_weights Variable indicating the probability (design or sampling)
 #'    weights of the survey data (level-1-weight).
 #'
-#' @return \code{data}, including the two new weighting variables: \code{pweights_a} and \code{pweights_b}, which represent the rescaled design weights to use in multilevel models (use these variables for the \code{weights} argument).
+#' @return \code{data}, including the new weighting variables: \code{pweights_a} and \code{pweights_b}, which represent the rescaled design weights to use in multilevel models (use these variables for the \code{weights} argument).
 #'
 #' @details Rescaling is based on two methods: For \code{pweights_a}, the sample
 #'    weights \code{probability_weights} are adjusted by a factor that represents the proportion
@@ -50,6 +53,9 @@
 #' data(nhanes_sample, package = "sjstats")
 #' head(rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR"))
 #'
+#' # also works with multiple group-variables
+#' head(rescale_weights(nhanes_sample, c("SDMVSTRA", "SDMVPSU"), "WTINT2YR"))
+#'
 #' library(lme4)
 #' nhanes_sample <- rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR")
 #' glmer(
@@ -72,6 +78,9 @@ rescale_weights <- function(data, group, probability_weights) {
   } else {
     data_tmp <- data
   }
+
+  # sort id
+  data_tmp$.bamboozled <- 1:nrow(data_tmp)
 
   out <- lapply(group, function(i) {
     x <- .rescale_weights(data_tmp, i, probability_weights, nrow(data), weight_non_na)
@@ -98,6 +107,10 @@ rescale_weights <- function(data, group, probability_weights) {
 
   colnames(design_weights)[1] <- group
   x <- merge(x, design_weights, by = group, sort = FALSE)
+
+  # restore original order
+  x <- x[order(x$.bamboozled), ]
+  x$.bamboozled <- NULL
 
   # multiply the original weight by the fraction of the
   # sampling unit total population based on Carle 2009
