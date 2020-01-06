@@ -4,7 +4,7 @@
 \alias{rescale_weights}
 \title{Rescale design weights for multilevel analysis}
 \usage{
-rescale_weights(data, group, probability_weights)
+rescale_weights(data, group, probability_weights, nest = FALSE)
 }
 \arguments{
 \item{data}{A data frame.}
@@ -17,6 +17,10 @@ variable.}
 
 \item{probability_weights}{Variable indicating the probability (design or sampling)
 weights of the survey data (level-1-weight).}
+
+\item{nest}{Logical, if \code{TRUE} and \code{group} indicates at least two
+group variables, then groups are "nested", i.e. groups are now a combination
+from each group level of the variables in \code{group}.}
 }
 \value{
 \code{data}, including the new weighting variables: \code{pweights_a} and \code{pweights_b}, which represent the rescaled design weights to use in multilevel models (use these variables for the \code{weights} argument).
@@ -59,10 +63,19 @@ library(sjstats)
 data(nhanes_sample, package = "sjstats")
 head(rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR"))
 
-# also works with multiple group-variables
+# also works with multiple group-variables...
 head(rescale_weights(nhanes_sample, c("SDMVSTRA", "SDMVPSU"), "WTINT2YR"))
 
-library(lme4)
+# or nested structures.
+x <- rescale_weights(
+  data = nhanes_sample,
+  group = c("SDMVSTRA", "SDMVPSU"),
+  probability_weights = "WTINT2YR",
+  nest = TRUE
+)
+head(x)
+
+ library(lme4)
 nhanes_sample <- rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR")
 glmer(
   total ~ factor(RIAGENDR) * (log(age) + factor(RIDRETH1)) + (1 | SDMVPSU),

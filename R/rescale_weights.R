@@ -16,7 +16,10 @@
 #'   each created weighting variable will be suffixed by the name of the group
 #'   variable.
 #' @param probability_weights Variable indicating the probability (design or sampling)
-#'    weights of the survey data (level-1-weight).
+#'   weights of the survey data (level-1-weight).
+#' @param nest Logical, if \code{TRUE} and \code{group} indicates at least two
+#'   group variables, then groups are "nested", i.e. groups are now a combination
+#'   from each group level of the variables in \code{group}.
 #'
 #' @return \code{data}, including the new weighting variables: \code{pweights_a} and \code{pweights_b}, which represent the rescaled design weights to use in multilevel models (use these variables for the \code{weights} argument).
 #'
@@ -53,10 +56,19 @@
 #' data(nhanes_sample, package = "sjstats")
 #' head(rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR"))
 #'
-#' # also works with multiple group-variables
+#' # also works with multiple group-variables...
 #' head(rescale_weights(nhanes_sample, c("SDMVSTRA", "SDMVPSU"), "WTINT2YR"))
 #'
-#' library(lme4)
+#' # or nested structures.
+#' x <- rescale_weights(
+#'   data = nhanes_sample,
+#'   group = c("SDMVSTRA", "SDMVPSU"),
+#'   probability_weights = "WTINT2YR",
+#'   nest = TRUE
+#' )
+#' head(x)
+#'
+#'  library(lme4)
 #' nhanes_sample <- rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR")
 #' glmer(
 #'   total ~ factor(RIAGENDR) * (log(age) + factor(RIDRETH1)) + (1 | SDMVPSU),
@@ -65,7 +77,7 @@
 #'   weights = pweights_a
 #' )
 #' @export
-rescale_weights <- function(data, group, probability_weights) {
+rescale_weights <- function(data, group, probability_weights, nest = FALSE) {
 
   # check if weight has missings. we need to remove them first,
   # and add back weights to correct cases later
@@ -82,18 +94,31 @@ rescale_weights <- function(data, group, probability_weights) {
   # sort id
   data_tmp$.bamboozled <- 1:nrow(data_tmp)
 
-  out <- lapply(group, function(i) {
-    x <- .rescale_weights(data_tmp, i, probability_weights, nrow(data), weight_non_na)
-    if (length(group) > 1) {
-      colnames(x) <- sprintf(c("pweight_a_%s", "pweight_b_%s"), i)
-    }
-    x
-  })
+  if (nest && length(group) < 2) {
+    warning(sprintf("Only one group variable selected, no nested structure possible. Rescaling weights for grout '%s' now.", group), call. = FALSE)
+    nest <- FALSE
+  }
+
+  if (nest) {
+    out <- .rescale_weights_nested(data_tmp, group, probability_weights, nrow(data), weight_non_na)
+  } else {
+    out <- lapply(group, function(i) {
+      x <- .rescale_weights(data_tmp, i, probability_weights, nrow(data), weight_non_na)
+      if (length(group) > 1) {
+        colnames(x) <- sprintf(c("pweight_a_%s", "pweight_b_%s"), i)
+      }
+      x
+    })
+  }
 
   do.call(cbind, list(data, out))
 }
 
 
+
+
+
+# rescale weights, for one or more group variables ----------------------------
 
 .rescale_weights <- function(x, group, probability_weights, n, weight_non_na) {
   # compute sum of weights per group
@@ -106,6 +131,50 @@ rescale_weights <- function(data, group, probability_weights) {
   )
 
   colnames(design_weights)[1] <- group
+  x <- merge(x, design_weights, by = group, sort = FALSE)
+
+  # restore original order
+  x <- x[order(x$.bamboozled), ]
+  x$.bamboozled <- NULL
+
+  # multiply the original weight by the fraction of the
+  # sampling unit total population based on Carle 2009
+
+  w_a <- x[[probability_weights]] * x$n_per_group / x$sum_weights_by_group
+  w_b <- x[[probability_weights]] * x$sum_weights_by_group / x$sum_squared_weights_by_group
+
+  out <- data.frame(
+    pweights_a = rep(as.numeric(NA), times = n),
+    pweights_b = rep(as.numeric(NA), times = n)
+  )
+
+  out$pweights_a[weight_non_na] <- w_a
+  out$pweights_b[weight_non_na] <- w_b
+
+  out
+}
+
+
+
+
+
+# rescale weights, for nested groups ----------------------------
+
+.rescale_weights_nested <- function(x, group, probability_weights, n, weight_non_na) {
+  groups <- expand.grid(lapply(group, function(i) sort(unique(x[[i]]))))
+  colnames(groups) <- group
+
+  # compute sum of weights per group
+  design_weights <- cbind(
+    groups,
+    data.frame(
+      sum_weights_by_group = unlist(as.list(tapply(x[[probability_weights]], lapply(group, function(i) as.factor(x[[i]])), sum))),
+      sum_squared_weights_by_group = unlist(as.list(tapply(x[[probability_weights]]^2, lapply(group, function(i) as.factor(x[[i]])), sum))),
+      n_per_group = unlist(as.list(table(x[, group]))),
+      stringsAsFactors = FALSE
+    )
+  )
+
   x <- merge(x, design_weights, by = group, sort = FALSE)
 
   # restore original order
