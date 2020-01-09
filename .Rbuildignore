@@ -9,5 +9,6 @@
 ^README.Rmd
 ^pkgdown/.
 ^paper.*$
+^paper/.
 ^vignettes/.
 ^WIP/.
