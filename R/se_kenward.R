@@ -6,15 +6,11 @@ se_kenward <- function(model) {
   }
 
   vcov_adj <- pbkrtest::vcovAdj(model)
-
   params <- insight::get_parameters(model, effects = "fixed")
-  le <- nrow(params)
-  Lmat <- diag(rep(1, le))
 
-  se <- sapply(1:le, function(i) sqrt(.qform(Lmat[i, ], as.matrix(vcov_adj))))
-  names(se) <- params[[1]]
-
-  se
+  data.frame(
+    Parameter = params$Parameter,
+    SE = as.vector(sqrt(diag(as.matrix(vcov_adj)))),
+    stringsAsFactors = FALSE
+  )
 }
-
-.qform <- function(x, A) sum(x * (A %*% x))

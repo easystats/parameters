@@ -4,8 +4,7 @@
 \alias{check_clusterstructure}
 \title{Check suitability of data for Clustering}
 \usage{
-check_clusterstructure(x, standardize = TRUE, distance = "euclidean",
-  ...)
+check_clusterstructure(x, standardize = TRUE, distance = "euclidean", ...)
 }
 \arguments{
 \item{x}{A data frame.}

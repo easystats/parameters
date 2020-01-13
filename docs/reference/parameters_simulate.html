@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -158,9 +158,15 @@
     <pre class="usage"><span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>parameters_simulate</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>parameters_simulate</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

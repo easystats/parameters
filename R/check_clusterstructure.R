@@ -21,26 +21,31 @@
 #' }
 #' @export
 check_clusterstructure <- function(x, standardize = TRUE, distance = "euclidean", ...) {
-
   if (standardize) {
     x <- as.data.frame(scale(x))
   }
 
   H <- .clusterstructure_hopkins(x, distance = distance)
-  if(H < 0.5){
-    text <- paste0("The dataset is suitable for clustering (Hopkins' H = ",
-                   insight::format_value(H),
-                   ").")
+  if (H < 0.5) {
+    text <- paste0(
+      "The dataset is suitable for clustering (Hopkins' H = ",
+      insight::format_value(H),
+      ").\n"
+    )
     color <- "green"
-  } else{
-    text <- paste0("The dataset is not suitable for clustering (Hopkins' H = ",
-                   insight::format_value(H),
-                   ").")
+  } else {
+    text <- paste0(
+      "The dataset is not suitable for clustering (Hopkins' H = ",
+      insight::format_value(H),
+      ").\n"
+    )
     color <- "red"
   }
 
-  out <- list(H = H,
-              dissimilarity_matrix = .clusterstructure_dm(x, distance = distance, method = "ward.D2"))
+  out <- list(
+    H = H,
+    dissimilarity_matrix = .clusterstructure_dm(x, distance = distance, method = "ward.D2")
+  )
 
   attr(out, "text") <- text
   attr(out, "color") <- color
@@ -54,10 +59,11 @@ check_clusterstructure <- function(x, standardize = TRUE, distance = "euclidean"
 #' @importFrom stats heatmap
 #' @importFrom grDevices colorRampPalette
 #' @export
-plot.check_clusterstructure <- function(x, ...){
+plot.check_clusterstructure <- function(x, ...) {
   # Can be reimplemented with ggplot in see
   stats::heatmap(
-    x$dissimilarity_matrix, Rowv = NA, Colv = NA,
+    x$dissimilarity_matrix,
+    Rowv = NA, Colv = NA,
     labRow = FALSE, labCol = FALSE,
     col = grDevices::colorRampPalette(c("#2196F3", "#FAFAFA", "#E91E63"))(100)
   )

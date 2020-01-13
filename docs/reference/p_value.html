@@ -46,7 +46,7 @@
 
 <meta property="og:title" content="p-values — p_value" />
 <meta property="og:description" content="This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
-Mixed models (lme4): By default, p-values are based on Wald-test approximations (see p_value_wald). For lmerMod objects, if method = &quot;kenward&quot;, p-values are based on Kenward-Roger approximations, i.e. p_value_kenward is called.
+Mixed models (lme4): By default, p-values are based on Wald-test approximations (see p_value_wald). For certain situations, the &quot;m-l-1&quot; rule might be a better approximation. That is, for method = &quot;ml1&quot;, p_value_ml1 is called. For lmerMod objects, if method = &quot;kenward&quot;, p-values are based on Kenward-Roger approximations, i.e. p_value_kenward is called, and method = &quot;satterthwaite&quot; calls p_value_satterthwaite.
 
 " />
 <meta property="og:image" content="/logo.png" />
@@ -82,7 +82,7 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -103,17 +103,8 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -156,7 +147,7 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
 
     <div class="ref-description">
     <p>This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:</p><ul>
-<li><p>Mixed models (lme4): By default, p-values are based on Wald-test approximations (see <code><a href='p_value_wald.html'>p_value_wald</a></code>). For <code>lmerMod</code> objects, if <code>method = "kenward"</code>, p-values are based on Kenward-Roger approximations, i.e. <code><a href='p_value_kenward.html'>p_value_kenward</a></code> is called.</p></li>
+<li><p>Mixed models (lme4): By default, p-values are based on Wald-test approximations (see <code><a href='p_value_wald.html'>p_value_wald</a></code>). For certain situations, the "m-l-1" rule might be a better approximation. That is, for <code>method = "ml1"</code>, <code><a href='p_value_ml1.html'>p_value_ml1</a></code> is called. For <code>lmerMod</code> objects, if <code>method = "kenward"</code>, p-values are based on Kenward-Roger approximations, i.e. <code><a href='p_value_kenward.html'>p_value_kenward</a></code> is called, and <code>method = "satterthwaite"</code> calls <code><a href='p_value_satterthwaite.html'>p_value_satterthwaite</a></code>.</p></li>
 </ul>
 
     </div>
@@ -166,17 +157,32 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
 <span class='co'># S3 method for lmerMod</span>
 <span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for merMod</span>
+<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for rlmerMod</span>
+<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for glmmTMB</span>
-<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>,
-  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
+<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for MixMod</span>
-<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>,
-  <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
+<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='no'>...</span>)
 
-<span class='fu'>p_value_robust</span>(<span class='no'>model</span>, <span class='kw'>vcov_estimation</span> <span class='kw'>=</span> <span class='st'>"HC"</span>, <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HC3"</span>,
-  <span class='st'>"const"</span>, <span class='st'>"HC"</span>, <span class='st'>"HC0"</span>, <span class='st'>"HC1"</span>, <span class='st'>"HC2"</span>, <span class='st'>"HC4"</span>, <span class='st'>"HC4m"</span>, <span class='st'>"HC5"</span>),
-  <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='co'># S3 method for mixor</span>
+<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for gee</span>
+<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='fu'>p_value_robust</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>vcov_estimation</span> <span class='kw'>=</span> <span class='st'>"HC"</span>,
+  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HC3"</span>, <span class='st'>"const"</span>, <span class='st'>"HC"</span>, <span class='st'>"HC0"</span>, <span class='st'>"HC1"</span>, <span class='st'>"HC2"</span>, <span class='st'>"HC4"</span>, <span class='st'>"HC4m"</span>, <span class='st'>"HC5"</span>, <span class='st'>"CR0"</span>,
+    <span class='st'>"CR1"</span>, <span class='st'>"CR1p"</span>, <span class='st'>"CR1S"</span>, <span class='st'>"CR2"</span>, <span class='st'>"CR3"</span>),
+  <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,7 +197,7 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models, can be <a href='p_value_wald.html'>"wald"</a> (default) or <a href='p_value_kenward.html'>"kenward"</a>.</p></td>
+      <td><p>For mixed models, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default), <code><a href='p_value_ml1.html'>"ml1"</a></code>, <code><a href='p_value_satterthwaite.html'>"satterthwaite"</a></code> or <code><a href='p_value_kenward.html'>"kenward"</a></code>. For certain models, like <span class="pkg">gee</span>, may also be <code>method = "robust"</code> to compute p-values based ob robust standard errors.</p></td>
     </tr>
     <tr>
       <th>component</th>
@@ -199,6 +205,14 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>effects</th>
+      <td><p>Should standard errors for fixed effects or random effects
+be returned? Only applies to mixed models. May be abbreviated. When
+standard errors for random effects are requested, for each grouping factor
+a list of standard errors (per group level) for random intercepts and slopes
+is returned.</p></td>
     </tr>
     <tr>
       <th>vcov_estimation</th>
@@ -246,7 +260,7 @@ are passed down to the <span class="pkg">sandwich</span>-function specified in <
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

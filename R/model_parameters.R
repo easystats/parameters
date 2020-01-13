@@ -11,7 +11,7 @@
 #'  \item{\link[=model_parameters.BFBayesFactor]{Bayesian tests} (\pkg{BayesFactor})}
 #'  \item{\link[=model_parameters.stanreg]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm})}
 #'  \item{\link[=model_parameters.principal]{PCA and FA} (\pkg{psych})}
-#'  \item{\link[=model_parameters.lavaan]{CFA and SEM} (\pkg{lavaan})}
+#'  \item{\link[=model_parameters.lavaan]{CFA and SEM} (\pkg{lavaan}, \pkg{blavaan})}
 #'  \item{\link[=model_parameters.kmeans]{Cluster models (k-means, ...)}}
 #'  \item{\link[=model_parameters.default]{Meta-Analysis via linear (mixed) models} (\code{rma})}
 #'  }

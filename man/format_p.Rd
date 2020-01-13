@@ -4,8 +4,15 @@
 \alias{format_p}
 \title{p-values formatting}
 \usage{
-format_p(p, stars = FALSE, stars_only = FALSE, name = "p",
-  missing = "", digits = 3, ...)
+format_p(
+  p,
+  stars = FALSE,
+  stars_only = FALSE,
+  name = "p",
+  missing = "",
+  digits = 3,
+  ...
+)
 }
 \arguments{
 \item{p}{value or vector of p-values.}
@@ -35,5 +42,4 @@ format_p(c(.02, .065, 0, .23), stars_only = TRUE)
 
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 format_p(p_value(model)$p, digits = "scientific")
-
 }

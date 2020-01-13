@@ -42,7 +42,7 @@ The `parameters` package implements a helper that will **automatically pick a me
 
 ### Fit a powerful model
 
-If you are familiar with R and the formula interface, you know of the possibility of including a dot (`.`) in the formula, signifying **"all the remaining variables"**. Curiously, few are aware of the possibility of additionaly easily adding **all the interaction terms**. This can be achieved using the `*.*` notation.
+If you are familiar with R and the formula interface, you know of the possibility of including a dot (`.`) in the formula, signifying **"all the remaining variables"**. Curiously, few are aware of the possibility of additionally easily adding **all the interaction terms**. This can be achieved using the `*.*` notation.
 
 Let's try that with the linear regression predicting **Sepal.Length** with the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R.
 
@@ -69,11 +69,11 @@ check_autocorrelation(model)
 check_collinearity(model)
 ```
 
-The main issue of the model seems to be the high [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity). This suggestst that our model might not be able to give valid results about any individual predictor, nor tell which predictors are redundant with respect to others.
+The main issue of the model seems to be the high [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity). This suggests that our model might not be able to give valid results about any individual predictor, nor tell which predictors are redundant with respect to others.
 
 ### Parameters selection
 
-Time to do some variables selection. This can be easily done using the `parameters_selection()` function, that will **automatically select the best variables** and update the model accordingly. One way of using that is in a tidy pipeline (using [`%>%`](https://cran.r-project.org/web/packages/magrittr/README.html)), using this output to update a new model.
+Time to do some variables selection. This can be easily done using the `select_parameters()` function, that will **automatically select the best variables** and update the model accordingly. One way of using that is in a tidy pipeline (using [`%>%`](https://cran.r-project.org/web/packages/magrittr/README.html)), using this output to update a new model.
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -81,14 +81,14 @@ library(dplyr)
 library(parameters)
 
 lm(Sepal.Length ~ .*., data=iris) %>% 
-  parameters_selection() %>% 
+  select_parameters() %>% 
   summary()
 ```
 
 
 That's still a lot of parameters, but as you can see, but almost all of them are now significant, and the R2 did not change much. 
 
-Altough appealing, please note that these automated selection methods are [**quite citicized**](https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df), and should not be used in place of **theorethical** or **hypothetical** reasons (*i.e.*, you should have justified hypotheses about the parameters of your model).
+Although appealing, please note that these automated selection methods are [**quite criticized**](https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df), and should not be used in place of **theoretical** or **hypothetical** reasons (*i.e.*, you should have justified hypotheses about the parameters of your model).
 
 
 
@@ -103,6 +103,6 @@ For simple linear regressions as above, the selection is made using the `step()`
 library(lme4)
 
 lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data=iris) %>%
-  parameters_selection() %>%
+  select_parameters() %>%
   summary()
 ```

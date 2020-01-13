@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -100,17 +100,8 @@
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -166,7 +157,7 @@
     </tr>
     <tr>
       <th>n</th>
-      <td><p>Number of components to extract. If <code>n = "all"</code> =, then <code>n</code> is set as the number of variables minus 1 (<code>ncol(x)-1</code>). If <code>n = "auto"</code> (default) or <code>n = NULL</code>, the number of components is selected through <code><a href='n_factors.html'>n_factors</a></code>. In <code><a href='parameters_reduction.html'>parameters_reduction</a></code>, can also be <code>"max"</code>, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.</p></td>
+      <td><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is set as the number of variables minus 1 (<code>ncol(x)-1</code>). If <code>n="auto"</code> (default) or <code>n=NULL</code>, the number of components is selected through <code><a href='n_factors.html'>n_factors</a></code>. In <code><a href='reduce_parameters.html'>reduce_parameters</a></code>, can also be <code>"max"</code>, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.</p></td>
     </tr>
     <tr>
       <th>distance</th>
@@ -353,7 +344,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

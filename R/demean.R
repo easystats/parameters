@@ -111,9 +111,9 @@
 #'   ID = c(1, 2, 3, 1, 2, 3, 1, 2)
 #' )
 #' demean(dat, select = c("a", "x*y"), group = "ID")
+#' @importFrom stats ave
 #' @export
 demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean = "_between") {
-
   interactions_no <- select[!grepl("(\\*|\\:)", select)]
   interactions_yes <- select[grepl("(\\*|\\:)", select)]
 
@@ -133,7 +133,8 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
       length(not_found),
       paste0(not_found, collapse = ", ")
     ),
-    color = "red")
+    color = "red"
+    )
   }
 
   select <- intersect(colnames(x), select)
@@ -169,12 +170,7 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
   # mean values to a vector of same length as the data
 
   x_gm_list <- lapply(select, function(i) {
-    group_means <- tapply(dat[[i]], dat[[group]], mean, na.rm = TRUE)
-    group_vector <- vector("numeric", nrow(dat))
-    for (j in names(group_means)) {
-      group_vector[dat[[group]] == j] <- group_means[j]
-    }
-    group_vector
+    stats::ave(dat[[i]], dat[[group]], FUN = function(.gm) mean(.gm, na.rm = TRUE))
   })
 
   names(x_gm_list) <- select

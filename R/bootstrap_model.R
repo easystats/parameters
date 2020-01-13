@@ -7,18 +7,21 @@
 #' @param verbose Hide possible refit messages.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @return A data.frame.
+#' @return A data frame.
 #'
-#' @seealso \code{\link{parameters_bootstrap}}, \code{\link{model_simulate}}, \code{\link{parameters_simulate}}
+#' @seealso \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}, \code{\link{simulate_parameters}}
 #'
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
-#' head(model_bootstrap(model))
+#' head(bootstrap_model(model))
 #' @export
-model_bootstrap <- function(model, iterations = 1000, verbose = FALSE, ...) {
-  UseMethod("model_bootstrap")
+bootstrap_model <- function(model, iterations = 1000, verbose = FALSE, ...) {
+  UseMethod("bootstrap_model")
 }
 
+#' @rdname bootstrap_model
+#' @export
+model_bootstrap <- bootstrap_model
 
 
 
@@ -30,7 +33,7 @@ model_bootstrap <- function(model, iterations = 1000, verbose = FALSE, ...) {
 #' @importFrom stats coef update setNames
 #' @importFrom insight get_data find_parameters get_parameters
 #' @export
-model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
+bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, ...) {
   if (!requireNamespace("boot", quietly = TRUE)) {
     stop("Package 'boot' needed for this function to work. Please install it.")
   }
@@ -63,15 +66,10 @@ model_bootstrap.lm <- function(model, iterations = 1000, verbose = FALSE, ...) {
   out
 }
 
-#' @export
-model_bootstrap.default <- model_bootstrap.lm
-
-#' @export
-model_bootstrap.glmmTMB <- model_bootstrap.lm
 
 
 #' @export
-model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ...) {
+bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ...) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
   }
@@ -101,7 +99,7 @@ model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
 
 
 
-# model_bootstrap.htest <- function(model, n = 1000, verbose = FALSE, ...) {
+# bootstrap_model.htest <- function(model, n = 1000, verbose = FALSE, ...) {
 #   data <- insight::get_data(model)
 #
 #   boot_function <- function(model, data, indices) {
@@ -133,17 +131,17 @@ model_bootstrap.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
 
 #' @export
 as.data.frame.lm <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
-  model_bootstrap(x, iterations = iterations, verbose = verbose, ...)
+  bootstrap_model(x, iterations = iterations, verbose = verbose, ...)
 }
 
 
 #' @export
 as.data.frame.merMod <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
-  model_bootstrap(x, iterations = iterations, verbose = verbose, ...)
+  bootstrap_model(x, iterations = iterations, verbose = verbose, ...)
 }
 
 
 #' @export
 as.data.frame.glmmTMB <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
-  model_bootstrap(x, iterations = iterations, verbose = verbose, ...)
+  bootstrap_model(x, iterations = iterations, verbose = verbose, ...)
 }

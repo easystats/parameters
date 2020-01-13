@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -99,17 +99,8 @@
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -184,7 +175,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="model_parameters.default.html">model_parameters(<i>&lt;default&gt;</i>)</a></code> </p>
+          <p><code><a href="model_parameters.default.html">model_parameters(<i>&lt;default&gt;</i>)</a></code> <code><a href="model_parameters.default.html">model_parameters(<i>&lt;betareg&gt;</i>)</a></code> <code><a href="model_parameters.default.html">model_parameters(<i>&lt;clm2&gt;</i>)</a></code> <code><a href="model_parameters.default.html">model_parameters(<i>&lt;glmx&gt;</i>)</a></code> </p>
         </td>
         <td><p>Parameters of (General) Linear Models</p></td>
       </tr><tr>
@@ -196,13 +187,13 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="model_parameters.gam.html">model_parameters(<i>&lt;gam&gt;</i>)</a></code> </p>
+          <p><code><a href="model_parameters.gam.html">model_parameters(<i>&lt;gam&gt;</i>)</a></code> <code><a href="model_parameters.gam.html">model_parameters(<i>&lt;rqss&gt;</i>)</a></code> <code><a href="model_parameters.gam.html">model_parameters(<i>&lt;cgam&gt;</i>)</a></code> </p>
         </td>
         <td><p>Parameters of Generalized Additive (Mixed) Models</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;glmmTMB&gt;</i>)</a></code> </p>
+          <p><code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;mixor&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;glmmTMB&gt;</i>)</a></code> </p>
         </td>
         <td><p>Mixed Model Parameters</p></td>
       </tr><tr>
@@ -210,7 +201,7 @@
         <td>
           <p><code><a href="model_parameters.lavaan.html">model_parameters(<i>&lt;lavaan&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Format CFA/SEM from the lavaan package</p></td>
+        <td><p>Format CFA/SEM from the (b)lavaan package</p></td>
       </tr><tr>
         
         <td>
@@ -276,7 +267,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;default&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;zeroinfl&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;hurdle&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci_robust()</a></code> </p>
+          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;default&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;mixor&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;zeroinfl&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;hurdle&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci_robust()</a></code> </p>
         </td>
         <td><p>Confidence Interval (CI)</p></td>
       </tr><tr>
@@ -297,6 +288,18 @@
           <p><code><a href="p_value_kenward.html">dof_kenward()</a></code> <code><a href="p_value_kenward.html">p_value_kenward()</a></code> <code><a href="p_value_kenward.html">se_kenward()</a></code> </p>
         </td>
         <td><p>p-values using Kenward-Roger approximation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value_ml1.html">dof_ml1()</a></code> <code><a href="p_value_ml1.html">p_value_ml1()</a></code> <code><a href="p_value_ml1.html">se_ml1()</a></code> </p>
+        </td>
+        <td><p>p-values using the "m-l-1" heuristic</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value_satterthwaite.html">dof_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">p_value_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">se_satterthwaite()</a></code> </p>
+        </td>
+        <td><p>p-values using Satterthwaite approximation</p></td>
       </tr><tr>
         
         <td>
@@ -326,25 +329,25 @@
       <tr>
         
         <td>
-          <p><code><a href="model_bootstrap.html">model_bootstrap()</a></code> </p>
+          <p><code><a href="bootstrap_model.html">bootstrap_model()</a></code> <code><a href="bootstrap_model.html">model_bootstrap()</a></code> </p>
         </td>
         <td><p>Model bootstrapping</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="parameters_bootstrap.html">parameters_bootstrap()</a></code> </p>
+          <p><code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code> <code><a href="bootstrap_parameters.html">parameters_bootstrap()</a></code> </p>
         </td>
         <td><p>Parameters bootstrapping</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="model_simulate.html">model_simulate()</a></code> </p>
+          <p><code><a href="simulate_model.html">simulate_model()</a></code> <code><a href="simulate_model.html">model_simulate()</a></code> </p>
         </td>
         <td><p>Simulated draws from model coefficients</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="parameters_simulate.html">parameters_simulate()</a></code> </p>
+          <p><code><a href="simulate_parameters.html">simulate_parameters()</a></code> <code><a href="simulate_parameters.html">parameters_simulate()</a></code> </p>
         </td>
         <td><p>Parameters simulation</p></td>
       </tr>
@@ -361,6 +364,12 @@
           <p><code><a href="demean.html">demean()</a></code> </p>
         </td>
         <td><p>Compute group-meaned and de-meaned variables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rescale_weights.html">rescale_weights()</a></code> </p>
+        </td>
+        <td><p>Rescale design weights for multilevel analysis</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -372,13 +381,13 @@
       <tr>
         
         <td>
-          <p><code><a href="parameters_reduction.html">parameters_reduction()</a></code> </p>
+          <p><code><a href="reduce_parameters.html">reduce_parameters()</a></code> <code><a href="reduce_parameters.html">parameters_reduction()</a></code> </p>
         </td>
         <td><p>Dimensionality reduction (DR) / Features Reduction</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="parameters_selection.html">parameters_selection()</a></code> </p>
+          <p><code><a href="select_parameters.html">select_parameters()</a></code> <code><a href="select_parameters.html">parameters_selection()</a></code> </p>
         </td>
         <td><p>Parameters Selection</p></td>
       </tr>
@@ -445,6 +454,12 @@
           <p><code><a href="convert_efa_to_cfa.html">convert_efa_to_cfa()</a></code> <code><a href="convert_efa_to_cfa.html">efa_to_cfa()</a></code> </p>
         </td>
         <td><p>Conversion between EFA results and CFA structure</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="factor_analysis.html">factor_analysis()</a></code> </p>
+        </td>
+        <td><p>Factor Analysis (FA)</p></td>
       </tr><tr>
         
         <td>
@@ -556,12 +571,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="format_ci.html">format_ci()</a></code> </p>
-        </td>
-        <td><p>Confidence/Credible Interval (CI) Formatting</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="format_model.html">format_model()</a></code> </p>
         </td>
         <td><p>Model Name Formatting</p></td>
@@ -644,7 +653,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

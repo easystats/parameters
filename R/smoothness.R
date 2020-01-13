@@ -30,4 +30,3 @@ smoothness <- function(x, method = "cor", lag = 1) {
   }
   smooth
 }
-

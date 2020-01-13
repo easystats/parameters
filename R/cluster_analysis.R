@@ -54,7 +54,8 @@
 #'
 #' # K-means clustering of mtcars-dataset, auto-detection of cluster-groups
 #' \dontrun{
-#' groups <- cluster_analysis(iris[, 1:4], method = "k")}
+#' groups <- cluster_analysis(iris[, 1:4], method = "k")
+#' }
 #' @importFrom stats dist na.omit hclust kmeans cutree complete.cases
 #' @export
 cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"),
@@ -143,11 +144,14 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
   rownames(out) <- NULL
 
   attr(complete.groups, "data") <- out
-  attr(complete.groups, "accuracy") <- tryCatch({
-    cluster_discrimination(original_data, complete.groups)
-  }, error = function(e) {
-    NULL
-  })
+  attr(complete.groups, "accuracy") <- tryCatch(
+    {
+      cluster_discrimination(original_data, complete.groups)
+    },
+    error = function(e) {
+      NULL
+    }
+  )
 
   class(complete.groups) <- c("cluster_analysis", "see_cluster_analysis", class(complete.groups))
 

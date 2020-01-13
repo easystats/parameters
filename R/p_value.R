@@ -2,12 +2,13 @@
 #'
 #' This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
 #' \itemize{
-#' \item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called.
+#' \item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
 #' }
 #'
 #' @param model A statistical model.
+#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For certain models, like \pkg{gee}, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
-#' @inheritParams model_simulate
+#' @inheritParams simulate_model
 #' @inheritParams standard_error
 #'
 #' @examples
@@ -32,32 +33,34 @@ p_value <- function(model, ...) {
 #' @export
 p_value.default <- function(model, ...) {
   # first, we need some special handling for Zelig-models
-  p <- tryCatch({
-    if (grepl("^Zelig-", class(model)[1])) {
-      if (!requireNamespace("Zelig", quietly = T)) {
-        stop("Package `Zelig` required. Please install", call. = F)
+  p <- tryCatch(
+    {
+      if (grepl("^Zelig-", class(model)[1])) {
+        if (!requireNamespace("Zelig", quietly = T)) {
+          stop("Package `Zelig` required. Please install", call. = F)
+        }
+        unlist(Zelig::get_pvalue(model))
+      } else {
+        # try to get p-value from classical summary for default models
+        .get_pval_from_summary(model)
       }
-      unlist(Zelig::get_pvalue(model))
-    } else {
-      # try to get p-value from classical summary for default models
-      .get_pval_from_summary(model)
-    }
-  },
-  error = function(e) {
-    NULL
-  }
-  )
-
-  # if all fails, try to get p-value from test-statistic
-  if (is.null(p)) {
-    p <- tryCatch({
-      stat <- insight::get_statistic(model)
-      p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
-      names(p) <- stat$Parameter
     },
     error = function(e) {
       NULL
     }
+  )
+
+  # if all fails, try to get p-value from test-statistic
+  if (is.null(p)) {
+    p <- tryCatch(
+      {
+        stat <- insight::get_statistic(model)
+        p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+        names(p) <- stat$Parameter
+      },
+      error = function(e) {
+        NULL
+      }
     )
   }
 
@@ -70,6 +73,31 @@ p_value.default <- function(model, ...) {
     )
   }
 }
+
+#' @export
+p_value.lm <- p_value.default
+
+#' @export
+p_value.LORgee <- p_value.default
+
+#' @export
+p_value.lm_robust <- p_value.default
+
+#' @export
+p_value.truncreg <- p_value.default
+
+#' @export
+p_value.geeglm <- p_value.default
+
+#' @export
+p_value.censReg <- p_value.default
+
+#' @export
+p_value.ivreg <- p_value.default
+
+#' @export
+p_value.negbin <- p_value.default
+
 
 
 #' @export
@@ -87,37 +115,6 @@ p_value.mlm <- function(model, ...) {
   .remove_backticks_from_parameter_names(do.call(rbind, p))
 }
 
-
-#' @export
-p_value.lm <- p_value.default
-
-
-#' @export
-p_value.LORgee <- p_value.default
-
-
-#' @export
-p_value.lm_robust <- p_value.default
-
-
-#' @export
-p_value.truncreg <- p_value.default
-
-
-#' @export
-p_value.geeglm <- p_value.default
-
-
-#' @export
-p_value.censReg <- p_value.default
-
-
-#' @export
-p_value.ivreg <- p_value.default
-
-
-#' @export
-p_value.negbin <- p_value.default
 
 
 #' @export
@@ -187,12 +184,15 @@ p_value.lme <- function(model, ...) {
 
 
 #' @rdname p_value
-#' @param method For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.
 #' @export
 p_value.lmerMod <- function(model, method = "wald", ...) {
-  method <- match.arg(method, c("wald", "kr", "kenward"))
+  method <- match.arg(method, c("wald", "ml1", "satterthwaite", "kr", "kenward"))
   if (method == "wald") {
     p_value_wald(model, ...)
+  } else if (method == "ml1") {
+    p_value_ml1(model, ...)
+  } else if (method == "satterthwaite") {
+    p_value_satterthwaite(model, ...)
   } else if (method %in% c("kr", "kenward")) {
     p_value_kenward(model, ...)
   }
@@ -200,9 +200,32 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 
 
 
+#' @rdname p_value
 #' @export
-p_value.merMod <- function(model, ...) {
-  p_value_wald(model, ...)
+p_value.merMod <- function(model, method = "wald", ...) {
+  method <- match.arg(method, c("wald", "ml1"))
+  if (method == "wald") {
+    dof <- Inf
+  } else {
+    dof <- dof_ml1(model)
+  }
+  p_value_wald(model, dof, ...)
+}
+
+#' @export
+p_value.cpglmm <- p_value.merMod
+
+
+#' @rdname p_value
+#' @export
+p_value.rlmerMod <- function(model, method = "wald", ...) {
+  method <- match.arg(method, c("wald", "ml1"))
+  if (method == "wald") {
+    dof <- Inf
+  } else {
+    dof <- dof_ml1(model)
+  }
+  p_value_wald(model, dof, ...)
 }
 
 
@@ -255,6 +278,22 @@ p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zer
 
   p <- do.call(rbind, x)
   .filter_component(p, component)
+}
+
+
+#' @rdname p_value
+#' @importFrom insight get_parameters
+#' @export
+p_value.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  stats <- model$Model[, "P(>|z|)"]
+  parms <- get_parameters(model, effects = effects)
+
+  .data_frame(
+    Parameter = parms$Parameter,
+    p = stats[parms$Parameter],
+    Effects = parms$Effects
+  )
 }
 
 
@@ -475,17 +514,99 @@ p_value.flexsurvreg <- function(model, ...) {
 
 
 #' @export
-p_value.rq <- function(model, ...) {
-  p <- tryCatch({
-    cs <- suppressWarnings(stats::coef(summary(model)))
-    cs[, "Pr(>|t|)"]
-  },
-  error = function(e) {
-    .get_pval_from_summary(
-      model,
-      cs = suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
-    )
+p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
+  component <- match.arg(component)
+
+  params <- insight::get_parameters(model)
+  cs <- stats::coef(summary(model))
+  p <- cs[, 4]
+
+  out <- .data_frame(
+    Parameter = params$Parameter,
+    Component = params$Component,
+    p = as.vector(p)
+  )
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
   }
+
+  out
+}
+
+
+#' @export
+p_value.clmm2 <- p_value.clm2
+
+
+#' @export
+p_value.cgam <- function(model, component = c("all", "conditional", "smooth_terms"), ...) {
+  component <- match.arg(component)
+
+  params <- insight::get_parameters(model, component = "all")
+  cs <- summary(model)
+  p <- as.vector(cs$coefficients[, 4])
+  if (!is.null(cs$coefficients2)) p <- c(p, as.vector(cs$coefficients2[, "p.value"]))
+
+  out <- .data_frame(
+    Parameter = params$Parameter,
+    Component = params$Component,
+    p = as.vector(p)
+  )
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
+}
+
+
+#' @importFrom utils capture.output
+#' @export
+p_value.cpglm <- function(model, ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = as.vector(stats[, "Pr(>|t|)"])
+  )
+}
+
+
+
+#' @export
+p_value.glmx <- function(model, ...) {
+  stats <- stats::coef(summary(model))
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = c(as.vector(stats$glm[, "Pr(>|z|)"]), as.vector(stats$extra[, "Pr(>|z|)"])),
+    Component = params$Component
+  )
+}
+
+
+
+#' @export
+p_value.rq <- function(model, ...) {
+  p <- tryCatch(
+    {
+      cs <- suppressWarnings(stats::coef(summary(model)))
+      cs[, "Pr(>|t|)"]
+    },
+    error = function(e) {
+      .get_pval_from_summary(
+        model,
+        cs = suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
+      )
+    }
   )
 
   params <- insight::get_parameters(model)
@@ -503,6 +624,43 @@ p_value.crq <- p_value.rq
 p_value.nlrq <- p_value.rq
 
 
+
+#' @export
+p_value.rqss <- function(model, component = c("all", "conditional", "smooth_terms"), ...) {
+  component <- match.arg(component)
+
+  cs <- summary(model)$coef
+  p_column <- intersect(c("Pr(>|t|)", "Pr(>|z|)"), colnames(cs))
+  p_cond <- cs[, p_column]
+
+  cs <- summary(model)$qsstab
+  p_smooth <- cs[, "Pr(>F)"]
+
+  params_cond <- insight::get_parameters(model, component = "conditional")
+  params_smooth <- insight::get_parameters(model, component = "smooth_terms")
+
+  out_cond <- .data_frame(
+    Parameter = params_cond$Parameter,
+    p = as.vector(p_cond),
+    Component = "conditional"
+  )
+
+  out_smooth <- .data_frame(
+    Parameter = params_smooth$Parameter,
+    p = as.vector(p_smooth),
+    Component = "smooth_terms"
+  )
+
+  switch(
+    component,
+    "all" = rbind(out_cond, out_smooth),
+    "conditional" = out_cond,
+    "smooth_terms" = out_smooth
+  )
+}
+
+
+
 #' @export
 p_value.biglm <- function(model, ...) {
   cs <- summary(model)$mat
@@ -513,6 +671,46 @@ p_value.biglm <- function(model, ...) {
     p = as.vector(cs[, 5])
   )
 }
+
+
+
+#' @export
+p_value.complmrob <- function(model, ...) {
+  stats <- summary(model)$stats
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = as.vector(stats[, "Pr(>|t|)"])
+  )
+}
+
+
+
+#' @export
+p_value.fixest <- function(model, ...) {
+  stats <- summary(model)$coeftable
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = as.vector(stats[, "Pr(>|z|)"])
+  )
+}
+
+
+
+#' @export
+p_value.feglm <- function(model, ...) {
+  stats <- stats::coef(summary(model))
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = as.vector(stats[, 4])
+  )
+}
+
 
 
 #' @export
@@ -527,16 +725,24 @@ p_value.crch <- function(model, ...) {
 }
 
 
+
+#' @rdname p_value
 #' @export
-p_value.gee <- function(model, ...) {
+p_value.gee <- function(model, method = NULL, ...) {
   cs <- stats::coef(summary(model))
-  p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+
+  if (!is.null(method) && method == "robust") {
+    p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Robust S.E."]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+  } else {
+    p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+  }
 
   .data_frame(
     Parameter = .remove_backticks_from_string(rownames(cs)),
     p = as.vector(p)
   )
 }
+
 
 
 #' @export
@@ -590,6 +796,7 @@ p_value.psm <- p_value.lrm
 
 
 
+
 #' @export
 p_value.rlm <- function(model, ...) {
   cs <- stats::coef(summary(model))
@@ -604,14 +811,24 @@ p_value.rlm <- function(model, ...) {
 
 
 #' @export
-p_value.betareg <- function(model, ...) {
+p_value.betareg <- function(model, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+
+  params <- insight::get_parameters(model)
   cs <- do.call(rbind, stats::coef(summary(model)))
   p <- cs[, 4]
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(names(p)),
+  out <- .data_frame(
+    Parameter = params$Parameter,
+    Component = params$Component,
     p = as.vector(p)
   )
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
 }
 
 
@@ -667,9 +884,9 @@ p_value.wbm <- function(model, ...) {
   )
 }
 
-
 #' @export
 p_value.wbgee <- p_value.wbm
+
 
 
 #' @export
@@ -786,9 +1003,9 @@ p_value.multinom <- function(model, ...) {
   )
 }
 
-
 #' @export
 p_value.brmultinom <- p_value.multinom
+
 
 
 #' @export
@@ -867,11 +1084,25 @@ p_value.vglm <- function(model, ...) {
 
   cs <- VGAM::summary(model)@coef3
   p <- cs[, 4]
-  # se <- cs[, 2]
 
   .data_frame(
     Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
+  )
+}
+
+
+
+#' @export
+p_value.vgam <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  stat <- insight::get_statistic(model)
+  p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(stat$Parameter),
+    p = as.vector(p),
+    Component = params$Component
   )
 }
 

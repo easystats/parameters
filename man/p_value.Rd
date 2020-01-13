@@ -3,8 +3,12 @@
 \name{p_value}
 \alias{p_value}
 \alias{p_value.lmerMod}
+\alias{p_value.merMod}
+\alias{p_value.rlmerMod}
 \alias{p_value.glmmTMB}
 \alias{p_value.MixMod}
+\alias{p_value.mixor}
+\alias{p_value.gee}
 \alias{p_value_robust}
 \title{p-values}
 \usage{
@@ -12,27 +16,44 @@ p_value(model, ...)
 
 \method{p_value}{lmerMod}(model, method = "wald", ...)
 
-\method{p_value}{glmmTMB}(model, component = c("all", "conditional",
-  "zi", "zero_inflated"), ...)
+\method{p_value}{merMod}(model, method = "wald", ...)
 
-\method{p_value}{MixMod}(model, component = c("all", "conditional", "zi",
-  "zero_inflated"), ...)
+\method{p_value}{rlmerMod}(model, method = "wald", ...)
 
-p_value_robust(model, vcov_estimation = "HC", vcov_type = c("HC3",
-  "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5"),
-  vcov_args = NULL, ...)
+\method{p_value}{glmmTMB}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
+
+\method{p_value}{MixMod}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
+
+\method{p_value}{mixor}(model, effects = c("all", "fixed", "random"), ...)
+
+\method{p_value}{gee}(model, method = NULL, ...)
+
+p_value_robust(
+  model,
+  vcov_estimation = "HC",
+  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0",
+    "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+  vcov_args = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A statistical model.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 
-\item{method}{For mixed models, can be \link[=p_value_wald]{"wald"} (default) or \link[=p_value_kenward]{"kenward"}.}
+\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For certain models, like \pkg{gee}, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+
+\item{effects}{Should standard errors for fixed effects or random effects
+be returned? Only applies to mixed models. May be abbreviated. When
+standard errors for random effects are requested, for each grouping factor
+a list of standard errors (per group level) for random intercepts and slopes
+is returned.}
 
 \item{vcov_estimation}{String, indicating the suffix of the \code{vcov*()}-function
 from the \pkg{sandwich}-package, e.g. \code{vcov_estimation = "CL"} (which
@@ -54,7 +75,7 @@ The p-values.
 \description{
 This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
 \itemize{
-\item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called.
+\item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
 }
 }
 \examples{

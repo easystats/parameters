@@ -2,15 +2,18 @@
 #'
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param dof Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.
-#' @inheritParams model_simulate
+#' @param robust Logical, if \code{TRUE}, robust standard errors are computed by calling \code{\link[=standard_error_robust]{standard_error_robust()}}. \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions from the \pkg{sandwich}-package for robust covariance matrix estimators.
+#'
+#' @inheritParams simulate_model
 #' @inheritParams standard_error
 #'
 #' @importFrom stats qt coef
 #' @export
-ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "conditional", "zi", "zero_inflated"), robust = FALSE, ...) {
+ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", "all"), component = c("all", "conditional", "zi", "zero_inflated", "precision", "scale", "smooth_terms"), robust = FALSE, ...) {
+  effects <- match.arg(effects)
   component <- match.arg(component)
   out <- lapply(ci, function(i) {
-    .ci_wald(model = model, ci = i, dof = dof, component = component, robust = robust, ...)
+    .ci_wald(model = model, ci = i, dof = dof, effects = effects, component = component, robust = robust, ...)
   })
   out <- do.call(rbind, out)
   row.names(out) <- NULL
@@ -21,8 +24,8 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 #' @importFrom insight get_parameters n_obs
 #' @importFrom stats qt
 #' @keywords internal
-.ci_wald <- function(model, ci, dof, component, robust = FALSE, ...) {
-  params <- insight::get_parameters(model, effects = "fixed", component = component)
+.ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, ...) {
+  params <- insight::get_parameters(model, effects = effects, component = component)
   estimates <- params$Estimate
 
   stderror <- if (isTRUE(robust)) {
@@ -55,6 +58,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, component = c("all", "condition
 
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
   if ("Component" %in% names(params)) out$Component <- params$Component
+  if ("Effects" %in% names(params) && effects != "fixed") out$Effects <- params$Effects
 
   out
 }

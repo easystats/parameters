@@ -8,7 +8,7 @@
 #'   value \code{1} (unless the factor has numeric levels, which are converted
 #'   to the corresponding numeric value). By default, \code{NA} is returned
 #'   for factors or character vectors.
-#' @param robust Logical, if \code{TRUE}, robust standard errors are computed
+#' @param method If \code{"robust"}, robust standard errors are computed
 #'   by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 #'   \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
 #'   from the \pkg{sandwich}-package for robust covariance matrix estimators.
@@ -25,22 +25,33 @@
 #'   are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
-#'   if \code{robust = TRUE}, arguments \code{vcov_estimation}, \code{vcov_type}
+#'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
 #'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
 #' @param effects Should standard errors for fixed effects or random effects
 #'    be returned? Only applies to mixed models. May be abbreviated. When
 #'    standard errors for random effects are requested, for each grouping factor
 #'    a list of standard errors (per group level) for random intercepts and slopes
 #'    is returned.
-#' @inheritParams model_simulate
+#' @inheritParams simulate_model
 #'
-#' @note \code{standard_error_robust()} resp. \code{standard_error(robust = TRUE)}
+#' @note \code{standard_error_robust()} resp. \code{standard_error(method = "robust")}
 #'   rely on the \pkg{sandwich}-package and will thus only work for those models
 #'   supported by that package.
 #'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
+#'
+#' # robust standard errors, calling sandwich::vcovHC(type="HC3") by default
+#' standard_error_robust(model)
+#'
+#' # cluster-robust standard errors, using clubSandwich
+#' iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
+#' standard_error_robust(
+#'   model,
+#'   vcov_type = "CR2",
+#'   vcov_args = list(cluster = iris$cluster)
+#' )
 #' @return A data frame.
 #' @importFrom stats coef vcov setNames var na.omit
 #' @importFrom insight get_varcov print_color get_parameters find_parameters
@@ -122,6 +133,27 @@ standard_error.table <- function(model, ...) {
 standard_error.xtabs <- standard_error.table
 
 
+#' @importFrom insight print_color
+#' @export
+standard_error.effectsize_std_params <- function(model, ...) {
+  se <- attr(model, "standard_error")
+
+  if (is.null(se)) {
+    insight::print_color("\nCould not extract standard errors of standardized coefficients.\n", "red")
+    return(NULL)
+  }
+
+  out <- .data_frame(
+    Parameter = model$Parameter,
+    SE = as.vector(se)
+  )
+
+  .remove_backticks_from_parameter_names(out)
+}
+
+
+
+
 
 
 
@@ -130,35 +162,39 @@ standard_error.xtabs <- standard_error.table
 
 #' @rdname standard_error
 #' @export
-standard_error.default <- function(model, robust = FALSE, ...) {
+standard_error.default <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+
   if (isTRUE(robust)) {
     standard_error_robust(model, ...)
   } else {
-    se <- tryCatch({
-      if (grepl("^Zelig-", class(model)[1])) {
-        if (!requireNamespace("Zelig", quietly = TRUE)) {
-          stop("Package `Zelig` required. Please install", call. = FALSE)
+    se <- tryCatch(
+      {
+        if (grepl("^Zelig-", class(model)[1])) {
+          if (!requireNamespace("Zelig", quietly = TRUE)) {
+            stop("Package `Zelig` required. Please install", call. = FALSE)
+          }
+          unlist(Zelig::get_se(model))
+        } else {
+          .get_se_from_summary(model)
         }
-        unlist(Zelig::get_se(model))
-      } else {
-        .get_se_from_summary(model)
-      }
-    },
-    error = function(e) {
-      NULL
-    }
-    )
-
-    # if all fails, try to get se from varcov
-    if (is.null(se)) {
-      se <- tryCatch({
-        varcov <- insight::get_varcov(model)
-        se <- sqrt(diag(varcov))
-        names(se) <- colnames(varcov)
       },
       error = function(e) {
         NULL
       }
+    )
+
+    # if all fails, try to get se from varcov
+    if (is.null(se)) {
+      se <- tryCatch(
+        {
+          varcov <- insight::get_varcov(model)
+          se <- sqrt(diag(varcov))
+          names(se) <- colnames(varcov)
+        },
+        error = function(e) {
+          NULL
+        }
       )
     }
 
@@ -173,6 +209,35 @@ standard_error.default <- function(model, robust = FALSE, ...) {
     }
   }
 }
+
+#' @export
+standard_error.truncreg <- standard_error.default
+
+#' @export
+standard_error.lm_robust <- standard_error.default
+
+#' @export
+standard_error.censReg <- standard_error.default
+
+#' @export
+standard_error.geeglm <- standard_error.default
+
+#' @export
+standard_error.negbin <- standard_error.default
+
+#' @export
+standard_error.ivreg <- standard_error.default
+
+#' @export
+standard_error.LORgee <- standard_error.default
+
+#' @export
+standard_error.lme <- standard_error.default
+
+#' @export
+standard_error.gls <- standard_error.default
+
+
 
 
 #' @export
@@ -192,42 +257,6 @@ standard_error.mlm <- function(model, ...) {
 
 
 #' @export
-standard_error.truncreg <- standard_error.default
-
-
-#' @export
-standard_error.lm_robust <- standard_error.default
-
-
-#' @export
-standard_error.censReg <- standard_error.default
-
-
-#' @export
-standard_error.geeglm <- standard_error.default
-
-
-#' @export
-standard_error.negbin <- standard_error.default
-
-
-#' @export
-standard_error.ivreg <- standard_error.default
-
-
-#' @export
-standard_error.LORgee <- standard_error.default
-
-
-#' @export
-standard_error.lme <- standard_error.default
-
-
-#' @export
-standard_error.gls <- standard_error.default
-
-
-#' @export
 standard_error.tobit <- function(model, ...) {
   params <- insight::get_parameters(model)
   std.error <- standard_error.default(model, ...)
@@ -244,7 +273,9 @@ standard_error.tobit <- function(model, ...) {
 
 
 #' @export
-standard_error.lm <- function(model, robust = FALSE, ...) {
+standard_error.lm <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+
   if (isTRUE(robust)) {
     standard_error_robust(model, ...)
   } else {
@@ -270,8 +301,9 @@ standard_error.glm <- standard_error.lm
 
 #' @rdname standard_error
 #' @export
-standard_error.merMod <- function(model, effects = c("fixed", "random"), robust = FALSE, ...) {
+standard_error.merMod <- function(model, effects = c("fixed", "random"), method = NULL, ...) {
   effects <- match.arg(effects)
+  robust <- !is.null(method) && method == "robust"
 
   if (effects == "random") {
     if (!requireNamespace("lme4", quietly = TRUE)) {
@@ -282,7 +314,6 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), robust 
     n.groupings <- length(rand.se)
 
     for (m in 1:n.groupings) {
-
       vars.m <- attr(rand.se[[m]], "postVar")
 
       K <- dim(vars.m)[1]
@@ -373,9 +404,9 @@ standard_error.MixMod <- function(model, effects = c("fixed", "random"), compone
     vars.m <- attr(rand.se, "post_vars")
     all_names <- attributes(rand.se)$dimnames
 
-    if (dim(vars.m[[1]])[1] == 1)
+    if (dim(vars.m[[1]])[1] == 1) {
       rand.se <- sqrt(unlist(vars.m))
-    else {
+    } else {
       rand.se <- do.call(
         rbind,
         lapply(vars.m, function(.x) t(as.data.frame(sqrt(diag(.x)))))
@@ -595,28 +626,29 @@ standard_error.aareg <- function(model, ...) {
 
 #' @export
 standard_error.multinom <- function(model, ...) {
-  se <- tryCatch({
-    stderr <- summary(model)$standard.errors
-    if (is.null(stderr)) {
-      vc <- insight::get_varcov(model)
-      stderr <- as.vector(sqrt(diag(vc)))
-    } else {
-      if (is.matrix(stderr)) {
-        tmp <- c()
-        for (i in 1:nrow(stderr)) {
-          tmp <- c(tmp, as.vector(stderr[i, ]))
-        }
+  se <- tryCatch(
+    {
+      stderr <- summary(model)$standard.errors
+      if (is.null(stderr)) {
+        vc <- insight::get_varcov(model)
+        stderr <- as.vector(sqrt(diag(vc)))
       } else {
-        tmp <- as.vector(stderr)
+        if (is.matrix(stderr)) {
+          tmp <- c()
+          for (i in 1:nrow(stderr)) {
+            tmp <- c(tmp, as.vector(stderr[i, ]))
+          }
+        } else {
+          tmp <- as.vector(stderr)
+        }
+        stderr <- tmp
       }
-      stderr <- tmp
+      stderr
+    },
+    error = function(e) {
+      vc <- insight::get_varcov(model)
+      as.vector(sqrt(diag(vc)))
     }
-    stderr
-  },
-  error = function(e) {
-    vc <- insight::get_varcov(model)
-    as.vector(sqrt(diag(vc)))
-  }
   )
 
   params <- insight::get_parameters(model)
@@ -653,6 +685,43 @@ standard_error.polr <- function(model, ...) {
 }
 
 
+#' @rdname standard_error
+#' @importFrom insight get_parameters
+#' @export
+standard_error.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  stats <- model$Model[, "Std. Error"]
+  parms <- get_parameters(model, effects = effects)
+
+  .data_frame(
+    Parameter = parms$Parameter,
+    SE = stats[parms$Parameter],
+    Effects = parms$Effects
+  )
+}
+
+
+
+#' @rdname standard_error
+#' @importFrom insight get_parameters
+#' @export
+standard_error.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
+  component <- match.arg(component)
+  stats <- .get_se_from_summary(model)
+  parms <- get_parameters(model, component = component)
+
+  .data_frame(
+    Parameter = parms$Parameter,
+    SE = stats[parms$Parameter],
+    Component = parms$Component
+  )
+}
+
+
+#' @export
+standard_error.clmm2 <- standard_error.clm2
+
+
 
 #' @export
 standard_error.bracl <- function(model, ...) {
@@ -681,21 +750,75 @@ standard_error.bracl <- function(model, ...) {
 
 
 #' @export
+standard_error.cgam <- function(model, ...) {
+  sc <- summary(model)
+  se <- as.vector(sc$coefficients[, "StdErr"])
+
+  params <- insight::get_parameters(model, component = "all")
+
+  if (!is.null(sc$coefficients2)) se <- c(se, rep(NA, nrow(sc$coefficients2)))
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = se,
+    Component = params$Component
+  )
+}
+
+
+
+#' @importFrom utils capture.output
+#' @export
+standard_error.cpglm <- function(model, ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, "Std. Error"])
+  )
+}
+
+
+
+#' @export
+standard_error.cpglmm <- function(model, ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  stats <- cplm::summary(model)$coefs
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, "Std. Error"])
+  )
+}
+
+
+
+#' @export
 standard_error.rq <- function(model, ...) {
-  se <- tryCatch({
-    cs <- suppressWarnings(stats::coef(summary(model)))
-    se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
-    if (length(se_column)) {
-      cs[, se_column]
-    } else {
+  se <- tryCatch(
+    {
+      cs <- suppressWarnings(stats::coef(summary(model)))
+      se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
+      if (length(se_column)) {
+        cs[, se_column]
+      } else {
+        vc <- insight::get_varcov(model)
+        as.vector(sqrt(diag(vc)))
+      }
+    },
+    error = function(e) {
       vc <- insight::get_varcov(model)
       as.vector(sqrt(diag(vc)))
     }
-  },
-  error = function(e) {
-    vc <- insight::get_varcov(model)
-    as.vector(sqrt(diag(vc)))
-  }
   )
 
   params <- insight::get_parameters(model)
@@ -713,6 +836,92 @@ standard_error.crq <- standard_error.rq
 standard_error.nlrq <- standard_error.rq
 
 
+
+#' @export
+standard_error.rqss <- function(model, component = c("all", "conditional", "smooth_terms"), ...) {
+  component <- match.arg(component)
+
+  cs <- summary(model)$coef
+  se_column <- intersect(c("Std Error", "Std. Error"), colnames(cs))
+  se <- cs[, se_column]
+
+  params_cond <- insight::get_parameters(model, component = "conditional")
+  params_smooth <- insight::get_parameters(model, component = "smooth_terms")
+
+  out_cond <- .data_frame(
+    Parameter = params_cond$Parameter,
+    SE = se,
+    Component = "conditional"
+  )
+
+  out_smooth <- .data_frame(
+    Parameter = params_smooth$Parameter,
+    SE = NA,
+    Component = "smooth_terms"
+  )
+
+  switch(
+    component,
+    "all" = rbind(out_cond, out_smooth),
+    "conditional" = out_cond,
+    "smooth_terms" = out_smooth
+  )
+}
+
+
+#' @export
+standard_error.complmrob <- function(model, ...) {
+  stats <- summary(model)$stats
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, "Std. Error"])
+  )
+}
+
+
+
+#' @export
+standard_error.glmx <- function(model, ...) {
+  stats <- stats::coef(summary(model))
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = c(as.vector(stats$glm[, "Std. Error"]), as.vector(stats$extra[, "Std. Error"])),
+    Component = params$Component
+  )
+}
+
+
+
+#' @export
+standard_error.fixest <- function(model, ...) {
+  stats <- summary(model)
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats$se)
+  )
+}
+
+
+
+#' @export
+standard_error.feglm <- function(model, ...) {
+  stats <- stats::coef(summary(model))
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, "Std. error"])
+  )
+}
+
+
+
 #' @export
 standard_error.biglm <- function(model, ...) {
   cs <- summary(model)$mat
@@ -723,6 +932,7 @@ standard_error.biglm <- function(model, ...) {
     SE = as.vector(cs[, 4])
   )
 }
+
 
 
 #' @export
@@ -737,14 +947,19 @@ standard_error.crch <- function(model, ...) {
 }
 
 
-#' @export
-standard_error.gee <- function(model, ...) {
-  cs <- stats::coef(summary(model))
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(cs)),
-    SE = as.vector(cs[, "Naive S.E."])
-  )
+#' @export
+standard_error.gee <- function(model, method = NULL, ...) {
+  cs <- stats::coef(summary(model))
+  robust <- !is.null(method) && method == "robust"
+
+  if (isTRUE(robust)) {
+    se <- as.vector(cs[, "Robust S.E."])
+  } else {
+    se <- as.vector(cs[, "Naive S.E."])
+  }
+
+  .data_frame(Parameter = .remove_backticks_from_string(rownames(cs)), SE = se)
 }
 
 
@@ -804,14 +1019,24 @@ standard_error.psm <- standard_error.lrm
 
 
 #' @export
-standard_error.betareg <- function(model, ...) {
+standard_error.betareg <- function(model, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+
+  params <- insight::get_parameters(model)
   cs <- do.call(rbind, stats::coef(summary(model)))
   se <- cs[, 2]
 
-  .data_frame(
+  out <- .data_frame(
     Parameter = .remove_backticks_from_string(names(se)),
+    Component = params$Component,
     SE = as.vector(se)
   )
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
 }
 
 
@@ -929,22 +1154,27 @@ standard_error.htest <- function(model, ...) {
 }
 
 
-
+#' @importFrom insight get_varcov
 #' @export
 standard_error.vglm <- function(model, ...) {
-  if (!requireNamespace("VGAM", quietly = TRUE)) {
-    stop("Package `VGAM` required.", call. = FALSE)
-  }
-
-  cs <- VGAM::summary(model)@coef3
-  se <- cs[, 2]
-
+  se <- sqrt(diag(insight::get_varcov(model)))
   .data_frame(
     Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se)
   )
 }
 
+#' @importFrom insight get_varcov
+#' @export
+standard_error.vgam <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  se <- sqrt(diag(insight::get_varcov(model)))
+  .data_frame(
+    Parameter = .remove_backticks_from_string(names(se)),
+    SE = as.vector(se),
+    Component = params$Component
+  )
+}
 
 
 #' @export

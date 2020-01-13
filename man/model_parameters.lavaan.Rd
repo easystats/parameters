@@ -2,11 +2,15 @@
 % Please edit documentation in R/model_parameters.lavaan.R
 \name{model_parameters.lavaan}
 \alias{model_parameters.lavaan}
-\title{Format CFA/SEM from the lavaan package}
+\title{Format CFA/SEM from the (b)lavaan package}
 \usage{
-\method{model_parameters}{lavaan}(model, ci = 0.95,
-  standardize = FALSE, type = c("regression", "correlation",
-  "loading"), ...)
+\method{model_parameters}{lavaan}(
+  model,
+  ci = 0.95,
+  standardize = FALSE,
+  type = c("regression", "correlation", "loading"),
+  ...
+)
 }
 \arguments{
 \item{model}{CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions.}
@@ -23,7 +27,7 @@
 A data.frame of indices related to the model's parameters.
 }
 \description{
-Format CFA/SEM objects from the lavaan package (Rosseel, 2012).
+Format CFA/SEM objects from the (b)lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).
 }
 \examples{
 library(parameters)
@@ -72,6 +76,7 @@ model_parameters(model, standardize = TRUE)
 }
 \references{
 \itemize{
-  \item Rosseel (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1-36.
+  \item Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1-36.
+  \item Merkle EC , Rosseel Y (2018). blavaan: Bayesian Structural Equation Models via Parameter Expansion. Journal of Statistical Software, 85(4), 1-30. http://www.jstatsoft.org/v85/i04/
 }
 }

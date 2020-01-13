@@ -10,15 +10,14 @@ reshape_loadings(x, ...)
 
 \method{reshape_loadings}{parameters_efa}(x, threshold = NULL, ...)
 
-\method{reshape_loadings}{data.frame}(x, threshold = NULL,
-  loadings_columns = NULL, ...)
+\method{reshape_loadings}{data.frame}(x, threshold = NULL, loadings_columns = NULL, ...)
 }
 \arguments{
 \item{x}{A dataframe or a statistical model.}
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per variable (the most simple structure).}
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).}
 
 \item{loadings_columns}{Vector indicating the columns corresponding to loadings.}
 }

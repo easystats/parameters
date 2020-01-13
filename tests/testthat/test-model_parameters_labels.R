@@ -68,7 +68,8 @@ test_that("model_parameters_labels", {
   m7 <- lm(mpg ~ as.factor(cyl) * poly(wt, 2) + hp * log(gear), data = mtcars)
   expect_equal(
     attr(model_parameters(m7), "pretty_names"),
-    c(`(Intercept)` = "(Intercept)", `as.factor(cyl)6` = "cyl6",
+    c(
+      `(Intercept)` = "(Intercept)", `as.factor(cyl)6` = "cyl6",
       `as.factor(cyl)8` = "cyl8", `poly(wt, 2)1` = "wt [1st degree]",
       `poly(wt, 2)2` = "wt [2nd degree]", hp = "hp", `log(gear)` = "gear [log]",
       `as.factor(cyl)6:poly(wt, 2)1` = "cyl6 * wt [1st degree]", `as.factor(cyl)8:poly(wt, 2)1` = "cyl8 * wt [1st degree]",

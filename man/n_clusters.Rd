@@ -4,9 +4,14 @@
 \alias{n_clusters}
 \title{Number of Clusters to Extract}
 \usage{
-n_clusters(x, standardize = TRUE, force = FALSE,
-  package = c("NbClust", "mclust", "clValid", "cluster"), fast = TRUE,
-  ...)
+n_clusters(
+  x,
+  standardize = TRUE,
+  force = FALSE,
+  package = c("NbClust", "mclust", "clValid", "cluster"),
+  fast = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A data frame.}
@@ -20,7 +25,7 @@ the number of clusters need numeric input only.}
 
 \item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.}
 
-\item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationaly heavy.}
+\item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationally heavy.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -30,5 +35,6 @@ This function runs many existing procedures for determining how many clusters ar
 \examples{
 library(parameters)
 \donttest{
-n_clusters(iris[, 1:4])}
+n_clusters(iris[, 1:4])
+}
 }

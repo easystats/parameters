@@ -7,8 +7,7 @@
 \usage{
 standardize_names(data, ...)
 
-\method{standardize_names}{parameters_model}(data, style = c("easystats",
-  "broom"), ...)
+\method{standardize_names}{parameters_model}(data, style = c("easystats", "broom"), ...)
 }
 \arguments{
 \item{data}{A data frame. Currently, only objects from \code{\link[=model_parameters]{model_parameters()}} are accepted.}

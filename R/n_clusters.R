@@ -8,15 +8,15 @@
 #'   clusters. By default, factors are removed, because most methods that determine
 #'   the number of clusters need numeric input only.
 #' @param package These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.
-#' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationaly heavy.
+#' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationally heavy.
 #'
 #' @examples
 #' library(parameters)
 #' \donttest{
-#' n_clusters(iris[, 1:4])}
+#' n_clusters(iris[, 1:4])
+#' }
 #' @export
 n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClust", "mclust", "clValid", "cluster"), fast = TRUE, ...) {
-
   if (all(package == "all")) {
     package <- c("NbClust", "mclust", "clValid", "cluster")
   }
@@ -159,7 +159,7 @@ n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClus
   grDevices::png(filename = ff)
   if (fast) {
     indices <- "all"
-  } else{
+  } else {
     indices <- "allong"
   }
   junk <- utils::capture.output(n <- NbClust::NbClust(x, min.nc = 2, max.nc = 9, method = "ward.D2", index = indices))

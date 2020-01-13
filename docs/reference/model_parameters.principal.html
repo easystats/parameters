@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -100,17 +100,8 @@
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -156,16 +147,13 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for PCA</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for principal</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for omega</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,7 +168,7 @@
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per variable (the most simple structure).</p></td>
+      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be <code>"max"</code>, in which case it will only display the maximum loading per variable (the most simple structure).</p></td>
     </tr>
     <tr>
       <th>labels</th>
@@ -194,20 +182,23 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame of loadings.</p>
+    <p>A data frame of loadings.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For the structural models obtained with <span class="pkg">psych</span>, the following indices are present:</p><ul>
-<li><p><strong>Complexity</strong> (Hoffman's, 1978; Pettersson and Turkheimer, 2010) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.</p></li>
+<li><p><strong>Complexity</strong> (<cite>Hoffman's, 1978; Pettersson and Turkheimer, 2010</cite>) represents the number of latent components needed to account for the observed variables. Whereas a perfect simple structure solution has a complexity of 1 in that each item would only load on one factor, a solution with evenly distributed items has a complexity greater than 1.</p></li>
 <li><p><strong>Uniqueness</strong> represents the variance that is 'unique' to the variable and not shared with other variables. It is equal to <code>1 – communality</code> (variance that is shared with other variables). A uniqueness of <code>0.20</code> suggests that 20% or that variable's variance is not shared with other variables in the overall factor model. The greater 'uniqueness' the lower the relevance of the variable in the factor model.</p></li>
+<li><p><strong>MSA</strong> represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy (<cite>Kaiser and Rice, 1974</cite>) for each item. It indicates whether there is enough data for each factor give reliable results for the PCA. The value should be &gt; 0.6, and desirable values are &gt; 0.8 (<cite>Tabachnick and Fidell, 2013</cite>).</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
+<li><p>Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and Psychological Measurement, 34(1):111–117</p></li>
 <li><p>Pettersson, E., \&amp; Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420.</p></li>
 <li><p>Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.</p></li>
+<li><p>Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate statistics (6th ed.). Boston: Pearson Education.</p></li>
 </ul>
 
 
@@ -259,7 +250,7 @@
 #&gt; </span><span style='color: #BBBB00;'>The 3 principal components accounted for 81.49% of the total variance of the original data (PC1 = 53.09%, PC2 = 16.30%, PC3 = 12.10%).</span><span></div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Exploratory Factor Analysis (EFA) ---------</span>
 <span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>attitude</span>)))<span class='co'># }</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (oblimin-rotation)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>efa</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>attitude</span>)))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (oblimin-rotation)
 #&gt; 
 #&gt; </span><span>Variable   | Label |  MR1 |  MR2 |  MR3 | Complexity | Uniqueness
 #&gt; -----------------------------------------------------------------
@@ -271,7 +262,8 @@
 #&gt; learning   |     4 |      | 0.54 |      |       2.51 |       0.24
 #&gt; critical   |     6 |      |      | 0.48 |       1.46 |       0.67
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span><span></div><div class='input'>
+#&gt; </span><span style='color: #BBBB00;'>The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span><span></div><div class='input'><span class='co'># }</span>
+
 <span class='co'># FactoMineR ---------</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>FactoMineR</span>)
@@ -281,7 +273,8 @@
 <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>))$<span class='no'>scores</span>
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>FactoMineR</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/FactoMineR/man/FAMD.html'>FAMD</a></span>(<span class='no'>iris</span>, <span class='kw'>ncp</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)}</div></span></pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+}</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -299,7 +292,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

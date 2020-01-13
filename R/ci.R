@@ -4,9 +4,9 @@
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"kenward"} or \code{"boot"} (see \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
+#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
-#' @inheritParams model_simulate
+#' @inheritParams simulate_model
 #' @inheritParams standard_error
 #'
 #' @return A data frame containing the CI bounds.
@@ -24,15 +24,24 @@
 #' )
 #'
 #' ci(model)
-#' ci(model, component = "zi")}
+#' ci(model, component = "zi")
+#' }
 #' @importFrom insight find_parameters
 #' @export
-ci.merMod <- function(x, ci = 0.95, method = c("wald", "kenward", "boot"), ...) {
+ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "satterthwaite", "kenward", "boot"), ...) {
   method <- match.arg(method)
 
   # Wald approx
   if (method == "wald") {
     out <- ci_wald(model = x, ci = ci, dof = Inf)
+
+    # ml1 approx
+  } else if (method == "ml1") {
+    out <- ci_wald(model = x, ci = ci, dof = dof_ml1(x))
+
+    # Satterthwaite
+  } else if (method == "satterthwaite") {
+    out <- ci_wald(model = x, ci = ci, dof = dof_satterthwaite(x))
 
     # Kenward approx
   } else if (method == "kenward") {
@@ -90,35 +99,35 @@ ci.lm <- function(x, ci = .95, method = NULL, ...) {
   ci_wald(model = x, ci = ci, robust = robust, ...)
 }
 
+#' @export
+ci.lm_robust <- ci.lm
+
+#' @export
+ci.comlmrob <- ci.lm
+
+#' @export
+ci.rq <- ci.lm
+
+#' @export
+ci.rqss <- ci.lm
+
+#' @export
+ci.crq <- ci.lm
+
+#' @export
+ci.nlrq <- ci.lm
+
+#' @export
+ci.BBmm <- ci.lm
+
+#' @export
+ci.BBreg <- ci.lm
+
 
 #' @export
 ci.gam <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, ...)
 }
-
-
-#' @export
-ci.lm_robust <- ci.lm
-
-
-#' @export
-ci.rq <- ci.lm
-
-
-#' @export
-ci.crq <- ci.lm
-
-
-#' @export
-ci.nlrq <- ci.lm
-
-
-#' @export
-ci.BBmm <- ci.lm
-
-
-#' @export
-ci.BBreg <- ci.lm
 
 
 #' @export
@@ -131,6 +140,7 @@ ci.list <- function(x, ci = .95, ...) {
     return(NULL)
   }
 }
+
 
 
 
@@ -156,10 +166,8 @@ ci.glm <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
   out
 }
 
-
 #' @export
 ci.negbin <- ci.glm
-
 
 #' @export
 ci.logistf <- ci.glm
@@ -210,6 +218,24 @@ ci.gamlss <- function(x, ci = .95, method = NULL, ...) {
 ci.speedglm <- ci.gamlss
 
 #' @export
+ci.cpglm <- ci.gamlss
+
+#' @export
+ci.cpglmm <- ci.gamlss
+
+#' @export
+ci.glmx <- ci.gamlss
+
+#' @export
+ci.glmmadmb <- ci.gamlss
+
+#' @export
+ci.fixest <- ci.gamlss
+
+#' @export
+ci.feglm <- ci.gamlss
+
+#' @export
 ci.speedlm <- ci.gamlss
 
 #' @export
@@ -246,16 +272,10 @@ ci.aareg <- ci.gamlss
 ci.clm <- ci.gamlss
 
 #' @export
-ci.clm2 <- ci.gamlss
-
-#' @export
 ci.crch <- ci.gamlss
 
 #' @export
 ci.feis <- ci.gamlss
-
-#' @export
-ci.betareg <- ci.gamlss
 
 #' @export
 ci.censReg <- ci.gamlss
@@ -293,6 +313,15 @@ ci.vglm <- ci.gamlss
 #' @export
 ci.svyglm.glimML <- ci.gamlss
 
+
+#' @rdname ci.merMod
+#' @export
+ci.mixor <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  ci_wald(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE, ...)
+}
+
+
 #' @export
 ci.gamm <- function(x, ci = .95, ...) {
   x <- x$gam
@@ -302,6 +331,7 @@ ci.gamm <- function(x, ci = .95, ...) {
 
 #' @export
 ci.gamm4 <- ci.gamm
+
 
 #' @export
 ci.multinom <- function(x, ci = .95, method = NULL, ...) {
@@ -317,10 +347,8 @@ ci.multinom <- function(x, ci = .95, method = NULL, ...) {
   out
 }
 
-
 #' @export
 ci.brmultinom <- ci.multinom
-
 
 #' @export
 ci.bracl <- ci.multinom
@@ -345,17 +373,13 @@ ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "z
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
 
-
-
 #' @rdname ci.merMod
 #' @export
 ci.zeroinfl <- ci.glmmTMB
 
-
 #' @rdname ci.merMod
 #' @export
 ci.hurdle <- ci.glmmTMB
-
 
 #' @export
 ci.zerocount <- ci.glmmTMB
@@ -380,6 +404,23 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
 
 
 #' @export
+ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+}
+
+
+#' @export
+ci.clm2 <- function(x, ci = .95, component = c("all", "conditional", "scale"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+}
+
+#' @export
+ci.clmm2 <- ci.clm2
+
+
+#' @export
 ci.biglm <- function(x, ci = .95, ...) {
   out <- lapply(ci, function(i) {
     ci_list <- stats::confint(x, level = i, ...)
@@ -394,9 +435,9 @@ ci.biglm <- function(x, ci = .95, ...) {
   .remove_backticks_from_parameter_names(do.call(rbind, out))
 }
 
-
 #' @export
 ci.gls <- ci.biglm
+
 
 
 #' @export
@@ -416,6 +457,7 @@ ci.lme <- function(x, ci = .95, ...) {
     .remove_backticks_from_parameter_names(do.call(rbind, out))
   }
 }
+
 
 
 #' @importFrom insight print_color
@@ -445,6 +487,7 @@ ci.effectsize_std_params <- function(x, ci = .95, ...) {
 }
 
 
+
 #' @export
 ci.rma <- function(x, ci = .95, ...) {
   params <- insight::get_parameters(x)
@@ -467,6 +510,7 @@ ci.rma <- function(x, ci = .95, ...) {
 
 # helper -----------------------------------------
 
+
 #' @keywords internal
 .check_component <- function(m, x) {
   if (!insight::model_info(m)$is_zero_inflated && x %in% c("zi", "zero_inflated")) {
@@ -474,4 +518,20 @@ ci.rma <- function(x, ci = .95, ...) {
     x <- NULL
   }
   x
+}
+
+
+#' @keywords internal
+.ci_from_refit <- function(std_coef, ci) {
+  se <- attributes(std_coef)$standard_error$SE
+  alpha <- (1 + ci) / 2
+  fac <- stats::qnorm(alpha)
+  out <- data.frame(
+    Parameter = std_coef$Parameter,
+    CI = ci * 100,
+    CI_low = std_coef$Std_Coefficient - se * fac,
+    CI_high = std_coef$Std_Coefficient + se * fac,
+    stringsAsFactors = FALSE
+  )
+  .remove_backticks_from_parameter_names(out)
 }

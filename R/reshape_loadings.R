@@ -23,10 +23,11 @@ reshape_loadings <- function(x, ...) {
 reshape_loadings.parameters_efa <- function(x, threshold = NULL, ...) {
   current_format <- attributes(x)$loadings_format
 
-  if (is.null(current_format) || current_format == "wide")
+  if (is.null(current_format) || current_format == "wide") {
     .long_loadings(x, threshold = threshold)
-  else
+  } else {
     .wide_loadings(x)
+  }
 }
 
 

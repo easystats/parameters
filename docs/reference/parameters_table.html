@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -100,17 +100,8 @@
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -222,8 +213,8 @@
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.03 seconds (Warm-up)
-#&gt; Chain 1:                0.04 seconds (Sampling)
+#&gt; Chain 1:  Elapsed Time: 0.029 seconds (Warm-up)
+#&gt; Chain 1:                0.041 seconds (Sampling)
 #&gt; Chain 1:                0.07 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
@@ -247,9 +238,9 @@
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.029 seconds (Warm-up)
-#&gt; Chain 2:                0.044 seconds (Sampling)
-#&gt; Chain 2:                0.073 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.033 seconds (Warm-up)
+#&gt; Chain 2:                0.045 seconds (Sampling)
+#&gt; Chain 2:                0.078 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -272,9 +263,9 @@
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.034 seconds (Warm-up)
+#&gt; Chain 3:  Elapsed Time: 0.029 seconds (Warm-up)
 #&gt; Chain 3:                0.042 seconds (Sampling)
-#&gt; Chain 3:                0.076 seconds (Total)
+#&gt; Chain 3:                0.071 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -298,16 +289,16 @@
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
 #&gt; Chain 4:  Elapsed Time: 0.031 seconds (Warm-up)
-#&gt; Chain 4:                0.046 seconds (Sampling)
-#&gt; Chain 4:                0.077 seconds (Total)
+#&gt; Chain 4:                0.042 seconds (Sampling)
+#&gt; Chain 4:                0.073 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;              Parameter Median       69% CI       89% CI       95% CI   pd
-#&gt; 1          (Intercept)   5.01 [4.93, 5.09] [4.89, 5.12] [4.87, 5.16] 100%
-#&gt; 2 Species [versicolor]   0.93 [0.82, 1.03] [0.76, 1.09] [0.73, 1.14] 100%
-#&gt; 3  Species [virginica]   1.57 [1.47, 1.68] [1.41, 1.74] [1.37, 1.77] 100%
+#&gt; 1          (Intercept)   5.01 [4.94, 5.09] [4.90, 5.13] [4.87, 5.16] 100%
+#&gt; 2 Species [versicolor]   0.92 [0.81, 1.02] [0.76, 1.09] [0.73, 1.14] 100%
+#&gt; 3  Species [virginica]   1.57 [1.46, 1.68] [1.41, 1.75] [1.36, 1.78] 100%
 #&gt;   % in ROPE  Rhat  ESS              Prior
-#&gt; 1        0% 1.000 3142 Normal (0 +- 8.28)
-#&gt; 2        0% 1.000 3155 Normal (0 +- 2.07)
-#&gt; 3        0% 0.999 3165 Normal (0 +- 2.07)</div><div class='input'># }
+#&gt; 1        0% 0.999 2893 Normal (0 +- 8.28)
+#&gt; 2        0% 1.000 2872 Normal (0 +- 2.07)
+#&gt; 3        0% 0.999 3083 Normal (0 +- 2.07)</div><div class='input'># }
 
 </div></pre>
   </div>
@@ -325,7 +316,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

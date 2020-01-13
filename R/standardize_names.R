@@ -60,6 +60,7 @@ standardize_names.parameters_model <- function(data, style = c("easystats", "bro
   if (style == "easystats") {
     cn[cn %in% c("t", "z", "F", "chisq", "t / F", "z / Chisq")] <- "Statistic"
     cn[cn %in% c("Median", "Mean", "MAP")] <- "Coefficient"
+    cn[cn %in% c("df_residual", "df_error")] <- "df"
   } else {
     # easy replacements
     cn[cn == "Parameter"] <- "term"
@@ -67,10 +68,11 @@ standardize_names.parameters_model <- function(data, style = c("easystats", "bro
     cn[cn == "SD"] <- "std.dev"
     cn[cn == "p"] <- "p.value"
     cn[cn == "BF"] <- "bayes.factor"
-    cn[cn == "df_residual"] <- "df.residual"
     cn[cn == "Component"] <- "component"
     cn[cn == "Effects"] <- "effects"
+    cn[cn == "Response"] <- "response"
     # more sophisticated replacements
+    cn[cn %in% c("df_residual", "df_error")] <- "df.error"
     cn[cn %in% c("Coefficient", "Std_Coefficient", "Median", "Mean", "MAP")] <- "estimate"
     cn[cn %in% c("t", "z", "F", "chisq", "t / F", "z / Chisq")] <- "statistic"
     # fancy regex replacements

@@ -4,7 +4,7 @@
 #'
 #' @param model A model with zero-inflation component.
 #' @inheritParams model_parameters.default
-#' @inheritParams model_simulate
+#' @inheritParams simulate_model
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
@@ -17,9 +17,9 @@
 #' model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
 #' model_parameters(model)
 #' @return A data frame of indices related to the model's parameters.
-#' @inheritParams model_simulate
+#' @inheritParams simulate_model
 #' @export
-model_parameters.zeroinfl <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.zeroinfl <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, robust = FALSE, ...) {
   component <- match.arg(component)
 
   # fix argument, if model has no zi-part
@@ -30,9 +30,9 @@ model_parameters.zeroinfl <- function(model, ci = .95, bootstrap = FALSE, iterat
 
   # Processing
   if (bootstrap) {
-    parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
+    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, ...)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, robust = robust, ...)
   }
 
 

@@ -8,6 +8,8 @@
 #' @param iterations The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.
 #' @param standardize The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.
+#' @param robust Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors.
+#' @param component Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}) or \code{"all"}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
@@ -32,10 +34,9 @@
 #' # logistic regression model
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' model_parameters(model)
-#'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -44,6 +45,8 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
+    effects = "fixed",
+    robust = robust,
     ...
   )
 
@@ -53,7 +56,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
-.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, ...) {
+.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", robust = FALSE, ...) {
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -61,12 +64,12 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
   # Processing
   if (bootstrap) {
-    parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
+    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- if (is.null(comp_argument)) {
-      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, ...)
+      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, ...)
     } else {
-      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, ...)
+      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, ...)
     }
   }
 
@@ -79,140 +82,120 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
-#' @export
-model_parameters.lme <- model_parameters.default
-
-#' @export
-model_parameters.lm <- model_parameters.default
-
-#' @export
-model_parameters.glm <- model_parameters.default
-
-#' @export
-model_parameters.clm2 <- model_parameters.default
-
-#' @export
-model_parameters.svyglm.nb <- model_parameters.default
-
-#' @export
-model_parameters.svyglm.zip <- model_parameters.default
-
-#' @export
-model_parameters.glimML <- model_parameters.default
-
-#' @export
-model_parameters.tobit <- model_parameters.default
-
-#' @export
-model_parameters.polr <- model_parameters.default
-
-#' @export
-model_parameters.clm <- model_parameters.default
-
-#' @export
-model_parameters.rq <- model_parameters.default
-
-#' @export
-model_parameters.crq <- model_parameters.default
-
-#' @export
-model_parameters.nlrq <- model_parameters.default
-
-#' @export
-model_parameters.speedglm <- model_parameters.default
-
-#' @export
-model_parameters.speedlm <- model_parameters.default
-
-#' @export
-model_parameters.iv_robust <- model_parameters.default
-
-#' @export
-model_parameters.glmRob <- model_parameters.default
-
-#' @export
-model_parameters.lmRob <- model_parameters.default
-
-#' @export
-model_parameters.lmrob <- model_parameters.default
-
-#' @export
-model_parameters.glmrob <- model_parameters.default
-
-#' @export
-model_parameters.gls <- model_parameters.default
-
-#' @export
-model_parameters.feis <- model_parameters.default
-
-#' @export
-model_parameters.coxph <- model_parameters.default
-
-#' @export
-model_parameters.betareg <- model_parameters.default
-
-#' @export
-model_parameters.lrm <- model_parameters.default
-
-#' @export
-model_parameters.biglm <- model_parameters.default
-
-#' @export
-model_parameters.lm_robust <- model_parameters.default
-
-#' @export
-model_parameters.geeglm <- model_parameters.default
-
-#' @export
-model_parameters.gee <- model_parameters.default
-
-#' @export
-model_parameters.ols <- model_parameters.default
-
-#' @export
-model_parameters.rms <- model_parameters.default
-
-#' @export
-model_parameters.vglm <- model_parameters.default
-
-#' @export
-model_parameters.logistf <- model_parameters.default
-
-#' @export
-model_parameters.coxme <- model_parameters.default
-
-#' @export
-model_parameters.censReg <- model_parameters.default
-
-#' @export
-model_parameters.flexsurvreg <- model_parameters.default
-
-#' @export
-model_parameters.crch <- model_parameters.default
-
-#' @export
-model_parameters.truncreg <- model_parameters.default
-
-#' @export
-model_parameters.plm <- model_parameters.default
-
-#' @export
-model_parameters.survreg <- model_parameters.default
-
-#' @export
-model_parameters.psm <- model_parameters.default
-
-#' @export
-model_parameters.ivreg <- model_parameters.default
-
-#' @export
-model_parameters.LORgee <- model_parameters.default
-
-
-
-
 
 # other special cases ------------------------------------------------
+
+
+#' @rdname model_parameters.merMod
+#' @export
+model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", "random"), bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+  effects <- match.arg(effects)
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Effects"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    effects = effects,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+#' @rdname model_parameters.default
+#' @export
+model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "precision", "all"), standardize = NULL, exponentiate = FALSE, ...) {
+  component <- match.arg(component)
+  if (component == "all") {
+    merge_by <- c("Parameter", "Component")
+  } else {
+    merge_by <- "Parameter"
+  }
+
+  ## TODO check merge by
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    component = component,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+
+#' @rdname model_parameters.default
+#' @export
+model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "scale"), standardize = NULL, exponentiate = FALSE, ...) {
+  component <- match.arg(component)
+  if (component == "all") {
+    merge_by <- c("Parameter", "Component")
+  } else {
+    merge_by <- "Parameter"
+  }
+
+  ## TODO check merge by
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    component = component,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+#' @export
+model_parameters.clmm2 <- model_parameters.clm2
+
+
+#' @rdname model_parameters.default
+#' @export
+model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "extra"), standardize = NULL, exponentiate = FALSE, ...) {
+  component <- match.arg(component)
+  if (component == "all") {
+    merge_by <- c("Parameter", "Component")
+  } else {
+    merge_by <- "Parameter"
+  }
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    component = component,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = merge_by,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
 
 
 #' @export
@@ -248,7 +231,6 @@ model_parameters.bracl <- model_parameters.mlm
 #' @importFrom stats qt setNames
 #' @export
 model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
-
   meta_analysis_overall <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -282,7 +264,7 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
     CI_low = rma_ci_low,
     CI_high = rma_ci_high,
     z = rma_statistic,
-    df_residual = NA,
+    df_error = NA,
     p = rma_ci_p,
     Weight = 1 / as.vector(model$vi),
     stringsAsFactors = FALSE
@@ -297,7 +279,7 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
   attributes(out) <- original_attributes
 
   # no df
-  out$df_residual <- NULL
+  out$df_error <- NULL
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
 
   out

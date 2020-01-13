@@ -8,8 +8,7 @@
 \usage{
 convert_efa_to_cfa(model, ...)
 
-\method{convert_efa_to_cfa}{fa}(model, threshold = "max", names = NULL,
-  ...)
+\method{convert_efa_to_cfa}{fa}(model, threshold = "max", names = NULL, ...)
 
 efa_to_cfa(model, ...)
 }
@@ -18,7 +17,7 @@ efa_to_cfa(model, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per variable (the most simple structure).}
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).}
 
 \item{names}{Vector containing dimension names.}
 }

@@ -38,6 +38,8 @@ reference:
   - degrees_of_freedom
   - p_value
   - p_value_kenward
+  - p_value_ml1
+  - p_value_satterthwaite
   - standard_error
   - equivalence_test
   - equivalence_test.lm
@@ -45,19 +47,20 @@ reference:
 
 - title: "Parameters Engineering"
   contents:
-  - model_bootstrap
-  - parameters_bootstrap
-  - model_simulate
-  - parameters_simulate
+  - bootstrap_model
+  - bootstrap_parameters
+  - simulate_model
+  - simulate_parameters
 
 - title: "Variable Preparation/Centering"
   contents:
   - demean
+  - rescale_weights
 
 - title: "Feature Reduction"
   contents:
-  - parameters_reduction
-  - parameters_selection
+  - reduce_parameters
+  - select_parameters
 
 - title: "Data Reduction: Cluster Analysis"
   contents:
@@ -72,6 +75,7 @@ reference:
   - check_kmo
   - check_sphericity
   - convert_efa_to_cfa
+  - factor_analysis
   - n_factors
   - principal_components
   - cmds
@@ -95,7 +99,6 @@ reference:
   contents:
   - format_algorithm
   - format_bf
-  - format_ci
   - format_model
   - format_number
   - format_order
@@ -120,9 +123,7 @@ navbar:
   - text: Parameters Description
     href: articles/model_parameters.html
   - text: Parameters Engineering
-    menu:
-      - text: 'Bootstrapped parameters'
-        href: articles/bootstrapping.html
+    href: articles/bootstrapping.html
   - text: Parameters Selection
     href: articles/parameters_selection.html
   - text: Dimension Reduction

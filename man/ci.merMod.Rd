@@ -4,6 +4,7 @@
 \alias{ci.merMod}
 \alias{ci.default}
 \alias{ci.glm}
+\alias{ci.mixor}
 \alias{ci.glmmTMB}
 \alias{ci.zeroinfl}
 \alias{ci.hurdle}
@@ -11,38 +12,71 @@
 \alias{ci_robust}
 \title{Confidence Interval (CI)}
 \usage{
-\method{ci}{merMod}(x, ci = 0.95, method = c("wald", "kenward",
-  "boot"), ...)
+\method{ci}{merMod}(
+  x,
+  ci = 0.95,
+  method = c("wald", "ml1", "satterthwaite", "kenward", "boot"),
+  ...
+)
 
 \method{ci}{default}(x, ci = 0.95, method = NULL, ...)
 
-\method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald", "robust"),
-  ...)
+\method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald", "robust"), ...)
 
-\method{ci}{glmmTMB}(x, ci = 0.95, component = c("all", "conditional",
-  "zi", "zero_inflated"), ...)
+\method{ci}{mixor}(x, ci = 0.95, effects = c("all", "fixed", "random"), ...)
 
-\method{ci}{zeroinfl}(x, ci = 0.95, component = c("all", "conditional",
-  "zi", "zero_inflated"), ...)
+\method{ci}{glmmTMB}(
+  x,
+  ci = 0.95,
+  component = c("all", "conditional", "zi", "zero_inflated"),
+  ...
+)
 
-\method{ci}{hurdle}(x, ci = 0.95, component = c("all", "conditional",
-  "zi", "zero_inflated"), ...)
+\method{ci}{zeroinfl}(
+  x,
+  ci = 0.95,
+  component = c("all", "conditional", "zi", "zero_inflated"),
+  ...
+)
 
-\method{ci}{MixMod}(x, ci = 0.95, component = c("all", "conditional",
-  "zi", "zero_inflated"), ...)
+\method{ci}{hurdle}(
+  x,
+  ci = 0.95,
+  component = c("all", "conditional", "zi", "zero_inflated"),
+  ...
+)
 
-ci_robust(model, ci = 0.95, vcov_estimation = "HC",
-  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m",
-  "HC5"), vcov_args = NULL, ...)
+\method{ci}{MixMod}(
+  x,
+  ci = 0.95,
+  component = c("all", "conditional", "zi", "zero_inflated"),
+  ...
+)
+
+ci_robust(
+  model,
+  ci = 0.95,
+  vcov_estimation = "HC",
+  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0",
+    "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+  vcov_args = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A statistical model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{method}{For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"kenward"} or \code{"boot"} (see \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute condifence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.}
+\item{method}{For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
+
+\item{effects}{Should standard errors for fixed effects or random effects
+be returned? Only applies to mixed models. May be abbreviated. When
+standard errors for random effects are requested, for each grouping factor
+a list of standard errors (per group level) for random intercepts and slopes
+is returned.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
@@ -84,5 +118,6 @@ model <- glmmTMB(
 )
 
 ci(model)
-ci(model, component = "zi")}
+ci(model, component = "zi")
+}
 }

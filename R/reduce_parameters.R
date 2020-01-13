@@ -34,20 +34,23 @@
 #' }
 #'
 #' @examples
-#' out <- parameters_reduction(iris, method = "PCA", n = "max")
+#' out <- reduce_parameters(iris, method = "PCA", n = "max")
 #' head(out)
 #' @importFrom stats dist
 #' @export
-parameters_reduction <- function(x, method = "PCA", n = "max", ...) {
-  UseMethod("parameters_reduction")
+reduce_parameters <- function(x, method = "PCA", n = "max", ...) {
+  UseMethod("reduce_parameters")
 }
 
+#' @rdname reduce_parameters
+#' @export
+parameters_reduction <- reduce_parameters
 
 
 
 
 #' @export
-parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...) {
+reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", ...) {
   x <- convert_data_to_numeric(x)
 
   # N factors
@@ -104,8 +107,8 @@ parameters_reduction.data.frame <- function(x, method = "PCA", n = "max", ...) {
 
 
 #' @export
-parameters_reduction.lm <- function(x, method = "PCA", n = "max", ...) {
-  data <- parameters_reduction(convert_data_to_numeric(insight::get_predictors(x, ...), ...), method = method, n = n)
+reduce_parameters.lm <- function(x, method = "PCA", n = "max", ...) {
+  data <- reduce_parameters(convert_data_to_numeric(insight::get_predictors(x, ...), ...), method = method, n = n)
 
   y <- data.frame(.row = 1:length(insight::get_response(x)))
   y[insight::find_response(x)] <- insight::get_response(x)
@@ -116,7 +119,7 @@ parameters_reduction.lm <- function(x, method = "PCA", n = "max", ...) {
 }
 
 #' @export
-parameters_reduction.merMod <- parameters_reduction.lm
+reduce_parameters.merMod <- reduce_parameters.lm
 
 
 
@@ -124,7 +127,7 @@ parameters_reduction.merMod <- parameters_reduction.lm
 
 #' @export
 principal_components.lm <- function(x, ...) {
-  parameters_reduction(x, method = "PCA", ...)
+  reduce_parameters(x, method = "PCA", ...)
 }
 
 #' @export
