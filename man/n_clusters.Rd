@@ -8,7 +8,7 @@ n_clusters(
   x,
   standardize = TRUE,
   force = FALSE,
-  package = c("NbClust", "mclust", "clValid", "cluster"),
+  package = c("NbClust", "mclust", "cluster"),
   fast = TRUE,
   ...
 )
@@ -23,7 +23,7 @@ values in order to be included in the data for determining the number of
 clusters. By default, factors are removed, because most methods that determine
 the number of clusters need numeric input only.}
 
-\item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.}
+\item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"cluster"}.}
 
 \item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationally heavy.}
 

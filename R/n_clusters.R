@@ -7,7 +7,7 @@
 #'   values in order to be included in the data for determining the number of
 #'   clusters. By default, factors are removed, because most methods that determine
 #'   the number of clusters need numeric input only.
-#' @param package These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.
+#' @param package These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"cluster"}.
 #' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationally heavy.
 #'
 #' @examples
@@ -16,9 +16,9 @@
 #' n_clusters(iris[, 1:4])
 #' }
 #' @export
-n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClust", "mclust", "clValid", "cluster"), fast = TRUE, ...) {
+n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClust", "mclust", "cluster"), fast = TRUE, ...) {
   if (all(package == "all")) {
-    package <- c("NbClust", "mclust", "clValid", "cluster")
+    package <- c("NbClust", "mclust", "cluster")
   }
 
   # convert factors to numeric
@@ -39,9 +39,6 @@ n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClus
   }
   if ("mclust" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_mclust(x))
-  }
-  if ("clvalid" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_clValid(x))
   }
   if ("cluster" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_cluster(x))
@@ -117,30 +114,6 @@ n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClus
   n <- cluster::maxSE(f = gap[, "gap"], SE.f = gap[, "SE.sim"], method = "Tibs2001SEmax", SE.factor = 1)
   data.frame(n_Clusters = n, Method = "Tibs2001SEmax", Package = "cluster")
 }
-
-
-
-
-
-
-#' @keywords internal
-.n_clusters_clValid <- function(x, ...) {
-  if (!requireNamespace("clValid", quietly = TRUE)) {
-    stop("Package 'clValid' required for this function to work. Please install it by running `install.packages('clValid')`.")
-  }
-
-  row.names(x) <- paste0("row", row.names(x))
-  rez <- clValid::clValid(x,
-    nClust = 2:9,
-    # clMethods = c("hierarchical", "kmeans", "pam", "diana", "fanny", "som", "model", "sota", "clara", "agnes"),
-    clMethods = c("hierarchical", "kmeans", "pam", "diana", "clara", "agnes"),
-    validation = c("internal", "stability"),
-    maxitems = nrow(x)
-  )
-  out <- clValid::optimalScores(rez)
-  data.frame(n_Clusters = out$Clusters, Method = row.names(out), Package = "clValid")
-}
-
 
 
 
