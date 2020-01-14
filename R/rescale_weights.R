@@ -4,7 +4,7 @@
 #' @description Most functions to fit multilevel and mixed effects models only
 #'    allow to specify frequency weights, but not design (i.e. sampling or probability)
 #'    weights, which should be used when analyzing complex samples and survey data.
-#'    \code{rescale_weights()} implements an algorithm proposed by \cite{Aaparouhov (2006)}
+#'    \code{rescale_weights()} implements an algorithm proposed by \cite{Asparouhov (2006)}
 #'    and \cite{Carle (2009)} to rescale design weights in survey data to account for
 #'    the grouping structure of multilevel models, which then can be used for
 #'    multilevel modelling.
