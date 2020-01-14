@@ -23,6 +23,7 @@
 ## General
 
 - Better handling of `clm2`, `clmm2` and `stanmvreg` models.
+- Better handling of `psych::omega` models.
 
 ## New functions
 
