@@ -10,15 +10,16 @@
 #'
 #' model <- kmeans(iris[1:4], centers = 3)
 #' model_parameters(model)
-#'
-#'
 #' @export
-model_parameters.kmeans <- function(model, ...){
-
-  params <- cbind(data.frame(Cluster = row.names(model$centers),
-                             n_Obs = model$size,
-                             Sum_Squares = model$withinss),
-                   model$centers)
+model_parameters.kmeans <- function(model, ...) {
+  params <- cbind(
+    data.frame(
+      Cluster = row.names(model$centers),
+      n_Obs = model$size,
+      Sum_Squares = model$withinss
+    ),
+    model$centers
+  )
 
   # Long means
   means <- .long_loadings(params, loadings_columns = 4:ncol(params))
@@ -53,7 +54,7 @@ print.parameters_clusters <- function(x, digits = 2, ...) {
 
 
 #' @export
-summary.parameters_clusters <- function(object, ...){
+summary.parameters_clusters <- function(object, ...) {
   object[1:3]
 }
 
@@ -71,16 +72,16 @@ predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ..
   if (!is.null(names)) {
 
     # List
-    if(is.list(names)){
+    if (is.list(names)) {
       out <- as.factor(out)
-      for(i in names(names)){
+      for (i in names(names)) {
         levels(out)[levels(out) == i] <- names[[i]]
       }
 
-    # Vector
-    } else if(is.character(names)){
+      # Vector
+    } else if (is.character(names)) {
       out <- names[as.numeric(out)]
-    } else{
+    } else {
       stop("'names' must be a character vector or a list.")
     }
     out <- as.character(out)
@@ -91,19 +92,18 @@ predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ..
 
 #' @export
 predict.kmeans <- function(object, newdata = NULL, ...) {
-
-  if(is.null(newdata)){
+  if (is.null(newdata)) {
     return(object$cluster)
   }
 
   # compute squared euclidean distance from each sample to each cluster center
   centers <- object$centers
   sumsquares_by_center <- apply(centers, 1, function(x) {
-    colSums((t(newdata) - x) ^ 2)
+    colSums((t(newdata) - x)^2)
   })
-  if(is.null(nrow(sumsquares_by_center))){
+  if (is.null(nrow(sumsquares_by_center))) {
     as.vector(which.min(sumsquares_by_center))
-  } else{
+  } else {
     as.vector(apply(as.data.frame(sumsquares_by_center), 1, which.min))
   }
 }

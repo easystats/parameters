@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -100,17 +100,8 @@
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -161,8 +152,7 @@
 <span class='fu'>reshape_loadings</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>reshape_loadings</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>loadings_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>reshape_loadings</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>loadings_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,7 +167,7 @@
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per variable (the most simple structure).</p></td>
+      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be <code>"max"</code>, in which case it will only display the maximum loading per variable (the most simple structure).</p></td>
     </tr>
     <tr>
       <th>loadings_columns</th>
@@ -188,7 +178,6 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>psych</span>)
 
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>))
@@ -216,8 +205,15 @@
 #&gt; MR3       |   learning |   -0.28 |       2.51 |       0.24
 #&gt; MR3       |     raises |    0.25 |       2.35 |       0.23
 #&gt; MR3       |   critical |    0.48 |       1.46 |       0.67
-#&gt; MR3       |    advance |    0.07 |       1.04 |       0.22</div><div class='input'><span class='fu'>reshape_loadings</span>(<span class='no'>loadings</span>)</div><div class='output co'>#&gt; <span class='error'>Error in attr(rval, "reshapeLong") &lt;- undoInfo: attempt to set an attribute on NULL</span></div><div class='input'># }
-</div></pre>
+#&gt; MR3       |    advance |    0.07 |       1.04 |       0.22</div><div class='input'><span class='fu'>reshape_loadings</span>(<span class='no'>loadings</span>)</div><div class='output co'>#&gt; Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness
+#&gt; ------------------------------------------------------------
+#&gt; rating     |  0.90 | -0.07 | -0.05 |       1.02 |       0.23
+#&gt; complaints |  0.97 | -0.06 |  0.04 |       1.01 |       0.10
+#&gt; privileges |  0.44 |  0.25 | -0.05 |       1.64 |       0.65
+#&gt; learning   |  0.47 |  0.54 | -0.28 |       2.51 |       0.24
+#&gt; raises     |  0.55 |  0.43 |  0.25 |       2.35 |       0.23
+#&gt; critical   |  0.16 |  0.17 |  0.48 |       1.46 |       0.67
+#&gt; advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -232,7 +228,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

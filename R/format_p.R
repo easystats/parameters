@@ -18,7 +18,6 @@
 #'
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' format_p(p_value(model)$p, digits = "scientific")
-#'
 #' @importFrom insight format_value
 #' @export
 format_p <- function(p, stars = FALSE, stars_only = FALSE, name = "p", missing = "", digits = 3, ...) {

@@ -181,7 +181,7 @@ print.parameters_omega_summary <- function(x, ...) {
   } else {
     type <- paste0(type, " component")
   }
-  
+
   if (type == "cluster") {
     summary <- as.data.frame(x)
     variance <- attributes(x)$variance * 100

@@ -52,6 +52,11 @@ parameters_type <- function(model, ...) {
     params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
   }
 
+  # Special case
+  if (inherits(model, "bracl")) {
+    params$Parameter <- gsub("(.*):(.*)", "\\2", params$Parameter)
+  }
+
 
   # Remove "as.factor()", "log()" etc. from parameter names but save original parameter before
   original_parameter <- params$Parameter
@@ -64,6 +69,9 @@ parameters_type <- function(model, ...) {
 
 
   data <- insight::get_data(model)
+  if (is.null(data)) {
+    return(NULL)
+  }
   reference <- .list_factors_numerics(data)
 
   # Get types
@@ -243,5 +251,3 @@ parameters_type <- function(model, ...) {
 
   out
 }
-
-

@@ -8,27 +8,44 @@
 \alias{standard_error.merMod}
 \alias{standard_error.glmmTMB}
 \alias{standard_error.MixMod}
+\alias{standard_error.mixor}
+\alias{standard_error.clm2}
 \title{Extract standard errors}
 \usage{
-standard_error_robust(model, vcov_estimation = "HC",
-  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m",
-  "HC5"), vcov_args = NULL, ...)
+standard_error_robust(
+  model,
+  vcov_estimation = "HC",
+  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0",
+    "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+  vcov_args = NULL,
+  ...
+)
 
 standard_error(model, ...)
 
-\method{standard_error}{factor}(model, force = FALSE, verbose = TRUE,
-  ...)
+\method{standard_error}{factor}(model, force = FALSE, verbose = TRUE, ...)
 
-\method{standard_error}{default}(model, robust = FALSE, ...)
+\method{standard_error}{default}(model, method = NULL, ...)
 
-\method{standard_error}{merMod}(model, effects = c("fixed", "random"),
-  robust = FALSE, ...)
+\method{standard_error}{merMod}(model, effects = c("fixed", "random"), method = NULL, ...)
 
-\method{standard_error}{glmmTMB}(model, effects = c("fixed", "random"),
-  component = c("all", "conditional", "zi", "zero_inflated"), ...)
+\method{standard_error}{glmmTMB}(
+  model,
+  effects = c("fixed", "random"),
+  component = c("all", "conditional", "zi", "zero_inflated"),
+  ...
+)
 
-\method{standard_error}{MixMod}(model, effects = c("fixed", "random"),
-  component = c("all", "conditional", "zi", "zero_inflated"), ...)
+\method{standard_error}{MixMod}(
+  model,
+  effects = c("fixed", "random"),
+  component = c("all", "conditional", "zi", "zero_inflated"),
+  ...
+)
+
+\method{standard_error}{mixor}(model, effects = c("all", "fixed", "random"), ...)
+
+\method{standard_error}{clm2}(model, component = c("all", "conditional", "scale"), ...)
 }
 \arguments{
 \item{model}{A model.}
@@ -48,7 +65,7 @@ details).}
 are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.}
 
 \item{...}{Arguments passed to or from other methods. For \code{standard_error()},
-if \code{robust = TRUE}, arguments \code{vcov_estimation}, \code{vcov_type}
+if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
 and \code{vcov_args} can be passed down to \code{standard_error_robust()}.}
 
 \item{force}{Logical, if \code{TRUE}, factors are converted to numerical
@@ -59,7 +76,7 @@ for factors or character vectors.}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are computed
+\item{method}{If \code{"robust"}, robust standard errors are computed
 by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
 from the \pkg{sandwich}-package for robust covariance matrix estimators.}
@@ -82,11 +99,22 @@ A data frame.
 \code{standard_error()} attempts to return standard errors of model parameters, while \code{standard_error_robust()} attempts to return robust standard errors.
 }
 \note{
-\code{standard_error_robust()} resp. \code{standard_error(robust = TRUE)}
+\code{standard_error_robust()} resp. \code{standard_error(method = "robust")}
   rely on the \pkg{sandwich}-package and will thus only work for those models
   supported by that package.
 }
 \examples{
 model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 standard_error(model)
+
+# robust standard errors, calling sandwich::vcovHC(type="HC3") by default
+standard_error_robust(model)
+
+# cluster-robust standard errors, using clubSandwich
+iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
+standard_error_robust(
+  model,
+  vcov_type = "CR2",
+  vcov_args = list(cluster = iris$cluster)
+)
 }

@@ -21,7 +21,7 @@
 model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
   # Processing
   if (bootstrap) {
-    parameters <- parameters_bootstrap(model, iterations = iterations, ci = ci, ...)
+    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- .extract_parameters_generic(model, ci = ci, component = "all", merge_by = c("Parameter", "Component"), standardize = standardize)
   }
@@ -34,6 +34,9 @@ model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations 
   parameters
 }
 
+
+#' @export
+model_parameters.vgam <- model_parameters.gam
 
 
 #' @export
@@ -56,3 +59,38 @@ model_parameters.list <- function(model, ci = .95, bootstrap = FALSE, iterations
 
 #' @export
 model_parameters.gamlss <- model_parameters.gam
+
+
+
+#' @rdname model_parameters.gam
+#' @export
+model_parameters.rqss <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "smooth_terms", "all"), standardize = NULL, exponentiate = FALSE, ...) {
+  component <- match.arg(component)
+  if (component == "all") {
+    merge_by <- c("Parameter", "Component")
+  } else {
+    merge_by <- "Parameter"
+  }
+
+  ## TODO check merge by
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    component = component,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = merge_by,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+#' @rdname model_parameters.gam
+#' @export
+model_parameters.cgam <- model_parameters.rqss

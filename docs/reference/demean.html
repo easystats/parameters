@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -102,17 +102,8 @@
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -159,8 +150,13 @@
    and within-subject effect.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>demean</span>(<span class='no'>x</span>, <span class='no'>select</span>, <span class='no'>group</span>, <span class='kw'>suffix_demean</span> <span class='kw'>=</span> <span class='st'>"_within"</span>,
-  <span class='kw'>suffix_groupmean</span> <span class='kw'>=</span> <span class='st'>"_between"</span>)</pre>
+    <pre class="usage"><span class='fu'>demean</span>(
+  <span class='no'>x</span>,
+  <span class='no'>select</span>,
+  <span class='no'>group</span>,
+  <span class='kw'>suffix_demean</span> <span class='kw'>=</span> <span class='st'>"_within"</span>,
+  <span class='kw'>suffix_groupmean</span> <span class='kw'>=</span> <span class='st'>"_between"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -256,7 +252,7 @@ with <code>"_between"</code>.</p></td>
     
 <ul>
 <li><p>Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.</p></li>
-<li><p>Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality &amp; Quantity. doi: <a href='https://doi.org/10.1007/s11135-018-0802-x'>10.1007/s11135-018-0802-x</a></p></li>
+<li><p>Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality &amp; Quantity.</p></li>
 <li><p>Giesselmann M, Schmidt-Catran A. (2018). Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html</p></li>
 <li><p>Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge</p></li>
 </ul>
@@ -269,34 +265,34 @@ with <code>"_between"</code>.</p></td>
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Petal.Length_between Sepal.Length_within
-#&gt; 1             5.848718             3.710256          -0.7487179
-#&gt; 2             5.902439             4.009756          -1.0024390
-#&gt; 3             5.848718             3.710256          -1.1487179
-#&gt; 4             5.848718             3.710256          -1.2487179
-#&gt; 5             5.848718             3.710256          -0.8487179
-#&gt; 6             5.848718             3.710256          -0.4487179
+#&gt; 1             5.768421             3.357895          -0.6684211
+#&gt; 2             5.956098             4.121951          -1.0560976
+#&gt; 3             5.768421             3.357895          -1.0684211
+#&gt; 4             5.956098             4.121951          -1.3560976
+#&gt; 5             5.752632             3.636842          -0.7526316
+#&gt; 6             5.768421             3.357895          -0.3684211
 #&gt;   Petal.Length_within
-#&gt; 1           -2.310256
-#&gt; 2           -2.609756
-#&gt; 3           -2.410256
-#&gt; 4           -2.210256
-#&gt; 5           -2.310256
-#&gt; 6           -2.010256</div><div class='input'>
+#&gt; 1           -1.957895
+#&gt; 2           -2.721951
+#&gt; 3           -2.057895
+#&gt; 4           -2.621951
+#&gt; 5           -2.236842
+#&gt; 6           -1.657895</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.
 #&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Species_between binary_between Sepal.Length_within
-#&gt; 1             5.848718       0.9487179      0.4102564          -0.7487179
-#&gt; 2             5.902439       1.1219512      0.2682927          -1.0024390
-#&gt; 3             5.848718       0.9487179      0.4102564          -1.1487179
-#&gt; 4             5.848718       0.9487179      0.4102564          -1.2487179
-#&gt; 5             5.848718       0.9487179      0.4102564          -0.8487179
-#&gt; 6             5.848718       0.9487179      0.4102564          -0.4487179
+#&gt; 1             5.768421       0.7894737      0.4210526          -0.6684211
+#&gt; 2             5.956098       1.1463415      0.3658537          -1.0560976
+#&gt; 3             5.768421       0.7894737      0.4210526          -1.0684211
+#&gt; 4             5.956098       1.1463415      0.3658537          -1.3560976
+#&gt; 5             5.752632       0.9736842      0.4736842          -0.7526316
+#&gt; 6             5.768421       0.7894737      0.4210526          -0.3684211
 #&gt;   Species_within binary_within
-#&gt; 1     -0.9487179     0.5897436
-#&gt; 2     -1.1219512     0.7317073
-#&gt; 3     -0.9487179    -0.4102564
-#&gt; 4     -0.9487179    -0.4102564
-#&gt; 5     -0.9487179     0.5897436
-#&gt; 6     -0.9487179     0.5897436</div><div class='input'>
+#&gt; 1     -0.7894737    -0.4210526
+#&gt; 2     -1.1463415    -0.3658537
+#&gt; 3     -0.7894737    -0.4210526
+#&gt; 4     -1.1463415    -0.3658537
+#&gt; 5     -0.9736842    -0.4736842
+#&gt; 6     -0.7894737     0.5789474</div><div class='input'>
 <span class='co'># demean interaction term x*y</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),
@@ -330,7 +326,7 @@ with <code>"_between"</code>.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

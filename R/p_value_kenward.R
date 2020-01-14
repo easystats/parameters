@@ -5,9 +5,23 @@
 #' @param model A statistical model.
 #' @param dof Degrees of Freedom.
 #'
-#' @details \code{dof_kenward()} and \code{se_kenward()} are small helper-functions
+#' @details Inferential statistics (like p-values, confidence intervals and
+#' standard errors) may be biased in mixed models when the number of clusters
+#' is small (even if the sample size of level-1 units is high). In such cases
+#' it is recommended to approximate a more accurate number of degrees of freedom
+#' for such inferential statistics. Unlike simpler approximation heuristics
+#' like the "m-l-1" rule (\code{dof_ml1}), the Kenward-Roger approximation is
+#' also applicable in more complex multilevel designs, e.g. with cross-classified
+#' clusters. However, the "m-l-1" heuristic also applies to generalized
+#' mixed models, while approaches like Kenward-Roger or Satterthwaite are limited
+#' to linear mixed models only.
+#'
+#' @seealso \code{dof_kenward()} and \code{se_kenward()} are small helper-functions
 #' to calculate approximated degrees of freedom and standard errors for model
 #' parameters, based on the Kenward-Roger (1997) approach.
+#' \cr \cr
+#' \code{\link{dof_satterthwaite}} and \code{\link{dof_ml1}} approximate degrees
+#' of freedom bases on Satterthwaite's method or the "m-l-1" rule.
 #'
 #' @examples
 #' \donttest{
@@ -51,4 +65,3 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
     stringsAsFactors = FALSE
   )
 }
-

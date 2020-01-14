@@ -81,7 +81,7 @@ consistent and the same for any model object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -102,17 +102,8 @@ consistent and the same for any model object." />
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -162,8 +153,7 @@ consistent and the same for any model object.</p>
     <pre class="usage"><span class='fu'>standardize_names</span>(<span class='no'>data</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for parameters_model</span>
-<span class='fu'>standardize_names</span>(<span class='no'>data</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"easystats"</span>,
-  <span class='st'>"broom"</span>), <span class='no'>...</span>)</pre>
+<span class='fu'>standardize_names</span>(<span class='no'>data</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"easystats"</span>, <span class='st'>"broom"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,24 +195,24 @@ consistent and the same for any model object.</p>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='no'>mp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>mp</span>)</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high         t df_residual
-#&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893          29
-#&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808          29
-#&gt; 3         cyl   -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972          29
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>mp</span>)</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high         t df_error
+#&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893       29
+#&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808       29
+#&gt; 3         cyl   -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972       29
 #&gt;              p
 #&gt; 1 3.043182e-20
 #&gt; 2 2.220200e-04
-#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span>(<span class='no'>mp</span>)</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high Statistic df_residual
-#&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893          29
-#&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808          29
-#&gt; 3         cyl   -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972          29
+#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span>(<span class='no'>mp</span>)</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high Statistic df
+#&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893 29
+#&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808 29
+#&gt; 3         cyl   -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972 29
 #&gt;              p
 #&gt; 1 3.043182e-20
 #&gt; 2 2.220200e-04
-#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span>(<span class='no'>mp</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"broom"</span>)</div><div class='output co'>#&gt;          term  estimate std.error  conf.low  conf.high statistic df.residual
-#&gt; 1 (Intercept) 39.686261 1.7149840 36.178725 43.1937976 23.140893          29
-#&gt; 2          wt -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808          29
-#&gt; 3         cyl -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972          29
+#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span>(<span class='no'>mp</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"broom"</span>)</div><div class='output co'>#&gt;          term  estimate std.error  conf.low  conf.high statistic df.error
+#&gt; 1 (Intercept) 39.686261 1.7149840 36.178725 43.1937976 23.140893       29
+#&gt; 2          wt -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808       29
+#&gt; 3         cyl -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972       29
 #&gt;        p.value
 #&gt; 1 3.043182e-20
 #&gt; 2 2.220200e-04
@@ -243,7 +233,7 @@ consistent and the same for any model object.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

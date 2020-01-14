@@ -6,8 +6,16 @@
 \alias{p_value_wald.merMod}
 \title{Wald-test approximation for CIs and p-values}
 \usage{
-ci_wald(model, ci = 0.95, dof = NULL, component = c("all",
-  "conditional", "zi", "zero_inflated"), robust = FALSE, ...)
+ci_wald(
+  model,
+  ci = 0.95,
+  dof = NULL,
+  effects = c("fixed", "random", "all"),
+  component = c("all", "conditional", "zi", "zero_inflated", "precision", "scale",
+    "smooth_terms"),
+  robust = FALSE,
+  ...
+)
 
 p_value_wald(model, ...)
 
@@ -20,15 +28,18 @@ p_value_wald(model, ...)
 
 \item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.}
 
+\item{effects}{Should standard errors for fixed effects or random effects
+be returned? Only applies to mixed models. May be abbreviated. When
+standard errors for random effects are requested, for each grouping factor
+a list of standard errors (per group level) for random intercepts and slopes
+is returned.}
+
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are computed
-by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
-\code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
-from the \pkg{sandwich}-package for robust covariance matrix estimators.}
+\item{robust}{Logical, if \code{TRUE}, robust standard errors are computed by calling \code{\link[=standard_error_robust]{standard_error_robust()}}. \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions from the \pkg{sandwich}-package for robust covariance matrix estimators.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 }

@@ -1,6 +1,6 @@
 #' Check if a distribution is unimodal or multimodal
 #'
-#' For univariate distributions (one-dimensional vectors), this functions perfoms a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.
+#' For univariate distributions (one-dimensional vectors), this functions performs a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.
 #'
 #'
 #' @param x A numeric vector or a dataframe.
@@ -16,7 +16,6 @@
 #'
 #' # Multivariate
 #' \donttest{
-#' library(bayestestR)
 #' m <- data.frame(
 #'   x = rnorm(200),
 #'   y = rbeta(200, 2, 1)
@@ -65,7 +64,7 @@ check_multimodal.data.frame <- function(x, ...) {
       insight::format_value(rez$df, protect_integers = TRUE),
       ") = ",
       insight::format_value(rez$Chisq),
-      ", ", format_p(rez$p), ")"
+      ", ", format_p(rez$p), ").\n"
     )
     color <- "green"
   } else {
@@ -75,7 +74,7 @@ check_multimodal.data.frame <- function(x, ...) {
       insight::format_value(rez$df, protect_integers = TRUE),
       ") = ",
       insight::format_value(rez$Chisq),
-      ", ", format_p(rez$p), ")"
+      ", ", format_p(rez$p), ").\n"
     )
     color <- "yellow"
   }
@@ -106,7 +105,7 @@ check_multimodal.numeric <- function(x, ...) {
       text,
       "the distribution is significantly multimodal (excess mass = ",
       insight::format_value(rez$excess_mass),
-      ", ", format_p(rez$p), ")"
+      ", ", format_p(rez$p), ").\n"
     )
     color <- "green"
   } else {
@@ -114,7 +113,7 @@ check_multimodal.numeric <- function(x, ...) {
       text,
       "the hypothesis of a multimodal distribution cannot be rejected (excess mass = ",
       insight::format_value(rez$excess_mass),
-      ", ", format_p(rez$p), ")"
+      ", ", format_p(rez$p), ").\n"
     )
     color <- "yellow"
   }

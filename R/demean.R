@@ -87,7 +87,7 @@
 #'
 #' @references \itemize{
 #'   \item Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
-#'   \item Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity. \doi{10.1007/s11135-018-0802-x}
+#'   \item Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity.
 #'   \item Giesselmann M, Schmidt-Catran A. (2018). Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html
 #'   \item Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
 #' }
@@ -111,9 +111,9 @@
 #'   ID = c(1, 2, 3, 1, 2, 3, 1, 2)
 #' )
 #' demean(dat, select = c("a", "x*y"), group = "ID")
+#' @importFrom stats ave
 #' @export
 demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean = "_between") {
-
   interactions_no <- select[!grepl("(\\*|\\:)", select)]
   interactions_yes <- select[grepl("(\\*|\\:)", select)]
 
@@ -133,7 +133,8 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
       length(not_found),
       paste0(not_found, collapse = ", ")
     ),
-    color = "red")
+    color = "red"
+    )
   }
 
   select <- intersect(colnames(x), select)
@@ -169,12 +170,7 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
   # mean values to a vector of same length as the data
 
   x_gm_list <- lapply(select, function(i) {
-    group_means <- tapply(dat[[i]], dat[[group]], mean, na.rm = TRUE)
-    group_vector <- vector("numeric", nrow(dat))
-    for (j in names(group_means)) {
-      group_vector[dat[[group]] == j] <- group_means[j]
-    }
-    group_vector
+    stats::ave(dat[[i]], dat[[group]], FUN = function(.gm) mean(.gm, na.rm = TRUE))
   })
 
   names(x_gm_list) <- select

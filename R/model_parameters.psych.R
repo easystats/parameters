@@ -102,7 +102,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
   loadings$Complexity <- model$complexity
   loadings$Uniqueness <- model$uniquenesses
   loadings$MSA <- attributes(model)$MSA
-  
+
   # Add attributes
   attr(loadings, "summary") <- data_summary
   attr(loadings, "model") <- model

@@ -35,7 +35,7 @@ n_parameters.default <- function(x, ...) {
 
 #' @rdname n_parameters
 #' @export
-n_parameters.merMod <- function(x, effects = c("all", "fixed", "random"), ...) {
+n_parameters.merMod <- function(x, effects = c("fixed", "random"), ...) {
   effects <- match.arg(effects)
   length(insight::find_parameters(x, effects = effects, flatten = TRUE, ...))
 }
@@ -45,6 +45,9 @@ n_parameters.BBmm <- n_parameters.merMod
 
 #' @export
 n_parameters.glimML <- n_parameters.merMod
+
+#' @export
+n_parameters.cpglmm <- n_parameters.merMod
 
 #' @export
 n_parameters.rlmerMod <- n_parameters.merMod
@@ -73,7 +76,7 @@ n_parameters.wbm <- n_parameters.merMod
 # Models with random effects and other components ----------------------------
 
 #' @export
-n_parameters.MixMod <- function(x, effects = c("all", "fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+n_parameters.MixMod <- function(x, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
   length(insight::find_parameters(x, effects = effects, component = component, flatten = TRUE, ...))
@@ -100,7 +103,7 @@ n_parameters.zeroinfl <- function(x, component = c("all", "conditional", "zi", "
 n_parameters.hurdle <- n_parameters.zeroinfl
 
 #' @export
-n_parameters.zerotrunc <- n_parameters.zeroinfl
+n_parameters.zerotrunc <- n_parameters.default
 
 
 

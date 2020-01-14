@@ -6,11 +6,9 @@
 ^LICENSE
 ^data/.
 ^docs/.
-^logo.png
 ^README.Rmd
-^logo.png
 ^pkgdown/.
 ^paper.*$
-^man/figures/.
+^paper/.
 ^vignettes/.
 ^WIP/.

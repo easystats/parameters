@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -60,17 +60,8 @@
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -118,11 +109,11 @@
 <div id="quick-and-exploratory-method" class="section level1">
 <h1 class="hasAnchor">
 <a href="#quick-and-exploratory-method" class="anchor"></a>Quick and Exploratory Method</h1>
-<p>Let’s start by fitting a multiple regression with the <code>attitude</code> dataset, available is base R, to predict the overal <strong>rating</strong> by employees of their organization with the remaining variables (handling of employee <strong>complaints</strong>, special <strong>privileges</strong>, opportunity of <strong>learning</strong>, <strong>raises</strong>, a feedback considered too <strong>critical</strong> and opportunity of <strong>advancement</strong>).</p>
+<p>Let’s start by fitting a multiple regression with the <code>attitude</code> dataset, available is base R, to predict the overall <strong>rating</strong> by employees of their organization with the remaining variables (handling of employee <strong>complaints</strong>, special <strong>privileges</strong>, opportunity of <strong>learning</strong>, <strong>raises</strong>, a feedback considered too <strong>critical</strong> and opportunity of <strong>advancement</strong>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</a>
 <a class="sourceLine" id="cb1-3" title="3"></a>
-<a class="sourceLine" id="cb1-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(rating <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>attitude)</a>
+<a class="sourceLine" id="cb1-4" title="4">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(rating <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> attitude)</a>
 <a class="sourceLine" id="cb1-5" title="5"><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>(model)</a></code></pre></div>
 <pre><code>&gt; Parameter   | Coefficient |    SE |          95% CI |     t | df |      p
 &gt; -------------------------------------------------------------------------
@@ -133,8 +124,8 @@
 &gt; raises      |        0.08 |  0.22 | [ -0.38,  0.54] |  0.37 | 23 | 0.715 
 &gt; critical    |        0.04 |  0.15 | [ -0.27,  0.34] |  0.26 | 23 | 0.796 
 &gt; advance     |       -0.22 |  0.18 | [ -0.59,  0.15] | -1.22 | 23 | 0.236</code></pre>
-<p>We can explore a reduction of the number of parameters with the <code><a href="../reference/parameters_reduction.html">parameters_reduction()</a></code> function.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">newmodel &lt;-<span class="st"> </span><span class="kw"><a href="../reference/parameters_reduction.html">parameters_reduction</a></span>(model)</a>
+<p>We can explore a reduction of the number of parameters with the <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> function.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">newmodel &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span>(model)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>(newmodel)</a></code></pre></div>
 <pre><code>&gt; Parameter                                                              | Coefficient |   SE |         95% CI |     t | df |      p
 &gt; ----------------------------------------------------------------------------------------------------------------------------------
@@ -143,10 +134,10 @@
 &gt; critical_0.80                                                          |       -3.41 | 1.59 | [-6.67, -0.14] | -2.14 | 27 | 0.041</code></pre>
 <p>This quickly <em>hints</em> toward the fact that the model could be represented via <strong>two “latent” dimensions</strong>, one correlated with all the positive things that a company has to offer, and the other one related to the amount of negative critiques received by the employees. These two dimensions have a positive and negative relationship with the company rating, respectively.</p>
 <blockquote>
-<p>What does <code><a href="../reference/parameters_reduction.html">parameters_reduction()</a></code> exactly do?</p>
+<p>What does <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> exactly do?</p>
 </blockquote>
 <p>This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is “<strong>PCA</strong>”, but other are available via the <code>method</code> argument, such as “<strong>cMDS</strong>”, “<strong>DRR</strong>” or “<strong>ICA</strong>”). Then, it names this new dimensions using the original variables that <em>correlate</em> the most with it. For instance, a variable named ‘V1_0.97/V4_-0.88’ means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/parameters_reduction.html">parameters_reduction</a></span>(model, <span class="dt">method =</span> <span class="st">"cMDS"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span>(model, <span class="dt">method =</span> <span class="st">"cMDS"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">parameters</a></span>()</a></code></pre></div>
 <pre><code>&gt; Parameter                                                 | Coefficient |   SE |         95% CI |     t | df |      p
 &gt; ---------------------------------------------------------------------------------------------------------------------
@@ -155,7 +146,7 @@
 &gt; advance_-0.60                                             |        0.32 | 0.13 | [ 0.04,  0.59] |  2.36 | 26 | 0.026 
 &gt; critical_-0.65                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 26 | 0.120</code></pre>
 <p>A different method (<strong>Classical Multidimensional Scaling - cMDS</strong>) suggests that negative critiques do not have a significant impact on the rating, and that the lack of opportunities of career advancement is a separate dimension with an importance on its own.</p>
-<p>Altough this function can be useful in exploratory data analysis, it’s best to perform the dimension reduction step in a <strong>separate and dedicated stage</strong>, as this is a very important process in the data analysis workflow.</p>
+<p>Although this function can be useful in exploratory data analysis, it’s best to perform the dimension reduction step in a <strong>separate and dedicated stage</strong>, as this is a very important process in the data analysis workflow.</p>
 </div>
 <div id="principal-component-analysis-pca" class="section level1">
 <h1 class="hasAnchor">
@@ -190,7 +181,7 @@
 <div id="using-the-psych-package-for-pca" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-the-psych-package-for-pca" class="anchor"></a>Using the <code>psych</code> package for PCA</h2>
-<p>You can alo use different packages for models, such as <a href="https://cran.r-project.org/package=psych"><code>psych</code></a> <span class="citation">(Revelle 2018)</span> or <a href="http://factominer.free.fr/"><code>FactoMineR</code></a> for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are <strong>fully supported</strong> by <code>parameters</code> through the <code><a href="../reference/model_parameters.html">model_parameters()</a></code> function.</p>
+<p>You can also use different packages for models, such as <a href="https://cran.r-project.org/package=psych"><code>psych</code></a> <span class="citation">(Revelle 2018)</span> or <a href="http://factominer.free.fr/"><code>FactoMineR</code></a> for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are <strong>fully supported</strong> by <code>parameters</code> through the <code><a href="../reference/model_parameters.html">model_parameters()</a></code> function.</p>
 <p>As such, the above analysis can be fully reproduced as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(psych)</a>
 <a class="sourceLine" id="cb12-2" title="2"></a>
@@ -256,7 +247,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

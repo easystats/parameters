@@ -12,7 +12,7 @@ dof(model, method = "analytical")
 \arguments{
 \item{model}{A statistical model.}
 
-\item{method}{Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.}
+\item{method}{Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}), \code{"kenward"} (see \code{\link{dof_kenward}}) or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.}
 }
 \description{
 Estimate or extract degrees of freedom of models.
@@ -25,9 +25,8 @@ model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 dof(model)
 
 library(lme4)
-model <- lme4::lmer(Sepal.Length ~ Petal.Length + (1|Species), data = iris)
+model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
 dof(model)
-
 \donttest{
 library(rstanarm)
 model <- stan_glm(
@@ -38,8 +37,4 @@ model <- stan_glm(
 )
 dof(model)
 }
-
-
-
-
 }

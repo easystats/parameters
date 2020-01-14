@@ -29,7 +29,6 @@
 #' @importFrom insight format_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
-
   if (!is.null(attributes(x)$title)) {
     insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
   }
@@ -70,6 +69,8 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   p_digits <- attributes(x)$p_digits
   is_ordinal_model <- attributes(x)$ordinal_model
 
+  if (is.null(is_ordinal_model)) is_ordinal_model <- FALSE
+
   # set up split-factor
   if (length(split_column) > 1) {
     split_by <- lapply(split_column, function(i) x[[i]])
@@ -80,6 +81,9 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
   # make sure we have correct sorting here...
   tables <- split(x, f = split_by)
+
+  # sanity check - only preserve tables with any data in data frames
+  tables <- tables[sapply(tables, nrow) > 0]
 
   for (type in names(tables)) {
 
@@ -113,7 +117,9 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     if (all(is.na(tables[[type]]$CI_high))) tables[[type]]$CI_high <- NULL
 
     # Don't print if empty col
-    tables[[type]][sapply(tables[[type]], function(x){all(x == "") | all(is.na(x))})] <- NULL
+    tables[[type]][sapply(tables[[type]], function(x) {
+      all(x == "") | all(is.na(x))
+    })] <- NULL
 
     attr(tables[[type]], "digits") <- digits
     attr(tables[[type]], "ci_digits") <- ci_digits
@@ -137,8 +143,13 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "sigma" = "Sigma",
       "Correlation" = "Correlation",
       "Loading" = "Loading",
+      "scale" = ,
+      "scale.fixed" = "Scale Parameters",
+      "extra" = ,
+      "extra.fixed" = "Extra Parameters",
       "nu" = "Nu",
       "tau" = "Tau",
+      "precision" = "Precision",
       type
     )
 

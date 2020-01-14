@@ -7,17 +7,18 @@
 #'
 #' @param x A data frame
 #' @param cluster_groups Group classification of the cluster analysis, which can
-#'   be retrieved from the \code{\link{cluster_groups}} function.
+#'   be retrieved from the \code{\link{cluster_analysis}} function.
 #'
 #' @seealso \code{\link{n_clusters}} to determine the number of clusters to extract, \code{\link{cluster_analysis}} to compute a cluster analysis and \code{\link{check_clusterstructure}} to check suitability of data for clustering.
 #'
 #' @examples
 #' \dontrun{
 #' # retrieve group classification from hierarchical cluster analysis
-#' groups <- cluster_groups(iris[, 1:4])
+#' groups <- cluster_analysis(iris[, 1:4])
 #'
 #' # goodness of group classificatoin
-#' cluster_discrimination(iris[, 1:4], cluster_groups = groups)}
+#' cluster_discrimination(iris[, 1:4], cluster_groups = groups)
+#' }
 #' @importFrom stats na.omit
 #' @export
 cluster_discrimination <- function(x, cluster_groups = NULL) {

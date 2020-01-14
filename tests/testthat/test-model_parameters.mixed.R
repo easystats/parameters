@@ -15,8 +15,11 @@ test_that("model_parameters.mixed", {
   params <- model_parameters(insight::download_model("merMod_1"))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 8))
 
-  params <- model_parameters(insight::download_model("merMod_2"))
+  model <- insight::download_model("merMod_2")
+  params <- model_parameters(model)
+  cs <- coef(summary(model))
   testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 8))
+  testthat::expect_equal(params$Parameter, rownames(cs))
 
   # TODO: Not sure how to deal with bootstrapped mixed models... As it throws an unreasonable amount of singular fits...
 })

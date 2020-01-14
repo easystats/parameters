@@ -3,26 +3,31 @@
 #' Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
 #'
 #'
-#' @inheritParams model_bootstrap
+#' @inheritParams bootstrap_model
 #' @inheritParams bayestestR::describe_posterior
 #'
 #' @return Bootstrapped parameters.
 #'
 #' @references Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.
 #'
-#' @seealso \code{\link{model_bootstrap}}, \code{\link{parameters_simulate}}, \code{\link{model_simulate}}
+#' @seealso \code{\link{bootstrap_model}}, \code{\link{simulate_parameters}}, \code{\link{simulate_model}}
 #'
 #' @examples
 #' library(parameters)
 #'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-#' parameters_bootstrap(model)
+#' bootstrap_parameters(model)
 #' @importFrom tools toTitleCase
 #' @export
-parameters_bootstrap <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
-  data <- model_bootstrap(model, iterations = iterations, ...)
+bootstrap_parameters <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+  data <- bootstrap_model(model, iterations = iterations, ...)
   .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
 }
+
+#' @rdname bootstrap_parameters
+#' @export
+parameters_bootstrap <- bootstrap_parameters
+
 
 
 

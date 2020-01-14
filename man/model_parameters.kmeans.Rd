@@ -19,6 +19,4 @@ library(parameters)
 
 model <- kmeans(iris[1:4], centers = 3)
 model_parameters(model)
-
-
 }

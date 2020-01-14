@@ -2,19 +2,19 @@
 #'
 #' Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping.
 #'
-#' @inheritParams model_simulate
+#' @inheritParams simulate_model
 #' @inheritParams bayestestR::describe_posterior
 #'
 #' @return A data frame with simulated parameters.
 #'
 #' @references Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge; New York: Cambridge University Press 2007: 140-143
 #'
-#' @seealso \code{\link{model_bootstrap}}, \code{\link{parameters_bootstrap}}, \code{\link{model_simulate}}
+#' @seealso \code{\link{bootstrap_model}}, \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}
 #'
 #' @details
 #'   \subsection{Technical Details}{
-#'     \code{model_simulate()} is a computationally faster alternative
-#'     to \code{model_bootstrap()}. Simulated draws for coefficients are based
+#'     \code{simulate_model()} is a computationally faster alternative
+#'     to \code{bootstrap_model()}. Simulated draws for coefficients are based
 #'     on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
 #'     \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
 #'   }
@@ -31,7 +31,7 @@
 #' library(glmmTMB)
 #'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
-#' parameters_simulate(model)
+#' simulate_parameters(model)
 #'
 #' model <- glmmTMB(
 #'   count ~ spp + mined + (1 | site),
@@ -39,22 +39,32 @@
 #'   family = poisson(),
 #'   data = Salamanders
 #' )
-#' parameters_simulate(model, centrality = "mean")
-#' parameters_simulate(model, ci = c(.8, .95), component = "zero_inflated")
+#' simulate_parameters(model, centrality = "mean")
+#' simulate_parameters(model, ci = c(.8, .95), component = "zero_inflated")
 #' @importFrom bayestestR describe_posterior
 #' @importFrom tools toTitleCase
 #' @export
-parameters_simulate <- function(model, ...) {
-  UseMethod("parameters_simulate")
+simulate_parameters <- function(model, ...) {
+  UseMethod("simulate_parameters")
 }
 
-
-
-#' @rdname parameters_simulate
+#' @rdname simulate_parameters
 #' @export
-parameters_simulate.default <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
-  data <- model_simulate(model, iterations = iterations, ...)
+parameters_simulate <- simulate_parameters
+
+
+
+
+#' @rdname simulate_parameters
+#' @export
+simulate_parameters.default <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+  data <- simulate_model(model, iterations = iterations, ...)
   out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
+
+  params <- insight::get_parameters(model)
+  if ("Effects" %in% colnames(params) && length(unique(params$Effects)) > 1) {
+    out$Effects <- params$Effects
+  }
 
   class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -66,8 +76,8 @@ parameters_simulate.default <- function(model, iterations = 1000, centrality = "
 
 
 #' @export
-parameters_simulate.multinom <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
-  data <- model_simulate(model, iterations = iterations, ...)
+simulate_parameters.multinom <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+  data <- simulate_model(model, iterations = iterations, ...)
   out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
 
   params <- insight::get_parameters(model)

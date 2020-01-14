@@ -12,7 +12,7 @@ check_multimodal(x, ...)
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-For univariate distributions (one-dimensional vectors), this functions perfoms a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.
+For univariate distributions (one-dimensional vectors), this functions performs a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.
 }
 \examples{
 # Univariate
@@ -24,7 +24,6 @@ check_multimodal(x)
 
 # Multivariate
 \donttest{
-library(bayestestR)
 m <- data.frame(
   x = rnorm(200),
   y = rbeta(200, 2, 1)

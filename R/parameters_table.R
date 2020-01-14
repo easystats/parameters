@@ -19,7 +19,7 @@
 #' @return A data.frame.
 #'
 #' @importFrom tools toTitleCase
-#' @importFrom insight format_value
+#' @importFrom insight format_value format_ci
 #' @importFrom stats na.omit
 #' @export
 parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
@@ -43,9 +43,14 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
   # Format specific columns
   if ("n_Obs" %in% names(x)) x$n_Obs <- insight::format_value(x$n_Obs, protect_integers = TRUE)
   if ("n_Missing" %in% names(x)) x$n_Missing <- insight::format_value(x$n_Missing, protect_integers = TRUE)
+  # generic df
   if ("df" %in% names(x)) x$df <- insight::format_value(x$df, protect_integers = TRUE)
+  # residual df
   if ("df_residual" %in% names(x)) x$df_residual <- insight::format_value(x$df_residual, protect_integers = TRUE)
   names(x)[names(x) == "df_residual"] <- "df"
+  # df for errors
+  if ("df_error" %in% names(x)) x$df_error <- insight::format_value(x$df_error, protect_integers = TRUE)
+  names(x)[names(x) == "df_error"] <- "df"
 
   # P values
   if ("p" %in% names(x)) {
@@ -63,10 +68,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
       ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
     }
     # Get characters to align the CI
-    max_len_low <- max(unlist(lapply(stats::na.omit(round(x[ci_low], ci_digits)), function(.i) nchar(as.character(.i)))))
-    max_len_high <- max(unlist(lapply(stats::na.omit(round(x[ci_high], ci_digits)), function(.i) nchar(as.character(.i)))))
     for (i in 1:length(ci_colname)) {
-      x[ci_colname[i]] <- format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL, digits = ci_digits, width_low = max_len_low, width_high = max_len_high, brackets = TRUE)
+      x[ci_colname[i]] <- insight::format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
     }
     # Replace at initial position
     ci_position <- which(names(x) == ci_low[1])

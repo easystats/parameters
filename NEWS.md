@@ -1,3 +1,47 @@
+# parameters 0.4.0
+
+## Breaking changes
+
+- The column for degrees of freedom in `model_parameters()` was renamed from `df_residuals` to `df_error` for regression model objects, because these degrees of freedom actually were not always referring to _residuals_ - we consider `df_error` as a more generic name.
+- `model_parameters()` for standardized parameters (i.e. `standardize` is not `NULL`) only returns standardized coefficients, CI and standard errors (and not both, unstandardized and standardized values).
+- `format_ci()` was removed and re-implemented in the **insight** package.
+
+## Renaming
+
+- `model_bootstrap()` was renamed to `bootstrap_model()`. `model_bootstrap()` will remain as alias.
+- `parameters_bootstrap()` was renamed to `bootstrap_parameters()`. `parameters_bootstrap()` will remain as alias.
+- `model_simulate()` was renamed to `simulate_model()`. `model_simulate()` will remain as alias.
+- `parameters_simulate()` was renamed to `simulate_parameters()`. `parameters_simulate()` will remain as alias.
+- `parameters_selection()` was renamed to `select_parameters()`. `parameters_selection()` will remain as alias.
+- `parameters_reduction()` was renamed to `reduce_parameters()`. `parameters_reduction()` will remain as alias.
+
+## New supported models
+
+- Added support for `vgam` (*VGAM*), `cgam`, `cgamm` (*cgam*), `complmrob` (*complmrob*), `cpglm`, `cpglmm` (*cplm*), `fixest` (*fixest*), `feglm` (*alpaca*), `glmx` (*glmx*), `glmmadmb` (*glmmADMB*), `mcmc` (*coda*), `mixor` (*mixor*).
+- `model_parameters()` now supports `blavaan` models (*blavaan*).
+
+## General
+
+- Better handling of `clm2`, `clmm2` and `stanmvreg` models.
+
+## New functions
+
+- `dof_satterthwaite()` and `dof_ml1()` to compute degrees of freedom based on different approximation methods (and related to that, `p_value_*()` and `se_*()` for these methods were added as well).
+- `rescale_weights()` to rescale design (probability or sampling) weights for use in multilevel-models without survey-design.
+
+## Changes to functions
+
+- Robust estimation (like `standard_error_robust()` or `ci_robust()`) can now also compute cluster-robust variance-covariance matrices, using the *clubSandwich*  package.
+- `model_parameters()` gets a `robust`-argument, to compute robust standard errors, and confidence intervals and p-values based on robust standard errors.
+- Arguments `p_method` and `ci_method` in `model_parameters.merMod()` were replaced by a single argument `df_method`.
+- `model_parameters.principal()` includes a `MSA` column for objects from `principal_components()`.
+
+## Bug fixes
+
+- Fixed issue in `model_parameters()` with non-typical ordering of coefficients for mixed models.
+- Fixed issues with models of class `rlmerMod`.
+- Fixed minor issues `model_parameters.BFBayesFactor()`.
+
 # parameters 0.3.0
 
 ## Breaking changes
@@ -43,6 +87,8 @@ Parts of the **parameter** package are restructured and functions focussing on a
 - Fixed bug in `parameters_type()` when a parameter occured multiple times in a model.
 - Fixed bug with *multinom*-support.
 - Fixed bug in `model_parameters()` for non-estimable GLMs.
+- Fixed bug in `p_value()` for *MASS::rlm* models.
+- Fixed bug in `reshape_loadings()` when converting loadings from wide to long and back again.
 
 # parameters 0.2.0
 

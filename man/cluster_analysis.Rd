@@ -4,12 +4,19 @@
 \alias{cluster_analysis}
 \title{Compute cluster analysis and return group indices}
 \usage{
-cluster_analysis(x, n_clusters = NULL, method = c("hclust", "kmeans"),
-  distance = c("euclidean", "maximum", "manhattan", "canberra", "binary",
-  "minkowski"), agglomeration = c("ward", "ward.D", "ward.D2", "single",
-  "complete", "average", "mcquitty", "median", "centroid"),
-  iterations = 20, algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
-  force = TRUE, package = c("NbClust", "mclust"), verbose = TRUE)
+cluster_analysis(
+  x,
+  n_clusters = NULL,
+  method = c("hclust", "kmeans"),
+  distance = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
+  agglomeration = c("ward", "ward.D", "ward.D2", "single", "complete", "average",
+    "mcquitty", "median", "centroid"),
+  iterations = 20,
+  algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
+  force = TRUE,
+  package = c("NbClust", "mclust"),
+  verbose = TRUE
+)
 }
 \arguments{
 \item{x}{A data frame.}
@@ -47,7 +54,7 @@ the cluster analysis. For \code{method = "kmeans"} and \code{force = TRUE},
 only ordered factors are used, because \code{\link{kmeans}} fails for dummy
 variables.}
 
-\item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"clValid"} and \code{"cluster"}.}
+\item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"cluster"}.}
 
 \item{verbose}{Toggle off warnings.}
 }
@@ -73,7 +80,8 @@ groups <- cluster_analysis(iris[, 1:4], 3)
 
 # K-means clustering of mtcars-dataset, auto-detection of cluster-groups
 \dontrun{
-groups <- cluster_analysis(iris[, 1:4], method = "k")}
+groups <- cluster_analysis(iris[, 1:4], method = "k")
+}
 }
 \references{
 Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.

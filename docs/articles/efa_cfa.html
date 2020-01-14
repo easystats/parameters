@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -60,17 +60,8 @@
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -192,12 +183,12 @@
 <h2 class="hasAnchor">
 <a href="#how-many-factors-to-retain-in-factor-analysis-fa" class="anchor"></a>How many factors to retain in Factor Analysis (FA)</h2>
 <p>When running a <strong>factor analysis (FA)</strong>, one often needs to specify <strong>how many components</strong> (or latent variables) to retain or to extract. This decision is often motivated or supported by some statistical indices and procedures aiming at finding the optimal number of factors.</p>
-<p>Interestingly, a huge amount of methods exist to statistically adress this issue, giving sometimes very different results… Unfortunately, there is no consensus on <strong>which method to use</strong>, or which is the best.</p>
+<p>Interestingly, a huge amount of methods exist to statistically address this issue, giving sometimes very different results… Unfortunately, there is no consensus on <strong>which method to use</strong>, or which is the best.</p>
 <div id="the-method-agreement-procedure" class="section level3">
 <h3 class="hasAnchor">
 <a href="#the-method-agreement-procedure" class="anchor"></a>The Method Agreement procedure</h3>
-<p>The Method Agreement procedure, first implemented in the <a href="https://neuropsychology.github.io/psycho.R/2018/05/24/n_factors.html"><code>psycho</code></a> pacakge <span class="citation">(Makowski 2018)</span>, proposes to rely on the consensus of methods, rather than on one method in particular.</p>
-<p>This procedure can be easily used via the <code><a href="../reference/n_factors.html">n_factors()</a></code> function, re-implemented and improved in the <a href="https://github.com/easystats/parameters"><strong>parameters</strong></a> package. One can provide a dataframe, and the function will run a large number of routines and reutrn the optimal number of factors based on the higher consensus.</p>
+<p>The Method Agreement procedure, first implemented in the <a href="https://neuropsychology.github.io/psycho.R/2018/05/24/n_factors.html"><code>psycho</code></a> package <span class="citation">(Makowski 2018)</span>, proposes to rely on the consensus of methods, rather than on one method in particular.</p>
+<p>This procedure can be easily used via the <code><a href="../reference/n_factors.html">n_factors()</a></code> function, re-implemented and improved in the <a href="https://github.com/easystats/parameters"><strong>parameters</strong></a> package. One can provide a dataframe, and the function will run a large number of routines and return the optimal number of factors based on the higher consensus.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">n &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n_factors.html">n_factors</a></span>(data)</a>
 <a class="sourceLine" id="cb7-2" title="2">n</a></code></pre></div>
 <pre><code>&gt; # Method Agreement Procedure:
@@ -293,15 +284,12 @@
 <a class="sourceLine" id="cb17-5" title="5">big6 &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(structure_big6, <span class="dt">data =</span> test)</a>
 <a class="sourceLine" id="cb17-6" title="6"></a>
 <a class="sourceLine" id="cb17-7" title="7">performance<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/performance/man/model_performance.html">compare_performance</a></span>(big5, big6)</a></code></pre></div>
-<pre><code>&gt;   Model   Type Chisq Chisq_df Chisq_p Baseline Baseline_df Baseline_p  GFI AGFI
-&gt; 1  big5 lavaan  1357      265       0     5822         300          0 0.86 0.82
-&gt; 2  big6 lavaan  1530      265       0     5822         300          0 0.84 0.81
-&gt;    NFI NNFI  CFI RMSEA RMSEA_CI_low RMSEA_CI_high RMSEA_p  RMR  SRMR  RFI PNFI
-&gt; 1 0.77 0.78 0.80 0.075        0.071         0.079 0.0e+00 0.16 0.077 0.74 0.68
-&gt; 2 0.74 0.74 0.77 0.081        0.077         0.085 8.8e-14 0.18 0.085 0.70 0.65
-&gt;    IFI  RNI Loglikelihood   AIC   BIC BIC_adjusted      BF
-&gt; 1 0.80 0.80        -29897 59914 60190        59999      NA
-&gt; 2 0.77 0.77        -29983 60087 60362        60172 3.2e-38</code></pre>
+<pre><code>&gt; # Comparison of Model Performance Indices
+&gt; 
+&gt; Model |   Type |   Chisq | Chisq_df | Chisq_p | Baseline | Baseline_df | Baseline_p |  GFI | AGFI |  NFI | NNFI |  CFI | RMSEA | RMSEA_CI_low | RMSEA_CI_high | RMSEA_p |  RMR | SRMR |  RFI | PNFI |  IFI |  RNI | Loglikelihood |      AIC |      BIC | BIC_adjusted | BF
+&gt; ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+&gt; big5  | lavaan | 1357.27 |      265 |       0 |  5821.53 |         300 |          0 | 0.86 | 0.82 | 0.77 | 0.78 | 0.80 |  0.07 |         0.07 |          0.08 |       0 | 0.16 | 0.08 | 0.74 | 0.68 | 0.80 | 0.80 |     -29897.05 | 59914.10 | 60189.76 |     59999.24 |   
+&gt; big6  | lavaan | 1529.93 |      265 |       0 |  5821.53 |         300 |          0 | 0.84 | 0.81 | 0.74 | 0.74 | 0.77 |  0.08 |         0.08 |          0.08 |       0 | 0.18 | 0.08 | 0.70 | 0.65 | 0.77 | 0.77 |     -29983.38 | 60086.76 | 60362.43 |     60171.91 |  0</code></pre>
 <p>All in all, it seems that the big 5 structure remains quite reliable.</p>
 </div>
 </div>
@@ -341,7 +329,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

@@ -30,6 +30,23 @@ p_value_wald.merMod <- function(model, dof = Inf, ...) {
 }
 
 
+#' @export
+p_value_wald.rlmerMod <- function(model, dof = Inf, ...) {
+  params <- as.data.frame(stats::coef(summary(model)))
+  .p_value_wald(params, dof)
+}
+
+
+#' @export
+p_value_wald.cpglmm <- function(model, dof = Inf, ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+  params <- as.data.frame(cplm::summary(model)$coefs)
+  .p_value_wald(params, dof)
+}
+
+
 .p_value_wald <- function(params, dof = NULL) {
   if (is.null(dof)) dof <- Inf
 

@@ -4,22 +4,27 @@
 \alias{model_parameters.aov}
 \title{ANOVAs Parameters}
 \usage{
-\method{model_parameters}{aov}(model, omega_squared = NULL,
-  eta_squared = NULL, epsilon_squared = NULL, ...)
+\method{model_parameters}{aov}(
+  model,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{Object of class \link{aov}, \link{anova} or \code{aovlist}.}
 
-\item{omega_squared}{Compute omega squared as index of effect size. Can be "partial" (adjusted for effect size) or "raw".}
+\item{omega_squared}{Compute omega squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.}
 
-\item{eta_squared}{Compute eta squared as index of effect size. Can be "partial" (adjusted for effect size) or "raw".}
+\item{eta_squared}{Compute eta squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.}
 
 \item{epsilon_squared}{Compute epsilon squared as index of effect size.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame of indices related to the model's parameters.
+A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters of ANOVAs.
@@ -37,10 +42,8 @@ model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsi
 
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
-\donttest{
-library(lme4)
 
+library(lme4)
 model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
 model_parameters(model)
-}
 }

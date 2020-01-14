@@ -3,10 +3,12 @@
 #' Parameters of ANOVAs.
 #'
 #' @param model Object of class \link{aov}, \link{anova} or \code{aovlist}.
-#' @param omega_squared Compute omega squared as index of effect size. Can be "partial" (adjusted for effect size) or "raw".
-#' @param eta_squared Compute eta squared as index of effect size. Can be "partial" (adjusted for effect size) or "raw".
+#' @param omega_squared Compute omega squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.
+#' @param eta_squared Compute eta squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.
 #' @param epsilon_squared Compute epsilon squared as index of effect size.
 #' @param ... Arguments passed to or from other methods.
+#'
+#' @return A data frame of indices related to the model's parameters.
 #'
 #' @examples
 #' df <- iris
@@ -21,16 +23,12 @@
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 #' model_parameters(model)
-#' \donttest{
-#' library(lme4)
 #'
+#' library(lme4)
 #' model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
 #' model_parameters(model)
-#' }
-#' @return A data.frame of indices related to the model's parameters.
 #' @export
 model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, ...) {
-
   if (!requireNamespace("effectsize", quietly = TRUE)) {
     stop("Package 'effectsize' required for this function to work. Please install it.")
   }

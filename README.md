@@ -21,8 +21,7 @@ wide variety of models, this package implements features like
 Run the following:
 
 ``` r
-install.packages("devtools")
-devtools::install_github("easystats/parameters")
+install.packages("parameters")
 ```
 
 ``` r
@@ -36,20 +35,20 @@ library("parameters")
 [![Features](https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3)](https://easystats.github.io/parameters/reference/index.html)
 
 Click on the buttons above to access the package
-[**documentation**](https://easystats.github.io/parameters/) and the
-[**easystats blog**](https://easystats.github.io/blog/posts/), and
-check-out these vignettes:
+[documentation](https://easystats.github.io/parameters/) and the
+[easystats blog](https://easystats.github.io/blog/posts/), and check-out
+these vignettes:
 
-  - [**Parameters
-    description**](https://easystats.github.io/parameters/articles/model_parameters.html)
-  - [**Bootstrapped
-    parameters**](https://easystats.github.io/parameters/articles/bootstrapping.html)
-  - [**Parameters
-    selection**](https://easystats.github.io/parameters/articles/parameters_selection.html)
-  - [**Feature reduction (PCA, cMDS,
-    ICA…)**](https://easystats.github.io/parameters/articles/parameters_reduction.html)
-  - [**Structural models (EFA, CFA,
-    SEM…)**](https://easystats.github.io/parameters/articles/efa_cfa.html)
+  - [Parameters
+    description](https://easystats.github.io/parameters/articles/model_parameters.html)
+  - [Bootstrapped
+    parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
+  - [Parameters
+    selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
+  - [Feature reduction (PCA, cMDS,
+    ICA…)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
+  - [Structural models (EFA, CFA,
+    SEM…)](https://easystats.github.io/parameters/articles/efa_cfa.html)
 
 # Features
 
@@ -80,8 +79,7 @@ with some notable differences:
 ### Classical Regression Models
 
 ``` r
-model <- lm(Sepal.Width ~ Petal.Length * Species + Petal.Width, 
-    data = iris)
+model <- lm(Sepal.Width ~ Petal.Length * Species + Petal.Width, data = iris)
 
 # regular model parameters
 model_parameters(model)
@@ -89,23 +87,23 @@ model_parameters(model)
 # ------------------------------------------------------------------------------------------------
 # (Intercept)                         |        2.89 | 0.36 | [ 2.18,  3.60] |  8.01 | 143 | < .001
 # Petal.Length                        |        0.26 | 0.25 | [-0.22,  0.75] |  1.07 | 143 | 0.287 
-# Species (versicolor)                |       -1.66 | 0.53 | [-2.71, -0.62] | -3.14 | 143 | 0.002 
-# Species (virginica)                 |       -1.92 | 0.59 | [-3.08, -0.76] | -3.28 | 143 | 0.001 
+# Species [versicolor]                |       -1.66 | 0.53 | [-2.71, -0.62] | -3.14 | 143 | 0.002 
+# Species [virginica]                 |       -1.92 | 0.59 | [-3.08, -0.76] | -3.28 | 143 | 0.001 
 # Petal.Width                         |        0.62 | 0.14 | [ 0.34,  0.89] |  4.41 | 143 | < .001
-# Petal.Length * Species (versicolor) |       -0.09 | 0.26 | [-0.61,  0.42] | -0.36 | 143 | 0.721 
-# Petal.Length * Species (virginica)  |       -0.13 | 0.26 | [-0.64,  0.38] | -0.50 | 143 | 0.618
+# Petal.Length * Species [versicolor] |       -0.09 | 0.26 | [-0.61,  0.42] | -0.36 | 143 | 0.721 
+# Petal.Length * Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] | -0.50 | 143 | 0.618
 
 # standardized parameters
 model_parameters(model, standardize = "refit")
 # Parameter                           | Coefficient (std.) |   SE |         95% CI |     t |  df |      p
 # -------------------------------------------------------------------------------------------------------
-# (Intercept)                         |               3.59 | 1.30 | [ 1.01,  6.17] |  8.01 | 143 | 0.007 
-# Petal.Length                        |               1.07 | 1.00 | [-0.91,  3.04] |  1.07 | 143 | 0.287 
-# Species (versicolor)                |              -4.62 | 1.31 | [-7.21, -2.03] | -3.14 | 143 | < .001
-# Species (virginica)                 |              -5.51 | 1.38 | [-8.23, -2.79] | -3.28 | 143 | < .001
-# Petal.Width                         |               1.08 | 0.24 | [ 0.59,  1.56] |  4.41 | 143 | < .001
-# Petal.Length * Species (versicolor) |              -0.38 | 1.06 | [-2.48,  1.72] | -0.36 | 143 | 0.721 
-# Petal.Length * Species (virginica)  |              -0.52 | 1.04 | [-2.58,  1.54] | -0.50 | 143 | 0.618
+# (Intercept)                         |               3.59 | 1.30 | [ 1.03,  6.14] |  8.01 | 143 | < .001
+# Petal.Length                        |               1.07 | 1.00 | [-0.89,  3.03] |  1.07 | 143 | 0.287 
+# Species [versicolor]                |              -4.62 | 1.31 | [-7.19, -2.06] | -3.14 | 143 | 0.002 
+# Species [virginica]                 |              -5.51 | 1.38 | [-8.20, -2.81] | -3.28 | 143 | 0.001 
+# Petal.Width                         |               1.08 | 0.24 | [ 0.60,  1.56] |  4.41 | 143 | < .001
+# Petal.Length * Species [versicolor] |              -0.38 | 1.06 | [-2.46,  1.70] | -0.36 | 143 | 0.721 
+# Petal.Length * Species [virginica]  |              -0.52 | 1.04 | [-2.56,  1.52] | -0.50 | 143 | 0.618
 ```
 
 ### Mixed Models
@@ -113,16 +111,24 @@ model_parameters(model, standardize = "refit")
 ``` r
 library(lme4)
 
-model <- lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris)
+model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 
-# model parameters with p-values based on Kenward-Roger
-# approximation
-model_parameters(model, p_method = "kenward", ci_method = "kenward")
-# Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p
-# -------------------------------------------------------------------------
-# (Intercept)  |        2.00 | 0.57 | [0.08, 3.92] | 3.56 |   2.67 | 0.046 
-# Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.75 | 140.99 | < .001
+# model parameters with CI, df and p-values based on Wald approximation
+model_parameters(model)
+# Parameter    | Coefficient |   SE |       95% CI |    t |  df |      p
+# ----------------------------------------------------------------------
+# (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | 146 | < .001
+# Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | 146 | < .001
+
+# model parameters with CI, df and p-values based on Kenward-Roger approximation
+model_parameters(model, df_method = "kenward")
+# Parameter    | Coefficient |   SE |       95% CI |    t |      p
+# ----------------------------------------------------------------
+# (Intercept)  |        2.00 | 0.57 | [0.08, 3.92] | 3.53 | 0.046 
+# Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | < .001
 ```
+
+### Structural Models
 
 Besides many types of regression models and packages, it also works for
 other types of models, such as [**structural
@@ -153,10 +159,16 @@ model_parameters(model)
 
 <img src='man/figures/figure2.png' align="center" />
 
+[`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html)
+can help you quickly select and retain the most relevant predictors
+using methods tailored for the model type.
+
 ``` r
 library(dplyr)
 
-lm(disp ~ ., data = mtcars) %>% parameters_selection() %>% model_parameters()
+lm(disp ~ ., data = mtcars) %>% 
+  select_parameters() %>% 
+  model_parameters()
 # Parameter   | Coefficient |     SE |            95% CI |     t | df |      p
 # ----------------------------------------------------------------------------
 # (Intercept) |      141.70 | 125.67 | [-116.62, 400.02] |  1.13 | 26 | 0.270 
@@ -167,33 +179,29 @@ lm(disp ~ ., data = mtcars) %>% parameters_selection() %>% model_parameters()
 # carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | 26 | < .001
 ```
 
-The
-[`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html)
-can also help you quickly select and retain the most relevant predictors
-using methods tailored for the model type. This function also works for
-mixed or Bayesian models:
+This function also works for mixed or Bayesian models:
 
 ``` r
 library(rstanarm)
 
-model <- stan_glm(mpg ~ ., data = mtcars) %>% parameters_selection() %>% 
-    model_parameters()
+stan_glm(mpg ~ ., data = mtcars, refresh = 0) %>% 
+  select_parameters() %>% 
+  model_parameters()
+# Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior
+# -----------------------------------------------------------------------------------------------
+# (Intercept) |  19.90 | [-0.59, 44.44] | 92.62% |     1.23% | 1.000 | 2348 | Normal (0 +- 60.27)
+# wt          |  -3.98 | [-5.92, -1.88] | 99.75% |     0.32% | 1.001 | 2159 | Normal (0 +- 15.40)
+# cyl         |  -0.48 | [-1.91,  0.76] | 71.43% |    46.02% | 1.000 | 2651 |  Normal (0 +- 8.44)
+# hp          |  -0.02 | [-0.04,  0.01] | 89.22% |      100% | 1.000 | 2766 |  Normal (0 +- 0.22)
+# am          |   2.93 | [-0.01,  5.77] | 94.90% |     7.42% | 1.000 | 2813 | Normal (0 +- 15.07)
+# qsec        |   0.80 | [-0.18,  1.73] | 91.33% |    35.23% | 1.000 | 2273 |  Normal (0 +- 8.43)
+# disp        |   0.01 | [-0.01,  0.03] | 87.08% |      100% | 1.002 | 2601 |  Normal (0 +- 0.12)
 ```
-
-    # Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior
-    # -----------------------------------------------------------------------------------------------
-    # (Intercept) |  19.82 | [-4.53, 40.21] | 91.65% |     1.25% | 1.002 | 1068 | Normal (0 +- 60.27)
-    # wt          |  -3.99 | [-6.00, -1.95] |   100% |     0.55% | 1.003 | 1353 | Normal (0 +- 15.40)
-    # cyl         |  -0.48 | [-1.80,  0.83] | 73.50% |    46.35% | 1.003 | 1220 |  Normal (0 +- 8.44)
-    # hp          |  -0.02 | [-0.04,  0.00] | 89.90% |      100% | 1.001 | 1604 |  Normal (0 +- 0.22)
-    # am          |   2.94 | [-0.08,  5.76] | 94.90% |     7.40% | 1.000 | 1253 | Normal (0 +- 15.07)
-    # qsec        |   0.82 | [-0.17,  1.77] | 91.00% |    33.95% | 1.003 | 1096 |  Normal (0 +- 8.43)
-    # disp        |   0.01 | [ 0.00,  0.03] | 86.90% |      100% | 1.003 | 1453 |  Normal (0 +- 0.12)
 
 ## Miscellaneous
 
-This packages also contains a lot of [**other useful
-functions**](https://easystats.github.io/parameters/reference/index.html):
+This packages also contains a lot of [other useful
+functions](https://easystats.github.io/parameters/reference/index.html):
 
 ### Describe a Distribution
 
@@ -202,10 +210,26 @@ x <- rnorm(300)
 describe_distribution(x)
 ```
 
-``` r
-knitr::kable(describe_distribution(rnorm(300)), digits = 1)
-```
+|  Mean | SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
+| ----: | -: | --: | --: | -------: | -------: | --: | ---------: |
+| \-0.1 |  1 | \-3 |   3 |        0 |    \-0.3 | 300 |          0 |
 
-| Mean | SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
-| ---: | -: | --: | --: | -------: | -------: | --: | ---------: |
-|    0 |  1 | \-2 |   4 |      0.1 |      0.1 | 300 |          0 |
+### Citation
+
+In order to cite this package, please use the following citation:
+
+  - Makowski D, Ben-Shachar M, Lüdecke D (2019). “Describe and
+    understand your model’s parameters.” CRAN. R package,
+    <https://github.com/easystats/parameters>.
+
+Corresponding BibTeX entry:
+
+    @Article{,
+      title = {Describe and understand your model's parameters},
+      author = {Dominique Makowski and Mattan S. Ben-Shachar and Daniel
+      Lüdecke},
+      journal = {CRAN},
+      year = {2019},
+      note = {R package},
+      url = {https://github.com/easystats/parameters},
+    }

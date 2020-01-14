@@ -4,10 +4,18 @@
 \alias{model_parameters.BFBayesFactor}
 \title{BayesFactor objects Parameters}
 \usage{
-\method{model_parameters}{BFBayesFactor}(model, centrality = "median",
-  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
-  "rope"), rope_range = "default", rope_ci = 0.89, priors = TRUE,
-  ...)
+\method{model_parameters}{BFBayesFactor}(
+  model,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.89,
+  ci_method = "hdi",
+  test = c("pd", "rope"),
+  rope_range = "default",
+  rope_ci = 0.89,
+  priors = TRUE,
+  ...
+)
 }
 \arguments{
 \item{model}{Object of class \code{BFBayesFactor}.}
@@ -20,8 +28,9 @@
 to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}) or \code{"ETI"}
-(see \code{\link[bayestestR:eti]{eti}}).}
+\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
+(see \code{\link[bayestestR:eti]{eti}}) or \code{"SI"}
+(see \code{\link[bayestestR:si]{si}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
@@ -43,7 +52,7 @@ proportion of HDI, to use for the percentage in ROPE.}
 \item{...}{Additional arguments to be passed to or from methods.}
 }
 \value{
-A data.frame of indices related to the model's parameters.
+A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters of BayesFactor objects.

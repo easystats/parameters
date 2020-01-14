@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
       </span>
     </div>
 
@@ -99,17 +99,8 @@
 <li>
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Engineering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/bootstrapping.html">Bootstrapped parameters</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -149,13 +140,94 @@
       
     </div>
 
-    <div id="parameters-030" class="section level1">
+    <div id="parameters-040" class="section level1">
 <h1 class="page-header">
-<a href="#parameters-030" class="anchor"></a>parameters 0.3.0<small> Unreleased </small>
+<a href="#parameters-040" class="anchor"></a>parameters 0.4.0<small> Unreleased </small>
 </h1>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>The column for degrees of freedom in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> was renamed from <code>df_residuals</code> to <code>df_error</code> for regression model objects, because these degrees of freedom actually were not always referring to <em>residuals</em> - we consider <code>df_error</code> as a more generic name.</li>
+<li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for standardized parameters (i.e. <code>standardize</code> is not <code>NULL</code>) only returns standardized coefficients, CI and standard errors (and not both, unstandardized and standardized values).</li>
+<li>
+<code>format_ci()</code> was removed and re-implemented in the <strong>insight</strong> package.</li>
+</ul>
+</div>
+<div id="renaming" class="section level2">
+<h2 class="hasAnchor">
+<a href="#renaming" class="anchor"></a>Renaming</h2>
+<ul>
+<li>
+<code><a href="../reference/bootstrap_model.html">model_bootstrap()</a></code> was renamed to <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>. <code><a href="../reference/bootstrap_model.html">model_bootstrap()</a></code> will remain as alias.</li>
+<li>
+<code><a href="../reference/bootstrap_parameters.html">parameters_bootstrap()</a></code> was renamed to <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>. <code><a href="../reference/bootstrap_parameters.html">parameters_bootstrap()</a></code> will remain as alias.</li>
+<li>
+<code><a href="../reference/simulate_model.html">model_simulate()</a></code> was renamed to <code><a href="../reference/simulate_model.html">simulate_model()</a></code>. <code><a href="../reference/simulate_model.html">model_simulate()</a></code> will remain as alias.</li>
+<li>
+<code><a href="../reference/simulate_parameters.html">parameters_simulate()</a></code> was renamed to <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code>. <code><a href="../reference/simulate_parameters.html">parameters_simulate()</a></code> will remain as alias.</li>
+<li>
+<code><a href="../reference/select_parameters.html">parameters_selection()</a></code> was renamed to <code><a href="../reference/select_parameters.html">select_parameters()</a></code>. <code><a href="../reference/select_parameters.html">parameters_selection()</a></code> will remain as alias.</li>
+<li>
+<code><a href="../reference/reduce_parameters.html">parameters_reduction()</a></code> was renamed to <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>. <code><a href="../reference/reduce_parameters.html">parameters_reduction()</a></code> will remain as alias.</li>
+</ul>
+</div>
+<div id="new-supported-models" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-supported-models" class="anchor"></a>New supported models</h2>
+<ul>
+<li>Added support for <code>vgam</code> (<em>VGAM</em>), <code>cgam</code>, <code>cgamm</code> (<em>cgam</em>), <code>complmrob</code> (<em>complmrob</em>), <code>cpglm</code>, <code>cpglmm</code> (<em>cplm</em>), <code>fixest</code> (<em>fixest</em>), <code>feglm</code> (<em>alpaca</em>), <code>glmx</code> (<em>glmx</em>), <code>glmmadmb</code> (<em>glmmADMB</em>), <code>mcmc</code> (<em>coda</em>), <code>mixor</code> (<em>mixor</em>).</li>
+<li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> now supports <code>blavaan</code> models (<em>blavaan</em>).</li>
+</ul>
+</div>
+<div id="general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general" class="anchor"></a>General</h2>
+<ul>
+<li>Better handling of <code>clm2</code>, <code>clmm2</code> and <code>stanmvreg</code> models.</li>
+</ul>
+</div>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/p_value_satterthwaite.html">dof_satterthwaite()</a></code> and <code><a href="../reference/p_value_ml1.html">dof_ml1()</a></code> to compute degrees of freedom based on different approximation methods (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for these methods were added as well).</li>
+<li>
+<code><a href="../reference/rescale_weights.html">rescale_weights()</a></code> to rescale design (probability or sampling) weights for use in multilevel-models without survey-design.</li>
+</ul>
+</div>
+<div id="changes-to-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<ul>
+<li>Robust estimation (like <code><a href="../reference/standard_error.html">standard_error_robust()</a></code> or <code><a href="../reference/ci.merMod.html">ci_robust()</a></code>) can now also compute cluster-robust variance-covariance matrices, using the <em>clubSandwich</em> package.</li>
+<li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>robust</code>-argument, to compute robust standard errors, and confidence intervals and p-values based on robust standard errors.</li>
+<li>Arguments <code>p_method</code> and <code>ci_method</code> in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> were replaced by a single argument <code>df_method</code>.</li>
+<li>
+<code><a href="../reference/model_parameters.principal.html">model_parameters.principal()</a></code> includes a <code>MSA</code> column for objects from <code><a href="../reference/principal_components.html">principal_components()</a></code>.</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with non-typical ordering of coefficients for mixed models.</li>
+<li>Fixed issues with models of class <code>rlmerMod</code>.</li>
+<li>Fixed minor issues <code><a href="../reference/model_parameters.BFBayesFactor.html">model_parameters.BFBayesFactor()</a></code>.</li>
+</ul>
+</div>
+</div>
+    <div id="parameters-030" class="section level1">
+<h1 class="page-header">
+<a href="#parameters-030" class="anchor"></a>parameters 0.3.0<small> 2019-11-20 </small>
+</h1>
+<div id="breaking-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <p>Parts of the <strong>parameter</strong> package are restructured and functions focussing on anything related to effect sizes are now re-implemented in a new package, <a href="https://github.com/easystats/effectsize"><strong>effectsize</strong></a>. In details, following breaking changes have been made:</p>
 <ul>
 <li>Functions for computing effect sizes (<code>cohens_f()</code>, <code>eta_squared()</code> etc.) have been removed and are now re-implemented in the <strong>effectsize</strong>-package.</li>
@@ -164,9 +236,9 @@
 <code>standardize()</code> and <code>normalize()</code> (and hence, also <code>parameters_standardize()</code>) have been removed ;-( and are now re-implemented in the <strong>effectsize</strong>-package.</li>
 </ul>
 </div>
-<div id="new-supported-models" class="section level2">
+<div id="new-supported-models-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-supported-models" class="anchor"></a>New supported models</h2>
+<a href="#new-supported-models-1" class="anchor"></a>New supported models</h2>
 <ul>
 <li>Added support for <code>aareg</code> (<em>survival</em>), <code>bracl</code>, <code>brmultinom</code> (<em>brglm2</em>), <code>rma</code> (<em>metafor</em>) and <code>multinom</code> (<em>nnet</em>) to various functions.</li>
 <li>
@@ -175,9 +247,9 @@
 <code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support <em>flexsurvreg</em> models (from package <strong>flexsurv</strong>).</li>
 </ul>
 </div>
-<div id="new-functions" class="section level2">
+<div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions" class="anchor"></a>New functions</h2>
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/degrees_of_freedom.html">degrees_of_freedom()</a></code> to get DoFs.</li>
@@ -200,9 +272,9 @@
 <li>Add <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code>-methods for <code><a href="../reference/principal_components.html">principal_components()</a></code>.</li>
 </ul>
 </div>
-<div id="changes-to-functions" class="section level2">
+<div id="changes-to-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>Added indices of model fit to <code><a href="../reference/n_factors.html">n_factors()</a></code> (<a href="https://doi.org/10.1177/0013164419865769">Finch, 2019</a>)</li>
 <li>
@@ -216,14 +288,16 @@
 <li>Added further method (gap-statistic) to <code><a href="../reference/n_clusters.html">n_clusters()</a></code>.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Interaction terms in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
 <li>Fixed bug in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when a parameter occured multiple times in a model.</li>
 <li>Fixed bug with <em>multinom</em>-support.</li>
 <li>Fixed bug in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for non-estimable GLMs.</li>
+<li>Fixed bug in <code><a href="../reference/p_value.html">p_value()</a></code> for <em>MASS::rlm</em> models.</li>
+<li>Fixed bug in <code><a href="../reference/reshape_loadings.html">reshape_loadings()</a></code> when converting loadings from wide to long and back again.</li>
 </ul>
 </div>
 </div>
@@ -231,17 +305,17 @@
 <h1 class="page-header">
 <a href="#parameters-020" class="anchor"></a>parameters 0.2.0<small> 2019-09-26 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code>format_value()</code> and <code>format_table()</code> have been removed and are now re-implemented in the <strong>insight</strong> package.</li>
 </ul>
 </div>
-<div id="general" class="section level2">
+<div id="general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general" class="anchor"></a>General</h2>
+<a href="#general-1" class="anchor"></a>General</h2>
 <ul>
 <li>
 <code><a href="../reference/model_parameters.html">parameters()</a></code> is an alias for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
@@ -249,12 +323,12 @@
 <code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code>standardize()</code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support many more model objects, including mixed models from packages <em>nlme</em>, <em>glmmTMB</em> or <em>GLMMadaptive</em>, zero-inflated models from package <em>pscl</em> or other modelling packages. Along with these changes, functions for specific model objects with zero-inflated component get a <code>component</code>-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.</li>
 </ul>
 </div>
-<div id="new-functions-1" class="section level2">
+<div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-1" class="anchor"></a>New functions</h2>
+<a href="#new-functions-2" class="anchor"></a>New functions</h2>
 <ul>
 <li>
-<code><a href="../reference/parameters_simulate.html">parameters_simulate()</a></code> and <code><a href="../reference/model_simulate.html">model_simulate()</a></code>, as computational faster alternatives to <code><a href="../reference/parameters_bootstrap.html">parameters_bootstrap()</a></code> and <code><a href="../reference/model_bootstrap.html">model_bootstrap()</a></code>.</li>
+<code><a href="../reference/simulate_parameters.html">parameters_simulate()</a></code> and <code><a href="../reference/simulate_model.html">model_simulate()</a></code>, as computational faster alternatives to <code><a href="../reference/bootstrap_parameters.html">parameters_bootstrap()</a></code> and <code><a href="../reference/bootstrap_model.html">model_bootstrap()</a></code>.</li>
 <li>
 <code><a href="../reference/data_partition.html">data_partition()</a></code> to partition data into a test and a training set.</li>
 <li>
@@ -263,14 +337,14 @@
 <code><a href="../reference/p_value_kenward.html">se_kenward()</a></code> to calculate approximated standard errors for model parameters, based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
-<div id="changes-to-functions-1" class="section level2">
+<div id="changes-to-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-2" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
-<code>format_value()</code> and <code><a href="../reference/format_ci.html">format_ci()</a></code> get a <code>width</code>-argument to set the minimum length of the returned formatted string.</li>
+<code>format_value()</code> and <code>format_ci()</code> get a <code>width</code>-argument to set the minimum length of the returned formatted string.</li>
 <li>
-<code><a href="../reference/format_ci.html">format_ci()</a></code> gets a <code>bracket</code>-argument include or remove brackets around the ci-values.</li>
+<code>format_ci()</code> gets a <code>bracket</code>-argument include or remove brackets around the ci-values.</li>
 <li>
 <code>eta_squared()</code>, <code>omega_squared()</code>, <code>epsilon_squared()</code> and <code>cohens_f()</code> now support more model objects.</li>
 <li>The <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now better aligns confidence intervals and p-values.</li>
@@ -279,9 +353,9 @@
 <li>The <code>method</code>-argument for <code><a href="../reference/ci.merMod.html">ci.merMod()</a></code> can now also be <code>"kenward"</code> to compute confidence intervals with degrees of freedom based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue with wrong computation of wald-approximated confidence intervals.</li>
 <li>Fixed issue with wrong computation of degrees of freedom for <code><a href="../reference/p_value_kenward.html">p_value_kenward()</a></code>.</li>
@@ -304,6 +378,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#parameters-040">0.4.0</a></li>
         <li><a href="#parameters-030">0.3.0</a></li>
         <li><a href="#parameters-020">0.2.0</a></li>
         <li><a href="#parameters-010">0.1.0</a></li>
@@ -316,7 +391,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
 </div>
 
 <div class="pkgdown">

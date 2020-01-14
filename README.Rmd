@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   dpi=300,
   tidy.opts=list(width.cutoff=60),
-  tidy=TRUE,
+  # tidy=TRUE,
   fig.path = "man/figures/"
 )
 knitr::opts_chunk$set(comment="#")
@@ -46,8 +46,7 @@ set.seed(333)
 Run the following:
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-install.packages("devtools")
-devtools::install_github("easystats/parameters")
+install.packages("parameters")
 ```
 ```{r message=FALSE, warning=FALSE}
 library("parameters")
@@ -61,14 +60,14 @@ library("parameters")
 [![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
 [![Features](https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3)](https://easystats.github.io/parameters/reference/index.html)
 
-Click on the buttons above to access the package [**documentation**](https://easystats.github.io/parameters/) and the [**easystats blog**](https://easystats.github.io/blog/posts/), and check-out these vignettes:
+Click on the buttons above to access the package [documentation](https://easystats.github.io/parameters/) and the [easystats blog](https://easystats.github.io/blog/posts/), and check-out these vignettes:
 
 
-- [**Parameters description**](https://easystats.github.io/parameters/articles/model_parameters.html)
-- [**Bootstrapped parameters**](https://easystats.github.io/parameters/articles/bootstrapping.html)
-- [**Parameters selection**](https://easystats.github.io/parameters/articles/parameters_selection.html)
-- [**Feature reduction (PCA, cMDS, ICA...)**](https://easystats.github.io/parameters/articles/parameters_reduction.html)
-- [**Structural models (EFA, CFA, SEM...)**](https://easystats.github.io/parameters/articles/efa_cfa.html)
+- [Parameters description](https://easystats.github.io/parameters/articles/model_parameters.html)
+- [Bootstrapped parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
+- [Parameters selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
+- [Feature reduction (PCA, cMDS, ICA...)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
+- [Structural models (EFA, CFA, SEM...)](https://easystats.github.io/parameters/articles/efa_cfa.html)
 
 # Features
  
@@ -102,10 +101,14 @@ library(lme4)
 
 model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 
-# model parameters with p-values based on Kenward-Roger approximation
-model_parameters(model, p_method = "kenward", ci_method = "kenward")
+# model parameters with CI, df and p-values based on Wald approximation
+model_parameters(model)
+
+# model parameters with CI, df and p-values based on Kenward-Roger approximation
+model_parameters(model, df_method = "kenward")
 ```
 
+### Structural Models
 
 Besides many types of regression models and packages, it also works for other types of models, such as [**structural models**](https://easystats.github.io/parameters/articles/efa_cfa.html) (EFA, CFA, SEM...).
 
@@ -122,37 +125,29 @@ model_parameters(model)
 
 <img src='man/figures/figure2.png' align="center" />
  
+[`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can help you quickly select and retain the most relevant predictors using methods tailored for the model type.
 
 ```{r, warning=FALSE, message=FALSE}
 library(dplyr)
 
 lm(disp ~ ., data = mtcars) %>% 
-  parameters_selection() %>% 
+  select_parameters() %>% 
   model_parameters()
 ```
 
-The [`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can also help you quickly select and retain the most relevant predictors using methods tailored for the model type. This function also works for mixed or Bayesian models:
+This function also works for mixed or Bayesian models:
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(rstanarm)
 
-model <- stan_glm(mpg ~ ., data = mtcars) %>% 
-  parameters_selection() %>% 
+stan_glm(mpg ~ ., data = mtcars, refresh = 0) %>% 
+  select_parameters() %>% 
   model_parameters()
 ```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-library(rstanarm)
-
-model <- stan_glm(mpg ~ ., data = mtcars, refresh = 0, chains = 2)
-  parameters_selection(model) %>% 
-  model_parameters()
-```
-
-
 
 ## Miscellaneous
 
-This packages also contains a lot of [**other useful functions**](https://easystats.github.io/parameters/reference/index.html):
+This packages also contains a lot of [other useful functions](https://easystats.github.io/parameters/reference/index.html):
 
 ### Describe a Distribution
 
@@ -160,9 +155,26 @@ This packages also contains a lot of [**other useful functions**](https://easyst
 x <- rnorm(300)
 describe_distribution(x)
 ```
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 knitr::kable(describe_distribution(rnorm(300)), digits = 1)
 ```
 
+### Citation
 
+In order to cite this package, please use the following citation:
 
+  * Makowski D, Ben-Shachar M, Lüdecke D (2019). "Describe and understand your model's parameters." CRAN. R package, https://github.com/easystats/parameters.
+
+Corresponding BibTeX entry:
+
+```
+@Article{,
+  title = {Describe and understand your model's parameters},
+  author = {Dominique Makowski and Mattan S. Ben-Shachar and Daniel
+  Lüdecke},
+  journal = {CRAN},
+  year = {2019},
+  note = {R package},
+  url = {https://github.com/easystats/parameters},
+}
+```

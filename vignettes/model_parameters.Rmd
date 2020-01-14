@@ -1,5 +1,5 @@
 ---
-title: "Parameters Descritpion"
+title: "Parameters Description"
 output: 
   github_document:
     toc: true
@@ -11,7 +11,7 @@ output:
     fig_height: 6
 tags: [r, parameters, variable selection, feature selection]
 vignette: >
-  %\VignetteIndexEntry{Parameters Descritpion}
+  %\VignetteIndexEntry{Parameters Description}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -54,12 +54,7 @@ cor.test(iris$Sepal.Length, iris$Sepal.Width) %>%
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-t.test(mpg ~ vs, data=mtcars) %>% 
-  parameters()
-```
-
-```{r, warning=FALSE, message=FALSE}
-t.test(mpg ~ vs, data=mtcars) %>% 
+t.test(mpg ~ vs, data = mtcars) %>% 
   parameters()
 ```
 
@@ -74,13 +69,13 @@ BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width) %>%
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-BayesFactor::ttestBF(formula = mpg ~ vs, data=mtcars) %>% 
+BayesFactor::ttestBF(formula = mpg ~ vs, data = mtcars) %>% 
   parameters()
 ```
 
 ## ANOVAs
 
-Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared()`, `epsilon_sqared()` or `omega_squared()` can be computed.
+Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared()`, `epsilon_sqared()` or `omega_squared()`, were moved to the [**effectsize**-package](https://easystats.github.io/effectsize/). However, **parameters** uses these function to compute such indices for parameters summaries.
 
 ### Simple
 
@@ -91,7 +86,7 @@ aov(Sepal.Length ~ Species, data = iris) %>%
 
 ### Repeated measures
 
-The function also works on repeated measures ANOVAs, whether computed from `aov()` or from a mixed model.
+`parameters()` (resp. its alias `model_parameters()`) also works on repeated measures ANOVAs, whether computed from `aov()` or from a mixed model.
 
 ```{r, warning=FALSE, message=FALSE}
 aov(mpg ~ am + Error(gear), data = mtcars) %>% 
@@ -101,13 +96,11 @@ aov(mpg ~ am + Error(gear), data = mtcars) %>%
 
 ## Regressions (GLMs, Mixed Models, GAMs, ...)
 
-This function was mainly built to work for regression models. It works for many types of models and packages, including mixed models and Bayesian models.
+`parameters()` (resp. its alias `model_parameters()`) was mainly built with regression models in mind. It works for many types of models and packages, including mixed models and Bayesian models.
 
 ### GLMs
 
 ```{r, warning=FALSE, message=FALSE}
-library(lme4)
-
 glm(vs ~ poly(mpg, 2) + cyl, data = mtcars) %>% 
   parameters()
 ```
@@ -161,7 +154,7 @@ parameters(model, effects = "all", component = "all")
 
 ## Structural Models (PCA, EFA, CFA, SEM...)
 
-The `parameters` package extends the support to structural models.
+The **parameters** package extends the support to structural models.
 
 ### Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA) 
 
@@ -207,7 +200,7 @@ model_parameters(model)
 
 ## Meta-Analysis
 
-`parameters` also works with `rma`-objects from the *metafor*-package.
+`parameters()` also works for `rma`-objects from the **metafor** package.
 
 ```{r, warning=FALSE, message=FALSE}
 library(metafor)

@@ -4,19 +4,26 @@
 \alias{principal_components}
 \title{Principal Component Analysis (PCA)}
 \usage{
-principal_components(x, n = "auto", rotation = "none", sort = FALSE,
-  threshold = NULL, standardize = TRUE, ...)
+principal_components(
+  x,
+  n = "auto",
+  rotation = "none",
+  sort = FALSE,
+  threshold = NULL,
+  standardize = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A dataframe or a statistical model.}
 
-\item{n}{Number of components to extract. If \code{n = "all"} =, then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n = "auto"} (default) or \code{n = NULL}, the number of components is selected through \code{\link{n_factors}}. In \code{\link{parameters_reduction}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.}
+\item{n}{Number of components to extract. If \code{n="all"}, then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n="auto"} (default) or \code{n=NULL}, the number of components is selected through \code{\link{n_factors}}. In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.}
 
-\item{rotation}{If not "none", the PCA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, and \code{"cluster"}. See \code{\link[psych]{fa}} for details.}
+\item{rotation}{If not \code{"none"}, the PCA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, and \code{"cluster"}. See \code{\link[psych]{fa}} for details.}
 
 \item{sort}{Sort the loadings.}
 
-\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be "max", in which case it will only display the maximum loading per variable (the most simple structure).}
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).}
 
 \item{standardize}{A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).}
 
@@ -35,6 +42,21 @@ This function performs a principal component analysis (PCA) and returns the load
    has a complexity of 1 in that each item would only load on one factor,
    a solution with evenly distributed items has a complexity greater than 1
    (\cite{Hofman, 1978; Pettersson and Turkheimer, 2010}) .
+ }
+ \subsection{Uniqueness}{
+   Uniqueness represents the variance that is 'unique' to the variable and
+   not shared with other variables. It is equal to \code{1 – communality}
+   (variance that is shared with other variables). A uniqueness of \code{0.20}
+   suggests that 20\% or that variable's variance is not shared with other
+   variables in the overall factor model. The greater 'uniqueness' the lower
+   the relevance of the variable in the factor model.
+ }
+ \subsection{MSA}{
+   MSA represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy
+   (\cite{Kaiser and Rice, 1974}) for each item. It indicates whether there
+   is enough data for each factor give reliable results for the PCA. The
+   value should be > 0.6, and desirable values are > 0.8
+   (\cite{Tabachnick and Fidell, 2013}).
  }
  \subsection{PCA or FA?}{
  There is a simplified rule of thumb that may help do decide whether to run
@@ -67,7 +89,9 @@ principal_components(mtcars[, 1:4], n = "auto")
 }
 \references{
 \itemize{
+  \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and Psychological Measurement, 34(1):111–117
   \item Hofmann, R. (1978). Complexity and simplicity as objective indices descriptive of factor solutions. Multivariate Behavioral Research, 13:2, 247-250, \doi{10.1207/s15327906mbr1302_9}
   \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
+  \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate statistics (6th ed.). Boston: Pearson Education.
 }
 }
