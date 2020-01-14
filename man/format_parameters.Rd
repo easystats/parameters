@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_parameters.R
 \name{format_parameters}
 \alias{format_parameters}
-\title{Parameters Names Formatting}
+\title{Parameter names formatting}
 \usage{
 format_parameters(model)
 }
@@ -13,7 +13,7 @@ format_parameters(model)
 The formatted parameter names.
 }
 \description{
-Parameters Names Formatting
+Parameter names formatting
 }
 \examples{
 library(parameters)

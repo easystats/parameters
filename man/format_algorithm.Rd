@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_algorithm.R
 \name{format_algorithm}
 \alias{format_algorithm}
-\title{Model Algorithm Formatting}
+\title{Model Algorithm formatting}
 \usage{
 format_algorithm(model)
 }
@@ -10,7 +10,7 @@ format_algorithm(model)
 \item{model}{A statistical model.}
 }
 \description{
-Model Algorithm Formatting
+Model Algorithm formatting
 }
 \examples{
 model <- lm(Sepal.Length ~ Species, data = iris)

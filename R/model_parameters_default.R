@@ -1,4 +1,4 @@
-#' Parameters of (General) Linear Models
+#' Parameters from (General) Linear Models
 #'
 #' Extract and compute indices and measures to describe parameters of (general) linear models (GLMs).
 #'

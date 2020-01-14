@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_model.R
 \name{format_model}
 \alias{format_model}
-\title{Model Name Formatting}
+\title{Model Name formatting}
 \usage{
 format_model(model)
 }
@@ -10,7 +10,7 @@ format_model(model)
 \item{model}{A statistical model.}
 }
 \description{
-Model Name Formatting
+Model Name formatting
 }
 \examples{
 model <- lm(Sepal.Length ~ Species, data = iris)

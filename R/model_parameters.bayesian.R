@@ -1,4 +1,4 @@
-#' Bayesian Models Parameters
+#' Parameters from Bayesian Models
 #'
 #' Parameters of Bayesian models.
 #'
@@ -21,7 +21,7 @@
 #' model_parameters(model)
 #' }
 #'
-#' @return A data.frame of indices related to the model's parameters.
+#' @return A data frame of indices related to the model's parameters.
 #' @importFrom insight get_priors
 #' @inheritParams insight::get_parameters
 #' @export

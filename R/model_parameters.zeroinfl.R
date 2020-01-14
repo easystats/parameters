@@ -1,6 +1,6 @@
-#' Model Parameters for Zero-Inflated Models
+#' Model Parameters from Zero-Inflated Models
 #'
-#' Parameters of zero-inflated models.
+#' Parameters from zero-inflated models.
 #'
 #' @param model A model with zero-inflation component.
 #' @inheritParams model_parameters.default

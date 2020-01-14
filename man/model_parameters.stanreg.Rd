@@ -3,7 +3,7 @@
 \name{model_parameters.stanreg}
 \alias{model_parameters.stanreg}
 \alias{model_parameters.brmsfit}
-\title{Bayesian Models Parameters}
+\title{Parameters from Bayesian Models}
 \usage{
 \method{model_parameters}{stanreg}(
   model,
@@ -84,7 +84,7 @@ Only applies to mixed models. May be abbreviated.}
 \item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}) or \code{"all"}.}
 }
 \value{
-A data.frame of indices related to the model's parameters.
+A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters of Bayesian models.

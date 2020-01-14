@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.lavaan.R
 \name{model_parameters.lavaan}
 \alias{model_parameters.lavaan}
-\title{Format CFA/SEM from the (b)lavaan package}
+\title{Parameters from CFA/SEM models}
 \usage{
 \method{model_parameters}{lavaan}(
   model,

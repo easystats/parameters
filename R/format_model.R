@@ -1,4 +1,4 @@
-#' Model Name Formatting
+#' Model Name formatting
 #'
 #' @param model A statistical model.
 #'

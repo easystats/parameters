@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.zeroinfl.R
 \name{model_parameters.zeroinfl}
 \alias{model_parameters.zeroinfl}
-\title{Model Parameters for Zero-Inflated Models}
+\title{Model Parameters from Zero-Inflated Models}
 \usage{
 \method{model_parameters}{zeroinfl}(
   model,
@@ -39,7 +39,7 @@
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters of zero-inflated models.
+Parameters from zero-inflated models.
 }
 \examples{
 library(parameters)

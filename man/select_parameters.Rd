@@ -6,7 +6,7 @@
 \alias{select_parameters.lm}
 \alias{select_parameters.merMod}
 \alias{select_parameters.stanreg}
-\title{Parameters Selection}
+\title{Automated selection of model parameters}
 \usage{
 select_parameters(model, ...)
 

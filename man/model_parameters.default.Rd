@@ -5,7 +5,7 @@
 \alias{model_parameters.betareg}
 \alias{model_parameters.clm2}
 \alias{model_parameters.glmx}
-\title{Parameters of (General) Linear Models}
+\title{Parameters from (General) Linear Models}
 \usage{
 \method{model_parameters}{default}(
   model,

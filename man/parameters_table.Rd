@@ -2,7 +2,7 @@
 % Please edit documentation in R/parameters_table.R
 \name{parameters_table}
 \alias{parameters_table}
-\title{Parameters Table Formatting}
+\title{Parameter table formatting}
 \usage{
 parameters_table(x, pretty_names = TRUE, stars = FALSE, ...)
 }
@@ -19,7 +19,7 @@ parameters_table(x, pretty_names = TRUE, stars = FALSE, ...)
 A data.frame.
 }
 \description{
-Parameters Table Formatting
+Parameter table formatting
 }
 \examples{
 library(parameters)

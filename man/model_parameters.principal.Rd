@@ -5,7 +5,7 @@
 \alias{model_parameters.PCA}
 \alias{model_parameters.principal}
 \alias{model_parameters.omega}
-\title{Structural Models (PCA, EFA, ...)}
+\title{Parameters from Structural Models (PCA, EFA, ...)}
 \usage{
 \method{model_parameters}{PCA}(model, sort = FALSE, threshold = NULL, labels = NULL, ...)
 

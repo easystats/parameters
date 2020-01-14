@@ -2,7 +2,7 @@
 % Please edit documentation in R/n_factors.R
 \name{n_factors}
 \alias{n_factors}
-\title{Number of Components/Factors to Retain in Factor Analysis}
+\title{Number of components/factors to retain in PCA/FA}
 \usage{
 n_factors(
   x,

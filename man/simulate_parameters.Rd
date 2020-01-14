@@ -4,7 +4,7 @@
 \alias{simulate_parameters}
 \alias{parameters_simulate}
 \alias{simulate_parameters.default}
-\title{Parameters simulation}
+\title{Simulate Model Parameters}
 \usage{
 simulate_parameters(model, ...)
 

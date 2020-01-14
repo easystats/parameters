@@ -1,4 +1,4 @@
-#' Extract standard errors
+#' Standard Errors
 #'
 #' \code{standard_error()} attempts to return standard errors of model parameters, while \code{standard_error_robust()} attempts to return robust standard errors.
 #'

@@ -1,4 +1,4 @@
-#' Format CFA/SEM from the (b)lavaan package
+#' Parameters from CFA/SEM models
 #'
 #' Format CFA/SEM objects from the (b)lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).
 #'

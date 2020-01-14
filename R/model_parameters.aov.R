@@ -1,6 +1,6 @@
-#' ANOVAs Parameters
+#' Parameters from ANOVAs
 #'
-#' Parameters of ANOVAs.
+#' Parameters from ANOVAs.
 #'
 #' @param model Object of class \link{aov}, \link{anova} or \code{aovlist}.
 #' @param omega_squared Compute omega squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.

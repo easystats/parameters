@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.BFBayesFactor.R
 \name{model_parameters.BFBayesFactor}
 \alias{model_parameters.BFBayesFactor}
-\title{BayesFactor objects Parameters}
+\title{Parameters from BayesFactor objects}
 \usage{
 \method{model_parameters}{BFBayesFactor}(
   model,

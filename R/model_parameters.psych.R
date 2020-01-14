@@ -1,4 +1,4 @@
-#' Structural Models (PCA, EFA, ...)
+#' Parameters from Structural Models (PCA, EFA, ...)
 #'
 #' Format structural models from the \pkg{psych} or \pkg{FactoMineR} packages.
 #'

@@ -1,4 +1,4 @@
-#' Parameters Selection
+#' Automated selection of model parameters
 #'
 #' This function performs an automated selection of the 'best' parameters, updating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
 #'

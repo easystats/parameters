@@ -2,7 +2,7 @@
 % Please edit documentation in R/describe_distribution.R
 \name{describe_distribution}
 \alias{describe_distribution}
-\title{Describe a Distribution}
+\title{Describe a distribution}
 \usage{
 describe_distribution(
   x,

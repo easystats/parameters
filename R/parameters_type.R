@@ -1,4 +1,4 @@
-#' Type of Model Parameters
+#' Type of model parameters
 #'
 #' @param model A statistical model.
 #' @param ... Arguments passed to or from other methods.

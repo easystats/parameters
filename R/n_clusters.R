@@ -1,4 +1,4 @@
-#' Number of Clusters to Extract
+#' Number of clusters to extract
 #'
 #' This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.
 #'

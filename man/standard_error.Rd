@@ -10,7 +10,7 @@
 \alias{standard_error.MixMod}
 \alias{standard_error.mixor}
 \alias{standard_error.clm2}
-\title{Extract standard errors}
+\title{Standard Errors}
 \usage{
 standard_error_robust(
   model,

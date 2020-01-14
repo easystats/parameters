@@ -1,4 +1,4 @@
-#' Format PCA/FA from the psych package
+#' Parameters from PCA/FA
 #'
 #' Format PCA/FA objects from the psych package (Revelle, 2016).
 #'
@@ -20,7 +20,7 @@
 #' efa_to_cfa(results)
 #' }
 #'
-#' @return A data.frame of loadings.
+#' @return A data frame of loadings.
 #'
 #' @export
 model_parameters.befa <- function(model, sort = FALSE, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = NULL, ...) {

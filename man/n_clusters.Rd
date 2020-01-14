@@ -2,7 +2,7 @@
 % Please edit documentation in R/n_clusters.R
 \name{n_clusters}
 \alias{n_clusters}
-\title{Number of Clusters to Extract}
+\title{Number of clusters to extract}
 \usage{
 n_clusters(
   x,

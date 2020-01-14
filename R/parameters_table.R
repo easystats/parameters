@@ -1,4 +1,4 @@
-#' Parameters Table Formatting
+#' Parameter table formatting
 #'
 #' @param x A dataframe of model's parameters.
 #' @param pretty_names Pretty parameters' names.

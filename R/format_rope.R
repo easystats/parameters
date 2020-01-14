@@ -1,4 +1,4 @@
-#' Percentage in ROPE Formatting
+#' Percentage in ROPE formatting
 #'
 #' @param rope_percentage Value or vector of percentages in ROPE.
 #' @inheritParams format_p

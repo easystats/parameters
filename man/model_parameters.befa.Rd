@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.BayesFM.R
 \name{model_parameters.befa}
 \alias{model_parameters.befa}
-\title{Format PCA/FA from the psych package}
+\title{Parameters from PCA/FA}
 \usage{
 \method{model_parameters}{befa}(
   model,
@@ -42,7 +42,7 @@ included in the summary output.}
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame of loadings.
+A data frame of loadings.
 }
 \description{
 Format PCA/FA objects from the psych package (Revelle, 2016).

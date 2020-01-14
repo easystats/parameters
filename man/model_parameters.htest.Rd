@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.htest.R
 \name{model_parameters.htest}
 \alias{model_parameters.htest}
-\title{Correlations and t-test Parameters}
+\title{Parameters from Correlations and t-tests}
 \usage{
 \method{model_parameters}{htest}(model, bootstrap = FALSE, ...)
 }
@@ -14,7 +14,7 @@
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame of indices related to the model's parameters.
+A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters of h-tests (correlations, t-tests).

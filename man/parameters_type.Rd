@@ -2,7 +2,7 @@
 % Please edit documentation in R/parameters_type.R
 \name{parameters_type}
 \alias{parameters_type}
-\title{Type of Model Parameters}
+\title{Type of model parameters}
 \usage{
 parameters_type(model, ...)
 }
@@ -15,7 +15,7 @@ parameters_type(model, ...)
 A data.frame.
 }
 \description{
-Type of Model Parameters
+Type of model parameters
 }
 \examples{
 library(parameters)

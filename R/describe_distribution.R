@@ -1,4 +1,4 @@
-#' Describe a Distribution
+#' Describe a distribution
 #'
 #'
 #' This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).

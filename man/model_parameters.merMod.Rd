@@ -5,7 +5,7 @@
 \alias{model_parameters.mixor}
 \alias{model_parameters.merMod}
 \alias{model_parameters.glmmTMB}
-\title{Mixed Model Parameters}
+\title{Parameters from Mixed Models}
 \usage{
 \method{model_parameters}{mixor}(
   model,
@@ -65,7 +65,7 @@
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters of (linear) mixed models.
+Parameters from (linear) mixed models.
 }
 \examples{
 library(parameters)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_pd.R
 \name{format_pd}
 \alias{format_pd}
-\title{Probability of direction (pd) Formatting}
+\title{Probability of direction (pd) formatting}
 \usage{
 format_pd(pd, stars = FALSE, stars_only = FALSE, name = "pd")
 }
@@ -19,7 +19,7 @@ format_pd(pd, stars = FALSE, stars_only = FALSE, name = "pd")
 A formatted string.
 }
 \description{
-Probability of direction (pd) Formatting
+Probability of direction (pd) formatting
 }
 \examples{
 format_pd(0.12)

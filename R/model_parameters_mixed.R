@@ -1,6 +1,6 @@
-#' Mixed Model Parameters
+#' Parameters from Mixed Models
 #'
-#' Parameters of (linear) mixed models.
+#' Parameters from (linear) mixed models.
 #'
 #' @param model A mixed model.
 #' @param effects Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.

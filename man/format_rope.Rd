@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_rope.R
 \name{format_rope}
 \alias{format_rope}
-\title{Percentage in ROPE Formatting}
+\title{Percentage in ROPE formatting}
 \usage{
 format_rope(rope_percentage, name = "in ROPE")
 }
@@ -15,7 +15,7 @@ format_rope(rope_percentage, name = "in ROPE")
 A formatted string.
 }
 \description{
-Percentage in ROPE Formatting
+Percentage in ROPE formatting
 }
 \examples{
 format_rope(c(0.02, 0.12, 0.357, 0))
