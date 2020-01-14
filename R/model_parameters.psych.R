@@ -60,10 +60,10 @@
 #' }
 #' @export
 model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  
+
   # n
   n <- model$factors
-  
+
   # Get summary
   variance <- as.data.frame(unclass(model$Vaccounted))
   data_summary <- .data_frame(
@@ -81,14 +81,14 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
     }
   }
   data_summary$Variance_Proportion <- data_summary$Variance / sum(data_summary$Variance)
-  
+
   # Get loadings
   loadings <- as.data.frame(unclass(model$loadings))
-  
+
   # Format
   loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
   row.names(loadings) <- NULL
-  
+
   # Labels
   if (!is.null(labels)) {
     loadings$Label <- labels
@@ -97,7 +97,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
   } else {
     loading_cols <- 2:(n + 1)
   }
-  
+
   # Add information
   loadings$Complexity <- model$complexity
   loadings$Uniqueness <- model$uniquenesses
@@ -112,27 +112,27 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
   attr(loadings, "n") <- n
   attr(loadings, "type") <- model$fn
   attr(loadings, "loadings_columns") <- loading_cols
-  
+
   # Sorting
   if (isTRUE(sort)) {
     loadings <- .sort_loadings(loadings)
   }
-  
+
   # Replace by NA all cells below threshold
   if (!is.null(threshold)) {
     loadings <- .filter_loadings(loadings, threshold = threshold)
   }
-  
+
   # Add some more attributes
   attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold, loadings_columns = loading_cols)
-  
+
   # add class-attribute for printing
   if (model$fn == "principal") {
     class(loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(loadings)))
   } else {
     class(loadings) <- unique(c("parameters_efa", "see_parameters_efa", class(loadings)))
   }
-  
+
   loadings
 }
 
@@ -150,42 +150,28 @@ model_parameters.fa <- model_parameters.principal
 #' @rdname model_parameters.principal
 #' @export
 model_parameters.omega <- function(model, ...) {
-  
+
   # Table of omega coefficients
   table_om <- model$omega.group
   colnames(table_om) <- c("Omega_Total", "Omega_Hierarchical", "Omega_Group")
   table_om$Composite <- row.names(table_om)
   row.names(table_om) <- NULL
   table_om <- table_om[c("Composite", names(table_om)[names(table_om) != "Composite"])]
-  
+
   # Get summary: Table of Variance
   table_var <- as.data.frame(unclass(model$omega.group))
   table_var$Composite <- rownames(model$omega.group)
-  table_var$Total <- table_var$total*100
-  table_var$General <- table_var$general*100
-  table_var$Group <- table_var$group*100
+  table_var$Total <- table_var$total * 100
+  table_var$General <- table_var$general * 100
+  table_var$Group <- table_var$group * 100
   table_var <- table_var[c("Composite", "Total", "General", "Group")]
-  
+
   # colnames(table_var) <- c("Composite", "Total Variance (%)", "Variance due to General Factor (%)", "Variance due to Group Factor (%)")
-  
+
   # cor.plot(psych::fa.sort(om), main = title)
-  
+
   out <- table_om
   attr(out, "summary") <- table_var
   class(out) <- c("parameters_omega", class(out))
   out
 }
-
-#
-#
-#   # TODO: TO BE SERVERLY IMPROVED
-#   # https://github.com/cran/psych/blob/master/R/print.psych.omega.R
-#
-#   # Get loadings
-#   loadings <- as.data.frame(unclass(model$schmid$sl))
-#
-#   # Format
-#   loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
-#   row.names(loadings) <- NULL
-#   loadings
-# }
