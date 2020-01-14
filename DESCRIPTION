@@ -73,6 +73,7 @@ Suggests:
     geepack,
     GLMMadaptive,
     glmmTMB,
+    GPArotation,
     knitr,
     lavaan,
     lme4,
