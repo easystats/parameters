@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Structural Models (PCA, EFA, ...) — model_parameters.PCA • parameters</title>
+<title>Parameters from Structural Models (PCA, EFA, ...) — model_parameters.PCA • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Structural Models (PCA, EFA, ...) — model_parameters.PCA" />
+<meta property="og:title" content="Parameters from Structural Models (PCA, EFA, ...) — model_parameters.PCA" />
 <meta property="og:description" content="Format structural models from the psych or FactoMineR packages." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -137,7 +137,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Structural Models (PCA, EFA, ...)</h1>
+    <h1>Parameters from Structural Models (PCA, EFA, ...)</h1>
     
     <div class="hidden name"><code>model_parameters.principal.Rd</code></div>
     </div>
@@ -153,7 +153,7 @@
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for omega</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -263,6 +263,20 @@
 #&gt; critical   |     6 |      |      | 0.48 |       1.46 |       0.67
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span><span></div><div class='input'><span class='co'># }</span>
+
+<span class='co'># Omega ---------</span>
+<span class='no'>omega</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/omega.html'>omega</a></span>(<span class='no'>mtcars</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='model_parameters.principal-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>params</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>omega</span>)
+<span class='no'>params</span></div><div class='output co'>#&gt; Composite | Omega (total) | Omega (hierarchical) | Omega (group)
+#&gt; ----------------------------------------------------------------
+#&gt; g         |          0.97 |                 0.57 |          0.26
+#&gt; F1*       |          0.90 |                 0.31 |          0.59
+#&gt; F2*       |          0.91 |                 0.69 |          0.22
+#&gt; F3*       |          0.87 |                 0.60 |          0.28</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; Composite | Total Variance (%) | Variance due to General Factor (%) | Variance due to Group Factor (%)
+#&gt; ------------------------------------------------------------------------------------------------------
+#&gt; g         |              97.28 |                              56.64 |                            26.42
+#&gt; F1*       |              90.12 |                              31.07 |                            59.05
+#&gt; F2*       |              91.37 |                              69.32 |                            22.04
+#&gt; F3*       |              87.36 |                              59.65 |                            27.71</div><div class='input'>
 
 <span class='co'># FactoMineR ---------</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Number of Clusters to Extract — n_clusters • parameters</title>
+<title>Number of clusters to extract — n_clusters • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Number of Clusters to Extract — n_clusters" />
+<meta property="og:title" content="Number of clusters to extract — n_clusters" />
 <meta property="og:description" content="This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -137,7 +137,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Number of Clusters to Extract</h1>
+    <h1>Number of clusters to extract</h1>
     
     <div class="hidden name"><code>n_clusters.Rd</code></div>
     </div>
@@ -150,7 +150,7 @@
   <span class='no'>x</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>package</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"NbClust"</span>, <span class='st'>"mclust"</span>, <span class='st'>"clValid"</span>, <span class='st'>"cluster"</span>),
+  <span class='kw'>package</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"NbClust"</span>, <span class='st'>"mclust"</span>, <span class='st'>"cluster"</span>),
   <span class='kw'>fast</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
 )</pre>
@@ -175,7 +175,7 @@ the number of clusters need numeric input only.</p></td>
     </tr>
     <tr>
       <th>package</th>
-      <td><p>These are the packages from which methods are used to determine the number of clusters. Can be <code>"all"</code> or a vector containing <code>"NbClust"</code>, <code>"mclust"</code>, <code>"clValid"</code> and <code>"cluster"</code>.</p></td>
+      <td><p>These are the packages from which methods are used to determine the number of clusters. Can be <code>"all"</code> or a vector containing <code>"NbClust"</code>, <code>"mclust"</code> and <code>"cluster"</code>.</p></td>
     </tr>
     <tr>
       <th>fast</th>
@@ -193,7 +193,7 @@ the number of clusters need numeric input only.</p></td>
 <span class='co'># \donttest{</span>
 <span class='fu'>n_clusters</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
-#&gt; </span><span>The choice of 2 clusters is supported by 15 (45.45%) methods out of 33 (CH, Cindex, DB, Silhouette, Beale, Ratkowsky, PtBiserial, McClain, Dunn, SDindex, Mixture, APN, ADM, Connectivity, Tibs2001SEmax).</div><div class='input'># }
+#&gt; </span><span>The choice of 2 clusters is supported by 12 (42.86%) methods out of 28 (CH, Cindex, DB, Silhouette, Beale, Ratkowsky, PtBiserial, McClain, Dunn, SDindex, Mixture, Tibs2001SEmax).</div><div class='input'># }
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
