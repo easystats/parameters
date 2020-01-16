@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: 
   c(
     person("Daniel", 
@@ -91,7 +91,6 @@ Suggests:
     panelr,
     pbkrtest,
     plm,
-    projpred,
     pscl,
     psych,
     randomForest,

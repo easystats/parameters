@@ -1,3 +1,9 @@
+# parameters 0.4.1
+
+## Bug fixes
+
+- Fix CRAN check issues, caused by removal of package 'projpred'.
+
 # parameters 0.4.0
 
 ## Breaking changes
