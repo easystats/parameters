@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -140,6 +140,18 @@
       
     </div>
 
+    <div id="parameters-041" class="section level1">
+<h1 class="page-header">
+<a href="#parameters-041" class="anchor"></a>parameters 0.4.1<small> Unreleased </small>
+</h1>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fix CRAN check issues, caused by removal of package ‘projpred’.</li>
+</ul>
+</div>
+</div>
     <div id="parameters-040" class="section level1">
 <h1 class="page-header">
 <a href="#parameters-040" class="anchor"></a>parameters 0.4.0<small> 2020-01-14 </small>
@@ -212,9 +224,9 @@
 <code><a href="../reference/model_parameters.principal.html">model_parameters.principal()</a></code> includes a <code>MSA</code> column for objects from <code><a href="../reference/principal_components.html">principal_components()</a></code>.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with non-typical ordering of coefficients for mixed models.</li>
 <li>Fixed issues with models of class <code>rlmerMod</code>.</li>
@@ -289,9 +301,9 @@
 <li>Added further method (gap-statistic) to <code><a href="../reference/n_clusters.html">n_clusters()</a></code>.</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Interaction terms in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
 <li>Fixed bug in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when a parameter occured multiple times in a model.</li>
@@ -354,9 +366,9 @@
 <li>The <code>method</code>-argument for <code><a href="../reference/ci.merMod.html">ci.merMod()</a></code> can now also be <code>"kenward"</code> to compute confidence intervals with degrees of freedom based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue with wrong computation of wald-approximated confidence intervals.</li>
 <li>Fixed issue with wrong computation of degrees of freedom for <code><a href="../reference/p_value_kenward.html">p_value_kenward()</a></code>.</li>
@@ -379,6 +391,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#parameters-041">0.4.1</a></li>
         <li><a href="#parameters-040">0.4.0</a></li>
         <li><a href="#parameters-030">0.3.0</a></li>
         <li><a href="#parameters-020">0.2.0</a></li>

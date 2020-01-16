@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A dataframe of model's parameters.</p></td>
+      <td><p>A data frame of model's parameters.</p></td>
     </tr>
     <tr>
       <th>pretty_names</th>
@@ -171,7 +171,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame.</p>
+    <p>A data frame.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
@@ -213,9 +213,9 @@
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.042 seconds (Warm-up)
-#&gt; Chain 1:                0.056 seconds (Sampling)
-#&gt; Chain 1:                0.098 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.041 seconds (Warm-up)
+#&gt; Chain 1:                0.064 seconds (Sampling)
+#&gt; Chain 1:                0.105 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -238,9 +238,9 @@
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.046 seconds (Warm-up)
+#&gt; Chain 2:  Elapsed Time: 0.045 seconds (Warm-up)
 #&gt; Chain 2:                0.064 seconds (Sampling)
-#&gt; Chain 2:                0.11 seconds (Total)
+#&gt; Chain 2:                0.109 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -288,9 +288,9 @@
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.038 seconds (Warm-up)
-#&gt; Chain 4:                0.061 seconds (Sampling)
-#&gt; Chain 4:                0.099 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.046 seconds (Warm-up)
+#&gt; Chain 4:                0.057 seconds (Sampling)
+#&gt; Chain 4:                0.103 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;              Parameter Median       69% CI       89% CI       95% CI   pd
 #&gt; 1          (Intercept)   5.01 [4.94, 5.09] [4.90, 5.13] [4.87, 5.16] 100%
 #&gt; 2 Species [versicolor]   0.92 [0.81, 1.02] [0.76, 1.09] [0.73, 1.14] 100%
