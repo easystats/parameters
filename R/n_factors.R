@@ -24,7 +24,7 @@
 #' n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
 #' }
 #'
-#' @return A data.frame.
+#' @return A data frame.
 #'
 #' @references \itemize{
 #'   \item Bartlett, M. S. (1950). Tests of significance in factor analysis. British Journal of statistical psychology, 3(2), 77-85.

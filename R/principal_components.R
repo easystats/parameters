@@ -60,7 +60,7 @@
 #' principal_components(mtcars[, 1:4], n = "auto")
 #' }
 #'
-#' @return A data.frame of loadings.
+#' @return A data frame of loadings.
 #' @references \itemize{
 #'   \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and Psychological Measurement, 34(1):111–117
 #'   \item Hofmann, R. (1978). Complexity and simplicity as objective indices descriptive of factor solutions. Multivariate Behavioral Research, 13:2, 247-250, \doi{10.1207/s15327906mbr1302_9}

@@ -1,6 +1,6 @@
 #' Parameter table formatting
 #'
-#' @param x A dataframe of model's parameters.
+#' @param x A data frame of model's parameters.
 #' @param pretty_names Pretty parameters' names.
 #' @inheritParams format_p
 #' @param ... Arguments passed to or from other methods.
@@ -16,7 +16,7 @@
 #' as.data.frame(parameters_table(x))
 #' }
 #'
-#' @return A data.frame.
+#' @return A data frame.
 #'
 #' @importFrom tools toTitleCase
 #' @importFrom insight format_value format_ci

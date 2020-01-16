@@ -33,7 +33,7 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 A data frame.
 }
 \description{
-Simulate draws from a statistical model to return a data.frame of estimates.
+Simulate draws from a statistical model to return a data frame of estimates.
 }
 \details{
 \subsection{Technical Details}{

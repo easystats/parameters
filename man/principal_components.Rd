@@ -30,7 +30,7 @@ principal_components(
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame of loadings.
+A data frame of loadings.
 }
 \description{
 This function performs a principal component analysis (PCA) and returns the loadings as a dataframe.

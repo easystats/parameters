@@ -1,6 +1,6 @@
 #' Simulated draws from model coefficients
 #'
-#' Simulate draws from a statistical model to return a data.frame of estimates.
+#' Simulate draws from a statistical model to return a data frame of estimates.
 #'
 #' @param model Statistical model (no Bayesian models).
 #' @param component Should all parameters, parameters for the conditional model,

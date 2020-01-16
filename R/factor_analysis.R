@@ -39,7 +39,7 @@
 #' factor_analysis(mtcars[, 1:4], n = "auto")
 #' }
 #'
-#' @return A data.frame of loadings.
+#' @return A data frame of loadings.
 #' @references \itemize{
 #'   \item Hofmann, R. (1978). Complexity and simplicity as objective indices descriptive of factor solutions. Multivariate Behavioral Research, 13:2, 247-250, \doi{10.1207/s15327906mbr1302_9}
 #'   \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
