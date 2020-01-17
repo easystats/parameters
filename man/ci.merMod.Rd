@@ -29,6 +29,7 @@
   x,
   ci = 0.95,
   component = c("all", "conditional", "zi", "zero_inflated"),
+  method = NULL,
   ...
 )
 
@@ -36,6 +37,7 @@
   x,
   ci = 0.95,
   component = c("all", "conditional", "zi", "zero_inflated"),
+  method = NULL,
   ...
 )
 
@@ -43,6 +45,7 @@
   x,
   ci = 0.95,
   component = c("all", "conditional", "zi", "zero_inflated"),
+  method = NULL,
   ...
 )
 

@@ -571,7 +571,12 @@ standard_error.coxme <- function(model, ...) {
 
 
 #' @export
-standard_error.coxph <- function(model, ...) {
+standard_error.coxph <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(standard_error_robust(model, ...))
+  }
+
   cs <- stats::coef(summary(model))
   se <- cs[, 3]
 
@@ -584,7 +589,12 @@ standard_error.coxph <- function(model, ...) {
 
 
 #' @export
-standard_error.survreg <- function(model, ...) {
+standard_error.survreg <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(standard_error_robust(model, ...))
+  }
+
   s <- summary(model)
   se <- s$table[, 2]
 
@@ -679,7 +689,12 @@ standard_error.brmultinom <- standard_error.multinom
 
 
 #' @export
-standard_error.polr <- function(model, ...) {
+standard_error.polr <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(standard_error_robust(model, ...))
+  }
+
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   se <- smry[[2]]
   names(se) <- rownames(smry)

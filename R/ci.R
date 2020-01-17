@@ -365,12 +365,14 @@ ci.bracl <- ci.multinom
 
 #' @rdname ci.merMod
 #' @export
-ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
   component <- match.arg(component)
+
   if (is.null(.check_component(x, component))) {
     return(NULL)
   }
-  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = robust)
 }
 
 #' @rdname ci.merMod

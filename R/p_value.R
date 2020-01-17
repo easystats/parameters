@@ -455,7 +455,12 @@ p_value.aovlist <- p_value.aov
 
 
 #' @export
-p_value.coxph <- function(model, ...) {
+p_value.coxph <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(p_value_robust(model, ...))
+  }
+
   cs <- stats::coef(summary(model))
   p <- cs[, 5]
 
@@ -494,7 +499,12 @@ p_value.coxme <- function(model, ...) {
 
 
 #' @export
-p_value.survreg <- function(model, ...) {
+p_value.survreg <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(p_value_robust(model, ...))
+  }
+
   s <- summary(model)
   p <- s$table[, "p"]
 
@@ -1074,7 +1084,12 @@ p_value.plm <- function(model, ...) {
 
 
 #' @export
-p_value.polr <- function(model, ...) {
+p_value.polr <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(standard_error_robust(model, ...))
+  }
+
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   tstat <- smry[[3]]
   p <- 2 * stats::pt(abs(tstat), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
