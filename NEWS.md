@@ -1,3 +1,9 @@
+# parameters 0.4.2
+
+## Bug fixes
+
+- Fixed issue in `model_parameters()` when `robust = TRUE`, which could sometimes mess up order of the statistic column.
+
 # parameters 0.4.1
 
 ## Bug fixes

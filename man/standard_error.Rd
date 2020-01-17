@@ -8,6 +8,7 @@
 \alias{standard_error.merMod}
 \alias{standard_error.glmmTMB}
 \alias{standard_error.MixMod}
+\alias{standard_error.zeroinfl}
 \alias{standard_error.mixor}
 \alias{standard_error.clm2}
 \title{Standard Errors}
@@ -40,6 +41,13 @@ standard_error(model, ...)
   model,
   effects = c("fixed", "random"),
   component = c("all", "conditional", "zi", "zero_inflated"),
+  ...
+)
+
+\method{standard_error}{zeroinfl}(
+  model,
+  component = c("all", "conditional", "zi", "zero_inflated"),
+  method = NULL,
   ...
 )
 

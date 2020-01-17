@@ -31,24 +31,31 @@ p_value <- function(model, ...) {
 
 
 #' @export
-p_value.default <- function(model, ...) {
-  # first, we need some special handling for Zelig-models
-  p <- tryCatch(
-    {
-      if (grepl("^Zelig-", class(model)[1])) {
-        if (!requireNamespace("Zelig", quietly = T)) {
-          stop("Package `Zelig` required. Please install", call. = F)
+p_value.default <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  p <- NULL
+
+  if (isTRUE(robust)) {
+    return(p_value_robust(model, ...))
+  } else {
+    # first, we need some special handling for Zelig-models
+    p <- tryCatch(
+      {
+        if (grepl("^Zelig-", class(model)[1])) {
+          if (!requireNamespace("Zelig", quietly = T)) {
+            stop("Package `Zelig` required. Please install", call. = F)
+          }
+          unlist(Zelig::get_pvalue(model))
+        } else {
+          # try to get p-value from classical summary for default models
+          .get_pval_from_summary(model)
         }
-        unlist(Zelig::get_pvalue(model))
-      } else {
-        # try to get p-value from classical summary for default models
-        .get_pval_from_summary(model)
+      },
+      error = function(e) {
+        NULL
       }
-    },
-    error = function(e) {
-      NULL
-    }
-  )
+    )
+  }
 
   # if all fails, try to get p-value from test-statistic
   if (is.null(p)) {
@@ -133,10 +140,15 @@ p_value.tobit <- function(model, ...) {
 
 
 #' @export
-p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, ...) {
   component <- match.arg(component)
   if (is.null(.check_component(model, component))) {
     return(NULL)
+  }
+
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(p_value_robust(model, ...))
   }
 
   cs <- .compact_list(stats::coef(summary(model)))

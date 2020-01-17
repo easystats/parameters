@@ -447,11 +447,17 @@ standard_error.MixMod <- function(model, effects = c("fixed", "random"), compone
 # Zero-inflated models --------------------------------------------------------
 
 
+#' @rdname standard_error
 #' @export
-standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, ...) {
   component <- match.arg(component)
   if (is.null(.check_component(model, component))) {
     return(NULL)
+  }
+
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(standard_error_robust(model, ...))
   }
 
   cs <- .compact_list(stats::coef(summary(model)))
