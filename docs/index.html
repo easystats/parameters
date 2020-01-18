@@ -68,9 +68,6 @@
   <a href="articles/model_parameters.html">Parameters Description</a>
 </li>
 <li>
-  <a href="articles/bootstrapping.html">Parameters Engineering</a>
-</li>
-<li>
   <a href="articles/parameters_selection.html">Parameters Selection</a>
 </li>
 <li class="dropdown">
@@ -141,7 +138,7 @@
 <ul>
 <li>The column names of the returned data frame are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (<strong>however</strong>, you can get standardized (generic) column names using <a href="https://easystats.github.io/parameters/reference/standardize_names.html"><code><a href="reference/standardize_names.html">standardize_names()</a></code></a>).</li>
 <li>It is able to compute or extract indices not available by default, such as <strong><em>p</em>-values</strong>, <strong>CIs</strong>, etc.</li>
-<li>It includes <strong>feature engineering</strong> capabilities, including parameters <a href="https://easystats.github.io/parameters/articles/bootstrapping.html"><strong>bootstrapping</strong></a>.</li>
+<li>It includes <strong>feature engineering</strong> capabilities, including parameters <a href="https://easystats.github.io/parameters/reference/bootstrap_parameters.html"><strong>bootstrapping</strong></a>.</li>
 </ul>
 <div id="classical-regression-models" class="section level3">
 <h3 class="hasAnchor">
@@ -162,15 +159,15 @@
 <a class="sourceLine" id="cb3-14" title="14"></a>
 <a class="sourceLine" id="cb3-15" title="15"><span class="co"># standardized parameters</span></a>
 <a class="sourceLine" id="cb3-16" title="16"><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"refit"</span>)</a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="co"># Parameter                           | Coefficient (std.) |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="co"># -------------------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="co"># (Intercept)                         |               3.59 | 1.30 | [ 1.03,  6.14] |  8.01 | 143 | &lt; .001</span></a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="co"># Petal.Length                        |               1.07 | 1.00 | [-0.89,  3.03] |  1.07 | 143 | 0.287 </span></a>
-<a class="sourceLine" id="cb3-21" title="21"><span class="co"># Species [versicolor]                |              -4.62 | 1.31 | [-7.19, -2.06] | -3.14 | 143 | 0.002 </span></a>
-<a class="sourceLine" id="cb3-22" title="22"><span class="co"># Species [virginica]                 |              -5.51 | 1.38 | [-8.20, -2.81] | -3.28 | 143 | 0.001 </span></a>
-<a class="sourceLine" id="cb3-23" title="23"><span class="co"># Petal.Width                         |               1.08 | 0.24 | [ 0.60,  1.56] |  4.41 | 143 | &lt; .001</span></a>
-<a class="sourceLine" id="cb3-24" title="24"><span class="co"># Petal.Length * Species [versicolor] |              -0.38 | 1.06 | [-2.46,  1.70] | -0.36 | 143 | 0.721 </span></a>
-<a class="sourceLine" id="cb3-25" title="25"><span class="co"># Petal.Length * Species [virginica]  |              -0.52 | 1.04 | [-2.56,  1.52] | -0.50 | 143 | 0.618</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-17" title="17"><span class="co"># Parameter                           | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="co"># ------------------------------------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="co"># (Intercept)                         |        3.59 | 1.30 | [ 1.01,  6.17] |  2.75 | 143 | 0.007 </span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="co"># Petal.Length                        |        1.07 | 1.00 | [-0.91,  3.04] |  1.07 | 143 | 0.287 </span></a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co"># Species [versicolor]                |       -4.62 | 1.31 | [-7.21, -2.03] | -3.53 | 143 | &lt; .001</span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="co"># Species [virginica]                 |       -5.51 | 1.38 | [-8.23, -2.79] | -4.00 | 143 | &lt; .001</span></a>
+<a class="sourceLine" id="cb3-23" title="23"><span class="co"># Petal.Width                         |        1.08 | 0.24 | [ 0.59,  1.56] |  4.41 | 143 | &lt; .001</span></a>
+<a class="sourceLine" id="cb3-24" title="24"><span class="co"># Petal.Length * Species [versicolor] |       -0.38 | 1.06 | [-2.48,  1.72] | -0.36 | 143 | 0.721 </span></a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="co"># Petal.Length * Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] | -0.50 | 143 | 0.618</span></a></code></pre></div>
 </div>
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
@@ -234,21 +231,6 @@
 <a class="sourceLine" id="cb6-11" title="11"><span class="co"># wt          |       80.45 |  12.22 | [  55.33, 105.57] |  6.58 | 26 | &lt; .001</span></a>
 <a class="sourceLine" id="cb6-12" title="12"><span class="co"># qsec        |      -14.68 |   6.14 | [ -27.31,  -2.05] | -2.39 | 26 | 0.024 </span></a>
 <a class="sourceLine" id="cb6-13" title="13"><span class="co"># carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | 26 | &lt; .001</span></a></code></pre></div>
-<p>This function also works for mixed or Bayesian models:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
-<a class="sourceLine" id="cb7-2" title="2"></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars, <span class="dt">refresh =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw"><a href="reference/select_parameters.html">select_parameters</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw"><a href="reference/model_parameters.html">model_parameters</a></span>()</a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co"># Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co"># -----------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co"># (Intercept) |  19.90 | [-0.59, 44.44] | 92.62% |     1.23% | 1.000 | 2348 | Normal (0 +- 60.27)</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co"># wt          |  -3.98 | [-5.92, -1.88] | 99.75% |     0.32% | 1.001 | 2159 | Normal (0 +- 15.40)</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co"># cyl         |  -0.48 | [-1.91,  0.76] | 71.43% |    46.02% | 1.000 | 2651 |  Normal (0 +- 8.44)</span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co"># hp          |  -0.02 | [-0.04,  0.01] | 89.22% |      100% | 1.000 | 2766 |  Normal (0 +- 0.22)</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co"># am          |   2.93 | [-0.01,  5.77] | 94.90% |     7.42% | 1.000 | 2813 | Normal (0 +- 15.07)</span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="co"># qsec        |   0.80 | [-0.18,  1.73] | 91.33% |    35.23% | 1.000 | 2273 |  Normal (0 +- 8.43)</span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="co"># disp        |   0.01 | [-0.01,  0.03] | 87.08% |      100% | 1.002 | 2601 |  Normal (0 +- 0.12)</span></a></code></pre></div>
 </div>
 <div id="miscellaneous" class="section level2">
 <h2 class="hasAnchor">
@@ -257,8 +239,8 @@
 <div id="describe-a-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#describe-a-distribution" class="anchor"></a>Describe a Distribution</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">300</span>)</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">300</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="reference/describe_distribution.html">describe_distribution</a></span>(x)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Mean</th>
@@ -271,12 +253,12 @@
 <th align="right">n_Missing</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="right">-0.1</td>
+<td align="right">0.1</td>
 <td align="right">1</td>
-<td align="right">-3</td>
+<td align="right">-2</td>
 <td align="right">3</td>
 <td align="right">0</td>
-<td align="right">-0.3</td>
+<td align="right">0</td>
 <td align="right">300</td>
 <td align="right">0</td>
 </tr></tbody>
@@ -290,15 +272,15 @@
 <li>Makowski D, Ben-Shachar M, Lüdecke D (2019). “Describe and understand your model’s parameters.” CRAN. R package, <a href="https://github.com/easystats/parameters" class="uri">https://github.com/easystats/parameters</a>.</li>
 </ul>
 <p>Corresponding BibTeX entry:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="op">@</span>Article{,</a>
-<a class="sourceLine" id="cb9-2" title="2">  title =<span class="st"> </span>{Describe and understand your model<span class="st">'s parameters},</span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="st">  author = {Dominique Makowski and Mattan S. Ben-Shachar and Daniel</span></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="st">  Lüdecke},</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="st">  journal = {CRAN},</span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="st">  year = {2019},</span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="st">  note = {R package},</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="st">  url = {https://github.com/easystats/parameters},</span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="st">}</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="op">@</span>Article{,</a>
+<a class="sourceLine" id="cb8-2" title="2">  title =<span class="st"> </span>{Describe and understand your model<span class="st">'s parameters},</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="st">  author = {Dominique Makowski and Mattan S. Ben-Shachar and Daniel</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="st">  Lüdecke},</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="st">  journal = {CRAN},</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="st">  year = {2019},</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="st">  note = {R package},</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="st">  url = {https://github.com/easystats/parameters},</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="st">}</span></a></code></pre></div>
 </div>
 </div>
 </div>

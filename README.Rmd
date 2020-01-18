@@ -79,7 +79,7 @@ The [`model_parameters()`](https://easystats.github.io/parameters/articles/model
 
 - The column names of the returned data frame are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using [`standardize_names()`](https://easystats.github.io/parameters/reference/standardize_names.html)).
 - It is able to compute or extract indices not available by default, such as ***p*-values**, **CIs**, etc.
-- It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html).
+- It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/reference/bootstrap_parameters.html).
 
 
 ### Classical Regression Models
@@ -131,16 +131,6 @@ model_parameters(model)
 library(dplyr)
 
 lm(disp ~ ., data = mtcars) %>% 
-  select_parameters() %>% 
-  model_parameters()
-```
-
-This function also works for mixed or Bayesian models:
-
-```{r, warning=FALSE, message=FALSE}
-library(rstanarm)
-
-stan_glm(mpg ~ ., data = mtcars, refresh = 0) %>% 
   select_parameters() %>% 
   model_parameters()
 ```

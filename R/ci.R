@@ -1,4 +1,4 @@
-#' Confidence Interval (CI)
+#' Confidence Intervals (CI)
 #'
 #' Compute confidence intervals (CI) for frequentist models.
 #'

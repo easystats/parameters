@@ -1,4 +1,4 @@
-#' Parameters of Generalized Additive (Mixed) Models
+#' Parameters from Generalized Additive (Mixed) Models
 #'
 #' Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s).
 #'

@@ -2,7 +2,6 @@ pandoc: 2.7.2
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
-  bootstrapping: bootstrapping.html
   efa_cfa: efa_cfa.html
   model_parameters: model_parameters.html
   parameters_reduction: parameters_reduction.html

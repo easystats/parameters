@@ -160,7 +160,7 @@
   # Std Coefficients for other methods than "refit"
   if (!is.null(standardize)) {
     # remove SE column
-    parameters[["Std. Error"]] <- NULL
+    parameters <- .remove_columns(parameters, c("SE", "Std. Error"))
     # standardize model parameters and calculate related CI and SE
     std_coef <- effectsize::standardize_parameters(model, method = standardize)
     parameters <- merge(parameters, std_coef, by = "Parameter")
@@ -219,9 +219,8 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("ml1", "satterthwaite", "kenward")) {
-    parameters[["Std. Error"]] <- NULL
-
+  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("ml1", "satterthwaite", "kenward", "kr")) {
+    parameters <- .remove_columns(parameters, c("SE", "Std. Error"))
     if (df_method == "kenward") {
       parameters <- merge(parameters, se_kenward(model), by = "Parameter")
     } else if (df_method == "satterthwaite") {
@@ -239,7 +238,7 @@
 
 
   # dof
-  if (!(df_method %in% c("ml1", "satterthwaite", "kenward")) && !"df" %in% names(parameters)) {
+  if (!(df_method %in% c("ml1", "satterthwaite", "kenward", "kr")) && !"df" %in% names(parameters)) {
     df_error <- degrees_of_freedom(model, method = "any")
     if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
       parameters$df_error <- df_error

@@ -180,3 +180,14 @@
 .safe_deparse <- function(string) {
   paste0(sapply(deparse(string, width.cutoff = 500), trimws, simplify = TRUE), collapse = " ")
 }
+
+
+
+#' @keywords internal
+.remove_columns <- function(data, variables) {
+  to_remove <- which(colnames(data) %in% variables)
+  if (length(to_remove))
+    data[, -to_remove, drop = FALSE]
+  else
+    data
+}

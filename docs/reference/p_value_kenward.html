@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kenward-Roger approximation for SEs, CIs and p-values — dof_kenward • parameters</title>
+<title>Kenward-Roger approximation for SEs, CIs and p-values — ci_kenward • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Kenward-Roger approximation for SEs, CIs and p-values — dof_kenward" />
+<meta property="og:title" content="Kenward-Roger approximation for SEs, CIs and p-values — ci_kenward" />
 <meta property="og:description" content="An approximate F-test based on the Kenward-Roger (1997) approach." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -101,9 +101,6 @@
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
 <li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
-</li>
-<li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
 </li>
 <li class="dropdown">
@@ -146,7 +143,9 @@
     <p>An approximate F-test based on the Kenward-Roger (1997) approach.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dof_kenward</span>(<span class='no'>model</span>)
+    <pre class="usage"><span class='fu'>ci_kenward</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>)
+
+<span class='fu'>dof_kenward</span>(<span class='no'>model</span>)
 
 <span class='fu'>p_value_kenward</span>(<span class='no'>model</span>, <span class='kw'>dof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
@@ -158,6 +157,10 @@
     <tr>
       <th>model</th>
       <td><p>A statistical model.</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
     </tr>
     <tr>
       <th>dof</th>

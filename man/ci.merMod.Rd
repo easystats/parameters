@@ -12,7 +12,7 @@
 \alias{ci.MixMod}
 \alias{ci.betareg}
 \alias{ci.clm2}
-\title{Confidence Interval (CI)}
+\title{Confidence Intervals (CI)}
 \usage{
 \method{ci}{merMod}(
   x,

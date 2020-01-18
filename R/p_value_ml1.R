@@ -1,4 +1,4 @@
-#' "m-l-1" heuristic approximation for SEs, CIs and p-values
+#' "m-l-1" approximation for SEs, CIs and p-values
 #'
 #' Approximation of degrees of freedom based on a "m-l-1" heuristic as suggested by Elff et al. (2019).
 #'

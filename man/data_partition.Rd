@@ -23,7 +23,7 @@ Creates a training and a test set based on a dataframe. Can also be stratified (
 df <- iris
 df$Smell <- rep(c("Strong", "Light"), 75)
 
-data_partition(df)
-data_partition(df, group = "Species")
-data_partition(df, group = c("Species", "Smell"))
+head(data_partition(df))
+head(data_partition(df, group = "Species"))
+head(data_partition(df, group = c("Species", "Smell")))
 }

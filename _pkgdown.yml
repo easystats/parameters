@@ -40,7 +40,7 @@ reference:
   contents:
   - standard_error_robust
 
-- title: "SEs, CIs and p-values based on different DoF-approximations"
+- title: "DoF-approximated SEs, CIs and p-values"
   contents:
   - p_value_wald
   - p_value_kenward
@@ -131,8 +131,6 @@ navbar:
     href: reference/index.html
   - text: Parameters Description
     href: articles/model_parameters.html
-  - text: Parameters Engineering
-    href: articles/bootstrapping.html
   - text: Parameters Selection
     href: articles/parameters_selection.html
   - text: Dimension Reduction

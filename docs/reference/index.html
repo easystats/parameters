@@ -100,9 +100,6 @@
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
 <li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
-</li>
-<li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
 </li>
 <li class="dropdown">
@@ -183,13 +180,13 @@
         <td>
           <p><code><a href="model_parameters.zeroinfl.html">model_parameters(<i>&lt;zeroinfl&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Model Parameters from Zero-Inflated Models</p></td>
+        <td><p>Parameters from Zero-Inflated Models</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="model_parameters.gam.html">model_parameters(<i>&lt;gam&gt;</i>)</a></code> <code><a href="model_parameters.gam.html">model_parameters(<i>&lt;rqss&gt;</i>)</a></code> <code><a href="model_parameters.gam.html">model_parameters(<i>&lt;cgam&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Parameters of Generalized Additive (Mixed) Models</p></td>
+        <td><p>Parameters from Generalized Additive (Mixed) Models</p></td>
       </tr><tr>
         
         <td>
@@ -213,7 +210,7 @@
         <td>
           <p><code><a href="model_parameters.Mclust.html">model_parameters(<i>&lt;Mclust&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Mixture Models Parameters</p></td>
+        <td><p>Parameters from Mixture Models</p></td>
       </tr><tr>
         
         <td>
@@ -263,7 +260,7 @@
         <td>
           <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;default&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;polr&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;mixor&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;zeroinfl&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;hurdle&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;betareg&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;clm2&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Confidence Interval (CI)</p></td>
+        <td><p>Confidence Intervals (CI)</p></td>
       </tr><tr>
         
         <td>
@@ -288,7 +285,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-ses-cis-and-p-values-based-on-different-dof-approximations" class="hasAnchor"><a href="#section-ses-cis-and-p-values-based-on-different-dof-approximations" class="anchor"></a>SEs, CIs and p-values based on different DoF-approximations</h2>
+          <h2 id="section-dof-approximated-ses-cis-and-p-values" class="hasAnchor"><a href="#section-dof-approximated-ses-cis-and-p-values" class="anchor"></a>DoF-approximated SEs, CIs and p-values</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -301,19 +298,19 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="p_value_kenward.html">dof_kenward()</a></code> <code><a href="p_value_kenward.html">p_value_kenward()</a></code> <code><a href="p_value_kenward.html">se_kenward()</a></code> </p>
+          <p><code><a href="p_value_kenward.html">ci_kenward()</a></code> <code><a href="p_value_kenward.html">dof_kenward()</a></code> <code><a href="p_value_kenward.html">p_value_kenward()</a></code> <code><a href="p_value_kenward.html">se_kenward()</a></code> </p>
         </td>
         <td><p>Kenward-Roger approximation for SEs, CIs and p-values</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="p_value_ml1.html">dof_ml1()</a></code> <code><a href="p_value_ml1.html">p_value_ml1()</a></code> <code><a href="p_value_ml1.html">se_ml1()</a></code> </p>
+          <p><code><a href="p_value_ml1.html">ci_ml1()</a></code> <code><a href="p_value_ml1.html">dof_ml1()</a></code> <code><a href="p_value_ml1.html">p_value_ml1()</a></code> <code><a href="p_value_ml1.html">se_ml1()</a></code> </p>
         </td>
-        <td><p>"m-l-1" heuristic approximation for SEs, CIs and p-values</p></td>
+        <td><p>"m-l-1" approximation for SEs, CIs and p-values</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="p_value_satterthwaite.html">dof_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">p_value_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">se_satterthwaite()</a></code> </p>
+          <p><code><a href="p_value_satterthwaite.html">ci_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">dof_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">p_value_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">se_satterthwaite()</a></code> </p>
         </td>
         <td><p>Satterthwaite approximation for SEs, CIs and p-values</p></td>
       </tr>
@@ -669,7 +666,7 @@
       <li><a href="#section-comprehensive-model-parameters">Comprehensive Model Parameters</a></li>
       <li><a href="#section-standard-errors-confidence-intervals-and-p-values">Standard Errors, Confidence Intervals and p-values</a></li>
       <li><a href="#section-robust-estimation-of-ses-cis-and-p-values">Robust Estimation of SEs, CIs and p-values</a></li>
-      <li><a href="#section-ses-cis-and-p-values-based-on-different-dof-approximations">SEs, CIs and p-values based on different DoF-approximations</a></li>
+      <li><a href="#section-dof-approximated-ses-cis-and-p-values">DoF-approximated SEs, CIs and p-values</a></li>
       <li><a href="#section-other-model-parameters">Other Model Parameters</a></li>
       <li><a href="#section-parameters-engineering">Parameters Engineering</a></li>
       <li><a href="#section-variable-preparation-centering">Variable Preparation/Centering</a></li>

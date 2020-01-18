@@ -1,4 +1,4 @@
-#' Model Parameters from Zero-Inflated Models
+#' Parameters from Zero-Inflated Models
 #'
 #' Parameters from zero-inflated models.
 #'

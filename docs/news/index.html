@@ -100,9 +100,6 @@
   <a href="../articles/model_parameters.html">Parameters Description</a>
 </li>
 <li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
-</li>
-<li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
 </li>
 <li class="dropdown">
@@ -235,7 +232,7 @@
 <h2 class="hasAnchor">
 <a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
 <ul>
-<li>Robust estimation (like <code><a href="../reference/standard_error.html">standard_error_robust()</a></code> or <code><a href="../reference/ci.merMod.html">ci_robust()</a></code>) can now also compute cluster-robust variance-covariance matrices, using the <em>clubSandwich</em> package.</li>
+<li>Robust estimation (like <code><a href="../reference/standard_error_robust.html">standard_error_robust()</a></code> or <code><a href="../reference/standard_error_robust.html">ci_robust()</a></code>) can now also compute cluster-robust variance-covariance matrices, using the <em>clubSandwich</em> package.</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>robust</code>-argument, to compute robust standard errors, and confidence intervals and p-values based on robust standard errors.</li>
 <li>Arguments <code>p_method</code> and <code>ci_method</code> in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> were replaced by a single argument <code>df_method</code>.</li>
@@ -286,7 +283,7 @@
 <li>
 <code><a href="../reference/degrees_of_freedom.html">degrees_of_freedom()</a></code> to get DoFs.</li>
 <li>
-<code><a href="../reference/p_value.html">p_value_robust()</a></code>, <code><a href="../reference/ci.merMod.html">ci_robust()</a></code> and <code><a href="../reference/standard_error.html">standard_error_robust()</a></code> to compute robust standard errors, and p-values or confidence intervals based on robust standard errors.</li>
+<code><a href="../reference/standard_error_robust.html">p_value_robust()</a></code>, <code><a href="../reference/standard_error_robust.html">ci_robust()</a></code> and <code><a href="../reference/standard_error_robust.html">standard_error_robust()</a></code> to compute robust standard errors, and p-values or confidence intervals based on robust standard errors.</li>
 <li>
 <code><a href="../reference/demean.html">demean()</a></code> to calculate de-meaned and group-meaned variables (centering within groups, for panel-data regression).</li>
 <li>

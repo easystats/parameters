@@ -1,4 +1,4 @@
-#' Mixture Models Parameters
+#' Parameters from Mixture Models
 #'
 #' Format mixture models obtained for example by \code{mclust::Mclust}.
 #'
