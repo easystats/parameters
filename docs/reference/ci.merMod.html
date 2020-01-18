@@ -160,6 +160,9 @@
 <span class='co'># S3 method for glm</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"profile"</span>, <span class='st'>"wald"</span>, <span class='st'>"robust"</span>), <span class='no'>...</span>)
 
+<span class='co'># S3 method for polr</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"profile"</span>, <span class='st'>"wald"</span>, <span class='st'>"robust"</span>), <span class='no'>...</span>)
+
 <span class='co'># S3 method for mixor</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='no'>...</span>)
 
@@ -197,6 +200,12 @@
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
   <span class='no'>...</span>
 )
+
+<span class='co'># S3 method for betareg</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for clm2</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span>), <span class='no'>...</span>)
 
 <span class='fu'>ci_robust</span>(
   <span class='no'>model</span>,
