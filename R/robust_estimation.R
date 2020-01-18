@@ -1,4 +1,42 @@
-#' @rdname standard_error
+#' Robust estimation
+#'
+#' \code{standard_error_robust()}, \code{ci_robust()} and \code{p_value_robust()}
+#' attempt to return indices based on robust estimation of the variance-covariance
+#' matrix, using the packages \pkg{sandwich} and \pkg{clubSandwich}.
+#'
+#' @param model A model.
+#' @param vcov_estimation String, indicating the suffix of the \code{vcov*()}-function
+#'   from the \pkg{sandwich}-package, e.g. \code{vcov_estimation = "CL"} (which
+#'   calls \code{\link[sandwich]{vcovCL}} to compute clustered covariance matrix
+#'   estimators), or \code{vcov_estimation = "HC"} (which calls
+#'   \code{\link[sandwich:vcovHC]{vcovHC()}} to compute heteroskedasticity-consistent
+#'   covariance matrix estimators).
+#' @param vcov_type Character vector, specifying the estimation type for the
+#'   robust covariance matrix estimation (see \code{\link[sandwich:vcovHC]{vcovHC()}}
+#'   or \code{\link[clubSandwich:vcovCR]{vcovCR()}} for details).
+#' @param vcov_args List of named vectors, used as additional arguments that
+#'   are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.
+#' @param ... Arguments passed to or from other methods. For \code{standard_error()},
+#'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
+#'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
+#'
+#' @note These functions rely on the \pkg{sandwich} or \pkg{clubSandwich} package
+#'   (the latter if \code{vcov_estimation = "CR"} for cluster-robust standard errors)
+#'   and will thus only work for those models supported by those packages.
+#'
+#' @examples
+#' # robust standard errors, calling sandwich::vcovHC(type="HC3") by default
+#' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
+#' standard_error_robust(model)
+#'
+#' # cluster-robust standard errors, using clubSandwich
+#' iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
+#' standard_error_robust(
+#'   model,
+#'   vcov_type = "CR2",
+#'   vcov_args = list(cluster = iris$cluster)
+#' )
+#' @return A data frame.
 #' @export
 standard_error_robust <- function(model,
                                   vcov_estimation = "HC",
@@ -22,7 +60,7 @@ standard_error_robust <- function(model,
 
 
 
-#' @rdname p_value
+#' @rdname standard_error_robust
 #' @export
 p_value_robust <- function(model,
                            vcov_estimation = "HC",
@@ -42,7 +80,7 @@ p_value_robust <- function(model,
 
 
 
-#' @rdname ci.merMod
+#' @rdname standard_error_robust
 #' @export
 ci_robust <- function(model,
                       ci = 0.95,

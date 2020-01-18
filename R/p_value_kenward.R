@@ -1,4 +1,4 @@
-#' p-values using Kenward-Roger approximation
+#' Kenward-Roger approximation for SEs, CIs and p-values
 #'
 #' An approximate F-test based on the Kenward-Roger (1997) approach.
 #'
@@ -20,8 +20,9 @@
 #' to calculate approximated degrees of freedom and standard errors for model
 #' parameters, based on the Kenward-Roger (1997) approach.
 #' \cr \cr
-#' \code{\link{dof_satterthwaite}} and \code{\link{dof_ml1}} approximate degrees
-#' of freedom bases on Satterthwaite's method or the "m-l-1" rule.
+#' \code{\link[=dof_satterthwaite]{dof_satterthwaite()}} and
+#' \code{\link[=dof_ml1]{dof_ml1}} approximate degrees
+#' of freedom based on Satterthwaite's method or the "m-l-1" rule.
 #'
 #' @examples
 #' \donttest{
@@ -30,7 +31,7 @@
 #' p_value_kenward(model)
 #' }
 #'
-#' @return The p-values.
+#' @return A data frame.
 #' @references Kenward, M. G., & Roger, J. H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics, 983-997.
 #' @importFrom stats pt coef
 #' @export

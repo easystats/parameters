@@ -4,7 +4,7 @@
 \alias{dof_ml1}
 \alias{p_value_ml1}
 \alias{se_ml1}
-\title{p-values using the "m-l-1" heuristic}
+\title{"m-l-1" heuristic approximation for SEs, CIs and p-values}
 \usage{
 dof_ml1(model)
 
@@ -18,7 +18,7 @@ se_ml1(model)
 \item{dof}{Degrees of Freedom.}
 }
 \value{
-The p-values.
+A data frame.
 }
 \description{
 Approximation of degrees of freedom based on a "m-l-1" heuristic as suggested by Elff et al. (2019).
@@ -45,7 +45,6 @@ library(lme4)
 model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 p_value_ml1(model)
 }
-
 }
 \references{
 Elff, M.; Heisig, J.P.; Schaeffer, M.; Shikano, S. (2019): Multilevel Analysis with Few Clusters: Improving Likelihood-based Methods to Provide Unbiased Estimates and Accurate Inference, British Journal of Political Science.

@@ -12,21 +12,10 @@
 #'   by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 #'   \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
 #'   from the \pkg{sandwich}-package for robust covariance matrix estimators.
-#' @param vcov_estimation String, indicating the suffix of the \code{vcov*()}-function
-#'   from the \pkg{sandwich}-package, e.g. \code{vcov_estimation = "CL"} (which
-#'   calls \code{\link[sandwich]{vcovCL}} to compute clustered covariance matrix
-#'   estimators), or \code{vcov_estimation = "HC"} (which calls
-#'   \code{\link[sandwich:vcovHC]{vcovHC()}} to compute heteroskedasticity-consistent
-#'   covariance matrix estimators).
-#' @param vcov_type Character vector, specifying the estimation type for the
-#'   robust covariance matrix estimation (see \code{\link[sandwich:vcovHC]{vcovHC()}}
-#'   or \code{\link[clubSandwich:vcovCR]{vcovCR()}} for details).
-#' @param vcov_args List of named vectors, used as additional arguments that
-#'   are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
 #'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
-#'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
+#'   and \code{vcov_args} can be passed down to \code{\link[=standard_error_robust]{standard_error_robust()}}.
 #' @param effects Should standard errors for fixed effects or random effects
 #'    be returned? Only applies to mixed models. May be abbreviated. When
 #'    standard errors for random effects are requested, for each grouping factor
@@ -34,25 +23,9 @@
 #'    is returned.
 #' @inheritParams simulate_model
 #'
-#' @note \code{standard_error_robust()} resp. \code{standard_error(method = "robust")}
-#'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-#'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
-#'   thus only work for those models supported by those packages.
-#'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
-#'
-#' # robust standard errors, calling sandwich::vcovHC(type="HC3") by default
-#' standard_error_robust(model)
-#'
-#' # cluster-robust standard errors, using clubSandwich
-#' iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
-#' standard_error_robust(
-#'   model,
-#'   vcov_type = "CR2",
-#'   vcov_args = list(cluster = iris$cluster)
-#' )
 #' @return A data frame.
 #' @importFrom stats coef vcov setNames var na.omit
 #' @importFrom insight get_varcov print_color get_parameters find_parameters

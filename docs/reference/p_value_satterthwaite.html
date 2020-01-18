@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>p-values using Satterthwaite approximation — dof_satterthwaite • parameters</title>
+<title>Satterthwaite approximation for SEs, CIs and p-values — dof_satterthwaite • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="p-values using Satterthwaite approximation — dof_satterthwaite" />
+<meta property="og:title" content="Satterthwaite approximation for SEs, CIs and p-values — dof_satterthwaite" />
 <meta property="og:description" content="An approximate F-test based on the Satterthwaite (1946) approach." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -137,7 +137,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>p-values using Satterthwaite approximation</h1>
+    <h1>Satterthwaite approximation for SEs, CIs and p-values</h1>
     
     <div class="hidden name"><code>p_value_satterthwaite.Rd</code></div>
     </div>
@@ -167,7 +167,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The p-values.</p>
+    <p>A data frame.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Inferential statistics (like p-values, confidence intervals and
@@ -188,8 +188,8 @@ Kenward-Roger or Satterthwaite are limited to linear mixed models only.</p>
 to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Satterthwaite (1946) approach.
 <br /> <br />
-<code><a href='p_value_kenward.html'>dof_kenward</a></code> and <code><a href='p_value_ml1.html'>dof_ml1</a></code> approximate degrees
-of freedom bases on Kenward-Roger's method or the "m-l-1" rule.</p></div>
+<code><a href='p_value_kenward.html'>dof_kenward()</a></code> and <code><a href='p_value_ml1.html'>dof_ml1()</a></code>
+approximate degrees of freedom bases on Kenward-Roger's method or the "m-l-1" rule.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
@@ -198,7 +198,6 @@ of freedom bases on Kenward-Roger's method or the "m-l-1" rule.</p></div>
 <span class='fu'>p_value_satterthwaite</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;      Parameter            p
 #&gt; 1  (Intercept) 9.605150e-01
 #&gt; 2 Sepal.Length 7.881906e-29</div><div class='input'># }
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

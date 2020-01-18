@@ -5,7 +5,7 @@
 \alias{dof_kenward}
 \alias{p_value_kenward}
 \alias{se_kenward}
-\title{p-values using Kenward-Roger approximation}
+\title{Kenward-Roger approximation for SEs, CIs and p-values}
 \usage{
 dof_kenward(model)
 
@@ -19,7 +19,7 @@ se_kenward(model)
 \item{dof}{Degrees of Freedom.}
 }
 \value{
-The p-values.
+A data frame.
 }
 \description{
 An approximate F-test based on the Kenward-Roger (1997) approach.
@@ -52,6 +52,7 @@ Kenward, M. G., & Roger, J. H. (1997). Small sample inference for fixed effects 
 to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Kenward-Roger (1997) approach.
 \cr \cr
-\code{\link{dof_satterthwaite}} and \code{\link{dof_ml1}} approximate degrees
-of freedom bases on Satterthwaite's method or the "m-l-1" rule.
+\code{\link[=dof_satterthwaite]{dof_satterthwaite()}} and
+\code{\link[=dof_ml1]{dof_ml1}} approximate degrees
+of freedom based on Satterthwaite's method or the "m-l-1" rule.
 }

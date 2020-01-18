@@ -205,16 +205,7 @@
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for clm2</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span>), <span class='no'>...</span>)
-
-<span class='fu'>ci_robust</span>(
-  <span class='no'>model</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>vcov_estimation</span> <span class='kw'>=</span> <span class='st'>"HC"</span>,
-  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -233,7 +224,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed down to <code><a href='standard_error.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
+      <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -250,30 +241,6 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
-    <tr>
-      <th>model</th>
-      <td><p>Statistical model (no Bayesian models).</p></td>
-    </tr>
-    <tr>
-      <th>vcov_estimation</th>
-      <td><p>String, indicating the suffix of the <code>vcov*()</code>-function
-from the <span class="pkg">sandwich</span>-package, e.g. <code>vcov_estimation = "CL"</code> (which
-calls <code><a href='https://rdrr.io/pkg/sandwich/man/vcovCL.html'>vcovCL</a></code> to compute clustered covariance matrix
-estimators), or <code>vcov_estimation = "HC"</code> (which calls
-<code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC()</a></code> to compute heteroskedasticity-consistent
-covariance matrix estimators).</p></td>
-    </tr>
-    <tr>
-      <th>vcov_type</th>
-      <td><p>Character vector, specifying the estimation type for the
-robust covariance matrix estimation (see <code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC()</a></code>
-or <code><a href='https://rdrr.io/pkg/clubSandwich/man/vcovCR.html'>vcovCR()</a></code> for details).</p></td>
-    </tr>
-    <tr>
-      <th>vcov_args</th>
-      <td><p>List of named vectors, used as additional arguments that
-are passed down to the <span class="pkg">sandwich</span>-function specified in <code>vcov_estimation</code>.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -281,7 +248,7 @@ are passed down to the <span class="pkg">sandwich</span>-function specified in <
     <p>A data frame containing the CI bounds.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code>ci_robust()</code> resp. <code><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci(method = "robust")</a></code>
+    <p><code><a href='standard_error_robust.html'>ci_robust()</a></code> resp. <code><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci(method = "robust")</a></code>
   rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package (the latter if
   <code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
   thus only work for those models supported by those packages.</p>

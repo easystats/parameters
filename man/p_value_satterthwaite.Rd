@@ -5,7 +5,7 @@
 \alias{dof_satterthwaite}
 \alias{p_value_satterthwaite}
 \alias{se_satterthwaite}
-\title{p-values using Satterthwaite approximation}
+\title{Satterthwaite approximation for SEs, CIs and p-values}
 \usage{
 dof_satterthwaite(model)
 
@@ -19,7 +19,7 @@ se_satterthwaite(model)
 \item{dof}{Degrees of Freedom.}
 }
 \value{
-The p-values.
+A data frame.
 }
 \description{
 An approximate F-test based on the Satterthwaite (1946) approach.
@@ -41,7 +41,6 @@ library(lme4)
 model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 p_value_satterthwaite(model)
 }
-
 }
 \references{
 Satterthwaite FE (1946) An approximate distribution of estimates of variance components. Biometrics Bulletin 2 (6):110–4.
@@ -51,6 +50,6 @@ Satterthwaite FE (1946) An approximate distribution of estimates of variance com
 to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Satterthwaite (1946) approach.
 \cr \cr
-\code{\link{dof_kenward}} and \code{\link{dof_ml1}} approximate degrees
-of freedom bases on Kenward-Roger's method or the "m-l-1" rule.
+\code{\link[=dof_kenward]{dof_kenward()}} and \code{\link[=dof_ml1]{dof_ml1()}}
+approximate degrees of freedom bases on Kenward-Roger's method or the "m-l-1" rule.
 }

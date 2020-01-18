@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kenward-Roger approximation for SEs, CIs and p-values — dof_kenward • parameters</title>
+<title>Robust estimation — standard_error_robust • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Kenward-Roger approximation for SEs, CIs and p-values — dof_kenward" />
-<meta property="og:description" content="An approximate F-test based on the Kenward-Roger (1997) approach." />
+<meta property="og:title" content="Robust estimation — standard_error_robust" />
+<meta property="og:description" content="standard_error_robust(), ci_robust() and p_value_robust()
+attempt to return indices based on robust estimation of the variance-covariance
+matrix, using the packages sandwich and clubSandwich." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -137,80 +139,118 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Kenward-Roger approximation for SEs, CIs and p-values</h1>
+    <h1>Robust estimation</h1>
     
-    <div class="hidden name"><code>p_value_kenward.Rd</code></div>
+    <div class="hidden name"><code>standard_error_robust.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>An approximate F-test based on the Kenward-Roger (1997) approach.</p>
+    <p><code>standard_error_robust()</code>, <code>ci_robust()</code> and <code>p_value_robust()</code>
+attempt to return indices based on robust estimation of the variance-covariance
+matrix, using the packages <span class="pkg">sandwich</span> and <span class="pkg">clubSandwich</span>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dof_kenward</span>(<span class='no'>model</span>)
+    <pre class="usage"><span class='fu'>standard_error_robust</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>vcov_estimation</span> <span class='kw'>=</span> <span class='st'>"HC"</span>,
+  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
-<span class='fu'>p_value_kenward</span>(<span class='no'>model</span>, <span class='kw'>dof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>p_value_robust</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>vcov_estimation</span> <span class='kw'>=</span> <span class='st'>"HC"</span>,
+  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
-<span class='fu'>se_kenward</span>(<span class='no'>model</span>)</pre>
+<span class='fu'>ci_robust</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>vcov_estimation</span> <span class='kw'>=</span> <span class='st'>"HC"</span>,
+  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>A statistical model.</p></td>
+      <td><p>A model.</p></td>
     </tr>
     <tr>
-      <th>dof</th>
-      <td><p>Degrees of Freedom.</p></td>
+      <th>vcov_estimation</th>
+      <td><p>String, indicating the suffix of the <code>vcov*()</code>-function
+from the <span class="pkg">sandwich</span>-package, e.g. <code>vcov_estimation = "CL"</code> (which
+calls <code><a href='https://rdrr.io/pkg/sandwich/man/vcovCL.html'>vcovCL</a></code> to compute clustered covariance matrix
+estimators), or <code>vcov_estimation = "HC"</code> (which calls
+<code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC()</a></code> to compute heteroskedasticity-consistent
+covariance matrix estimators).</p></td>
+    </tr>
+    <tr>
+      <th>vcov_type</th>
+      <td><p>Character vector, specifying the estimation type for the
+robust covariance matrix estimation (see <code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC()</a></code>
+or <code><a href='https://rdrr.io/pkg/clubSandwich/man/vcovCR.html'>vcovCR()</a></code> for details).</p></td>
+    </tr>
+    <tr>
+      <th>vcov_args</th>
+      <td><p>List of named vectors, used as additional arguments that
+are passed down to the <span class="pkg">sandwich</span>-function specified in <code>vcov_estimation</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods. For <code><a href='standard_error.html'>standard_error()</a></code>,
+if <code>method = "robust"</code>, arguments <code>vcov_estimation</code>, <code>vcov_type</code>
+and <code>vcov_args</code> can be passed down to <code>standard_error_robust()</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Inferential statistics (like p-values, confidence intervals and
-standard errors) may be biased in mixed models when the number of clusters
-is small (even if the sample size of level-1 units is high). In such cases
-it is recommended to approximate a more accurate number of degrees of freedom
-for such inferential statistics. Unlike simpler approximation heuristics
-like the "m-l-1" rule (<code>dof_ml1</code>), the Kenward-Roger approximation is
-also applicable in more complex multilevel designs, e.g. with cross-classified
-clusters. However, the "m-l-1" heuristic also applies to generalized
-mixed models, while approaches like Kenward-Roger or Satterthwaite are limited
-to linear mixed models only.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Kenward, M. G., &amp; Roger, J. H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics, 983-997.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code>dof_kenward()</code> and <code>se_kenward()</code> are small helper-functions
-to calculate approximated degrees of freedom and standard errors for model
-parameters, based on the Kenward-Roger (1997) approach.
-<br /> <br />
-<code><a href='p_value_satterthwaite.html'>dof_satterthwaite()</a></code> and
-<code><a href='p_value_ml1.html'>dof_ml1</a></code> approximate degrees
-of freedom based on Satterthwaite's method or the "m-l-1" rule.</p></div>
+    <p>These functions rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package
+  (the latter if <code>vcov_estimation = "CR"</code> for cluster-robust standard errors)
+  and will thus only work for those models supported by those packages.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>p_value_kenward</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;      Parameter            p
-#&gt; 1  (Intercept) 9.605110e-01
-#&gt; 2 Sepal.Length 7.880077e-29</div><div class='input'># }
-
-</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># robust standard errors, calling sandwich::vcovHC(type="HC3") by default</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> * <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'>standard_error_robust</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                        Parameter         SE
+#&gt; 1                    (Intercept) 0.42486667
+#&gt; 2                   Sepal.Length 0.08504442
+#&gt; 3              Speciesversicolor 0.67252996
+#&gt; 4               Speciesvirginica 0.58942889
+#&gt; 5 Sepal.Length:Speciesversicolor 0.12045791
+#&gt; 6  Sepal.Length:Speciesvirginica 0.10558799</div><div class='input'>
+<span class='co'># cluster-robust standard errors, using clubSandwich</span>
+<span class='no'>iris</span>$<span class='no'>cluster</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>8</span>], <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>iris</span>)))
+<span class='fu'>standard_error_robust</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='st'>"CR2"</span>,
+  <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>cluster</span> <span class='kw'>=</span> <span class='no'>iris</span>$<span class='no'>cluster</span>)
+)</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'clubSandwich':</span>
+#&gt; <span class='message'>  method    from    </span>
+#&gt; <span class='message'>  bread.mlm sandwich</span></div><div class='output co'>#&gt;                        Parameter         SE
+#&gt; 1                    (Intercept) 0.31972491
+#&gt; 2                   Sepal.Length 0.06451833
+#&gt; 3              Speciesversicolor 0.47235519
+#&gt; 4               Speciesvirginica 0.34252942
+#&gt; 5 Sepal.Length:Speciesversicolor 0.08746672
+#&gt; 6  Sepal.Length:Speciesvirginica 0.06624836</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#note">Note</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

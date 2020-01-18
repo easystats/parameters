@@ -248,17 +248,51 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-specific-model-parameters" class="hasAnchor"><a href="#section-specific-model-parameters" class="anchor"></a>Specific Model Parameters</h2>
+          <h2 id="section-standard-errors-confidence-intervals-and-p-values" class="hasAnchor"><a href="#section-standard-errors-confidence-intervals-and-p-values" class="anchor"></a>Standard Errors, Confidence Intervals and p-values</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="reexports.html">reexports</a></code> </p>
+          <p><code><a href="standard_error.html">standard_error()</a></code> </p>
         </td>
-        <td><p>Objects exported from other packages</p></td>
+        <td><p>Standard Errors</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;default&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;polr&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;mixor&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;zeroinfl&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;hurdle&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;betareg&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;clm2&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Confidence Interval (CI)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value.html">p_value()</a></code> </p>
+        </td>
+        <td><p>p-values</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-robust-estimation-of-ses-cis-and-p-values" class="hasAnchor"><a href="#section-robust-estimation-of-ses-cis-and-p-values" class="anchor"></a>Robust Estimation of SEs, CIs and p-values</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="standard_error_robust.html">standard_error_robust()</a></code> <code><a href="standard_error_robust.html">p_value_robust()</a></code> <code><a href="standard_error_robust.html">ci_robust()</a></code> </p>
+        </td>
+        <td><p>Robust estimation</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-ses-cis-and-p-values-based-on-different-dof-approximations" class="hasAnchor"><a href="#section-ses-cis-and-p-values-based-on-different-dof-approximations" class="anchor"></a>SEs, CIs and p-values based on different DoF-approximations</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="p_value_wald.html">ci_wald()</a></code> <code><a href="p_value_wald.html">p_value_wald()</a></code> </p>
@@ -267,10 +301,30 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;default&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;polr&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;mixor&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;zeroinfl&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;hurdle&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;betareg&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;clm2&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci_robust()</a></code> </p>
+          <p><code><a href="p_value_kenward.html">dof_kenward()</a></code> <code><a href="p_value_kenward.html">p_value_kenward()</a></code> <code><a href="p_value_kenward.html">se_kenward()</a></code> </p>
         </td>
-        <td><p>Confidence Interval (CI)</p></td>
+        <td><p>Kenward-Roger approximation for SEs, CIs and p-values</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value_ml1.html">dof_ml1()</a></code> <code><a href="p_value_ml1.html">p_value_ml1()</a></code> <code><a href="p_value_ml1.html">se_ml1()</a></code> </p>
+        </td>
+        <td><p>"m-l-1" heuristic approximation for SEs, CIs and p-values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value_satterthwaite.html">dof_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">p_value_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">se_satterthwaite()</a></code> </p>
+        </td>
+        <td><p>Satterthwaite approximation for SEs, CIs and p-values</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-other-model-parameters" class="hasAnchor"><a href="#section-other-model-parameters" class="anchor"></a>Other Model Parameters</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="degrees_of_freedom.html">degrees_of_freedom()</a></code> <code><a href="degrees_of_freedom.html">dof()</a></code> </p>
@@ -279,33 +333,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="p_value.html">p_value()</a></code> <code><a href="p_value.html">p_value_robust()</a></code> </p>
+          <p><code><a href="reexports.html">reexports</a></code> </p>
         </td>
-        <td><p>p-values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="p_value_kenward.html">dof_kenward()</a></code> <code><a href="p_value_kenward.html">p_value_kenward()</a></code> <code><a href="p_value_kenward.html">se_kenward()</a></code> </p>
-        </td>
-        <td><p>p-values using Kenward-Roger approximation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="p_value_ml1.html">dof_ml1()</a></code> <code><a href="p_value_ml1.html">p_value_ml1()</a></code> <code><a href="p_value_ml1.html">se_ml1()</a></code> </p>
-        </td>
-        <td><p>p-values using the "m-l-1" heuristic</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="p_value_satterthwaite.html">dof_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">p_value_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">se_satterthwaite()</a></code> </p>
-        </td>
-        <td><p>p-values using Satterthwaite approximation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="standard_error.html">standard_error_robust()</a></code> <code><a href="standard_error.html">standard_error()</a></code> </p>
-        </td>
-        <td><p>Standard Errors</p></td>
+        <td><p>Objects exported from other packages</p></td>
       </tr><tr>
         
         <td>
@@ -637,7 +667,10 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#section-comprehensive-model-parameters">Comprehensive Model Parameters</a></li>
-      <li><a href="#section-specific-model-parameters">Specific Model Parameters</a></li>
+      <li><a href="#section-standard-errors-confidence-intervals-and-p-values">Standard Errors, Confidence Intervals and p-values</a></li>
+      <li><a href="#section-robust-estimation-of-ses-cis-and-p-values">Robust Estimation of SEs, CIs and p-values</a></li>
+      <li><a href="#section-ses-cis-and-p-values-based-on-different-dof-approximations">SEs, CIs and p-values based on different DoF-approximations</a></li>
+      <li><a href="#section-other-model-parameters">Other Model Parameters</a></li>
       <li><a href="#section-parameters-engineering">Parameters Engineering</a></li>
       <li><a href="#section-variable-preparation-centering">Variable Preparation/Centering</a></li>
       <li><a href="#section-feature-reduction">Feature Reduction</a></li>
