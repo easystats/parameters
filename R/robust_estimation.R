@@ -68,6 +68,11 @@ ci_robust <- function(model,
 #' @importFrom insight n_obs
 #' @importFrom stats coef pnorm pt
 .robust_covariance_matrix <- function(x, vcov_fun = "vcovHC", vcov_type = NULL, vcov_args = NULL) {
+  # fix default, if necessary
+  if (!is.null(vcov_type) && vcov_type %in% c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3")) {
+    vcov_fun <- "vcovCR"
+  }
+
   # set default for clubSandwich
   if (vcov_fun == "vcovCR" && is.null(vcov_type)) {
     vcov_type <- "CR0"
