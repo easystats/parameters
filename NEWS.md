@@ -1,5 +1,9 @@
 # parameters 0.4.2
 
+## General
+
+- Improved handling of robust statistics in `model_parameters()`. This should now work for more models than before.
+
 ## Bug fixes
 
 - Fixed issue in `model_parameters()` when `robust = TRUE`, which could sometimes mess up order of the statistic column.
