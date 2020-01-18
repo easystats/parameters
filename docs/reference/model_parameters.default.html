@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -223,7 +223,7 @@
     </tr>
     <tr>
       <th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error.html'>standard_error()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -259,11 +259,11 @@
 #&gt; wt          |       -3.21 | [-4.87, -1.89] | &lt; .001
 #&gt; cyl         |       -1.48 | [-2.23, -0.76] | &lt; .001</div><div class='input'>
 <span class='co'># standardized parameters</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient (std.) |   SE |         95% CI |     t | df |      p
-#&gt; ------------------------------------------------------------------------------
-#&gt; (Intercept) |               0.00 | 0.08 | [-0.15,  0.15] | 23.14 | 29 | &lt; .001
-#&gt; wt          |              -0.52 | 0.12 | [-0.76, -0.28] | -4.22 | 29 | &lt; .001
-#&gt; cyl         |              -0.45 | 0.12 | [-0.69, -0.21] | -3.64 | 29 | 0.001 </div><div class='input'>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='st'>"refit"</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
+#&gt; -----------------------------------------------------------------------
+#&gt; (Intercept) |        0.00 | 0.08 | [-0.15,  0.15] |  0.00 | 29 | 1.000 
+#&gt; wt          |       -0.52 | 0.12 | [-0.77, -0.27] | -4.22 | 29 | &lt; .001
+#&gt; cyl         |       -0.45 | 0.12 | [-0.70, -0.20] | -3.64 | 29 | 0.001 </div><div class='input'>
 <span class='co'># different p-value style in output</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>p_digits</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |       p
 #&gt; ------------------------------------------------------------------------

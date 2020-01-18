@@ -4,11 +4,14 @@
 \alias{ci.merMod}
 \alias{ci.default}
 \alias{ci.glm}
+\alias{ci.polr}
 \alias{ci.mixor}
 \alias{ci.glmmTMB}
 \alias{ci.zeroinfl}
 \alias{ci.hurdle}
 \alias{ci.MixMod}
+\alias{ci.betareg}
+\alias{ci.clm2}
 \alias{ci_robust}
 \title{Confidence Interval (CI)}
 \usage{
@@ -22,6 +25,8 @@
 \method{ci}{default}(x, ci = 0.95, method = NULL, ...)
 
 \method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald", "robust"), ...)
+
+\method{ci}{polr}(x, ci = 0.95, method = c("profile", "wald", "robust"), ...)
 
 \method{ci}{mixor}(x, ci = 0.95, effects = c("all", "fixed", "random"), ...)
 
@@ -55,6 +60,10 @@
   component = c("all", "conditional", "zi", "zero_inflated"),
   ...
 )
+
+\method{ci}{betareg}(x, ci = 0.95, component = c("all", "conditional", "precision"), ...)
+
+\method{ci}{clm2}(x, ci = 0.95, component = c("all", "conditional", "scale"), ...)
 
 ci_robust(
   model,

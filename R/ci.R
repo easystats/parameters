@@ -178,6 +178,7 @@ ci.negbin <- ci.glm
 ci.logistf <- ci.glm
 
 
+#' @rdname ci.merMod
 #' @export
 ci.polr <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
   method <- match.arg(method)
@@ -410,6 +411,7 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
 # Special models -----------------------------------------
 
 
+#' @rdname ci.merMod
 #' @export
 ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
@@ -417,6 +419,7 @@ ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precisi
 }
 
 
+#' @rdname ci.merMod
 #' @export
 ci.clm2 <- function(x, ci = .95, component = c("all", "conditional", "scale"), ...) {
   component <- match.arg(component)

@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -167,6 +167,7 @@
   <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
 
@@ -219,7 +220,11 @@
     </tr>
     <tr>
       <th>df_method</th>
-      <td><p>Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be <code>"wald"</code> (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see <code><a href='p_value_ml1.html'>dof_ml1</a></code>), <code>"satterthwaite"</code> (see <code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see <code><a href='p_value_kenward.html'>dof_kenward</a></code>).</p></td>
+      <td><p>Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be <code>"wald"</code> (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see <code><a href='p_value_ml1.html'>dof_ml1</a></code>), <code>"satterthwaite"</code> (see <code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see <code><a href='p_value_kenward.html'>dof_kenward</a></code>). Note that when <code>df_method</code> is not <code>"wald"</code>, robust standard errors etc. cannot be computed.</p></td>
+    </tr>
+    <tr>
+      <th>robust</th>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error.html'>standard_error()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>component</th>

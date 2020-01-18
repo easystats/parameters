@@ -9,6 +9,7 @@
 \alias{standard_error.glmmTMB}
 \alias{standard_error.MixMod}
 \alias{standard_error.zeroinfl}
+\alias{standard_error.coxph}
 \alias{standard_error.mixor}
 \alias{standard_error.clm2}
 \title{Standard Errors}
@@ -49,6 +50,8 @@ standard_error(model, ...)
   method = NULL,
   ...
 )
+
+\method{standard_error}{coxph}(model, method = NULL, ...)
 
 \method{standard_error}{mixor}(model, effects = c("all", "fixed", "random"), ...)
 
