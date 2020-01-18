@@ -27,7 +27,7 @@ if (require("testthat") &&
     params <- model_parameters(model, standardize = "refit", robust = TRUE)
     robust_se <- unname(sqrt(diag(sandwich::vcovHC(model2))))
     expect_equal(params$SE, robust_se, tolerance = 1e-3)
-    expect_equal(params$p, c(0, 0.0259, 0.01478, 0.01197, 0.95238, 0.01165), tolerance = 1e-3)
+    expect_equal(params$p, c(0.28624, 0.0259, 0.43611, 0.01197, 0.95238, 0.01165), tolerance = 1e-3)
   })
 
 
