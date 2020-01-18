@@ -11,6 +11,11 @@
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
 #'
+#' @note \code{p_value_robust()} resp. \code{p_value(method = "robust")}
+#'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
+#'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
+#'   thus only work for those models supported by those packages.
+#'
 #' @examples
 #' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #' p_value(model)

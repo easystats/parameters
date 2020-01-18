@@ -5,6 +5,18 @@
 #' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, ...) {
+  # check if standardization is required and package available
+  if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
+    insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
+    standardize <- NULL
+  }
+
+  # for refit, we completely refit the model, than extract parameters, ci etc. as usual
+  if (!is.null(standardize) && standardize == "refit") {
+    model <- effectsize::standardize(model, verbose = FALSE)
+    standardize <- NULL
+  }
+
   parameters <- insight::get_parameters(model, effects = effects, component = component)
   statistic <- insight::get_statistic(model, component = component)
 
@@ -19,34 +31,22 @@
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
 
-  # Std Coefficients
+  # Std Coefficients for other methods than "refit"
   if (!is.null(standardize)) {
-    if (!requireNamespace("effectsize", quietly = TRUE)) {
-      insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
+    # standardize model parameters and calculate related CI and SE
+    std_coef <- effectsize::standardize_parameters(model, method = standardize)
+    parameters <- merge(parameters, std_coef, by = merge_by)
+    coef_col <- "Std_Coefficient"
+    # merge all data, including CI and SE for std. parameters
+    if (inherits(std_coef, "effectsize_std_params")) {
+      parameters <- merge(parameters, ci(std_coef, ci = ci), by = merge_by)
+      parameters <- merge(parameters, standard_error(std_coef), by = merge_by)
+    }
+    # if we have CIs, remember columns names to select later
+    if (!is.null(ci)) {
+      ci_cols <- c("CI_low", "CI_high")
     } else {
-      # standardize model parameters and calculate related CI and SE
-      std_coef <- effectsize::standardize_parameters(model, method = standardize)
-      parameters <- merge(parameters, std_coef, by = merge_by)
-      coef_col <- "Std_Coefficient"
-      # merge all data, including CI and SE for std. parameters
-      if (standardize == "refit") {
-        parameters <- merge(parameters, .ci_from_refit(std_coef, ci), by = merge_by)
-        parameters <- merge(parameters, attributes(std_coef)$standard_error, by = merge_by)
-      } else if (inherits(std_coef, "effectsize_std_params")) {
-        if (isTRUE(robust)) {
-          parameters <- merge(parameters, ci_robust(std_coef, ci = ci, ...), by = merge_by)
-          parameters <- merge(parameters, standard_error_robust(std_coef, ...), by = merge_by)
-        } else {
-          parameters <- merge(parameters, ci(std_coef, ci = ci), by = merge_by)
-          parameters <- merge(parameters, standard_error(std_coef), by = merge_by)
-        }
-      }
-      # if we have CIs, remember columns names to select later
-      if (!is.null(ci)) {
-        ci_cols <- c("CI_low", "CI_high")
-      } else {
-        ci_cols <- c()
-      }
+      ci_cols <- c()
     }
   }
 

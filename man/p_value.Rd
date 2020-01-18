@@ -31,8 +31,7 @@ p_value(model, ...)
 p_value_robust(
   model,
   vcov_estimation = "HC",
-  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0",
-    "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+  vcov_type = NULL,
   vcov_args = NULL,
   ...
 )
@@ -59,12 +58,12 @@ is returned.}
 from the \pkg{sandwich}-package, e.g. \code{vcov_estimation = "CL"} (which
 calls \code{\link[sandwich]{vcovCL}} to compute clustered covariance matrix
 estimators), or \code{vcov_estimation = "HC"} (which calls
-\code{\link[sandwich]{vcovHC}} to compute heteroskedasticity-consistent
+\code{\link[sandwich:vcovHC]{vcovHC()}} to compute heteroskedasticity-consistent
 covariance matrix estimators).}
 
 \item{vcov_type}{Character vector, specifying the estimation type for the
-robust covariance matrix estimation (see \code{\link[sandwich]{vcovHC}} for
-details).}
+robust covariance matrix estimation (see \code{\link[sandwich:vcovHC]{vcovHC()}}
+or \code{\link[clubSandwich:vcovCR]{vcovCR()}} for details).}
 
 \item{vcov_args}{List of named vectors, used as additional arguments that
 are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.}
@@ -77,6 +76,12 @@ This function attempts to return, or compute, p-values of a model's parameters. 
 \itemize{
 \item Mixed models (lme4): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
 }
+}
+\note{
+\code{p_value_robust()} resp. \code{p_value(method = "robust")}
+  rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
+  \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
+  thus only work for those models supported by those packages.
 }
 \examples{
 model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)

@@ -2,17 +2,13 @@
 #' @export
 standard_error_robust <- function(model,
                                   vcov_estimation = "HC",
-                                  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+                                  vcov_type = NULL,
                                   vcov_args = NULL,
                                   ...) {
-
   # exceptions
   if (inherits(model, "gee")) {
     return(standard_error(model, method = "robust", ...))
   }
-
-  # match arguments
-  vcov_type <- match.arg(vcov_type)
 
   robust <- .robust_covariance_matrix(
     model,
@@ -30,12 +26,9 @@ standard_error_robust <- function(model,
 #' @export
 p_value_robust <- function(model,
                            vcov_estimation = "HC",
-                           vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+                           vcov_type = NULL,
                            vcov_args = NULL,
                            ...) {
-  # match arguments
-  vcov_type <- match.arg(vcov_type)
-
   robust <- .robust_covariance_matrix(
     model,
     vcov_fun = paste0("vcov", vcov_estimation),
@@ -54,11 +47,9 @@ p_value_robust <- function(model,
 ci_robust <- function(model,
                       ci = 0.95,
                       vcov_estimation = "HC",
-                      vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+                      vcov_type = NULL,
                       vcov_args = NULL,
                       ...) {
-  vcov_type <- match.arg(vcov_type)
-
   ci_wald(
     model = model,
     ci = ci,
@@ -76,16 +67,9 @@ ci_robust <- function(model,
 
 #' @importFrom insight n_obs
 #' @importFrom stats coef pnorm pt
-.robust_covariance_matrix <- function(x,
-                                      vcov_fun = "vcovHC",
-                                      vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"),
-                                      vcov_args = NULL) {
-
-  # match arguments
-  vcov_type <- match.arg(vcov_type)
-
+.robust_covariance_matrix <- function(x, vcov_fun = "vcovHC", vcov_type = NULL, vcov_args = NULL) {
   # check if required package is available
-  if (vcov_type %in% c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3")) {
+  if (vcov_fun == "vcovCR" && !is.null(vcov_type) && vcov_type %in% c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3")) {
     if (!requireNamespace("clubSandwich", quietly = TRUE)) {
       stop("Package `clubSandwich` needed for this function. Please install and try again.")
     }

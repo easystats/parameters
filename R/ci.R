@@ -11,6 +11,11 @@
 #'
 #' @return A data frame containing the CI bounds.
 #'
+#' @note \code{ci_robust()} resp. \code{ci(method = "robust")}
+#'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
+#'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
+#'   thus only work for those models supported by those packages.
+#'
 #' @examples
 #' \donttest{
 #' library(parameters)
