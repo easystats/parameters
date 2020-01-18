@@ -5,7 +5,7 @@
 #' @param model A mixed model.
 #' @param effects Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.
 #' @inheritParams model_parameters.default
-#' @param df_method Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}).
+#' @param df_method Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}). Note that when \code{df_method} is not \code{"wald"}, robust standard errors etc. cannot be computed.
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
@@ -32,7 +32,7 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, ...) {
   # p-values, CI and se might be based of wald, or KR
   df_method <- match.arg(df_method, choices = c("wald", "ml1", "satterthwaite", "kenward"))
 
@@ -40,7 +40,7 @@ model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_metho
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_mixed(model, ci = ci, df_method = df_method, ...)
+    parameters <- .extract_parameters_mixed(model, ci = ci, df_method = df_method, robust = robust, ...)
   }
 
 

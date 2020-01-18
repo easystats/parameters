@@ -13,6 +13,7 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
+  robust = FALSE,
   ...
 )
 
@@ -50,6 +51,8 @@
 \item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.}
+
+\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error]{standard_error()}} for details.}
 
 \item{...}{Arguments passed to or from other methods.}
 
