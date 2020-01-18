@@ -68,8 +68,13 @@ ci_robust <- function(model,
 #' @importFrom insight n_obs
 #' @importFrom stats coef pnorm pt
 .robust_covariance_matrix <- function(x, vcov_fun = "vcovHC", vcov_type = NULL, vcov_args = NULL) {
+  # set default for clubSandwich
+  if (vcov_fun == "vcovCR" && is.null(vcov_type)) {
+    vcov_type <- "CR0"
+  }
+
   # check if required package is available
-  if (vcov_fun == "vcovCR" && !is.null(vcov_type) && vcov_type %in% c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3")) {
+  if (vcov_fun == "vcovCR") {
     if (!requireNamespace("clubSandwich", quietly = TRUE)) {
       stop("Package `clubSandwich` needed for this function. Please install and try again.")
     }
