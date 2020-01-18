@@ -72,7 +72,7 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, ...)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, robust = FALSE, ...)
   }
 
 

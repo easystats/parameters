@@ -23,7 +23,7 @@ model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations 
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = "all", merge_by = c("Parameter", "Component"), standardize = standardize)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = "all", merge_by = c("Parameter", "Component"), standardize = standardize, robust = FALSE)
   }
 
   if (exponentiate) parameters <- .exponentiate_parameters(parameters)
@@ -43,7 +43,7 @@ model_parameters.vgam <- model_parameters.gam
 model_parameters.gamm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
   model <- model$gam
   class(model) <- c("gam", "lm", "glm")
-  model_parameters(model, ci = ci, bootstrap = bootstrap, iterations = iterations, ...)
+  model_parameters(model, ci = ci, bootstrap = bootstrap, iterations = iterations, robust = FALSE, ...)
 }
 
 
@@ -52,7 +52,7 @@ model_parameters.list <- function(model, ci = .95, bootstrap = FALSE, iterations
   if ("gam" %in% names(model)) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
-    model_parameters(model, ci = ci, bootstrap = bootstrap, iterations = iterations, ...)
+    model_parameters(model, ci = ci, bootstrap = bootstrap, iterations = iterations, robust = FALSE, ...)
   }
 }
 
