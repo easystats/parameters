@@ -7,7 +7,6 @@
 .extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, ...) {
   parameters <- insight::get_parameters(model, effects = effects, component = component)
   statistic <- insight::get_statistic(model, component = component)
-  robust <- if (isTRUE(robust)) "robust" else NULL
 
   # clean parameter names
 
@@ -34,8 +33,13 @@
         parameters <- merge(parameters, .ci_from_refit(std_coef, ci), by = merge_by)
         parameters <- merge(parameters, attributes(std_coef)$standard_error, by = merge_by)
       } else if (inherits(std_coef, "effectsize_std_params")) {
-        parameters <- merge(parameters, ci(std_coef, ci = ci), by = merge_by)
-        parameters <- merge(parameters, standard_error(std_coef), by = merge_by)
+        if (isTRUE(robust)) {
+          parameters <- merge(parameters, ci_robust(std_coef, ci = ci, ...), by = merge_by)
+          parameters <- merge(parameters, standard_error_robust(std_coef, ...), by = merge_by)
+        } else {
+          parameters <- merge(parameters, ci(std_coef, ci = ci), by = merge_by)
+          parameters <- merge(parameters, standard_error(std_coef), by = merge_by)
+        }
       }
       # if we have CIs, remember columns names to select later
       if (!is.null(ci)) {
@@ -50,7 +54,11 @@
   # CI - only if we don't already have CI for std. parameters
   if (is.null(standardize)) {
     if (!is.null(ci)) {
-      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = robust))
+      if (isTRUE(robust)) {
+        ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
+      } else {
+        ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
+      }
       if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
       parameters <- merge(parameters, ci_df, by = merge_by)
@@ -61,23 +69,37 @@
 
 
   # p value
-  parameters <- merge(parameters, p_value(model, effects = effects, component = component, method = robust), by = merge_by)
+  if (isTRUE(robust)) {
+    parameters <- merge(parameters, p_value_robust(model, ...), by = merge_by)
+  } else {
+    parameters <- merge(parameters, p_value(model, effects = effects, component = component), by = merge_by)
+  }
+
 
   # standard error - only if we don't already have SE for std. parameters
-  if (is.null(standardize)) parameters <- merge(parameters, standard_error(model, effects = effects, component = component, method = robust), by = merge_by)
+  if (is.null(standardize)) {
+    if (isTRUE(robust)) {
+      parameters <- merge(parameters, standard_error_robust(model, ...), by = merge_by)
+    } else {
+      parameters <- merge(parameters, standard_error(model, effects = effects, component = component), by = merge_by)
+    }
+  }
+
 
   # test statistic - fix values for robust estimation
-  if (!is.null(robust) && robust == "robust") {
+  if (isTRUE(robust)) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = merge_by)
   }
+
 
   # dof
   df_error <- degrees_of_freedom(model, method = "any")
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
     parameters$df_error <- df_error
   }
+
 
   # Rematch order after merging
   parameters <- parameters[match(original_order, parameters$.id), ]
