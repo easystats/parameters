@@ -33,7 +33,7 @@ set.seed(333)
 
 The [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html) function also allows the computation of standard errors, confidence intervals and p-values based on robust covariance matrix estimation from model parameters. Robust estimation is based on the packages **sandwich** and **clubSandwich**, so all models supported by either of these packages work with `model_parameters()` when `robust = TRUE`.
 
-By default, when `model_parameters(robust = TRUE)`, it internally calls `sandwich::vcovHC(type = "HC3")`. However, there are three arguments that allow for choosing different methods and options of robust estimation: `vcov_estimation`, `vcov_type` and `vcov_args` (see [`?standard_error_robust](https://easystats.github.io/parameters/reference/standard_error_robust.html) for further details).
+By default, when `model_parameters(robust = TRUE)`, it internally calls `sandwich::vcovHC(type = "HC3")`. However, there are three arguments that allow for choosing different methods and options of robust estimation: `vcov_estimation`, `vcov_type` and `vcov_args` (see [`?standard_error_robust`](https://easystats.github.io/parameters/reference/standard_error_robust.html) for further details).
 
 Let us start with a simple example, which uses a heteroskedasticity-consistent covariance matrix estimation with estimation-type "HC3" (i.e. `sandwich::vcovHC(type = "HC3")` is called):
 
