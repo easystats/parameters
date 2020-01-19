@@ -7,7 +7,7 @@
 ## Bug fixes
 
 - Fixed issue in `model_parameters()` when `robust = TRUE`, which could sometimes mess up order of the statistic column.
-- Fixed issue in `model_parameters()` with `df_method = "satterthwaite"`.
+- Fixed issues in `model_parameters()` when `df_method` was not set to default.
 
 # parameters 0.4.1
 
