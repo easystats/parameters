@@ -40,7 +40,7 @@ model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_metho
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_mixed(model, ci = ci, df_method = df_method, robust = robust, ...)
+    parameters <- .extract_parameters_mixed(model, ci = ci, df_method = df_method, robust = robust, standardize = standardize, ...)
   }
 
 

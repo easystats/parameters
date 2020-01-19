@@ -130,7 +130,11 @@ navbar:
   - text: Features
     href: reference/index.html
   - text: Parameters Description
-    href: articles/model_parameters.html
+    menu:
+      - text: Summary of Model Parameters
+        href: articles/model_parameters.html
+      - text: Standardized Model Parameters
+        href: articles/model_parameters_standardized.html
   - text: Parameters Selection
     href: articles/parameters_selection.html
   - text: Dimension Reduction
