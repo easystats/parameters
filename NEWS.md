@@ -2,13 +2,14 @@
 
 ## General
 
+- Added new vignettes on 'Standardized Model Parameters' and 'Robust Estimation of Standard Errors', and vignettes are now also published on CRAN.
 - Improved handling of robust statistics in `model_parameters()`. This should now work for more models than before.
-- Improved accuracy of `ci()` for `method = "satterthwaite"` and `method = "kenward"`.
+- Improved accuracy of `ci.merMod()` for `method = "satterthwaite"` and `method = "kenward"`.
 
 ## Bug fixes
 
 - Fixed issue in `model_parameters()` when `robust = TRUE`, which could sometimes mess up order of the statistic column.
-- Fixed issues in `model_parameters()` when `df_method` was not set to default.
+- Fixed issues in `model_parameters.merMod()` when `df_method` was not set to default.
 
 # parameters 0.4.1
 

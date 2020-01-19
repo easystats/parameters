@@ -33,6 +33,8 @@ set.seed(333)
 
 The [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html) function also allows the computation of standard errors, confidence intervals and p-values based on robust covariance matrix estimation from model parameters. Robust estimation is based on the packages **sandwich** and **clubSandwich**, so all models supported by either of these packages work with `model_parameters()` when `robust = TRUE`.
 
+## Robust Covariance Matrix Estimation from Model Parameters
+
 By default, when `model_parameters(robust = TRUE)`, it internally calls `sandwich::vcovHC(type = "HC3")`. However, there are three arguments that allow for choosing different methods and options of robust estimation: `vcov_estimation`, `vcov_type` and `vcov_args` (see [`?standard_error_robust`](https://easystats.github.io/parameters/reference/standard_error_robust.html) for further details).
 
 Let us start with a simple example, which uses a heteroskedasticity-consistent covariance matrix estimation with estimation-type "HC3" (i.e. `sandwich::vcovHC(type = "HC3")` is called):
@@ -50,7 +52,11 @@ mp$SE
 unname(sqrt(diag(sandwich::vcovHC(model))))
 ```
 
+## Cluster-Robust Covariance Matrix Estimation (sandwich)
 
+If another covariance matrix estimation is required, use the `vcov_estimation`-argument. This argument needs the suffix for the related `vcov*()`-functions as value, i.e. `vcov_estimation = "CL"` would call `sandwich::vcovCL()`, or `vcov_estimation = "HAC"` would call `sandwich::vcovHAC()`.
+
+The specific estimation type can be changed with `vcov_type`. E.g., `sandwich::vcovCL()` accepts estimation types HC0 to HC3. In the next example, we use a clustered covariance matrix estimation with HC1-estimation type.
 
 ```{r}
 # change estimation-type
@@ -61,6 +67,8 @@ mp
 mp$SE
 unname(sqrt(diag(sandwich::vcovCL(model))))
 ```
+
+Usually, clustered covariance matrix estimation is used when there is a cluster-structure in the data. The variable indicating the cluster-structure can be defined in `sandwich::vcovCL()` with the `cluster`-argument. In `model_parameters()`, additional arguments that should be passed down to functions from the **sandwich** package can be specified in `vcov_args`:
 
 ```{r}
 iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
@@ -79,6 +87,9 @@ mp$SE
 unname(sqrt(diag(sandwich::vcovCL(model, cluster = iris$cluster))))
 ```
 
+## Cluster-Robust Covariance Matrix Estimation (clubSandwich)
+
+Cluster-robust estimation of the variance-covariance matrix can also be achieved using `clubSandwich::vcovCR()`. Thus, when `vcov_estimation = "CR"`, the related function from the **clubSandwich** package is called. Note that this function _requires_ the specification of the `cluster`-argument.
 
 ```{r}
 # create fake-cluster-variable, to demonstrate cluster robust standard errors
@@ -99,6 +110,9 @@ mp$SE
 unname(sqrt(diag(clubSandwich::vcovCR(model, type = "CR1", cluster = iris$cluster))))
 ```
 
+## Robust Covariance Matrix Estimation on Standardized Model Parameters
+
+Finally, robust estimation can be combined with standardization. However, robust covariance matrix estimation only works for `standardize = "refit"`.
 
 ```{r}
 # model parameters, robust estimation on standardized model

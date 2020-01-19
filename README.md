@@ -39,10 +39,14 @@ Click on the buttons above to access the package
 [easystats blog](https://easystats.github.io/blog/posts/), and check-out
 these vignettes:
 
-  - [Parameters
-    description](https://easystats.github.io/parameters/articles/model_parameters.html)
-  - [Bootstrapped
-    parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
+  - [Summary of Model
+    Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
+  - [Standardized Model
+    Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
+  - [Standardized Model
+    Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
+  - [Robust Estimation of Standard Errors, Confidence Intervals and
+    p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
   - [Parameters
     selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
   - [Feature reduction (PCA, cMDS,
