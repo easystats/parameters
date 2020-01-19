@@ -31,7 +31,7 @@ library(dplyr)
 set.seed(333)
 ```
 
-The [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html) function (also accessible via the shortcut `parameters()`) can also be used to calculate standardized model parameters via the `standardize`-argument. There are different methods of standardizing model parameters: `"refit"`, `"posthoc"`, `"smart"` and `"basic"` (see [`?effectsize::standardize_parameters](https://easystats.github.io/effectsize/reference/standardize_parameters.html) for further details).
+The [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html) function (also accessible via the shortcut `parameters()`) can be used to calculate standardized model parameters, too, via the `standardize`-argument. There are different methods of standardizing model parameters: `"refit"`, `"posthoc"`, `"smart"` and `"basic"` (see [`?effectsize::standardize_parameters`](https://easystats.github.io/effectsize/reference/standardize_parameters.html) for further details).
 
 ## Standardization by re-fitting the model
 
