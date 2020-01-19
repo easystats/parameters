@@ -96,8 +96,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -146,6 +161,7 @@
 <a href="#general" class="anchor"></a>General</h2>
 <ul>
 <li>Improved handling of robust statistics in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. This should now work for more models than before.</li>
+<li>Improved accuracy of <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code> for <code>method = "satterthwaite"</code> and <code>method = "kenward"</code>.</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -153,6 +169,7 @@
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when <code>robust = TRUE</code>, which could sometimes mess up order of the statistic column.</li>
+<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when <code>df_method</code> was not set to default.</li>
 </ul>
 </div>
 </div>

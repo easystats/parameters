@@ -1,0 +1,106 @@
+---
+title: "Robust Estimation of Standard Errors, Confidence Intervals and p-values"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, parameters, variable selection, feature selection]
+vignette: >
+  %\VignetteIndexEntry{Robust Estimation of Standard Errors}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(comment=">")
+options(digits=2)
+
+library(parameters)
+library(dplyr)
+
+set.seed(333)
+```
+
+The [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html) function also allows the computation of standard errors, confidence intervals and p-values based on robust covariance matrix estimation from model parameters. Robust estimation is based on the packages **sandwich** and **clubSandwich**, so all models supported by either of these packages work with `model_parameters()` when `robust = TRUE`.
+
+By default, when `model_parameters(robust = TRUE)`, it internally calls `sandwich::vcovHC(type = "HC3")`. However, there are three arguments that allow for choosing different methods and options of robust estimation: `vcov_estimation`, `vcov_type` and `vcov_args` (see [`?standard_error_robust](https://easystats.github.io/parameters/reference/standard_error_robust.html) for further details).
+
+Let us start with a simple example, which uses a heteroskedasticity-consistent covariance matrix estimation with estimation-type "HC3" (i.e. `sandwich::vcovHC(type = "HC3")` is called):
+
+```{r}
+data(iris)
+model <- lm(Petal.Length ~ Sepal.Length * Species + Sepal.Width, data = iris)
+
+# model parameters, where SE, CI and p-values are based on robust estimation
+mp <- model_parameters(model, robust = TRUE)
+mp
+
+# compare standard errors to result from sandwich-package
+mp$SE
+unname(sqrt(diag(sandwich::vcovHC(model))))
+```
+
+
+
+```{r}
+# change estimation-type
+mp <- model_parameters(model, robust = TRUE, vcov_estimation = "CL", vcov_type = "HC1")
+mp
+
+# compare standard errors to result from sandwich-package
+mp$SE
+unname(sqrt(diag(sandwich::vcovCL(model))))
+```
+
+```{r}
+iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
+# change estimation-type, defining additional arguments
+mp <- model_parameters(
+  model, 
+  robust = TRUE, 
+  vcov_estimation = "CL", 
+  vcov_type = "HC1",
+  vcov_args = list(cluster = iris$cluster)
+)
+mp
+
+# compare standard errors to result from sandwich-package
+mp$SE
+unname(sqrt(diag(sandwich::vcovCL(model, cluster = iris$cluster))))
+```
+
+
+```{r}
+# create fake-cluster-variable, to demonstrate cluster robust standard errors
+iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
+
+# cluster-robust estimation
+mp <- model_parameters(
+  model, 
+  robust = TRUE, 
+  vcov_estimation = "CR", 
+  vcov_type = "CR1", 
+  vcov_args = list(cluster = iris$cluster)
+)
+mp
+
+# compare standard errors to result from clubSsandwich-package
+mp$SE
+unname(sqrt(diag(clubSandwich::vcovCR(model, type = "CR1", cluster = iris$cluster))))
+```
+
+
+```{r}
+# model parameters, robust estimation on standardized model
+model_parameters(model, standardize = "refit", robust = TRUE)
+```

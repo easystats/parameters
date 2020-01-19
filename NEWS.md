@@ -3,6 +3,7 @@
 ## General
 
 - Improved handling of robust statistics in `model_parameters()`. This should now work for more models than before.
+- Improved accuracy of `ci()` for `method = "satterthwaite"` and `method = "kenward"`.
 
 ## Bug fixes
 

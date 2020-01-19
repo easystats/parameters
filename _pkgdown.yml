@@ -135,6 +135,8 @@ navbar:
         href: articles/model_parameters.html
       - text: Standardized Model Parameters
         href: articles/model_parameters_standardized.html
+      - text: Robust Estimation of Standard Errors
+        href: articles/model_parameters_robust.html
   - text: Parameters Selection
     href: articles/parameters_selection.html
   - text: Dimension Reduction
