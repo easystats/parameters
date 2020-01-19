@@ -131,7 +131,7 @@ ci_robust <- function(model,
   }
 
   # get coefficients
-  est <- stats::coef(x)
+  params <- insight::get_parameters(x)
 
   # compute robust standard errors based on vcov
   if (package == "sandwich") {
@@ -144,7 +144,7 @@ ci_robust <- function(model,
 
   se <- sqrt(diag(.vcov))
   dendf <- degrees_of_freedom(x, method = "any")
-  t.stat <- est / se
+  t.stat <- params$Estimate / se
 
   if (is.null(dendf)) {
     p.value <- 2 * stats::pnorm(abs(t.stat), lower.tail = FALSE)
@@ -154,8 +154,8 @@ ci_robust <- function(model,
 
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(est)),
-    Estimate = est,
+    Parameter = params$Parameter,
+    Estimate = params$Estimate,
     SE = se,
     Statistic = t.stat,
     p = p.value

@@ -10,6 +10,7 @@
 
 - Fixed issue in `model_parameters()` when `robust = TRUE`, which could sometimes mess up order of the statistic column.
 - Fixed issues in `model_parameters.merMod()` when `df_method` was not set to default.
+- Fixed issues in `model_parameters.merMod()` when `robust = TRUE`.
 
 # parameters 0.4.1
 

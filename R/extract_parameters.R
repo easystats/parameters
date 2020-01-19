@@ -145,6 +145,9 @@
   parameters$Parameter <- row.names(parameters)
   original_order <- parameters$.id <- 1:nrow(parameters)
 
+  # remove SE column
+  parameters <- .remove_columns(parameters, c("SE", "Std. Error"))
+
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
 
@@ -159,8 +162,6 @@
 
   # Std Coefficients for other methods than "refit"
   if (!is.null(standardize)) {
-    # remove SE column
-    parameters <- .remove_columns(parameters, c("SE", "Std. Error"))
     # standardize model parameters and calculate related CI and SE
     std_coef <- effectsize::standardize_parameters(model, method = standardize)
     parameters <- merge(parameters, std_coef, by = "Parameter")
@@ -197,7 +198,7 @@
 
 
   # standard error - only if we don't already have SE for std. parameters
-  if (is.null(standardize)) {
+  if (is.null(standardize) || !("SE" %in% colnames(parameters))) {
     if (isTRUE(robust)) {
       parameters <- merge(parameters, standard_error_robust(model, ...), by = "Parameter")
     } else {
