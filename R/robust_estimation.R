@@ -19,6 +19,7 @@
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
 #'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
 #'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
+#' @inheritParams ci.merMod
 #'
 #' @note These functions rely on the \pkg{sandwich} or \pkg{clubSandwich} package
 #'   (the latter if \code{vcov_estimation = "CR"} for cluster-robust standard errors)

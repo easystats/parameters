@@ -51,6 +51,8 @@ are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimatio
 \item{...}{Arguments passed to or from other methods. For \code{standard_error()},
 if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
 and \code{vcov_args} can be passed down to \code{standard_error_robust()}.}
+
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 }
 \value{
 A data frame.

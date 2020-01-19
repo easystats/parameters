@@ -19,6 +19,8 @@ se_satterthwaite(model)
 \arguments{
 \item{model}{A statistical model.}
 
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+
 \item{dof}{Degrees of Freedom.}
 }
 \value{

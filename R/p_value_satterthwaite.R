@@ -4,6 +4,7 @@
 #'
 #' @param model A statistical model.
 #' @param dof Degrees of Freedom.
+#' @inheritParams ci.merMod
 #'
 #' @details Inferential statistics (like p-values, confidence intervals and
 #' standard errors) may be biased in mixed models when the number of clusters
