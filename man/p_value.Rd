@@ -2,6 +2,7 @@
 % Please edit documentation in R/p_value.R
 \name{p_value}
 \alias{p_value}
+\alias{p_value.default}
 \alias{p_value.lmerMod}
 \alias{p_value.merMod}
 \alias{p_value.rlmerMod}
@@ -12,6 +13,8 @@
 \title{p-values}
 \usage{
 p_value(model, ...)
+
+\method{p_value}{default}(model, method = NULL, ...)
 
 \method{p_value}{lmerMod}(model, method = "wald", ...)
 

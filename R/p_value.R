@@ -35,6 +35,7 @@ p_value <- function(model, ...) {
 # p-Values from Standard Models -----------------------------------------------
 
 
+#' @rdname p_value
 #' @export
 p_value.default <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"

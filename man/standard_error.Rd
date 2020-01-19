@@ -66,7 +66,8 @@ for factors or character vectors.}
 \item{method}{If \code{"robust"}, robust standard errors are computed
 by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
-from the \pkg{sandwich}-package for robust covariance matrix estimators.}
+from the \pkg{sandwich} or \pkg{clubSandwich} package for robust covariance
+matrix estimators.}
 
 \item{effects}{Should standard errors for fixed effects or random effects
 be returned? Only applies to mixed models. May be abbreviated. When

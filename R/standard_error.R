@@ -11,7 +11,8 @@
 #' @param method If \code{"robust"}, robust standard errors are computed
 #'   by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 #'   \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
-#'   from the \pkg{sandwich}-package for robust covariance matrix estimators.
+#'   from the \pkg{sandwich} or \pkg{clubSandwich} package for robust covariance
+#'   matrix estimators.
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
 #'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
