@@ -43,8 +43,6 @@ these vignettes:
     Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
   - [Standardized Model
     Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
-  - [Standardized Model
-    Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
   - [Robust Estimation of Standard Errors, Confidence Intervals and
     p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
   - [Parameters
