@@ -277,6 +277,7 @@ standard_error.glm <- standard_error.lm
 #' @export
 standard_error.merMod <- function(model, effects = c("fixed", "random"), method = NULL, ...) {
   effects <- match.arg(effects)
+  if (is.null(method)) method <- "wald"
   robust <- !is.null(method) && method == "robust"
 
   if (effects == "random") {
@@ -306,10 +307,22 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
     if (isTRUE(robust)) {
       standard_error_robust(model, ...)
     } else {
-      .data_frame(
-        Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
-        SE = .get_se_from_summary(model)
-      )
+      # Classic SE
+      if (method == "wald") {
+        .data_frame(
+          Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+          SE = .get_se_from_summary(model)
+        )
+        # ml1 approx
+      } else if (method == "ml1") {
+        se_ml1(model)
+        # Satterthwaite
+      } else if (method == "satterthwaite") {
+        se_satterthwaite(model)
+        # Kenward approx
+      } else if (method %in% c("kenward", "kr")) {
+        se_kenward(model)
+      }
     }
   }
 }

@@ -3,16 +3,13 @@
 #' @importFrom insight get_parameters
 #' @export
 se_satterthwaite <- function(model) {
-  if (!requireNamespace("lmerTest", quietly = TRUE)) {
-    stop("Package `lmerTest` required for Kenward-Rogers approximation.", call. = FALSE)
-  }
-
   params <- insight::get_parameters(model)
-  lmerTest_model <- lmerTest::as_lmerModLmerTest(model)
+  p <- p_value_satterthwaite(model)
+  statistic <- stats::qnorm(p$p / 2, lower.tail = FALSE)
 
   data.frame(
     Parameter = params$Parameter,
-    SE = as.vector(sqrt(diag(lmerTest_model@vcov_varpar))),
+    SE = abs(as.vector(params$Estimate / statistic)),
     stringsAsFactors = FALSE
   )
 }

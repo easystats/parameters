@@ -10,7 +10,7 @@ se_kenward <- function(model) {
 
   data.frame(
     Parameter = params$Parameter,
-    SE = as.vector(sqrt(diag(as.matrix(vcov_adj)))),
+    SE = abs(as.vector(sqrt(diag(as.matrix(vcov_adj))))),
     stringsAsFactors = FALSE
   )
 }

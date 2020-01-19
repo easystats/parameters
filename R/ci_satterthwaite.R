@@ -1,5 +1,10 @@
 #' @rdname p_value_satterthwaite
 #' @export
 ci_satterthwaite <- function(model, ci = .95) {
-  ci(model, ci = ci, method = "satterthwaite")
+  out <- lapply(ci, function(i) {
+    .ci_wald(model = model, ci = i, dof = Inf, effect = "fixed", component = "all", method = "satterthwaite")
+  })
+  out <- do.call(rbind, out)
+  row.names(out) <- NULL
+  out
 }

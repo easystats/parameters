@@ -185,7 +185,7 @@
       if (isTRUE(robust)) {
         ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
       } else {
-        ci_df <- ci_wald(model, ci = ci, dof = df)
+        ci_df <- ci(model, ci = ci, method = df_method)
       }
       if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
@@ -201,7 +201,7 @@
     if (isTRUE(robust)) {
       parameters <- merge(parameters, standard_error_robust(model, ...), by = "Parameter")
     } else {
-      parameters <- merge(parameters, standard_error(model), by = "Parameter")
+      parameters <- merge(parameters, standard_error(model, method = df_method), by = "Parameter")
     }
   }
 
@@ -220,15 +220,6 @@
 
   # adjust standard errors and test-statistic as well
   if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("ml1", "satterthwaite", "kenward", "kr")) {
-    parameters <- .remove_columns(parameters, c("SE", "Std. Error"))
-    if (df_method == "kenward") {
-      parameters <- merge(parameters, se_kenward(model), by = "Parameter")
-    } else if (df_method == "satterthwaite") {
-      parameters <- merge(parameters, se_satterthwaite(model), by = "Parameter")
-    } else {
-      parameters <- merge(parameters, se_ml1(model), by = "Parameter")
-    }
-
     for (test_statistic in c("t value", "z value")) {
       if (test_statistic %in% colnames(parameters)) {
         parameters[[test_statistic]] <- parameters[["Estimate"]] / parameters[["SE"]]
@@ -238,8 +229,11 @@
 
 
   # dof
-  if (!(df_method %in% c("ml1", "satterthwaite", "kenward", "kr")) && !"df" %in% names(parameters)) {
-    df_error <- degrees_of_freedom(model, method = "any")
+  if (!"df" %in% names(parameters)) {
+    if (df_method %in% c("ml1", "satterthwaite", "kenward", "kr"))
+      df_error <- df
+    else
+      df_error <- degrees_of_freedom(model, method = "any")
     if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
       parameters$df_error <- df_error
     }

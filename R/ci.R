@@ -42,15 +42,15 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "satterthwaite", "
 
     # ml1 approx
   } else if (method == "ml1") {
-    out <- ci_wald(model = x, ci = ci, dof = dof_ml1(x))
+    out <- ci_ml1(x, ci)
 
     # Satterthwaite
   } else if (method == "satterthwaite") {
-    out <- ci_wald(model = x, ci = ci, dof = dof_satterthwaite(x))
+    out <- ci_satterthwaite(x, ci)
 
     # Kenward approx
-  } else if (method == "kenward") {
-    out <- ci_wald(model = x, ci = ci, dof = dof_kenward(x))
+  } else if (method %in% c("kenward", "kr")) {
+    out <- ci_kenward(x, ci)
 
     # bootstrapping
   } else if (method == "boot") {

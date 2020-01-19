@@ -1,5 +1,10 @@
 #' @rdname p_value_kenward
 #' @export
 ci_kenward <- function(model, ci = .95) {
-  ci(model, ci = ci, method = "kenward")
+  out <- lapply(ci, function(i) {
+    .ci_wald(model = model, ci = i, dof = Inf, effect = "fixed", component = "all", method = "kenward")
+  })
+  out <- do.call(rbind, out)
+  row.names(out) <- NULL
+  out
 }
