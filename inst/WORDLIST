@@ -83,6 +83,7 @@ glmmTMB
 glmx
 Golino
 Gorsuch
+HC
 HDI
 Heisig
 heteroskedasticity
@@ -130,6 +131,7 @@ Modelling
 MSA
 multicollinearity
 multinom
+Neter
 Nieto
 nlme
 nnet
@@ -144,6 +146,7 @@ Pettersson
 platykurtic
 PloS
 PLOS
+projpred
 pscl
 PSU
 Psychometrika
@@ -169,6 +172,7 @@ Satterthwaite's
 SBC
 Schaeffer
 SEM
+SEs
 Shachar
 Shi
 Shikano
