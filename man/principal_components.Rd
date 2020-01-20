@@ -81,9 +81,13 @@ principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
 principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 
-pca <- principal_components(mtcars[, 1:5], n = 2)
+pca <- principal_components(mtcars[, 1:5], n = 2, rotation = "varimax")
 summary(pca)
 predict(pca)
+
+# which variables from the original data belong to which extracted component?
+component_columns(pca)
+
 \donttest{
 # Automated number of components
 principal_components(mtcars[, 1:4], n = "auto")

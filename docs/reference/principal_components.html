@@ -166,7 +166,9 @@
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
-)</pre>
+)
+
+<span class='fu'>component_columns</span>(<span class='no'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -232,7 +234,7 @@
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>There is a <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code>-method that prints the Eigenvalues and (explained) variance for each extracted component.</p>
+    <p>There is a <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code>-method that prints the Eigenvalues and (explained) variance for each extracted component. <code>component_columns()</code> will return a numeric vector with the assigned component index for each column from the original data frame.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -284,47 +286,51 @@
 #&gt; qsec     |      | -0.81 |       1.75
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The 2 principal components accounted for 89.18% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%).</span><span></div><div class='input'>
-<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"varimax"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># (Explained) Variance of Components
 #&gt; 
-#&gt; </span><span>Parameter                       |   PC1 |   PC2
+#&gt; </span><span>Parameter                       |   RC1 |   RC2
 #&gt; -----------------------------------------------
 #&gt; Eigenvalues                     | 4.038 | 0.562
-#&gt; Variance Explained              | 0.808 | 0.112
-#&gt; Variance Explained (Cumulative) | 0.808 | 0.920
-#&gt; Variance Explained (Proportion) | 0.808 | 0.112</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;            PC1         PC2
-#&gt; 1  -0.83958112 -0.12417860
-#&gt; 2  -0.83958112 -0.12417860
-#&gt; 3  -1.78076155  0.20357157
-#&gt; 4   0.09834476  1.10598482
-#&gt; 5   1.58552749  0.32873919
-#&gt; 6   0.42628595  1.61371418
-#&gt; 7   2.31798915 -0.38579468
-#&gt; 8  -1.83392218  0.71554314
-#&gt; 9  -1.69378203  0.07797675
-#&gt; 10 -0.60554684 -0.27702188
-#&gt; 11 -0.49812301 -0.28570556
-#&gt; 12  1.52990575  0.40014511
-#&gt; 13  1.46084757  0.40572748
-#&gt; 14  1.62198332  0.39270195
-#&gt; 15  2.99730327  0.34308959
-#&gt; 16  2.96336452  0.15336639
-#&gt; 17  2.48424862 -0.29287006
-#&gt; 18 -2.96506160  0.14911053
-#&gt; 19 -3.52699413 -1.02550272
-#&gt; 20 -3.21693607 -0.04349485
-#&gt; 21 -1.50101897  0.38651333
-#&gt; 22  1.79695027  1.11397253
-#&gt; 23  1.48376642  0.52524948
-#&gt; 24  1.97953272 -1.17526822
-#&gt; 25  1.75060571  0.43376680
-#&gt; 26 -2.57258674  0.11744981
-#&gt; 27 -2.41238961 -0.63531022
-#&gt; 28 -2.22991874  0.20202457
-#&gt; 29  1.55523735 -2.06076910
-#&gt; 30 -0.18704672 -0.26276186
-#&gt; 31  2.36338454 -1.64100466
-#&gt; 32 -1.71202696 -0.33478623</div><div class='input'><span class='co'># \donttest{</span>
+#&gt; Variance Explained              | 0.565 | 0.355
+#&gt; Variance Explained (Cumulative) | 0.565 | 0.920
+#&gt; Variance Explained (Proportion) | 0.614 | 0.386</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;            RC1         RC2
+#&gt; 1  -0.23906186  0.38058456
+#&gt; 2  -0.23906186  0.38058456
+#&gt; 3  -0.87523403  0.30496365
+#&gt; 4  -0.83256507 -1.21853890
+#&gt; 5   0.37716377 -0.82007976
+#&gt; 6  -1.10127278 -1.86114104
+#&gt; 7   1.23453249 -0.26702364
+#&gt; 8  -1.30024506 -0.23007562
+#&gt; 9  -0.74129623  0.41446358
+#&gt; 10 -0.02461777  0.47612740
+#&gt; 11  0.02534454  0.45386195
+#&gt; 12  0.29853804 -0.88051969
+#&gt; 13  0.26641941 -0.86620618
+#&gt; 14  0.34136287 -0.89960437
+#&gt; 15  0.93247714 -1.25088059
+#&gt; 16  1.06844670 -1.03682781
+#&gt; 17  1.22799380 -0.41588998
+#&gt; 18 -1.30762202  0.71198099
+#&gt; 19 -0.60701035  2.14073148
+#&gt; 20 -1.25685030  0.99325379
+#&gt; 21 -0.90720118  0.02588588
+#&gt; 22 -0.15711335 -1.72688554
+#&gt; 23  0.18137850 -1.00150788
+#&gt; 24  1.72116683  0.68171810
+#&gt; 25  0.36060813 -0.98161661
+#&gt; 26 -1.12513535  0.63056351
+#&gt; 27 -0.46730967  1.39310467
+#&gt; 28 -1.05428733  0.43877634
+#&gt; 29  2.24906373  1.75900256
+#&gt; 30  0.13210722  0.33766027
+#&gt; 31  2.24244855  1.06973229
+#&gt; 32 -0.42316749  0.86380202</div><div class='input'>
+<span class='co'># which variables from the original data belong to which extracted component?</span>
+<span class='fu'>component_columns</span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;  mpg  cyl disp   hp drat 
+#&gt;    1    1    1    1    1 </div><div class='input'>
+<span class='co'># \donttest{</span>
 <span class='co'># Automated number of components</span>
 <span class='fu'>principal_components</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
 #&gt; 

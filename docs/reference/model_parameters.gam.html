@@ -246,7 +246,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mgcv</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: nlme</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'nlme'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:lme4':</span>
+#&gt; <span class='message'>Attaching package: ‘nlme’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:lme4’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    lmList</span></div><div class='output co'>#&gt; <span class='message'>This is mgcv 1.8-31. For overview type 'help("mgcv-package")'.</span></div><div class='input'>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/gamSim.html'>gamSim</a></span>(<span class='fl'>1</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>400</span>, <span class='kw'>dist</span> <span class='kw'>=</span> <span class='st'>"normal"</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Gu &amp; Wahba 4 term additive model</div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/gam.html'>gam</a></span>(<span class='no'>y</span> ~ <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x0</span>) + <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x1</span>) + <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x2</span>) + <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x3</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dat</span>)
@@ -254,16 +254,16 @@
 #&gt; 
 #&gt; </span><span>Parameter   | Coefficient |   SE |       95% CI |     t |     df |      p
 #&gt; -------------------------------------------------------------------------
-#&gt; (Intercept) |        7.96 | 0.10 | [7.76, 8.16] | 77.52 | 384.05 | &lt; .001
+#&gt; (Intercept) |        7.72 | 0.10 | [7.53, 7.91] | 79.20 | 381.45 | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Smooth Terms component
 #&gt; 
 #&gt; </span><span>Parameter        | Coefficient |      t |     df |      p
 #&gt; ---------------------------------------------------------
-#&gt; Smooth term (x0) |        2.82 |   7.66 | 384.05 | &lt; .001
-#&gt; Smooth term (x1) |        2.56 | 101.82 | 384.05 | &lt; .001
-#&gt; Smooth term (x2) |        8.57 |  74.16 | 384.05 | &lt; .001
-#&gt; Smooth term (x3) |        1.00 |   0.08 | 384.05 | 0.774 
+#&gt; Smooth term (x0) |        2.77 |   9.77 | 381.45 | &lt; .001
+#&gt; Smooth term (x1) |        2.51 | 101.45 | 381.45 | &lt; .001
+#&gt; Smooth term (x2) |        8.55 |  94.71 | 381.45 | &lt; .001
+#&gt; Smooth term (x3) |        3.71 |   0.99 | 381.45 | 0.489 
 #&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

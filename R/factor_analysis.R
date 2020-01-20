@@ -87,5 +87,8 @@ factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = 
     stop(sprintf("Package `psych` required for `%s`-rotation.", rotation), call. = FALSE)
   }
 
-  model_parameters(psych::fa(x, nfactors = n, rotate = rotation, ...), sort = sort, threshold = threshold)
+  out <- model_parameters(psych::fa(x, nfactors = n, rotate = rotation, ...), sort = sort, threshold = threshold)
+
+  attr(out, "data_set") <- x
+  out
 }
