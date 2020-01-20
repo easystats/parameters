@@ -25,9 +25,10 @@
 #'
 #' @examples
 #' \donttest{
-#' library(lme4)
-#' model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#' p_value_satterthwaite(model)
+#' if (require("lme4")) {
+#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+#'   p_value_satterthwaite(model)
+#' }
 #' }
 #' @return A data frame.
 #' @references Satterthwaite FE (1946) An approximate distribution of estimates of variance components. Biometrics Bulletin 2 (6):110–4.

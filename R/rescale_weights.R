@@ -52,30 +52,33 @@
 #'   }
 #'
 #' @examples
-#' library(sjstats)
-#' data(nhanes_sample, package = "sjstats")
-#' head(rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR"))
+#' if (require("sjstats")) {
+#'   data(nhanes_sample, package = "sjstats")
+#'   head(rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR"))
 #'
-#' # also works with multiple group-variables...
-#' head(rescale_weights(nhanes_sample, c("SDMVSTRA", "SDMVPSU"), "WTINT2YR"))
+#'   # also works with multiple group-variables...
+#'   head(rescale_weights(nhanes_sample, c("SDMVSTRA", "SDMVPSU"), "WTINT2YR"))
 #'
-#' # or nested structures.
-#' x <- rescale_weights(
-#'   data = nhanes_sample,
-#'   group = c("SDMVSTRA", "SDMVPSU"),
-#'   probability_weights = "WTINT2YR",
-#'   nest = TRUE
-#' )
-#' head(x)
+#'   # or nested structures.
+#'   x <- rescale_weights(
+#'     data = nhanes_sample,
+#'     group = c("SDMVSTRA", "SDMVPSU"),
+#'     probability_weights = "WTINT2YR",
+#'     nest = TRUE
+#'   )
+#'   head(x)
+#' }
 #'
-#'  library(lme4)
-#' nhanes_sample <- rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR")
-#' glmer(
-#'   total ~ factor(RIAGENDR) * (log(age) + factor(RIDRETH1)) + (1 | SDMVPSU),
-#'   family = poisson(),
-#'   data = nhanes_sample,
-#'   weights = pweights_a
-#' )
+#' if (require("lme4") && require("sjstats")) {
+#'   data(nhanes_sample, package = "sjstats")
+#'   nhanes_sample <- rescale_weights(nhanes_sample, "SDMVSTRA", "WTINT2YR")
+#'   glmer(
+#'     total ~ factor(RIAGENDR) * (log(age) + factor(RIDRETH1)) + (1 | SDMVPSU),
+#'     family = poisson(),
+#'     data = nhanes_sample,
+#'     weights = pweights_a
+#'   )
+#' }
 #' @export
 rescale_weights <- function(data, group, probability_weights, nest = FALSE) {
 

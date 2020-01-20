@@ -27,11 +27,11 @@
 #'
 #' @examples
 #' \donttest{
-#' library(lme4)
-#' model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#' p_value_kenward(model)
+#' if (require("lme4")) {
+#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+#'   p_value_kenward(model)
 #' }
-#'
+#' }
 #' @return A data frame.
 #' @references Kenward, M. G., & Roger, J. H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics, 983-997.
 #' @importFrom stats pt coef

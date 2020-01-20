@@ -26,9 +26,10 @@
 #'
 #' @examples
 #' \donttest{
-#' library(lme4)
-#' model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#' p_value_ml1(model)
+#' if (require("lme4")) {
+#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+#'   p_value_ml1(model)
+#' }
 #' }
 #' @return A data frame.
 #' @references Elff, M.; Heisig, J.P.; Schaeffer, M.; Shikano, S. (2019): Multilevel Analysis with Few Clusters: Improving Likelihood-based Methods to Provide Unbiased Estimates and Accurate Inference, British Journal of Political Science.

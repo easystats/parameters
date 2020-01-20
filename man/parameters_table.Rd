@@ -27,9 +27,9 @@ library(parameters)
 x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
 as.data.frame(parameters_table(x))
 \donttest{
-library(rstanarm)
-x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
-as.data.frame(parameters_table(x))
+if (require("rstanarm")) {
+  x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
+  as.data.frame(parameters_table(x))
 }
-
+}
 }

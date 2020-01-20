@@ -12,15 +12,13 @@
 #' @examples
 #' \donttest{
 #' library(parameters)
-#' library(rstanarm)
-#'
-#' model <- rstanarm::stan_glm(Sepal.Length ~ Petal.Length * Species,
-#'   data = iris, iter = 500, refresh = 0
-#' )
-#'
-#' model_parameters(model)
+#' if (require("rstanarm")) {
+#'   model <- rstanarm::stan_glm(Sepal.Length ~ Petal.Length * Species,
+#'     data = iris, iter = 500, refresh = 0
+#'   )
+#'   model_parameters(model)
 #' }
-#'
+#' }
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom insight get_priors
 #' @inheritParams insight::get_parameters

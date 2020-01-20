@@ -51,12 +51,12 @@ The Wald-test approximation treats t-values as Wald z. Since the t distribution 
 }
 \examples{
 \donttest{
-library(lme4)
-model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-p_value_wald(model)
-ci_wald(model, ci = c(0.90, 0.95))
+if (require("lme4")) {
+  model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+  p_value_wald(model)
+  ci_wald(model, ci = c(0.90, 0.95))
 }
-
+}
 }
 \references{
 Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.

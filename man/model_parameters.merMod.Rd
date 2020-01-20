@@ -72,24 +72,24 @@ Parameters from (linear) mixed models.
 }
 \examples{
 library(parameters)
-library(lme4)
-library(glmmTMB)
+if (require("lme4") && require("glmmTMB")) {
+  model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
+  model_parameters(model)
 
-model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
-model_parameters(model)
-
-model <- glmmTMB(
-  count ~ spp + mined + (1 | site),
-  ziformula = ~mined,
-  family = poisson(),
-  data = Salamanders
-)
-model_parameters(model)
-\donttest{
-model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
-model_parameters(model, bootstrap = TRUE, iterations = 50)
+  model <- glmmTMB(
+    count ~ spp + mined + (1 | site),
+    ziformula = ~mined,
+    family = poisson(),
+    data = Salamanders
+  )
+  model_parameters(model)
 }
-
+\donttest{
+if (require("lme4")) {
+  model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
+  model_parameters(model, bootstrap = TRUE, iterations = 50)
+}
+}
 }
 \seealso{
 \code{\link[=standardize_names]{standardize_names()}} to rename

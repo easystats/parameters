@@ -47,9 +47,10 @@ to linear mixed models only.
 }
 \examples{
 \donttest{
-library(lme4)
-model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-p_value_ml1(model)
+if (require("lme4")) {
+  model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+  p_value_ml1(model)
+}
 }
 }
 \references{
