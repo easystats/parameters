@@ -125,7 +125,7 @@ model_parameters(model, standardize = "refit", robust = TRUE)
 
 ### Robust Covariance Matrix Estimation for Mixed Models
 
-For linear mixed models, that by definition have a clustered ("hierachical" or multilevel) structure in the data, it is also possible to estimate a cluster-robust covariance matrix. This is possible due to the **clubSandwich** package, thus we need to define the same arguments as in the above example.
+For linear mixed models, that by definition have a clustered ("hierarchical" or multilevel) structure in the data, it is also possible to estimate a cluster-robust covariance matrix. This is possible due to the **clubSandwich** package, thus we need to define the same arguments as in the above example.
 
 ```{r}
 library(lme4)
