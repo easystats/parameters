@@ -220,7 +220,7 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("ml1", "satterthwaite", "kenward", "kr")) {
+  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("ml1", "kenward", "kr")) {
     for (test_statistic in c("t value", "z value")) {
       if (test_statistic %in% colnames(parameters)) {
         parameters[[test_statistic]] <- parameters[["Estimate"]] / parameters[["SE"]]
