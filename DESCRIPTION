@@ -107,6 +107,7 @@ Suggests:
     survival,
     testthat,
     TMB,
+    truncreg,
     VGAM,
     Zelig
 Encoding: UTF-8
