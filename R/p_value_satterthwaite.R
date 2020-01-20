@@ -43,24 +43,5 @@ p_value_satterthwaite.lmerMod <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_satterthwaite(model)
   }
-
-  params <- as.data.frame(stats::coef(summary(model)))
-
-  if ("t value" %in% names(params)) {
-    p <- 2 * stats::pt(abs(params[, "t value"]), df = dof, lower.tail = FALSE)
-  } else {
-    stop("Couldn't find any suitable statistic (t value) for Satterthwaite approximation.")
-  }
-
-  if (is.null(names(p))) {
-    coef_names <- rownames(params)
-  } else {
-    coef_names <- names(p)
-  }
-
-  data.frame(
-    Parameter = coef_names,
-    p = unname(p),
-    stringsAsFactors = FALSE
-  )
+  .p_value_dof(model, dof)
 }

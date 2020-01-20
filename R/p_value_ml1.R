@@ -45,13 +45,5 @@ p_value_ml1.merMod <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_ml1(model)
   }
-
-  statistic <- insight::get_statistic(model)
-  p <- 2 * stats::pt(abs(statistic$Statistic), df = dof, lower.tail = FALSE)
-
-  data.frame(
-    Parameter = statistic$Parameter,
-    p = unname(p),
-    stringsAsFactors = FALSE
-  )
+  .p_value_dof(model, dof)
 }

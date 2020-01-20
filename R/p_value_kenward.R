@@ -46,23 +46,21 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_kenward(model)
   }
+  .p_value_dof(model, dof)
+}
 
-  params <- as.data.frame(stats::coef(summary(model)))
 
-  if ("t value" %in% names(params)) {
-    p <- 2 * stats::pt(abs(params[, "t value"]), df = dof, lower.tail = FALSE)
-  } else {
-    stop("Couldn't find any suitable statistic (t value) for Kenward-Roger approximation.")
-  }
 
-  if (is.null(names(p))) {
-    coef_names <- rownames(params)
-  } else {
-    coef_names <- names(p)
-  }
+
+
+# helper ------------------------------
+
+.p_value_dof <- function(model, dof) {
+  statistic <- insight::get_statistic(model)
+  p <- 2 * stats::pt(abs(statistic$Statistic), df = dof, lower.tail = FALSE)
 
   data.frame(
-    Parameter = coef_names,
+    Parameter = statistic$Parameter,
     p = unname(p),
     stringsAsFactors = FALSE
   )
