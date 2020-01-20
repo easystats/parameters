@@ -123,8 +123,16 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
     loadings <- .filter_loadings(loadings, threshold = threshold)
   }
 
+  # get loading columns in long-format
+  long_loadings <- .long_loadings(loadings, threshold = threshold, loadings_columns = loading_cols)
+  # here we match the original columns in the data set with the assigned components
+  # for each variable, so we know which column in the original data set belongs
+  # to which extracted component...
+  component_columns <- as.numeric(as.factor(as.character(long_loadings$Component)[match(rownames(model$loadings), as.character(long_loadings$Variable))]))
+
   # Add some more attributes
-  attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold, loadings_columns = loading_cols)
+  attr(loadings, "loadings_long") <- long_loadings
+  attr(loadings, "component_columns") <- stats::setNames(component_columns, rownames(model$loadings))
 
   # add class-attribute for printing
   if (model$fn == "principal") {

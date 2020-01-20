@@ -6,6 +6,10 @@
 - Improved handling of robust statistics in `model_parameters()`. This should now work for more models than before.
 - Improved accuracy of `ci.merMod()` for `method = "satterthwaite"` and `method = "kenward"`.
 
+## New functions
+
+- `component_columns()` as a small helper that returns the component index for each variable in a data frame that was used in `principal_components()`.
+
 ## Bug fixes
 
 - Fixed issue in `model_parameters()` when `robust = TRUE`, which could sometimes mess up order of the statistic column.

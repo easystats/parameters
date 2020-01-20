@@ -43,7 +43,7 @@
 #'  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
 #'  }
 #'
-#' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component.
+#' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{component_columns()} will return a numeric vector with the assigned component index for each column from the original data frame.
 #'
 #' @examples
 #' library(parameters)
@@ -73,9 +73,15 @@ principal_components <- function(x, n = "auto", rotation = "none", sort = FALSE,
   UseMethod("principal_components")
 }
 
+#' @rdname principal_components
+#' @export
+component_columns <- function(x) {
+  attributes(x)$component_columns
+}
 
 
-#' @importFrom stats prcomp na.omit
+
+#' @importFrom stats prcomp na.omit setNames
 #' @export
 principal_components.data.frame <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
   # save name of data set
@@ -159,8 +165,16 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
     loadings <- .filter_loadings(loadings, threshold = threshold)
   }
 
+  # get loading columns in long-format
+  long_loadings <- .long_loadings(loadings, threshold = threshold)
+  # here we match the original columns in the data set with the assigned components
+  # for each variable, so we know which column in the original data set belongs
+  # to which extracted component...
+  component_columns <- as.numeric(as.factor(as.character(long_loadings$Component)[match(colnames(x), as.character(long_loadings$Variable))]))
+
   # Add some more attributes
-  attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
+  attr(loadings, "loadings_long") <- long_loadings
+  attr(loadings, "component_columns") <- stats::setNames(component_columns, colnames(x))
   attr(loadings, "data") <- data_name
 
   # add class-attribute for printing
