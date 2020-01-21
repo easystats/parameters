@@ -220,9 +220,10 @@
 #&gt; Species | Residuals |       34.94 |   1 |       34.94 |       |       
 #&gt; Within  | Sepal.Big |        4.74 |   1 |        4.74 | 20.24 | &lt; .001
 #&gt; Within  | Residuals |       34.21 | 146 |        0.23 |       |       </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>))
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares | df | Mean_Square |     F
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>)) {
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>))
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+}</div><div class='output co'>#&gt; Parameter | Sum_Squares | df | Mean_Square |     F
 #&gt; --------------------------------------------------
 #&gt; Sepal.Big |        4.64 |  1 |        4.64 | 19.82</div></pre>
   </div>

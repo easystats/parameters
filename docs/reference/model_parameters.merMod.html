@@ -254,21 +254,18 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>glmmTMB</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"glmmTMB"</span>)) {
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
-#&gt; -----------------------------------------------------------------------
-#&gt; (Intercept) |       36.19 | 2.19 | [31.90, 40.48] | 16.52 | 28 | &lt; .001
-#&gt; wt          |       -5.05 | 0.64 | [-6.30, -3.79] | -7.89 | 28 | &lt; .001</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
-  <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
-  <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
-)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
+    <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
+    <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
+    <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
+  )
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+}</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
 #&gt; 
 #&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
 #&gt; ------------------------------------------------------------------------
@@ -288,12 +285,13 @@
 #&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 633 | 0.004 
 #&gt; mined [no]  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | 633 | &lt; .001
 #&gt; </div><div class='input'><span class='co'># \donttest{</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>)) {
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>gear</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+}</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
 #&gt; (Intercept) |       36.40 | [32.30, 41.02] | &lt; .001
 #&gt; wt          |       -5.17 | [-6.48, -3.79] | &lt; .001</div><div class='input'># }
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
