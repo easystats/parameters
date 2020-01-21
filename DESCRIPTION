@@ -75,6 +75,7 @@ Suggests:
     glmmTMB,
     GPArotation,
     lavaan,
+    lavaSearch2,
     lme4,
     lmerTest,
     logspline,
