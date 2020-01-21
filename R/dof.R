@@ -103,12 +103,17 @@ dof <- degrees_of_freedom
   dof <- try(stats::df.residual(model), silent = TRUE)
 
   # 2nd try
-  if (inherits(dof, "try-error")) {
+  if (inherits(dof, "try-error") || is.null(dof)) {
     dof <- try(summary(model)$df[2], silent = TRUE)
   }
 
-  # 2nd try
-  if (inherits(dof, "try-error")) {
+  # 3rd try, nlme
+  if (inherits(dof, "try-error") || is.null(dof)) {
+    dof <- try(unname(model$fixDF$X), silent = TRUE)
+  }
+
+  # last try
+  if (inherits(dof, "try-error") || is.null(dof)) {
     dof <- Inf
     if (verbose) {
       insight::print_color("Could not extract degrees of freedom.\n", "red")
@@ -122,7 +127,11 @@ dof <- degrees_of_freedom
 
 
 .dof_method_ok <- function(model, method) {
-  if (!insight::model_info(model)$is_linear && method %in% c("satterthwaite", "kenward")) {
+  if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "kenward", "kr", "nokr", "wald", "ml1"))) {
+    warning("'df_method' must be one of 'wald', 'kenward', 'satterthwaite' or ' ml1'. Using 'wald' now.", call. = FALSE)
+    return(TRUE)
+  }
+  if (!insight::model_info(model)$is_linear && method %in% c("satterthwaite", "kenward", "kr")) {
     warning(sprintf("'%s'-degrees of freedoms are only available for linear mixed models.", method), call. = FALSE)
     return(FALSE)
   }
