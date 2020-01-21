@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.lavaan.R
 \name{model_parameters.lavaan}
 \alias{model_parameters.lavaan}
-\title{Format CFA/SEM from the (b)lavaan package}
+\title{Parameters from CFA/SEM models}
 \usage{
 \method{model_parameters}{lavaan}(
   model,
@@ -24,7 +24,7 @@
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame of indices related to the model's parameters.
+A data frame of indices related to the model's parameters.
 }
 \description{
 Format CFA/SEM objects from the (b)lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).

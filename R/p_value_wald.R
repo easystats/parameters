@@ -7,13 +7,13 @@
 #'
 #' @examples
 #' \donttest{
-#' library(lme4)
-#' model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#' p_value_wald(model)
-#' ci_wald(model, ci = c(0.90, 0.95))
+#' if (require("lme4")) {
+#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+#'   p_value_wald(model)
+#'   ci_wald(model, ci = c(0.90, 0.95))
 #' }
-#'
-#' @return The p-values.
+#' }
+#' @return A data frame.
 #' @importFrom stats coef pt
 #' @references Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.
 #' @export

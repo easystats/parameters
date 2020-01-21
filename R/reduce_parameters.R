@@ -10,23 +10,11 @@
 #' \subsection{Supervised Methods}{
 #' \itemize{
 #' \item \strong{PCA}: See \code{\link{principal_components}}.
-#' }
-#'
-#' \itemize{
 #' \item \strong{cMDS / PCoA}: See \code{\link{cmds}}. Classical Multidimensional Scaling (cMDS) takes a set of dissimilarities (i.e., a distance matrix) and returns a set of points such that the distances between the points are approximately equal to the dissimilarities.
-#' }
-#'
-#' \itemize{
 #' \item \strong{DRR}: See \code{\link{DRR}}. Dimensionality Reduction via Regression (DRR) is a very recent technique extending PCA (Laparra et al., 2015). Starting from a rotated PCA, it predicts redundant information from the remaining components using non-linear regression. Some of the most notable advantages of performing PCR are avoidance of multicollinearity between predictors and overfitting mitigation. PCR tends to perform well when the first principal components are enough to explain most of the variation in the predictors. Requires the \pkg{DRR} package to be installed.
-#' }
-#'
-#' \itemize{
 #' \item \strong{ICA}: See \code{\link{ICA}}. Performs an Independent Component Analysis using the FastICA algorithm. Contrary to PCA, that attempts to find uncorrelated sources (through least squares minimization), ICA attempts to find independent sources, i.e., the source space that maximizes the "non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each source, which makes it a poor tool for dimensionality reduction. Requires the \pkg{fastICA} package to be installed.
 #' }
-#'
-#'
 #' }
-#'
 #'
 #' @references \itemize{
 #'  \item Nguyen, L. H., \& Holmes, S. (2019). Ten quick tips for effective dimensionality reduction. PLOS Computational Biology, 15(6).

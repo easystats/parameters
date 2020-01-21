@@ -1,4 +1,4 @@
-#' Format CFA/SEM from the (b)lavaan package
+#' Parameters from CFA/SEM models
 #'
 #' Format CFA/SEM objects from the (b)lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).
 #'
@@ -53,7 +53,7 @@
 #' # model_parameters(model, standardize = TRUE)
 #' }
 #'
-#' @return A data.frame of indices related to the model's parameters.
+#' @return A data frame of indices related to the model's parameters.
 #'
 #' @references \itemize{
 #'   \item Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1-36.

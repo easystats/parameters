@@ -1,9 +1,10 @@
-#' p-values using the "m-l-1" heuristic
+#' "m-l-1" approximation for SEs, CIs and p-values
 #'
 #' Approximation of degrees of freedom based on a "m-l-1" heuristic as suggested by Elff et al. (2019).
 #'
 #' @param model A mixed model.
 #' @param dof Degrees of Freedom.
+#' @inheritParams ci.merMod
 #'
 #' @details Inferential statistics (like p-values, confidence intervals and
 #' standard errors) may be biased in mixed models when the number of clusters
@@ -25,12 +26,12 @@
 #'
 #' @examples
 #' \donttest{
-#' library(lme4)
-#' model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#' p_value_ml1(model)
+#' if (require("lme4")) {
+#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+#'   p_value_ml1(model)
 #' }
-#'
-#' @return The p-values.
+#' }
+#' @return A data frame.
 #' @references Elff, M.; Heisig, J.P.; Schaeffer, M.; Shikano, S. (2019): Multilevel Analysis with Few Clusters: Improving Likelihood-based Methods to Provide Unbiased Estimates and Accurate Inference, British Journal of Political Science.
 #' @importFrom stats pt coef
 #' @export
@@ -45,13 +46,5 @@ p_value_ml1.merMod <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_ml1(model)
   }
-
-  statistic <- insight::get_statistic(model)
-  p <- 2 * stats::pt(abs(statistic$Statistic), df = dof, lower.tail = FALSE)
-
-  data.frame(
-    Parameter = statistic$Parameter,
-    p = unname(p),
-    stringsAsFactors = FALSE
-  )
+  .p_value_dof(model, dof)
 }

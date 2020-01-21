@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -97,11 +97,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -193,7 +205,7 @@ A kurtosis value below zero indicates a "platykurtic" distribution with <em>thin
 tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>skewness</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; [1] -0.1160078</div><div class='input'><span class='fu'>kurtosis</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; [1] -0.09492725</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>skewness</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; [1] 0.05571265</div><div class='input'><span class='fu'>kurtosis</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; [1] -0.3315299</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

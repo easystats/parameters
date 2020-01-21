@@ -5,13 +5,13 @@
 \alias{model_parameters.PCA}
 \alias{model_parameters.principal}
 \alias{model_parameters.omega}
-\title{Structural Models (PCA, EFA, ...)}
+\title{Parameters from Structural Models (PCA, EFA, ...)}
 \usage{
 \method{model_parameters}{PCA}(model, sort = FALSE, threshold = NULL, labels = NULL, ...)
 
 \method{model_parameters}{principal}(model, sort = FALSE, threshold = NULL, labels = NULL, ...)
 
-\method{model_parameters}{omega}(model, sort = FALSE, threshold = NULL, labels = NULL, ...)
+\method{model_parameters}{omega}(model, ...)
 }
 \arguments{
 \item{model}{PCA or FA created by the \pkg{psych} or \pkg{FactoMineR} packages (e.g. through \code{psych::principal},  \code{psych::fa} or \code{psych::omega}).}
@@ -55,6 +55,13 @@ principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 efa <- psych::fa(attitude, nfactors = 3)
 model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
 }
+
+# Omega ---------
+omega <- psych::omega(mtcars, nfactors = 3)
+params <- model_parameters(omega)
+params
+summary(params)
+
 
 # FactoMineR ---------
 \dontrun{

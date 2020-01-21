@@ -2,7 +2,7 @@
 % Please edit documentation in R/n_factors.R
 \name{n_factors}
 \alias{n_factors}
-\title{Number of Components/Factors to Retain in Factor Analysis}
+\title{Number of components/factors to retain in PCA/FA}
 \usage{
 n_factors(
   x,
@@ -33,7 +33,7 @@ n_factors(
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame.
+A data frame.
 }
 \description{
 This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors.

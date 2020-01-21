@@ -1,4 +1,4 @@
-#' Structural Models (PCA, EFA, ...)
+#' Parameters from Structural Models (PCA, EFA, ...)
 #'
 #' Format structural models from the \pkg{psych} or \pkg{FactoMineR} packages.
 #'
@@ -32,6 +32,13 @@
 #' efa <- psych::fa(attitude, nfactors = 3)
 #' model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
 #' }
+#'
+#' # Omega ---------
+#' omega <- psych::omega(mtcars, nfactors = 3)
+#' params <- model_parameters(omega)
+#' params
+#' summary(params)
+#'
 #'
 #' # FactoMineR ---------
 #' \dontrun{
@@ -118,6 +125,10 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
 
   # Add some more attributes
   attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold, loadings_columns = loading_cols)
+  # here we match the original columns in the data set with the assigned components
+  # for each variable, so we know which column in the original data set belongs
+  # to which extracted component...
+  attr(loadings, "component_columns") <- .component_columns(loadings, loadings_columns = loading_cols, variable_names = rownames(model$loadings))
 
   # add class-attribute for printing
   if (model$fn == "principal") {
@@ -132,6 +143,8 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
 
 
 
+
+
 #' @export
 model_parameters.fa <- model_parameters.principal
 
@@ -140,16 +153,29 @@ model_parameters.fa <- model_parameters.principal
 
 #' @rdname model_parameters.principal
 #' @export
-model_parameters.omega <- function(model, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+model_parameters.omega <- function(model, ...) {
 
-  # TODO: TO BE SERVERLY IMPROVED
-  # https://github.com/cran/psych/blob/master/R/print.psych.omega.R
+  # Table of omega coefficients
+  table_om <- model$omega.group
+  colnames(table_om) <- c("Omega_Total", "Omega_Hierarchical", "Omega_Group")
+  table_om$Composite <- row.names(table_om)
+  row.names(table_om) <- NULL
+  table_om <- table_om[c("Composite", names(table_om)[names(table_om) != "Composite"])]
 
-  # Get loadings
-  loadings <- as.data.frame(unclass(model$schmid$sl))
+  # Get summary: Table of Variance
+  table_var <- as.data.frame(unclass(model$omega.group))
+  table_var$Composite <- rownames(model$omega.group)
+  table_var$Total <- table_var$total * 100
+  table_var$General <- table_var$general * 100
+  table_var$Group <- table_var$group * 100
+  table_var <- table_var[c("Composite", "Total", "General", "Group")]
 
-  # Format
-  loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
-  row.names(loadings) <- NULL
-  loadings
+  # colnames(table_var) <- c("Composite", "Total Variance (%)", "Variance due to General Factor (%)", "Variance due to Group Factor (%)")
+
+  # cor.plot(psych::fa.sort(om), main = title)
+
+  out <- table_om
+  attr(out, "summary") <- table_var
+  class(out) <- c("parameters_omega", class(out))
+  out
 }

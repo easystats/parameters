@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.aov.R
 \name{model_parameters.aov}
 \alias{model_parameters.aov}
-\title{ANOVAs Parameters}
+\title{Parameters from ANOVAs}
 \usage{
 \method{model_parameters}{aov}(
   model,
@@ -27,7 +27,7 @@
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters of ANOVAs.
+Parameters from ANOVAs.
 }
 \examples{
 df <- iris
@@ -43,7 +43,8 @@ model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsi
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
 
-library(lme4)
-model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
-model_parameters(model)
+if (require("lme4")) {
+  model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
+  model_parameters(model)
+}
 }

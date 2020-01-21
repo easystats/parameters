@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>p-values using Kenward-Roger approximation — dof_kenward • parameters</title>
+<title>Kenward-Roger approximation for SEs, CIs and p-values — ci_kenward • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="p-values using Kenward-Roger approximation — dof_kenward" />
+<meta property="og:title" content="Kenward-Roger approximation for SEs, CIs and p-values — ci_kenward" />
 <meta property="og:description" content="An approximate F-test based on the Kenward-Roger (1997) approach." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -97,11 +97,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -137,7 +149,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>p-values using Kenward-Roger approximation</h1>
+    <h1>Kenward-Roger approximation for SEs, CIs and p-values</h1>
     
     <div class="hidden name"><code>p_value_kenward.Rd</code></div>
     </div>
@@ -146,7 +158,9 @@
     <p>An approximate F-test based on the Kenward-Roger (1997) approach.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dof_kenward</span>(<span class='no'>model</span>)
+    <pre class="usage"><span class='fu'>ci_kenward</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>)
+
+<span class='fu'>dof_kenward</span>(<span class='no'>model</span>)
 
 <span class='fu'>p_value_kenward</span>(<span class='no'>model</span>, <span class='kw'>dof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
@@ -160,6 +174,10 @@
       <td><p>A statistical model.</p></td>
     </tr>
     <tr>
+      <th>ci</th>
+      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+    </tr>
+    <tr>
       <th>dof</th>
       <td><p>Degrees of Freedom.</p></td>
     </tr>
@@ -167,7 +185,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The p-values.</p>
+    <p>A data frame.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Inferential statistics (like p-values, confidence intervals and
@@ -189,8 +207,9 @@ to linear mixed models only.</p>
 to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Kenward-Roger (1997) approach.
 <br /> <br />
-<code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code> and <code><a href='p_value_ml1.html'>dof_ml1</a></code> approximate degrees
-of freedom bases on Satterthwaite's method or the "m-l-1" rule.</p></div>
+<code><a href='p_value_satterthwaite.html'>dof_satterthwaite()</a></code> and
+<code><a href='p_value_ml1.html'>dof_ml1</a></code> approximate degrees
+of freedom based on Satterthwaite's method or the "m-l-1" rule.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>

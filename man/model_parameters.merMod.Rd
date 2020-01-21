@@ -5,7 +5,7 @@
 \alias{model_parameters.mixor}
 \alias{model_parameters.merMod}
 \alias{model_parameters.glmmTMB}
-\title{Mixed Model Parameters}
+\title{Parameters from Mixed Models}
 \usage{
 \method{model_parameters}{mixor}(
   model,
@@ -26,6 +26,7 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
+  robust = FALSE,
   ...
 )
 
@@ -51,13 +52,15 @@
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.}
 
-\item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}.}
+\item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only works when \code{standardize="refit"}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.}
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{df_method}{Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}).}
+\item{df_method}{Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}). Note that when \code{df_method} is not \code{"wald"}, robust standard errors etc. cannot be computed.}
+
+\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
 
 \item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}) or \code{"all"}.}
 }
@@ -65,28 +68,28 @@
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters of (linear) mixed models.
+Parameters from (linear) mixed models.
 }
 \examples{
 library(parameters)
-library(lme4)
-library(glmmTMB)
+if (require("lme4") && require("glmmTMB")) {
+  model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
+  model_parameters(model)
 
-model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
-model_parameters(model)
-
-model <- glmmTMB(
-  count ~ spp + mined + (1 | site),
-  ziformula = ~mined,
-  family = poisson(),
-  data = Salamanders
-)
-model_parameters(model)
-\donttest{
-model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
-model_parameters(model, bootstrap = TRUE, iterations = 50)
+  model <- glmmTMB(
+    count ~ spp + mined + (1 | site),
+    ziformula = ~mined,
+    family = poisson(),
+    data = Salamanders
+  )
+  model_parameters(model)
 }
-
+\donttest{
+if (require("lme4")) {
+  model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
+  model_parameters(model, bootstrap = TRUE, iterations = 50)
+}
+}
 }
 \seealso{
 \code{\link[=standardize_names]{standardize_names()}} to rename

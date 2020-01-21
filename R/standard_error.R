@@ -1,4 +1,4 @@
-#' Extract standard errors
+#' Standard Errors
 #'
 #' \code{standard_error()} attempts to return standard errors of model parameters, while \code{standard_error_robust()} attempts to return robust standard errors.
 #'
@@ -11,22 +11,12 @@
 #' @param method If \code{"robust"}, robust standard errors are computed
 #'   by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 #'   \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
-#'   from the \pkg{sandwich}-package for robust covariance matrix estimators.
-#' @param vcov_estimation String, indicating the suffix of the \code{vcov*()}-function
-#'   from the \pkg{sandwich}-package, e.g. \code{vcov_estimation = "CL"} (which
-#'   calls \code{\link[sandwich]{vcovCL}} to compute clustered covariance matrix
-#'   estimators), or \code{vcov_estimation = "HC"} (which calls
-#'   \code{\link[sandwich]{vcovHC}} to compute heteroskedasticity-consistent
-#'   covariance matrix estimators).
-#' @param vcov_type Character vector, specifying the estimation type for the
-#'   robust covariance matrix estimation (see \code{\link[sandwich]{vcovHC}} for
-#'   details).
-#' @param vcov_args List of named vectors, used as additional arguments that
-#'   are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.
+#'   from the \pkg{sandwich} or \pkg{clubSandwich} package for robust covariance
+#'   matrix estimators.
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
 #'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
-#'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
+#'   and \code{vcov_args} can be passed down to \code{\link[=standard_error_robust]{standard_error_robust()}}.
 #' @param effects Should standard errors for fixed effects or random effects
 #'    be returned? Only applies to mixed models. May be abbreviated. When
 #'    standard errors for random effects are requested, for each grouping factor
@@ -34,24 +24,9 @@
 #'    is returned.
 #' @inheritParams simulate_model
 #'
-#' @note \code{standard_error_robust()} resp. \code{standard_error(method = "robust")}
-#'   rely on the \pkg{sandwich}-package and will thus only work for those models
-#'   supported by that package.
-#'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
-#'
-#' # robust standard errors, calling sandwich::vcovHC(type="HC3") by default
-#' standard_error_robust(model)
-#'
-#' # cluster-robust standard errors, using clubSandwich
-#' iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
-#' standard_error_robust(
-#'   model,
-#'   vcov_type = "CR2",
-#'   vcov_args = list(cluster = iris$cluster)
-#' )
 #' @return A data frame.
 #' @importFrom stats coef vcov setNames var na.omit
 #' @importFrom insight get_varcov print_color get_parameters find_parameters
@@ -303,6 +278,7 @@ standard_error.glm <- standard_error.lm
 #' @export
 standard_error.merMod <- function(model, effects = c("fixed", "random"), method = NULL, ...) {
   effects <- match.arg(effects)
+  if (is.null(method)) method <- "wald"
   robust <- !is.null(method) && method == "robust"
 
   if (effects == "random") {
@@ -332,10 +308,19 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
     if (isTRUE(robust)) {
       standard_error_robust(model, ...)
     } else {
-      .data_frame(
-        Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
-        SE = .get_se_from_summary(model)
-      )
+      # Classic and Satterthwaite SE
+      if (method %in% c("wald", "satterthwaite")) {
+        .data_frame(
+          Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+          SE = .get_se_from_summary(model)
+        )
+        # ml1 approx
+      } else if (method == "ml1") {
+        se_ml1(model)
+        # Kenward approx
+      } else if (method %in% c("kenward", "kr")) {
+        se_kenward(model)
+      }
     }
   }
 }
@@ -447,11 +432,17 @@ standard_error.MixMod <- function(model, effects = c("fixed", "random"), compone
 # Zero-inflated models --------------------------------------------------------
 
 
+#' @rdname standard_error
 #' @export
-standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, ...) {
   component <- match.arg(component)
   if (is.null(.check_component(model, component))) {
     return(NULL)
+  }
+
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(standard_error_robust(model, ...))
   }
 
   cs <- .compact_list(stats::coef(summary(model)))
@@ -564,8 +555,14 @@ standard_error.coxme <- function(model, ...) {
 
 
 
+#' @rdname standard_error
 #' @export
-standard_error.coxph <- function(model, ...) {
+standard_error.coxph <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(standard_error_robust(model, ...))
+  }
+
   cs <- stats::coef(summary(model))
   se <- cs[, 3]
 
@@ -578,7 +575,12 @@ standard_error.coxph <- function(model, ...) {
 
 
 #' @export
-standard_error.survreg <- function(model, ...) {
+standard_error.survreg <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(standard_error_robust(model, ...))
+  }
+
   s <- summary(model)
   se <- s$table[, 2]
 
@@ -673,7 +675,12 @@ standard_error.brmultinom <- standard_error.multinom
 
 
 #' @export
-standard_error.polr <- function(model, ...) {
+standard_error.polr <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(standard_error_robust(model, ...))
+  }
+
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   se <- smry[[2]]
   names(se) <- rownames(smry)

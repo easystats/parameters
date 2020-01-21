@@ -5,8 +5,7 @@
 \alias{parameters_selection}
 \alias{select_parameters.lm}
 \alias{select_parameters.merMod}
-\alias{select_parameters.stanreg}
-\title{Parameters Selection}
+\title{Automated selection of model parameters}
 \usage{
 select_parameters(model, ...)
 
@@ -15,8 +14,6 @@ parameters_selection(model, ...)
 \method{select_parameters}{lm}(model, direction = "both", steps = 1000, k = 2, ...)
 
 \method{select_parameters}{merMod}(model, direction = "backward", steps = 1000, ...)
-
-\method{select_parameters}{stanreg}(model, method = NULL, cross_validation = FALSE, ...)
 }
 \arguments{
 \item{model}{A statistical model.}
@@ -41,16 +38,12 @@ parameters_selection(model, ...)
     Only \code{k = 2} gives the genuine AIC: \code{k = log(n)} is sometimes
     referred to as BIC or SBC.
   }
-
-\item{method}{The method used in the variable selection. Can be NULL (default), "forward" or "L1". See \code{projpred::varsel}.}
-
-\item{cross_validation}{Select with cross-validation.}
 }
 \value{
 The model refitted with optimal number of parameters.
 }
 \description{
-This function performs an automated selection of the 'best' parameters, updating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
+This function performs an automated selection of the 'best' parameters, updating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection.
 }
 \examples{
 model <- lm(mpg ~ ., data = mtcars)
@@ -60,16 +53,18 @@ model <- lm(mpg ~ cyl * disp * hp * wt, data = mtcars)
 select_parameters(model)
 \donttest{
 # lme4 -------------------------------------------
-library(lme4)
-model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species), data = iris)
-select_parameters(model)
+if (require("lme4")) {
+  model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species), data = iris)
+  select_parameters(model)
+}
 
 # rstanarm -------------------------------------------
-library(rstanarm)
-model <- stan_glm(mpg ~ ., data = mtcars, iter = 500, refresh = 0)
-select_parameters(model, cross_validation = TRUE)
+if (require("rstanarm")) {
+  model <- stan_glm(mpg ~ ., data = mtcars, iter = 500, refresh = 0)
+  select_parameters(model, cross_validation = TRUE)
 
-model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars, iter = 500, refresh = 0)
-select_parameters(model, cross_validation = FALSE)
+  model <- stan_glm(mpg ~ cyl * disp * hp, data = mtcars, iter = 500, refresh = 0)
+  select_parameters(model, cross_validation = FALSE)
+}
 }
 }

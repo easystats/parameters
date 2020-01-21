@@ -1,9 +1,10 @@
-#' p-values using Kenward-Roger approximation
+#' Kenward-Roger approximation for SEs, CIs and p-values
 #'
 #' An approximate F-test based on the Kenward-Roger (1997) approach.
 #'
 #' @param model A statistical model.
 #' @param dof Degrees of Freedom.
+#' @inheritParams ci.merMod
 #'
 #' @details Inferential statistics (like p-values, confidence intervals and
 #' standard errors) may be biased in mixed models when the number of clusters
@@ -20,17 +21,18 @@
 #' to calculate approximated degrees of freedom and standard errors for model
 #' parameters, based on the Kenward-Roger (1997) approach.
 #' \cr \cr
-#' \code{\link{dof_satterthwaite}} and \code{\link{dof_ml1}} approximate degrees
-#' of freedom bases on Satterthwaite's method or the "m-l-1" rule.
+#' \code{\link[=dof_satterthwaite]{dof_satterthwaite()}} and
+#' \code{\link[=dof_ml1]{dof_ml1}} approximate degrees
+#' of freedom based on Satterthwaite's method or the "m-l-1" rule.
 #'
 #' @examples
 #' \donttest{
-#' library(lme4)
-#' model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#' p_value_kenward(model)
+#' if (require("lme4")) {
+#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+#'   p_value_kenward(model)
 #' }
-#'
-#' @return The p-values.
+#' }
+#' @return A data frame.
 #' @references Kenward, M. G., & Roger, J. H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics, 983-997.
 #' @importFrom stats pt coef
 #' @export
@@ -44,23 +46,21 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_kenward(model)
   }
+  .p_value_dof(model, dof)
+}
 
-  params <- as.data.frame(stats::coef(summary(model)))
 
-  if ("t value" %in% names(params)) {
-    p <- 2 * stats::pt(abs(params[, "t value"]), df = dof, lower.tail = FALSE)
-  } else {
-    stop("Couldn't find any suitable statistic (t value) for Kenward-Roger approximation.")
-  }
 
-  if (is.null(names(p))) {
-    coef_names <- rownames(params)
-  } else {
-    coef_names <- names(p)
-  }
+
+
+# helper ------------------------------
+
+.p_value_dof <- function(model, dof) {
+  statistic <- insight::get_statistic(model)
+  p <- 2 * stats::pt(abs(statistic$Statistic), df = dof, lower.tail = FALSE)
 
   data.frame(
-    Parameter = coef_names,
+    Parameter = statistic$Parameter,
     p = unname(p),
     stringsAsFactors = FALSE
   )

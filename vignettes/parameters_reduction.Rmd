@@ -34,7 +34,7 @@ set.seed(333)
 Also known as [**feature extraction** or **dimension reduction**](https://en.wikipedia.org/wiki/Feature_extraction) in machine learning, the goal of variable reduction is to **reduce the number of predictors** by derivating, from a set of measured data, new variables intended to be informative and non-redundant. This method can be used to **simplify models**, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
 
 
-# Quick and Exploratory Method
+## Quick and Exploratory Method
 
 Let's start by fitting a multiple regression with the `attitude` dataset, available is base R, to predict the overall **rating** by employees of their organization with the remaining variables (handling of employee **complaints**, special **privileges**, opportunity of **learning**, **raises**, a feedback considered too **critical** and opportunity of **advancement**).
 
@@ -69,7 +69,7 @@ A different method (**Classical Multidimensional Scaling - cMDS**) suggests that
 Although this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a **separate and dedicated stage**, as this is a very important process in the data analysis workflow.
 
 
-# Principal Component Analysis (PCA)
+## Principal Component Analysis (PCA)
 
 PCA is a widely used procedure that lies in-between dimension reduction and structural modelling. Indeed, one of the way of reducing the number of predictors is to extract a new set of uncorrelated variables that will *represent* variance of your initial dataset. But how the original variables relate between themselves can also be a question on its own.
 
@@ -96,7 +96,7 @@ update(model, rating ~ PC1, data = newdata) %>%
 ```
 
 
-## Using the `psych` package for PCA
+### Using the `psych` package for PCA
 
 You can also use different packages for models, such as [`psych`](https://cran.r-project.org/package=psych) [@revelle2018] or [`FactoMineR`](http://factominer.free.fr/) for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are **fully supported** by `parameters` through the `model_parameters()` function.
 
@@ -121,7 +121,5 @@ df <- cbind(attitude, predict(pca))
 update(model, rating ~ PC1, data = df) %>% 
   model_parameters()
 ```
-
-
 
 # References

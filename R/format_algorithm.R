@@ -1,4 +1,4 @@
-#' Model Algorithm Formatting
+#' Model Algorithm formatting
 #'
 #' @param model A statistical model.
 #'

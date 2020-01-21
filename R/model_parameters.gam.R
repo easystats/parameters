@@ -1,4 +1,4 @@
-#' Parameters of Generalized Additive (Mixed) Models
+#' Parameters from Generalized Additive (Mixed) Models
 #'
 #' Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s).
 #'
@@ -18,12 +18,12 @@
 #' model <- gam(y ~ s(x0) + s(x1) + s(x2) + s(x3), data = dat)
 #' model_parameters(model)
 #' @export
-model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, ...) {
   # Processing
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = "all", merge_by = c("Parameter", "Component"), standardize = standardize)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = "all", merge_by = c("Parameter", "Component"), standardize = standardize, robust = robust)
   }
 
   if (exponentiate) parameters <- .exponentiate_parameters(parameters)
@@ -43,16 +43,16 @@ model_parameters.vgam <- model_parameters.gam
 model_parameters.gamm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
   model <- model$gam
   class(model) <- c("gam", "lm", "glm")
-  model_parameters(model, ci = ci, bootstrap = bootstrap, iterations = iterations, ...)
+  model_parameters(model, ci = ci, bootstrap = bootstrap, iterations = iterations, robust = FALSE, ...)
 }
 
 
 #' @export
-model_parameters.list <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, ...) {
+model_parameters.list <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, robust = FALSE, ...) {
   if ("gam" %in% names(model)) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
-    model_parameters(model, ci = ci, bootstrap = bootstrap, iterations = iterations, ...)
+    model_parameters(model, ci = ci, bootstrap = bootstrap, iterations = iterations, robust = robust, ...)
   }
 }
 

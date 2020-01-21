@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Confidence Interval (CI) — ci.merMod • parameters</title>
+<title>Confidence Intervals (CI) — ci.merMod • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Confidence Interval (CI) — ci.merMod" />
+<meta property="og:title" content="Confidence Intervals (CI) — ci.merMod" />
 <meta property="og:description" content="Compute confidence intervals (CI) for frequentist models." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -97,11 +97,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -137,7 +149,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Confidence Interval (CI)</h1>
+    <h1>Confidence Intervals (CI)</h1>
     
     <div class="hidden name"><code>ci.merMod.Rd</code></div>
     </div>
@@ -160,6 +172,9 @@
 <span class='co'># S3 method for glm</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"profile"</span>, <span class='st'>"wald"</span>, <span class='st'>"robust"</span>), <span class='no'>...</span>)
 
+<span class='co'># S3 method for polr</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"profile"</span>, <span class='st'>"wald"</span>, <span class='st'>"robust"</span>), <span class='no'>...</span>)
+
 <span class='co'># S3 method for mixor</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='no'>...</span>)
 
@@ -168,6 +183,7 @@
   <span class='no'>x</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )
 
@@ -176,6 +192,7 @@
   <span class='no'>x</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )
 
@@ -184,6 +201,7 @@
   <span class='no'>x</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )
 
@@ -195,15 +213,11 @@
   <span class='no'>...</span>
 )
 
-<span class='fu'>ci_robust</span>(
-  <span class='no'>model</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>vcov_estimation</span> <span class='kw'>=</span> <span class='st'>"HC"</span>,
-  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HC3"</span>, <span class='st'>"const"</span>, <span class='st'>"HC"</span>, <span class='st'>"HC0"</span>, <span class='st'>"HC1"</span>, <span class='st'>"HC2"</span>, <span class='st'>"HC4"</span>, <span class='st'>"HC4m"</span>, <span class='st'>"HC5"</span>, <span class='st'>"CR0"</span>,
-    <span class='st'>"CR1"</span>, <span class='st'>"CR1p"</span>, <span class='st'>"CR1S"</span>, <span class='st'>"CR2"</span>, <span class='st'>"CR3"</span>),
-  <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='co'># S3 method for betareg</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for clm2</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,7 +236,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed down to <code><a href='standard_error.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
+      <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -239,35 +253,17 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
-    <tr>
-      <th>model</th>
-      <td><p>Statistical model (no Bayesian models).</p></td>
-    </tr>
-    <tr>
-      <th>vcov_estimation</th>
-      <td><p>String, indicating the suffix of the <code>vcov*()</code>-function
-from the <span class="pkg">sandwich</span>-package, e.g. <code>vcov_estimation = "CL"</code> (which
-calls <code><a href='https://rdrr.io/pkg/sandwich/man/vcovCL.html'>vcovCL</a></code> to compute clustered covariance matrix
-estimators), or <code>vcov_estimation = "HC"</code> (which calls
-<code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC</a></code> to compute heteroskedasticity-consistent
-covariance matrix estimators).</p></td>
-    </tr>
-    <tr>
-      <th>vcov_type</th>
-      <td><p>Character vector, specifying the estimation type for the
-robust covariance matrix estimation (see <code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC</a></code> for
-details).</p></td>
-    </tr>
-    <tr>
-      <th>vcov_args</th>
-      <td><p>List of named vectors, used as additional arguments that
-are passed down to the <span class="pkg">sandwich</span>-function specified in <code>vcov_estimation</code>.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame containing the CI bounds.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p><code><a href='standard_error_robust.html'>ci_robust()</a></code> resp. <code><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci(method = "robust")</a></code>
+  rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package (the latter if
+  <code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
+  thus only work for those models supported by those packages.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
@@ -301,6 +297,7 @@ are passed down to the <span class="pkg">sandwich</span>-function specified in <
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#note">Note</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

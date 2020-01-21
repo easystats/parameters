@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.Mclust.R
 \name{model_parameters.Mclust}
 \alias{model_parameters.Mclust}
-\title{Mixture Models Parameters}
+\title{Parameters from Mixture Models}
 \usage{
 \method{model_parameters}{Mclust}(model, ...)
 }

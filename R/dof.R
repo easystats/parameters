@@ -12,18 +12,20 @@
 #' model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 #' dof(model)
 #'
-#' library(lme4)
-#' model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-#' dof(model)
+#' if (require("lme4")) {
+#'   model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+#'   dof(model)
+#' }
 #' \donttest{
-#' library(rstanarm)
-#' model <- stan_glm(
-#'   Sepal.Length ~ Petal.Length * Species,
-#'   data = iris,
-#'   chains = 2,
-#'   refresh = 0
-#' )
-#' dof(model)
+#' if (require("rstanarm")) {
+#'   model <- stan_glm(
+#'     Sepal.Length ~ Petal.Length * Species,
+#'     data = iris,
+#'     chains = 2,
+#'     refresh = 0
+#'   )
+#'   dof(model)
+#' }
 #' }
 #' @export
 degrees_of_freedom <- function(model, method = "analytical") {

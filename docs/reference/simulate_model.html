@@ -45,7 +45,7 @@
   
 
 <meta property="og:title" content="Simulated draws from model coefficients — simulate_model" />
-<meta property="og:description" content="Simulate draws from a statistical model to return a data.frame of estimates." />
+<meta property="og:description" content="Simulate draws from a statistical model to return a data frame of estimates." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -97,11 +97,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -143,7 +155,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Simulate draws from a statistical model to return a data.frame of estimates.</p>
+    <p>Simulate draws from a statistical model to return a data frame of estimates.</p>
     </div>
 
     <pre class="usage"><span class='fu'>simulate_model</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
@@ -211,45 +223,45 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
-#&gt; 1    3.477800         -1.100042        -1.650753   0.8613331    0.8673646
-#&gt; 2    3.339773         -0.821275        -2.585874   0.2354248    1.0438662
-#&gt; 3    3.227401         -1.271530        -2.775289   1.0499625    1.0381349
-#&gt; 4    3.898565         -1.284933        -2.062805  -0.6295069    0.8786853
-#&gt; 5    3.460539         -1.419151        -2.722116  -0.1290633    1.0848056
-#&gt; 6    3.719594         -1.756277        -1.294521   0.7555580    0.7667266
+#&gt; 1    3.404895        -1.4495523        -1.658974  1.04226519    0.8944799
+#&gt; 2    3.594144        -1.3131367        -1.982839  0.52434634    0.8687698
+#&gt; 3    3.285108        -0.8198478        -2.809915  0.66981567    1.0335770
+#&gt; 4    3.543699        -0.9742509        -2.158027 -0.01023858    1.0307308
+#&gt; 5    3.712911        -0.7844119        -3.267886 -0.42696354    0.9873675
+#&gt; 6    3.626768        -1.3156968        -1.590338 -0.14994659    0.9139153
 #&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
-#&gt; 1                    -1.0105265                  -0.86121341
-#&gt; 2                    -1.0367369                  -0.23288148
-#&gt; 3                    -1.4021334                  -0.90483831
-#&gt; 4                     0.3197725                   0.53387066
-#&gt; 5                    -0.4545711                   0.02889233
-#&gt; 6                    -0.2972529                  -0.83257724</div><div class='input'>
+#&gt; 1                    -0.8729099                  -1.12953933
+#&gt; 2                    -0.5673161                  -0.42988776
+#&gt; 3                    -1.3881523                  -0.45778575
+#&gt; 4                    -0.7451538                  -0.19654116
+#&gt; 5                    -0.4686398                   0.70172417
+#&gt; 6                    -0.1066046                  -0.08454052</div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
   <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
   <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
   <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
 )
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept)     sppPR       sppDM    sppEC-A   sppEC-L  sppDES-L       sppDF
-#&gt; 1 -0.26334222 -1.552747  0.35849946 -0.6225720 0.4628961 0.4190927 -0.03844777
-#&gt; 2 -0.85014245 -1.163187 -0.01537845 -0.4380014 0.6054221 0.4799746  0.22475510
-#&gt; 3 -0.03491835 -1.383506  0.33925201 -0.7417919 0.6484625 0.5912209  0.18135893
-#&gt; 4 -0.62246002 -1.246795  0.04572176 -0.8998526 0.6158391 0.4043438 -0.11786300
-#&gt; 5 -0.40095441 -1.487786  0.30547569 -0.8382810 0.6710861 0.6107590  0.20338737
-#&gt; 6 -0.31129236 -1.672634  0.01532667 -0.6062330 0.5122990 0.4482887 -0.04101846
-#&gt;     minedno (Intercept)_zi minedno_zi
-#&gt; 1 1.4026186      0.8997506  -1.950767
-#&gt; 2 1.7380679      1.3063531  -2.395193
-#&gt; 3 0.8684755      0.9109446  -1.779862
-#&gt; 4 1.6478462      0.7696153  -1.778931
-#&gt; 5 1.3090852      0.6493970  -1.697941
-#&gt; 6 1.2737600      0.7311969  -1.858400</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>))</div><div class='output co'>#&gt;   (Intercept)   minedno
-#&gt; 1   0.8836636 -1.854584
-#&gt; 2   0.8617341 -2.151215
-#&gt; 3   0.7870524 -2.113692
-#&gt; 4   0.4824277 -1.456766
-#&gt; 5   1.1759076 -2.500519
-#&gt; 6   1.0901337 -2.265194</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept)     sppPR     sppDM    sppEC-A   sppEC-L  sppDES-L      sppDF
+#&gt; 1 -0.04358525 -1.323612 0.2021646 -0.8251109 0.7606523 0.6202670 0.05885506
+#&gt; 2 -0.55857284 -1.371607 0.3515352 -0.5458674 0.6728705 0.5908258 0.11513497
+#&gt; 3 -0.41281277 -1.304294 0.1976165 -0.3772979 0.7708132 0.5506967 0.15609011
+#&gt; 4 -0.58463323 -1.371095 0.2457783 -0.3849654 0.8851888 0.7818880 0.14630199
+#&gt; 5  0.14979521 -1.308963 0.1975455 -0.4483306 0.6163035 0.6089289 0.13172565
+#&gt; 6 -0.66886572 -1.330268 0.3436324 -0.4475572 0.6902804 0.6183474 0.15638409
+#&gt;    minedno (Intercept)_zi minedno_zi
+#&gt; 1 1.025334      0.8213169  -1.528439
+#&gt; 2 1.440005      0.4374825  -1.605004
+#&gt; 3 1.254055      0.8576511  -1.778367
+#&gt; 4 1.542409      0.7179802  -1.680469
+#&gt; 5 0.962958      0.8669426  -1.767918
+#&gt; 6 1.441789      1.0695663  -1.985709</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>))</div><div class='output co'>#&gt;   (Intercept)   minedno
+#&gt; 1   0.9302574 -1.902361
+#&gt; 2   0.8314003 -1.924865
+#&gt; 3   0.1053317 -1.078260
+#&gt; 4   0.6856044 -1.833492
+#&gt; 5   0.7881163 -2.011245
+#&gt; 6   0.8491423 -2.075195</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

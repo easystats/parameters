@@ -30,7 +30,7 @@ factor_analysis(
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame of loadings.
+A data frame of loadings.
 }
 \description{
 This function performs a Factor Analysis (FA).

@@ -1,6 +1,6 @@
-#' ANOVAs Parameters
+#' Parameters from ANOVAs
 #'
-#' Parameters of ANOVAs.
+#' Parameters from ANOVAs.
 #'
 #' @param model Object of class \link{aov}, \link{anova} or \code{aovlist}.
 #' @param omega_squared Compute omega squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.
@@ -24,9 +24,10 @@
 #' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 #' model_parameters(model)
 #'
-#' library(lme4)
-#' model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
-#' model_parameters(model)
+#' if (require("lme4")) {
+#'   model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
+#'   model_parameters(model)
+#' }
 #' @export
 model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, ...) {
   if (!requireNamespace("effectsize", quietly = TRUE)) {

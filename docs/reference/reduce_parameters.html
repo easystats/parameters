@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -97,11 +97,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -178,21 +190,10 @@
 
 <ul>
 <li><p><strong>PCA</strong>: See <code><a href='principal_components.html'>principal_components</a></code>.</p></li>
-</ul>
-
-<ul>
 <li><p><strong>cMDS / PCoA</strong>: See <code><a href='cmds.html'>cmds</a></code>. Classical Multidimensional Scaling (cMDS) takes a set of dissimilarities (i.e., a distance matrix) and returns a set of points such that the distances between the points are approximately equal to the dissimilarities.</p></li>
-</ul>
-
-<ul>
 <li><p><strong>DRR</strong>: See <code><a href='DRR.html'>DRR</a></code>. Dimensionality Reduction via Regression (DRR) is a very recent technique extending PCA (Laparra et al., 2015). Starting from a rotated PCA, it predicts redundant information from the remaining components using non-linear regression. Some of the most notable advantages of performing PCR are avoidance of multicollinearity between predictors and overfitting mitigation. PCR tends to perform well when the first principal components are enough to explain most of the variation in the predictors. Requires the <span class="pkg">DRR</span> package to be installed.</p></li>
-</ul>
-
-<ul>
 <li><p><strong>ICA</strong>: See <code><a href='ICA.html'>ICA</a></code>. Performs an Independent Component Analysis using the FastICA algorithm. Contrary to PCA, that attempts to find uncorrelated sources (through least squares minimization), ICA attempts to find independent sources, i.e., the source space that maximizes the "non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each source, which makes it a poor tool for dimensionality reduction. Requires the <span class="pkg">fastICA</span> package to be installed.</p></li>
 </ul>
-
-
 
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

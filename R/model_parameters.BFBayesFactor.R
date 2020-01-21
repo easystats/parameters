@@ -1,4 +1,4 @@
-#' BayesFactor objects Parameters
+#' Parameters from BayesFactor objects
 #'
 #' Parameters of BayesFactor objects.
 #'

@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.3.0.1
+Version: 0.4.1.1
 Authors@R: 
   c(
     person("Daniel", 
@@ -23,7 +23,11 @@ Authors@R:
            family = "Patil",
            role = c("aut"),
            email = "patilindrajeet.science@gmail.com",
-           comment = c(ORCID = "0000-0003-1995-6531"))
+           comment = c(ORCID = "0000-0003-1995-6531")),
+    person(given = "Zen J.",
+           family = "Lau",
+           role = c("ctb"),
+           email = "zenjuen.lau@ntu.edu.sg")
   )
 Description: Utilities for processing the parameters of various
     statistical models. Beyond computing p values, CIs, and other indices
@@ -40,7 +44,7 @@ Depends:
     R (>= 3.2)
 Imports:
     bayestestR (>= 0.4.0),
-    insight (>= 0.7.0),
+    insight (>= 0.8.0),
     methods,
     stats,
     tools,
@@ -56,7 +60,6 @@ Suggests:
     cAIC4,
     clubSandwich,
     cluster,
-    clValid,
     covr,
     cplm,
     dplyr,
@@ -70,15 +73,17 @@ Suggests:
     geepack,
     GLMMadaptive,
     glmmTMB,
-    knitr,
+    GPArotation,
     lavaan,
     lme4,
     lmerTest,
     logspline,
+    knitr,
     MASS,
     Matrix,
     mclust,
     MCMCglmm,
+    metafor,
     mgcv,
     multimode,
     MuMIn,
@@ -86,9 +91,9 @@ Suggests:
     nFactors,
     nlme,
     panelr,
+    performance,
     pbkrtest,
     plm,
-    projpred,
     pscl,
     psych,
     randomForest,
@@ -102,6 +107,7 @@ Suggests:
     survival,
     testthat,
     TMB,
+    truncreg,
     VGAM,
     Zelig
 Encoding: UTF-8

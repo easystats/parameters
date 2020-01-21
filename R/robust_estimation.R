@@ -1,18 +1,53 @@
-#' @rdname standard_error
+#' Robust estimation
+#'
+#' \code{standard_error_robust()}, \code{ci_robust()} and \code{p_value_robust()}
+#' attempt to return indices based on robust estimation of the variance-covariance
+#' matrix, using the packages \pkg{sandwich} and \pkg{clubSandwich}.
+#'
+#' @param model A model.
+#' @param vcov_estimation String, indicating the suffix of the \code{vcov*()}-function
+#'   from the \pkg{sandwich}-package, e.g. \code{vcov_estimation = "CL"} (which
+#'   calls \code{\link[sandwich]{vcovCL}} to compute clustered covariance matrix
+#'   estimators), or \code{vcov_estimation = "HC"} (which calls
+#'   \code{\link[sandwich:vcovHC]{vcovHC()}} to compute heteroskedasticity-consistent
+#'   covariance matrix estimators).
+#' @param vcov_type Character vector, specifying the estimation type for the
+#'   robust covariance matrix estimation (see \code{\link[sandwich:vcovHC]{vcovHC()}}
+#'   or \code{\link[clubSandwich:vcovCR]{vcovCR()}} for details).
+#' @param vcov_args List of named vectors, used as additional arguments that
+#'   are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.
+#' @param ... Arguments passed to or from other methods. For \code{standard_error()},
+#'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
+#'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
+#' @inheritParams ci.merMod
+#'
+#' @note These functions rely on the \pkg{sandwich} or \pkg{clubSandwich} package
+#'   (the latter if \code{vcov_estimation = "CR"} for cluster-robust standard errors)
+#'   and will thus only work for those models supported by those packages.
+#'
+#' @examples
+#' # robust standard errors, calling sandwich::vcovHC(type="HC3") by default
+#' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
+#' standard_error_robust(model)
+#'
+#' # cluster-robust standard errors, using clubSandwich
+#' iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
+#' standard_error_robust(
+#'   model,
+#'   vcov_type = "CR2",
+#'   vcov_args = list(cluster = iris$cluster)
+#' )
+#' @return A data frame.
 #' @export
 standard_error_robust <- function(model,
                                   vcov_estimation = "HC",
-                                  vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+                                  vcov_type = NULL,
                                   vcov_args = NULL,
                                   ...) {
-
   # exceptions
   if (inherits(model, "gee")) {
     return(standard_error(model, method = "robust", ...))
   }
-
-  # match arguments
-  vcov_type <- match.arg(vcov_type)
 
   robust <- .robust_covariance_matrix(
     model,
@@ -26,16 +61,13 @@ standard_error_robust <- function(model,
 
 
 
-#' @rdname p_value
+#' @rdname standard_error_robust
 #' @export
 p_value_robust <- function(model,
                            vcov_estimation = "HC",
-                           vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+                           vcov_type = NULL,
                            vcov_args = NULL,
                            ...) {
-  # match arguments
-  vcov_type <- match.arg(vcov_type)
-
   robust <- .robust_covariance_matrix(
     model,
     vcov_fun = paste0("vcov", vcov_estimation),
@@ -49,16 +81,14 @@ p_value_robust <- function(model,
 
 
 
-#' @rdname ci.merMod
+#' @rdname standard_error_robust
 #' @export
 ci_robust <- function(model,
                       ci = 0.95,
                       vcov_estimation = "HC",
-                      vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"),
+                      vcov_type = NULL,
                       vcov_args = NULL,
                       ...) {
-  vcov_type <- match.arg(vcov_type)
-
   ci_wald(
     model = model,
     ci = ci,
@@ -76,16 +106,19 @@ ci_robust <- function(model,
 
 #' @importFrom insight n_obs
 #' @importFrom stats coef pnorm pt
-.robust_covariance_matrix <- function(x,
-                                      vcov_fun = "vcovHC",
-                                      vcov_type = c("HC3", "const", "HC", "HC0", "HC1", "HC2", "HC4", "HC4m", "HC5", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"),
-                                      vcov_args = NULL) {
+.robust_covariance_matrix <- function(x, vcov_fun = "vcovHC", vcov_type = NULL, vcov_args = NULL) {
+  # fix default, if necessary
+  if (!is.null(vcov_type) && vcov_type %in% c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3")) {
+    vcov_fun <- "vcovCR"
+  }
 
-  # match arguments
-  vcov_type <- match.arg(vcov_type)
+  # set default for clubSandwich
+  if (vcov_fun == "vcovCR" && is.null(vcov_type)) {
+    vcov_type <- "CR0"
+  }
 
   # check if required package is available
-  if (vcov_type %in% c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3")) {
+  if (vcov_fun == "vcovCR") {
     if (!requireNamespace("clubSandwich", quietly = TRUE)) {
       stop("Package `clubSandwich` needed for this function. Please install and try again.")
     }
@@ -98,7 +131,7 @@ ci_robust <- function(model,
   }
 
   # get coefficients
-  est <- stats::coef(x)
+  params <- insight::get_parameters(x)
 
   # compute robust standard errors based on vcov
   if (package == "sandwich") {
@@ -111,7 +144,7 @@ ci_robust <- function(model,
 
   se <- sqrt(diag(.vcov))
   dendf <- degrees_of_freedom(x, method = "any")
-  t.stat <- est / se
+  t.stat <- params$Estimate / se
 
   if (is.null(dendf)) {
     p.value <- 2 * stats::pnorm(abs(t.stat), lower.tail = FALSE)
@@ -121,8 +154,8 @@ ci_robust <- function(model,
 
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(est)),
-    Estimate = est,
+    Parameter = params$Parameter,
+    Estimate = params$Estimate,
     SE = se,
     Statistic = t.stat,
     p = p.value

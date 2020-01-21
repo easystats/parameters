@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -97,11 +97,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -194,17 +206,17 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     </tr>
     <tr>
       <th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, robust standard errors are computed by calling <code><a href='standard_error.html'>standard_error_robust()</a></code>. <code><a href='standard_error.html'>standard_error_robust()</a></code>, in turn, calls one of the <code>vcov*()</code>-functions from the <span class="pkg">sandwich</span>-package for robust covariance matrix estimators.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed down to <code><a href='standard_error.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
+      <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The p-values.</p>
+    <p>A data frame.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.</p>

@@ -30,17 +30,26 @@ reference:
   - model_parameters.htest
   - print.parameters_model
 
-- title: "Specific Model Parameters"
+- title: "Standard Errors, Confidence Intervals and p-values"
   contents:
-  - ci
-  - ci_wald
+  - standard_error
   - ci.merMod
-  - degrees_of_freedom
   - p_value
+
+- title: "Robust Estimation of SEs, CIs and p-values"
+  contents:
+  - standard_error_robust
+
+- title: "DoF-approximated SEs, CIs and p-values"
+  contents:
+  - p_value_wald
   - p_value_kenward
   - p_value_ml1
   - p_value_satterthwaite
-  - standard_error
+
+- title: "Other Model Parameters"
+  contents:
+  - degrees_of_freedom
   - equivalence_test
   - equivalence_test.lm
   - n_parameters
@@ -121,9 +130,13 @@ navbar:
   - text: Features
     href: reference/index.html
   - text: Parameters Description
-    href: articles/model_parameters.html
-  - text: Parameters Engineering
-    href: articles/bootstrapping.html
+    menu:
+      - text: Summary of Model Parameters
+        href: articles/model_parameters.html
+      - text: Standardized Model Parameters
+        href: articles/model_parameters_standardized.html
+      - text: Robust Estimation of Standard Errors
+        href: articles/model_parameters_robust.html
   - text: Parameters Selection
     href: articles/parameters_selection.html
   - text: Dimension Reduction

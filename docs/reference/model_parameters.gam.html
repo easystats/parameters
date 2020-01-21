@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters of Generalized Additive (Mixed) Models — model_parameters.gam • parameters</title>
+<title>Parameters from Generalized Additive (Mixed) Models — model_parameters.gam • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Parameters of Generalized Additive (Mixed) Models — model_parameters.gam" />
+<meta property="og:title" content="Parameters from Generalized Additive (Mixed) Models — model_parameters.gam" />
 <meta property="og:description" content="Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s)." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -97,11 +97,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -137,7 +149,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameters of Generalized Additive (Mixed) Models</h1>
+    <h1>Parameters from Generalized Additive (Mixed) Models</h1>
     
     <div class="hidden name"><code>model_parameters.gam.Rd</code></div>
     </div>
@@ -154,6 +166,7 @@
   <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
 
@@ -202,11 +215,15 @@
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://rdrr.io/pkg/effectsize/man/standardize_parameters.html'>standardize_parameters</a></code>.</p></td>
+      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://rdrr.io/pkg/effectsize/man/standardize_parameters.html'>standardize_parameters</a></code>. Note that robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only works when <code>standardize="refit"</code>.</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
       <td><p>Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.</p></td>
+    </tr>
+    <tr>
+      <th>robust</th>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>...</th>

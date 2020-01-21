@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_parameters.kmeans.R
 \name{model_parameters.kmeans}
 \alias{model_parameters.kmeans}
-\title{Cluster Models (k-means, ...)}
+\title{Parameters from Cluster Models (k-means, ...)}
 \usage{
 \method{model_parameters}{kmeans}(model, ...)
 }

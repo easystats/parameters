@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mixed Model Parameters — model_parameters.mixor • parameters</title>
+<title>Parameters from Mixed Models — model_parameters.mixor • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Mixed Model Parameters — model_parameters.mixor" />
-<meta property="og:description" content="Parameters of (linear) mixed models." />
+<meta property="og:title" content="Parameters from Mixed Models — model_parameters.mixor" />
+<meta property="og:description" content="Parameters from (linear) mixed models." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -97,11 +97,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -137,13 +149,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mixed Model Parameters</h1>
+    <h1>Parameters from Mixed Models</h1>
     
     <div class="hidden name"><code>model_parameters.merMod.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameters of (linear) mixed models.</p>
+    <p>Parameters from (linear) mixed models.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mixor</span>
@@ -167,6 +179,7 @@
   <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
 
@@ -207,7 +220,7 @@
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://rdrr.io/pkg/effectsize/man/standardize_parameters.html'>standardize_parameters</a></code>.</p></td>
+      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://rdrr.io/pkg/effectsize/man/standardize_parameters.html'>standardize_parameters</a></code>. Note that robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only works when <code>standardize="refit"</code>.</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
@@ -219,7 +232,11 @@
     </tr>
     <tr>
       <th>df_method</th>
-      <td><p>Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be <code>"wald"</code> (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see <code><a href='p_value_ml1.html'>dof_ml1</a></code>), <code>"satterthwaite"</code> (see <code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see <code><a href='p_value_kenward.html'>dof_kenward</a></code>).</p></td>
+      <td><p>Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be <code>"wald"</code> (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see <code><a href='p_value_ml1.html'>dof_ml1</a></code>), <code>"satterthwaite"</code> (see <code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see <code><a href='p_value_kenward.html'>dof_kenward</a></code>). Note that when <code>df_method</code> is not <code>"wald"</code>, robust standard errors etc. cannot be computed.</p></td>
+    </tr>
+    <tr>
+      <th>robust</th>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>component</th>

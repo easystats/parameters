@@ -1,6 +1,6 @@
-#' Parameters Table Formatting
+#' Parameter table formatting
 #'
-#' @param x A dataframe of model's parameters.
+#' @param x A data frame of model's parameters.
 #' @param pretty_names Pretty parameters' names.
 #' @inheritParams format_p
 #' @param ... Arguments passed to or from other methods.
@@ -11,12 +11,12 @@
 #' x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
 #' as.data.frame(parameters_table(x))
 #' \donttest{
-#' library(rstanarm)
-#' x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
-#' as.data.frame(parameters_table(x))
+#' if (require("rstanarm")) {
+#'   x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
+#'   as.data.frame(parameters_table(x))
 #' }
-#'
-#' @return A data.frame.
+#' }
+#' @return A data frame.
 #'
 #' @importFrom tools toTitleCase
 #' @importFrom insight format_value format_ci

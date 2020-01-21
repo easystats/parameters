@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -97,11 +97,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -173,7 +185,7 @@
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>
 <span class='no'>df</span>$<span class='no'>Smell</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Strong"</span>, <span class='st'>"Light"</span>), <span class='fl'>75</span>)
 
-<span class='fu'>data_partition</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; $training
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>data_partition</span>(<span class='no'>df</span>))</div><div class='output co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 110          7.2         3.6          6.1         2.5  virginica  Light
 #&gt; 23           4.6         3.6          1.0         0.2     setosa Strong
@@ -328,7 +340,7 @@
 #&gt; 135          6.1         2.6          5.6         1.4  virginica Strong
 #&gt; 136          7.7         3.0          6.1         2.3  virginica  Light
 #&gt; 150          5.9         3.0          5.1         1.8  virginica  Light
-#&gt; </div><div class='input'><span class='fu'>data_partition</span>(<span class='no'>df</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)</div><div class='output co'>#&gt; $training
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>data_partition</span>(<span class='no'>df</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"Species"</span>))</div><div class='output co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 43           4.4         3.2          1.3         0.2     setosa Strong
 #&gt; 26           5.0         3.0          1.6         0.2     setosa  Light
@@ -483,7 +495,7 @@
 #&gt; 139          6.0         3.0          4.8         1.8  virginica Strong
 #&gt; 142          6.9         3.1          5.1         2.3  virginica  Light
 #&gt; 143          5.8         2.7          5.1         1.9  virginica Strong
-#&gt; </div><div class='input'><span class='fu'>data_partition</span>(<span class='no'>df</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Smell"</span>))</div><div class='output co'>#&gt; $training
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>data_partition</span>(<span class='no'>df</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Smell"</span>)))</div><div class='output co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 20           5.1         3.8          1.5         0.3     setosa  Light
 #&gt; 32           5.4         3.4          1.5         0.4     setosa  Light

@@ -1,4 +1,5 @@
 ’
+Asparouhov
 al
 Alonso
 Ameijeiras
@@ -15,16 +16,19 @@ Bezdek
 Biometrics
 Biometrika
 blavaan
+BMC
 boostrapped
 brglm
 brms
 canberra
+Carle
 Casal
 Catran
 Cattell
 Cattell's
 centred
 CFA
+cgam
 ci
 clubSandwich
 clusterable
@@ -79,6 +83,7 @@ glmmTMB
 glmx
 Golino
 Gorsuch
+HC
 HDI
 Heisig
 heteroskedasticity
@@ -126,6 +131,7 @@ Modelling
 MSA
 multicollinearity
 multinom
+Neter
 Nieto
 nlme
 nnet
@@ -140,10 +146,17 @@ Pettersson
 platykurtic
 PloS
 PLOS
+projpred
 pscl
+PSU
 Psychometrika
 Recode
 repec
+rescale
+rescaled
+Rescale
+rescaling
+Rescaling
 Revelle
 rlm
 Rocklin
@@ -159,6 +172,7 @@ Satterthwaite's
 SBC
 Schaeffer
 SEM
+SEs
 Shachar
 Shi
 Shikano

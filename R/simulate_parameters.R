@@ -1,4 +1,4 @@
-#' Parameters simulation
+#' Simulate Model Parameters
 #'
 #' Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping.
 #'

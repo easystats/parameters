@@ -9,7 +9,7 @@ se_ml1 <- function(model) {
 
   data.frame(
     Parameter = params$Parameter,
-    SE = as.vector(params$Estimate / statistic),
+    SE = abs(as.vector(params$Estimate / statistic)),
     stringsAsFactors = FALSE
   )
 }

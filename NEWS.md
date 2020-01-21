@@ -1,3 +1,27 @@
+# parameters 0.4.2
+
+## General
+
+- Added new vignettes on 'Standardized Model Parameters' and 'Robust Estimation of Standard Errors', and vignettes are now also published on CRAN.
+- Improved handling of robust statistics in `model_parameters()`. This should now work for more models than before.
+- Improved accuracy of `ci.merMod()` for `method = "satterthwaite"` and `method = "kenward"`.
+
+## New functions
+
+- `component_columns()` as a small helper that returns the component index for each variable in a data frame that was used in `principal_components()`.
+
+## Bug fixes
+
+- Fixed issue in `model_parameters()` when `robust = TRUE`, which could sometimes mess up order of the statistic column.
+- Fixed issues in `model_parameters.merMod()` when `df_method` was not set to default.
+- Fixed issues in `model_parameters.merMod()` when `robust = TRUE`.
+
+# parameters 0.4.1
+
+## Bug fixes
+
+- Fix CRAN check issues, caused by removal of package 'projpred'.
+
 # parameters 0.4.0
 
 ## Breaking changes
@@ -23,6 +47,7 @@
 ## General
 
 - Better handling of `clm2`, `clmm2` and `stanmvreg` models.
+- Better handling of `psych::omega` models.
 
 ## New functions
 

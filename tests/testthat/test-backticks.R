@@ -2,8 +2,6 @@
 
 if (.runThisTest && Sys.getenv("USER") != "travis") {
   if (require("testthat") && require("parameters")) {
-    context("backticks")
-
     data(iris)
     iris$`a m` <- iris$Species
     iris$`Sepal Width` <- iris$Sepal.Width

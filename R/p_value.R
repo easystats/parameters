@@ -6,10 +6,15 @@
 #' }
 #'
 #' @param model A statistical model.
-#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For certain models, like \pkg{gee}, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
+#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
+#'
+#' @note \code{p_value_robust()} resp. \code{p_value(method = "robust")}
+#'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
+#'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
+#'   thus only work for those models supported by those packages.
 #'
 #' @examples
 #' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
@@ -30,25 +35,33 @@ p_value <- function(model, ...) {
 # p-Values from Standard Models -----------------------------------------------
 
 
+#' @rdname p_value
 #' @export
-p_value.default <- function(model, ...) {
-  # first, we need some special handling for Zelig-models
-  p <- tryCatch(
-    {
-      if (grepl("^Zelig-", class(model)[1])) {
-        if (!requireNamespace("Zelig", quietly = T)) {
-          stop("Package `Zelig` required. Please install", call. = F)
+p_value.default <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  p <- NULL
+
+  if (isTRUE(robust)) {
+    return(p_value_robust(model, ...))
+  } else {
+    # first, we need some special handling for Zelig-models
+    p <- tryCatch(
+      {
+        if (grepl("^Zelig-", class(model)[1])) {
+          if (!requireNamespace("Zelig", quietly = T)) {
+            stop("Package `Zelig` required. Please install", call. = F)
+          }
+          unlist(Zelig::get_pvalue(model))
+        } else {
+          # try to get p-value from classical summary for default models
+          .get_pval_from_summary(model)
         }
-        unlist(Zelig::get_pvalue(model))
-      } else {
-        # try to get p-value from classical summary for default models
-        .get_pval_from_summary(model)
+      },
+      error = function(e) {
+        NULL
       }
-    },
-    error = function(e) {
-      NULL
-    }
-  )
+    )
+  }
 
   # if all fails, try to get p-value from test-statistic
   if (is.null(p)) {
@@ -133,10 +146,15 @@ p_value.tobit <- function(model, ...) {
 
 
 #' @export
-p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, ...) {
   component <- match.arg(component)
   if (is.null(.check_component(model, component))) {
     return(NULL)
+  }
+
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(p_value_robust(model, ...))
   }
 
   cs <- .compact_list(stats::coef(summary(model)))
@@ -443,7 +461,12 @@ p_value.aovlist <- p_value.aov
 
 
 #' @export
-p_value.coxph <- function(model, ...) {
+p_value.coxph <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(p_value_robust(model, ...))
+  }
+
   cs <- stats::coef(summary(model))
   p <- cs[, 5]
 
@@ -482,7 +505,12 @@ p_value.coxme <- function(model, ...) {
 
 
 #' @export
-p_value.survreg <- function(model, ...) {
+p_value.survreg <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(p_value_robust(model, ...))
+  }
+
   s <- summary(model)
   p <- s$table[, "p"]
 
@@ -1062,7 +1090,12 @@ p_value.plm <- function(model, ...) {
 
 
 #' @export
-p_value.polr <- function(model, ...) {
+p_value.polr <- function(model, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(standard_error_robust(model, ...))
+  }
+
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   tstat <- smry[[3]]
   p <- 2 * stats::pt(abs(tstat), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)

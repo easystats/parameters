@@ -1,4 +1,4 @@
-#' Count number parameters in a model
+#' Count number of parameters in a model
 #'
 #' Returns the number of parameters of a model.
 #'

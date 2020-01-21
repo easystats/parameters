@@ -39,24 +39,24 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are computed by calling \code{\link[=standard_error_robust]{standard_error_robust()}}. \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions from the \pkg{sandwich}-package for robust covariance matrix estimators.}
+\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 }
 \value{
-The p-values.
+A data frame.
 }
 \description{
 The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5\% at p = 0.05.
 }
 \examples{
 \donttest{
-library(lme4)
-model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-p_value_wald(model)
-ci_wald(model, ci = c(0.90, 0.95))
+if (require("lme4")) {
+  model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+  p_value_wald(model)
+  ci_wald(model, ci = c(0.90, 0.95))
 }
-
+}
 }
 \references{
 Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.

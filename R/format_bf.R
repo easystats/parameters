@@ -1,4 +1,4 @@
-#' Bayes Factor Formatting
+#' Bayes Factor formatting
 #'
 #' @param bf Bayes Factor.
 #' @inheritParams format_p

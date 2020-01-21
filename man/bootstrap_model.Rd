@@ -22,7 +22,7 @@ model_bootstrap(model, iterations = 1000, verbose = FALSE, ...)
 A data frame.
 }
 \description{
-Bootstrap a statistical model n times to return a data.frame of estimates.
+Bootstrap a statistical model n times to return a data frame of estimates.
 }
 \examples{
 model <- lm(mpg ~ wt + cyl, data = mtcars)

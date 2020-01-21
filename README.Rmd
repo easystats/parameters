@@ -63,8 +63,9 @@ library("parameters")
 Click on the buttons above to access the package [documentation](https://easystats.github.io/parameters/) and the [easystats blog](https://easystats.github.io/blog/posts/), and check-out these vignettes:
 
 
-- [Parameters description](https://easystats.github.io/parameters/articles/model_parameters.html)
-- [Bootstrapped parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
+- [Summary of Model Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
+- [Standardized Model Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
+- [Robust Estimation of Standard Errors, Confidence Intervals and p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
 - [Parameters selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
 - [Feature reduction (PCA, cMDS, ICA...)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
 - [Structural models (EFA, CFA, SEM...)](https://easystats.github.io/parameters/articles/efa_cfa.html)
@@ -79,7 +80,7 @@ The [`model_parameters()`](https://easystats.github.io/parameters/articles/model
 
 - The column names of the returned data frame are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using [`standardize_names()`](https://easystats.github.io/parameters/reference/standardize_names.html)).
 - It is able to compute or extract indices not available by default, such as ***p*-values**, **CIs**, etc.
-- It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html).
+- It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/reference/bootstrap_parameters.html).
 
 
 ### Classical Regression Models
@@ -131,16 +132,6 @@ model_parameters(model)
 library(dplyr)
 
 lm(disp ~ ., data = mtcars) %>% 
-  select_parameters() %>% 
-  model_parameters()
-```
-
-This function also works for mixed or Bayesian models:
-
-```{r, warning=FALSE, message=FALSE}
-library(rstanarm)
-
-stan_glm(mpg ~ ., data = mtcars, refresh = 0) %>% 
   select_parameters() %>% 
   model_parameters()
 ```

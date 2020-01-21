@@ -1,4 +1,4 @@
-#' Probability of direction (pd) Formatting
+#' Probability of direction (pd) formatting
 #'
 #' @param pd Probability of direction (pd).
 #' @inheritParams format_p

@@ -1,4 +1,4 @@
-#' Correlations and t-test Parameters
+#' Parameters from Correlations and t-tests
 #'
 #' Parameters of h-tests (correlations, t-tests).
 #'
@@ -18,7 +18,7 @@
 #'
 #' model <- t.test(iris$Sepal.Width, mu = 1)
 #' model_parameters(model)
-#' @return A data.frame of indices related to the model's parameters.
+#' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.htest <- function(model, bootstrap = FALSE, ...) {
   if (bootstrap) {

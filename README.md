@@ -39,10 +39,12 @@ Click on the buttons above to access the package
 [easystats blog](https://easystats.github.io/blog/posts/), and check-out
 these vignettes:
 
-  - [Parameters
-    description](https://easystats.github.io/parameters/articles/model_parameters.html)
-  - [Bootstrapped
-    parameters](https://easystats.github.io/parameters/articles/bootstrapping.html)
+  - [Summary of Model
+    Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
+  - [Standardized Model
+    Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
+  - [Robust Estimation of Standard Errors, Confidence Intervals and
+    p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
   - [Parameters
     selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
   - [Feature reduction (PCA, cMDS,
@@ -74,7 +76,7 @@ with some notable differences:
     such as ***p*-values**, **CIs**, etc.
   - It includes **feature engineering** capabilities, including
     parameters
-    [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html).
+    [**bootstrapping**](https://easystats.github.io/parameters/reference/bootstrap_parameters.html).
 
 ### Classical Regression Models
 
@@ -95,15 +97,15 @@ model_parameters(model)
 
 # standardized parameters
 model_parameters(model, standardize = "refit")
-# Parameter                           | Coefficient (std.) |   SE |         95% CI |     t |  df |      p
-# -------------------------------------------------------------------------------------------------------
-# (Intercept)                         |               3.59 | 1.30 | [ 1.03,  6.14] |  8.01 | 143 | < .001
-# Petal.Length                        |               1.07 | 1.00 | [-0.89,  3.03] |  1.07 | 143 | 0.287 
-# Species [versicolor]                |              -4.62 | 1.31 | [-7.19, -2.06] | -3.14 | 143 | 0.002 
-# Species [virginica]                 |              -5.51 | 1.38 | [-8.20, -2.81] | -3.28 | 143 | 0.001 
-# Petal.Width                         |               1.08 | 0.24 | [ 0.60,  1.56] |  4.41 | 143 | < .001
-# Petal.Length * Species [versicolor] |              -0.38 | 1.06 | [-2.46,  1.70] | -0.36 | 143 | 0.721 
-# Petal.Length * Species [virginica]  |              -0.52 | 1.04 | [-2.56,  1.52] | -0.50 | 143 | 0.618
+# Parameter                           | Coefficient |   SE |         95% CI |     t |  df |      p
+# ------------------------------------------------------------------------------------------------
+# (Intercept)                         |        3.59 | 1.30 | [ 1.01,  6.17] |  2.75 | 143 | 0.007 
+# Petal.Length                        |        1.07 | 1.00 | [-0.91,  3.04] |  1.07 | 143 | 0.287 
+# Species [versicolor]                |       -4.62 | 1.31 | [-7.21, -2.03] | -3.53 | 143 | < .001
+# Species [virginica]                 |       -5.51 | 1.38 | [-8.23, -2.79] | -4.00 | 143 | < .001
+# Petal.Width                         |        1.08 | 0.24 | [ 0.59,  1.56] |  4.41 | 143 | < .001
+# Petal.Length * Species [versicolor] |       -0.38 | 1.06 | [-2.48,  1.72] | -0.36 | 143 | 0.721 
+# Petal.Length * Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] | -0.50 | 143 | 0.618
 ```
 
 ### Mixed Models
@@ -122,10 +124,10 @@ model_parameters(model)
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
 model_parameters(model, df_method = "kenward")
-# Parameter    | Coefficient |   SE |       95% CI |    t |      p
-# ----------------------------------------------------------------
-# (Intercept)  |        2.00 | 0.57 | [0.08, 3.92] | 3.53 | 0.046 
-# Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | < .001
+# Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p
+# -------------------------------------------------------------------------
+# (Intercept)  |        2.00 | 0.56 | [0.89, 3.11] | 3.53 |   2.67 | 0.046 
+# Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.99 | < .001
 ```
 
 ### Structural Models
@@ -179,25 +181,6 @@ lm(disp ~ ., data = mtcars) %>%
 # carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | 26 | < .001
 ```
 
-This function also works for mixed or Bayesian models:
-
-``` r
-library(rstanarm)
-
-stan_glm(mpg ~ ., data = mtcars, refresh = 0) %>% 
-  select_parameters() %>% 
-  model_parameters()
-# Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS |               Prior
-# -----------------------------------------------------------------------------------------------
-# (Intercept) |  19.90 | [-0.59, 44.44] | 92.62% |     1.23% | 1.000 | 2348 | Normal (0 +- 60.27)
-# wt          |  -3.98 | [-5.92, -1.88] | 99.75% |     0.32% | 1.001 | 2159 | Normal (0 +- 15.40)
-# cyl         |  -0.48 | [-1.91,  0.76] | 71.43% |    46.02% | 1.000 | 2651 |  Normal (0 +- 8.44)
-# hp          |  -0.02 | [-0.04,  0.01] | 89.22% |      100% | 1.000 | 2766 |  Normal (0 +- 0.22)
-# am          |   2.93 | [-0.01,  5.77] | 94.90% |     7.42% | 1.000 | 2813 | Normal (0 +- 15.07)
-# qsec        |   0.80 | [-0.18,  1.73] | 91.33% |    35.23% | 1.000 | 2273 |  Normal (0 +- 8.43)
-# disp        |   0.01 | [-0.01,  0.03] | 87.08% |      100% | 1.002 | 2601 |  Normal (0 +- 0.12)
-```
-
 ## Miscellaneous
 
 This packages also contains a lot of [other useful
@@ -210,9 +193,9 @@ x <- rnorm(300)
 describe_distribution(x)
 ```
 
-|  Mean | SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
-| ----: | -: | --: | --: | -------: | -------: | --: | ---------: |
-| \-0.1 |  1 | \-3 |   3 |        0 |    \-0.3 | 300 |          0 |
+| Mean | SD | Min | Max | Skewness | Kurtosis |   n | n\_Missing |
+| ---: | -: | --: | --: | -------: | -------: | --: | ---------: |
+|  0.1 |  1 | \-2 |   3 |        0 |        0 | 300 |          0 |
 
 ### Citation
 

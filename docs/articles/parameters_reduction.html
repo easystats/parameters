@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -57,11 +57,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -106,9 +118,9 @@
     
     
 <p>Also known as <a href="https://en.wikipedia.org/wiki/Feature_extraction"><strong>feature extraction</strong> or <strong>dimension reduction</strong></a> in machine learning, the goal of variable reduction is to <strong>reduce the number of predictors</strong> by derivating, from a set of measured data, new variables intended to be informative and non-redundant. This method can be used to <strong>simplify models</strong>, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).</p>
-<div id="quick-and-exploratory-method" class="section level1">
-<h1 class="hasAnchor">
-<a href="#quick-and-exploratory-method" class="anchor"></a>Quick and Exploratory Method</h1>
+<div id="quick-and-exploratory-method" class="section level2">
+<h2 class="hasAnchor">
+<a href="#quick-and-exploratory-method" class="anchor"></a>Quick and Exploratory Method</h2>
 <p>Let’s start by fitting a multiple regression with the <code>attitude</code> dataset, available is base R, to predict the overall <strong>rating</strong> by employees of their organization with the remaining variables (handling of employee <strong>complaints</strong>, special <strong>privileges</strong>, opportunity of <strong>learning</strong>, <strong>raises</strong>, a feedback considered too <strong>critical</strong> and opportunity of <strong>advancement</strong>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</a>
@@ -148,9 +160,9 @@
 <p>A different method (<strong>Classical Multidimensional Scaling - cMDS</strong>) suggests that negative critiques do not have a significant impact on the rating, and that the lack of opportunities of career advancement is a separate dimension with an importance on its own.</p>
 <p>Although this function can be useful in exploratory data analysis, it’s best to perform the dimension reduction step in a <strong>separate and dedicated stage</strong>, as this is a very important process in the data analysis workflow.</p>
 </div>
-<div id="principal-component-analysis-pca" class="section level1">
-<h1 class="hasAnchor">
-<a href="#principal-component-analysis-pca" class="anchor"></a>Principal Component Analysis (PCA)</h1>
+<div id="principal-component-analysis-pca" class="section level2">
+<h2 class="hasAnchor">
+<a href="#principal-component-analysis-pca" class="anchor"></a>Principal Component Analysis (PCA)</h2>
 <p>PCA is a widely used procedure that lies in-between dimension reduction and structural modelling. Indeed, one of the way of reducing the number of predictors is to extract a new set of uncorrelated variables that will <em>represent</em> variance of your initial dataset. But how the original variables relate between themselves can also be a question on its own.</p>
 <p>We can apply the <code><a href="../reference/principal_components.html">principal_components()</a></code> function to do the the predictors of the model:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/principal_components.html">principal_components</a></span>(insight<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/insight/man/get_predictors.html">get_predictors</a></span>(model), <span class="dt">n =</span> <span class="st">"auto"</span>)</a>
@@ -178,9 +190,9 @@
 &gt; -----------------------------------------------------------------------
 &gt; (Intercept) |       64.63 | 1.67 | [61.22, 68.05] | 38.78 | 28 | &lt; .001
 &gt; PC1         |        4.62 | 0.95 | [ 2.67,  6.57] |  4.86 | 28 | &lt; .001</code></pre>
-<div id="using-the-psych-package-for-pca" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-the-psych-package-for-pca" class="anchor"></a>Using the <code>psych</code> package for PCA</h2>
+<div id="using-the-psych-package-for-pca" class="section level3">
+<h3 class="hasAnchor">
+<a href="#using-the-psych-package-for-pca" class="anchor"></a>Using the <code>psych</code> package for PCA</h3>
 <p>You can also use different packages for models, such as <a href="https://cran.r-project.org/package=psych"><code>psych</code></a> <span class="citation">(Revelle 2018)</span> or <a href="http://factominer.free.fr/"><code>FactoMineR</code></a> for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are <strong>fully supported</strong> by <code>parameters</code> through the <code><a href="../reference/model_parameters.html">model_parameters()</a></code> function.</p>
 <p>As such, the above analysis can be fully reproduced as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(psych)</a>
@@ -232,11 +244,7 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#quick-and-exploratory-method">Quick and Exploratory Method</a></li>
-      <li>
-<a href="#principal-component-analysis-pca">Principal Component Analysis (PCA)</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#using-the-psych-package-for-pca">Using the <code>psych</code> package for PCA</a></li>
-      </ul>
-</li>
+      <li><a href="#principal-component-analysis-pca">Principal Component Analysis (PCA)</a></li>
       <li><a href="#references">References</a></li>
       </ul>
 </div>

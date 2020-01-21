@@ -10,5 +10,4 @@
 ^pkgdown/.
 ^paper.*$
 ^paper/.
-^vignettes/.
 ^WIP/.

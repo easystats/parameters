@@ -82,7 +82,7 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -100,11 +100,23 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -154,6 +166,9 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
 
     <pre class="usage"><span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for default</span>
+<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for lmerMod</span>
 <span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)
 
@@ -173,16 +188,7 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
 <span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for gee</span>
-<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='fu'>p_value_robust</span>(
-  <span class='no'>model</span>,
-  <span class='kw'>vcov_estimation</span> <span class='kw'>=</span> <span class='st'>"HC"</span>,
-  <span class='kw'>vcov_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"HC3"</span>, <span class='st'>"const"</span>, <span class='st'>"HC"</span>, <span class='st'>"HC0"</span>, <span class='st'>"HC1"</span>, <span class='st'>"HC2"</span>, <span class='st'>"HC4"</span>, <span class='st'>"HC4m"</span>, <span class='st'>"HC5"</span>, <span class='st'>"CR0"</span>,
-    <span class='st'>"CR1"</span>, <span class='st'>"CR1p"</span>, <span class='st'>"CR1S"</span>, <span class='st'>"CR2"</span>, <span class='st'>"CR3"</span>),
-  <span class='kw'>vcov_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,11 +199,11 @@ Mixed models (lme4): By default, p-values are based on Wald-test approximations 
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed down to <code><a href='standard_error.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
+      <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default), <code><a href='p_value_ml1.html'>"ml1"</a></code>, <code><a href='p_value_satterthwaite.html'>"satterthwaite"</a></code> or <code><a href='p_value_kenward.html'>"kenward"</a></code>. For certain models, like <span class="pkg">gee</span>, may also be <code>method = "robust"</code> to compute p-values based ob robust standard errors.</p></td>
+      <td><p>For mixed models, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default), <code><a href='p_value_ml1.html'>"ml1"</a></code>, <code><a href='p_value_satterthwaite.html'>"satterthwaite"</a></code> or <code><a href='p_value_kenward.html'>"kenward"</a></code>. For models that are supported by the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> packages, may also be <code>method = "robust"</code> to compute p-values based ob robust standard errors.</p></td>
     </tr>
     <tr>
       <th>component</th>
@@ -214,31 +220,17 @@ standard errors for random effects are requested, for each grouping factor
 a list of standard errors (per group level) for random intercepts and slopes
 is returned.</p></td>
     </tr>
-    <tr>
-      <th>vcov_estimation</th>
-      <td><p>String, indicating the suffix of the <code>vcov*()</code>-function
-from the <span class="pkg">sandwich</span>-package, e.g. <code>vcov_estimation = "CL"</code> (which
-calls <code><a href='https://rdrr.io/pkg/sandwich/man/vcovCL.html'>vcovCL</a></code> to compute clustered covariance matrix
-estimators), or <code>vcov_estimation = "HC"</code> (which calls
-<code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC</a></code> to compute heteroskedasticity-consistent
-covariance matrix estimators).</p></td>
-    </tr>
-    <tr>
-      <th>vcov_type</th>
-      <td><p>Character vector, specifying the estimation type for the
-robust covariance matrix estimation (see <code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC</a></code> for
-details).</p></td>
-    </tr>
-    <tr>
-      <th>vcov_args</th>
-      <td><p>List of named vectors, used as additional arguments that
-are passed down to the <span class="pkg">sandwich</span>-function specified in <code>vcov_estimation</code>.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The p-values.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p><code><a href='standard_error_robust.html'>p_value_robust()</a></code> resp. <code>p_value(method = "robust")</code>
+  rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package (the latter if
+  <code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
+  thus only work for those models supported by those packages.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lme4</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
@@ -251,6 +243,7 @@ are passed down to the <span class="pkg">sandwich</span>-function specified in <
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#note">Note</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

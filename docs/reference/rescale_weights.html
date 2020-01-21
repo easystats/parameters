@@ -48,7 +48,7 @@
 <meta property="og:description" content="Most functions to fit multilevel and mixed effects models only
    allow to specify frequency weights, but not design (i.e. sampling or probability)
    weights, which should be used when analyzing complex samples and survey data.
-   rescale_weights() implements an algorithm proposed by Aaparouhov (2006)
+   rescale_weights() implements an algorithm proposed by Asparouhov (2006)
    and Carle (2009) to rescale design weights in survey data to account for
    the grouping structure of multilevel models, which then can be used for
    multilevel modelling." />
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -103,11 +103,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -152,7 +164,7 @@
     <p>Most functions to fit multilevel and mixed effects models only
    allow to specify frequency weights, but not design (i.e. sampling or probability)
    weights, which should be used when analyzing complex samples and survey data.
-   <code>rescale_weights()</code> implements an algorithm proposed by <cite>Aaparouhov (2006)</cite>
+   <code>rescale_weights()</code> implements an algorithm proposed by <cite>Asparouhov (2006)</cite>
    and <cite>Carle (2009)</cite> to rescale design weights in survey data to account for
    the grouping structure of multilevel models, which then can be used for
    multilevel modelling.</p>

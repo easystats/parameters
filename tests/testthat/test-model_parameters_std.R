@@ -8,9 +8,9 @@ if (require("testthat") &&
   test_that("model_parameters, standardize-refit", {
     params <- model_parameters(model, standardize = "refit")
     testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 8))
-    testthat::expect_equal(params$Std_Coefficient, c(-0.14183, -0.61463, -0.35967, -0.86017), tolerance = 1e-3)
+    testthat::expect_equal(params$Coefficient, c(-0.14183, -0.61463, -0.35967, -0.86017), tolerance = 1e-3)
     testthat::expect_equal(params$SE, c(0.12207, 0.12755, 0.23542, 0.23454), tolerance = 1e-3)
-    testthat::expect_equal(params$CI_high, c(0.09742, -0.36464, 0.10175, -0.40048), tolerance = 1e-3)
+    testthat::expect_equal(params$CI_high, c(0.10821, -0.35336, 0.12257, -0.37973), tolerance = 1e-3)
   })
 
   test_that("model_parameters, standardize-posthoc", {

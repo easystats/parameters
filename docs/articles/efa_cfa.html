@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.1</span>
       </span>
     </div>
 
@@ -57,11 +57,23 @@
 <li>
   <a href="../reference/index.html">Features</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Parameters Description
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="../articles/model_parameters.html">Parameters Description</a>
-</li>
-<li>
-  <a href="../articles/bootstrapping.html">Parameters Engineering</a>
+      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../articles/parameters_selection.html">Parameters Selection</a>
@@ -283,7 +295,7 @@
 <a class="sourceLine" id="cb17-4" title="4">big5 &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(structure_big5, <span class="dt">data =</span> test)</a>
 <a class="sourceLine" id="cb17-5" title="5">big6 &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(structure_big6, <span class="dt">data =</span> test)</a>
 <a class="sourceLine" id="cb17-6" title="6"></a>
-<a class="sourceLine" id="cb17-7" title="7">performance<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/performance/man/model_performance.html">compare_performance</a></span>(big5, big6)</a></code></pre></div>
+<a class="sourceLine" id="cb17-7" title="7">performance<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/performance/man/compare_performance.html">compare_performance</a></span>(big5, big6)</a></code></pre></div>
 <pre><code>&gt; # Comparison of Model Performance Indices
 &gt; 
 &gt; Model |   Type |   Chisq | Chisq_df | Chisq_p | Baseline | Baseline_df | Baseline_p |  GFI | AGFI |  NFI | NNFI |  CFI | RMSEA | RMSEA_CI_low | RMSEA_CI_high | RMSEA_p |  RMR | SRMR |  RFI | PNFI |  IFI |  RNI | Loglikelihood |      AIC |      BIC | BIC_adjusted | BF

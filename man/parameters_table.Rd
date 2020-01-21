@@ -2,12 +2,12 @@
 % Please edit documentation in R/parameters_table.R
 \name{parameters_table}
 \alias{parameters_table}
-\title{Parameters Table Formatting}
+\title{Parameter table formatting}
 \usage{
 parameters_table(x, pretty_names = TRUE, stars = FALSE, ...)
 }
 \arguments{
-\item{x}{A dataframe of model's parameters.}
+\item{x}{A data frame of model's parameters.}
 
 \item{pretty_names}{Pretty parameters' names.}
 
@@ -16,10 +16,10 @@ parameters_table(x, pretty_names = TRUE, stars = FALSE, ...)
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A data.frame.
+A data frame.
 }
 \description{
-Parameters Table Formatting
+Parameter table formatting
 }
 \examples{
 library(parameters)
@@ -27,9 +27,9 @@ library(parameters)
 x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
 as.data.frame(parameters_table(x))
 \donttest{
-library(rstanarm)
-x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
-as.data.frame(parameters_table(x))
+if (require("rstanarm")) {
+  x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
+  as.data.frame(parameters_table(x))
 }
-
+}
 }

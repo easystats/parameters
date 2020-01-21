@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_clusterstructure.R
 \name{check_clusterstructure}
 \alias{check_clusterstructure}
-\title{Check suitability of data for Clustering}
+\title{Check suitability of data for clustering}
 \usage{
 check_clusterstructure(x, standardize = TRUE, distance = "euclidean", ...)
 }

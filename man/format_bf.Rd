@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_bf.R
 \name{format_bf}
 \alias{format_bf}
-\title{Bayes Factor Formatting}
+\title{Bayes Factor formatting}
 \usage{
 format_bf(bf, stars = FALSE, stars_only = FALSE, name = "BF")
 }
@@ -19,7 +19,7 @@ format_bf(bf, stars = FALSE, stars_only = FALSE, name = "BF")
 A formatted string.
 }
 \description{
-Bayes Factor Formatting
+Bayes Factor formatting
 }
 \examples{
 format_bf(1.20)

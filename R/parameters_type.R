@@ -1,4 +1,4 @@
-#' Type of Model Parameters
+#' Type of model parameters
 #'
 #' @param model A statistical model.
 #' @param ... Arguments passed to or from other methods.
@@ -37,7 +37,7 @@
 #'
 #' model <- lm(Sepal.Length ~ Species / fac2 * Petal.Length, data = data)
 #' parameters_type(model)
-#' @return A data.frame.
+#' @return A data frame.
 #' @export
 parameters_type <- function(model, ...) {
 

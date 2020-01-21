@@ -1,4 +1,4 @@
-#' Confidence Interval (CI)
+#' Confidence Intervals (CI)
 #'
 #' Compute confidence intervals (CI) for frequentist models.
 #'
@@ -10,6 +10,11 @@
 #' @inheritParams standard_error
 #'
 #' @return A data frame containing the CI bounds.
+#'
+#' @note \code{ci_robust()} resp. \code{ci(method = "robust")}
+#'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
+#'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
+#'   thus only work for those models supported by those packages.
 #'
 #' @examples
 #' \donttest{
@@ -37,15 +42,15 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "satterthwaite", "
 
     # ml1 approx
   } else if (method == "ml1") {
-    out <- ci_wald(model = x, ci = ci, dof = dof_ml1(x))
+    out <- ci_ml1(x, ci)
 
     # Satterthwaite
   } else if (method == "satterthwaite") {
-    out <- ci_wald(model = x, ci = ci, dof = dof_satterthwaite(x))
+    out <- ci_satterthwaite(x, ci)
 
     # Kenward approx
-  } else if (method == "kenward") {
-    out <- ci_wald(model = x, ci = ci, dof = dof_kenward(x))
+  } else if (method %in% c("kenward", "kr")) {
+    out <- ci_kenward(x, ci)
 
     # bootstrapping
   } else if (method == "boot") {
@@ -173,6 +178,7 @@ ci.negbin <- ci.glm
 ci.logistf <- ci.glm
 
 
+#' @rdname ci.merMod
 #' @export
 ci.polr <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
   method <- match.arg(method)
@@ -365,12 +371,14 @@ ci.bracl <- ci.multinom
 
 #' @rdname ci.merMod
 #' @export
-ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
   component <- match.arg(component)
+
   if (is.null(.check_component(x, component))) {
     return(NULL)
   }
-  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = robust)
 }
 
 #' @rdname ci.merMod
@@ -403,6 +411,7 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
 # Special models -----------------------------------------
 
 
+#' @rdname ci.merMod
 #' @export
 ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
@@ -410,6 +419,7 @@ ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precisi
 }
 
 
+#' @rdname ci.merMod
 #' @export
 ci.clm2 <- function(x, ci = .95, component = c("all", "conditional", "scale"), ...) {
   component <- match.arg(component)

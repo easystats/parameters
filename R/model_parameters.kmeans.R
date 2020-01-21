@@ -1,4 +1,4 @@
-#' Cluster Models (k-means, ...)
+#' Parameters from Cluster Models (k-means, ...)
 #'
 #' Format cluster models obtained for example by \code{\link{kmeans}}.
 #'
