@@ -8,21 +8,19 @@
 #'
 #' @examples
 #' \donttest{
-#' library(psych)
-#' library(lavaan)
 #' library(parameters)
+#' if (require("psych") && require("lavaan")) {
+#'   efa <- psych::fa(attitude, nfactors = 3)
 #'
-#' efa <- psych::fa(attitude, nfactors = 3)
+#'   model1 <- efa_to_cfa(efa)
+#'   model2 <- efa_to_cfa(efa, threshold = 0.3)
 #'
-#' model1 <- efa_to_cfa(efa)
-#' model2 <- efa_to_cfa(efa, threshold = 0.3)
-#'
-#' anova(
-#'   lavaan::cfa(model1, data = attitude),
-#'   lavaan::cfa(model2, data = attitude)
-#' )
+#'   anova(
+#'     lavaan::cfa(model1, data = attitude),
+#'     lavaan::cfa(model2, data = attitude)
+#'   )
 #' }
-#'
+#' }
 #' @return Converted index.
 #' @export
 convert_efa_to_cfa <- function(model, ...) {

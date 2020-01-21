@@ -22,8 +22,17 @@ bibliography: bibliography.bib
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
-options(digits=2)
+options(digits = 2)
+knitr::opts_chunk$set(comment = ">")
+
+if (!requireNamespace("dplyr", quietly = TRUE) ||
+    !requireNamespace("performance", quietly = TRUE) ||
+    !requireNamespace("lme4", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+} else {
+  library(parameters)
+  library(dplyr)
+}
 
 set.seed(333)
 ```
@@ -77,9 +86,6 @@ Time to do some variables selection. This can be easily done using the `select_p
 
 
 ```{r message=FALSE, warning=FALSE}
-library(dplyr)
-library(parameters)
-
 lm(Sepal.Length ~ .*., data=iris) %>% 
   select_parameters() %>% 
   summary()

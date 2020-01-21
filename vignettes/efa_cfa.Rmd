@@ -22,8 +22,16 @@ bibliography: bibliography.bib
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
-options(digits=2)
+options(digits = 2)
+knitr::opts_chunk$set(comment = ">")
+
+if (!requireNamespace("dplyr", quietly = TRUE) ||
+    !requireNamespace("see", quietly = TRUE) ||
+    !requireNamespace("lavaan", quietly = TRUE) ||
+    !requireNamespace("performance", quietly = TRUE) ||
+    !requireNamespace("psych", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
 
 set.seed(333)
 ```
@@ -112,10 +120,9 @@ summary(n)
 A plot can also be obtained (the `see` package must be loaded):
 
 ```{r message=FALSE, warning=FALSE}
-# library(see)
+library(see)
 
-# plot(n) +
-#   theme_modern()
+plot(n) + theme_modern()
 ```
 
 

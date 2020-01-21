@@ -22,8 +22,16 @@ bibliography: bibliography.bib
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
-options(digits=2)
+options(digits = 2)
+knitr::opts_chunk$set(comment = ">")
+
+if (!requireNamespace("dplyr", quietly = TRUE) ||
+    !requireNamespace("psych", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+} else {
+  library(parameters)
+  library(dplyr)
+}
 
 set.seed(333)
 ```
@@ -39,9 +47,6 @@ Also known as [**feature extraction** or **dimension reduction**](https://en.wik
 Let's start by fitting a multiple regression with the `attitude` dataset, available is base R, to predict the overall **rating** by employees of their organization with the remaining variables (handling of employee **complaints**, special **privileges**, opportunity of **learning**, **raises**, a feedback considered too **critical** and opportunity of **advancement**).
 
 ```{r message=FALSE, warning=FALSE}
-library(dplyr)
-library(parameters)
-
 model <- lm(rating ~ ., data = attitude)
 parameters(model)
 ```
