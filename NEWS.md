@@ -9,6 +9,7 @@
 ## New functions
 
 - `component_columns()` as a small helper that returns the component index for each variable in a data frame that was used in `principal_components()`.
+- `extract_scales()` as a small helper to extract scales and calculate sum scores from a principal component analysis (PCA, `principal_components()`).
 
 ## Bug fixes
 

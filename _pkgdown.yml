@@ -84,6 +84,7 @@ reference:
   - check_kmo
   - check_sphericity
   - convert_efa_to_cfa
+  - extract_scales
   - factor_analysis
   - n_factors
   - principal_components
