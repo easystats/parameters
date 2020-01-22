@@ -158,9 +158,9 @@
     <p>Compute Skewness and Kurtosis</p>
     </div>
 
-    <pre class="usage"><span class='fu'>skewness</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>skewness</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"2"</span>, <span class='no'>...</span>)
 
-<span class='fu'>kurtosis</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>kurtosis</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"2"</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,6 +174,10 @@
       <td><p>Remove missing values.</p></td>
     </tr>
     <tr>
+      <th>type</th>
+      <td><p>Type of algorithm for computing skewness. May be one of <code>1</code> (or <code>"1"</code>, <code>"I"</code> or <code>"classic"</code>), <code>2</code> (or <code>"2"</code>, <code>"II"</code> or <code>"SPSS"</code> or <code>"SAS"</code>) or <code>3</code> (or  <code>"3"</code>, <code>"III"</code> or <code>"Minitab"</code>). See 'Details'.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
@@ -184,9 +188,9 @@
     <p>Values of skewness or kurtosis.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><strong>Skewness</strong>
-<br /> <br />
-Symmetric distributions have a <code>skewness</code> around zero, while
+    
+<h3>Skewness</h3>
+<p>Symmetric distributions have a <code>skewness</code> around zero, while
 a negative skewness values indicates a "left-skewed" distribution, and a
 positive skewness values indicates a "right-skewed" distribution. Examples
 for the relationship of skewness and distributions are:</p><ul>
@@ -194,18 +198,34 @@ for the relationship of skewness and distributions are:</p><ul>
 <li><p>Half-normal distribution has a skewness just below 1</p></li>
 <li><p>Exponential distribution has a skewness of 2</p></li>
 <li><p>Lognormal distribution can have a skewness of any positive value, depending on its parameters</p></li>
-</ul><p>(<cite>https://en.wikipedia.org/wiki/Skewness</cite>)
-<br /> <br />
-<strong>Kurtosis</strong>
-<br /> <br />
-The <code>kurtosis</code> is a measure of "tailedness" of a distribution. A distribution
+</ul><p>(<cite>https://en.wikipedia.org/wiki/Skewness</cite>)</p>
+<h3>Types of Skewness</h3>
+<p><code>skewness()</code> supports three different methods for estimating skewness, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
+<li><p>Type "1" is the "classical" method, which is <code>(sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5</code></p></li>
+<li><p>Type "2" first calculates the type-1 skewness, than adjusts the result: <code>type-1-skewness * sqrt(n * (n - 1)) / (n - 2)</code>. This is what SAS and SPSS usually return</p></li>
+<li><p>Type "3" first calculates the type-1 skewness, than adjusts the result: <code>type-1-skewness * ((1 - 1 / n))^1.5</code>. This is what Minitab usually returns.</p></li>
+</ul>
+
+<h3>Kurtosis</h3>
+<p>The <code>kurtosis</code> is a measure of "tailedness" of a distribution. A distribution
 with a kurtosis values of about zero is called "mesokurtic". A kurtosis value
 larger than zero indicates a "leptokurtic" distribution with <em>fatter</em> tails.
 A kurtosis value below zero indicates a "platykurtic" distribution with <em>thinner</em>
 tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
+<h3>Types of Kurtosis</h3>
+<p><code>kurtosis()</code> supports three different methods for estimating kurtosis, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
+<li><p>Type "1" is the "classical" method, which is <code>n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3</code>.</p></li>
+<li><p>Type "2" first calculates the type-1 kurtosis, than adjusts the result: <code>((n + 1) * type-1-kurtosis + 6) * (n - 1)/((n - 2) * (n - 3))</code>. This is what SAS and SPSS usually return</p></li>
+<li><p>Type "3" first calculates the type-1 kurtosis, than adjusts the result: <code>(type-1-kurtosis + 3) * (1 - 1 / n)^2 - 3</code>. This is what Minitab usually returns.</p></li>
+</ul>
+
+
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>D. N. Joanes and C. A. Gill (1998). Comparing measures of sample skewness and kurtosis. The Statistician, 47, 183–189.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>skewness</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; [1] -0.004844631</div><div class='input'><span class='fu'>kurtosis</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; [1] 0.5170865</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>skewness</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; [1] -0.004851911</div><div class='input'><span class='fu'>kurtosis</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; [1] 0.5257054</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -213,6 +233,7 @@ tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#references">References</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
