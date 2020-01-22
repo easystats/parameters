@@ -3,6 +3,7 @@
 ## Breaking changes
 
 - `skewness()` now uses a different method to calculate the skewness by default. Different methods can be selected using the `type`-argument.
+- `kurtosis()` now uses a different method to calculate the skewness by default. Different methods can be selected using the `type`-argument.
 
 ## General
 
@@ -13,6 +14,7 @@
 ## Changes to functions
 
 - `skewness()` gets a `type`-argument, to compute different types of skewness.
+- `kurtosis()` gets a `type`-argument, to compute different types of skewness.
 
 ## New functions
 
