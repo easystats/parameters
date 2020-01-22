@@ -41,9 +41,9 @@ for the relationship of skewness and distributions are:
 \subsection{Types of Skewness}{
 \code{skewness()} supports three different methods for estimating skewness, as discussed in \cite{Joanes and Gill (1988)}:
 \itemize{
-\item Type "1" is the "classical" method, which is \code{(sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5}
-\item Type "2" first calculates the type-1 skewness, than adjusts the result: \code{type-1-skewness * sqrt(n * (n - 1)) / (n - 2)}. This is what SAS and SPSS usually return
-\item Type "3" first calculates the type-1 skewness, than adjusts the result: \code{type-1-skewness * ((1 - 1 / n))^1.5}. This is what Minitab usually returns.
+\item Type "1" is the "classical" method, which is \code{g1 = (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5}
+\item Type "2" first calculates the type-1 skewness, than adjusts the result: \code{G1 = g1 * sqrt(n * (n - 1)) / (n - 2)}. This is what SAS and SPSS usually return
+\item Type "3" first calculates the type-1 skewness, than adjusts the result: \code{b1 = g1 * ((1 - 1 / n))^1.5}. This is what Minitab usually returns.
 }
 }
 \subsection{Kurtosis}{
@@ -56,9 +56,9 @@ tails (\cite{https://en.wikipedia.org/wiki/Kurtosis}).
 \subsection{Types of Kurtosis}{
 \code{kurtosis()} supports three different methods for estimating kurtosis, as discussed in \cite{Joanes and Gill (1988)}:
 \itemize{
-\item Type "1" is the "classical" method, which is \code{n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3}.
-\item Type "2" first calculates the type-1 kurtosis, than adjusts the result: \code{((n + 1) * type-1-kurtosis + 6) * (n - 1)/((n - 2) * (n - 3))}. This is what SAS and SPSS usually return
-\item Type "3" first calculates the type-1 kurtosis, than adjusts the result: \code{(type-1-kurtosis + 3) * (1 - 1 / n)^2 - 3}. This is what Minitab usually returns.
+\item Type "1" is the "classical" method, which is \code{g2 = n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3}.
+\item Type "2" first calculates the type-1 kurtosis, than adjusts the result: \code{G2 = ((n + 1) * g2 + 6) * (n - 1)/((n - 2) * (n - 3))}. This is what SAS and SPSS usually return
+\item Type "3" first calculates the type-1 kurtosis, than adjusts the result: \code{b2 = (g2 + 3) * (1 - 1 / n)^2 - 3}. This is what Minitab usually returns.
 }
 }
 }

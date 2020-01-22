@@ -21,9 +21,9 @@
 #' \subsection{Types of Skewness}{
 #' \code{skewness()} supports three different methods for estimating skewness, as discussed in \cite{Joanes and Gill (1988)}:
 #' \itemize{
-#' \item Type "1" is the "classical" method, which is \code{(sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5}
-#' \item Type "2" first calculates the type-1 skewness, than adjusts the result: \code{type-1-skewness * sqrt(n * (n - 1)) / (n - 2)}. This is what SAS and SPSS usually return
-#' \item Type "3" first calculates the type-1 skewness, than adjusts the result: \code{type-1-skewness * ((1 - 1 / n))^1.5}. This is what Minitab usually returns.
+#' \item Type "1" is the "classical" method, which is \code{g1 = (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5}
+#' \item Type "2" first calculates the type-1 skewness, than adjusts the result: \code{G1 = g1 * sqrt(n * (n - 1)) / (n - 2)}. This is what SAS and SPSS usually return
+#' \item Type "3" first calculates the type-1 skewness, than adjusts the result: \code{b1 = g1 * ((1 - 1 / n))^1.5}. This is what Minitab usually returns.
 #' }
 #' }
 #' \subsection{Kurtosis}{
@@ -36,9 +36,9 @@
 #' \subsection{Types of Kurtosis}{
 #' \code{kurtosis()} supports three different methods for estimating kurtosis, as discussed in \cite{Joanes and Gill (1988)}:
 #' \itemize{
-#' \item Type "1" is the "classical" method, which is \code{n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3}.
-#' \item Type "2" first calculates the type-1 kurtosis, than adjusts the result: \code{((n + 1) * type-1-kurtosis + 6) * (n - 1)/((n - 2) * (n - 3))}. This is what SAS and SPSS usually return
-#' \item Type "3" first calculates the type-1 kurtosis, than adjusts the result: \code{(type-1-kurtosis + 3) * (1 - 1 / n)^2 - 3}. This is what Minitab usually returns.
+#' \item Type "1" is the "classical" method, which is \code{g2 = n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3}.
+#' \item Type "2" first calculates the type-1 kurtosis, than adjusts the result: \code{G2 = ((n + 1) * g2 + 6) * (n - 1)/((n - 2) * (n - 3))}. This is what SAS and SPSS usually return
+#' \item Type "3" first calculates the type-1 kurtosis, than adjusts the result: \code{b2 = (g2 + 3) * (1 - 1 / n)^2 - 3}. This is what Minitab usually returns.
 #' }
 #' }
 #'
@@ -59,32 +59,33 @@ skewness.numeric <- function(x, na.rm = TRUE, type = "2", ...) {
   n <- length(x)
   out <- (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5
 
-  # convenience
-  if (is.numeric(type)) type <- as.character(type)
+  type <- .check_skewness_type(type)
 
-  if (!.skewness_type_ok(type)) {
-    warning("'type' must be a character value from \"1\" to \"3\". Using 'type=\"2\"' now.", call. = FALSE)
-    type <- "2"
-  }
-
-  if (type %in% c("2", "II", "SPSS", "SAS") && n < 3) {
+  if (type == "2" && n < 3) {
     warning("Need at least 3 complete observations for type-2-skewness. Using 'type=\"1\"' now.", call. = FALSE)
     type <- "1"
   }
 
-  switch(
+  .skewness <- switch(
     type,
-    "1" = ,
-    "I" = ,
-    "classic" = out,
-    "2" = ,
-    "II" = ,
-    "SPSS" = ,
-    "SAS" = out * sqrt(n * (n - 1)) / (n - 2),
-    "3" = ,
-    "III" = ,
-    "Minitab" = out * ((1 - 1 / n))^1.5
+    "1" = out,
+    "2" = out * sqrt(n * (n - 1)) / (n - 2),
+    "3" = out * ((1 - 1 / n))^1.5
   )
+#
+#   out_se <- sqrt((6 * (n - 2)) / ((n + 1) * (n + 3)))
+#
+#   .skewness_se <- switch(
+#     type,
+#     "1" = out_se,
+#     "2" = out_se * ((sqrt(n * (n - 1))) / (n - 2)),
+#     "3" = out_se * (((n - 1) / n)^1.5),
+#   )
+#
+#   attr(.skewness, "SE") <- .skewness_se
+#   class(.skewness) <- unique(c("parameters_skewness", class(.skewness)))
+
+  .skewness
 }
 
 #' @export
@@ -95,6 +96,16 @@ skewness.matrix <- function(x, na.rm = TRUE, type = "2", ...) {
 #' @export
 skewness.data.frame <- function(x, na.rm = TRUE, type = "2", ...) {
   sapply(x, skewness, na.rm = na.rm, type = type)
+  # out <- lapply(x, skewness, na.rm = na.rm, type = type)
+  # out <- data.frame(
+  #   Parameter = names(out),
+  #   Skewness = unname(sapply(out, as.vector)),
+  #   SE = unname(sapply(out, function(i) attributes(i)$SE)),
+  #   stringsAsFactors = FALSE
+  # )
+  #
+  # class(out) <- c("parameters_skewness", "data.frame")
+  # out
 }
 
 #' @export
@@ -116,32 +127,33 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", ...) {
   n <- length(x)
   out <- n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2)
 
-  # convenience
-  if (is.numeric(type)) type <- as.character(type)
+  type <- .check_skewness_type(type)
 
-  if (!.skewness_type_ok(type)) {
-    warning("'type' must be a character value from \"1\" to \"3\". Using 'type=\"2\"' now.", call. = FALSE)
-    type <- "2"
-  }
-
-  if (type %in% c("2", "II", "SPSS", "SAS") && n < 4) {
+  if (type == "2" && n < 4) {
     warning("Need at least 4 complete observations for type-2-kurtosis Using 'type=\"1\"' now.", call. = FALSE)
     type <- "1"
   }
 
-  switch(
+  .kurtosis <- switch(
     type,
-    "1" = ,
-    "I" = ,
-    "classic" = out - 3,
-    "2" = ,
-    "II" = ,
-    "SPSS" = ,
-    "SAS" = ((n + 1) * (out - 3) + 6) * (n - 1)/((n - 2) * (n - 3)),
-    "3" = ,
-    "III" = ,
-    "Minitab" = out * (1 - 1 / n)^2 - 3
+    "1" = out - 3,
+    "2" = ((n + 1) * (out - 3) + 6) * (n - 1)/((n - 2) * (n - 3)),
+    "3" = out * (1 - 1 / n)^2 - 3
   )
+
+  # out_se <- sqrt((24 * n * (n - 2) * (n - 3)) / (((n + 1)^2) * (n + 3) * (n + 5)))
+  #
+  # .kurtosis_se <- switch(
+  #   type,
+  #   "1" = out_se,
+  #   "2" = out_se * (((n - 1) * (n + 1)) / ((n - 2) * (n - 3))),
+  #   "3" = out_se * ((n - 1) / n)^2
+  # )
+  #
+  # attr(.kurtosis, "SE") <- .kurtosis_se
+  # class(.kurtosis) <- unique(c("parameters_kurtosis", class(.kurtosis)))
+
+  .kurtosis
 }
 
 #' @export
@@ -152,6 +164,17 @@ kurtosis.matrix <- function(x, na.rm = TRUE, type = "2", ...) {
 #' @export
 kurtosis.data.frame <- function(x, na.rm = TRUE, type = "2", ...) {
   sapply(x, kurtosis, na.rm = na.rm, type = type)
+
+  # out <- lapply(x, kurtosis, na.rm = na.rm, type = type)
+  # out <- data.frame(
+  #   Parameter = names(out),
+  #   Kurtosis = unname(sapply(out, as.vector)),
+  #   SE = unname(sapply(out, function(i) attributes(i)$SE)),
+  #   stringsAsFactors = FALSE
+  # )
+  #
+  # class(out) <- c("parameters_kurtosis", "data.frame")
+  # out
 }
 
 #' @export
@@ -162,6 +185,51 @@ kurtosis.default <- function(x, na.rm = TRUE, type = "2", ...) {
 
 
 
-.skewness_type_ok <- function(type) {
-  !is.null(type) && !is.na(type) && (type %in% c("1", "2", "3", "I", "II", "III", "classic", "SPSS", "SAS", "Minitab"))
+.check_skewness_type <- function(type) {
+  # convenience
+  if (is.numeric(type)) type <- as.character(type)
+
+  if (is.null(type) || is.na(type) || !(type %in% c("1", "2", "3", "I", "II", "III", "classic", "SPSS", "SAS", "Minitab"))) {
+    warning("'type' must be a character value from \"1\" to \"3\". Using 'type=\"2\"' now.", call. = FALSE)
+    type <- "2"
+  }
+
+  switch(
+    type,
+    "1" = ,
+    "I" = ,
+    "classic" = "1",
+    "2" = ,
+    "II" = ,
+    "SPSS" = ,
+    "SAS" = "2",
+    "3" = ,
+    "III" = ,
+    "Minitab" = "3"
+  )
 }
+
+
+
+#' #' @export
+#' print.parameters_skewness <- function(x, digits = 3, ...) {
+#'   if (is.numeric(x)) {
+#'     cat(sprintf("Skewness (SE): %.*f (%.*f)\n", digits, as.vector(x), digits, attributes(x)$SE))
+#'   } else if (is.data.frame(x)) {
+#'     cat(insight::format_table(x, digits = digits))
+#'   } else {
+#'     NextMethod()
+#'   }
+#' }
+#'
+#'
+#' #' @export
+#' print.parameters_kurtosis <- function(x, digits = 3, ...) {
+#'   if (is.numeric(x)) {
+#'     cat(sprintf("Kurtosis (SE): %.*f (%.*f)\n", digits, as.vector(x), digits, attributes(x)$SE))
+#'   } else if (is.data.frame(x)) {
+#'     cat(insight::format_table(x, digits = digits))
+#'   } else {
+#'     NextMethod()
+#'   }
+#' }
