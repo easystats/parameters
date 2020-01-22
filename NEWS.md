@@ -1,10 +1,18 @@
 # parameters 0.4.2
 
+## Breaking changes
+
+- `skewness()` now uses a different method to calculate the skewness by default. Different methods can be selected using the `type`-argument.
+
 ## General
 
 - Added new vignettes on 'Standardized Model Parameters' and 'Robust Estimation of Standard Errors', and vignettes are now also published on CRAN.
 - Improved handling of robust statistics in `model_parameters()`. This should now work for more models than before.
 - Improved accuracy of `ci.merMod()` for `method = "satterthwaite"` and `method = "kenward"`.
+
+## Changes to functions
+
+- `skewness()` gets a `type`-argument, to compute different types of skewness.
 
 ## New functions
 
