@@ -158,7 +158,7 @@ model_parameters.MixMod <- model_parameters.glmmTMB
 
   # Number of levels per random-effect groups
   n_re <- as.list(.n_randomeffects(model))
-  names(n_re) <- paste0("N_groups_", names(n_re))
+  names(n_re) <- paste0("N_", names(n_re))
   out <- c(out, n_re)
   out <- c(out, as.list(NA))
 

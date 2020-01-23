@@ -29,10 +29,13 @@
 #' @importFrom insight format_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
+  res <- attributes(x)$summary_random
+
   if (!is.null(attributes(x)$title)) {
     insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
+  } else if (!is.null(res)) {
+    insight::print_color("# Fixed Effects\n\n", "blue")
   }
-
 
   # For Bayesian models, we need to prettify parameter names here...
 
@@ -59,16 +62,24 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   }
 
   # print summary for random effects
-  res <- attributes(x)$summary_random
   if (!is.null(res)) {
-    max_len <- max(nchar(res$Statistic, keepNA = FALSE))
-    minus <- paste0(rep("-", max_len + 2), collapse = "")
-    res$Statistic[grep("^X", res$Statistic)] <- minus
+    insight::print_color("\n# Random Effects\n", "blue")
 
-    max_len <- max(nchar(as.character(res$Value), keepNA = FALSE))
-    minus <- paste0(rep("-", max_len + 2), collapse = "")
-    out <- insight::format_table(res, missing = "XXXXXXXXXXXXXXX")
-    out <- gsub("XXXXXXXXXXXXXXX", minus, out, fixed = TRUE)
+    res$Statistic <- gsub("_(.*)", " \\(\\1\\)", res$Statistic)
+
+    max_len1 <- max(nchar(res$Statistic, keepNA = FALSE))
+    minus1 <- paste0(rep("-", max_len1 + 1), collapse = "")
+    space1 <- paste0(rep(" ", max_len1 + 1), collapse = "")
+
+    max_len2 <- max(nchar(as.character(round(res$Value, digits = attributes(x)$digits)), keepNA = FALSE))
+    minus2 <- paste0(rep("-", max_len2 + 2), collapse = "")
+    space2 <- paste0(rep(" ", max_len2 + 1), collapse = "")
+
+    res$Statistic[grep("^X", res$Statistic)] <- NA
+
+    out <- insight::format_table(res)
+    out <- gsub(paste0(space1, "|", space2), paste0(minus1, "|", minus2), out, fixed = TRUE)
+
     cat("\n")
     cat(out)
   }
