@@ -9,7 +9,7 @@ dof_satterthwaite <- function(model) {
 #' @export
 dof_satterthwaite.lmerMod <- function(model) {
   if (!requireNamespace("lmerTest", quietly = TRUE)) {
-    stop("Package `lmerTest` required for Satterthwaite approximation.", call. = FALSE)
+    stop("Package `lmerTest` required for Satterthwaite approximation. Please install it.", call. = FALSE)
   }
 
   parameters <- find_parameters(model, effects = "fixed", flatten = TRUE)
@@ -23,7 +23,7 @@ dof_satterthwaite.lmerMod <- function(model) {
 #' @export
 dof_satterthwaite.lme <- function(model) {
   if (!requireNamespace("lavaSearch2", quietly = TRUE)) {
-    stop("Package `lavaSearch2` required for Satterthwaite approximation.", call. = FALSE)
+    stop("Package `lavaSearch2` required for Satterthwaite approximation. Please install it.", call. = FALSE)
   }
   parameters <- find_parameters(model, effects = "fixed", flatten = TRUE)
   lavaSearch2::sCorrect(model) <- TRUE

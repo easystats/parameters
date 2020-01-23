@@ -141,8 +141,9 @@
     standardize <- NULL
   }
 
-  parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
-  parameters$Parameter <- row.names(parameters)
+  parameters <- insight::get_parameters(model, effects = "fixed", component = "all")
+  statistic <- insight::get_statistic(model, component = "all")
+
   original_order <- parameters$.id <- 1:nrow(parameters)
 
   # remove SE column
@@ -221,11 +222,9 @@
 
   # adjust standard errors and test-statistic as well
   if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("ml1", "kenward", "kr")) {
-    for (test_statistic in c("t value", "z value")) {
-      if (test_statistic %in% colnames(parameters)) {
-        parameters[[test_statistic]] <- parameters[["Estimate"]] / parameters[["SE"]]
-      }
-    }
+    parameters$Statistic <- parameters$Estimate / parameters$SE
+  } else {
+    parameters <- merge(parameters, statistic, by = "Parameter")
   }
 
 
@@ -245,6 +244,7 @@
   parameters <- parameters[match(original_order, parameters$.id), ]
 
   # Renaming
+  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters))
   names(parameters) <- gsub("Std. Error", "SE", names(parameters))
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
   names(parameters) <- gsub("t value", "t", names(parameters))
