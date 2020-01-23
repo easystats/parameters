@@ -13,19 +13,19 @@
 #'
 #' @examples
 #' library(parameters)
-#' library(glmmTMB)
+#' if (require("glmmTMB")) {
+#'   model <- glmmTMB(
+#'     count ~ spp + mined + (1 | site),
+#'     ziformula = ~mined,
+#'     family = poisson(),
+#'     data = Salamanders
+#'   )
+#'   mp <- model_parameters(model)
 #'
-#' model <- glmmTMB(
-#'   count ~ spp + mined + (1 | site),
-#'   ziformula = ~mined,
-#'   family = poisson(),
-#'   data = Salamanders
-#' )
-#' mp <- model_parameters(model)
+#'   print(mp, pretty_names = FALSE)
 #'
-#' print(mp, pretty_names = FALSE)
-#'
-#' print(mp, split_components = FALSE)
+#'   print(mp, split_components = FALSE)
+#' }
 #' @importFrom insight format_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
@@ -56,6 +56,21 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   } else {
     formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
     cat(insight::format_table(formatted_table))
+  }
+
+  # print summary for random effects
+  res <- attributes(x)$summary_random
+  if (!is.null(res)) {
+    max_len <- max(nchar(res$Statistic, keepNA = FALSE))
+    minus <- paste0(rep("-", max_len + 2), collapse = "")
+    res$Statistic[grep("^X", res$Statistic)] <- minus
+
+    max_len <- max(nchar(as.character(res$Value), keepNA = FALSE))
+    minus <- paste0(rep("-", max_len + 2), collapse = "")
+    out <- insight::format_table(res, missing = "XXXXXXXXXXXXXXX")
+    out <- gsub("XXXXXXXXXXXXXXX", minus, out, fixed = TRUE)
+    cat("\n")
+    cat(out)
   }
 }
 

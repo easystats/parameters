@@ -1,5 +1,5 @@
 #' @export
-model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, exponentiate = FALSE, ...) {
+model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, exponentiate = FALSE, summary_random = TRUE, ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -12,6 +12,11 @@ model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations 
   )
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+
+  if (isTRUE(summary_random)) {
+    attr(parameters, "summary_random") <- .randomeffects_summary(model)
+  }
+
   out
 }
 

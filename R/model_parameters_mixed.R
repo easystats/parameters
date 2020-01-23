@@ -32,7 +32,7 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, ...) {
+model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, summary_random = TRUE, ...) {
   # p-values, CI and se might be based of wald, or KR
   df_method <- match.arg(df_method, choices = c("wald", "ml1", "satterthwaite", "kenward"))
 
@@ -46,6 +46,11 @@ model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_metho
 
   if (exponentiate) parameters <- .exponentiate_parameters(parameters)
   parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
+
+  if (isTRUE(summary_random)) {
+    attr(parameters, "summary_random") <- .randomeffects_summary(model)
+  }
+
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
@@ -64,7 +69,7 @@ model_parameters.lme <- model_parameters.merMod
 #' @inheritParams simulate_model
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, summary_random = TRUE, ...) {
   component <- match.arg(component)
 
   # fix argument, if model has no zi-part
@@ -82,6 +87,11 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
 
   if (exponentiate) parameters <- .exponentiate_parameters(parameters)
   parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
+
+  if (isTRUE(summary_random)) {
+    attr(parameters, "summary_random") <- .randomeffects_summary(model)
+  }
+
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
@@ -160,11 +170,6 @@ model_parameters.MixMod <- model_parameters.glmmTMB
   out$Statistic <- rownames(out)
   rownames(out) <- NULL
   colnames(out) <- c("Value", "Statistic")
-
-  # "empty rows
-  # out$Statistic[grep("^X", out$Statistic)] <- NA
-  # max(nchar(x$Statistic, keepNA = F))
-  # gsub("XXX                  ", "---------------------", xx, fixed = T)
 
   out[c(2:1)]
 }

@@ -27,6 +27,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   robust = FALSE,
+  summary_random = TRUE,
   ...
 )
 
@@ -38,6 +39,7 @@
   component = c("all", "conditional", "zi", "zero_inflated"),
   standardize = NULL,
   exponentiate = FALSE,
+  summary_random = TRUE,
   ...
 )
 }

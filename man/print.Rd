@@ -27,17 +27,17 @@ A \code{print()}-method for objects from \code{\link[=model_parameters]{model_pa
 }
 \examples{
 library(parameters)
-library(glmmTMB)
+if (require("glmmTMB")) {
+  model <- glmmTMB(
+    count ~ spp + mined + (1 | site),
+    ziformula = ~mined,
+    family = poisson(),
+    data = Salamanders
+  )
+  mp <- model_parameters(model)
 
-model <- glmmTMB(
-  count ~ spp + mined + (1 | site),
-  ziformula = ~mined,
-  family = poisson(),
-  data = Salamanders
-)
-mp <- model_parameters(model)
+  print(mp, pretty_names = FALSE)
 
-print(mp, pretty_names = FALSE)
-
-print(mp, split_components = FALSE)
+  print(mp, split_components = FALSE)
+}
 }
