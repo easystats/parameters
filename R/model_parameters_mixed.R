@@ -129,13 +129,14 @@ model_parameters.MixMod <- model_parameters.glmmTMB
     var_intercept <- as.list(re_variances$var.intercept)
     names(var_intercept) <- paste0("tau00_", names(re_variances$var.intercept))
     out <- c(out, var_intercept)
-    out <- c(out, as.list(NA))
 
     # Random Slope Variance
     if (!.is_empty_object(re_variances$var.slope) && !.is_empty_object(model_rs)) {
       var_slope <- as.list(re_variances$var.slope)
       names(var_slope) <- paste0("tau11_", names(re_variances$var.slope))
       out <- c(out, var_slope)
+      out <- c(out, as.list(NA))
+    } else {
       out <- c(out, as.list(NA))
     }
 
@@ -160,7 +161,6 @@ model_parameters.MixMod <- model_parameters.glmmTMB
   n_re <- as.list(.n_randomeffects(model))
   names(n_re) <- paste0("N_", names(n_re))
   out <- c(out, n_re)
-  out <- c(out, as.list(NA))
 
   # number of observations
   out$Observations <- insight::n_obs(model)
