@@ -132,7 +132,7 @@ model_parameters.MixMod <- model_parameters.glmmTMB
     # Slope-Intercept Correlation
     if (!.is_empty_object(re_variances$cor.slope_intercept) && !.is_empty_object(model_rs)) {
       cor_slope_intercept <- as.list(re_variances$cor.slope_intercept)
-      names(cor_slope_intercept) <- paste0("rho01", model_re, ".", model_rs)
+      names(cor_slope_intercept) <- paste0("rho01_", model_re, ".", model_rs)
       out <- c(out, cor_slope_intercept)
       out <- c(out, as.list(NA))
     }
