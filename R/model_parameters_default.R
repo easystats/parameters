@@ -86,27 +86,6 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 # other special cases ------------------------------------------------
 
 
-#' @rdname model_parameters.merMod
-#' @export
-model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", "random"), bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
-  effects <- match.arg(effects)
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = c("Parameter", "Effects"),
-    standardize = standardize,
-    exponentiate = exponentiate,
-    effects = effects,
-    ...
-  )
-
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  out
-}
-
-
 #' @rdname model_parameters.default
 #' @export
 model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "precision", "all"), standardize = NULL, exponentiate = FALSE, ...) {
@@ -128,6 +107,7 @@ model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterati
     merge_by = c("Parameter", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
+    robust = FALSE,
     ...
   )
 
@@ -158,6 +138,7 @@ model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations
     merge_by = c("Parameter", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
+    robust = FALSE,
     ...
   )
 
@@ -189,6 +170,7 @@ model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations
     merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
+    robust = FALSE,
     ...
   )
 
@@ -208,6 +190,7 @@ model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations 
     merge_by = c("Parameter", "Response"),
     standardize = standardize,
     exponentiate = exponentiate,
+    robust = FALSE,
     ...
   )
 

@@ -9,13 +9,14 @@ model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations 
     merge_by = c("Parameter", "Component"),
     standardize = NULL,
     exponentiate = exponentiate,
+    robust = FALSE,
     ...
   )
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
 
   if (isTRUE(summary_random)) {
-    attr(parameters, "summary_random") <- .randomeffects_summary(model)
+    attr(out, "summary_random") <- .randomeffects_summary(model)
   }
 
   out

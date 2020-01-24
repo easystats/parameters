@@ -102,3 +102,67 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
 #' @export
 model_parameters.MixMod <- model_parameters.glmmTMB
 
+
+
+
+# other mixed models -------------------------------
+
+
+#' @rdname model_parameters.merMod
+#' @export
+model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", "random"), bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, summary_random = FALSE, ...) {
+  effects <- match.arg(effects)
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Effects"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    effects = effects,
+    robust = FALSE,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+
+  if (isTRUE(summary_random)) {
+    attr(out, "summary_random") <- .randomeffects_summary(model)
+  }
+
+  out
+}
+
+
+#' @rdname model_parameters.merMod
+#' @export
+model_parameters.clmm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, summary_random = FALSE, ...) {
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    effects = "fixed",
+    robust = FALSE,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+
+  if (isTRUE(summary_random)) {
+    attr(out, "summary_random") <- .randomeffects_summary(model)
+  }
+
+  out
+}
+
+
+#' @export
+model_parameters.cpglmm <- model_parameters.clmm
+
+#' @export
+model_parameters.rlmerMod <- model_parameters.clmm

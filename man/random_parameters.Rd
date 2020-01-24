@@ -21,13 +21,13 @@ This function extracts the different variance components of a
 \details{
 The variance components are obtained from \code{\link[insight]{get_variance}}
   and are denoted as following:
-  \subsection{Within-subject (or residual) variance}{
+  \subsection{Within-group (or residual) variance}{
     The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
     is the sum of the distribution-specific variance and the variance due to additive dispersion.
-    It indicates the \emph{within-subject variance}.
+    It indicates the \emph{within-group variance}.
   }
-  \subsection{Between-subject (or random intercept) variance}{
-    The random intercept variance, or \emph{between-subject} variance
+  \subsection{Between-group (or random intercept) variance}{
+    The random intercept variance, or \emph{between-group} variance
     (\ifelse{html}{\out{&tau;<sub>00</sub>}}{\eqn{\tau_{00}}}),
     is obtained from \code{VarCorr()}. It indicates how much groups
     or subjects differ from each other.
