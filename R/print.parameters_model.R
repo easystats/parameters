@@ -63,27 +63,46 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
   # print summary for random effects
   if (!is.null(res)) {
-    insight::print_color("\n# Random Effects\n", "blue")
-
-    res$Statistic <- gsub("_(.*)", " \\(\\1\\)", res$Statistic)
-
-    max_len1 <- max(nchar(res$Statistic, keepNA = FALSE))
-    minus1 <- paste0(rep("-", max_len1 + 1), collapse = "")
-    space1 <- paste0(rep(" ", max_len1 + 1), collapse = "")
-
-    max_len2 <- max(nchar(as.character(round(res$Value, digits = attributes(x)$digits)), keepNA = FALSE))
-    minus2 <- paste0(rep("-", max_len2 + 2), collapse = "")
-    space2 <- paste0(rep(" ", max_len2 + 1), collapse = "")
-
-    res$Statistic[grep("^X", res$Statistic)] <- NA
-
-    out <- insight::format_table(res)
-    out <- gsub(paste0(space1, "|", space2), paste0(minus1, "|", minus2), out, fixed = TRUE)
-
-    cat("\n")
-    cat(out)
+    .print_random_parameters(res, digits = attributes(x)$digits)
   }
 }
+
+
+
+
+#' @export
+print.parameters_random <- function(x, digits = 2, ...) {
+  .print_random_parameters(x, digits = digits)
+}
+
+
+
+
+#' @keywords internal
+.print_random_parameters <- function(random_params, digits = 2) {
+  insight::print_color("\n# Random Effects\n", "blue")
+
+  random_params$Statistic <- gsub("_(.*)", " \\(\\1\\)", random_params$Statistic)
+
+  max_len1 <- max(nchar(random_params$Statistic, keepNA = FALSE))
+  minus1 <- paste0(rep("-", max_len1 + 1), collapse = "")
+  space1 <- paste0(rep(" ", max_len1 + 1), collapse = "")
+
+  max_len2 <- max(nchar(as.character(round(random_params$Value, digits = digits)), keepNA = FALSE))
+  minus2 <- paste0(rep("-", max_len2 + 2), collapse = "")
+  space2 <- paste0(rep(" ", max_len2 + 1), collapse = "")
+
+  random_params$Statistic[grep("^X", random_params$Statistic)] <- NA
+
+  out <- insight::format_table(random_params)
+  out <- gsub(paste0(space1, "|", space2), paste0(minus1, "|", minus2), out, fixed = TRUE)
+
+  cat("\n")
+  cat(out)
+}
+
+
+
 
 
 #' @keywords internal
