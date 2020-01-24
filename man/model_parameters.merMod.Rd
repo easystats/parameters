@@ -98,7 +98,7 @@ if (require("lme4") && require("glmmTMB")) {
     family = poisson(),
     data = Salamanders
   )
-  model_parameters(model)
+  model_parameters(model, summary_random = TRUE)
 }
 \donttest{
 if (require("lme4")) {
