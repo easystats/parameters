@@ -91,12 +91,12 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
   max_len2 <- max(nchar(random_params$Value, keepNA = FALSE))
   minus2 <- paste0(rep("-", max_len2 + 2), collapse = "")
-  space2 <- paste0(rep(" ", max_len2 + 1), collapse = "")
+  space2 <- paste0(rep(" ", max_len2 - 1), collapse = "")
 
   random_params$Statistic[grep("^X", random_params$Statistic)] <- NA
 
   out <- insight::format_table(random_params)
-  out <- gsub(paste0(space1, "|", space2), paste0(minus1, "|", minus2), out, fixed = TRUE)
+  out <- gsub(paste0(space1, "|", space2, "NA"), paste0(minus1, "|", minus2), out, fixed = TRUE)
 
   cat("\n")
   cat(out)
