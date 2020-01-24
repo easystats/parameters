@@ -27,7 +27,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   robust = FALSE,
-  summary_random = TRUE,
+  summary_random = FALSE,
   ...
 )
 
@@ -39,7 +39,7 @@
   component = c("all", "conditional", "zi", "zero_inflated"),
   standardize = NULL,
   exponentiate = FALSE,
-  summary_random = TRUE,
+  summary_random = FALSE,
   ...
 )
 }
@@ -63,6 +63,8 @@
 \item{df_method}{Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}). Note that when \code{df_method} is not \code{"wald"}, robust standard errors etc. cannot be computed.}
 
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
+
+\item{summary_random}{Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.}
 
 \item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}) or \code{"all"}.}
 }

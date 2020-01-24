@@ -1,3 +1,48 @@
+#' @title Summary information from random effects
+#' @name random_parameters
+#'
+#' @description This function extracts the different variance components of a
+#'   mixed model as well as further information related to random effects (ICC, R2)
+#'   and returns the result as a data frame.
+#'
+#' @param model A mixed effects model.
+#'
+#' @return A data frame with random effects statistics, including number of levels per
+#'   random effect group, as well as complete observations in the model.
+#'
+#' @details The variance components are obtained from \code{\link[insight]{get_variance}}
+#'   and are denoted as following:
+#'   \subsection{Within-subject (or residual) variance}{
+#'     The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
+#'     is the sum of the distribution-specific variance and the variance due to additive dispersion.
+#'     It indicates the \emph{within-subject variance}.
+#'   }
+#'   \subsection{Between-subject (or random intercept) variance}{
+#'     The random intercept variance, or \emph{between-subject} variance
+#'     (\ifelse{html}{\out{&tau;<sub>00</sub>}}{\eqn{\tau_{00}}}),
+#'     is obtained from \code{VarCorr()}. It indicates how much groups
+#'     or subjects differ from each other.
+#'   }
+#'   \subsection{Random slope variance}{
+#'     The random slope variance (\ifelse{html}{\out{&tau;<sub>11</sub>}}{\eqn{\tau_{11}}})
+#'     is obtained from \code{VarCorr()}. This measure is only available
+#'     for mixed models with random slopes.
+#'   }
+#'   \subsection{Random slope-intercept correlation}{
+#'     The random slope-intercept correlation
+#'     (\ifelse{html}{\out{&rho;<sub>01</sub>}}{\eqn{\rho_{01}}})
+#'     is obtained from \code{VarCorr()}. This measure is only available
+#'     for mixed models with random intercepts and slopes.
+#'   }
+#'  For details regarding the calculation of R2 and ICC, see \code{\link[performance]{r2_nakagawa}}
+#'  and \code{\link[performance]{icc}}.
+#'
+#' @examples
+#' if (require("lme4")) {
+#'   data(sleepstudy)
+#'   model <- lmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy)
+#'   random_parameters(model)
+#' }
 #' @export
 random_parameters <- function(model) {
   out <- .randomeffects_summary(model)
@@ -23,10 +68,11 @@ random_parameters <- function(model) {
   model_re <- insight::find_random(model, split_nested = FALSE, flatten = TRUE)
   model_rs <- unlist(insight::find_random_slopes(model))
 
+  new_line <- FALSE
+
   if (length(re_variances) && !is.na(re_variances) && !is.null(re_variances)) {
     # Residual Variance (Sigma^2)
     out$Sigma2 <- re_variances$var.residual
-    out <- c(out, as.list(NA))
 
     # Random Intercept Variance
     var_intercept <- as.list(re_variances$var.intercept)
@@ -35,21 +81,25 @@ random_parameters <- function(model) {
 
     # Random Slope Variance
     if (!.is_empty_object(re_variances$var.slope) && !.is_empty_object(model_rs)) {
+      out <- c(out, as.list(NA))
+      new_line <- TRUE
       var_slope <- as.list(re_variances$var.slope)
       names(var_slope) <- paste0("tau11_", names(re_variances$var.slope))
       out <- c(out, var_slope)
-      out <- c(out, as.list(NA))
-    } else {
-      out <- c(out, as.list(NA))
     }
 
     # Slope-Intercept Correlation
     if (!.is_empty_object(re_variances$cor.slope_intercept) && !.is_empty_object(model_rs)) {
+      if (!new_line) {
+        out <- c(out, as.list(NA))
+        new_line <- TRUE
+      }
       cor_slope_intercept <- as.list(re_variances$cor.slope_intercept)
       names(cor_slope_intercept) <- paste0("rho01_", model_re, ".", model_rs)
       out <- c(out, cor_slope_intercept)
-      out <- c(out, as.list(NA))
     }
+
+    out <- c(out, as.list(NA))
 
     # ICC & R2
     out$R2_marginal <- re_variances$var.fixed / (re_variances$var.fixed + re_variances$var.residual)
@@ -73,6 +123,13 @@ random_parameters <- function(model) {
   out$Statistic <- rownames(out)
   rownames(out) <- NULL
   colnames(out) <- c("Value", "Statistic")
+
+  # renaming
+  out$Statistic[out$Statistic == "Sigma2"] <- "Within-Subject Variance"
+  out$Statistic <- gsub("^tau00_(.*)", "Between-Subject Variance \\(\\1\\)", out$Statistic)
+  out$Statistic <- gsub("^tau11_(.*)", "Random Slope Variance \\(\\1\\)", out$Statistic)
+  out$Statistic <- gsub("^rho01_(.*)", "Slope-Intercept Correlation \\(\\1\\)", out$Statistic)
+  out$Statistic <- gsub("_(.*)", " \\(\\1\\)", out$Statistic)
 
   out[c(2:1)]
 }

@@ -82,13 +82,14 @@ print.parameters_random <- function(x, digits = 2, ...) {
 .print_random_parameters <- function(random_params, digits = 2) {
   insight::print_color("\n# Random Effects\n", "blue")
 
-  random_params$Statistic <- gsub("_(.*)", " \\(\\1\\)", random_params$Statistic)
+  # format values
+  random_params$Value <- sprintf("%g", round(random_params$Value, digits = digits))
 
   max_len1 <- max(nchar(random_params$Statistic, keepNA = FALSE))
   minus1 <- paste0(rep("-", max_len1 + 1), collapse = "")
   space1 <- paste0(rep(" ", max_len1 + 1), collapse = "")
 
-  max_len2 <- max(nchar(as.character(round(random_params$Value, digits = digits)), keepNA = FALSE))
+  max_len2 <- max(nchar(random_params$Value, keepNA = FALSE))
   minus2 <- paste0(rep("-", max_len2 + 2), collapse = "")
   space2 <- paste0(rep(" ", max_len2 + 1), collapse = "")
 

@@ -4,6 +4,7 @@
 #'
 #' @param model A mixed model.
 #' @param effects Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.
+#' @param summary_random Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.
 #' @inheritParams model_parameters.default
 #' @param df_method Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}). Note that when \code{df_method} is not \code{"wald"}, robust standard errors etc. cannot be computed.
 #'
@@ -32,7 +33,7 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, summary_random = TRUE, ...) {
+model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, summary_random = FALSE, ...) {
   # p-values, CI and se might be based of wald, or KR
   df_method <- match.arg(df_method, choices = c("wald", "ml1", "satterthwaite", "kenward"))
 
@@ -69,7 +70,7 @@ model_parameters.lme <- model_parameters.merMod
 #' @inheritParams simulate_model
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, summary_random = TRUE, ...) {
+model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, summary_random = FALSE, ...) {
   component <- match.arg(component)
 
   # fix argument, if model has no zi-part
