@@ -15,7 +15,10 @@
 #' \donttest{
 #' # lme4 -------------------------------------------
 #' if (require("lme4")) {
-#'   model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species), data = iris)
+#'   model <- lmer(
+#'     Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species),
+#'     data = iris
+#'   )
 #'   select_parameters(model)
 #' }
 #'

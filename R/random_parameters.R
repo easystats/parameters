@@ -70,7 +70,7 @@ random_parameters <- function(model) {
 
   new_line <- FALSE
 
-  if (length(re_variances) && !is.na(re_variances) && !is.null(re_variances)) {
+  if (length(re_variances) && sum(!is.na(re_variances)) > 0 && !is.null(re_variances)) {
     # Residual Variance (Sigma^2)
     out$Sigma2 <- re_variances$var.residual
 
