@@ -11,15 +11,17 @@
 - Improved handling of robust statistics in `model_parameters()`. This should now work for more models than before.
 - Improved accuracy of `ci.merMod()` for `method = "satterthwaite"` and `method = "kenward"`.
 
-## Changes to functions
-
-- `skewness()` gets a `type`-argument, to compute different types of skewness.
-- `kurtosis()` gets a `type`-argument, to compute different types of skewness.
-
 ## New functions
 
+- `random_parameters()` that returns information about the random effects such as variances, R2 or ICC.
 - `closest_component()` as a small helper that returns the component index for each variable in a data frame that was used in `principal_components()`.
 - `get_scores()` as a small helper to extract scales and calculate sum scores from a principal component analysis (PCA, `principal_components()`).
+
+## Changes to functions
+
+- `model_parameters()` for mixed models gets a `summary_random`-argument to additionally print information about the random effects.
+- `skewness()` gets a `type`-argument, to compute different types of skewness.
+- `kurtosis()` gets a `type`-argument, to compute different types of skewness.
 
 ## Bug fixes
 
