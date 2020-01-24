@@ -128,7 +128,7 @@ model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, la
   # here we match the original columns in the data set with the assigned components
   # for each variable, so we know which column in the original data set belongs
   # to which extracted component...
-  attr(loadings, "component_columns") <- .component_columns(loadings, loadings_columns = loading_cols, variable_names = rownames(model$loadings))
+  attr(loadings, "closest_component") <- .closest_component(loadings, loadings_columns = loading_cols, variable_names = rownames(model$loadings))
 
   # add class-attribute for printing
   if (model$fn == "principal") {

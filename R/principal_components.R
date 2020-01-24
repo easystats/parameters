@@ -43,7 +43,7 @@
 #'  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
 #'  }
 #'
-#' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{component_columns()} will return a numeric vector with the assigned component index for each column from the original data frame.
+#' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{closest_component()} will return a numeric vector with the assigned component index for each column from the original data frame.
 #'
 #' @examples
 #' library(parameters)
@@ -57,7 +57,7 @@
 #' predict(pca)
 #'
 #' # which variables from the original data belong to which extracted component?
-#' component_columns(pca)
+#' closest_component(pca)
 #'
 #' \donttest{
 #' # Automated number of components
@@ -79,8 +79,8 @@ principal_components <- function(x, n = "auto", rotation = "none", sort = FALSE,
 
 #' @rdname principal_components
 #' @export
-component_columns <- function(x) {
-  attributes(x)$component_columns
+closest_component <- function(x) {
+  attributes(x)$closest_component
 }
 
 
@@ -177,7 +177,7 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
   # here we match the original columns in the data set with the assigned components
   # for each variable, so we know which column in the original data set belongs
   # to which extracted component...
-  attr(loadings, "component_columns") <- .component_columns(loadings, loadings_columns = loading_cols, variable_names = colnames(x))
+  attr(loadings, "closest_component") <- .closest_component(loadings, loadings_columns = loading_cols, variable_names = colnames(x))
   attr(loadings, "data") <- data_name
   attr(loadings, "data_set") <- original_data
 
@@ -240,7 +240,7 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
 
 
 
-.component_columns <- function(loadings, loadings_columns, variable_names) {
+.closest_component <- function(loadings, loadings_columns, variable_names) {
   component_columns <- apply(loadings[loadings_columns], 1, function(i) which.max(abs(i)))
   stats::setNames(component_columns, variable_names)
 }
