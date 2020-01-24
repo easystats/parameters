@@ -95,8 +95,13 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
   random_params$Statistic[grep("^X", random_params$Statistic)] <- NA
 
-  out <- insight::format_table(random_params)
+  # remove headline
+  out <- gsub("^(.*)(---\\n)(.*)", "\\3", insight::format_table(random_params))
   out <- gsub(paste0(space1, "|", space2, "NA"), paste0(minus1, "|", minus2), out, fixed = TRUE)
+
+  # out <- gsub("^(.*)(---\\n)(.*)", "\\3", insight::format_table(random_params, sep = " "))
+  # space2 <- paste0(rep(" ", max_len2 - 2), collapse = "")
+  # out <- gsub(paste0(space1, space2, "NA"), paste0(space1, space2, "  "), out, fixed = TRUE)
 
   cat("\n")
   cat(out)
