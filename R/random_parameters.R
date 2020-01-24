@@ -120,16 +120,36 @@ random_parameters <- function(model) {
 
   # make nice data frame
   out <- as.data.frame(do.call(rbind, out), stringsAsFactors = FALSE)
-  out$Statistic <- rownames(out)
+  out$Description <- rownames(out)
   rownames(out) <- NULL
-  colnames(out) <- c("Value", "Statistic")
+  colnames(out) <- c("Value", "Description")
+
+  # Additional information
+  out$Component <- ""
+  out$Component[out$Description == "Sigma2"] <- "sigma2"
+  out$Component[grepl("^tau00_", out$Description)] <- "tau00"
+  out$Component[grepl("^tau11_", out$Description)] <- "tau11"
+  out$Component[grepl("^rho01_", out$Description)] <- "rho01"
+
+  # Additional information
+  out$Term <- ""
+  out$Term[out$Component == "tau00"] <- gsub("^tau00_(.*)", "\\1", out$Description[out$Component == "tau00"])
+  out$Term[out$Component == "tau11"] <- gsub("^tau11_(.*)", "\\1", out$Description[out$Component == "tau11"])
+  out$Term[out$Component == "rho01"] <- gsub("^rho01_(.*)", "\\1", out$Description[out$Component == "rho01"])
 
   # renaming
-  out$Statistic[out$Statistic == "Sigma2"] <- "Within-Subject Variance"
-  out$Statistic <- gsub("^tau00_(.*)", "Between-Subject Variance \\(\\1\\)", out$Statistic)
-  out$Statistic <- gsub("^tau11_(.*)", "Random Slope Variance \\(\\1\\)", out$Statistic)
-  out$Statistic <- gsub("^rho01_(.*)", "Slope-Intercept Correlation \\(\\1\\)", out$Statistic)
-  out$Statistic <- gsub("_(.*)", " \\(\\1\\)", out$Statistic)
+  out$Description[out$Description == "Sigma2"] <- "Within-Subject Variance"
+  out$Description <- gsub("^tau00_(.*)", "Between-Subject Variance", out$Description)
+  out$Description <- gsub("^tau11_(.*)", "Random Slope Variance", out$Description)
+  out$Description <- gsub("^rho01_(.*)", "Slope-Intercept Correlation", out$Description)
 
-  out[c(2:1)]
+  out$Term[grepl("N_(.*)", out$Description)] <- gsub("N_(.*)", "\\1", out$Description[grepl("N_(.*)", out$Description)])
+  out$Description <- gsub("R2_(.*)", "R2 \\(\\1\\)", out$Description)
+  out$Description <- gsub("_(.*)", "", out$Description)
+
+  out$Description[grepl("^X", out$Description)] <- NA
+  out$Component[out$Component == ""] <- NA
+  out$Term[out$Term == ""] <- NA
+
+  out[c("Description", "Component", "Term", "Value")]
 }
