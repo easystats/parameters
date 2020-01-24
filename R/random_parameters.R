@@ -12,13 +12,13 @@
 #'
 #' @details The variance components are obtained from \code{\link[insight]{get_variance}}
 #'   and are denoted as following:
-#'   \subsection{Within-subject (or residual) variance}{
+#'   \subsection{Within-group (or residual) variance}{
 #'     The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
 #'     is the sum of the distribution-specific variance and the variance due to additive dispersion.
-#'     It indicates the \emph{within-subject variance}.
+#'     It indicates the \emph{within-group variance}.
 #'   }
-#'   \subsection{Between-subject (or random intercept) variance}{
-#'     The random intercept variance, or \emph{between-subject} variance
+#'   \subsection{Between-group (or random intercept) variance}{
+#'     The random intercept variance, or \emph{between-group} variance
 #'     (\ifelse{html}{\out{&tau;<sub>00</sub>}}{\eqn{\tau_{00}}}),
 #'     is obtained from \code{VarCorr()}. It indicates how much groups
 #'     or subjects differ from each other.
@@ -138,8 +138,8 @@ random_parameters <- function(model) {
   out$Term[out$Component == "rho01"] <- gsub("^rho01_(.*)", "\\1", out$Description[out$Component == "rho01"])
 
   # renaming
-  out$Description[out$Description == "Sigma2"] <- "Within-Subject Variance"
-  out$Description <- gsub("^tau00_(.*)", "Between-Subject Variance", out$Description)
+  out$Description[out$Description == "Sigma2"] <- "Within-Group Variance"
+  out$Description <- gsub("^tau00_(.*)", "Between-Group Variance", out$Description)
   out$Description <- gsub("^tau11_(.*)", "Random Slope Variance", out$Description)
   out$Description <- gsub("^rho01_(.*)", "Slope-Intercept Correlation", out$Description)
 
