@@ -14,6 +14,6 @@ if (require("testthat") && require("insight") && require("parameters") && requir
       c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "p", "Weight")
     )
     expect_equal(params$Coefficient, c(0.111, 0.245, 0.8, 1.1, 0.03, 0.43769), tolerance = 1e-3)
-    expect_equal(params$Coefficient, c(400, 81.16224, 1e+06, 25, 10000, NA), tolerance = 1e-3)
+    expect_equal(params$Weight, c(400, 81.16224, 1e+06, 25, 10000, NA), tolerance = 1e-3)
   })
 }
