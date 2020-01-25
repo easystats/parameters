@@ -27,6 +27,7 @@ reference:
   - model_parameters.principal
   - model_parameters.stanreg
   - model_parameters.BFBayesFactor
+  - model_parameters.rma
   - model_parameters.htest
   - print.parameters_model
 
