@@ -563,11 +563,12 @@ standard_error.coxph <- function(model, method = NULL, ...) {
     return(standard_error_robust(model, ...))
   }
 
+  params <- insight::get_parameters(model)
   cs <- stats::coef(summary(model))
   se <- cs[, 3]
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(se)),
+    Parameter = params$Parameter,
     SE = as.vector(se)
   )
 }

@@ -469,9 +469,10 @@ p_value.coxph <- function(model, method = NULL, ...) {
 
   cs <- stats::coef(summary(model))
   p <- cs[, 5]
+  params <- insight::get_parameters(model)
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(p)),
+    Parameter = params$Parameter,
     p = as.vector(p)
   )
 }

@@ -37,4 +37,21 @@ if (require("testthat") && require("parameters") && require("survival")) {
       tolerance = 1e-4
     )
   })
+
+
+  # Create the simplest test data set
+  test1 <- list(
+    time = c(4, 3, 1, 1, 2, 2, 3),
+    status = c(1, 1, 1, 0, 1, 1, 0),
+    x = c(0, 2, 1, 1, 1, 0, 0),
+    sex = c(0, 0, 0, 0, 1, 1, 1)
+  )
+  # Fit a stratified model
+  m2 <- coxph(Surv(time, status) ~ x + strata(sex), test1)
+
+  test_that("model_parameters", {
+    expect_equal(model_parameters(m2)$Coefficient, 0.8023179, tolerance = 1e-4)
+    expect_equal(model_parameters(m2)$z, 0.9756088, tolerance = 1e-4)
+    expect_equal(model_parameters(m2)$p, 0.3292583, tolerance = 1e-4)
+  })
 }
