@@ -35,6 +35,7 @@
 #' @export
 model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, summary_random = FALSE, ...) {
   # p-values, CI and se might be based of wald, or KR
+  df_method <- tolower(df_method)
   df_method <- match.arg(df_method, choices = c("wald", "ml1", "satterthwaite", "kenward"))
 
   # Processing

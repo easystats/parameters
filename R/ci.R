@@ -34,6 +34,7 @@
 #' @importFrom insight find_parameters
 #' @export
 ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "satterthwaite", "kenward", "boot"), ...) {
+  method <- tolower(method)
   method <- match.arg(method)
 
   # Wald approx
@@ -452,6 +453,9 @@ ci.gls <- ci.biglm
 #' @rdname ci.merMod
 #' @export
 ci.lme <- function(x, ci = .95, method = c("wald", "ml1", "satterthwaite"), ...) {
+  method <- tolower(method)
+  method <- match.arg(method)
+
   if (method == "wald") {
     if (!requireNamespace("nlme", quietly = TRUE)) {
       ci_wald(model = x, ci = ci)

@@ -204,6 +204,7 @@ p_value.lme <- function(model, ...) {
 #' @rdname p_value
 #' @export
 p_value.lmerMod <- function(model, method = "wald", ...) {
+  method <- tolower(method)
   method <- match.arg(method, c("wald", "ml1", "satterthwaite", "kr", "kenward"))
   if (method == "wald") {
     p_value_wald(model, ...)
@@ -221,6 +222,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @rdname p_value
 #' @export
 p_value.merMod <- function(model, method = "wald", ...) {
+  method <- tolower(method)
   method <- match.arg(method, c("wald", "ml1"))
   if (method == "wald") {
     dof <- Inf

@@ -29,6 +29,7 @@
 #' }
 #' @export
 degrees_of_freedom <- function(model, method = "analytical") {
+  method <- tolower(method)
   method <- match.arg(method, c("analytical", "any", "fit", "ml1", "satterthwaite", "kenward", "nokr", "wald"))
 
   if (!.dof_method_ok(model, method)) {
@@ -127,6 +128,7 @@ dof <- degrees_of_freedom
 
 
 .dof_method_ok <- function(model, method) {
+  method <- tolower(method)
   if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "kenward", "kr", "nokr", "wald", "ml1"))) {
     warning("'df_method' must be one of 'wald', 'kenward', 'satterthwaite' or ' ml1'. Using 'wald' now.", call. = FALSE)
     return(TRUE)
