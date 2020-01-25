@@ -29,6 +29,7 @@
 - Fixed issues in `model_parameters()` with wrong `df` for `lme`-models.
 - Fixed issues in `model_parameters.merMod()` when `df_method` was not set to default.
 - Fixed issues in `model_parameters.merMod()` when `robust = TRUE`.
+- Fixed issues with *coxph* models with only one parameter.
 
 # parameters 0.4.1
 
