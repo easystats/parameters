@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters bootstrapping — bootstrap_parameters • parameters</title>
+<title>Parameters from Meta-Analysis — model_parameters.rma • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Parameters bootstrapping — bootstrap_parameters" />
-<meta property="og:description" content="Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values." />
+<meta property="og:title" content="Parameters from Meta-Analysis — model_parameters.rma" />
+<meta property="og:description" content="Extract and compute indices and measures to describe parameters of meta-analysis models." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -149,32 +149,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameters bootstrapping</h1>
+    <h1>Parameters from Meta-Analysis</h1>
     
-    <div class="hidden name"><code>bootstrap_parameters.Rd</code></div>
+    <div class="hidden name"><code>model_parameters.rma.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.</p>
+    <p>Extract and compute indices and measures to describe parameters of meta-analysis models.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bootstrap_parameters</span>(
+    <pre class="usage"><span class='co'># S3 method for rma</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='no'>model</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>,
-  <span class='no'>...</span>
-)
-
-<span class='fu'>parameters_bootstrap</span>(
-  <span class='no'>model</span>,
+  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -183,37 +174,27 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Statistical model.</p></td>
-    </tr>
-    <tr>
-      <th>iterations</th>
-      <td><p>The number of draws to simulate/bootstrap.</p></td>
-    </tr>
-    <tr>
-      <th>centrality</th>
-      <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
+      <td><p>Model object.</p></td>
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code>.95</code> (95%) for frequentist models.</p></td>
+      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
     </tr>
     <tr>
-      <th>ci_method</th>
-      <td><p>The type of index used for Credible Interval. Can be
-<code>"HDI"</code> (default, see <code><a href='https://rdrr.io/pkg/bayestestR/man/hdi.html'>hdi</a></code>), <code>"ETI"</code>
-(see <code><a href='https://rdrr.io/pkg/bayestestR/man/eti.html'>eti</a></code>) or <code>"SI"</code>
-(see <code><a href='https://rdrr.io/pkg/bayestestR/man/si.html'>si</a></code>).</p></td>
+      <th>bootstrap</th>
+      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>parameters_bootstrap()</a></code>).</p></td>
     </tr>
     <tr>
-      <th>test</th>
-      <td><p>The indices of effect existence to compute. Character (vector) or
-list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
-<code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
-<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
-For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code><a href='https://rdrr.io/pkg/bayestestR/man/rope.html'>rope</a></code> or <code><a href='https://rdrr.io/pkg/bayestestR/man/p_direction.html'>p_direction</a></code>) and its results
-included in the summary output.</p></td>
+      <th>iterations</th>
+      <td><p>The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.</p></td>
+    </tr>
+    <tr>
+      <th>standardize</th>
+      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://rdrr.io/pkg/effectsize/man/standardize_parameters.html'>standardize_parameters</a></code>. Note that robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only works when <code>standardize="refit"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>exponentiate</th>
+      <td><p>Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -223,33 +204,28 @@ included in the summary output.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Bootstrapped parameters.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Davison, A. C., &amp; Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='bootstrap_model.html'>bootstrap_model</a></code>, <code><a href='simulate_parameters.html'>simulate_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code></p></div>
+    <p>A data frame of indices related to the model's parameters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>bootstrap_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
-#&gt; 1                   (Intercept)   4.7766617  4.5135438 4.9897666 0.000000000
-#&gt; 2             Speciesversicolor  -0.7181220 -1.6069290 0.1527264 0.105894106
-#&gt; 3              Speciesvirginica   0.5204686 -0.7304722 1.7185077 0.401598402
-#&gt; 4                   Petal.Width   0.9180041  0.2656675 1.9659747 0.003996004
-#&gt; 5 Speciesversicolor:Petal.Width   0.4702195 -0.6860819 1.4379762 0.399600400
-#&gt; 6  Speciesvirginica:Petal.Width  -0.2886256 -1.4616369 0.6301752 0.535464535</div></pre>
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.111</span>, <span class='fl'>0.245</span>, <span class='fl'>0.8</span>, <span class='fl'>1.1</span>, <span class='fl'>0.03</span>),
+  <span class='kw'>std.error</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.111</span>, <span class='fl'>0.001</span>, <span class='fl'>0.2</span>, <span class='fl'>0.01</span>)
+)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"metafor"</span>)) {
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/metafor/man/rma.uni.html'>rma</a></span>(<span class='kw'>yi</span> <span class='kw'>=</span> <span class='no'>estimate</span>, <span class='kw'>sei</span> <span class='kw'>=</span> <span class='no'>std.error</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: metafor</span></div><div class='output co'>#&gt; <span class='message'>Loading 'metafor' package (version 2.1-0). For an overview </span>
+#&gt; <span class='message'>and introduction to the package please type: help(metafor).</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'metafor'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:mclust':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    hc</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(mf.yi, data, enclos = sys.frame(sys.parent())): object 'estimate' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -236,17 +236,14 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: coda</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'>************</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: coda</span></div><div class='output co'>#&gt; <span class='message'>************</span>
 #&gt; <span class='message'>Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>Type BFManual() to open the manual.</span>
-#&gt; <span class='message'>************</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘BayesFactor’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    compare</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
+#&gt; <span class='message'>************</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter  | Median |       89% CI |   pd | % in ROPE |              Prior | Effects |   Component |    BF
 #&gt; ----------------------------------------------------------------------------------------------------------
-#&gt; Difference |   0.81 | [0.62, 1.00] | 100% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | &gt; 999</div><div class='input'># }
+#&gt; Difference |   0.94 | [0.72, 1.15] | 100% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | &gt; 999</div><div class='input'># }
 
 </div></pre>
   </div>
