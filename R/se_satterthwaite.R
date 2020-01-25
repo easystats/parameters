@@ -27,3 +27,6 @@ se_satterthwaite.lme <- function(model) {
     stringsAsFactors = FALSE
   )
 }
+
+#' @export
+se_satterthwaite.gls <- se_satterthwaite.lme

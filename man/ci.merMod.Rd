@@ -12,6 +12,7 @@
 \alias{ci.MixMod}
 \alias{ci.betareg}
 \alias{ci.clm2}
+\alias{ci.lme}
 \title{Confidence Intervals (CI)}
 \usage{
 \method{ci}{merMod}(
@@ -63,6 +64,8 @@
 \method{ci}{betareg}(x, ci = 0.95, component = c("all", "conditional", "precision"), ...)
 
 \method{ci}{clm2}(x, ci = 0.95, component = c("all", "conditional", "scale"), ...)
+
+\method{ci}{lme}(x, ci = 0.95, method = c("wald", "ml1", "satterthwaite"), ...)
 }
 \arguments{
 \item{x}{A statistical model.}

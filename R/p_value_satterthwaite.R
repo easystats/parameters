@@ -55,3 +55,6 @@ p_value_satterthwaite.lme <- function(model, dof = NULL) {
   }
   .p_value_dof(model, dof)
 }
+
+#' @export
+p_value_satterthwaite.gls <- p_value_satterthwaite.lme

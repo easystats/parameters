@@ -449,22 +449,31 @@ ci.biglm <- function(x, ci = .95, ...) {
 ci.gls <- ci.biglm
 
 
-
+#' @rdname ci.merMod
 #' @export
-ci.lme <- function(x, ci = .95, ...) {
-  if (!requireNamespace("nlme", quietly = TRUE)) {
-    ci_wald(model = x, ci = ci)
-  } else {
-    out <- lapply(ci, function(i) {
-      ci_list <- nlme::intervals(x, level = i, ...)
-      .data_frame(
-        Parameter = rownames(ci_list$fixed),
-        CI = i * 100,
-        CI_low = as.vector(ci_list$fixed[, "lower"]),
-        CI_high = as.vector(ci_list$fixed[, "upper"])
-      )
-    })
-    .remove_backticks_from_parameter_names(do.call(rbind, out))
+ci.lme <- function(x, ci = .95, method = c("wald", "ml1", "satterthwaite"), ...) {
+  if (method == "wald") {
+    if (!requireNamespace("nlme", quietly = TRUE)) {
+      ci_wald(model = x, ci = ci)
+    } else {
+      out <- lapply(ci, function(i) {
+        ci_list <- nlme::intervals(x, level = i, ...)
+        .data_frame(
+          Parameter = rownames(ci_list$fixed),
+          CI = i * 100,
+          CI_low = as.vector(ci_list$fixed[, "lower"]),
+          CI_high = as.vector(ci_list$fixed[, "upper"])
+        )
+      })
+      .remove_backticks_from_parameter_names(do.call(rbind, out))
+    }
+    # ml1 approx
+  } else if (method == "ml1") {
+    ci_ml1(x, ci)
+
+    # Satterthwaite
+  } else if (method == "satterthwaite") {
+    ci_satterthwaite(x, ci)
   }
 }
 
