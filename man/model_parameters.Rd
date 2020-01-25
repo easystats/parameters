@@ -31,7 +31,7 @@ Compute and extract model parameters. See the documentation for your object's cl
  \item{\link[=model_parameters.principal]{PCA and FA} (\pkg{psych})}
  \item{\link[=model_parameters.lavaan]{CFA and SEM} (\pkg{lavaan}, \pkg{blavaan})}
  \item{\link[=model_parameters.kmeans]{Cluster models (k-means, ...)}}
- \item{\link[=model_parameters.metafor]{Meta-Analysis via linear (mixed) models} (\code{rma})}
+ \item{\link[=model_parameters.rma]{Meta-Analysis via linear (mixed) models} (\code{rma})}
  }
 }
 \details{
