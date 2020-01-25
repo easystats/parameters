@@ -5,6 +5,10 @@
 - `skewness()` now uses a different method to calculate the skewness by default. Different methods can be selected using the `type`-argument.
 - `kurtosis()` now uses a different method to calculate the skewness by default. Different methods can be selected using the `type`-argument.
 
+## New supported models
+
+- Added support for `cglm` (*cglm*)
+
 ## General
 
 - Added new vignettes on 'Standardized Model Parameters' and 'Robust Estimation of Standard Errors', and vignettes are now also published on CRAN.
