@@ -6,12 +6,12 @@
 #'
 #' @examples
 #' library(parameters)
-#' data <- data.frame(
-#'   estimate = c(0.111, 0.245, 0.8, 1.1, 0.03),
-#'   std.error = c(0.05, 0.111, 0.001, 0.2, 0.01)
+#' mydat <- data.frame(
+#'   effectsize = c(-0.393, 0.675, 0.282, -1.398),
+#'   stderr = c(0.317, 0.317, 0.13, 0.36)
 #' )
 #' if (require("metafor")) {
-#'   model <- rma(yi = estimate, sei = std.error, data = data)
+#'   model <- rma(yi = effectsize, sei = stderr, method = "REML", data = mydat)
 #'   model_parameters(model)
 #' }
 #' @return A data frame of indices related to the model's parameters.
