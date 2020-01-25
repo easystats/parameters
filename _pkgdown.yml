@@ -53,6 +53,7 @@ reference:
   - equivalence_test
   - equivalence_test.lm
   - n_parameters
+  - random_parameters
 
 - title: "Parameters Engineering"
   contents:
@@ -84,8 +85,8 @@ reference:
   - check_kmo
   - check_sphericity
   - convert_efa_to_cfa
-  - extract_scales
   - factor_analysis
+  - get_scores
   - n_factors
   - principal_components
   - cmds

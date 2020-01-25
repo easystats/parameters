@@ -231,7 +231,10 @@
 #&gt; </div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># lme4 -------------------------------------------</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>)) {
-  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Sepal.Width</span> ~ <span class='no'>Sepal.Length</span> * <span class='no'>Petal.Width</span> * <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(
+    <span class='no'>Sepal.Width</span> ~ <span class='no'>Sepal.Length</span> * <span class='no'>Petal.Width</span> * <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>),
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
+  )
   <span class='fu'>select_parameters</span>(<span class='no'>model</span>)
 }</div><div class='output co'>#&gt; Linear mixed model fit by REML ['lmerMod']
 #&gt; Formula: Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 |  

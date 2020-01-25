@@ -201,9 +201,9 @@ for the relationship of skewness and distributions are:</p><ul>
 </ul><p>(<cite>https://en.wikipedia.org/wiki/Skewness</cite>)</p>
 <h3>Types of Skewness</h3>
 <p><code>skewness()</code> supports three different methods for estimating skewness, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
-<li><p>Type "1" is the "classical" method, which is <code>(sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5</code></p></li>
-<li><p>Type "2" first calculates the type-1 skewness, than adjusts the result: <code>type-1-skewness * sqrt(n * (n - 1)) / (n - 2)</code>. This is what SAS and SPSS usually return</p></li>
-<li><p>Type "3" first calculates the type-1 skewness, than adjusts the result: <code>type-1-skewness * ((1 - 1 / n))^1.5</code>. This is what Minitab usually returns.</p></li>
+<li><p>Type "1" is the "classical" method, which is <code>g1 = (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5</code></p></li>
+<li><p>Type "2" first calculates the type-1 skewness, than adjusts the result: <code>G1 = g1 * sqrt(n * (n - 1)) / (n - 2)</code>. This is what SAS and SPSS usually return</p></li>
+<li><p>Type "3" first calculates the type-1 skewness, than adjusts the result: <code>b1 = g1 * ((1 - 1 / n))^1.5</code>. This is what Minitab usually returns.</p></li>
 </ul>
 
 <h3>Kurtosis</h3>
@@ -214,9 +214,9 @@ A kurtosis value below zero indicates a "platykurtic" distribution with <em>thin
 tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
 <h3>Types of Kurtosis</h3>
 <p><code>kurtosis()</code> supports three different methods for estimating kurtosis, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
-<li><p>Type "1" is the "classical" method, which is <code>n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3</code>.</p></li>
-<li><p>Type "2" first calculates the type-1 kurtosis, than adjusts the result: <code>((n + 1) * type-1-kurtosis + 6) * (n - 1)/((n - 2) * (n - 3))</code>. This is what SAS and SPSS usually return</p></li>
-<li><p>Type "3" first calculates the type-1 kurtosis, than adjusts the result: <code>(type-1-kurtosis + 3) * (1 - 1 / n)^2 - 3</code>. This is what Minitab usually returns.</p></li>
+<li><p>Type "1" is the "classical" method, which is <code>g2 = n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3</code>.</p></li>
+<li><p>Type "2" first calculates the type-1 kurtosis, than adjusts the result: <code>G2 = ((n + 1) * g2 + 6) * (n - 1)/((n - 2) * (n - 3))</code>. This is what SAS and SPSS usually return</p></li>
+<li><p>Type "3" first calculates the type-1 kurtosis, than adjusts the result: <code>b2 = (g2 + 3) * (1 - 1 / n)^2 - 3</code>. This is what Minitab usually returns.</p></li>
 </ul>
 
 

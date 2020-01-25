@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters from BayesFactor objects — model_parameters.BFBayesFactor • parameters</title>
+<title>Summary information from random effects — random_parameters • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Parameters from BayesFactor objects — model_parameters.BFBayesFactor" />
-<meta property="og:description" content="Parameters of BayesFactor objects." />
+<meta property="og:title" content="Summary information from random effects — random_parameters" />
+<meta property="og:description" content="This function extracts the different variance components of a
+  mixed model as well as further information related to random effects (ICC, R2)
+  and returns the result as a data frame." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -149,112 +151,79 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameters from BayesFactor objects</h1>
+    <h1>Summary information from random effects</h1>
     
-    <div class="hidden name"><code>model_parameters.BFBayesFactor.Rd</code></div>
+    <div class="hidden name"><code>random_parameters.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameters of BayesFactor objects.</p>
+    <p>This function extracts the different variance components of a
+  mixed model as well as further information related to random effects (ICC, R2)
+  and returns the result as a data frame.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
-  <span class='no'>model</span>,
-  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>),
-  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>random_parameters</span>(<span class='no'>model</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Object of class <code>BFBayesFactor</code>.</p></td>
-    </tr>
-    <tr>
-      <th>centrality</th>
-      <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>dispersion</th>
-      <td><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></td>
-    </tr>
-    <tr>
-      <th>ci</th>
-      <td><p>Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code>.95</code> (95%) for frequentist models.</p></td>
-    </tr>
-    <tr>
-      <th>ci_method</th>
-      <td><p>The type of index used for Credible Interval. Can be
-<code>"HDI"</code> (default, see <code><a href='https://rdrr.io/pkg/bayestestR/man/hdi.html'>hdi</a></code>), <code>"ETI"</code>
-(see <code><a href='https://rdrr.io/pkg/bayestestR/man/eti.html'>eti</a></code>) or <code>"SI"</code>
-(see <code><a href='https://rdrr.io/pkg/bayestestR/man/si.html'>si</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>test</th>
-      <td><p>The indices of effect existence to compute. Character (vector) or
-list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
-<code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
-<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
-For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code><a href='https://rdrr.io/pkg/bayestestR/man/rope.html'>rope</a></code> or <code><a href='https://rdrr.io/pkg/bayestestR/man/p_direction.html'>p_direction</a></code>) and its results
-included in the summary output.</p></td>
-    </tr>
-    <tr>
-      <th>rope_range</th>
-      <td><p>ROPE's lower and higher bounds. Should be a list of two
-values (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>,
-the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
-    </tr>
-    <tr>
-      <th>rope_ci</th>
-      <td><p>The Credible Interval (CI) probability, corresponding to the
-proportion of HDI, to use for the percentage in ROPE.</p></td>
-    </tr>
-    <tr>
-      <th>priors</th>
-      <td><p>Add the prior used for each parameter.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments to be passed to or from methods.</p></td>
+      <td><p>A mixed effects model.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of indices related to the model's parameters.</p>
+    <p>A data frame with random effects statistics, including number of levels per
+  random effect group, as well as complete observations in the model.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The variance components are obtained from <code><a href='https://rdrr.io/pkg/insight/man/get_variance.html'>get_variance</a></code>
+  and are denoted as following:</p><h3>Within-group (or residual) variance</h3>
+<p>The residual variance, &sigma;<sup>2</sup><sub>&epsilon;</sub>,
+    is the sum of the distribution-specific variance and the variance due to additive dispersion.
+    It indicates the <em>within-group variance</em>.</p><p></p><h3>Between-group (or random intercept) variance</h3>
+<p>The random intercept variance, or <em>between-group</em> variance
+    (&tau;<sub>00</sub>),
+    is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. It indicates how much groups
+    or subjects differ from each other.</p><p></p><h3>Random slope variance</h3>
+<p>The random slope variance (&tau;<sub>11</sub>)
+    is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. This measure is only available
+    for mixed models with random slopes.</p><p></p><h3>Random slope-intercept correlation</h3>
+<p>The random slope-intercept correlation
+    (&rho;<sub>01</sub>)
+    is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. This measure is only available
+    for mixed models with random intercepts and slopes.</p><p>For details regarding the calculation of R2 and ICC, see <code><a href='https://rdrr.io/pkg/performance/man/r2_nakagawa.html'>r2_nakagawa</a></code>
+ and <code><a href='https://rdrr.io/pkg/performance/man/icc.html'>icc</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: coda</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'>************</span>
-#&gt; <span class='message'>Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>Type BFManual() to open the manual.</span>
-#&gt; <span class='message'>************</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘BayesFactor’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    compare</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter  | Median |       89% CI |   pd | % in ROPE |              Prior | Effects |   Component |    BF
-#&gt; ----------------------------------------------------------------------------------------------------------
-#&gt; Difference |   0.81 | [0.62, 1.00] | 100% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | &gt; 999</div><div class='input'># }
-
-</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sleepstudy</span>)
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='fl'>1</span> + <span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleepstudy</span>)
+  <span class='fu'>random_parameters</span>(<span class='no'>model</span>)
+}</div><div class='output co'>#&gt; <span style='color: #0000BB;'>
+#&gt; # Random Effects
+#&gt; </span><span>
+#&gt; Within-Group Variance                      | 654.94
+#&gt; Between-Group Variance (Subject)           |  611.9
+#&gt; -------------------------------------------|--------
+#&gt; Random Slope Variance (Subject.Days)       |  35.08
+#&gt; Slope-Intercept Correlation (Subject.Days) |   0.07
+#&gt; -------------------------------------------|--------
+#&gt; R2 (marginal)                              |   0.58
+#&gt; R2 (conditional)                           |    0.8
+#&gt; ICC                                        |   0.72
+#&gt; -------------------------------------------|--------
+#&gt; N (Subject)                                |     18
+#&gt; Observations                               |    180</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

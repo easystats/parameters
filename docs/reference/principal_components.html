@@ -168,7 +168,7 @@
   <span class='no'>...</span>
 )
 
-<span class='fu'>component_columns</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>closest_component</span>(<span class='no'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -234,7 +234,7 @@
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>There is a <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code>-method that prints the Eigenvalues and (explained) variance for each extracted component. <code>component_columns()</code> will return a numeric vector with the assigned component index for each column from the original data frame.</p>
+    <p>There is a <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code>-method that prints the Eigenvalues and (explained) variance for each extracted component. <code>closest_component()</code> will return a numeric vector with the assigned component index for each column from the original data frame.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -328,7 +328,7 @@
 #&gt; 31  2.24244855  1.06973229
 #&gt; 32 -0.42316749  0.86380202</div><div class='input'>
 <span class='co'># which variables from the original data belong to which extracted component?</span>
-<span class='fu'>component_columns</span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;  mpg  cyl disp   hp drat 
+<span class='fu'>closest_component</span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;  mpg  cyl disp   hp drat 
 #&gt;    1    1    1    1    2 </div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'># Automated number of components</span>
