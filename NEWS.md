@@ -20,6 +20,7 @@
 ## Changes to functions
 
 - `model_parameters()` for mixed models gets a `summary_random`-argument to additionally print information about the random effects.
+- `model_parameters()` for *lme*-models now also accepts the `df_method`-argument.
 - `skewness()` gets a `type`-argument, to compute different types of skewness.
 - `kurtosis()` gets a `type`-argument, to compute different types of skewness.
 
