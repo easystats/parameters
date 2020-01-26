@@ -361,6 +361,29 @@ ci.brmultinom <- ci.multinom
 ci.bracl <- ci.multinom
 
 
+#' @export
+ci.DirichletRegModel <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  params <- insight::get_parameters(x, component = component)
+
+  out <- ci_wald(model = x, ci = ci, dof = Inf, ...)
+
+  if (is.null(out$Component)) {
+    component <- "all"
+  }
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  if ("Response" %in% colnames(params)) {
+    out$Response <- params$Response
+  }
+
+  out
+}
+
+
 
 
 
