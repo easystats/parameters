@@ -11,6 +11,8 @@
 \alias{standard_error.coxph}
 \alias{standard_error.mixor}
 \alias{standard_error.clm2}
+\alias{standard_error.betareg}
+\alias{standard_error.DirichletRegModel}
 \title{Standard Errors}
 \usage{
 standard_error(model, ...)
@@ -47,6 +49,10 @@ standard_error(model, ...)
 \method{standard_error}{mixor}(model, effects = c("all", "fixed", "random"), ...)
 
 \method{standard_error}{clm2}(model, component = c("all", "conditional", "scale"), ...)
+
+\method{standard_error}{betareg}(model, component = c("all", "conditional", "precision"), ...)
+
+\method{standard_error}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
 }
 \arguments{
 \item{model}{A model.}

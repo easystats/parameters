@@ -1026,6 +1026,7 @@ standard_error.psm <- standard_error.lrm
 
 
 
+#' @rdname standard_error
 #' @export
 standard_error.betareg <- function(model, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
@@ -1039,6 +1040,32 @@ standard_error.betareg <- function(model, component = c("all", "conditional", "p
     Component = params$Component,
     SE = as.vector(se)
   )
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
+}
+
+
+#' @rdname standard_error
+#' @export
+standard_error.DirichletRegModel <- function(model, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  params <- insight::get_parameters(model)
+
+  out <- .data_frame(
+    Parameter = params$Parameter,
+    Response = params$Response,
+    SE = as.vector(model$se)
+  )
+
+  if (!is.null(params$Component)) {
+    out$Component <- params$Component
+  } else {
+    component <- "all"
+  }
 
   if (component != "all") {
     out <- out[out$Component == component, ]
