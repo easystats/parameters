@@ -43,3 +43,13 @@ model_parameters <- function(model, ...) {
 #' @rdname model_parameters
 #' @export
 parameters <- model_parameters
+
+
+#' @export
+`[.parameters_model` <- function(x, i, ...) {
+  out <- NextMethod("[")
+  mostattributes(out) <- attributes(x)
+  if (is.numeric(i)) i <- colnames(x)[i]
+  colnames(out) <- i
+  out
+}
