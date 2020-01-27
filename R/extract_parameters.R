@@ -20,6 +20,11 @@
   parameters <- insight::get_parameters(model, effects = effects, component = component)
   statistic <- insight::get_statistic(model, component = component)
 
+  # check if we really have a component column
+  if (!("Component" %in% names(parameters)) && "Component" %in% merge_by) {
+    merge_by <- setdiff(merge_by, "Component")
+  }
+
   # clean parameter names
 
   if (inherits(model, "polr")) {

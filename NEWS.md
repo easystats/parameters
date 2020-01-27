@@ -7,7 +7,7 @@
 
 ## New supported models
 
-- Added support for `cglm` (*cglm*)
+- Added support for `cglm` (*cglm*), `DirichletRegModel` (*DirichletReg*)
 
 ## General
 

@@ -119,6 +119,38 @@ model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 #' @rdname model_parameters.default
 #' @export
+model_parameters.DirichletRegModel <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "precision"), standardize = NULL, exponentiate = FALSE, ...) {
+  component <- match.arg(component)
+  if (component == "all") {
+    merge_by <- c("Parameter", "Component", "Response")
+  } else {
+    merge_by <- c("Parameter", "Response")
+  }
+
+  ## TODO check merge by
+
+  junk <- utils::capture.output(out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    component = component,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = merge_by,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    robust = FALSE,
+    ...
+  ))
+
+  out$Response[is.na(out$Response)] <- ""
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+
+#' @rdname model_parameters.default
+#' @export
 model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "scale"), standardize = NULL, exponentiate = FALSE, ...) {
   component <- match.arg(component)
   if (component == "all") {

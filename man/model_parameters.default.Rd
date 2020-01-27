@@ -3,6 +3,7 @@
 \name{model_parameters.default}
 \alias{model_parameters.default}
 \alias{model_parameters.betareg}
+\alias{model_parameters.DirichletRegModel}
 \alias{model_parameters.clm2}
 \alias{model_parameters.glmx}
 \title{Parameters from (General) Linear Models}
@@ -24,6 +25,17 @@
   bootstrap = FALSE,
   iterations = 1000,
   component = c("conditional", "precision", "all"),
+  standardize = NULL,
+  exponentiate = FALSE,
+  ...
+)
+
+\method{model_parameters}{DirichletRegModel}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = c("all", "conditional", "precision"),
   standardize = NULL,
   exponentiate = FALSE,
   ...

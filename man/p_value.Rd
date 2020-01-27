@@ -9,6 +9,8 @@
 \alias{p_value.glmmTMB}
 \alias{p_value.MixMod}
 \alias{p_value.mixor}
+\alias{p_value.DirichletRegModel}
+\alias{p_value.clm2}
 \alias{p_value.gee}
 \title{p-values}
 \usage{
@@ -27,6 +29,10 @@ p_value(model, ...)
 \method{p_value}{MixMod}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
 
 \method{p_value}{mixor}(model, effects = c("all", "fixed", "random"), ...)
+
+\method{p_value}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
+
+\method{p_value}{clm2}(model, component = c("all", "conditional", "scale"), ...)
 
 \method{p_value}{gee}(model, method = NULL, ...)
 }

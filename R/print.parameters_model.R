@@ -124,6 +124,12 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
   if (is.null(is_ordinal_model)) is_ordinal_model <- FALSE
 
+  # make sure we have correct order of levels from split-factor
+  x[split_column] <- lapply(x[split_column], function(i) {
+    if (!is.factor(i)) i <- factor(i, levels = unique(i))
+    i
+  })
+
   # set up split-factor
   if (length(split_column) > 1) {
     split_by <- lapply(split_column, function(i) x[[i]])
@@ -202,12 +208,21 @@ print.parameters_random <- function(x, digits = 2, ...) {
       "extra.fixed" = "Extra Parameters",
       "nu" = "Nu",
       "tau" = "Tau",
-      "precision" = "Precision",
+      "precision" = ,
+      "precision." = "Precision",
       type
     )
 
 
-    if (length(split_column) > 1) {
+    if (attributes(x)$model_class == "DirichletRegModel") {
+      if (grepl("^conditional\\.", component_name) || split_column == "Response") {
+        s1 <- "Response level:"
+        s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)
+      } else {
+        s1 <- component_name
+        s2 <- ""
+      }
+    } else if (length(split_column) > 1) {
       s1 <- component_name
       s2 <- ""
     } else if (split_column == "Response" && is_ordinal_model) {

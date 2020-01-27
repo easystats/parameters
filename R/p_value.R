@@ -544,6 +544,33 @@ p_value.flexsurvreg <- function(model, ...) {
 # p-Values from Special Models -----------------------------------------------
 
 
+#' @rdname p_value
+#' @export
+p_value.DirichletRegModel <- function(model, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  params <- insight::get_parameters(model)
+
+  out <- .data_frame(
+    Parameter = params$Parameter,
+    Response = params$Response,
+    p = as.vector(2 * stats::pnorm(-abs(params$Estimate / model$se)))
+  )
+
+  if (!is.null(params$Component)) {
+    out$Component <- params$Component
+  } else {
+    component <- "all"
+  }
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
+}
+
+
+#' @rdname p_value
 #' @export
 p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
   component <- match.arg(component)

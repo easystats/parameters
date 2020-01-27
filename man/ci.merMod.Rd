@@ -6,6 +6,7 @@
 \alias{ci.glm}
 \alias{ci.polr}
 \alias{ci.mixor}
+\alias{ci.DirichletRegModel}
 \alias{ci.glmmTMB}
 \alias{ci.zeroinfl}
 \alias{ci.hurdle}
@@ -29,6 +30,8 @@
 \method{ci}{polr}(x, ci = 0.95, method = c("profile", "wald", "robust"), ...)
 
 \method{ci}{mixor}(x, ci = 0.95, effects = c("all", "fixed", "random"), ...)
+
+\method{ci}{DirichletRegModel}(x, ci = 0.95, component = c("all", "conditional", "precision"), ...)
 
 \method{ci}{glmmTMB}(
   x,
