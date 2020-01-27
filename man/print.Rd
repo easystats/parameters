@@ -5,7 +5,7 @@
 \alias{print.parameters_model}
 \title{Print model parameters}
 \usage{
-\method{print}{parameters_model}(x, pretty_names = TRUE, split_components = TRUE, ...)
+\method{print}{parameters_model}(x, pretty_names = TRUE, split_components = TRUE, select = NULL, ...)
 }
 \arguments{
 \item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
@@ -16,6 +16,9 @@
 multiple components (zero-inflation, smooth terms, ...), each component is
 printed in a separate table. If \code{FALSE}, model parameters are printed
 in a single table and a \code{Component} column is added to the output.}
+
+\item{select}{Character vector (or numeric index) of column names that should
+be printed. If \code{NULL} (default), all columns are printed.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -39,5 +42,7 @@ if (require("glmmTMB")) {
   print(mp, pretty_names = FALSE)
 
   print(mp, split_components = FALSE)
+
+  print(mp, select = c("Parameter", "Coefficient", "CI_low", "CI_high"))
 }
 }

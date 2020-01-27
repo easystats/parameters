@@ -8,6 +8,8 @@
 #'   multiple components (zero-inflation, smooth terms, ...), each component is
 #'   printed in a separate table. If \code{FALSE}, model parameters are printed
 #'   in a single table and a \code{Component} column is added to the output.
+#' @param select Character vector (or numeric index) of column names that should
+#'   be printed. If \code{NULL} (default), all columns are printed.
 #' @inheritParams parameters_table
 #' @return \code{NULL}
 #'
@@ -25,11 +27,20 @@
 #'   print(mp, pretty_names = FALSE)
 #'
 #'   print(mp, split_components = FALSE)
+#'
+#'   print(mp, select = c("Parameter", "Coefficient", "CI_low", "CI_high"))
 #' }
 #' @importFrom insight format_table
 #' @export
-print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
+print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, ...) {
   res <- attributes(x)$summary_random
+
+  if (!is.null(select)) {
+    if (is.numeric(select)) select <- colnames(x)[select]
+    select <- union(select, c("Component", "Effects", "Response"))
+    to_remove <- setdiff(colnames(x), select)
+    x[to_remove] <- NULL
+  }
 
   if (!is.null(attributes(x)$title)) {
     insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
