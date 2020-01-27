@@ -98,12 +98,6 @@ model_parameters(model)
 
 # show odds ratio / exponentiated coefficients
 model_parameters(model, exponentiate = TRUE)
-
-# select specific columns only
-params <- model_parameters(model)
-params[c(1, 2, 4:5)]
-
-params[c("Parameter", "Coefficient", "p")]
 }
 \seealso{
 \code{\link[=standardize_names]{standardize_names()}} to rename
