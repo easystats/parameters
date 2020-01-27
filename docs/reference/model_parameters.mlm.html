@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters from Meta-Analysis — model_parameters.rma • parameters</title>
+<title>Parameters from multinomial or cumulative link models — model_parameters.mlm • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Parameters from Meta-Analysis — model_parameters.rma" />
-<meta property="og:description" content="Extract and compute indices and measures to describe parameters of meta-analysis models." />
+<meta property="og:title" content="Parameters from multinomial or cumulative link models — model_parameters.mlm" />
+<meta property="og:description" content="Parameters from multinomial or cumulative link models" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -149,21 +149,55 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameters from Meta-Analysis</h1>
+    <h1>Parameters from multinomial or cumulative link models</h1>
     
-    <div class="hidden name"><code>model_parameters.rma.Rd</code></div>
+    <div class="hidden name"><code>model_parameters.mlm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract and compute indices and measures to describe parameters of meta-analysis models.</p>
+    <p>Parameters from multinomial or cumulative link models</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for rma</span>
+    <pre class="usage"><span class='co'># S3 method for mlm</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='no'>model</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
+
+<span class='co'># S3 method for multinom</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+  <span class='no'>model</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
+
+<span class='co'># S3 method for bracl</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+  <span class='no'>model</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
+
+<span class='co'># S3 method for DirichletRegModel</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+  <span class='no'>model</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>),
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
@@ -174,7 +208,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Model object.</p></td>
+      <td><p>A model with multinomial or categorical response value.</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -200,32 +234,70 @@
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>) or <code>"all"</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of indices related to the model's parameters.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Multinomial or cumulative link models, i.e. models where the
+  response value (dependent variable) is categorical and has more than two
+  levels, usually return coefficients for each response level. Hence, the
+  output from <code><a href='model_parameters.html'>model_parameters()</a></code> will split the coefficient tables
+  by the different levels of the model's response.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
+  columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='no'>mydat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>effectsize</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.393</span>, <span class='fl'>0.675</span>, <span class='fl'>0.282</span>, -<span class='fl'>1.398</span>),
-  <span class='kw'>stderr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.317</span>, <span class='fl'>0.317</span>, <span class='fl'>0.13</span>, <span class='fl'>0.36</span>)
-)
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"metafor"</span>)) {
-  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/metafor/man/rma.uni.html'>rma</a></span>(<span class='kw'>yi</span> <span class='kw'>=</span> <span class='no'>effectsize</span>, <span class='kw'>sei</span> <span class='kw'>=</span> <span class='no'>stderr</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"REML"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mydat</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"brglm2"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"stemcell"</span>)
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brglm2/man/bracl.html'>bracl</a></span>(
+    <span class='no'>research</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>religion</span>) + <span class='no'>gender</span>,
+    <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>frequency</span>,
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>stemcell</span>,
+    <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"ML"</span>
+  )
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: metafor</span></div><div class='output co'>#&gt; <span class='message'>Loading 'metafor' package (version 2.1-0). For an overview </span>
-#&gt; <span class='message'>and introduction to the package please type: help(metafor).</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'metafor'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:mclust':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    hc</span></div><div class='output co'>#&gt; <span class='error'>Error in rma(yi = effectsize, sei = stderr, data = mydat, method = "REML",     level = i): object 'mydat' not found</span></div></pre>
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: brglm2</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Response level: definitely
+#&gt; 
+#&gt; </span><span>Parameter       | Coefficient |   SE |         95% CI |     z | df |      p
+#&gt; ---------------------------------------------------------------------------
+#&gt; (Intercept)     |       -1.25 | 0.26 | [-1.76, -0.73] | -4.76 | 63 | &lt; .001
+#&gt; religion        |        0.44 | 0.10 | [ 0.23,  0.64] |  4.20 | 63 | &lt; .001
+#&gt; gender [female] |       -0.14 | 0.17 | [-0.47,  0.19] | -0.82 | 63 | 0.414 
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Response level: probably
+#&gt; 
+#&gt; </span><span>Parameter       | Coefficient |   SE |        95% CI |    z | df |     p
+#&gt; ------------------------------------------------------------------------
+#&gt; (Intercept)     |        0.47 | 0.29 | [-0.10, 1.04] | 1.62 | 63 | 0.105
+#&gt; religion        |        0.26 | 0.13 | [ 0.01, 0.51] | 2.01 | 63 | 0.044
+#&gt; gender [female] |        0.19 | 0.21 | [-0.22, 0.60] | 0.90 | 63 | 0.370
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Response level: probably not
+#&gt; 
+#&gt; </span><span>Parameter       | Coefficient |   SE |        95% CI |     z | df |     p
+#&gt; -------------------------------------------------------------------------
+#&gt; (Intercept)     |        0.43 | 0.39 | [-0.33, 1.18] |  1.11 | 63 | 0.268
+#&gt; religion        |        0.01 | 0.17 | [-0.33, 0.35] |  0.07 | 63 | 0.945
+#&gt; gender [female] |       -0.16 | 0.28 | [-0.71, 0.39] | -0.57 | 63 | 0.566
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

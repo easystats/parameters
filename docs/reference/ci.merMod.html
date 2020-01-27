@@ -178,6 +178,9 @@
 <span class='co'># S3 method for mixor</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='no'>...</span>)
 
+<span class='co'># S3 method for DirichletRegModel</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>), <span class='no'>...</span>)
+
 <span class='co'># S3 method for glmmTMB</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(
   <span class='no'>x</span>,
@@ -271,26 +274,17 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>glmmTMB</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"glmmTMB"</span>)) {
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
+    <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
+    <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
+    <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
+  )
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
-  <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
-  <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
-)
-
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;      Parameter CI       CI_low    CI_high     Component
-#&gt; 1  (Intercept) 95 -0.904868203  0.1834728   conditional
-#&gt; 2        sppPR 95 -1.741720718 -0.7977701   conditional
-#&gt; 3        sppDM 95 -0.001515455  0.5395142   conditional
-#&gt; 4      sppEC-A 95 -0.967367323 -0.1630136   conditional
-#&gt; 5      sppEC-L 95  0.414693327  0.9167312   conditional
-#&gt; 6     sppDES-L 95  0.378400449  0.8723050   conditional
-#&gt; 7        sppDF 95 -0.173790668  0.4038560   conditional
-#&gt; 8      minedno 95  0.742998151  1.7998569   conditional
-#&gt; 9  (Intercept) 95  0.255245254  1.3247538 zero_inflated
-#&gt; 10     minedno 95 -2.460449166 -1.2293688 zero_inflated</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zi"</span>)</div><div class='output co'>#&gt;     Parameter CI     CI_low   CI_high     Component
+  <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>model</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zi"</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: glmmTMB</span></div><div class='output co'>#&gt;     Parameter CI     CI_low   CI_high     Component
 #&gt; 1 (Intercept) 95  0.2552453  1.324754 zero_inflated
 #&gt; 2     minedno 95 -2.4604492 -1.229369 zero_inflated</div><div class='input'># }
 </div></pre>

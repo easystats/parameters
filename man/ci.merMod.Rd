@@ -105,16 +105,16 @@ Compute confidence intervals (CI) for frequentist models.
 \examples{
 \donttest{
 library(parameters)
-library(glmmTMB)
+if (require("glmmTMB")) {
+  model <- glmmTMB(
+    count ~ spp + mined + (1 | site),
+    ziformula = ~mined,
+    family = poisson(),
+    data = Salamanders
+  )
 
-model <- glmmTMB(
-  count ~ spp + mined + (1 | site),
-  ziformula = ~mined,
-  family = poisson(),
-  data = Salamanders
-)
-
-ci(model)
-ci(model, component = "zi")
+  ci(model)
+  ci(model, component = "zi")
+}
 }
 }

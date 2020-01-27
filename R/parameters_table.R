@@ -12,7 +12,8 @@
 #' as.data.frame(parameters_table(x))
 #' \donttest{
 #' if (require("rstanarm")) {
-#'   x <- model_parameters(stan_glm(Sepal.Length ~ Species, data = iris), ci = c(0.69, 0.89, 0.95))
+#'   model <- stan_glm(Sepal.Length ~ Species, data = iris, refresh = 0, seed = 123)
+#'   x <- model_parameters(model, ci = c(0.69, 0.89, 0.95))
 #'   as.data.frame(parameters_table(x))
 #' }
 #' }

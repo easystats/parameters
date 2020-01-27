@@ -19,6 +19,7 @@ reference:
   - model_parameters.default
   - model_parameters.zeroinfl
   - model_parameters.gam
+  - model_parameters.mlm
   - model_parameters.merMod
   - model_parameters.lavaan
   - model_parameters.kmeans
