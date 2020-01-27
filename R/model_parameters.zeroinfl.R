@@ -11,11 +11,11 @@
 #'
 #' @examples
 #' library(parameters)
-#' library(pscl)
-#'
-#' data("bioChemists")
-#' model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
-#' model_parameters(model)
+#' if (require("pscl")) {
+#'   data("bioChemists")
+#'   model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
+#'   model_parameters(model)
+#' }
 #' @return A data frame of indices related to the model's parameters.
 #' @inheritParams simulate_model
 #' @export
