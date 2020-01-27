@@ -214,7 +214,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
     )
 
 
-    if (attributes(x)$model_class == "DirichletRegModel") {
+    if ("DirichletRegModel" %in% attributes(x)$model_class) {
       if (grepl("^conditional\\.", component_name) || split_column == "Response") {
         s1 <- "Response level:"
         s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)
