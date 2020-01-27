@@ -8,7 +8,7 @@ authors:
 
 template:
   params:
-    bootswatch: cosmo
+    bootswatch: flatly
 
 reference:
 - title: "Comprehensive Model Parameters"
