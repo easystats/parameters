@@ -157,7 +157,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for parameters_model</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='kw'>pretty_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>split_components</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>print</span>(<span class='no'>x</span>, <span class='kw'>pretty_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>split_components</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,6 +176,11 @@
 multiple components (zero-inflation, smooth terms, ...), each component is
 printed in a separate table. If <code>FALSE</code>, model parameters are printed
 in a single table and a <code>Component</code> column is added to the output.</p></td>
+    </tr>
+    <tr>
+      <th>select</th>
+      <td><p>Character vector (or numeric index) of column names that should
+be printed. If <code>NULL</code> (default), all columns are printed.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -201,6 +206,8 @@ in a single table and a <code>Component</code> column is added to the output.</p
   <span class='fu'>print</span>(<span class='no'>mp</span>, <span class='kw'>pretty_names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
   <span class='fu'>print</span>(<span class='no'>mp</span>, <span class='kw'>split_components</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+  <span class='fu'>print</span>(<span class='no'>mp</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Parameter"</span>, <span class='st'>"Coefficient"</span>, <span class='st'>"CI_low"</span>, <span class='st'>"CI_high"</span>))
 }</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
 #&gt; 
 #&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
@@ -232,7 +239,27 @@ in a single table and a <code>Component</code> column is added to the output.</p
 #&gt; spp [DF]    |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 633 | 0.435  |   conditional
 #&gt; mined [no]  |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | 633 | &lt; .001 |   conditional
 #&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 633 | 0.004  | zero_inflated
-#&gt; mined [no]  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | 633 | &lt; .001 | zero_inflated</div></span></pre>
+#&gt; mined [no]  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | 633 | &lt; .001 | zero_inflated
+#&gt; </span><span style='color: #0000BB;'># Fixed Effects component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |         95% CI
+#&gt; ------------------------------------------
+#&gt; (Intercept) |       -0.36 | [-0.90,  0.18]
+#&gt; spp [PR]    |       -1.27 | [-1.74, -0.80]
+#&gt; spp [DM]    |        0.27 | [ 0.00,  0.54]
+#&gt; spp [EC-A]  |       -0.57 | [-0.97, -0.16]
+#&gt; spp [EC-L]  |        0.67 | [ 0.41,  0.92]
+#&gt; spp [DES-L] |        0.63 | [ 0.38,  0.87]
+#&gt; spp [DF]    |        0.12 | [-0.17,  0.40]
+#&gt; mined [no]  |        1.27 | [ 0.74,  1.80]
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |         95% CI
+#&gt; ------------------------------------------
+#&gt; (Intercept) |        0.79 | [ 0.26,  1.32]
+#&gt; mined [no]  |       -1.84 | [-2.46, -1.23]
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

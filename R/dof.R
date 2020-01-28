@@ -130,6 +130,9 @@ dof <- degrees_of_freedom
 
 
 .dof_method_ok <- function(model, method) {
+  if (is.null(method)) {
+    return(TRUE)
+  }
   method <- tolower(method)
   if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1"))) {
     warning("'df_method' must be one of 'wald', 'kenward', 'satterthwaite', 'betwithin' or ' ml1'. Using 'wald' now.", call. = FALSE)

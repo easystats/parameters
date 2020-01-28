@@ -46,8 +46,9 @@ reference:
   contents:
   - p_value_wald
   - p_value_kenward
-  - p_value_ml1
   - p_value_satterthwaite
+  - p_value_betwithin
+  - p_value_ml1
 
 - title: "Other Model Parameters"
   contents:

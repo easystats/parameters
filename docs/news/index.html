@@ -185,6 +185,8 @@
 <a href="#new-functions" class="anchor"></a>New functions</h2>
 <ul>
 <li>
+<code><a href="../reference/p_value_betwithin.html">dof_betwithin()</a></code> to compute degrees of freedom based on a between-within approximation method (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for this method were added as well).</li>
+<li>
 <code><a href="../reference/random_parameters.html">random_parameters()</a></code> that returns information about the random effects such as variances, R2 or ICC.</li>
 <li>
 <code><a href="../reference/principal_components.html">closest_component()</a></code> as a small helper that returns the component index for each variable in a data frame that was used in <code><a href="../reference/principal_components.html">principal_components()</a></code>.</li>
@@ -196,10 +198,11 @@
 <h2 class="hasAnchor">
 <a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
 <ul>
+<li>The <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>select</code>-argument, to print only selected columns of the parameters table.</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models gets a <code>summary_random</code>-argument to additionally print information about the random effects.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>lme</em>-models now also accepts the <code>df_method</code>-argument.</li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for now also accepts the <code>df_method</code>-argument for more (mixed) models.</li>
 <li>The Intercept-parameter in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for meta-analysis models was renamed to <code>"Overall"</code>.</li>
 <li>
 <code><a href="../reference/skewness.html">skewness()</a></code> gets a <code>type</code>-argument, to compute different types of skewness.</li>
