@@ -138,10 +138,18 @@ standard_error.effectsize_std_params <- function(model, ...) {
 #' @rdname standard_error
 #' @export
 standard_error.default <- function(model, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
+  if (!is.null(method)) {
+    method <- tolower(method)
+  } else {
+    method <- "wald"
+  }
 
-  if (isTRUE(robust)) {
+  if (method == "robust") {
     standard_error_robust(model, ...)
+  } else if (method == "ml1") {
+    se_ml1(model)
+  } else if (method == "betwithin") {
+    se_betwithin(model)
   } else {
     se <- tryCatch(
       {

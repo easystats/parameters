@@ -38,11 +38,20 @@ p_value <- function(model, ...) {
 #' @rdname p_value
 #' @export
 p_value.default <- function(model, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
+  if (!is.null(method)) {
+    method <- tolower(method)
+  } else {
+    method <- "wald"
+  }
+
   p <- NULL
 
-  if (isTRUE(robust)) {
+  if (method == "robust") {
     return(p_value_robust(model, ...))
+  } else if (method == "ml1") {
+    return(p_value_ml1(model))
+  } else if (method == "betwithin") {
+    return(p_value_betwithin(model))
   } else {
     # first, we need some special handling for Zelig-models
     p <- tryCatch(
