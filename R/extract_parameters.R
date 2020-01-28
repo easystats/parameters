@@ -4,7 +4,7 @@
 #' @importFrom insight get_statistic get_parameters
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, ...) {
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, ...) {
   # check if standardization is required and package available
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
     insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
@@ -227,7 +227,7 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("ml1", "kenward", "kr")) {
+  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("betwithin", "ml1", "kenward", "kr")) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = "Parameter")
@@ -236,7 +236,7 @@
 
   # dof
   if (!"df" %in% names(parameters)) {
-    if (df_method %in% c("ml1", "satterthwaite", "kenward", "kr"))
+    if (df_method %in% c("betwithin", "ml1", "satterthwaite", "kenward", "kr"))
       df_error <- df
     else
       df_error <- degrees_of_freedom(model, method = "any")

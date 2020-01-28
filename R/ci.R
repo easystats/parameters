@@ -4,7 +4,7 @@
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
+#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"betwithin"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
@@ -33,7 +33,7 @@
 #' }
 #' @importFrom insight find_parameters
 #' @export
-ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "satterthwaite", "kenward", "boot"), ...) {
+ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot"), ...) {
   method <- tolower(method)
   method <- match.arg(method)
 
@@ -44,6 +44,10 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "satterthwaite", "
     # ml1 approx
   } else if (method == "ml1") {
     out <- ci_ml1(x, ci)
+
+    # betwithin approx
+  } else if (method == "betwithin") {
+    out <- ci_betwithin(x, ci)
 
     # Satterthwaite
   } else if (method == "satterthwaite") {
@@ -393,14 +397,24 @@ ci.DirichletRegModel <- function(x, ci = .95, component = c("all", "conditional"
 
 #' @rdname ci.merMod
 #' @export
-ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
+ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), method = c("wald", "ml1", "betwithin", "robust"), ...) {
+  method <- tolower(method)
+  method <- match.arg(method)
   component <- match.arg(component)
 
   if (is.null(.check_component(x, component))) {
     return(NULL)
   }
-  ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = robust)
+
+  if (method == "robust") {
+    ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = TRUE)
+  } else if (method == "wald") {
+    ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = FALSE)
+  } else if (method == "ml1") {
+    ci_ml1(model = x, ci = ci)
+  } else if (method == "betwithin") {
+    ci_betwithin(model = x, ci = ci)
+  }
 }
 
 #' @rdname ci.merMod
@@ -473,7 +487,7 @@ ci.gls <- ci.biglm
 
 #' @rdname ci.merMod
 #' @export
-ci.lme <- function(x, ci = .95, method = c("wald", "ml1", "satterthwaite"), ...) {
+ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterthwaite"), ...) {
   method <- tolower(method)
   method <- match.arg(method)
 
@@ -495,6 +509,10 @@ ci.lme <- function(x, ci = .95, method = c("wald", "ml1", "satterthwaite"), ...)
     # ml1 approx
   } else if (method == "ml1") {
     ci_ml1(x, ci)
+
+    # betwithin approx
+  } else if (method == "betwithin") {
+    ci_betwithin(x, ci)
 
     # Satterthwaite
   } else if (method == "satterthwaite") {

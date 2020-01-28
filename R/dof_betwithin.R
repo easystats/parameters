@@ -1,0 +1,28 @@
+#' @rdname p_value_betwithin
+#' @importFrom insight find_random_slopes find_parameters has_intercept n_obs
+#' @importFrom stats setNames
+#' @export
+dof_betwithin <- function(model) {
+  if (!insight::model_info(model)$is_mixed) {
+    stop("Model must be a mixed model.")
+  }
+
+  ngrps <- sum(.n_randomeffects(model))
+  parameters <- insight::find_parameters(model)[["conditional"]]
+  within_effects <- unlist(insight::find_random_slopes(model))
+  has_intcp <- insight::has_intercept(model)
+
+  ddf_within <- ngrps - n_parameters(model)
+  ddf_between <- insight::n_obs(model) - ngrps - n_parameters(model)
+
+  if (has_intcp) {
+    ddf_between <- ddf_between - 1
+    ddf_within <- ddf_within - 1
+  }
+
+  ddf <- stats::setNames(1:length(parameters), parameters)
+  ddf[match(within_effects, parameters)] <- ddf_within
+  ddf[-match(within_effects, parameters)] <- ddf_between
+
+  ddf
+}

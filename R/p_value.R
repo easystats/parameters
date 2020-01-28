@@ -6,7 +6,7 @@
 #' }
 #'
 #' @param model A statistical model.
-#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
+#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
@@ -205,11 +205,13 @@ p_value.lme <- function(model, ...) {
 #' @export
 p_value.lmerMod <- function(model, method = "wald", ...) {
   method <- tolower(method)
-  method <- match.arg(method, c("wald", "ml1", "satterthwaite", "kr", "kenward"))
+  method <- match.arg(method, c("wald", "ml1", "betwithin", "satterthwaite", "kr", "kenward"))
   if (method == "wald") {
     p_value_wald(model, ...)
   } else if (method == "ml1") {
     p_value_ml1(model, ...)
+  } else if (method == "betwithin") {
+    p_value_betwithin(model, ...)
   } else if (method == "satterthwaite") {
     p_value_satterthwaite(model, ...)
   } else if (method %in% c("kr", "kenward")) {
@@ -223,11 +225,13 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @export
 p_value.merMod <- function(model, method = "wald", ...) {
   method <- tolower(method)
-  method <- match.arg(method, c("wald", "ml1"))
+  method <- match.arg(method, c("wald", "betwithin", "ml1"))
   if (method == "wald") {
     dof <- Inf
-  } else {
+  } else if (method == "ml1") {
     dof <- dof_ml1(model)
+  } else {
+    dof <- dof_betwithin(model)
   }
   p_value_wald(model, dof, ...)
 }
@@ -239,11 +243,13 @@ p_value.cpglmm <- p_value.merMod
 #' @rdname p_value
 #' @export
 p_value.rlmerMod <- function(model, method = "wald", ...) {
-  method <- match.arg(method, c("wald", "ml1"))
+  method <- match.arg(method, c("wald", "betwithin", "ml1"))
   if (method == "wald") {
     dof <- Inf
-  } else {
+  } else if (method == "ml1") {
     dof <- dof_ml1(model)
+  } else {
+    dof <- dof_betwithin(model)
   }
   p_value_wald(model, dof, ...)
 }

@@ -3,7 +3,7 @@
 #' Estimate or extract degrees of freedom of models.
 #'
 #' @param model A statistical model.
-#' @param method Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}), \code{"kenward"} (see \code{\link{dof_kenward}}) or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.
+#' @param method Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}), \code{"kenward"} (see \code{\link{dof_kenward}}) or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
@@ -30,7 +30,7 @@
 #' @export
 degrees_of_freedom <- function(model, method = "analytical") {
   method <- tolower(method)
-  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "satterthwaite", "kenward", "nokr", "wald"))
+  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward", "nokr", "wald"))
 
   if (!.dof_method_ok(model, method)) {
     method <- "any"
@@ -47,6 +47,8 @@ degrees_of_freedom <- function(model, method = "analytical") {
     dof <- Inf
   } else if (method == "satterthwaite") {
     dof <- dof_satterthwaite(model)
+  } else if (method == "betwithin") {
+    dof <- dof_betwithin(model)
   } else if (method == "kenward") {
     dof <- dof_kenward(model)
   } else if (method == "analytical") {
@@ -129,8 +131,8 @@ dof <- degrees_of_freedom
 
 .dof_method_ok <- function(model, method) {
   method <- tolower(method)
-  if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "kenward", "kr", "nokr", "wald", "ml1"))) {
-    warning("'df_method' must be one of 'wald', 'kenward', 'satterthwaite' or ' ml1'. Using 'wald' now.", call. = FALSE)
+  if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1"))) {
+    warning("'df_method' must be one of 'wald', 'kenward', 'satterthwaite', 'betwithin' or ' ml1'. Using 'wald' now.", call. = FALSE)
     return(TRUE)
   }
   if (!insight::model_info(model)$is_linear && method %in% c("satterthwaite", "kenward", "kr")) {

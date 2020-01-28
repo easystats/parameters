@@ -17,6 +17,7 @@
 
 ## New functions
 
+- `dof_betwithin()` to compute degrees of freedom based on a between-within approximation method (and related to that, `p_value_*()` and `se_*()` for this method were added as well).
 - `random_parameters()` that returns information about the random effects such as variances, R2 or ICC.
 - `closest_component()` as a small helper that returns the component index for each variable in a data frame that was used in `principal_components()`.
 - `get_scores()` as a small helper to extract scales and calculate sum scores from a principal component analysis (PCA, `principal_components()`).
