@@ -20,9 +20,15 @@ dof_betwithin <- function(model) {
     ddf_within <- ddf_within - 1
   }
 
+  within_index <- match(within_effects, parameters)
   ddf <- stats::setNames(1:length(parameters), parameters)
-  ddf[match(within_effects, parameters)] <- ddf_within
-  ddf[-match(within_effects, parameters)] <- ddf_between
+
+  if (length(within_index) > 0) {
+    ddf[match(within_effects, parameters)] <- ddf_within
+    ddf[-match(within_effects, parameters)] <- ddf_between
+  } else {
+    ddf <- ddf_between
+  }
 
   ddf
 }

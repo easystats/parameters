@@ -25,6 +25,12 @@
     merge_by <- setdiff(merge_by, "Component")
   }
 
+  # check Degrees of freedom
+  if (!.dof_method_ok(model, df_method)) {
+    df_method <- NULL
+  }
+
+
   # clean parameter names
 
   if (inherits(model, "polr")) {
@@ -61,6 +67,8 @@
     if (!is.null(ci)) {
       if (isTRUE(robust)) {
         ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
+      } else if (!is.null(df_method)) {
+        ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = df_method))
       } else {
         ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
       }
@@ -76,6 +84,8 @@
   # p value
   if (isTRUE(robust)) {
     parameters <- merge(parameters, p_value_robust(model, ...), by = merge_by)
+  } else if (!is.null(df_method)) {
+    parameters <- merge(parameters, p_value(model, effects = effects, component = component, method = df_method), by = merge_by)
   } else {
     parameters <- merge(parameters, p_value(model, effects = effects, component = component), by = merge_by)
   }
@@ -85,6 +95,8 @@
   if (is.null(standardize)) {
     if (isTRUE(robust)) {
       parameters <- merge(parameters, standard_error_robust(model, ...), by = merge_by)
+    } else if (!is.null(df_method)) {
+      parameters <- merge(parameters, standard_error(model, effects = effects, component = component, method = df_method), by = merge_by)
     } else {
       parameters <- merge(parameters, standard_error(model, effects = effects, component = component), by = merge_by)
     }
@@ -100,7 +112,11 @@
 
 
   # dof
-  df_error <- degrees_of_freedom(model, method = "any")
+  if (!is.null(df_method)) {
+    df_error <- degrees_of_freedom(model, method = df_method)
+  } else {
+    df_error <- degrees_of_freedom(model, method = "any")
+  }
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
     parameters$df_error <- df_error
   }

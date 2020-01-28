@@ -28,6 +28,7 @@
   component = c("all", "conditional", "zi", "zero_inflated"),
   standardize = NULL,
   exponentiate = FALSE,
+  df_method = NULL,
   summary_random = FALSE,
   ...
 )
@@ -52,6 +53,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   summary_random = FALSE,
+  df_method = NULL,
   ...
 )
 }

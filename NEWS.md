@@ -26,7 +26,7 @@
 
 - The `print()`-method for `model_parameters()` gets a `select`-argument, to print only selected columns of the parameters table.
 - `model_parameters()` for mixed models gets a `summary_random`-argument to additionally print information about the random effects.
-- `model_parameters()` for *lme*-models now also accepts the `df_method`-argument.
+- `model_parameters()` for now also accepts the `df_method`-argument for more (mixed) models.
 - The Intercept-parameter in `model_parameters()` for meta-analysis models was renamed to `"Overall"`.
 - `skewness()` gets a `type`-argument, to compute different types of skewness.
 - `kurtosis()` gets a `type`-argument, to compute different types of skewness.

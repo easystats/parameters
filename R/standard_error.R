@@ -12,7 +12,9 @@
 #'   by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 #'   \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
 #'   from the \pkg{sandwich} or \pkg{clubSandwich} package for robust covariance
-#'   matrix estimators.
+#'   matrix estimators. For certain mixed models, \code{method} may also be one
+#'   of \code{"wald"}, \code{\link[=p_value_ml1]{"ml1"}}, \code{\link\link[=p_value_betwithin]{"betwithin"}},
+#'   \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}.
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
 #'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}

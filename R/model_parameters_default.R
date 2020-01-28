@@ -59,7 +59,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
-.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", robust = FALSE, ...) {
+.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", robust = FALSE, df_method = NULL, ...) {
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -70,9 +70,9 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- if (is.null(comp_argument)) {
-      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, ...)
+      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, ...)
     } else {
-      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, ...)
+      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, ...)
     }
   }
 

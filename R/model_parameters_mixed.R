@@ -71,8 +71,14 @@ model_parameters.lme <- model_parameters.merMod
 #' @inheritParams simulate_model
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, summary_random = FALSE, ...) {
+model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, df_method = NULL, summary_random = FALSE, ...) {
   component <- match.arg(component)
+
+  # p-values, CI and se might be based on differen df-methods
+  if (!is.null(df_method)) {
+    df_method <- tolower(df_method)
+    df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin"))
+  }
 
   # fix argument, if model has no zi-part
   if (!insight::model_info(model)$is_zero_inflated && component != "conditional") {
@@ -83,7 +89,7 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, robust = FALSE, ...)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, robust = FALSE, df_method = df_method, ...)
   }
 
 
@@ -138,7 +144,13 @@ model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", 
 
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.clmm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, summary_random = FALSE, ...) {
+model_parameters.clmm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, summary_random = FALSE, df_method = NULL, ...) {
+  # p-values, CI and se might be based on differen df-methods
+  if (!is.null(df_method)) {
+    df_method <- tolower(df_method)
+    df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin"))
+  }
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -149,6 +161,7 @@ model_parameters.clmm <- function(model, ci = .95, bootstrap = FALSE, iterations
     exponentiate = exponentiate,
     effects = "fixed",
     robust = FALSE,
+    df_method = df_method,
     ...
   )
 
