@@ -4,7 +4,7 @@
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"betwithin"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
+#' @param method For mixed models, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"} or \code{"betwithin"}. For linear mixed model, can also be \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
@@ -79,8 +79,21 @@ bayestestR::ci
 #' @rdname ci.merMod
 #' @export
 ci.default <- function(x, ci = .95, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
-  ci_wald(model = x, ci = ci, robust = robust, ...)
+  if (!is.null(method)) {
+    method <- tolower(method)
+  } else {
+    method <- "wald"
+  }
+
+  if (method == "robust") {
+    ci_wald(model = x, ci = ci, dof = Inf, robust = TRUE)
+  } else if (method == "wald") {
+    ci_wald(model = x, ci = ci, dof = Inf, robust = FALSE)
+  } else if (method == "ml1") {
+    ci_ml1(model = x, ci = ci)
+  } else if (method == "betwithin") {
+    ci_betwithin(model = x, ci = ci)
+  }
 }
 
 

@@ -46,13 +46,6 @@
 #' @importFrom stats pt coef
 #' @export
 p_value_betwithin <- function(model, dof = NULL) {
-  UseMethod("p_value_betwithin")
-}
-
-
-
-#' @export
-p_value_betwithin.default <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_betwithin(model)
   }

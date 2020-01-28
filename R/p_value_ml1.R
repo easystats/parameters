@@ -50,13 +50,6 @@
 #' @importFrom stats pt coef
 #' @export
 p_value_ml1 <- function(model, dof = NULL) {
-  UseMethod("p_value_ml1")
-}
-
-
-
-#' @export
-p_value_ml1.merMod <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_ml1(model)
   }
