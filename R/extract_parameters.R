@@ -164,7 +164,6 @@
 
   parameters <- insight::get_parameters(model, effects = "fixed", component = "all")
   statistic <- insight::get_statistic(model, component = "all")
-  df_method <- tolower(df_method)
 
   original_order <- parameters$.id <- 1:nrow(parameters)
 
