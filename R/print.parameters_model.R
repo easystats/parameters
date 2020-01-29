@@ -8,31 +8,45 @@
 #'   multiple components (zero-inflation, smooth terms, ...), each component is
 #'   printed in a separate table. If \code{FALSE}, model parameters are printed
 #'   in a single table and a \code{Component} column is added to the output.
+#' @param select Character vector (or numeric index) of column names that should
+#'   be printed. If \code{NULL} (default), all columns are printed.
 #' @inheritParams parameters_table
 #' @return \code{NULL}
 #'
 #' @examples
 #' library(parameters)
-#' library(glmmTMB)
+#' if (require("glmmTMB")) {
+#'   model <- glmmTMB(
+#'     count ~ spp + mined + (1 | site),
+#'     ziformula = ~mined,
+#'     family = poisson(),
+#'     data = Salamanders
+#'   )
+#'   mp <- model_parameters(model)
 #'
-#' model <- glmmTMB(
-#'   count ~ spp + mined + (1 | site),
-#'   ziformula = ~mined,
-#'   family = poisson(),
-#'   data = Salamanders
-#' )
-#' mp <- model_parameters(model)
+#'   print(mp, pretty_names = FALSE)
 #'
-#' print(mp, pretty_names = FALSE)
+#'   print(mp, split_components = FALSE)
 #'
-#' print(mp, split_components = FALSE)
+#'   print(mp, select = c("Parameter", "Coefficient", "CI_low", "CI_high"))
+#' }
 #' @importFrom insight format_table
 #' @export
-print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, ...) {
-  if (!is.null(attributes(x)$title)) {
-    insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
+print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, ...) {
+  res <- attributes(x)$summary_random
+
+  if (!is.null(select)) {
+    if (is.numeric(select)) select <- colnames(x)[select]
+    select <- union(select, c("Component", "Effects", "Response"))
+    to_remove <- setdiff(colnames(x), select)
+    x[to_remove] <- NULL
   }
 
+  if (!is.null(attributes(x)$title)) {
+    insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
+  } else if (!is.null(res)) {
+    insight::print_color("# Fixed Effects\n\n", "blue")
+  }
 
   # For Bayesian models, we need to prettify parameter names here...
 
@@ -57,7 +71,57 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
     cat(insight::format_table(formatted_table))
   }
+
+  # print summary for random effects
+  if (!is.null(res)) {
+    .print_random_parameters(res, digits = attributes(x)$digits)
+  }
 }
+
+
+
+
+#' @export
+print.parameters_random <- function(x, digits = 2, ...) {
+  .print_random_parameters(x, digits = digits)
+}
+
+
+
+
+#' @keywords internal
+.print_random_parameters <- function(random_params, digits = 2) {
+  insight::print_color("\n# Random Effects\n", "blue")
+
+  # format values
+  random_params$Value <- sprintf("%g", round(random_params$Value, digits = digits))
+  random_params$Value[random_params$Value == "NA"] <- NA
+
+  valid_terms <- !is.na(random_params$Term)
+  random_params$Description[valid_terms] <- paste0(random_params$Description[valid_terms], " (", random_params$Term[valid_terms], ")")
+
+  max_len1 <- max(nchar(random_params$Description, keepNA = FALSE))
+  minus1 <- paste0(rep("-", max_len1 + 1), collapse = "")
+  space1 <- paste0(rep(" ", max_len1 + 1), collapse = "")
+
+  max_len2 <- max(nchar(random_params$Value, keepNA = FALSE))
+  minus2 <- paste0(rep("-", max_len2 + 2), collapse = "")
+  space2 <- paste0(rep(" ", max_len2 + 1), collapse = "")
+
+  # remove headline
+  out <- gsub("^(.*)(---\\n)(.*)", "\\3", insight::format_table(random_params[c("Description", "Value")]))
+  out <- gsub(paste0(space1, "|", space2), paste0(minus1, "|", minus2), out, fixed = TRUE)
+
+  # out <- gsub("^(.*)(---\\n)(.*)", "\\3", insight::format_table(random_params, sep = " "))
+  # space2 <- paste0(rep(" ", max_len2 - 2), collapse = "")
+  # out <- gsub(paste0(space1, space2, "NA"), paste0(space1, space2, "  "), out, fixed = TRUE)
+
+  cat("\n")
+  cat(out)
+}
+
+
+
 
 
 #' @keywords internal
@@ -70,6 +134,12 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   is_ordinal_model <- attributes(x)$ordinal_model
 
   if (is.null(is_ordinal_model)) is_ordinal_model <- FALSE
+
+  # make sure we have correct order of levels from split-factor
+  x[split_column] <- lapply(x[split_column], function(i) {
+    if (!is.factor(i)) i <- factor(i, levels = unique(i))
+    i
+  })
 
   # set up split-factor
   if (length(split_column) > 1) {
@@ -149,12 +219,21 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "extra.fixed" = "Extra Parameters",
       "nu" = "Nu",
       "tau" = "Tau",
-      "precision" = "Precision",
+      "precision" = ,
+      "precision." = "Precision",
       type
     )
 
 
-    if (length(split_column) > 1) {
+    if ("DirichletRegModel" %in% attributes(x)$model_class) {
+      if (grepl("^conditional\\.", component_name) || split_column == "Response") {
+        s1 <- "Response level:"
+        s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)
+      } else {
+        s1 <- component_name
+        s2 <- ""
+      }
+    } else if (length(split_column) > 1) {
       s1 <- component_name
       s2 <- ""
     } else if (split_column == "Response" && is_ordinal_model) {

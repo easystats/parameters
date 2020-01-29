@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
@@ -41,8 +41,6 @@
 
 
 
-  <link href="../extra.css" rel="stylesheet">
-  
 
 <meta property="og:title" content="Rescale design weights for multilevel analysis — rescale_weights" />
 <meta property="og:description" content="Most functions to fit multilevel and mixed effects models only
@@ -237,58 +235,47 @@ from each group level of the variables in <code>group</code>.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sjstats</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'sjstats'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:rstanarm':</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"sjstats"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>nhanes_sample</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sjstats"</span>)
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>))
+
+  <span class='co'># also works with multiple group-variables...</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>), <span class='st'>"WTINT2YR"</span>))
+
+  <span class='co'># or nested structures.</span>
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>rescale_weights</span>(
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes_sample</span>,
+    <span class='kw'>group</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>),
+    <span class='kw'>probability_weights</span> <span class='kw'>=</span> <span class='st'>"WTINT2YR"</span>,
+    <span class='kw'>nest</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  )
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: sjstats</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'sjstats'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:metafor':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    robust</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:rstanarm':</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    se</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:psych':</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    phi</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:parameters':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    p_value</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>nhanes_sample</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sjstats"</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>))</div><div class='output co'>#&gt;   total  age RIAGENDR RIDRETH1 SDMVPSU SDMVSTRA WTINT2YR pweights_a pweights_b
-#&gt; 1     1 2.20        1        3       2       31 97593.68  1.5733612  1.2005159
-#&gt; 2     7 2.08        2        3       1       29 39599.36  0.6231745  0.5246593
-#&gt; 3     3 1.48        2        1       2       42 26619.83  0.8976966  0.5439111
-#&gt; 4     4 1.32        2        4       2       33 34998.53  0.7083628  0.5498944
-#&gt; 5     1 2.00        2        1       1       41 14746.45  0.4217782  0.3119698
-#&gt; 6     6 2.20        2        4       1       38 28232.10  0.6877550  0.5155503</div><div class='input'>
-<span class='co'># also works with multiple group-variables...</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>), <span class='st'>"WTINT2YR"</span>))</div><div class='output co'>#&gt;   total  age RIAGENDR RIDRETH1 SDMVPSU SDMVSTRA WTINT2YR pweight_a_SDMVSTRA
-#&gt; 1     1 2.20        1        3       2       31 97593.68          1.5733612
-#&gt; 2     7 2.08        2        3       1       29 39599.36          0.6231745
-#&gt; 3     3 1.48        2        1       2       42 26619.83          0.8976966
-#&gt; 4     4 1.32        2        4       2       33 34998.53          0.7083628
-#&gt; 5     1 2.00        2        1       1       41 14746.45          0.4217782
-#&gt; 6     6 2.20        2        4       1       38 28232.10          0.6877550
-#&gt;   pweight_b_SDMVSTRA pweight_a_SDMVPSU pweight_b_SDMVPSU
-#&gt; 1          1.2005159         1.8458164         1.3699952
-#&gt; 2          0.5246593         0.8217570         0.5780808
-#&gt; 3          0.5439111         0.5034683         0.3736824
-#&gt; 4          0.5498944         0.6619369         0.4913004
-#&gt; 5          0.3119698         0.3060151         0.2152722
-#&gt; 6          0.5155503         0.5858662         0.4121388</div><div class='input'>
-<span class='co'># or nested structures.</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>rescale_weights</span>(
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes_sample</span>,
-  <span class='kw'>group</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>),
-  <span class='kw'>probability_weights</span> <span class='kw'>=</span> <span class='st'>"WTINT2YR"</span>,
-  <span class='kw'>nest</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   total  age RIAGENDR RIDRETH1 SDMVPSU SDMVSTRA WTINT2YR pweights_a pweights_b
+#&gt; <span class='message'>    p_value</span></div><div class='output co'>#&gt;   total  age RIAGENDR RIDRETH1 SDMVPSU SDMVSTRA WTINT2YR pweights_a pweights_b
 #&gt; 1     1 2.20        1        3       2       31 97593.68  1.6532834  1.3583967
 #&gt; 2     7 2.08        2        3       1       29 39599.36  0.5492655  0.4875798
 #&gt; 3     3 1.48        2        1       2       42 26619.83  0.8341084  0.5891700
 #&gt; 4     4 1.32        2        4       2       33 34998.53  0.7937824  0.5941006
 #&gt; 5     1 2.00        2        1       1       41 14746.45  0.4285939  0.3068214
 #&gt; 6     6 2.20        2        4       1       38 28232.10  0.6215579  0.4759935</div><div class='input'>
- <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)
-<span class='no'>nhanes_sample</span> <span class='kw'>&lt;-</span> <span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>glmer</a></span>(
-  <span class='no'>total</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>RIAGENDR</span>) * (<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>age</span>) + <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>RIDRETH1</span>)) + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>SDMVPSU</span>),
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes_sample</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>pweights_a</span>
-)</div><div class='output co'>#&gt; Generalized linear mixed model fit by maximum likelihood (Laplace
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"sjstats"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>nhanes_sample</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sjstats"</span>)
+  <span class='no'>nhanes_sample</span> <span class='kw'>&lt;-</span> <span class='fu'>rescale_weights</span>(<span class='no'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>glmer</a></span>(
+    <span class='no'>total</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>RIAGENDR</span>) * (<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>age</span>) + <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>RIDRETH1</span>)) + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>SDMVPSU</span>),
+    <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes_sample</span>,
+    <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>pweights_a</span>
+  )
+}</div><div class='output co'>#&gt; Generalized linear mixed model fit by maximum likelihood (Laplace
 #&gt;   Approximation) [glmerMod]
 #&gt;  Family: poisson  ( log )
 #&gt; Formula: total ~ factor(RIAGENDR) * (log(age) + factor(RIDRETH1)) + (1 |  

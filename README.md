@@ -5,7 +5,6 @@
 [![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
 [![Build
 Status](https://travis-ci.org/easystats/parameters.svg?branch=master)](https://travis-ci.org/easystats/parameters)
-[![codecov](https://codecov.io/gh/easystats/parameters/branch/master/graph/badge.svg)](https://codecov.io/gh/easystats/parameters)
 
 ***Describe and understand your model’s parameters\!***
 
@@ -126,7 +125,7 @@ model_parameters(model)
 model_parameters(model, df_method = "kenward")
 # Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p
 # -------------------------------------------------------------------------
-# (Intercept)  |        2.00 | 0.56 | [0.89, 3.11] | 3.53 |   2.67 | 0.046 
+# (Intercept)  |        2.00 | 0.57 | [0.89, 3.11] | 3.53 |   2.67 | 0.046 
 # Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.99 | < .001
 ```
 

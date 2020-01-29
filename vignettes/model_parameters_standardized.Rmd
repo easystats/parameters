@@ -22,11 +22,16 @@ bibliography: bibliography.bib
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
-options(digits=2)
+options(digits = 2)
+knitr::opts_chunk$set(comment = ">")
 
-library(parameters)
-library(dplyr)
+if (!requireNamespace("dplyr", quietly = TRUE) ||
+    !requireNamespace("lme4", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+} else {
+  library(parameters)
+  library(dplyr)
+}
 
 set.seed(333)
 ```

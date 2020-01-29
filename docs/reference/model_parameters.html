@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
@@ -41,8 +41,6 @@
 
 
 
-  <link href="../extra.css" rel="stylesheet">
-  
 
 <meta property="og:title" content="Model Parameters — model_parameters" />
 <meta property="og:description" content="Compute and extract model parameters. See the documentation for your object's class:
@@ -51,6 +49,7 @@ ANOVAs
 Regression models (lm, glm, survey, ...)
 Additive models (gam, gamm, ...)
 Zero-inflated models (hurdle, zeroinfl, zerocount)
+Multinomial, ordinal and cumulative link models (bracl, multinom, mlm, ...)
 Mixed models (lme4, nlme, glmmTMB, ...)
 Bayesian tests (BayesFactor)
 Bayesian models (rstanarm, brms, MCMCglmm)
@@ -175,13 +174,14 @@ Meta-Analysis via linear (mixed) models (rma)
 <li><p><a href='model_parameters.default.html'>Regression models</a> (<code>lm</code>, <code>glm</code>, <span class="pkg">survey</span>, ...)</p></li>
 <li><p><a href='model_parameters.gam.html'>Additive models</a> (<code>gam</code>, <code>gamm</code>, ...)</p></li>
 <li><p><a href='model_parameters.zeroinfl.html'>Zero-inflated models</a> (<code>hurdle</code>, <code>zeroinfl</code>, <code>zerocount</code>)</p></li>
+<li><p><a href='model_parameters.mlm.html'>Multinomial, ordinal and cumulative link models</a> (<code>bracl</code>, <code>multinom</code>, <code>mlm</code>, ...)</p></li>
 <li><p><a href='model_parameters.merMod.html'>Mixed models</a> (<span class="pkg">lme4</span>, <span class="pkg">nlme</span>, <span class="pkg">glmmTMB</span>, ...)</p></li>
 <li><p><a href='model_parameters.BFBayesFactor.html'>Bayesian tests</a> (<span class="pkg">BayesFactor</span>)</p></li>
 <li><p><a href='model_parameters.stanreg.html'>Bayesian models</a> (<span class="pkg">rstanarm</span>, <span class="pkg">brms</span>, <span class="pkg">MCMCglmm</span>)</p></li>
 <li><p><a href='model_parameters.principal.html'>PCA and FA</a> (<span class="pkg">psych</span>)</p></li>
 <li><p><a href='model_parameters.lavaan.html'>CFA and SEM</a> (<span class="pkg">lavaan</span>, <span class="pkg">blavaan</span>)</p></li>
 <li><p><a href='model_parameters.kmeans.html'>Cluster models (k-means, ...)</a></p></li>
-<li><p><a href='model_parameters.default.html'>Meta-Analysis via linear (mixed) models</a> (<code>rma</code>)</p></li>
+<li><p><a href='model_parameters.rma.html'>Meta-Analysis via linear (mixed) models</a> (<code>rma</code>)</p></li>
 </ul>
 
     </div>

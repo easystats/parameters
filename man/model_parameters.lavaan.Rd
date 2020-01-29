@@ -33,46 +33,38 @@ Format CFA/SEM objects from the (b)lavaan package (Rosseel, 2012; Merkle and Ros
 library(parameters)
 
 # lavaan -------------------------------------
-library(lavaan)
+if (require("lavaan")) {
 
-# Confirmatory Factor Analysis (CFA) ---------
+  # Confirmatory Factor Analysis (CFA) ---------
 
-structure <- " visual  =~ x1 + x2 + x3
-               textual =~ x4 + x5 + x6
-               speed   =~ x7 + x8 + x9 "
-model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
-model_parameters(model)
-model_parameters(model, standardize = TRUE)
+  structure <- " visual  =~ x1 + x2 + x3
+                 textual =~ x4 + x5 + x6
+                 speed   =~ x7 + x8 + x9 "
+  model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
+  model_parameters(model)
+  model_parameters(model, standardize = TRUE)
 
-# Structural Equation Model (SEM) ------------
+  # Structural Equation Model (SEM) ------------
 
-structure <- "
-  # latent variable definitions
-    ind60 =~ x1 + x2 + x3
-    dem60 =~ y1 + a*y2 + b*y3 + c*y4
-    dem65 =~ y5 + a*y6 + b*y7 + c*y8
-  # regressions
-    dem60 ~ ind60
-    dem65 ~ ind60 + dem60
-  # residual correlations
-    y1 ~~ y5
-    y2 ~~ y4 + y6
-    y3 ~~ y7
-    y4 ~~ y8
-    y6 ~~ y8
-"
-model <- lavaan::sem(structure, data = PoliticalDemocracy)
-model_parameters(model)
-model_parameters(model, standardize = TRUE)
-\donttest{
-# blavaan ------------------------------------
-# library(blavaan)
-
-# model <- blavaan::bsem(structure, data=PoliticalDemocracy)
-# model_parameters(model)
-# model_parameters(model, standardize = TRUE)
+  structure <- "
+    # latent variable definitions
+      ind60 =~ x1 + x2 + x3
+      dem60 =~ y1 + a*y2 + b*y3 + c*y4
+      dem65 =~ y5 + a*y6 + b*y7 + c*y8
+    # regressions
+      dem60 ~ ind60
+      dem65 ~ ind60 + dem60
+    # residual correlations
+      y1 ~~ y5
+      y2 ~~ y4 + y6
+      y3 ~~ y7
+      y4 ~~ y8
+      y6 ~~ y8
+  "
+  model <- lavaan::sem(structure, data = PoliticalDemocracy)
+  model_parameters(model)
+  model_parameters(model, standardize = TRUE)
 }
-
 }
 \references{
 \itemize{

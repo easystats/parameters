@@ -61,209 +61,166 @@ model_simulate <- simulate_model
 #' @importFrom stats vcov setNames
 #' @importFrom insight get_parameters
 #' @export
-simulate_model.lm <- function(model, iterations = 1000, ...) {
+simulate_model.default <- function(model, iterations = 1000, ...) {
   .simulate_model(model, iterations, component = "conditional", effects = "fixed")
 }
 
 
 #' @export
-simulate_model.glmmadmb <- simulate_model.lm
-
-
-#' @export
-simulate_model.cpglm <- simulate_model.lm
-
+simulate_model.lm <- simulate_model.default
 
 #' @export
-simulate_model.cpglmm <- simulate_model.lm
-
-
-#' @export
-simulate_model.feglm <- simulate_model.lm
-
+simulate_model.glmmadmb <- simulate_model.default
 
 #' @export
-simulate_model.iv_robust <- simulate_model.lm
-
-
-#' @export
-simulate_model.fixest <- simulate_model.lm
-
+simulate_model.cglm <- simulate_model.default
 
 #' @export
-simulate_model.rq <- simulate_model.lm
-
-
-#' @export
-simulate_model.crq <- simulate_model.lm
-
+simulate_model.cpglm <- simulate_model.default
 
 #' @export
-simulate_model.nlrq <- simulate_model.lm
-
-
-#' @export
-simulate_model.speedglm <- simulate_model.lm
-
+simulate_model.cpglmm <- simulate_model.default
 
 #' @export
-simulate_model.speedlm <- simulate_model.lm
-
-
-#' @export
-simulate_model.glm <- simulate_model.lm
-
+simulate_model.feglm <- simulate_model.default
 
 #' @export
-simulate_model.glmRob <- simulate_model.lm
-
-
-#' @export
-simulate_model.lmRob <- simulate_model.lm
-
+simulate_model.iv_robust <- simulate_model.default
 
 #' @export
-simulate_model.gls <- simulate_model.lm
-
-
-#' @export
-simulate_model.lme <- simulate_model.lm
-
+simulate_model.fixest <- simulate_model.default
 
 #' @export
-simulate_model.crch <- simulate_model.lm
-
-
-#' @export
-simulate_model.biglm <- simulate_model.lm
-
+simulate_model.rq <- simulate_model.default
 
 #' @export
-simulate_model.plm <- simulate_model.lm
-
-
-#' @export
-simulate_model.flexsurvreg <- simulate_model.lm
-
+simulate_model.crq <- simulate_model.default
 
 #' @export
-simulate_model.LORgee <- simulate_model.lm
-
-
-#' @export
-simulate_model.feis <- simulate_model.lm
-
+simulate_model.nlrq <- simulate_model.default
 
 #' @export
-simulate_model.lmrob <- simulate_model.lm
-
-
-#' @export
-simulate_model.glmrob <- simulate_model.lm
-
+simulate_model.speedglm <- simulate_model.default
 
 #' @export
-simulate_model.merMod <- simulate_model.lm
-
-
-#' @export
-simulate_model.gamlss <- simulate_model.lm
-
+simulate_model.speedlm <- simulate_model.default
 
 #' @export
-simulate_model.lm_robust <- simulate_model.lm
-
-
-#' @export
-simulate_model.coxme <- simulate_model.lm
-
+simulate_model.glm <- simulate_model.default
 
 #' @export
-simulate_model.geeglm <- simulate_model.lm
-
-
-#' @export
-simulate_model.gee <- simulate_model.lm
-
+simulate_model.glmRob <- simulate_model.default
 
 #' @export
-simulate_model.clm <- simulate_model.lm
-
-
-#' @export
-simulate_model.polr <- simulate_model.lm
-
+simulate_model.lmRob <- simulate_model.default
 
 #' @export
-simulate_model.coxph <- simulate_model.lm
-
-
-#' @export
-simulate_model.svyglm.nb <- simulate_model.lm
-
+simulate_model.gls <- simulate_model.default
 
 #' @export
-simulate_model.svyglm.zip <- simulate_model.lm
-
-
-#' @export
-simulate_model.logistf <- simulate_model.lm
-
+simulate_model.lme <- simulate_model.default
 
 #' @export
-simulate_model.truncreg <- simulate_model.lm
-
-
-#' @export
-simulate_model.glimML <- simulate_model.lm
-
+simulate_model.crch <- simulate_model.default
 
 #' @export
-simulate_model.ivreg <- simulate_model.lm
-
-
-#' @export
-simulate_model.lrm <- simulate_model.lm
-
+simulate_model.biglm <- simulate_model.default
 
 #' @export
-simulate_model.psm <- simulate_model.lm
-
-
-#' @export
-simulate_model.ols <- simulate_model.lm
-
+simulate_model.plm <- simulate_model.default
 
 #' @export
-simulate_model.rms <- simulate_model.lm
-
-
-#' @export
-simulate_model.vglm <- simulate_model.lm
-
+simulate_model.flexsurvreg <- simulate_model.default
 
 #' @export
-simulate_model.censReg <- simulate_model.lm
-
-
-#' @export
-simulate_model.tobit <- simulate_model.lm
-
+simulate_model.LORgee <- simulate_model.default
 
 #' @export
-simulate_model.survreg <- simulate_model.lm
-
-
-#' @export
-simulate_model.multinom <- simulate_model.lm
-
+simulate_model.feis <- simulate_model.default
 
 #' @export
-simulate_model.brmultinom <- simulate_model.lm
-
+simulate_model.lmrob <- simulate_model.default
 
 #' @export
-simulate_model.bracl <- simulate_model.lm
+simulate_model.glmrob <- simulate_model.default
+
+#' @export
+simulate_model.merMod <- simulate_model.default
+
+#' @export
+simulate_model.gamlss <- simulate_model.default
+
+#' @export
+simulate_model.lm_robust <- simulate_model.default
+
+#' @export
+simulate_model.coxme <- simulate_model.default
+
+#' @export
+simulate_model.geeglm <- simulate_model.default
+
+#' @export
+simulate_model.gee <- simulate_model.default
+
+#' @export
+simulate_model.clm <- simulate_model.default
+
+#' @export
+simulate_model.polr <- simulate_model.default
+
+#' @export
+simulate_model.coxph <- simulate_model.default
+
+#' @export
+simulate_model.svyglm.nb <- simulate_model.default
+
+#' @export
+simulate_model.svyglm.zip <- simulate_model.default
+
+#' @export
+simulate_model.logistf <- simulate_model.default
+
+#' @export
+simulate_model.truncreg <- simulate_model.default
+
+#' @export
+simulate_model.glimML <- simulate_model.default
+
+#' @export
+simulate_model.ivreg <- simulate_model.default
+
+#' @export
+simulate_model.lrm <- simulate_model.default
+
+#' @export
+simulate_model.psm <- simulate_model.default
+
+#' @export
+simulate_model.ols <- simulate_model.default
+
+#' @export
+simulate_model.rms <- simulate_model.default
+
+#' @export
+simulate_model.vglm <- simulate_model.default
+
+#' @export
+simulate_model.censReg <- simulate_model.default
+
+#' @export
+simulate_model.tobit <- simulate_model.default
+
+#' @export
+simulate_model.survreg <- simulate_model.default
+
+#' @export
+simulate_model.multinom <- simulate_model.default
+
+#' @export
+simulate_model.brmultinom <- simulate_model.default
+
+#' @export
+simulate_model.bracl <- simulate_model.default
 
 
 

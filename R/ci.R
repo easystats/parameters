@@ -4,7 +4,7 @@
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param method For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
+#' @param method For mixed models, can be \code{\link[=ci_wald]{"wald"}} (default), \code{\link[=ci_ml1]{"ml1"}} or \code{\link[=ci_betwithin]{"betwithin"}}. For linear mixed model, can also be \code{\link[=ci_satterthwaite]{"satterthwaite"}}, \code{\link[=ci_kenward]{"kenward"}} or \code{"boot"} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
@@ -19,21 +19,22 @@
 #' @examples
 #' \donttest{
 #' library(parameters)
-#' library(glmmTMB)
+#' if (require("glmmTMB")) {
+#'   model <- glmmTMB(
+#'     count ~ spp + mined + (1 | site),
+#'     ziformula = ~mined,
+#'     family = poisson(),
+#'     data = Salamanders
+#'   )
 #'
-#' model <- glmmTMB(
-#'   count ~ spp + mined + (1 | site),
-#'   ziformula = ~mined,
-#'   family = poisson(),
-#'   data = Salamanders
-#' )
-#'
-#' ci(model)
-#' ci(model, component = "zi")
+#'   ci(model)
+#'   ci(model, component = "zi")
+#' }
 #' }
 #' @importFrom insight find_parameters
 #' @export
-ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "satterthwaite", "kenward", "boot"), ...) {
+ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot"), ...) {
+  method <- tolower(method)
   method <- match.arg(method)
 
   # Wald approx
@@ -43,6 +44,10 @@ ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "satterthwaite", "
     # ml1 approx
   } else if (method == "ml1") {
     out <- ci_ml1(x, ci)
+
+    # betwithin approx
+  } else if (method == "betwithin") {
+    out <- ci_betwithin(x, ci)
 
     # Satterthwaite
   } else if (method == "satterthwaite") {
@@ -74,8 +79,21 @@ bayestestR::ci
 #' @rdname ci.merMod
 #' @export
 ci.default <- function(x, ci = .95, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
-  ci_wald(model = x, ci = ci, robust = robust, ...)
+  if (!is.null(method)) {
+    method <- tolower(method)
+  } else {
+    method <- "wald"
+  }
+
+  if (method == "robust") {
+    ci_wald(model = x, ci = ci, dof = Inf, robust = TRUE)
+  } else if (method == "ml1") {
+    ci_ml1(model = x, ci = ci)
+  } else if (method == "betwithin") {
+    ci_betwithin(model = x, ci = ci)
+  } else {
+    ci_wald(model = x, ci = ci, dof = Inf, robust = FALSE)
+  }
 }
 
 
@@ -360,6 +378,27 @@ ci.brmultinom <- ci.multinom
 ci.bracl <- ci.multinom
 
 
+#' @rdname ci.merMod
+#' @export
+ci.DirichletRegModel <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  params <- insight::get_parameters(x, component = component)
+  out <- ci_wald(model = x, ci = ci, dof = Inf, ...)
+
+  if (is.null(out$Component)) {
+    component <- "all"
+  }
+  if ("Response" %in% colnames(params)) {
+    out$Response <- params$Response
+  }
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
+}
+
+
 
 
 
@@ -371,14 +410,24 @@ ci.bracl <- ci.multinom
 
 #' @rdname ci.merMod
 #' @export
-ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
+ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), method = c("wald", "ml1", "betwithin", "robust"), ...) {
+  method <- tolower(method)
+  method <- match.arg(method)
   component <- match.arg(component)
 
   if (is.null(.check_component(x, component))) {
     return(NULL)
   }
-  ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = robust)
+
+  if (method == "robust") {
+    ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = TRUE)
+  } else if (method == "wald") {
+    ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = FALSE)
+  } else if (method == "ml1") {
+    ci_ml1(model = x, ci = ci)
+  } else if (method == "betwithin") {
+    ci_betwithin(model = x, ci = ci)
+  }
 }
 
 #' @rdname ci.merMod
@@ -449,22 +498,38 @@ ci.biglm <- function(x, ci = .95, ...) {
 ci.gls <- ci.biglm
 
 
-
+#' @rdname ci.merMod
 #' @export
-ci.lme <- function(x, ci = .95, ...) {
-  if (!requireNamespace("nlme", quietly = TRUE)) {
-    ci_wald(model = x, ci = ci)
-  } else {
-    out <- lapply(ci, function(i) {
-      ci_list <- nlme::intervals(x, level = i, ...)
-      .data_frame(
-        Parameter = rownames(ci_list$fixed),
-        CI = i * 100,
-        CI_low = as.vector(ci_list$fixed[, "lower"]),
-        CI_high = as.vector(ci_list$fixed[, "upper"])
-      )
-    })
-    .remove_backticks_from_parameter_names(do.call(rbind, out))
+ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterthwaite"), ...) {
+  method <- tolower(method)
+  method <- match.arg(method)
+
+  if (method == "wald") {
+    if (!requireNamespace("nlme", quietly = TRUE)) {
+      ci_wald(model = x, ci = ci)
+    } else {
+      out <- lapply(ci, function(i) {
+        ci_list <- nlme::intervals(x, level = i, ...)
+        .data_frame(
+          Parameter = rownames(ci_list$fixed),
+          CI = i * 100,
+          CI_low = as.vector(ci_list$fixed[, "lower"]),
+          CI_high = as.vector(ci_list$fixed[, "upper"])
+        )
+      })
+      .remove_backticks_from_parameter_names(do.call(rbind, out))
+    }
+    # ml1 approx
+  } else if (method == "ml1") {
+    ci_ml1(x, ci)
+
+    # betwithin approx
+  } else if (method == "betwithin") {
+    ci_betwithin(x, ci)
+
+    # Satterthwaite
+  } else if (method == "satterthwaite") {
+    ci_satterthwaite(x, ci)
   }
 }
 

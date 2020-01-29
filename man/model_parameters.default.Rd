@@ -95,6 +95,9 @@ model_parameters(model, digits = 3, ci_digits = 4, p_digits = "scientific")
 # logistic regression model
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 model_parameters(model)
+
+# show odds ratio / exponentiated coefficients
+model_parameters(model, exponentiate = TRUE)
 }
 \seealso{
 \code{\link[=standardize_names]{standardize_names()}} to rename

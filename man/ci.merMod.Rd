@@ -6,18 +6,20 @@
 \alias{ci.glm}
 \alias{ci.polr}
 \alias{ci.mixor}
+\alias{ci.DirichletRegModel}
 \alias{ci.glmmTMB}
 \alias{ci.zeroinfl}
 \alias{ci.hurdle}
 \alias{ci.MixMod}
 \alias{ci.betareg}
 \alias{ci.clm2}
+\alias{ci.lme}
 \title{Confidence Intervals (CI)}
 \usage{
 \method{ci}{merMod}(
   x,
   ci = 0.95,
-  method = c("wald", "ml1", "satterthwaite", "kenward", "boot"),
+  method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot"),
   ...
 )
 
@@ -29,11 +31,13 @@
 
 \method{ci}{mixor}(x, ci = 0.95, effects = c("all", "fixed", "random"), ...)
 
+\method{ci}{DirichletRegModel}(x, ci = 0.95, component = c("all", "conditional", "precision"), ...)
+
 \method{ci}{glmmTMB}(
   x,
   ci = 0.95,
   component = c("all", "conditional", "zi", "zero_inflated"),
-  method = NULL,
+  method = c("wald", "ml1", "betwithin", "robust"),
   ...
 )
 
@@ -41,7 +45,7 @@
   x,
   ci = 0.95,
   component = c("all", "conditional", "zi", "zero_inflated"),
-  method = NULL,
+  method = c("wald", "ml1", "betwithin", "robust"),
   ...
 )
 
@@ -49,7 +53,7 @@
   x,
   ci = 0.95,
   component = c("all", "conditional", "zi", "zero_inflated"),
-  method = NULL,
+  method = c("wald", "ml1", "betwithin", "robust"),
   ...
 )
 
@@ -63,13 +67,15 @@
 \method{ci}{betareg}(x, ci = 0.95, component = c("all", "conditional", "precision"), ...)
 
 \method{ci}{clm2}(x, ci = 0.95, component = c("all", "conditional", "scale"), ...)
+
+\method{ci}{lme}(x, ci = 0.95, method = c("wald", "betwithin", "ml1", "satterthwaite"), ...)
 }
 \arguments{
 \item{x}{A statistical model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{method}{For mixed models of class \code{merMod}, can be \code{\link[=ci_wald]{"wald"}} (default), \code{"ml1"}, \code{"satterthwaite"}, \code{"kenward"} or \code{"boot"} (see also \code{\link{p_value_kenward}} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.}
+\item{method}{For mixed models, can be \code{\link[=ci_wald]{"wald"}} (default), \code{\link[=ci_ml1]{"ml1"}} or \code{\link[=ci_betwithin]{"betwithin"}}. For linear mixed model, can also be \code{\link[=ci_satterthwaite]{"satterthwaite"}}, \code{\link[=ci_kenward]{"kenward"}} or \code{"boot"} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 
@@ -99,16 +105,16 @@ Compute confidence intervals (CI) for frequentist models.
 \examples{
 \donttest{
 library(parameters)
-library(glmmTMB)
+if (require("glmmTMB")) {
+  model <- glmmTMB(
+    count ~ spp + mined + (1 | site),
+    ziformula = ~mined,
+    family = poisson(),
+    data = Salamanders
+  )
 
-model <- glmmTMB(
-  count ~ spp + mined + (1 | site),
-  ziformula = ~mined,
-  family = poisson(),
-  data = Salamanders
-)
-
-ci(model)
-ci(model, component = "zi")
+  ci(model)
+  ci(model, component = "zi")
+}
 }
 }

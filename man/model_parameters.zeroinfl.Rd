@@ -43,11 +43,11 @@ Parameters from zero-inflated models.
 }
 \examples{
 library(parameters)
-library(pscl)
-
-data("bioChemists")
-model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
-model_parameters(model)
+if (require("pscl")) {
+  data("bioChemists")
+  model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
+  model_parameters(model)
+}
 }
 \seealso{
 \code{\link[=standardize_names]{standardize_names()}} to rename

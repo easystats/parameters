@@ -4,7 +4,7 @@
 #' @importFrom insight get_statistic get_parameters
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, ...) {
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, ...) {
   # check if standardization is required and package available
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
     insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
@@ -19,6 +19,17 @@
 
   parameters <- insight::get_parameters(model, effects = effects, component = component)
   statistic <- insight::get_statistic(model, component = component)
+
+  # check if we really have a component column
+  if (!("Component" %in% names(parameters)) && "Component" %in% merge_by) {
+    merge_by <- setdiff(merge_by, "Component")
+  }
+
+  # check Degrees of freedom
+  if (!.dof_method_ok(model, df_method)) {
+    df_method <- NULL
+  }
+
 
   # clean parameter names
 
@@ -56,6 +67,8 @@
     if (!is.null(ci)) {
       if (isTRUE(robust)) {
         ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
+      } else if (!is.null(df_method)) {
+        ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = df_method))
       } else {
         ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
       }
@@ -71,6 +84,8 @@
   # p value
   if (isTRUE(robust)) {
     parameters <- merge(parameters, p_value_robust(model, ...), by = merge_by)
+  } else if (!is.null(df_method)) {
+    parameters <- merge(parameters, p_value(model, effects = effects, component = component, method = df_method), by = merge_by)
   } else {
     parameters <- merge(parameters, p_value(model, effects = effects, component = component), by = merge_by)
   }
@@ -80,6 +95,8 @@
   if (is.null(standardize)) {
     if (isTRUE(robust)) {
       parameters <- merge(parameters, standard_error_robust(model, ...), by = merge_by)
+    } else if (!is.null(df_method)) {
+      parameters <- merge(parameters, standard_error(model, effects = effects, component = component, method = df_method), by = merge_by)
     } else {
       parameters <- merge(parameters, standard_error(model, effects = effects, component = component), by = merge_by)
     }
@@ -95,7 +112,11 @@
 
 
   # dof
-  df_error <- degrees_of_freedom(model, method = "any")
+  if (!is.null(df_method)) {
+    df_error <- degrees_of_freedom(model, method = df_method)
+  } else {
+    df_error <- degrees_of_freedom(model, method = "any")
+  }
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
     parameters$df_error <- df_error
   }
@@ -141,8 +162,9 @@
     standardize <- NULL
   }
 
-  parameters <- as.data.frame(summary(model)$coefficients, stringsAsFactors = FALSE)
-  parameters$Parameter <- row.names(parameters)
+  parameters <- insight::get_parameters(model, effects = "fixed", component = "all")
+  statistic <- insight::get_statistic(model, component = "all")
+
   original_order <- parameters$.id <- 1:nrow(parameters)
 
   # remove SE column
@@ -220,18 +242,16 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("ml1", "kenward", "kr")) {
-    for (test_statistic in c("t value", "z value")) {
-      if (test_statistic %in% colnames(parameters)) {
-        parameters[[test_statistic]] <- parameters[["Estimate"]] / parameters[["SE"]]
-      }
-    }
+  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("betwithin", "ml1", "kenward", "kr")) {
+    parameters$Statistic <- parameters$Estimate / parameters$SE
+  } else {
+    parameters <- merge(parameters, statistic, by = "Parameter")
   }
 
 
   # dof
   if (!"df" %in% names(parameters)) {
-    if (df_method %in% c("ml1", "satterthwaite", "kenward", "kr"))
+    if (df_method %in% c("betwithin", "ml1", "satterthwaite", "kenward", "kr"))
       df_error <- df
     else
       df_error <- degrees_of_freedom(model, method = "any")
@@ -245,6 +265,7 @@
   parameters <- parameters[match(original_order, parameters$.id), ]
 
   # Renaming
+  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters))
   names(parameters) <- gsub("Std. Error", "SE", names(parameters))
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
   names(parameters) <- gsub("t value", "t", names(parameters))

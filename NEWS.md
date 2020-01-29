@@ -1,4 +1,13 @@
-# parameters 0.4.2
+# parameters 0.5.0
+
+## Breaking changes
+
+- `skewness()` now uses a different method to calculate the skewness by default. Different methods can be selected using the `type`-argument.
+- `kurtosis()` now uses a different method to calculate the skewness by default. Different methods can be selected using the `type`-argument.
+
+## New supported models
+
+- Added support for `cglm` (*cglm*), `DirichletRegModel` (*DirichletReg*)
 
 ## General
 
@@ -8,13 +17,27 @@
 
 ## New functions
 
-- `component_columns()` as a small helper that returns the component index for each variable in a data frame that was used in `principal_components()`.
+- `dof_betwithin()` to compute degrees of freedom based on a between-within approximation method (and related to that, `p_value_*()` and `se_*()` for this method were added as well).
+- `random_parameters()` that returns information about the random effects such as variances, R2 or ICC.
+- `closest_component()` as a small helper that returns the component index for each variable in a data frame that was used in `principal_components()`.
+- `get_scores()` as a small helper to extract scales and calculate sum scores from a principal component analysis (PCA, `principal_components()`).
+
+## Changes to functions
+
+- The `print()`-method for `model_parameters()` gets a `select`-argument, to print only selected columns of the parameters table.
+- `model_parameters()` for mixed models gets a `summary_random`-argument to additionally print information about the random effects.
+- `model_parameters()` for now also accepts the `df_method`-argument for more (mixed) models.
+- The Intercept-parameter in `model_parameters()` for meta-analysis models was renamed to `"Overall"`.
+- `skewness()` gets a `type`-argument, to compute different types of skewness.
+- `kurtosis()` gets a `type`-argument, to compute different types of skewness.
 
 ## Bug fixes
 
 - Fixed issue in `model_parameters()` when `robust = TRUE`, which could sometimes mess up order of the statistic column.
+- Fixed issues in `model_parameters()` with wrong `df` for `lme`-models.
 - Fixed issues in `model_parameters.merMod()` when `df_method` was not set to default.
 - Fixed issues in `model_parameters.merMod()` when `robust = TRUE`.
+- Fixed issues with *coxph* models with only one parameter.
 
 # parameters 0.4.1
 

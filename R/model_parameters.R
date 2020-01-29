@@ -7,13 +7,14 @@
 #'  \item{\link[=model_parameters.default]{Regression models} (\code{lm}, \code{glm}, \pkg{survey}, ...)}
 #'  \item{\link[=model_parameters.gam]{Additive models} (\code{gam}, \code{gamm}, ...)}
 #'  \item{\link[=model_parameters.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount})}
+#'  \item{\link[=model_parameters.mlm]{Multinomial, ordinal and cumulative link models} (\code{bracl}, \code{multinom}, \code{mlm}, ...)}
 #'  \item{\link[=model_parameters.merMod]{Mixed models} (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, ...)}
 #'  \item{\link[=model_parameters.BFBayesFactor]{Bayesian tests} (\pkg{BayesFactor})}
 #'  \item{\link[=model_parameters.stanreg]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm})}
 #'  \item{\link[=model_parameters.principal]{PCA and FA} (\pkg{psych})}
 #'  \item{\link[=model_parameters.lavaan]{CFA and SEM} (\pkg{lavaan}, \pkg{blavaan})}
 #'  \item{\link[=model_parameters.kmeans]{Cluster models (k-means, ...)}}
-#'  \item{\link[=model_parameters.default]{Meta-Analysis via linear (mixed) models} (\code{rma})}
+#'  \item{\link[=model_parameters.rma]{Meta-Analysis via linear (mixed) models} (\code{rma})}
 #'  }
 #'
 #' @param model Statistical Model.

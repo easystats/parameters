@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
@@ -41,8 +41,6 @@
 
 
 
-  <link href="../extra.css" rel="stylesheet">
-  
 
 <meta property="og:title" content="Parameters from (General) Linear Models — model_parameters.default" />
 <meta property="og:description" content="Extract and compute indices and measures to describe parameters of (general) linear models (GLMs)." />
@@ -292,7 +290,13 @@
 #&gt; ----------------------------------------------------------------------
 #&gt; (Intercept) |       10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 29 | 0.011
 #&gt; wt          |        2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 29 | 0.174
-#&gt; cyl         |       -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 29 | 0.034</div></pre>
+#&gt; cyl         |       -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 29 | 0.034</div><div class='input'>
+<span class='co'># show odds ratio / exponentiated coefficients</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |                  95% CI |     z | df |     p
+#&gt; -------------------------------------------------------------------------------
+#&gt; (Intercept) |    40911.34 | 4.17 | [120.16,   6.95162e+09] |  2.55 | 29 | 0.011
+#&gt; wt          |        8.17 | 1.55 | [  0.59,        514.10] |  1.36 | 29 | 0.174
+#&gt; cyl         |        0.05 | 1.38 | [  0.00,          0.34] | -2.12 | 29 | 0.034</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -12,7 +12,9 @@
 #'   by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 #'   \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
 #'   from the \pkg{sandwich} or \pkg{clubSandwich} package for robust covariance
-#'   matrix estimators.
+#'   matrix estimators. For certain mixed models, \code{method} may also be one
+#'   of \code{"wald"}, \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}},
+#'   \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}.
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
 #'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
@@ -138,10 +140,18 @@ standard_error.effectsize_std_params <- function(model, ...) {
 #' @rdname standard_error
 #' @export
 standard_error.default <- function(model, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
+  if (!is.null(method)) {
+    method <- tolower(method)
+  } else {
+    method <- "wald"
+  }
 
-  if (isTRUE(robust)) {
+  if (method == "robust") {
     standard_error_robust(model, ...)
+  } else if (method == "ml1") {
+    se_ml1(model)
+  } else if (method == "betwithin") {
+    se_betwithin(model)
   } else {
     se <- tryCatch(
       {
@@ -317,6 +327,8 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
         # ml1 approx
       } else if (method == "ml1") {
         se_ml1(model)
+      } else if (method == "betwithin") {
+        se_betwithin(model)
         # Kenward approx
       } else if (method %in% c("kenward", "kr")) {
         se_kenward(model)
@@ -563,11 +575,12 @@ standard_error.coxph <- function(model, method = NULL, ...) {
     return(standard_error_robust(model, ...))
   }
 
+  params <- insight::get_parameters(model)
   cs <- stats::coef(summary(model))
   se <- cs[, 3]
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(se)),
+    Parameter = params$Parameter,
     SE = as.vector(se)
   )
 }
@@ -1025,6 +1038,7 @@ standard_error.psm <- standard_error.lrm
 
 
 
+#' @rdname standard_error
 #' @export
 standard_error.betareg <- function(model, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
@@ -1038,6 +1052,32 @@ standard_error.betareg <- function(model, component = c("all", "conditional", "p
     Component = params$Component,
     SE = as.vector(se)
   )
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
+}
+
+
+#' @rdname standard_error
+#' @export
+standard_error.DirichletRegModel <- function(model, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  params <- insight::get_parameters(model)
+
+  out <- .data_frame(
+    Parameter = params$Parameter,
+    Response = params$Response,
+    SE = as.vector(model$se)
+  )
+
+  if (!is.null(params$Component)) {
+    out$Component <- params$Component
+  } else {
+    component <- "all"
+  }
 
   if (component != "all") {
     out <- out[out$Component == component, ]

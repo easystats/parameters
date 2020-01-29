@@ -9,6 +9,8 @@
 \alias{p_value.glmmTMB}
 \alias{p_value.MixMod}
 \alias{p_value.mixor}
+\alias{p_value.DirichletRegModel}
+\alias{p_value.clm2}
 \alias{p_value.gee}
 \title{p-values}
 \usage{
@@ -28,6 +30,10 @@ p_value(model, ...)
 
 \method{p_value}{mixor}(model, effects = c("all", "fixed", "random"), ...)
 
+\method{p_value}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
+
+\method{p_value}{clm2}(model, component = c("all", "conditional", "scale"), ...)
+
 \method{p_value}{gee}(model, method = NULL, ...)
 }
 \arguments{
@@ -35,7 +41,7 @@ p_value(model, ...)
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 
-\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.}
+\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models

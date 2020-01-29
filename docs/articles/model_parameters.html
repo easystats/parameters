@@ -12,12 +12,11 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Summary of Model Parameters">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Summary of Model Parameters">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -343,15 +342,7 @@
 <a class="sourceLine" id="cb27-6" title="6">                       <span class="dt">data =</span> HolzingerSwineford1939)</a>
 <a class="sourceLine" id="cb27-7" title="7"></a>
 <a class="sourceLine" id="cb27-8" title="8"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
-<pre><code>&gt; # Correlation type
-&gt; 
-&gt; Link              | Coefficient |   SE |       95% CI |      p
-&gt; --------------------------------------------------------------
-&gt; visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | &lt; .001
-&gt; visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | &lt; .001
-&gt; textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | &lt; .001
-&gt; 
-&gt; # Loading type
+<pre><code>&gt; # Loading type
 &gt; 
 &gt; Link          | Coefficient |   SE |       95% CI |      p
 &gt; ----------------------------------------------------------
@@ -363,7 +354,15 @@
 &gt; textual =~ x6 |        0.93 | 0.06 | [0.82, 1.03] | &lt; .001
 &gt; speed =~ x7   |        1.00 | 0.00 | [1.00, 1.00] | &lt; .001
 &gt; speed =~ x8   |        1.18 | 0.16 | [0.86, 1.50] | &lt; .001
-&gt; speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001</code></pre>
+&gt; speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001
+&gt; 
+&gt; # Correlation type
+&gt; 
+&gt; Link              | Coefficient |   SE |       95% CI |      p
+&gt; --------------------------------------------------------------
+&gt; visual ~~ textual |        0.41 | 0.07 | [0.26, 0.55] | &lt; .001
+&gt; visual ~~ speed   |        0.26 | 0.06 | [0.15, 0.37] | &lt; .001
+&gt; textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | &lt; .001</code></pre>
 </div>
 <div id="bayesian-1" class="section level4">
 <h4 class="hasAnchor">
@@ -385,13 +384,13 @@
 <a class="sourceLine" id="cb29-7" title="7"></a>
 <a class="sourceLine" id="cb29-8" title="8"><span class="kw">rma</span>(<span class="dt">yi =</span> effectsize, <span class="dt">sei =</span> standarderror, <span class="dt">method =</span> <span class="st">"REML"</span>, <span class="dt">data =</span> mydat) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb29-9" title="9"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>()</a></code></pre></div>
-<pre><code>&gt; Parameter   | Coefficient |   SE |         95% CI |     z |      p | Weight
-&gt; ---------------------------------------------------------------------------
-&gt; Study 1     |       -0.39 | 0.32 | [-1.01,  0.23] | -1.24 | 0.215  |   9.95
-&gt; Study 2     |        0.68 | 0.32 | [ 0.05,  1.30] |  2.13 | 0.033  |   9.95
-&gt; Study 3     |        0.28 | 0.13 | [ 0.03,  0.54] |  2.17 | 0.030  |  59.17
-&gt; Study 4     |       -1.40 | 0.36 | [-2.10, -0.69] | -3.88 | &lt; .001 |   7.72
-&gt; (Intercept) |       -0.18 | 0.44 | [-1.05,  0.68] | -0.42 | 0.676  |</code></pre>
+<pre><code>&gt; Parameter | Coefficient |   SE |         95% CI |     z |      p | Weight
+&gt; -------------------------------------------------------------------------
+&gt; Study 1   |       -0.39 | 0.32 | [-1.01,  0.23] | -1.24 | 0.215  |   9.95
+&gt; Study 2   |        0.68 | 0.32 | [ 0.05,  1.30] |  2.13 | 0.033  |   9.95
+&gt; Study 3   |        0.28 | 0.13 | [ 0.03,  0.54] |  2.17 | 0.030  |  59.17
+&gt; Study 4   |       -1.40 | 0.36 | [-2.10, -0.69] | -3.88 | &lt; .001 |   7.72
+&gt; Overall   |       -0.18 | 0.44 | [-1.05,  0.68] | -0.42 | 0.676  |</code></pre>
 </div>
   </div>
 

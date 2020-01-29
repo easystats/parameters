@@ -34,6 +34,9 @@
 #' # logistic regression model
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' model_parameters(model)
+#'
+#' # show odds ratio / exponentiated coefficients
+#' model_parameters(model, exponentiate = TRUE)
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, ...) {
@@ -47,6 +50,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     exponentiate = exponentiate,
     effects = "fixed",
     robust = robust,
+    df_method = NULL,
     ...
   )
 
@@ -56,7 +60,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
-.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", robust = FALSE, ...) {
+.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", robust = FALSE, df_method = NULL, ...) {
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -67,9 +71,9 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
     parameters <- if (is.null(comp_argument)) {
-      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, ...)
+      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, ...)
     } else {
-      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, ...)
+      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, ...)
     }
   }
 
@@ -84,27 +88,6 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 # other special cases ------------------------------------------------
-
-
-#' @rdname model_parameters.merMod
-#' @export
-model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", "random"), bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
-  effects <- match.arg(effects)
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = c("Parameter", "Effects"),
-    standardize = standardize,
-    exponentiate = exponentiate,
-    effects = effects,
-    ...
-  )
-
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  out
-}
 
 
 #' @rdname model_parameters.default
@@ -128,6 +111,7 @@ model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterati
     merge_by = c("Parameter", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
+    robust = FALSE,
     ...
   )
 
@@ -158,6 +142,7 @@ model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations
     merge_by = c("Parameter", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
+    robust = FALSE,
     ...
   )
 
@@ -189,98 +174,10 @@ model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations
     merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
+    robust = FALSE,
     ...
   )
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  out
-}
-
-
-
-#' @export
-model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = c("Parameter", "Response"),
-    standardize = standardize,
-    exponentiate = exponentiate,
-    ...
-  )
-
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  out
-}
-
-
-#' @export
-model_parameters.multinom <- model_parameters.mlm
-
-
-#' @export
-model_parameters.brmultinom <- model_parameters.mlm
-
-
-#' @export
-model_parameters.bracl <- model_parameters.mlm
-
-
-#' @importFrom stats qt setNames
-#' @export
-model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
-  meta_analysis_overall <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = "Parameter",
-    standardize = standardize,
-    exponentiate = exponentiate,
-    ...
-  )
-
-  alpha <- (1 + ci) / 2
-
-  rma_parameters <- if (!is.null(model$slab)) {
-    sprintf("Study %s", model$slab)
-  } else {
-    sprintf("Study %i", 1:model[["k"]])
-  }
-
-  rma_coeffients <- as.vector(model$yi)
-  rma_se <- as.vector(sqrt(model$vi))
-  rma_ci_low <- rma_coeffients - rma_se * stats::qt(alpha, df = Inf)
-  rma_ci_high <- rma_coeffients + rma_se * stats::qt(alpha, df = Inf)
-  rma_statistic <- rma_coeffients / rma_se
-  rma_ci_p <- 2 * stats::pt(abs(rma_statistic), df = Inf, lower.tail = FALSE)
-
-  meta_analysis_studies <- data.frame(
-    Parameter = rma_parameters,
-    Coefficient = rma_coeffients,
-    SE = rma_se,
-    CI_low = rma_ci_low,
-    CI_high = rma_ci_high,
-    z = rma_statistic,
-    df_error = NA,
-    p = rma_ci_p,
-    Weight = 1 / as.vector(model$vi),
-    stringsAsFactors = FALSE
-  )
-
-  original_attributes <- attributes(meta_analysis_overall)
-  out <- merge(meta_analysis_studies, meta_analysis_overall, all = TRUE, sort = FALSE)
-
-  original_attributes$names <- names(out)
-  original_attributes$row.names <- 1:nrow(out)
-  original_attributes$pretty_names <- stats::setNames(out$Parameter, out$Parameter)
-  attributes(out) <- original_attributes
-
-  # no df
-  out$df_error <- NULL
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-
   out
 }

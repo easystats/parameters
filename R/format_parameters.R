@@ -38,13 +38,33 @@ format_parameters.default <- function(model) {
     info <- info[[1]]
   }
 
-  # hurdle- and zeroinfl-models
+
+  # special handling hurdle- and zeroinfl-models ---------------------
+
   if (info$is_zero_inflated | info$is_hurdle) {
     names <- gsub("^(count_|zero_)", "", names)
   }
 
+
+  # special handling bracl ---------------------
+
   if (inherits(model, "bracl")) {
     names <- gsub("(.*):(.*)", "\\2", names)
+  }
+
+
+  # special handling DirichletRegModel ---------------------
+
+  dirich_names <- NULL
+  if (inherits(model, "DirichletRegModel")) {
+    cf <- stats::coef(model)
+    if (model$parametrization == "common") {
+      pattern <- paste0("(", paste(model$varnames, collapse = "|"), ")\\.(.*)")
+      dirich_names <- names <- gsub(pattern, "\\2", names(unlist(cf)))
+    } else {
+      dirich_names <- names <- gsub("(.*)\\.(.*)\\.(.*)", "\\3", names(unlist(cf)))
+    }
+    original_names <- names
   }
 
 
@@ -58,10 +78,17 @@ format_parameters.default <- function(model) {
   }
   types$Parameter <- .clean_parameter_names(types$Parameter, full = TRUE)
 
+
   # hurdle- and zeroinfl-models
   if (info$is_zero_inflated | info$is_hurdle) {
     types$Parameter <- gsub("^(count_|zero_)", "", types$Parameter)
   }
+
+  # special handling DirichletRegModel
+  if (inherits(model, "DirichletRegModel") && !is.null(dirich_names)) {
+    types$Parameter <- dirich_names
+  }
+
 
   for (i in 1:nrow(types)) {
     name <- types$Parameter[i]
@@ -78,6 +105,15 @@ format_parameters.default <- function(model) {
       for (j in 1:length(components)) {
         if (components[j] %in% types$Parameter) {
           type <- types[types$Parameter == components[j], ]
+
+          ## TODO check if this is ok...
+
+          # for models with multiple response categories, we might have same
+          # variable for each response, thus we have multiple rows here,
+          # where only one row is required.
+
+          if (nrow(type) > 1) type <- type[1, ]
+
           components[j] <- .format_parameter(components[j], variable = type$Variable, type = type$Type, level = type$Level)
         } else if (components[j] %in% types$Secondary_Parameter) {
           type <- types[!is.na(types$Secondary_Parameter) & types$Secondary_Parameter == components[j], ]

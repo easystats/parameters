@@ -6,7 +6,7 @@
 #' }
 #'
 #' @param model A statistical model.
-#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
+#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
@@ -38,11 +38,20 @@ p_value <- function(model, ...) {
 #' @rdname p_value
 #' @export
 p_value.default <- function(model, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
+  if (!is.null(method)) {
+    method <- tolower(method)
+  } else {
+    method <- "wald"
+  }
+
   p <- NULL
 
-  if (isTRUE(robust)) {
+  if (method == "robust") {
     return(p_value_robust(model, ...))
+  } else if (method == "ml1") {
+    return(p_value_ml1(model))
+  } else if (method == "betwithin") {
+    return(p_value_betwithin(model))
   } else {
     # first, we need some special handling for Zelig-models
     p <- tryCatch(
@@ -204,11 +213,14 @@ p_value.lme <- function(model, ...) {
 #' @rdname p_value
 #' @export
 p_value.lmerMod <- function(model, method = "wald", ...) {
-  method <- match.arg(method, c("wald", "ml1", "satterthwaite", "kr", "kenward"))
+  method <- tolower(method)
+  method <- match.arg(method, c("wald", "ml1", "betwithin", "satterthwaite", "kr", "kenward"))
   if (method == "wald") {
     p_value_wald(model, ...)
   } else if (method == "ml1") {
     p_value_ml1(model, ...)
+  } else if (method == "betwithin") {
+    p_value_betwithin(model, ...)
   } else if (method == "satterthwaite") {
     p_value_satterthwaite(model, ...)
   } else if (method %in% c("kr", "kenward")) {
@@ -221,11 +233,14 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @rdname p_value
 #' @export
 p_value.merMod <- function(model, method = "wald", ...) {
-  method <- match.arg(method, c("wald", "ml1"))
+  method <- tolower(method)
+  method <- match.arg(method, c("wald", "betwithin", "ml1"))
   if (method == "wald") {
     dof <- Inf
-  } else {
+  } else if (method == "ml1") {
     dof <- dof_ml1(model)
+  } else {
+    dof <- dof_betwithin(model)
   }
   p_value_wald(model, dof, ...)
 }
@@ -237,11 +252,13 @@ p_value.cpglmm <- p_value.merMod
 #' @rdname p_value
 #' @export
 p_value.rlmerMod <- function(model, method = "wald", ...) {
-  method <- match.arg(method, c("wald", "ml1"))
+  method <- match.arg(method, c("wald", "betwithin", "ml1"))
   if (method == "wald") {
     dof <- Inf
-  } else {
+  } else if (method == "ml1") {
     dof <- dof_ml1(model)
+  } else {
+    dof <- dof_betwithin(model)
   }
   p_value_wald(model, dof, ...)
 }
@@ -469,9 +486,10 @@ p_value.coxph <- function(model, method = NULL, ...) {
 
   cs <- stats::coef(summary(model))
   p <- cs[, 5]
+  params <- insight::get_parameters(model)
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(p)),
+    Parameter = params$Parameter,
     p = as.vector(p)
   )
 }
@@ -541,6 +559,33 @@ p_value.flexsurvreg <- function(model, ...) {
 # p-Values from Special Models -----------------------------------------------
 
 
+#' @rdname p_value
+#' @export
+p_value.DirichletRegModel <- function(model, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  params <- insight::get_parameters(model)
+
+  out <- .data_frame(
+    Parameter = params$Parameter,
+    Response = params$Response,
+    p = as.vector(2 * stats::pnorm(-abs(params$Estimate / model$se)))
+  )
+
+  if (!is.null(params$Component)) {
+    out$Component <- params$Component
+  } else {
+    component <- "all"
+  }
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
+}
+
+
+#' @rdname p_value
 #' @export
 p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
   component <- match.arg(component)

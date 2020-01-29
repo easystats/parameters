@@ -11,6 +11,8 @@
 \alias{standard_error.coxph}
 \alias{standard_error.mixor}
 \alias{standard_error.clm2}
+\alias{standard_error.betareg}
+\alias{standard_error.DirichletRegModel}
 \title{Standard Errors}
 \usage{
 standard_error(model, ...)
@@ -47,6 +49,10 @@ standard_error(model, ...)
 \method{standard_error}{mixor}(model, effects = c("all", "fixed", "random"), ...)
 
 \method{standard_error}{clm2}(model, component = c("all", "conditional", "scale"), ...)
+
+\method{standard_error}{betareg}(model, component = c("all", "conditional", "precision"), ...)
+
+\method{standard_error}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
 }
 \arguments{
 \item{model}{A model.}
@@ -67,7 +73,9 @@ for factors or character vectors.}
 by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 \code{standard_error_robust()}, in turn, calls one of the \code{vcov*()}-functions
 from the \pkg{sandwich} or \pkg{clubSandwich} package for robust covariance
-matrix estimators.}
+matrix estimators. For certain mixed models, \code{method} may also be one
+of \code{"wald"}, \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}},
+\code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}.}
 
 \item{effects}{Should standard errors for fixed effects or random effects
 be returned? Only applies to mixed models. May be abbreviated. When

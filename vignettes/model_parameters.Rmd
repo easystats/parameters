@@ -22,11 +22,22 @@ bibliography: bibliography.bib
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
-options(digits=2)
+options(digits = 2)
+knitr::opts_chunk$set(comment = ">")
 
-library(parameters)
-library(dplyr)
+if (!requireNamespace("dplyr", quietly = TRUE) ||
+    !requireNamespace("BayesFactor", quietly = TRUE) ||
+    !requireNamespace("lme4", quietly = TRUE) ||
+    !requireNamespace("metafor", quietly = TRUE) ||
+    !requireNamespace("lavaan", quietly = TRUE) ||
+    !requireNamespace("psych", quietly = TRUE) ||
+    !requireNamespace("rstanarm", quietly = TRUE) ||
+    !requireNamespace("FactoMineR", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+} else {
+  library(parameters)
+  library(dplyr)
+}
 
 set.seed(333)
 ```

@@ -27,6 +27,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
 .ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, method = "wald", ...) {
   params <- insight::get_parameters(model, effects = effects, component = component)
   estimates <- params$Estimate
+  method <- tolower(method)
 
   stderror <- if (isTRUE(robust)) {
     standard_error_robust(model, ...)
@@ -37,6 +38,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
       "kenward" = ,
       "kr" = se_kenward(model),
       "ml1" = se_ml1(model),
+      "betwithin" = se_betwithin(model),
       "satterthwaite" = se_satterthwaite(model),
       standard_error(model, component = component)
     )

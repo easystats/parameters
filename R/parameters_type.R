@@ -57,6 +57,17 @@ parameters_type <- function(model, ...) {
     params$Parameter <- gsub("(.*):(.*)", "\\2", params$Parameter)
   }
 
+  # Special case
+  if (inherits(model, "DirichletRegModel")) {
+    cf <- stats::coef(model)
+    if (model$parametrization == "common") {
+      pattern <- paste0("(", paste(model$varnames, collapse = "|"), ")\\.(.*)")
+      params$Parameter <- gsub(pattern, "\\2", names(unlist(cf)))
+    } else {
+      params$Parameter <- gsub("(.*)\\.(.*)\\.(.*)", "\\3", names(unlist(cf)))
+    }
+  }
+
 
   # Remove "as.factor()", "log()" etc. from parameter names but save original parameter before
   original_parameter <- params$Parameter
@@ -193,13 +204,13 @@ parameters_type <- function(model, ...) {
     return(c(type, "Association", name, var, degree, NA))
 
     # Splines
-  } else if (grepl("(bs|ns|psline|rcs)\\(", name)) {
+  } else if (grepl("(bs|ns|psline|lspline|rcs)\\(", name)) {
     type <- "spline"
-    var <- gsub("(bs|ns|psline|rcs)\\((.*)\\)(\\d)", "\\2", name)
+    var <- gsub("(bs|ns|psline|lspline|rcs)\\((.*)\\)(\\d)", "\\2", name)
     if (grepl(",", var, fixed = TRUE)) {
       var <- substr(var, start = 0, stop = regexpr(",", var, fixed = TRUE) - 1)
     }
-    degree <- gsub("(bs|ns|psline|rcs)\\((.*)\\)(\\d)", "\\3", name)
+    degree <- gsub("(bs|ns|psline|lspline|rcs)\\((.*)\\)(\\d)", "\\3", name)
     return(c(type, "Association", name, var, degree, NA))
 
     # log-transformation

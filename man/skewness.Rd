@@ -5,14 +5,16 @@
 \alias{kurtosis}
 \title{Compute Skewness and Kurtosis}
 \usage{
-skewness(x, na.rm = TRUE, ...)
+skewness(x, na.rm = TRUE, type = "2", ...)
 
-kurtosis(x, ...)
+kurtosis(x, na.rm = TRUE, type = "2", ...)
 }
 \arguments{
 \item{x}{A numeric vector or data.frame.}
 
 \item{na.rm}{Remove missing values.}
+
+\item{type}{Type of algorithm for computing skewness. May be one of \code{1} (or \code{"1"}, \code{"I"} or \code{"classic"}), \code{2} (or \code{"2"}, \code{"II"} or \code{"SPSS"} or \code{"SAS"}) or \code{3} (or  \code{"3"}, \code{"III"} or \code{"Minitab"}). See 'Details'.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -23,8 +25,7 @@ Values of skewness or kurtosis.
 Compute Skewness and Kurtosis
 }
 \details{
-\strong{Skewness}
-\cr \cr
+\subsection{Skewness}{
 Symmetric distributions have a \code{skewness} around zero, while
 a negative skewness values indicates a "left-skewed" distribution, and a
 positive skewness values indicates a "right-skewed" distribution. Examples
@@ -36,16 +37,35 @@ for the relationship of skewness and distributions are:
   \item Lognormal distribution can have a skewness of any positive value, depending on its parameters
 }
 (\cite{https://en.wikipedia.org/wiki/Skewness})
-\cr \cr
-\strong{Kurtosis}
-\cr \cr
+}
+\subsection{Types of Skewness}{
+\code{skewness()} supports three different methods for estimating skewness, as discussed in \cite{Joanes and Gill (1988)}:
+\itemize{
+\item Type "1" is the "classical" method, which is \code{g1 = (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5}
+\item Type "2" first calculates the type-1 skewness, than adjusts the result: \code{G1 = g1 * sqrt(n * (n - 1)) / (n - 2)}. This is what SAS and SPSS usually return
+\item Type "3" first calculates the type-1 skewness, than adjusts the result: \code{b1 = g1 * ((1 - 1 / n))^1.5}. This is what Minitab usually returns.
+}
+}
+\subsection{Kurtosis}{
 The \code{kurtosis} is a measure of "tailedness" of a distribution. A distribution
 with a kurtosis values of about zero is called "mesokurtic". A kurtosis value
 larger than zero indicates a "leptokurtic" distribution with \emph{fatter} tails.
 A kurtosis value below zero indicates a "platykurtic" distribution with \emph{thinner}
 tails (\cite{https://en.wikipedia.org/wiki/Kurtosis}).
 }
+\subsection{Types of Kurtosis}{
+\code{kurtosis()} supports three different methods for estimating kurtosis, as discussed in \cite{Joanes and Gill (1988)}:
+\itemize{
+\item Type "1" is the "classical" method, which is \code{g2 = n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3}.
+\item Type "2" first calculates the type-1 kurtosis, than adjusts the result: \code{G2 = ((n + 1) * g2 + 6) * (n - 1)/((n - 2) * (n - 3))}. This is what SAS and SPSS usually return
+\item Type "3" first calculates the type-1 kurtosis, than adjusts the result: \code{b2 = (g2 + 3) * (1 - 1 / n)^2 - 3}. This is what Minitab usually returns.
+}
+}
+}
 \examples{
 skewness(rnorm(1000))
 kurtosis(rnorm(1000))
+}
+\references{
+D. N. Joanes and C. A. Gill (1998). Comparing measures of sample skewness and kurtosis. The Statistician, 47, 183–189.
 }

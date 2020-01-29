@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
@@ -41,8 +41,6 @@
 
 
 
-  <link href="../extra.css" rel="stylesheet">
-  
 
 <meta property="og:title" content="Confidence Intervals (CI) — ci.merMod" />
 <meta property="og:description" content="Compute confidence intervals (CI) for frequentist models." />
@@ -162,7 +160,7 @@
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(
   <span class='no'>x</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"satterthwaite"</span>, <span class='st'>"kenward"</span>, <span class='st'>"boot"</span>),
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"satterthwaite"</span>, <span class='st'>"kenward"</span>, <span class='st'>"boot"</span>),
   <span class='no'>...</span>
 )
 
@@ -178,12 +176,15 @@
 <span class='co'># S3 method for mixor</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='no'>...</span>)
 
+<span class='co'># S3 method for DirichletRegModel</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>), <span class='no'>...</span>)
+
 <span class='co'># S3 method for glmmTMB</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(
   <span class='no'>x</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"robust"</span>),
   <span class='no'>...</span>
 )
 
@@ -192,7 +193,7 @@
   <span class='no'>x</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"robust"</span>),
   <span class='no'>...</span>
 )
 
@@ -201,7 +202,7 @@
   <span class='no'>x</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"robust"</span>),
   <span class='no'>...</span>
 )
 
@@ -217,7 +218,10 @@
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for clm2</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span>), <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for lme</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"ml1"</span>, <span class='st'>"satterthwaite"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -232,7 +236,7 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models of class <code>merMod</code>, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default), <code>"ml1"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code> or <code>"boot"</code> (see also <code><a href='p_value_kenward.html'>p_value_kenward</a></code> and <code><a href='https://rdrr.io/pkg/lme4/man/confint.merMod.html'>lme4::confint.merMod</a></code>). For (generalized) linear models, can be <code>"robust"</code> to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be <code>"profile"</code> (default) or <code>"wald"</code>.</p></td>
+      <td><p>For mixed models, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default), <code><a href='p_value_ml1.html'>"ml1"</a></code> or <code><a href='p_value_betwithin.html'>"betwithin"</a></code>. For linear mixed model, can also be <code><a href='p_value_satterthwaite.html'>"satterthwaite"</a></code>, <code><a href='p_value_kenward.html'>"kenward"</a></code> or <code>"boot"</code> and <code><a href='https://rdrr.io/pkg/lme4/man/confint.merMod.html'>lme4::confint.merMod</a></code>). For (generalized) linear models, can be <code>"robust"</code> to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be <code>"profile"</code> (default) or <code>"wald"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -268,26 +272,17 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>glmmTMB</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"glmmTMB"</span>)) {
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
+    <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
+    <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
+    <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
+  )
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
-  <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
-  <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
-)
-
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;      Parameter CI       CI_low    CI_high     Component
-#&gt; 1  (Intercept) 95 -0.904868203  0.1834728   conditional
-#&gt; 2        sppPR 95 -1.741720718 -0.7977701   conditional
-#&gt; 3        sppDM 95 -0.001515455  0.5395142   conditional
-#&gt; 4      sppEC-A 95 -0.967367323 -0.1630136   conditional
-#&gt; 5      sppEC-L 95  0.414693327  0.9167312   conditional
-#&gt; 6     sppDES-L 95  0.378400449  0.8723050   conditional
-#&gt; 7        sppDF 95 -0.173790668  0.4038560   conditional
-#&gt; 8      minedno 95  0.742998151  1.7998569   conditional
-#&gt; 9  (Intercept) 95  0.255245254  1.3247538 zero_inflated
-#&gt; 10     minedno 95 -2.460449166 -1.2293688 zero_inflated</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zi"</span>)</div><div class='output co'>#&gt;     Parameter CI     CI_low   CI_high     Component
+  <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>model</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zi"</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: glmmTMB</span></div><div class='output co'>#&gt;     Parameter CI     CI_low   CI_high     Component
 #&gt; 1 (Intercept) 95  0.2552453  1.324754 zero_inflated
 #&gt; 2     minedno 95 -2.4604492 -1.229369 zero_inflated</div><div class='input'># }
 </div></pre>

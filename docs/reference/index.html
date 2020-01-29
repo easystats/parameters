@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
@@ -41,8 +41,6 @@
 
 
 
-  <link href="../extra.css" rel="stylesheet">
-  
 
 <meta property="og:title" content="Function reference" />
 <meta property="og:image" content="/logo.png" />
@@ -205,7 +203,13 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;mixor&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;glmmTMB&gt;</i>)</a></code> </p>
+          <p><code><a href="model_parameters.mlm.html">model_parameters(<i>&lt;mlm&gt;</i>)</a></code> <code><a href="model_parameters.mlm.html">model_parameters(<i>&lt;multinom&gt;</i>)</a></code> <code><a href="model_parameters.mlm.html">model_parameters(<i>&lt;bracl&gt;</i>)</a></code> <code><a href="model_parameters.mlm.html">model_parameters(<i>&lt;DirichletRegModel&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Parameters from multinomial or cumulative link models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;mixor&gt;</i>)</a></code> <code><a href="model_parameters.merMod.html">model_parameters(<i>&lt;clmm&gt;</i>)</a></code> </p>
         </td>
         <td><p>Parameters from Mixed Models</p></td>
       </tr><tr>
@@ -247,6 +251,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="model_parameters.rma.html">model_parameters(<i>&lt;rma&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Parameters from Meta-Analysis</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="model_parameters.htest.html">model_parameters(<i>&lt;htest&gt;</i>)</a></code> </p>
         </td>
         <td><p>Parameters from Correlations and t-tests</p></td>
@@ -273,7 +283,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;default&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;polr&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;mixor&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;zeroinfl&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;hurdle&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;betareg&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;clm2&gt;</i>)</a></code> </p>
+          <p><code><a href="ci.merMod.html">ci(<i>&lt;merMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;default&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glm&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;polr&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;mixor&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;DirichletRegModel&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;glmmTMB&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;zeroinfl&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;hurdle&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;MixMod&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;betareg&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;clm2&gt;</i>)</a></code> <code><a href="ci.merMod.html">ci(<i>&lt;lme&gt;</i>)</a></code> </p>
         </td>
         <td><p>Confidence Intervals (CI)</p></td>
       </tr><tr>
@@ -319,15 +329,21 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="p_value_ml1.html">ci_ml1()</a></code> <code><a href="p_value_ml1.html">dof_ml1()</a></code> <code><a href="p_value_ml1.html">p_value_ml1()</a></code> <code><a href="p_value_ml1.html">se_ml1()</a></code> </p>
-        </td>
-        <td><p>"m-l-1" approximation for SEs, CIs and p-values</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="p_value_satterthwaite.html">ci_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">dof_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">p_value_satterthwaite()</a></code> <code><a href="p_value_satterthwaite.html">se_satterthwaite()</a></code> </p>
         </td>
         <td><p>Satterthwaite approximation for SEs, CIs and p-values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value_betwithin.html">ci_betwithin()</a></code> <code><a href="p_value_betwithin.html">dof_betwithin()</a></code> <code><a href="p_value_betwithin.html">p_value_betwithin()</a></code> <code><a href="p_value_betwithin.html">se_betwithin()</a></code> </p>
+        </td>
+        <td><p>Between-within approximation for SEs, CIs and p-values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="p_value_ml1.html">ci_ml1()</a></code> <code><a href="p_value_ml1.html">dof_ml1()</a></code> <code><a href="p_value_ml1.html">p_value_ml1()</a></code> <code><a href="p_value_ml1.html">se_ml1()</a></code> </p>
+        </td>
+        <td><p>"m-l-1" approximation for SEs, CIs and p-values</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -360,6 +376,12 @@
           <p><code><a href="n_parameters.html">n_parameters()</a></code> </p>
         </td>
         <td><p>Count number of parameters in a model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="random_parameters.html">random_parameters()</a></code> </p>
+        </td>
+        <td><p>Summary information from random effects</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -505,13 +527,19 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="get_scores.html">get_scores()</a></code> </p>
+        </td>
+        <td><p>Get Scores from Principal Component Analysis (PCA)</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="n_factors.html">n_factors()</a></code> </p>
         </td>
         <td><p>Number of components/factors to retain in PCA/FA</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="principal_components.html">principal_components()</a></code> <code><a href="principal_components.html">component_columns()</a></code> </p>
+          <p><code><a href="principal_components.html">principal_components()</a></code> <code><a href="principal_components.html">closest_component()</a></code> </p>
         </td>
         <td><p>Principal Component Analysis (PCA)</p></td>
       </tr><tr>
