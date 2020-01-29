@@ -127,7 +127,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
         cat(sprintf("%s  %s\n", i$Line[j], i$Value[j]))
       }
     } else if ("N" %in% i$Description) {
-      insight::print_color("N (levels per group)\n", "blue")
+      insight::print_color("N (groups per factor)\n", "blue")
       for (j in 1:nrow(i)) {
         cat(sprintf("  %s%s\n", format(i$Term[j], width = max_len - 2), i$Value[j]))
       }
