@@ -100,14 +100,6 @@ random_parameters <- function(model) {
     }
 
     out <- c(out, as.list(NA))
-
-    # ICC & R2
-    out$R2_marginal <- re_variances$var.fixed / (re_variances$var.fixed + re_variances$var.residual)
-    if (!.is_empty_object(re_variances$var.random) && !is.na(re_variances$var.random)) {
-      out$R2_conditional <- (re_variances$var.fixed + re_variances$var.random) / (re_variances$var.fixed + re_variances$var.random + re_variances$var.residual)
-      out$ICC <- re_variances$var.random / (re_variances$var.random + re_variances$var.residual)
-    }
-    out <- c(out, as.list(NA))
   }
 
   # Number of levels per random-effect groups
@@ -144,7 +136,6 @@ random_parameters <- function(model) {
   out$Description <- gsub("^rho01_(.*)", "Slope-Intercept Correlation", out$Description)
 
   out$Term[grepl("N_(.*)", out$Description)] <- gsub("N_(.*)", "\\1", out$Description[grepl("N_(.*)", out$Description)])
-  out$Description <- gsub("R2_(.*)", "R2 \\(\\1\\)", out$Description)
   out$Description <- gsub("_(.*)", "", out$Description)
 
   out$Description[grepl("^X", out$Description)] <- NA

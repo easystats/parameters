@@ -33,7 +33,7 @@
 #' @importFrom insight format_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, ...) {
-  res <- attributes(x)$summary_random
+  res <- attributes(x)$details
 
   if (!is.null(select)) {
     if (is.numeric(select)) select <- colnames(x)[select]
