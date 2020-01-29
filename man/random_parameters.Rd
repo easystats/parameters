@@ -10,13 +10,13 @@ random_parameters(model)
 \item{model}{A mixed effects model.}
 }
 \value{
-A data frame with random effects statistics, including number of levels per
-  random effect group, as well as complete observations in the model.
+A data frame with random effects statistics for the variance components,
+  including number of levels per random effect group, as well as complete
+  observations in the model.
 }
 \description{
 This function extracts the different variance components of a
-  mixed model as well as further information related to random effects (ICC, R2)
-  and returns the result as a data frame.
+  mixed model and returns the result as a data frame.
 }
 \details{
 The variance components are obtained from \code{\link[insight]{get_variance}}
@@ -43,8 +43,6 @@ The variance components are obtained from \code{\link[insight]{get_variance}}
     is obtained from \code{VarCorr()}. This measure is only available
     for mixed models with random intercepts and slopes.
   }
- For details regarding the calculation of R2 and ICC, see \code{\link[performance]{r2_nakagawa}}
- and \code{\link[performance]{icc}}.
 }
 \examples{
 if (require("lme4")) {

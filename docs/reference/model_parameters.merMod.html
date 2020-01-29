@@ -166,7 +166,7 @@
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>summary_random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
 
@@ -180,7 +180,7 @@
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>df_method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>summary_random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
 
@@ -193,7 +193,7 @@
   <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>summary_random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
 
@@ -205,7 +205,7 @@
   <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>summary_random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>df_method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )</pre>
@@ -246,7 +246,7 @@
       <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
     </tr>
     <tr>
-      <th>summary_random</th>
+      <th>details</th>
       <td><p>Logical, if <code>TRUE</code>, a summary of the random effects is included. See <code><a href='random_parameters.html'>random_parameters</a></code> for details.</p></td>
     </tr>
     <tr>
@@ -283,7 +283,7 @@
     <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
   )
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>summary_random</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 }</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects
 #&gt; 
 #&gt; # Fixed Effects component
@@ -311,10 +311,6 @@
 #&gt; </span><span>
 #&gt; Within-Group Variance         |  0.51
 #&gt; Between-Group Variance (site) |  0.11
-#&gt; ------------------------------|------ 
-#&gt; R2 (marginal)                 |  0.61
-#&gt; R2 (conditional)              |  0.64
-#&gt; ICC                           |  0.18
 #&gt; ------------------------------|------ 
 #&gt; N (site)                      |    23
 #&gt; Observations                  |   644</div><div class='input'><span class='co'># \donttest{</span>
