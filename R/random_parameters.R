@@ -17,16 +17,18 @@
 #'     is the sum of the distribution-specific variance and the variance due to additive dispersion.
 #'     It indicates the \emph{within-group variance}.
 #'   }
-#'   \subsection{Between-group (or random intercept) variance}{
+#'   \subsection{Between-group random intercept variance}{
 #'     The random intercept variance, or \emph{between-group} variance
-#'     (\ifelse{html}{\out{&tau;<sub>00</sub>}}{\eqn{\tau_{00}}}),
+#'     for the intercept (\ifelse{html}{\out{&tau;<sub>00</sub>}}{\eqn{\tau_{00}}}),
 #'     is obtained from \code{VarCorr()}. It indicates how much groups
 #'     or subjects differ from each other.
 #'   }
-#'   \subsection{Random slope variance}{
-#'     The random slope variance (\ifelse{html}{\out{&tau;<sub>11</sub>}}{\eqn{\tau_{11}}})
+#'   \subsection{Between-group random slope variance}{
+#'     The random slope variance, or \emph{between-group} variance
+#'     for the slopes (\ifelse{html}{\out{&tau;<sub>11</sub>}}{\eqn{\tau_{11}}})
 #'     is obtained from \code{VarCorr()}. This measure is only available
-#'     for mixed models with random slopes.
+#'     for mixed models with random slopes. It indicates how much groups
+#'     or subjects differ from each other according to their slopes.
 #'   }
 #'   \subsection{Random slope-intercept correlation}{
 #'     The random slope-intercept correlation

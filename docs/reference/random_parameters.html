@@ -180,14 +180,16 @@
   and are denoted as following:</p><h3>Within-group (or residual) variance</h3>
 <p>The residual variance, &sigma;<sup>2</sup><sub>&epsilon;</sub>,
     is the sum of the distribution-specific variance and the variance due to additive dispersion.
-    It indicates the <em>within-group variance</em>.</p><p></p><h3>Between-group (or random intercept) variance</h3>
+    It indicates the <em>within-group variance</em>.</p><p></p><h3>Between-group random intercept variance</h3>
 <p>The random intercept variance, or <em>between-group</em> variance
-    (&tau;<sub>00</sub>),
+    for the intercept (&tau;<sub>00</sub>),
     is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. It indicates how much groups
-    or subjects differ from each other.</p><p></p><h3>Random slope variance</h3>
-<p>The random slope variance (&tau;<sub>11</sub>)
+    or subjects differ from each other.</p><p></p><h3>Between-group random slope variance</h3>
+<p>The random slope variance, or <em>between-group</em> variance
+    for the slopes (&tau;<sub>11</sub>)
     is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. This measure is only available
-    for mixed models with random slopes.</p><p></p><h3>Random slope-intercept correlation</h3>
+    for mixed models with random slopes. It indicates how much groups
+    or subjects differ from each other according to their slopes.</p><p></p><h3>Random slope-intercept correlation</h3>
 <p>The random slope-intercept correlation
     (&rho;<sub>01</sub>)
     is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. This measure is only available
@@ -199,17 +201,18 @@
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sleepstudy</span>)
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='fl'>1</span> + <span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleepstudy</span>)
   <span class='fu'>random_parameters</span>(<span class='no'>model</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: lme4</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'>
+}</div><div class='output co'>#&gt; <span style='color: #0000BB;'>
 #&gt; # Random Effects
-#&gt; </span><span>
-#&gt; Within-Group Variance                      | 654.94
-#&gt; Between-Group Variance (Subject)           |  611.9
-#&gt; -------------------------------------------|--------
-#&gt; Random Slope Variance (Subject.Days)       |  35.08
-#&gt; Slope-Intercept Correlation (Subject.Days) |   0.07
-#&gt; -------------------------------------------|--------
-#&gt; N (Subject)                                |     18
-#&gt; Observations                               |    180</div></span></pre>
+#&gt; 
+#&gt; Within-Group Variance          </span><span>654.94
+#&gt; </span><span style='color: #0000BB;'>Between-Group Variance
+#&gt; </span><span>  Random Intercept (Subject)    611.9
+#&gt;   Random Slope (Subject.Days)   35.08
+#&gt; </span><span style='color: #0000BB;'>Correlations
+#&gt; </span><span>  Subject.Days                   0.07
+#&gt; </span><span style='color: #0000BB;'>N (levels per group)
+#&gt; </span><span>  Subject                          18
+#&gt; </span><span style='color: #0000BB;'>Observations                   </span><span>   180</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
