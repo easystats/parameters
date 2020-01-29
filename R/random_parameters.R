@@ -66,8 +66,6 @@ random_parameters <- function(model) {
   model_re <- insight::find_random(model, split_nested = FALSE, flatten = TRUE)
   model_rs <- unlist(insight::find_random_slopes(model))
 
-  new_line <- FALSE
-
   if (length(re_variances) && sum(!is.na(re_variances)) > 0 && !is.null(re_variances)) {
     # Residual Variance (Sigma^2)
     out$Sigma2 <- re_variances$var.residual
@@ -79,8 +77,6 @@ random_parameters <- function(model) {
 
     # Random Slope Variance
     if (!.is_empty_object(re_variances$var.slope) && !.is_empty_object(model_rs)) {
-      out <- c(out, as.list(NA))
-      new_line <- TRUE
       var_slope <- as.list(re_variances$var.slope)
       names(var_slope) <- paste0("tau11_", names(re_variances$var.slope))
       out <- c(out, var_slope)
@@ -88,16 +84,10 @@ random_parameters <- function(model) {
 
     # Slope-Intercept Correlation
     if (!.is_empty_object(re_variances$cor.slope_intercept) && !.is_empty_object(model_rs)) {
-      if (!new_line) {
-        out <- c(out, as.list(NA))
-        new_line <- TRUE
-      }
       cor_slope_intercept <- as.list(re_variances$cor.slope_intercept)
       names(cor_slope_intercept) <- paste0("rho01_", model_re, ".", model_rs)
       out <- c(out, cor_slope_intercept)
     }
-
-    out <- c(out, as.list(NA))
   }
 
   # Number of levels per random-effect groups
@@ -128,17 +118,30 @@ random_parameters <- function(model) {
   out$Term[out$Component == "rho01"] <- gsub("^rho01_(.*)", "\\1", out$Description[out$Component == "rho01"])
 
   # renaming
-  out$Description[out$Description == "Sigma2"] <- "Within-Group Variance"
-  out$Description <- gsub("^tau00_(.*)", "Between-Group Variance", out$Description)
-  out$Description <- gsub("^tau11_(.*)", "Random Slope Variance", out$Description)
-  out$Description <- gsub("^rho01_(.*)", "Slope-Intercept Correlation", out$Description)
+  out$Type <- ""
 
+  # Within-Group Variance
+  out$Type[out$Description == "Sigma2"] <- ""
+  out$Description[out$Description == "Sigma2"] <- "Within-Group Variance"
+
+  # Between-Group Variance
+  out$Type[grepl("^tau00_", out$Description)] <- "Random Intercept"
+  out$Description <- gsub("^tau00_(.*)", "Between-Group Variance", out$Description)
+  out$Type[grepl("^tau11_", out$Description)] <- "Random Slope"
+  out$Description <- gsub("^tau11_(.*)", "Between-Group Variance", out$Description)
+
+  # correlations
+  out$Type[grepl("^rho01_", out$Description)] <- ""
+  out$Description <- gsub("^rho01_(.*)", "Correlations", out$Description)
+
+  out$Type[grepl("N_(.*)", out$Description)] <- ""
   out$Term[grepl("N_(.*)", out$Description)] <- gsub("N_(.*)", "\\1", out$Description[grepl("N_(.*)", out$Description)])
   out$Description <- gsub("_(.*)", "", out$Description)
 
+  out$Type[grepl("^X", out$Description)] <- ""
   out$Description[grepl("^X", out$Description)] <- NA
   out$Component[out$Component == ""] <- NA
   out$Term[out$Term == ""] <- NA
 
-  out[c("Description", "Component", "Term", "Value")]
+  out[c("Description", "Component", "Type", "Term", "Value")]
 }
