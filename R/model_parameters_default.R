@@ -50,7 +50,6 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     exponentiate = exponentiate,
     effects = "fixed",
     robust = robust,
-    df_method = NULL,
     ...
   )
 

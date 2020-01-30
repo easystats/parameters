@@ -29,4 +29,11 @@ if (require("testthat") &&
     expect_equal(mp3$p, c(0, 0.01772, 0.14202, 0.1907, 0.84772, 0.00546, 0.04232, 0.32614), tolerance = 1e-3)
     expect_equal(mp3$CI_low, c(24.46832, 0.5968, -2.46649, -0.06211, -2.83447, -4.4337, -0.21565, -0.0552), tolerance = 1e-3)
   })
+
+
+  model <- lm(mpg ~ as.factor(gear) * hp + as.factor(am) + wt, data = mtcars)
+  test_that("model_parameters, df_method-lm", {
+    testthat::expect_is(model_parameters(model), class = "parameters_model")
+    testthat::expect_is(model_parameters(model, df_method = "kenward"), class = "parameters_model")
+  })
 }
