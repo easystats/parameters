@@ -29,7 +29,7 @@ format_parameters <- function(model) {
 
 #' @export
 format_parameters.default <- function(model) {
-  original_names <- names <- insight::find_parameters(model, flatten = TRUE)
+  original_names <- names <- insight::find_parameters(model, effects = "fixed", flatten = TRUE)
   info <- insight::model_info(model)
 
   # quick fix, for multivariate response models, we use

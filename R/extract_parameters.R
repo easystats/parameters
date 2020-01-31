@@ -208,7 +208,7 @@
       if (isTRUE(robust)) {
         ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
       } else {
-        ci_df <- ci(model, ci = ci, method = df_method)
+        ci_df <- ci(model, ci = ci, method = df_method, effects = "fixed")
       }
       if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
@@ -224,7 +224,7 @@
     if (isTRUE(robust)) {
       parameters <- merge(parameters, standard_error_robust(model, ...), by = "Parameter")
     } else {
-      parameters <- merge(parameters, standard_error(model, method = df_method), by = "Parameter")
+      parameters <- merge(parameters, standard_error(model, method = df_method, effects = "fixed"), by = "Parameter")
     }
   }
 
@@ -236,7 +236,7 @@
     if ("Pr(>|z|)" %in% names(parameters)) {
       names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
     } else {
-      parameters <- merge(parameters, p_value(model, dof = df), by = "Parameter")
+      parameters <- merge(parameters, p_value(model, dof = df, effects = "fixed"), by = "Parameter")
     }
   }
 

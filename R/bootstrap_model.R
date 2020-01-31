@@ -87,7 +87,7 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
   }
 
   out <- as.data.frame(results$t)
-  names(out) <- insight::find_parameters(model)$conditional
+  names(out) <- insight::find_parameters(model, effects = "fixed")$conditional
 
   out
 }
