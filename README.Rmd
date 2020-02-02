@@ -15,15 +15,14 @@ editor_options:
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  dpi=300,
-  tidy.opts=list(width.cutoff=60),
-  # tidy=TRUE,
-  fig.path = "man/figures/"
+  dpi = 300,
+  tidy.opts = list(width.cutoff = 80),
+  fig.path = "man/figures/",
+  comment = "#"
 )
-knitr::opts_chunk$set(comment="#")
 options(knitr.kable.NA = '',
         digits = 1,
-        width=60)
+        width = 80)
 
 set.seed(333)
 ```
