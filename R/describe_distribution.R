@@ -4,14 +4,16 @@
 #'
 #' @param x A numeric vector.
 #' @param range Return the range (min and max).
+#' @param include_factors Logical, if \code{TRUE}, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.
 #' @inheritParams bayestestR::point_estimate
 #'
-#' @return A data frame with column that describe the properties of the variables.
+#' @return A data frame with columns that describe the properties of the variables.
 #' @examples
 #' describe_distribution(rnorm(100))
 #'
 #' data(iris)
 #' describe_distribution(iris)
+#' describe_distribution(iris, include_factors = TRUE)
 #' @export
 describe_distribution <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, ...) {
   UseMethod("describe_distribution")
@@ -98,11 +100,11 @@ describe_distribution.factor <- function(x, centrality = "mean", dispersion = TR
 
 
 
-
+#' @rdname describe_distribution
 #' @export
-describe_distribution.data.frame <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, ...) {
+describe_distribution.data.frame <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, include_factors = FALSE, ...) {
   out <- do.call(rbind, lapply(x, function(i) {
-    if (!is.character(i)) {
+    if ((include_factors && is.factor(i)) || (!is.character(i) && !is.factor(i))) {
       describe_distribution(i, centrality = centrality, dispersion = dispersion, range = range)
     }
   }))
