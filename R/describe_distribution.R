@@ -113,6 +113,7 @@ describe_distribution.data.frame <- function(x, centrality = "mean", dispersion 
 
   row.names(out) <- NULL
   class(out) <- unique(c("parameters_distribution", class(out)))
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
 
   out[c("Variable", setdiff(colnames(out), "Variable"))]
 }
