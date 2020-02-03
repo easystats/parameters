@@ -41,11 +41,11 @@ affiliations:
 
 # Introduction
 
-The recent growth of data science that is transforming modern societies is partly fuelled by the ever-growing amount of data and the joint important developpments in statistical modelling. Previously reserved to a handful of statisticians and expert data scientists, new and powerful models and frameworks are becomming accessible to a new type of users. Often lacking a formal background in statistics, these users are facing with a new challenge. 
+The recent growth of data science that is transforming modern societies is partly fuelled by the ever-growing amount of data and the joint important developments in statistical modelling. Previously reserved to a handful of statisticians and expert data scientists, new and powerful models and frameworks are becomming accessible to a new type of users. Often lacking a formal background in statistics, these users are facing with a new challenge. 
 
 How to best use, explore, understand, describe and report these models.
 
-
+parameters’ primary goal is to provide utilities for processing the parameters of various statistical models. Beyond computing p-values, standard errors, confidence intervals, Bayesian indices and other measures for a wide variety of models, this package implements features like bootstrapping of parameters and models, feature reduction (feature extraction and variable selection).
 
 
 It relies on the **insight** and the **bayestestR** packages [@ludecke2019insight; @makowski2019bayestestR] to access and process information contained in models.
