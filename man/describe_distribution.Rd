@@ -24,7 +24,7 @@ describe_distribution(
 \item{...}{Additional arguments to be passed to or from methods.}
 }
 \value{
-Converted index.
+A data frame with column that describe the properties of the variables.
 }
 \description{
 This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).

@@ -1,16 +1,17 @@
 #' Describe a distribution
 #'
-#'
 #' This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).
 #'
 #' @param x A numeric vector.
 #' @param range Return the range (min and max).
 #' @inheritParams bayestestR::point_estimate
 #'
-#'
-#' @return Converted index.
+#' @return A data frame with column that describe the properties of the variables.
 #' @examples
 #' describe_distribution(rnorm(100))
+#'
+#' data(iris)
+#' describe_distribution(iris)
 #' @export
 describe_distribution <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, ...) {
   UseMethod("describe_distribution")
@@ -56,5 +57,72 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
   out$n <- length(x)
   out$n_Missing <- n_missing
   out$`.temp` <- NULL
+
+  class(out) <- unique(c("parameters_distribution", class(out)))
   out
+}
+
+
+
+
+
+#' @export
+describe_distribution.factor <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, ...) {
+  # Missing
+  n_missing <- sum(is.na(x))
+  x <- stats::na.omit(x)
+
+  out <- data.frame(
+    Mean = NA,
+    SD = NA,
+    Min = levels(x)[1],
+    Max = levels(x)[nlevels(x)],
+    Skewness = NA,
+    Kurtosis = NA,
+    n = length(x),
+    n_Missing = n_missing,
+    stringsAsFactors = FALSE
+  )
+
+  if (!dispersion) {
+    out$SD <- NULL
+  }
+
+  if (!range) {
+    out$Min <- NULL
+    out$Max <- NULL
+  }
+
+  out
+}
+
+
+
+
+#' @export
+describe_distribution.data.frame <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, ...) {
+  out <- do.call(rbind, lapply(x, function(i) {
+    if (!is.character(i)) {
+      describe_distribution(i, centrality = centrality, dispersion = dispersion, range = range)
+    }
+  }))
+
+  out$Variable <- row.names(out)
+
+  row.names(out) <- NULL
+  class(out) <- unique(c("parameters_distribution", class(out)))
+
+  out[c("Variable", setdiff(colnames(out), "Variable"))]
+}
+
+
+
+
+
+
+
+
+#' @export
+print.parameters_distribution <- function(x, ...) {
+  cat(insight::format_table(x))
 }
