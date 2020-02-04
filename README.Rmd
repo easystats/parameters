@@ -140,12 +140,9 @@ This packages also contains a lot of [other useful functions](https://easystats.
 
 ### Describe a Distribution
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-x <- rnorm(300)
-describe_distribution(x)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(describe_distribution(rnorm(300)), digits = 1)
+```{r, warning=FALSE, message=FALSE}
+data(iris)
+describe_distribution(iris)
 ```
 
 ### Citation

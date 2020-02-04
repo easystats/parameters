@@ -162,6 +162,16 @@
   <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>range</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
+)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>describe_distribution</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>range</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>include_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -187,15 +197,33 @@
       <th>...</th>
       <td><p>Additional arguments to be passed to or from methods.</p></td>
     </tr>
+    <tr>
+      <th>include_factors</th>
+      <td><p>Logical, if <code>TRUE</code>, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Converted index.</p>
+    <p>A data frame with columns that describe the properties of the variables.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>describe_distribution</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt;        Mean       SD       Min      Max  Skewness  Kurtosis   n n_Missing
-#&gt; 1 0.1170989 1.077194 -2.725028 3.431691 0.3846932 0.1917467 100         0</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>describe_distribution</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt; Mean |   SD |   Min |  Max | Skewness | Kurtosis |   n | n_Missing
+#&gt; ------------------------------------------------------------------
+#&gt; 0.12 | 1.08 | -2.73 | 3.43 |     0.38 |     0.19 | 100 |         0</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>iris</span>)
+<span class='fu'>describe_distribution</span>(<span class='no'>iris</span>)</div><div class='output co'>#&gt; Variable     | Mean |   SD |  Min |  Max | Skewness | Kurtosis |   n | n_Missing
+#&gt; --------------------------------------------------------------------------------
+#&gt; Sepal.Length | 5.84 | 0.83 | 4.30 | 7.90 |     0.31 |    -0.55 | 150 |         0
+#&gt; Sepal.Width  | 3.06 | 0.44 | 2.00 | 4.40 |     0.32 |     0.23 | 150 |         0
+#&gt; Petal.Length | 3.76 | 1.77 | 1.00 | 6.90 |    -0.27 |    -1.40 | 150 |         0
+#&gt; Petal.Width  | 1.20 | 0.76 | 0.10 | 2.50 |    -0.10 |    -1.34 | 150 |         0</div><div class='input'><span class='fu'>describe_distribution</span>(<span class='no'>iris</span>, <span class='kw'>include_factors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Variable     | Mean |   SD |    Min |       Max | Skewness | Kurtosis |   n | n_Missing
+#&gt; ---------------------------------------------------------------------------------------
+#&gt; Sepal.Length | 5.84 | 0.83 |    4.3 |       7.9 |     0.31 |    -0.55 | 150 |         0
+#&gt; Sepal.Width  | 3.06 | 0.44 |      2 |       4.4 |     0.32 |     0.23 | 150 |         0
+#&gt; Petal.Length | 3.76 | 1.77 |      1 |       6.9 |    -0.27 |    -1.40 | 150 |         0
+#&gt; Petal.Width  | 1.20 | 0.76 |    0.1 |       2.5 |    -0.10 |    -1.34 | 150 |         0
+#&gt; Species      |      |      | setosa | virginica |          |          | 150 |         0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
