@@ -29,6 +29,7 @@ Cattell's
 centred
 CFA
 cgam
+cglm
 ci
 clubSandwich
 clusterable
@@ -39,6 +40,7 @@ codecov
 complmrob
 computationaly
 condifence
+coxph
 cplm
 CrossValidated
 Crujeiras
@@ -46,6 +48,7 @@ Davison
 de
 De
 derivating
+DirichletReg
 df
 diw
 DIW
@@ -101,6 +104,7 @@ ifelse
 IJCNN
 interpretable
 iteratively
+Joanes
 joss
 jstatsoft
 Jurs
@@ -123,6 +127,7 @@ meritourious
 Merkle
 mesokurtic
 metafor
+Minitab
 minkowski
 mixor
 modelled
@@ -179,9 +184,11 @@ Shikano
 sphericity
 Sphericity
 stackexchange
+stanreg
 statitics
 Struyf
 substracted
+subscales
 Tabachnick
 tailedness
 th
