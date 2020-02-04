@@ -96,6 +96,7 @@ Suggests:
     performance,
     pbkrtest,
     plm,
+    projpred,
     pscl,
     psych,
     randomForest,

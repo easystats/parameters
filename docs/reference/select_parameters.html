@@ -43,7 +43,7 @@
 
 
 <meta property="og:title" content="Automated selection of model parameters — select_parameters" />
-<meta property="og:description" content="This function performs an automated selection of the 'best' parameters, updating and returning the &quot;best&quot; model. For frequentist simple GLMs, it performs an AIC-based stepwise selection." />
+<meta property="og:description" content="This function performs an automated selection of the 'best' parameters, updating and returning the &quot;best&quot; model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the projpred package." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -153,7 +153,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This function performs an automated selection of the 'best' parameters, updating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection.</p>
+    <p>This function performs an automated selection of the 'best' parameters, updating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the <code>projpred</code> package.</p>
     </div>
 
     <pre class="usage"><span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='no'>...</span>)
@@ -164,7 +164,10 @@
 <span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"both"</span>, <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for merMod</span>
-<span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"backward"</span>, <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"backward"</span>, <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stanreg</span>
+<span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,6 +198,14 @@
       <td><p>the multiple of the number of degrees of freedom used for the penalty.
     Only <code>k = 2</code> gives the genuine AIC: <code>k = log(n)</code> is sometimes
     referred to as BIC or SBC.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>The method used in the variable selection. Can be <code>NULL</code> (default), <code>"forward"</code> or <code>"L1"</code>. See <code><a href='https://rdrr.io/pkg/projpred/man/varsel.html'>projpred::varsel</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>cross_validation</th>
+      <td><p>Select with cross-validation.</p></td>
     </tr>
     </table>
 
@@ -260,11 +271,32 @@
 
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> * <span class='no'>disp</span> * <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)
   <span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-}</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.19.2, packaged: 2019-10-01 20:20:33 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- bayesplot theme set to bayesplot::theme_default()</span></div><div class='output co'>#&gt; <span class='message'>   * Does _not_ affect other ggplot2 plots</span></div><div class='output co'>#&gt; <span class='message'>   * See ?bayesplot_theme_set for details on theme setting</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='error'>Error in stats::step(model, trace = 0, direction = direction, steps = steps,     k = k, ...): AIC is not defined for this model, so 'step' cannot proceed</span></div><div class='input'># }
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; stan_glm
+#&gt;  family:       gaussian [identity]
+#&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp
+#&gt;  observations: 32
+#&gt;  predictors:   5
+#&gt; ------
+#&gt;             Median MAD_SD
+#&gt; (Intercept) 46.5    4.7  
+#&gt; cyl         -2.7    0.9  
+#&gt; disp        -0.1    0.0  
+#&gt; hp           0.0    0.0  
+#&gt; cyl:disp     0.0    0.0  
+#&gt; 
+#&gt; Auxiliary parameter(s):
+#&gt;       Median MAD_SD
+#&gt; sigma 2.6    0.4   
+#&gt; 
+#&gt; ------
+#&gt; * For help interpreting the printed output see ?print.stanreg
+#&gt; * For info on the priors used see ?prior_summary.stanreg</div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

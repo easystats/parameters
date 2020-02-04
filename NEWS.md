@@ -14,6 +14,7 @@
 - Added new vignettes on 'Standardized Model Parameters' and 'Robust Estimation of Standard Errors', and vignettes are now also published on CRAN.
 - Improved handling of robust statistics in `model_parameters()`. This should now work for more models than before.
 - Improved accuracy of `ci.merMod()` for `method = "satterthwaite"` and `method = "kenward"`.
+- `select_parameters()` for *stanreg* models, which was temporarily removed due to the CRAN removal of package **projpred**, is now re-implemented.
 
 ## New functions
 
