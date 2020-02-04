@@ -178,6 +178,8 @@
 <li>Added new vignettes on ‘Standardized Model Parameters’ and ‘Robust Estimation of Standard Errors’, and vignettes are now also published on CRAN.</li>
 <li>Improved handling of robust statistics in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. This should now work for more models than before.</li>
 <li>Improved accuracy of <code><a href="../reference/ci.merMod.html">ci.merMod()</a></code> for <code>method = "satterthwaite"</code> and <code>method = "kenward"</code>.</li>
+<li>
+<code><a href="../reference/select_parameters.html">select_parameters()</a></code> for <em>stanreg</em> models, which was temporarily removed due to the CRAN removal of package <strong>projpred</strong>, is now re-implemented.</li>
 </ul>
 </div>
 <div id="new-functions" class="section level2">
@@ -219,7 +221,7 @@
 <li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when <code>robust = TRUE</code>, which could sometimes mess up order of the statistic column.</li>
 <li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with wrong <code>df</code> for <code>lme</code>-models.</li>
 <li>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> when <code>df_method</code> was not set to default.</li>
-<li>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> when <code>robust = TRUE</code>.</li>
+<li>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> and <code>model_parameters.gee()</code> when <code>robust = TRUE</code>.</li>
 <li>Fixed issues with <em>coxph</em> models with only one parameter.</li>
 </ul>
 </div>
