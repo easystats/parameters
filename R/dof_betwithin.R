@@ -8,7 +8,7 @@ dof_betwithin <- function(model) {
   }
 
   ngrps <- sum(.n_randomeffects(model))
-  parameters <- insight::find_parameters(model)[["conditional"]]
+  parameters <- insight::find_parameters(model, effects = "fixed")[["conditional"]]
   within_effects <- unlist(insight::find_random_slopes(model))
   has_intcp <- insight::has_intercept(model)
 

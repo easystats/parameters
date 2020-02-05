@@ -33,7 +33,7 @@
 #' @importFrom insight format_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, ...) {
-  res <- attributes(x)$summary_random
+  res <- attributes(x)$details
 
   if (!is.null(select)) {
     if (is.numeric(select)) select <- colnames(x)[select]
@@ -91,33 +91,51 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 #' @keywords internal
 .print_random_parameters <- function(random_params, digits = 2) {
-  insight::print_color("\n# Random Effects\n", "blue")
+  insight::print_color("\n# Random Effects\n\n", "blue")
 
   # format values
-  random_params$Value <- sprintf("%g", round(random_params$Value, digits = digits))
-  random_params$Value[random_params$Value == "NA"] <- NA
+  random_params$Value <- format(sprintf("%g", round(random_params$Value, digits = digits)), justify = "right")
 
-  valid_terms <- !is.na(random_params$Term)
-  random_params$Description[valid_terms] <- paste0(random_params$Description[valid_terms], " (", random_params$Term[valid_terms], ")")
+  # create summary-information for each component
+  random_params$Line <- ""
+  random_params$Term[is.na(random_params$Term)] <- ""
 
-  max_len1 <- max(nchar(random_params$Description, keepNA = FALSE))
-  minus1 <- paste0(rep("-", max_len1 + 1), collapse = "")
-  space1 <- paste0(rep(" ", max_len1 + 1), collapse = "")
+  non_empty <- random_params$Term != "" & random_params$Type != ""
+  random_params$Line[non_empty] <- sprintf("%s (%s)", random_params$Type[non_empty], random_params$Term[non_empty])
 
-  max_len2 <- max(nchar(random_params$Value, keepNA = FALSE))
-  minus2 <- paste0(rep("-", max_len2 + 2), collapse = "")
-  space2 <- paste0(rep(" ", max_len2 + 1), collapse = "")
+  non_empty <- random_params$Term != "" & random_params$Type == ""
+  random_params$Line[non_empty] <- sprintf("%s", random_params$Term[non_empty])
 
-  # remove headline
-  out <- gsub("^(.*)(---\\n)(.*)", "\\3", insight::format_table(random_params[c("Description", "Value")]))
-  out <- gsub(paste0(space1, "|", space2), paste0(minus1, "|", minus2), out, fixed = TRUE)
+  # final fix, indentions
+  random_params$Line <- sprintf("  %s", format(random_params$Line))
+  max_len <- max(nchar(random_params$Line)) + 2
 
-  # out <- gsub("^(.*)(---\\n)(.*)", "\\3", insight::format_table(random_params, sep = " "))
-  # space2 <- paste0(rep(" ", max_len2 - 2), collapse = "")
-  # out <- gsub(paste0(space1, space2, "NA"), paste0(space1, space2, "  "), out, fixed = TRUE)
+  out <- split(random_params, factor(random_params$Description, levels = unique(random_params$Description)))
 
-  cat("\n")
-  cat(out)
+  for (i in out) {
+    if ("Within-Group Variance" %in% i$Description) {
+      insight::print_color(format("Within-Group Variance", width = max_len), color = "blue")
+      cat(sprintf("%s\n", i$Value))
+    } else if ("Between-Group Variance" %in% i$Description) {
+      insight::print_color("Between-Group Variance\n", "blue")
+      for (j in 1:nrow(i)) {
+        cat(sprintf("%s  %s\n", i$Line[j], i$Value[j]))
+      }
+    } else if ("Correlations" %in% i$Description) {
+      insight::print_color("Correlations\n", "blue")
+      for (j in 1:nrow(i)) {
+        cat(sprintf("%s  %s\n", i$Line[j], i$Value[j]))
+      }
+    } else if ("N" %in% i$Description) {
+      insight::print_color("N (groups per factor)\n", "blue")
+      for (j in 1:nrow(i)) {
+        cat(sprintf("  %s%s\n", format(i$Term[j], width = max_len - 2), i$Value[j]))
+      }
+    } else if ("Observations" %in% i$Description) {
+      insight::print_color(format("Observations", width = max_len), color = "blue")
+      cat(sprintf("%s\n", i$Value))
+    }
+  }
 }
 
 

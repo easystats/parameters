@@ -15,15 +15,14 @@ editor_options:
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  dpi=300,
-  tidy.opts=list(width.cutoff=60),
-  # tidy=TRUE,
-  fig.path = "man/figures/"
+  dpi = 300,
+  tidy.opts = list(width.cutoff = 80),
+  fig.path = "man/figures/",
+  comment = "#"
 )
-knitr::opts_chunk$set(comment="#")
 options(knitr.kable.NA = '',
         digits = 1,
-        width=60)
+        width = 80)
 
 set.seed(333)
 ```
@@ -141,12 +140,9 @@ This packages also contains a lot of [other useful functions](https://easystats.
 
 ### Describe a Distribution
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-x <- rnorm(300)
-describe_distribution(x)
-```
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-knitr::kable(describe_distribution(rnorm(300)), digits = 1)
+```{r, warning=FALSE, message=FALSE}
+data(iris)
+describe_distribution(iris)
 ```
 
 ### Citation

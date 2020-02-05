@@ -83,7 +83,6 @@ model_parameters.rqss <- function(model, ci = .95, bootstrap = FALSE, iterations
     merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
-    df_method = NULL,
     ...
   )
 

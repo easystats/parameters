@@ -67,7 +67,7 @@
   # Compute
   out <- as.data.frame(lme4::confint.merMod(x, level = ci, method = "boot", ...))
   rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
-  out <- out[rownames(out) %in% insight::find_parameters(x)$conditional, ]
+  out <- out[rownames(out) %in% insight::find_parameters(x, effects = "fixed")$conditional, ]
   names(out) <- c("CI_low", "CI_high")
 
   # Clean up

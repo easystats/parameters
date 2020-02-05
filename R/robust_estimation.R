@@ -68,6 +68,11 @@ p_value_robust <- function(model,
                            vcov_type = NULL,
                            vcov_args = NULL,
                            ...) {
+  # exceptions
+  if (inherits(model, "gee")) {
+    return(p_value(model, method = "robust", ...))
+  }
+
   robust <- .robust_covariance_matrix(
     model,
     vcov_fun = paste0("vcov", vcov_estimation),

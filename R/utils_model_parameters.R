@@ -6,7 +6,7 @@
   attr(parameters, "pretty_names") <- format_parameters(model)
   attr(parameters, "ci") <- ci
   attr(parameters, "exponentiate") <- exponentiate
-  attr(parameters, "ordinal_model") <- info$is_ordinal
+  attr(parameters, "ordinal_model") <- info$is_ordinal | info$is_multinomial
   attr(parameters, "model_class") <- class(model)
 
 

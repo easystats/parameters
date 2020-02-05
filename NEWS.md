@@ -14,6 +14,7 @@
 - Added new vignettes on 'Standardized Model Parameters' and 'Robust Estimation of Standard Errors', and vignettes are now also published on CRAN.
 - Improved handling of robust statistics in `model_parameters()`. This should now work for more models than before.
 - Improved accuracy of `ci.merMod()` for `method = "satterthwaite"` and `method = "kenward"`.
+- `select_parameters()` for *stanreg* models, which was temporarily removed due to the CRAN removal of package **projpred**, is now re-implemented.
 
 ## New functions
 
@@ -25,18 +26,19 @@
 ## Changes to functions
 
 - The `print()`-method for `model_parameters()` gets a `select`-argument, to print only selected columns of the parameters table.
-- `model_parameters()` for mixed models gets a `summary_random`-argument to additionally print information about the random effects.
-- `model_parameters()` for now also accepts the `df_method`-argument for more (mixed) models.
+- `model_parameters()` for mixed models gets a `details`-argument to additionally print information about the random effects.
+- `model_parameters()` now accepts the `df_method`-argument for more (mixed) models.
 - The Intercept-parameter in `model_parameters()` for meta-analysis models was renamed to `"Overall"`.
 - `skewness()` gets a `type`-argument, to compute different types of skewness.
 - `kurtosis()` gets a `type`-argument, to compute different types of skewness.
+- `describe_distribution()` now also works on data frames and gets a nicer print-method.
 
 ## Bug fixes
 
 - Fixed issue in `model_parameters()` when `robust = TRUE`, which could sometimes mess up order of the statistic column.
 - Fixed issues in `model_parameters()` with wrong `df` for `lme`-models.
 - Fixed issues in `model_parameters.merMod()` when `df_method` was not set to default.
-- Fixed issues in `model_parameters.merMod()` when `robust = TRUE`.
+- Fixed issues in `model_parameters.merMod()` and `model_parameters.gee()` when `robust = TRUE`.
 - Fixed issues with *coxph* models with only one parameter.
 
 # parameters 0.4.1

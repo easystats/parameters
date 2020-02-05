@@ -31,7 +31,6 @@
 #'   ci(model, component = "zi")
 #' }
 #' }
-#' @importFrom insight find_parameters
 #' @export
 ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot"), ...) {
   method <- tolower(method)

@@ -2,6 +2,7 @@
 % Please edit documentation in R/describe_distribution.R
 \name{describe_distribution}
 \alias{describe_distribution}
+\alias{describe_distribution.data.frame}
 \title{Describe a distribution}
 \usage{
 describe_distribution(
@@ -9,6 +10,15 @@ describe_distribution(
   centrality = "mean",
   dispersion = TRUE,
   range = TRUE,
+  ...
+)
+
+\method{describe_distribution}{data.frame}(
+  x,
+  centrality = "mean",
+  dispersion = TRUE,
+  range = TRUE,
+  include_factors = FALSE,
   ...
 )
 }
@@ -22,13 +32,19 @@ describe_distribution(
 \item{range}{Return the range (min and max).}
 
 \item{...}{Additional arguments to be passed to or from methods.}
+
+\item{include_factors}{Logical, if \code{TRUE}, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.}
 }
 \value{
-Converted index.
+A data frame with columns that describe the properties of the variables.
 }
 \description{
 This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).
 }
 \examples{
 describe_distribution(rnorm(100))
+
+data(iris)
+describe_distribution(iris)
+describe_distribution(iris, include_factors = TRUE)
 }

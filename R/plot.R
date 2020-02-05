@@ -35,6 +35,15 @@ plot.n_factors <- function(x, ...) {
 
 
 #' @export
+plot.parameters_distribution <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot distributions. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
+}
+
+
+#' @export
 plot.n_clusters <- function(x, ...) {
   if (!requireNamespace("see", quietly = TRUE)) {
     stop("Package 'see' needed to plot point-estimates. Please install it by running `install.packages('see')`.")

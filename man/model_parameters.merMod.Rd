@@ -16,7 +16,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   robust = FALSE,
-  summary_random = FALSE,
+  details = FALSE,
   ...
 )
 
@@ -29,7 +29,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   df_method = NULL,
-  summary_random = FALSE,
+  details = FALSE,
   ...
 )
 
@@ -41,7 +41,7 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
-  summary_random = FALSE,
+  details = FALSE,
   ...
 )
 
@@ -52,7 +52,7 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
-  summary_random = FALSE,
+  details = FALSE,
   df_method = NULL,
   ...
 )
@@ -74,9 +74,9 @@
 
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
 
-\item{summary_random}{Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.}
+\item{details}{Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 
 \item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}) or \code{"all"}.}
 
@@ -100,7 +100,7 @@ if (require("lme4") && require("glmmTMB")) {
     family = poisson(),
     data = Salamanders
   )
-  model_parameters(model, summary_random = TRUE)
+  model_parameters(model, details = TRUE)
 }
 \donttest{
 if (require("lme4")) {

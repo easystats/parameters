@@ -27,7 +27,7 @@
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

@@ -1,6 +1,6 @@
 #' @inheritParams model_parameters.merMod
 #' @export
-model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, exponentiate = FALSE, summary_random = FALSE, ...) {
+model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, exponentiate = FALSE, details = FALSE, ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -15,8 +15,8 @@ model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations 
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
 
-  if (isTRUE(summary_random)) {
-    attr(out, "summary_random") <- .randomeffects_summary(model)
+  if (isTRUE(details)) {
+    attr(out, "details") <- .randomeffects_summary(model)
   }
 
   out
