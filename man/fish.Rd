@@ -3,7 +3,7 @@
 \docType{data}
 \name{fish}
 \alias{fish}
-\title{Sample dataset}
+\title{Sample data set}
 \description{
 A sample data set, used in tests and some examples.
 }

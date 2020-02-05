@@ -1,5 +1,5 @@
 #' @docType data
-#' @title Sample dataset
+#' @title Sample data set
 #' @name fish
 #' @keywords data
 #'
