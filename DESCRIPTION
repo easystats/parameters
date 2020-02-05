@@ -115,6 +115,5 @@ Suggests:
     Zelig
 Encoding: UTF-8
 Language: en-US
-LazyData: true
 RoxygenNote: 7.0.2
 VignetteBuilder: knitr
