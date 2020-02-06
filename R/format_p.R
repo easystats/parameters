@@ -26,7 +26,7 @@ format_p <- function(p, stars = FALSE, stars_only = FALSE, name = "p", missing =
       ifelse(p < 0.001, "< .001***",
         ifelse(p < 0.01, "< .01**",
           ifelse(p < 0.05, "< .05*",
-            paste0("= ", insight::format_value(p, digits))
+            paste0("= ", insight::format_value(p, 3))
           )
         )
       )

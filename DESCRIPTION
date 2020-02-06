@@ -89,6 +89,7 @@ Suggests:
     mgcv,
     multimode,
     MuMIn,
+    M3C,
     NbClust,
     nFactors,
     nlme,

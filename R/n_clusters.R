@@ -7,18 +7,18 @@
 #'   values in order to be included in the data for determining the number of
 #'   clusters. By default, factors are removed, because most methods that determine
 #'   the number of clusters need numeric input only.
-#' @param package These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"cluster"}.
+#' @param package These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.
 #' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationally heavy.
 #'
 #' @examples
 #' library(parameters)
 #' \donttest{
-#' n_clusters(iris[, 1:4])
+#' n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
 #' }
 #' @export
-n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClust", "mclust", "cluster"), fast = TRUE, ...) {
+n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClust", "mclust", "cluster", "M3C"), fast = TRUE, ...) {
   if (all(package == "all")) {
-    package <- c("NbClust", "mclust", "cluster")
+    package <- c("NbClust", "mclust", "cluster", "M3C")
   }
 
   # convert factors to numeric
@@ -42,6 +42,9 @@ n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClus
   }
   if ("cluster" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_cluster(x))
+  }
+  if ("M3C" %in% tolower(package)) {
+    out <- rbind(out, .n_clusters_M3C(x, fast = fast))
   }
 
 
@@ -120,6 +123,8 @@ n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClus
 
 
 
+
+
 #' @importFrom grDevices png dev.off
 #' @keywords internal
 .n_clusters_NbClust <- function(x, fast = TRUE, ...) {
@@ -141,4 +146,28 @@ n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClus
 
   out <- as.data.frame(t(n$Best.nc))
   data.frame(n_Clusters = out$Number_clusters, Method = row.names(out), Package = "NbClust")
+}
+
+
+
+
+#' @keywords internal
+.n_clusters_M3C <- function(x, fast=TRUE, ...) {
+  if (!requireNamespace("M3C", quietly = TRUE)) {
+    stop("Package 'M3C' required for this function to work. Please install it by running `devtools::install_github('crj32/M3C')`.")  # Not on CRAN (but on github and bioconductor)
+  }
+
+  data <- data.frame(t(x))
+  colnames(data) <- paste0('x',seq(1, ncol(data)))  # Add columns names as required by the package
+
+  suppressMessages(out <- M3C::M3C(data, method=2))
+  out <- data.frame(n_Clusters = which.max(out$scores$PCSI), Method = "Consensus clustering algorithm (penalty term)", Package = "M3C")
+
+  # Doesn't work
+  # if (fast == FALSE){
+  #   suppressMessages(out <- M3C::M3C(data, method=1))
+  #   out <- rbind(out, data.frame(n_Clusters = which.max(out$scores$RCSI), Method = "Consensus clustering algorithm (Monte Carlo)", Package = "M3C"))
+  # }
+
+  out
 }
