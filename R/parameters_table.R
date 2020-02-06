@@ -78,6 +78,9 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
     x <- x[!names(x) %in% c(ci_low, ci_high)]
   }
 
+  # Misc
+  names(x)[names(x) == "Cohens_d"] <- "Cohen's d"
+
   # Standardized
   std_cols <- names(x)[grepl("Std_", names(x))]
   x[std_cols] <- insight::format_value(x[std_cols], digits = digits)
