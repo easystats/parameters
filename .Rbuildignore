@@ -4,7 +4,6 @@
 ^\.travis.yml
 ^\_pkgdown.yml
 ^LICENSE
-^data/.
 ^docs/.
 ^README.Rmd
 ^pkgdown/.
