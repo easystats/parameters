@@ -7,7 +7,7 @@
 #'   values in order to be included in the data for determining the number of
 #'   clusters. By default, factors are removed, because most methods that determine
 #'   the number of clusters need numeric input only.
-#' @param package These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C}.
+#' @param package These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.
 #' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationally heavy.
 #'
 #' @examples
@@ -163,10 +163,11 @@ n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClus
   suppressMessages(out <- M3C::M3C(data, method=2))
   out <- data.frame(n_Clusters = which.max(out$scores$PCSI), Method = "Consensus clustering algorithm (penalty term)", Package = "M3C")
 
-  if (fast == FALSE){
-    suppressMessages(out <- M3C::M3C(data, method=1))
-    out <- rbind(out, data.frame(n_Clusters = which.max(out$scores$RCSI), Method = "Consensus clustering algorithm (Monte Carlo)", Package = "M3C"))
-  }
+  # Doesn't work
+  # if (fast == FALSE){
+  #   suppressMessages(out <- M3C::M3C(data, method=1))
+  #   out <- rbind(out, data.frame(n_Clusters = which.max(out$scores$RCSI), Method = "Consensus clustering algorithm (Monte Carlo)", Package = "M3C"))
+  # }
 
   out
 }
