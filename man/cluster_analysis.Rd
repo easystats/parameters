@@ -54,7 +54,7 @@ the cluster analysis. For \code{method = "kmeans"} and \code{force = TRUE},
 only ordered factors are used, because \code{\link{kmeans}} fails for dummy
 variables.}
 
-\item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"} and \code{"cluster"}.}
+\item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
 
 \item{verbose}{Toggle off warnings.}
 }

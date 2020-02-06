@@ -25,6 +25,7 @@
 
 ## Changes to functions
 
+- `n_clusters()` gets the option `"M3C"` for the `package`-argument, so you can try to determine the number of cluster by using the `M3C::M3C()` function.
 - The `print()`-method for `model_parameters()` gets a `select`-argument, to print only selected columns of the parameters table.
 - `model_parameters()` for mixed models gets a `details`-argument to additionally print information about the random effects.
 - `model_parameters()` now accepts the `df_method`-argument for more (mixed) models.
@@ -40,6 +41,7 @@
 - Fixed issues in `model_parameters.merMod()` when `df_method` was not set to default.
 - Fixed issues in `model_parameters.merMod()` and `model_parameters.gee()` when `robust = TRUE`.
 - Fixed issues with *coxph* models with only one parameter.
+- Fixed issue in `format_p()` when argument `digits` was `"apa"`.
 
 # parameters 0.4.1
 
