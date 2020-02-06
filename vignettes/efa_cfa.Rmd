@@ -43,7 +43,7 @@ The difference between PCA and EFA can be quite hard to intuitively grasp as the
 
 This is why PCA is popular for feature reduction, as it will try to best represent the variance contained in the original data, minimizing the loss of information. On the other hand, EFA is usually in the context of exploring the latent dimensions that might be hidden in the observed variables, without necessary striving at representing the whole dataset.
 
-To illustrate EFA, let us use the [International Personality Item Pool](ipip.ori.org) data available in the [ `psych`](https://www.personality-project.org/r/html/bfi.html) package. It includes 25 personality self report items. The authors built these items following the **big 5** personality structure.
+To illustrate EFA, let us use the [International Personality Item Pool](https://ipip.ori.org/) data available in the [`psych`](https://www.personality-project.org/r/html/bfi.html) package. It includes 25 personality self report items. The authors built these items following the **big 5** personality structure.
 
 ## Factor Structure (Sphericity and KMO)
 
