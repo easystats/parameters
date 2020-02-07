@@ -95,7 +95,7 @@ Suggests:
     nlme,
     panelr,
     performance,
-    pbkrtest,
+    pbkrtest (>= 0.4-7),
     plm,
     projpred,
     pscl,
