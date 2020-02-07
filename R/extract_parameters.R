@@ -559,7 +559,7 @@
         "Parameter2" = names[2],
         "Mean_Parameter1" = model$estimate[1],
         "Mean_Parameter2" = model$estimate[2],
-        "Difference" = model$estimate[2] - model$estimate[1],
+        "Difference" = model$estimate[1] - model$estimate[2],
         "t" = model$statistic,
         "df" = model$parameter,
         "p" = model$p.value,
