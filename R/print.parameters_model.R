@@ -37,7 +37,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
   if (!is.null(select)) {
     if (is.numeric(select)) select <- colnames(x)[select]
-    select <- union(select, c("Component", "Effects", "Response"))
+    select <- union(select, c("Component", "Effects", "Response", "Subgroup"))
     to_remove <- setdiff(colnames(x), select)
     x[to_remove] <- NULL
   }
@@ -62,6 +62,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   split_by <- c(split_by, ifelse("Component" %in% names(x) && length(unique(x$Component)) > 1, "Component", ""))
   split_by <- c(split_by, ifelse("Effects" %in% names(x) && length(unique(x$Effects)) > 1, "Effects", ""))
   split_by <- c(split_by, ifelse("Response" %in% names(x) && length(unique(x$Response)) > 1, "Response", ""))
+  split_by <- c(split_by, ifelse("Subgroup" %in% names(x) && length(unique(x$Subgroup)) > 1, "Subgroup", ""))
 
   split_by <- split_by[nchar(split_by) > 0]
 
@@ -257,6 +258,9 @@ print.parameters_random <- function(x, digits = 2, ...) {
     } else if (split_column == "Response" && is_ordinal_model) {
       s1 <- "Response level:"
       s2 <- component_name
+    } else if (split_column == "Subgroup") {
+      s1 <- component_name
+      s2 <- ""
     } else {
       s1 <- component_name
       s2 <- split_column

@@ -27,6 +27,7 @@
 
 - `n_clusters()` gets the option `"M3C"` for the `package`-argument, so you can try to determine the number of cluster by using the `M3C::M3C()` function.
 - The `print()`-method for `model_parameters()` gets a `select`-argument, to print only selected columns of the parameters table.
+- `model_parameters()` for meta-analysis models has an improved `print()`-method for subgroups (see examples in `?model_parameters.rma`).
 - `model_parameters()` for mixed models gets a `details`-argument to additionally print information about the random effects.
 - `model_parameters()` now accepts the `df_method`-argument for more (mixed) models.
 - The Intercept-parameter in `model_parameters()` for meta-analysis models was renamed to `"Overall"`.

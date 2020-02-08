@@ -14,6 +14,22 @@
 #'   model <- rma(yi = effectsize, sei = stderr, method = "REML", data = mydat)
 #'   model_parameters(model)
 #' }
+#'
+#' # with subgroups
+#' if (require("metafor")) {
+#'   data(dat.bcg)
+#'   dat <- escalc(
+#'     measure = "RR",
+#'     ai = tpos,
+#'     bi = tneg,
+#'     ci = cpos,
+#'     di = cneg,
+#'     data = dat.bcg
+#'   )
+#'   dat$alloc <- ifelse(dat$alloc == "random", "random", "other")
+#'   model <- rma(yi, vi, mods = ~ alloc, data = dat, digits = 3, slab = author)
+#'   model_parameters(model)
+#' }
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats qt pt setNames
 #' @export
@@ -29,10 +45,16 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
     ...
   )
 
+  # remove specific parameters
+  remove <- which(meta_analysis_overall$Parameter != "(Intercept)")
+  if (length(remove) > 0) {
+    meta_analysis_overall <- meta_analysis_overall[-remove, ]
+  }
+
   alpha <- (1 + ci) / 2
 
   rma_parameters <- if (!is.null(model$slab)) {
-    sprintf("Study %s", model$slab)
+    sprintf("%s", model$slab)
   } else {
     sprintf("Study %i", 1:model[["k"]])
   }
@@ -59,6 +81,17 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
 
   original_attributes <- attributes(meta_analysis_overall)
   out <- merge(meta_analysis_studies, meta_analysis_overall, all = TRUE, sort = FALSE)
+
+  # subgroup analyses?
+  if (!is.null(model$formula.mods)) {
+    subgroups <- deparse(model$formula.mods[[2]])[1]
+    model_data <- insight::get_data(model)
+    if (subgroups %in% colnames(model_data)) {
+      out$Subgroup <- NA
+      out$Subgroup[out$Parameter != "(Intercept)"] <- insight::get_data(model)[[subgroups]]
+      out$Subgroup[out$Parameter == "(Intercept)"] <- "Overall"
+    }
+  }
 
   # fix intercept name
   out$Parameter[out$Parameter == "(Intercept)"] <- "Overall"
