@@ -174,7 +174,7 @@ dof_kenward <- function(model) {
     stop("Package 'Matrix' required for this function to work. Please install it.")
   }
 
-  SigmaInv <- chol2inv(chol(Matrix::forceSymmetric(as(SigmaG$Sigma, "matrix"))))
+  SigmaInv <- chol2inv(chol(Matrix::forceSymmetric(as.matrix(SigmaG$Sigma))))
   n.ggamma <- SigmaG$n.ggamma
   TT       <- as.matrix(SigmaInv %*% X)
   HH       <- OO <- vector("list", n.ggamma)
@@ -222,7 +222,7 @@ dof_kenward <- function(model) {
   WW <- if (condi > 1e-10)
     as.matrix(Matrix::forceSymmetric(2 * solve(IE2)))
   else
-    as.matrix(Matrix::forceSymmetric(2 * Matrix::ginv(IE2)))
+    as.matrix(Matrix::forceSymmetric(2 * MASS::ginv(IE2)))
 
   UU <- matrix(0, nrow = ncol(X), ncol = ncol(X))
   for (ii in 1:(n.ggamma - 1)) {
