@@ -7,7 +7,7 @@
 random_parameters(model)
 }
 \arguments{
-\item{model}{A mixed effects model.}
+\item{model}{A mixed effects model (including \code{stanreg} models).}
 }
 \value{
 A data frame with random effects statistics for the variance components,
