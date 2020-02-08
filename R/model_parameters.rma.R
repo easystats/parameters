@@ -53,7 +53,7 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
 
   alpha <- (1 + ci) / 2
 
-  rma_parameters <- if (!is.null(model$slab)) {
+  rma_parameters <- if (!is.null(model$slab) && !is.numeric(model$slab)) {
     sprintf("%s", model$slab)
   } else {
     sprintf("Study %i", 1:model[["k"]])
