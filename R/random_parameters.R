@@ -4,7 +4,7 @@
 #' @description This function extracts the different variance components of a
 #'   mixed model and returns the result as a data frame.
 #'
-#' @param model A mixed effects model.
+#' @param model A mixed effects model (including \code{stanreg} models).
 #'
 #' @return A data frame with random effects statistics for the variance components,
 #'   including number of levels per random effect group, as well as complete

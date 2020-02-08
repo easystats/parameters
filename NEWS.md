@@ -42,6 +42,7 @@
 - Fixed issues in `model_parameters.merMod()` and `model_parameters.gee()` when `robust = TRUE`.
 - Fixed issues with *coxph* models with only one parameter.
 - Fixed issue in `format_p()` when argument `digits` was `"apa"`.
+- Fixed issues in `model_parameters()` for `zeroinfl`-models.
 
 # parameters 0.4.1
 

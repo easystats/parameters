@@ -169,9 +169,17 @@ p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "z
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     comp <- ifelse(i == "count", "conditional", "zi")
+    stats <- cs[[i]]
+
+    # remove log(theta)
+    theta <- grepl("Log(theta)", rownames(stats), fixed = TRUE)
+    if (any(theta)) {
+      stats <- stats[!theta, ]
+    }
+
     .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
-      p = as.vector(cs[[i]][, 4]),
+      p = as.vector(stats[, 4]),
       Component = comp
     )
   })

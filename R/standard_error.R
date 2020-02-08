@@ -460,9 +460,18 @@ standard_error.zeroinfl <- function(model, component = c("all", "conditional", "
   cs <- .compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     comp <- ifelse(i == "count", "conditional", "zi")
+
+    stats <- cs[[i]]
+
+    # remove log(theta)
+    theta <- grepl("Log(theta)", rownames(stats), fixed = TRUE)
+    if (any(theta)) {
+      stats <- stats[!theta, ]
+    }
+
     .data_frame(
       Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
-      SE = as.vector(cs[[i]][, 2]),
+      SE = as.vector(stats[, 2]),
       Component = comp
     )
   })

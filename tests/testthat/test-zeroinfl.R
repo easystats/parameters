@@ -35,4 +35,19 @@ if (require("testthat") &&
       tolerance = 1e-4
     )
   })
+
+
+  m2 <- zeroinfl(formula = art ~ . | 1, data = bioChemists, dist = "negbin")
+  test_that("model_parameters", {
+    expect_equal(
+      model_parameters(m2)$Coefficient,
+      c(0.25615, -0.21642, 0.15049, -0.17642, 0.01527, 0.02908, -11.95447),
+      tolerance = 1e-4
+    )
+    expect_equal(
+      model_parameters(m2)$Coefficient,
+      c("conditional", "conditional", "conditional", "conditional",
+        "conditional", "conditional", "zero_inflated")
+    )
+  })
 }
