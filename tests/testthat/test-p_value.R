@@ -1,6 +1,8 @@
 if (require("testthat") &&
     require("parameters") &&
+    require("lme4") &&
     require("insight")) {
+  data(mtcars)
   test_that("p_value", {
     # h-tests
     model <- insight::download_model("htest_1")
@@ -83,7 +85,7 @@ if (require("testthat") &&
 
 
     # Mixed models
-    model <- insight::download_model("lmerMod_1")
+    model <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
     testthat::expect_equal(p_value(model)$p[1], 0.195, tol = 0.01)
     testthat::expect_equal(p_value(model, method = "kr")$p[1], 0.227, tol = 0.01)
 

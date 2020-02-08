@@ -1,6 +1,7 @@
 if (require("insight") && require("testthat") && require("parameters")) {
+  data(mtcars)
   test_that("model_parameters.lm", {
-    model <- insight::download_model("lm_1")
+    model <- lm(mpg ~ wt, data = mtcars)
 
     params <- model_parameters(model)
     testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 8))
