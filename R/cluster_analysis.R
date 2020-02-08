@@ -40,6 +40,8 @@
 #'   returned vector includes missing values, so it has the same length
 #'   as \code{nrow(x)}.
 #'
+#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'
 #' @details The \code{print()} and \code{plot()} methods show the (standardized)
 #'   mean value for each variable within each cluster. Thus, a higher absolute
 #'   value indicates that a certain variable characteristic is more pronounced

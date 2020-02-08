@@ -224,3 +224,7 @@ mydat <- data.frame(
 rma(yi = effectsize, sei = standarderror, method = "REML", data = mydat) %>% 
   model_parameters()
 ```
+
+## Plotting Model Parameters
+
+There is a `plot()`-method implemented in the [**see**-package](https://easystats.github.io/see/). Several examples are shown [in this vignette](https://easystats.github.io/see/articles/parameters.html).

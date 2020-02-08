@@ -11,6 +11,8 @@
 #' @param cor An optional correlation matrix that can be used. If \code{NULL}, will compute it by running \code{cor()} on the passed data.
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'
 #' @examples
 #' library(parameters)
 #'

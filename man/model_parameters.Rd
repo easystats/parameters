@@ -42,7 +42,7 @@ Standardization is based on \code{\link[effectsize]{standardize_parameters}}.
   standard errors and confidence intervals refer to the standardized coefficient.
 }
 \note{
-The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output.
+The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \seealso{
 \code{\link[=standardize_names]{standardize_names()}} to rename

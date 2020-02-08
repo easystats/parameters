@@ -74,6 +74,9 @@ The \code{print()} and \code{plot()} methods show the (standardized)
   within that specific cluster (as compared to other cluster groups with lower
   absolute mean values).
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
 \examples{
 # Hierarchical clustering of mtcars-dataset
 groups <- cluster_analysis(iris[, 1:4], 3)

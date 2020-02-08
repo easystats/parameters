@@ -66,6 +66,9 @@ Compute simulated draws of parameters and their related indices such as Confiden
     include smooth terms, but not random effects.
   }
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
 \examples{
 library(parameters)
 library(glmmTMB)

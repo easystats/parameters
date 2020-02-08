@@ -11,6 +11,8 @@
 #'
 #' @seealso \code{\link{bootstrap_model}}, \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}
 #'
+#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'
 #' @details
 #'   \subsection{Technical Details}{
 #'     \code{simulate_model()} is a computationally faster alternative
