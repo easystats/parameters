@@ -200,6 +200,8 @@
 <h2 class="hasAnchor">
 <a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
 <ul>
+<li>
+<code><a href="../reference/n_clusters.html">n_clusters()</a></code> gets the option <code>"M3C"</code> for the <code>package</code>-argument, so you can try to determine the number of cluster by using the <code>M3C::M3C()</code> function.</li>
 <li>The <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>select</code>-argument, to print only selected columns of the parameters table.</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models gets a <code>details</code>-argument to additionally print information about the random effects.</li>
@@ -223,6 +225,8 @@
 <li>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> when <code>df_method</code> was not set to default.</li>
 <li>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> and <code>model_parameters.gee()</code> when <code>robust = TRUE</code>.</li>
 <li>Fixed issues with <em>coxph</em> models with only one parameter.</li>
+<li>Fixed issue in <code><a href="../reference/format_p.html">format_p()</a></code> when argument <code>digits</code> was <code>"apa"</code>.</li>
+<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>zeroinfl</code>-models.</li>
 </ul>
 </div>
 </div>
@@ -492,7 +496,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil, Søren Højsgaard.</p>
 </div>
 
 <div class="pkgdown">
