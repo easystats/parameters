@@ -149,7 +149,7 @@ model <- brm(bf(
  ),
  data = fish,
  family = zero_inflated_poisson(),
- iter = 500,
+ iter = 250,
  chains = 1,
  refresh = 0
 )
