@@ -1,12 +1,10 @@
 if (require("testthat") &&
     require("parameters") &&
-    require("lme4") &&
-    require("insight") &&
     require("lme4")) {
 
   data(mtcars)
   m1 <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
-  m2 <- insight::download_model("merMod_1")
+  m2 <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
 
   test_that("model_parameters.mixed", {
     params <- model_parameters(m1)
@@ -21,7 +19,7 @@ if (require("testthat") &&
     params <- model_parameters(m2)
     testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 8))
 
-    model <- insight::download_model("merMod_2")
+    model <- lme4::glmer(vs ~ drat + cyl + (1 | gear), data = mtcars, family = "binomial")
     params <- model_parameters(model)
     cs <- coef(summary(model))
     testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 8))
