@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.1</span>
       </span>
     </div>
 
@@ -243,7 +243,6 @@ included in the summary output.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>glmmTMB</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>simulate_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high           p
@@ -254,27 +253,22 @@ included in the summary output.</p></td>
 #&gt; 5                  Petal.Length   0.9418990  0.7957040  1.0889821 0.000000000
 #&gt; 6 Speciesversicolor:Petal.Width  -0.7330585 -1.8367166  0.2348297 0.159840160
 #&gt; 7  Speciesvirginica:Petal.Width  -0.3694773 -1.4165314  0.5600944 0.423576424</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
-  <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
-  <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
-)
-<span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt;         Parameter Coefficient      CI_low    CI_high           p
-#&gt; 1     (Intercept)  -0.3618549 -0.92521263  0.1741156 0.185814186
-#&gt; 2           sppPR  -1.2602986 -1.75081929 -0.7693395 0.000000000
-#&gt; 3           sppDM   0.2678564  0.01355088  0.5480817 0.039960040
-#&gt; 4         sppEC-A  -0.5582286 -0.93701979 -0.1496809 0.005994006
-#&gt; 5         sppEC-L   0.6704696  0.43478923  0.9069486 0.000000000
-#&gt; 6        sppDES-L   0.6273870  0.38308796  0.8802319 0.000000000
-#&gt; 7           sppDF   0.1190586 -0.15457258  0.3958122 0.405594406
-#&gt; 8         minedno   1.2695018  0.73835218  1.7833134 0.000000000
-#&gt; 9  (Intercept)_zi   0.7932094  0.28927800  1.2821302 0.000000000
-#&gt; 10     minedno_zi  -1.8416667 -2.48984112 -1.2731391 0.000000000</div><div class='input'><span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high           p
+<span class='co'># \donttest{</span>
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"glmmTMB"</span>)) {
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
+    <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
+    <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
+    <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
+  )
+  <span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)
+  <span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)
+}</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high           p
 #&gt; 1 (Intercept)   0.7975917 80  0.4290829  1.144443 0.003996004
 #&gt; 2 (Intercept)   0.7975917 95  0.2260494  1.322215 0.003996004
 #&gt; 3     minedno  -1.8386463 80 -2.2581487 -1.438269 0.000000000
-#&gt; 4     minedno  -1.8386463 95 -2.4424867 -1.235278 0.000000000</div></pre>
+#&gt; 4     minedno  -1.8386463 95 -2.4424867 -1.235278 0.000000000</div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
