@@ -17,8 +17,11 @@
 #'   thus only work for those models supported by those packages.
 #'
 #' @examples
-#' model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#' p_value(model)
+#' if (require("lme4")) {
+#'   data(iris)
+#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+#'   p_value(model)
+#' }
 #' @return The p-values.
 #' @importFrom bayestestR p_direction convert_pd_to_p
 #' @importFrom stats coef vcov pt pnorm na.omit

@@ -32,19 +32,21 @@
 #'
 #' @examples
 #' library(parameters)
-#' library(glmmTMB)
-#'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 #' head(simulate_model(model))
 #'
-#' model <- glmmTMB(
-#'   count ~ spp + mined + (1 | site),
-#'   ziformula = ~mined,
-#'   family = poisson(),
-#'   data = Salamanders
-#' )
-#' head(simulate_model(model))
-#' head(simulate_model(model, component = "zero_inflated"))
+#' \donttest{
+#' if (require("glmmTMB")) {
+#'   model <- glmmTMB(
+#'     count ~ spp + mined + (1 | site),
+#'     ziformula = ~mined,
+#'     family = poisson(),
+#'     data = Salamanders
+#'   )
+#'   head(simulate_model(model))
+#'   head(simulate_model(model, component = "zero_inflated"))
+#' }
+#' }
 #' @export
 simulate_model <- function(model, iterations = 1000, ...) {
   UseMethod("simulate_model")

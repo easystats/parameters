@@ -90,10 +90,15 @@ Parameters from (linear) mixed models.
 }
 \examples{
 library(parameters)
-if (require("lme4") && require("glmmTMB")) {
+if (require("lme4")) {
+  data(mtcars)
   model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
   model_parameters(model)
+}
 
+\donttest{
+if (require("glmmTMB")) {
+  data(Salamanders)
   model <- glmmTMB(
     count ~ spp + mined + (1 | site),
     ziformula = ~mined,
@@ -102,7 +107,7 @@ if (require("lme4") && require("glmmTMB")) {
   )
   model_parameters(model, details = TRUE)
 }
-\donttest{
+
 if (require("lme4")) {
   model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
   model_parameters(model, bootstrap = TRUE, iterations = 50)

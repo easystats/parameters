@@ -71,19 +71,21 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 }
 \examples{
 library(parameters)
-library(glmmTMB)
 
 model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 simulate_parameters(model)
 
-model <- glmmTMB(
-  count ~ spp + mined + (1 | site),
-  ziformula = ~mined,
-  family = poisson(),
-  data = Salamanders
-)
-simulate_parameters(model, centrality = "mean")
-simulate_parameters(model, ci = c(.8, .95), component = "zero_inflated")
+\donttest{
+if (require("glmmTMB")) {
+  model <- glmmTMB(
+    ziformula = ~mined,
+    family = poisson(),
+    data = Salamanders
+  )
+  simulate_parameters(model, centrality = "mean")
+  simulate_parameters(model, ci = c(.8, .95), component = "zero_inflated")
+}
+}
 }
 \references{
 Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge; New York: Cambridge University Press 2007: 140-143
