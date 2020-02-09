@@ -37,13 +37,9 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
 set.seed(333)
 ```
 
-```{r, warning=FALSE, message=FALSE, fig.align='center', echo=FALSE}
-include_graphics("/man/figures/figure2.png")
-```
-
 Also known as [**feature selection**](https://en.wikipedia.org/wiki/Feature_selection) in machine learning, the goal of variable selection is to **identify a subset of predictors** to **simplify models**. This can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
 
-There are many different methods. The one that is appropriate for a given problem depends on the model type, the data, the objective and the theorethical rationale.
+There are many different methods. The one that is appropriate for a given problem depends on the model type, the data, the objective and the theoretical rationale.
 
 The `parameters` package implements a helper that will **automatically pick a method deemed appropriate for the provided model**, run the variables selection and return the **optimal formula**, which you can then re-use to update the model.
 
@@ -86,7 +82,7 @@ Time to do some variables selection. This can be easily done using the `select_p
 
 
 ```{r message=FALSE, warning=FALSE}
-lm(Sepal.Length ~ .*., data=iris) %>% 
+lm(Sepal.Length ~ .*., data = iris) %>% 
   select_parameters() %>% 
   summary()
 ```
@@ -108,7 +104,7 @@ For simple linear regressions as above, the selection is made using the `step()`
 ```{r message=FALSE, warning=FALSE}
 library(lme4)
 
-lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data=iris) %>%
+lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data = iris) %>%
   select_parameters() %>%
   summary()
 ```
