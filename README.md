@@ -55,7 +55,11 @@ these vignettes:
 
 ## Model’s parameters description
 
+<p>
+
 <img src='man/figures/figure1.png' align="center" />
+
+</p>
 
 The
 [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html)
@@ -158,7 +162,11 @@ model_parameters(model)
 
 ## Variable and parameters selection
 
+<p>
+
 <img src='man/figures/figure2.png' align="center" />
+
+</p>
 
 [`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html)
 can help you quickly select and retain the most relevant predictors
