@@ -1,4 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllggeffectsTests") == "yes"
+.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest || Sys.getenv("USER") == "travis") {
   if (require("testthat") &&
