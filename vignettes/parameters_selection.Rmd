@@ -38,7 +38,7 @@ set.seed(333)
 ```
 
 ```{r, warning=FALSE, message=FALSE, fig.align='center', echo=FALSE}
-include_graphics("https://raw.githubusercontent.com/easystats/parameters/master/man/figures/figure2.png")
+include_graphics("/man/figures/figure2.png")
 ```
 
 Also known as [**feature selection**](https://en.wikipedia.org/wiki/Feature_selection) in machine learning, the goal of variable selection is to **identify a subset of predictors** to **simplify models**. This can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
