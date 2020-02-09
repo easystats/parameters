@@ -30,6 +30,7 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
     !requireNamespace("lme4", quietly = TRUE) ||
     !requireNamespace("metafor", quietly = TRUE) ||
     !requireNamespace("lavaan", quietly = TRUE) ||
+    !requireNamespace("brms", quietly = TRUE) ||
     !requireNamespace("psych", quietly = TRUE) ||
     !requireNamespace("rstanarm", quietly = TRUE) ||
     !requireNamespace("FactoMineR", quietly = TRUE)) {
@@ -139,19 +140,19 @@ stan_glm(mpg ~ wt * cyl, data = mtcars, iter = 500, chains = 2, refresh = 0) %>%
 ... as well as for (more complex) models from the **brms** package. For more complex models, other model components can be printed using the arguments `effects` and `component` arguments.
 
 ```{r, warning=FALSE, message=FALSE}
-# We download the model to save computation time. Here is the code
-# to refit the exact model used below...
-
-# zinb <- read.csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
-# set.seed(123)
-# model <- brm(bf(
-#     count ~ persons + child + camper + (1 | persons),
-#     zi ~ child + camper + (1 | persons)
-#   ),
-#   data = zinb,
-#   family = zero_inflated_poisson()
-# )
-model <- insight::download_model("brms_zi_2")
+library(brms)
+data(fish)
+set.seed(123)
+model <- brm(bf(
+   count ~ persons + child + camper + (1 | persons),
+   zi ~ child + camper + (1 | persons)
+ ),
+ data = fish,
+ family = zero_inflated_poisson(),
+ iter = 500,
+ chains = 1,
+ refresh = 0
+)
 parameters(model, component = "conditional")
 
 parameters(model, effects = "all", component = "all")
