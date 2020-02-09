@@ -1,4 +1,4 @@
-if (require("testthat") && require("insight") && require("lme4") && require("parameters")) {
+if (require("testthat") && require("lme4") && require("parameters")) {
   data(mtcars)
   test_that("ci", {
     model <- lm(mpg ~ wt, data = mtcars)
@@ -15,10 +15,10 @@ if (require("testthat") && require("insight") && require("lme4") && require("par
     val <- ci(model, method = "boot")[1, 3]
     testthat::expect_equal(val, -0.555424, tol = 0.01)
 
-    model <- insight::download_model("merMod_1")
+    model <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
     testthat::expect_equal(ci(model)[1, 3], -0.7876679, tol = 0.01)
 
-    model <- insight::download_model("merMod_2")
+    model <- lme4::glmer(vs ~ drat + cyl + (1 | gear), data = mtcars, family = "binomial")
     testthat::expect_equal(ci(model)[1, 3], -48.14195, tol = 0.01)
   })
 }

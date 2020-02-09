@@ -16,17 +16,11 @@ if (require("insight") && require("testthat") && require("parameters")) {
 
 
   test_that("model_parameters.anova", {
-    model <- insight::download_model("anova_1")
+    model <- anova(lm(Sepal.Width ~ Species, data = iris))
     testthat::expect_equal(sum(model_parameters(model)$df), 149)
 
-    model <- insight::download_model("anova_2")
+    model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = data))
     testthat::expect_equal(sum(model_parameters(model)$df), 149)
-
-    model <- insight::download_model("anova_3")
-    testthat::expect_equal(sum(model_parameters(model)$df), 149)
-
-    model <- insight::download_model("anova_4")
-    testthat::expect_equal(sum(model_parameters(model)$df, na.rm = TRUE), 2)
 
     model <- insight::download_model("anova_lmerMod_0")
     testthat::expect_equal(nrow(model_parameters(model)), 0)
@@ -50,6 +44,15 @@ if (require("insight") && require("testthat") && require("parameters")) {
     testthat::expect_equal(sum(model_parameters(model)$df), 12)
   })
 
+  test_that("model_parameters.anova", {
+    model <- insight::download_model("anova_3")
+    skip_on_cran()
+    testthat::expect_equal(sum(model_parameters(model)$df), 149)
+
+    model <- insight::download_model("anova_4")
+    skip_on_cran()
+    testthat::expect_equal(sum(model_parameters(model)$df, na.rm = TRUE), 2)
+  })
 
 
 
