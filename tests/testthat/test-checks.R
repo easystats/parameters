@@ -1,4 +1,5 @@
 if (require("testthat") && require("parameters")) {
+  data(mtcars)
   test_that("check_factorstructure", {
     x <- check_factorstructure(mtcars)
     testthat::expect_equal(x$KMO$MSA, 0.826, tol = 0.01)
