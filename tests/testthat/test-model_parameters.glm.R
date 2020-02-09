@@ -2,7 +2,6 @@ if (require("insight") && require("testthat") && require("parameters")) {
   data(mtcars)
   test_that("model_parameters.lm", {
     model <- lm(mpg ~ wt, data = mtcars)
-
     params <- model_parameters(model)
     testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 8))
     testthat::expect_equal(params$CI_high, c(41.119752761418, -4.20263490802709), tolerance = 1e-3)
@@ -13,13 +12,11 @@ if (require("insight") && require("testthat") && require("parameters")) {
     params <- model_parameters(model, dispersion = TRUE, bootstrap = TRUE, n = 500)
     testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 6))
 
-    model <- insight::download_model("lm_2")
-
+    model <- lm(mpg ~ wt + cyl, data = mtcars)
     params <- model_parameters(model)
     testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 8))
 
-    model <- insight::download_model("lm_3")
-
+    model <- lm(mpg ~ wt * cyl, data = mtcars)
     params <- model_parameters(model)
     testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 8))
   })
@@ -32,7 +29,6 @@ if (require("insight") && require("testthat") && require("parameters")) {
 
     params <- model_parameters(model)
     testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 8))
-
 
     params <- suppressWarnings(model_parameters(model, bootstrap = TRUE, n = 500))
     testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 5))
