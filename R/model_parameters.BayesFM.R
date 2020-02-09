@@ -7,19 +7,16 @@
 #' @inheritParams bayestestR::describe_posterior
 #' @param ... Arguments passed to or from other methods.
 #'
-#'
 #' @examples
 #' library(parameters)
 #' \donttest{
-#' library(BayesFM)
-#' efa <- BayesFM::befa(mtcars, iter = 1000)
-#' results <- model_parameters(efa, sort = TRUE)
-#'
-#' results
-#' attributes(results)$loadings_long
-#' efa_to_cfa(results)
+#' if (require("BayesFM")) {
+#'   efa <- BayesFM::befa(mtcars, iter = 1000)
+#'   results <- model_parameters(efa, sort = TRUE)
+#'   results
+#'   efa_to_cfa(results)
 #' }
-#'
+#' }
 #' @return A data frame of loadings.
 #'
 #' @export
