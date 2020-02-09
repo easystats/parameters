@@ -217,7 +217,22 @@
 #&gt; <span class='message'>and introduction to the package please type: help(metafor).</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'metafor'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:mclust':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    hc</span></div><div class='output co'>#&gt; <span class='error'>Error in rma(yi = effectsize, sei = stderr, data = mydat, method = "REML",     level = i): object 'mydat' not found</span></div></pre>
+#&gt; <span class='message'>    hc</span></div><div class='output co'>#&gt; <span class='error'>Error in rma(yi = effectsize, sei = stderr, data = mydat, method = "REML",     level = i): object 'mydat' not found</span></div><div class='input'>
+<span class='co'># with subgroups</span>
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"metafor"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dat.bcg</span>)
+  <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/metafor/man/escalc.html'>escalc</a></span>(
+    <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"RR"</span>,
+    <span class='kw'>ai</span> <span class='kw'>=</span> <span class='no'>tpos</span>,
+    <span class='kw'>bi</span> <span class='kw'>=</span> <span class='no'>tneg</span>,
+    <span class='kw'>ci</span> <span class='kw'>=</span> <span class='no'>cpos</span>,
+    <span class='kw'>di</span> <span class='kw'>=</span> <span class='no'>cneg</span>,
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dat.bcg</span>
+  )
+  <span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>==</span> <span class='st'>"random"</span>, <span class='st'>"random"</span>, <span class='st'>"other"</span>)
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/metafor/man/rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>alloc</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dat</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>slab</span> <span class='kw'>=</span> <span class='no'>author</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+}</div><div class='output co'>#&gt; <span class='error'>Error in rma(yi = yi, vi = vi, mods = ~alloc, data = dat, slab = author,     digits = 3, level = i): object 'dat' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
