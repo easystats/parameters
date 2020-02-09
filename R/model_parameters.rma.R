@@ -109,6 +109,7 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
   # no df
   out$df_error <- NULL
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "measure") <- model$measure
 
   out
 }
