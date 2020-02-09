@@ -45,10 +45,21 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
     ...
   )
 
-  # remove specific parameters
-  remove <- which(meta_analysis_overall$Parameter != "(Intercept)")
-  if (length(remove) > 0) {
-    meta_analysis_overall <- meta_analysis_overall[-remove, ]
+  subgroups <- NULL
+  group_variable <- NULL
+
+  # subgroup analyses?
+  if (!is.null(model$formula.mods)) {
+    group_variable <- deparse(model$formula.mods[[2]])[1]
+    model_data <- insight::get_data(model)
+    if (group_variable %in% colnames(model_data)) {
+      subgroups <- sort(unique(model_data[[group_variable]]))
+    }
+  }
+
+  if (nrow(meta_analysis_overall) > 1 && !is.null(subgroups))  {
+    meta_analysis_overall$Subgroup <- subgroups
+    meta_analysis_overall$Parameter <- "(Intercept)"
   }
 
   alpha <- (1 + ci) / 2
@@ -79,19 +90,13 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
     stringsAsFactors = FALSE
   )
 
+  # subgroup analyses?
+  if (!is.null(subgroups)) {
+    meta_analysis_studies$Subgroup <- insight::get_data(model)[[group_variable]]
+  }
+
   original_attributes <- attributes(meta_analysis_overall)
   out <- merge(meta_analysis_studies, meta_analysis_overall, all = TRUE, sort = FALSE)
-
-  # subgroup analyses?
-  if (!is.null(model$formula.mods)) {
-    subgroups <- deparse(model$formula.mods[[2]])[1]
-    model_data <- insight::get_data(model)
-    if (subgroups %in% colnames(model_data)) {
-      out$Subgroup <- NA
-      out$Subgroup[out$Parameter != "(Intercept)"] <- insight::get_data(model)[[subgroups]]
-      out$Subgroup[out$Parameter == "(Intercept)"] <- "Overall"
-    }
-  }
 
   # fix intercept name
   out$Parameter[out$Parameter == "(Intercept)"] <- "Overall"
