@@ -1,4 +1,4 @@
-if (require("insight") && require("testthat") && require("parameters")) {
+if (require("testthat") && require("parameters")) {
   data(mtcars)
   test_that("model_parameters.lm", {
     model <- lm(mpg ~ wt, data = mtcars)

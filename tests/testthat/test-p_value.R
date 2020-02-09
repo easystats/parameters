@@ -1,3 +1,6 @@
+.runThisTest <- Sys.getenv("RunAllggeffectsTests") == "yes"
+
+
 if (require("testthat") &&
     require("parameters") &&
     require("lme4") &&
