@@ -21,7 +21,7 @@ if (require("insight") && require("testthat") && require("lme4") && require("par
     model <- anova(lm(Sepal.Width ~ Species, data = iris))
     testthat::expect_equal(sum(model_parameters(model)$df), 149)
 
-    model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = data))
+    model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
     testthat::expect_equal(sum(model_parameters(model)$df), 149)
 
     model <- anova(lmer(wt ~ 1 + (1 | gear), data = mtcars))
