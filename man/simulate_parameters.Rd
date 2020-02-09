@@ -78,6 +78,7 @@ simulate_parameters(model)
 \donttest{
 if (require("glmmTMB")) {
   model <- glmmTMB(
+    count ~ spp + mined + (1 | site),
     ziformula = ~mined,
     family = poisson(),
     data = Salamanders
