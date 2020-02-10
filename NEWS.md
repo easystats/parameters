@@ -1,5 +1,15 @@
 # parameters 0.5.0
 
+## Changes
+
+- Run certain tests only locally, to reduce running-times for checks on CRAN.
+
+## Bug fixes
+
+- Fixes minor issue with the `print()`-method for `model_parameters.befa()`.
+
+# parameters 0.5.0
+
 ## Breaking changes
 
 - `skewness()` now uses a different method to calculate the skewness by default. Different methods can be selected using the `type`-argument.
