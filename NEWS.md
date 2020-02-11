@@ -1,8 +1,8 @@
-# parameters 0.5.0
+# parameters 0.5.1
 
 ## Changes
 
-- Run certain tests only locally, to reduce running-times for checks on CRAN.
+- Run certain tests only locally, to reduce duration of CRAN checks.
 
 ## Bug fixes
 
