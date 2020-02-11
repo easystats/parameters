@@ -3,8 +3,8 @@
 if (.runThisTest && Sys.getenv("USER") != "travis") {
   if (require("testthat") && require("parameters")) {
     data(iris)
-    iris$`a m` <- iris$Species
-    iris$`Sepal Width` <- iris$Sepal.Width
+    iris$`a m` <<- iris$Species
+    iris$`Sepal Width` <<- iris$Sepal.Width
     m1 <- lm(`Sepal Width` ~ Petal.Length + `a m` * log(Sepal.Length), data = iris)
     m2 <- lm(Sepal.Width ~ Petal.Length + Species * log(Sepal.Length), data = iris)
 
