@@ -180,6 +180,7 @@
   } else {
     df <- Inf
   }
+  df_error <- data.frame(Parameter = parameters$Parameter, df_error = as.vector(df), stringsAsFactors = FALSE)
 
 
   # Std Coefficients for other methods than "refit"
@@ -251,12 +252,15 @@
 
   # dof
   if (!"df" %in% names(parameters)) {
-    if (df_method %in% c("betwithin", "ml1", "satterthwaite", "kenward", "kr"))
-      df_error <- df
-    else
-      df_error <- degrees_of_freedom(model, method = "any")
-    if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
-      parameters$df_error <- df_error
+    if (!df_method %in% c("betwithin", "ml1", "satterthwaite", "kenward", "kr")) {
+      df_error <- data.frame(
+        Parameter = parameters$Parameter,
+        df_error = degrees_of_freedom(model, method = "any"),
+        stringsAsFactors = FALSE
+      )
+    }
+    if (!is.null(df_error) && nrow(df_error) == nrow(parameters)) {
+      parameters <- merge(parameters, df_error, by = "Parameter")
     }
   }
 

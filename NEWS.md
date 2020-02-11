@@ -6,7 +6,9 @@
 
 ## Bug fixes
 
-- Fixes minor issue with the `print()`-method for `model_parameters.befa()`.
+- Fixed minor issue with the `print()`-method for `model_parameters.befa()`.
+- Fixed issues in `model_parameters()` with wrong order of degrees of freedom.
+- Fixed issues in `model_parameters()` with wrong test statistic for *lmerModLmerTest* models.
 
 # parameters 0.5.0
 
