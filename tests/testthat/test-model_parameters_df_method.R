@@ -25,7 +25,7 @@ if (require("testthat") &&
 
   test_that("model_parameters, df_method kenward", {
     expect_equal(mp3$SE, c(2.97608, 6.10454, 3.98754, 0.02032, 1.60327, 0.91599, 0.05509, 0.01962), tolerance = 1e-3)
-    expect_equal(mp3$df, c(19.39553, 23.57086, 22.7421, 2.72622, 5.27602, 22.82714, 8.97297, 23.76299), tolerance = 1e-3)
+    expect_equal(mp3$df, c(19.39553, 5.27602, 23.57086, 8.97297, 22.7421, 23.76299, 2.72622, 22.82714), tolerance = 1e-3)
     expect_equal(mp3$p, c(0, 0.01772, 0.14202, 0.1907, 0.84772, 0.00546, 0.04232, 0.32614), tolerance = 1e-3)
     expect_equal(mp3$CI_low, c(24.46832, 0.5968, -2.46649, -0.06211, -2.83447, -4.4337, -0.21565, -0.0552), tolerance = 1e-3)
   })
