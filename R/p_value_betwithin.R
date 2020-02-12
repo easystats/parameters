@@ -49,5 +49,5 @@ p_value_betwithin <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_betwithin(model)
   }
-  .p_value_dof(model, dof)
+  .p_value_dof(model, dof, method = "betwithin")
 }

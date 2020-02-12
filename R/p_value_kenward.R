@@ -46,7 +46,7 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_kenward(model)
   }
-  .p_value_dof(model, dof)
+  .p_value_dof(model, dof, method = "kenward")
 }
 
 
@@ -55,11 +55,18 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
 # helper ------------------------------
 
-.p_value_dof <- function(model, dof) {
+.p_value_dof <- function(model, dof, method, statistic = NULL) {
   params <- insight::get_parameters(model)
-  se <- se_kenward(model)
-  p <- 2 * stats::pt(abs(params$Coefficient / se$SE), df = dof, lower.tail = FALSE)
+  if (is.null(statistic)) {
+    statistic <- insight::get_statistic(model)$Statistic
+  }
 
+  if (method == "kenward") {
+    se <- se_kenward(model)
+    statistic <- params$Coefficient / se$SE
+  }
+
+  p <- 2 * stats::pt(abs(statistic), df = dof, lower.tail = FALSE)
   data.frame(
     Parameter = params$Parameter,
     p = unname(p),

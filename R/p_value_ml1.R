@@ -53,5 +53,5 @@ p_value_ml1 <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_ml1(model)
   }
-  .p_value_dof(model, dof)
+  .p_value_dof(model, dof, method = "ml1")
 }
