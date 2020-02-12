@@ -171,7 +171,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A dataframe or a statistical model.</p></td>
+      <td><p>A data frame or a statistical model.</p></td>
     </tr>
     <tr>
       <th>n</th>
@@ -179,7 +179,7 @@
     </tr>
     <tr>
       <th>rotation</th>
-      <td><p>If not <code>"none"</code>, the PCA will be computed using the <span class="pkg">psych</span> package. Possible options include <code>"varimax"</code>, <code>"quartimax"</code>, <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>, and <code>"cluster"</code>. See <code><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></code> for details.</p></td>
+      <td><p>If not <code>"none"</code>, the PCA / FA will be computed using the <span class="pkg">psych</span> package. Possible options include <code>"varimax"</code>, <code>"quartimax"</code>, <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>, and <code>"cluster"</code>. See <code><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>sort</th>
@@ -191,7 +191,7 @@
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).</p></td>
+      <td><p>A logical value indicating whether the variables should be standardized (centered and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -213,8 +213,8 @@
    (<cite>Hofman, 1978; Pettersson and Turkheimer, 2010</cite>) .</p><p></p><h3>FA or PCA?</h3>
 <p>There is a simplified rule of thumb that may help do decide whether to run
  a principal component analysis or a factor analysis:</p><ul>
-<li><p>Run principal component analysis if you assume or wish to test a theoretical model of latent factors causing observed variables.</p></li>
-<li><p>Run factor analysis If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.</p></li>
+<li><p>Run <em>factor analysis</em> if you assume or wish to test a theoretical model of latent factors causing observed variables.</p></li>
+<li><p>Run <em>principal component analysis</em> If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.</p></li>
 </ul><p>(Source: <a href='https://stats.stackexchange.com/q/1576/54740'>CrossValidated</a>)</p>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -232,7 +232,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 
-<span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
+<span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable |   MR1 |   MR2 |  MR3 |  MR4 | MR5 | MR6 | Complexity | Uniqueness
 #&gt; ----------------------------------------------------------------------------
@@ -244,7 +244,7 @@
 #&gt; wt       |  0.89 |  0.38 | 0.24 |      |     |     |       1.53 |       0.00
 #&gt; qsec     | -0.53 |  0.76 |      |      |     |     |       1.81 |       0.14
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 6 latent factors accounted for 90.99% of the total variance of the original data (MR1 = 71.60%, MR2 = 14.55%, MR3 = 2.91%, MR4 = 1.35%, MR5 = 0.45%, MR6 = 0.12%).</span><span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"oblimin"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (oblimin-rotation)
+#&gt; </span><span style='color: #BBBB00;'>The 6 latent factors accounted for 90.99% of the total variance of the original data (MR1 = 71.60%, MR2 = 14.55%, MR3 = 2.91%, MR4 = 1.35%, MR5 = 0.45%, MR6 = 0.12%).</span><span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"oblimin"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Factor Analysis (oblimin-rotation)
 #&gt; 
 #&gt; </span><span>Variable |   MR1 |  MR2 | Complexity | Uniqueness
 #&gt; -------------------------------------------------
@@ -256,7 +256,7 @@
 #&gt; hp       |  0.60 |      |       1.94 |       0.18
 #&gt; qsec     |       | 1.00 |       1.00 |       0.00
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 2 latent factors (oblimin rotation) accounted for 85.83% of the total variance of the original data (MR1 = 63.85%, MR2 = 21.99%).</span><span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
+#&gt; </span><span style='color: #BBBB00;'>The 2 latent factors (oblimin rotation) accounted for 85.83% of the total variance of the original data (MR1 = 63.85%, MR2 = 21.99%).</span><span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable |  MR1 |  MR2 | Complexity | Uniqueness
 #&gt; ------------------------------------------------
@@ -311,7 +311,7 @@
 #&gt; 31  1.32372015  3.27012728
 #&gt; 32 -0.87651282  0.43537850</div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Automated number of components</span>
-<span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
+<span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable |   MR1 | Complexity | Uniqueness
 #&gt; ------------------------------------------
