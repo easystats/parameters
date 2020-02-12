@@ -1,9 +1,11 @@
 if (require("testthat") &&
   require("parameters") &&
+  require("lmerTest") &&
   require("lme4")) {
   data("mtcars")
   mtcars$cyl <- as.factor(mtcars$cyl)
-  model <- lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars)
+  model <- lme4::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars)
+  model2 <- lmerTest::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars)
 
   mp1 <- model_parameters(model, digits = 5)
   mp2 <- model_parameters(model, digits = 5, df_method = "s")
@@ -28,6 +30,22 @@ if (require("testthat") &&
     expect_equal(mp3$df, c(19.39553, 5.27602, 23.57086, 8.97297, 22.7421, 23.76299, 2.72622, 22.82714), tolerance = 1e-3)
     expect_equal(mp3$p, c(0, 0.09176, 0.19257, 0.30147, 0.84942, 0.00828, 0.15478, 0.40248), tolerance = 1e-3)
     expect_equal(mp3$CI_low, c(24.08091, -2.887, -2.88887, -0.06828, -3.01082, -4.5299, -0.29339, -0.05735), tolerance = 1e-3)
+  })
+
+  test_that("model_parameters, satterthwaite compare", {
+    s <- summary(model2)
+    expect_equal(mp2$df, as.vector(s$coefficients[, "df"]), tolerance = 1e-4)
+    expect_equal(mp2$t, as.vector(s$coefficients[, "t value"]), tolerance = 1e-4)
+    expect_equal(mp2$p, as.vector(s$coefficients[, "Pr(>|t|)"]), tolerance = 1e-4)
+    expect_equal(mp2$SE, as.vector(s$coefficients[, "Std. Error"]), tolerance = 1e-4)
+  })
+
+  test_that("model_parameters, satterthwaite compare", {
+    s <- summary(model2, ddf = "Kenward-Roger")
+    expect_equal(mp3$df, as.vector(s$coefficients[, "df"]), tolerance = 1e-4)
+    expect_equal(mp3$t, as.vector(s$coefficients[, "t value"]), tolerance = 1e-4)
+    expect_equal(mp3$p, as.vector(s$coefficients[, "Pr(>|t|)"]), tolerance = 1e-4)
+    expect_equal(mp3$SE, as.vector(s$coefficients[, "Std. Error"]), tolerance = 1e-4)
   })
 
 
