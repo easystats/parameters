@@ -156,9 +156,7 @@
     <p>This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is "PCA", but other are available via the <code>method</code> argument, such as "cMDS", "DRR" or "ICA"). Then, it names this new dimensions using the original variables that correlates the most with it. For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension. Although this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a separate and dedicated stage, as this is a very important process in the data analysis workflow.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>reduce_parameters</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"PCA"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='no'>...</span>)
-
-<span class='fu'>parameters_reduction</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"PCA"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>reduce_parameters</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"PCA"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

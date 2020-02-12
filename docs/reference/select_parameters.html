@@ -158,8 +158,6 @@
 
     <pre class="usage"><span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='no'>...</span>)
 
-<span class='fu'>parameters_selection</span>(<span class='no'>model</span>, <span class='no'>...</span>)
-
 <span class='co'># S3 method for lm</span>
 <span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"both"</span>, <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
 
@@ -245,7 +243,7 @@
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
   )
   <span class='fu'>select_parameters</span>(<span class='no'>model</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: lme4</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; Linear mixed model fit by REML ['lmerMod']
+}</div><div class='output co'>#&gt; Linear mixed model fit by REML ['lmerMod']
 #&gt; Formula: Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 |  
 #&gt;     Species)
 #&gt;    Data: iris
@@ -279,9 +277,7 @@
   <span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 }</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
@@ -292,15 +288,15 @@
 #&gt;  predictors:   5
 #&gt; ------
 #&gt;             Median MAD_SD
-#&gt; (Intercept) 46.3    4.3  
-#&gt; cyl         -2.6    0.8  
+#&gt; (Intercept) 46.2    4.6  
+#&gt; cyl         -2.7    0.8  
 #&gt; disp        -0.1    0.0  
 #&gt; hp           0.0    0.0  
 #&gt; cyl:disp     0.0    0.0  
 #&gt; 
 #&gt; Auxiliary parameter(s):
 #&gt;       Median MAD_SD
-#&gt; sigma 2.7    0.4   
+#&gt; sigma 2.6    0.4   
 #&gt; 
 #&gt; ------
 #&gt; * For help interpreting the printed output see ?print.stanreg

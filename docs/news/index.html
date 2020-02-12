@@ -154,6 +154,18 @@
 <h1 class="page-header">
 <a href="#parameters-051" class="anchor"></a>parameters 0.5.1<small> Unreleased </small>
 </h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>Alias <code>model_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>.</li>
+<li>Alias <code>parameters_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>.</li>
+<li>Alias <code>model_simulate()</code> was removed, please use <code><a href="../reference/simulate_model.html">simulate_model()</a></code>.</li>
+<li>Alias <code>parameters_simulate()</code> was removed, please use <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code>.</li>
+<li>Alias <code>parameters_selection()</code> was removed, please use <code><a href="../reference/select_parameters.html">select_parameters()</a></code>.</li>
+<li>Alias <code>parameters_reduction()</code> was removed, please use <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>.</li>
+</ul>
+</div>
 <div id="changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes" class="anchor"></a>Changes</h2>
@@ -175,9 +187,9 @@
 <h1 class="page-header">
 <a href="#parameters-050" class="anchor"></a>parameters 0.5.0<small> 2020-02-09 </small>
 </h1>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code><a href="../reference/skewness.html">skewness()</a></code> now uses a different method to calculate the skewness by default. Different methods can be selected using the <code>type</code>-argument.</li>
@@ -269,9 +281,9 @@
 <h1 class="page-header">
 <a href="#parameters-040" class="anchor"></a>parameters 0.4.0<small> 2020-01-14 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>The column for degrees of freedom in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> was renamed from <code>df_residuals</code> to <code>df_error</code> for regression model objects, because these degrees of freedom actually were not always referring to <em>residuals</em> - we consider <code>df_error</code> as a more generic name.</li>
 <li>
@@ -285,17 +297,17 @@
 <a href="#renaming" class="anchor"></a>Renaming</h2>
 <ul>
 <li>
-<code><a href="../reference/bootstrap_model.html">model_bootstrap()</a></code> was renamed to <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>. <code><a href="../reference/bootstrap_model.html">model_bootstrap()</a></code> will remain as alias.</li>
+<code>model_bootstrap()</code> was renamed to <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>. <code>model_bootstrap()</code> will remain as alias.</li>
 <li>
-<code><a href="../reference/bootstrap_parameters.html">parameters_bootstrap()</a></code> was renamed to <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>. <code><a href="../reference/bootstrap_parameters.html">parameters_bootstrap()</a></code> will remain as alias.</li>
+<code>parameters_bootstrap()</code> was renamed to <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>. <code>parameters_bootstrap()</code> will remain as alias.</li>
 <li>
-<code><a href="../reference/simulate_model.html">model_simulate()</a></code> was renamed to <code><a href="../reference/simulate_model.html">simulate_model()</a></code>. <code><a href="../reference/simulate_model.html">model_simulate()</a></code> will remain as alias.</li>
+<code>model_simulate()</code> was renamed to <code><a href="../reference/simulate_model.html">simulate_model()</a></code>. <code>model_simulate()</code> will remain as alias.</li>
 <li>
-<code><a href="../reference/simulate_parameters.html">parameters_simulate()</a></code> was renamed to <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code>. <code><a href="../reference/simulate_parameters.html">parameters_simulate()</a></code> will remain as alias.</li>
+<code>parameters_simulate()</code> was renamed to <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code>. <code>parameters_simulate()</code> will remain as alias.</li>
 <li>
-<code><a href="../reference/select_parameters.html">parameters_selection()</a></code> was renamed to <code><a href="../reference/select_parameters.html">select_parameters()</a></code>. <code><a href="../reference/select_parameters.html">parameters_selection()</a></code> will remain as alias.</li>
+<code>parameters_selection()</code> was renamed to <code><a href="../reference/select_parameters.html">select_parameters()</a></code>. <code>parameters_selection()</code> will remain as alias.</li>
 <li>
-<code><a href="../reference/reduce_parameters.html">parameters_reduction()</a></code> was renamed to <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>. <code><a href="../reference/reduce_parameters.html">parameters_reduction()</a></code> will remain as alias.</li>
+<code>parameters_reduction()</code> was renamed to <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>. <code>parameters_reduction()</code> will remain as alias.</li>
 </ul>
 </div>
 <div id="new-supported-models-1" class="section level2">
@@ -351,9 +363,9 @@
 <h1 class="page-header">
 <a href="#parameters-030" class="anchor"></a>parameters 0.3.0<small> 2019-11-20 </small>
 </h1>
-<div id="breaking-changes-2" class="section level2">
+<div id="breaking-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-3" class="anchor"></a>Breaking changes</h2>
 <p>Parts of the <strong>parameter</strong> package are restructured and functions focussing on anything related to effect sizes are now re-implemented in a new package, <a href="https://github.com/easystats/effectsize"><strong>effectsize</strong></a>. In details, following breaking changes have been made:</p>
 <ul>
 <li>Functions for computing effect sizes (<code>cohens_f()</code>, <code>eta_squared()</code> etc.) have been removed and are now re-implemented in the <strong>effectsize</strong>-package.</li>
@@ -431,9 +443,9 @@
 <h1 class="page-header">
 <a href="#parameters-020" class="anchor"></a>parameters 0.2.0<small> 2019-09-26 </small>
 </h1>
-<div id="breaking-changes-3" class="section level2">
+<div id="breaking-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-3" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-4" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code>format_value()</code> and <code>format_table()</code> have been removed and are now re-implemented in the <strong>insight</strong> package.</li>
@@ -454,7 +466,7 @@
 <a href="#new-functions-3" class="anchor"></a>New functions</h2>
 <ul>
 <li>
-<code><a href="../reference/simulate_parameters.html">parameters_simulate()</a></code> and <code><a href="../reference/simulate_model.html">model_simulate()</a></code>, as computational faster alternatives to <code><a href="../reference/bootstrap_parameters.html">parameters_bootstrap()</a></code> and <code><a href="../reference/bootstrap_model.html">model_bootstrap()</a></code>.</li>
+<code>parameters_simulate()</code> and <code>model_simulate()</code>, as computational faster alternatives to <code>parameters_bootstrap()</code> and <code>model_bootstrap()</code>.</li>
 <li>
 <code><a href="../reference/data_partition.html">data_partition()</a></code> to partition data into a test and a training set.</li>
 <li>
