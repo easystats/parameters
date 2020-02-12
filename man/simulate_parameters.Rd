@@ -2,13 +2,10 @@
 % Please edit documentation in R/simulate_parameters.R
 \name{simulate_parameters}
 \alias{simulate_parameters}
-\alias{parameters_simulate}
 \alias{simulate_parameters.default}
 \title{Simulate Model Parameters}
 \usage{
 simulate_parameters(model, ...)
-
-parameters_simulate(model, ...)
 
 \method{simulate_parameters}{default}(
   model,

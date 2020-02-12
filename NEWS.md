@@ -1,5 +1,14 @@
 # parameters 0.5.1
 
+## Breaking changes
+
+- Alias `model_bootstrap()` was removed, please use `bootstrap_model()`.
+- Alias `parameters_bootstrap()` was removed, please use `bootstrap_parameters()`.
+- Alias `model_simulate()` was removed, please use `simulate_model()`.
+- Alias `parameters_simulate()` was removed, please use `simulate_parameters()`.
+- Alias `parameters_selection()` was removed, please use `select_parameters()`.
+- Alias `parameters_reduction()` was removed, please use `reduce_parameters()`.
+
 ## Changes
 
 - Run certain tests only locally, to reduce duration of CRAN checks.

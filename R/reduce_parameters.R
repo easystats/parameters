@@ -30,10 +30,6 @@ reduce_parameters <- function(x, method = "PCA", n = "max", ...) {
   UseMethod("reduce_parameters")
 }
 
-#' @rdname reduce_parameters
-#' @export
-parameters_reduction <- reduce_parameters
-
 
 
 

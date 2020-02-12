@@ -11,7 +11,7 @@
 #'
 #' @return A data frame.
 #'
-#' @seealso \code{\link[=parameters_simulate]{simulate_parameters()}},
+#' @seealso \code{\link[=simulate_parameters]{simulate_parameters()}},
 #' \code{\link[=bootstrap_model]{bootstrap_model()}},
 #' \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}
 #'
@@ -52,9 +52,6 @@ simulate_model <- function(model, iterations = 1000, ...) {
   UseMethod("simulate_model")
 }
 
-#' @rdname simulate_model
-#' @export
-model_simulate <- simulate_model
 
 
 # Models with single component only -----------------------------------------

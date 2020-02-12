@@ -2,12 +2,9 @@
 % Please edit documentation in R/reduce_parameters.R
 \name{reduce_parameters}
 \alias{reduce_parameters}
-\alias{parameters_reduction}
 \title{Dimensionality reduction (DR) / Features Reduction}
 \usage{
 reduce_parameters(x, method = "PCA", n = "max", ...)
-
-parameters_reduction(x, method = "PCA", n = "max", ...)
 }
 \arguments{
 \item{x}{A dataframe or a statistical model.}

@@ -96,14 +96,14 @@ if (.runThisTest && Sys.getenv("USER") != "travis") {
 
     test_that("model_parameters-2, backticks", {
       expect_equal(
-        model_parameters(parameters_selection(m1))$Parameter,
+        model_parameters(select_parameters(m1))$Parameter,
         c(
           "(Intercept)", "a mversicolor", "a mvirginica", "log(Sepal.Length)",
           "a mversicolor:log(Sepal.Length)", "a mvirginica:log(Sepal.Length)"
         )
       )
       expect_equal(
-        model_parameters(parameters_selection(m2))$Parameter,
+        model_parameters(select_parameters(m2))$Parameter,
         c(
           "(Intercept)", "Speciesversicolor", "Speciesvirginica", "log(Sepal.Length)",
           "Speciesversicolor:log(Sepal.Length)", "Speciesvirginica:log(Sepal.Length)"

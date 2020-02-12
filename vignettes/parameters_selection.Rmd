@@ -1,5 +1,5 @@
 ---
-title: "Parameters Selection"
+title: "Selection of Model Parameters"
 output: 
   github_document:
     toc: true

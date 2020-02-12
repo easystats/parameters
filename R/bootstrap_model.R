@@ -19,12 +19,6 @@ bootstrap_model <- function(model, iterations = 1000, verbose = FALSE, ...) {
   UseMethod("bootstrap_model")
 }
 
-#' @rdname bootstrap_model
-#' @export
-model_bootstrap <- bootstrap_model
-
-
-
 
 
 

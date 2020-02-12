@@ -2,13 +2,10 @@
 % Please edit documentation in R/simulate_model.R
 \name{simulate_model}
 \alias{simulate_model}
-\alias{model_simulate}
 \alias{simulate_model.glmmTMB}
 \title{Simulated draws from model coefficients}
 \usage{
 simulate_model(model, iterations = 1000, ...)
-
-model_simulate(model, iterations = 1000, ...)
 
 \method{simulate_model}{glmmTMB}(
   model,
@@ -69,7 +66,7 @@ if (require("glmmTMB")) {
 }
 }
 \seealso{
-\code{\link[=parameters_simulate]{simulate_parameters()}},
+\code{\link[=simulate_parameters]{simulate_parameters()}},
 \code{\link[=bootstrap_model]{bootstrap_model()}},
 \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}
 }

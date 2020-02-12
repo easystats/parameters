@@ -2,12 +2,9 @@
 % Please edit documentation in R/bootstrap_model.R
 \name{bootstrap_model}
 \alias{bootstrap_model}
-\alias{model_bootstrap}
 \title{Model bootstrapping}
 \usage{
 bootstrap_model(model, iterations = 1000, verbose = FALSE, ...)
-
-model_bootstrap(model, iterations = 1000, verbose = FALSE, ...)
 }
 \arguments{
 \item{model}{Statistical model.}

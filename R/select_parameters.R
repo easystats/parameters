@@ -42,11 +42,6 @@ select_parameters <- function(model, ...) {
   UseMethod("select_parameters")
 }
 
-#' @rdname select_parameters
-#' @export
-parameters_selection <- select_parameters
-
-
 
 #' @rdname select_parameters
 #' @inheritParams stats::step

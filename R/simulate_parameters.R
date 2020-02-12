@@ -53,10 +53,6 @@ simulate_parameters <- function(model, ...) {
   UseMethod("simulate_parameters")
 }
 
-#' @rdname simulate_parameters
-#' @export
-parameters_simulate <- simulate_parameters
-
 
 
 

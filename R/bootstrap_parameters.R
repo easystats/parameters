@@ -24,9 +24,6 @@ bootstrap_parameters <- function(model, iterations = 1000, centrality = "median"
   .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
 }
 
-#' @rdname bootstrap_parameters
-#' @export
-parameters_bootstrap <- bootstrap_parameters
 
 
 

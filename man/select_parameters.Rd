@@ -3,15 +3,12 @@
 %   R/select_parameters.stanreg.R
 \name{select_parameters}
 \alias{select_parameters}
-\alias{parameters_selection}
 \alias{select_parameters.lm}
 \alias{select_parameters.merMod}
 \alias{select_parameters.stanreg}
 \title{Automated selection of model parameters}
 \usage{
 select_parameters(model, ...)
-
-parameters_selection(model, ...)
 
 \method{select_parameters}{lm}(model, direction = "both", steps = 1000, k = 2, ...)
 
