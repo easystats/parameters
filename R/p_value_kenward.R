@@ -56,11 +56,26 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 # helper ------------------------------
 
 .p_value_dof <- function(model, dof) {
-  statistic <- insight::get_statistic(model)
-  p <- 2 * stats::pt(abs(statistic$Statistic), df = dof, lower.tail = FALSE)
+  params <- insight::get_parameters(model)
+  se <- se_kenward(model)
+  p <- 2 * stats::pt(abs(params$Coefficient / se$SE), df = dof, lower.tail = FALSE)
 
   data.frame(
     Parameter = statistic$Parameter,
+    p = unname(p),
+    stringsAsFactors = FALSE
+  )
+}
+
+
+
+
+.p_value_dof2 <- function(model, params, dof) {
+  params <- merge(params, dof, by = "Parameter")
+  p <- 2 * stats::pt(abs(params$Estimate / params$SE), df = params$df_error, lower.tail = FALSE)
+
+  data.frame(
+    Parameter = params$Parameter,
     p = unname(p),
     stringsAsFactors = FALSE
   )

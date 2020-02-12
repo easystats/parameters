@@ -10,6 +10,7 @@ if (.runThisTest && Sys.getenv("USER") != "travis") {
       s <- summary(m1)
       expect_equal(params$df, as.vector(s$coefficients[, "df"]), tolerance = 1e-4)
       expect_equal(params$t, as.vector(s$coefficients[, "t value"]), tolerance = 1e-4)
+      expect_equal(params$p, as.vector(s$coefficients[, "Pr(>|t|)"]), tolerance = 1e-4)
     })
 
     test_that("model_parameters, kenward", {
@@ -17,6 +18,7 @@ if (.runThisTest && Sys.getenv("USER") != "travis") {
       s <- summary(m1, ddf = "Kenward-Roger")
       expect_equal(params$df, as.vector(s$coefficients[, "df"]), tolerance = 1e-4)
       expect_equal(params$t, as.vector(s$coefficients[, "t value"]), tolerance = 1e-4)
+      expect_equal(params$p, as.vector(s$coefficients[, "Pr(>|t|)"]), tolerance = 1e-4)
     })
   }
 

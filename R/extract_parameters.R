@@ -236,6 +236,8 @@
   } else {
     if ("Pr(>|z|)" %in% names(parameters)) {
       names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
+    } else if (df_method %in% c("betwithin", "ml1", "satterthwaite", "kenward", "kr")) {
+      parameters <- merge(parameters, .p_value_dof2(model, params = parameters, dof = df_error), by = "Parameter")
     } else {
       parameters <- merge(parameters, p_value(model, dof = df, effects = "fixed"), by = "Parameter")
     }
@@ -243,7 +245,7 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("betwithin", "ml1", "kenward", "kr")) {
+  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("betwithin", "satterthwaite", "ml1", "kenward", "kr")) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = "Parameter")
