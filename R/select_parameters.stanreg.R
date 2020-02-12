@@ -10,7 +10,7 @@ select_parameters.stanreg <- function(model, method = NULL, cross_validation = F
 
   if (cross_validation) {
     message("Cross-validating best parameters...")
-    junk <- utils::capture.output(selection <- projpred::cv_varsel(model, method = method), ...)
+    junk <- utils::capture.output(selection <- projpred::cv_varsel(model, method = method, ...))
   } else {
     selection <- projpred::varsel(model, method = method, ...)
   }
@@ -26,7 +26,7 @@ select_parameters.stanreg <- function(model, method = NULL, cross_validation = F
   formula <- .reconstruct_formula(parameters, model)
 
   # Update model
-  junk <- utils::capture.output(best <- stats::update(model, formula = formula, ...))
+  junk <- utils::capture.output(best <- suppressWarnings(stats::update(model, formula = formula, ...)))
   best
 }
 
