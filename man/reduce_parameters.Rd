@@ -7,7 +7,7 @@
 reduce_parameters(x, method = "PCA", n = "max", ...)
 }
 \arguments{
-\item{x}{A dataframe or a statistical model.}
+\item{x}{A data frame or a statistical model.}
 
 \item{method}{The features reduction method. Can be one of 'PCA', 'cMDS', 'DRR', 'ICA' (see the Details section).}
 

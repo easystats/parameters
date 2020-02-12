@@ -7,7 +7,7 @@
 ICA(x, n = "all", ...)
 }
 \arguments{
-\item{x}{A dataframe or a statistical model.}
+\item{x}{A data frame or a statistical model.}
 
 \item{n}{Number of components to extract. If \code{n="all"}, then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n="auto"} (default) or \code{n=NULL}, the number of components is selected through \code{\link{n_factors}}. In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.}
 

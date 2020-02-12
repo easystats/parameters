@@ -115,6 +115,12 @@ print.parameters_pca_summary <- print.parameters_efa_summary
 #' @export
 print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
 
+  if (inherits(x, "parameters_pca")) {
+    method <- "Principal Component Analysis"
+  } else {
+    method <- "Factor Analysis"
+  }
+
   # Labels
   if (!is.null(labels)) {
     x$Label <- labels
@@ -135,9 +141,9 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
   rotation_name <- attr(x, "rotation", exact = TRUE)
 
   if (is.null(rotation_name) || rotation_name == "none") {
-    insight::print_color("# Loadings from Principal Component Analysis (no rotation)\n\n", "blue")
+    insight::print_color(sprintf("# Loadings from %s (no rotation)\n\n", method), "blue")
   } else {
-    insight::print_color(sprintf("# Rotated loadings from Principal Component Analysis (%s-rotation)\n\n", rotation_name), "blue")
+    insight::print_color(sprintf("# Rotated loadings from %s (%s-rotation)\n\n", method, rotation_name), "blue")
   }
 
   cat(insight::format_table(x, digits = digits, ...))

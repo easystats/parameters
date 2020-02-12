@@ -12,6 +12,7 @@
 ## Changes
 
 - Run certain tests only locally, to reduce duration of CRAN checks.
+- Improved print-method for `factor_analysis()`.
 
 ## Bug fixes
 

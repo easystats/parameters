@@ -1,13 +1,13 @@
 #' Principal Component Analysis (PCA)
 #'
-#' This function performs a principal component analysis (PCA) and returns the loadings as a dataframe.
+#' This function performs a principal component analysis (PCA) and returns the loadings as a data frame.
 #'
-#' @param x A dataframe or a statistical model.
+#' @param x A data frame or a statistical model.
 #' @param n Number of components to extract. If \code{n="all"}, then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n="auto"} (default) or \code{n=NULL}, the number of components is selected through \code{\link{n_factors}}. In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.
-#' @param rotation If not \code{"none"}, the PCA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, and \code{"cluster"}. See \code{\link[psych]{fa}} for details.
+#' @param rotation If not \code{"none"}, the PCA / FA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, and \code{"cluster"}. See \code{\link[psych]{fa}} for details.
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).
-#' @param standardize A logical value indicating whether the variables should be standardized (centred and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).
+#' @param standardize A logical value indicating whether the variables should be standardized (centered and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details

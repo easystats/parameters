@@ -16,8 +16,8 @@
 #'  There is a simplified rule of thumb that may help do decide whether to run
 #'  a principal component analysis or a factor analysis:
 #'  \itemize{
-#'    \item Run principal component analysis if you assume or wish to test a theoretical model of latent factors causing observed variables.
-#'    \item Run factor analysis If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.
+#'    \item Run \emph{factor analysis} if you assume or wish to test a theoretical model of latent factors causing observed variables.
+#'    \item Run \emph{principal component analysis} If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.
 #'  }
 #'  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
 #'  }

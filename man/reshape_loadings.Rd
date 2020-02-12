@@ -13,7 +13,7 @@ reshape_loadings(x, ...)
 \method{reshape_loadings}{data.frame}(x, threshold = NULL, loadings_columns = NULL, ...)
 }
 \arguments{
-\item{x}{A dataframe or a statistical model.}
+\item{x}{A data frame or a statistical model.}
 
 \item{...}{Arguments passed to or from other methods.}
 
