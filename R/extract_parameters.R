@@ -156,15 +156,20 @@
     standardize <- NULL
   }
 
-  # for refit, we completely refit the model, than extract parameters, ci etc. as usual
+  # for refit, we completely refit the model, than extract parameters,
+  # ci etc. as usual - therefor, we set "standardize" to NULL
   if (!is.null(standardize) && standardize == "refit") {
     model <- effectsize::standardize(model, verbose = FALSE)
     standardize <- NULL
   }
 
+  special_df_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
+
+  # get parameters and statistic
   parameters <- insight::get_parameters(model, effects = "fixed", component = "all")
   statistic <- insight::get_statistic(model, component = "all")
 
+  # sometimes, due to merge(), row-order messes up, so we save this here
   original_order <- parameters$.id <- 1:nrow(parameters)
 
   # remove SE column
@@ -180,7 +185,14 @@
   } else {
     df <- Inf
   }
-  df_error <- data.frame(Parameter = parameters$Parameter, df_error = as.vector(df), stringsAsFactors = FALSE)
+
+  df_error <- data.frame(
+    Parameter = parameters$Parameter,
+    df_error = as.vector(df),
+    stringsAsFactors = FALSE
+  )
+  # for KR-dof, we have the SE as well, to save computation time
+  df_error$SE <- attr(df, "se", exact = TRUE)
 
 
   # Std Coefficients for other methods than "refit"
@@ -208,6 +220,9 @@
     if (!is.null(ci)) {
       if (isTRUE(robust)) {
         ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
+      } else if (df_method %in% c("kenward", "kr")) {
+        # special handling for KR-CIs, where we already have computed SE
+        ci_df <- .ci_kenward_dof(model, ci = ci, df_kr = df_error)
       } else {
         ci_df <- ci(model, ci = ci, method = df_method, effects = "fixed")
       }
@@ -224,6 +239,11 @@
   if (is.null(standardize) || !("SE" %in% colnames(parameters))) {
     if (isTRUE(robust)) {
       parameters <- merge(parameters, standard_error_robust(model, ...), by = "Parameter")
+      # special handling for KR-SEs, which we already have computed from dof
+    } else if ("SE" %in% colnames(df_error)) {
+      se_kr <- df_error
+      se_kr$df_error <- NULL
+      parameters <- merge(parameters, se_kr, by = "Parameter")
     } else {
       parameters <- merge(parameters, standard_error(model, method = df_method, effects = "fixed"), by = "Parameter")
     }
@@ -236,8 +256,9 @@
   } else {
     if ("Pr(>|z|)" %in% names(parameters)) {
       names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
-    } else if (df_method %in% c("betwithin", "ml1", "satterthwaite", "kenward", "kr")) {
-      parameters <- merge(parameters, .p_value_dof2(model, params = parameters, dof = df_error), by = "Parameter")
+    } else if (df_method %in% special_df_methods) {
+      # special handling for KR-p, which we already have computed from dof
+      parameters <- merge(parameters, .p_value_dof_kr(model, params = parameters, dof = df_error), by = "Parameter")
     } else {
       parameters <- merge(parameters, p_value(model, dof = df, effects = "fixed"), by = "Parameter")
     }
@@ -245,7 +266,7 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (!isTRUE(robust) && is.null(standardize) && df_method %in% c("betwithin", "satterthwaite", "ml1", "kenward", "kr")) {
+  if (!isTRUE(robust) && is.null(standardize) && df_method %in% special_df_methods) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = "Parameter")
@@ -254,7 +275,7 @@
 
   # dof
   if (!"df" %in% names(parameters)) {
-    if (!df_method %in% c("betwithin", "ml1", "satterthwaite", "kenward", "kr")) {
+    if (!df_method %in% special_df_methods) {
       df_error <- data.frame(
         Parameter = parameters$Parameter,
         df_error = degrees_of_freedom(model, method = "any"),
@@ -262,6 +283,9 @@
       )
     }
     if (!is.null(df_error) && nrow(df_error) == nrow(parameters)) {
+      if ("SE" %in% colnames(df_error)) {
+        df_error$SE <- NULL
+      }
       parameters <- merge(parameters, df_error, by = "Parameter")
     }
   }

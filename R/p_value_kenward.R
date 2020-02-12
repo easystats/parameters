@@ -61,7 +61,7 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
   p <- 2 * stats::pt(abs(params$Coefficient / se$SE), df = dof, lower.tail = FALSE)
 
   data.frame(
-    Parameter = statistic$Parameter,
+    Parameter = params$Parameter,
     p = unname(p),
     stringsAsFactors = FALSE
   )
@@ -70,7 +70,10 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
 
 
-.p_value_dof2 <- function(model, params, dof) {
+.p_value_dof_kr <- function(model, params, dof) {
+  if ("SE" %in% colnames(params) && "SE" %in% colnames(dof)) {
+    params$SE <- NULL
+  }
   params <- merge(params, dof, by = "Parameter")
   p <- 2 * stats::pt(abs(params$Estimate / params$SE), df = params$df_error, lower.tail = FALSE)
 

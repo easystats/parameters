@@ -4,16 +4,21 @@
 dof_kenward <- function(model) {
   parameters <- insight::find_parameters(model, effects = "fixed", flatten = TRUE)
   L <- as.data.frame(diag(rep(1, n_parameters(model, effects = "fixed"))))
-  stats::setNames(sapply(L, .kenward_adjusted_ddf, model = model), parameters)
-  # stats::setNames(sapply(L, pbkrtest::get_ddf_Lb, object = model), parameters)
+  krvcov <- .vcov_kenward_ajusted(model)
+
+  dof <- stats::setNames(sapply(L, .kenward_adjusted_ddf, model = model, adjusted_vcov = krvcov), parameters)
+
+  attr(dof, "vcov") <- krvcov
+  attr(dof, "se") <- abs(as.vector(sqrt(diag(as.matrix(krvcov)))))
+  dof
 }
 
 
 
 # The following code was taken from the "pbkrtest" package and slightly modified
 #' @author Søren Højsgaard, \email{sorenh@@math.aau.dk}
-.kenward_adjusted_ddf <- function(model, linear_coef) {
-  .adjusted_ddf(.vcov_kenward_ajusted(model), linear_coef, stats::vcov(model))
+.kenward_adjusted_ddf <- function(model, linear_coef, adjusted_vcov) {
+  .adjusted_ddf(adjusted_vcov, linear_coef, stats::vcov(model))
 }
 
 

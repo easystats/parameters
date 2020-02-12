@@ -24,29 +24,33 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
 #' @importFrom insight get_parameters n_obs
 #' @importFrom stats qt
 #' @keywords internal
-.ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, method = "wald", ...) {
+.ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, method = "wald", se = NULL, ...) {
   params <- insight::get_parameters(model, effects = effects, component = component)
   estimates <- params$Estimate
   method <- tolower(method)
 
-  stderror <- if (isTRUE(robust)) {
-    standard_error_robust(model, ...)
-  } else {
-    switch(
-      method,
-      "wald" = standard_error(model, component = component),
-      "kenward" = ,
-      "kr" = se_kenward(model),
-      "ml1" = se_ml1(model),
-      "betwithin" = se_betwithin(model),
-      "satterthwaite" = se_satterthwaite(model),
-      standard_error(model, component = component)
-    )
-  }
+  # if we have adjusted SE, e.g. from kenward-roger, don't recompute
+  # standard errors to save time...
+  if (is.null(se)) {
+    stderror <- if (isTRUE(robust)) {
+      standard_error_robust(model, ...)
+    } else {
+      switch(
+        method,
+        "wald" = standard_error(model, component = component),
+        "kenward" = ,
+        "kr" = se_kenward(model),
+        "ml1" = se_ml1(model),
+        "betwithin" = se_betwithin(model),
+        "satterthwaite" = se_satterthwaite(model),
+        standard_error(model, component = component)
+      )
+    }
 
-  # filter non-matching parameters
-  stderror <- stderror[1:nrow(params), ]
-  se <- stderror$SE
+    # filter non-matching parameters
+    stderror <- stderror[1:nrow(params), ]
+    se <- stderror$SE
+  }
 
   if (is.null(dof)) {
     # residual df
