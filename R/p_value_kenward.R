@@ -63,7 +63,12 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
   if (method == "kenward") {
     se <- se_kenward(model)
-    statistic <- params$Coefficient / se$SE
+    estimate <- if ("Coefficient" %in% colnames(params)) {
+      params$Coefficient
+    } else {
+      params$Estimate
+    }
+    statistic <- estimate / se$SE
   }
 
   p <- 2 * stats::pt(abs(statistic), df = dof, lower.tail = FALSE)

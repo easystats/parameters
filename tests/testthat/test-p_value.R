@@ -89,8 +89,8 @@ if (.runThisTest || Sys.getenv("USER") == "travis") {
 
       # Mixed models
       model <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
-      testthat::expect_equal(p_value(model)$p[1], 0.195, tol = 0.01)
-      testthat::expect_equal(p_value(model, method = "kr")$p[1], 0.227, tol = 0.01)
+      testthat::expect_equal(p_value(model)$p[1], 0.1956467, tol = 0.01)
+      testthat::expect_equal(p_value(model, method = "kr")$p[1], 0.319398, tol = 0.01)
 
       model <- insight::download_model("merMod_1")
       testthat::expect_equal(p_value(model)$p[1], 0.065, tol = 0.01)
