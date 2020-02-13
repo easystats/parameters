@@ -2,7 +2,7 @@
 #'
 #' This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors.
 #'
-#' @param x A dataframe.
+#' @param x A data frame.
 #' @param type Can be \code{"FA"} or \code{"PCA"}, depending on what you want to do.
 #' @param rotation Only used for VSS (Very Simple Structure criterion, see \code{\link[psych]{VSS}}). The rotation to apply. Can be \code{"none"}, \code{"varimax"}, \code{"quartimax"}, \code{"bentlerT"}, \code{"equamax"}, \code{"varimin"}, \code{"geominT"} and \code{"bifactor"} for orthogonal rotations, and \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, \code{"bentlerQ"}, \code{"geominQ"}, \code{"biquartimin"} and \code{"cluster"} for oblique transformations.
 #' @param algorithm Factoring method used by VSS. Can be \code{"pa"} for Principal Axis Factor Analysis, \code{"minres"} for minimum residual (OLS) factoring, \code{"mle"} for Maximum Likelihood FA and \code{"pc"} for Principal Components. \code{"default"} will select \code{"minres"} if \code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.
@@ -11,7 +11,7 @@
 #' @param cor An optional correlation matrix that can be used. If \code{NULL}, will compute it by running \code{cor()} on the passed data.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}. \code{n_components()} is a convenient short for \code{n_factors(type = "PCA")}.
 #'
 #' @examples
 #' library(parameters)
@@ -25,7 +25,6 @@
 #' n_factors(mtcars, type = "PCA", package = "all")
 #' n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
 #' }
-#'
 #' @return A data frame.
 #'
 #' @references \itemize{
@@ -224,7 +223,11 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 
 
 
-
+#' @rdname n_factors
+#' @export
+n_components <- function(x, type = "PCA", rotation = "varimax", algorithm = "default", package = c("nFactors", "psych"), cor = NULL, safe = TRUE, ...) {
+  n_factors(x, type = type, rotation = rotation, algorithm = algorithm, package = package, cor = cor, safe = safe, ...)
+}
 
 
 

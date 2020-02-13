@@ -2,6 +2,7 @@
 % Please edit documentation in R/n_factors.R
 \name{n_factors}
 \alias{n_factors}
+\alias{n_components}
 \title{Number of components/factors to retain in PCA/FA}
 \usage{
 n_factors(
@@ -14,9 +15,20 @@ n_factors(
   safe = TRUE,
   ...
 )
+
+n_components(
+  x,
+  type = "PCA",
+  rotation = "varimax",
+  algorithm = "default",
+  package = c("nFactors", "psych"),
+  cor = NULL,
+  safe = TRUE,
+  ...
+)
 }
 \arguments{
-\item{x}{A dataframe.}
+\item{x}{A data frame.}
 
 \item{type}{Can be \code{"FA"} or \code{"PCA"}, depending on what you want to do.}
 
@@ -39,7 +51,7 @@ A data frame.
 This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors.
 }
 \note{
-There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}. \code{n_components()} is a convenient short for \code{n_factors(type = "PCA")}.
 }
 \examples{
 library(parameters)
@@ -53,7 +65,6 @@ summary(result)
 n_factors(mtcars, type = "PCA", package = "all")
 n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
 }
-
 }
 \references{
 \itemize{

@@ -102,3 +102,6 @@ principal_components(mtcars[, 1:4], n = "auto")
   \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate statistics (6th ed.). Boston: Pearson Education.
 }
 }
+\seealso{
+\code{\link[=performance::check_itemscale]{check_itemscale()}} to compute various measures of internal consistencies applied to the (sub)scales (i.e. components) extracted from the PCA.
+}

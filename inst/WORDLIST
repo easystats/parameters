@@ -119,6 +119,7 @@ leptokurtic
 lm
 lme
 lmer
+lmerModLmerTest
 loadings
 Maechler
 Malo

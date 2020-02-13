@@ -45,6 +45,8 @@
 #'
 #' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{closest_component()} will return a numeric vector with the assigned component index for each column from the original data frame. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
+#' @seealso \code{\link[=performance::check_itemscale]{check_itemscale()}} to compute various measures of internal consistencies applied to the (sub)scales (i.e. components) extracted from the PCA.
+#'
 #' @examples
 #' library(parameters)
 #'
