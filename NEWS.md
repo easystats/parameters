@@ -14,6 +14,7 @@
 - Run certain tests only locally, to reduce duration of CRAN checks.
 - Improved print-method for `factor_analysis()`.
 - Improved efficiency for `model_parameters()` (for linear mixed models) when `df_method = "kenward"`.
+- `model_parameters()` gets a `p_adjust`-argument, to adjust p-values for multiple comparisons.
 
 ## Bug fixes
 

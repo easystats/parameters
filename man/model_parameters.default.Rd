@@ -15,6 +15,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   robust = FALSE,
+  p_adjust = NULL,
   ...
 )
 
@@ -26,6 +27,7 @@
   component = c("conditional", "precision", "all"),
   standardize = NULL,
   exponentiate = FALSE,
+  p_adjust = NULL,
   ...
 )
 
@@ -37,6 +39,7 @@
   component = c("all", "conditional", "scale"),
   standardize = NULL,
   exponentiate = FALSE,
+  p_adjust = NULL,
   ...
 )
 
@@ -48,6 +51,7 @@
   component = c("all", "conditional", "extra"),
   standardize = NULL,
   exponentiate = FALSE,
+  p_adjust = NULL,
   ...
 )
 }
@@ -65,6 +69,8 @@
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.}
 
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
+
+\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 

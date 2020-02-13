@@ -1,6 +1,6 @@
 #' @inheritParams model_parameters.merMod
 #' @export
-model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, exponentiate = FALSE, details = FALSE, ...) {
+model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, exponentiate = FALSE, details = FALSE, p_adjust = NULL, ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -10,6 +10,7 @@ model_parameters.wbm <- function(model, ci = .95, bootstrap = FALSE, iterations 
     standardize = NULL,
     exponentiate = exponentiate,
     robust = FALSE,
+    p_adjust = p_adjust,
     ...
   )
 

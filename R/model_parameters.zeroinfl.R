@@ -19,7 +19,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @inheritParams simulate_model
 #' @export
-model_parameters.zeroinfl <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, robust = FALSE, ...) {
+model_parameters.zeroinfl <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, robust = FALSE, p_adjust = NULL, ...) {
   component <- match.arg(component)
 
   # fix argument, if model has no zi-part
@@ -32,7 +32,7 @@ model_parameters.zeroinfl <- function(model, ci = .95, bootstrap = FALSE, iterat
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, robust = robust, ...)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, robust = robust, p_adjust = p_adjust, ...)
   }
 
 

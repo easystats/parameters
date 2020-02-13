@@ -30,7 +30,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @inheritParams simulate_model
 #' @export
-model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, p_adjust = NULL, ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -40,6 +40,7 @@ model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations 
     standardize = standardize,
     exponentiate = exponentiate,
     robust = FALSE,
+    p_adjust = p_adjust,
     ...
   )
 

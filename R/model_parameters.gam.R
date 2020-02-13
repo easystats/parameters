@@ -18,12 +18,12 @@
 #' model <- gam(y ~ s(x0) + s(x1) + s(x2) + s(x3), data = dat)
 #' model_parameters(model)
 #' @export
-model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, ...) {
+model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, p_adjust = NULL, ...) {
   # Processing
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = "all", merge_by = c("Parameter", "Component"), standardize = standardize, robust = robust)
+    parameters <- .extract_parameters_generic(model, ci = ci, component = "all", merge_by = c("Parameter", "Component"), standardize = standardize, robust = robust, p_adjust = p_adjust)
   }
 
   if (exponentiate) parameters <- .exponentiate_parameters(parameters)

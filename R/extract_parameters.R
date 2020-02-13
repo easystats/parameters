@@ -2,9 +2,9 @@
 
 
 #' @importFrom insight get_statistic get_parameters
-#' @importFrom stats confint
+#' @importFrom stats confint p.adjust.methods p.adjust
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, ...) {
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, p_adjust = NULL, ...) {
   # check if standardization is required and package available
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
     insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
@@ -137,6 +137,11 @@
   if (length(unique(parameters$Component)) == 1) parameters$Component <- NULL
   if (length(unique(parameters$Effects)) == 1 || effects == "fixed") parameters$Effects <- NULL
 
+  # adjust p-values?
+  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
+    parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
+  }
+
   rownames(parameters) <- NULL
   parameters
 }
@@ -149,7 +154,7 @@
 
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_mixed <- function(model, ci = .95, df_method = "wald", standardize = NULL, robust = FALSE, ...) {
+.extract_parameters_mixed <- function(model, ci = .95, df_method = "wald", standardize = NULL, robust = FALSE, p_adjust = NULL, ...) {
   # check if standardization is required and package available
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
     insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
@@ -304,6 +309,11 @@
   # Reorder
   order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
+
+  # adjust p-values?
+  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
+    parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
+  }
 
   rownames(parameters) <- NULL
   parameters

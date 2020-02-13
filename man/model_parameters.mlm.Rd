@@ -14,6 +14,7 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
+  p_adjust = NULL,
   ...
 )
 
@@ -24,6 +25,7 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
+  p_adjust = NULL,
   ...
 )
 
@@ -34,6 +36,7 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
+  p_adjust = NULL,
   ...
 )
 
@@ -60,6 +63,8 @@
 \item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only works when \code{standardize="refit"}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.}
+
+\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 
