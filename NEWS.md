@@ -13,11 +13,13 @@
 
 - Run certain tests only locally, to reduce duration of CRAN checks.
 - Improved print-method for `factor_analysis()`.
+- Improved efficiency for `model_parameters()` (for linear mixed models) when `df_method = "kenward"`.
 
 ## Bug fixes
 
 - Fixed minor issue with the `print()`-method for `model_parameters.befa()`.
-- Fixed issues in `model_parameters()` with wrong order of degrees of freedom.
+- Fixed issues in `model_parameters()` (for linear mixed models) with wrong order of degrees of freedom
+- Fixed issues in `model_parameters()` (for linear mixed models) with accuracy of p-values.
 - Fixed issues in `model_parameters()` with wrong test statistic for *lmerModLmerTest* models.
 
 # parameters 0.5.0
