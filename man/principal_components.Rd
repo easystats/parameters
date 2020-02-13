@@ -103,5 +103,5 @@ principal_components(mtcars[, 1:4], n = "auto")
 }
 }
 \seealso{
-\code{\link[=performance::check_itemscale]{check_itemscale()}} to compute various measures of internal consistencies applied to the (sub)scales (i.e. components) extracted from the PCA.
+\code{\link[performance]{check_itemscale}} to compute various measures of internal consistencies applied to the (sub)scales (i.e. components) extracted from the PCA.
 }
