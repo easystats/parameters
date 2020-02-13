@@ -219,8 +219,8 @@ included in the summary output.</p></td>
 
     
 <h3>Technical Details</h3>
-<p><code><a href='simulate_model.html'>simulate_model()</a></code> is a computationally faster alternative
-    to <code><a href='bootstrap_model.html'>bootstrap_model()</a></code>. Simulated draws for coefficients are based
+<p><code>simulate_parameters()</code> is a computationally faster alternative
+    to <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>. Simulated draws for coefficients are based
     on a multivariate normal distribution (<code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>MASS::mvrnorm()</a></code>) with mean
     <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p><p></p><h3>Models with Zero-Inflation Component</h3>
 <p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
@@ -244,13 +244,13 @@ included in the summary output.</p></td>
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>simulate_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high           p
-#&gt; 1                   (Intercept)   3.5284178  3.2062455  3.8624354 0.000000000
-#&gt; 2             Speciesversicolor  -1.1531106 -1.8077936 -0.4978578 0.001998002
-#&gt; 3              Speciesvirginica  -2.2501388 -3.1073087 -1.3975844 0.000000000
-#&gt; 4                   Petal.Width   0.4117286 -0.4668826  1.3212562 0.355644356
-#&gt; 5                  Petal.Length   0.9418990  0.7957040  1.0889821 0.000000000
-#&gt; 6 Speciesversicolor:Petal.Width  -0.7330585 -1.8367166  0.2348297 0.159840160
-#&gt; 7  Speciesvirginica:Petal.Width  -0.3694773 -1.4165314  0.5600944 0.423576424</div><div class='input'>
+#&gt; 1                   (Intercept)   3.5191669  3.2129553  3.8401167 0.000000000
+#&gt; 2             Speciesversicolor  -1.1637096 -1.8390518 -0.4830205 0.001998002
+#&gt; 3              Speciesvirginica  -2.2637105 -3.0986713 -1.3408663 0.000000000
+#&gt; 4                   Petal.Width   0.4294848 -0.5175793  1.2854830 0.367632368
+#&gt; 5                  Petal.Length   0.9411926  0.7859122  1.0914035 0.000000000
+#&gt; 6 Speciesversicolor:Petal.Width  -0.7677361 -1.7234432  0.3407279 0.167832168
+#&gt; 7  Speciesvirginica:Petal.Width  -0.3711253 -1.2755121  0.6017500 0.465534466</div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"glmmTMB"</span>)) {
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
@@ -262,10 +262,10 @@ included in the summary output.</p></td>
   <span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)
   <span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)
 }</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high           p
-#&gt; 1 (Intercept)   0.7975917 80  0.4290829  1.144443 0.003996004
-#&gt; 2 (Intercept)   0.7975917 95  0.2260494  1.322215 0.003996004
-#&gt; 3     minedno  -1.8386463 80 -2.2581487 -1.438269 0.000000000
-#&gt; 4     minedno  -1.8386463 95 -2.4424867 -1.235278 0.000000000</div><div class='input'># }
+#&gt; 1 (Intercept)   0.7906336 80  0.4348867  1.132659 0.003996004
+#&gt; 2 (Intercept)   0.7906336 95  0.2539569  1.311328 0.003996004
+#&gt; 3     minedno  -1.8500716 80 -2.2399420 -1.436088 0.000000000
+#&gt; 4     minedno  -1.8500716 95 -2.4970581 -1.255580 0.000000000</div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

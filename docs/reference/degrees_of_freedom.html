@@ -173,6 +173,20 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Methods for calculating degrees of freedom:</p><ul>
+<li><p><code>"analytical"</code> For models of class <code>lmerMod</code>, Kenward-Roger approximated degrees of freedoms are calculated, for other models, <code>n-k</code> (number of observations minus number of parameters).</p></li>
+<li><p><code>"fit"</code> Tries to extract residual degrees of freedom, and returns <code>Inf</code> if residual df's could not be extracted.</p></li>
+<li><p><code>"any"</code> First tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.</p></li>
+<li><p><code>"nokr"</code> Same as <code>"analytical"</code>, but does not Kenward-Roger approximation for models of class <code>lmerMod</code>. Instead, always uses <code>n-k</code> to calculate df for any model.</p></li>
+<li><p><code>"wald"</code> Returns <code>Inf</code>.</p></li>
+<li><p><code>"kenward"</code> Calls <code><a href='p_value_kenward.html'>dof_kenward</a></code>.</p></li>
+<li><p><code>"satterthwaite"</code> Calls <code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code>.</p></li>
+<li><p><code>"ml1"</code> Calls <code><a href='p_value_ml1.html'>dof_ml1</a></code>.</p></li>
+<li><p><code>"betwithin"</code> Calls <code><a href='p_value_betwithin.html'>dof_betwithin</a></code>.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> * <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
@@ -198,6 +212,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

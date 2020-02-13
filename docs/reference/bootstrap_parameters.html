@@ -195,13 +195,7 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
     </tr>
     <tr>
       <th>test</th>
-      <td><p>The indices of effect existence to compute. Character (vector) or
-list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
-<code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
-<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
-For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code><a href='https://rdrr.io/pkg/bayestestR/man/rope.html'>rope</a></code> or <code><a href='https://rdrr.io/pkg/bayestestR/man/p_direction.html'>p_direction</a></code>) and its results
-included in the summary output.</p></td>
+      <td><p>The indices to compute. Character (vector) with one or more of these options: <code>"p-value"</code> (or <code>"p"</code>), <code>"p_direction"</code> (or <code>"pd"</code>), <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>), <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests. For each "test", the corresponding <span class="pkg">bayestestR</span> function is called (e.g. <code><a href='https://rdrr.io/pkg/bayestestR/man/rope.html'>rope</a></code> or <code><a href='https://rdrr.io/pkg/bayestestR/man/p_direction.html'>p_direction</a></code>) and its results included in the summary output.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -212,6 +206,12 @@ included in the summary output.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Bootstrapped parameters.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function first calls <code><a href='bootstrap_model.html'>bootstrap_model</a></code> to generate
+  bootstrapped coefficients. The resulting replicated for each coefficient
+  are treated as "distribution", and is passed to <code><a href='https://rdrr.io/pkg/bayestestR/man/describe_posterior.html'>describe_posterior</a></code>
+  to calculate the related indices defined in the <code>"test"</code> argument.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Davison, A. C., &amp; Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.</p>
@@ -236,6 +236,7 @@ included in the summary output.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
