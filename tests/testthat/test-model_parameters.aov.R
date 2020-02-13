@@ -2,6 +2,7 @@
 
 if (.runThisTest || Sys.getenv("USER") == "travis") {
   if (require("insight") && require("testthat") && require("lme4") && require("parameters")) {
+    unloadNamespace("lmerTest")
     data(iris)
     iris$Cat1 <- rep(c("X", "X", "Y"), length.out = nrow(iris))
     iris$Cat2 <- rep(c("A", "B"), length.out = nrow(iris))

@@ -54,4 +54,6 @@ if (require("testthat") &&
     testthat::expect_is(model_parameters(model), class = "parameters_model")
     testthat::expect_is(model_parameters(model, df_method = "kenward"), class = "parameters_model")
   })
+
+  unloadNamespace("lmerTest")
 }
