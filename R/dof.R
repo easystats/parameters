@@ -5,6 +5,19 @@
 #' @param model A statistical model.
 #' @param method Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}), \code{"kenward"} (see \code{\link{dof_kenward}}) or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.
 #'
+#' @details Methods for calculating degrees of freedom:
+#' \itemize{
+#' \item \code{"analytical"} For models of class \code{lmerMod}, Kenward-Roger approximated degrees of freedoms are calculated, for other models, \code{n-k} (number of observations minus number of parameters).
+#' \item \code{"fit"} Tries to extract residual degrees of freedom, and returns \code{Inf} if residual df's could not be extracted.
+#' \item \code{"any"} First tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.
+#' \item \code{"nokr"} Same as \code{"analytical"}, but does not Kenward-Roger approximation for models of class \code{lmerMod}. Instead, always uses \code{n-k} to calculate df for any model.
+#' \item \code{"wald"} Returns \code{Inf}.
+#' \item \code{"kenward"} Calls \code{\link{dof_kenward}}.
+#' \item \code{"satterthwaite"} Calls \code{\link{dof_satterthwaite}}.
+#' \item \code{"ml1"} Calls \code{\link{dof_ml1}}.
+#' \item \code{"betwithin"} Calls \code{\link{dof_betwithin}}.
+#' }
+#'
 #' @examples
 #' model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
 #' dof(model)

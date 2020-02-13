@@ -13,6 +13,11 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return The number of parameters in the model.
+#'
+#' @examples
+#' data(iris)
+#' model <- lm(Sepal.Length ~ Sepal.Width * Species, data = iris)
+#' n_parameters(model)
 #' @export
 n_parameters <- function(x, ...) {
   UseMethod("n_parameters")

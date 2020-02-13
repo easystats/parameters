@@ -3,6 +3,7 @@
 #' Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
 #'
 #'
+#' @param test The indices to compute. Character (vector) with one or more of these options: \code{"p-value"} (or \code{"p"}), \code{"p_direction"} (or \code{"pd"}), \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}), \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests. For each "test", the corresponding \pkg{bayestestR} function is called (e.g. \code{\link[bayestestR]{rope}} or \code{\link[bayestestR]{p_direction}}) and its results included in the summary output.
 #' @inheritParams bootstrap_model
 #' @inheritParams bayestestR::describe_posterior
 #'
@@ -11,6 +12,11 @@
 #' @references Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.
 #'
 #' @seealso \code{\link{bootstrap_model}}, \code{\link{simulate_parameters}}, \code{\link{simulate_model}}
+#'
+#' @details This function first calls \code{\link{bootstrap_model}} to generate
+#'   bootstrapped coefficients. The resulting replicated for each coefficient
+#'   are treated as "distribution", and is passed to \code{\link[bayestestR]{describe_posterior}}
+#'   to calculate the related indices defined in the \code{"test"} argument.
 #'
 #' @examples
 #' library(parameters)

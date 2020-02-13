@@ -17,6 +17,20 @@ dof(model, method = "analytical")
 \description{
 Estimate or extract degrees of freedom of models.
 }
+\details{
+Methods for calculating degrees of freedom:
+\itemize{
+\item \code{"analytical"} For models of class \code{lmerMod}, Kenward-Roger approximated degrees of freedoms are calculated, for other models, \code{n-k} (number of observations minus number of parameters).
+\item \code{"fit"} Tries to extract residual degrees of freedom, and returns \code{Inf} if residual df's could not be extracted.
+\item \code{"any"} First tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.
+\item \code{"nokr"} Same as \code{"analytical"}, but does not Kenward-Roger approximation for models of class \code{lmerMod}. Instead, always uses \code{n-k} to calculate df for any model.
+\item \code{"wald"} Returns \code{Inf}.
+\item \code{"kenward"} Calls \code{\link{dof_kenward}}.
+\item \code{"satterthwaite"} Calls \code{\link{dof_satterthwaite}}.
+\item \code{"ml1"} Calls \code{\link{dof_ml1}}.
+\item \code{"betwithin"} Calls \code{\link{dof_betwithin}}.
+}
+}
 \examples{
 model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
 dof(model)

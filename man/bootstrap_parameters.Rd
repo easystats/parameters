@@ -29,13 +29,7 @@ to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95}
 (see \code{\link[bayestestR:eti]{eti}}) or \code{"SI"}
 (see \code{\link[bayestestR:si]{si}}).}
 
-\item{test}{The indices of effect existence to compute. Character (vector) or
-list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
-\code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
-\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
-For each "test", the corresponding \pkg{bayestestR} function is called
-(e.g. \code{\link[bayestestR:rope]{rope}} or \code{\link[bayestestR:p_direction]{p_direction}}) and its results
-included in the summary output.}
+\item{test}{The indices to compute. Character (vector) with one or more of these options: \code{"p-value"} (or \code{"p"}), \code{"p_direction"} (or \code{"pd"}), \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}), \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests. For each "test", the corresponding \pkg{bayestestR} function is called (e.g. \code{\link[bayestestR]{rope}} or \code{\link[bayestestR]{p_direction}}) and its results included in the summary output.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -44,6 +38,12 @@ Bootstrapped parameters.
 }
 \description{
 Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
+}
+\details{
+This function first calls \code{\link{bootstrap_model}} to generate
+  bootstrapped coefficients. The resulting replicated for each coefficient
+  are treated as "distribution", and is passed to \code{\link[bayestestR]{describe_posterior}}
+  to calculate the related indices defined in the \code{"test"} argument.
 }
 \examples{
 library(parameters)

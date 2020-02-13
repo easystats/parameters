@@ -50,8 +50,8 @@ Compute simulated draws of parameters and their related indices such as Confiden
 }
 \details{
 \subsection{Technical Details}{
-    \code{simulate_model()} is a computationally faster alternative
-    to \code{bootstrap_model()}. Simulated draws for coefficients are based
+    \code{simulate_parameters()} is a computationally faster alternative
+    to \code{bootstrap_parameters()}. Simulated draws for coefficients are based
     on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
     \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
   }

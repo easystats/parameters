@@ -59,3 +59,8 @@ The number of parameters in the model.
 \description{
 Returns the number of parameters of a model.
 }
+\examples{
+data(iris)
+model <- lm(Sepal.Length ~ Sepal.Width * Species, data = iris)
+n_parameters(model)
+}
