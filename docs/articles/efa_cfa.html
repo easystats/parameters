@@ -103,7 +103,7 @@
 
       
 
-      </header><script src="efa_cfa_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Structural Models (EFA, CFA, SEM…)</h1>
@@ -127,16 +127,16 @@
 <a href="#factor-structure-sphericity-and-kmo" class="anchor"></a>Factor Structure (Sphericity and KMO)</h2>
 <p>The first step is to test the dataset for factor analysis suitability. Two existing methods are the <strong>Bartlett’s Test of Sphericity</strong> and the <strong>Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA)</strong>. The former tests whether a matrix is significantly different from an identity matrix. This statistical test for the presence of correlations among variables, providing the statistical probability that the correlation matrix has significant correlations among at least some of variables. As for factor analysis to work, some relationships between variables are needed, thus, a significant Bartlett’s test of sphericity is required, say <em>p</em> &lt; .001. The latter was introduced by Kaiser (1970) as the Measure of Sampling Adequacy (MSA), later modified by Kaiser and Rice (1974). The Kaiser-Meyer-Olkin (KMO) statistic, which can vary from 0 to 1, indicates the degree to which each variable in a set is predicted without error by the other variables. A value of 0 indicates that the sum of partial correlations is large relative to the sum correlations, indicating factor analysis is likely to be inappropriate. A KMO value close to 1 indicates that the sum of partial correlations is not large relative to the sum of correlations and so factor analysis should yield distinct and reliable factors.</p>
 <p>Both tests can be performed by using the <code><a href="../reference/check_factorstructure.html">check_factorstructure()</a></code> function.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(psych)</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Load the data</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>data &lt;-<span class="st"> </span>psych<span class="op">::</span>bfi[, <span class="dv">1</span><span class="op">:</span><span class="dv">25</span>]  <span class="co"># Select only the 25 first columns corresponding to the items</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span>(data)  <span class="co"># remove missing values</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># Check factor structure</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="kw"><a href="../reference/check_factorstructure.html">check_factorstructure</a></span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(psych)</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co"># Load the data</span></a>
+<a class="sourceLine" id="cb1-6" title="6">data &lt;-<span class="st"> </span>psych<span class="op">::</span>bfi[, <span class="dv">1</span><span class="op">:</span><span class="dv">25</span>]  <span class="co"># Select only the 25 first columns corresponding to the items</span></a>
+<a class="sourceLine" id="cb1-7" title="7">data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span>(data)  <span class="co"># remove missing values</span></a>
+<a class="sourceLine" id="cb1-8" title="8"></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co"># Check factor structure</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw"><a href="../reference/check_factorstructure.html">check_factorstructure</a></span>(data)</a></code></pre></div>
 <pre><code>#&gt; # Is the data suitable for Factor Analysis?
 #&gt; 
 #&gt;   - KMO: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = 0.85).
@@ -146,10 +146,10 @@
 <h2 class="hasAnchor">
 <a href="#exploratory-factor-analysis-efa" class="anchor"></a>Exploratory Factor Analysis (EFA)</h2>
 <p>Now that we are confident that our dataset is appropriate, we will explore a factor structure made of 5 latent variables, corresponding to the items’ authors theory of personality.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Fit an EFA</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>efa &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span>(data, <span class="dt">nfactors =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="dt">sort =</span> <span class="ot">TRUE</span>, <span class="dt">threshold =</span> <span class="st">"max"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>efa</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Fit an EFA</span></a>
+<a class="sourceLine" id="cb3-2" title="2">efa &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span>(data, <span class="dt">nfactors =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="dt">sort =</span> <span class="ot">TRUE</span>, <span class="dt">threshold =</span> <span class="st">"max"</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4">efa</a></code></pre></div>
 <pre><code>#&gt; # Rotated loadings from Factor Analysis (oblimin-rotation)
 #&gt; 
 #&gt; Variable |  MR2 |   MR3 |   MR1 |   MR5 |   MR4 | Complexity | Uniqueness
@@ -182,7 +182,7 @@
 #&gt; 
 #&gt; The 5 latent factors (oblimin rotation) accounted for 42.36% of the total variance of the original data (MR2 = 10.31%, MR3 = 8.39%, MR1 = 8.83%, MR5 = 8.29%, MR4 = 6.55%).</code></pre>
 <p>As we can see, the 25 items nicely spread on the 5 latent factors, the famous <strong>big 5</strong>. Based on this model, we can now predict back the scores for each individual for these new variables:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(efa, <span class="dt">names =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Neuroticism"</span>, <span class="st">"Conscientiousness"</span>, <span class="st">"Extraversion"</span>, <span class="st">"Agreeableness"</span>, <span class="st">"Opennness"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(efa, <span class="dt">names =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Neuroticism"</span>, <span class="st">"Conscientiousness"</span>, <span class="st">"Extraversion"</span>, <span class="st">"Agreeableness"</span>, <span class="st">"Opennness"</span>))</a></code></pre></div>
 <pre><code>#&gt;   Neuroticism Conscientiousness Extraversion Agreeableness Opennness
 #&gt; 1       -0.22            -1.327       -0.128        -0.855     -1.61
 #&gt; 2        0.16            -0.572       -0.466        -0.072     -0.17
@@ -200,14 +200,14 @@
 <a href="#the-method-agreement-procedure" class="anchor"></a>The Method Agreement procedure</h3>
 <p>The Method Agreement procedure, first implemented in the <a href="https://neuropsychology.github.io/psycho.R/2018/05/24/n_factors.html"><code>psycho</code></a> package <span class="citation">(Makowski 2018)</span>, proposes to rely on the consensus of methods, rather than on one method in particular.</p>
 <p>This procedure can be easily used via the <code><a href="../reference/n_factors.html">n_factors()</a></code> function, re-implemented and improved in the <a href="https://github.com/easystats/parameters"><strong>parameters</strong></a> package. One can provide a dataframe, and the function will run a large number of routines and return the optimal number of factors based on the higher consensus.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>n &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n_factors.html">n_factors</a></span>(data)</span>
-<span id="cb7-2"><a href="#cb7-2"></a>n</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">n &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n_factors.html">n_factors</a></span>(data)</a>
+<a class="sourceLine" id="cb7-2" title="2">n</a></code></pre></div>
 <pre><code>#&gt; # Method Agreement Procedure:
 #&gt; 
 #&gt; The choice of 1 dimensions is supported by 3 (13.04%) methods out of 23 (Acceleration factor, TLI, RMSEA).</code></pre>
 <p>Interestingly, the smallest nubmer of factors that most methods suggest is 6… Which is consistent whith the newer models of personality (e.g., HEXACO).</p>
 <p>More details, as well as a summary table can be obtained as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(n)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(n)</a></code></pre></div>
 <pre><code>#&gt;    n_Factors              Method              Family
 #&gt; 1          1 Acceleration factor               Scree
 #&gt; 2          1                 TLI                 Fit
@@ -232,7 +232,7 @@
 #&gt; 21        24            Bartlett             Barlett
 #&gt; 22        24            Anderson             Barlett
 #&gt; 23        24              Lawley             Barlett</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(n)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(n)</a></code></pre></div>
 <pre><code>#&gt;    n_Factors n_Methods
 #&gt; 1          1         3
 #&gt; 2          3         1
@@ -246,9 +246,9 @@
 #&gt; 10        22         1
 #&gt; 11        24         3</code></pre>
 <p>A plot can also be obtained (the <code>see</code> package must be loaded):</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(see)</span>
-<span id="cb13-2"><a href="#cb13-2"></a></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(n) <span class="op">+</span><span class="st"> </span><span class="kw">theme_modern</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(see)</a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(n) <span class="op">+</span><span class="st"> </span><span class="kw">theme_modern</span>()</a></code></pre></div>
 <p><img src="efa_cfa_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 </div>
@@ -261,21 +261,21 @@
 <h3 class="hasAnchor">
 <a href="#partition-the-data" class="anchor"></a>Partition the data</h3>
 <p>The data can be easily split into two sets with the <code><a href="../reference/data_partition.html">data_partition()</a></code> function, through which we will use 70% of the sample as training and the rest as test.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>partitions &lt;-<span class="st"> </span><span class="kw"><a href="../reference/data_partition.html">data_partition</a></span>(data, <span class="dt">training_proportion =</span> <span class="fl">0.7</span>)</span>
-<span id="cb14-2"><a href="#cb14-2"></a>training &lt;-<span class="st"> </span>partitions<span class="op">$</span>training</span>
-<span id="cb14-3"><a href="#cb14-3"></a>test &lt;-<span class="st"> </span>partitions<span class="op">$</span>test</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">partitions &lt;-<span class="st"> </span><span class="kw"><a href="../reference/data_partition.html">data_partition</a></span>(data, <span class="dt">training_proportion =</span> <span class="fl">0.7</span>)</a>
+<a class="sourceLine" id="cb14-2" title="2">training &lt;-<span class="st"> </span>partitions<span class="op">$</span>training</a>
+<a class="sourceLine" id="cb14-3" title="3">test &lt;-<span class="st"> </span>partitions<span class="op">$</span>test</a></code></pre></div>
 </div>
 <div id="create-cfa-structures-out-of-efa-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#create-cfa-structures-out-of-efa-models" class="anchor"></a>Create CFA structures out of EFA models</h3>
 <p>In the next step, we will run two EFA models on the training set, specifying 5 and 6 latent factors respectively, that we will then transform into CFA structures.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>structure_big5 &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span>(training, <span class="dt">nfactors =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="st">  </span><span class="kw"><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa</a></span>()</span>
-<span id="cb15-3"><a href="#cb15-3"></a>structure_big6 &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span>(training, <span class="dt">nfactors =</span> <span class="dv">6</span>)  <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="st">  </span><span class="kw"><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa</a></span>()</span>
-<span id="cb15-5"><a href="#cb15-5"></a></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="co"># Investigate how a model looks</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>structure_big5</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">structure_big5 &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span>(training, <span class="dt">nfactors =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa</a></span>()</a>
+<a class="sourceLine" id="cb15-3" title="3">structure_big6 &lt;-<span class="st"> </span>psych<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span>(training, <span class="dt">nfactors =</span> <span class="dv">6</span>)  <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa</a></span>()</a>
+<a class="sourceLine" id="cb15-5" title="5"></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="co"># Investigate how a model looks</span></a>
+<a class="sourceLine" id="cb15-7" title="7">structure_big5</a></code></pre></div>
 <pre><code>#&gt; # Latent variables
 #&gt; MR2 =~ N1 + N2 + N3 + N4 + N5
 #&gt; MR1 =~ E1 + E2 + E3 + E4 + E5
@@ -288,13 +288,13 @@
 <h3 class="hasAnchor">
 <a href="#fit-and-compare-models" class="anchor"></a>Fit and Compare models</h3>
 <p>We can finally with that structure to the test set using the <code>lavaan</code> package, and compare these models together:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lavaan)</span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(performance)</span>
-<span id="cb17-3"><a href="#cb17-3"></a></span>
-<span id="cb17-4"><a href="#cb17-4"></a>big5 &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(structure_big5, <span class="dt">data =</span> test)</span>
-<span id="cb17-5"><a href="#cb17-5"></a>big6 &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(structure_big6, <span class="dt">data =</span> test)</span>
-<span id="cb17-6"><a href="#cb17-6"></a></span>
-<span id="cb17-7"><a href="#cb17-7"></a>performance<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/performance/man/compare_performance.html">compare_performance</a></span>(big5, big6)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lavaan)</a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(performance)</a>
+<a class="sourceLine" id="cb17-3" title="3"></a>
+<a class="sourceLine" id="cb17-4" title="4">big5 &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(structure_big5, <span class="dt">data =</span> test)</a>
+<a class="sourceLine" id="cb17-5" title="5">big6 &lt;-<span class="st"> </span>lavaan<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(structure_big6, <span class="dt">data =</span> test)</a>
+<a class="sourceLine" id="cb17-6" title="6"></a>
+<a class="sourceLine" id="cb17-7" title="7">performance<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/performance/man/compare_performance.html">compare_performance</a></span>(big5, big6)</a></code></pre></div>
 <pre><code>#&gt; # Comparison of Model Performance Indices
 #&gt; 
 #&gt; Model |   Type |   Chisq | Chisq_df | Chisq_p | Baseline | Baseline_df | Baseline_p |  GFI | AGFI |  NFI | NNFI |  CFI | RMSEA | RMSEA_CI_low | RMSEA_CI_high | RMSEA_p |  RMR | SRMR |  RFI | PNFI |  IFI |  RNI | Loglikelihood |      AIC |      BIC | BIC_adjusted | BF
@@ -308,7 +308,7 @@
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 <div id="ref-makowski2018psycho">
 <p>Makowski, Dominique. 2018. “The Psycho Package: An Efficient and Publishing-Oriented Workflow for Psychological Science.” <em>Journal of Open Source Software</em> 3 (22): 470.</p>
 </div>
@@ -323,8 +323,7 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li>
-<a href="#how-to-perform-a-factor-analysis-fa">How to perform a Factor Analysis (FA)</a>
-      <ul class="nav nav-pills nav-stacked">
+<a href="#how-to-perform-a-factor-analysis-fa">How to perform a Factor Analysis (FA)</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#factor-structure-sphericity-and-kmo">Factor Structure (Sphericity and KMO)</a></li>
       <li><a href="#exploratory-factor-analysis-efa">Exploratory Factor Analysis (EFA)</a></li>
       <li><a href="#how-many-factors-to-retain-in-factor-analysis-fa">How many factors to retain in Factor Analysis (FA)</a></li>

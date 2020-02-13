@@ -129,7 +129,7 @@ model_parameters(model)
 model_parameters(model, df_method = "kenward")
 #> Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p
 #> -------------------------------------------------------------------------
-#> (Intercept)  |        2.00 | 0.57 | [0.89, 3.11] | 3.53 |   2.67 | 0.046 
+#> (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 
 #> Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.99 | < .001
 ```
 
@@ -145,7 +145,7 @@ library(psych)
 
 model <- psych::fa(attitude, nfactors = 3)
 model_parameters(model)
-#> # Rotated loadings from Principal Component Analysis (oblimin-rotation)
+#> # Rotated loadings from Factor Analysis (oblimin-rotation)
 #> 
 #> Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness
 #> ------------------------------------------------------------
