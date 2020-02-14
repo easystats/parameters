@@ -21,8 +21,8 @@
 ## Bug fixes
 
 - Fixed minor issue with the `print()`-method for `model_parameters.befa()`.
-- Fixed issues in `model_parameters()` (for linear mixed models) with wrong order of degrees of freedom
-- Fixed issues in `model_parameters()` (for linear mixed models) with accuracy of p-values.
+- Fixed issues in `model_parameters()` (for linear mixed models) with wrong order of degrees of freedom when `df_method` was different from default.
+- Fixed issues in `model_parameters()` (for linear mixed models) with accuracy of p-values when `df_method = "kenward`.
 - Fixed issues in `model_parameters()` with wrong test statistic for *lmerModLmerTest* models.
 
 # parameters 0.5.0
