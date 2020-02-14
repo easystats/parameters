@@ -29,9 +29,7 @@
 #'   converted to numeric values, while character vectors and factors are converted
 #'   to dummy-variables (numeric 0/1) and are included in the cluster analysis.
 #'   If \code{FALSE}, factors and character vectors are removed before computing
-#'   the cluster analysis. For \code{method = "kmeans"} and \code{force = TRUE},
-#'   only ordered factors are used, because \code{\link{kmeans}} fails for dummy
-#'   variables.
+#'   the cluster analysis.
 #'
 #' @inheritParams equivalence_test.lm
 #' @inheritParams n_clusters
@@ -53,10 +51,12 @@
 #' @examples
 #' # Hierarchical clustering of mtcars-dataset
 #' groups <- cluster_analysis(iris[, 1:4], 3)
+#' groups
 #'
 #' # K-means clustering of mtcars-dataset, auto-detection of cluster-groups
 #' \dontrun{
 #' groups <- cluster_analysis(iris[, 1:4], method = "k")
+#' groups
 #' }
 #' @importFrom stats dist na.omit hclust kmeans cutree complete.cases
 #' @export
@@ -86,12 +86,8 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
     # character and factors to dummies
     factors <- sapply(x, function(i) is.character(i) | is.factor(i))
     if (any(factors)) {
-      if (method == "kmeans") {
-        x <- x[sapply(x, is.numeric)]
-      } else {
-        dummies <- lapply(x[factors], .factor_to_dummy)
-        x <- cbind(x[!factors], dummies)
-      }
+      dummies <- lapply(x[factors], .factor_to_dummy)
+      x <- cbind(x[!factors], dummies)
     }
   } else {
     # remove factors
@@ -101,12 +97,20 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
 
   # check number of clusters
   if (is.null(n_clusters)) {
-    nc <- n_clusters(x, package = package, force = force)
-    ncs <- attributes(nc)$summary
-    n_clusters <- ncs$n_Clusters[which.max(ncs$n_Methods)][1]
-    if (verbose) {
-      insight::print_color(sprintf("Using solution with %i clusters, supported by %i out of %i methods.\n", n_clusters, max(ncs$n_Methods), sum(ncs$n_Methods)), "blue")
+    n_clusters <- tryCatch({
+      nc <- n_clusters(x, package = package, force = force)
+      ncs <- attributes(nc)$summary
+      n_cl <- ncs$n_Clusters[which.max(ncs$n_Methods)][1]
+      if (verbose) {
+        insight::print_color(sprintf("Using solution with %i clusters, supported by %i out of %i methods.\n", n_cl, max(ncs$n_Methods), sum(ncs$n_Methods)), "blue")
+      }
+      n_cl
+    },
+    error = function(e) {
+      insight::print_color("Could not extract number of cluster. Please provide argument 'n_clusters'.\n", "red")
+      1
     }
+    )
   }
 
   # save original data, standardized, for later use

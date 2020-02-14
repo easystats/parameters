@@ -50,9 +50,7 @@ for details on this argument.}
 converted to numeric values, while character vectors and factors are converted
 to dummy-variables (numeric 0/1) and are included in the cluster analysis.
 If \code{FALSE}, factors and character vectors are removed before computing
-the cluster analysis. For \code{method = "kmeans"} and \code{force = TRUE},
-only ordered factors are used, because \code{\link{kmeans}} fails for dummy
-variables.}
+the cluster analysis.}
 
 \item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
 
@@ -80,10 +78,12 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 \examples{
 # Hierarchical clustering of mtcars-dataset
 groups <- cluster_analysis(iris[, 1:4], 3)
+groups
 
 # K-means clustering of mtcars-dataset, auto-detection of cluster-groups
 \dontrun{
 groups <- cluster_analysis(iris[, 1:4], method = "k")
+groups
 }
 }
 \references{
