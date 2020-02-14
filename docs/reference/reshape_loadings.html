@@ -188,10 +188,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>psych</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘psych’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    describe</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>psych</span>)
+
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>))
 <span class='no'>loadings</span> <span class='kw'>&lt;-</span> <span class='fu'>reshape_loadings</span>(<span class='no'>pca</span>)
 

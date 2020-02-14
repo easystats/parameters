@@ -217,19 +217,19 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
-#&gt; 1    3.645847        -1.1069778       -0.9962585   0.9120568    0.7778984
-#&gt; 2    3.338099        -1.1570731       -1.7945181   0.9668482    0.9223404
-#&gt; 3    3.577355        -0.7079402       -2.1252408   0.9664972    0.8205951
-#&gt; 4    3.370763        -1.0557726       -4.0329400  -0.4050182    1.1638166
-#&gt; 5    3.687877        -0.8289615       -2.9011936  -0.4558821    0.9772139
-#&gt; 6    3.410520        -0.8050196       -2.5482029   0.8906005    0.9228378
+#&gt; 1    3.370856        -1.0998234        -1.875433   0.6194222    1.0179878
+#&gt; 2    3.395215        -1.6106708        -2.601202   0.5781322    0.9884989
+#&gt; 3    3.685762        -1.6823891        -1.720361  -0.6125496    0.9798042
+#&gt; 4    3.475337        -1.8369984        -2.844922   0.3012812    1.0046408
+#&gt; 5    3.781507        -1.1625047        -2.020804  -0.4473250    0.8824611
+#&gt; 6    3.480473        -0.9596203        -2.002137   0.4354871    0.9462879
 #&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
-#&gt; 1                    -0.8361576                   -1.0858551
-#&gt; 2                    -1.1343131                   -1.0491876
-#&gt; 3                    -1.2966480                   -0.6996750
-#&gt; 4                    -0.6239762                    0.7855494
-#&gt; 5                    -0.3377431                    0.6698141
-#&gt; 6                    -1.3763648                   -0.5744971</div><div class='input'>
+#&gt; 1                    -1.1132595                   -0.8941799
+#&gt; 2                    -0.6830175                   -0.4499756
+#&gt; 3                     0.3854134                    0.2141105
+#&gt; 4                    -0.3719440                   -0.1528747
+#&gt; 5                     0.1227635                    0.4076785
+#&gt; 6                    -0.9113866                   -0.4794441</div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"glmmTMB"</span>)) {
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
@@ -240,13 +240,13 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   )
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>))
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>))
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: glmmTMB</span></div><div class='output co'>#&gt;   (Intercept)   minedno
-#&gt; 1   0.7815883 -1.911163
-#&gt; 2   0.7530062 -2.105593
-#&gt; 3   0.8156010 -1.823838
-#&gt; 4   1.2840555 -2.297677
-#&gt; 5   1.6232004 -2.931159
-#&gt; 6   0.5012074 -1.696466</div><div class='input'># }
+}</div><div class='output co'>#&gt;   (Intercept)   minedno
+#&gt; 1   0.5641863 -1.763613
+#&gt; 2   0.7581232 -1.729197
+#&gt; 3   0.9823013 -1.951007
+#&gt; 4   0.6237866 -1.515200
+#&gt; 5   0.4950668 -1.600382
+#&gt; 6   0.6599316 -1.761012</div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
