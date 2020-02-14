@@ -14,7 +14,7 @@ matrix:
 # Copied from broom
 sudo: required
 cache: packages
-bioc_required: false
+bioc_required: true
 warnings_are_errors: false
 
 env:
