@@ -92,9 +92,7 @@ reference:
   - get_scores
   - n_factors
   - principal_components
-  - cmds
-  - DRR
-  - ICA
+  - reduce_data
 
 - title: "Data Properties"
   contents:
