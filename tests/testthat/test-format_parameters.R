@@ -228,4 +228,17 @@ if (require("testthat") && require("parameters") && require("splines")) {
       ))
     }
   })
+
+  test_that("format_parameters-17", {
+    data(iris)
+    levels(iris$Species) <- c("Species verti", "No Specieses", "Yes (Species)")
+    model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+    fp <- format_parameters(model)
+    expect_equal(fp, c(
+      `(Intercept)` = "(Intercept)", `SpeciesNo Specieses` = "Species [No Specieses]",
+      `SpeciesYes (Species)` = "Species [Yes (Species)]", Petal.Width = "Petal.Width",
+      `SpeciesNo Specieses:Petal.Width` = "Species [No Specieses] * Petal.Width",
+      `SpeciesYes (Species):Petal.Width` = "Species [Yes (Species)] * Petal.Width"
+    ))
+  })
 }

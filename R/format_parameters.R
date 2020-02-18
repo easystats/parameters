@@ -219,7 +219,7 @@ format_parameters.parameters_model <- function(model) {
 
 #' @keywords internal
 .format_factor <- function(name, variable) {
-  level <- gsub(variable, "", name)
+  level <- sub(variable, "", name)
   paste0(variable, " [", level, "]")
 }
 
