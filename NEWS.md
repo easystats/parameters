@@ -17,6 +17,7 @@
 - Improved efficiency for `model_parameters()` (for linear mixed models) when `df_method = "kenward"`.
 - `model_parameters()` gets a `p_adjust`-argument, to adjust p-values for multiple comparisons.
 - Minor improvements for `cluster_analysis()` when `method = "kmeans"` and `force = TRUE` (factors now also work for kmeans-clustering).
+- `demean()` now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic *panelr*-behaviour.
 
 ## Bug fixes
 

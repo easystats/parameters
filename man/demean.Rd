@@ -74,6 +74,14 @@ A data frame with the group-/de-meaned variables, which get the suffix
     categorical time-varying predictors to numeric to compute the de- and
     group-meaned versions for these variables.
   }
+  \subsection{De-meaning of factors with more than 2 levels}{
+    Factors with more than two levels are demeaned in two ways: first, these
+    are also converted to numeric and de-meaned; second, dummy variables
+    are created (binary, with 0/1 coding for each level) and these binary
+    dummy-variables are de-meaned in the same way (as described above).
+    Packages like \pkg{panelr} internally convert factors to dummies before
+    demeaning, so this behaviour can be mimicked here.
+  }
   \subsection{De-meaning interaction terms}{
     There are multiple ways to deal with interaction terms of within- and
     between-effects. A classical approach is to simply use the product
