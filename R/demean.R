@@ -149,12 +149,32 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
   # find categorical predictors that are coded as factors
   categorical_predictors <- sapply(dat[select], is.factor)
 
-  # convert binrary predictors to numeric
+  # convert binary predictors to numeric
   if (any(categorical_predictors)) {
+    # convert categorical to numeric, and then demean
     dat[select[categorical_predictors]] <- lapply(
       dat[select[categorical_predictors]],
       function(i) as.numeric(i) - 1
     )
+    # convert categorical to dummy, and demean each binary dummy
+    for (i in select[categorical_predictors]) {
+      if (nlevels(x[[i]]) > 2) {
+        for (j in levels(x[[i]])) {
+          # create vector with zeros
+          f <- rep(0, nrow(x))
+          # for each matching level, set dummy to 1
+          f[x[[i]] == j] <- 1
+          dummy <- data.frame(f)
+          # colnames = variable name + factor level
+          # also add new dummy variables to "select"
+          colnames(dummy) <- sprintf("%s_%s", i, j)
+          select <- c(select, sprintf("%s_%s", i, j))
+          # add to data
+          dat <- cbind(dat, dummy)
+        }
+      }
+    }
+    # tell user...
     insight::print_color(
       sprintf(
         "Categorical predictors (%s) have been coerced to numeric values to compute de- and group-meaned variables.\n",
