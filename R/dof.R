@@ -115,17 +115,12 @@ dof <- degrees_of_freedom
     model <- bayestestR::bayesian_as_frequentist(model)
   }
 
-  # exceptions. logistf, for instance, prints complete summary
-  if (inherits(model, "logistf")) {
-    return(Inf)
-  }
-
   # 1st try
   dof <- try(stats::df.residual(model), silent = TRUE)
 
   # 2nd try
   if (inherits(dof, "try-error") || is.null(dof)) {
-    dof <- try(summary(model)$df[2], silent = TRUE)
+    junk <- utils::capture.output(dof <- try(summary(model)$df[2], silent = TRUE))
   }
 
   # 3rd try, nlme
