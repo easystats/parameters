@@ -120,7 +120,7 @@ dof <- degrees_of_freedom
 
   # 2nd try
   if (inherits(dof, "try-error") || is.null(dof)) {
-    junk <- utils::capture.output(dof <- try(summary(model)$df[2], silent = TRUE))
+    junk <- utils::capture.output(dof = try(summary(model)$df[2], silent = TRUE))
   }
 
   # 3rd try, nlme
