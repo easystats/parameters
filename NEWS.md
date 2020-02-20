@@ -26,6 +26,7 @@
 - Fixed issues in `model_parameters()` (for linear mixed models) with accuracy of p-values when `df_method = "kenward`.
 - Fixed issues in `model_parameters()` with wrong test statistic for *lmerModLmerTest* models.
 - Fixed issue in `format_parameters()` (which is used to format output of `model_parameters()`) for factors, when variable name was also part of factor levels.
+- Fixed issue in `degrees_of_freedem()` for *logistf*-models, which unintentionally printed the complete model summary.
 
 # parameters 0.5.0
 
