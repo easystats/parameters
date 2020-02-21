@@ -44,11 +44,12 @@ A data frame with the group-/de-meaned variables, which get the suffix
     \emph{Gauss-Markov-assumptions} can happen, for instance, when analysing panel
     data. To control for correlating predictors and group effects, it is
     recommended to include the group-meaned and de-meaned version of
-    \emph{time-varying covariates} in the model. By this, one can fit
-    complex multilevel models for panel data, including time-varying predictors,
-    time-invariant predictors and random effects. This approach is superior to
-    classic fixed-effects models, which lack information of variation in the
-    group-effects or between-subject effects.
+    \emph{time-varying covariates} (and group-meaned version of \emph{time-invariant
+    covariates}) in the model. By this, one can fit complex multilevel models
+    for panel data, including time-varying predictors, time-invariant predictors
+    and random effects. This approach is superior to classic fixed-effects
+    models, which lack information of variation in the group-effects or
+    between-subject effects.
   }
   \subsection{Terminology}{
     The group-meaned variable is simply the mean of an independent variable
