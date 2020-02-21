@@ -176,6 +176,9 @@
 <li>Improved efficiency for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) when <code>df_method = "kenward"</code>.</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>p_adjust</code>-argument, to adjust p-values for multiple comparisons.</li>
+<li>Minor improvements for <code><a href="../reference/cluster_analysis.html">cluster_analysis()</a></code> when <code>method = "kmeans"</code> and <code>force = TRUE</code> (factors now also work for kmeans-clustering).</li>
+<li>
+<code><a href="../reference/demean.html">demean()</a></code> now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic <em>panelr</em>-behaviour.</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -183,9 +186,11 @@
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed minor issue with the <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.befa.html">model_parameters.befa()</a></code>.</li>
-<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with wrong order of degrees of freedom</li>
-<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with accuracy of p-values.</li>
+<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with wrong order of degrees of freedom when <code>df_method</code> was different from default.</li>
+<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with accuracy of p-values when <code>df_method = "kenward</code>.</li>
 <li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with wrong test statistic for <em>lmerModLmerTest</em> models.</li>
+<li>Fixed issue in <code><a href="../reference/format_parameters.html">format_parameters()</a></code> (which is used to format output of <code><a href="../reference/model_parameters.html">model_parameters()</a></code>) for factors, when variable name was also part of factor levels.</li>
+<li>Fixed issue in <code>degrees_of_freedem()</code> for <em>logistf</em>-models, which unintentionally printed the complete model summary.</li>
 </ul>
 </div>
 </div>
@@ -240,7 +245,7 @@
 <a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
-<code><a href="../reference/n_clusters.html">n_clusters()</a></code> gets the option <code>"M3C"</code> for the <code>package</code>-argument, so you can try to determine the number of cluster by using the <code>M3C::M3C()</code> function.</li>
+<code><a href="../reference/n_clusters.html">n_clusters()</a></code> gets the option <code>"M3C"</code> for the <code>package</code>-argument, so you can try to determine the number of cluster by using the <code><a href="https://rdrr.io/pkg/M3C/man/M3C.html">M3C::M3C()</a></code> function.</li>
 <li>The <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>select</code>-argument, to print only selected columns of the parameters table.</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for meta-analysis models has an improved <code><a href="../reference/print.html">print()</a></code>-method for subgroups (see examples in <code><a href="../reference/model_parameters.rma.html">?model_parameters.rma</a></code>).</li>

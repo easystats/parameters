@@ -103,7 +103,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="model_parameters_standardized_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Standardized Model Parameters</h1>
@@ -122,20 +122,20 @@
 <a href="#standardization-by-re-fitting-the-model" class="anchor"></a>Standardization by re-fitting the model</h2>
 <p><code>standardize = "refit"</code> is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for heavy models such as, for instance, for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms).</p>
 <p>When <code>standardize = "refit"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize.html"><code><a href="https://rdrr.io/pkg/effectsize/man/standardize.html">effectsize::standardize()</a></code></a> to standardize the data that was used to fit the model and updates the model with the standardized data. Note that <code><a href="https://rdrr.io/pkg/effectsize/man/standardize.html">effectsize::standardize()</a></code> tries to detect which variables should be standardized and which not. For instance, having a <code><a href="https://rdrr.io/r/base/Log.html">log(x)</a></code> in the model formula would exclude <code>x</code> from being standardized, because <code>x</code> might get negative values, and thus <code><a href="https://rdrr.io/r/base/Log.html">log(x)</a></code> would no longer be defined. Factors will also be not standardized. Response variables will be standardized, if appropriate.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</span></code></pre></div>
 <pre><code>#&gt; Loading required package: Matrix</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(iris)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1234</span>)</a>
-<a class="sourceLine" id="cb3-3" title="3">iris<span class="op">$</span>grp &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(iris), <span class="dt">replace =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co"># fit example model</span></a>
-<a class="sourceLine" id="cb3-6" title="6">model &lt;-<span class="st"> </span>lme4<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(</a>
-<a class="sourceLine" id="cb3-7" title="7">  Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">*</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>grp),</a>
-<a class="sourceLine" id="cb3-8" title="8">  <span class="dt">data =</span> iris</a>
-<a class="sourceLine" id="cb3-9" title="9">)</a>
-<a class="sourceLine" id="cb3-10" title="10"></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co"># classic model parameters</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(iris)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1234</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>iris<span class="op">$</span>grp &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(iris), <span class="dt">replace =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># fit example model</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>model &lt;-<span class="st"> </span>lme4<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(</span>
+<span id="cb3-7"><a href="#cb3-7"></a>  Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">*</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>grp),</span>
+<span id="cb3-8"><a href="#cb3-8"></a>  <span class="dt">data =</span> iris</span>
+<span id="cb3-9"><a href="#cb3-9"></a>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co"># classic model parameters</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model)</span></code></pre></div>
 <pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI |     t |  df |      p
 #&gt; -----------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |        1.55 | 0.40 | [ 0.77,  2.34] |  3.87 | 141 | &lt; .001
@@ -145,8 +145,8 @@
 #&gt; Petal.Length                       |        0.82 | 0.07 | [ 0.69,  0.95] | 12.52 | 141 | &lt; .001
 #&gt; Species [versicolor] * Sepal.Width |       -0.48 | 0.19 | [-0.85, -0.12] | -2.60 | 141 | 0.009 
 #&gt; Species [virginica] * Sepal.Width  |       -0.36 | 0.18 | [-0.71, -0.01] | -1.99 | 141 | 0.046</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># standardized model parameters</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"refit"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># standardized model parameters</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"refit"</span>)</span></code></pre></div>
 <pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI |     t |  df |      p
 #&gt; -----------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |        0.97 | 0.20 | [ 0.57,  1.37] |  4.74 | 141 | &lt; .001
@@ -157,12 +157,12 @@
 #&gt; Species [versicolor] * Sepal.Width |       -0.25 | 0.10 | [-0.45, -0.06] | -2.60 | 141 | 0.009 
 #&gt; Species [virginica] * Sepal.Width  |       -0.19 | 0.09 | [-0.37,  0.00] | -1.99 | 141 | 0.046</code></pre>
 <p>The second output is identical to following:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># standardize continuous variables manually</span></a>
-<a class="sourceLine" id="cb7-2" title="2">model2 &lt;-<span class="st"> </span>lme4<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(</a>
-<a class="sourceLine" id="cb7-3" title="3">  <span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(Sepal.Length) <span class="op">~</span><span class="st"> </span>Species <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(Sepal.Width) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(Petal.Length) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>grp),</a>
-<a class="sourceLine" id="cb7-4" title="4">  <span class="dt">data =</span> iris</a>
-<a class="sourceLine" id="cb7-5" title="5">)</a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model2)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># standardize continuous variables manually</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>model2 &lt;-<span class="st"> </span>lme4<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(Sepal.Length) <span class="op">~</span><span class="st"> </span>Species <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(Sepal.Width) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/scale.html">scale</a></span>(Petal.Length) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>grp),</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="dt">data =</span> iris</span>
+<span id="cb7-5"><a href="#cb7-5"></a>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model2)</span></code></pre></div>
 <pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI |     t |  df |      p
 #&gt; -----------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |        0.97 | 0.20 | [ 0.57,  1.37] |  4.74 | 141 | &lt; .001
@@ -179,7 +179,7 @@
 <p><code>standardize = "posthoc"</code> aims at emulating the results obtained by <code>"refit"</code> without refitting the model. The coefficients are divided by the standard deviation of the outcome (which becomes their expression ‘unit’). Then, the coefficients related to numeric variables are additionally multiplied by the standard deviation of the related terms, so that they correspond to changes of 1 SD of the predictor (e.g., “a change in 1 SD of x is related to a change of 0.24 of the SD of y”). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p>
 <p>This method is not accurate and tends to give aberrant results when interactions are specified. However, this method of standardization is the “classic” result obtained by many statistical packages when standardized coefficients are requested.</p>
 <p>When <code>standardize = "posthoc"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html"><code><a href="https://rdrr.io/pkg/effectsize/man/standardize_parameters.html">effectsize::standardize_parameters(method = "posthoc")</a></code></a>. Test statistic and p-values are not affected, i.e. they are the same as if no standardization would be applied.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"posthoc"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"posthoc"</span>)</span></code></pre></div>
 <pre><code>#&gt; Parameter                          | Coefficient (std.) |   SE |         95% CI |     t |  df |      p
 #&gt; ------------------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |               0.00 | 0.00 | [ 0.00,  0.00] |  3.87 | 141 | &lt; .001
@@ -190,7 +190,7 @@
 #&gt; Species [versicolor] * Sepal.Width |              -0.25 | 0.10 | [-0.45, -0.06] | -2.60 | 141 | 0.009 
 #&gt; Species [virginica] * Sepal.Width  |              -0.19 | 0.09 | [-0.37,  0.00] | -1.99 | 141 | 0.046</code></pre>
 <p><code>standardize = "basic"</code> also applies post-hoc standardization, however, factors are converted to numeric, which means that it also scales the coefficient by the standard deviation of model’s matrix’ parameter of factor levels (transformed to integers) or binary predictors.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"basic"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"basic"</span>)</span></code></pre></div>
 <pre><code>#&gt; Parameter                          | Coefficient (std.) |   SE |         95% CI |     t |  df |      p
 #&gt; ------------------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |               0.00 | 0.00 | [ 0.00,  0.00] |  3.87 | 141 | &lt; .001
@@ -205,7 +205,7 @@
 <h2 class="hasAnchor">
 <a href="#smart-standardization" class="anchor"></a>Smart standardization</h2>
 <p><code>standardize = "smart"</code> is similar to <code>standardize = "posthoc"</code> in that it does not involve model re-fitting. The difference is that the SD of the response is computed on the relevant section of the data. For instance, if a factor with 3 levels A (the intercept), B and C is entered as a predictor, the effect corresponding to B vs. A will be scaled by the variance of the response at the intercept only. As a results, the coefficients for effects of factors are similar to a Glass’ delta.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"smart"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(model, <span class="dt">standardize =</span> <span class="st">"smart"</span>)</span></code></pre></div>
 <pre><code>#&gt; Parameter                          | Coefficient (std.) |   SE |         95% CI |     t |  df |      p
 #&gt; ------------------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |               0.00 | 0.00 | [ 0.00,  0.00] |  3.87 | 141 | &lt; .001

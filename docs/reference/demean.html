@@ -209,11 +209,12 @@ with <code>"_between"</code>.</p></td>
     <em>Gauss-Markov-assumptions</em> can happen, for instance, when analysing panel
     data. To control for correlating predictors and group effects, it is
     recommended to include the group-meaned and de-meaned version of
-    <em>time-varying covariates</em> in the model. By this, one can fit
-    complex multilevel models for panel data, including time-varying predictors,
-    time-invariant predictors and random effects. This approach is superior to
-    classic fixed-effects models, which lack information of variation in the
-    group-effects or between-subject effects.</p><p></p><h3>Terminology</h3>
+    <em>time-varying covariates</em> (and group-meaned version of <em>time-invariant
+    covariates</em>) in the model. By this, one can fit complex multilevel models
+    for panel data, including time-varying predictors, time-invariant predictors
+    and random effects. This approach is superior to classic fixed-effects
+    models, which lack information of variation in the group-effects or
+    between-subject effects.</p><p></p><h3>Terminology</h3>
 <p>The group-meaned variable is simply the mean of an independent variable
     within each group (or id-level or cluster) represented by <code>group</code>.
     It represents the cluster-mean of an independent variable. The de-meaned
@@ -231,7 +232,13 @@ with <code>"_between"</code>.</p></td>
     <em>de-meaned</em> variable as random effect (random slope)
     (<cite>Hoffmann 2015, chapter 8-2.I</cite>). <code>demean()</code> will thus coerce
     categorical time-varying predictors to numeric to compute the de- and
-    group-meaned versions for these variables.</p><p></p><h3>De-meaning interaction terms</h3>
+    group-meaned versions for these variables.</p><p></p><h3>De-meaning of factors with more than 2 levels</h3>
+<p>Factors with more than two levels are demeaned in two ways: first, these
+    are also converted to numeric and de-meaned; second, dummy variables
+    are created (binary, with 0/1 coding for each level) and these binary
+    dummy-variables are de-meaned in the same way (as described above).
+    Packages like <span class="pkg">panelr</span> internally convert factors to dummies before
+    demeaning, so this behaviour can be mimicked here.</p><p></p><h3>De-meaning interaction terms</h3>
 <p>There are multiple ways to deal with interaction terms of within- and
     between-effects. A classical approach is to simply use the product
     term of the de-meaned variables (i.e. introducing the de-meaned variables
@@ -289,20 +296,34 @@ with <code>"_between"</code>.</p></td>
 #&gt; 5           -2.236842
 #&gt; 6           -1.657895</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.
-#&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Species_between binary_between Sepal.Length_within
-#&gt; 1             5.768421       0.7894737      0.4210526          -0.6684211
-#&gt; 2             5.956098       1.1463415      0.3658537          -1.0560976
-#&gt; 3             5.768421       0.7894737      0.4210526          -1.0684211
-#&gt; 4             5.956098       1.1463415      0.3658537          -1.3560976
-#&gt; 5             5.752632       0.9736842      0.4736842          -0.7526316
-#&gt; 6             5.768421       0.7894737      0.4210526          -0.3684211
-#&gt;   Species_within binary_within
-#&gt; 1     -0.7894737    -0.4210526
-#&gt; 2     -1.1463415    -0.3658537
-#&gt; 3     -0.7894737    -0.4210526
-#&gt; 4     -1.1463415    -0.3658537
-#&gt; 5     -0.9736842    -0.4736842
-#&gt; 6     -0.7894737     0.5789474</div><div class='input'>
+#&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Species_between binary_between Species_setosa_between
+#&gt; 1             5.768421       0.7894737      0.4210526              0.4473684
+#&gt; 2             5.956098       1.1463415      0.3658537              0.2439024
+#&gt; 3             5.768421       0.7894737      0.4210526              0.4473684
+#&gt; 4             5.956098       1.1463415      0.3658537              0.2439024
+#&gt; 5             5.752632       0.9736842      0.4736842              0.3421053
+#&gt; 6             5.768421       0.7894737      0.4210526              0.4473684
+#&gt;   Species_versicolor_between Species_virginica_between Sepal.Length_within
+#&gt; 1                  0.3157895                 0.2368421          -0.6684211
+#&gt; 2                  0.3658537                 0.3902439          -1.0560976
+#&gt; 3                  0.3157895                 0.2368421          -1.0684211
+#&gt; 4                  0.3658537                 0.3902439          -1.3560976
+#&gt; 5                  0.3421053                 0.3157895          -0.7526316
+#&gt; 6                  0.3157895                 0.2368421          -0.3684211
+#&gt;   Species_within binary_within Species_setosa_within Species_versicolor_within
+#&gt; 1     -0.7894737    -0.4210526             0.5526316                -0.3157895
+#&gt; 2     -1.1463415    -0.3658537             0.7560976                -0.3658537
+#&gt; 3     -0.7894737    -0.4210526             0.5526316                -0.3157895
+#&gt; 4     -1.1463415    -0.3658537             0.7560976                -0.3658537
+#&gt; 5     -0.9736842    -0.4736842             0.6578947                -0.3421053
+#&gt; 6     -0.7894737     0.5789474             0.5526316                -0.3157895
+#&gt;   Species_virginica_within
+#&gt; 1               -0.2368421
+#&gt; 2               -0.3902439
+#&gt; 3               -0.2368421
+#&gt; 4               -0.3902439
+#&gt; 5               -0.3157895
+#&gt; 6               -0.2368421</div><div class='input'>
 <span class='co'># demean interaction term x*y</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),
