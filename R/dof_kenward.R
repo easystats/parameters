@@ -85,6 +85,7 @@ dof_kenward <- function(model) {
   }
   if (!(lme4::getME(model, "is_REML"))) {
     model <- stats::update(model, . ~ ., REML = TRUE)
+    warning("Model was not fitted by REML. Re-fitting model now, but p-values, df, etc. still might be unreliable.", call. = FALSE)
   }
   .vcovAdj16_internal(stats::vcov(model), .get_SigmaG(model), lme4::getME(model, "X"))
 }
