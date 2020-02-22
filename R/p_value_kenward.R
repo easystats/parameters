@@ -44,7 +44,6 @@ p_value_kenward <- function(model, dof = NULL) {
 #' @export
 p_value_kenward.lmerMod <- function(model, dof = NULL) {
   if (is.null(dof)) {
-    .check_REML_fit(model)
     dof <- dof_kenward(model)
   }
   .p_value_dof(model, dof, method = "kenward")
