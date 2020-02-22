@@ -44,6 +44,7 @@ p_value_kenward <- function(model, dof = NULL) {
 #' @export
 p_value_kenward.lmerMod <- function(model, dof = NULL) {
   if (is.null(dof)) {
+    .check_REML_fit(model)
     dof <- dof_kenward(model)
   }
   .p_value_dof(model, dof, method = "kenward")
@@ -94,4 +95,19 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
     p = unname(p),
     stringsAsFactors = FALSE
   )
+}
+
+
+
+
+
+# helper -------------------------
+
+.check_REML_fit <- function(model) {
+  if (!requireNamespace("lme4", quietly = TRUE)) {
+    stop("Package 'lme4' required for this function to work. Please install it.")
+  }
+  if (!(lme4::getME(model, "is_REML"))) {
+    warning("Model was not fitted by REML. Re-fitting model now, but p-values, df, etc. still might be unreliable.", call. = FALSE)
+  }
 }

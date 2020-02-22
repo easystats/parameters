@@ -1,6 +1,7 @@
 #' @rdname p_value_kenward
 #' @export
 ci_kenward <- function(model, ci = .95) {
+  .check_REML_fit(model)
   df_kr <- dof_kenward(model)
   out <- lapply(ci, function(i) {
     .ci_wald(model = model, ci = i, dof = df_kr, effects = "fixed", component = "all", method = "kenward", se = attr(df_kr, "se", exact = TRUE))
