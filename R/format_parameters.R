@@ -34,7 +34,7 @@ format_parameters.default <- function(model) {
 
   # quick fix, for multivariate response models, we use
   # info from first model only
-  if (insight::is_multivariate(model)) {
+  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info)) {
     info <- info[[1]]
   }
 
