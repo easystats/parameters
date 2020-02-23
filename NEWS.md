@@ -19,6 +19,7 @@
 - Minor improvements for `cluster_analysis()` when `method = "kmeans"` and `force = TRUE` (factors now also work for kmeans-clustering).
 - `demean()` now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic *panelr*-behaviour.
 - `p_value_kenward()`, `se_kenward()` etc. now give a warning when model was not fitted by REML.
+- Added `ci()`, `standard_error()` and `p_value()` for *lavaan* and *blavaan* objects.
 
 ## Bug fixes
 

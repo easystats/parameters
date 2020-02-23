@@ -91,11 +91,18 @@ model_parameters.blavaan <- function(model, ci = 0.95, standardize = FALSE, type
 
 #' @export
 n_parameters.lavaan <- function(x, ...) {
-  if (!requireNamespace("lavaan", quietly = TRUE)) {
-    stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
-  }
-  lavaan::fitmeasures(x)$npar
+  length(stats::coef(x))
+  # if (!requireNamespace("lavaan", quietly = TRUE)) {
+  #   stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
+  # }
+  # lavaan::fitmeasures(x)[["npar"]]
 }
+
+
+#' @export
+n_parameters.blavaan <- n_parameters.lavaan
+
+
 
 
 #' @importFrom insight format_table

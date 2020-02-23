@@ -497,6 +497,22 @@ ci.biglm <- function(x, ci = .95, ...) {
 ci.gls <- ci.biglm
 
 
+#' @export
+ci.lavaan <- function(x, ci = .95, ...) {
+  out <- .extract_parameters_lavaan(model = x, ci = ci, ...)
+  out$CI <- ci * 100
+  out[out$Operator != "~1", c("To", "Operator", "From", "CI", "CI_low", "CI_high")]
+}
+
+
+#' @export
+ci.blavaan <- function(x, ci = .95, ...) {
+  out <- .extract_parameters_blavaan(model = x, ci = ci, ...)
+  out$CI <- ci * 100
+  out[out$Operator != "~1", c("To", "Operator", "From", "CI", "CI_low", "CI_high")]
+}
+
+
 #' @rdname ci.merMod
 #' @export
 ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterthwaite"), ...) {

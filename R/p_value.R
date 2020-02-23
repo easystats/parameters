@@ -1207,6 +1207,22 @@ p_value.rma <- function(model, ...) {
 }
 
 
+#' @export
+p_value.lavaan <- function(model, ...) {
+  out <- .extract_parameters_lavaan(model, ...)
+  out[out$Operator != "~1", c("To", "Operator", "From", "p")]
+}
+
+
+
+#' @export
+p_value.blavaan <- function(model, ci = .95, ...) {
+  out <- .extract_parameters_blavaan(model, ...)
+  out[out$Operator != "~1", c("To", "Operator", "From", "p")]
+}
+
+
+
 
 
 
