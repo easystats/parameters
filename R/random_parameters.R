@@ -87,7 +87,9 @@ random_parameters <- function(model) {
     # Slope-Intercept Correlation
     if (!.is_empty_object(re_variances$cor.slope_intercept) && !.is_empty_object(model_rs)) {
       cor_slope_intercept <- as.list(re_variances$cor.slope_intercept)
-      names(cor_slope_intercept) <- paste0("rho01_", model_re, ".", model_rs)
+      csi_names <- gsub("(.*)(\\.\\d)(.*)", "\\1\\3", names(re_variances$var.slope))
+      # csi_names <- names(re_variances$var.slope)
+      names(cor_slope_intercept) <- paste0("rho01_", csi_names)
       out <- c(out, cor_slope_intercept)
     }
   }

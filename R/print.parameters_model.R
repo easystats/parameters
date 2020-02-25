@@ -75,6 +75,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
   # print summary for random effects
   if (!is.null(res)) {
+    cat("\n")
     .print_random_parameters(res, digits = attributes(x)$digits)
   }
 }
@@ -92,7 +93,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 #' @keywords internal
 .print_random_parameters <- function(random_params, digits = 2) {
-  insight::print_color("\n# Random Effects\n\n", "blue")
+  insight::print_color("# Random Effects\n\n", "blue")
 
   # format values
   random_params$Value <- format(sprintf("%g", round(random_params$Value, digits = digits)), justify = "right")
