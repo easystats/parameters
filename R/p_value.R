@@ -1223,6 +1223,19 @@ p_value.blavaan <- function(model, ci = .95, ...) {
 
 
 
+#' @export
+p_value.bife <- function(model, ...) {
+  cs <- summary(model)
+  p <- cs$cm[, 4]
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(rownames(cs$cm)),
+    p = as.vector(p)
+  )
+}
+
+
+
 
 
 

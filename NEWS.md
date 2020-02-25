@@ -1,4 +1,4 @@
-# parameters 0.5.1
+# parameters 0.6.0
 
 ## Breaking changes
 
@@ -9,6 +9,10 @@
 - Alias `parameters_selection()` was removed, please use `select_parameters()`.
 - Alias `parameters_reduction()` was removed, please use `reduce_parameters()`.
 - Functions `DDR()`, `ICA()` and `cmds()` are no longer exported, as these were intended to be used internally by `reduce_parameters()` only.
+
+## New supported models
+
+- Added support for `bife` (*bife*).
 
 ## Changes
 

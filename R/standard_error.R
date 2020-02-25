@@ -779,6 +779,19 @@ standard_error.bracl <- function(model, ...) {
 
 
 #' @export
+standard_error.bife <- function(model, ...) {
+  cs <- summary(model)
+  se <- cs$cm[, 2]
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(rownames(cs$cm)),
+    SE = as.vector(se)
+  )
+}
+
+
+
+#' @export
 standard_error.cgam <- function(model, ...) {
   sc <- summary(model)
   se <- as.vector(sc$coefficients[, "StdErr"])
