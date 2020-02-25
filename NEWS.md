@@ -30,6 +30,7 @@
 - Fixed issue in `format_parameters()` (which is used to format output of `model_parameters()`) for factors, when variable name was also part of factor levels.
 - Fixed issue in `degrees_of_freedem()` for *logistf*-models, which unintentionally printed the complete model summary.
 - Fixed issue in `model_parameters()` for *mlm* models.
+- Fixed issue in `random_parameters()` for uncorrelated random effects.
 
 # parameters 0.5.0
 
