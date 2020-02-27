@@ -118,4 +118,14 @@ model_parameters.mcmc <- function(model, centrality = "median", dispersion = FAL
 
 
 #' @export
-model_parameters.bcplm <- model_parameters.mcmc
+model_parameters.bcplm <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000, ...) {
+
+  # Processing
+  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, iterations = iterations, ...)
+
+  attr(parameters, "ci") <- ci
+  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+
+  parameters
+}
