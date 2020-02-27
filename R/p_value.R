@@ -382,6 +382,10 @@ p_value.stanreg <- p_value.brmsfit
 p_value.BFBayesFactor <- p_value.brmsfit
 
 
+#' @export
+p_value.bcplm <- p_value.brmsfit
+
+
 
 
 

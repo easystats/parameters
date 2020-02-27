@@ -115,3 +115,7 @@ model_parameters.mcmc <- function(model, centrality = "median", dispersion = FAL
 
   parameters
 }
+
+
+#' @export
+model_parameters.bcplm <- model_parameters.mcmc

@@ -12,7 +12,7 @@
 
 ## New supported models
 
-- Added support for `bife` (*bife*).
+- Added support for `bife` (*bife*), `bcplm` (*cplm*)
 
 ## Changes
 
