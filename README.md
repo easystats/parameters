@@ -9,11 +9,12 @@ Status](https://travis-ci.org/easystats/parameters.svg?branch=master)](https://t
 ***Describe and understand your model’s parameters\!***
 
 `parameters`’ primary goal is to provide utilities for processing the
-parameters of various statistical models. Beyond computing
-***p*-values**, **CIs**, **Bayesian indices** and other measures for a
-wide variety of models, this package implements features like
-**bootstrapping** of parameters and models, **feature reduction**
-(feature extraction and variable selection).
+parameters of various statistical models (see
+[here](https://easystats.github.io/insight/) for a list of supported
+models). Beyond computing ***p*-values**, **CIs**, **Bayesian indices**
+and other measures for a wide variety of models, this package implements
+features like **bootstrapping** of parameters and models, **feature
+reduction** (feature extraction and variable selection).
 
 ## Installation
 
