@@ -827,6 +827,39 @@ standard_error.cpglm <- function(model, ...) {
 
 
 
+#' @importFrom utils capture.output
+#' @export
+standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  component <- match.arg(component)
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  params <- get_parameters(model)
+
+  tweedie <- data.frame(
+    Parameter = params$Parameter[params$Component == "conditional"],
+    SE = as.vector(stats$tweedie[, "Std. Error"]),
+    Component = "conditional",
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+
+  zero <- data.frame(
+    Parameter = params$Parameter[params$Component == "zero_inflated"],
+    SE = as.vector(stats$zero[, "Std. Error"]),
+    Component = "zero_inflated",
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+
+  out <- .filter_component(rbind(tweedie, zero), component)
+  out
+}
+
+
+
 #' @export
 standard_error.cpglmm <- function(model, ...) {
   if (!requireNamespace("cplm", quietly = TRUE)) {

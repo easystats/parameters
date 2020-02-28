@@ -202,6 +202,40 @@ p_value.hurdle <- p_value.zeroinfl
 p_value.zerocount <- p_value.zeroinfl
 
 
+#' @importFrom utils capture.output
+#' @export
+p_value.zcpglm <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  component <- match.arg(component)
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  params <- get_parameters(model)
+
+  tweedie <- data.frame(
+    Parameter = params$Parameter[params$Component == "conditional"],
+    p = as.vector(stats$tweedie[, "Pr(>|z|)"]),
+    Component = "conditional",
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+
+  zero <- data.frame(
+    Parameter = params$Parameter[params$Component == "zero_inflated"],
+    p = as.vector(stats$zero[, "Pr(>|z|)"]),
+    Component = "zero_inflated",
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+
+  out <- .filter_component(rbind(tweedie, zero), component)
+  out
+}
+
+
+
+
 
 
 

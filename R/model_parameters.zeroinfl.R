@@ -50,3 +50,6 @@ model_parameters.hurdle <- model_parameters.zeroinfl
 
 #' @export
 model_parameters.zerocount <- model_parameters.zeroinfl
+
+#' @export
+model_parameters.zcpglm <- model_parameters.zeroinfl
