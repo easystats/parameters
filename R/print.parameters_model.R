@@ -53,7 +53,9 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   mc <- attributes(x)$model_class
   cp <- attributes(x)$cleaned_parameters
   if (!is.null(mc) && !is.null(cp) && mc %in% c("stanreg", "stanmvreg", "brmsfit")) {
-    x$Parameter <- cp
+    if (length(cp) == length(x$Parameter)) {
+      x$Parameter <- cp
+    }
     pretty_names <- FALSE
   }
 
@@ -228,6 +230,8 @@ print.parameters_random <- function(x, digits = 2, ...) {
       "zero_inflated" = "Zero-Inflated",
       "zero_inflated.fixed" = "Fixed Effects (Zero-Inflated Model)",
       "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
+      "simplex.fixed" = ,
+      "simplex" = "Monotonic Effects",
       "smooth_sd" = "Smooth Terms (SD)",
       "smooth_terms" = "Smooth Terms",
       "sigma" = "Sigma",
