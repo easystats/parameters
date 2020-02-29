@@ -3,7 +3,9 @@
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   info <- insight::model_info(model)
 
-  attr(parameters, "pretty_names") <- format_parameters(model)
+  if (is.null(attr(parameters, "pretty_names", exact = TRUE))) {
+    attr(parameters, "pretty_names") <- format_parameters(model)
+  }
   attr(parameters, "ci") <- ci
   attr(parameters, "exponentiate") <- exponentiate
   attr(parameters, "ordinal_model") <- info$is_ordinal | info$is_multinomial

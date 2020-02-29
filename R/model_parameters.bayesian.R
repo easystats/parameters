@@ -65,10 +65,11 @@ model_parameters.stanmvreg <- function(model, centrality = "median", dispersion 
 
 
 
+#' @importFrom insight clean_parameters
 #' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
-model_parameters.brmsfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000, effects = "fixed", component = "all", ...) {
+model_parameters.brmsfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000, effects = "fixed", component = "all", exponentiate = FALSE, ...) {
 
   # Processing
   parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, iterations = iterations, effects = effects, component = component, ...)
@@ -79,9 +80,12 @@ model_parameters.brmsfit <- function(model, centrality = "median", dispersion = 
     parameters <- .add_pretty_names(parameters, model, effects = effects, component = component)
   }
 
-  attr(parameters, "ci") <- ci
+  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
+  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
+
+  attr(parameters, "parameter_info") <- insight::clean_parameters(model)
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  class(parameters) <- c("parameters_brms", "see_parameters_model", "parameters_model", class(parameters))
 
   parameters
 }

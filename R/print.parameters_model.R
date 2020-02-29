@@ -278,3 +278,49 @@ print.parameters_random <- function(x, digits = 2, ...) {
     cat("\n")
   }
 }
+
+
+
+#' @export
+print.parameters_brms <- function(x, split_components = TRUE, select = NULL, ...) {
+  cp <- attributes(x)$parameter_info
+
+  # check if user supplied digits attributes
+  ci <- attributes(x)$ci
+  digits <- attributes(x)$digits
+  ci_digits <- attributes(x)$ci_digits
+  p_digits <- attributes(x)$p_digits
+
+  if (!split_components || is.null(cp)) {
+    NextMethod()
+  } else {
+    if (!is.null(select)) {
+      if (is.numeric(select)) select <- colnames(x)[select]
+      select <- union(select, c("Parameter", "Component", "Effects", "Response", "Subgroup", "Function"))
+      to_remove <- setdiff(colnames(x), select)
+      x[to_remove] <- NULL
+    }
+
+    out <- insight::print_parameters(cp, x)
+
+    for (i in out) {
+      insight::print_color(paste0("# ", attr(i, "main_title")), "blue")
+      cat(" ")
+      insight::print_color(attr(i, "sub_title"), "red")
+      cat("\n\n")
+
+      rem <- which(colnames(i) %in% c("Parameter", "Component", "Effects", "Group", "Response", "Subgroup", "Function"))
+      i <- i[, -rem]
+
+      colnames(i)[1] <- "Parameter"
+      attr(i, "ci") <- ci
+      attr(i, "digits") <- digits
+      attr(i, "ci_digits") <- ci_digits
+      attr(i, "p_digits") <- p_digits
+
+      formatted_table <- parameters_table(i, pretty_names = FALSE, ...)
+      cat(insight::format_table(formatted_table))
+      cat("\n")
+    }
+  }
+}

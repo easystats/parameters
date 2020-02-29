@@ -37,6 +37,7 @@
   iterations = 1000,
   effects = "fixed",
   component = "all",
+  exponentiate = FALSE,
   ...
 )
 }
@@ -83,6 +84,8 @@ Only applies to mixed models. May be abbreviated.}
 \item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 
 \item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}) or \code{"all"}.}
+
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.}
 }
 \value{
 A data frame of indices related to the model's parameters.

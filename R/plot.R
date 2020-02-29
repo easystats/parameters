@@ -17,6 +17,15 @@ plot.parameters_model <- function(x, ...) {
 
 
 #' @export
+plot.parameters_brms <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot model parameters. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
+}
+
+
+#' @export
 plot.parameters_simulate <- function(x, ...) {
   if (!requireNamespace("see", quietly = TRUE)) {
     stop("Package 'see' needed to plot point-estimates. Please install it by running `install.packages('see')`.")
