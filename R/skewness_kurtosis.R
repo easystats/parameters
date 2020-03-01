@@ -54,7 +54,9 @@ skewness <- function(x, na.rm = TRUE, type = "2", ...) {
 }
 
 #' @export
-skewness.numeric <- function(x, na.rm = TRUE, type = "2", ...) {
+skewness.numeric <- function(x, na.rm = TRUE, type = "2",
+                             # bootstrap_iterations = NA,
+                             ...) {
   if (na.rm) x <- x[!is.na(x)]
   n <- length(x)
   out <- (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5
@@ -81,6 +83,18 @@ skewness.numeric <- function(x, na.rm = TRUE, type = "2", ...) {
 #     "2" = out_se * ((sqrt(n * (n - 1))) / (n - 2)),
 #     "3" = out_se * (((n - 1) / n)^1.5),
 #   )
+#
+#   if (!is.na(bootstrap_iterations)) {
+#     if (!requireNamespace("boot", quietly = TRUE)) {
+#       warning("Package 'boot' needed for bootstrapping SEs. Using parametric method.")
+#     }
+#
+#     results <- boot::boot(data = x, statistic = skewness.numeric,
+#                           R = bootstrap_iterations,
+#                           na.rm = na.rm, type = type, bootstrap_iterations = NA, ...)
+#
+#     .skewness_se <- sd(results$t)
+#   }
 #
 #   attr(.skewness, "SE") <- .skewness_se
 #   class(.skewness) <- unique(c("parameters_skewness", class(.skewness)))
@@ -117,7 +131,9 @@ skewness.default <- function(x, na.rm = TRUE, type = "2", ...) {
 
 #' @rdname skewness
 #' @export
-kurtosis <- function(x, na.rm = TRUE, type = "2", ...) {
+kurtosis <- function(x, na.rm = TRUE, type = "2",
+                     # bootstrap_iterations = NA,
+                     ...) {
   UseMethod("kurtosis")
 }
 
@@ -149,6 +165,18 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", ...) {
   #   "2" = out_se * (((n - 1) * (n + 1)) / ((n - 2) * (n - 3))),
   #   "3" = out_se * ((n - 1) / n)^2
   # )
+  #
+  # if (!is.na(bootstrap_iterations)) {
+  #   if (!requireNamespace("boot", quietly = TRUE)) {
+  #     warning("Package 'boot' needed for bootstrapping SEs. Using parametric method.")
+  #   }
+  #
+  #   results <- boot::boot(data = x, statistic = kurtosis.numeric,
+  #                         R = bootstrap_iterations,
+  #                         na.rm = na.rm, type = type, bootstrap_iterations = NA, ...)
+  #
+  #   .kurtosis_se <- sd(results$t)
+  # }
   #
   # attr(.kurtosis, "SE") <- .kurtosis_se
   # class(.kurtosis) <- unique(c("parameters_kurtosis", class(.kurtosis)))
