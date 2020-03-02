@@ -333,7 +333,7 @@
   # MCMCglmm need special handling
   if (inherits(model, "MCMCglmm")) {
     parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, diagnostic = "ESS", ...)
-  } else if ((insight::is_multivariate(model) && insight::model_info(model)[[1]]$is_bayesian) || insight::model_info(model)$is_bayesian) {
+  } else {
     parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
   }
 

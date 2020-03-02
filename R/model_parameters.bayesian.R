@@ -2,13 +2,15 @@
 #'
 #' Parameters of Bayesian models.
 #'
-#' @param model Bayesian model.
+#' @param model Bayesian model. May also be a data frame with posterior samples.
 #' @param ci Credible Interval (CI) level. Default to 0.89 (89\%). See \code{\link[bayestestR]{ci}} for further details.
 #' @inheritParams model_parameters.default
 #' @inheritParams bayestestR::describe_posterior
 #'
 #' @seealso \code{\link[parameters:standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
+#'
+#' @note If \code{model} is a data frame, arguments \code{diagnostic}, \code{bf_prior} and \code{priors} are ignored.
 #'
 #' @details Currently supported models are \code{brmsfit}, \code{stanreg}, \code{stanmvreg}, \code{MCMCglmm}, \code{mcmc} and \code{bcplm}.
 #'
@@ -122,6 +124,9 @@ model_parameters.mcmc <- function(model, centrality = "median", dispersion = FAL
 
   parameters
 }
+
+#' @export
+model_parameters.data.frame <- model_parameters.mcmc
 
 
 #' @export

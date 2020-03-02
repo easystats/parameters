@@ -40,7 +40,7 @@
 )
 }
 \arguments{
-\item{model}{Bayesian model.}
+\item{model}{Bayesian model. May also be a data frame with posterior samples.}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
@@ -91,6 +91,9 @@ Parameters of Bayesian models.
 }
 \details{
 Currently supported models are \code{brmsfit}, \code{stanreg}, \code{stanmvreg}, \code{MCMCglmm}, \code{mcmc} and \code{bcplm}.
+}
+\note{
+If \code{model} is a data frame, arguments \code{diagnostic}, \code{bf_prior} and \code{priors} are ignored.
 }
 \examples{
 \donttest{
