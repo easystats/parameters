@@ -236,6 +236,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
       "smooth_terms" = "Smooth Terms",
       "sigma" = "Sigma",
       "Correlation" = "Correlation",
+      "SD/Cor" = "SD / Correlation",
       "Loading" = "Loading",
       "scale" = ,
       "scale.fixed" = "Scale Parameters",
