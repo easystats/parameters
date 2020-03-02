@@ -13,7 +13,7 @@
 )
 }
 \arguments{
-\item{model}{CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions.}
+\item{model}{CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions (or from \pkg{blavaan}).}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 

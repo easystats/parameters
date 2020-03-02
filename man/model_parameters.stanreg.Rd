@@ -17,7 +17,6 @@
   bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"),
   priors = TRUE,
-  iterations = 1000,
   effects = "fixed",
   ...
 )
@@ -34,7 +33,6 @@
   bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"),
   priors = TRUE,
-  iterations = 1000,
   effects = "fixed",
   component = "all",
   exponentiate = FALSE,
@@ -48,7 +46,7 @@
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Credible Interval (CI) level. Default to 0.89 (89\%). See \code{\link[bayestestR]{ci}} for further details.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
 \code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
@@ -76,8 +74,6 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{iterations}{The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.}
-
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
 
@@ -92,6 +88,9 @@ A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters of Bayesian models.
+}
+\details{
+Currently supported models are \code{brmsfit}, \code{stanreg}, \code{stanmvreg}, \code{MCMCglmm}, \code{mcmc} and \code{bcplm}.
 }
 \examples{
 \donttest{

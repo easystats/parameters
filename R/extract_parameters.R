@@ -328,20 +328,13 @@
 
 #' @importFrom stats sd setNames
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, iterations = 1000, ...) {
+.extract_parameters_bayesian <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, ...) {
 
   # MCMCglmm need special handling
   if (inherits(model, "MCMCglmm")) {
     parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, diagnostic = "ESS", ...)
-
-    # Bayesian Models
   } else if ((insight::is_multivariate(model) && insight::model_info(model)[[1]]$is_bayesian) || insight::model_info(model)$is_bayesian) {
     parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
-
-    # Bootstrapped Models
-  } else {
-    data <- bootstrap_model(model, iterations = iterations)
-    parameters <- bayestestR::describe_posterior(data, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
   }
 
   if (length(ci) > 1) {
