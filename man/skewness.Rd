@@ -69,11 +69,19 @@ tails (\cite{https://en.wikipedia.org/wiki/Kurtosis}).
 \item Type "3" first calculates the type-1 kurtosis, than adjusts the result: \code{b2 = (g2 + 3) * (1 - 1 / n)^2 - 3}. This is what Minitab usually returns.
 }
 }
+
+\subsection{Standard Errors}{
+It is recomended to compute empirical (bootstrapped) SEs (via the  \code{iterations} argument) than rely on
+analytical SEs (Wright & Herrington, 2011).
+}
 }
 \examples{
 skewness(rnorm(1000))
 kurtosis(rnorm(1000))
 }
 \references{
-D. N. Joanes and C. A. Gill (1998). Comparing measures of sample skewness and kurtosis. The Statistician, 47, 183–189.
+\itemize{
+  \item D. N. Joanes and C. A. Gill (1998). Comparing measures of sample skewness and kurtosis. The Statistician, 47, 183–189.
+  \item Wright, D. B., & Herrington, J. A. (2011). Problematic standard errors and confidence intervals for skewness and kurtosis. Behavior research methods, 43(1), 8-17.
+}
 }

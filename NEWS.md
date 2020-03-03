@@ -9,6 +9,7 @@
 - Alias `parameters_selection()` was removed, please use `select_parameters()`.
 - Alias `parameters_reduction()` was removed, please use `reduce_parameters()`.
 - Functions `DDR()`, `ICA()` and `cmds()` are no longer exported, as these were intended to be used internally by `reduce_parameters()` only.
+- `skewness()` and `kurtosis()` always return a data frame.
 
 ## New supported models
 
