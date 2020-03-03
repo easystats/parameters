@@ -127,6 +127,16 @@ describe_distribution.data.frame <- function(x, centrality = "mean", dispersion 
 
 
 #' @export
-print.parameters_distribution <- function(x, ...) {
+print.parameters_distribution <- function(x, digits = 2, ...) {
+  if (all(c("Min", "Max") %in% names(x))) {
+    if (is.numeric(x$Min) && is.numeric(x$Max)) {
+      width <- "auto"
+    } else {
+      width <- NULL
+    }
+    x$Min <- insight::format_ci(x$Min, x$Max, ci = NULL, digits = digits, width = width, brackets = TRUE)
+    x$Max <- NULL
+    colnames(x)[which(colnames(x) == "Min")] <- "Range"
+  }
   cat(insight::format_table(x))
 }
