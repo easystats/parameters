@@ -3,7 +3,9 @@
 #' @param x A numeric vector or data.frame.
 #' @param na.rm Remove missing values.
 #' @param type Type of algorithm for computing skewness. May be one of \code{1} (or \code{"1"}, \code{"I"} or \code{"classic"}), \code{2} (or \code{"2"}, \code{"II"} or \code{"SPSS"} or \code{"SAS"}) or \code{3} (or  \code{"3"}, \code{"III"} or \code{"Minitab"}). See 'Details'.
-#' @param iterations The number of bootstrap replicates for computing standard errors. If \code{NULL} (default), no standard errors are computed.
+#' @param iterations The number of bootstrap replicates for computing standard errors. If \code{NULL} (default), parametric standard errors are computed. See 'Details'.
+#' @param test Logical, if \code{TRUE}, tests if skewness or kurtosis is significantly different from zero.
+#' @param digits Number of decimal places.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details \subsection{Skewness}{
@@ -42,10 +44,8 @@
 #' \item Type "3" first calculates the type-1 kurtosis, than adjusts the result: \code{b2 = (g2 + 3) * (1 - 1 / n)^2 - 3}. This is what Minitab usually returns.
 #' }
 #' }
-#'
 #' \subsection{Standard Errors}{
-#' It is recomended to compute empirical (bootstrapped) SEs (via the  \code{iterations} argument) than rely on
-#' analytical SEs (Wright & Herrington, 2011).
+#' It is recommended to compute empirical (bootstrapped) standard errors (via the \code{iterations} argument) than relying on analytic standard errors (\cite{Wright & Herrington, 2011}).
 #' }
 #'
 #' @references
@@ -61,12 +61,15 @@
 #' skewness(rnorm(1000))
 #' kurtosis(rnorm(1000))
 #' @export
-skewness <- function(x, na.rm = TRUE, type = "2", ...) {
+skewness <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   UseMethod("skewness")
 }
 
-#' @rdname skewness
-#' @importFrom stats sd
+
+# skewness -----------------------------------------
+
+
+#' @importFrom stats sd pnorm
 #' @export
 skewness.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   if (na.rm) x <- x[!is.na(x)]
@@ -111,6 +114,8 @@ skewness.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
   .skewness
 }
 
+
+
 #' @export
 skewness.matrix <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   .skewness <- apply(x, 2, skewness, na.rm = na.rm, type = type, iterations = iterations)
@@ -123,6 +128,8 @@ skewness.matrix <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
   .skewness
 }
 
+
+
 #' @export
 skewness.data.frame <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   .skewness <- lapply(x, skewness, na.rm = na.rm, type = type, iterations = iterations)
@@ -131,21 +138,31 @@ skewness.data.frame <- function(x, na.rm = TRUE, type = "2", iterations = NULL, 
   .skewness
 }
 
+
+
 #' @export
 skewness.default <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
-  skewness(as.vector(x), na.rm = na.rm, type = type, iterations = iterations)
+  skewness(.factor_to_numeric(x), na.rm = na.rm, type = type, iterations = iterations)
 }
 
 
 
+
+
+
+
+
+# Kurtosis -----------------------------------
+
+
 #' @rdname skewness
 #' @export
-kurtosis <- function(x, na.rm = TRUE, type = "2", ...) {
+kurtosis <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   UseMethod("kurtosis")
 }
 
 
-#' @rdname skewness
+
 #' @export
 kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   if (na.rm) x <- x[!is.na(x)]
@@ -190,6 +207,8 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
   .kurtosis
 }
 
+
+
 #' @export
 kurtosis.matrix <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   .kurtosis <- apply(x, 2, kurtosis, na.rm = na.rm, type = type, iterations = iterations)
@@ -202,6 +221,8 @@ kurtosis.matrix <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
   .kurtosis
 }
 
+
+
 #' @export
 kurtosis.data.frame <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   .kurtosis <- lapply(x, kurtosis, na.rm = na.rm, type = type, iterations = iterations)
@@ -210,12 +231,53 @@ kurtosis.data.frame <- function(x, na.rm = TRUE, type = "2", iterations = NULL, 
   .kurtosis
 }
 
+
+
 #' @export
 kurtosis.default <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
-  kurtosis(as.vector(x), na.rm = na.rm, type = type, iterations = iterations)
+  kurtosis(.factor_to_numeric(x), na.rm = na.rm, type = type, iterations = iterations)
 }
 
 
+
+
+
+# methods -----------------------------------------
+
+#' @export
+as.numeric.parameters_kurtosis <- function(x){
+  x$Kurtosis
+}
+
+#' @export
+as.numeric.parameters_skewness <- function(x){
+  x$Skewness
+}
+
+#' @export
+as.double.parameters_kurtosis <- as.numeric.parameters_kurtosis
+
+#' @export
+as.double.parameters_skewness <- as.numeric.parameters_skewness
+
+#' @rdname skewness
+#' @export
+print.parameters_kurtosis <- function(x, digits = 3, test = FALSE, ...) {
+  .print_skew_kurt(x, val = "Kurtosis", digits = digits, test = test, ...)
+}
+
+#' @rdname skewness
+#' @export
+print.parameters_skewness <- function(x, digits = 3, test = FALSE, ...) {
+  .print_skew_kurt(x, val = "Skewness", digits = digits, test = test, ...)
+}
+
+
+
+
+
+
+# helper ------------------------------------------
 
 
 .check_skewness_type <- function(type) {
@@ -243,55 +305,14 @@ kurtosis.default <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
 }
 
 
-# methods -----------------------------------------
-
-#' @export
-as.numeric.parameters_kurtosis <- function(x){
-  x$Kurtosis
-}
-
-#' @export
-as.numeric.parameters_skewness <- function(x){
-  x$Skewness
-}
-
-#' @export
-as.double.parameters_kurtosis <- as.numeric.parameters_kurtosis
-
-#' @export
-as.double.parameters_skewness <- as.numeric.parameters_skewness
-
-
-#' @export
-print.parameters_kurtosis <- function(x, digits = 3, test = FALSE, ...) {
-  .print_skew_kurt(x, val = "Kurtosis", digits = digits, test = test, ...)
-}
-
-#' @export
-print.parameters_skewness <- function(x, digits = 3, test = FALSE, ...) {
-  .print_skew_kurt(x, val = "Skewness", digits = digits, test = test, ...)
-}
-
 .print_skew_kurt <- function(x, val, digits = 3, test = FALSE, ...) {
-  # alpha <- (1 + ci) / 2
-  # fac <- stats::qnorm(alpha)
-  #
-  # x$CI <- 100 * ci
-  # x$CI_low <- x[[val]] - x$SE * fac
-  # x$CI_high <- x[[val]] + x$SE * fac
-
   if (test) {
     x$z <- x[[val]] / x$SE
-    x$p <- 2 * (1 - pnorm(abs(x$z)))
+    x$p <- 2 * (1 - stats::pnorm(abs(x$z)))
   }
 
-  # attr(x, "ci") <- ci
   attr(x, "digits") <- digits
-  # attr(x, "ci_digits") <- digits
-
-
   out <- parameters_table(x)
-  # out$CI <- NULL
 
   cat(insight::format_table(out, digits = digits))
 }

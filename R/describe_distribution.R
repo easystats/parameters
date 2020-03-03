@@ -51,8 +51,8 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
   out <- cbind(
     out,
     data.frame(
-      Skewness = skewness(x),
-      Kurtosis = kurtosis(x)
+      Skewness = as.numeric(skewness(x)),
+      Kurtosis = as.numeric(kurtosis(x))
     )
   )
 
@@ -80,8 +80,8 @@ describe_distribution.factor <- function(x, centrality = "mean", dispersion = TR
     SD = NA,
     Min = levels(x)[1],
     Max = levels(x)[nlevels(x)],
-    Skewness = NA,
-    Kurtosis = NA,
+    Skewness = as.numeric(skewness(x)),
+    Kurtosis = as.numeric(kurtosis(x)),
     n = length(x),
     n_Missing = n_missing,
     stringsAsFactors = FALSE
