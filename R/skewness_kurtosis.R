@@ -167,7 +167,7 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
     if (!requireNamespace("boot", quietly = TRUE)) {
       warning("Package 'boot' needed for bootstrapping SEs.", call. = FALSE)
     } else {
-      results <- boot::boot(data = x, statistic = .boot_skewness, R = iterations, na.rm = na.rm, type = type)
+      results <- boot::boot(data = x, statistic = .boot_kurtosis, R = iterations, na.rm = na.rm, type = type)
       attr(.kurtosis, "SE") <- stats::sd(results$t, na.rm = TRUE)
       class(.kurtosis) <- unique(c("parameters_kurtosis", class(.kurtosis)))
     }
