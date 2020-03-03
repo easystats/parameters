@@ -2,12 +2,18 @@
 % Please edit documentation in R/skewness_kurtosis.R
 \name{skewness}
 \alias{skewness}
+\alias{skewness.numeric}
 \alias{kurtosis}
+\alias{kurtosis.numeric}
 \title{Compute Skewness and Kurtosis}
 \usage{
 skewness(x, na.rm = TRUE, type = "2", ...)
 
+\method{skewness}{numeric}(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
+
 kurtosis(x, na.rm = TRUE, type = "2", ...)
+
+\method{kurtosis}{numeric}(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
 }
 \arguments{
 \item{x}{A numeric vector or data.frame.}
@@ -17,6 +23,8 @@ kurtosis(x, na.rm = TRUE, type = "2", ...)
 \item{type}{Type of algorithm for computing skewness. May be one of \code{1} (or \code{"1"}, \code{"I"} or \code{"classic"}), \code{2} (or \code{"2"}, \code{"II"} or \code{"SPSS"} or \code{"SAS"}) or \code{3} (or  \code{"3"}, \code{"III"} or \code{"Minitab"}). See 'Details'.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{iterations}{The number of bootstrap replicates for computing standard errors. If \code{NULL} (default), no standard errors are computed.}
 }
 \value{
 Values of skewness or kurtosis.

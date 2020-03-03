@@ -17,6 +17,7 @@
 ## Changes
 
 - Run certain tests only locally, to reduce duration of CRAN checks.
+- `skewness()` and `kurtosis()` get an `iteration` argument, to set the numbers of bootstrap replicates for computing standard errors.
 - Improved print-method for `factor_analysis()`.
 - Improved print-method for `model_parameters.brmsfit()`.
 - Improved efficiency for `model_parameters()` (for linear mixed models) when `df_method = "kenward"`.

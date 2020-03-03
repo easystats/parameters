@@ -3,6 +3,7 @@
 #' @param x A numeric vector or data.frame.
 #' @param na.rm Remove missing values.
 #' @param type Type of algorithm for computing skewness. May be one of \code{1} (or \code{"1"}, \code{"I"} or \code{"classic"}), \code{2} (or \code{"2"}, \code{"II"} or \code{"SPSS"} or \code{"SAS"}) or \code{3} (or  \code{"3"}, \code{"III"} or \code{"Minitab"}). See 'Details'.
+#' @param iterations The number of bootstrap replicates for computing standard errors. If \code{NULL} (default), no standard errors are computed.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details \subsection{Skewness}{
@@ -53,10 +54,10 @@ skewness <- function(x, na.rm = TRUE, type = "2", ...) {
   UseMethod("skewness")
 }
 
+#' @rdname skewness
+#' @importFrom stats sd
 #' @export
-skewness.numeric <- function(x, na.rm = TRUE, type = "2",
-                             # bootstrap_iterations = NA,
-                             ...) {
+skewness.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   if (na.rm) x <- x[!is.na(x)]
   n <- length(x)
   out <- (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5
@@ -74,30 +75,25 @@ skewness.numeric <- function(x, na.rm = TRUE, type = "2",
     "2" = out * sqrt(n * (n - 1)) / (n - 2),
     "3" = out * ((1 - 1 / n))^1.5
   )
-#
-#   out_se <- sqrt((6 * (n - 2)) / ((n + 1) * (n + 3)))
-#
-#   .skewness_se <- switch(
-#     type,
-#     "1" = out_se,
-#     "2" = out_se * ((sqrt(n * (n - 1))) / (n - 2)),
-#     "3" = out_se * (((n - 1) / n)^1.5),
-#   )
-#
-#   if (!is.na(bootstrap_iterations)) {
-#     if (!requireNamespace("boot", quietly = TRUE)) {
-#       warning("Package 'boot' needed for bootstrapping SEs. Using parametric method.")
-#     }
-#
-#     results <- boot::boot(data = x, statistic = skewness.numeric,
-#                           R = bootstrap_iterations,
-#                           na.rm = na.rm, type = type, bootstrap_iterations = NA, ...)
-#
-#     .skewness_se <- sd(results$t)
-#   }
-#
-#   attr(.skewness, "SE") <- .skewness_se
-#   class(.skewness) <- unique(c("parameters_skewness", class(.skewness)))
+
+  # out_se <- sqrt((6 * (n - 2)) / ((n + 1) * (n + 3)))
+  #
+  # .skewness_se <- switch(
+  #   type,
+  #   "1" = out_se,
+  #   "2" = out_se * ((sqrt(n * (n - 1))) / (n - 2)),
+  #   "3" = out_se * (((n - 1) / n)^1.5),
+  # )
+
+  if (!is.null(iterations )) {
+    if (!requireNamespace("boot", quietly = TRUE)) {
+      warning("Package 'boot' needed for bootstrapping SEs.", call. = FALSE)
+    } else {
+      results <- boot::boot(data = x, statistic = .boot_skewness, R = iterations, na.rm = na.rm, type = type)
+      attr(.skewness, "SE") <- stats::sd(results$t, na.rm = TRUE)
+      class(.skewness) <- unique(c("parameters_skewness", class(.skewness)))
+    }
+  }
 
   .skewness
 }
@@ -131,14 +127,14 @@ skewness.default <- function(x, na.rm = TRUE, type = "2", ...) {
 
 #' @rdname skewness
 #' @export
-kurtosis <- function(x, na.rm = TRUE, type = "2",
-                     # bootstrap_iterations = NA,
-                     ...) {
+kurtosis <- function(x, na.rm = TRUE, type = "2", ...) {
   UseMethod("kurtosis")
 }
 
+
+#' @rdname skewness
 #' @export
-kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", ...) {
+kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   if (na.rm) x <- x[!is.na(x)]
   n <- length(x)
   out <- n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2)
@@ -166,20 +162,16 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", ...) {
   #   "3" = out_se * ((n - 1) / n)^2
   # )
   #
-  # if (!is.na(bootstrap_iterations)) {
-  #   if (!requireNamespace("boot", quietly = TRUE)) {
-  #     warning("Package 'boot' needed for bootstrapping SEs. Using parametric method.")
-  #   }
-  #
-  #   results <- boot::boot(data = x, statistic = kurtosis.numeric,
-  #                         R = bootstrap_iterations,
-  #                         na.rm = na.rm, type = type, bootstrap_iterations = NA, ...)
-  #
-  #   .kurtosis_se <- sd(results$t)
-  # }
-  #
-  # attr(.kurtosis, "SE") <- .kurtosis_se
-  # class(.kurtosis) <- unique(c("parameters_kurtosis", class(.kurtosis)))
+
+  if (!is.null(iterations )) {
+    if (!requireNamespace("boot", quietly = TRUE)) {
+      warning("Package 'boot' needed for bootstrapping SEs.", call. = FALSE)
+    } else {
+      results <- boot::boot(data = x, statistic = .boot_skewness, R = iterations, na.rm = na.rm, type = type)
+      attr(.kurtosis, "SE") <- stats::sd(results$t, na.rm = TRUE)
+      class(.kurtosis) <- unique(c("parameters_kurtosis", class(.kurtosis)))
+    }
+  }
 
   .kurtosis
 }
@@ -239,25 +231,41 @@ kurtosis.default <- function(x, na.rm = TRUE, type = "2", ...) {
 
 
 
-#' #' @export
-#' print.parameters_skewness <- function(x, digits = 3, ...) {
-#'   if (is.numeric(x)) {
-#'     cat(sprintf("Skewness (SE): %.*f (%.*f)\n", digits, as.vector(x), digits, attributes(x)$SE))
-#'   } else if (is.data.frame(x)) {
-#'     cat(insight::format_table(x, digits = digits))
-#'   } else {
-#'     NextMethod()
-#'   }
-#' }
-#'
-#'
-#' #' @export
-#' print.parameters_kurtosis <- function(x, digits = 3, ...) {
-#'   if (is.numeric(x)) {
-#'     cat(sprintf("Kurtosis (SE): %.*f (%.*f)\n", digits, as.vector(x), digits, attributes(x)$SE))
-#'   } else if (is.data.frame(x)) {
-#'     cat(insight::format_table(x, digits = digits))
-#'   } else {
-#'     NextMethod()
-#'   }
-#' }
+#' @export
+print.parameters_skewness <- function(x, digits = 3, ...) {
+  if (is.numeric(x)) {
+    cat(sprintf("Skewness (SE): %.*f (%.*f)\n", digits, as.vector(x), digits, attributes(x)$SE))
+  } else if (is.data.frame(x)) {
+    cat(insight::format_table(x, digits = digits))
+  } else {
+    NextMethod()
+  }
+}
+
+
+#' @export
+print.parameters_kurtosis <- function(x, digits = 3, ...) {
+  if (is.numeric(x)) {
+    cat(sprintf("Kurtosis (SE): %.*f (%.*f)\n", digits, as.vector(x), digits, attributes(x)$SE))
+  } else if (is.data.frame(x)) {
+    cat(insight::format_table(x, digits = digits))
+  } else {
+    NextMethod()
+  }
+}
+
+
+
+
+
+
+# bootstrapping -----------------------------------
+
+.boot_skewness <- function(data, indices, na.rm, type) {
+  parameters::skewness(data[indices], na.rm = na.rm, type = type, iterations = NULL)
+}
+
+
+.boot_kurtosis <- function(data, indices, na.rm, type) {
+  parameters::kurtosis(data[indices], na.rm = na.rm, type = type, iterations = NULL)
+}
