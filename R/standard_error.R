@@ -129,6 +129,16 @@ standard_error.effectsize_std_params <- function(model, ...) {
 }
 
 
+#' @export
+standard_error.parameters_skewness <- function(model, ...) {
+  attributes(model)$SE
+}
+
+#' @export
+standard_error.parameters_kurtosis <- standard_error.parameters_skewness
+
+
+
 
 
 

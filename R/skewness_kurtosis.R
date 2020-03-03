@@ -231,10 +231,17 @@ kurtosis.default <- function(x, na.rm = TRUE, type = "2", ...) {
 
 
 
+
+
+
+
+# print-methods -----------------------------------------
+
+
 #' @export
-print.parameters_skewness <- function(x, digits = 3, ...) {
+print.parameters_skewness <- function(x, digits = 3, ci = .95, ...) {
   if (is.numeric(x)) {
-    cat(sprintf("Skewness (SE): %.*f (%.*f)\n", digits, as.vector(x), digits, attributes(x)$SE))
+    .print_skew_kurt(x, ci, digits, "Skewness")
   } else if (is.data.frame(x)) {
     cat(insight::format_table(x, digits = digits))
   } else {
@@ -244,14 +251,40 @@ print.parameters_skewness <- function(x, digits = 3, ...) {
 
 
 #' @export
-print.parameters_kurtosis <- function(x, digits = 3, ...) {
+print.parameters_kurtosis <- function(x, digits = 3, ci = .95, ...) {
   if (is.numeric(x)) {
-    cat(sprintf("Kurtosis (SE): %.*f (%.*f)\n", digits, as.vector(x), digits, attributes(x)$SE))
+    .print_skew_kurt(x, ci, digits, "Kurtosis")
   } else if (is.data.frame(x)) {
     cat(insight::format_table(x, digits = digits))
   } else {
     NextMethod()
   }
+}
+
+
+
+.print_skew_kurt <- function(x, ci, digits, .fun) {
+  alpha <- (1 + ci) / 2
+  fac <- stats::qnorm(alpha)
+
+  out <- data.frame(
+    Parameter = as.vector(x),
+    SE = attributes(x)$SE,
+    CI = 100 * ci,
+    CI_low = as.vector(x) - attributes(x)$SE * fac,
+    CI_high = as.vector(x) + attributes(x)$SE * fac,
+    stringsAsFactors = FALSE
+  )
+
+  attr(out, "ci") <- ci
+  attr(out, "digits") <- digits
+  attr(out, "ci_digits") <- digits
+
+  colnames(out)[1] <- .fun
+  out <- parameters_table(out)
+  out$CI <- NULL
+
+  cat(insight::format_table(out, digits = digits))
 }
 
 
