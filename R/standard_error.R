@@ -26,6 +26,8 @@
 #'    is returned.
 #' @inheritParams simulate_model
 #'
+#' @note For Bayesian models (from \pkg{rstanarm} or \pkg{brms}), the standard error is the SD of the posterior samples.
+#'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
@@ -776,6 +778,35 @@ standard_error.bracl <- function(model, ...) {
     Response = params$Response
   )
 }
+
+
+
+
+
+
+
+
+# Bayesian ----------------------------------------------
+
+
+#' @export
+standard_error.stanreg <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+
+  params <- insight::get_parameters(model, effects = effects, component = component, ...)
+
+  .data_frame(
+    Parameter = colnames(params),
+    SE = unname(sapply(params, stats::sd, na.rm = TRUE))
+  )
+}
+
+#' @export
+standard_error.brmsfit <- standard_error.stanreg
+
+#' @export
+standard_error.mvstanreg <- standard_error.stanreg
 
 
 

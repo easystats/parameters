@@ -94,6 +94,9 @@ A data frame.
 \description{
 \code{standard_error()} attempts to return standard errors of model parameters, while \code{standard_error_robust()} attempts to return robust standard errors.
 }
+\note{
+For Bayesian models (from \pkg{rstanarm} or \pkg{brms}), the standard error is the SD of the posterior samples.
+}
 \examples{
 model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 standard_error(model)
