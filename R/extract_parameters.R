@@ -326,7 +326,14 @@
 
 
 .add_within_between_effects <- function(model, parameters) {
-  parameters$Component <- "contextual"
+
+  # This function checks whether the model contains predictors that were
+  # "demeaned" using the "demean()" function. If so, these columns have an
+  # attribute indicating the within or between effect, and in such cases,
+  # this effect is used as "Component" value. by this, we get a nicer print
+  # for model parameters...
+
+  parameters$Component <- "rewb-contextual"
 
   within_effects <- .find_within_between(model, "within-effect")
   if (!is.null(within_effects)) {
@@ -358,8 +365,9 @@
 
 
 
+#' @importFrom stats model.frame
 .find_within_between <- function(model, which_effect) {
-  mf <- insight::get_data(model)
+  mf <- stats::model.frame(model)
   unlist(sapply(names(mf), function(i) {
     if (!is.null(attr(mf[[i]], which_effect, exact = TRUE))) {
       i

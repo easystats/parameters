@@ -253,6 +253,8 @@ print.parameters_random <- function(x, digits = 2, ...) {
     )
 
 
+    # tweaking of sub headers
+
     if ("DirichletRegModel" %in% attributes(x)$model_class) {
       if (grepl("^conditional\\.", component_name) || split_column == "Response") {
         s1 <- "Response level:"
@@ -270,6 +272,9 @@ print.parameters_random <- function(x, digits = 2, ...) {
     } else if (split_column == "Subgroup") {
       s1 <- component_name
       s2 <- ""
+    } else if (component_name %in% c("Within-Effects", "Between-Effects")) {
+      s1 <- component_name
+      s2 <- ""
     } else {
       s1 <- component_name
       s2 <- split_column
@@ -277,7 +282,9 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 
     # Print
-    insight::print_color(sprintf("# %s %s\n\n", s1, tolower(s2)), "blue")
+    if (component_name != "rewb-contextual") {
+      insight::print_color(sprintf("# %s %s\n\n", s1, tolower(s2)), "blue")
+    }
     cat(insight::format_table(formatted_table))
     cat("\n")
   }
