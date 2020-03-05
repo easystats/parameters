@@ -219,5 +219,14 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
   colnames(x_dm) <- sprintf("%s%s", colnames(x_dm), suffix_demean)
   colnames(x_gm) <- sprintf("%s%s", colnames(x_gm), suffix_groupmean)
 
+  x_dm[] <- lapply(x_dm, function(i) {
+    attr(i, "within-effect") <- TRUE
+    i
+  })
+  x_gm[] <- lapply(x_gm, function(i) {
+    attr(i, "between-effect") <- TRUE
+    i
+  })
+
   cbind(x_gm, x_dm)
 }

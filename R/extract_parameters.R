@@ -315,9 +315,58 @@
     parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
   }
 
+  # if we have within/between effects (from demean()), we can add a component
+  # column for nicer printing...
+  parameters <- .add_within_between_effects(model, parameters)
+
   rownames(parameters) <- NULL
   parameters
 }
+
+
+
+.add_within_between_effects <- function(model, parameters) {
+  parameters$Component <- "contextual"
+
+  within_effects <- .find_within_between(model, "within-effect")
+  if (!is.null(within_effects)) {
+    index <- unique(unlist(sapply(within_effects, function(i) {
+      grep(i, parameters$Parameter, fixed = TRUE)
+    })))
+    parameters$Component[index] <- "within"
+  }
+
+  between_effects <- .find_within_between(model, "between-effect")
+  if (!is.null(between_effects)) {
+    index <- unique(unlist(sapply(between_effects, function(i) {
+      grep(i, parameters$Parameter, fixed = TRUE)
+    })))
+    parameters$Component[index] <- "between"
+  }
+
+  interactions <- grep(":", parameters$Parameter, fixed = TRUE)
+  if (length(interactions)) {
+    parameters$Component[interactions] <- "interactions"
+  }
+
+  if (!("within" %in% parameters$Component) || !("between" %in% parameters$Component)) {
+    parameters$Component <- NULL
+  }
+
+  parameters
+}
+
+
+
+.find_within_between <- function(model, which_effect) {
+  mf <- insight::get_data(model)
+  unlist(sapply(names(mf), function(i) {
+    if (!is.null(attr(mf[[i]], which_effect, exact = TRUE))) {
+      i
+    }
+  }))
+}
+
 
 
 

@@ -244,6 +244,9 @@ print.parameters_random <- function(x, digits = 2, ...) {
       "extra.fixed" = "Extra Parameters",
       "nu" = "Nu",
       "tau" = "Tau",
+      "within" = "Within-Effects",
+      "between" = "Between-Effects",
+      "interactions" = "(Cross-Level) Interactions",
       "precision" = ,
       "precision." = "Precision",
       type
