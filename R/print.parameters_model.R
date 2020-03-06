@@ -97,12 +97,19 @@ print.parameters_random <- function(x, digits = 2, ...) {
 .print_random_parameters <- function(random_params, digits = 2) {
   insight::print_color("# Random Effects\n\n", "blue")
 
+  # create SD
+  random_params$SD <- NA
+  var_components <- random_params$Description %in% c("Within-Group Variance", "Between-Group Variance")
+  random_params$SD[var_components] <- sqrt(random_params$Value[var_components])
+
   # format values
   random_params$Value <- format(sprintf("%g", round(random_params$Value, digits = digits)), justify = "right")
+  random_params$SD[var_components] <- format(sprintf("(%g)", round(random_params$SD[var_components], digits = digits)), justify = "right")
 
   # create summary-information for each component
   random_params$Line <- ""
   random_params$Term[is.na(random_params$Term)] <- ""
+  random_params$SD[is.na(random_params$SD)] <- ""
 
   non_empty <- random_params$Term != "" & random_params$Type != ""
   random_params$Line[non_empty] <- sprintf("%s (%s)", random_params$Type[non_empty], random_params$Term[non_empty])
@@ -119,11 +126,11 @@ print.parameters_random <- function(x, digits = 2, ...) {
   for (i in out) {
     if ("Within-Group Variance" %in% i$Description) {
       insight::print_color(format("Within-Group Variance", width = max_len), color = "blue")
-      cat(sprintf("%s\n", i$Value))
+      cat(sprintf("%s %s\n", i$Value, i$SD))
     } else if ("Between-Group Variance" %in% i$Description) {
       insight::print_color("Between-Group Variance\n", "blue")
       for (j in 1:nrow(i)) {
-        cat(sprintf("%s  %s\n", i$Line[j], i$Value[j]))
+        cat(sprintf("%s  %s %s\n", i$Line[j], i$Value[j], i$SD[j]))
       }
     } else if ("Correlations" %in% i$Description) {
       insight::print_color("Correlations\n", "blue")

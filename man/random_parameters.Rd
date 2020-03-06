@@ -45,6 +45,7 @@ The variance components are obtained from \code{\link[insight]{get_variance}}
     is obtained from \code{VarCorr()}. This measure is only available
     for mixed models with random intercepts and slopes.
   }
+  \strong{Note:} For the within-group and between-group variance, variance and standard deviations (which are simply the square root of the variance) are shown.
 }
 \examples{
 if (require("lme4")) {
