@@ -108,8 +108,10 @@ skewness.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
     }
   }
 
-  .skewness <- data.frame(Skewness = .skewness,
-                          SE = out_se)
+  .skewness <- data.frame(
+    Skewness = .skewness,
+    SE = out_se
+  )
   class(.skewness) <- unique(c("parameters_skewness", class(.skewness)))
   .skewness
 }
@@ -179,7 +181,7 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
   .kurtosis <- switch(
     type,
     "1" = out - 3,
-    "2" = ((n + 1) * (out - 3) + 6) * (n - 1)/((n - 2) * (n - 3)),
+    "2" = ((n + 1) * (out - 3) + 6) * (n - 1) / ((n - 2) * (n - 3)),
     "3" = out * (1 - 1 / n)^2 - 3
   )
 
@@ -192,7 +194,7 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
     "3" = out_se * ((n - 1) / n)^2
   )
 
-  if (!is.null(iterations )) {
+  if (!is.null(iterations)) {
     if (!requireNamespace("boot", quietly = TRUE)) {
       warning("Package 'boot' needed for bootstrapping SEs.", call. = FALSE)
     } else {
@@ -201,8 +203,10 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
     }
   }
 
-  .kurtosis <- data.frame(Kurtosis = .kurtosis,
-                          SE = out_se)
+  .kurtosis <- data.frame(
+    Kurtosis = .kurtosis,
+    SE = out_se
+  )
   class(.kurtosis) <- unique(c("parameters_kurtosis", class(.kurtosis)))
   .kurtosis
 }
@@ -245,12 +249,12 @@ kurtosis.default <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
 # methods -----------------------------------------
 
 #' @export
-as.numeric.parameters_kurtosis <- function(x){
+as.numeric.parameters_kurtosis <- function(x) {
   x$Kurtosis
 }
 
 #' @export
-as.numeric.parameters_skewness <- function(x){
+as.numeric.parameters_skewness <- function(x) {
   x$Skewness
 }
 
@@ -323,15 +327,17 @@ print.parameters_skewness <- function(x, digits = 3, test = FALSE, ...) {
 
 .boot_skewness <- function(data, indices, na.rm, type) {
   parameters::skewness(data[indices],
-                       na.rm = na.rm,
-                       type = type,
-                       iterations = NULL)$Skewness
+    na.rm = na.rm,
+    type = type,
+    iterations = NULL
+  )$Skewness
 }
 
 
 .boot_kurtosis <- function(data, indices, na.rm, type) {
   parameters::kurtosis(data[indices],
-                       na.rm = na.rm,
-                       type = type,
-                       iterations = NULL)$Kurtosis
+    na.rm = na.rm,
+    type = type,
+    iterations = NULL
+  )$Kurtosis
 }

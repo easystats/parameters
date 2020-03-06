@@ -25,8 +25,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -217,20 +217,19 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
-#&gt; 1    3.370856        -1.0998234        -1.875433   0.6194222    1.0179878
-#&gt; 2    3.395215        -1.6106708        -2.601202   0.5781322    0.9884989
-#&gt; 3    3.685762        -1.6823891        -1.720361  -0.6125496    0.9798042
-#&gt; 4    3.475337        -1.8369984        -2.844922   0.3012812    1.0046408
-#&gt; 5    3.781507        -1.1625047        -2.020804  -0.4473250    0.8824611
-#&gt; 6    3.480473        -0.9596203        -2.002137   0.4354871    0.9462879
+#&gt; 1    3.494911         -1.000534        -1.837260   0.9338871    0.8853281
+#&gt; 2    3.536130         -1.016807        -1.265041   0.1916124    0.9194452
+#&gt; 3    3.517759         -1.265926        -2.485673   0.8674889    0.9279371
+#&gt; 4    3.423196         -1.286573        -2.055230   0.6930829    0.9752158
+#&gt; 5    3.573245         -1.566527        -2.388445  -0.1436607    0.9510880
+#&gt; 6    3.881560         -1.685696        -1.652882  -0.5578917    0.8899102
 #&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
-#&gt; 1                    -1.1132595                   -0.8941799
-#&gt; 2                    -0.6830175                   -0.4499756
-#&gt; 3                     0.3854134                    0.2141105
-#&gt; 4                    -0.3719440                   -0.1528747
-#&gt; 5                     0.1227635                    0.4076785
-#&gt; 6                    -0.9113866                   -0.4794441</div><div class='input'>
-<span class='co'># \donttest{</span>
+#&gt; 1                   -1.18918538                   -0.9502384
+#&gt; 2                   -0.62235209                   -0.6014843
+#&gt; 3                   -1.09014695                   -0.6575919
+#&gt; 4                   -0.95887306                   -0.7590331
+#&gt; 5                    0.01860424                    0.2308056
+#&gt; 6                    0.53965301                    0.2713740</div><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"glmmTMB"</span>)) {
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
     <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
@@ -241,15 +240,15 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>))
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>))
 }</div><div class='output co'>#&gt;   (Intercept)   minedno
-#&gt; 1   0.5641863 -1.763613
-#&gt; 2   0.7581232 -1.729197
-#&gt; 3   0.9823013 -1.951007
-#&gt; 4   0.6237866 -1.515200
-#&gt; 5   0.4950668 -1.600382
-#&gt; 6   0.6599316 -1.761012</div><div class='input'># }
+#&gt; 1   0.8385056 -1.780004
+#&gt; 2   0.1000480 -1.106925
+#&gt; 3   0.8630587 -1.847891
+#&gt; 4   0.8638368 -2.017027
+#&gt; 5   1.2082434 -2.086319
+#&gt; 6   0.7379437 -1.827924</div><div class='input'># }
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
@@ -265,11 +264,11 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil, Søren Højsgaard.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, <a href='https://sites.google.com/site/indrajeetspatilmorality/'>Indrajeet Patil</a>, Søren Højsgaard.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

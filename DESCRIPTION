@@ -119,5 +119,5 @@ Suggests:
     Zelig
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.0.2
+RoxygenNote: 7.0.2.9000
 VignetteBuilder: knitr

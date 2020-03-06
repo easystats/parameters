@@ -87,7 +87,6 @@ predict(pca)
 
 # which variables from the original data belong to which extracted component?
 closest_component(pca)
-
 \donttest{
 # Automated number of components
 principal_components(mtcars[, 1:4], n = "auto")

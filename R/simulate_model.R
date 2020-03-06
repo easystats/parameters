@@ -34,7 +34,6 @@
 #' library(parameters)
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 #' head(simulate_model(model))
-#'
 #' \donttest{
 #' if (require("glmmTMB")) {
 #'   model <- glmmTMB(

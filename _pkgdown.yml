@@ -5,6 +5,8 @@ authors:
     href: https://dominiquemakowski.github.io/
   Mattan S. Ben-Shachar:
     href: https://github.com/mattansb
+  Indrajeet Patil:
+    href: https://sites.google.com/site/indrajeetspatilmorality/
 
 template:
   params:
@@ -106,6 +108,7 @@ reference:
   - data_partition
   - reshape_loadings
   - convert_data_to_numeric
+  - fish
 
 - title: "Table and Value Formatting"
   contents:
@@ -121,7 +124,6 @@ reference:
   - parameters_table
   - parameters_type
   - standardize_names
-
 
 navbar:
   type: default

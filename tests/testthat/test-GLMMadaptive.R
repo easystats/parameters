@@ -2,7 +2,6 @@ if (require("testthat") &&
   require("parameters") &&
   require("lme4") &&
   require("GLMMadaptive")) {
-
   data("fish")
   data("cbpp")
 
@@ -13,7 +12,7 @@ if (require("testthat") &&
     data = fish,
     family = zi.poisson()
   )
-  m2 <-  mixed_model(
+  m2 <- mixed_model(
     cbind(incidence, size - incidence) ~ period,
     random = ~ 1 | herd,
     data = cbpp,

@@ -14,6 +14,7 @@ describe_distribution(x, ...)
   centrality = "mean",
   dispersion = TRUE,
   range = TRUE,
+  ci = 0.95,
   ...
 )
 
@@ -39,13 +40,18 @@ describe_distribution(x, ...)
 
 \item{range}{Return the range (min and max).}
 
-\item{include_factors}{Logical, if \code{TRUE}, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.}
+\item{ci}{Confidence Interval (CI) level. Default to 0.95.}
+
+\item{include_factors}{Logical, if \code{TRUE}, factors are included in the
+output, however, only columns for range (first and last factor levels) as
+well as n and missing will contain information.}
 }
 \value{
 A data frame with columns that describe the properties of the variables.
 }
 \description{
-This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).
+This function describes a distribution by a set of indices (e.g., measures of
+centrality, dispersion, range, skewness, kurtosis).
 }
 \examples{
 describe_distribution(rnorm(100))

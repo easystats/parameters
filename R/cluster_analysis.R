@@ -97,19 +97,20 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
 
   # check number of clusters
   if (is.null(n_clusters)) {
-    n_clusters <- tryCatch({
-      nc <- n_clusters(x, package = package, force = force)
-      ncs <- attributes(nc)$summary
-      n_cl <- ncs$n_Clusters[which.max(ncs$n_Methods)][1]
-      if (verbose) {
-        insight::print_color(sprintf("Using solution with %i clusters, supported by %i out of %i methods.\n", n_cl, max(ncs$n_Methods), sum(ncs$n_Methods)), "blue")
+    n_clusters <- tryCatch(
+      {
+        nc <- n_clusters(x, package = package, force = force)
+        ncs <- attributes(nc)$summary
+        n_cl <- ncs$n_Clusters[which.max(ncs$n_Methods)][1]
+        if (verbose) {
+          insight::print_color(sprintf("Using solution with %i clusters, supported by %i out of %i methods.\n", n_cl, max(ncs$n_Methods), sum(ncs$n_Methods)), "blue")
+        }
+        n_cl
+      },
+      error = function(e) {
+        insight::print_color("Could not extract number of cluster. Please provide argument 'n_clusters'.\n", "red")
+        1
       }
-      n_cl
-    },
-    error = function(e) {
-      insight::print_color("Could not extract number of cluster. Please provide argument 'n_clusters'.\n", "red")
-      1
-    }
     )
   }
 

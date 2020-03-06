@@ -1,6 +1,6 @@
 if (require("testthat") &&
-    require("parameters") &&
-    require("lme4")) {
+  require("parameters") &&
+  require("lme4")) {
   data("cbpp")
   model <- glmer(
     cbind(incidence, size - incidence) ~ period + (1 | herd),

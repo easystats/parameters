@@ -4,7 +4,6 @@ if (.runThisTest || Sys.getenv("USER") == "travis") {
   if (require("testthat") &&
     require("parameters") &&
     require("lme4")) {
-
     data(iris)
     set.seed(1234)
     iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))

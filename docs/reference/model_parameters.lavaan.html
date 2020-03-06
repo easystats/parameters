@@ -25,8 +25,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -170,7 +170,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>CFA or SEM created by the <code><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>lavaan::cfa</a></code> or <code><a href='https://rdrr.io/pkg/lavaan/man/sem.html'>lavaan::sem</a></code> functions.</p></td>
+      <td><p>CFA or SEM created by the <code><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>lavaan::cfa</a></code> or <code><a href='https://rdrr.io/pkg/lavaan/man/sem.html'>lavaan::sem</a></code> functions (or from <span class="pkg">blavaan</span>).</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -237,7 +237,7 @@
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>lavaan</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/sem.html'>sem</a></span>(<span class='no'>structure</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>PoliticalDemocracy</span>)
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loading type
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: lavaan</span></div><div class='output co'>#&gt; <span class='message'>This is lavaan 0.6-5</span></div><div class='output co'>#&gt; <span class='message'>lavaan is BETA software! Please report any bugs.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loading type
 #&gt; 
 #&gt; </span><span>Link        | Coefficient |   SE |       95% CI |      p
 #&gt; --------------------------------------------------------
@@ -273,7 +273,7 @@
 #&gt; y6 ~~ y8 |        0.34 | 0.11 | [ 0.12, 0.55] | 0.002 
 #&gt; </div></span></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
@@ -288,11 +288,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil, Søren Højsgaard.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, <a href='https://sites.google.com/site/indrajeetspatilmorality/'>Indrajeet Patil</a>, Søren Højsgaard.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

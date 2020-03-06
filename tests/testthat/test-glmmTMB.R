@@ -4,7 +4,6 @@ if (.runThisTest || Sys.getenv("USER") == "travis") {
   if (require("testthat") &&
     require("parameters") &&
     require("glmmTMB")) {
-
     data("fish")
 
     m1 <- glmmTMB(

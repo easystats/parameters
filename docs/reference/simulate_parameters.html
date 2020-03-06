@@ -25,8 +25,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -243,15 +243,14 @@ included in the summary output.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>simulate_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high           p
-#&gt; 1                   (Intercept)   3.5308518  3.2167274  3.8508258 0.000000000
-#&gt; 2             Speciesversicolor  -1.1447244 -1.8322506 -0.4537137 0.001998002
-#&gt; 3              Speciesvirginica  -2.2572762 -3.1547751 -1.3669044 0.000000000
-#&gt; 4                   Petal.Width   0.4110340 -0.5042827  1.3653828 0.353646354
-#&gt; 5                  Petal.Length   0.9399185  0.7876682  1.0885759 0.000000000
-#&gt; 6 Speciesversicolor:Petal.Width  -0.7427106 -1.8317449  0.2698742 0.143856144
-#&gt; 7  Speciesvirginica:Petal.Width  -0.3404900 -1.3726461  0.5663082 0.431568432</div><div class='input'>
-<span class='co'># \donttest{</span>
+<span class='fu'>simulate_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low    CI_high         p
+#&gt; 1                   (Intercept)   3.5253521  3.2343828  3.8419188 0.0000000
+#&gt; 2             Speciesversicolor  -1.1651302 -1.8935799 -0.4642451 0.0000000
+#&gt; 3              Speciesvirginica  -2.2366445 -3.1680703 -1.3927662 0.0000000
+#&gt; 4                   Petal.Width   0.3928410 -0.4540003  1.3379346 0.4075924
+#&gt; 5                  Petal.Length   0.9428384  0.7857314  1.0976910 0.0000000
+#&gt; 6 Speciesversicolor:Petal.Width  -0.7320453 -1.7468201  0.3026081 0.1618382
+#&gt; 7  Speciesvirginica:Petal.Width  -0.3548119 -1.3248292  0.5739295 0.4755245</div><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"glmmTMB"</span>)) {
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
     <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
@@ -261,14 +260,14 @@ included in the summary output.</p></td>
   )
   <span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)
   <span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)
-}</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high           p
-#&gt; 1 (Intercept)   0.7849491 80  0.4417386  1.119140 0.001998002
-#&gt; 2 (Intercept)   0.7849491 95  0.2688329  1.323525 0.001998002
-#&gt; 3     minedno  -1.8446748 80 -2.2397398 -1.450061 0.000000000
-#&gt; 4     minedno  -1.8446748 95 -2.4862579 -1.243662 0.000000000</div><div class='input'># }
+}</div><div class='output co'>#&gt;     Parameter Coefficient CI     CI_low   CI_high p
+#&gt; 1 (Intercept)   0.7864189 80  0.4416994  1.141162 0
+#&gt; 2 (Intercept)   0.7864189 95  0.2493293  1.298726 0
+#&gt; 3     minedno  -1.8383099 80 -2.2401188 -1.441013 0
+#&gt; 4     minedno  -1.8383099 95 -2.4712074 -1.217709 0</div><div class='input'># }
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
@@ -286,11 +285,11 @@ included in the summary output.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, Indrajeet Patil, Søren Højsgaard.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, <a href='https://sites.google.com/site/indrajeetspatilmorality/'>Indrajeet Patil</a>, Søren Højsgaard.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

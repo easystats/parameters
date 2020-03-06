@@ -67,4 +67,3 @@ select_parameters.stanreg <- function(model, method = NULL, cross_validation = F
   formula <- paste(insight::find_response(model), "~", formula)
   formula
 }
-

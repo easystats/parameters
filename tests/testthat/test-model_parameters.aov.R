@@ -38,7 +38,7 @@ if (.runThisTest || Sys.getenv("USER") == "travis") {
       model <- anova(lmer(wt ~ drat * cyl + (1 | gear), data = mtcars))
       testthat::expect_equal(sum(model_parameters(model)$df), 3)
 
-      model <- anova(lmer(wt ~ drat/cyl + (1 | gear), data = mtcars))
+      model <- anova(lmer(wt ~ drat / cyl + (1 | gear), data = mtcars))
       testthat::expect_equal(sum(model_parameters(model)$df), 2)
     })
 

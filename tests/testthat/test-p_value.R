@@ -2,9 +2,9 @@
 
 if (.runThisTest || Sys.getenv("USER") == "travis") {
   if (require("testthat") &&
-      require("parameters") &&
-      require("lme4") &&
-      require("insight")) {
+    require("parameters") &&
+    require("lme4") &&
+    require("insight")) {
     data(mtcars)
     test_that("p_value", {
       # h-tests

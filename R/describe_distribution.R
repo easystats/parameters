@@ -1,10 +1,15 @@
-#' Describe a distribution
+#' @title Describe a distribution
 #'
-#' This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).
+#' @description
+#' This function describes a distribution by a set of indices (e.g., measures of
+#' centrality, dispersion, range, skewness, kurtosis).
 #'
 #' @param x A numeric vector.
 #' @param range Return the range (min and max).
-#' @param include_factors Logical, if \code{TRUE}, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.
+#' @param include_factors Logical, if \code{TRUE}, factors are included in the
+#'   output, however, only columns for range (first and last factor levels) as
+#'   well as n and missing will contain information.
+#' @param ci Confidence Interval (CI) level. Default to 0.95.
 #' @inheritParams bayestestR::point_estimate
 #'
 #' @return A data frame with columns that describe the properties of the variables.
@@ -21,9 +26,9 @@ describe_distribution <- function(x, ...) {
 
 
 #' @rdname describe_distribution
-#' @importFrom stats na.omit
+#' @importFrom stats na.omit qnorm
 #' @export
-describe_distribution.numeric <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, ...) {
+describe_distribution.numeric <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, ci = 0.95, ...) {
   out <- data.frame(.temp = 0)
 
   # Missing
@@ -57,6 +62,17 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
     data.frame(
       Skewness = as.numeric(skewness(x)),
       Kurtosis = as.numeric(kurtosis(x))
+    )
+  )
+
+  # CI
+  # probability for computing confidence intervals
+  prob <- 1 - ((1 - ci) / 2)
+  out <- cbind(
+    out,
+    data.frame(
+      CI_low = out[[1]] - stats::qnorm(prob) * standard_error(x),
+      CI_high = out[[1]] + stats::qnorm(prob) * standard_error(x)
     )
   )
 

@@ -1,5 +1,4 @@
-if (require("testthat") && require("parameters")) {
-
+if (require("testthat") && require("parameters") && require("nFactors")) {
   test_that("principal_components", {
     x <- parameters::principal_components(mtcars[, 1:7], rotation = "varimax")
 
