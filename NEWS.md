@@ -15,20 +15,28 @@
 
 - Added support for `bife` (*bife*), `bcplm` and `zcpglm` (*cplm*)
 
-## Changes
+## Changes to functions
 
-- Run certain tests only locally, to reduce duration of CRAN checks.
-- `skewness()` and `kurtosis()` get an `iteration` argument, to set the numbers of bootstrap replicates for computing standard errors.
-- Improved print-method for `factor_analysis()`.
+### model_parameters()
+
 - Improved print-method for `model_parameters.brmsfit()`.
 - Improved print-method for `model_parameters.merMod()` when fitting REWB-Models (see `demean()`).
 - Improved efficiency for `model_parameters()` (for linear mixed models) when `df_method = "kenward"`.
 - `model_parameters()` gets a `p_adjust`-argument, to adjust p-values for multiple comparisons.
 - Minor improvements for `cluster_analysis()` when `method = "kmeans"` and `force = TRUE` (factors now also work for kmeans-clustering).
-- `demean()` now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic *panelr*-behaviour.
+
+### p_value(), ci() and standard_error()
+
 - `p_value_kenward()`, `se_kenward()` etc. now give a warning when model was not fitted by REML.
 - Added `ci()`, `standard_error()` and `p_value()` for *lavaan* and *blavaan* objects.
 - Added `standard_error()` for *brmsfit* and *stanreg* objects.
+
+### Other changes
+
+- Run certain tests only locally, to reduce duration of CRAN checks.
+- `skewness()` and `kurtosis()` get an `iteration` argument, to set the numbers of bootstrap replicates for computing standard errors.
+- Improved print-method for `factor_analysis()`.
+- `demean()` now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic *panelr*-behaviour.
 
 ## Bug fixes
 

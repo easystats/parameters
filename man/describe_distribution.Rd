@@ -2,16 +2,22 @@
 % Please edit documentation in R/describe_distribution.R
 \name{describe_distribution}
 \alias{describe_distribution}
+\alias{describe_distribution.numeric}
+\alias{describe_distribution.factor}
 \alias{describe_distribution.data.frame}
 \title{Describe a distribution}
 \usage{
-describe_distribution(
+describe_distribution(x, ...)
+
+\method{describe_distribution}{numeric}(
   x,
   centrality = "mean",
   dispersion = TRUE,
   range = TRUE,
   ...
 )
+
+\method{describe_distribution}{factor}(x, dispersion = TRUE, range = TRUE, ...)
 
 \method{describe_distribution}{data.frame}(
   x,
@@ -25,13 +31,13 @@ describe_distribution(
 \arguments{
 \item{x}{A numeric vector.}
 
+\item{...}{Additional arguments to be passed to or from methods.}
+
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
 \item{range}{Return the range (min and max).}
-
-\item{...}{Additional arguments to be passed to or from methods.}
 
 \item{include_factors}{Logical, if \code{TRUE}, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.}
 }
