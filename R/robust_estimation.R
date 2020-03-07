@@ -49,9 +49,14 @@ standard_error_robust <- function(model,
     return(standard_error(model, method = "robust", ...))
   }
 
+  # check for existing vcov-prefix
+  if (!grepl("^vcov", vcov_estimation)) {
+    vcov_estimation <- paste0("vcov", vcov_estimation)
+  }
+
   robust <- .robust_covariance_matrix(
     model,
-    vcov_fun = paste0("vcov", vcov_estimation),
+    vcov_fun = vcov_estimation,
     vcov_type = vcov_type,
     vcov_args = vcov_args
   )
@@ -73,9 +78,14 @@ p_value_robust <- function(model,
     return(p_value(model, method = "robust", ...))
   }
 
+  # check for existing vcov-prefix
+  if (!grepl("^vcov", vcov_estimation)) {
+    vcov_estimation <- paste0("vcov", vcov_estimation)
+  }
+
   robust <- .robust_covariance_matrix(
     model,
-    vcov_fun = paste0("vcov", vcov_estimation),
+    vcov_fun = vcov_estimation,
     vcov_type = vcov_type,
     vcov_args = vcov_args
   )
