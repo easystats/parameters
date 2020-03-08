@@ -81,7 +81,11 @@ smoothness.default <- function(x, method = "cor", lag = 1, iterations = NULL, ..
 
 #' @export
 as.numeric.parameters_smoothness <- function(x, ...) {
-  x$Kurtosis
+  if (is.data.frame(x)) {
+    x$Smoothness
+  } else {
+    as.vector(x)
+  }
 }
 
 #' @export
