@@ -245,12 +245,12 @@ kurtosis.default <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
 # methods -----------------------------------------
 
 #' @export
-as.numeric.parameters_kurtosis <- function(x){
+as.numeric.parameters_kurtosis <- function(x, ...) {
   x$Kurtosis
 }
 
 #' @export
-as.numeric.parameters_skewness <- function(x){
+as.numeric.parameters_skewness <- function(x, ...) {
   x$Skewness
 }
 

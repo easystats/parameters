@@ -34,7 +34,7 @@
 ### Other changes
 
 - Run certain tests only locally, to reduce duration of CRAN checks.
-- `skewness()` and `kurtosis()` get an `iteration` argument, to set the numbers of bootstrap replicates for computing standard errors.
+- `skewness()`, `kurtosis()` and `smoothness()` get an `iteration` argument, to set the numbers of bootstrap replicates for computing standard errors.
 - Improved print-method for `factor_analysis()`.
 - `demean()` now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic *panelr*-behaviour.
 
