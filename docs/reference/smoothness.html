@@ -156,7 +156,7 @@
     <p>Quantify the smoothness of a vector</p>
     </div>
 
-    <pre class="usage"><span class='fu'>smoothness</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"cor"</span>, <span class='kw'>lag</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>smoothness</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"cor"</span>, <span class='kw'>lag</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,6 +173,14 @@
       <th>lag</th>
       <td><p>An integer indicating which lag to use. If less than 1, will be interpreted as expressed in percentage of the length of the vector.</p></td>
     </tr>
+    <tr>
+      <th>iterations</th>
+      <td><p>The number of bootstrap replicates for computing standard errors. If <code>NULL</code> (default), parametric standard errors are computed. See 'Details'.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -184,7 +192,11 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> (-<span class='fl'>10</span>:<span class='fl'>10</span>)^<span class='fl'>3</span> + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>21</span>, <span class='fl'>0</span>, <span class='fl'>100</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='smoothness-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>smoothness</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"cor"</span>)</div><div class='output co'>#&gt; [1] 0.9040493</div><div class='input'><span class='fu'>smoothness</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"diff"</span>)</div><div class='output co'>#&gt; [1] 1.76975</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='smoothness-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>smoothness</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"cor"</span>)</div><div class='output co'>#&gt; [1] 0.9040493
+#&gt; attr(,"class")
+#&gt; [1] "parameters_smoothness" "numeric"              </div><div class='input'><span class='fu'>smoothness</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"diff"</span>)</div><div class='output co'>#&gt; [1] 1.76975
+#&gt; attr(,"class")
+#&gt; [1] "parameters_smoothness" "numeric"              </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

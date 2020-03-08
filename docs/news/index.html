@@ -165,6 +165,8 @@
 <li>Alias <code>parameters_selection()</code> was removed, please use <code><a href="../reference/select_parameters.html">select_parameters()</a></code>.</li>
 <li>Alias <code>parameters_reduction()</code> was removed, please use <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>.</li>
 <li>Functions <code>DDR()</code>, <code>ICA()</code> and <code>cmds()</code> are no longer exported, as these were intended to be used internally by <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> only.</li>
+<li>
+<code><a href="../reference/skewness.html">skewness()</a></code> and <code><a href="../reference/skewness.html">kurtosis()</a></code> always return a data frame.</li>
 </ul>
 </div>
 <div id="new-supported-models" class="section level2">
@@ -174,22 +176,43 @@
 <li>Added support for <code>bife</code> (<em>bife</em>), <code>bcplm</code> and <code>zcpglm</code> (<em>cplm</em>)</li>
 </ul>
 </div>
-<div id="changes" class="section level2">
+<div id="changes-to-functions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes" class="anchor"></a>Changes</h2>
+<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<div id="model_parameters" class="section level3">
+<h3 class="hasAnchor">
+<a href="#model_parameters" class="anchor"></a>model_parameters()</h3>
 <ul>
-<li>Run certain tests only locally, to reduce duration of CRAN checks.</li>
-<li>Improved print-method for <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</li>
+<li>Improved print-method for <code><a href="../reference/model_parameters.stanreg.html">model_parameters.brmsfit()</a></code>.</li>
+<li>Improved print-method for <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> when fitting REWB-Models (see <code><a href="../reference/demean.html">demean()</a></code>).</li>
 <li>Improved efficiency for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) when <code>df_method = "kenward"</code>.</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>p_adjust</code>-argument, to adjust p-values for multiple comparisons.</li>
 <li>Minor improvements for <code><a href="../reference/cluster_analysis.html">cluster_analysis()</a></code> when <code>method = "kmeans"</code> and <code>force = TRUE</code> (factors now also work for kmeans-clustering).</li>
-<li>
-<code><a href="../reference/demean.html">demean()</a></code> now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic <em>panelr</em>-behaviour.</li>
+</ul>
+</div>
+<div id="p_value-ci-and-standard_error" class="section level3">
+<h3 class="hasAnchor">
+<a href="#p_value-ci-and-standard_error" class="anchor"></a>p_value(), ci() and standard_error()</h3>
+<ul>
 <li>
 <code><a href="../reference/p_value_kenward.html">p_value_kenward()</a></code>, <code><a href="../reference/p_value_kenward.html">se_kenward()</a></code> etc. now give a warning when model was not fitted by REML.</li>
 <li>Added <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code> for <em>lavaan</em> and <em>blavaan</em> objects.</li>
+<li>Added <code><a href="../reference/standard_error.html">standard_error()</a></code> for <em>brmsfit</em> and <em>stanreg</em> objects.</li>
 </ul>
+</div>
+<div id="other-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other changes</h3>
+<ul>
+<li>Run certain tests only locally, to reduce duration of CRAN checks.</li>
+<li>
+<code><a href="../reference/skewness.html">skewness()</a></code>, <code><a href="../reference/skewness.html">kurtosis()</a></code> and <code><a href="../reference/smoothness.html">smoothness()</a></code> get an <code>iteration</code> argument, to set the numbers of bootstrap replicates for computing standard errors.</li>
+<li>Improved print-method for <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</li>
+<li>
+<code><a href="../reference/demean.html">demean()</a></code> now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic <em>panelr</em>-behaviour.</li>
+</ul>
+</div>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
@@ -252,9 +275,9 @@
 <code><a href="../reference/get_scores.html">get_scores()</a></code> as a small helper to extract scales and calculate sum scores from a principal component analysis (PCA, <code><a href="../reference/principal_components.html">principal_components()</a></code>).</li>
 </ul>
 </div>
-<div id="changes-to-functions" class="section level2">
+<div id="changes-to-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code><a href="../reference/n_clusters.html">n_clusters()</a></code> gets the option <code>"M3C"</code> for the <code>package</code>-argument, so you can try to determine the number of cluster by using the <code>M3C::M3C()</code> function.</li>
@@ -360,9 +383,9 @@
 <code><a href="../reference/rescale_weights.html">rescale_weights()</a></code> to rescale design (probability or sampling) weights for use in multilevel-models without survey-design.</li>
 </ul>
 </div>
-<div id="changes-to-functions-1" class="section level2">
+<div id="changes-to-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-2" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>Robust estimation (like <code><a href="../reference/standard_error_robust.html">standard_error_robust()</a></code> or <code><a href="../reference/standard_error_robust.html">ci_robust()</a></code>) can now also compute cluster-robust variance-covariance matrices, using the <em>clubSandwich</em> package.</li>
 <li>
@@ -433,9 +456,9 @@
 <li>Add <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code>-methods for <code><a href="../reference/principal_components.html">principal_components()</a></code>.</li>
 </ul>
 </div>
-<div id="changes-to-functions-2" class="section level2">
+<div id="changes-to-functions-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-2" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-3" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>Added indices of model fit to <code><a href="../reference/n_factors.html">n_factors()</a></code> (<a href="https://doi.org/10.1177/0013164419865769">Finch, 2019</a>)</li>
 <li>
@@ -498,9 +521,9 @@
 <code><a href="../reference/p_value_kenward.html">se_kenward()</a></code> to calculate approximated standard errors for model parameters, based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
-<div id="changes-to-functions-3" class="section level2">
+<div id="changes-to-functions-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-3" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-4" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code>format_value()</code> and <code>format_ci()</code> get a <code>width</code>-argument to set the minimum length of the returned formatted string.</li>

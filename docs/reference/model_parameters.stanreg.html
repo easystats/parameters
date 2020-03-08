@@ -169,7 +169,6 @@
   <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
   <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>,
   <span class='no'>...</span>
 )
@@ -187,9 +186,9 @@
   <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
   <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
+  <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -198,7 +197,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Bayesian model.</p></td>
+      <td><p>Bayesian model. May also be a data frame with posterior samples.</p></td>
     </tr>
     <tr>
       <th>centrality</th>
@@ -210,7 +209,7 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Credible Interval (CI) level. Default to 0.89 (89%). See <code><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci</a></code> for further details.</p></td>
     </tr>
     <tr>
       <th>ci_method</th>
@@ -253,10 +252,6 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
       <td><p>Add the prior used for each parameter.</p></td>
     </tr>
     <tr>
-      <th>iterations</th>
-      <td><p>The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.</p></td>
-    </tr>
-    <tr>
       <th>effects</th>
       <td><p>Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.</p></td>
@@ -269,11 +264,21 @@ Only applies to mixed models. May be abbreviated.</p></td>
       <th>component</th>
       <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>) or <code>"all"</code>.</p></td>
     </tr>
+    <tr>
+      <th>exponentiate</th>
+      <td><p>Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of indices related to the model's parameters.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Currently supported models are <code>brmsfit</code>, <code>stanreg</code>, <code>stanmvreg</code>, <code>MCMCglmm</code>, <code>mcmc</code> and <code>bcplm</code>.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>If <code>model</code> is a data frame, arguments <code>diagnostic</code>, <code>bf_prior</code> and <code>priors</code> are ignored.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
@@ -307,6 +312,8 @@ Only applies to mixed models. May be abbreviated.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#note">Note</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

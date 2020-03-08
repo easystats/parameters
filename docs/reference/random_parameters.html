@@ -193,8 +193,7 @@
 <p>The random slope-intercept correlation
     (&rho;<sub>01</sub>)
     is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. This measure is only available
-    for mixed models with random intercepts and slopes.</p>
-
+    for mixed models with random intercepts and slopes.</p><p><strong>Note:</strong> For the within-group and between-group variance, variance and standard deviations (which are simply the square root of the variance) are shown.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>)) {
@@ -203,10 +202,10 @@
   <span class='fu'>random_parameters</span>(<span class='no'>model</span>)
 }</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Random Effects
 #&gt; 
-#&gt; Within-Group Variance          </span><span>654.94
+#&gt; Within-Group Variance          </span><span>654.94 (25.59)
 #&gt; </span><span style='color: #0000BB;'>Between-Group Variance
-#&gt; </span><span>  Random Intercept (Subject)    611.9
-#&gt;   Random Slope (Subject.Days)   35.08
+#&gt; </span><span>  Random Intercept (Subject)    611.9 (24.74)
+#&gt;   Random Slope (Subject.Days)   35.08  (5.92)
 #&gt; </span><span style='color: #0000BB;'>Correlations
 #&gt; </span><span>  Subject.Days                   0.07
 #&gt; </span><span style='color: #0000BB;'>N (groups per factor)
