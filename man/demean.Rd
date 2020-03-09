@@ -35,21 +35,43 @@ A data frame with the group-/de-meaned variables, which get the suffix
    and within-subject effect.
 }
 \details{
-\subsection{Panel data and correlating fixed and group effects}{
+\subsection{Heterogeneity Bias}{
+    Mixed models include different levels of sources of variability, i.e.
+    error terms at each level. When macro-indicators (or level-2 predictors,
+    or higher-level units, ...) are included as fixed effects (covariate at
+    level-1), the variance that is left unaccounted for this covariate will
+    be absorbed into the error terms of level-1 and level-2. Hence, the error
+    terms will be correlated with the covariate, which violates one of the
+    assumptions of mixed model (iid, independent and identically distributed
+    error terms). This bias is also called the \emph{heterogeneity bias}
+    (\cite{Bell et al. 2015}). To resolve this problem, level-2 predictors
+    used as covariates should be "group-meaned".
+  }
+  \subsection{Panel data and correlating fixed and group effects}{
     \code{demean()} is intended to create group- and de-meaned variables
     for panel regression models (fixed effects models), or for complex
-    random-effect-within-between models (see \cite{Bell et al. 2018}),
+    random-effect-within-between models (see \cite{Bell et al. 2015, 2018}),
     where group-effects (random effects) and fixed effects correlate (see
     \cite{Bafumi and Gelman 2006)}). This violation of one of the
-    \emph{Gauss-Markov-assumptions} can happen, for instance, when analysing panel
-    data. To control for correlating predictors and group effects, it is
-    recommended to include the group-meaned and de-meaned version of
-    \emph{time-varying covariates} (and group-meaned version of \emph{time-invariant
-    covariates}) in the model. By this, one can fit complex multilevel models
-    for panel data, including time-varying predictors, time-invariant predictors
-    and random effects. This approach is superior to classic fixed-effects
+    \emph{Gauss-Markov-assumptions} (see previous section \emph{Heterogeneity Bias})
+    can happen, for instance, when analyzing panel data. To control for
+    correlating predictors and group effects, it is recommended to include
+    the group-meaned and de-meaned version of \emph{time-varying covariates}
+    (and group-meaned version of \emph{time-invariant covariates} that are on
+    a higher level, e.g. level-2 predictors) in the model. By this, one can
+    fit complex multilevel models for panel data, including time-varying
+    predictors, time-invariant predictors and random effects.
+   }
+  \subsection{Why mixed models are preferred over fixed effects models}{
+    A mixed models approach including time-varying and time-constant fixed
+    effects as well as random effects is superior to classic fixed-effects
     models, which lack information of variation in the group-effects or
-    between-subject effects.
+    between-subject effects. Furthermore, fixed effects regression cannot
+    include random slopes, which means that fixed effects regressions are
+    neglecting \dQuote{cross-cluster differences in the effects of lower-level
+    controls (which) reduces the precision of estimated context effects,
+    resulting in unnecessarily wide confidence intervals and low statistical
+    power} (\cite{Heisig et al. 2017}).
   }
   \subsection{Terminology}{
     The group-meaned variable is simply the mean of an independent variable
@@ -136,7 +158,9 @@ demean(dat, select = c("a", "x*y"), group = "ID")
 \itemize{
   \item Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
   \item Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity.
-  \item Giesselmann M, Schmidt-Catran A. (2018). Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html
+  \item Bell A, Jones K. 2015. Explaining Fixed Effects: Random Effects Modeling of Time-Series Cross-Sectional and Panel Data. Political Science Research and Methods, 3(1), 133–153.
+  \item Giesselmann M, Schmidt-Catran A. 2018. Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html
+  \item Heisig JP, Schaeffer M, Giesecke J. 2017. The Costs of Simplicity: Why Multilevel Models May Benefit from Accounting for Cross-Cluster Differences in the Effects of Controls. American Sociological Review 82 (4): 796–827.
   \item Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
 }
 }

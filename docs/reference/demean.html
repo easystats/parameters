@@ -200,21 +200,39 @@ with <code>"_between"</code>.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3>Panel data and correlating fixed and group effects</h3>
+<h3>Heterogeneity Bias</h3>
+<p>Mixed models include different levels of sources of variability, i.e.
+    error terms at each level. When macro-indicators (or level-2 predictors,
+    or higher-level units, ...) are included as fixed effects (covariate at
+    level-1), the variance that is left unaccounted for this covariate will
+    be absorbed into the error terms of level-1 and level-2. Hence, the error
+    terms will be correlated with the covariate, which violates one of the
+    assumptions of mixed model (iid, independent and identically distributed
+    error terms). This bias is also called the <em>heterogeneity bias</em>
+    (<cite>Bell et al. 2015</cite>). To resolve this problem, level-2 predictors
+    used as covariates should be "group-meaned".</p><p></p><h3>Panel data and correlating fixed and group effects</h3>
 <p><code>demean()</code> is intended to create group- and de-meaned variables
     for panel regression models (fixed effects models), or for complex
-    random-effect-within-between models (see <cite>Bell et al. 2018</cite>),
+    random-effect-within-between models (see <cite>Bell et al. 2015, 2018</cite>),
     where group-effects (random effects) and fixed effects correlate (see
     <cite>Bafumi and Gelman 2006)</cite>). This violation of one of the
-    <em>Gauss-Markov-assumptions</em> can happen, for instance, when analysing panel
-    data. To control for correlating predictors and group effects, it is
-    recommended to include the group-meaned and de-meaned version of
-    <em>time-varying covariates</em> (and group-meaned version of <em>time-invariant
-    covariates</em>) in the model. By this, one can fit complex multilevel models
-    for panel data, including time-varying predictors, time-invariant predictors
-    and random effects. This approach is superior to classic fixed-effects
+    <em>Gauss-Markov-assumptions</em> (see previous section <em>Heterogeneity Bias</em>)
+    can happen, for instance, when analyzing panel data. To control for
+    correlating predictors and group effects, it is recommended to include
+    the group-meaned and de-meaned version of <em>time-varying covariates</em>
+    (and group-meaned version of <em>time-invariant covariates</em> that are on
+    a higher level, e.g. level-2 predictors) in the model. By this, one can
+    fit complex multilevel models for panel data, including time-varying
+    predictors, time-invariant predictors and random effects.</p><p></p><h3>Why mixed models are preferred over fixed effects models</h3>
+<p>A mixed models approach including time-varying and time-constant fixed
+    effects as well as random effects is superior to classic fixed-effects
     models, which lack information of variation in the group-effects or
-    between-subject effects.</p><p></p><h3>Terminology</h3>
+    between-subject effects. Furthermore, fixed effects regression cannot
+    include random slopes, which means that fixed effects regressions are
+    neglecting &#8220;cross-cluster differences in the effects of lower-level
+    controls (which) reduces the precision of estimated context effects,
+    resulting in unnecessarily wide confidence intervals and low statistical
+    power&#8221; (<cite>Heisig et al. 2017</cite>).</p><p></p><h3>Terminology</h3>
 <p>The group-meaned variable is simply the mean of an independent variable
     within each group (or id-level or cluster) represented by <code>group</code>.
     It represents the cluster-mean of an independent variable. The de-meaned
@@ -270,7 +288,9 @@ with <code>"_between"</code>.</p></td>
 <ul>
 <li><p>Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.</p></li>
 <li><p>Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality &amp; Quantity.</p></li>
-<li><p>Giesselmann M, Schmidt-Catran A. (2018). Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html</p></li>
+<li><p>Bell A, Jones K. 2015. Explaining Fixed Effects: Random Effects Modeling of Time-Series Cross-Sectional and Panel Data. Political Science Research and Methods, 3(1), 133–153.</p></li>
+<li><p>Giesselmann M, Schmidt-Catran A. 2018. Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html</p></li>
+<li><p>Heisig JP, Schaeffer M, Giesecke J. 2017. The Costs of Simplicity: Why Multilevel Models May Benefit from Accounting for Cross-Cluster Differences in the Effects of Controls. American Sociological Review 82 (4): 796–827.</p></li>
 <li><p>Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge</p></li>
 </ul>
 
@@ -282,48 +302,48 @@ with <code>"_between"</code>.</p></td>
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Petal.Length_between Sepal.Length_within
-#&gt; 1             5.768421             3.357895          -0.6684211
-#&gt; 2             5.956098             4.121951          -1.0560976
-#&gt; 3             5.768421             3.357895          -1.0684211
-#&gt; 4             5.956098             4.121951          -1.3560976
-#&gt; 5             5.752632             3.636842          -0.7526316
-#&gt; 6             5.768421             3.357895          -0.3684211
+#&gt; 1             5.833333             3.893939          -0.7333333
+#&gt; 2             5.884211             3.555263          -0.9842105
+#&gt; 3             5.744186             3.576744          -1.0441860
+#&gt; 4             5.884211             3.555263          -1.2842105
+#&gt; 5             5.927778             4.063889          -0.9277778
+#&gt; 6             5.744186             3.576744          -0.3441860
 #&gt;   Petal.Length_within
-#&gt; 1           -1.957895
-#&gt; 2           -2.721951
-#&gt; 3           -2.057895
-#&gt; 4           -2.621951
-#&gt; 5           -2.236842
-#&gt; 6           -1.657895</div><div class='input'>
+#&gt; 1           -2.493939
+#&gt; 2           -2.155263
+#&gt; 3           -2.276744
+#&gt; 4           -2.055263
+#&gt; 5           -2.663889
+#&gt; 6           -1.876744</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.
 #&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Species_between binary_between Species_setosa_between
-#&gt; 1             5.768421       0.7894737      0.4210526              0.4473684
-#&gt; 2             5.956098       1.1463415      0.3658537              0.2439024
-#&gt; 3             5.768421       0.7894737      0.4210526              0.4473684
-#&gt; 4             5.956098       1.1463415      0.3658537              0.2439024
-#&gt; 5             5.752632       0.9736842      0.4736842              0.3421053
-#&gt; 6             5.768421       0.7894737      0.4210526              0.4473684
+#&gt; 1             5.833333       1.0909091      0.3030303              0.2424242
+#&gt; 2             5.884211       0.8157895      0.4210526              0.3947368
+#&gt; 3             5.744186       0.9767442      0.2325581              0.3953488
+#&gt; 4             5.884211       0.8157895      0.4210526              0.3947368
+#&gt; 5             5.927778       1.1388889      0.4444444              0.2777778
+#&gt; 6             5.744186       0.9767442      0.2325581              0.3953488
 #&gt;   Species_versicolor_between Species_virginica_between Sepal.Length_within
-#&gt; 1                  0.3157895                 0.2368421          -0.6684211
-#&gt; 2                  0.3658537                 0.3902439          -1.0560976
-#&gt; 3                  0.3157895                 0.2368421          -1.0684211
-#&gt; 4                  0.3658537                 0.3902439          -1.3560976
-#&gt; 5                  0.3421053                 0.3157895          -0.7526316
-#&gt; 6                  0.3157895                 0.2368421          -0.3684211
+#&gt; 1                  0.4242424                 0.3333333          -0.7333333
+#&gt; 2                  0.3947368                 0.2105263          -0.9842105
+#&gt; 3                  0.2325581                 0.3720930          -1.0441860
+#&gt; 4                  0.3947368                 0.2105263          -1.2842105
+#&gt; 5                  0.3055556                 0.4166667          -0.9277778
+#&gt; 6                  0.2325581                 0.3720930          -0.3441860
 #&gt;   Species_within binary_within Species_setosa_within Species_versicolor_within
-#&gt; 1     -0.7894737    -0.4210526             0.5526316                -0.3157895
-#&gt; 2     -1.1463415    -0.3658537             0.7560976                -0.3658537
-#&gt; 3     -0.7894737    -0.4210526             0.5526316                -0.3157895
-#&gt; 4     -1.1463415    -0.3658537             0.7560976                -0.3658537
-#&gt; 5     -0.9736842    -0.4736842             0.6578947                -0.3421053
-#&gt; 6     -0.7894737     0.5789474             0.5526316                -0.3157895
+#&gt; 1     -1.0909091    -0.3030303             0.7575758                -0.4242424
+#&gt; 2     -0.8157895    -0.4210526             0.6052632                -0.3947368
+#&gt; 3     -0.9767442    -0.2325581             0.6046512                -0.2325581
+#&gt; 4     -0.8157895    -0.4210526             0.6052632                -0.3947368
+#&gt; 5     -1.1388889    -0.4444444             0.7222222                -0.3055556
+#&gt; 6     -0.9767442    -0.2325581             0.6046512                -0.2325581
 #&gt;   Species_virginica_within
-#&gt; 1               -0.2368421
-#&gt; 2               -0.3902439
-#&gt; 3               -0.2368421
-#&gt; 4               -0.3902439
-#&gt; 5               -0.3157895
-#&gt; 6               -0.2368421</div><div class='input'>
+#&gt; 1               -0.3333333
+#&gt; 2               -0.2105263
+#&gt; 3               -0.3720930
+#&gt; 4               -0.2105263
+#&gt; 5               -0.4166667
+#&gt; 6               -0.3720930</div><div class='input'>
 <span class='co'># demean interaction term x*y</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),
