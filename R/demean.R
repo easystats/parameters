@@ -20,25 +20,26 @@
 #'   \subsection{Heterogeneity Bias}{
 #'     Mixed models include different levels of sources of variability, i.e.
 #'     error terms at each level. When macro-indicators (or level-2 predictors,
-#'     or higher-level units, ...) are included as fixed effects (covariate at
-#'     level-1), the variance that is left unaccounted for this covariate will
-#'     be absorbed into the error terms of level-1 and level-2. Hence, the error
+#'     or higher-level units, or more general: \emph{group-level predictors that
+#'     are \strong{constant} within groups}, such as "education" within participants,
+#'     or GDP within countries) are included as fixed effects (i.e. treated as
+#'     covariate at level-1), the variance that is left unaccounted for this covariate
+#'     will be absorbed into the error terms of level-1 and level-2. Hence, the error
 #'     terms will be correlated with the covariate, which violates one of the
-#'     assumptions of mixed model (iid, independent and identically distributed
+#'     assumptions of mixed models (iid, independent and identically distributed
 #'     error terms). This bias is also called the \emph{heterogeneity bias}
 #'     (\cite{Bell et al. 2015}). To resolve this problem, level-2 predictors
-#'     used as covariates should be "group-meaned".
+#'     used as (level-1) covariates should be "group-meaned".
 #'   }
 #'   \subsection{Panel data and correlating fixed and group effects}{
 #'     \code{demean()} is intended to create group- and de-meaned variables
 #'     for panel regression models (fixed effects models), or for complex
 #'     random-effect-within-between models (see \cite{Bell et al. 2015, 2018}),
 #'     where group-effects (random effects) and fixed effects correlate (see
-#'     \cite{Bafumi and Gelman 2006)}). This violation of one of the
-#'     \emph{Gauss-Markov-assumptions} (see previous section \emph{Heterogeneity Bias})
-#'     can happen, for instance, when analyzing panel data. To control for
-#'     correlating predictors and group effects, it is recommended to include
-#'     the group-meaned and de-meaned version of \emph{time-varying covariates}
+#'     \cite{Bafumi and Gelman 2006}). This can happen, for instance, when
+#'     analyzing panel data, which can lead to \emph{Heterogeneity Bias}. To
+#'     control for correlating predictors and group effects, it is recommended
+#'     to include the group-meaned and de-meaned version of \emph{time-varying covariates}
 #'     (and group-meaned version of \emph{time-invariant covariates} that are on
 #'     a higher level, e.g. level-2 predictors) in the model. By this, one can
 #'     fit complex multilevel models for panel data, including time-varying
