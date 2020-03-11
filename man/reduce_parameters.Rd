@@ -33,7 +33,7 @@ The different methods available are described below:
 \item \strong{ICA}: Performs an Independent Component Analysis using the FastICA algorithm. Contrary to PCA, that attempts to find uncorrelated sources (through least squares minimization), ICA attempts to find independent sources, i.e., the source space that maximizes the "non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each source, which makes it a poor tool for dimensionality reduction. Requires the \pkg{fastICA} package to be installed.
 }
 }
-See also \href{package vignette}{https://easystats.github.io/parameters/articles/parameters_reduction.html}.
+See also \href{package vignette}{https://CRAN.R-project.org/package=parameters/vignettes/parameters_reduction.html}.
 }
 \examples{
 data(iris)

@@ -46,6 +46,7 @@ if (require("metafor")) {
   model_parameters(model)
 }
 
+\donttest{
 # with subgroups
 if (require("metafor")) {
   data(dat.bcg)
@@ -60,5 +61,6 @@ if (require("metafor")) {
   dat$alloc <- ifelse(dat$alloc == "random", "random", "other")
   model <- rma(yi, vi, mods = ~ alloc, data = dat, digits = 3, slab = author)
   model_parameters(model)
+}
 }
 }
