@@ -30,7 +30,12 @@ format_parameters <- function(model) {
 #' @export
 format_parameters.default <- function(model) {
   original_names <- names <- insight::find_parameters(model, effects = "fixed", flatten = TRUE)
-  info <- insight::model_info(model)
+  info <- insight::model_info(model, verbose = FALSE)
+
+  ## TODO remove is.list() when insight 0.8.3 on CRAN
+  if (!is.list(info) || is.null(info)) {
+    info <- list(family = "unknown", link_function = "unknown")
+  }
 
   # quick fix, for multivariate response models, we use
   # info from first model only
@@ -41,7 +46,7 @@ format_parameters.default <- function(model) {
 
   # special handling hurdle- and zeroinfl-models ---------------------
 
-  if (info$is_zero_inflated | info$is_hurdle) {
+  if (isTRUE(info$is_zero_inflated) | isTRUE(info$is_hurdle)) {
     names <- gsub("^(count_|zero_)", "", names)
   }
 
@@ -80,7 +85,7 @@ format_parameters.default <- function(model) {
 
 
   # hurdle- and zeroinfl-models
-  if (info$is_zero_inflated | info$is_hurdle) {
+  if (isTRUE(info$is_zero_inflated) | isTRUE(info$is_hurdle)) {
     types$Parameter <- gsub("^(count_|zero_)", "", types$Parameter)
   }
 

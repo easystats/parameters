@@ -13,7 +13,7 @@
 
 ## New supported models
 
-- Added support for `bife` (*bife*), `bcplm` and `zcpglm` (*cplm*)
+- Added support for `arima` (*stats*), `bife` (*bife*), `bcplm` and `zcpglm` (*cplm*)
 
 ## Changes to functions
 

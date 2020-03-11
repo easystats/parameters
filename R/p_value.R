@@ -81,8 +81,9 @@ p_value.default <- function(model, method = NULL, ...) {
     p <- tryCatch(
       {
         stat <- insight::get_statistic(model)
-        p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
-        names(p) <- stat$Parameter
+        p_from_stat <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+        names(p_from_stat) <- stat$Parameter
+        p_from_stat
       },
       error = function(e) {
         NULL

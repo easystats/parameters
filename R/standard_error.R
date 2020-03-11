@@ -186,8 +186,9 @@ standard_error.default <- function(model, method = NULL, ...) {
       se <- tryCatch(
         {
           varcov <- insight::get_varcov(model)
-          se <- sqrt(diag(varcov))
-          names(se) <- colnames(varcov)
+          se_from_varcov <- sqrt(diag(varcov))
+          names(se_from_varcov) <- colnames(varcov)
+          se_from_varcov
         },
         error = function(e) {
           NULL

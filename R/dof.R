@@ -109,9 +109,10 @@ dof <- degrees_of_freedom
 #' @importFrom stats df.residual
 #' @keywords internal
 .degrees_of_freedom_fit <- function(model, verbose = TRUE) {
-  info <- insight::model_info(model)
+  info <- insight::model_info(model, verbose = FALSE)
 
-  if (info$is_bayesian) {
+  ## TODO remove is.list() when insight 0.8.3 on CRAN
+  if (!is.null(info) && is.list(info) && info$is_bayesian) {
     model <- bayestestR::bayesian_as_frequentist(model)
   }
 
@@ -146,7 +147,9 @@ dof <- degrees_of_freedom
   if (is.null(method)) {
     return(TRUE)
   }
-  if (!insight::model_info(model)$is_mixed) {
+  info <- insight::model_info(model, verbose = FALSE)
+  ## TODO remove is.list() when insight 0.8.3 on CRAN
+  if (is.null(info) || !is.list(info) || !info$is_mixed) {
     return(FALSE)
   }
   method <- tolower(method)
@@ -154,7 +157,7 @@ dof <- degrees_of_freedom
     warning("'df_method' must be one of 'wald', 'kenward', 'satterthwaite', 'betwithin' or ' ml1'. Using 'wald' now.", call. = FALSE)
     return(FALSE)
   }
-  if (!insight::model_info(model)$is_linear && method %in% c("satterthwaite", "kenward", "kr")) {
+  if (!info$is_linear && method %in% c("satterthwaite", "kenward", "kr")) {
     warning(sprintf("'%s'-degrees of freedoms are only available for linear mixed models.", method), call. = FALSE)
     return(FALSE)
   }

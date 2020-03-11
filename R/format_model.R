@@ -8,7 +8,11 @@
 #' @importFrom insight model_info
 #' @export
 format_model <- function(model) {
-  info <- insight::model_info(model)
+  info <- insight::model_info(model, verbose = FALSE)
+  ## TODO remove is.list() when insight 0.8.3 on CRAN
+  if (!is.list(info) || is.null(info)) {
+    info <- list(family = "unknown", link_function = "unknown")
+  }
 
   if (all(insight::find_parameters(model, flatten = FALSE) == "(Intercept)")) {
     type <- "constant (intercept-only) "
@@ -20,26 +24,26 @@ format_model <- function(model) {
     return("Gaussian finite mixture fitted by EM algorithm")
   }
 
-  if (info$is_bayesian) {
+  if (isTRUE(info$is_bayesian)) {
     type <- paste0(type, "Bayesian ")
   }
 
-  if (info$is_zero_inflated) {
+  if (isTRUE(info$is_zero_inflated)) {
     type <- paste0(type, "zero-inflated ")
   }
   # TODO: hurdle?
 
-  if (info$is_logit) {
+  if (isTRUE(info$is_logit)) {
     type <- paste0(type, "logistic ")
-  } else if (info$is_probit) {
+  } else if (isTRUE(info$is_probit)) {
     type <- paste0(type, "probit ")
-  } else if (info$is_linear) {
+  } else if (isTRUE(info$is_linear)) {
     type <- paste0(type, "linear ")
   } else {
     type <- paste0(type, "general linear ")
   }
 
-  if (info$is_mixed) {
+  if (isTRUE(info$is_mixed)) {
     type <- paste0(type, "mixed ")
   }
 

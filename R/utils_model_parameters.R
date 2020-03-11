@@ -1,14 +1,19 @@
 #' @keywords internal
 .add_model_parameters_attributes <- function(parameters, model, ci, exponentiate = FALSE, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
-  info <- insight::model_info(model)
+  info <- insight::model_info(model, verbose = FALSE)
+
+  ## TODO remove is.list() when insight 0.8.3 on CRAN
+  if (!is.list(info) || is.null(info)) {
+    info <- list(family = "unknown", link_function = "unknown")
+  }
 
   if (is.null(attr(parameters, "pretty_names", exact = TRUE))) {
     attr(parameters, "pretty_names") <- format_parameters(model)
   }
   attr(parameters, "ci") <- ci
   attr(parameters, "exponentiate") <- exponentiate
-  attr(parameters, "ordinal_model") <- info$is_ordinal | info$is_multinomial
+  attr(parameters, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)
   attr(parameters, "model_class") <- class(model)
 
 
