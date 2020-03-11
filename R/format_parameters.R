@@ -33,7 +33,7 @@ format_parameters.default <- function(model) {
   info <- insight::model_info(model, verbose = FALSE)
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
-  if (!is.list(info) || is.null(info)) {
+  if (is.null(info) || !is.list(info)) {
     info <- list(family = "unknown", link_function = "unknown")
   }
 
