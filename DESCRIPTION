@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.6.0
+Version: 0.6.0.1
 Authors@R: 
   c(
     person("Daniel", 
@@ -119,5 +119,5 @@ Suggests:
     Zelig
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr

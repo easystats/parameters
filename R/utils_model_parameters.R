@@ -48,7 +48,12 @@
 #' @keywords internal
 .exponentiate_parameters <- function(parameters) {
   columns <- grepl(pattern = "^(Coefficient|Std_Coefficient|CI_)", colnames(parameters))
-  if (any(columns)) parameters[columns] <- exp(parameters[columns])
+  if (any(columns)) {
+    parameters[columns] <- exp(parameters[columns])
+    if (all(c("Coefficient", "SE") %in% names(parameters))) {
+      parameters$SE <- exp(parameters$SE)
+    }
+  }
   parameters
 }
 

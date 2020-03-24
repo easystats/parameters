@@ -1,3 +1,9 @@
+# parameters 0.6.1
+
+## Changes to functions
+
+* `model_parameters()` now also transforms standard errors when `exponentiate = TRUE`.
+
 # parameters 0.6.0
 
 ## Breaking changes
