@@ -20,7 +20,7 @@
 model_parameters.BFBayesFactor <- function(model, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, priors = TRUE, ...) {
 
   if (grepl("^Null", names(model@numerator))) {
-    insight::print_color("Stupid is as stupid does...\n", "red")
+    insight::print_color("Nothing to compute for point-null models.\nSee github.com/easystats/parameters/issues/226\n", "red")
     return(NULL)
   }
 
