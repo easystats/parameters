@@ -21,14 +21,14 @@
 #'     Mixed models include different levels of sources of variability, i.e.
 #'     error terms at each level. When macro-indicators (or level-2 predictors,
 #'     or higher-level units, or more general: \emph{group-level predictors that
-#'     are \strong{constant} within groups}, such as "education" within participants,
-#'     or GDP within countries) are included as fixed effects (i.e. treated as
-#'     covariate at level-1), the variance that is left unaccounted for this covariate
-#'     will be absorbed into the error terms of level-1 and level-2. Hence, the error
-#'     terms will be correlated with the covariate, which violates one of the
-#'     assumptions of mixed models (iid, independent and identically distributed
-#'     error terms). This bias is also called the \emph{heterogeneity bias}
-#'     (\cite{Bell et al. 2015}). To resolve this problem, level-2 predictors
+#'     \strong{vary} within and across groups} are included as fixed effects (i.e.
+#'     treated as covariate at level-1), the variance that is left unaccounted for
+#'     this covariate will be absorbed into the error terms of level-1 and level-2
+#'     (\cite{Bafumi and Gelman 2006; Gelman and Hill 2007, Chapter 12.6.}).
+#'     Hence, the error terms will be correlated with the covariate, which violates
+#'     one of the assumptions of mixed models (iid, independent and identically
+#'     distributed error terms). This bias is also called the \emph{heterogeneity
+#'     bias} (\cite{Bell et al. 2015}). To resolve this problem, level-2 predictors
 #'     used as (level-1) covariates should be "group-meaned".
 #'   }
 #'   \subsection{Panel data and correlating fixed and group effects}{
@@ -121,6 +121,7 @@
 #'   \item Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
 #'   \item Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity.
 #'   \item Bell A, Jones K. 2015. Explaining Fixed Effects: Random Effects Modeling of Time-Series Cross-Sectional and Panel Data. Political Science Research and Methods, 3(1), 133–153.
+#'   \item Gelman A, Hill J. 2007. Data Analysis Using Regression and Multilevel/Hierarchical Models. Analytical Methods for Social Research. Cambridge, New York: Cambridge University Press
 #'   \item Giesselmann M, Schmidt-Catran A. 2018. Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html
 #'   \item Heisig JP, Schaeffer M, Giesecke J. 2017. The Costs of Simplicity: Why Multilevel Models May Benefit from Accounting for Cross-Cluster Differences in the Effects of Controls. American Sociological Review 82 (4): 796–827.
 #'   \item Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
