@@ -47,7 +47,8 @@ A data frame with the group-/de-meaned variables, which get the suffix
     one of the assumptions of mixed models (iid, independent and identically
     distributed error terms). This bias is also called the \emph{heterogeneity
     bias} (\cite{Bell et al. 2015}). To resolve this problem, level-2 predictors
-    used as (level-1) covariates should be "group-meaned".
+    used as (level-1) covariates should be separated into their "within" and
+    "between" effects by "group-meaning".
   }
   \subsection{Panel data and correlating fixed and group effects}{
     \code{demean()} is intended to create group- and de-meaned variables
