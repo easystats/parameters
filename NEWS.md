@@ -1,5 +1,9 @@
 # parameters 0.6.1
 
+## General
+
+* Remove 'Zelig' from suggestes packages, as it was removed from CRAN.
+
 ## Changes to functions
 
 * `model_parameters()` now also transforms standard errors when `exponentiate = TRUE`.

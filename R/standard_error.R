@@ -168,10 +168,7 @@ standard_error.default <- function(model, method = NULL, ...) {
     se <- tryCatch(
       {
         if (grepl("^Zelig-", class(model)[1])) {
-          if (!requireNamespace("Zelig", quietly = TRUE)) {
-            stop("Package `Zelig` required. Please install", call. = FALSE)
-          }
-          unlist(Zelig::get_se(model))
+          unlist(model$get_se())
         } else {
           .get_se_from_summary(model)
         }

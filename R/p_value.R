@@ -61,10 +61,7 @@ p_value.default <- function(model, method = NULL, ...) {
     p <- tryCatch(
       {
         if (grepl("^Zelig-", class(model)[1])) {
-          if (!requireNamespace("Zelig", quietly = T)) {
-            stop("Package `Zelig` required. Please install", call. = F)
-          }
-          unlist(Zelig::get_pvalue(model))
+          unlist(model$get_pvalue())
         } else {
           # try to get p-value from classical summary for default models
           .get_pval_from_summary(model)

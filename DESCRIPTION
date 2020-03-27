@@ -115,8 +115,7 @@ Suggests:
     testthat,
     TMB,
     truncreg,
-    VGAM,
-    Zelig
+    VGAM
 Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.1.0
