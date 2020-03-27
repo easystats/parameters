@@ -47,15 +47,17 @@
 #'     predictors, time-invariant predictors and random effects.
 #'    }
 #'   \subsection{Why mixed models are preferred over fixed effects models}{
-#'     A mixed models approach including time-varying and time-constant fixed
-#'     effects as well as random effects is superior to classic fixed-effects
-#'     models, which lack information of variation in the group-effects or
-#'     between-subject effects. Furthermore, fixed effects regression cannot
-#'     include random slopes, which means that fixed effects regressions are
-#'     neglecting \dQuote{cross-cluster differences in the effects of lower-level
-#'     controls (which) reduces the precision of estimated context effects,
-#'     resulting in unnecessarily wide confidence intervals and low statistical
-#'     power} (\cite{Heisig et al. 2017}).
+#'     A mixed models approach can model the causes of endogeneity explicitly
+#'     by including separating the within- and between-effects of time-varying
+#'     fixed effects and including time-constant fixed effects. Furthermore,
+#'     mixed models also include random effects, thus a mixed models approach
+#'     is superior to classic fixed-effects models, which lack information of
+#'     variation in the group-effects or between-subject effects. Furthermore,
+#'     fixed effects regression cannot include random slopes, which means that
+#'     fixed effects regressions are neglecting \dQuote{cross-cluster differences
+#'     in the effects of lower-level controls (which) reduces the precision of
+#'     estimated context effects, resulting in unnecessarily wide confidence
+#'     intervals and low statistical power} (\cite{Heisig et al. 2017}).
 #'   }
 #'   \subsection{Terminology}{
 #'     The group-meaned variable is simply the mean of an independent variable

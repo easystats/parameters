@@ -234,15 +234,17 @@ with <code>"_between"</code>.</p></td>
     a higher level, e.g. level-2 predictors) in the model. By this, one can
     fit complex multilevel models for panel data, including time-varying
     predictors, time-invariant predictors and random effects.</p><p></p><h3>Why mixed models are preferred over fixed effects models</h3>
-<p>A mixed models approach including time-varying and time-constant fixed
-    effects as well as random effects is superior to classic fixed-effects
-    models, which lack information of variation in the group-effects or
-    between-subject effects. Furthermore, fixed effects regression cannot
-    include random slopes, which means that fixed effects regressions are
-    neglecting &#8220;cross-cluster differences in the effects of lower-level
-    controls (which) reduces the precision of estimated context effects,
-    resulting in unnecessarily wide confidence intervals and low statistical
-    power&#8221; (<cite>Heisig et al. 2017</cite>).</p><p></p><h3>Terminology</h3>
+<p>A mixed models approach can model the causes of endogeneity explicitly
+    by including separating the within- and between-effects of time-varying
+    fixed effects and including time-constant fixed effects. Furthermore,
+    mixed models also include random effects, thus a mixed models approach
+    is superior to classic fixed-effects models, which lack information of
+    variation in the group-effects or between-subject effects. Furthermore,
+    fixed effects regression cannot include random slopes, which means that
+    fixed effects regressions are neglecting &#8220;cross-cluster differences
+    in the effects of lower-level controls (which) reduces the precision of
+    estimated context effects, resulting in unnecessarily wide confidence
+    intervals and low statistical power&#8221; (<cite>Heisig et al. 2017</cite>).</p><p></p><h3>Terminology</h3>
 <p>The group-meaned variable is simply the mean of an independent variable
     within each group (or id-level or cluster) represented by <code>group</code>.
     It represents the cluster-mean of an independent variable. The de-meaned
