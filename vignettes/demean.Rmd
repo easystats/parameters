@@ -152,7 +152,7 @@ model_parameters(fe_model1)[1:2, ]
 
 As we can see, the estimates and standard errors are identical. The argument _against_ the use of mixed models, i.e. that using mixed models for panel data will yield biased estimates and standard errors, is based on an incorrect model specification [@mundlak_pooling_1978]. As such, when the (mixed) model is properly specified, the estimator of the mixed model is identical to the 'within' (i.e. FE) estimator.
 
-As a consequence, we cannot only use the above specified mixed model for panel data, we can even specify more complex models including within-effects, between-effects or random effects variation. A mixed models approach can model the causes of endogeneity explicitly by including separating the within- and between-effects of time-varying fixed effects and including time-constant fixed effects.
+As a consequence, we cannot only use the above specified mixed model for panel data, we can even specify more complex models including within-effects, between-effects or random effects variation. A mixed models approach can model the causes of endogeneity explicitly by including the (separated) within- and between-effects of time-varying fixed effects and including time-constant fixed effects.
 
 ```{r}
 mixed_2 <- lmer(
@@ -178,7 +178,7 @@ f <- "<ul><li>x<sub>it</sub> - &#x035E;x<sub>i</sub> is the de-meaned predictor,
 knitr::asis_output(f)
 ```
 
-Written in R-code, the model is written down like this:
+In R-code, the model is written down like this:
 
 ```{r}
 rewb <- lmer(
