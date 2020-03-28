@@ -9,7 +9,6 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
-tags: [r, parameters, panel data, demean, repeated measure]
 vignette: >
   %\VignetteIndexEntry{Analysing Longitudinal or Panel Data}
   \usepackage[utf8]{inputenc}
@@ -26,11 +25,9 @@ knitr::opts_chunk$set(
   collapse = TRUE, 
   warning = FALSE,
   message = FALSE,
-  comment = "#>"
+  comment = "#>",
+  eval = TRUE
 )
-
-options(knitr.kable.NA = '')
-options(digits = 2)
 
 if (!requireNamespace("lme4", quietly = TRUE) ||
     !requireNamespace("lfe", quietly = TRUE)) {
@@ -48,7 +45,7 @@ This vignette explains the rational behind the [`demean()`](https://easystats.gi
 
 # Sampel data used in this vignette
 
-```{r message=FALSE}
+```{r}
 library(parameters)
 data("qol_cancer")
 ```
