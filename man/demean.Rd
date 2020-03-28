@@ -73,7 +73,7 @@ A data frame with the group-/de-meaned variables, which get the suffix
    }
   \subsection{Why mixed models are preferred over fixed effects models}{
     A mixed models approach can model the causes of endogeneity explicitly
-    by including separating the within- and between-effects of time-varying
+    by including the (separated) within- and between-effects of time-varying
     fixed effects and including time-constant fixed effects. Furthermore,
     mixed models also include random effects, thus a mixed models approach
     is superior to classic fixed-effects models, which lack information of
