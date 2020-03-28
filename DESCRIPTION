@@ -81,6 +81,7 @@ Suggests:
     GPArotation,
     lavaan,
     lavaSearch2,
+    lfe,
     lme4,
     lmerTest,
     logspline,
