@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameter names formatting — format_parameters • parameters</title>
+<title>Sample data set — qol_cancer • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Parameter names formatting — format_parameters" />
-<meta property="og:description" content="Parameter names formatting" />
+<meta property="og:title" content="Sample data set — qol_cancer" />
+<meta property="og:description" content="A sample data set with longitudinal data, used in the vignette describing the demean() function." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -158,70 +158,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameter names formatting</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/format_parameters.R'><code>R/format_parameters.R</code></a></small>
-    <div class="hidden name"><code>format_parameters.Rd</code></div>
+    <h1>Sample data set</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/fish.R'><code>R/fish.R</code></a></small>
+    <div class="hidden name"><code>qol_cancer.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameter names formatting</p>
+    <p>A sample data set with longitudinal data, used in the vignette describing the <code><a href='demean.html'>demean()</a></code> function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>format_parameters</span>(<span class='no'>model</span>)</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>model</th>
-      <td><p>A statistical model.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The formatted parameter names.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Sepal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>format_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                          (Intercept)                    Speciesversicolor 
-#&gt;                        "(Intercept)"               "Species [versicolor]" 
-#&gt;                     Speciesvirginica                          Sepal.Width 
-#&gt;                "Species [virginica]"                        "Sepal.Width" 
-#&gt;        Speciesversicolor:Sepal.Width         Speciesvirginica:Sepal.Width 
-#&gt; "Species [versicolor] * Sepal.Width"  "Species [virginica] * Sepal.Width" </div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> / <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>format_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                           (Intercept)                     Speciesversicolor 
-#&gt;                         "(Intercept)"                "Species [versicolor]" 
-#&gt;                      Speciesvirginica            Speciessetosa:Petal.Length 
-#&gt;                 "Species [virginica]"     "Species [setosa] : Petal.Length" 
-#&gt;        Speciesversicolor:Petal.Length         Speciesvirginica:Petal.Length 
-#&gt; "Species [versicolor] : Petal.Length"  "Species [virginica] : Petal.Length" </div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Species</span> / <span class='no'>Sepal.Width</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>format_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                          (Intercept)                         Petal.Length 
-#&gt;                        "(Intercept)"                       "Petal.Length" 
-#&gt;                    Speciesversicolor                     Speciesvirginica 
-#&gt;               "Species [versicolor]"                "Species [virginica]" 
-#&gt;            Speciessetosa:Sepal.Width        Speciesversicolor:Sepal.Width 
-#&gt;     "Species [setosa] : Sepal.Width" "Species [versicolor] : Sepal.Width" 
-#&gt;         Speciesvirginica:Sepal.Width 
-#&gt;  "Species [virginica] : Sepal.Width" </div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='no'>Sepal.Width</span>, <span class='fl'>2</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>format_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                (Intercept)          Speciesversicolor 
-#&gt;              "(Intercept)"     "Species [versicolor]" 
-#&gt;           Speciesvirginica      poly(Sepal.Width, 2)1 
-#&gt;      "Species [virginica]" "Sepal.Width [1st degree]" 
-#&gt;      poly(Sepal.Width, 2)2 
-#&gt; "Sepal.Width [2nd degree]" </div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='no'>Sepal.Width</span>, <span class='fl'>2</span>, <span class='kw'>raw</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>format_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       (Intercept)                 Speciesversicolor 
-#&gt;                     "(Intercept)"            "Species [versicolor]" 
-#&gt;                  Speciesvirginica poly(Sepal.Width, 2, raw = TRUE)1 
-#&gt;             "Species [virginica]"        "Sepal.Width [1st degree]" 
-#&gt; poly(Sepal.Width, 2, raw = TRUE)2 
-#&gt;        "Sepal.Width [2nd degree]" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

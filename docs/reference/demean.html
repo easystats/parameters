@@ -116,6 +116,9 @@
     <li>
       <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
     </li>
+    <li>
+      <a href="../articles/demean.html">Panel Data Analysis</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -212,16 +215,23 @@ with <code>"_between"</code>.</p></td>
 <p>Mixed models include different levels of sources of variability, i.e.
     error terms at each level. When macro-indicators (or level-2 predictors,
     or higher-level units, or more general: <em>group-level predictors that
-    <strong>vary</strong> within and across groups</em> are included as fixed effects (i.e.
+    <strong>vary</strong> within and across groups</em>) are included as fixed effects (i.e.
     treated as covariate at level-1), the variance that is left unaccounted for
     this covariate will be absorbed into the error terms of level-1 and level-2
-    (<cite>Bafumi and Gelman 2006; Gelman and Hill 2007, Chapter 12.6.</cite>).
-    Hence, the error terms will be correlated with the covariate, which violates
-    one of the assumptions of mixed models (iid, independent and identically
-    distributed error terms). This bias is also called the <em>heterogeneity
-    bias</em> (<cite>Bell et al. 2015</cite>). To resolve this problem, level-2 predictors
-    used as (level-1) covariates should be separated into their "within" and
-    "between" effects by "group-meaning".</p><p></p><h3>Panel data and correlating fixed and group effects</h3>
+    (<cite>Bafumi and Gelman 2006; Gelman and Hill 2007, Chapter 12.6.</cite>):
+    &#8220;Such covariates contain two parts: one that is specific to the
+    higher-level entity that does not vary between occasions, and one that
+    represents the difference between occasions, within higher-level entities&#8221;
+    (<cite>Bell et al. 2015</cite>). Hence, the error terms will be correlated with
+    the covariate, which violates one of the assumptions of mixed models
+    (iid, independent and identically distributed error terms). This bias is
+    also called the <em>heterogeneity bias</em> (<cite>Bell et al. 2015</cite>). To
+    resolve this problem, level-2 predictors used as (level-1) covariates should
+    be separated into their "within" and "between" effects by "de-meaning" and
+    "group-meaning": After demeaning time-varying predictors, &#8220;at the
+    higher level, the mean term is no longer constrained by Level 1 effects,
+    so it is free to account for all the higher-level variance associated
+    with that variable&#8221; (<cite>Bell et al. 2015</cite>).</p><p></p><h3>Panel data and correlating fixed and group effects</h3>
 <p><code>demean()</code> is intended to create group- and de-meaned variables
     for panel regression models (fixed effects models), or for complex
     random-effect-within-between models (see <cite>Bell et al. 2015, 2018</cite>),
@@ -290,9 +300,8 @@ with <code>"_between"</code>.</p></td>
     <code>select = "a*b"</code> (see 'Examples').</p><p></p><h3>Analysing panel data with mixed models using lme4</h3>
 <p>A description of how to translate the
     formulas described in <em>Bell et al. 2018</em> into R using <code>lmer()</code>
-    from <span class="pkg">lme4</span> or <code>glmmTMB()</code> from <span class="pkg">glmmTMB</span> can be found here:
-    <a href='https://strengejacke.github.io/mixed-models-snippets/random-effects-within-between-effects-model.html'>for lmer()</a>
-    and <a href='https://strengejacke.github.io/mixed-models-snippets/random-effects-within-between-effects-model-glmmtmb.html'>for glmmTMB()</a>.</p>
+    from <span class="pkg">lme4</span> can be found in
+    <a href='https://easystats.github.io/parameters/articles/demean.html'>this vignette</a>.</p>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -315,48 +324,48 @@ with <code>"_between"</code>.</p></td>
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Petal.Length_between Sepal.Length_within
-#&gt; 1             5.883333             3.952381          -0.7833333
-#&gt; 2             5.802564             3.482051          -0.9025641
-#&gt; 3             5.946667             3.920000          -1.2466667
-#&gt; 4             5.802564             3.482051          -1.2025641
-#&gt; 5             5.883333             3.952381          -0.8833333
-#&gt; 6             5.761538             3.700000          -0.3615385
+#&gt; 1             5.768421             3.357895          -0.6684211
+#&gt; 2             5.956098             4.121951          -1.0560976
+#&gt; 3             5.768421             3.357895          -1.0684211
+#&gt; 4             5.956098             4.121951          -1.3560976
+#&gt; 5             5.752632             3.636842          -0.7526316
+#&gt; 6             5.768421             3.357895          -0.3684211
 #&gt;   Petal.Length_within
-#&gt; 1           -2.552381
-#&gt; 2           -2.082051
-#&gt; 3           -2.620000
-#&gt; 4           -1.982051
-#&gt; 5           -2.552381
-#&gt; 6           -2.000000</div><div class='input'>
+#&gt; 1           -1.957895
+#&gt; 2           -2.721951
+#&gt; 3           -2.057895
+#&gt; 4           -2.621951
+#&gt; 5           -2.236842
+#&gt; 6           -1.657895</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>demean</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>ID</span>)</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.
 #&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Sepal.Length_between Species_between binary_between Species_setosa_between
-#&gt; 1             5.883333       1.1190476      0.4285714              0.3095238
-#&gt; 2             5.802564       0.8974359      0.3589744              0.4102564
-#&gt; 3             5.946667       1.0333333      0.6333333              0.2666667
-#&gt; 4             5.802564       0.8974359      0.3589744              0.4102564
-#&gt; 5             5.883333       1.1190476      0.4285714              0.3095238
-#&gt; 6             5.761538       0.9487179      0.4102564              0.3333333
+#&gt; 1             5.768421       0.7894737      0.4210526              0.4473684
+#&gt; 2             5.956098       1.1463415      0.3658537              0.2439024
+#&gt; 3             5.768421       0.7894737      0.4210526              0.4473684
+#&gt; 4             5.956098       1.1463415      0.3658537              0.2439024
+#&gt; 5             5.752632       0.9736842      0.4736842              0.3421053
+#&gt; 6             5.768421       0.7894737      0.4210526              0.4473684
 #&gt;   Species_versicolor_between Species_virginica_between Sepal.Length_within
-#&gt; 1                  0.2619048                 0.4285714          -0.7833333
-#&gt; 2                  0.2820513                 0.3076923          -0.9025641
-#&gt; 3                  0.4333333                 0.3000000          -1.2466667
-#&gt; 4                  0.2820513                 0.3076923          -1.2025641
-#&gt; 5                  0.2619048                 0.4285714          -0.8833333
-#&gt; 6                  0.3846154                 0.2820513          -0.3615385
+#&gt; 1                  0.3157895                 0.2368421          -0.6684211
+#&gt; 2                  0.3658537                 0.3902439          -1.0560976
+#&gt; 3                  0.3157895                 0.2368421          -1.0684211
+#&gt; 4                  0.3658537                 0.3902439          -1.3560976
+#&gt; 5                  0.3421053                 0.3157895          -0.7526316
+#&gt; 6                  0.3157895                 0.2368421          -0.3684211
 #&gt;   Species_within binary_within Species_setosa_within Species_versicolor_within
-#&gt; 1     -1.1190476     0.5714286             0.6904762                -0.2619048
-#&gt; 2     -0.8974359    -0.3589744             0.5897436                -0.2820513
-#&gt; 3     -1.0333333     0.3666667             0.7333333                -0.4333333
-#&gt; 4     -0.8974359    -0.3589744             0.5897436                -0.2820513
-#&gt; 5     -1.1190476    -0.4285714             0.6904762                -0.2619048
-#&gt; 6     -0.9487179    -0.4102564             0.6666667                -0.3846154
+#&gt; 1     -0.7894737    -0.4210526             0.5526316                -0.3157895
+#&gt; 2     -1.1463415    -0.3658537             0.7560976                -0.3658537
+#&gt; 3     -0.7894737    -0.4210526             0.5526316                -0.3157895
+#&gt; 4     -1.1463415    -0.3658537             0.7560976                -0.3658537
+#&gt; 5     -0.9736842    -0.4736842             0.6578947                -0.3421053
+#&gt; 6     -0.7894737     0.5789474             0.5526316                -0.3157895
 #&gt;   Species_virginica_within
-#&gt; 1               -0.4285714
-#&gt; 2               -0.3076923
-#&gt; 3               -0.3000000
-#&gt; 4               -0.3076923
-#&gt; 5               -0.4285714
-#&gt; 6               -0.2820513</div><div class='input'>
+#&gt; 1               -0.2368421
+#&gt; 2               -0.3902439
+#&gt; 3               -0.2368421
+#&gt; 4               -0.3902439
+#&gt; 5               -0.3157895
+#&gt; 6               -0.2368421</div><div class='input'>
 <span class='co'># demean interaction term x*y</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),

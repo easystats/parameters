@@ -140,9 +140,8 @@ A data frame with the group-/de-meaned variables, which get the suffix
   \subsection{Analysing panel data with mixed models using lme4}{
     A description of how to translate the
     formulas described in \emph{Bell et al. 2018} into R using \code{lmer()}
-    from \pkg{lme4} or \code{glmmTMB()} from \pkg{glmmTMB} can be found here:
-    \href{https://strengejacke.github.io/mixed-models-snippets/random-effects-within-between-effects-model.html}{for lmer()}
-    and \href{https://strengejacke.github.io/mixed-models-snippets/random-effects-within-between-effects-model-glmmtmb.html}{for glmmTMB()}.
+    from \pkg{lme4} can be found in
+    \href{https://easystats.github.io/parameters/articles/demean.html}{this vignette}.
   }
 }
 \examples{
