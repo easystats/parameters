@@ -39,16 +39,23 @@ A data frame with the group-/de-meaned variables, which get the suffix
     Mixed models include different levels of sources of variability, i.e.
     error terms at each level. When macro-indicators (or level-2 predictors,
     or higher-level units, or more general: \emph{group-level predictors that
-    \strong{vary} within and across groups} are included as fixed effects (i.e.
+    \strong{vary} within and across groups}) are included as fixed effects (i.e.
     treated as covariate at level-1), the variance that is left unaccounted for
     this covariate will be absorbed into the error terms of level-1 and level-2
-    (\cite{Bafumi and Gelman 2006; Gelman and Hill 2007, Chapter 12.6.}).
-    Hence, the error terms will be correlated with the covariate, which violates
-    one of the assumptions of mixed models (iid, independent and identically
-    distributed error terms). This bias is also called the \emph{heterogeneity
-    bias} (\cite{Bell et al. 2015}). To resolve this problem, level-2 predictors
-    used as (level-1) covariates should be separated into their "within" and
-    "between" effects by "group-meaning".
+    (\cite{Bafumi and Gelman 2006; Gelman and Hill 2007, Chapter 12.6.}):
+    \dQuote{Such covariates contain two parts: one that is specific to the
+    higher-level entity that does not vary between occasions, and one that
+    represents the difference between occasions, within higher-level entities}
+    (\cite{Bell et al. 2015}). Hence, the error terms will be correlated with
+    the covariate, which violates one of the assumptions of mixed models
+    (iid, independent and identically distributed error terms). This bias is
+    also called the \emph{heterogeneity bias} (\cite{Bell et al. 2015}). To
+    resolve this problem, level-2 predictors used as (level-1) covariates should
+    be separated into their "within" and "between" effects by "de-meaning" and
+    "group-meaning": After demeaning time-varying predictors, \dQuote{at the
+    higher level, the mean term is no longer constrained by Level 1 effects,
+    so it is free to account for all the higher-level variance associated
+    with that variable} (\cite{Bell et al. 2015}).
   }
   \subsection{Panel data and correlating fixed and group effects}{
     \code{demean()} is intended to create group- and de-meaned variables
