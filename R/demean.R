@@ -11,6 +11,10 @@
 #'   group-meaned and de-meaned variables of \code{x}. By default, de-meaned
 #'   variables will be suffixed with \code{"_within"} and grouped-meaned variables
 #'   with \code{"_between"}.
+#' @param add_attributes Logical, if \code{TRUE}, the returned variables gain
+#'   attributes to indicate the within- and between-effects. This is only relevant
+#'   when printing \code{model_parameters()} - in such cases, the within- and
+#'   between-effects are printed in separated blocks.
 #'
 #' @return A data frame with the group-/de-meaned variables, which get the suffix
 #'   \code{"_between"} (for the group-meaned variable) and \code{"_within"} (for
@@ -157,7 +161,7 @@
 #' demean(dat, select = c("a", "x*y"), group = "ID")
 #' @importFrom stats ave
 #' @export
-demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean = "_between") {
+demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean = "_between", add_attributes = TRUE) {
   interactions_no <- select[!grepl("(\\*|\\:)", select)]
   interactions_yes <- select[grepl("(\\*|\\:)", select)]
 
@@ -254,14 +258,16 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
   colnames(x_dm) <- sprintf("%s%s", colnames(x_dm), suffix_demean)
   colnames(x_gm) <- sprintf("%s%s", colnames(x_gm), suffix_groupmean)
 
-  x_dm[] <- lapply(x_dm, function(i) {
-    attr(i, "within-effect") <- TRUE
-    i
-  })
-  x_gm[] <- lapply(x_gm, function(i) {
-    attr(i, "between-effect") <- TRUE
-    i
-  })
+  if (isTRUE(add_attributes)) {
+    x_dm[] <- lapply(x_dm, function(i) {
+      attr(i, "within-effect") <- TRUE
+      i
+    })
+    x_gm[] <- lapply(x_gm, function(i) {
+      attr(i, "between-effect") <- TRUE
+      i
+    })
+  }
 
   cbind(x_gm, x_dm)
 }

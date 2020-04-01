@@ -9,7 +9,8 @@ demean(
   select,
   group,
   suffix_demean = "_within",
-  suffix_groupmean = "_between"
+  suffix_groupmean = "_between",
+  add_attributes = TRUE
 )
 }
 \arguments{
@@ -23,6 +24,11 @@ demean(
 group-meaned and de-meaned variables of \code{x}. By default, de-meaned
 variables will be suffixed with \code{"_within"} and grouped-meaned variables
 with \code{"_between"}.}
+
+\item{add_attributes}{Logical, if \code{TRUE}, the returned variables gain
+attributes to indicate the within- and between-effects. This is only relevant
+when printing \code{model_parameters()} - in such cases, the within- and
+between-effects are printed in separated blocks.}
 }
 \value{
 A data frame with the group-/de-meaned variables, which get the suffix
