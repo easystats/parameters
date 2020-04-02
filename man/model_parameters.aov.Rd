@@ -20,7 +20,7 @@
 
 \item{eta_squared}{Compute eta squared as index of effect size. Can be \code{"partial"} (adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for anova-tables from mixed models).}
 
-\item{epsilon_squared}{Compute epsilon squared as index of effect size.}
+\item{epsilon_squared}{Compute epsilon squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.}
 
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for anova tables from mixed models. See 'Examples'.}
 
@@ -40,11 +40,11 @@ df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
+model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial")
 
 model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 model_parameters(model)
-model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
+model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial")
 
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)

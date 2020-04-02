@@ -5,7 +5,7 @@
 #' @param model Object of class \link{aov}, \link{anova} or \code{aovlist}.
 #' @param omega_squared Compute omega squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.
 #' @param eta_squared Compute eta squared as index of effect size. Can be \code{"partial"} (adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for anova-tables from mixed models).
-#' @param epsilon_squared Compute epsilon squared as index of effect size.
+#' @param epsilon_squared Compute epsilon squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.
 #' @param df_error Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for anova tables from mixed models. See 'Examples'.
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -18,11 +18,11 @@
 #' df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-#' model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
+#' model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial")
 #'
 #' model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 #' model_parameters(model)
-#' model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
+#' model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial")
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 #' model_parameters(model)
@@ -113,8 +113,13 @@ model_parameters.aovlist <- model_parameters.aov
 
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
-    fx <- effectsize::epsilon_squared(model)$Epsilon_sq
-    parameters$Epsilon_sq <- .fix_effectsize_rows(fx, parameters)
+    if (epsilon_squared == "partial") {
+      fx <- effectsize::epsilon_squared(model, partial = TRUE)$Epsilon_Sq_partial
+      parameters$Epsilon_Sq_partial <- .fix_effectsize_rows(fx, parameters)
+    } else {
+      fx <- effectsize::epsilon_squared(model, partial = FALSE)$Epsilon_Sq
+      parameters$Epsilon_Sq <- .fix_effectsize_rows(fx, parameters)
+    }
   }
 
   parameters
