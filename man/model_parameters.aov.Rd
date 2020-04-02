@@ -10,6 +10,7 @@
   eta_squared = NULL,
   epsilon_squared = NULL,
   df_error = NULL,
+  type = NULL,
   ...
 )
 }
@@ -23,6 +24,8 @@
 \item{epsilon_squared}{Compute epsilon squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.}
 
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for anova tables from mixed models. See 'Examples'.}
+
+\item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, anova-tables using \code{car::Anova()} will be returned.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

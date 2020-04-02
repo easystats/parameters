@@ -63,6 +63,7 @@ Suggests:
     brglm2,
     brms,
     cAIC4,
+    car,
     clubSandwich,
     cluster,
     covr,

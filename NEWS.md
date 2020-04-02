@@ -8,6 +8,7 @@
 
 * `model_parameters()` now also transforms standard errors when `exponentiate = TRUE`.
 * `model_parameters()` for `anova()` from mixed models can now also compute effect sizes like eta squared.
+* `model_parameters()` for `aov()` gains a `type`-argument to compute type-1, type-2 or type-3 sums of squares.
 * You can now control whether `demean()` should add attributes to indicate within- and between-effects. This is only relevant for the `print()`-method of `model_parameters()`.
 
 ## Bug fixes
