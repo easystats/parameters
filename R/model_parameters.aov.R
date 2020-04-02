@@ -68,7 +68,11 @@ model_parameters.aovlist <- model_parameters.aov
 
 
 
+
+
+
 # helper ------------------------------
+
 
 
 .effectsizes_for_aov <- function(model, parameters, omega_squared, eta_squared, epsilon_squared) {
@@ -93,28 +97,35 @@ model_parameters.aovlist <- model_parameters.aov
   # Omega squared
   if (!is.null(omega_squared)) {
     if (omega_squared == "partial") {
-      parameters$Omega_Sq_partial <- effectsize::omega_squared(model, partial = TRUE)$Omega_Sq_partial
+      fx <- effectsize::omega_squared(model, partial = TRUE)$Omega_Sq_partial
+      parameters$Omega_Sq_partial <- .fix_effectsize_rows(fx, nrow(parameters))
     } else {
-      parameters$Omega_Sq <- effectsize::omega_squared(model, partial = FALSE)$Omega_Sq
+      fx <- effectsize::omega_squared(model, partial = FALSE)$Omega_Sq
+      parameters$Omega_Sq <- .fix_effectsize_rows(fx, nrow(parameters))
     }
   }
 
   # Eta squared
   if (!is.null(eta_squared)) {
     if (eta_squared == "partial") {
-      parameters$Eta_Sq_partial <- effectsize::eta_squared(model, partial = TRUE)$Eta_Sq_partial
+      fx <- effectsize::eta_squared(model, partial = TRUE)$Eta_Sq_partial
+      parameters$Eta_Sq_partial <- .fix_effectsize_rows(fx, nrow(parameters))
     } else {
-      parameters$Eta_Sq <- effectsize::eta_squared(model, partial = FALSE)$Eta_Sq
+      fx <- effectsize::eta_squared(model, partial = FALSE)$Eta_Sq
+      parameters$Eta_Sq <- .fix_effectsize_rows(fx, nrow(parameters))
     }
   }
 
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
-    parameters$Epsilon_sq <- effectsize::epsilon_squared(model)$Epsilon_sq
+    fx <- effectsize::epsilon_squared(model)$Epsilon_sq
+    parameters$Epsilon_sq <- .fix_effectsize_rows(fx, nrow(parameters))
   }
 
   parameters
 }
+
+
 
 
 
@@ -160,22 +171,35 @@ model_parameters.aovlist <- model_parameters.aov
 
   # Omega squared
   if (!is.null(omega_squared)) {
-    parameters$Omega_Sq_partial <- effectsize::F_to_omega2(f = f_value, df = df_num, df_error = df_error, ci = NA)
+    fx <- effectsize::F_to_omega2(f = f_value, df = df_num, df_error = df_error, ci = NA)
+    parameters$Omega_Sq_partial <- .fix_effectsize_rows(fx, nrow(parameters))
   }
 
   # Eta squared
   if (!is.null(eta_squared)) {
     if (eta_squared == "adjusted") {
-      parameters$Eta_Sq_partial <- effectsize::F_to_eta2_adj(f = f_value, df = df_num, df_error = df_error, ci = NA)
+      fx <- effectsize::F_to_eta2_adj(f = f_value, df = df_num, df_error = df_error, ci = NA)
+      parameters$Eta_Sq_partial <- .fix_effectsize_rows(fx, nrow(parameters))
     } else {
-      parameters$Eta_Sq_partial <- effectsize::F_to_eta2(f = f_value, df = df_num, df_error = df_error, ci = NA)
+      fx <- effectsize::F_to_eta2(f = f_value, df = df_num, df_error = df_error, ci = NA)
+      parameters$Eta_Sq_partial <- .fix_effectsize_rows(fx, nrow(parameters))
     }
   }
 
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
-    parameters$Epsilon_sq <- effectsize::F_to_epsilon2(f = f_value, df = df_num, df_error = df_error, ci = NA)
+    fx <- effectsize::F_to_epsilon2(f = f_value, df = df_num, df_error = df_error, ci = NA)
+    parameters$Epsilon_sq <- .fix_effectsize_rows(fx, nrow(parameters))
   }
 
   parameters
+}
+
+
+
+.fix_effectsize_rows <- function(fx, n_row) {
+  if (n_row > length(fx)) {
+    fx <- c(fx, rep_len(NA, length.out = n_row - length(fx)))
+  }
+  fx
 }
