@@ -9,6 +9,7 @@
   omega_squared = NULL,
   eta_squared = NULL,
   epsilon_squared = NULL,
+  df_error = NULL,
   ...
 )
 }
@@ -17,9 +18,11 @@
 
 \item{omega_squared}{Compute omega squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.}
 
-\item{eta_squared}{Compute eta squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.}
+\item{eta_squared}{Compute eta squared as index of effect size. Can be \code{"partial"} (adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for anova-tables from mixed models).}
 
 \item{epsilon_squared}{Compute epsilon squared as index of effect size.}
+
+\item{df_error}{Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for anova tables from mixed models. See 'Examples'.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -28,6 +31,9 @@ A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters from ANOVAs.
+}
+\note{
+For anova-tables from mixed models (i.e. \code{anova(lmer())}), only partial or adjusted effect sizes can be computed.
 }
 \examples{
 df <- iris
@@ -44,7 +50,17 @@ model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
 
 if (require("lme4")) {
-  model <- anova(lmer(Sepal.Length ~ Sepal.Big + (1 | Species), data = df))
+  mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species), data = df)
+  model <- anova(mm)
+
+  # simple parameters table
   model_parameters(model)
+
+  # parameters table including effect sizes
+  model_parameters(
+    model,
+    eta_squared = "partial",
+    df_error = dof_satterthwaite(mm)
+  )
 }
 }

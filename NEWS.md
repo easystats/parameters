@@ -7,7 +7,12 @@
 ## Changes to functions
 
 * `model_parameters()` now also transforms standard errors when `exponentiate = TRUE`.
+* `model_parameters()` for `anova()` from mixed models can now also compute effect sizes like eta squared.
 * You can now control whether `demean()` should add attributes to indicate within- and between-effects. This is only relevant for the `print()`-method of `model_parameters()`.
+
+## Bug fixes
+
+* Fixed `model_parameters()` for `anova()` from *lmerTest* models.
 
 # parameters 0.6.0
 

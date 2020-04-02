@@ -552,8 +552,9 @@
 
     # If mixed models...
     sumsq <- names(parameters)[names(parameters) %in% c("Sum Sq", "Sum of Sq")]
+    df_num <- names(parameters)[names(parameters) %in% c("Df", "NumDF")]
     if (length(sumsq) != 0) {
-      parameters$Mean_Square <- parameters[[sumsq]] / parameters[["Df"]]
+      parameters$Mean_Square <- parameters[[sumsq]] / parameters[[df_num]]
     }
   } else if ("aovlist" %in% class(model)) {
     if (names(model)[1L] == "(Intercept)") {
