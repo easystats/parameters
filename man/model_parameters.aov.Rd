@@ -39,31 +39,45 @@ Parameters from ANOVAs.
 For anova-tables from mixed models (i.e. \code{anova(lmer())}), only partial or adjusted effect sizes can be computed.
 }
 \examples{
-df <- iris
-df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
+if (requireNamespace("effectsize", quietly = TRUE) &&
+    packageVersion("effectsize") > "0.2.9.9") {
+  df <- iris
+  df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
-model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial")
-
-model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
-model_parameters(model)
-model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial")
-
-model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
-model_parameters(model)
-
-if (require("lme4")) {
-  mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species), data = df)
-  model <- anova(mm)
-
-  # simple parameters table
-  model_parameters(model)
-
-  # parameters table including effect sizes
+  model <- aov(Sepal.Length ~ Sepal.Big, data = df)
   model_parameters(
     model,
+    omega_squared = "partial",
     eta_squared = "partial",
-    df_error = dof_satterthwaite(mm)
+    epsilon_squared = "partial"
   )
+
+  model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
+  model_parameters(model)
+  model_parameters(
+    model,
+    omega_squared = "partial",
+    eta_squared = "partial",
+    epsilon_squared = "partial"
+  )
+
+  model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
+  model_parameters(model)
+
+  if (require("lme4")) {
+    mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species),
+               data = df)
+    model <- anova(mm)
+
+    # simple parameters table
+    model_parameters(model)
+
+    # parameters table including effect sizes
+    model_parameters(
+      model,
+      eta_squared = "partial",
+      df_error = dof_satterthwaite(mm)
+    )
+  }
 }
 }
