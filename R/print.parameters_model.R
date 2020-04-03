@@ -35,6 +35,11 @@
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, ...) {
   res <- attributes(x)$details
 
+  # minor fix for nested Anovas
+  if ("Group" %in% colnames(x) && sum(x$Parameter == "Residuals") > 1) {
+    colnames(x)[which(colnames(x) == "Group")] <- "Subgroup"
+  }
+
   if (!is.null(select)) {
     if (is.numeric(select)) select <- colnames(x)[select]
     select <- union(select, c("Component", "Effects", "Response", "Subgroup"))
