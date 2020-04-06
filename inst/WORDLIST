@@ -1,4 +1,5 @@
 ’
+Adressing
 Asparouhov
 al
 Alonso
@@ -11,6 +12,7 @@ APA
 ateucher
 Bafumi
 BayesFactor
+behaviour
 Bentler
 Bezdek
 Biometrics
@@ -20,6 +22,7 @@ BMC
 boostrapped
 brglm
 brms
+brmsfit
 canberra
 Carle
 Casal
@@ -62,6 +65,7 @@ easystats
 EFA
 effectsize
 Elff
+endogeneity
 Epskamp
 et
 exponentiate
@@ -77,6 +81,7 @@ gamm
 Garrido
 gaussianity
 Gelman
+Giesecke
 Giesselmann
 github
 githuband
@@ -89,6 +94,7 @@ Gorsuch
 HC
 HDI
 Heisig
+Herrington
 heteroskedasticity
 HEXACO
 Hinkley
@@ -119,8 +125,10 @@ leptokurtic
 lm
 lme
 lmer
+lmerTest
 lmerModLmerTest
 loadings
+logistf
 Maechler
 Malo
 meaned
@@ -131,12 +139,14 @@ metafor
 Minitab
 minkowski
 mixor
+mlm
 modelled
 modelling
 Modelling
 MSA
 multicollinearity
 multinom
+Mundlak
 Neter
 Nieto
 nlme
@@ -145,10 +155,12 @@ nubmer
 occured
 occurence
 Olkin
+panelr
 PCoA
 perfoms
 performant
 Pettersson
+PHQ
 platykurtic
 PloS
 PLOS
@@ -164,6 +176,7 @@ Rescale
 rescaling
 Rescaling
 Revelle
+REWB
 rlm
 Rocklin
 Rodríguez
@@ -186,6 +199,7 @@ sphericity
 Sphericity
 stackexchange
 stanreg
+Stata
 statitics
 Struyf
 substracted

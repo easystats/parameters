@@ -2,7 +2,7 @@
 
 ## General
 
-* Remove 'Zelig' from suggestes packages, as it was removed from CRAN.
+* Remove 'Zelig' from suggested packages, as it was removed from CRAN.
 
 ## Changes to functions
 
