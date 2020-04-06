@@ -80,10 +80,7 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
   component <- match.arg(component)
 
   # p-values, CI and se might be based on differen df-methods
-  if (!is.null(df_method)) {
-    df_method <- tolower(df_method)
-    df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin"))
-  }
+  df_method <- .check_df_method(df_method)
 
   # fix argument, if model has no zi-part
   if (!insight::model_info(model)$is_zero_inflated && component != "conditional") {
@@ -151,10 +148,7 @@ model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", 
 #' @export
 model_parameters.clmm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, details = FALSE, df_method = NULL, ...) {
   # p-values, CI and se might be based on differen df-methods
-  if (!is.null(df_method)) {
-    df_method <- tolower(df_method)
-    df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin"))
-  }
+  df_method <- .check_df_method(df_method)
 
   out <- .model_parameters_generic(
     model = model,
@@ -185,3 +179,22 @@ model_parameters.cpglmm <- model_parameters.clmm
 
 #' @export
 model_parameters.rlmerMod <- model_parameters.clmm
+
+
+
+
+
+
+# tools --------------------
+
+.check_df_method <- function(df_method) {
+  if (!is.null(df_method)) {
+    df_method <- tolower(df_method)
+    if (df_method %in% c("satterthwaite", "kenward", "kr")) {
+      warning("Satterthwaite or Kenward-Rogers approximation of degrees of freedom is only available for linear mixed models.", call. = FALSE)
+      df_method <- "wald"
+    }
+    df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin"))
+  }
+  df_method
+}
