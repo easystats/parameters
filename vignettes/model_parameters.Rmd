@@ -87,7 +87,7 @@ Indices of effect size for ANOVAs, such as partial and non-partial versions of `
 
 ```{r, warning=FALSE, message=FALSE}
 aov(Sepal.Length ~ Species, data = iris) %>% 
-  parameters(omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
+  parameters(omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial")
 ```
 
 ### Repeated measures
