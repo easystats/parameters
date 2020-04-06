@@ -78,7 +78,7 @@ model_parameters.befa <- function(model, sort = FALSE, centrality = "median", di
 
   # Clean
   long_loadings$Parameter <- NULL
-  if ("CI" %in% names(long_loadings) && length(unique(na.omit(long_loadings$CI))) == 1) {
+  if ("CI" %in% names(long_loadings) && .n_unique(long_loadings$CI) == 1) {
     long_loadings$CI <- NULL
   }
   long_loadings <- long_loadings[long_loadings$Component != 0, ]
@@ -90,7 +90,7 @@ model_parameters.befa <- function(model, sort = FALSE, centrality = "median", di
   # Add attributes
   attr(loadings, "model") <- model
   attr(loadings, "additional_arguments") <- list(...)
-  attr(loadings, "n") <- length(unique(long_loadings$Component))
+  attr(loadings, "n") <- .n_unique(long_loadings$Component)
   attr(loadings, "loadings_columns") <- names(loadings)[2:ncol(loadings)]
   attr(loadings, "ci") <- ci
 

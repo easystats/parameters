@@ -96,7 +96,7 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
   )
 
   # Restore component names
-  for (i in 1:length(unique(long$Component))) {
+  for (i in 1:.n_unique(long$Component)) {
     component <- unique(long$Component)[[i]]
     name <- names(loadings)[loadings_columns][[i]]
     long[long$Component == component, "Component"] <- name

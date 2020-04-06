@@ -56,7 +56,7 @@ random_parameters <- function(model) {
 # helper -----------------------------------
 
 .n_randomeffects <- function(model) {
-  sapply(insight::get_data(model)[insight::find_random(model, split_nested = TRUE, flatten = TRUE)], function(i) length(unique(i, na.rm = TRUE)))
+  sapply(insight::get_data(model)[insight::find_random(model, split_nested = TRUE, flatten = TRUE)], function(i) .n_unique(i))
 }
 
 

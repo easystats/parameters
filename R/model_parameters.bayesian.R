@@ -29,10 +29,10 @@
 #' @importFrom insight get_priors
 #' @inheritParams insight::get_parameters
 #' @export
-model_parameters.stanreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", ...) {
+model_parameters.stanreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", standardize = NULL, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, ...)
+  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, standardize = standardize, ...)
 
   if (effects == "fixed") {
     attr(parameters, "pretty_names") <- format_parameters(model)
@@ -49,10 +49,10 @@ model_parameters.stanreg <- function(model, centrality = "median", dispersion = 
 
 
 #' @export
-model_parameters.stanmvreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = "pd", rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", ...) {
+model_parameters.stanmvreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = "pd", rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", standardize = NULL, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, ...)
+  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, standardize = standardize, ...)
   parameters$Parameter <- gsub("^(.*)\\|(.*)", "\\2", parameters$Parameter)
 
   if (effects == "fixed") {
@@ -74,10 +74,10 @@ model_parameters.stanmvreg <- function(model, centrality = "median", dispersion 
 #' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
-model_parameters.brmsfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", component = "all", exponentiate = FALSE, ...) {
+model_parameters.brmsfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", component = "all", exponentiate = FALSE, standardize = NULL, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, component = component, ...)
+  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, component = component, standardize = standardize, ...)
 
   if (effects == "fixed" && component == "conditional") {
     attr(parameters, "pretty_names") <- format_parameters(model)

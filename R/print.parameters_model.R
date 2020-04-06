@@ -66,10 +66,10 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
 
   split_by <- ""
-  split_by <- c(split_by, ifelse("Component" %in% names(x) && length(unique(x$Component)) > 1, "Component", ""))
-  split_by <- c(split_by, ifelse("Effects" %in% names(x) && length(unique(x$Effects)) > 1, "Effects", ""))
-  split_by <- c(split_by, ifelse("Response" %in% names(x) && length(unique(x$Response)) > 1, "Response", ""))
-  split_by <- c(split_by, ifelse("Subgroup" %in% names(x) && length(unique(x$Subgroup)) > 1, "Subgroup", ""))
+  split_by <- c(split_by, ifelse("Component" %in% names(x) && .n_unique(x$Component) > 1, "Component", ""))
+  split_by <- c(split_by, ifelse("Effects" %in% names(x) && .n_unique(x$Effects) > 1, "Effects", ""))
+  split_by <- c(split_by, ifelse("Response" %in% names(x) && .n_unique(x$Response) > 1, "Response", ""))
+  split_by <- c(split_by, ifelse("Subgroup" %in% names(x) && .n_unique(x$Subgroup) > 1, "Subgroup", ""))
 
   split_by <- split_by[nchar(split_by) > 0]
 

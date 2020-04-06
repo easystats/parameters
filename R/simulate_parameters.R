@@ -63,7 +63,7 @@ simulate_parameters.default <- function(model, iterations = 1000, centrality = "
   out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
 
   params <- insight::get_parameters(model)
-  if ("Effects" %in% colnames(params) && length(unique(params$Effects)) > 1) {
+  if ("Effects" %in% colnames(params) && .n_unique(params$Effects) > 1) {
     out$Effects <- params$Effects
   }
 

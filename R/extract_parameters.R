@@ -134,8 +134,8 @@
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   # remove Component column if not needed
-  if (length(unique(parameters$Component)) == 1) parameters$Component <- NULL
-  if (length(unique(parameters$Effects)) == 1 || effects == "fixed") parameters$Effects <- NULL
+  if (.n_unique(parameters$Component) == 1) parameters$Component <- NULL
+  if (.n_unique(parameters$Effects) == 1 || effects == "fixed") parameters$Effects <- NULL
 
   # adjust p-values?
   if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
@@ -383,13 +383,23 @@
 # Bayes function ------------------------------------------------------
 
 
-#' @importFrom stats sd setNames
+#' @importFrom stats sd setNames na.omit
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, ...) {
+.extract_parameters_bayesian <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, standardize = NULL, ...) {
+  # check if standardization is required and package available
+  if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
+    insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
+    standardize <- NULL
+  }
 
   # MCMCglmm need special handling
   if (inherits(model, "MCMCglmm")) {
     parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, diagnostic = "ESS", ...)
+  } else if (!is.null(standardize)) {
+    std_post <- effectsize::standardize_posteriors(model, method = standardize)
+    std_parameters <- bayestestR::describe_posterior(std_post, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
+    parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
+    parameters <- merge(std_parameters, parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))], sort = FALSE)
   } else {
     parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
   }
@@ -398,11 +408,11 @@
     parameters <- bayestestR::reshape_ci(parameters)
   }
 
-  # Remove unecessary columns
-  if ("CI" %in% names(parameters) && length(unique(parameters$CI)) == 1) {
+  # Remove unnecessary columns
+  if ("CI" %in% names(parameters) && .n_unique(parameters$CI) == 1) {
     parameters$CI <- NULL
   }
-  if ("ROPE_CI" %in% names(parameters) && length(unique(parameters$ROPE_CI)) == 1) {
+  if ("ROPE_CI" %in% names(parameters) && .n_unique(parameters$ROPE_CI) == 1) {
     parameters$ROPE_CI <- NULL
   }
   if ("ROPE_low" %in% names(parameters) & "ROPE_high" %in% names(parameters)) {

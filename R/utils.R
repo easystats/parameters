@@ -210,3 +210,13 @@
   x <- suppressWarnings(x[!is.na(x)])
   length(x) == 0 || is.null(x)
 }
+
+
+
+
+#' @importFrom stats na.omit
+#' @keywords internal
+.n_unique <- function(x, na.rm = TRUE) {
+  if (isTRUE(na.rm)) x <- stats::na.omit(x)
+  length(unique(x))
+}
