@@ -10,7 +10,8 @@
 #' @seealso \code{\link[parameters:standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
-#' @note If \code{model} is a data frame, arguments \code{diagnostic}, \code{bf_prior} and \code{priors} are ignored.
+#' @note When \code{standardize = "refit"}, columns related to \code{diagnostic}, \code{bf_prior} and \code{priors} are in relation to the \emph{original} \code{model}.
+#' If \code{model} is a data frame, arguments \code{diagnostic}, \code{bf_prior} and \code{priors} are ignored.
 #'
 #' @details Currently supported models are \code{brmsfit}, \code{stanreg}, \code{stanmvreg}, \code{MCMCglmm}, \code{mcmc} and \code{bcplm}.
 #'
