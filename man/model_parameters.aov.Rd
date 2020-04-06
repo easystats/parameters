@@ -40,7 +40,7 @@ For anova-tables from mixed models (i.e. \code{anova(lmer())}), only partial or 
 }
 \examples{
 if (requireNamespace("effectsize", quietly = TRUE) &&
-    packageVersion("effectsize") > "0.2.9.9") {
+    packageVersion("effectsize") >= "0.2.9") {
   df <- iris
   df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
