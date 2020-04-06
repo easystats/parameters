@@ -400,7 +400,7 @@
 
     # Don't test BF on standerdized params
     test_no_BF <- test[!test %in% c("bf", "bayesfactor", "bayes_factor")]
-    if (length(test_no_BF)==0) test_no_BF <- NULL
+    if (length(test_no_BF) == 0) test_no_BF <- NULL
     std_post <- effectsize::standardize_posteriors(model, method = standardize)
     std_parameters <- bayestestR::describe_posterior(std_post, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test_no_BF, rope_range = rope_range, rope_ci = rope_ci, ...)
 
