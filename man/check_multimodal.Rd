@@ -19,11 +19,11 @@ For univariate distributions (one-dimensional vectors), this functions performs 
 x <- rnorm(2000)
 check_multimodal(x)
 
+\donttest{
 x <- c(rnorm(1000), rnorm(1000, 2))
 check_multimodal(x)
 
 # Multivariate
-\donttest{
 m <- data.frame(
   x = rnorm(200),
   y = rbeta(200, 2, 1)
