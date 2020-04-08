@@ -575,6 +575,10 @@
     } else if (length(mean_sq) != 0) {
       parameters$Mean_Square <- parameters[[mean_sq]]
     }
+
+    if (length(df_num) == 0 && length(sumsq) != 0 && "Mean_Square" %in% colnames(parameters) && !("Df" %in% colnames(parameters))) {
+      parameters$Df <- round(parameters[[sumsq]] / parameters$Mean_Square)
+    }
   } else if ("aovlist" %in% class(model)) {
     if (names(model)[1L] == "(Intercept)") {
       model <- model[-1L]
@@ -599,6 +603,7 @@
   # Rename
   names(parameters) <- gsub("Pr(>F)", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Df", "df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("NumDF", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi.Df", "Chisq_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi DoF", "Chisq_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum Sq", "Sum_Squares", names(parameters), fixed = TRUE)

@@ -187,7 +187,20 @@ model_parameters.aovlist <- model_parameters.aov
   }
 
   # numerator DF
-  df_num <- model[[colnames(model)[colnames(model) %in% c("Df", "NumDF")]]]
+  df_num <- NULL
+  df_num_cols <- colnames(model)[colnames(model) %in% c("Df", "NumDF")]
+
+  if (length(df_num_cols) != 0) {
+    df_num <- model[[df_num_cols[1]]]
+  } else if ("df" %in% colnames(parameters)) {
+    df_num <- parameters[["df"]]
+  }
+
+  # check if we have any information on denominator df
+  if (is.null(df_num)) {
+    warning("Cannot compute effect size without numerator degrees of freedom.", call. = FALSE)
+    return(parameters)
+  }
 
   # F value
   f_value <- model[["F value"]]
