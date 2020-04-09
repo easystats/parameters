@@ -7,7 +7,7 @@
 check_multimodal(x, ...)
 }
 \arguments{
-\item{x}{A numeric vector or a dataframe.}
+\item{x}{A numeric vector or a data frame.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
