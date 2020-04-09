@@ -567,7 +567,7 @@
 
     # If mixed models...
     sumsq <- names(parameters)[names(parameters) %in% c("Sum Sq", "Sum of Sq")]
-    df_num <- names(parameters)[names(parameters) %in% c("Df", "NumDF")]
+    df_num <- names(parameters)[names(parameters) %in% c("npar", "Df", "NumDF")]
     mean_sq <- names(parameters)[names(parameters) %in% c("Mean Sq")]
 
     if (length(sumsq) != 0 && length(df_num) != 0) {
