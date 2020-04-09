@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -44,7 +48,6 @@
 
 <meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -62,7 +65,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -135,7 +138,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/easystats/parameters/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -149,19 +157,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/easystats/parameters/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="parameters-062" class="section level1">
+<h1 class="page-header" data-toc-text="0.6.2">
+<a href="#parameters-062" class="anchor"></a>parameters 0.6.2<small> Unreleased </small>
+</h1>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/demean.html">find_within()</a></code> as a small helper to find variables that have a within- and between-effect related to a grouping variable.</li>
+</ul>
+</div>
+</div>
     <div id="parameters-061" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.6.1">
 <a href="#parameters-061" class="anchor"></a>parameters 0.6.1<small> 2020-04-08 </small>
 </h1>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#general" class="anchor"></a>General</h2>
 <ul>
-<li>Remove âZeligâ from suggested packages, as it was removed from CRAN.</li>
+<li>Remove ‘Zelig’ from suggested packages, as it was removed from CRAN.</li>
 </ul>
 </div>
 <div id="changes-to-functions" class="section level2">
@@ -193,7 +214,7 @@
 </div>
 </div>
     <div id="parameters-060" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.6.0">
 <a href="#parameters-060" class="anchor"></a>parameters 0.6.0<small> 2020-03-12 </small>
 </h1>
 <div id="breaking-changes" class="section level2">
@@ -272,7 +293,7 @@
 </div>
 </div>
     <div id="parameters-050" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5.0">
 <a href="#parameters-050" class="anchor"></a>parameters 0.5.0<small> 2020-02-09 </small>
 </h1>
 <div id="breaking-changes-1" class="section level2">
@@ -296,16 +317,16 @@
 <h2 class="hasAnchor">
 <a href="#general-1" class="anchor"></a>General</h2>
 <ul>
-<li>Added new vignettes on âStandardized Model Parametersâ and âRobust Estimation of Standard Errorsâ, and vignettes are now also published on CRAN.</li>
+<li>Added new vignettes on ‘Standardized Model Parameters’ and ‘Robust Estimation of Standard Errors’, and vignettes are now also published on CRAN.</li>
 <li>Improved handling of robust statistics in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. This should now work for more models than before.</li>
 <li>Improved accuracy of <code><a href="../reference/ci.merMod.html">ci.merMod()</a></code> for <code>method = "satterthwaite"</code> and <code>method = "kenward"</code>.</li>
 <li>
 <code><a href="../reference/select_parameters.html">select_parameters()</a></code> for <em>stanreg</em> models, which was temporarily removed due to the CRAN removal of package <strong>projpred</strong>, is now re-implemented.</li>
 </ul>
 </div>
-<div id="new-functions" class="section level2">
+<div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions" class="anchor"></a>New functions</h2>
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/p_value_betwithin.html">dof_betwithin()</a></code> to compute degrees of freedom based on a between-within approximation method (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for this method were added as well).</li>
@@ -354,19 +375,19 @@
 </div>
 </div>
     <div id="parameters-041" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.4.1">
 <a href="#parameters-041" class="anchor"></a>parameters 0.4.1<small> 2020-01-17 </small>
 </h1>
 <div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fix CRAN check issues, caused by removal of package âprojpredâ.</li>
+<li>Fix CRAN check issues, caused by removal of package ‘projpred’.</li>
 </ul>
 </div>
 </div>
     <div id="parameters-040" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.4.0">
 <a href="#parameters-040" class="anchor"></a>parameters 0.4.0<small> 2020-01-14 </small>
 </h1>
 <div id="breaking-changes-2" class="section level2">
@@ -375,7 +396,7 @@
 <ul>
 <li>The column for degrees of freedom in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> was renamed from <code>df_residuals</code> to <code>df_error</code> for regression model objects, because these degrees of freedom actually were not always referring to <em>residuals</em> - we consider <code>df_error</code> as a more generic name.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for standardized parameters (i.e.Â <code>standardize</code> is not <code>NULL</code>) only returns standardized coefficients, CI and standard errors (and not both, unstandardized and standardized values).</li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for standardized parameters (i.e. <code>standardize</code> is not <code>NULL</code>) only returns standardized coefficients, CI and standard errors (and not both, unstandardized and standardized values).</li>
 <li>
 <code>format_ci()</code> was removed and re-implemented in the <strong>insight</strong> package.</li>
 </ul>
@@ -415,9 +436,9 @@
 <li>Better handling of <code><a href="https://rdrr.io/pkg/psych/man/omega.html">psych::omega</a></code> models.</li>
 </ul>
 </div>
-<div id="new-functions-1" class="section level2">
+<div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-1" class="anchor"></a>New functions</h2>
+<a href="#new-functions-2" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/p_value_satterthwaite.html">dof_satterthwaite()</a></code> and <code><a href="../reference/p_value_ml1.html">dof_ml1()</a></code> to compute degrees of freedom based on different approximation methods (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for these methods were added as well).</li>
@@ -448,7 +469,7 @@
 </div>
 </div>
     <div id="parameters-030" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.3.0">
 <a href="#parameters-030" class="anchor"></a>parameters 0.3.0<small> 2019-11-20 </small>
 </h1>
 <div id="breaking-changes-3" class="section level2">
@@ -473,9 +494,9 @@
 <code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support <em>flexsurvreg</em> models (from package <strong>flexsurv</strong>).</li>
 </ul>
 </div>
-<div id="new-functions-2" class="section level2">
+<div id="new-functions-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-2" class="anchor"></a>New functions</h2>
+<a href="#new-functions-3" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/degrees_of_freedom.html">degrees_of_freedom()</a></code> to get DoFs.</li>
@@ -518,7 +539,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Interaction terms in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g.Â <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
+<li>Interaction terms in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
 <li>Fixed bug in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when a parameter occured multiple times in a model.</li>
 <li>Fixed bug with <em>multinom</em>-support.</li>
 <li>Fixed bug in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for non-estimable GLMs.</li>
@@ -528,7 +549,7 @@
 </div>
 </div>
     <div id="parameters-020" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.2.0">
 <a href="#parameters-020" class="anchor"></a>parameters 0.2.0<small> 2019-09-26 </small>
 </h1>
 <div id="breaking-changes-4" class="section level2">
@@ -549,9 +570,9 @@
 <code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code>standardize()</code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support many more model objects, including mixed models from packages <em>nlme</em>, <em>glmmTMB</em> or <em>GLMMadaptive</em>, zero-inflated models from package <em>pscl</em> or other modelling packages. Along with these changes, functions for specific model objects with zero-inflated component get a <code>component</code>-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.</li>
 </ul>
 </div>
-<div id="new-functions-3" class="section level2">
+<div id="new-functions-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-3" class="anchor"></a>New functions</h2>
+<a href="#new-functions-4" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code>parameters_simulate()</code> and <code>model_simulate()</code>, as computational faster alternatives to <code>parameters_bootstrap()</code> and <code>model_bootstrap()</code>.</li>
@@ -591,7 +612,7 @@
 </div>
 </div>
     <div id="parameters-010" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.0">
 <a href="#parameters-010" class="anchor"></a>parameters 0.1.0<small> 2019-08-26 </small>
 </h1>
 <ul>
@@ -600,20 +621,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#parameters-061">0.6.1</a></li>
-        <li><a href="#parameters-060">0.6.0</a></li>
-        <li><a href="#parameters-050">0.5.0</a></li>
-        <li><a href="#parameters-041">0.4.1</a></li>
-        <li><a href="#parameters-040">0.4.0</a></li>
-        <li><a href="#parameters-030">0.3.0</a></li>
-        <li><a href="#parameters-020">0.2.0</a></li>
-        <li><a href="#parameters-010">0.1.0</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -625,7 +636,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
