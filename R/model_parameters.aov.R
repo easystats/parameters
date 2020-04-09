@@ -188,7 +188,7 @@ model_parameters.aovlist <- model_parameters.aov
 
   # numerator DF
   df_num <- NULL
-  df_num_cols <- colnames(model)[colnames(model) %in% c("Df", "NumDF")]
+  df_num_cols <- colnames(model)[colnames(model) %in% c("npar", "Df", "NumDF")]
 
   if (length(df_num_cols) != 0) {
     df_num <- model[[df_num_cols[1]]]
