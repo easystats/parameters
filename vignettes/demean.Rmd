@@ -188,7 +188,15 @@ rewb <- lmer(
 )
 ```
 
-The benefit of this kind of model is that you have information on within-, between- and other time-constant (i.e. between) effects...
+**What about time-constant predictors?**
+
+After demeaning time-varying predictors, "at the higher level, the mean term is no longer constrained by Level 1 effects, so it is free to account for all the higher-level variance associated with that variable" [@bell_explaining_2015].
+
+Thus, _time-constant **categorical**_ predictors, that only have a between-effect, can be simply included as fixed effects predictor (since they’re not constrained by level-1 effects).
+Time-constant _continuous_ **group-level predictors** (for instance, GDP of countries) should be group-meaned, to have a proper "between"-effect.
+
+
+The benefit of this kind of model is that you have information on within-, between- and other time-constant (i.e. between) effects or group-level predictors...
 
 ```{r}
 model_parameters(rewb)
