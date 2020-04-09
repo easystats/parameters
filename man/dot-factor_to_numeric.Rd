@@ -4,7 +4,7 @@
 \alias{.factor_to_numeric}
 \title{Safe transformation from factor/character to numeric}
 \usage{
-.factor_to_numeric(x)
+.factor_to_numeric(x, lowest = NULL)
 }
 \description{
 Safe transformation from factor/character to numeric

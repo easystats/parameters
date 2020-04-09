@@ -2,11 +2,13 @@
 #'
 #' \code{demean()} computes group- and de-meaned versions of a
 #'    variable that can be used in regression analysis to model the between-
-#'    and within-subject effect.
+#'    and within-subject effect. \code{find_within()} checks if model
+#'    predictors or variables may cause a heterogeneity bias, i.e. if variables
+#'    have a within- and/or between-effect.
 #'
-#' @param x A data frame.
-#' @param select Character vector with names of variables to select that should be group- and de-meaned.
-#' @param group Name of the variable that indicates the group- or cluster-ID.
+#' @param x A data frame. For \code{find_within()}, may also be a mixed model object.
+#' @param select Character vector with names of variables to select that should be group- and de-meaned. For \code{find_within()}, if \code{x} is a mixed model object, this argument be ignored.
+#' @param group Character vector with the name of the variable that indicates the group- or cluster-ID. For \code{find_within()}, if \code{x} is a model object, this argument be ignored.
 #' @param suffix_demean,suffix_groupmean String value, will be appended to the names of the
 #'   group-meaned and de-meaned variables of \code{x}. By default, de-meaned
 #'   variables will be suffixed with \code{"_within"} and grouped-meaned variables
@@ -15,6 +17,7 @@
 #'   attributes to indicate the within- and between-effects. This is only relevant
 #'   when printing \code{model_parameters()} - in such cases, the within- and
 #'   between-effects are printed in separated blocks.
+#' @param verbose Toggle off warnings.
 #'
 #' @return A data frame with the group-/de-meaned variables, which get the suffix
 #'   \code{"_between"} (for the group-meaned variable) and \code{"_within"} (for
@@ -145,11 +148,13 @@
 #' iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
 #' iris$binary <- as.factor(rbinom(150, 1, .35)) # binary variable
 #'
-#' x <- demean(iris, select = c("Sepal.Length", "Petal.Length"), group = ID)
+#' x <- demean(iris, select = c("Sepal.Length", "Petal.Length"), group = "ID")
 #' head(x)
 #'
-#' x <- demean(iris, select = c("Sepal.Length", "binary", "Species"), group = ID)
+#' x <- demean(iris, select = c("Sepal.Length", "binary", "Species"), group = "ID")
 #' head(x)
+#'
+#' find_within(iris, select = c("Sepal.Length", "Petal.Length"), group = "ID")
 #'
 #' # demean interaction term x*y
 #' dat <- data.frame(
@@ -161,7 +166,10 @@
 #' demean(dat, select = c("a", "x*y"), group = "ID")
 #' @importFrom stats ave
 #' @export
-demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean = "_between", add_attributes = TRUE) {
+demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean = "_between", add_attributes = TRUE, verbose = TRUE) {
+  # ugly tibbles again...
+  x <- as.data.frame(x)
+
   interactions_no <- select[!grepl("(\\*|\\:)", select)]
   interactions_yes <- select[grepl("(\\*|\\:)", select)]
 
@@ -175,7 +183,7 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
 
   not_found <- setdiff(select, colnames(x))
 
-  if (length(not_found)) {
+  if (length(not_found) && isTRUE(verbose)) {
     insight::print_color(sprintf(
       "%i variables were not found in the dataset: %s\n",
       length(not_found),
@@ -186,9 +194,6 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
   }
 
   select <- intersect(colnames(x), select)
-
-  # parse group-variable name to string
-  group <- gsub("\"", "", deparse(substitute(group)), fixed = TRUE)
 
   # get data to demean...
   dat <- x[, c(select, group)]
@@ -223,13 +228,15 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
       }
     }
     # tell user...
-    insight::print_color(
-      sprintf(
-        "Categorical predictors (%s) have been coerced to numeric values to compute de- and group-meaned variables.\n",
-        paste0(names(categorical_predictors)[categorical_predictors], collapse = ", ")
-      ),
-      "yellow"
-    )
+    if (isTRUE(verbose)) {
+      insight::print_color(
+        sprintf(
+          "Categorical predictors (%s) have been coerced to numeric values to compute de- and group-meaned variables.\n",
+          paste0(names(categorical_predictors)[categorical_predictors], collapse = ", ")
+        ),
+        "yellow"
+      )
+    }
   }
 
 
