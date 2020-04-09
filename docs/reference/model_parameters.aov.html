@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
       </span>
     </div>
 
@@ -165,6 +165,8 @@
   <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>df_error</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -181,11 +183,19 @@
     </tr>
     <tr>
       <th>eta_squared</th>
-      <td><p>Compute eta squared as index of effect size. Can be <code>"partial"</code> (adjusted for effect size) or <code>"raw"</code>.</p></td>
+      <td><p>Compute eta squared as index of effect size. Can be <code>"partial"</code> (adjusted for effect size), <code>"raw"</code>  or <code>"adjusted"</code> (the latter option only for anova-tables from mixed models).</p></td>
     </tr>
     <tr>
       <th>epsilon_squared</th>
-      <td><p>Compute epsilon squared as index of effect size.</p></td>
+      <td><p>Compute epsilon squared as index of effect size. Can be <code>"partial"</code> (adjusted for effect size) or <code>"raw"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>df_error</th>
+      <td><p>Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for anova tables from mixed models. See 'Examples'.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, anova-tables using <code><a href='https://rdrr.io/pkg/car/man/Anova.html'>car::Anova()</a></code> will be returned.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -196,43 +206,62 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of indices related to the model's parameters.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>For anova-tables from mixed models (i.e. <code><a href='https://rdrr.io/r/stats/anova.html'>anova(lmer())</a></code>), only partial or adjusted effect sizes can be computed.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>
-<span class='no'>df</span>$<span class='no'>Sepal.Big</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>df</span>$<span class='no'>Sepal.Width</span> <span class='kw'>&gt;=</span> <span class='fl'>3</span>, <span class='st'>"Yes"</span>, <span class='st'>"No"</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"effectsize"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>&amp;&amp;</span>
+    <span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageVersion</a></span>(<span class='st'>"effectsize"</span>) <span class='kw'>&gt;=</span> <span class='st'>"0.2.9"</span>) {
+  <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>
+  <span class='no'>df</span>$<span class='no'>Sepal.Big</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>df</span>$<span class='no'>Sepal.Width</span> <span class='kw'>&gt;=</span> <span class='fl'>3</span>, <span class='st'>"Yes"</span>, <span class='st'>"No"</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |     p | Omega_Sq (partial) | Eta_Sq (partial)
-#&gt; --------------------------------------------------------------------------------------------------
-#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207 |               0.00 |             0.01
-#&gt; Residuals |      101.07 | 148 |        0.68 |      |       |               0.00 |             0.01</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>))
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |     p
-#&gt; ----------------------------------------------------------
-#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207
-#&gt; Residuals |      101.07 | 148 |        0.68 |      |      </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter | Sum_Squares |  df | Mean_Square |    F |     p | Omega_Sq (partial) | Eta_Sq (partial)
-#&gt; --------------------------------------------------------------------------------------------------
-#&gt; Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207 |               0.00 |             0.01
-#&gt; Residuals |      101.07 | 148 |        0.68 |      |       |               0.00 |             0.01</div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>Error</a></span>(<span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Group   | Parameter | Sum_Squares |  df | Mean_Square |     F |      p
-#&gt; ----------------------------------------------------------------------
-#&gt; Species | Sepal.Big |       28.27 |   1 |       28.27 |  0.81 | 0.534 
-#&gt; Species | Residuals |       34.94 |   1 |       34.94 |       |       
-#&gt; Within  | Sepal.Big |        4.74 |   1 |        4.74 | 20.24 | &lt; .001
-#&gt; Within  | Residuals |       34.21 | 146 |        0.23 |       |       </div><div class='input'>
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>)) {
-  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>))
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+    <span class='no'>model</span>,
+    <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>,
+    <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>,
+    <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>
+  )
+
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>))
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
-}</div><div class='output co'>#&gt; Parameter | Sum_Squares | df | Mean_Square |     F
-#&gt; --------------------------------------------------
-#&gt; Sepal.Big |        4.64 |  1 |        4.64 | 19.82</div></pre>
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+    <span class='no'>model</span>,
+    <span class='kw'>omega_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>,
+    <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>,
+    <span class='kw'>epsilon_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>
+  )
+
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>Error</a></span>(<span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+
+  <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>)) {
+    <span class='no'>mm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Big</span> + <span class='no'>Petal.Width</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>),
+               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>)
+    <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>mm</span>)
+
+    <span class='co'># simple parameters table</span>
+    <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
+
+    <span class='co'># parameters table including effect sizes</span>
+    <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
+      <span class='no'>model</span>,
+      <span class='kw'>eta_squared</span> <span class='kw'>=</span> <span class='st'>"partial"</span>,
+      <span class='kw'>df_error</span> <span class='kw'>=</span> <span class='fu'><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></span>(<span class='no'>mm</span>)
+    )
+  }
+}</div><div class='output co'>#&gt; <span class='warning'>Warning: Cannot compute effect size without denominator degrees of freedom. Please specify 'df_error', or use package 'lmerTest' to fit your mixed model.</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; Parameter   | Sum_Squares | df | Mean_Square |      F | Eta_Sq (partial)
+#&gt; ------------------------------------------------------------------------
+#&gt; Sepal.Big   |        1.10 |  1 |        1.10 |   4.96 |             0.03
+#&gt; Petal.Width |       68.50 |  1 |       68.50 | 309.23 |             0.68</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#note">Note</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

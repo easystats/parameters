@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
       </span>
     </div>
 
@@ -173,6 +173,7 @@
   <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
   <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )
 
@@ -192,6 +193,7 @@
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>,
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
   <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -260,6 +262,10 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
+      <th>standardize</th>
+      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://rdrr.io/pkg/effectsize/man/standardize_parameters.html'>standardize_parameters</a></code>. Note that robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only works when <code>standardize="refit"</code>.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://rdrr.io/pkg/bayestestR/man/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
@@ -281,7 +287,8 @@ Only applies to mixed models. May be abbreviated.</p></td>
     <p>Currently supported models are <code>brmsfit</code>, <code>stanreg</code>, <code>stanmvreg</code>, <code>MCMCglmm</code>, <code>mcmc</code> and <code>bcplm</code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>If <code>model</code> is a data frame, arguments <code>diagnostic</code>, <code>bf_prior</code> and <code>priors</code> are ignored.</p>
+    <p>When <code>standardize = "refit"</code>, columns <code>diagnostic</code>, <code>bf_prior</code> and <code>priors</code> refer to the <em>original</em> <code>model</code>.
+If <code>model</code> is a data frame, arguments <code>diagnostic</code>, <code>bf_prior</code> and <code>priors</code> are ignored.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename

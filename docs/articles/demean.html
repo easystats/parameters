@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
       </span>
     </div>
 
@@ -106,7 +106,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="demean_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Analysing Longitudinal or Panel Data</h1>
@@ -123,8 +123,8 @@
 <div id="sample-data-used-in-this-vignette" class="section level1">
 <h1 class="hasAnchor">
 <a href="#sample-data-used-in-this-vignette" class="anchor"></a>Sample data used in this vignette</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"qol_cancer"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parameters)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"qol_cancer"</span>)</span></code></pre></div>
 <ul>
 <li>Variables:
 <ul>
@@ -157,10 +157,10 @@
 <div id="computing-the-de-meaned-and-group-meaned-variables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#computing-the-de-meaned-and-group-meaned-variables" class="anchor"></a>Computing the de-meaned and group-meaned variables</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">qol_cancer &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(</a>
-<a class="sourceLine" id="cb2-2" title="2">  qol_cancer,</a>
-<a class="sourceLine" id="cb2-3" title="3">  <span class="kw"><a href="../reference/demean.html">demean</a></span>(qol_cancer, <span class="dt">select =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"phq4"</span>, <span class="st">"QoL"</span>), <span class="dt">group =</span> <span class="st">"ID"</span>)</a>
-<a class="sourceLine" id="cb2-4" title="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>qol_cancer &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  qol_cancer,</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="kw"><a href="../reference/demean.html">demean</a></span>(qol_cancer, <span class="dt">select =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"phq4"</span>, <span class="st">"QoL"</span>), <span class="dt">group =</span> <span class="st">"ID"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>)</span></code></pre></div>
 <p>Now we have:</p>
 <ul>
 <li>
@@ -175,43 +175,43 @@
 <li>the group-level factor is included as predictor</li>
 <li>time-varying predictors are de-meaned (“person-mean centered”, indicating the “within-subject” effect)</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">fe_model1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(</a>
-<a class="sourceLine" id="cb3-2" title="2">  QoL <span class="op">~</span><span class="st"> </span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">+</span><span class="st"> </span>ID,</a>
-<a class="sourceLine" id="cb3-3" title="3">   <span class="dt">data =</span> qol_cancer</a>
-<a class="sourceLine" id="cb3-4" title="4">)</a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co"># we use only the first two rows, because the remaining rows are</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co"># the estimates for "ID", which is not of interest here...</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(fe_model1)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, ]</a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="co">#&gt; ------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 374 | 0.089 </span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></a>
-<a class="sourceLine" id="cb3-12" title="12"></a>
-<a class="sourceLine" id="cb3-13" title="13"></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co"># instead of removing the intercept, we could also use the </span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="co"># de-meaned response...</span></a>
-<a class="sourceLine" id="cb3-16" title="16">fe_model2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(</a>
-<a class="sourceLine" id="cb3-17" title="17">  QoL_within <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">+</span><span class="st"> </span>ID,</a>
-<a class="sourceLine" id="cb3-18" title="18">   <span class="dt">data =</span> qol_cancer</a>
-<a class="sourceLine" id="cb3-19" title="19">)</a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(fe_model2)[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, ]</a>
-<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt; ------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 374 | 0.089 </span></a>
-<a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></a>
-<a class="sourceLine" id="cb3-25" title="25"></a>
-<a class="sourceLine" id="cb3-26" title="26"></a>
-<a class="sourceLine" id="cb3-27" title="27"><span class="co"># we compare the results with those from the "lfe"-package for panel data</span></a>
-<a class="sourceLine" id="cb3-28" title="28"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lfe)</a>
-<a class="sourceLine" id="cb3-29" title="29">fe_model3 &lt;-<span class="st"> </span><span class="kw">felm</span>(</a>
-<a class="sourceLine" id="cb3-30" title="30">  QoL <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">|</span><span class="st"> </span>ID,</a>
-<a class="sourceLine" id="cb3-31" title="31">   <span class="dt">data =</span> qol_cancer</a>
-<a class="sourceLine" id="cb3-32" title="32">)</a>
-<a class="sourceLine" id="cb3-33" title="33"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(fe_model3)</a>
-<a class="sourceLine" id="cb3-34" title="34"><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb3-35" title="35"><span class="co">#&gt; ------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb3-36" title="36"><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.16,  2.34] |  1.70 | 374 | 0.089 </span></a>
-<a class="sourceLine" id="cb3-37" title="37"><span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>fe_model1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  QoL <span class="op">~</span><span class="st"> </span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">+</span><span class="st"> </span>ID,</span>
+<span id="cb3-3"><a href="#cb3-3"></a>   <span class="dt">data =</span> qol_cancer</span>
+<span id="cb3-4"><a href="#cb3-4"></a>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># we use only the first two rows, because the remaining rows are</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co"># the estimates for "ID", which is not of interest here...</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(fe_model1)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, ]</span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 374 | 0.089 </span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a></span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># instead of removing the intercept, we could also use the </span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># de-meaned response...</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>fe_model2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(</span>
+<span id="cb3-17"><a href="#cb3-17"></a>  QoL_within <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">+</span><span class="st"> </span>ID,</span>
+<span id="cb3-18"><a href="#cb3-18"></a>   <span class="dt">data =</span> qol_cancer</span>
+<span id="cb3-19"><a href="#cb3-19"></a>)</span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(fe_model2)[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, ]</span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 374 | 0.089 </span></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a></span>
+<span id="cb3-26"><a href="#cb3-26"></a></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="co"># we compare the results with those from the "lfe"-package for panel data</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lfe)</span>
+<span id="cb3-29"><a href="#cb3-29"></a>fe_model3 &lt;-<span class="st"> </span><span class="kw">felm</span>(</span>
+<span id="cb3-30"><a href="#cb3-30"></a>  QoL <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">|</span><span class="st"> </span>ID,</span>
+<span id="cb3-31"><a href="#cb3-31"></a>   <span class="dt">data =</span> qol_cancer</span>
+<span id="cb3-32"><a href="#cb3-32"></a>)</span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(fe_model3)</span>
+<span id="cb3-34"><a href="#cb3-34"></a><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
+<span id="cb3-36"><a href="#cb3-36"></a><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.16,  2.34] |  1.70 | 374 | 0.089 </span></span>
+<span id="cb3-37"><a href="#cb3-37"></a><span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></span></code></pre></div>
 <p>As we can see, the <em>within-effect</em> of PHQ-4 is <code>-3.66</code>, hence the mean of the change for an average individual case in our sample (or, the “net” effect), is <code>-3.66</code>.</p>
 <p>But what about the between-effect? How do people with higher PHQ-4 score differ from people with lower PHQ-4 score? Or what about educational inequalities? Do higher educated people have a higher PHQ-4 score than lower educated people?</p>
 <p>This question cannot be answered with FE regression. But: “Can one fit a multilevel model with varying intercepts (or coefficients) when the units and predictors correlate? The answer is yes. And the solution is simple.” <span class="citation">(Bafumi and Gelman 2006)</span></p>
@@ -229,60 +229,60 @@
 <li>When time-varying predictors are “decomposed” into their time-varying and time-invariant components (demeaning), then mixed models can model <strong>both</strong> within- and between-subject effects <span class="citation">(Bell, Fairbrother, and Jones 2018)</span> - this approach is essentially a further development of a long-known recommendation by Mundlak <span class="citation">(Mundlak 1978)</span>.</li>
 </ul>
 <p>For now, we will follow the last recommendation and use the within- and between-version of <code>phq4</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</a>
-<a class="sourceLine" id="cb4-2" title="2">mixed_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">lmer</span>(</a>
-<a class="sourceLine" id="cb4-3" title="3">  QoL <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">+</span><span class="st"> </span>phq4_between <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>ID),</a>
-<a class="sourceLine" id="cb4-4" title="4">   <span class="dt">data =</span> qol_cancer</a>
-<a class="sourceLine" id="cb4-5" title="5">)</a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(mixed_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; ------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; (Intercept) |       71.53 | 1.56 | [68.48, 74.58] | 45.98 | 558 | &lt; .001</span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.16,  2.34] |  1.70 | 558 | 0.088 </span></a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; # Within-Effects </span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; ------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 558 | &lt; .001</span></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; # Between-Effects </span></a>
-<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI |      t |  df |      p</span></a>
-<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; --------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; phq4_between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | 558 | &lt; .001</span></a>
-<a class="sourceLine" id="cb4-23" title="23"></a>
-<a class="sourceLine" id="cb4-24" title="24"><span class="co"># compare to FE-model</span></a>
-<a class="sourceLine" id="cb4-25" title="25"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(fe_model1)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, ]</a>
-<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt; ------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 374 | 0.089 </span></a>
-<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>mixed_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">lmer</span>(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  QoL <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">+</span><span class="st"> </span>phq4_between <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>ID),</span>
+<span id="cb4-4"><a href="#cb4-4"></a>   <span class="dt">data =</span> qol_cancer</span>
+<span id="cb4-5"><a href="#cb4-5"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(mixed_<span class="dv">1</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; (Intercept) |       71.53 | 1.56 | [68.48, 74.58] | 45.98 | 558 | &lt; .001</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.16,  2.34] |  1.70 | 558 | 0.088 </span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt; </span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt; # Within-Effects </span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt; </span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 558 | &lt; .001</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt; </span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt; # Between-Effects </span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; </span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI |      t |  df |      p</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">#&gt; --------------------------------------------------------------------------</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">#&gt; phq4_between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | 558 | &lt; .001</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="co"># compare to FE-model</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(fe_model1)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, ]</span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></span>
+<span id="cb4-27"><a href="#cb4-27"></a><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 374 | 0.089 </span></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></span></code></pre></div>
 <p>As we can see, the estimates and standard errors are identical. The argument <em>against</em> the use of mixed models, i.e. that using mixed models for panel data will yield biased estimates and standard errors, is based on an incorrect model specification <span class="citation">(Mundlak 1978)</span>. As such, when the (mixed) model is properly specified, the estimator of the mixed model is identical to the ‘within’ (i.e. FE) estimator.</p>
 <p>As a consequence, we cannot only use the above specified mixed model for panel data, we can even specify more complex models including within-effects, between-effects or random effects variation. A mixed models approach can model the causes of endogeneity explicitly by including the (separated) within- and between-effects of time-varying fixed effects and including time-constant fixed effects.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">mixed_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">lmer</span>(</a>
-<a class="sourceLine" id="cb5-2" title="2">  QoL <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">+</span><span class="st"> </span>phq4_between <span class="op">+</span><span class="st"> </span>education <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>time <span class="op">|</span><span class="st"> </span>ID),</a>
-<a class="sourceLine" id="cb5-3" title="3">   <span class="dt">data =</span> qol_cancer</a>
-<a class="sourceLine" id="cb5-4" title="4">)</a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(mixed_<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt; -----------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; (Intercept)      |       67.36 | 2.48 | [62.49, 72.22] | 27.15 | 554 | &lt; .001</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt; time             |        1.09 | 0.66 | [-0.20,  2.38] |  1.65 | 554 | 0.098 </span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="co">#&gt; education [mid]  |        5.01 | 2.35 | [ 0.41,  9.61] |  2.14 | 554 | 0.033 </span></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="co">#&gt; education [high] |        5.52 | 2.75 | [ 0.12, 10.91] |  2.00 | 554 | 0.045 </span></a>
-<a class="sourceLine" id="cb5-12" title="12"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-13" title="13"><span class="co">#&gt; # Within-Effects </span></a>
-<a class="sourceLine" id="cb5-14" title="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-15" title="15"><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb5-16" title="16"><span class="co">#&gt; ------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb5-17" title="17"><span class="co">#&gt; phq4_within |       -3.72 | 0.41 | [-4.52, -2.92] | -9.10 | 554 | &lt; .001</span></a>
-<a class="sourceLine" id="cb5-18" title="18"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-19" title="19"><span class="co">#&gt; # Between-Effects </span></a>
-<a class="sourceLine" id="cb5-20" title="20"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-21" title="21"><span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI |      t |  df |      p</span></a>
-<a class="sourceLine" id="cb5-22" title="22"><span class="co">#&gt; --------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb5-23" title="23"><span class="co">#&gt; phq4_between |       -6.13 | 0.52 | [-7.14, -5.11] | -11.84 | 554 | &lt; .001</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>mixed_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">lmer</span>(</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  QoL <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">+</span><span class="st"> </span>phq4_between <span class="op">+</span><span class="st"> </span>education <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>time <span class="op">|</span><span class="st"> </span>ID),</span>
+<span id="cb5-3"><a href="#cb5-3"></a>   <span class="dt">data =</span> qol_cancer</span>
+<span id="cb5-4"><a href="#cb5-4"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(mixed_<span class="dv">2</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI |     t |  df |      p</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; -----------------------------------------------------------------------------</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; (Intercept)      |       67.36 | 2.48 | [62.49, 72.22] | 27.15 | 554 | &lt; .001</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; time             |        1.09 | 0.66 | [-0.20,  2.38] |  1.65 | 554 | 0.098 </span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; education [mid]  |        5.01 | 2.35 | [ 0.41,  9.61] |  2.14 | 554 | 0.033 </span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; education [high] |        5.52 | 2.75 | [ 0.12, 10.91] |  2.00 | 554 | 0.045 </span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; </span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; # Within-Effects </span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; </span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; phq4_within |       -3.72 | 0.41 | [-4.52, -2.92] | -9.10 | 554 | &lt; .001</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; </span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; # Between-Effects </span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; </span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI |      t |  df |      p</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt; --------------------------------------------------------------------------</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt; phq4_between |       -6.13 | 0.52 | [-7.14, -5.11] | -11.84 | 554 | &lt; .001</span></span></code></pre></div>
 <p>For more complex models, within-effects will naturally change slightly and are no longer identical to simpler FE models. This is no “bias”, but rather the result of building more complex models: FE models lack information of variation in the group-effects or between-subject effects. Furthermore, FE models cannot include random slopes, which means that fixed effects regressions are neglecting “cross-cluster differences in the effects of lower-level controls (which) reduces the precision of estimated context effects, resulting in (…) low statistical power” <span class="citation">(Heisig, Schaeffer, and Giesecke 2017)</span>.</p>
 </div>
 <div id="conclusion-complex-random-effects-within-between-models" class="section level1">
@@ -308,52 +308,55 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 </li>
 </ul>
 <p>In R-code, the model is written down like this:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">rewb &lt;-<span class="st"> </span><span class="kw">lmer</span>(</a>
-<a class="sourceLine" id="cb6-2" title="2">  QoL <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">+</span><span class="st"> </span>phq4_between <span class="op">+</span><span class="st"> </span>education <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="st">    </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>time <span class="op">|</span><span class="st"> </span>ID) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">|</span><span class="st"> </span>ID),</a>
-<a class="sourceLine" id="cb6-4" title="4">   <span class="dt">data =</span> qol_cancer</a>
-<a class="sourceLine" id="cb6-5" title="5">)</a></code></pre></div>
-<p>The benefit of this kind of model is that you have information on within-, between- and other time-constant (i.e. between) effects…</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(rewb)</a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt; -----------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt; (Intercept)      |       67.18 | 2.39 | [62.50, 71.86] | 28.13 | 551 | &lt; .001</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt; time             |        1.18 | 0.60 | [ 0.00,  2.37] |  1.95 | 551 | 0.051 </span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; education [mid]  |        4.95 | 2.35 | [ 0.35,  9.55] |  2.11 | 551 | 0.035 </span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; education [high] |        5.62 | 2.76 | [ 0.21, 11.02] |  2.04 | 551 | 0.042 </span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; # Within-Effects </span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; ------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt; phq4_within |       -4.50 | 0.58 | [-5.63, -3.37] | -7.78 | 551 | &lt; .001</span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; # Between-Effects </span></a>
-<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI |      t |  df |      p</span></a>
-<a class="sourceLine" id="cb7-18" title="18"><span class="co">#&gt; --------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb7-19" title="19"><span class="co">#&gt; phq4_between |       -6.11 | 0.52 | [-7.13, -5.10] | -11.81 | 551 | &lt; .001</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>rewb &lt;-<span class="st"> </span><span class="kw">lmer</span>(</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  QoL <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">+</span><span class="st"> </span>phq4_between <span class="op">+</span><span class="st"> </span>education <span class="op">+</span><span class="st"> </span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="st">    </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>time <span class="op">|</span><span class="st"> </span>ID) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>phq4_within <span class="op">|</span><span class="st"> </span>ID),</span>
+<span id="cb6-4"><a href="#cb6-4"></a>   <span class="dt">data =</span> qol_cancer</span>
+<span id="cb6-5"><a href="#cb6-5"></a>)</span></code></pre></div>
+<p><strong>What about time-constant predictors?</strong></p>
+<p>After demeaning time-varying predictors, “at the higher level, the mean term is no longer constrained by Level 1 effects, so it is free to account for all the higher-level variance associated with that variable” <span class="citation">(Bell and Jones 2015)</span>.</p>
+<p>Thus, <em>time-constant <strong>categorical</strong></em> predictors, that only have a between-effect, can be simply included as fixed effects predictor (since they’re not constrained by level-1 effects). Time-constant <em>continuous</em> <strong>group-level predictors</strong> (for instance, GDP of countries) should be group-meaned, to have a proper “between”-effect.</p>
+<p>The benefit of this kind of model is that you have information on within-, between- and other time-constant (i.e. between) effects or group-level predictors…</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="../reference/model_parameters.html">model_parameters</a></span>(rewb)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI |     t |  df |      p</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt; -----------------------------------------------------------------------------</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; (Intercept)      |       67.18 | 2.39 | [62.50, 71.86] | 28.13 | 551 | &lt; .001</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt; time             |        1.18 | 0.60 | [ 0.00,  2.37] |  1.95 | 551 | 0.051 </span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt; education [mid]  |        4.95 | 2.35 | [ 0.35,  9.55] |  2.11 | 551 | 0.035 </span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt; education [high] |        5.62 | 2.76 | [ 0.21, 11.02] |  2.04 | 551 | 0.042 </span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; </span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; # Within-Effects </span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt; </span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#&gt; phq4_within |       -4.50 | 0.58 | [-5.63, -3.37] | -7.78 | 551 | &lt; .001</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">#&gt; </span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt; # Between-Effects </span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt; </span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI |      t |  df |      p</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="co">#&gt; --------------------------------------------------------------------------</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="co">#&gt; phq4_between |       -6.11 | 0.52 | [-7.13, -5.10] | -11.81 | 551 | &lt; .001</span></span></code></pre></div>
 <p>… but you can also model the variation of (group) effects across time (and probably space), and you can even include more higher-level units (e.g. nested design or cross-classified design with more than two levels):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/random_parameters.html">random_parameters</a></span>(rewb)</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; # Random Effects</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt; Within-Group Variance              119.48 (10.93)</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; Between-Group Variance</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt;   Random Intercept (ID)            107.46 (10.37)</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt;   Random Intercept (ID.1)           25.74  (5.07)</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt;   Random Slope (ID.time)             0.49   (0.7)</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt;   Random Slope (ID.1.phq4_within)   14.38  (3.79)</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; Correlations</span></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt;   ID.time                           -0.99</span></a>
-<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt;   ID.phq4_within                     0.44</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; N (groups per factor)</span></a>
-<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt;   ID                                  188</span></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; Observations                          564</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw"><a href="../reference/random_parameters.html">random_parameters</a></span>(rewb)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt; # Random Effects</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt; </span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt; Within-Group Variance              119.47 (10.93)</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt; Between-Group Variance</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt;   Random Intercept (ID)             107.5 (10.37)</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt;   Random Intercept (ID.1)           25.76  (5.08)</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt;   Random Slope (ID.time)             0.49   (0.7)</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt;   Random Slope (ID.1.phq4_within)   14.37  (3.79)</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; Correlations</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt;   ID.time                           -0.99</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt;   ID.phq4_within                     0.44</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; N (groups per factor)</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt;   ID                                  188</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; Observations                          564</span></span></code></pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
-<div id="refs" class="references">
+<div id="refs" class="references hanging-indent">
 <div id="ref-bafumi_fitting_2006">
 <p>Bafumi, Joseph, and Andrew Gelman. 2006. “Fitting Multilevel Models When Predictors and Group Effects Correlate.” In. Philadelphia, PA.</p>
 </div>
@@ -370,7 +373,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <p>Heisig, Jan Paul, Merlin Schaeffer, and Johannes Giesecke. 2017. “The Costs of Simplicity: Why Multilevel Models May Benefit from Accounting for Cross-Cluster Differences in the Effects of Controls.” <em>American Sociological Review</em> 82 (4): 796–827. <a href="https://doi.org/10.1177/0003122417717901">https://doi.org/10.1177/0003122417717901</a>.</p>
 </div>
 <div id="ref-mundlak_pooling_1978">
-<p>Mundlak, Yair. 1978. “On the Pooling of Time Series and Cross Section Data.” <em>Econometrica</em> 46 (1): 69. <a href="https://doi.org/10.2307/1913646">https://doi.org/10.2307/1913646</a>.</p>
+<p>Mundlak, Yair. 1978. “On the Pooling of Time Series and Cross Section Data.” <em>Econometrica</em> 46 (1): 69.</p>
 </div>
 <div id="ref-shor_bayesian_2007">
 <p>Shor, Boris, Joseph Bafumi, Luke Keele, and David Park. 2007. “A Bayesian Multilevel Modeling Approach to Time-Series Cross-Sectional Data.” <em>Political Analysis</em> 15 (2): 165–81. <a href="https://doi.org/10.1093/pan/mpm006">https://doi.org/10.1093/pan/mpm006</a>.</p>
@@ -388,7 +391,8 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <li><a href="#sample-data-used-in-this-vignette">Sample data used in this vignette</a></li>
       <li><a href="#heterogeneity-bias">Heterogeneity bias</a></li>
       <li>
-<a href="#adressing-heterogeneity-bias-the-fixed-effects-regression-fe-approach">Adressing heterogeneity bias: the Fixed Effects Regression (FE) approach</a><ul class="nav nav-pills nav-stacked">
+<a href="#adressing-heterogeneity-bias-the-fixed-effects-regression-fe-approach">Adressing heterogeneity bias: the Fixed Effects Regression (FE) approach</a>
+      <ul class="nav nav-pills nav-stacked">
 <li><a href="#computing-the-de-meaned-and-group-meaned-variables">Computing the de-meaned and group-meaned variables</a></li>
       </ul>
 </li>
