@@ -97,14 +97,10 @@ model_parameters.averaging <- function(model, ci = .95, component = c("condition
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
-    bootstrap = FALSE,
-    iterations = 10,
     merge_by = "Parameter",
-    standardize = NULL,
     exponentiate = exponentiate,
     component = component,
     effects = "fixed",
-    robust = FALSE,
     p_adjust = p_adjust,
     ...
   )
