@@ -13,6 +13,7 @@
 \alias{standard_error.clm2}
 \alias{standard_error.betareg}
 \alias{standard_error.DirichletRegModel}
+\alias{standard_error.averaging}
 \title{Standard Errors}
 \usage{
 standard_error(model, ...)
@@ -53,6 +54,8 @@ standard_error(model, ...)
 \method{standard_error}{betareg}(model, component = c("all", "conditional", "precision"), ...)
 
 \method{standard_error}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
+
+\method{standard_error}{averaging}(model, component = c("conditional", "full"), ...)
 }
 \arguments{
 \item{model}{A model.}

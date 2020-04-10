@@ -609,6 +609,24 @@ p_value.flexsurvreg <- function(model, ...) {
 
 #' @rdname p_value
 #' @export
+p_value.averaging <- function(model, component = c("conditional", "full"), ...) {
+  component <- match.arg(component)
+  params <- get_parameters(model, component = component)
+  if (component == "full") {
+    s <- summary(model)$coefmat.full
+  } else {
+    s <- summary(model)$coefmat.subset
+  }
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(params$Parameter),
+    p = as.vector(s[, 5])
+  )
+}
+
+
+#' @rdname p_value
+#' @export
 p_value.DirichletRegModel <- function(model, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
   params <- insight::get_parameters(model)

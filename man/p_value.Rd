@@ -9,6 +9,7 @@
 \alias{p_value.glmmTMB}
 \alias{p_value.MixMod}
 \alias{p_value.mixor}
+\alias{p_value.averaging}
 \alias{p_value.DirichletRegModel}
 \alias{p_value.clm2}
 \alias{p_value.gee}
@@ -29,6 +30,8 @@ p_value(model, ...)
 \method{p_value}{MixMod}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
 
 \method{p_value}{mixor}(model, effects = c("all", "fixed", "random"), ...)
+
+\method{p_value}{averaging}(model, component = c("conditional", "full"), ...)
 
 \method{p_value}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
 

@@ -1,5 +1,9 @@
 # parameters 0.6.2
 
+## New supported models
+
+* `averaging` (*MuMIn*)
+
 ## New functions
 
 * `find_within()` as a small helper to find variables that have a within- and between-effect related to a grouping variable.

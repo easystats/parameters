@@ -114,6 +114,13 @@ ci.mlm <- function(x, ci = .95, ...) {
 }
 
 
+#' @export
+ci.averaging <- function(x, ci = .95, component = c("conditional", "full"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+}
+
+
 #' @method ci lm
 #' @export
 ci.lm <- function(x, ci = .95, method = NULL, ...) {

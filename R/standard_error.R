@@ -1340,12 +1340,37 @@ standard_error.gmnl <- function(model, ...) {
 
 
 
+
+
+
+# Special classes and models -----------------------------
+
+
 #' @export
 standard_error.rma <- function(model, ...) {
   params <- insight::get_parameters(model)
   .data_frame(
     Parameter = .remove_backticks_from_string(params$Parameter),
     SE = model[["se"]]
+  )
+}
+
+
+
+#' @rdname standard_error
+#' @export
+standard_error.averaging <- function(model, component = c("conditional", "full"), ...) {
+  component <- match.arg(component)
+  params <- get_parameters(model, component = component)
+  if (component == "full") {
+    s <- summary(model)$coefmat.full
+  } else {
+    s <- summary(model)$coefmat.subset
+  }
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(params$Parameter),
+    SE = as.vector(s[, 3])
   )
 }
 
