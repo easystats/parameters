@@ -39,8 +39,7 @@ Parameters from ANOVAs.
 For anova-tables from mixed models (i.e. \code{anova(lmer())}), only partial or adjusted effect sizes can be computed.
 }
 \examples{
-if (requireNamespace("effectsize", quietly = TRUE) &&
-    packageVersion("effectsize") >= "0.2.9") {
+if (requireNamespace("effectsize", quietly = TRUE)) {
   df <- iris
   df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 

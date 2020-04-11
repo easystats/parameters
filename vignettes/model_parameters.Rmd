@@ -80,25 +80,25 @@ BayesFactor::ttestBF(formula = mpg ~ vs, data = mtcars) %>%
 ```
 
 
-<!-- ## ANOVAs -->
+## ANOVAs
 
-<!-- Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared()`, `epsilon_sqared()` or `omega_squared()`, were moved to the [**effectsize**-package](https://easystats.github.io/effectsize/). However, **parameters** uses these function to compute such indices for parameters summaries. -->
+Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared()`, `epsilon_sqared()` or `omega_squared()`, were moved to the [**effectsize**-package](https://easystats.github.io/effectsize/). However, **parameters** uses these function to compute such indices for parameters summaries.
 
-<!-- ### Simple -->
+### Simple
 
-<!-- ```{r, warning=FALSE, message=FALSE} -->
-<!-- aov(Sepal.Length ~ Species, data = iris) %>%  -->
-<!--   parameters(omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial") -->
-<!-- ``` -->
+```{r, warning=FALSE, message=FALSE}
+aov(Sepal.Length ~ Species, data = iris) %>%
+  parameters(omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial")
+```
 
-<!-- ### Repeated measures -->
+### Repeated measures
 
-<!-- `parameters()` (resp. its alias `model_parameters()`) also works on repeated measures ANOVAs, whether computed from `aov()` or from a mixed model. -->
+`parameters()` (resp. its alias `model_parameters()`) also works on repeated measures ANOVAs, whether computed from `aov()` or from a mixed model.
 
-<!-- ```{r, warning=FALSE, message=FALSE} -->
-<!-- aov(mpg ~ am + Error(gear), data = mtcars) %>%  -->
-<!--   parameters() -->
-<!-- ``` -->
+```{r, warning=FALSE, message=FALSE}
+aov(mpg ~ am + Error(gear), data = mtcars) %>%
+  parameters()
+```
 
 
 ## Regressions (GLMs, Mixed Models, GAMs, ...)

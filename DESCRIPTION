@@ -70,7 +70,7 @@ Suggests:
     cplm,
     dplyr,
     DRR,
-    effectsize,
+    effectsize (>= 0.3.0),
     EGAnet (>= 0.7),
     FactoMineR,
     fastICA,

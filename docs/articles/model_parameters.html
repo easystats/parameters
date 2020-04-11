@@ -164,19 +164,33 @@
 <pre><code>#&gt; Parameter  | Median |          89% CI |     pd | % in ROPE |              Prior | Effects |   Component |     BF
 #&gt; ----------------------------------------------------------------------------------------------------------------
 #&gt; Difference |  -7.30 | [-10.15, -4.58] | 99.98% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | 529.27</code></pre>
-<!-- ## ANOVAs -->
-<!-- Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared()`, `epsilon_sqared()` or `omega_squared()`, were moved to the [**effectsize**-package](https://easystats.github.io/effectsize/). However, **parameters** uses these function to compute such indices for parameters summaries. -->
-<!-- ### Simple -->
-<!-- ```{r, warning=FALSE, message=FALSE} -->
-<!-- aov(Sepal.Length ~ Species, data = iris) %>%  -->
-<!--   parameters(omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial") -->
-<!-- ``` -->
-<!-- ### Repeated measures -->
-<!-- `parameters()` (resp. its alias `model_parameters()`) also works on repeated measures ANOVAs, whether computed from `aov()` or from a mixed model. -->
-<!-- ```{r, warning=FALSE, message=FALSE} -->
-<!-- aov(mpg ~ am + Error(gear), data = mtcars) %>%  -->
-<!--   parameters() -->
-<!-- ``` -->
+</div>
+</div>
+<div id="anovas" class="section level2">
+<h2 class="hasAnchor">
+<a href="#anovas" class="anchor"></a>ANOVAs</h2>
+<p>Indices of effect size for ANOVAs, such as partial and non-partial versions of <code>eta_squared()</code>, <code>epsilon_sqared()</code> or <code>omega_squared()</code>, were moved to the <a href="https://easystats.github.io/effectsize/"><strong>effectsize</strong>-package</a>. However, <strong>parameters</strong> uses these function to compute such indices for parameters summaries.</p>
+<div id="simple" class="section level3">
+<h3 class="hasAnchor">
+<a href="#simple" class="anchor"></a>Simple</h3>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span>(<span class="no">Sepal.Length</span> ~ <span class="no">Species</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">iris</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>(<span class="kw">omega_squared</span> <span class="kw">=</span> <span class="st">"partial"</span>, <span class="kw">eta_squared</span> <span class="kw">=</span> <span class="st">"partial"</span>, <span class="kw">epsilon_squared</span> <span class="kw">=</span> <span class="st">"partial"</span>)</pre></body></html></div>
+<pre><code>#&gt; Parameter | Sum_Squares |  df | Mean_Square |      F |      p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_Sq (partial)
+#&gt; ----------------------------------------------------------------------------------------------------------------------------
+#&gt; Species   |       63.21 |   2 |       31.61 | 119.26 | &lt; .001 |               0.61 |             0.62 |                 0.61
+#&gt; Residuals |       38.96 | 147 |        0.27 |        |        |                    |                  |</code></pre>
+</div>
+<div id="repeated-measures" class="section level3">
+<h3 class="hasAnchor">
+<a href="#repeated-measures" class="anchor"></a>Repeated measures</h3>
+<p><code><a href="../reference/model_parameters.html">parameters()</a></code> (resp. its alias <code><a href="../reference/model_parameters.html">model_parameters()</a></code>) also works on repeated measures ANOVAs, whether computed from <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> or from a mixed model.</p>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span>(<span class="no">mpg</span> ~ <span class="no">am</span> + <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span>(<span class="no">gear</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>()</pre></body></html></div>
+<pre><code>#&gt; Group  | Parameter | Sum_Squares | df | Mean_Square |    F |     p
+#&gt; ------------------------------------------------------------------
+#&gt; gear   |        am |      259.75 |  1 |      259.75 |      |      
+#&gt; Within |        am |      145.45 |  1 |      145.45 | 5.85 | 0.022
+#&gt; Within | Residuals |      720.85 | 29 |       24.86 |      |</code></pre>
 </div>
 </div>
 <div id="regressions-glms-mixed-models-gams" class="section level2">
@@ -186,7 +200,7 @@
 <div id="glms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#glms" class="anchor"></a>GLMs</h3>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">vs</span> ~ <span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span>(<span class="no">mpg</span>, <span class="fl">2</span>) + <span class="no">cyl</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">vs</span> ~ <span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span>(<span class="no">mpg</span>, <span class="fl">2</span>) + <span class="no">cyl</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>()</pre></body></html></div>
 <pre><code>#&gt; Parameter        | Coefficient |   SE |         95% CI |     t | df |      p
 #&gt; ----------------------------------------------------------------------------
@@ -198,7 +212,7 @@
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mixed-models" class="anchor"></a>Mixed Models</h3>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">lme4</span>)
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">lme4</span>)
 
 <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">Sepal.Width</span> ~ <span class="no">Petal.Length</span> + (<span class="fl">1</span><span class="kw">|</span><span class="no">Species</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">iris</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>()</pre></body></html></div>
@@ -211,7 +225,7 @@
 <h3 class="hasAnchor">
 <a href="#bayesian-models" class="anchor"></a>Bayesian Models</h3>
 <p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> works fine with Bayesian models from the <strong>rstanarm</strong> package…</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rstanarm</span>)
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rstanarm</span>)
 
 <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="no">mpg</span> ~ <span class="no">wt</span> * <span class="no">cyl</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>()</pre></body></html></div>
@@ -222,7 +236,7 @@
 #&gt; cyl         |  -3.71 | [ -4.88, -1.77] |   100% |     0.20% | 1.000 | 206 |  Normal (0 +- 8.44)
 #&gt; wt * cyl    |   0.76 | [  0.19,  1.25] | 98.40% |    32.00% | 1.004 | 179 |  Normal (0 +- 1.36)</code></pre>
 <p>… as well as for (more complex) models from the <strong>brms</strong> package. For more complex models, other model components can be printed using the arguments <code>effects</code> and <code>component</code> arguments.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">brms</span>)
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">brms</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">fish</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
 <span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsformula.html">bf</a></span>(
@@ -284,7 +298,7 @@
 <div id="principal-component-analysis-pca-and-exploratory-factor-analysis-efa" class="section level3">
 <h3 class="hasAnchor">
 <a href="#principal-component-analysis-pca-and-exploratory-factor-analysis-efa" class="anchor"></a>Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA)</h3>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">psych</span>)
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">psych</span>)
 
 <span class="kw pkg">psych</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/principal.html">pca</a></span>(<span class="no">mtcars</span>, <span class="kw">nfactors</span> <span class="kw">=</span> <span class="fl">3</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>()</pre></body></html></div>
@@ -305,7 +319,7 @@
 #&gt; carb     |  0.11 |  0.44 |  0.85 |       1.53 |       0.07
 #&gt; 
 #&gt; The 3 principal components (varimax rotation) accounted for 89.87% of the total variance of the original data (RC2 = 41.43%, RC3 = 29.06%, RC1 = 19.39%).</code></pre>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">FactoMineR</span>)
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">FactoMineR</span>)
 
 <span class="kw pkg">FactoMineR</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/FactoMineR/man/FAMD.html">FAMD</a></span>(<span class="no">iris</span>, <span class="kw">ncp</span> <span class="kw">=</span> <span class="fl">3</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>()</pre></body></html></div>
@@ -327,7 +341,7 @@
 <div id="frequentist-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#frequentist-1" class="anchor"></a>Frequentist</h4>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">lavaan</span>)
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">lavaan</span>)
 
 <span class="no">model</span> <span class="kw">&lt;-</span> <span class="kw pkg">lavaan</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(<span class="st">' visual  =~ x1 + x2 + x3
                        textual =~ x4 + x5 + x6
@@ -368,7 +382,7 @@
 <h2 class="hasAnchor">
 <a href="#meta-analysis" class="anchor"></a>Meta-Analysis</h2>
 <p><code><a href="../reference/model_parameters.html">parameters()</a></code> also works for <code>rma</code>-objects from the <strong>metafor</strong> package.</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">metafor</span>)
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">metafor</span>)
 
 <span class="no">mydat</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
   <span class="kw">effectsize</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">0.393</span>, <span class="fl">0.675</span>, <span class="fl">0.282</span>, -<span class="fl">1.398</span>),
