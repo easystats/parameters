@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute group-meaned and de-meaned variables — find_within • parameters</title>
+<title>Compute group-meaned and de-meaned variables — check_heterogeneity • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,10 @@
 
 
 
-<meta property="og:title" content="Compute group-meaned and de-meaned variables — find_within" />
+<meta property="og:title" content="Compute group-meaned and de-meaned variables — check_heterogeneity" />
 <meta property="og:description" content="demean() computes group- and de-meaned versions of a
    variable that can be used in regression analysis to model the between-
-   and within-subject effect. find_within() checks if model
+   and within-subject effect. check_heterogeneity() checks if model
    predictors or variables may cause a heterogeneity bias, i.e. if variables
    have a within- and/or between-effect." />
 <meta property="og:image" content="/logo.png" />
@@ -163,19 +163,19 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Compute group-meaned and de-meaned variables</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/check_within_between.R'><code>R/check_within_between.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/demean.R'><code>R/demean.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/check_heterogeneity.R'><code>R/check_heterogeneity.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/demean.R'><code>R/demean.R</code></a></small>
     <div class="hidden name"><code>demean.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p><code>demean()</code> computes group- and de-meaned versions of a
    variable that can be used in regression analysis to model the between-
-   and within-subject effect. <code>find_within()</code> checks if model
+   and within-subject effect. <code>check_heterogeneity()</code> checks if model
    predictors or variables may cause a heterogeneity bias, i.e. if variables
    have a within- and/or between-effect.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>find_within</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>check_heterogeneity</span>(<span class='no'>x</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>demean</span>(
   <span class='no'>x</span>,
@@ -192,15 +192,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A data frame. For <code>find_within()</code>, may also be a mixed model object.</p></td>
+      <td><p>A data frame. For <code>check_heterogeneity()</code>, may also be a mixed model object.</p></td>
     </tr>
     <tr>
       <th>select</th>
-      <td><p>Character vector with names of variables to select that should be group- and de-meaned. For <code>find_within()</code>, if <code>x</code> is a mixed model object, this argument be ignored.</p></td>
+      <td><p>Character vector with names of variables to select that should be group- and de-meaned. For <code>check_heterogeneity()</code>, if <code>x</code> is a mixed model object, this argument be ignored.</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>Character vector with the name of the variable that indicates the group- or cluster-ID. For <code>find_within()</code>, if <code>x</code> is a model object, this argument be ignored.</p></td>
+      <td><p>Character vector with the name of the variable that indicates the group- or cluster-ID. For <code>check_heterogeneity()</code>, if <code>x</code> is a model object, this argument be ignored.</p></td>
     </tr>
     <tr>
       <th>suffix_demean, suffix_groupmean</th>
@@ -327,7 +327,7 @@ between-effects are printed in separated blocks.</p></td>
     
 <ul>
 <li><p>Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.</p></li>
-<li><p>Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality &amp; Quantity.</p></li>
+<li><p>Bell A, Fairbrother M, Jones K. 2019. Fixed and Random Effects Models: Making an Informed Choice. Quality &amp; Quantity (53); 1051-1074</p></li>
 <li><p>Bell A, Jones K. 2015. Explaining Fixed Effects: Random Effects Modeling of Time-Series Cross-Sectional and Panel Data. Political Science Research and Methods, 3(1), 133–153.</p></li>
 <li><p>Gelman A, Hill J. 2007. Data Analysis Using Regression and Multilevel/Hierarchical Models. Analytical Methods for Social Research. Cambridge, New York: Cambridge University Press</p></li>
 <li><p>Giesselmann M, Schmidt-Catran A. 2018. Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html</p></li>
@@ -385,7 +385,7 @@ between-effects are printed in separated blocks.</p></td>
 #&gt; 4               -0.3902439
 #&gt; 5               -0.3157895
 #&gt; 6               -0.2368421</div><div class='input'>
-<span class='fu'>find_within</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>)</div><div class='output co'>#&gt; Following predictors have a within- and between-effect: </span><span style='color: #BB0000;'>Sepal.Length, Petal.Length</span><span></div><div class='input'>
+<span class='fu'>check_heterogeneity</span>(<span class='no'>iris</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>)</div><div class='output co'>#&gt; Possible heterogeneity bias due to following predictors: </span><span style='color: #BB0000;'>Sepal.Length, Petal.Length</span><span></div><div class='input'>
 <span class='co'># demean interaction term x*y</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),

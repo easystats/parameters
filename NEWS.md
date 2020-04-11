@@ -6,7 +6,7 @@
 
 ## New functions
 
-* `find_within()` as a small helper to find variables that have a within- and between-effect related to a grouping variable.
+* `check_heterogeneity()` as a small helper to find variables that have a within- and between-effect related to a grouping variable (and thus, may result in heterogeneity bias, see [this vignette](https://easystats.github.io/parameters/articles/demean.html)).
 
 # parameters 0.6.1
 

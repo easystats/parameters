@@ -2,7 +2,7 @@
 #' @importFrom insight is_model find_random find_predictors get_data
 #' @importFrom stats ave
 #' @export
-find_within <- function(x, select = NULL, group = NULL) {
+check_heterogeneity <- function(x, select = NULL, group = NULL) {
   if (insight::is_model(x)) {
     group <- insight::find_random(x, split_nested = TRUE, flatten = FALSE)
     if (is.null(group)) {
@@ -34,7 +34,7 @@ find_within <- function(x, select = NULL, group = NULL) {
   }, as.character(combinations[[1]]), as.character(combinations[[2]]), SIMPLIFY = FALSE)
 
   out <- unname(unlist(.compact_list(result)))
-  class(out) <- c("find_within", class(out))
+  class(out) <- c("check_heterogeneity", class(out))
 
   out
 }
@@ -43,8 +43,8 @@ find_within <- function(x, select = NULL, group = NULL) {
 
 
 #' @export
-print.find_within <- function(x, ...) {
-  cat("Following predictors have a within- and between-effect: ")
+print.check_heterogeneity <- function(x, ...) {
+  cat("Possible heterogeneity bias due to following predictors: ")
   insight::print_color(paste(x, collapse = ", "), "red")
   cat("\n")
 }

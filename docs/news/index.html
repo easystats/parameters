@@ -165,12 +165,20 @@
 <h1 class="page-header" data-toc-text="0.6.2">
 <a href="#parameters-062" class="anchor"></a>parameters 0.6.2<small> Unreleased </small>
 </h1>
+<div id="new-supported-models" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-supported-models" class="anchor"></a>New supported models</h2>
+<ul>
+<li>
+<code>averaging</code> (<em>MuMIn</em>)</li>
+</ul>
+</div>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h2>
 <ul>
 <li>
-<code><a href="../reference/demean.html">find_within()</a></code> as a small helper to find variables that have a within- and between-effect related to a grouping variable.</li>
+<code><a href="../reference/demean.html">check_heterogeneity()</a></code> as a small helper to find variables that have a within- and between-effect related to a grouping variable (and thus, may result in heterogeneity bias, see <a href="https://easystats.github.io/parameters/articles/demean.html">this vignette</a>).</li>
 </ul>
 </div>
 </div>
@@ -232,9 +240,9 @@
 <code><a href="../reference/skewness.html">skewness()</a></code> and <code><a href="../reference/skewness.html">kurtosis()</a></code> always return a data frame.</li>
 </ul>
 </div>
-<div id="new-supported-models" class="section level2">
+<div id="new-supported-models-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-supported-models" class="anchor"></a>New supported models</h2>
+<a href="#new-supported-models-1" class="anchor"></a>New supported models</h2>
 <ul>
 <li>Added support for <code>arima</code> (<em>stats</em>), <code>bife</code> (<em>bife</em>), <code>bcplm</code> and <code>zcpglm</code> (<em>cplm</em>)</li>
 </ul>
@@ -306,9 +314,9 @@
 <code><a href="../reference/skewness.html">kurtosis()</a></code> now uses a different method to calculate the skewness by default. Different methods can be selected using the <code>type</code>-argument.</li>
 </ul>
 </div>
-<div id="new-supported-models-1" class="section level2">
+<div id="new-supported-models-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-supported-models-1" class="anchor"></a>New supported models</h2>
+<a href="#new-supported-models-2" class="anchor"></a>New supported models</h2>
 <ul>
 <li>Added support for <code>cglm</code> (<em>cglm</em>), <code>DirichletRegModel</code> (<em>DirichletReg</em>)</li>
 </ul>
@@ -419,9 +427,9 @@
 <code>parameters_reduction()</code> was renamed to <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>. <code>parameters_reduction()</code> will remain as alias.</li>
 </ul>
 </div>
-<div id="new-supported-models-2" class="section level2">
+<div id="new-supported-models-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-supported-models-2" class="anchor"></a>New supported models</h2>
+<a href="#new-supported-models-3" class="anchor"></a>New supported models</h2>
 <ul>
 <li>Added support for <code>vgam</code> (<em>VGAM</em>), <code>cgam</code>, <code>cgamm</code> (<em>cgam</em>), <code>complmrob</code> (<em>complmrob</em>), <code>cpglm</code>, <code>cpglmm</code> (<em>cplm</em>), <code>fixest</code> (<em>fixest</em>), <code>feglm</code> (<em>alpaca</em>), <code>glmx</code> (<em>glmx</em>), <code>glmmadmb</code> (<em>glmmADMB</em>), <code>mcmc</code> (<em>coda</em>), <code>mixor</code> (<em>mixor</em>).</li>
 <li>
@@ -483,9 +491,9 @@
 <code>standardize()</code> and <code>normalize()</code> (and hence, also <code>parameters_standardize()</code>) have been removed ;-( and are now re-implemented in the <strong>effectsize</strong>-package.</li>
 </ul>
 </div>
-<div id="new-supported-models-3" class="section level2">
+<div id="new-supported-models-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-supported-models-3" class="anchor"></a>New supported models</h2>
+<a href="#new-supported-models-4" class="anchor"></a>New supported models</h2>
 <ul>
 <li>Added support for <code>aareg</code> (<em>survival</em>), <code>bracl</code>, <code>brmultinom</code> (<em>brglm2</em>), <code>rma</code> (<em>metafor</em>) and <code>multinom</code> (<em>nnet</em>) to various functions.</li>
 <li>

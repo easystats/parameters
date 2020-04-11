@@ -2,13 +2,13 @@
 #'
 #' \code{demean()} computes group- and de-meaned versions of a
 #'    variable that can be used in regression analysis to model the between-
-#'    and within-subject effect. \code{find_within()} checks if model
+#'    and within-subject effect. \code{check_heterogeneity()} checks if model
 #'    predictors or variables may cause a heterogeneity bias, i.e. if variables
 #'    have a within- and/or between-effect.
 #'
-#' @param x A data frame. For \code{find_within()}, may also be a mixed model object.
-#' @param select Character vector with names of variables to select that should be group- and de-meaned. For \code{find_within()}, if \code{x} is a mixed model object, this argument be ignored.
-#' @param group Character vector with the name of the variable that indicates the group- or cluster-ID. For \code{find_within()}, if \code{x} is a model object, this argument be ignored.
+#' @param x A data frame. For \code{check_heterogeneity()}, may also be a mixed model object.
+#' @param select Character vector with names of variables to select that should be group- and de-meaned. For \code{check_heterogeneity()}, if \code{x} is a mixed model object, this argument be ignored.
+#' @param group Character vector with the name of the variable that indicates the group- or cluster-ID. For \code{check_heterogeneity()}, if \code{x} is a model object, this argument be ignored.
 #' @param suffix_demean,suffix_groupmean String value, will be appended to the names of the
 #'   group-meaned and de-meaned variables of \code{x}. By default, de-meaned
 #'   variables will be suffixed with \code{"_within"} and grouped-meaned variables
@@ -135,7 +135,7 @@
 #'
 #' @references \itemize{
 #'   \item Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.
-#'   \item Bell A, Fairbrother M, Jones K. 2018. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity.
+#'   \item Bell A, Fairbrother M, Jones K. 2019. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity (53); 1051-1074
 #'   \item Bell A, Jones K. 2015. Explaining Fixed Effects: Random Effects Modeling of Time-Series Cross-Sectional and Panel Data. Political Science Research and Methods, 3(1), 133–153.
 #'   \item Gelman A, Hill J. 2007. Data Analysis Using Regression and Multilevel/Hierarchical Models. Analytical Methods for Social Research. Cambridge, New York: Cambridge University Press
 #'   \item Giesselmann M, Schmidt-Catran A. 2018. Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html
@@ -154,7 +154,7 @@
 #' x <- demean(iris, select = c("Sepal.Length", "binary", "Species"), group = "ID")
 #' head(x)
 #'
-#' find_within(iris, select = c("Sepal.Length", "Petal.Length"), group = "ID")
+#' check_heterogeneity(iris, select = c("Sepal.Length", "Petal.Length"), group = "ID")
 #'
 #' # demean interaction term x*y
 #' dat <- data.frame(

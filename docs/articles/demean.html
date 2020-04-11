@@ -155,6 +155,9 @@
 <h1 class="hasAnchor">
 <a href="#heterogeneity-bias" class="anchor"></a>Heterogeneity bias</h1>
 <p>Heterogeneity bias occurs when group-level predictors vary within and across groups, and hence fixed effects may correlate with group (or random) effects. This is a typical situation when analyzing longitudinal or panel data: Due to the repeated measurements of persons, the “person” (or subject-ID) is now a level-2 variable. Predictors at level-1 (“fixed effects”), e.g. self-rated health or income, now have an effect at level-1 (“within”-effect) and at higher-level units (level-2, the subject-level, which is the “between”-effect) (see also <a href="https://shouldbewriting.netlify.com/posts/2019-10-21-accounting-for-within-and-between-subject-effect/">this posting</a>). This inevitably leads to correlating fixed effects and error terms - which, in turn, results in biased estimates, because both the within- <em>and</em> between-effect are captured in <em>one</em> estimate.</p>
+<p>You can check if your model may suffer from heterogeneity bias using the <code><a href="../reference/demean.html">check_heterogeneity()</a></code> function:</p>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/demean.html">check_heterogeneity</a></span>(<span class="no">qol_cancer</span>, <span class="kw">select</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"phq4"</span>, <span class="st">"education"</span>), <span class="kw">group</span> <span class="kw">=</span> <span class="st">"ID"</span>)
+<span class="co">#&gt; Possible heterogeneity bias due to following predictors: phq4</span></pre></body></html></div>
 </div>
 <div id="adressing-heterogeneity-bias-the-fixed-effects-regression-fe-approach" class="section level1">
 <h1 class="hasAnchor">
@@ -164,7 +167,7 @@
 <div id="computing-the-de-meaned-and-group-meaned-variables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#computing-the-de-meaned-and-group-meaned-variables" class="anchor"></a>Computing the de-meaned and group-meaned variables</h2>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">qol_cancer</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">qol_cancer</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
   <span class="no">qol_cancer</span>,
   <span class="fu"><a href="../reference/demean.html">demean</a></span>(<span class="no">qol_cancer</span>, <span class="kw">select</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"phq4"</span>, <span class="st">"QoL"</span>), <span class="kw">group</span> <span class="kw">=</span> <span class="st">"ID"</span>)
 )</pre></body></html></div>
@@ -182,7 +185,7 @@
 <li>the group-level factor is included as predictor</li>
 <li>time-varying predictors are de-meaned (“person-mean centered”, indicating the “within-subject” effect)</li>
 </ul>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">fe_model1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">fe_model1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(
   <span class="no">QoL</span> ~ <span class="fl">0</span> + <span class="no">time</span> + <span class="no">phq4_within</span> + <span class="no">ID</span>,
    <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
 )
@@ -233,10 +236,10 @@
 <ul>
 <li>Correlated group factors and predictors are no problem anyway, because <a href="https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/">partial pooling</a> allows estimates of units o borrow strength from the whole sample and shrink toward a common mean (<span class="citation">Shor et al. (2007)</span>).</li>
 <li>If predictor and group factors correlate, one can remove this correlation by group-meaning <span class="citation">(or “mean within clusters”, Bafumi and Gelman 2006; Gelman and Hill 2007, Chap. 12.6.)</span>.</li>
-<li>When time-varying predictors are “decomposed” into their time-varying and time-invariant components (demeaning), then mixed models can model <strong>both</strong> within- and between-subject effects <span class="citation">(Bell, Fairbrother, and Jones 2018)</span> - this approach is essentially a further development of a long-known recommendation by Mundlak <span class="citation">(Mundlak 1978)</span>.</li>
+<li>When time-varying predictors are “decomposed” into their time-varying and time-invariant components (demeaning), then mixed models can model <strong>both</strong> within- and between-subject effects <span class="citation">(Bell, Fairbrother, and Jones 2019)</span> - this approach is essentially a further development of a long-known recommendation by Mundlak <span class="citation">(Mundlak 1978)</span>.</li>
 </ul>
 <p>For now, we will follow the last recommendation and use the within- and between-version of <code>phq4</code>.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">lme4</span>)
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">lme4</span>)
 <span class="no">mixed_1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
   <span class="no">QoL</span> ~ <span class="no">time</span> + <span class="no">phq4_within</span> + <span class="no">phq4_between</span> + (<span class="fl">1</span> <span class="kw">|</span> <span class="no">ID</span>),
    <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
@@ -267,7 +270,7 @@
 <span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></pre></body></html></div>
 <p>As we can see, the estimates and standard errors are identical. The argument <em>against</em> the use of mixed models, i.e. that using mixed models for panel data will yield biased estimates and standard errors, is based on an incorrect model specification <span class="citation">(Mundlak 1978)</span>. As such, when the (mixed) model is properly specified, the estimator of the mixed model is identical to the ‘within’ (i.e. FE) estimator.</p>
 <p>As a consequence, we cannot only use the above specified mixed model for panel data, we can even specify more complex models including within-effects, between-effects or random effects variation. A mixed models approach can model the causes of endogeneity explicitly by including the (separated) within- and between-effects of time-varying fixed effects and including time-constant fixed effects.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">mixed_2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">mixed_2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
   <span class="no">QoL</span> ~ <span class="no">time</span> + <span class="no">phq4_within</span> + <span class="no">phq4_between</span> + <span class="no">education</span> + (<span class="fl">1</span> + <span class="no">time</span> <span class="kw">|</span> <span class="no">ID</span>),
    <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
 )
@@ -295,7 +298,7 @@
 <div id="conclusion-complex-random-effects-within-between-models" class="section level1">
 <h1 class="hasAnchor">
 <a href="#conclusion-complex-random-effects-within-between-models" class="anchor"></a>Conclusion: Complex Random Effects Within-Between Models</h1>
-<p>Depending on the structure of the data, the best approach to analyzing panel data would be a so called “complex random effects within-between” model <span class="citation">(Bell, Fairbrother, and Jones 2018)</span>:</p>
+<p>Depending on the structure of the data, the best approach to analyzing panel data would be a so called “complex random effects within-between” model <span class="citation">(Bell, Fairbrother, and Jones 2019)</span>:</p>
 <p>y<sub>it</sub> = β<sub>0</sub> + β<sub>1W</sub> (x<sub>it</sub> - ͞x<sub>i</sub>) + β<sub>2B</sub> ͞x<sub>i</sub> + β<sub>3</sub> z<sub>i</sub> + υ<sub>i0</sub> + υ<sub>i1</sub> (x<sub>it</sub> - ͞x<sub>i</sub>) + ε<sub>it</sub></p>
 <ul>
 <li>
@@ -315,7 +318,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 </li>
 </ul>
 <p>In R-code, the model is written down like this:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">rewb</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">rewb</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
   <span class="no">QoL</span> ~ <span class="no">time</span> + <span class="no">phq4_within</span> + <span class="no">phq4_between</span> + <span class="no">education</span> +
     (<span class="fl">1</span> + <span class="no">time</span> <span class="kw">|</span> <span class="no">ID</span>) + (<span class="fl">1</span> + <span class="no">phq4_within</span> <span class="kw">|</span> <span class="no">ID</span>),
    <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
@@ -324,7 +327,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <p>After demeaning time-varying predictors, “at the higher level, the mean term is no longer constrained by Level 1 effects, so it is free to account for all the higher-level variance associated with that variable” <span class="citation">(Bell and Jones 2015)</span>.</p>
 <p>Thus, <em>time-constant <strong>categorical</strong></em> predictors, that only have a between-effect, can be simply included as fixed effects predictor (since they’re not constrained by level-1 effects). Time-constant <em>continuous</em> <strong>group-level predictors</strong> (for instance, GDP of countries) should be group-meaned, to have a proper “between”-effect.</p>
 <p>The benefit of this kind of model is that you have information on within-, between- and other time-constant (i.e. between) effects or group-level predictors…</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">rewb</span>)
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">rewb</span>)
 <span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI |     t |  df |      p</span>
 <span class="co">#&gt; -----------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)      |       67.18 | 2.39 | [62.50, 71.86] | 28.13 | 551 | &lt; .001</span>
@@ -344,7 +347,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; --------------------------------------------------------------------------</span>
 <span class="co">#&gt; phq4_between |       -6.11 | 0.52 | [-7.13, -5.10] | -11.81 | 551 | &lt; .001</span></pre></body></html></div>
 <p>… but you can also model the variation of (group) effects across time (and probably space), and you can even include more higher-level units (e.g. nested design or cross-classified design with more than two levels):</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/random_parameters.html">random_parameters</a></span>(<span class="no">rewb</span>)
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/random_parameters.html">random_parameters</a></span>(<span class="no">rewb</span>)
 <span class="co">#&gt; # Random Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Within-Group Variance              119.47 (10.93)</span>
@@ -367,8 +370,8 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <div id="ref-bafumi_fitting_2006">
 <p>Bafumi, Joseph, and Andrew Gelman. 2006. “Fitting Multilevel Models When Predictors and Group Effects Correlate.” In. Philadelphia, PA.</p>
 </div>
-<div id="ref-bell_fixed_2018">
-<p>Bell, Andrew, Malcolm Fairbrother, and Kelvyn Jones. 2018. “Fixed and Random Effects Models: Making an Informed Choice.” <em>Quality &amp; Quantity</em>, August. <a href="https://doi.org/10.1007/s11135-018-0802-x">https://doi.org/10.1007/s11135-018-0802-x</a>.</p>
+<div id="ref-bell_fixed_2019">
+<p>Bell, Andrew, Malcolm Fairbrother, and Kelvyn Jones. 2019. “Fixed and Random Effects Models: Making an Informed Choice.” <em>Quality &amp; Quantity</em> 53: 1051–74. <a href="https://doi.org/10.1007/s11135-018-0802-x">https://doi.org/10.1007/s11135-018-0802-x</a>.</p>
 </div>
 <div id="ref-bell_explaining_2015">
 <p>Bell, Andrew, and Kelvyn Jones. 2015. “Explaining Fixed Effects: Random Effects Modeling of Time-Series Cross-Sectional and Panel Data.” <em>Political Science Research and Methods</em> 3 (1): 133–53. <a href="https://doi.org/10.1017/psrm.2014.7">https://doi.org/10.1017/psrm.2014.7</a>.</p>
