@@ -64,7 +64,7 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
   out$n_Missing <- n_missing
   out$`.temp` <- NULL
 
-  class(out) <- unique(c("parameters_distribution", class(out)))
+  class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
   attr(out, "data") <- x
   out
 }
@@ -102,6 +102,8 @@ describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...
     out$Max <- NULL
   }
 
+  class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
+  attr(out, "data") <- x
   out
 }
 
@@ -136,6 +138,8 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
     out$Max <- NULL
   }
 
+  class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
+  attr(out, "data") <- x
   out
 }
 
@@ -154,7 +158,7 @@ describe_distribution.data.frame <- function(x, centrality = "mean", dispersion 
   row.names(out) <- NULL
   out <- out[c("Variable", setdiff(colnames(out), "Variable"))]
 
-  class(out) <- unique(c("parameters_distribution", class(out)))
+  class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
