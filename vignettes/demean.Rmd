@@ -260,6 +260,8 @@ ggplot(d, aes(x, y)) +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
 
+## Model 1: Linear relationship between typing errors and typing speed
+
 We can now assume a (linear) relationship between typing errors and typing speed.
 
 ```{r}
@@ -289,6 +291,8 @@ ggplot(d, aes(x, y)) +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
 
+## Model 2: Within-subject effect of typing speed
+
 A fixed effects regression (FE-regression) would now remove all between-effects and include only the within-effects as well as the group-level indicator. 
 
 ```{r}
@@ -306,6 +310,8 @@ This returns the coefficient of the "within"-effect, which is `1.2`, with a stan
 m2 <- lm(y ~ 0 + x_within + grp, data = d)
 model_parameters(m2)[1, ]
 ```
+
+## Model 3: Between-subject effect of typing speed
 
 To understand, why the above model 1 (`m1`) returns a biased estimate, which is a "weighted average" of the within- and between-effects, let us look at the between-effect now.
 
@@ -325,6 +331,8 @@ m3 <- lm(y ~ x_between, data = d)
 model_parameters(m3)
 ```
 
+## Model 4: Mixed model with within- and between-subjects
+
 Since FE-models can only model within-effects, we now use a mixed model with within- and between-effects.
 
 ```{r}
@@ -343,6 +351,8 @@ We see, the estimate for the within-effects is *not* biased. Furthermore, we get
 m4 <- lmer(y ~ x_between + x_within + (1 | grp), data = d)
 model_parameters(m4)
 ```
+
+## Model 5: Complex Random-Effects Within-Between Model
 
 Finally, we can also take the variation between subjects into account by adding a random slope. This model can be called a complex "REWB" (random-effects within-between) model. Due to the variation between subjects, we get larger standard errors for the within-effect.
 

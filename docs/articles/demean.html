@@ -398,6 +398,9 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
   <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/theme_modern.html">theme_modern</a></span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Typing Speed"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Typing Errors"</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Type Experience"</span>)</pre></body></html></div>
 <p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<div id="model-1-linear-relationship-between-typing-errors-and-typing-speed" class="section level2">
+<h2 class="hasAnchor">
+<a href="#model-1-linear-relationship-between-typing-errors-and-typing-speed" class="anchor"></a>Model 1: Linear relationship between typing errors and typing speed</h2>
 <p>We can now assume a (linear) relationship between typing errors and typing speed.</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">y</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="st">"#555555"</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2.5</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.5</span>) +
@@ -421,6 +424,10 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
   <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/theme_modern.html">theme_modern</a></span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Typing Speed"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Typing Errors"</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Type Experience"</span>)</pre></body></html></div>
 <p><img src="demean_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+</div>
+<div id="model-2-within-subject-effect-of-typing-speed" class="section level2">
+<h2 class="hasAnchor">
+<a href="#model-2-within-subject-effect-of-typing-speed" class="anchor"></a>Model 2: Within-subject effect of typing speed</h2>
 <p>A fixed effects regression (FE-regression) would now remove all between-effects and include only the within-effects as well as the group-level indicator.</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">y</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">grp</span>), <span class="kw">method</span> <span class="kw">=</span> <span class="st">"lm"</span>, <span class="kw">se</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
@@ -435,6 +442,10 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI |     t | df |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; x_within  |        1.20 | 0.07 | [1.06, 1.35] | 16.08 | 99 | &lt; .001</span></pre></body></html></div>
+</div>
+<div id="model-3-between-subject-effect-of-typing-speed" class="section level2">
+<h2 class="hasAnchor">
+<a href="#model-3-between-subject-effect-of-typing-speed" class="anchor"></a>Model 3: Between-subject effect of typing speed</h2>
 <p>To understand, why the above model 1 (<code>m1</code>) returns a biased estimate, which is a “weighted average” of the within- and between-effects, let us look at the between-effect now.</p>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">y</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">grp</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2.2</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.6</span>) +
@@ -450,6 +461,10 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; -------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       37.83 | 0.62 | [36.59, 39.06] |  60.79 | 103 | &lt; .001</span>
 <span class="co">#&gt; x_between   |       -2.93 | 0.08 | [-3.09, -2.78] | -36.76 | 103 | &lt; .001</span></pre></body></html></div>
+</div>
+<div id="model-4-mixed-model-with-within--and-between-subjects" class="section level2">
+<h2 class="hasAnchor">
+<a href="#model-4-mixed-model-with-within--and-between-subjects" class="anchor"></a>Model 4: Mixed model with within- and between-subjects</h2>
 <p>Since FE-models can only model within-effects, we now use a mixed model with within- and between-effects.</p>
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">y</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">grp</span>), <span class="kw">method</span> <span class="kw">=</span> <span class="st">"lm"</span>, <span class="kw">se</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
@@ -477,7 +492,11 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI |     t |  df |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------------</span>
 <span class="co">#&gt; x_within  |        1.20 | 0.07 | [1.06, 1.35] | 16.22 | 100 | &lt; .001</span></pre></body></html></div>
-<p>Finally, we can also take the variation between subjects into account by adding a random slope. This model can be calle a complex “REWB” (random-effects within-between) model. Due to the variation between subjects, we get larger standard errors for the within-effect.</p>
+</div>
+<div id="model-5-complex-random-effects-within-between-model" class="section level2">
+<h2 class="hasAnchor">
+<a href="#model-5-complex-random-effects-within-between-model" class="anchor"></a>Model 5: Complex Random-Effects Within-Between Model</h2>
+<p>Finally, we can also take the variation between subjects into account by adding a random slope. This model can be called a complex “REWB” (random-effects within-between) model. Due to the variation between subjects, we get larger standard errors for the within-effect.</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">m5</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">y</span> ~ <span class="no">x_between</span> + <span class="no">x_within</span> + (<span class="fl">1</span> + <span class="no">x_within</span> <span class="kw">|</span> <span class="no">grp</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m5</span>)
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |      t | df |      p</span>
@@ -495,6 +514,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI |     t | df |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; x_within  |        1.20 | 0.10 | [1.01, 1.40] | 12.16 | 98 | &lt; .001</span></pre></body></html></div>
+</div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
