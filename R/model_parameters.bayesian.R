@@ -33,19 +33,19 @@
 model_parameters.stanreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", standardize = NULL, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, standardize = standardize, ...)
+  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, standardize = standardize, ...)
 
   if (effects == "fixed") {
-    attr(parameters, "pretty_names") <- format_parameters(model)
+    attr(params, "pretty_names") <- format_parameters(model)
   } else {
-    parameters <- .add_pretty_names(parameters, model, effects = effects, component = NULL)
+    params <- .add_pretty_names(params, model, effects = effects, component = NULL)
   }
 
-  attr(parameters, "ci") <- ci
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  attr(params, "ci") <- ci
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
-  parameters
+  params
 }
 
 
@@ -53,20 +53,20 @@ model_parameters.stanreg <- function(model, centrality = "median", dispersion = 
 model_parameters.stanmvreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = "pd", rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", standardize = NULL, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, standardize = standardize, ...)
-  parameters$Parameter <- gsub("^(.*)\\|(.*)", "\\2", parameters$Parameter)
+  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, standardize = standardize, ...)
+  params$Parameter <- gsub("^(.*)\\|(.*)", "\\2", params$Parameter)
 
   if (effects == "fixed") {
-    attr(parameters, "pretty_names") <- format_parameters(model)
+    attr(params, "pretty_names") <- format_parameters(model)
   } else {
-    parameters <- .add_pretty_names(parameters, model, effects = effects, component = NULL)
+    params <- .add_pretty_names(params, model, effects = effects, component = NULL)
   }
 
-  attr(parameters, "ci") <- ci
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  attr(params, "ci") <- ci
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
-  parameters
+  params
 }
 
 
@@ -78,22 +78,22 @@ model_parameters.stanmvreg <- function(model, centrality = "median", dispersion 
 model_parameters.brmsfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", component = "all", exponentiate = FALSE, standardize = NULL, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, component = component, standardize = standardize, ...)
+  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, component = component, standardize = standardize, ...)
 
   if (effects == "fixed" && component == "conditional") {
-    attr(parameters, "pretty_names") <- format_parameters(model)
+    attr(params, "pretty_names") <- format_parameters(model)
   } else {
-    parameters <- .add_pretty_names(parameters, model, effects = effects, component = component)
+    params <- .add_pretty_names(params, model, effects = effects, component = component)
   }
 
-  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
-  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
+  if (exponentiate) params <- .exponentiate_parameters(params)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
 
-  attr(parameters, "parameter_info") <- insight::clean_parameters(model)
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_brms", "see_parameters_model", "parameters_model", class(parameters))
+  attr(params, "parameter_info") <- insight::clean_parameters(model)
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_brms", "see_parameters_model", "parameters_model", class(params))
 
-  parameters
+  params
 }
 
 
@@ -101,14 +101,14 @@ model_parameters.brmsfit <- function(model, centrality = "median", dispersion = 
 model_parameters.MCMCglmm <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
+  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
 
-  attr(parameters, "pretty_names") <- format_parameters(model)
-  attr(parameters, "ci") <- ci
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  attr(params, "pretty_names") <- format_parameters(model)
+  attr(params, "ci") <- ci
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
-  parameters
+  params
 }
 
 
@@ -117,13 +117,13 @@ model_parameters.MCMCglmm <- function(model, centrality = "median", dispersion =
 model_parameters.mcmc <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = NULL, diagnostic = NULL, priors = FALSE, ...)
+  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = NULL, diagnostic = NULL, priors = FALSE, ...)
 
-  attr(parameters, "ci") <- ci
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  attr(params, "ci") <- ci
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
-  parameters
+  params
 }
 
 #' @export
@@ -134,11 +134,11 @@ model_parameters.data.frame <- model_parameters.mcmc
 model_parameters.bcplm <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, ...) {
 
   # Processing
-  parameters <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
+  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
 
-  attr(parameters, "ci") <- ci
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  attr(params, "ci") <- ci
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
-  parameters
+  params
 }

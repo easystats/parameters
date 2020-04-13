@@ -69,20 +69,20 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
   # Processing
   if (bootstrap) {
-    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+    params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- if (is.null(comp_argument)) {
+    params <- if (is.null(comp_argument)) {
       .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, p_adjust = p_adjust, ...)
     } else {
       .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, p_adjust = p_adjust, ...)
     }
   }
 
-  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
-  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  if (exponentiate) params <- .exponentiate_parameters(params)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
-  parameters
+  params
 }
 
 

@@ -1,5 +1,5 @@
 #' @keywords internal
-.add_model_parameters_attributes <- function(parameters, model, ci, exponentiate = FALSE, ...) {
+.add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   info <- insight::model_info(model, verbose = FALSE)
 
@@ -8,61 +8,61 @@
     info <- list(family = "unknown", link_function = "unknown")
   }
 
-  if (is.null(attr(parameters, "pretty_names", exact = TRUE))) {
-    attr(parameters, "pretty_names") <- format_parameters(model)
+  if (is.null(attr(params, "pretty_names", exact = TRUE))) {
+    attr(params, "pretty_names") <- format_parameters(model)
   }
-  attr(parameters, "ci") <- ci
-  attr(parameters, "exponentiate") <- exponentiate
-  attr(parameters, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)
-  attr(parameters, "model_class") <- class(model)
+  attr(params, "ci") <- ci
+  attr(params, "exponentiate") <- exponentiate
+  attr(params, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)
+  attr(params, "model_class") <- class(model)
 
 
   if (inherits(model, c("rma", "rma.uni"))) {
-    attr(parameters, "data") <- insight::get_data(model)
-    attr(parameters, "study_weights") <- 1 / model$vi
+    attr(params, "data") <- insight::get_data(model)
+    attr(params, "study_weights") <- 1 / model$vi
   }
 
   if ("digits" %in% names(dot.arguments)) {
-    attr(parameters, "digits") <- eval(dot.arguments[["digits"]])
+    attr(params, "digits") <- eval(dot.arguments[["digits"]])
   } else {
-    attr(parameters, "digits") <- 2
+    attr(params, "digits") <- 2
   }
 
   if ("ci_digits" %in% names(dot.arguments)) {
-    attr(parameters, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
+    attr(params, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
   } else {
-    attr(parameters, "ci_digits") <- 2
+    attr(params, "ci_digits") <- 2
   }
 
   if ("p_digits" %in% names(dot.arguments)) {
-    attr(parameters, "p_digits") <- eval(dot.arguments[["p_digits"]])
+    attr(params, "p_digits") <- eval(dot.arguments[["p_digits"]])
   } else {
-    attr(parameters, "p_digits") <- 3
+    attr(params, "p_digits") <- 3
   }
 
-  parameters
+  params
 }
 
 
 
 #' @keywords internal
-.exponentiate_parameters <- function(parameters) {
-  columns <- grepl(pattern = "^(Coefficient|Std_Coefficient|CI_)", colnames(parameters))
+.exponentiate_parameters <- function(params) {
+  columns <- grepl(pattern = "^(Coefficient|Std_Coefficient|CI_)", colnames(params))
   if (any(columns)) {
-    parameters[columns] <- exp(parameters[columns])
-    if (all(c("Coefficient", "SE") %in% names(parameters))) {
-      parameters$SE <- exp(parameters$SE)
+    params[columns] <- exp(params[columns])
+    if (all(c("Coefficient", "SE") %in% names(params))) {
+      params$SE <- exp(params$SE)
     }
   }
-  parameters
+  params
 }
 
 
 
 
 #' @importFrom insight clean_parameters
-.add_pretty_names <- function(parameters, model, effects = NULL, component = NULL) {
-  attr(parameters, "model_class") <- class(model)
+.add_pretty_names <- function(params, model, effects = NULL, component = NULL) {
+  attr(params, "model_class") <- class(model)
   clean_params <- insight::clean_parameters(model)
 
   if (is.null(effects)) {
@@ -78,7 +78,7 @@
   }
 
   clean_params <- clean_params[clean_params$Component %in% component & clean_params$Effects %in% effects, ]
-  attr(parameters, "cleaned_parameters") <- clean_params$Cleaned_Parameter
+  attr(params, "cleaned_parameters") <- clean_params$Cleaned_Parameter
 
-  parameters
+  params
 }

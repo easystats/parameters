@@ -45,23 +45,23 @@ model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_metho
 
   # Processing
   if (bootstrap) {
-    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+    params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_mixed(model, ci = ci, df_method = df_method, robust = robust, standardize = standardize, p_adjust = p_adjust, ...)
+    params <- .extract_parameters_mixed(model, ci = ci, df_method = df_method, robust = robust, standardize = standardize, p_adjust = p_adjust, ...)
   }
 
 
-  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
-  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
+  if (exponentiate) params <- .exponentiate_parameters(params)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
 
   if (isTRUE(details)) {
-    attr(parameters, "details") <- .randomeffects_summary(model)
+    attr(params, "details") <- .randomeffects_summary(model)
   }
 
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
-  parameters
+  params
 }
 
 #' @export
@@ -89,23 +89,23 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
 
   # Processing
   if (bootstrap) {
-    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+    params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, robust = FALSE, df_method = df_method, ...)
+    params <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, robust = FALSE, df_method = df_method, ...)
   }
 
 
-  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
-  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
+  if (exponentiate) params <- .exponentiate_parameters(params)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
 
   if (isTRUE(details)) {
-    attr(parameters, "details") <- .randomeffects_summary(model)
+    attr(params, "details") <- .randomeffects_summary(model)
   }
 
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
-  parameters
+  params
 }
 
 #' @export
