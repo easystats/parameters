@@ -300,7 +300,7 @@ ggplot(d, aes(x, y)) +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
 
-This returns as the coefficient of the "within"-effects, which is `1.2`, with a standard error of `0.07`. Note that the FE-model does *not* take the variation *within* subjects into account, thus resulting in (possibly) slightly biased estimates, and biased standard errors.
+This returns the coefficient of the "within"-effect, which is `1.2`, with a standard error of `0.07`. Note that the FE-model does *not* take the variation *between* subjects into account, thus resulting in (possibly) biased estimates, and biased standard errors.
 
 ```{r}
 m2 <- lm(y ~ 0 + x_within + grp, data = d)
@@ -344,7 +344,7 @@ m4 <- lmer(y ~ x_between + x_within + (1 | grp), data = d)
 model_parameters(m4)
 ```
 
-Finally, we can also take the variation between subjects into account by adding a random slope. This model can be calle a complex "REWB" (random-effects within-between) model. Due to the variation between subjects, we get larger standard errors for the within-effect.
+Finally, we can also take the variation between subjects into account by adding a random slope. This model can be called a complex "REWB" (random-effects within-between) model. Due to the variation between subjects, we get larger standard errors for the within-effect.
 
 ```{r}
 m5 <- lmer(y ~ x_between + x_within + (1 + x_within | grp), data = d)
