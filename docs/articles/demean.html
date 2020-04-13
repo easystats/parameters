@@ -363,6 +363,139 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt;   ID                                  188</span>
 <span class="co">#&gt; Observations                          564</span></pre></body></html></div>
 </div>
+<div id="a-visual-example" class="section level1">
+<h1 class="hasAnchor">
+<a href="#a-visual-example" class="anchor"></a>A visual example</h1>
+<p>First, we generate some fake data that implies a linear relationship between outcome and independent variable. The objective is that the amount of typing errors depends on how fast (typing speed) you can type, however, the more typing experience you have, the faster you can type. Thus, the outcome measure is “amount of typing errors”, while our predictor is “typing speed”. Furthermore, we have repeated measurements of people with different “typing experience levels”.</p>
+<p>The results show that we will have two sources of variation: Overall, more experienced typists make less mistakes (group-level pattern). When typing faster, typists make more mistakes (individual-level pattern).</p>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">see</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
+<span class="no">n</span> <span class="kw">&lt;-</span> <span class="fl">5</span>
+<span class="no">b</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="fl">1.5</span>, <span class="kw">length.out</span> <span class="kw">=</span> <span class="fl">5</span>)
+<span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">2</span>, <span class="fl">2</span> * <span class="no">n</span>, <span class="fl">2</span>)
+
+<span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="no">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="no">n</span>, <span class="kw">function</span>(<span class="no">i</span>) {
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="no">n</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">.2</span>),
+             <span class="kw">y</span> <span class="kw">=</span> <span class="fl">2</span> * <span class="no">x</span>[<span class="no">i</span>] + <span class="no">b</span>[<span class="no">i</span>] * <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="no">n</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">.2</span>) + <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">21</span>),
+             <span class="kw">grp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="fl">2</span> * <span class="no">i</span>))
+}))
+
+<span class="no">d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">grp</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fl">15</span> - (<span class="no">x</span> + <span class="fl">1.5</span> * <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="no">grp</span>)))) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>()
+
+<span class="no">labs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"very slow"</span>, <span class="st">"slow"</span>, <span class="st">"average"</span>, <span class="st">"fast"</span>, <span class="st">"very fast"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(<span class="no">d</span>$<span class="no">grp</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="no">labs</span>)
+
+<span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">d</span>, <span class="fu"><a href="../reference/demean.html">demean</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="kw">group</span> <span class="kw">=</span> <span class="st">"grp"</span>))</pre></body></html></div>
+<p>Let’s look at the raw data…</p>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">y</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="st">"#555555"</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2.5</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.5</span>) +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/theme_modern.html">theme_modern</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Typing Speed"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Typing Errors"</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Type Experience"</span>)</pre></body></html></div>
+<p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p>We can now assume a (linear) relationship between typing errors and typing speed.</p>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">y</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="st">"#555555"</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2.5</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.5</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"lm"</span>, <span class="kw">se</span> <span class="kw">=</span> <span class="no">F</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"#555555"</span>) +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/scale_color_flat.html">scale_color_flat</a></span>() +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/theme_modern.html">theme_modern</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Typing Speed"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Typing Errors"</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Type Experience"</span>)</pre></body></html></div>
+<p><img src="demean_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p>Looking at the coefficients, we have following model with a coefficient of <code>-1.92</code>.</p>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">m1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">y</span> ~ <span class="no">x</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m1</span>)
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |      t |  df |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       30.20 | 1.42 | [27.39, 33.00] |  21.34 | 103 | &lt; .001</span>
+<span class="co">#&gt; x           |       -1.92 | 0.18 | [-2.27, -1.56] | -10.69 | 103 | &lt; .001</span></pre></body></html></div>
+<p>However, we have ignored the clustered structure in our data, in this example due to repeated measurements.</p>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">y</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">grp</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2.5</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.5</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"lm"</span>, <span class="kw">se</span> <span class="kw">=</span> <span class="no">F</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"#555555"</span>) +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/scale_color_flat.html">scale_color_flat</a></span>() +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/theme_modern.html">theme_modern</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Typing Speed"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Typing Errors"</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Type Experience"</span>)</pre></body></html></div>
+<p><img src="demean_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<p>A fixed effects regression (FE-regression) would now remove all between-effects and include only the within-effects as well as the group-level indicator.</p>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">y</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">grp</span>), <span class="kw">method</span> <span class="kw">=</span> <span class="st">"lm"</span>, <span class="kw">se</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">grp</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2.2</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.6</span>) +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/scale_color_flat.html">scale_color_flat</a></span>() +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/theme_modern.html">theme_modern</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Typing Speed"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Typing Errors"</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Type Experience"</span>)</pre></body></html></div>
+<p><img src="demean_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p>This returns as the coefficient of the “within”-effects, which is <code>1.2</code>, with a standard error of <code>0.07</code>. Note that the FE-model does <em>not</em> take the variation <em>within</em> subjects into account, thus resulting in (possibly) slightly biased estimates, and biased standard errors.</p>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">m2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">y</span> ~ <span class="fl">0</span> + <span class="no">x_within</span> + <span class="no">grp</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m2</span>)[<span class="fl">1</span>, ]
+<span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI |     t | df |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; x_within  |        1.20 | 0.07 | [1.06, 1.35] | 16.08 | 99 | &lt; .001</span></pre></body></html></div>
+<p>To understand, why the above model 1 (<code>m1</code>) returns a biased estimate, which is a “weighted average” of the within- and between-effects, let us look at the between-effect now.</p>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">y</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">grp</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2.2</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.6</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x_between</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y_between</span>), <span class="kw">method</span> <span class="kw">=</span> <span class="st">"lm"</span>, <span class="kw">se</span> <span class="kw">=</span> <span class="no">F</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"#444444"</span>) +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/scale_color_flat.html">scale_color_flat</a></span>() +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/theme_modern.html">theme_modern</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Typing Speed"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Typing Errors"</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Type Experience"</span>)</pre></body></html></div>
+<p><img src="demean_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<p>As we can see, the between-effect is <code>-2.93</code>, which is different from the <code>-1.92</code> estimated in the model <code>m1</code>.</p>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">m3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">y</span> ~ <span class="no">x_between</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m3</span>)
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |      t |  df |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       37.83 | 0.62 | [36.59, 39.06] |  60.79 | 103 | &lt; .001</span>
+<span class="co">#&gt; x_between   |       -2.93 | 0.08 | [-3.09, -2.78] | -36.76 | 103 | &lt; .001</span></pre></body></html></div>
+<p>Since FE-models can only model within-effects, we now use a mixed model with within- and between-effects.</p>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">y</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">grp</span>), <span class="kw">method</span> <span class="kw">=</span> <span class="st">"lm"</span>, <span class="kw">se</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="no">grp</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2.2</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">.6</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x_between</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y_between</span>), <span class="kw">method</span> <span class="kw">=</span> <span class="st">"lm"</span>, <span class="kw">se</span> <span class="kw">=</span> <span class="no">F</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"#444444"</span>) +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/scale_color_flat.html">scale_color_flat</a></span>() +
+  <span class="kw pkg">see</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/see/man/theme_modern.html">theme_modern</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Typing Speed"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Typing Errors"</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Type Experience"</span>)</pre></body></html></div>
+<p><img src="demean_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
+<p>We see, the estimate for the within-effects is <em>not</em> biased. Furthermore, we get the correct between-effect as well (standard errors differ, because the variance in the grouping structure is more accurately taken into account).</p>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">m4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">y</span> ~ <span class="no">x_between</span> + <span class="no">x_within</span> + (<span class="fl">1</span> <span class="kw">|</span> <span class="no">grp</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m4</span>)
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |      t |  df |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       37.83 | 0.33 | [37.18, 38.48] | 114.46 | 100 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Between-Effects </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Coefficient |   SE |         95% CI |      t |  df |      p</span>
+<span class="co">#&gt; -----------------------------------------------------------------------</span>
+<span class="co">#&gt; x_between |       -2.93 | 0.04 | [-3.02, -2.85] | -69.22 | 100 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Within-Effects </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI |     t |  df |      p</span>
+<span class="co">#&gt; --------------------------------------------------------------------</span>
+<span class="co">#&gt; x_within  |        1.20 | 0.07 | [1.06, 1.35] | 16.22 | 100 | &lt; .001</span></pre></body></html></div>
+<p>Finally, we can also take the variation between subjects into account by adding a random slope. This model can be calle a complex “REWB” (random-effects within-between) model. Due to the variation between subjects, we get larger standard errors for the within-effect.</p>
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">m5</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">y</span> ~ <span class="no">x_between</span> + <span class="no">x_within</span> + (<span class="fl">1</span> + <span class="no">x_within</span> <span class="kw">|</span> <span class="no">grp</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m5</span>)
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |      t | df |      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       37.95 | 0.34 | [37.29, 38.62] | 111.15 | 98 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Between-Effects </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Coefficient |   SE |         95% CI |      t | df |      p</span>
+<span class="co">#&gt; ----------------------------------------------------------------------</span>
+<span class="co">#&gt; x_between |       -2.95 | 0.04 | [-3.04, -2.87] | -67.57 | 98 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Within-Effects </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI |     t | df |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; x_within  |        1.20 | 0.10 | [1.01, 1.40] | 12.16 | 98 | &lt; .001</span></pre></body></html></div>
+</div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>

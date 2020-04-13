@@ -30,6 +30,9 @@ knitr::opts_chunk$set(
 )
 
 if (!requireNamespace("lme4", quietly = TRUE) ||
+    !requireNamespace("dplyr", quietly = TRUE) ||
+    !requireNamespace("ggplot2", quietly = TRUE) ||
+    !requireNamespace("see", quietly = TRUE) ||
     !requireNamespace("lfe", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
@@ -212,6 +215,140 @@ model_parameters(rewb)
 
 ```{r}
 random_parameters(rewb)
+```
+
+# A visual example
+
+First, we generate some fake data that implies a linear relationship between outcome and independent variable. The objective is that the amount of typing errors depends on how fast (typing speed) you can type, however, the more typing experience you have, the faster you can type. Thus, the outcome measure is "amount of typing errors", while our predictor is "typing speed". Furthermore, we have repeated measurements of people with different "typing experience levels".
+
+The results show that we will have two sources of variation: Overall, more experienced typists make less mistakes (group-level pattern). When typing faster, typists make more mistakes (individual-level pattern).
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(see)
+
+set.seed(123)
+n <- 5
+b <- seq(1, 1.5, length.out = 5)
+x <- seq(2, 2 * n, 2)
+
+d <- do.call(rbind, lapply(1:n, function(i) {
+  data.frame(x = seq(1, n, by = .2),
+             y = 2 * x[i] + b[i] * seq(1, n, by = .2) + rnorm(21),
+             grp = as.factor(2 * i))
+}))
+
+d <- d %>%
+  group_by(grp) %>%
+  mutate(x = rev(15 - (x + 1.5 * as.numeric(grp)))) %>%
+  ungroup()
+
+labs <- c("very slow", "slow", "average", "fast", "very fast")
+levels(d$grp) <- rev(labs)
+
+d <- cbind(d, demean(d, c("x", "y"), group = "grp"))
+```
+
+Let's look at the raw data...
+
+```{r}
+ggplot(d, aes(x, y)) +
+  geom_point(colour = "#555555", size = 2.5, alpha = .5) +
+  see::theme_modern() +
+  labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
+```
+
+We can now assume a (linear) relationship between typing errors and typing speed.
+
+```{r}
+ggplot(d, aes(x, y)) +
+  geom_point(colour = "#555555", size = 2.5, alpha = .5) +
+  geom_smooth(method = "lm", se = F, colour = "#555555") +
+  see::scale_color_flat() +
+  see::theme_modern() +
+  labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
+```
+
+Looking at the coefficients, we have following model with a coefficient of `-1.92`.
+
+```{r}
+m1 <- lm(y ~ x, data = d)
+model_parameters(m1)
+```
+
+However, we have ignored the clustered structure in our data, in this example due to repeated measurements.
+
+```{r}
+ggplot(d, aes(x, y)) +
+  geom_point(mapping = aes(colour = grp), size = 2.5, alpha = .5) +
+  geom_smooth(method = "lm", se = F, colour = "#555555") +
+  see::scale_color_flat() +
+  see::theme_modern() +
+  labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
+```
+
+A fixed effects regression (FE-regression) would now remove all between-effects and include only the within-effects as well as the group-level indicator. 
+
+```{r}
+ggplot(d, aes(x, y)) +
+  geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
+  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
+  see::scale_color_flat() +
+  see::theme_modern() +
+  labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
+```
+
+This returns as the coefficient of the "within"-effects, which is `1.2`, with a standard error of `0.07`. Note that the FE-model does *not* take the variation *within* subjects into account, thus resulting in (possibly) slightly biased estimates, and biased standard errors.
+
+```{r}
+m2 <- lm(y ~ 0 + x_within + grp, data = d)
+model_parameters(m2)[1, ]
+```
+
+To understand, why the above model 1 (`m1`) returns a biased estimate, which is a "weighted average" of the within- and between-effects, let us look at the between-effect now.
+
+```{r}
+ggplot(d, aes(x, y)) +
+  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
+  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
+  see::scale_color_flat() +
+  see::theme_modern() +
+  labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
+```
+
+As we can see, the between-effect is `-2.93`, which is different from the `-1.92` estimated in the model `m1`.
+
+```{r}
+m3 <- lm(y ~ x_between, data = d)
+model_parameters(m3)
+```
+
+Since FE-models can only model within-effects, we now use a mixed model with within- and between-effects.
+
+```{r}
+ggplot(d, aes(x, y)) +
+  geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
+  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
+  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
+  see::scale_color_flat() +
+  see::theme_modern() +
+  labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
+```
+
+We see, the estimate for the within-effects is *not* biased. Furthermore, we get the correct between-effect as well (standard errors differ, because the variance in the grouping structure is more accurately taken into account).
+
+```{r}
+m4 <- lmer(y ~ x_between + x_within + (1 | grp), data = d)
+model_parameters(m4)
+```
+
+Finally, we can also take the variation between subjects into account by adding a random slope. This model can be calle a complex "REWB" (random-effects within-between) model. Due to the variation between subjects, we get larger standard errors for the within-effect.
+
+```{r}
+m5 <- lmer(y ~ x_between + x_within + (1 + x_within | grp), data = d)
+model_parameters(m5)
 ```
 
 # References
