@@ -11,6 +11,8 @@
 ## Changes to functions
 
 * `model_parameters()` for Stan-models (*brms*, *rstanarm*) gains a `group_level` argument to show or hide parameters for group levels of random effects.
+* `equivalence_test()` for mixed models gains an `effect` argument, to perform equivalence testing on random effects.
+* `equivalence_test()` now supports more frequentist model objects.
 
 ## Bug fixes
 
