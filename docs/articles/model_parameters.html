@@ -229,12 +229,14 @@
 
 <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="no">mpg</span> ~ <span class="no">wt</span> * <span class="no">cyl</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>()</pre></body></html></div>
-<pre><code>#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat | ESS |               Prior
+<pre><code>#&gt; # Fixed effects 
+#&gt; 
+#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat | ESS |               Prior
 #&gt; -----------------------------------------------------------------------------------------------
 #&gt; (Intercept) |  53.16 | [ 42.36, 61.52] |   100% |        0% | 1.002 | 188 | Normal (0 +- 60.27)
 #&gt; wt          |  -8.19 | [-11.59, -4.40] |   100% |     0.20% | 1.006 | 184 | Normal (0 +- 15.40)
 #&gt; cyl         |  -3.71 | [ -4.88, -1.77] |   100% |     0.20% | 1.000 | 206 |  Normal (0 +- 8.44)
-#&gt; wt * cyl    |   0.76 | [  0.19,  1.25] | 98.40% |    32.00% | 1.004 | 179 |  Normal (0 +- 1.36)</code></pre>
+#&gt; wt:cyl      |   0.76 | [  0.19,  1.25] | 98.40% |    32.00% | 1.004 | 179 |  Normal (0 +- 1.36)</code></pre>
 <p>… as well as for (more complex) models from the <strong>brms</strong> package. For more complex models, other model components can be printed using the arguments <code>effects</code> and <code>component</code> arguments.</p>
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">brms</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">fish</span>)

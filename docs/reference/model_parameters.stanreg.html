@@ -182,6 +182,7 @@
   <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>group_level</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
 
@@ -202,6 +203,7 @@
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
   <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>group_level</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -274,6 +276,10 @@ Only applies to mixed models. May be abbreviated.</p></td>
       <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://rdrr.io/pkg/effectsize/man/standardize_parameters.html'>standardize_parameters</a></code>. Note that robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only works when <code>standardize="refit"</code>.</p></td>
     </tr>
     <tr>
+      <th>group_level</th>
+      <td><p>Logical, for multilevel models (i.e. models with random effects) and when <code>effects = "all"</code> or <code>effects = "random"</code>, include the parameters for each group level from random effects. If <code>group_level = FALSE</code> (the default), only information on SD and COR are shown.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://rdrr.io/pkg/bayestestR/man/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
@@ -315,15 +321,18 @@ If <code>model</code> is a data frame, arguments <code>diagnostic</code>, <code>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.88). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; Parameter                           | Median |         89% CI |     pd | % in ROPE |  Rhat | ESS |              Prior
-#&gt; ---------------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                         |   4.02 | [ 3.50,  4.61] |   100% |        0% | 1.018 | 277 | Normal (0 +- 8.28)
-#&gt; Petal.Length                        |   0.67 | [ 0.29,  1.04] | 99.90% |     0.50% | 1.018 | 268 | Normal (0 +- 1.17)
-#&gt; Species [versicolor]                |  -1.55 | [-2.29, -0.59] | 99.60% |     0.30% | 1.017 | 327 | Normal (0 +- 2.07)
-#&gt; Species [virginica]                 |  -2.79 | [-3.58, -1.82] |   100% |        0% | 1.010 | 341 | Normal (0 +- 2.07)
-#&gt; Petal.Length * Species [versicolor] |   0.13 | [-0.29,  0.50] | 72.30% |    21.30% | 1.023 | 243 | Normal (0 +- 1.02)
-#&gt; Petal.Length * Species [virginica]  |   0.28 | [-0.12,  0.66] | 88.20% |    12.50% | 1.018 | 249 | Normal (0 +- 0.78)</div><div class='input'># }
-</div></pre>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.88). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
+#&gt; 
+#&gt; Parameter                      | Median |         89% CI |     pd | % in ROPE |  Rhat | ESS |              Prior
+#&gt; ----------------------------------------------------------------------------------------------------------------
+#&gt; (Intercept)                    |   4.02 | [ 3.50,  4.61] |   100% |        0% | 1.018 | 277 | Normal (0 +- 8.28)
+#&gt; Petal.Length                   |   0.67 | [ 0.29,  1.04] | 99.90% |     0.50% | 1.018 | 268 | Normal (0 +- 1.17)
+#&gt; Speciesversicolor              |  -1.55 | [-2.29, -0.59] | 99.60% |     0.30% | 1.017 | 327 | Normal (0 +- 2.07)
+#&gt; Speciesvirginica               |  -2.79 | [-3.58, -1.82] |   100% |        0% | 1.010 | 341 | Normal (0 +- 2.07)
+#&gt; Petal.Length:Speciesversicolor |   0.13 | [-0.29,  0.50] | 72.30% |    21.30% | 1.023 | 243 | Normal (0 +- 1.02)
+#&gt; Petal.Length:Speciesvirginica  |   0.28 | [-0.12,  0.66] | 88.20% |    12.50% | 1.018 | 249 | Normal (0 +- 0.78)
+#&gt; </div><div class='input'># }
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
