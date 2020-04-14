@@ -167,7 +167,7 @@ equivalence_test.MixMod <- equivalence_test.merMod
       CI_low = est - stderr * fac,
       CI_high = est + stderr * fac,
       CI = ci,
-      group = np,
+      Group = np,
       stringsAsFactors = FALSE
     )
 
@@ -244,8 +244,8 @@ print.equivalence_test_lm <- function(x, digits = 2, ...) {
     x <- x[x$Component %in% c("conditional", "count"), ]
   }
 
-  if ("group" %in% colnames(x)) {
-    out <- split(x, x$group)
+  if ("Group" %in% colnames(x)) {
+    out <- split(x, x$Group)
     for (i in names(out)) {
       insight::print_color(sprintf("Group: %s\n\n", i), "red")
       .print_equitest_freq(out[[i]], digits, ...)
