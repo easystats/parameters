@@ -14,6 +14,7 @@ bayestestR::equivalence_test
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams model_parameters.merMod
 #'
 #' @seealso For more details, see \code{\link[bayestestR:equivalence_test]{equivalence_test}}.
 #'
@@ -67,6 +68,7 @@ equivalence_test.zeroinfl <- equivalence_test.lm
 
 # mixed models, also random effects ----------------------
 
+#' @rdname equivalence_test.lm
 #' @export
 equivalence_test.merMod <- function(x, range = "default", ci = .95, effects = c("fixed", "random"), verbose = TRUE, ...) {
   effects <- match.arg(effects)

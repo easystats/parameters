@@ -2,9 +2,19 @@
 % Please edit documentation in R/equivalence_test.R
 \name{equivalence_test.lm}
 \alias{equivalence_test.lm}
+\alias{equivalence_test.merMod}
 \title{Equivalence test}
 \usage{
 \method{equivalence_test}{lm}(x, range = "default", ci = 0.95, verbose = TRUE, ...)
+
+\method{equivalence_test}{merMod}(
+  x,
+  range = "default",
+  ci = 0.95,
+  effects = c("fixed", "random"),
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A statistical model.}
@@ -17,6 +27,8 @@ to automatically define this range based on properties of the model's data.}
 \item{verbose}{Toggle off warnings.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{effects}{Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.}
 }
 \value{
 A data frame.
