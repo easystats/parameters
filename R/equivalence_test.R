@@ -49,7 +49,6 @@ equivalence_test.MixMod <- equivalence_test.lm
 
 
 
-#' @importFrom stats confint
 #' @importFrom bayestestR equivalence_test rope_range
 #' @keywords internal
 .equivalence_test_frequentist <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
@@ -59,19 +58,8 @@ equivalence_test.MixMod <- equivalence_test.lm
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  conf_int <- tryCatch(
-    {
-      .clean_confint(as.data.frame(t(stats::confint(x, level = ci, method = "Wald", estimate = FALSE))))
-    },
-    error = function(e) {
-      NULL
-    }
-  )
-
-  # sanity check
-  if (is.null(conf_int)) {
-    conf_int <- as.data.frame(t(ci_wald(x, ci = ci)[, c("CI_low", "CI_high")]))
-  }
+  params <- conf_int <- ci_wald(x, ci = ci)
+  conf_int <- as.data.frame(t(conf_int[, c("CI_low", "CI_high")]))
 
   l <- lapply(
     conf_int,
@@ -81,8 +69,10 @@ equivalence_test.MixMod <- equivalence_test.lm
   )
 
   dat <- do.call(rbind, l)
+  if ("Component" %in% colnames(params)) dat$Component <- params$Component
+
   out <- data.frame(
-    Parameter = names(l),
+    Parameter = params$Parameter,
     CI = ci,
     dat,
     stringsAsFactors = FALSE

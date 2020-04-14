@@ -46,27 +46,6 @@
 
 
 #' @keywords internal
-.clean_confint <- function(ci) {
-  estimate_row <- grep(pattern = "^estimate", x = rownames(ci), ignore.case = TRUE)
-  if (length(estimate_row)) {
-    ci <- ci[-estimate_row, ]
-  }
-
-  zi_col <- grep(pattern = "^zi\\.", x = colnames(ci), ignore.case = TRUE)
-  if (length(zi_col)) {
-    ci <- ci[, -zi_col, drop = FALSE]
-  }
-
-  colnames(ci) <- gsub("cond.", "", colnames(ci), fixed = TRUE)
-  ci[!sapply(ci, function(i) all(is.na(i)), simplify = TRUE)]
-}
-
-
-
-
-
-
-#' @keywords internal
 .remove_backticks_from_string <- function(x) {
   if (is.character(x)) {
     x <- gsub("`", "", x, fixed = TRUE)
