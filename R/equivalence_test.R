@@ -66,7 +66,7 @@ equivalence_test.MixMod <- equivalence_test.lm
 
   # sanity check
   if (is.null(conf_int)) {
-    conf_int <- as.data.frame(t(ci_wald(x)[, c("CI_low", "CI_high")]))
+    conf_int <- as.data.frame(t(ci_wald(x, ci = ci)[, c("CI_low", "CI_high")]))
   }
 
   l <- lapply(
