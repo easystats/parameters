@@ -26,7 +26,7 @@ equivalence_test.lm <- function(x, range = "default", ci = .95, verbose = TRUE, 
   out <- .equivalence_test_frequentist(x, range, ci, verbose, ...)
 
   attr(out, "object_name") <- .safe_deparse(substitute(x))
-  class(out) <- c("equivalence_test_lm", "equivalence_test", "see_equivalence_test", class(out))
+  class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
   out
 }
 
