@@ -305,7 +305,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 
 #' @export
-print.parameters_brms <- function(x, split_components = TRUE, select = NULL, ...) {
+print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
   cp <- attributes(x)$parameter_info
 
   # check if user supplied digits attributes

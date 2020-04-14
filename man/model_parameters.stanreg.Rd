@@ -19,6 +19,7 @@
   priors = TRUE,
   effects = "fixed",
   standardize = NULL,
+  group_level = FALSE,
   ...
 )
 
@@ -38,6 +39,7 @@
   component = "all",
   exponentiate = FALSE,
   standardize = NULL,
+  group_level = FALSE,
   ...
 )
 }
@@ -80,6 +82,8 @@ proportion of HDI, to use for the percentage in ROPE.}
 Only applies to mixed models. May be abbreviated.}
 
 \item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only works when \code{standardize="refit"}.}
+
+\item{group_level}{Logical, for multilevel models (i.e. models with random effects) and when \code{effects = "all"} or \code{effects = "random"}, include the parameters for each group level from random effects. If \code{group_level = FALSE} (the default), only information on SD and COR are shown.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 

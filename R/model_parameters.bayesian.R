@@ -4,6 +4,7 @@
 #'
 #' @param model Bayesian model. May also be a data frame with posterior samples.
 #' @param ci Credible Interval (CI) level. Default to 0.89 (89\%). See \code{\link[bayestestR]{ci}} for further details.
+#' @param group_level Logical, for multilevel models (i.e. models with random effects) and when \code{effects = "all"} or \code{effects = "random"}, include the parameters for each group level from random effects. If \code{group_level = FALSE} (the default), only information on SD and COR are shown.
 #' @inheritParams model_parameters.default
 #' @inheritParams bayestestR::describe_posterior
 #'
@@ -30,7 +31,7 @@
 #' @importFrom insight get_priors
 #' @inheritParams insight::get_parameters
 #' @export
-model_parameters.stanreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", standardize = NULL, ...) {
+model_parameters.stanreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", standardize = NULL, group_level = FALSE, ...) {
 
   # Processing
   params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, standardize = standardize, ...)
@@ -38,12 +39,15 @@ model_parameters.stanreg <- function(model, centrality = "median", dispersion = 
   if (effects == "fixed") {
     attr(params, "pretty_names") <- format_parameters(model)
   } else {
+    random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE))
+    if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
     params <- .add_pretty_names(params, model, effects = effects, component = NULL)
   }
 
+  attr(params, "parameter_info") <- insight::clean_parameters(model)
   attr(params, "ci") <- ci
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(params) <- c("parameters_model", "see_parameters_model", class(params))
+  class(params) <- c("parameters_stan", "parameters_model", "see_parameters_model", class(params))
 
   params
 }
@@ -75,7 +79,7 @@ model_parameters.stanmvreg <- function(model, centrality = "median", dispersion 
 #' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
-model_parameters.brmsfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", component = "all", exponentiate = FALSE, standardize = NULL, ...) {
+model_parameters.brmsfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", component = "all", exponentiate = FALSE, standardize = NULL, group_level = FALSE, ...) {
 
   # Processing
   params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, component = component, standardize = standardize, ...)
@@ -83,6 +87,8 @@ model_parameters.brmsfit <- function(model, centrality = "median", dispersion = 
   if (effects == "fixed" && component == "conditional") {
     attr(params, "pretty_names") <- format_parameters(model)
   } else {
+    random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE))
+    if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
     params <- .add_pretty_names(params, model, effects = effects, component = component)
   }
 
@@ -91,7 +97,7 @@ model_parameters.brmsfit <- function(model, centrality = "median", dispersion = 
 
   attr(params, "parameter_info") <- insight::clean_parameters(model)
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(params) <- c("parameters_brms", "see_parameters_model", "parameters_model", class(params))
+  class(params) <- c("parameters_stan", "see_parameters_model", "parameters_model", class(params))
 
   params
 }

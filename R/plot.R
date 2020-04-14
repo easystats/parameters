@@ -17,7 +17,7 @@ plot.parameters_model <- function(x, ...) {
 
 
 #' @export
-plot.parameters_brms <- function(x, ...) {
+plot.parameters_stan <- function(x, ...) {
   if (!requireNamespace("see", quietly = TRUE)) {
     stop("Package 'see' needed to plot model parameters. Please install it by running `install.packages('see')`.")
   }
