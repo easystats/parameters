@@ -55,7 +55,19 @@ equivalence_test.MixMod <- equivalence_test.lm
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  conf_int <- .clean_confint(as.data.frame(t(stats::confint(x, level = ci, method = "Wald", estimate = FALSE))))
+  conf_int <- tryCatch(
+    {
+      .clean_confint(as.data.frame(t(stats::confint(x, level = ci, method = "Wald", estimate = FALSE))))
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+
+  # sanity check
+  if (is.null(conf_int)) {
+    conf_int <- as.data.frame(t(ci_wald(x)[, c("CI_low", "CI_high")]))
+  }
 
   l <- lapply(
     conf_int,
@@ -72,8 +84,9 @@ equivalence_test.MixMod <- equivalence_test.lm
     stringsAsFactors = FALSE
   )
 
-  class(out) <- c("equivalence_test_lm", class(out))
+  class(out) <- c("equivalence_test_lm", "equivalence_test", "see_equivalence_test", class(out))
   attr(out, "rope") <- range
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
 
   out
 }
@@ -151,4 +164,14 @@ print.equivalence_test_lm <- function(x, digits = 2, ...) {
     print.data.frame(xsub, digits = digits, row.names = FALSE)
     cat("\n")
   }
+}
+
+
+
+#' @export
+plot.equivalence_test_lm <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot results from equivalence-test. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
 }

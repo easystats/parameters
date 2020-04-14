@@ -58,7 +58,7 @@
   }
 
   colnames(ci) <- gsub("cond.", "", colnames(ci), fixed = TRUE)
-  ci
+  ci[!sapply(ci, function(i) all(is.na(i)), simplify = TRUE)]
 }
 
 
