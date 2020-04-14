@@ -132,6 +132,10 @@ print.equivalence_test_lm <- function(x, digits = 2, ...) {
   .rope <- attr(x, "rope", exact = TRUE)
   cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, .rope[1], digits, .rope[2]))
 
+  if ("Component" %in% colnames(x)) {
+    x <- x[x$Component %in% c("conditional", "count"), ]
+  }
+
   # find the longest CI-value, so we can align the brackets in the ouput
   x$CI_low <- sprintf("%.*f", digits, x$CI_low)
   x$CI_high <- sprintf("%.*f", digits, x$CI_high)
