@@ -58,6 +58,11 @@ equivalence_test.MixMod <- equivalence_test.lm
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
+  if (length(ci) > 1) {
+    warning("`ci` may only be of length 1. Using first ci-value now.", call. = FALSE)
+    ci <- ci[1]
+  }
+
   params <- conf_int <- ci_wald(x, ci = ci)
   conf_int <- as.data.frame(t(conf_int[, c("CI_low", "CI_high")]))
 
