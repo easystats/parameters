@@ -12,6 +12,10 @@
 
 * `model_parameters()` for Stan-models (*brms*, *rstanarm*) gains a `group_level` argument to show or hide parameters for group levels of random effects.
 
+## Bug fixes
+
+* Fixed issue in `equivalence_test()` for mixed models.
+
 # parameters 0.6.1
 
 ## General
