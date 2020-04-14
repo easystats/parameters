@@ -253,7 +253,7 @@ d <- cbind(d, demean(d, c("x", "y"), group = "grp"))
 
 Let's look at the raw data...
 
-```{r}
+```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(colour = "#555555", size = 2.5, alpha = .5) +
   see::theme_modern() +
@@ -264,11 +264,10 @@ ggplot(d, aes(x, y)) +
 
 We can now assume a (linear) relationship between typing errors and typing speed.
 
-```{r}
+```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(colour = "#555555", size = 2.5, alpha = .5) +
   geom_smooth(method = "lm", se = F, colour = "#555555") +
-  see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
@@ -282,7 +281,7 @@ model_parameters(m1)
 
 However, we have ignored the clustered structure in our data, in this example due to repeated measurements.
 
-```{r}
+```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(mapping = aes(colour = grp), size = 2.5, alpha = .5) +
   geom_smooth(method = "lm", se = F, colour = "#555555") +
@@ -295,7 +294,7 @@ ggplot(d, aes(x, y)) +
 
 A fixed effects regression (FE-regression) would now remove all between-effects and include only the within-effects as well as the group-level indicator. 
 
-```{r}
+```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
@@ -315,7 +314,7 @@ model_parameters(m2)[1, ]
 
 To understand, why the above model 1 (`m1`) returns a biased estimate, which is a "weighted average" of the within- and between-effects, let us look at the between-effect now.
 
-```{r}
+```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
   geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
@@ -335,7 +334,7 @@ model_parameters(m3)
 
 Since FE-models can only model within-effects, we now use a mixed model with within- and between-effects.
 
-```{r}
+```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
