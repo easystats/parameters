@@ -23,7 +23,11 @@ bayestestR::equivalence_test
 #' equivalence_test(m)
 #' @export
 equivalence_test.lm <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
-  .equivalence_test_frequentist(x, range, ci, verbose, ...)
+  out <- .equivalence_test_frequentist(x, range, ci, verbose, ...)
+
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  class(out) <- c("equivalence_test_lm", "equivalence_test", "see_equivalence_test", class(out))
+  out
 }
 
 
@@ -83,11 +87,7 @@ equivalence_test.MixMod <- equivalence_test.lm
     dat,
     stringsAsFactors = FALSE
   )
-
-  class(out) <- c("equivalence_test_lm", "equivalence_test", "see_equivalence_test", class(out))
   attr(out, "rope") <- range
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
-
   out
 }
 
@@ -119,6 +119,8 @@ equivalence_test.MixMod <- equivalence_test.lm
   data.frame(
     CI_low = range_ci[1],
     CI_high = range_ci[2],
+    ROPE_low = range_rope[1],
+    ROPE_high = range_rope[2],
     ROPE_Percentage = coverage,
     ROPE_Equivalence = decision,
     stringsAsFactors = FALSE
