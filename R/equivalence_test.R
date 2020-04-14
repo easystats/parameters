@@ -164,14 +164,15 @@ equivalence_test.MixMod <- equivalence_test.merMod
     d <- data.frame(
       Parameter = rownames(params[[np]]),
       Estimate = est,
-      CI_low = est - stderr * fac,
-      CI_high = est + stderr * fac,
       CI = ci,
       Group = np,
       stringsAsFactors = FALSE
     )
 
-    conf_int <- as.data.frame(t(d[, c("CI_low", "CI_high")]))
+    conf_int <- as.data.frame(t(data.frame(
+      CI_low = est - stderr * fac,
+      CI_high = est + stderr * fac
+    )))
 
     l <- lapply(
       conf_int,
