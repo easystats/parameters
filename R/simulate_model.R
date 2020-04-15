@@ -61,7 +61,11 @@ simulate_model <- function(model, iterations = 1000, ...) {
 #' @importFrom insight get_parameters
 #' @export
 simulate_model.default <- function(model, iterations = 1000, ...) {
-  .simulate_model(model, iterations, component = "conditional", effects = "fixed")
+  out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed")
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
 }
 
 
@@ -240,7 +244,12 @@ simulate_model.gam <- function(model, iterations = 1000, ...) {
 
   beta <- stats::coef(model)
   varcov <- insight::get_varcov(model, component = "all")
-  as.data.frame(MASS::mvrnorm(n = iterations, mu = beta, Sigma = varcov))
+
+  out <- as.data.frame(MASS::mvrnorm(n = iterations, mu = beta, Sigma = varcov))
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
 }
 
 
@@ -267,7 +276,9 @@ simulate_model.list <- function(model, iterations = 1000, ...) {
 
 #' @export
 simulate_model.vgam <- function(model, iterations = 1000, ...) {
-  .simulate_model(model, iterations, component = "all")
+  out <- .simulate_model(model, iterations, component = "all")
+  class(out) <- c("parameters_simulate_model", class(out))
+  out
 }
 
 
@@ -310,6 +321,8 @@ simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all"
     d <- .simulate_model(model, iterations, component = "zero_inflated")
   }
 
+  class(d) <- c("parameters_simulate_model", class(d))
+  attr(d, "object_name") <- .safe_deparse(substitute(model))
   d
 }
 
@@ -337,14 +350,22 @@ simulate_model.zerocount <- simulate_model.zeroinfl
 #' @export
 simulate_model.betareg <- function(model, iterations = 1000, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
-  .simulate_model(model, iterations, component = component)
+  out <- .simulate_model(model, iterations, component = component)
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
 }
 
 
 #' @export
 simulate_model.clm2 <- function(model, iterations = 1000, component = c("all", "conditional", "scale"), ...) {
   component <- match.arg(component)
-  .simulate_model(model, iterations, component = component)
+  out <- .simulate_model(model, iterations, component = component)
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
 }
 
 
@@ -355,14 +376,22 @@ simulate_model.clmm2 <- simulate_model.clm2
 #' @export
 simulate_model.glmx <- function(model, iterations = 1000, component = c("all", "conditional", "extra"), ...) {
   component <- match.arg(component)
-  .simulate_model(model, iterations, component = component)
+  out <- .simulate_model(model, iterations, component = component)
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
 }
 
 
 #' @export
 simulate_model.mixor <- function(model, iterations = 1000, effects = c("all", "fixed", "random"), ...) {
   effects <- match.arg(effects)
-  .simulate_model(model, iterations, component = "conditional", effects = effects)
+  out <- .simulate_model(model, iterations, component = "conditional", effects = effects)
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
 }
 
 

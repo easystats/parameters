@@ -95,6 +95,23 @@ equivalence_test.MixMod <- equivalence_test.merMod
 
 
 
+
+# Special classes -------------------------
+
+#' @export
+equivalence_test.parameters_simulate_model <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
+  out <- equivalence_test(as.data.frame(x), range = range, ci = ci, verbose = verbose, ...)
+
+  attr(out, "object_name") <- attr(x, "object_name")
+  class(out) <- c("equivalence_test", "see_equivalence_test", class(out))
+  out
+}
+
+
+
+
+
+
 # helper -------------------
 
 
