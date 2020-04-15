@@ -160,9 +160,16 @@ n_parameters.stanmvreg <- n_parameters.stanreg
 
 
 
+
 # Other models -------------------------------------
 
 #' @export
 n_parameters.multinom <- function(x, ...) {
   nrow(insight::get_parameters(x))
+}
+
+
+#' @export
+n_parameters.bayesx <- function(x, ...) {
+  length(insight::find_parameters(x, component = "conditional", flatten = TRUE, ...))
 }

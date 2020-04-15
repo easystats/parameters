@@ -625,6 +625,15 @@ p_value.averaging <- function(model, component = c("conditional", "full"), ...) 
 }
 
 
+#' @export
+p_value.bayesx <- function(model, ...) {
+  .data_frame(
+    Parameter = find_parameters(model, component = "conditional", flatten = TRUE),
+    p = model$fixed.effects[, 4]
+  )
+}
+
+
 #' @rdname p_value
 #' @export
 p_value.DirichletRegModel <- function(model, component = c("all", "conditional", "precision"), ...) {

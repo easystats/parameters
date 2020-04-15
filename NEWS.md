@@ -2,7 +2,7 @@
 
 ## New supported models
 
-* `averaging` (*MuMIn*)
+* `averaging` (*MuMIn*), `bayesx` (*R2BayesX*)
 
 ## New functions
 

@@ -806,6 +806,14 @@ standard_error.brmsfit <- standard_error.stanreg
 #' @export
 standard_error.mvstanreg <- standard_error.stanreg
 
+#' @export
+standard_error.bayesx <- function(model, ...) {
+  .data_frame(
+    Parameter = find_parameters(model, component = "conditional", flatten = TRUE),
+    SE = model$fixed.effects[, 2]
+  )
+}
+
 
 
 
