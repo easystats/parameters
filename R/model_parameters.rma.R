@@ -5,9 +5,8 @@
 #' @inheritParams model_parameters.default
 #'
 #' @examples
-#' \dontrun{
 #' library(parameters)
-#' mydat <- data.frame(
+#' mydat <<- data.frame(
 #'   effectsize = c(-0.393, 0.675, 0.282, -1.398),
 #'   stderr = c(0.317, 0.317, 0.13, 0.36)
 #' )
@@ -16,10 +15,11 @@
 #'   model_parameters(model)
 #' }
 #'
+#' \donttest{
 #' # with subgroups
 #' if (require("metafor")) {
 #'   data(dat.bcg)
-#'   dat <- escalc(
+#'   dat <<- escalc(
 #'     measure = "RR",
 #'     ai = tpos,
 #'     bi = tneg,
@@ -27,7 +27,7 @@
 #'     di = cneg,
 #'     data = dat.bcg
 #'   )
-#'   dat$alloc <- ifelse(dat$alloc == "random", "random", "other")
+#'   dat$alloc <<- ifelse(dat$alloc == "random", "random", "other")
 #'   model <- rma(yi, vi, mods = ~ alloc, data = dat, digits = 3, slab = author)
 #'   model_parameters(model)
 #' }
