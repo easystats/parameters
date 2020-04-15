@@ -98,11 +98,29 @@ equivalence_test.MixMod <- equivalence_test.merMod
 
 # Special classes -------------------------
 
+#' @importFrom bayestestR rope_range
 #' @export
 equivalence_test.parameters_simulate_model <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
+  model_name <- attr(x, "object_name", exact = TRUE)
+  # retrieve model
+  model <- tryCatch(
+    {
+      get(model_name, envir = parent.frame())
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+
+  if (all(range == "default") && !is.null(model)) {
+    range <- bayestestR::rope_range(model)
+  } else if (!all(is.numeric(range)) | length(range) != 2) {
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+  }
+
   out <- equivalence_test(as.data.frame(x), range = range, ci = ci, verbose = verbose, ...)
 
-  attr(out, "object_name") <- attr(x, "object_name")
+  attr(out, "object_name") <- model_name
   attr(out, "data") <- x
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", "equivalence_test_simulate_model", class(out)))
   out
