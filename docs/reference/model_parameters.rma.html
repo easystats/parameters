@@ -216,7 +216,8 @@
     <p>A data frame of indices related to the model's parameters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
 <span class='no'>mydat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>effectsize</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.393</span>, <span class='fl'>0.675</span>, <span class='fl'>0.282</span>, -<span class='fl'>1.398</span>),
   <span class='kw'>stderr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.317</span>, <span class='fl'>0.317</span>, <span class='fl'>0.13</span>, <span class='fl'>0.36</span>)
@@ -224,12 +225,8 @@
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"metafor"</span>)) {
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/metafor/man/rma.uni.html'>rma</a></span>(<span class='kw'>yi</span> <span class='kw'>=</span> <span class='no'>effectsize</span>, <span class='kw'>sei</span> <span class='kw'>=</span> <span class='no'>stderr</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"REML"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mydat</span>)
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: metafor</span></div><div class='output co'>#&gt; <span class='message'>Loading 'metafor' package (version 2.4-0). For an overview </span>
-#&gt; <span class='message'>and introduction to the package please type: help(metafor).</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'metafor'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:mclust':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    hc</span></div><div class='output co'>#&gt; <span class='error'>Error in rma(yi = effectsize, sei = stderr, data = mydat, method = "REML",     level = i): object 'mydat' not found</span></div><div class='input'>
-<span class='co'># \donttest{</span>
+}
+
 <span class='co'># with subgroups</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"metafor"</span>)) {
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>dat.bcg</span>)
@@ -244,8 +241,8 @@
   <span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>dat</span>$<span class='no'>alloc</span> <span class='kw'>==</span> <span class='st'>"random"</span>, <span class='st'>"random"</span>, <span class='st'>"other"</span>)
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/metafor/man/rma.uni.html'>rma</a></span>(<span class='no'>yi</span>, <span class='no'>vi</span>, <span class='kw'>mods</span> <span class='kw'>=</span> ~ <span class='no'>alloc</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dat</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>slab</span> <span class='kw'>=</span> <span class='no'>author</span>)
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
-}</div><div class='output co'>#&gt; <span class='error'>Error in rma(yi = yi, vi = vi, mods = ~alloc, data = dat, slab = author,     digits = 3, level = i): object 'dat' not found</span></div><div class='input'># }
-</div></pre>
+}
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

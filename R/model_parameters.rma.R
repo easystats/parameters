@@ -5,6 +5,7 @@
 #' @inheritParams model_parameters.default
 #'
 #' @examples
+#' \dontrun{
 #' library(parameters)
 #' mydat <- data.frame(
 #'   effectsize = c(-0.393, 0.675, 0.282, -1.398),
@@ -15,7 +16,6 @@
 #'   model_parameters(model)
 #' }
 #'
-#' \donttest{
 #' # with subgroups
 #' if (require("metafor")) {
 #'   data(dat.bcg)

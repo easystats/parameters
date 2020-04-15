@@ -36,6 +36,7 @@ A data frame of indices related to the model's parameters.
 Extract and compute indices and measures to describe parameters of meta-analysis models.
 }
 \examples{
+\dontrun{
 library(parameters)
 mydat <- data.frame(
   effectsize = c(-0.393, 0.675, 0.282, -1.398),
@@ -46,7 +47,6 @@ if (require("metafor")) {
   model_parameters(model)
 }
 
-\donttest{
 # with subgroups
 if (require("metafor")) {
   data(dat.bcg)
