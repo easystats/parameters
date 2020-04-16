@@ -36,9 +36,9 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   res <- attributes(x)$details
 
   # check if user supplied digits attributes
-  if (missing(digits)) digits <- .add_additional_arguments(x, "digits", 2)
-  if (missing(ci_digits)) ci_digits <- .add_additional_arguments(x, "ci_digits", 2)
-  if (missing(p_digits)) p_digits <- .add_additional_arguments(x, "p_digits", 3)
+  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
+  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
 
   # minor fix for nested Anovas
   if ("Group" %in% colnames(x) && sum(x$Parameter == "Residuals") > 1) {
@@ -311,10 +311,10 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
   cp <- attributes(x)$parameter_info
 
   # check if user supplied digits attributes
-  ci <- .add_additional_arguments(x, "ci", .95)
-  digits <- .add_additional_arguments(x, "digits", 2)
-  ci_digits <- .add_additional_arguments(x, "ci_digits", 2)
-  p_digits <- .add_additional_arguments(x, "p_digits", 3)
+  ci <- .additional_arguments(x, "ci", .95)
+  digits <- .additional_arguments(x, "digits", 2)
+  ci_digits <- .additional_arguments(x, "ci_digits", 2)
+  p_digits <- .additional_arguments(x, "p_digits", 3)
 
   if (!split_components || is.null(cp)) {
     NextMethod()
