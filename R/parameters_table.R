@@ -30,13 +30,9 @@
 parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, ci_digits = 2, p_digits = 3, ...) {
 
   # check if user supplied digits attributes
-  if (missing(digits)) digits <- attributes(x)$digits
-  if (missing(ci_digits)) ci_digits <- attributes(x)$ci_digits
-  if (missing(p_digits)) p_digits <- attributes(x)$p_digits
-
-  if (is.null(digits)) digits <- 2
-  if (is.null(ci_digits)) ci_digits <- 2
-  if (is.null(p_digits)) p_digits <- 3
+  if (missing(digits)) digits <- .add_additional_arguments(x, "digits", 2)
+  if (missing(ci_digits)) ci_digits <- .add_additional_arguments(x, "ci_digits", 2)
+  if (missing(p_digits)) p_digits <- .add_additional_arguments(x, "p_digits", 3)
 
   x <- as.data.frame(x)
 
@@ -139,4 +135,26 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   }
 
   x
+}
+
+
+
+
+
+# helper ---------------------
+
+.add_additional_arguments <- function(x, value, default) {
+  args <- attributes(x)$additional_arguments
+
+  if (length(args) > 0 && value %in% names(args)) {
+    out <- args[[value]]
+  } else {
+    out <- attributes(x)[[value]]
+  }
+
+  if (is.null(out)) {
+    out <- default
+  }
+
+  out
 }

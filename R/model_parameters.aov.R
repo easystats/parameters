@@ -163,14 +163,19 @@ model_parameters.aovlist <- model_parameters.aov
 
   # check if we have any information on denominator df
   if (is.null(df_error) && !("DenDF" %in% colnames(model))) {
-    warning("Cannot compute effect size without denominator degrees of freedom. Please specify 'df_error', or use package 'lmerTest' to fit your mixed model.", call. = FALSE)
-    return(parameters)
+    if ("Residuals" %in% parameters$Parameter) {
+      df_col <- colnames(parameters)[colnames(parameters) %in% c("df", "df_error", "Df", "NumDF")]
+      df_error <- parameters[parameters$Parameter == "Residuals", df_col]
+    } else {
+      warning("Cannot compute effect size without denominator degrees of freedom. Please specify 'df_error', or use package 'lmerTest' to fit your mixed model.", call. = FALSE)
+      return(parameters)
+    }
   }
 
   # denominator DF
   if (is.null(df_error)) {
     df_error <- model$DenDF
-  } else {
+  } else if (length(df_error) > 1) {
     # term names
     rn <- rownames(model)
 

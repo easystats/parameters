@@ -18,6 +18,7 @@
 ## Bug fixes
 
 * Fixed issue in `equivalence_test()` for mixed models.
+* Fixed bug for `model_parameters.anova(..., eta_squared = "partial")` when called with non-mixed models.
 
 # parameters 0.6.1
 
