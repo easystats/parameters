@@ -81,7 +81,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   if (split_components && !is.null(split_by) && length(split_by)) {
     .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
   } else {
-    formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
+    formatted_table <- parameters_table(x, pretty_names = pretty_names, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
     cat(insight::format_table(formatted_table))
   }
 
