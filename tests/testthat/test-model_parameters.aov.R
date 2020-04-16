@@ -3,7 +3,7 @@
 if (.runThisTest || Sys.getenv("USER") == "travis") {
   if (require("insight") && require("testthat") && require("lme4") && require("parameters")) {
 
-    if (requireNamespace("effectsize") && utils::packageVersion("effectsize") >= "0.2.9.9") {
+    if (requireNamespace("effectsize")) {
       unloadNamespace("lmerTest")
       data(iris)
       iris$Cat1 <- rep(c("X", "X", "Y"), length.out = nrow(iris))

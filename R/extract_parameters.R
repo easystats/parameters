@@ -603,6 +603,7 @@
   # Rename
   names(parameters) <- gsub("Pr(>F)", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Df", "df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("npar", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("NumDF", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi.Df", "Chisq_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi DoF", "Chisq_df", names(parameters), fixed = TRUE)
