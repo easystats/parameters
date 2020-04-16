@@ -5,7 +5,16 @@
 \alias{print.parameters_model}
 \title{Print model parameters}
 \usage{
-\method{print}{parameters_model}(x, pretty_names = TRUE, split_components = TRUE, select = NULL, ...)
+\method{print}{parameters_model}(
+  x,
+  pretty_names = TRUE,
+  split_components = TRUE,
+  select = NULL,
+  digits = 2,
+  ci_digits = 2,
+  p_digits = 3,
+  ...
+)
 }
 \arguments{
 \item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
@@ -19,6 +28,12 @@ in a single table and a \code{Component} column is added to the output.}
 
 \item{select}{Character vector (or numeric index) of column names that should
 be printed. If \code{NULL} (default), all columns are printed.}
+
+\item{digits}{Number of decimal places for numeric values (except confidence intervals and p-values).}
+
+\item{ci_digits}{Number of decimal places for confidence intervals.}
+
+\item{p_digits}{Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

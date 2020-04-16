@@ -2,6 +2,9 @@
 #'
 #' @param x A data frame of model's parameters.
 #' @param pretty_names Pretty parameters' names.
+#' @param digits Number of decimal places for numeric values (except confidence intervals and p-values).
+#' @param ci_digits Number of decimal places for confidence intervals.
+#' @param p_digits Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.
 #' @inheritParams format_p
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -10,6 +13,7 @@
 #'
 #' x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
 #' as.data.frame(parameters_table(x))
+#' as.data.frame(parameters_table(x, p_digits = "scientific"))
 #' \donttest{
 #' if (require("rstanarm")) {
 #'   model <- stan_glm(Sepal.Length ~ Species, data = iris, refresh = 0, seed = 123)
@@ -23,12 +27,12 @@
 #' @importFrom insight format_value format_ci
 #' @importFrom stats na.omit
 #' @export
-parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, ...) {
+parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, ci_digits = 2, p_digits = 3, ...) {
 
   # check if user supplied digits attributes
-  digits <- attributes(x)$digits
-  ci_digits <- attributes(x)$ci_digits
-  p_digits <- attributes(x)$p_digits
+  if (missing(digits)) digits <- attributes(x)$digits
+  if (missing(ci_digits)) ci_digits <- attributes(x)$ci_digits
+  if (missing(p_digits)) p_digits <- attributes(x)$p_digits
 
   if (is.null(digits)) digits <- 2
   if (is.null(ci_digits)) ci_digits <- 2

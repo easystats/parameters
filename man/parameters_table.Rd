@@ -4,7 +4,15 @@
 \alias{parameters_table}
 \title{Parameter table formatting}
 \usage{
-parameters_table(x, pretty_names = TRUE, stars = FALSE, ...)
+parameters_table(
+  x,
+  pretty_names = TRUE,
+  stars = FALSE,
+  digits = 2,
+  ci_digits = 2,
+  p_digits = 3,
+  ...
+)
 }
 \arguments{
 \item{x}{A data frame of model's parameters.}
@@ -12,6 +20,12 @@ parameters_table(x, pretty_names = TRUE, stars = FALSE, ...)
 \item{pretty_names}{Pretty parameters' names.}
 
 \item{stars}{Add significance stars (e.g., p < .001***).}
+
+\item{digits}{Number of decimal places for numeric values (except confidence intervals and p-values).}
+
+\item{ci_digits}{Number of decimal places for confidence intervals.}
+
+\item{p_digits}{Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -26,6 +40,7 @@ library(parameters)
 
 x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
 as.data.frame(parameters_table(x))
+as.data.frame(parameters_table(x, p_digits = "scientific"))
 \donttest{
 if (require("rstanarm")) {
   model <- stan_glm(Sepal.Length ~ Species, data = iris, refresh = 0, seed = 123)

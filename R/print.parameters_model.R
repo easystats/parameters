@@ -32,8 +32,13 @@
 #' }
 #' @importFrom insight format_table
 #' @export
-print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, ...) {
+print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
   res <- attributes(x)$details
+
+  # check if user supplied digits attributes
+  if (missing(digits) && !is.null(attributes(x)$digits)) digits <- attributes(x)$digits
+  if (missing(ci_digits) && !is.null(attributes(x)$ci_digits)) ci_digits <- attributes(x)$ci_digits
+  if (missing(p_digits) && !is.null(attributes(x)$p_digits)) p_digits <- attributes(x)$p_digits
 
   # minor fix for nested Anovas
   if ("Group" %in% colnames(x) && sum(x$Parameter == "Residuals") > 1) {
