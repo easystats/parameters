@@ -79,7 +79,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   split_by <- split_by[nchar(split_by) > 0]
 
   if (split_components && !is.null(split_by) && length(split_by)) {
-    .print_model_parms_components(x, pretty_names, split_column = split_by, ...)
+    .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
   } else {
     formatted_table <- parameters_table(x, pretty_names = pretty_names, ...)
     cat(insight::format_table(formatted_table))
@@ -88,7 +88,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   # print summary for random effects
   if (!is.null(res)) {
     cat("\n")
-    .print_random_parameters(res, digits = attributes(x)$digits)
+    .print_random_parameters(res, digits = digits)
   }
 }
 
@@ -164,12 +164,9 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 
 #' @keywords internal
-.print_model_parms_components <- function(x, pretty_names, split_column = "Component", ...) {
+.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, ...) {
 
   # check if user supplied digits attributes
-  digits <- attributes(x)$digits
-  ci_digits <- attributes(x)$ci_digits
-  p_digits <- attributes(x)$p_digits
   is_ordinal_model <- attributes(x)$ordinal_model
 
   if (is.null(is_ordinal_model)) is_ordinal_model <- FALSE
