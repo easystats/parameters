@@ -190,4 +190,5 @@ print.cluster_analysis <- function(x, digits = 2, ...) {
     cat("\n")
     print(accuracy)
   }
+  invisible(x)
 }

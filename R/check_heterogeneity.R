@@ -47,4 +47,5 @@ print.check_heterogeneity <- function(x, ...) {
   cat("Possible heterogeneity bias due to following predictors: ")
   insight::print_color(paste(x, collapse = ", "), "red")
   cat("\n")
+  invisible(x)
 }

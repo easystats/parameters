@@ -33,6 +33,7 @@
 #' @importFrom insight format_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
+  orig_x <- x
   res <- attributes(x)$details
 
   # check if user supplied digits attributes
@@ -90,6 +91,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     cat("\n")
     .print_random_parameters(res, digits = digits)
   }
+  invisible(orig_x)
 }
 
 
@@ -98,6 +100,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 #' @export
 print.parameters_random <- function(x, digits = 2, ...) {
   .print_random_parameters(x, digits = digits)
+  invisible(x)
 }
 
 
@@ -308,6 +311,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 #' @export
 print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
+  orig_x <- x
   cp <- attributes(x)$parameter_info
 
   # check if user supplied digits attributes
@@ -348,4 +352,5 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
       cat("\n")
     }
   }
+  invisible(orig_x)
 }

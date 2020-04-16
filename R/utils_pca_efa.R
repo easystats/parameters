@@ -115,6 +115,8 @@ print.parameters_pca_summary <- print.parameters_efa_summary
 #' @export
 print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
 
+  orig_x <- x
+
   if (inherits(x, "parameters_pca")) {
     method <- "Principal Component Analysis"
   } else {
@@ -153,6 +155,8 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
     insight::print_colour(.text_components_variance(x), "yellow")
     cat("\n")
   }
+
+  invisible(orig_x)
 }
 
 #' @export
@@ -162,15 +166,19 @@ print.parameters_pca <- print.parameters_efa
 
 #' @export
 print.parameters_omega <- function(x, ...) {
+  orig_x <- x
   names(x) <- c("Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)")
   cat(insight::format_table(x))
+  invisible(orig_x)
 }
 
 
 #' @export
 print.parameters_omega_summary <- function(x, ...) {
+  orig_x <- x
   names(x) <- c("Composite", "Total Variance (%)", "Variance due to General Factor (%)", "Variance due to Group Factor (%)")
   cat(insight::format_table(x))
+  invisible(orig_x)
 }
 
 

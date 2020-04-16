@@ -264,12 +264,14 @@ as.double.parameters_skewness <- as.numeric.parameters_skewness
 #' @export
 print.parameters_kurtosis <- function(x, digits = 3, test = FALSE, ...) {
   .print_skew_kurt(x, val = "Kurtosis", digits = digits, test = test, ...)
+  invisible(x)
 }
 
 #' @rdname skewness
 #' @export
 print.parameters_skewness <- function(x, digits = 3, test = FALSE, ...) {
   .print_skew_kurt(x, val = "Skewness", digits = digits, test = test, ...)
+  invisible(x)
 }
 
 

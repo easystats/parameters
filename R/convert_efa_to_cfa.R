@@ -84,4 +84,5 @@ efa_to_cfa <- convert_efa_to_cfa
 #' @export
 print.cfa_model <- function(x, ...) {
   cat(x)
+  invisible(x)
 }

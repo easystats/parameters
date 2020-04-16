@@ -274,6 +274,7 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 #' @importFrom insight print_color
 #' @export
 print.equivalence_test_lm <- function(x, digits = 2, ...) {
+  orig_x <- x
   insight::print_color("# Test for Practical Equivalence\n\n", "blue")
 
   .rope <- attr(x, "rope", exact = TRUE)
@@ -292,6 +293,7 @@ print.equivalence_test_lm <- function(x, digits = 2, ...) {
   } else {
     .print_equitest_freq(x, digits, ...)
   }
+  invisible(orig_x)
 }
 
 

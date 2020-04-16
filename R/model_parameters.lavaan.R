@@ -115,6 +115,7 @@ print.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
 
   .print_model_parms_components(x, pretty_names = TRUE, split_column = "Type", digits = digits, ci_digits = ci_digits, p_digits = p_digits)
+  invisible(x)
 }
 
 

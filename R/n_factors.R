@@ -274,6 +274,7 @@ print.n_factors <- function(x, ...) {
 
   insight::print_color("# Method Agreement Procedure:\n\n", "blue")
   cat(text)
+  invisible(x)
 }
 
 

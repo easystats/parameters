@@ -128,4 +128,5 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 print.parameters_loadings <- function(x, ...) {
   formatted_table <- parameters_table(x)
   cat(insight::format_table(formatted_table))
+  invisible(x)
 }

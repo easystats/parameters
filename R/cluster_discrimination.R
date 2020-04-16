@@ -58,6 +58,7 @@ cluster_discrimination <- function(x, cluster_groups = NULL) {
 
 #' @export
 print.cluster_discrimintation <- function(x, ...) {
+  orig_x <- x
   insight::print_color("# Accuracy of Cluster Group Classification\n\n", "blue")
 
   total_accuracy <- attributes(x)$Overall_Accuracy
@@ -66,4 +67,5 @@ print.cluster_discrimintation <- function(x, ...) {
 
   print.data.frame(x, row.names = FALSE, ...)
   insight::print_color(sprintf("\nOverall accuracy of classification: %s\n", total), "yellow")
+  invisible(orig_x)
 }
