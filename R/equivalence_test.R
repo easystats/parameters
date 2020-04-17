@@ -12,19 +12,36 @@ bayestestR::equivalence_test
 #' @param range The range of practical equivalence of an effect. May be \code{"default"},
 #'   to automatically define this range based on properties of the model's data.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
+#' @param p_values Logical, if \code{TRUE}, adjusted p-values for equivalence testing are calculated.
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.merMod
 #'
 #' @seealso For more details, see \code{\link[bayestestR:equivalence_test]{equivalence_test}}.
+#'   Further readings can be found in the references.
+#'
+#' @details The calculation of p-values is somewhat "experimental". For parameters, where H0...
+#'   \itemize{
+#'     \item ... is rejected, the p-value equals a NHST as if the upper / lower boundary of the ROPE (see \code{range}) would be the point-null to test against.
+#'     \item ... is accepted, the p-value is set to 1.
+#'     \item ... is undecided, the p-value equals a NHST against the point-null, however, the "uncertainty" (i.e. ROPE range) is added to the confidence intervals (so the upper confidence interval limit equals the regular upper confidence interval limit + half the ROPE range).
+#'   }
+#'   All p-values are then adjusted for multiple testing (using \code{\link[stats]{p.adjust}} with \code{method = "fdr"}).
+#'
+#' @references
+#' \itemize{
+#'   \item Campbell, H., & Gustafson, P. (2018). Conditional equivalence testing: An alternative remedy for publication bias. PLOS ONE, 13(4), e0195145. https://doi.org/10.1371/journal.pone.0195145
+#'   \item Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. doi: 10.1177/2515245918771304
+#'   \item Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses. Social Psychological and Personality Science, 8(4), 355–362. https://doi.org/10.1177/1948550617697177
+#' }
 #'
 #' @return A data frame.
 #' @examples
 #' m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 #' equivalence_test(m)
 #' @export
-equivalence_test.lm <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
-  out <- .equivalence_test_frequentist(x, range, ci, verbose, ...)
+equivalence_test.lm <- function(x, range = "default", ci = .95, p_values = FALSE, verbose = TRUE, ...) {
+  out <- .equivalence_test_frequentist(x, range, ci, p_values, verbose, ...)
 
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
@@ -70,10 +87,10 @@ equivalence_test.zeroinfl <- equivalence_test.lm
 
 #' @rdname equivalence_test.lm
 #' @export
-equivalence_test.merMod <- function(x, range = "default", ci = .95, effects = c("fixed", "random"), verbose = TRUE, ...) {
+equivalence_test.merMod <- function(x, range = "default", ci = .95, effects = c("fixed", "random"), p_values = FALSE, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   if (effects == "fixed") {
-    out <- .equivalence_test_frequentist(x, range, ci, verbose, ...)
+    out <- .equivalence_test_frequentist(x, range, ci, p_values, verbose, ...)
   } else {
     out <- .equivalence_test_frequentist_random(x, range, ci, verbose, ...)
   }
@@ -136,7 +153,7 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
 #' @importFrom bayestestR equivalence_test rope_range
 #' @keywords internal
-.equivalence_test_frequentist <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
+.equivalence_test_frequentist <- function(x, range = "default", ci = .95, p_values = FALSE, verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
@@ -167,6 +184,10 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
     dat,
     stringsAsFactors = FALSE
   )
+
+  # adjusted p-value for tests
+  if (isTRUE(p_values)) out$p <- .add_p_to_equitest(x, ci, range, out$ROPE_Equivalence)
+
   attr(out, "rope") <- range
   out
 }
@@ -265,6 +286,29 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
 
 
+#' @importFrom stats pt qnorm p.adjust
+.add_p_to_equitest <- function(model, ci, range, decision) {
+  tryCatch({
+    fac <- stats::qnorm((1 + ci) / 2)
+    interval <- ci_wald(model, ci = ci)
+    se <- abs((interval$CI_high - interval$CI_low) / (2 * fac))
+    est <- insight::get_parameters(model)$Estimate
+    r <- range[2]
+    if (any(decision == "Undecided")) se[decision == "Undecided"] <- se[decision == "Undecided"] + (r / fac)
+    if (any(decision == "Rejected")) est[decision == "Rejected"] <- ifelse(est[decision == "Rejected"] < 0, est[decision == "Rejected"] + r, est[decision == "Rejected"] - r)
+    stat <- abs(est / se)
+    df <- degrees_of_freedom(model)
+    out <- stats::p.adjust(2 * stats::pt(stat, df = df, lower.tail = FALSE), method = "fdr")
+    if (any(decision == "Accepted")) out[decision == "Accepted"] <- 1
+    out
+  },
+  error = function(e) {
+    NULL
+  })
+}
+
+
+
 
 
 
@@ -321,9 +365,12 @@ plot.equivalence_test_lm <- function(x, ...) {
 
   x$ROPE_Percentage <- sprintf("%.*f %%", digits, 100 * x$ROPE_Percentage)
   x$conf.int <- sprintf("[%*s %*s]", maxlen_low, x$CI_low, maxlen_high, x$CI_high)
+  if ("p" %in% colnames(x)) {
+    x$p <- format_p(x$p, name = NULL)
+  }
 
   CI <- unique(x$CI)
-  keep.columns <- c("CI", "Parameter", "ROPE_Equivalence", "ROPE_Percentage", "conf.int")
+  keep.columns <- c("CI", "Parameter", "ROPE_Equivalence", "ROPE_Percentage", "conf.int", "p")
 
   x <- x[, intersect(keep.columns, colnames(x))]
 
@@ -332,7 +379,12 @@ plot.equivalence_test_lm <- function(x, ...) {
 
   for (i in CI) {
     xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
-    colnames(xsub)[ncol(xsub)] <- sprintf("%i%% CI", round(100 * i))
+    if ("p" %in% colnames(x)) {
+      ci_col <- ncol(xsub) - 1
+    } else {
+      ci_col <- ncol(xsub)
+    }
+    colnames(xsub)[ci_col] <- sprintf("%i%% CI", round(100 * i))
     print.data.frame(xsub, digits = digits, row.names = FALSE)
     cat("\n")
   }
