@@ -170,7 +170,7 @@
 <a href="#new-supported-models" class="anchor"></a>New supported models</h2>
 <ul>
 <li>
-<code>averaging</code> (<em>MuMIn</em>)</li>
+<code>averaging</code> (<em>MuMIn</em>), <code>bayesx</code> (<em>R2BayesX</em>)</li>
 </ul>
 </div>
 <div id="new-functions" class="section level2">
@@ -184,20 +184,36 @@
 <div id="changes-to-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<div id="equivalence_test" class="section level3">
+<h3 class="hasAnchor">
+<a href="#equivalence_test" class="anchor"></a><code>equivalence_test()</code>
+</h3>
+<ul>
+<li>
+<code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> for mixed models gains an <code>effect</code> argument, to perform equivalence testing on random effects.</li>
+<li>
+<code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> gains a <code>p_values</code> argument, to calculate p-values for the equivalence test.</li>
+<li>
+<code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> now supports more frequentist model objects.</li>
+</ul>
+</div>
+<div id="other-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other changes</h3>
 <ul>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Stan-models (<em>brms</em>, <em>rstanarm</em>) gains a <code>group_level</code> argument to show or hide parameters for group levels of random effects.</li>
 <li>
-<code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> for mixed models gains an <code>effect</code> argument, to perform equivalence testing on random effects.</li>
-<li>
-<code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> now supports more frequentist model objects.</li>
+<code><a href="../reference/parameters_table.html">parameters_table()</a></code> and <code><a href="../reference/print.html">print.parameters_model()</a></code> now explicitely get arguments to define the digits for decimal places used in output.</li>
 </ul>
+</div>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue in <code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> for mixed models.</li>
+<li>Fixed bug for <code>model_parameters.anova(..., eta_squared = "partial")</code> when called with non-mixed models.</li>
 </ul>
 </div>
 </div>
@@ -291,9 +307,9 @@
 <li>Added <code><a href="../reference/standard_error.html">standard_error()</a></code> for <em>brmsfit</em> and <em>stanreg</em> objects.</li>
 </ul>
 </div>
-<div id="other-changes" class="section level3">
+<div id="other-changes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other changes</h3>
+<a href="#other-changes-1" class="anchor"></a>Other changes</h3>
 <ul>
 <li>Run certain tests only locally, to reduce duration of CRAN checks.</li>
 <li>
