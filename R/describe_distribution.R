@@ -166,6 +166,24 @@ describe_distribution.data.frame <- function(x, centrality = "mean", dispersion 
 
 
 
+#' @export
+describe_distribution.grouped_df <- function(x, centrality = "mean", dispersion = TRUE, range = TRUE, include_factors = FALSE, ...) {
+  group_vars <- setdiff(colnames(attributes(x)$groups), ".rows")
+  group_data <- expand.grid(lapply(x[group_vars], function(i) unique(sort(i))))
+  groups <- split(x, x[group_vars])
+
+  out <- do.call(rbind, lapply(1:length(groups), function(i) {
+    d <- describe_distribution.data.frame(groups[[i]], centrality = centrality, dispersion = dispersion, range = range, include_factors = include_factors, ...)
+    d[[".group"]] <- paste(sprintf("%s=%s", group_vars, sapply(group_data[i, ], as.character)), collapse = " | ")
+    d
+  }))
+
+  class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
+
+
 
 
 
@@ -173,11 +191,24 @@ describe_distribution.data.frame <- function(x, centrality = "mean", dispersion 
 #' @export
 print.parameters_distribution <- function(x, digits = 2, ...) {
   orig_x <- x
+
   if (all(c("Min", "Max") %in% names(x))) {
     x$Min <- insight::format_ci(x$Min, x$Max, ci = NULL, digits = digits, width = "auto", brackets = TRUE)
     x$Max <- NULL
     colnames(x)[which(colnames(x) == "Min")] <- "Range"
   }
-  cat(insight::format_table(x))
+
+  if (".group" %in% colnames(x)) {
+    grps <- split(x, x[[".group"]])
+    for (i in names(grps)) {
+      grps[[i]][[".group"]] <- NULL
+      insight::print_color(sprintf("# %s\n\n", i), "blue")
+      cat(insight::format_table(grps[[i]]))
+      cat("\n")
+    }
+  } else {
+    cat(insight::format_table(x))
+  }
+
   invisible(orig_x)
 }
