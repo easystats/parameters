@@ -171,8 +171,9 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
   # check if user supplied digits attributes
   is_ordinal_model <- attributes(x)$ordinal_model
-
   if (is.null(is_ordinal_model)) is_ordinal_model <- FALSE
+
+  is_zero_inflated <- (!is.null(x$Component) & "zero_inflated" %in% x$Component)
 
   # make sure we have correct order of levels from split-factor
   x[split_column] <- lapply(x[split_column], function(i) {
@@ -242,8 +243,8 @@ print.parameters_random <- function(x, digits = 2, ...) {
       "fixed" = ,
       "conditional" = "Fixed Effects",
       "random" = "Random Effects",
-      "conditional.fixed" = "Fixed Effects (Count Model)",
-      "conditional.random" = "Random Effects (Count Model)",
+      "conditional.fixed" = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
+      "conditional.random" = ifelse(is_zero_inflated, "Random Effects (Count Model)", "Random Effects"),
       "zero_inflated" = "Zero-Inflated",
       "zero_inflated.fixed" = "Fixed Effects (Zero-Inflated Model)",
       "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
