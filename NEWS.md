@@ -21,6 +21,7 @@
 * `model_parameters()` for Stan-models (*brms*, *rstanarm*) gains a `group_level` argument to show or hide parameters for group levels of random effects.
 * `parameters_table()` and `print.parameters_model()` now explicitely get arguments to define the digits for decimal places used in output.
 * `describe_distribution()` now works on grouped data frames.
+* `model_parameters.merMod()` no longer passes `...` down to bootstrap-functions (i.e. when `bootstrap = TRUE`), as this might conflict with `lme4::bootMer()`.
 
 ## Bug fixes
 
