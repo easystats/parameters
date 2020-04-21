@@ -49,7 +49,6 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
     merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
-    effects = "fixed",
     robust = robust,
     p_adjust = p_adjust,
     ...
@@ -61,7 +60,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
-.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", robust = FALSE, df_method = NULL, p_adjust = NULL, ...) {
+.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", component = "conditional", robust = FALSE, df_method = NULL, p_adjust = NULL, ...) {
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -71,11 +70,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
   if (bootstrap) {
     params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    params <- if (is.null(comp_argument)) {
-      .extract_parameters_generic(model, ci = ci, component = "conditional", merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, p_adjust = p_adjust, ...)
-    } else {
-      .extract_parameters_generic(model, ci = ci, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, p_adjust = p_adjust, ...)
-    }
+    .extract_parameters_generic(model, ci = ci, component = component, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, p_adjust = p_adjust, ...)
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)
@@ -100,7 +95,6 @@ model_parameters.averaging <- function(model, ci = .95, component = c("condition
     merge_by = "Parameter",
     exponentiate = exponentiate,
     component = component,
-    effects = "fixed",
     p_adjust = p_adjust,
     ...
   )
@@ -132,7 +126,6 @@ model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterati
     merge_by = c("Parameter", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
     ...
   )
@@ -164,7 +157,6 @@ model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations
     merge_by = c("Parameter", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
     ...
   )
@@ -197,7 +189,6 @@ model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations
     merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
     ...
   )
