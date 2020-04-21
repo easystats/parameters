@@ -2,7 +2,7 @@
 
 ## New supported models
 
-* `averaging` (*MuMIn*), `bayesx` (*R2BayesX*)
+* `averaging` (*MuMIn*), `bayesx` (*R2BayesX*), `afex_aov` (*afex*)
 
 ## New functions
 
