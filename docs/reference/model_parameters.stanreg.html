@@ -318,20 +318,20 @@ If <code>model</code> is a data frame, arguments <code>diagnostic</code>, <code>
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
   )
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.19.3, packaged: 2020-02-11 05:16:41 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- bayesplot theme set to bayesplot::theme_default()</span></div><div class='output co'>#&gt; <span class='message'>   * Does _not_ affect other ggplot2 plots</span></div><div class='output co'>#&gt; <span class='message'>   * See ?bayesplot_theme_set for details on theme setting</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+}</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.88), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.81), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.89). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.88). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
 #&gt; 
 #&gt; Parameter                      | Median |         89% CI |     pd | % in ROPE |  Rhat | ESS |              Prior
 #&gt; ----------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                    |   4.03 | [ 3.45,  4.64] |   100% |        0% | 1.014 | 220 | Normal (0 +- 8.28)
-#&gt; Petal.Length                   |   0.67 | [ 0.29,  1.11] | 99.90% |     0.50% | 1.013 | 218 | Normal (0 +- 1.17)
-#&gt; Speciesversicolor              |  -1.53 | [-2.41, -0.65] | 99.50% |     0.50% | 1.013 | 225 | Normal (0 +- 2.07)
-#&gt; Speciesvirginica               |  -2.77 | [-3.67, -1.85] |   100% |        0% | 1.005 | 311 | Normal (0 +- 2.07)
-#&gt; Petal.Length:Speciesversicolor |   0.13 | [-0.31,  0.57] | 70.60% |    21.90% | 1.016 | 197 | Normal (0 +- 1.02)
-#&gt; Petal.Length:Speciesvirginica  |   0.29 | [-0.18,  0.67] | 85.10% |    11.30% | 1.012 | 212 | Normal (0 +- 0.78)
+#&gt; (Intercept)                    |   4.02 | [ 3.50,  4.61] |   100% |        0% | 1.018 | 277 | Normal (0 +- 8.28)
+#&gt; Petal.Length                   |   0.67 | [ 0.29,  1.04] | 99.90% |     0.50% | 1.018 | 268 | Normal (0 +- 1.17)
+#&gt; Speciesversicolor              |  -1.55 | [-2.29, -0.59] | 99.60% |     0.30% | 1.017 | 327 | Normal (0 +- 2.07)
+#&gt; Speciesvirginica               |  -2.79 | [-3.58, -1.82] |   100% |        0% | 1.010 | 341 | Normal (0 +- 2.07)
+#&gt; Petal.Length:Speciesversicolor |   0.13 | [-0.29,  0.50] | 72.30% |    21.30% | 1.023 | 243 | Normal (0 +- 1.02)
+#&gt; Petal.Length:Speciesvirginica  |   0.28 | [-0.12,  0.66] | 88.20% |    12.50% | 1.018 | 249 | Normal (0 +- 0.78)
 #&gt; </div><div class='input'># }
 </div></span></pre>
   </div>

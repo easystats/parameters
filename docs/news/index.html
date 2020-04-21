@@ -170,7 +170,7 @@
 <a href="#new-supported-models" class="anchor"></a>New supported models</h2>
 <ul>
 <li>
-<code>averaging</code> (<em>MuMIn</em>), <code>bayesx</code> (<em>R2BayesX</em>)</li>
+<code>averaging</code> (<em>MuMIn</em>), <code>bayesx</code> (<em>R2BayesX</em>), <code>afex_aov</code> (<em>afex</em>)</li>
 </ul>
 </div>
 <div id="new-functions" class="section level2">
@@ -205,6 +205,10 @@
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Stan-models (<em>brms</em>, <em>rstanarm</em>) gains a <code>group_level</code> argument to show or hide parameters for group levels of random effects.</li>
 <li>
 <code><a href="../reference/parameters_table.html">parameters_table()</a></code> and <code><a href="../reference/print.html">print.parameters_model()</a></code> now explicitely get arguments to define the digits for decimal places used in output.</li>
+<li>
+<code><a href="../reference/describe_distribution.html">describe_distribution()</a></code> now works on grouped data frames.</li>
+<li>
+<code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> no longer passes <code>...</code> down to bootstrap-functions (i.e. when <code>bootstrap = TRUE</code>), as this might conflict with <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html">lme4::bootMer()</a></code>.</li>
 </ul>
 </div>
 </div>

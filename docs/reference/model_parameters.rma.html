@@ -224,7 +224,11 @@
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"metafor"</span>)) {
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/metafor/man/rma.uni.html'>rma</a></span>(<span class='kw'>yi</span> <span class='kw'>=</span> <span class='no'>effectsize</span>, <span class='kw'>sei</span> <span class='kw'>=</span> <span class='no'>stderr</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"REML"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mydat</span>)
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
-}</div><div class='output co'>#&gt; Parameter | Coefficient |   SE |         95% CI |     z |      p | Weight
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: metafor</span></div><div class='output co'>#&gt; <span class='message'>Loading 'metafor' package (version 2.4-0). For an overview </span>
+#&gt; <span class='message'>and introduction to the package please type: help(metafor).</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'metafor'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:mclust':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    hc</span></div><div class='output co'>#&gt; Parameter | Coefficient |   SE |         95% CI |     z |      p | Weight
 #&gt; -------------------------------------------------------------------------
 #&gt; Study 1   |       -0.39 | 0.32 | [-1.01,  0.23] | -1.24 | 0.215  |   9.95
 #&gt; Study 2   |        0.68 | 0.32 | [ 0.05,  1.30] |  2.13 | 0.033  |   9.95
