@@ -15,11 +15,11 @@
 #'   model_parameters(model)
 #' }
 #'
-#' \donttest{
+#' \dontrun{
 #' # with subgroups
 #' if (require("metafor")) {
 #'   data(dat.bcg)
-#'   dat <<- escalc(
+#'   dat <- escalc(
 #'     measure = "RR",
 #'     ai = tpos,
 #'     bi = tneg,
@@ -27,7 +27,7 @@
 #'     di = cneg,
 #'     data = dat.bcg
 #'   )
-#'   dat$alloc <<- ifelse(dat$alloc == "random", "random", "other")
+#'   dat$alloc <- ifelse(dat$alloc == "random", "random", "other")
 #'   model <- rma(yi, vi, mods = ~ alloc, data = dat, digits = 3, slab = author)
 #'   model_parameters(model)
 #' }
