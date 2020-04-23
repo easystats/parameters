@@ -26,6 +26,11 @@ model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations 
     parameters <- .extract_parameters_generic(model, ci = ci, component = "all", merge_by = c("Parameter", "Component"), standardize = standardize, robust = robust, p_adjust = p_adjust)
   }
 
+  # fix statistic column
+  if ("t" %in% names(parameters) && !is.null(parameters$Component) && "smooth_terms" %in% parameters$Component) {
+    names(parameters)[names(parameters) == "t"] <- "t / F"
+  }
+
   if (exponentiate) parameters <- .exponentiate_parameters(parameters)
   parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, ...)
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)

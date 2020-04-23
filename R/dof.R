@@ -85,6 +85,7 @@ dof <- degrees_of_freedom
 
 
 
+# Analytical approach ------------------------------
 
 
 #' @keywords internal
@@ -104,6 +105,10 @@ dof <- degrees_of_freedom
 
 
 
+
+
+
+# Model approach (Residual df) ------------------------------
 
 #' @importFrom bayestestR bayesian_as_frequentist
 #' @importFrom stats df.residual
@@ -137,11 +142,36 @@ dof <- degrees_of_freedom
     }
   }
 
+
+  # special cases
+  if (inherits(model, "gam")) {
+    dof <- .dof_fit_gam(model, dof)
+  }
+
+  dof
+}
+
+# helper --------------
+
+.dof_fit_gam <- function(model, dof) {
+  params <- insight::find_parameters(model)
+  if (!is.null(params$conditional)) {
+    dof <- rep(dof, length(params$conditional))
+  }
+  if (!is.null(params$smooth_terms)) {
+    s <- summary(g)
+    dof <- c(dof, s$s.table[, "Ref.df"])
+  }
   dof
 }
 
 
 
+
+
+
+
+# Helper, check args ------------------------------
 
 .dof_method_ok <- function(model, method) {
   if (is.null(method)) {

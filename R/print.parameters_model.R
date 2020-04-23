@@ -210,7 +210,10 @@ print.parameters_random <- function(x, digits = 2, ...) {
       if (type == "conditional") {
         names(tables[[type]])[names(tables[[type]]) == "t / F"] <- "t"
       }
+    } else if (type == "smooth_terms" && "t" %in% names(tables[[type]])) {
+      names(tables[[type]])[names(tables[[type]]) == "t"] <- "F"
     }
+
 
     if ("z / Chisq" %in% names(tables[[type]])) {
       if (type == "smooth_terms") {
