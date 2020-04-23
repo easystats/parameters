@@ -159,7 +159,7 @@ dof <- degrees_of_freedom
     dof <- rep(dof, length(params$conditional))
   }
   if (!is.null(params$smooth_terms)) {
-    s <- summary(g)
+    s <- summary(model)
     dof <- c(dof, s$s.table[, "Ref.df"])
   }
   dof
