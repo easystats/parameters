@@ -270,6 +270,7 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
   if (isTRUE(p_values)) out$p <- .add_p_to_equitest(x, ci, range, out$ROPE_Equivalence)
 
   attr(out, "rope") <- range
+  attr(out, "narrow_ci") <- conf_int2
   out
 }
 
