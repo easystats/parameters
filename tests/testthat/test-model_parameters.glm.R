@@ -19,6 +19,8 @@ if (require("testthat") && require("parameters")) {
     model <- lm(mpg ~ wt * cyl, data = mtcars)
     params <- model_parameters(model)
     testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 8))
+
+    params <- model_parameters(model, component = "conditional", effects = "fixed")
   })
 
 
@@ -32,5 +34,7 @@ if (require("testthat") && require("parameters")) {
 
     params <- suppressWarnings(model_parameters(model, bootstrap = TRUE, n = 500))
     testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 5))
+
+    params <- model_parameters(model, component = "conditional", effects = "fixed")
   })
 }
