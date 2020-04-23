@@ -6,12 +6,13 @@ bayestestR::equivalence_test
 
 #' @title Equivalence test
 #'
-#' @description Compute the equivalence test for frequentist models.
+#' @description Compute the (conditional) equivalence test for frequentist models.
 #'
 #' @param x A statistical model.
 #' @param range The range of practical equivalence of an effect. May be \code{"default"},
 #'   to automatically define this range based on properties of the model's data.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
+#' @param rule Character, indicating the rules when testing for practical equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See 'Details'.
 #' @param p_values Logical, if \code{TRUE}, adjusted p-values for equivalence testing are calculated.
 #' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods.
@@ -22,22 +23,39 @@ bayestestR::equivalence_test
 #'
 #' @details
 #' \subsection{Calculation of equivalence testing}{
-#'   Note that \code{equivalence_test()} in \pkg{parameters} \emph{does not} implement
-#'   the method suggested by \cite{Campbell & Gustafson 2018} or \cite{Lakens 2017},
-#'   because we consider the rules to "reject" the "null hypotheses", when based
-#'   on these approaches, to be too similar to classical NHST. We therefore decided
-#'   for the \strong{Test for Practical Equivalence} for frequentist models to follow
-#'   the \dQuote{HDI+ROPE decision rule} \cite{(Kruschke, 2014, 2018)} used for
-#'   the \code{\link[bayestestR:equivalence_test]{Bayesian counterpart}}. This means,
-#'   if the confidence intervals are completely outside the ROPE, the "null hypothesis"
-#'   for this parameter is "rejected". If the ROPE completely covers the CI, the
-#'   null hypothesis is accepted. Else, it's undecided whether to accept or reject
-#'   the null hypothesis. Desirable results are low proportions inside the ROPE
-#'   (the closer to zero the better).
-#'   \cr \cr
-#'   Some attention is required for finding suitable values for the ROPE limits
-#'   (argument \code{range}). See 'Details' in \code{\link[bayestestR]{rope_range}}
-#'   for further information.
+#'   For \code{rule = "classic"} and \code{rule = "cet"}, "narrow" confidence intervals
+#'   are used for equivalence testing. "Narrow" means, the the intervals is not
+#'   1 - alpha, but 1 - 2 * alpha. Thus, if \code{ci = .95}, alpha is assumed to
+#'   be 0.05 and internally a ci-level of 0.90 is used.
+#'   \describe{
+#'     \item{"bayes" - Bayesian rule (Kruschke 2018)}{
+#'       This rule follows the \dQuote{HDI+ROPE decision rule} \cite{(Kruschke, 2014, 2018)}
+#'       used for the \code{\link[bayestestR:equivalence_test]{Bayesian counterpart}}.
+#'       This means, if the confidence intervals are completely outside the ROPE,
+#'       the "null hypothesis" for this parameter is "rejected". If the ROPE
+#'       completely covers the CI, the null hypothesis is accepted. Else, it's
+#'       undecided whether to accept or reject the null hypothesis. Desirable
+#'       results are low proportions inside the ROPE (the closer to zero the better).
+#'     }
+#'     \item{"classic" - The TOST rule (Lakens 2017)}{
+#'       This rule follows the \dQuote{TOST rule}, i.e. a two one-sided test
+#'       procedure (\cite{Lakens 2017}). Following this rule, practical equivalence
+#'       of an effect (i.e. H0) is \emph{rejected}, when the coefficient is statistically
+#'       significant \emph{and} the narrow confidence intervals (i.e. \code{1-2*alpha})
+#'       \emph{include} or \emph{exceed} the ROPE boundaries. Practical equivalence
+#'       is assumed (i.e. H0 accepted) when the narrow confidence intervals are
+#'       completely inside the ROPE, no matter if the effect is statistically
+#'       significant or not. Else, the decision whether to accept or reject H0 is
+#'       undecided.
+#'     }
+#'     \item{"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)}{
+#'       The Conditional Equivalence Testing as described by \cite{Campbell and Gustafson 2018}.
+#'       According to this rule, practical equivalence is rejected when the
+#'       coefficient is statistically significant. When the effect is \emph{not}
+#'       significant and the narrow confidence intervals are completely inside the ROPE,
+#'       we accept H0, else it is undecided.
+#'     }
+#'   }
 #' }
 #' \subsection{Adjustment for multiple testing}{
 #'   The calculation of p-values is somewhat "experimental". For parameters, where H0...
@@ -47,6 +65,11 @@ bayestestR::equivalence_test
 #'     \item ... is undecided, the p-value equals a NHST against the point-null, however, the "uncertainty" (i.e. ROPE range) is added to the confidence intervals (so the upper confidence interval limit equals the regular upper confidence interval limit + half the ROPE range).
 #'   }
 #'   All p-values are then adjusted for multiple testing (using \code{\link[stats]{p.adjust}} with \code{method = "fdr"}).
+#' }
+#' \subsection{ROPE range}{
+#'   Some attention is required for finding suitable values for the ROPE limits
+#'   (argument \code{range}). See 'Details' in \code{\link[bayestestR]{rope_range}}
+#'   for further information.
 #' }
 #'
 #' @references
@@ -62,10 +85,12 @@ bayestestR::equivalence_test
 #' m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 #' equivalence_test(m)
 #' @export
-equivalence_test.lm <- function(x, range = "default", ci = .95, p_values = FALSE, verbose = TRUE, ...) {
-  out <- .equivalence_test_frequentist(x, range, ci, p_values, verbose, ...)
+equivalence_test.lm <- function(x, range = "default", ci = .95, rule = "bayes", p_values = FALSE, verbose = TRUE, ...) {
+  rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
+  out <- .equivalence_test_frequentist(x, range, ci, rule, p_values, verbose, ...)
 
   attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "rule") <- rule
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
   out
 }
@@ -109,15 +134,27 @@ equivalence_test.zeroinfl <- equivalence_test.lm
 
 #' @rdname equivalence_test.lm
 #' @export
-equivalence_test.merMod <- function(x, range = "default", ci = .95, effects = c("fixed", "random"), p_values = FALSE, verbose = TRUE, ...) {
+equivalence_test.merMod <- function(x, range = "default", ci = .95, rule = "bayes", effects = c("fixed", "random"), p_values = FALSE, verbose = TRUE, ...) {
+
+  # ==== argument matching ====
+
+  rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
   effects <- match.arg(effects)
+
+
+  # ==== equivalent testing for fixed or random effects ====
+
   if (effects == "fixed") {
-    out <- .equivalence_test_frequentist(x, range, ci, p_values, verbose, ...)
+    out <- .equivalence_test_frequentist(x, range, ci, rule, p_values, verbose, ...)
   } else {
-    out <- .equivalence_test_frequentist_random(x, range, ci, verbose, ...)
+    out <- .equivalence_test_frequentist_random(x, range, ci, rule, verbose, ...)
   }
 
+
+  # ==== result ====
+
   attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "rule") <- rule
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
   out
 }
@@ -141,7 +178,9 @@ equivalence_test.MixMod <- equivalence_test.merMod
 #' @export
 equivalence_test.parameters_simulate_model <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
   model_name <- attr(x, "object_name", exact = TRUE)
-  # retrieve model
+
+  # ==== retrieve model, to define rope range for simulated model parameters ====
+
   model <- tryCatch(
     {
       get(model_name, envir = parent.frame())
@@ -156,6 +195,9 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
+
+
+  # ==== classical equivalent testing for data frames ====
 
   out <- equivalence_test(as.data.frame(x), range = range, ci = ci, verbose = verbose, ...)
 
@@ -175,7 +217,10 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
 #' @importFrom bayestestR equivalence_test rope_range
 #' @keywords internal
-.equivalence_test_frequentist <- function(x, range = "default", ci = .95, p_values = FALSE, verbose = TRUE, ...) {
+.equivalence_test_frequentist <- function(x, range = "default", ci = .95, rule = "bayes", p_values = FALSE, verbose = TRUE, ...) {
+
+  # ==== define rope range ====
+
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
@@ -187,14 +232,26 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
     ci <- ci[1]
   }
 
+
+  # ==== requested confidence intervals ====
+
   params <- conf_int <- ci_wald(x, ci = ci)
   conf_int <- as.data.frame(t(conf_int[, c("CI_low", "CI_high")]))
 
-  l <- lapply(
-    conf_int,
-    .equivalence_test_numeric,
-    range_rope = range,
-    verbose = verbose
+
+  # ==== the "narrower" intervals (1-2*alpha) for CET-rules. ====
+
+  alpha <- 1 - ci
+  conf_int2 <- ci_wald(x, ci = (ci - alpha))
+  conf_int2 <- as.data.frame(t(conf_int2[, c("CI_low", "CI_high")]))
+
+
+  # ==== equivalence test for each parameter ====
+
+  l <- mapply(
+    function(ci_wide, ci_narrow) {
+      .equivalence_test_numeric(ci_wide, ci_narrow, range_rope = range, rule = rule, verbose = verbose)
+    }, conf_int, conf_int2, SIMPLIFY = FALSE
   )
 
   dat <- do.call(rbind, l)
@@ -207,7 +264,9 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
     stringsAsFactors = FALSE
   )
 
-  # adjusted p-value for tests
+
+  # ==== adjusted p-value for tests ====
+
   if (isTRUE(p_values)) out$p <- .add_p_to_equitest(x, ci, range, out$ROPE_Equivalence)
 
   attr(out, "rope") <- range
@@ -220,7 +279,7 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 #' @importFrom insight get_parameters
 #' @importFrom bayestestR rope_range
 #' @keywords internal
-.equivalence_test_frequentist_random <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
+.equivalence_test_frequentist_random <- function(x, range = "default", ci = .95, rule = "bayes", verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
@@ -237,6 +296,10 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
   alpha <- (1 + ci) / 2
   fac <- stats::qnorm(alpha)
+
+  alpha_narrow <- (1 + ci - (1 - ci)) / 2
+  fac_narrow <- stats::qnorm(alpha_narrow)
+
 
   out <- do.call(rbind, lapply(names(params), function(np) {
     est <- params[[np]][, "(Intercept)"]
@@ -255,11 +318,15 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
       CI_high = est + stderr * fac
     )))
 
-    l <- lapply(
-      conf_int,
-      .equivalence_test_numeric,
-      range_rope = range,
-      verbose = verbose
+    conf_int2 <- as.data.frame(t(data.frame(
+      CI_low = est - stderr * fac_narrow,
+      CI_high = est + stderr * fac_narrow
+    )))
+
+    l <- mapply(
+      function(ci_wide, ci_narrow) {
+        .equivalence_test_numeric(ci_wide, ci_narrow, range_rope = range, rule = rule, verbose = verbose)
+      }, conf_int, conf_int2, SIMPLIFY = FALSE
     )
 
     dat <- do.call(rbind, l)
@@ -274,30 +341,87 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
 
 #' @keywords internal
-.equivalence_test_numeric <- function(range_ci, range_rope, verbose) {
-  if (min(range_ci) > max(range_rope) || max(range_ci) < min(range_rope)) {
-    decision <- "Rejected"
-    coverage <- 0
-  } else if (max(range_ci) <= max(range_rope) && min(range_ci) >= min(range_rope)) {
-    decision <- "Accepted"
-    coverage <- 1
-  } else {
-    diff_rope <- abs(diff(range_rope))
-    diff_ci <- abs(diff(range_ci))
-    decision <- "Undecided"
+.equivalence_test_numeric <- function(ci_wide, ci_narrow, range_rope, rule, verbose) {
 
-    if (min(range_rope) >= min(range_ci) && max(range_rope) <= max(range_ci)) {
-      coverage <- diff_rope / diff_ci
-    } else if (min(range_ci) <= min(range_rope)) {
-      coverage <- abs(diff(c(min(range_rope), max(range_ci)))) / diff_ci
+  # ==== HDI+ROPE decision rule, by Kruschke ====
+
+  if (rule == "bayes") {
+    if (min(ci_wide) > max(range_rope) || max(ci_wide) < min(range_rope)) {
+      decision <- "Rejected"
+      coverage <- 0
+    } else if (max(ci_wide) <= max(range_rope) && min(ci_wide) >= min(range_rope)) {
+      decision <- "Accepted"
+      coverage <- 1
     } else {
-      coverage <- abs(diff(c(min(range_ci), max(range_rope)))) / diff_ci
+      diff_rope <- abs(diff(range_rope))
+      diff_ci <- abs(diff(ci_wide))
+      decision <- "Undecided"
+
+      if (min(range_rope) >= min(ci_wide) && max(range_rope) <= max(ci_wide)) {
+        coverage <- diff_rope / diff_ci
+      } else if (min(ci_wide) <= min(range_rope)) {
+        coverage <- abs(diff(c(min(range_rope), max(ci_wide)))) / diff_ci
+      } else {
+        coverage <- abs(diff(c(min(ci_wide), max(range_rope)))) / diff_ci
+      }
     }
   }
 
+
+  # ==== Lakens' rule ====
+
+  if (rule == "classic") {
+    # used for calculating coverage
+    diff_rope <- abs(diff(range_rope))
+    diff_ci <- abs(diff(ci_narrow))
+    # significant result?
+    if (min(ci_narrow) > 0 || max(ci_narrow) < 0) {
+      # check if CI are entirely inside ROPE. If CI crosses ROPE, reject H0, else accept
+      if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
+        decision <- "Accepted"
+        coverage <- 1
+      } else {
+        decision <- "Rejected"
+        coverage <- diff_rope / diff_ci
+      }
+      # non-significant results
+    } else {
+      # check if CI are entirely inside ROPE. If CI crosses ROPE, reject H0, else accept
+      if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
+        decision <- "Accepted"
+        coverage <- 1
+      } else {
+        decision <- "Undecided"
+        coverage <- diff_rope / diff_ci
+      }
+    }
+  }
+
+
+  # ==== CET rule ====
+
+  if (rule == "cet") {
+    # used for calculating coverage
+    diff_rope <- abs(diff(range_rope))
+    diff_ci <- abs(diff(ci_narrow))
+    # significant result?
+    if (min(ci_wide) > 0 || max(ci_wide) < 0) {
+      decision <- "Rejected"
+      coverage <- 0
+      # non-significant results, all narrow CI inside ROPE
+    } else if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
+      decision <- "Accepted"
+      coverage <- 1
+    } else {
+      decision <- "Undecided"
+      coverage <- diff_rope / diff_ci
+    }
+  }
+
+
   data.frame(
-    CI_low = range_ci[1],
-    CI_high = range_ci[2],
+    CI_low = ci_wide[1],
+    CI_high = ci_wide[2],
     ROPE_low = range_rope[1],
     ROPE_high = range_rope[2],
     ROPE_Percentage = coverage,
@@ -378,7 +502,7 @@ plot.equivalence_test_lm <- function(x, ...) {
 # method-helper ----------------------
 
 .print_equitest_freq <- function(x, digits, ...) {
-  # find the longest CI-value, so we can align the brackets in the ouput
+  # find the longest CI-value, so we can align the brackets in the output
   x$CI_low <- sprintf("%.*f", digits, x$CI_low)
   x$CI_high <- sprintf("%.*f", digits, x$CI_high)
 

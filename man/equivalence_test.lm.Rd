@@ -9,6 +9,7 @@
   x,
   range = "default",
   ci = 0.95,
+  rule = "bayes",
   p_values = FALSE,
   verbose = TRUE,
   ...
@@ -18,6 +19,7 @@
   x,
   range = "default",
   ci = 0.95,
+  rule = "bayes",
   effects = c("fixed", "random"),
   p_values = FALSE,
   verbose = TRUE,
@@ -32,6 +34,8 @@ to automatically define this range based on properties of the model's data.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
+\item{rule}{Character, indicating the rules when testing for practical equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See 'Details'.}
+
 \item{p_values}{Logical, if \code{TRUE}, adjusted p-values for equivalence testing are calculated.}
 
 \item{verbose}{Toggle off warnings.}
@@ -44,26 +48,43 @@ to automatically define this range based on properties of the model's data.}
 A data frame.
 }
 \description{
-Compute the equivalence test for frequentist models.
+Compute the (conditional) equivalence test for frequentist models.
 }
 \details{
 \subsection{Calculation of equivalence testing}{
-  Note that \code{equivalence_test()} in \pkg{parameters} \emph{does not} implement
-  the method suggested by \cite{Campbell & Gustafson 2018} or \cite{Lakens 2017},
-  because we consider the rules to "reject" the "null hypotheses", when based
-  on these approaches, to be too similar to classical NHST. We therefore decided
-  for the \strong{Test for Practical Equivalence} for frequentist models to follow
-  the \dQuote{HDI+ROPE decision rule} \cite{(Kruschke, 2014, 2018)} used for
-  the \code{\link[bayestestR:equivalence_test]{Bayesian counterpart}}. This means,
-  if the confidence intervals are completely outside the ROPE, the "null hypothesis"
-  for this parameter is "rejected". If the ROPE completely covers the CI, the
-  null hypothesis is accepted. Else, it's undecided whether to accept or reject
-  the null hypothesis. Desirable results are low proportions inside the ROPE
-  (the closer to zero the better).
-  \cr \cr
-  Some attention is required for finding suitable values for the ROPE limits
-  (argument \code{range}). See 'Details' in \code{\link[bayestestR]{rope_range}}
-  for further information.
+  For \code{rule = "classic"} and \code{rule = "cet"}, "narrow" confidence intervals
+  are used for equivalence testing. "Narrow" means, the the intervals is not
+  1 - alpha, but 1 - 2 * alpha. Thus, if \code{ci = .95}, alpha is assumed to
+  be 0.05 and internally a ci-level of 0.90 is used.
+  \describe{
+    \item{"bayes" - Bayesian rule (Kruschke 2018)}{
+      This rule follows the \dQuote{HDI+ROPE decision rule} \cite{(Kruschke, 2014, 2018)}
+      used for the \code{\link[bayestestR:equivalence_test]{Bayesian counterpart}}.
+      This means, if the confidence intervals are completely outside the ROPE,
+      the "null hypothesis" for this parameter is "rejected". If the ROPE
+      completely covers the CI, the null hypothesis is accepted. Else, it's
+      undecided whether to accept or reject the null hypothesis. Desirable
+      results are low proportions inside the ROPE (the closer to zero the better).
+    }
+    \item{"classic" - The TOST rule (Lakens 2017)}{
+      This rule follows the \dQuote{TOST rule}, i.e. a two one-sided test
+      procedure (\cite{Lakens 2017}). Following this rule, practical equivalence
+      of an effect (i.e. H0) is \emph{rejected}, when the coefficient is statistically
+      significant \emph{and} the narrow confidence intervals (i.e. \code{1-2*alpha})
+      \emph{include} or \emph{exceed} the ROPE boundaries. Practical equivalence
+      is assumed (i.e. H0 accepted) when the narrow confidence intervals are
+      completely inside the ROPE, no matter if the effect is statistically
+      significant or not. Else, the decision whether to accept or reject H0 is
+      undecided.
+    }
+    \item{"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)}{
+      The Conditional Equivalence Testing as described by \cite{Campbell and Gustafson 2018}.
+      According to this rule, practical equivalence is rejected when the
+      coefficient is statistically significant. When the effect is \emph{not}
+      significant and the narrow confidence intervals are completely inside the ROPE,
+      we accept H0, else it is undecided.
+    }
+  }
 }
 \subsection{Adjustment for multiple testing}{
   The calculation of p-values is somewhat "experimental". For parameters, where H0...
@@ -73,6 +94,11 @@ Compute the equivalence test for frequentist models.
     \item ... is undecided, the p-value equals a NHST against the point-null, however, the "uncertainty" (i.e. ROPE range) is added to the confidence intervals (so the upper confidence interval limit equals the regular upper confidence interval limit + half the ROPE range).
   }
   All p-values are then adjusted for multiple testing (using \code{\link[stats]{p.adjust}} with \code{method = "fdr"}).
+}
+\subsection{ROPE range}{
+  Some attention is required for finding suitable values for the ROPE limits
+  (argument \code{range}). See 'Details' in \code{\link[bayestestR]{rope_range}}
+  for further information.
 }
 }
 \examples{
