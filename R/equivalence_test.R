@@ -20,17 +20,39 @@ bayestestR::equivalence_test
 #' @seealso For more details, see \code{\link[bayestestR:equivalence_test]{equivalence_test}}.
 #'   Further readings can be found in the references.
 #'
-#' @details The calculation of p-values is somewhat "experimental". For parameters, where H0...
+#' @details
+#' \subsection{Calculation of equivalence testing}{
+#'   Note that \code{equivalence_test()} in \pkg{parameters} \emph{does not} implement
+#'   the method suggested by \cite{Campbell & Gustafson 2018} or \cite{Lakens 2017},
+#'   because we consider the rules to "reject" the "null hypotheses", when based
+#'   on these approaches, to be too similar to classical NHST. We therefore decided
+#'   for the \strong{Test for Practical Equivalence} for frequentist models to follow
+#'   the \dQuote{HDI+ROPE decision rule} \cite{(Kruschke, 2014, 2018)} used for
+#'   the \code{\link[bayestestR:equivalence_test]{Bayesian counterpart}}. This means,
+#'   if the confidence intervals are completely outside the ROPE, the "null hypothesis"
+#'   for this parameter is "rejected". If the ROPE completely covers the CI, the
+#'   null hypothesis is accepted. Else, it's undecided whether to accept or reject
+#'   the null hypothesis. Desirable results are low proportions inside the ROPE
+#'   (the closer to zero the better).
+#'   \cr \cr
+#'   Some attention is required for finding suitable values for the ROPE limits
+#'   (argument \code{range}). See 'Details' in \code{\link[bayestestR]{rope_range}}
+#'   for further information.
+#' }
+#' \subsection{Adjustment for multiple testing}{
+#'   The calculation of p-values is somewhat "experimental". For parameters, where H0...
 #'   \itemize{
 #'     \item ... is rejected, the p-value equals a NHST as if the upper / lower boundary of the ROPE (see \code{range}) would be the point-null to test against.
 #'     \item ... is accepted, the p-value is set to 1.
 #'     \item ... is undecided, the p-value equals a NHST against the point-null, however, the "uncertainty" (i.e. ROPE range) is added to the confidence intervals (so the upper confidence interval limit equals the regular upper confidence interval limit + half the ROPE range).
 #'   }
 #'   All p-values are then adjusted for multiple testing (using \code{\link[stats]{p.adjust}} with \code{method = "fdr"}).
+#' }
 #'
 #' @references
 #' \itemize{
 #'   \item Campbell, H., & Gustafson, P. (2018). Conditional equivalence testing: An alternative remedy for publication bias. PLOS ONE, 13(4), e0195145. https://doi.org/10.1371/journal.pone.0195145
+#'   \item Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press
 #'   \item Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. doi: 10.1177/2515245918771304
 #'   \item Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses. Social Psychological and Personality Science, 8(4), 355–362. https://doi.org/10.1177/1948550617697177
 #' }
