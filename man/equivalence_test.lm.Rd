@@ -105,11 +105,6 @@ Compute the (conditional) equivalence test for frequentist models.
   for further information.
 }
 }
-\note{
-Depending on the \code{rule}, the \code{plot()} methods displays the narrow
-confidence intervals, and the regular confidence intervals are the longer, blue
-lines.
-}
 \examples{
 data(qol_cancer)
 model <- lm(QoL ~ time + age + education, data = qol_cancer)

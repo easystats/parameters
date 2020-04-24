@@ -76,10 +76,6 @@ bayestestR::equivalence_test
 #'   for further information.
 #' }
 #'
-#' @note Depending on the \code{rule}, the \code{plot()} methods displays the narrow
-#' confidence intervals, and the regular confidence intervals are the longer, blue
-#' lines.
-#'
 #' @references
 #' \itemize{
 #'   \item Campbell, H., & Gustafson, P. (2018). Conditional equivalence testing: An alternative remedy for publication bias. PLOS ONE, 13(4), e0195145. https://doi.org/10.1371/journal.pone.0195145
@@ -284,7 +280,6 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
   if (isTRUE(p_values)) out$p <- .add_p_to_equitest(x, ci, range, out$ROPE_Equivalence)
 
   attr(out, "rope") <- range
-  attr(out, "narrow_ci") <- conf_int2
   out
 }
 
