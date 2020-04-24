@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Equivalence test — equivalence_test.lm" />
-<meta property="og:description" content="Compute the equivalence test for frequentist models." />
+<meta property="og:description" content="Compute the (conditional) equivalence test for frequentist models." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.1</span>
       </span>
     </div>
 
@@ -164,7 +164,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute the equivalence test for frequentist models.</p>
+    <p>Compute the (conditional) equivalence test for frequentist models.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for lm</span>
@@ -172,6 +172,7 @@
   <span class='no'>x</span>,
   <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>rule</span> <span class='kw'>=</span> <span class='st'>"bayes"</span>,
   <span class='kw'>p_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
@@ -182,6 +183,7 @@
   <span class='no'>x</span>,
   <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>rule</span> <span class='kw'>=</span> <span class='st'>"bayes"</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>),
   <span class='kw'>p_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -203,6 +205,10 @@ to automatically define this range based on properties of the model's data.</p><
     <tr>
       <th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+    </tr>
+    <tr>
+      <th>rule</th>
+      <td><p>Character, indicating the rules when testing for practical equivalence. Can be <code>"bayes"</code>, <code>"classic"</code> or <code>"cet"</code>. See 'Details'.</p></td>
     </tr>
     <tr>
       <th>p_values</th>
@@ -227,16 +233,62 @@ to automatically define this range based on properties of the model's data.</p><
     <p>A data frame.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The calculation of p-values is somewhat "experimental". For parameters, where H0...</p><ul>
+    
+<h3>Calculation of equivalence testing</h3>
+<p></p><dl'>
+    <dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the &#8220;HDI+ROPE decision rule&#8221; <cite>(Kruschke, 2014, 2018)</cite>
+      used for the <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>Bayesian counterpart</a></code>.
+      This means, if the confidence intervals are completely outside the ROPE,
+      the "null hypothesis" for this parameter is "rejected". If the ROPE
+      completely covers the CI, the null hypothesis is accepted. Else, it's
+      undecided whether to accept or reject the null hypothesis. Desirable
+      results are low proportions inside the ROPE (the closer to zero the better).</p></dd>
+    <dt>"classic" - The TOST rule (Lakens 2017)</dt><dd><p>This rule follows the &#8220;TOST rule&#8221;, i.e. a two one-sided test
+      procedure (<cite>Lakens 2017</cite>). Following this rule, practical equivalence
+      of an effect (i.e. H0) is <em>rejected</em>, when the coefficient is statistically
+      significant <em>and</em> the narrow confidence intervals (i.e. <code>1-2*alpha</code>)
+      <em>include</em> or <em>exceed</em> the ROPE boundaries. Practical equivalence
+      is assumed (i.e. H0 accepted) when the narrow confidence intervals are
+      completely inside the ROPE, no matter if the effect is statistically
+      significant or not. Else, the decision whether to accept or reject H0 is
+      undecided.</p></dd>
+    <dt>"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)</dt><dd><p>The Conditional Equivalence Testing as described by <cite>Campbell and Gustafson 2018</cite>.
+      According to this rule, practical equivalence is rejected when the
+      coefficient is statistically significant. When the effect is <em>not</em>
+      significant and the narrow confidence intervals are completely inside the ROPE,
+      we accept H0, else it is undecided.</p></dd>
+  
+</dl>
+
+<h3>Levels of Confidence Intervals used for Equivalence Testing</h3>
+<p>For <code>rule = "cet"</code>, "narrow" confidence intervals are used for
+  equivalence testing. "Narrow" means, the the intervals is not 1 - alpha,
+  but 1 - 2 * alpha. Thus, if <code>ci = .95</code>, alpha is assumed to be 0.05
+  and internally a ci-level of 0.90 is used. <code>rule = "classic"</code> uses
+  both regular and narrow confidence intervals, while <code>rule = "bayes"</code>
+  only uses the regular intervals.</p>
+<h3>Adjustment for multiple testing</h3>
+<p>The calculation of p-values is somewhat "experimental". For parameters, where H0...</p><ul>
 <li><p>... is rejected, the p-value equals a NHST as if the upper / lower boundary of the ROPE (see <code>range</code>) would be the point-null to test against.</p></li>
 <li><p>... is accepted, the p-value is set to 1.</p></li>
 <li><p>... is undecided, the p-value equals a NHST against the point-null, however, the "uncertainty" (i.e. ROPE range) is added to the confidence intervals (so the upper confidence interval limit equals the regular upper confidence interval limit + half the ROPE range).</p></li>
 </ul><p>All p-values are then adjusted for multiple testing (using <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> with <code>method = "fdr"</code>).</p>
+<h3>ROPE range</h3>
+<p>Some attention is required for finding suitable values for the ROPE limits
+  (argument <code>range</code>). See 'Details' in <code><a href='https://rdrr.io/pkg/bayestestR/man/rope_range.html'>rope_range</a></code>
+  for further information.</p>
+
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Depending on the <code>rule</code>, the <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code> methods displays the narrow
+confidence intervals, and the regular confidence intervals are the longer, blue
+lines.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
 <li><p>Campbell, H., &amp; Gustafson, P. (2018). Conditional equivalence testing: An alternative remedy for publication bias. PLOS ONE, 13(4), e0195145. https://doi.org/10.1371/journal.pone.0195145</p></li>
+<li><p>Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press</p></li>
 <li><p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. doi: 10.1177/2515245918771304</p></li>
 <li><p>Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses. Social Psychological and Personality Science, 8(4), 355–362. https://doi.org/10.1177/1948550617697177</p></li>
 </ul>
@@ -247,17 +299,32 @@ to automatically define this range based on properties of the model's data.</p><
   Further readings can be found in the references.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>gear</span> + <span class='no'>wt</span> + <span class='no'>cyl</span> + <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='no'>m</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Test for Practical Equivalence
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>qol_cancer</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>QoL</span> ~ <span class='no'>time</span> + <span class='no'>age</span> + <span class='no'>education</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>qol_cancer</span>)
+
+<span class='co'># default rule</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
-#&gt; </span><span>  ROPE: [-0.60 0.60]
+#&gt; </span><span>  ROPE: [-1.99 1.99]
 #&gt; 
-#&gt;    Parameter        H0 inside ROPE        95% CI
-#&gt;  (Intercept)  Rejected      0.00 % [24.44 48.94]
-#&gt;         gear Undecided     29.37 % [-1.69  2.41]
-#&gt;           wt  Rejected      0.00 % [-4.77 -1.28]
-#&gt;          cyl Undecided     42.29 % [-2.17  0.55]
-#&gt;           hp  Accepted    100.00 % [-0.05  0.01]
+#&gt;      Parameter        H0 inside ROPE        95% CI
+#&gt;    (Intercept)  Rejected      0.00 % [58.46 69.28]
+#&gt;           time Undecided     78.11 % [-1.07  2.85]
+#&gt;            age  Accepted    100.00 % [-0.32  0.37]
+#&gt;   educationmid  Rejected      0.00 % [ 4.43 13.09]
+#&gt;  educationhigh  Rejected      0.00 % [ 9.33 19.38]
+#&gt; </div><div class='input'>
+<span class='co'># conditional equivalence test</span>
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='no'>model</span>, <span class='kw'>rule</span> <span class='kw'>=</span> <span class='st'>"cet"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Conditional Equivalence Testing
+#&gt; 
+#&gt; </span><span>  ROPE: [-1.99 1.99]
+#&gt; 
+#&gt;      Parameter        H0 inside ROPE        90% CI
+#&gt;    (Intercept)  Rejected      0.00 % [59.33 68.41]
+#&gt;           time Undecided    120.96 % [-0.76  2.53]
+#&gt;            age  Accepted    100.00 % [-0.26  0.32]
+#&gt;   educationmid  Rejected      0.00 % [ 5.13 12.39]
+#&gt;  educationhigh  Rejected      0.00 % [10.14 18.57]
 #&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

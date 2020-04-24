@@ -52,10 +52,6 @@ Compute the (conditional) equivalence test for frequentist models.
 }
 \details{
 \subsection{Calculation of equivalence testing}{
-  For \code{rule = "classic"} and \code{rule = "cet"}, "narrow" confidence intervals
-  are used for equivalence testing. "Narrow" means, the the intervals is not
-  1 - alpha, but 1 - 2 * alpha. Thus, if \code{ci = .95}, alpha is assumed to
-  be 0.05 and internally a ci-level of 0.90 is used.
   \describe{
     \item{"bayes" - Bayesian rule (Kruschke 2018)}{
       This rule follows the \dQuote{HDI+ROPE decision rule} \cite{(Kruschke, 2014, 2018)}
@@ -86,6 +82,14 @@ Compute the (conditional) equivalence test for frequentist models.
     }
   }
 }
+\subsection{Levels of Confidence Intervals used for Equivalence Testing}{
+  For \code{rule = "cet"}, "narrow" confidence intervals are used for
+  equivalence testing. "Narrow" means, the the intervals is not 1 - alpha,
+  but 1 - 2 * alpha. Thus, if \code{ci = .95}, alpha is assumed to be 0.05
+  and internally a ci-level of 0.90 is used. \code{rule = "classic"} uses
+  both regular and narrow confidence intervals, while \code{rule = "bayes"}
+  only uses the regular intervals.
+}
 \subsection{Adjustment for multiple testing}{
   The calculation of p-values is somewhat "experimental". For parameters, where H0...
   \itemize{
@@ -101,9 +105,20 @@ Compute the (conditional) equivalence test for frequentist models.
   for further information.
 }
 }
+\note{
+Depending on the \code{rule}, the \code{plot()} methods displays the narrow
+confidence intervals, and the regular confidence intervals are the longer, blue
+lines.
+}
 \examples{
-m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
-equivalence_test(m)
+data(qol_cancer)
+model <- lm(QoL ~ time + age + education, data = qol_cancer)
+
+# default rule
+equivalence_test(model)
+
+# conditional equivalence test
+equivalence_test(model, rule = "cet")
 }
 \references{
 \itemize{

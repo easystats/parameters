@@ -23,10 +23,6 @@ bayestestR::equivalence_test
 #'
 #' @details
 #' \subsection{Calculation of equivalence testing}{
-#'   For \code{rule = "classic"} and \code{rule = "cet"}, "narrow" confidence intervals
-#'   are used for equivalence testing. "Narrow" means, the the intervals is not
-#'   1 - alpha, but 1 - 2 * alpha. Thus, if \code{ci = .95}, alpha is assumed to
-#'   be 0.05 and internally a ci-level of 0.90 is used.
 #'   \describe{
 #'     \item{"bayes" - Bayesian rule (Kruschke 2018)}{
 #'       This rule follows the \dQuote{HDI+ROPE decision rule} \cite{(Kruschke, 2014, 2018)}
@@ -57,6 +53,14 @@ bayestestR::equivalence_test
 #'     }
 #'   }
 #' }
+#' \subsection{Levels of Confidence Intervals used for Equivalence Testing}{
+#'   For \code{rule = "cet"}, "narrow" confidence intervals are used for
+#'   equivalence testing. "Narrow" means, the the intervals is not 1 - alpha,
+#'   but 1 - 2 * alpha. Thus, if \code{ci = .95}, alpha is assumed to be 0.05
+#'   and internally a ci-level of 0.90 is used. \code{rule = "classic"} uses
+#'   both regular and narrow confidence intervals, while \code{rule = "bayes"}
+#'   only uses the regular intervals.
+#' }
 #' \subsection{Adjustment for multiple testing}{
 #'   The calculation of p-values is somewhat "experimental". For parameters, where H0...
 #'   \itemize{
@@ -72,6 +76,10 @@ bayestestR::equivalence_test
 #'   for further information.
 #' }
 #'
+#' @note Depending on the \code{rule}, the \code{plot()} methods displays the narrow
+#' confidence intervals, and the regular confidence intervals are the longer, blue
+#' lines.
+#'
 #' @references
 #' \itemize{
 #'   \item Campbell, H., & Gustafson, P. (2018). Conditional equivalence testing: An alternative remedy for publication bias. PLOS ONE, 13(4), e0195145. https://doi.org/10.1371/journal.pone.0195145
@@ -82,8 +90,14 @@ bayestestR::equivalence_test
 #'
 #' @return A data frame.
 #' @examples
-#' m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
-#' equivalence_test(m)
+#' data(qol_cancer)
+#' model <- lm(QoL ~ time + age + education, data = qol_cancer)
+#'
+#' # default rule
+#' equivalence_test(model)
+#'
+#' # conditional equivalence test
+#' equivalence_test(model, rule = "cet")
 #' @export
 equivalence_test.lm <- function(x, range = "default", ci = .95, rule = "bayes", p_values = FALSE, verbose = TRUE, ...) {
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
@@ -259,7 +273,7 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
   out <- data.frame(
     Parameter = params$Parameter,
-    CI = ci,
+    CI = ifelse(rule == "bayes", ci, ci - alpha),
     dat,
     stringsAsFactors = FALSE
   )
@@ -309,7 +323,7 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
     d <- data.frame(
       Parameter = rownames(params[[np]]),
       Estimate = est,
-      CI = ci,
+      CI = ifelse(rule == "bayes", ci, ci - (1 - ci)),
       Group = np,
       stringsAsFactors = FALSE
     )
@@ -344,9 +358,12 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 #' @keywords internal
 .equivalence_test_numeric <- function(ci_wide, ci_narrow, range_rope, rule, verbose) {
 
+  final_ci <- NULL
+
   # ==== HDI+ROPE decision rule, by Kruschke ====
 
   if (rule == "bayes") {
+    final_ci <- ci_wide
     if (min(ci_wide) > max(range_rope) || max(ci_wide) < min(range_rope)) {
       decision <- "Rejected"
       coverage <- 0
@@ -372,6 +389,7 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
   # ==== Lakens' rule ====
 
   if (rule == "classic") {
+    final_ci <- ci_narrow
     # used for calculating coverage
     diff_rope <- abs(diff(range_rope))
     diff_ci <- abs(diff(ci_narrow))
@@ -402,6 +420,7 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
   # ==== CET rule ====
 
   if (rule == "cet") {
+    final_ci <- ci_narrow
     # used for calculating coverage
     diff_rope <- abs(diff(range_rope))
     diff_ci <- abs(diff(ci_narrow))
@@ -421,8 +440,8 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
 
   data.frame(
-    CI_low = ci_wide[1],
-    CI_high = ci_wide[2],
+    CI_low = final_ci[1],
+    CI_high = final_ci[2],
     ROPE_low = range_rope[1],
     ROPE_high = range_rope[2],
     ROPE_Percentage = coverage,
@@ -466,7 +485,19 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 #' @export
 print.equivalence_test_lm <- function(x, digits = 2, ...) {
   orig_x <- x
-  insight::print_color("# Test for Practical Equivalence\n\n", "blue")
+
+  rule <- attributes(x)$rule
+  if (!is.null(rule)) {
+    if (rule == "cet") {
+      insight::print_color("# Conditional Equivalence Testing\n\n", "blue")
+    } else if (rule == "classic") {
+      insight::print_color("# TOST-test for Practical Equivalence\n\n", "blue")
+    } else {
+      insight::print_color("# Test for Practical Equivalence\n\n", "blue")
+    }
+  } else {
+    insight::print_color("# Test for Practical Equivalence\n\n", "blue")
+  }
 
   .rope <- attr(x, "rope", exact = TRUE)
   cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, .rope[1], digits, .rope[2]))

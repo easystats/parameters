@@ -12,6 +12,7 @@
 
 ### `equivalence_test()`
 
+* `equivalence_test()` gains a `rule` argument, so equivalence testing can be based on different approaches.
 * `equivalence_test()` for mixed models gains an `effect` argument, to perform equivalence testing on random effects.
 * `equivalence_test()` gains a `p_values` argument, to calculate p-values for the equivalence test.
 * `equivalence_test()` now supports more frequentist model objects.
