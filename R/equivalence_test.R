@@ -366,22 +366,10 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
     final_ci <- ci_wide
     if (min(ci_wide) > max(range_rope) || max(ci_wide) < min(range_rope)) {
       decision <- "Rejected"
-      coverage <- 0
     } else if (max(ci_wide) <= max(range_rope) && min(ci_wide) >= min(range_rope)) {
       decision <- "Accepted"
-      coverage <- 1
     } else {
-      diff_rope <- abs(diff(range_rope))
-      diff_ci <- abs(diff(ci_wide))
       decision <- "Undecided"
-
-      if (min(range_rope) >= min(ci_wide) && max(range_rope) <= max(ci_wide)) {
-        coverage <- diff_rope / diff_ci
-      } else if (min(ci_wide) <= min(range_rope)) {
-        coverage <- abs(diff(c(min(range_rope), max(ci_wide)))) / diff_ci
-      } else {
-        coverage <- abs(diff(c(min(ci_wide), max(range_rope)))) / diff_ci
-      }
     }
   }
 
@@ -390,28 +378,21 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
   if (rule == "classic") {
     final_ci <- ci_narrow
-    # used for calculating coverage
-    diff_rope <- abs(diff(range_rope))
-    diff_ci <- abs(diff(ci_narrow))
     # significant result?
     if (min(ci_narrow) > 0 || max(ci_narrow) < 0) {
       # check if CI are entirely inside ROPE. If CI crosses ROPE, reject H0, else accept
       if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
         decision <- "Accepted"
-        coverage <- 1
       } else {
         decision <- "Rejected"
-        coverage <- diff_rope / diff_ci
       }
       # non-significant results
     } else {
       # check if CI are entirely inside ROPE. If CI crosses ROPE, reject H0, else accept
       if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
         decision <- "Accepted"
-        coverage <- 1
       } else {
         decision <- "Undecided"
-        coverage <- diff_rope / diff_ci
       }
     }
   }
@@ -421,33 +402,63 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
   if (rule == "cet") {
     final_ci <- ci_narrow
-    # used for calculating coverage
-    diff_rope <- abs(diff(range_rope))
-    diff_ci <- abs(diff(ci_narrow))
     # significant result?
     if (min(ci_wide) > 0 || max(ci_wide) < 0) {
       decision <- "Rejected"
-      coverage <- 0
       # non-significant results, all narrow CI inside ROPE
     } else if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
       decision <- "Accepted"
-      coverage <- 1
     } else {
       decision <- "Undecided"
-      coverage <- diff_rope / diff_ci
     }
   }
-
 
   data.frame(
     CI_low = final_ci[1],
     CI_high = final_ci[2],
     ROPE_low = range_rope[1],
     ROPE_high = range_rope[2],
-    ROPE_Percentage = coverage,
+    ROPE_Percentage = .rope_coverage(range_rope, final_ci),
     ROPE_Equivalence = decision,
     stringsAsFactors = FALSE
   )
+}
+
+
+
+
+# helper ---------------------
+
+
+.rope_coverage <- function(rope, ci) {
+  diff_rope <- abs(diff(rope))
+  diff_ci <- abs(diff(ci))
+
+  # inside?
+  if (min(ci) >= min(rope) && max(ci) <= max(rope)) {
+    coverage <- 1
+
+    # outside?
+  } else if (max(ci) < min(rope) || min(ci) > max(rope)) {
+    coverage <- 0
+
+    # CI covers completely rope?
+  } else if (max(ci) > max(rope) && min(ci) < min(rope)) {
+    coverage <- diff_rope / diff_ci
+
+    # CI inside rope and outside max rope?
+  } else if (min(ci) >= min(rope) && max(ci) > max(rope)) {
+    diff_in_rope <- max(rope) - min(ci)
+    coverage <- diff_in_rope / diff_ci
+
+    # CI inside rope and outside min rope?
+  } else if (max(ci) <= max(rope) && min(ci) < min(rope)) {
+    diff_in_rope <- max(ci) - min(rope)
+    coverage <- diff_in_rope / diff_ci
+
+  }
+
+  coverage
 }
 
 
