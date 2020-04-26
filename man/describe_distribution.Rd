@@ -13,7 +13,10 @@ describe_distribution(x, ...)
   x,
   centrality = "mean",
   dispersion = TRUE,
+  iqr = TRUE,
   range = TRUE,
+  ci = NULL,
+  iterations = 100,
   ...
 )
 
@@ -23,8 +26,11 @@ describe_distribution(x, ...)
   x,
   centrality = "mean",
   dispersion = TRUE,
+  iqr = TRUE,
   range = TRUE,
   include_factors = FALSE,
+  ci = NULL,
+  iterations = 100,
   ...
 )
 }
@@ -37,7 +43,13 @@ describe_distribution(x, ...)
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
+\item{iqr}{Logical, if \code{TRUE}, the interquartile range is calculated (based on \code{\link[stats]{IQR}}, using \code{type = 6}).}
+
 \item{range}{Return the range (min and max).}
+
+\item{ci}{Confidence Interval (CI) level. Default is \code{NULL}, i.e. no confidence intervals are computed. If not \code{NULL}, confidence intervals are based on bootstrap replicates (see \code{iterations}).}
+
+\item{iterations}{The number of bootstrap replicates for computing confidence intervals. Only applies when \code{ci} is not \code{NULL}.}
 
 \item{include_factors}{Logical, if \code{TRUE}, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.}
 }

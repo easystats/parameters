@@ -47,7 +47,7 @@ bootstrap_parameters <- function(model, iterations = 1000, centrality = "median"
 
   parameters <- bayestestR::describe_posterior(data, centrality = centrality, ci = ci, ci_method = ci_method, test = test, ...)
 
-  # Remove unecessary columns
+  # Remove unnecessary columns
   if ("CI" %in% names(parameters) && .n_unique(parameters$CI) == 1) {
     parameters$CI <- NULL
   }

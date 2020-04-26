@@ -12,16 +12,23 @@
 
 ### `equivalence_test()`
 
-* `equivalence_test()` gains a `rule` argument, so equivalence testing can be based on different approaches.
-* `equivalence_test()` for mixed models gains an `effect` argument, to perform equivalence testing on random effects.
-* `equivalence_test()` gains a `p_values` argument, to calculate p-values for the equivalence test.
-* `equivalence_test()` now supports more frequentist model objects.
+* gains a `rule` argument, so equivalence testing can be based on different approaches.
+* for mixed models gains an `effect` argument, to perform equivalence testing on random effects.
+* gains a `p_values` argument, to calculate p-values for the equivalence test.
+* now supports more frequentist model objects.
+
+### `describe_distribution()`
+
+* now works on grouped data frames.
+* gains `ci` and `iterations` arguments, to compute confidence intervals based on bootstrapping.
+* gains a `iqr` argument, to compute the interquartile range.
+* `SE` column was removed.
+
 
 ### Other changes
 
 * `model_parameters()` for Stan-models (*brms*, *rstanarm*) gains a `group_level` argument to show or hide parameters for group levels of random effects.
 * `parameters_table()` and `print.parameters_model()` now explicitely get arguments to define the digits for decimal places used in output.
-* `describe_distribution()` now works on grouped data frames.
 * `model_parameters.merMod()` no longer passes `...` down to bootstrap-functions (i.e. when `bootstrap = TRUE`), as this might conflict with `lme4::bootMer()`.
 
 ## Bug fixes
