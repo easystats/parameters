@@ -564,7 +564,7 @@ ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterth
 
 
 #' @importFrom insight print_color
-#' @importFrom stats qnorm
+#' @importFrom stats qt
 #' @export
 ci.effectsize_std_params <- function(x, ci = .95, ...) {
   se <- attr(x, "standard_error")
@@ -574,9 +574,24 @@ ci.effectsize_std_params <- function(x, ci = .95, ...) {
     return(NULL)
   }
 
+  # check if we have model. if so, use df from model
+  model <- .get_object(x)
+  if (!is.null(model)) {
+    df <- degrees_of_freedom(model, method = "any")
+    if (!is.null(df)) {
+      if (length(df) > 1 && length(df) != nrow(x)) {
+        df <- Inf
+      }
+    } else {
+      df <- Inf
+    }
+  } else {
+    df <- Inf
+  }
+
   out <- lapply(ci, function(i) {
     alpha <- (1 + i) / 2
-    fac <- stats::qnorm(alpha)
+    fac <- stats::qt(alpha, df = df)
     data.frame(
       Parameter = x$Parameter,
       CI = i * 100,

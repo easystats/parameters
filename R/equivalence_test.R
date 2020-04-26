@@ -187,18 +187,10 @@ equivalence_test.MixMod <- equivalence_test.merMod
 #' @importFrom bayestestR rope_range
 #' @export
 equivalence_test.parameters_simulate_model <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
-  model_name <- attr(x, "object_name", exact = TRUE)
 
   # ==== retrieve model, to define rope range for simulated model parameters ====
 
-  model <- tryCatch(
-    {
-      get(model_name, envir = parent.frame())
-    },
-    error = function(e) {
-      NULL
-    }
-  )
+  model <- .get_object(x)
 
   if (all(range == "default") && !is.null(model)) {
     range <- bayestestR::rope_range(model)
