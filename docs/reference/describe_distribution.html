@@ -174,7 +174,10 @@
   <span class='no'>x</span>,
   <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
   <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>iqr</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>range</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='no'>...</span>
 )
 
@@ -186,8 +189,11 @@
   <span class='no'>x</span>,
   <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
   <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>iqr</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>range</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>include_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -211,8 +217,20 @@
       <td><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></td>
     </tr>
     <tr>
+      <th>iqr</th>
+      <td><p>Logical, if <code>TRUE</code>, the interquartile range is calculated (based on <code><a href='https://rdrr.io/r/stats/IQR.html'>IQR</a></code>, using <code>type = 6</code>).</p></td>
+    </tr>
+    <tr>
       <th>range</th>
       <td><p>Return the range (min and max).</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Confidence Interval (CI) level. Default is <code>NULL</code>, i.e. no confidence intervals are computed. If not <code>NULL</code>, confidence intervals are based on bootstrap replicates (see <code>iterations</code>).</p></td>
+    </tr>
+    <tr>
+      <th>iterations</th>
+      <td><p>The number of bootstrap replicates for computing confidence intervals. Only applies when <code>ci</code> is not <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>include_factors</th>
@@ -225,21 +243,21 @@
     <p>A data frame with columns that describe the properties of the variables.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>describe_distribution</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt; Mean |   SD |   SE |         Range | Skewness | Kurtosis |   n | n_Missing
+    <pre class="examples"><div class='input'><span class='fu'>describe_distribution</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt; Mean |   SD |  IQR |         Range | Skewness | Kurtosis |   n | n_Missing
 #&gt; --------------------------------------------------------------------------
-#&gt; 0.12 | 1.08 | 0.11 | [-2.73, 3.43] |     0.38 |     0.19 | 100 |         0</div><div class='input'>
+#&gt; 0.07 | 1.05 | 0.99 | [-2.61, 2.76] |    -0.21 |     0.39 | 100 |         0</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>iris</span>)
-<span class='fu'>describe_distribution</span>(<span class='no'>iris</span>)</div><div class='output co'>#&gt; Variable     | Mean |   SD |   SE |        Range | Skewness | Kurtosis |   n | n_Missing
+<span class='fu'>describe_distribution</span>(<span class='no'>iris</span>)</div><div class='output co'>#&gt; Variable     | Mean |   SD |  IQR |        Range | Skewness | Kurtosis |   n | n_Missing
 #&gt; ----------------------------------------------------------------------------------------
-#&gt; Sepal.Length | 5.84 | 0.83 | 0.07 | [4.30, 7.90] |     0.31 |    -0.55 | 150 |         0
-#&gt; Sepal.Width  | 3.06 | 0.44 | 0.04 | [2.00, 4.40] |     0.32 |     0.23 | 150 |         0
-#&gt; Petal.Length | 3.76 | 1.77 | 0.14 | [1.00, 6.90] |    -0.27 |    -1.40 | 150 |         0
-#&gt; Petal.Width  | 1.20 | 0.76 | 0.06 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0</div><div class='input'><span class='fu'>describe_distribution</span>(<span class='no'>iris</span>, <span class='kw'>include_factors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Variable     | Mean |   SD |   SE |               Range | Skewness | Kurtosis |   n | n_Missing
+#&gt; Sepal.Length | 5.84 | 0.83 | 1.30 | [4.30, 7.90] |     0.31 |    -0.55 | 150 |         0
+#&gt; Sepal.Width  | 3.06 | 0.44 | 0.52 | [2.00, 4.40] |     0.32 |     0.23 | 150 |         0
+#&gt; Petal.Length | 3.76 | 1.77 | 3.52 | [1.00, 6.90] |    -0.27 |    -1.40 | 150 |         0
+#&gt; Petal.Width  | 1.20 | 0.76 | 1.50 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0</div><div class='input'><span class='fu'>describe_distribution</span>(<span class='no'>iris</span>, <span class='kw'>include_factors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Variable     | Mean |   SD |  IQR |               Range | Skewness | Kurtosis |   n | n_Missing
 #&gt; -----------------------------------------------------------------------------------------------
-#&gt; Sepal.Length | 5.84 | 0.83 | 0.07 | [   4.3,       7.9] |     0.31 |    -0.55 | 150 |         0
-#&gt; Sepal.Width  | 3.06 | 0.44 | 0.04 | [     2,       4.4] |     0.32 |     0.23 | 150 |         0
-#&gt; Petal.Length | 3.76 | 1.77 | 0.14 | [     1,       6.9] |    -0.27 |    -1.40 | 150 |         0
-#&gt; Petal.Width  | 1.20 | 0.76 | 0.06 | [   0.1,       2.5] |    -0.10 |    -1.34 | 150 |         0
+#&gt; Sepal.Length | 5.84 | 0.83 | 1.30 | [   4.3,       7.9] |     0.31 |    -0.55 | 150 |         0
+#&gt; Sepal.Width  | 3.06 | 0.44 | 0.52 | [     2,       4.4] |     0.32 |     0.23 | 150 |         0
+#&gt; Petal.Length | 3.76 | 1.77 | 3.52 | [     1,       6.9] |    -0.27 |    -1.40 | 150 |         0
+#&gt; Petal.Width  | 1.20 | 0.76 | 1.50 | [   0.1,       2.5] |    -0.10 |    -1.34 | 150 |         0
 #&gt; Species      |      |      |      | [setosa, virginica] |     0.00 |    -1.51 | 150 |         0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
