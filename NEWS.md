@@ -24,12 +24,15 @@
 * gains a `iqr` argument, to compute the interquartile range.
 * `SE` column was removed.
 
+### `model_parameters()`
+
+* `model_parameters()` for Stan-models (*brms*, *rstanarm*) gains a `group_level` argument to show or hide parameters for group levels of random effects.
+* Improved accuracy of confidence intervals in `model_parameters()` with `standardize = "basic"` or `standardize = "posthoc"`.
+* `model_parameters.merMod()` no longer passes `...` down to bootstrap-functions (i.e. when `bootstrap = TRUE`), as this might conflict with `lme4::bootMer()`.
 
 ### Other changes
 
-* `model_parameters()` for Stan-models (*brms*, *rstanarm*) gains a `group_level` argument to show or hide parameters for group levels of random effects.
 * `parameters_table()` and `print.parameters_model()` now explicitely get arguments to define the digits for decimal places used in output.
-* `model_parameters.merMod()` no longer passes `...` down to bootstrap-functions (i.e. when `bootstrap = TRUE`), as this might conflict with `lme4::bootMer()`.
 
 ## Bug fixes
 
