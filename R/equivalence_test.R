@@ -203,7 +203,7 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
   out <- equivalence_test(as.data.frame(x), range = range, ci = ci, verbose = verbose, ...)
 
-  attr(out, "object_name") <- model_name
+  attr(out, "object_name") <- attr(x, "object_name")
   attr(out, "data") <- x
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", "equivalence_test_simulate_model", class(out)))
   out
