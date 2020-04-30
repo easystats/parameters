@@ -646,7 +646,12 @@
       "Parameter2" = names[2]
     )
 
-    if (grepl("Pearson", model$method)) {
+    if (model$method == "Pearson's Chi-squared test") {
+      out$Chisq <- model$statistic
+      out$df <- model$parameter
+      out$p <- model$p.value
+      out$Method <- "Pearson"
+    } else if (grepl("Pearson", model$method)) {
       out$r <- model$estimate
       out$t <- model$statistic
       out$df <- model$parameter
