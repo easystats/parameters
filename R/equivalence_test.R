@@ -277,7 +277,7 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
 
 
-#' @importFrom stats pnorm
+#' @importFrom stats qnorm
 #' @importFrom insight get_parameters
 #' @importFrom bayestestR rope_range
 #' @keywords internal
