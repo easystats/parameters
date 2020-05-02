@@ -1,11 +1,12 @@
 #' @rdname p_value_ml1
-#' @importFrom stats qnorm
+#' @importFrom stats qt
 #' @importFrom insight get_parameters
 #' @export
 se_ml1 <- function(model) {
   params <- insight::get_parameters(model)
   p <- p_value_ml1(model)
-  statistic <- stats::qnorm(p$p / 2, lower.tail = FALSE)
+  df <- degrees_of_freedom(model, method = "any")
+  statistic <- stats::qt(p$p / 2, df = df, lower.tail = FALSE)
 
   data.frame(
     Parameter = params$Parameter,
