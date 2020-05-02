@@ -1,5 +1,9 @@
 # parameters 0.6.2
 
+## General
+
+* We changed the computation of confidence intervals or standard errors, so these are now based on a t-distribution with degrees of freedom and not normal distribution assuming infinite degrees of freedom. This was implemented for most functions before and only affects few functions (like `equivalence_test()` or CIs for standardized parameters from `model_parameters()` when standardization method was `"posthoc"`).
+
 ## New supported models
 
 * `averaging` (*MuMIn*), `bayesx` (*R2BayesX*), `afex_aov` (*afex*)
