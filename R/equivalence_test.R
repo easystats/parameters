@@ -450,10 +450,11 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
 
 
-#' @importFrom stats pt qnorm p.adjust
+#' @importFrom stats pt p.adjust
 .add_p_to_equitest <- function(model, ci, range, decision) {
   tryCatch({
-    fac <- stats::qnorm((1 + ci) / 2)
+    df <- degrees_of_freedom(model, method = "any")
+    fac <- stats::qt((1 + ci) / 2, df = df)
     interval <- ci_wald(model, ci = ci)
     se <- abs((interval$CI_high - interval$CI_low) / (2 * fac))
     est <- insight::get_parameters(model)$Estimate
@@ -461,7 +462,6 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
     if (any(decision == "Undecided")) se[decision == "Undecided"] <- se[decision == "Undecided"] + (r / fac)
     if (any(decision == "Rejected")) est[decision == "Rejected"] <- ifelse(est[decision == "Rejected"] < 0, est[decision == "Rejected"] + r, est[decision == "Rejected"] - r)
     stat <- abs(est / se)
-    df <- degrees_of_freedom(model)
     out <- stats::p.adjust(2 * stats::pt(stat, df = df, lower.tail = FALSE), method = "fdr")
     if (any(decision == "Accepted")) out[decision == "Accepted"] <- 1
     out
