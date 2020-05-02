@@ -637,19 +637,3 @@ ci.rma <- function(x, ci = .95, ...) {
   }
   x
 }
-
-
-#' @keywords internal
-.ci_from_refit <- function(std_coef, ci) {
-  se <- attributes(std_coef)$standard_error$SE
-  alpha <- (1 + ci) / 2
-  fac <- stats::qnorm(alpha)
-  out <- data.frame(
-    Parameter = std_coef$Parameter,
-    CI = ci * 100,
-    CI_low = std_coef$Std_Coefficient - se * fac,
-    CI_high = std_coef$Std_Coefficient + se * fac,
-    stringsAsFactors = FALSE
-  )
-  .remove_backticks_from_parameter_names(out)
-}
