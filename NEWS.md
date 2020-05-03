@@ -33,6 +33,7 @@
 * `model_parameters()` for Stan-models (*brms*, *rstanarm*) gains a `group_level` argument to show or hide parameters for group levels of random effects.
 * Improved accuracy of confidence intervals in `model_parameters()` with `standardize = "basic"` or `standardize = "posthoc"`.
 * `model_parameters.merMod()` no longer passes `...` down to bootstrap-functions (i.e. when `bootstrap = TRUE`), as this might conflict with `lme4::bootMer()`.
+* For ordinal models (like `MASS::polr()` or `ordinal::clm()`), a `Component` column is added, indicating intercept categories (`"alpha"`) and estimates (`"beta"`).
 
 ### Other changes
 

@@ -45,21 +45,22 @@ format_parameters.default <- function(model) {
 
 
   # special handling hurdle- and zeroinfl-models ---------------------
-
   if (isTRUE(info$is_zero_inflated) | isTRUE(info$is_hurdle)) {
     names <- gsub("^(count_|zero_)", "", names)
   }
 
+  # special handling polr ---------------------
+  if (inherits(model, "polr")) {
+    original_names <- gsub("Intercept: ", "", original_names, fixed = TRUE)
+    names <- gsub("Intercept: ", "", names, fixed = TRUE)
+  }
 
   # special handling bracl ---------------------
-
   if (inherits(model, "bracl")) {
     names <- gsub("(.*):(.*)", "\\2", names)
   }
 
-
   # special handling DirichletRegModel ---------------------
-
   dirich_names <- NULL
   if (inherits(model, "DirichletRegModel")) {
     cf <- stats::coef(model)

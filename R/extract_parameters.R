@@ -34,7 +34,12 @@
   # clean parameter names
 
   if (inherits(model, "polr")) {
+    intercept_groups <- which(grepl("^Intercept:", parameters$Parameter))
     parameters$Parameter <- gsub("Intercept: ", "", parameters$Parameter, fixed = TRUE)
+  } else if (inherits(model, "clm") && !is.null(model$alpha)) {
+    intercept_groups <- match(names(model$alpha), parameters$Parameter)
+  } else {
+    intercept_groups <- NULL
   }
 
   original_order <- parameters$.id <- 1:nrow(parameters)
@@ -132,6 +137,16 @@
   # Reorder
   col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_error", "p", "Component", "Response", "Effects")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
+
+  # add intercept groups for ordinal models
+  if (inherits(model, c("polr", "clm")) && !is.null(intercept_groups)) {
+    parameters$Component <- "beta"
+    parameters$Component[intercept_groups] <- "alpha"
+  } else if (inherits(model, "clm2") && !is.null(model$Alpha)) {
+    intercept_groups <- match(names(model$Alpha), parameters$Parameter)
+    parameters$Component[parameters$Component == "conditional"] <- "beta"
+    parameters$Component[intercept_groups] <- "alpha"
+  }
 
   # remove Component column if not needed
   if (.n_unique(parameters$Component) == 1) parameters$Component <- NULL
