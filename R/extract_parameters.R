@@ -5,13 +5,17 @@
 #' @importFrom stats confint p.adjust.methods p.adjust
 #' @keywords internal
 .extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, p_adjust = NULL, ...) {
-  # check if standardization is required and package available
+
+  # ==== check if standardization is required and package available
+
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
     insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
     standardize <- NULL
   }
 
-  # for refit, we completely refit the model, than extract parameters, ci etc. as usual
+
+  # ==== for refit, we completely refit the model, than extract parameters, ci etc. as usual
+
   if (!is.null(standardize) && standardize == "refit") {
     model <- effectsize::standardize(model, verbose = FALSE)
     standardize <- NULL
@@ -20,18 +24,23 @@
   parameters <- insight::get_parameters(model, effects = effects, component = component)
   statistic <- insight::get_statistic(model, component = component)
 
-  # check if we really have a component column
+
+  # ==== check if we really have a component column
+
   if (!("Component" %in% names(parameters)) && "Component" %in% merge_by) {
     merge_by <- setdiff(merge_by, "Component")
   }
 
-  # check Degrees of freedom
+
+  # ==== check Degrees of freedom
+
   if (!.dof_method_ok(model, df_method)) {
     df_method <- NULL
   }
 
 
-  # clean parameter names
+  # ==== for ordinal models, first, clean parameter names and then indicate
+  #      intercepts (alpha-coefficients) in the component column
 
   if (inherits(model, "polr")) {
     intercept_groups <- which(grepl("^Intercept:", parameters$Parameter))
@@ -47,7 +56,9 @@
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
 
-  # Std Coefficients for other methods than "refit"
+
+  # ==== Std Coefficients for other methods than "refit"
+
   if (!is.null(standardize)) {
     # standardize model parameters and calculate related CI and SE
     std_coef <- effectsize::standardize_parameters(model, method = standardize, ci = NULL)
@@ -67,7 +78,8 @@
   }
 
 
-  # CI - only if we don't already have CI for std. parameters
+  # ==== CI - only if we don't already have CI for std. parameters
+
   if (is.null(standardize)) {
     if (!is.null(ci)) {
       if (isTRUE(robust)) {
@@ -86,7 +98,8 @@
   }
 
 
-  # p value
+  # ==== p value
+
   if (isTRUE(robust)) {
     parameters <- merge(parameters, p_value_robust(model, ...), by = merge_by)
   } else if (!is.null(df_method)) {
@@ -96,7 +109,8 @@
   }
 
 
-  # standard error - only if we don't already have SE for std. parameters
+  # ==== standard error - only if we don't already have SE for std. parameters
+
   if (is.null(standardize)) {
     if (isTRUE(robust)) {
       parameters <- merge(parameters, standard_error_robust(model, ...), by = merge_by)
@@ -108,7 +122,8 @@
   }
 
 
-  # test statistic - fix values for robust estimation
+  # ==== test statistic - fix values for robust estimation
+
   if (isTRUE(robust)) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
@@ -116,7 +131,7 @@
   }
 
 
-  # dof
+  # ==== degrees of freedom
   if (!is.null(df_method)) {
     df_error <- degrees_of_freedom(model, method = df_method)
   } else {
@@ -127,18 +142,25 @@
   }
 
 
-  # Rematch order after merging
+  # ==== Rematch order after merging
+
   parameters <- parameters[match(original_order, parameters$.id), ]
 
-  # Renaming
+
+  # ==== Renaming
+
   names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters))
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
-  # Reorder
+
+  # ==== Reorder
+
   col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "df", "df_error", "p", "Component", "Response", "Effects")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
-  # add intercept groups for ordinal models
+
+  # ==== add intercept groups for ordinal models
+
   if (inherits(model, c("polr", "clm")) && !is.null(intercept_groups)) {
     parameters$Component <- "beta"
     parameters$Component[intercept_groups] <- "alpha"
@@ -148,11 +170,15 @@
     parameters$Component[intercept_groups] <- "alpha"
   }
 
-  # remove Component column if not needed
+
+  # ==== remove Component column if not needed
+
   if (.n_unique(parameters$Component) == 1) parameters$Component <- NULL
   if (.n_unique(parameters$Effects) == 1 || effects == "fixed") parameters$Effects <- NULL
 
-  # adjust p-values?
+
+  # ==== adjust p-values?
+
   if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
     parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
   }
