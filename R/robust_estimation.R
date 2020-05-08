@@ -111,8 +111,7 @@ ci_robust <- function(model,
     robust = TRUE,
     vcov_estimation = vcov_estimation,
     vcov_type = vcov_type,
-    vcov_args = vcov_args,
-    ...
+    vcov_args = vcov_args
   )
 }
 
