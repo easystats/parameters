@@ -66,7 +66,6 @@
     coef_col <- "Std_Coefficient"
     # merge all data, including CI and SE for std. parameters
     if (inherits(std_coef, "effectsize_std_params")) {
-      parameters <- merge(parameters, ci(std_coef, ci = ci), by = merge_by)
       parameters <- merge(parameters, standard_error(std_coef), by = merge_by)
     }
     # if we have CIs, remember columns names to select later
@@ -249,7 +248,6 @@
     coef_col <- "Std_Coefficient"
     # merge all data, including CI and SE for std. parameters
     if (inherits(std_coef, "effectsize_std_params")) {
-      parameters <- merge(parameters, ci(std_coef, ci = ci), by = "Parameter")
       parameters <- merge(parameters, standard_error(std_coef), by = "Parameter")
     }
     # if we have CIs, remember columns names to select later
