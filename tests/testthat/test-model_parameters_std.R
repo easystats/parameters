@@ -23,7 +23,7 @@ if (.runThisTest || Sys.getenv("USER") == "travis") {
       testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 8))
       testthat::expect_equal(params$Std_Coefficient, c(0, -0.61463, 2.46865, -0.87911), tolerance = 1e-3)
       testthat::expect_equal(params$SE, c(0, 0.12755, 0.7075, 0.23971), tolerance = 1e-3)
-      testthat::expect_equal(params$CI_high, c(0, -0.36464, 3.85532, -0.4093), tolerance = 1e-3)
+      testthat::expect_equal(params$CI_high, c(0, -0.35336, 3.91789, -0.38809), tolerance = 1e-3)
     })
 
     test_that("model_parameters, standardize-basic", {
@@ -31,7 +31,7 @@ if (.runThisTest || Sys.getenv("USER") == "travis") {
       testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 8))
       testthat::expect_equal(params$Std_Coefficient, c(0, -0.61463, 1.23183, -1.11016), tolerance = 1e-3)
       testthat::expect_equal(params$SE, c(0, 0.12755, 0.35303, 0.30271), tolerance = 1e-3)
-      testthat::expect_equal(params$CI_high, c(0, -0.36464, 1.92377, -0.51687), tolerance = 1e-3)
+      testthat::expect_equal(params$CI_high, c(0, -0.35336, 1.95499, -0.4901), tolerance = 1e-3)
     })
 
     test_that("model_parameters, standardize-smart", {

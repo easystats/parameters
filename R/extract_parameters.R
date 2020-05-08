@@ -66,6 +66,7 @@
     coef_col <- "Std_Coefficient"
     # merge all data, including CI and SE for std. parameters
     if (inherits(std_coef, "effectsize_std_params")) {
+      parameters <- merge(parameters, ci(std_coef, ci = ci), by = merge_by)
       parameters <- merge(parameters, standard_error(std_coef), by = merge_by)
     }
     # if we have CIs, remember columns names to select later
@@ -243,11 +244,12 @@
   # Std Coefficients for other methods than "refit"
   if (!is.null(standardize)) {
     # standardize model parameters and calculate related CI and SE
-    std_coef <- effectsize::standardize_parameters(model, method = standardize)
+    std_coef <- effectsize::standardize_parameters(model, method = standardize, ci = NULL)
     parameters <- merge(parameters, std_coef, by = "Parameter")
     coef_col <- "Std_Coefficient"
     # merge all data, including CI and SE for std. parameters
     if (inherits(std_coef, "effectsize_std_params")) {
+      parameters <- merge(parameters, ci(std_coef, ci = ci), by = "Parameter")
       parameters <- merge(parameters, standard_error(std_coef), by = "Parameter")
     }
     # if we have CIs, remember columns names to select later
