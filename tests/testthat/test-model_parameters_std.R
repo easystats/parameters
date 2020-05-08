@@ -39,7 +39,7 @@ if (.runThisTest || Sys.getenv("USER") == "travis") {
       testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 8))
       testthat::expect_equal(params$Std_Coefficient, c(0, -0.61463, 2.41278, -0.85922), tolerance = 1e-3)
       testthat::expect_equal(params$SE, c(0, 0.12755, 0.69148, 0.23428), tolerance = 1e-3)
-      testthat::expect_equal(params$CI_high, c(0, -0.36464, 3.76807, -0.40003), tolerance = 1e-3)
+      testthat::expect_equal(params$CI_high, c(0, -0.35336, 3.82922, -0.37931), tolerance = 1e-3)
     })
   }
 }
