@@ -206,8 +206,8 @@ matrix, using the packages <span class="pkg">sandwich</span> and <span class="pk
     <tr>
       <th>vcov_estimation</th>
       <td><p>String, indicating the suffix of the <code>vcov*()</code>-function
-from the <span class="pkg">sandwich</span>-package, e.g. <code>vcov_estimation = "CL"</code> (which
-calls <code><a href='https://rdrr.io/pkg/sandwich/man/vcovCL.html'>vcovCL</a></code> to compute clustered covariance matrix
+from the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package, e.g. <code>vcov_estimation = "CL"</code>
+(which calls <code><a href='https://rdrr.io/pkg/sandwich/man/vcovCL.html'>vcovCL</a></code> to compute clustered covariance matrix
 estimators), or <code>vcov_estimation = "HC"</code> (which calls
 <code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC()</a></code> to compute heteroskedasticity-consistent
 covariance matrix estimators).</p></td>
