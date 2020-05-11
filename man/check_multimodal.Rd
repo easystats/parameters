@@ -15,28 +15,32 @@ check_multimodal(x, ...)
 For univariate distributions (one-dimensional vectors), this functions performs a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.
 }
 \examples{
-# Univariate
-x <- rnorm(2000)
-check_multimodal(x)
+if (require("multimode")) {
+  # Univariate
+  x <- rnorm(2000)
+  check_multimodal(x)
+}
 
 \donttest{
-x <- c(rnorm(1000), rnorm(1000, 2))
-check_multimodal(x)
+if (require("multimode") && require("mclust")) {
+  x <- c(rnorm(1000), rnorm(1000, 2))
+  check_multimodal(x)
 
-# Multivariate
-m <- data.frame(
-  x = rnorm(200),
-  y = rbeta(200, 2, 1)
-)
-plot(m$x, m$y)
-check_multimodal(m)
+  # Multivariate
+  m <- data.frame(
+    x = rnorm(200),
+    y = rbeta(200, 2, 1)
+  )
+  plot(m$x, m$y)
+  check_multimodal(m)
 
-m <- data.frame(
-  x = c(rnorm(100), rnorm(100, 4)),
-  y = c(rbeta(100, 2, 1), rbeta(100, 1, 4))
-)
-plot(m$x, m$y)
-check_multimodal(m)
+  m <- data.frame(
+    x = c(rnorm(100), rnorm(100, 4)),
+    y = c(rbeta(100, 2, 1), rbeta(100, 1, 4))
+  )
+  plot(m$x, m$y)
+  check_multimodal(m)
+}
 }
 }
 \references{
