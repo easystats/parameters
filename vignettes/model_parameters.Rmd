@@ -125,6 +125,7 @@ lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) %>%
 
 ```{r, warning=FALSE, message=FALSE}
 library(GLMMadaptive)
+library(glmmTMB)
 data("Salamanders")
 model <- mixed_model(
   count ~ spp + mined,
