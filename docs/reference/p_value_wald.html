@@ -172,8 +172,8 @@
   <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>dof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"precision"</span>, <span class='st'>"scale"</span>,
-    <span class='st'>"smooth_terms"</span>, <span class='st'>"full"</span>),
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span>, <span class='st'>"precision"</span>,
+    <span class='st'>"scale"</span>, <span class='st'>"smooth_terms"</span>, <span class='st'>"full"</span>),
   <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
@@ -236,7 +236,10 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
   <span class='fu'>p_value_wald</span>(<span class='no'>model</span>)
   <span class='fu'>ci_wald</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.90</span>, <span class='fl'>0.95</span>))
-}</div><div class='output co'>#&gt;      Parameter CI     CI_low   CI_high
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: lme4</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘lme4’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:GLMMadaptive’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    negative.binomial</span></div><div class='output co'>#&gt;      Parameter CI     CI_low   CI_high
 #&gt; 1  (Intercept) 90 -1.5296038 1.6346530
 #&gt; 2 Sepal.Length 90  0.5592337 0.7090408
 #&gt; 3  (Intercept) 95 -1.8363924 1.9414416
