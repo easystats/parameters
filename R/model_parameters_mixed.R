@@ -85,7 +85,10 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
 
   # fix argument, if model has only conditional component
   cs <- stats::coef(summary(model))
-  if (!insight::model_info(model)$is_zero_inflated && is.null(cs$disp) && component != "conditional") {
+  has_zeroinf <- insight::model_info(model)$is_zero_inflated
+  has_disp <- is.list(cs) && !is.null(cs$disp)
+
+  if (!has_zeroinf && !has_disp && component != "conditional") {
     component <- "conditional"
   }
 
