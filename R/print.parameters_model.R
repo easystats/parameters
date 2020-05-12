@@ -251,6 +251,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
       "zero_inflated" = "Zero-Inflated",
       "zero_inflated.fixed" = "Fixed Effects (Zero-Inflated Model)",
       "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
+      "dispersion" = "Dispersion",
       "simplex.fixed" = ,
       "simplex" = "Monotonic Effects",
       "smooth_sd" = "Smooth Terms (SD)",

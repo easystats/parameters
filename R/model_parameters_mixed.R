@@ -73,17 +73,19 @@ model_parameters.lme <- model_parameters.merMod
 
 # Mixed Models with zero inflation ------------------------------------
 
+#' @importFrom stats coef
 #' @inheritParams simulate_model
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), standardize = NULL, exponentiate = FALSE, df_method = NULL, details = FALSE, ...) {
+model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), standardize = NULL, exponentiate = FALSE, df_method = NULL, details = FALSE, ...) {
   component <- match.arg(component)
 
-  # p-values, CI and se might be based on differen df-methods
+  # p-values, CI and se might be based on different df-methods
   df_method <- .check_df_method(df_method)
 
-  # fix argument, if model has no zi-part
-  if (!insight::model_info(model)$is_zero_inflated && component != "conditional") {
+  # fix argument, if model has only conditional component
+  cs <- stats::coef(summary(model))
+  if (!insight::model_info(model)$is_zero_inflated && is.null(cs$disp) && component != "conditional") {
     component <- "conditional"
   }
 

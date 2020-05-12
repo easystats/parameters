@@ -199,12 +199,12 @@ functions](https://easystats.github.io/parameters/reference/index.html):
 ``` r
 data(iris)
 describe_distribution(iris)
-#> Variable     | Mean |   SD |   SE |        Range | Skewness | Kurtosis |   n | n_Missing
+#> Variable     | Mean |   SD |  IQR |        Range | Skewness | Kurtosis |   n | n_Missing
 #> ----------------------------------------------------------------------------------------
-#> Sepal.Length | 5.84 | 0.83 | 0.07 | [4.30, 7.90] |     0.31 |    -0.55 | 150 |         0
-#> Sepal.Width  | 3.06 | 0.44 | 0.04 | [2.00, 4.40] |     0.32 |     0.23 | 150 |         0
-#> Petal.Length | 3.76 | 1.77 | 0.14 | [1.00, 6.90] |    -0.27 |    -1.40 | 150 |         0
-#> Petal.Width  | 1.20 | 0.76 | 0.06 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0
+#> Sepal.Length | 5.84 | 0.83 | 1.30 | [4.30, 7.90] |     0.31 |    -0.55 | 150 |         0
+#> Sepal.Width  | 3.06 | 0.44 | 0.52 | [2.00, 4.40] |     0.32 |     0.23 | 150 |         0
+#> Petal.Length | 3.76 | 1.77 | 3.52 | [1.00, 6.90] |    -0.27 |    -1.40 | 150 |         0
+#> Petal.Width  | 1.20 | 0.76 | 1.50 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0
 ```
 
 ### Citation

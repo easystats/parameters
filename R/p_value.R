@@ -328,7 +328,7 @@ p_value.rlmerMod <- function(model, method = "wald", ...) {
 
 #' @rdname p_value
 #' @export
-p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), ...) {
   component <- match.arg(component)
   if (is.null(.check_component(model, component))) {
     return(NULL)
@@ -346,6 +346,7 @@ p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "ze
   p <- do.call(rbind, x)
   p$Component <- .rename_values(p$Component, "cond", "conditional")
   p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
+  p$Component <- .rename_values(p$Component, "disp", "dispersion")
 
   .filter_component(p, component)
 }

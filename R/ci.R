@@ -422,7 +422,7 @@ ci.DirichletRegModel <- function(x, ci = .95, component = c("all", "conditional"
 
 #' @rdname ci.merMod
 #' @export
-ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), method = c("wald", "ml1", "betwithin", "robust"), ...) {
+ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), method = c("wald", "ml1", "betwithin", "robust"), ...) {
   method <- tolower(method)
   method <- match.arg(method)
   component <- match.arg(component)

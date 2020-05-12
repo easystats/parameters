@@ -36,7 +36,7 @@
 \method{ci}{glmmTMB}(
   x,
   ci = 0.95,
-  component = c("all", "conditional", "zi", "zero_inflated"),
+  component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
   method = c("wald", "ml1", "betwithin", "robust"),
   ...
 )
@@ -44,7 +44,7 @@
 \method{ci}{zeroinfl}(
   x,
   ci = 0.95,
-  component = c("all", "conditional", "zi", "zero_inflated"),
+  component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
   method = c("wald", "ml1", "betwithin", "robust"),
   ...
 )
@@ -52,7 +52,7 @@
 \method{ci}{hurdle}(
   x,
   ci = 0.95,
-  component = c("all", "conditional", "zi", "zero_inflated"),
+  component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
   method = c("wald", "ml1", "betwithin", "robust"),
   ...
 )

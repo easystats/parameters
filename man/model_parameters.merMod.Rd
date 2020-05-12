@@ -26,7 +26,7 @@
   ci = 0.95,
   bootstrap = FALSE,
   iterations = 1000,
-  component = c("all", "conditional", "zi", "zero_inflated"),
+  component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
   standardize = NULL,
   exponentiate = FALSE,
   df_method = NULL,

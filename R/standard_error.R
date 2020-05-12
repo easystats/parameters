@@ -351,7 +351,7 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
 
 #' @rdname standard_error
 #' @export
-standard_error.glmmTMB <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+standard_error.glmmTMB <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), ...) {
   component <- match.arg(component)
   effects <- match.arg(effects)
 
@@ -389,6 +389,7 @@ standard_error.glmmTMB <- function(model, effects = c("fixed", "random"), compon
     se <- do.call(rbind, x)
     se$Component <- .rename_values(se$Component, "cond", "conditional")
     se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
+    se$Component <- .rename_values(se$Component, "disp", "dispersion")
 
     .filter_component(se, component)
   }

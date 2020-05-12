@@ -25,7 +25,11 @@ p_value(model, ...)
 
 \method{p_value}{rlmerMod}(model, method = "wald", ...)
 
-\method{p_value}{glmmTMB}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
+\method{p_value}{glmmTMB}(
+  model,
+  component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+  ...
+)
 
 \method{p_value}{MixMod}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
 

@@ -38,6 +38,7 @@
 ### Other changes
 
 * `parameters_table()` and `print.parameters_model()` now explicitely get arguments to define the digits for decimal places used in output.
+* `ci()`, `standard_error()`, `p_value()` and `model_parameters()` for *glmmTMB* models now also works for dispersion models.
 
 ## Bug fixes
 

@@ -27,7 +27,7 @@ standard_error(model, ...)
 \method{standard_error}{glmmTMB}(
   model,
   effects = c("fixed", "random"),
-  component = c("all", "conditional", "zi", "zero_inflated"),
+  component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
   ...
 )
 
