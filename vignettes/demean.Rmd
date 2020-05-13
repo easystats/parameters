@@ -121,7 +121,7 @@ model_parameters(fe_model2)[2:3, ]
 # we compare the results with those from the "lfe"-package for panel data
 library(lfe)
 fe_model3 <- felm(
-  QoL ~ time + phq4_within | ID,
+  QoL ~ time + phq4 | ID,
    data = qol_cancer
 )
 model_parameters(fe_model3)

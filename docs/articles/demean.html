@@ -214,14 +214,14 @@
 <span class="co"># we compare the results with those from the "lfe"-package for panel data</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">lfe</span>)
 <span class="no">fe_model3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lfe/man/felm.html">felm</a></span>(
-  <span class="no">QoL</span> ~ <span class="no">time</span> + <span class="no">phq4_within</span> <span class="kw">|</span> <span class="no">ID</span>,
+  <span class="no">QoL</span> ~ <span class="no">time</span> + <span class="no">phq4</span> <span class="kw">|</span> <span class="no">ID</span>,
    <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
 )
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">fe_model3</span>)
-<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span>
-<span class="co">#&gt; ------------------------------------------------------------------------</span>
-<span class="co">#&gt; time        |        1.09 | 0.64 | [-0.16,  2.34] |  1.70 | 374 | 0.089 </span>
-<span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></pre></body></html></div>
+<span class="co">#&gt; Parameter | Coefficient |   SE |         95% CI |     t |  df |      p</span>
+<span class="co">#&gt; ----------------------------------------------------------------------</span>
+<span class="co">#&gt; time      |        1.09 | 0.64 | [-0.16,  2.34] |  1.70 | 374 | 0.089 </span>
+<span class="co">#&gt; phq4      |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></pre></body></html></div>
 <p>As we can see, the <em>within-effect</em> of PHQ-4 is <code>-3.66</code>, hence the mean of the change for an average individual case in our sample (or, the “net” effect), is <code>-3.66</code>.</p>
 <p>But what about the between-effect? How do people with higher PHQ-4 score differ from people with lower PHQ-4 score? Or what about educational inequalities? Do higher educated people have a higher PHQ-4 score than lower educated people?</p>
 <p>This question cannot be answered with FE regression. But: “Can one fit a multilevel model with varying intercepts (or coefficients) when the units and predictors correlate? The answer is yes. And the solution is simple.” <span class="citation">(Bafumi and Gelman 2006)</span></p>
