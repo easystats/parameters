@@ -59,6 +59,9 @@ A data frame with columns that describe the properties of the variables.
 \description{
 This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
 \examples{
 describe_distribution(rnorm(100))
 

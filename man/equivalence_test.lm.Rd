@@ -51,6 +51,22 @@ A data frame.
 Compute the (conditional) equivalence test for frequentist models.
 }
 \details{
+In classical null hypothesis significance testing (NHST) within a frequentist
+framework, it is not possible to accept the null hypothesis, H0 - unlike
+in Bayesian statistics, where such probability statements are possible.
+\dQuote{[...] one can only reject the null hypothesis if the test
+statistics falls into the critical region(s), or fail to reject this
+hypothesis. In the latter case, all we can say is that no significant effect
+was observed, but one cannot conclude that the null hypothesis is true.}
+(\cite{Pernet 2017}). One way to address this issues without Bayesian methods
+is \emph{Equivalence Testing}, as implemented in \code{equivalence_test()}.
+While you either can reject the null hypothesis or claim an inconclusive result
+in NHST, the equivalence test adds a third category, \emph{"accept"}. Roughly
+speaking, the idea behind equivalence testing in a frequentist framework is
+to check whether an estimate and its uncertainty (i.e. confidence interval)
+falls within a region of "practical equivalence". Depending on the rule for
+this test (see below), statistical significance may not be used to reject the
+null hypothesis.
 \subsection{Calculation of equivalence testing}{
   \describe{
     \item{"bayes" - Bayesian rule (Kruschke 2018)}{
@@ -105,6 +121,9 @@ Compute the (conditional) equivalence test for frequentist models.
   for further information.
 }
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
 \examples{
 data(qol_cancer)
 model <- lm(QoL ~ time + age + education, data = qol_cancer)
@@ -114,16 +133,23 @@ equivalence_test(model)
 
 # conditional equivalence test
 equivalence_test(model, rule = "cet")
+
+# plot method
+if (require("see")) {
+  result <- equivalence_test(model)
+  plot(result)
+}
 }
 \references{
 \itemize{
-  \item Campbell, H., & Gustafson, P. (2018). Conditional equivalence testing: An alternative remedy for publication bias. PLOS ONE, 13(4), e0195145. https://doi.org/10.1371/journal.pone.0195145
+  \item Campbell, H., & Gustafson, P. (2018). Conditional equivalence testing: An alternative remedy for publication bias. PLOS ONE, 13(4), e0195145. doi: 10.1371/journal.pone.0195145
   \item Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press
   \item Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. doi: 10.1177/2515245918771304
-  \item Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses. Social Psychological and Personality Science, 8(4), 355–362. https://doi.org/10.1177/1948550617697177
+  \item Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses. Social Psychological and Personality Science, 8(4), 355–362. doi: 10.1177/1948550617697177
+  \item Pernet, C. (2017). Null hypothesis significance testing: A guide to commonly misunderstood concepts and recommendations for good practice. F1000Research, 4, 621. doi: 10.12688/f1000research.6963.5
 }
 }
 \seealso{
-For more details, see \code{\link[bayestestR:equivalence_test]{equivalence_test}}.
+For more details, see \code{\link[bayestestR:equivalence_test]{equivalence_test()}}.
   Further readings can be found in the references.
 }

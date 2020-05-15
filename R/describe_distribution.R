@@ -10,6 +10,8 @@
 #' @param iqr Logical, if \code{TRUE}, the interquartile range is calculated (based on \code{\link[stats]{IQR}}, using \code{type = 6}).
 #' @inheritParams bayestestR::point_estimate
 #'
+#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'
 #' @return A data frame with columns that describe the properties of the variables.
 #' @examples
 #' describe_distribution(rnorm(100))
