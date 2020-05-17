@@ -27,7 +27,8 @@ printed in a separate table. If \code{FALSE}, model parameters are printed
 in a single table and a \code{Component} column is added to the output.}
 
 \item{select}{Character vector (or numeric index) of column names that should
-be printed. If \code{NULL} (default), all columns are printed.}
+be printed. If \code{NULL} (default), all columns are printed. The shortcut
+\code{select = "minimal"} prints coefficient, confidence intervals and p-values.}
 
 \item{digits}{Number of decimal places for numeric values (except confidence intervals and p-values).}
 
@@ -58,6 +59,8 @@ if (require("glmmTMB")) {
 
   print(mp, split_components = FALSE)
 
-  print(mp, select = c("Parameter", "Coefficient", "CI_low", "CI_high"))
+  print(mp, select = c("Parameter", "Coefficient", "SE"))
+
+  print(mp, select = "minimal")
 }
 }
