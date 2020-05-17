@@ -34,6 +34,7 @@
 * Improved accuracy of confidence intervals in `model_parameters()` with `standardize = "basic"` or `standardize = "posthoc"`.
 * `model_parameters.merMod()` no longer passes `...` down to bootstrap-functions (i.e. when `bootstrap = TRUE`), as this might conflict with `lme4::bootMer()`.
 * For ordinal models (like `MASS::polr()` or `ordinal::clm()`), a `Component` column is added, indicating intercept categories (`"alpha"`) and estimates (`"beta"`).
+* The `select`-argument from `print.parameters_model()` now gets a `"minimal"`-option as shortcut to print coefficients, confidence intervals and p-values only.
 
 ### Other changes
 
