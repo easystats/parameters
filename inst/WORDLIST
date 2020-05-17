@@ -1,5 +1,6 @@
 ’
 Adressing
+afex
 Asparouhov
 al
 Alonso
@@ -11,6 +12,7 @@ aov
 APA
 ateucher
 Bafumi
+BayesX
 BayesFactor
 behaviour
 Bentler
@@ -92,6 +94,7 @@ glmmTMB
 glmx
 Golino
 Gorsuch
+Gustafson
 HC
 HDI
 Heisig
@@ -119,6 +122,8 @@ Kenward
 kmeans
 kmo
 KMO
+Kruschke
+Lakens
 Laparra
 lavaan
 Lawley
@@ -144,11 +149,13 @@ mlm
 modelled
 modelling
 Modelling
+MuMIn
 MSA
 multicollinearity
 multinom
 Mundlak
 Neter
+NHST
 Nieto
 nlme
 nnet
@@ -158,6 +165,7 @@ occurence
 Olkin
 panelr
 PCoA
+Pernet
 perfoms
 performant
 Pettersson
@@ -210,6 +218,7 @@ tailedness
 th
 theorethical
 Thiyagarajan
+TOST
 Turkheimer
 untransformed
 Valls
