@@ -38,14 +38,14 @@
 
 ### Other changes
 
-* `parameters_table()` and `print.parameters_model()` now explicitely get arguments to define the digits for decimal places used in output.
+* `parameters_table()` and `print.parameters_model()` now explicitly get arguments to define the digits for decimal places used in output.
 * `ci()`, `standard_error()`, `p_value()` and `model_parameters()` for *glmmTMB* models now also works for dispersion models.
 
 ## Bug fixes
 
 * Fixed issue in `equivalence_test()` for mixed models.
 * Fixed bug for `model_parameters.anova(..., eta_squared = "partial")` when called with non-mixed models.
-* Fixed issue with wrong degrees of freedeom in `model_parameters()` for *gam* models.
+* Fixed issue with wrong degrees of freedom in `model_parameters()` for *gam* models.
 * Fixed issue with unused arguments in `model_parameters()`.
 
 # parameters 0.6.1

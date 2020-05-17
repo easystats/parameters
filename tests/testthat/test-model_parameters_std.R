@@ -4,6 +4,7 @@ if (.runThisTest || Sys.getenv("USER") == "travis") {
 
   if (require("testthat") &&
       require("parameters") &&
+      require("effectsize") &&
       require("insight")) {
 
     data(mtcars)
