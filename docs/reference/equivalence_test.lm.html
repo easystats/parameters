@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -233,8 +233,22 @@ to automatically define this range based on properties of the model's data.</p><
     <p>A data frame.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    
-<h3>Calculation of equivalence testing</h3>
+    <p>In classical null hypothesis significance testing (NHST) within a frequentist
+framework, it is not possible to accept the null hypothesis, H0 - unlike
+in Bayesian statistics, where such probability statements are possible.
+&#8220;[...] one can only reject the null hypothesis if the test
+statistics falls into the critical region(s), or fail to reject this
+hypothesis. In the latter case, all we can say is that no significant effect
+was observed, but one cannot conclude that the null hypothesis is true.&#8221;
+(<cite>Pernet 2017</cite>). One way to address this issues without Bayesian methods
+is <em>Equivalence Testing</em>, as implemented in <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test()</a></code>.
+While you either can reject the null hypothesis or claim an inconclusive result
+in NHST, the equivalence test adds a third category, <em>"accept"</em>. Roughly
+speaking, the idea behind equivalence testing in a frequentist framework is
+to check whether an estimate and its uncertainty (i.e. confidence interval)
+falls within a region of "practical equivalence". Depending on the rule for
+this test (see below), statistical significance may not be used to reject the
+null hypothesis.</p><h3>Calculation of equivalence testing</h3>
 <p></p><dl'>
     <dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the &#8220;HDI+ROPE decision rule&#8221; <cite>(Kruschke, 2014, 2018)</cite>
       used for the <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>Bayesian counterpart</a></code>.
@@ -278,19 +292,23 @@ to automatically define this range based on properties of the model's data.</p><
   (argument <code>range</code>). See 'Details' in <code><a href='https://rdrr.io/pkg/bayestestR/man/rope_range.html'>rope_range</a></code>
   for further information.</p>
 
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
-<li><p>Campbell, H., &amp; Gustafson, P. (2018). Conditional equivalence testing: An alternative remedy for publication bias. PLOS ONE, 13(4), e0195145. https://doi.org/10.1371/journal.pone.0195145</p></li>
+<li><p>Campbell, H., &amp; Gustafson, P. (2018). Conditional equivalence testing: An alternative remedy for publication bias. PLOS ONE, 13(4), e0195145. doi: 10.1371/journal.pone.0195145</p></li>
 <li><p>Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press</p></li>
 <li><p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. doi: 10.1177/2515245918771304</p></li>
-<li><p>Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses. Social Psychological and Personality Science, 8(4), 355–362. https://doi.org/10.1177/1948550617697177</p></li>
+<li><p>Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses. Social Psychological and Personality Science, 8(4), 355–362. doi: 10.1177/1948550617697177</p></li>
+<li><p>Pernet, C. (2017). Null hypothesis significance testing: A guide to commonly misunderstood concepts and recommendations for good practice. F1000Research, 4, 621. doi: 10.12688/f1000research.6963.5</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>For more details, see <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></code>.
+    <div class='dont-index'><p>For more details, see <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test()</a></code>.
   Further readings can be found in the references.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -320,7 +338,12 @@ to automatically define this range based on properties of the model's data.</p><
 #&gt;            age  Accepted    100.00 % [-0.26  0.32]
 #&gt;   educationmid  Rejected      0.00 % [ 5.13 12.39]
 #&gt;  educationhigh  Rejected      0.00 % [10.14 18.57]
-#&gt; </div></span></pre>
+#&gt; </div><div class='input'>
+<span class='co'># plot method</span>
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"see"</span>)) {
+  <span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='no'>model</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>result</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: see</span></div><div class='img'><img src='equivalence_test.lm-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

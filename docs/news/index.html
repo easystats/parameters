@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -161,9 +161,9 @@
       <small>Source: <a href='https://github.com/easystats/parameters/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="parameters-062" class="section level1">
-<h1 class="page-header" data-toc-text="0.6.2">
-<a href="#parameters-062" class="anchor"></a>parameters 0.6.2<small> Unreleased </small>
+    <div id="parameters-070" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.0">
+<a href="#parameters-070" class="anchor"></a>parameters 0.7.0<small> Unreleased </small>
 </h1>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
@@ -225,6 +225,7 @@
 <li>
 <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> no longer passes <code>...</code> down to bootstrap-functions (i.e. when <code>bootstrap = TRUE</code>), as this might conflict with <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html">lme4::bootMer()</a></code>.</li>
 <li>For ordinal models (like <code><a href="https://rdrr.io/pkg/MASS/man/polr.html">MASS::polr()</a></code> or <code><a href="https://rdrr.io/pkg/ordinal/man/clm.html">ordinal::clm()</a></code>), a <code>Component</code> column is added, indicating intercept categories (<code>"alpha"</code>) and estimates (<code>"beta"</code>).</li>
+<li>The <code>select</code>-argument from <code><a href="../reference/print.html">print.parameters_model()</a></code> now gets a <code>"minimal"</code>-option as shortcut to print coefficients, confidence intervals and p-values only.</li>
 </ul>
 </div>
 <div id="other-changes" class="section level3">
@@ -232,7 +233,9 @@
 <a href="#other-changes" class="anchor"></a>Other changes</h3>
 <ul>
 <li>
-<code><a href="../reference/parameters_table.html">parameters_table()</a></code> and <code><a href="../reference/print.html">print.parameters_model()</a></code> now explicitely get arguments to define the digits for decimal places used in output.</li>
+<code><a href="../reference/parameters_table.html">parameters_table()</a></code> and <code><a href="../reference/print.html">print.parameters_model()</a></code> now explicitly get arguments to define the digits for decimal places used in output.</li>
+<li>
+<code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="../reference/p_value.html">p_value()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>glmmTMB</em> models now also works for dispersion models.</li>
 </ul>
 </div>
 </div>
@@ -242,7 +245,7 @@
 <ul>
 <li>Fixed issue in <code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> for mixed models.</li>
 <li>Fixed bug for <code>model_parameters.anova(..., eta_squared = "partial")</code> when called with non-mixed models.</li>
-<li>Fixed issue with wrong degrees of freedeom in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>gam</em> models.</li>
+<li>Fixed issue with wrong degrees of freedom in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>gam</em> models.</li>
 <li>Fixed issue with unused arguments in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
 </ul>
 </div>
