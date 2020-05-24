@@ -10,3 +10,4 @@
 ^paper.*$
 ^paper/.
 ^WIP/.
+^.github/.
