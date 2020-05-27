@@ -1,6 +1,10 @@
 # parameters 0.7.1
 
-## General
+## New supported models
+
+* `robmixglm` (*robmixglm*)
+
+## Changes to functions
 
 ### `simulate_parameters()` and `simulate_model()`
 

@@ -625,6 +625,17 @@ p_value.flexsurvreg <- function(model, ...) {
 # p-Values from Special Models -----------------------------------------------
 
 
+#' @importFrom stats na.omit
+#' @export
+p_value.robmixglm <- function(model, ...) {
+  p <- stats::na.omit(.get_pval_from_summary(model))
+  .data_frame(
+    Parameter = names(p),
+    p = as.vector(p)
+  )
+}
+
+
 #' @rdname p_value
 #' @export
 p_value.averaging <- function(model, component = c("conditional", "full"), ...) {

@@ -826,6 +826,17 @@ standard_error.bayesx <- function(model, ...) {
 # Other models ---------------------------------------------------------------
 
 
+#' @importFrom stats na.omit
+#' @export
+standard_error.robmixglm <- function(model, ...) {
+  se <- stats::na.omit(.get_se_from_summary(model))
+  .data_frame(
+    Parameter = names(se),
+    SE = as.vector(se)
+  )
+}
+
+
 #' @export
 standard_error.bife <- function(model, ...) {
   cs <- summary(model)
