@@ -1,3 +1,13 @@
+# parameters 0.7.1
+
+## General
+
+### `simulate_parameters()` and `simulate_model()`
+
+* has a nicer `print()` method.
+* now also simulate parameters from the dispersion model for *glmmTMB* objects.
+* gets a `verbose` argument, to show or hide warnings and messages.
+
 # parameters 0.7.0
 
 ## General

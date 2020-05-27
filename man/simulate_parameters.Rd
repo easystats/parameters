@@ -3,11 +3,22 @@
 \name{simulate_parameters}
 \alias{simulate_parameters}
 \alias{simulate_parameters.default}
+\alias{simulate_parameters.glmmTMB}
 \title{Simulate Model Parameters}
 \usage{
 simulate_parameters(model, ...)
 
 \method{simulate_parameters}{default}(
+  model,
+  iterations = 1000,
+  centrality = "median",
+  ci = 0.95,
+  ci_method = "quantile",
+  test = "p-value",
+  ...
+)
+
+\method{simulate_parameters}{glmmTMB}(
   model,
   iterations = 1000,
   centrality = "median",

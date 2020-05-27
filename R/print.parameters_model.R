@@ -366,3 +366,7 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
   }
   invisible(orig_x)
 }
+
+
+#' @export
+print.parameters_simulate <- print.parameters_model

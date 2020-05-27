@@ -294,7 +294,7 @@ simulate_model.vgam <- function(model, iterations = 1000, ...) {
 #' @importFrom insight get_parameters
 #' @rdname simulate_model
 #' @export
-simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = FALSE, ...) {
   component <- match.arg(component)
   info <- insight::model_info(model)
 
@@ -303,22 +303,55 @@ simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all"
     info <- NULL
   }
 
-  if (component %in% c("zi", "zero_inflated", "all") && !is.null(info) && !isTRUE(info$is_zero_inflated)) {
-    insight::print_color("Model has no zero-inflation component. Simulating from conditional parameters.\n", "red")
-    component <- "conditional"
+  has_zeroinflated <- !is.null(info) && isTRUE(info$is_zero_inflated)
+  has_dispersion <- !is.null(info) && isTRUE(info$is_dispersion)
+
+
+  # check component-argument ----
+
+  if (component == "all") {
+    if (!has_zeroinflated && !has_dispersion) {
+      if (verbose) insight::print_color("No zero-inflation and dispersion components. Simulating from conditional parameters.\n", "red")
+      component <- "conditional"
+    } else if (!has_zeroinflated && has_dispersion) {
+      if (verbose) insight::print_color("No zero-inflation component. Simulating from conditional and dispersion parameters.\n", "red")
+      component <- c("conditional", "dispersion")
+    } else if (has_zeroinflated && !has_dispersion) {
+      if (verbose) insight::print_color("No dispersion component. Simulating from conditional and zero-inflation parameters.\n", "red")
+      component <- c("conditional", "zero_inflated")
+    }
+  } else if (component %in% c("zi", "zero_inflated") && !has_zeroinflated) {
+    stop("No zero-inflation model found.")
+  } else if (component == "dispersion" && !has_dispersion) {
+    stop("No dispersion model found.")
   }
+
 
   if (is.null(iterations)) iterations <- 1000
 
-  if (component == "all") {
+  if (all(component == c("conditional", "zero_inflated"))) {
     d1 <- .simulate_model(model, iterations, component = "conditional")
     d2 <- .simulate_model(model, iterations, component = "zero_inflated")
     colnames(d2) <- paste0(colnames(d2), "_zi")
     d <- cbind(d1, d2)
-  } else if (component == "conditional") {
+  } else   if (all(component == c("conditional", "dispersion"))) {
+    d1 <- .simulate_model(model, iterations, component = "conditional")
+    d2 <- .simulate_model(model, iterations, component = "dispersion")
+    colnames(d2) <- paste0(colnames(d2), "_disp")
+    d <- cbind(d1, d2)
+  } else if (all(component == "all")) {
+    d1 <- .simulate_model(model, iterations, component = "conditional")
+    d2 <- .simulate_model(model, iterations, component = "zero_inflated")
+    d3 <- .simulate_model(model, iterations, component = "dispersion")
+    colnames(d2) <- paste0(colnames(d2), "_zi")
+    colnames(d3) <- paste0(colnames(d3), "_disp")
+    d <- cbind(d1, d2, d3)
+  } else if (all(component == "conditional")) {
     d <- .simulate_model(model, iterations, component = "conditional")
-  } else {
+  } else if (all(component %in% c("zi", "zero_inflated"))) {
     d <- .simulate_model(model, iterations, component = "zero_inflated")
+  } else {
+    d <- .simulate_model(model, iterations, component = "dispersion")
   }
 
   class(d) <- c("parameters_simulate_model", class(d))
