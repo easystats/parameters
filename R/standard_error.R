@@ -1369,7 +1369,7 @@ standard_error.gmnl <- function(model, ...) {
 #' @export
 standard_error.emmGrid <- function(model, ...) {
   s <- summary(model)
-  estimate_pos <- which(colnames(s) == "emmean")
+  estimate_pos <- which(colnames(s) == model@misc$estName)
 
   if (length(estimate_pos)) {
     .data_frame(

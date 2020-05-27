@@ -475,7 +475,7 @@ p_value.svyolr <- function(model, ...) {
 #' @export
 p_value.emmGrid <- function(model, ci = .95, adjust = "none", ...) {
   s <- summary(model, level = ci, adjust = adjust)
-  estimate_pos <- which(colnames(s) == "emmean")
+  estimate_pos <- which(colnames(s) == model@misc$estName)
 
   if (length(estimate_pos)) {
     stat <- insight::get_statistic(model, ci = ci, adjust = adjust)
