@@ -2,7 +2,7 @@
 
 ## New supported models
 
-* `robmixglm` (*robmixglm*)
+* `robmixglm` (*robmixglm*), partial support `emmGrid` (*emmeans*)
 
 ## Changes to functions
 
