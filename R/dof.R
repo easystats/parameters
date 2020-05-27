@@ -41,7 +41,13 @@
 #' }
 #' }
 #' @export
-degrees_of_freedom <- function(model, method = "analytical") {
+degrees_of_freedom <- function(model, ...) {
+  UseMethod("degrees_of_freedom")
+}
+
+
+#' @export
+degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   method <- tolower(method)
   method <- match.arg(method, c("analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward", "nokr", "wald"))
 
@@ -79,6 +85,11 @@ degrees_of_freedom <- function(model, method = "analytical") {
 #' @export
 dof <- degrees_of_freedom
 
+
+#' @export
+degrees_of_freedom.emmGrid <- function(model,...) {
+  summary(model)$df
+}
 
 
 

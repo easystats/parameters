@@ -5,9 +5,9 @@
 \alias{dof}
 \title{Degrees of Freedom (DoF)}
 \usage{
-degrees_of_freedom(model, method = "analytical")
+degrees_of_freedom(model, ...)
 
-dof(model, method = "analytical")
+dof(model, ...)
 }
 \arguments{
 \item{model}{A statistical model.}

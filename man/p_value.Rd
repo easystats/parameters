@@ -9,6 +9,7 @@
 \alias{p_value.glmmTMB}
 \alias{p_value.MixMod}
 \alias{p_value.mixor}
+\alias{p_value.emmGrid}
 \alias{p_value.averaging}
 \alias{p_value.DirichletRegModel}
 \alias{p_value.clm2}
@@ -35,6 +36,8 @@ p_value(model, ...)
 
 \method{p_value}{mixor}(model, effects = c("all", "fixed", "random"), ...)
 
+\method{p_value}{emmGrid}(model, ci = 0.95, adjust = "none", ...)
+
 \method{p_value}{averaging}(model, component = c("conditional", "full"), ...)
 
 \method{p_value}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
@@ -60,6 +63,8 @@ be returned? Only applies to mixed models. May be abbreviated. When
 standard errors for random effects are requested, for each grouping factor
 a list of standard errors (per group level) for random intercepts and slopes
 is returned.}
+
+\item{adjust}{Character value naming the method used to adjust p-values or confidence intervals. See \code{\link[emmeans]{summary.emmGrid}} for details.}
 }
 \value{
 The p-values.

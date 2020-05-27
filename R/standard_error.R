@@ -1367,6 +1367,22 @@ standard_error.gmnl <- function(model, ...) {
 
 
 #' @export
+standard_error.emmGrid <- function(model, ...) {
+  s <- summary(model)
+  estimate_pos <- which(colnames(s) == "emmean")
+
+  if (length(estimate_pos)) {
+    .data_frame(
+      s[, 1:(estimate_pos - 1), drop = FALSE],
+      SE = s$SE
+    )
+  } else {
+    return(NULL)
+  }
+}
+
+
+#' @export
 standard_error.rma <- function(model, ...) {
   params <- insight::get_parameters(model)
   .data_frame(

@@ -8,6 +8,7 @@
 #'
 #' @param model A statistical model.
 #' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
+#' @param adjust Character value naming the method used to adjust p-values or confidence intervals. See \code{\link[emmeans]{summary.emmGrid}} for details.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
@@ -467,6 +468,26 @@ p_value.svyolr <- function(model, ...) {
     Parameter = .remove_backticks_from_string(rownames(cs)),
     p = as.vector(p)
   )
+}
+
+
+#' @rdname p_value
+#' @export
+p_value.emmGrid <- function(model, ci = .95, adjust = "none", ...) {
+  s <- summary(model, level = ci, adjust = adjust)
+  estimate_pos <- which(colnames(s) == "emmean")
+
+  if (length(estimate_pos)) {
+    stat <- insight::get_statistic(model, ci = ci, adjust = adjust)
+    p <- 2 * stats::pt(abs(stat$Statistic), df = s$df, lower.tail = FALSE)
+
+    .data_frame(
+      s[, 1:(estimate_pos - 1), drop = FALSE],
+      p = as.vector(p)
+    )
+  } else {
+    return(NULL)
+  }
 }
 
 

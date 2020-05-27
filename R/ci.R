@@ -8,6 +8,7 @@
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
+#' @inheritParams p_value
 #'
 #' @return A data frame containing the CI bounds.
 #'
@@ -489,6 +490,7 @@ ci.clm2 <- function(x, ci = .95, component = c("all", "conditional", "scale"), .
 
 #' @export
 ci.clmm2 <- ci.clm2
+
 
 
 #' @export
