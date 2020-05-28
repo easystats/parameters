@@ -3,8 +3,6 @@
 
 [![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
 [![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
-[![Build
-Status](https://travis-ci.org/easystats/parameters.svg?branch=master)](https://travis-ci.org/easystats/parameters)
 
 ***Describe and understand your model’s parameters\!***
 
@@ -219,8 +217,7 @@ Corresponding BibTeX entry:
 
     @Article{,
       title = {Describe and understand your model's parameters},
-      author = {Dominique Makowski and Mattan S. Ben-Shachar and Daniel
-      Lüdecke},
+      author = {Daniel Lüdecke and Mattan S. Ben-Shachar and Dominique Makowski},
       journal = {CRAN},
       year = {2019},
       note = {R package},
