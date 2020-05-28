@@ -152,3 +152,21 @@ model_parameters.bcplm <- function(model, centrality = "median", dispersion = FA
 
   params
 }
+
+
+
+#' @export
+model_parameters.stanfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, diagnostic = c("ESS", "Rhat"), exponentiate = FALSE, standardize = NULL, ...) {
+
+  # Processing
+  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = NULL, diagnostic = diagnostic, priors = FALSE, standardize = standardize, ...)
+
+  if (exponentiate) params <- .exponentiate_parameters(params)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+
+  attr(params, "parameter_info") <- insight::clean_parameters(model)
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_stan", "parameters_model", "see_parameters_model", class(params))
+
+  params
+}
