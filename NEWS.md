@@ -12,6 +12,10 @@
 * now also simulate parameters from the dispersion model for *glmmTMB* objects.
 * gets a `verbose` argument, to show or hide warnings and messages.
 
+## Bug fixes
+
+* fix issue with rank deficient models.
+
 # parameters 0.7.0
 
 ## General

@@ -22,7 +22,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
 
 
 #' @importFrom insight get_parameters n_obs
-#' @importFrom stats qt
+#' @importFrom stats qt complete.cases
 #' @keywords internal
 .ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, method = "wald", se = NULL, ...) {
   params <- insight::get_parameters(model, effects = effects, component = component)
@@ -74,5 +74,5 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
   if ("Component" %in% names(params)) out$Component <- params$Component
   if ("Effects" %in% names(params) && effects != "fixed") out$Effects <- params$Effects
 
-  out
+  out[stats::complete.cases(out), ]
 }

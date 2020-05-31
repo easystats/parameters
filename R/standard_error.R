@@ -274,9 +274,10 @@ standard_error.lm <- function(model, method = NULL, ...) {
   if (isTRUE(robust)) {
     standard_error_robust(model, ...)
   } else {
+    se <- .get_se_from_summary(model)
     .data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
-      SE = .get_se_from_summary(model)
+      Parameter = names(se),
+      SE = as.vector(se)
     )
   }
 }

@@ -24,6 +24,8 @@
   parameters <- insight::get_parameters(model, effects = effects, component = component)
   statistic <- insight::get_statistic(model, component = component)
 
+  # check if all estimates are non-NA
+  parameters <- .check_rank_deficiency(parameters)
 
   # ==== check if we really have a component column
 
@@ -214,6 +216,9 @@
   # get parameters and statistic
   parameters <- insight::get_parameters(model, effects = "fixed", component = "all")
   statistic <- insight::get_statistic(model, component = "all")
+
+  # check if all estimates are non-NA
+  parameters <- .check_rank_deficiency(parameters)
 
   # sometimes, due to merge(), row-order messes up, so we save this here
   original_order <- parameters$.id <- 1:nrow(parameters)
@@ -764,4 +769,14 @@
 
   row.names(out) <- NULL
   out
+}
+
+
+
+.check_rank_deficiency <- function(p) {
+  if (anyNA(p$Estimate)) {
+    warning(sprintf("Model matrix is rank deficient. Parameters %s were not estimable.", paste(p$Parameter[is.na(p$Estimate)], collapse = ", ")), call. = FALSE)
+    p <- p[!is.na(p$Estimate), ]
+  }
+  p
 }
