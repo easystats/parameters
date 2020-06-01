@@ -141,11 +141,18 @@
 <span class="co"># model parameters, where SE, CI and p-values are based on robust estimation</span>
 <span class="no">mp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>, <span class="kw">robust</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="no">mp</span></pre></body></html></div>
-<pre><code>#&gt; Parameter | Coefficient | SE | 95% CI | t | df | p
-#&gt; --------------------------------------------------</code></pre>
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |        0.87 | 0.45 | [-0.03, 1.76] |  1.91 | 143 | 0.059 
+#&gt; Sepal.Length                        |        0.04 | 0.12 | [-0.19, 0.28] |  0.37 | 143 | 0.711 
+#&gt; Species [versicolor]                |       -0.78 | 0.69 | [-2.15, 0.59] | -1.12 | 143 | 0.265 
+#&gt; Species [virginica]                 |       -0.41 | 0.63 | [-1.66, 0.83] | -0.66 | 143 | 0.513 
+#&gt; Sepal.Width                         |        0.11 | 0.08 | [-0.05, 0.27] |  1.32 | 143 | 0.190 
+#&gt; Sepal.Length * Species [versicolor] |        0.61 | 0.13 | [ 0.35, 0.87] |  4.65 | 143 | &lt; .001
+#&gt; Sepal.Length * Species [virginica]  |        0.68 | 0.12 | [ 0.45, 0.91] |  5.75 | 143 | &lt; .001</code></pre>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># compare standard errors to result from sandwich-package</span>
 <span class="no">mp</span>$<span class="no">SE</span></pre></body></html></div>
-<pre><code>#&gt; numeric(0)</code></pre>
+<pre><code>#&gt; [1] 0.454 0.119 0.693 0.630 0.083 0.130 0.118</code></pre>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw pkg">sandwich</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovHC.html">vcovHC</a></span>(<span class="no">model</span>))))</pre></body></html></div>
 <pre><code>#&gt; [1] 0.454 0.119 0.693 0.630 0.083 0.130 0.118</code></pre>
 </div>
@@ -157,11 +164,18 @@
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># change estimation-type</span>
 <span class="no">mp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>, <span class="kw">robust</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">vcov_estimation</span> <span class="kw">=</span> <span class="st">"CL"</span>, <span class="kw">vcov_type</span> <span class="kw">=</span> <span class="st">"HC1"</span>)
 <span class="no">mp</span></pre></body></html></div>
-<pre><code>#&gt; Parameter | Coefficient | SE | 95% CI | t | df | p
-#&gt; --------------------------------------------------</code></pre>
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |        0.87 | 0.42 | [ 0.03, 1.70] |  2.05 | 143 | 0.042 
+#&gt; Sepal.Length                        |        0.04 | 0.11 | [-0.18, 0.26] |  0.40 | 143 | 0.692 
+#&gt; Species [versicolor]                |       -0.78 | 0.65 | [-2.07, 0.51] | -1.19 | 143 | 0.237 
+#&gt; Species [virginica]                 |       -0.41 | 0.59 | [-1.57, 0.75] | -0.70 | 143 | 0.483 
+#&gt; Sepal.Width                         |        0.11 | 0.08 | [-0.05, 0.27] |  1.38 | 143 | 0.170 
+#&gt; Sepal.Length * Species [versicolor] |        0.61 | 0.12 | [ 0.37, 0.85] |  4.96 | 143 | &lt; .001
+#&gt; Sepal.Length * Species [virginica]  |        0.68 | 0.11 | [ 0.46, 0.90] |  6.15 | 143 | &lt; .001</code></pre>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># compare standard errors to result from sandwich-package</span>
 <span class="no">mp</span>$<span class="no">SE</span></pre></body></html></div>
-<pre><code>#&gt; numeric(0)</code></pre>
+<pre><code>#&gt; [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111</code></pre>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw pkg">sandwich</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html">vcovCL</a></span>(<span class="no">model</span>))))</pre></body></html></div>
 <pre><code>#&gt; [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111</code></pre>
 <p>Usually, clustered covariance matrix estimation is used when there is a cluster-structure in the data. The variable indicating the cluster-structure can be defined in <code><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html">sandwich::vcovCL()</a></code> with the <code>cluster</code>-argument. In <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, additional arguments that should be passed down to functions from the <strong>sandwich</strong> package can be specified in <code>vcov_args</code>:</p>
@@ -175,11 +189,18 @@
   <span class="kw">vcov_args</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">cluster</span> <span class="kw">=</span> <span class="no">iris</span>$<span class="no">cluster</span>)
 )
 <span class="no">mp</span></pre></body></html></div>
-<pre><code>#&gt; Parameter | Coefficient | SE | 95% CI | t | df | p
-#&gt; --------------------------------------------------</code></pre>
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |        0.87 | 0.34 | [ 0.20, 1.53] |  2.57 | 143 | 0.011 
+#&gt; Sepal.Length                        |        0.04 | 0.07 | [-0.10, 0.19] |  0.61 | 143 | 0.540 
+#&gt; Species [versicolor]                |       -0.78 | 0.52 | [-1.80, 0.25] | -1.49 | 143 | 0.137 
+#&gt; Species [virginica]                 |       -0.41 | 0.26 | [-0.94, 0.11] | -1.56 | 143 | 0.120 
+#&gt; Sepal.Width                         |        0.11 | 0.07 | [-0.03, 0.25] |  1.52 | 143 | 0.131 
+#&gt; Sepal.Length * Species [versicolor] |        0.61 | 0.10 | [ 0.42, 0.80] |  6.29 | 143 | &lt; .001
+#&gt; Sepal.Length * Species [virginica]  |        0.68 | 0.05 | [ 0.58, 0.78] | 13.28 | 143 | &lt; .001</code></pre>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="co"># compare standard errors to result from sandwich-package</span>
 <span class="no">mp</span>$<span class="no">SE</span></pre></body></html></div>
-<pre><code>#&gt; numeric(0)</code></pre>
+<pre><code>#&gt; [1] 0.337 0.072 0.519 0.264 0.072 0.097 0.051</code></pre>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw pkg">sandwich</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html">vcovCL</a></span>(<span class="no">model</span>, <span class="kw">cluster</span> <span class="kw">=</span> <span class="no">iris</span>$<span class="no">cluster</span>))))</pre></body></html></div>
 <pre><code>#&gt; [1] 0.337 0.072 0.519 0.264 0.072 0.097 0.051</code></pre>
 </div>
@@ -199,11 +220,18 @@
   <span class="kw">vcov_args</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">cluster</span> <span class="kw">=</span> <span class="no">iris</span>$<span class="no">cluster</span>)
 )
 <span class="no">mp</span></pre></body></html></div>
-<pre><code>#&gt; Parameter | Coefficient | SE | 95% CI | t | df | p
-#&gt; --------------------------------------------------</code></pre>
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |        0.87 | 0.33 | [ 0.21, 1.52] |  2.62 | 143 | 0.010 
+#&gt; Sepal.Length                        |        0.04 | 0.07 | [-0.10, 0.18] |  0.63 | 143 | 0.531 
+#&gt; Species [versicolor]                |       -0.78 | 0.51 | [-1.78, 0.23] | -1.53 | 143 | 0.129 
+#&gt; Species [virginica]                 |       -0.41 | 0.26 | [-0.92, 0.10] | -1.60 | 143 | 0.112 
+#&gt; Sepal.Width                         |        0.11 | 0.07 | [-0.03, 0.25] |  1.55 | 143 | 0.123 
+#&gt; Sepal.Length * Species [versicolor] |        0.61 | 0.09 | [ 0.42, 0.79] |  6.42 | 143 | &lt; .001
+#&gt; Sepal.Length * Species [virginica]  |        0.68 | 0.05 | [ 0.58, 0.78] | 13.56 | 143 | &lt; .001</code></pre>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="co"># compare standard errors to result from clubSsandwich-package</span>
 <span class="no">mp</span>$<span class="no">SE</span></pre></body></html></div>
-<pre><code>#&gt; numeric(0)</code></pre>
+<pre><code>#&gt; [1] 0.330 0.070 0.508 0.259 0.071 0.095 0.050</code></pre>
 <div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw pkg">clubSandwich</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/clubSandwich/man/vcovCR.html">vcovCR</a></span>(<span class="no">model</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"CR1"</span>, <span class="kw">cluster</span> <span class="kw">=</span> <span class="no">iris</span>$<span class="no">cluster</span>))))</pre></body></html></div>
 <pre><code>#&gt; [1] 0.330 0.070 0.508 0.259 0.071 0.095 0.050</code></pre>
 </div>
@@ -213,8 +241,15 @@
 <p>Finally, robust estimation can be combined with standardization. However, robust covariance matrix estimation only works for <code>standardize = "refit"</code>.</p>
 <div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="co"># model parameters, robust estimation on standardized model</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>, <span class="kw">standardize</span> <span class="kw">=</span> <span class="st">"refit"</span>, <span class="kw">robust</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<pre><code>#&gt; Parameter | Coefficient | SE | 95% CI | t | df | p
-#&gt; --------------------------------------------------</code></pre>
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |         95% CI |      t |  df |      p
+#&gt; -------------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |       -1.30 | 0.07 | [-1.44, -1.16] | -18.70 | 143 | &lt; .001
+#&gt; Sepal.Length                        |        0.02 | 0.06 | [-0.09,  0.13] |   0.37 | 143 | 0.711 
+#&gt; Species [versicolor]                |        1.57 | 0.09 | [ 1.40,  1.74] |  17.84 | 143 | &lt; .001
+#&gt; Species [virginica]                 |        2.02 | 0.09 | [ 1.84,  2.20] |  22.49 | 143 | &lt; .001
+#&gt; Sepal.Width                         |        0.03 | 0.02 | [-0.01,  0.07] |   1.32 | 143 | 0.190 
+#&gt; Sepal.Length * Species [versicolor] |        0.28 | 0.06 | [ 0.16,  0.41] |   4.65 | 143 | &lt; .001
+#&gt; Sepal.Length * Species [virginica]  |        0.32 | 0.06 | [ 0.21,  0.43] |   5.75 | 143 | &lt; .001</code></pre>
 </div>
 </div>
 <div id="mixed-models" class="section level2">

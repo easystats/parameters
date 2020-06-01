@@ -202,8 +202,12 @@
 <a href="#glms" class="anchor"></a>GLMs</h3>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">vs</span> ~ <span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span>(<span class="no">mpg</span>, <span class="fl">2</span>) + <span class="no">cyl</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>()</pre></body></html></div>
-<pre><code>#&gt; Parameter | Coefficient | SE | 95% CI | t | df | p
-#&gt; --------------------------------------------------</code></pre>
+<pre><code>#&gt; Parameter        | Coefficient |   SE |         95% CI |     t | df |      p
+#&gt; ----------------------------------------------------------------------------
+#&gt; (Intercept)      |        2.04 | 0.39 | [ 1.27,  2.80] |  5.22 | 28 | &lt; .001
+#&gt; mpg [1st degree] |       -0.33 | 0.61 | [-1.53,  0.87] | -0.53 | 28 | 0.599 
+#&gt; mpg [2nd degree] |        0.10 | 0.32 | [-0.54,  0.74] |  0.31 | 28 | 0.762 
+#&gt; cyl              |       -0.26 | 0.06 | [-0.38, -0.14] | -4.14 | 28 | &lt; .001</code></pre>
 </div>
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
@@ -469,7 +473,8 @@
 #&gt; Study 1   |       -0.39 | 0.32 | [-1.01,  0.23] | -1.24 | 0.215  |   9.95
 #&gt; Study 2   |        0.68 | 0.32 | [ 0.05,  1.30] |  2.13 | 0.033  |   9.95
 #&gt; Study 3   |        0.28 | 0.13 | [ 0.03,  0.54] |  2.17 | 0.030  |  59.17
-#&gt; Study 4   |       -1.40 | 0.36 | [-2.10, -0.69] | -3.88 | &lt; .001 |   7.72</code></pre>
+#&gt; Study 4   |       -1.40 | 0.36 | [-2.10, -0.69] | -3.88 | &lt; .001 |   7.72
+#&gt; Overall   |       -0.18 | 0.44 | [-1.05,  0.68] | -0.42 | 0.676  |</code></pre>
 </div>
 <div id="plotting-model-parameters" class="section level2">
 <h2 class="hasAnchor">
