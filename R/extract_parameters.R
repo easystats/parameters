@@ -175,7 +175,7 @@
 
   # ==== remove Component column if not needed
 
-  if (!include_marginal) {
+  if (!include_marginal && !is.null(parameters$Component) && "marginal" %in% parameters$Component) {
     parameters <- parameters[parameters$Component != "marginal", ]
   }
 
