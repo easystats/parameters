@@ -230,6 +230,25 @@ simulate_model.bracl <- simulate_model.default
 
 
 
+# mfx models  -----------------------------------------
+
+
+#' @export
+simulate_model.logitor <- function(model, iterations = 1000, ...) {
+  simulate_model.default(model$fit, iterations = iterations, ...)
+}
+
+#' @export
+simulate_model.poissonirr <- simulate_model.logitor
+
+#' @export
+simulate_model.negbinirr <- simulate_model.logitor
+
+
+
+
+
+
 # gam models  -----------------------------------------
 
 

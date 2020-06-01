@@ -470,6 +470,24 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
 
 
 
+# mfx models -----------------------------------------
+
+
+#' @export
+ci.logitor <- function(x, ci = .95, method = NULL, ...) {
+  ci.lm(x$fit, ci = ci, method = method, ...)
+}
+
+#' @export
+ci.poissonirr <- ci.logitor
+
+#' @export
+ci.negbinirr <- ci.logitor
+
+
+
+
+
 # Special models -----------------------------------------
 
 

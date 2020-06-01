@@ -1364,6 +1364,23 @@ standard_error.gmnl <- function(model, ...) {
 
 
 
+# mfx models -----------------------------
+
+#' @export
+standard_error.logitor <- function(model, ...) {
+  standard_error.lm(model$fit, ...)
+}
+
+#' @export
+standard_error.poissonirr <- standard_error.logitor
+
+#' @export
+standard_error.negbinirr <- standard_error.logitor
+
+
+
+
+
 # Special classes and models -----------------------------
 
 

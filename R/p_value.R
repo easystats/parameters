@@ -643,6 +643,24 @@ p_value.flexsurvreg <- function(model, ...) {
 
 
 
+# p-Values from mfx Models -----------------------------------------------
+
+
+#' @export
+p_value.logitor <- function(model, method = NULL, ...) {
+  p_value.default(model$fit, method = method, ...)
+}
+
+#' @export
+p_value.poissonirr <- p_value.logitor
+
+#' @export
+p_value.negbinirr <- p_value.logitor
+
+
+
+
+
 # p-Values from Special Models -----------------------------------------------
 
 

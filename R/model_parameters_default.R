@@ -83,6 +83,25 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
+# mfx cases ------------------------------------------------
+
+
+#' @export
+model_parameters.logitor <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, p_adjust = NULL, ...) {
+  model_parameters.default(model$fit, ci = ci, bootstrap = bootstrap, iterations = iterations, standardize = standardize, exponentiate = exponentiate, robust = robust, p_adjust = p_adjust, ...)
+}
+
+#' @export
+model_parameters.poissonirr <- model_parameters.logitor
+
+#' @export
+model_parameters.negbinirr <- model_parameters.logitor
+
+
+
+
+
+
 # other special cases ------------------------------------------------
 
 

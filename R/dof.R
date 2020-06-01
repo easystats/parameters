@@ -91,6 +91,17 @@ degrees_of_freedom.emmGrid <- function(model,...) {
   summary(model)$df
 }
 
+#' @export
+degrees_of_freedom.logitor <- function(model,...) {
+  degrees_of_freedom.default(model$fit, ...)
+}
+
+#' @export
+degrees_of_freedom.poissonirr <- degrees_of_freedom.logitor
+
+#' @export
+degrees_of_freedom.negbinirr <- degrees_of_freedom.logitor
+
 
 
 
