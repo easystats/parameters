@@ -1377,6 +1377,31 @@ standard_error.poissonirr <- standard_error.logitor
 #' @export
 standard_error.negbinirr <- standard_error.logitor
 
+#' @export
+standard_error.poissonmfx <- function(model, ...) {
+  parms <- insight::get_parameters(model, include_marginal = TRUE, ...)
+  cs <- stats::coef(summary(model$fit))
+  se <- c(as.vector(model$mfxest[, 2]), as.vector(cs[, 2]))
+
+  data.frame(
+    Parameter = parms$Parameter,
+    SE = se,
+    Component = parms$Component,
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+}
+
+#' @export
+standard_error.logitmfx <- standard_error.poissonmfx
+
+#' @export
+standard_error.probitmfx <- standard_error.poissonmfx
+
+#' @export
+standard_error.negbinmfx <- standard_error.poissonmfx
+
+
 
 
 

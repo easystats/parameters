@@ -4,7 +4,7 @@
 #' @importFrom insight get_statistic get_parameters
 #' @importFrom stats confint p.adjust.methods p.adjust
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, p_adjust = NULL, ...) {
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, p_adjust = NULL, include_marginal = FALSE, ...) {
 
   # ==== check if standardization is required and package available
 
@@ -21,8 +21,8 @@
     standardize <- NULL
   }
 
-  parameters <- insight::get_parameters(model, effects = effects, component = component)
-  statistic <- insight::get_statistic(model, component = component)
+  parameters <- insight::get_parameters(model, effects = effects, component = component, include_marginal = TRUE)
+  statistic <- insight::get_statistic(model, component = component, include_marginal = TRUE)
 
   # check if all estimates are non-NA
   parameters <- .check_rank_deficiency(parameters)
@@ -174,6 +174,10 @@
 
 
   # ==== remove Component column if not needed
+
+  if (!include_marginal) {
+    parameters <- parameters[parameters$Component != "marginal", ]
+  }
 
   if (.n_unique(parameters$Component) == 1) parameters$Component <- NULL
   if (.n_unique(parameters$Effects) == 1 || effects == "fixed") parameters$Effects <- NULL

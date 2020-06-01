@@ -25,7 +25,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
 #' @importFrom stats qt complete.cases
 #' @keywords internal
 .ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, method = "wald", se = NULL, ...) {
-  params <- insight::get_parameters(model, effects = effects, component = component)
+  params <- insight::get_parameters(model, effects = effects, component = component, include_marginal = TRUE)
   estimates <- params$Estimate
   method <- tolower(method)
 

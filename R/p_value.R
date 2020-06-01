@@ -657,6 +657,31 @@ p_value.poissonirr <- p_value.logitor
 #' @export
 p_value.negbinirr <- p_value.logitor
 
+#' @export
+p_value.poissonmfx <- function(model, ...) {
+  parms <- insight::get_parameters(model, include_marginal = TRUE, ...)
+  cs <- stats::coef(summary(model$fit))
+  p <- c(as.vector(model$mfxest[, 4]), as.vector(cs[, 4]))
+
+  data.frame(
+    Parameter = parms$Parameter,
+    p = p,
+    Component = parms$Component,
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+}
+
+#' @export
+p_value.logitmfx <- p_value.poissonmfx
+
+#' @export
+p_value.probitmfx <- p_value.poissonmfx
+
+#' @export
+p_value.negbinmfx <- p_value.poissonmfx
+
+
 
 
 

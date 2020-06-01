@@ -102,6 +102,19 @@ degrees_of_freedom.poissonirr <- degrees_of_freedom.logitor
 #' @export
 degrees_of_freedom.negbinirr <- degrees_of_freedom.logitor
 
+#' @export
+degrees_of_freedom.poissonmfx <- degrees_of_freedom.logitor
+
+#' @export
+degrees_of_freedom.logitmfx <- degrees_of_freedom.logitor
+
+#' @export
+degrees_of_freedom.negbinmfx <- degrees_of_freedom.logitor
+
+#' @export
+degrees_of_freedom.probitmfx <- degrees_of_freedom.logitor
+
+
 
 
 

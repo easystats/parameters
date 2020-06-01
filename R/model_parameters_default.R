@@ -11,6 +11,7 @@
 #' @param robust Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.
 #' @param component Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}) or \code{"all"}.
 #' @param p_adjust Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.
+#' @param include_marginal Logical, for models with marginal effects (from \pkg{mfx}) includes the marginal effects parameters.
 #' @param ... Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
@@ -60,7 +61,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
-.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", component = "conditional", robust = FALSE, df_method = NULL, p_adjust = NULL, ...) {
+.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", component = "conditional", robust = FALSE, df_method = NULL, p_adjust = NULL, include_marginal = FALSE, ...) {
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -70,7 +71,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
   if (bootstrap) {
     params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    params <- .extract_parameters_generic(model, ci = ci, component = component, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, p_adjust = p_adjust, ...)
+    params <- .extract_parameters_generic(model, ci = ci, component = component, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, p_adjust = p_adjust, include_marginal = include_marginal, ...)
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)
@@ -87,7 +88,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 #' @export
-model_parameters.logitor <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, p_adjust = NULL, ...) {
+model_parameters.logitor <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = TRUE, robust = FALSE, p_adjust = NULL, ...) {
   model_parameters.default(model$fit, ci = ci, bootstrap = bootstrap, iterations = iterations, standardize = standardize, exponentiate = exponentiate, robust = robust, p_adjust = p_adjust, ...)
 }
 
@@ -96,6 +97,37 @@ model_parameters.poissonirr <- model_parameters.logitor
 
 #' @export
 model_parameters.negbinirr <- model_parameters.logitor
+
+#' @rdname model_parameters.default
+#' @export
+model_parameters.poissonmfx <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = TRUE, robust = FALSE, p_adjust = NULL, include_marginal = TRUE, ...) {
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    robust = robust,
+    p_adjust = p_adjust,
+    include_marginal = include_marginal,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+#' @export
+model_parameters.logitmfx <- model_parameters.poissonmfx
+
+#' @export
+model_parameters.probitmfx <- model_parameters.poissonmfx
+
+#' @export
+model_parameters.negbinmfx <- model_parameters.poissonmfx
+
 
 
 

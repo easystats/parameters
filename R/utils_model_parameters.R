@@ -51,7 +51,7 @@
   if (any(columns)) {
     params[columns] <- exp(params[columns])
     if (all(c("Coefficient", "SE") %in% names(params))) {
-      params$SE <- exp(params$SE)
+      params$SE <- params$Coefficient * params$SE
     }
   }
   params

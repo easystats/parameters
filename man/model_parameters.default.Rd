@@ -2,6 +2,7 @@
 % Please edit documentation in R/model_parameters_default.R
 \name{model_parameters.default}
 \alias{model_parameters.default}
+\alias{model_parameters.poissonmfx}
 \alias{model_parameters.betareg}
 \alias{model_parameters.clm2}
 \alias{model_parameters.glmx}
@@ -16,6 +17,19 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  ...
+)
+
+\method{model_parameters}{poissonmfx}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = TRUE,
+  robust = FALSE,
+  p_adjust = NULL,
+  include_marginal = TRUE,
   ...
 )
 
@@ -73,6 +87,8 @@
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
+
+\item{include_marginal}{Logical, for models with marginal effects (from \pkg{mfx}) includes the marginal effects parameters.}
 
 \item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}) or \code{"all"}.}
 }
