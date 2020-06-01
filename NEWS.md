@@ -2,7 +2,7 @@
 
 ## New supported models
 
-* `robmixglm` (*robmixglm*), `logitor`, `poissonirr`, `negbinirr` (*mfs*), partial support `emmGrid` (*emmeans*)
+* `robmixglm` (*robmixglm*), `logitor`, `poissonirr`, `negbinirr` (*mfx*), partial support `emmGrid` (*emmeans*)
 
 ## Changes to functions
 
