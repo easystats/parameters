@@ -202,7 +202,7 @@
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>) or <code>"all"</code>.</p></td>
+      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>), <code>"marginal"</code> (<span class="pkg">mfx</span>) or <code>"all"</code>.</p></td>
     </tr>
     <tr>
       <th>standardize</th>
@@ -247,13 +247,13 @@
 #&gt; <span class='message'>Simon Jackman</span>
 #&gt; <span class='message'>hurdle and zeroinfl functions by Achim Zeileis</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
 #&gt; 
-#&gt; </span><span>Parameter     | Coefficient |   SE |         95% CI |     z |  df |      p
-#&gt; --------------------------------------------------------------------------
-#&gt; (Intercept)   |        0.56 | 0.07 | [ 0.43,  0.69] |  8.26 | 907 | &lt; .001
-#&gt; fem [Women]   |       -0.23 | 0.06 | [-0.34, -0.11] | -3.91 | 907 | &lt; .001
-#&gt; mar [Married] |        0.14 | 0.07 | [ 0.01,  0.27] |  2.07 | 907 | 0.038 
-#&gt; kid5          |       -0.17 | 0.05 | [-0.26, -0.07] | -3.43 | 907 | &lt; .001
-#&gt; ment          |        0.02 | 0.00 | [ 0.02,  0.03] | 10.05 | 907 | &lt; .001
+#&gt; </span><span>Parameter     | Coefficient |       SE |         95% CI |     z |  df |      p
+#&gt; ------------------------------------------------------------------------------
+#&gt; (Intercept)   |        0.56 |     0.07 | [ 0.43,  0.69] |  8.26 | 907 | &lt; .001
+#&gt; fem [Women]   |       -0.23 |     0.06 | [-0.34, -0.11] | -3.91 | 907 | &lt; .001
+#&gt; mar [Married] |        0.14 |     0.07 | [ 0.01,  0.27] |  2.07 | 907 | 0.038 
+#&gt; kid5          |       -0.17 |     0.05 | [-0.26, -0.07] | -3.43 | 907 | &lt; .001
+#&gt; ment          |        0.02 | 2.12e-03 | [ 0.02,  0.03] | 10.05 | 907 | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
 #&gt; 
