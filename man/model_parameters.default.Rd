@@ -2,6 +2,7 @@
 % Please edit documentation in R/model_parameters_default.R
 \name{model_parameters.default}
 \alias{model_parameters.default}
+\alias{model_parameters.logitor}
 \alias{model_parameters.poissonmfx}
 \alias{model_parameters.betareg}
 \alias{model_parameters.clm2}
@@ -20,13 +21,25 @@
   ...
 )
 
-\method{model_parameters}{poissonmfx}(
+\method{model_parameters}{logitor}(
   model,
   ci = 0.95,
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
   exponentiate = TRUE,
+  robust = FALSE,
+  p_adjust = NULL,
+  ...
+)
+
+\method{model_parameters}{poissonmfx}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
   include_marginal = TRUE,
