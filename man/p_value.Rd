@@ -10,6 +10,7 @@
 \alias{p_value.MixMod}
 \alias{p_value.mixor}
 \alias{p_value.emmGrid}
+\alias{p_value.poissonmfx}
 \alias{p_value.averaging}
 \alias{p_value.DirichletRegModel}
 \alias{p_value.clm2}
@@ -37,6 +38,8 @@ p_value(model, ...)
 \method{p_value}{mixor}(model, effects = c("all", "fixed", "random"), ...)
 
 \method{p_value}{emmGrid}(model, ci = 0.95, adjust = "none", ...)
+
+\method{p_value}{poissonmfx}(model, component = c("all", "conditional", "marginal"), ...)
 
 \method{p_value}{averaging}(model, component = c("conditional", "full"), ...)
 

@@ -12,7 +12,7 @@ ci_wald(
   dof = NULL,
   effects = c("fixed", "random", "all"),
   component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision",
-    "scale", "smooth_terms", "full"),
+    "scale", "smooth_terms", "full", "marginal"),
   robust = FALSE,
   ...
 )

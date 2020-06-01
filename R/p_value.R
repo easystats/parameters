@@ -657,19 +657,27 @@ p_value.poissonirr <- p_value.logitor
 #' @export
 p_value.negbinirr <- p_value.logitor
 
+#' @rdname p_value
 #' @export
-p_value.poissonmfx <- function(model, ...) {
-  parms <- insight::get_parameters(model, include_marginal = TRUE, ...)
+p_value.poissonmfx <- function(model, component = c("all", "conditional", "marginal"), ...) {
+  parms <- insight::get_parameters(model, component = "all")
   cs <- stats::coef(summary(model$fit))
   p <- c(as.vector(model$mfxest[, 4]), as.vector(cs[, 4]))
 
-  data.frame(
+  out <- data.frame(
     Parameter = parms$Parameter,
     p = p,
     Component = parms$Component,
     stringsAsFactors = FALSE,
     row.names = NULL
   )
+
+  component <- match.arg(component)
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
 }
 
 #' @export

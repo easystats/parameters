@@ -476,7 +476,7 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
 #' @export
 ci.logitor <- function(x, ci = .95, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
-  ci_wald(x$fit, ci = ci, robust = robust, ...)
+  ci_wald(model = x$fit, ci = ci, robust = robust, ...)
 }
 
 #' @export
@@ -486,9 +486,10 @@ ci.poissonirr <- ci.logitor
 ci.negbinirr <- ci.logitor
 
 #' @export
-ci.poissonmfx <- function(x, ci = .95, method = NULL, ...) {
+ci.poissonmfx <- function(x, ci = .95, component = c("all", "conditional", "marginal"), method = NULL, ...) {
+  component <- match.arg(component)
   robust <- !is.null(method) && method == "robust"
-  ci_wald(model = x, ci = ci, robust = robust, ...)
+  ci_wald(model = x, ci = ci, component = component, robust = robust, ...)
 }
 
 #' @export

@@ -1377,19 +1377,27 @@ standard_error.poissonirr <- standard_error.logitor
 #' @export
 standard_error.negbinirr <- standard_error.logitor
 
+#' @rdname standard_error
 #' @export
-standard_error.poissonmfx <- function(model, ...) {
-  parms <- insight::get_parameters(model, include_marginal = TRUE, ...)
+standard_error.poissonmfx <- function(model, component = c("all", "conditional", "marginal"), ...) {
+  parms <- insight::get_parameters(model, component = "all")
   cs <- stats::coef(summary(model$fit))
   se <- c(as.vector(model$mfxest[, 2]), as.vector(cs[, 2]))
 
-  data.frame(
+  out <- data.frame(
     Parameter = parms$Parameter,
     SE = se,
     Component = parms$Component,
     stringsAsFactors = FALSE,
     row.names = NULL
   )
+
+  component <- match.arg(component)
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
 }
 
 #' @export
