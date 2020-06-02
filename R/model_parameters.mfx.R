@@ -8,6 +8,9 @@ model_parameters.logitor <- function(model, ci = .95, bootstrap = FALSE, iterati
 model_parameters.poissonirr <- model_parameters.logitor
 
 #' @export
+model_parameters.betaor <- model_parameters.logitor
+
+#' @export
 model_parameters.negbinirr <- model_parameters.logitor
 
 #' @rdname model_parameters.default

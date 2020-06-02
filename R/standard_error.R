@@ -1409,6 +1409,12 @@ standard_error.probitmfx <- standard_error.poissonmfx
 #' @export
 standard_error.negbinmfx <- standard_error.poissonmfx
 
+#' @export
+standard_error.betaor <- function(model, component = c("all", "conditional", "precision"), ...) {
+  component = match.arg(component)
+  standard_error.betareg(model$fit, component = component, ...)
+}
+
 
 
 
