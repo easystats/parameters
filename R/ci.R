@@ -501,6 +501,11 @@ ci.logitmfx <- ci.poissonmfx
 #' @export
 ci.probitmfx <- ci.poissonmfx
 
+#' @export
+ci.betaor <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x$fit, ci = ci, dof = Inf, component = component)
+}
 
 
 

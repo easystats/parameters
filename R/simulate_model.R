@@ -390,6 +390,14 @@ simulate_model.betareg <- function(model, iterations = 1000, component = c("all"
   out
 }
 
+#' @export
+simulate_model.betaor <- function(model, iterations = 1000, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  simulate_model.betareg(model$fit, iterations = iterations, component = component, ...)
+}
+
+#' @export
+simulate_model.betamfx <- simulate_model.betaor
 
 #' @export
 simulate_model.clm2 <- function(model, iterations = 1000, component = c("all", "conditional", "scale"), ...) {

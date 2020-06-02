@@ -8,9 +8,6 @@ model_parameters.logitor <- function(model, ci = .95, bootstrap = FALSE, iterati
 model_parameters.poissonirr <- model_parameters.logitor
 
 #' @export
-model_parameters.betaor <- model_parameters.logitor
-
-#' @export
 model_parameters.negbinirr <- model_parameters.logitor
 
 #' @rdname model_parameters.default
@@ -43,3 +40,10 @@ model_parameters.probitmfx <- model_parameters.poissonmfx
 
 #' @export
 model_parameters.negbinmfx <- model_parameters.poissonmfx
+
+
+#' @export
+model_parameters.betaor <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "precision", "all"), standardize = NULL, exponentiate = FALSE, p_adjust = NULL, ...) {
+  component <- match.arg(component)
+  model_parameters.betareg(model$fit, ci = ci, bootstrap = bootstrap, iterations = iterations, component = component, standardize = standardize, exponentiate = exponentiate, p_adjust = p_adjust, ...)
+}
