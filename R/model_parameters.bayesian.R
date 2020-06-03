@@ -153,6 +153,8 @@ model_parameters.bcplm <- function(model, centrality = "median", dispersion = FA
   params
 }
 
+#' @export
+model_parameters.bayesQR <- model_parameters.bcplm
 
 
 #' @export
