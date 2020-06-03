@@ -74,6 +74,8 @@ standard errors for random effects are requested, for each grouping factor
 a list of standard errors (per group level) for random intercepts and slopes
 is returned.}
 
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+
 \item{adjust}{Character value naming the method used to adjust p-values or confidence intervals. See \code{\link[emmeans]{summary.emmGrid}} for details.}
 }
 \value{

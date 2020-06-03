@@ -12,6 +12,7 @@
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
+#' @inheritParams ci.merMod
 #'
 #' @note \code{p_value_robust()} resp. \code{p_value(method = "robust")}
 #'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
