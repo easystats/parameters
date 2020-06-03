@@ -485,6 +485,7 @@ ci.poissonirr <- ci.logitor
 #' @export
 ci.negbinirr <- ci.logitor
 
+#' @rdname ci.merMod
 #' @export
 ci.poissonmfx <- function(x, ci = .95, component = c("all", "conditional", "marginal"), method = NULL, ...) {
   component <- match.arg(component)
@@ -506,6 +507,15 @@ ci.betaor <- function(x, ci = .95, component = c("all", "conditional", "precisio
   component <- match.arg(component)
   ci_wald(model = x$fit, ci = ci, dof = Inf, component = component)
 }
+
+#' @rdname ci.merMod
+#' @export
+ci.betamfx <- function(x, ci = .95, component = c("all", "conditional", "precision", "marginal"), method = NULL, ...) {
+  component <- match.arg(component)
+  robust <- !is.null(method) && method == "robust"
+  ci_wald(model = x, ci = ci, component = component, robust = robust, ...)
+}
+
 
 
 

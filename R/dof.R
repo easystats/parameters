@@ -114,6 +114,12 @@ degrees_of_freedom.negbinmfx <- degrees_of_freedom.logitor
 #' @export
 degrees_of_freedom.probitmfx <- degrees_of_freedom.logitor
 
+#' @export
+degrees_of_freedom.betaor <- degrees_of_freedom.logitor
+
+#' @export
+degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
+
 
 
 

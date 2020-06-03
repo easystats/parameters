@@ -20,10 +20,9 @@ se_satterthwaite.lme <- function(model) {
   lavaSearch2::sCorrect(model) <- TRUE
   s <- lavaSearch2::summary2(model)
 
-  data.frame(
+  .data_frame(
     Parameter = params$Parameter,
-    SE = as.vector(s$tTable[, "Std.Error"]),
-    stringsAsFactors = FALSE
+    SE = as.vector(s$tTable[, "Std.Error"])
   )
 }
 

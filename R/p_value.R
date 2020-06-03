@@ -230,20 +230,16 @@ p_value.zcpglm <- function(model, component = c("all", "conditional", "zi", "zer
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
   params <- get_parameters(model)
 
-  tweedie <- data.frame(
+  tweedie <- .data_frame(
     Parameter = params$Parameter[params$Component == "conditional"],
     p = as.vector(stats$tweedie[, "Pr(>|z|)"]),
-    Component = "conditional",
-    stringsAsFactors = FALSE,
-    row.names = NULL
+    Component = "conditional"
   )
 
-  zero <- data.frame(
+  zero <- .data_frame(
     Parameter = params$Parameter[params$Component == "zero_inflated"],
     p = as.vector(stats$zero[, "Pr(>|z|)"]),
-    Component = "zero_inflated",
-    stringsAsFactors = FALSE,
-    row.names = NULL
+    Component = "zero_inflated"
   )
 
   out <- .filter_component(rbind(tweedie, zero), component)
@@ -664,12 +660,10 @@ p_value.poissonmfx <- function(model, component = c("all", "conditional", "margi
   cs <- stats::coef(summary(model$fit))
   p <- c(as.vector(model$mfxest[, 4]), as.vector(cs[, 4]))
 
-  out <- data.frame(
+  out <- .data_frame(
     Parameter = parms$Parameter,
     p = p,
-    Component = parms$Component,
-    stringsAsFactors = FALSE,
-    row.names = NULL
+    Component = parms$Component
   )
 
   component <- match.arg(component)
@@ -693,6 +687,27 @@ p_value.negbinmfx <- p_value.poissonmfx
 p_value.betaor <- function(model, component = c("all", "conditional", "precision"), ...) {
   component = match.arg(component)
   p_value.betareg(model$fit, component = component, ...)
+}
+
+#' @rdname p_value
+#' @export
+p_value.betamfx <- function(model, component = c("all", "conditional", "precision", "marginal"), ...) {
+  parms <- insight::get_parameters(model, component = "all")
+  cs <- do.call(rbind, stats::coef(summary(model$fit)))
+  p <- c(as.vector(model$mfxest[, 4]), as.vector(cs[, 4]))
+
+  out <- .data_frame(
+    Parameter = parms$Parameter,
+    p = p,
+    Component = parms$Component
+  )
+
+  component <- match.arg(component)
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
 }
 
 

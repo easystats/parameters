@@ -11,6 +11,8 @@
 \alias{ci.zeroinfl}
 \alias{ci.hurdle}
 \alias{ci.MixMod}
+\alias{ci.poissonmfx}
+\alias{ci.betamfx}
 \alias{ci.betareg}
 \alias{ci.clm2}
 \alias{ci.lme}
@@ -61,6 +63,22 @@
   x,
   ci = 0.95,
   component = c("all", "conditional", "zi", "zero_inflated"),
+  ...
+)
+
+\method{ci}{poissonmfx}(
+  x,
+  ci = 0.95,
+  component = c("all", "conditional", "marginal"),
+  method = NULL,
+  ...
+)
+
+\method{ci}{betamfx}(
+  x,
+  ci = 0.95,
+  component = c("all", "conditional", "precision", "marginal"),
+  method = NULL,
   ...
 )
 

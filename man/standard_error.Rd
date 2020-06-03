@@ -14,6 +14,7 @@
 \alias{standard_error.betareg}
 \alias{standard_error.DirichletRegModel}
 \alias{standard_error.poissonmfx}
+\alias{standard_error.betamfx}
 \alias{standard_error.averaging}
 \title{Standard Errors}
 \usage{
@@ -57,6 +58,12 @@ standard_error(model, ...)
 \method{standard_error}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
 
 \method{standard_error}{poissonmfx}(model, component = c("all", "conditional", "marginal"), ...)
+
+\method{standard_error}{betamfx}(
+  model,
+  component = c("all", "conditional", "precision", "marginal"),
+  ...
+)
 
 \method{standard_error}{averaging}(model, component = c("conditional", "full"), ...)
 }

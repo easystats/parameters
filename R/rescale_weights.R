@@ -125,12 +125,11 @@ rescale_weights <- function(data, group, probability_weights, nest = FALSE) {
 
 .rescale_weights <- function(x, group, probability_weights, n, weight_non_na) {
   # compute sum of weights per group
-  design_weights <- data.frame(
+  design_weights <- .data_frame(
     group = sort(unique(x[[group]])),
     sum_weights_by_group = tapply(x[[probability_weights]], as.factor(x[[group]]), sum),
     sum_squared_weights_by_group = tapply(x[[probability_weights]]^2, as.factor(x[[group]]), sum),
-    n_per_group = as.vector(table(x[[group]])),
-    stringsAsFactors = FALSE
+    n_per_group = as.vector(table(x[[group]]))
   )
 
   colnames(design_weights)[1] <- group
@@ -170,11 +169,10 @@ rescale_weights <- function(data, group, probability_weights, nest = FALSE) {
   # compute sum of weights per group
   design_weights <- cbind(
     groups,
-    data.frame(
+    .data_frame(
       sum_weights_by_group = unlist(as.list(tapply(x[[probability_weights]], lapply(group, function(i) as.factor(x[[i]])), sum))),
       sum_squared_weights_by_group = unlist(as.list(tapply(x[[probability_weights]]^2, lapply(group, function(i) as.factor(x[[i]])), sum))),
-      n_per_group = unlist(as.list(table(x[, group]))),
-      stringsAsFactors = FALSE
+      n_per_group = unlist(as.list(table(x[, group])))
     )
   )
 

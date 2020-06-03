@@ -513,10 +513,9 @@ standard_error.zerocount <- standard_error.zeroinfl
 standard_error.aov <- function(model, ...) {
   params <- model_parameters(model)
 
-  data.frame(
+  .data_frame(
     Parameter = params$Parameter,
-    SE = params$SE,
-    stringsAsFactors = FALSE
+    SE = params$SE
   )
 }
 
@@ -898,20 +897,16 @@ standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
   params <- get_parameters(model)
 
-  tweedie <- data.frame(
+  tweedie <- .data_frame(
     Parameter = params$Parameter[params$Component == "conditional"],
     SE = as.vector(stats$tweedie[, "Std. Error"]),
-    Component = "conditional",
-    stringsAsFactors = FALSE,
-    row.names = NULL
+    Component = "conditional"
   )
 
-  zero <- data.frame(
+  zero <- .data_frame(
     Parameter = params$Parameter[params$Component == "zero_inflated"],
     SE = as.vector(stats$zero[, "Std. Error"]),
-    Component = "zero_inflated",
-    stringsAsFactors = FALSE,
-    row.names = NULL
+    Component = "zero_inflated"
   )
 
   out <- .filter_component(rbind(tweedie, zero), component)
@@ -1384,12 +1379,10 @@ standard_error.poissonmfx <- function(model, component = c("all", "conditional",
   cs <- stats::coef(summary(model$fit))
   se <- c(as.vector(model$mfxest[, 2]), as.vector(cs[, 2]))
 
-  out <- data.frame(
+  out <- .data_frame(
     Parameter = parms$Parameter,
     SE = se,
-    Component = parms$Component,
-    stringsAsFactors = FALSE,
-    row.names = NULL
+    Component = parms$Component
   )
 
   component <- match.arg(component)
@@ -1414,6 +1407,28 @@ standard_error.betaor <- function(model, component = c("all", "conditional", "pr
   component = match.arg(component)
   standard_error.betareg(model$fit, component = component, ...)
 }
+
+#' @rdname standard_error
+#' @export
+standard_error.betamfx <- function(model, component = c("all", "conditional", "precision", "marginal"), ...) {
+  parms <- insight::get_parameters(model, component = "all")
+  cs <- do.call(rbind, stats::coef(summary(model$fit)))
+  se <- c(as.vector(model$mfxest[, 2]), as.vector(cs[, 2]))
+
+  out <- .data_frame(
+    Parameter = parms$Parameter,
+    SE = se,
+    Component = parms$Component
+  )
+
+  component <- match.arg(component)
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
+}
+
 
 
 

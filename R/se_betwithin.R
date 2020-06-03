@@ -8,9 +8,8 @@ se_betwithin <- function(model) {
   df <- degrees_of_freedom(model, method = "any")
   statistic <- stats::qt(p$p / 2, df = df, lower.tail = FALSE)
 
-  data.frame(
+  .data_frame(
     Parameter = params$Parameter,
-    SE = abs(as.vector(params$Estimate / statistic)),
-    stringsAsFactors = FALSE
+    SE = abs(as.vector(params$Estimate / statistic))
   )
 }

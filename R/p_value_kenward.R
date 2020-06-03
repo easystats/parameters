@@ -72,10 +72,9 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
   }
 
   p <- 2 * stats::pt(abs(statistic), df = dof, lower.tail = FALSE)
-  data.frame(
+  .data_frame(
     Parameter = params$Parameter,
-    p = unname(p),
-    stringsAsFactors = FALSE
+    p = unname(p)
   )
 }
 
@@ -89,10 +88,9 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
   params <- merge(params, dof, by = "Parameter")
   p <- 2 * stats::pt(abs(params$Estimate / params$SE), df = params$df_error, lower.tail = FALSE)
 
-  data.frame(
+  .data_frame(
     Parameter = params$Parameter,
-    p = unname(p),
-    stringsAsFactors = FALSE
+    p = unname(p)
   )
 }
 

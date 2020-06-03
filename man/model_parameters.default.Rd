@@ -4,6 +4,7 @@
 \name{model_parameters.logitor}
 \alias{model_parameters.logitor}
 \alias{model_parameters.poissonmfx}
+\alias{model_parameters.betamfx}
 \alias{model_parameters.default}
 \alias{model_parameters.betareg}
 \alias{model_parameters.clm2}
@@ -28,6 +29,19 @@
   bootstrap = FALSE,
   iterations = 1000,
   component = c("all", "conditional", "marginal"),
+  standardize = NULL,
+  exponentiate = FALSE,
+  robust = FALSE,
+  p_adjust = NULL,
+  ...
+)
+
+\method{model_parameters}{betamfx}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = c("all", "conditional", "precision", "marginal"),
   standardize = NULL,
   exponentiate = FALSE,
   robust = FALSE,
