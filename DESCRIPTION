@@ -93,6 +93,7 @@ Suggests:
     mclust,
     MCMCglmm,
     metafor,
+    mfx,
     mgcv,
     multimode,
     MuMIn,
