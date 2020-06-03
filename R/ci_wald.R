@@ -74,5 +74,9 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
   if ("Component" %in% names(params)) out$Component <- params$Component
   if ("Effects" %in% names(params) && effects != "fixed") out$Effects <- params$Effects
 
-  out[stats::complete.cases(out), ]
+  if (anyNA(params$Estimate)) {
+    out[stats::complete.cases(out), ]
+  } else {
+    out
+  }
 }

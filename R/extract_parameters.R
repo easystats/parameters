@@ -773,9 +773,9 @@
 
 
 
-.check_rank_deficiency <- function(p) {
+.check_rank_deficiency <- function(p, verbose = TRUE) {
   if (anyNA(p$Estimate)) {
-    warning(sprintf("Model matrix is rank deficient. Parameters %s were not estimable.", paste(p$Parameter[is.na(p$Estimate)], collapse = ", ")), call. = FALSE)
+    if (isTRUE(verbose)) warning(sprintf("Model matrix is rank deficient. Parameters %s were not estimable.", paste(p$Parameter[is.na(p$Estimate)], collapse = ", ")), call. = FALSE)
     p <- p[!is.na(p$Estimate), ]
   }
   p
