@@ -1,8 +1,8 @@
-# parameters 0.7.1
+# parameters 0.8.0
 
 ## New supported models
 
-* `robmixglm` (*robmixglm*), `betaor`, `logitor`, `poissonirr`, `negbinirr`, `logitmfx`, `probitmfx`, `poissonmfx`, `negbinmfx` (*mfx*), partial support `emmGrid` (*emmeans*)
+* `robmixglm` (*robmixglm*), `betaor`, `betamfx`, `logitor`, `poissonirr`, `negbinirr`, `logitmfx`, `probitmfx`, `poissonmfx`, `negbinmfx` (*mfx*), partial support `emmGrid` (*emmeans*)
 
 ## Changes to functions
 
