@@ -1,11 +1,4 @@
 if (require("testthat") && require("parameters")) {
-  test_that("format_ci", {
-    testthat::expect_equal(format_ci(1.2012313, 145), "95% CI [1.20, 145.00]")
-    testthat::expect_equal(format_ci(c(1.2012313, NA), c(145, 12.4)), c("95% CI [1.20, 145.00]", "95% CI [NA, 12.40]"))
-    testthat::expect_equal(format_ci(c(NA, NA), c(1.2012313, NA)), c("95% CI [NA, 1.20]", ""))
-  })
-
-
   test_that("format_p", {
     testthat::expect_equal(nchar(format_p(0.02)), 9)
     testthat::expect_equal(nchar(format_p(0.02, stars = TRUE)), 10)
