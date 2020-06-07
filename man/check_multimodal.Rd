@@ -17,7 +17,7 @@ For univariate distributions (one-dimensional vectors), this functions performs 
 \examples{
 if (require("multimode")) {
   # Univariate
-  x <- rnorm(2000)
+  x <- rnorm(1000)
   check_multimodal(x)
 }
 

@@ -2,10 +2,13 @@
 % Please edit documentation in R/dof.R
 \name{degrees_of_freedom}
 \alias{degrees_of_freedom}
+\alias{degrees_of_freedom.default}
 \alias{dof}
 \title{Degrees of Freedom (DoF)}
 \usage{
 degrees_of_freedom(model, ...)
+
+\method{degrees_of_freedom}{default}(model, method = "analytical", ...)
 
 dof(model, ...)
 }

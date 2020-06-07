@@ -47,6 +47,7 @@ degrees_of_freedom <- function(model, ...) {
 }
 
 
+#' @rdname degrees_of_freedom
 #' @export
 degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   method <- tolower(method)
