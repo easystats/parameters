@@ -93,6 +93,13 @@ random_parameters <- function(model) {
       names(cor_slope_intercept) <- paste0("rho01_", csi_names)
       out <- c(out, cor_slope_intercept)
     }
+
+    # Slopes Correlation
+    if (!.is_empty_object(re_variances$cor.slopes) && !.is_empty_object(model_rs)) {
+      cor_slopes <- as.list(re_variances$cor.slopes)
+      names(cor_slopes) <- paste0("rho00_", names(cor_slopes))
+      out <- c(out, cor_slopes)
+    }
   }
 
   # Number of levels per random-effect groups
@@ -115,12 +122,14 @@ random_parameters <- function(model) {
   out$Component[grepl("^tau00_", out$Description)] <- "tau00"
   out$Component[grepl("^tau11_", out$Description)] <- "tau11"
   out$Component[grepl("^rho01_", out$Description)] <- "rho01"
+  out$Component[grepl("^rho00_", out$Description)] <- "rho00"
 
   # Additional information
   out$Term <- ""
   out$Term[out$Component == "tau00"] <- gsub("^tau00_(.*)", "\\1", out$Description[out$Component == "tau00"])
   out$Term[out$Component == "tau11"] <- gsub("^tau11_(.*)", "\\1", out$Description[out$Component == "tau11"])
   out$Term[out$Component == "rho01"] <- gsub("^rho01_(.*)", "\\1", out$Description[out$Component == "rho01"])
+  out$Term[out$Component == "rho00"] <- gsub("^rho00_(.*)(\\.\\.\\.)(.*)", "\\3", out$Description[out$Component == "rho00"])
 
   # renaming
   out$Type <- ""
@@ -138,6 +147,8 @@ random_parameters <- function(model) {
   # correlations
   out$Type[grepl("^rho01_", out$Description)] <- ""
   out$Description <- gsub("^rho01_(.*)", "Correlations", out$Description)
+  out$Type[grepl("^rho00_", out$Description)] <- ""
+  out$Description <- gsub("^rho00_(.*)", "Correlations", out$Description)
 
   out$Type[grepl("N_(.*)", out$Description)] <- ""
   out$Term[grepl("N_(.*)", out$Description)] <- gsub("N_(.*)", "\\1", out$Description[grepl("N_(.*)", out$Description)])
