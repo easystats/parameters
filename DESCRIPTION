@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.7.0.1
+Version: 0.8.0
 Authors@R: 
   c(
     person("Daniel", 
