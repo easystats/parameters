@@ -84,7 +84,7 @@ Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -208,6 +208,13 @@ Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds 
 <span class='co'># S3 method for poissonmfx</span>
 <span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"marginal"</span>), <span class='no'>...</span>)
 
+<span class='co'># S3 method for betamfx</span>
+<span class='fu'>p_value</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>, <span class='st'>"marginal"</span>),
+  <span class='no'>...</span>
+)
+
 <span class='co'># S3 method for averaging</span>
 <span class='fu'>p_value</span>(<span class='no'>model</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"full"</span>), <span class='no'>...</span>)
 
@@ -249,6 +256,10 @@ be returned? Only applies to mixed models. May be abbreviated. When
 standard errors for random effects are requested, for each grouping factor
 a list of standard errors (per group level) for random intercepts and slopes
 is returned.</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
     </tr>
     <tr>
       <th>adjust</th>

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -245,16 +245,16 @@ be printed. If <code>NULL</code> (default), all columns are printed. The shortcu
   <span class='fu'>print</span>(<span class='no'>mp</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='st'>"minimal"</span>)
 }</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |             95% CI |     z |  df |      p
-#&gt; ----------------------------------------------------------------------------
-#&gt; (Intercept) |       -0.36 | 0.28 | [    -0.90,  0.18] | -1.30 | 633 | 0.194 
-#&gt; sppPR       |       -1.27 | 0.24 | [    -1.74, -0.80] | -5.27 | 633 | &lt; .001
-#&gt; sppDM       |        0.27 | 0.14 | [-0.00e+00,  0.54] |  1.95 | 633 | 0.051 
-#&gt; sppEC-A     |       -0.57 | 0.21 | [    -0.97, -0.16] | -2.75 | 633 | 0.006 
-#&gt; sppEC-L     |        0.67 | 0.13 | [     0.41,  0.92] |  5.20 | 633 | &lt; .001
-#&gt; sppDES-L    |        0.63 | 0.13 | [     0.38,  0.87] |  4.96 | 633 | &lt; .001
-#&gt; sppDF       |        0.12 | 0.15 | [    -0.17,  0.40] |  0.78 | 633 | 0.435 
-#&gt; minedno     |        1.27 | 0.27 | [     0.74,  1.80] |  4.72 | 633 | &lt; .001
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p
+#&gt; ------------------------------------------------------------------------
+#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 633 | 0.194 
+#&gt; sppPR       |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | 633 | &lt; .001
+#&gt; sppDM       |        0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 633 | 0.051 
+#&gt; sppEC-A     |       -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 633 | 0.006 
+#&gt; sppEC-L     |        0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | 633 | &lt; .001
+#&gt; sppDES-L    |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | 633 | &lt; .001
+#&gt; sppDF       |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 633 | 0.435 
+#&gt; minedno     |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | 633 | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
 #&gt; 
@@ -263,18 +263,18 @@ be printed. If <code>NULL</code> (default), all columns are printed. The shortcu
 #&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 633 | 0.004 
 #&gt; minedno     |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | 633 | &lt; .001
 #&gt; 
-#&gt; Parameter   | Coefficient |   SE |             95% CI |     z |  df |      p |     Component
-#&gt; --------------------------------------------------------------------------------------------
-#&gt; (Intercept) |       -0.36 | 0.28 | [    -0.90,  0.18] | -1.30 | 633 | 0.194  |   conditional
-#&gt; spp [PR]    |       -1.27 | 0.24 | [    -1.74, -0.80] | -5.27 | 633 | &lt; .001 |   conditional
-#&gt; spp [DM]    |        0.27 | 0.14 | [-0.00e+00,  0.54] |  1.95 | 633 | 0.051  |   conditional
-#&gt; spp [EC-A]  |       -0.57 | 0.21 | [    -0.97, -0.16] | -2.75 | 633 | 0.006  |   conditional
-#&gt; spp [EC-L]  |        0.67 | 0.13 | [     0.41,  0.92] |  5.20 | 633 | &lt; .001 |   conditional
-#&gt; spp [DES-L] |        0.63 | 0.13 | [     0.38,  0.87] |  4.96 | 633 | &lt; .001 |   conditional
-#&gt; spp [DF]    |        0.12 | 0.15 | [    -0.17,  0.40] |  0.78 | 633 | 0.435  |   conditional
-#&gt; mined [no]  |        1.27 | 0.27 | [     0.74,  1.80] |  4.72 | 633 | &lt; .001 |   conditional
-#&gt; (Intercept) |        0.79 | 0.27 | [     0.26,  1.32] |  2.90 | 633 | 0.004  | zero_inflated
-#&gt; mined [no]  |       -1.84 | 0.31 | [    -2.46, -1.23] | -5.87 | 633 | &lt; .001 | zero_inflated
+#&gt; Parameter   | Coefficient |   SE |         95% CI |     z |  df |      p |     Component
+#&gt; ----------------------------------------------------------------------------------------
+#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 633 | 0.194  |   conditional
+#&gt; spp [PR]    |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | 633 | &lt; .001 |   conditional
+#&gt; spp [DM]    |        0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 633 | 0.051  |   conditional
+#&gt; spp [EC-A]  |       -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 633 | 0.006  |   conditional
+#&gt; spp [EC-L]  |        0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | 633 | &lt; .001 |   conditional
+#&gt; spp [DES-L] |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | 633 | &lt; .001 |   conditional
+#&gt; spp [DF]    |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 633 | 0.435  |   conditional
+#&gt; mined [no]  |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | 633 | &lt; .001 |   conditional
+#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 633 | 0.004  | zero_inflated
+#&gt; mined [no]  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | 633 | &lt; .001 | zero_inflated
 #&gt; </span><span style='color: #0000BB;'># Fixed Effects component
 #&gt; 
 #&gt; </span><span>Parameter   | Coefficient |   SE
@@ -297,16 +297,16 @@ be printed. If <code>NULL</code> (default), all columns are printed. The shortcu
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Fixed Effects component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |             95% CI |      p
-#&gt; -------------------------------------------------------
-#&gt; (Intercept) |       -0.36 | [    -0.90,  0.18] | 0.194 
-#&gt; spp [PR]    |       -1.27 | [    -1.74, -0.80] | &lt; .001
-#&gt; spp [DM]    |        0.27 | [-0.00e+00,  0.54] | 0.051 
-#&gt; spp [EC-A]  |       -0.57 | [    -0.97, -0.16] | 0.006 
-#&gt; spp [EC-L]  |        0.67 | [     0.41,  0.92] | &lt; .001
-#&gt; spp [DES-L] |        0.63 | [     0.38,  0.87] | &lt; .001
-#&gt; spp [DF]    |        0.12 | [    -0.17,  0.40] | 0.435 
-#&gt; mined [no]  |        1.27 | [     0.74,  1.80] | &lt; .001
+#&gt; </span><span>Parameter   | Coefficient |         95% CI |      p
+#&gt; ---------------------------------------------------
+#&gt; (Intercept) |       -0.36 | [-0.90,  0.18] | 0.194 
+#&gt; spp [PR]    |       -1.27 | [-1.74, -0.80] | &lt; .001
+#&gt; spp [DM]    |        0.27 | [ 0.00,  0.54] | 0.051 
+#&gt; spp [EC-A]  |       -0.57 | [-0.97, -0.16] | 0.006 
+#&gt; spp [EC-L]  |        0.67 | [ 0.41,  0.92] | &lt; .001
+#&gt; spp [DES-L] |        0.63 | [ 0.38,  0.87] | &lt; .001
+#&gt; spp [DF]    |        0.12 | [-0.17,  0.40] | 0.435 
+#&gt; mined [no]  |        1.27 | [ 0.74,  1.80] | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
 #&gt; 

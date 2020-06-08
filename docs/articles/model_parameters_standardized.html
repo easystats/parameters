@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -113,7 +113,7 @@
 
       
 
-      </header><script src="model_parameters_standardized_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><script src="model_parameters_standardized_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Standardized Model Parameters</h1>
@@ -157,15 +157,15 @@
 #&gt; Species [virginica] * Sepal.Width  |       -0.36 | 0.18 | [-0.71, -0.01] | -1.99 | 141 | 0.046</code></pre>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># standardized model parameters</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>, <span class="kw">standardize</span> <span class="kw">=</span> <span class="st">"refit"</span>)</pre></body></html></div>
-<pre><code>#&gt; Parameter                          | Coefficient |   SE |             95% CI |     t |  df |      p
-#&gt; ---------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                        |        0.97 | 0.20 | [ 0.57,      1.37] |  4.74 | 141 | &lt; .001
-#&gt; Species [versicolor]               |       -1.29 | 0.26 | [-1.80,     -0.77] | -4.91 | 141 | &lt; .001
-#&gt; Species [virginica]                |       -1.81 | 0.34 | [-2.48,     -1.15] | -5.33 | 141 | &lt; .001
-#&gt; Sepal.Width                        |        0.35 | 0.06 | [ 0.23,      0.46] |  5.83 | 141 | &lt; .001
-#&gt; Petal.Length                       |        1.74 | 0.14 | [ 1.47,      2.02] | 12.52 | 141 | &lt; .001
-#&gt; Species [versicolor] * Sepal.Width |       -0.25 | 0.10 | [-0.45,     -0.06] | -2.60 | 141 | 0.009 
-#&gt; Species [virginica] * Sepal.Width  |       -0.19 | 0.09 | [-0.37, -0.00e+00] | -1.99 | 141 | 0.046</code></pre>
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                        |        0.97 | 0.20 | [ 0.57,  1.37] |  4.74 | 141 | &lt; .001
+#&gt; Species [versicolor]               |       -1.29 | 0.26 | [-1.80, -0.77] | -4.91 | 141 | &lt; .001
+#&gt; Species [virginica]                |       -1.81 | 0.34 | [-2.48, -1.15] | -5.33 | 141 | &lt; .001
+#&gt; Sepal.Width                        |        0.35 | 0.06 | [ 0.23,  0.46] |  5.83 | 141 | &lt; .001
+#&gt; Petal.Length                       |        1.74 | 0.14 | [ 1.47,  2.02] | 12.52 | 141 | &lt; .001
+#&gt; Species [versicolor] * Sepal.Width |       -0.25 | 0.10 | [-0.45, -0.06] | -2.60 | 141 | 0.009 
+#&gt; Species [virginica] * Sepal.Width  |       -0.19 | 0.09 | [-0.37,  0.00] | -1.99 | 141 | 0.046</code></pre>
 <p>The second output is identical to following:</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># standardize continuous variables manually</span>
 <span class="no">model2</span> <span class="kw">&lt;-</span> <span class="kw pkg">lme4</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
@@ -173,15 +173,15 @@
   <span class="kw">data</span> <span class="kw">=</span> <span class="no">iris</span>
 )
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">model2</span>)</pre></body></html></div>
-<pre><code>#&gt; Parameter                          | Coefficient |   SE |             95% CI |     t |  df |      p
-#&gt; ---------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                        |        0.97 | 0.20 | [ 0.57,      1.37] |  4.74 | 141 | &lt; .001
-#&gt; Species [versicolor]               |       -1.29 | 0.26 | [-1.80,     -0.77] | -4.91 | 141 | &lt; .001
-#&gt; Species [virginica]                |       -1.81 | 0.34 | [-2.48,     -1.15] | -5.33 | 141 | &lt; .001
-#&gt; Sepal.Width                        |        0.35 | 0.06 | [ 0.23,      0.46] |  5.83 | 141 | &lt; .001
-#&gt; Petal.Length                       |        1.74 | 0.14 | [ 1.47,      2.02] | 12.52 | 141 | &lt; .001
-#&gt; Species [versicolor] * Sepal.Width |       -0.25 | 0.10 | [-0.45,     -0.06] | -2.60 | 141 | 0.009 
-#&gt; Species [virginica] * Sepal.Width  |       -0.19 | 0.09 | [-0.37, -0.00e+00] | -1.99 | 141 | 0.046</code></pre>
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                        |        0.97 | 0.20 | [ 0.57,  1.37] |  4.74 | 141 | &lt; .001
+#&gt; Species [versicolor]               |       -1.29 | 0.26 | [-1.80, -0.77] | -4.91 | 141 | &lt; .001
+#&gt; Species [virginica]                |       -1.81 | 0.34 | [-2.48, -1.15] | -5.33 | 141 | &lt; .001
+#&gt; Sepal.Width                        |        0.35 | 0.06 | [ 0.23,  0.46] |  5.83 | 141 | &lt; .001
+#&gt; Petal.Length                       |        1.74 | 0.14 | [ 1.47,  2.02] | 12.52 | 141 | &lt; .001
+#&gt; Species [versicolor] * Sepal.Width |       -0.25 | 0.10 | [-0.45, -0.06] | -2.60 | 141 | 0.009 
+#&gt; Species [virginica] * Sepal.Width  |       -0.19 | 0.09 | [-0.37,  0.00] | -1.99 | 141 | 0.046</code></pre>
 </div>
 <div id="post-hoc-standardization" class="section level2">
 <h2 class="hasAnchor">
@@ -190,41 +190,41 @@
 <p>This method is not accurate and tends to give aberrant results when interactions are specified. However, this method of standardization is the “classic” result obtained by many statistical packages when standardized coefficients are requested.</p>
 <p>When <code>standardize = "posthoc"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html"><code><a href="https://rdrr.io/pkg/effectsize/man/standardize_parameters.html">effectsize::standardize_parameters(method = "posthoc")</a></code></a>. Test statistic and p-values are not affected, i.e. they are the same as if no standardization would be applied.</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>, <span class="kw">standardize</span> <span class="kw">=</span> <span class="st">"posthoc"</span>)</pre></body></html></div>
-<pre><code>#&gt; Parameter                          | Coefficient (std.) |       SE |                95% CI |     t |  df |      p
-#&gt; -----------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                        |           0.00e+00 | 0.00e+00 | [0.00e+00,  0.00e+00] |  3.87 | 141 | &lt; .001
-#&gt; Species [versicolor]               |               0.50 |     0.66 | [   -0.81,      1.81] |  0.75 | 141 | 0.453 
-#&gt; Species [virginica]                |              -0.49 |     0.70 | [   -1.88,      0.89] | -0.70 | 141 | 0.482 
-#&gt; Sepal.Width                        |               0.35 |     0.06 | [    0.23,      0.47] |  5.83 | 141 | &lt; .001
-#&gt; Petal.Length                       |               1.74 |     0.14 | [    1.47,      2.02] | 12.52 | 141 | &lt; .001
-#&gt; Species [versicolor] * Sepal.Width |              -0.25 |     0.10 | [   -0.45,     -0.06] | -2.60 | 141 | 0.009 
-#&gt; Species [virginica] * Sepal.Width  |              -0.19 |     0.09 | [   -0.38, -0.00e+00] | -1.99 | 141 | 0.046</code></pre>
+<pre><code>#&gt; Parameter                          | Coefficient (std.) |   SE |         95% CI |     t |  df |      p
+#&gt; ------------------------------------------------------------------------------------------------------
+#&gt; (Intercept)                        |               0.00 | 0.00 | [ 0.00,  0.00] |  3.87 | 141 | &lt; .001
+#&gt; Species [versicolor]               |               0.50 | 0.66 | [-0.81,  1.81] |  0.75 | 141 | 0.453 
+#&gt; Species [virginica]                |              -0.49 | 0.70 | [-1.88,  0.89] | -0.70 | 141 | 0.482 
+#&gt; Sepal.Width                        |               0.35 | 0.06 | [ 0.23,  0.47] |  5.83 | 141 | &lt; .001
+#&gt; Petal.Length                       |               1.74 | 0.14 | [ 1.47,  2.02] | 12.52 | 141 | &lt; .001
+#&gt; Species [versicolor] * Sepal.Width |              -0.25 | 0.10 | [-0.45, -0.06] | -2.60 | 141 | 0.009 
+#&gt; Species [virginica] * Sepal.Width  |              -0.19 | 0.09 | [-0.38,  0.00] | -1.99 | 141 | 0.046</code></pre>
 <p><code>standardize = "basic"</code> also applies post-hoc standardization, however, factors are converted to numeric, which means that it also scales the coefficient by the standard deviation of model’s matrix’ parameter of factor levels (transformed to integers) or binary predictors.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>, <span class="kw">standardize</span> <span class="kw">=</span> <span class="st">"basic"</span>)</pre></body></html></div>
-<pre><code>#&gt; Parameter                          | Coefficient (std.) |       SE |                95% CI |     t |  df |      p
-#&gt; -----------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                        |           0.00e+00 | 0.00e+00 | [0.00e+00,  0.00e+00] |  3.87 | 141 | &lt; .001
-#&gt; Species [versicolor]               |               0.23 |     0.31 | [   -0.38,      0.85] |  0.75 | 141 | 0.453 
-#&gt; Species [virginica]                |              -0.23 |     0.33 | [   -0.89,      0.42] | -0.70 | 141 | 0.482 
-#&gt; Sepal.Width                        |               0.35 |     0.06 | [    0.23,      0.47] |  5.83 | 141 | &lt; .001
-#&gt; Petal.Length                       |               1.74 |     0.14 | [    1.47,      2.02] | 12.52 | 141 | &lt; .001
-#&gt; Species [versicolor] * Sepal.Width |              -0.77 |     0.30 | [   -1.36,     -0.19] | -2.60 | 141 | 0.009 
-#&gt; Species [virginica] * Sepal.Width  |              -0.61 |     0.31 | [   -1.22, -0.00e+00] | -1.99 | 141 | 0.046</code></pre>
+<pre><code>#&gt; Parameter                          | Coefficient (std.) |   SE |         95% CI |     t |  df |      p
+#&gt; ------------------------------------------------------------------------------------------------------
+#&gt; (Intercept)                        |               0.00 | 0.00 | [ 0.00,  0.00] |  3.87 | 141 | &lt; .001
+#&gt; Species [versicolor]               |               0.23 | 0.31 | [-0.38,  0.85] |  0.75 | 141 | 0.453 
+#&gt; Species [virginica]                |              -0.23 | 0.33 | [-0.89,  0.42] | -0.70 | 141 | 0.482 
+#&gt; Sepal.Width                        |               0.35 | 0.06 | [ 0.23,  0.47] |  5.83 | 141 | &lt; .001
+#&gt; Petal.Length                       |               1.74 | 0.14 | [ 1.47,  2.02] | 12.52 | 141 | &lt; .001
+#&gt; Species [versicolor] * Sepal.Width |              -0.77 | 0.30 | [-1.36, -0.19] | -2.60 | 141 | 0.009 
+#&gt; Species [virginica] * Sepal.Width  |              -0.61 | 0.31 | [-1.22,  0.00] | -1.99 | 141 | 0.046</code></pre>
 </div>
 <div id="smart-standardization" class="section level2">
 <h2 class="hasAnchor">
 <a href="#smart-standardization" class="anchor"></a>Smart standardization</h2>
 <p><code>standardize = "smart"</code> is similar to <code>standardize = "posthoc"</code> in that it does not involve model re-fitting. The difference is that the SD of the response is computed on the relevant section of the data. For instance, if a factor with 3 levels A (the intercept), B and C is entered as a predictor, the effect corresponding to B vs. A will be scaled by the variance of the response at the intercept only. As a results, the coefficients for effects of factors are similar to a Glass’ delta.</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>, <span class="kw">standardize</span> <span class="kw">=</span> <span class="st">"smart"</span>)</pre></body></html></div>
-<pre><code>#&gt; Parameter                          | Coefficient (std.) |       SE |               95% CI |     t |  df |      p
-#&gt; ----------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                        |           0.00e+00 | 0.00e+00 | [0.00e+00, 0.00e+00] |  3.87 | 141 | &lt; .001
-#&gt; Species [versicolor]               |               1.17 |     1.56 | [   -1.91,     4.24] |  0.75 | 141 | 0.453 
-#&gt; Species [virginica]                |              -1.16 |     1.65 | [   -4.42,     2.10] | -0.70 | 141 | 0.482 
-#&gt; Sepal.Width                        |               0.35 |     0.06 | [    0.23,     0.47] |  5.83 | 141 | &lt; .001
-#&gt; Petal.Length                       |               1.74 |     0.14 | [    1.47,     2.02] | 12.52 | 141 | &lt; .001
-#&gt; Species [versicolor] * Sepal.Width |              -1.13 |     0.43 | [   -1.98,    -0.27] | -2.60 | 141 | 0.009 
-#&gt; Species [virginica] * Sepal.Width  |              -0.83 |     0.42 | [   -1.66,    -0.01] | -1.99 | 141 | 0.046</code></pre>
+<pre><code>#&gt; Parameter                          | Coefficient (std.) |   SE |         95% CI |     t |  df |      p
+#&gt; ------------------------------------------------------------------------------------------------------
+#&gt; (Intercept)                        |               0.00 | 0.00 | [ 0.00,  0.00] |  3.87 | 141 | &lt; .001
+#&gt; Species [versicolor]               |               1.17 | 1.56 | [-1.91,  4.24] |  0.75 | 141 | 0.453 
+#&gt; Species [virginica]                |              -1.16 | 1.65 | [-4.42,  2.10] | -0.70 | 141 | 0.482 
+#&gt; Sepal.Width                        |               0.35 | 0.06 | [ 0.23,  0.47] |  5.83 | 141 | &lt; .001
+#&gt; Petal.Length                       |               1.74 | 0.14 | [ 1.47,  2.02] | 12.52 | 141 | &lt; .001
+#&gt; Species [versicolor] * Sepal.Width |              -1.13 | 0.43 | [-1.98, -0.27] | -2.60 | 141 | 0.009 
+#&gt; Species [virginica] * Sepal.Width  |              -0.83 | 0.42 | [-1.66, -0.01] | -1.99 | 141 | 0.046</code></pre>
 </div>
   </div>
 

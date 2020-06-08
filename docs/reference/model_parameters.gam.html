@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -267,13 +267,21 @@
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    mvn</span></div><div class='input'>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/gamSim.html'>gamSim</a></span>(<span class='fl'>1</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>400</span>, <span class='kw'>dist</span> <span class='kw'>=</span> <span class='st'>"normal"</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Gu &amp; Wahba 4 term additive model</div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/gam.html'>gam</a></span>(<span class='no'>y</span> ~ <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x0</span>) + <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x1</span>) + <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x2</span>) + <span class='fu'><a href='https://rdrr.io/pkg/mgcv/man/s.html'>s</a></span>(<span class='no'>x3</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dat</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |       95% CI |     t |      p
-#&gt; ----------------------------------------------------------------
-#&gt; (Intercept) |        8.17 | 0.09 | [7.99, 8.35] | 87.58 | &lt; .001
-#&gt;             |             |      |              |       |       
-#&gt;             |             |      |              |       |       
-#&gt;             |             |      |              |       |       
-#&gt;             |             |      |              |       |       </div></pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |   SE |       95% CI |     t |     df |      p
+#&gt; -------------------------------------------------------------------------
+#&gt; (Intercept) |        8.25 | 0.10 | [8.05, 8.45] | 81.52 | 384.26 | &lt; .001
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Smooth Terms component
+#&gt; 
+#&gt; </span><span>Parameter        | Coefficient |      F |   df |      p
+#&gt; -------------------------------------------------------
+#&gt; Smooth term (x0) |        3.14 |  11.12 | 3.89 | &lt; .001
+#&gt; Smooth term (x1) |        2.29 | 121.22 | 2.86 | &lt; .001
+#&gt; Smooth term (x2) |        8.31 |  89.48 | 8.87 | &lt; .001
+#&gt; Smooth term (x3) |        1.00 |   0.51 | 1.00 | 0.475 
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

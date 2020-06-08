@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -113,7 +113,7 @@
 
       
 
-      </header><script src="demean_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><script src="demean_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Analysing Longitudinal or Panel Data</h1>
@@ -328,12 +328,12 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <p>Thus, <em>time-constant <strong>categorical</strong></em> predictors, that only have a between-effect, can be simply included as fixed effects predictor (since they’re not constrained by level-1 effects). Time-constant <em>continuous</em> <strong>group-level predictors</strong> (for instance, GDP of countries) should be group-meaned, to have a proper “between”-effect <span class="citation">(Gelman and Hill 2007, Chap. 12.6.)</span>.</p>
 <p>The benefit of this kind of model is that you have information on within-, between- and other time-constant (i.e. between) effects or group-level predictors…</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">rewb</span>)
-<span class="co">#&gt; Parameter        | Coefficient |   SE |             95% CI |     t |  df |      p</span>
-<span class="co">#&gt; ---------------------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept)      |       67.18 | 2.39 | [    62.50, 71.86] | 28.13 | 551 | &lt; .001</span>
-<span class="co">#&gt; time             |        1.18 | 0.60 | [-0.00e+00,  2.37] |  1.95 | 551 | 0.051 </span>
-<span class="co">#&gt; education [mid]  |        4.95 | 2.35 | [     0.35,  9.55] |  2.11 | 551 | 0.035 </span>
-<span class="co">#&gt; education [high] |        5.62 | 2.76 | [     0.21, 11.02] |  2.04 | 551 | 0.042 </span>
+<span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI |     t |  df |      p</span>
+<span class="co">#&gt; -----------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)      |       67.18 | 2.39 | [62.50, 71.86] | 28.13 | 551 | &lt; .001</span>
+<span class="co">#&gt; time             |        1.18 | 0.60 | [ 0.00,  2.37] |  1.95 | 551 | 0.051 </span>
+<span class="co">#&gt; education [mid]  |        4.95 | 2.35 | [ 0.35,  9.55] |  2.11 | 551 | 0.035 </span>
+<span class="co">#&gt; education [high] |        5.62 | 2.76 | [ 0.21, 11.02] |  2.04 | 551 | 0.042 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Within-Effects </span>
 <span class="co">#&gt; </span>
