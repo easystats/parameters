@@ -252,7 +252,7 @@
 #&gt; disp     |  0.95 |       |      | 0.20 |     |     |       1.13 |       0.03
 #&gt; hp       |  0.86 | -0.35 |      |      |     |     |       1.38 |       0.12
 #&gt; drat     | -0.72 | -0.40 | 0.29 |      |     |     |       1.96 |       0.24
-#&gt; wt       |  0.89 |  0.38 | 0.24 |      |     |     |       1.53 |       0.00
+#&gt; wt       |  0.89 |  0.38 | 0.24 |      |     |     |       1.53 |   5.00e-03
 #&gt; qsec     | -0.53 |  0.76 |      |      |     |     |       1.81 |       0.14
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The 6 latent factors accounted for 90.99% of the total variance of the original data (MR1 = 71.60%, MR2 = 14.55%, MR3 = 2.91%, MR4 = 1.35%, MR5 = 0.45%, MR6 = 0.12%).</span><span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"oblimin"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Factor Analysis (oblimin-rotation)
@@ -265,7 +265,7 @@
 #&gt; drat     | -0.84 |      |       1.14 |       0.39
 #&gt; cyl      |  0.82 |      |       1.23 |       0.08
 #&gt; hp       |  0.60 |      |       1.94 |       0.18
-#&gt; qsec     |       | 1.00 |       1.00 |       0.00
+#&gt; qsec     |       | 1.00 |       1.00 |   4.75e-03
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The 2 latent factors (oblimin rotation) accounted for 85.83% of the total variance of the original data (MR1 = 63.85%, MR2 = 21.99%).</span><span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
 #&gt; 
@@ -277,7 +277,7 @@
 #&gt; wt       |      | 0.36 |       1.33 |       0.10
 #&gt; hp       |      |      |       1.23 |       0.18
 #&gt; drat     |      |      |       1.49 |       0.39
-#&gt; qsec     |      | 0.83 |       1.74 |       0.00
+#&gt; qsec     |      | 0.83 |       1.74 |   4.75e-03
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The 2 latent factors accounted for 85.83% of the total variance of the original data (MR1 = 70.67%, MR2 = 15.16%).</span><span></div><div class='input'>
 <span class='no'>efa</span> <span class='kw'>&lt;-</span> <span class='fu'>factor_analysis</span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
