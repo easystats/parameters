@@ -209,7 +209,7 @@ describe_distribution(iris)
 
 In order to cite this package, please use the following citation:
 
-  - Makowski D, Ben-Shachar M, Lüdecke D (2019). “Describe and
+  - Lüdecke D, Ben-Shachar M, Makowski D (2019). “Describe and
     understand your model’s parameters.” CRAN. R package,
     <https://github.com/easystats/parameters>.
 
