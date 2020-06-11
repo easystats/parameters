@@ -1465,6 +1465,23 @@ standard_error.rma <- function(model, ...) {
 
 
 
+#' @export
+standard_error.metaplus <- function(model, ...) {
+  ci_low <- as.vector(model$results[, "95% ci.lb"])
+  ci_high <- as.vector(model$results[, "95% ci.ub"])
+  cis <- apply(cbind(ci_low, ci_high), MARGIN = 1, diff)
+
+  out <- .data_frame(
+    Parameter = .remove_backticks_from_string(rownames(model$results)),
+    SE = cis / (2 * stats::qnorm(.975))
+  )
+
+  out$Parameter[grepl("muhat", out$Parameter)] <- "(Intercept)"
+  out
+}
+
+
+
 #' @rdname standard_error
 #' @export
 standard_error.averaging <- function(model, component = c("conditional", "full"), ...) {

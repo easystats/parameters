@@ -1395,6 +1395,18 @@ p_value.rma <- function(model, ...) {
 
 
 #' @export
+p_value.metaplus <- function(model, ...) {
+  out <- .data_frame(
+    Parameter = .remove_backticks_from_string(rownames(model$results)),
+    p = as.vector(model$results[, "pvalue"])
+  )
+
+  out$Parameter[grepl("muhat", out$Parameter)] <- "(Intercept)"
+  out
+}
+
+
+#' @export
 p_value.lavaan <- function(model, ...) {
   out <- .extract_parameters_lavaan(model, ...)
   out[out$Operator != "~1", c("To", "Operator", "From", "p")]

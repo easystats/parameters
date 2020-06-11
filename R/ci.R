@@ -676,6 +676,20 @@ ci.rma <- function(x, ci = .95, ...) {
 
 
 
+#' @export
+ci.metaplus <- function(x, ...) {
+  out <- .data_frame(
+    Parameter = .remove_backticks_from_string(rownames(x$results)),
+    CI_low = as.vector(x$results[, "95% ci.lb"]),
+    CI_high = as.vector(x$results[, "95% ci.ub"])
+  )
+
+  out$Parameter[grepl("muhat", out$Parameter)] <- "(Intercept)"
+  out
+}
+
+
+
 
 
 
