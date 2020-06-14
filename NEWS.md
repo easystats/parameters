@@ -1,3 +1,9 @@
+# parameters 0.8.1
+
+## New supported models
+
+* `metaplus` (*metaplus*)
+
 # parameters 0.8.0
 
 ## New supported models
