@@ -85,7 +85,7 @@ The p-values.
 This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
 \itemize{
 \item Mixed models (\pkg{lme4}): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
-\item Bayesian models (\pkg{rstanarm}, \pkg{brms}): For Bayesian models, the p-values corresponds to the \emph{probability of direction} (\code{\link[bayestestR]{p_direction}}), which is converted to a p-value using \code{\link[bayestestR]{convert_pd_to_p}}.
+\item Bayesian models (\pkg{rstanarm}, \pkg{brms}): For Bayesian models, the p-values corresponds to the \emph{probability of direction} (\code{\link[bayestestR]{p_direction}}), which is converted to a p-value using \code{bayestestR::convert_pd_to_p()}.
 }
 }
 \note{
