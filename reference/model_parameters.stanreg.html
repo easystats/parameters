@@ -322,16 +322,18 @@ There is also a <a href='https://easystats.github.io/see/articles/parameters.htm
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)
 }</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.86), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.8), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.87). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.85), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
 #&gt; 
 #&gt; Parameter                      | Median |         89% CI |     pd | % in ROPE |  Rhat | ESS |              Prior
 #&gt; ----------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                    |   4.03 | [ 3.52,  4.62] |   100% |        0% | 1.017 | 243 | Normal (0 +- 8.28)
-#&gt; Petal.Length                   |   0.67 | [ 0.29,  1.03] | 99.90% |     0.40% | 1.016 | 245 | Normal (0 +- 1.17)
-#&gt; Speciesversicolor              |  -1.52 | [-2.39, -0.72] |   100% |        0% | 1.005 | 331 | Normal (0 +- 2.07)
-#&gt; Speciesvirginica               |  -2.83 | [-3.67, -1.90] |   100% |        0% | 1.009 | 363 | Normal (0 +- 2.07)
-#&gt; Petal.Length:Speciesversicolor |   0.15 | [-0.26,  0.52] | 71.00% |    22.00% | 1.014 | 236 | Normal (0 +- 1.02)
-#&gt; Petal.Length:Speciesvirginica  |   0.31 | [-0.05,  0.70] | 88.40% |    13.80% | 1.018 | 237 | Normal (0 +- 0.78)
+#&gt; (Intercept)                    |   4.04 | [ 3.42,  4.58] |   100% |        0% | 1.005 | 207 | Normal (0 +- 8.28)
+#&gt; Petal.Length                   |   0.66 | [ 0.30,  1.08] | 99.70% |     0.90% | 1.006 | 201 | Normal (0 +- 1.17)
+#&gt; Speciesversicolor              |  -1.58 | [-2.31, -0.59] | 99.60% |     0.70% | 1.005 | 277 | Normal (0 +- 2.07)
+#&gt; Speciesvirginica               |  -2.80 | [-3.73, -1.84] |   100% |        0% | 1.004 | 304 | Normal (0 +- 2.07)
+#&gt; Petal.Length:Speciesversicolor |   0.15 | [-0.26,  0.55] | 73.60% |    20.50% | 1.007 | 194 | Normal (0 +- 1.02)
+#&gt; Petal.Length:Speciesvirginica  |   0.29 | [-0.18,  0.66] | 87.40% |    12.10% | 1.007 | 192 | Normal (0 +- 0.78)
 #&gt; </div><div class='input'><span class='co'># }</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
