@@ -1,6 +1,6 @@
 pandoc: 2.7.3
 pkgdown: 1.5.1.9000
-pkgdown_sha: ee70a69b5de661b82b6dd086f4e97b2d3d7fd4ab
+pkgdown_sha: e3235d58b2c539f6aa34a0be88363c6998c9d5ca
 articles:
   demean: demean.html
   efa_cfa: efa_cfa.html
@@ -9,5 +9,5 @@ articles:
   model_parameters_standardized: model_parameters_standardized.html
   parameters_reduction: parameters_reduction.html
   parameters_selection: parameters_selection.html
-last_built: 2020-06-11T20:37Z
+last_built: 2020-06-15T09:23Z
 
