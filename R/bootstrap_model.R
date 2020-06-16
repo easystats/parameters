@@ -57,6 +57,7 @@ bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, .
   out <- as.data.frame(results$t)
   names(out) <- insight::get_parameters(model)$Parameter
 
+  class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
   out
 }
 
@@ -83,6 +84,7 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
   out <- as.data.frame(results$t)
   names(out) <- insight::find_parameters(model, effects = "fixed")$conditional
 
+  class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
   out
 }
 
