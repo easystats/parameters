@@ -167,13 +167,13 @@
     <p>Approximation of degrees of freedom based on a "m-l-1" heuristic as suggested by Elff et al. (2019).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ci_ml1</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>ci_ml1</a></span>(<span class='kw'>model</span>, ci = <span class='fl'>0.95</span>)
 
-<span class='fu'>dof_ml1</span>(<span class='no'>model</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>dof_ml1</a></span>(<span class='kw'>model</span>)
 
-<span class='fu'>p_value_ml1</span>(<span class='no'>model</span>, <span class='kw'>dof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>p_value_ml1</a></span>(<span class='kw'>model</span>, dof = <span class='kw'>NULL</span>)
 
-<span class='fu'>se_ml1</span>(<span class='no'>model</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>se_ml1</a></span>(<span class='kw'>model</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,12 +211,12 @@ fewer degrees of freedom (<code>dof_ml1</code>) to calculate p-values
 <h3>Degrees of Freedom for Longitudinal Designs (Repeated Measures)</h3>
 <p>In particular for repeated measure designs (longitudinal data analysis),
 the <em>m-l-1</em> heuristic is likely to be more accurate than simply using the
-residual or infinite degrees of freedom, because <code>dof_ml1()</code> returns
+residual or infinite degrees of freedom, because <code><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>dof_ml1()</a></code> returns
 different degrees of freedom for within-cluster and between-cluster effects.</p>
 <h3>Limitations of the "m-l-1" Heuristic</h3>
 <p>Note that the "m-l-1" heuristic is not applicable (or at least less accurate)
 for complex multilevel designs, e.g. with cross-classified clusters. In such cases,
-more accurate approaches like the Kenward-Roger approximation (<code><a href='p_value_kenward.html'>dof_kenward()</a></code>)
+more accurate approaches like the Kenward-Roger approximation (<code><a href='https://rdrr.io/pkg/parameters/man/p_value_kenward.html'>dof_kenward()</a></code>)
 is recommended. However, the "m-l-1" heuristic also applies to generalized
 mixed models, while approaches like Kenward-Roger or Satterthwaite are limited
 to linear mixed models only.</p>
@@ -231,15 +231,15 @@ to linear mixed models only.</p>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>dof_ml1()</code> and <code>se_ml1()</code> are small helper-functions
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>dof_ml1()</a></code> and <code><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>se_ml1()</a></code> are small helper-functions
 to calculate approximated degrees of freedom and standard errors of model
 parameters, based on the "m-l-1" heuristic.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>)) {
-  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-  <span class='fu'>p_value_ml1</span>(<span class='no'>model</span>)
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
+  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Petal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Length</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>), data = <span class='kw'>iris</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>p_value_ml1</a></span>(<span class='kw'>model</span>)
 }</div><div class='output co'>#&gt;      Parameter          p
 #&gt; 1  (Intercept) 0.96504927
 #&gt; 2 Sepal.Length 0.04534945</div><div class='input'><span class='co'># }</span></div></pre>

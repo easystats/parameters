@@ -169,25 +169,25 @@
 
     <pre class="usage"><span class='co'># S3 method for lm</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>rule</span> <span class='kw'>=</span> <span class='st'>"bayes"</span>,
-  <span class='kw'>p_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  range = <span class='st'>"default"</span>,
+  ci = <span class='fl'>0.95</span>,
+  rule = <span class='st'>"bayes"</span>,
+  p_values = <span class='fl'>FALSE</span>,
+  verbose = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for merMod</span>
 <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>rule</span> <span class='kw'>=</span> <span class='st'>"bayes"</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>),
-  <span class='kw'>p_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  range = <span class='st'>"default"</span>,
+  ci = <span class='fl'>0.95</span>,
+  rule = <span class='st'>"bayes"</span>,
+  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>),
+  p_values = <span class='fl'>FALSE</span>,
+  verbose = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -294,7 +294,7 @@ null hypothesis.</p><h3>Calculation of equivalence testing</h3>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -312,11 +312,11 @@ null hypothesis.</p><h3>Calculation of equivalence testing</h3>
   Further readings can be found in the references.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>qol_cancer</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>QoL</span> ~ <span class='no'>time</span> + <span class='no'>age</span> + <span class='no'>education</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>qol_cancer</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>qol_cancer</span>)
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>QoL</span> <span class='op'>~</span> <span class='kw'>time</span> <span class='op'>+</span> <span class='kw'>age</span> <span class='op'>+</span> <span class='kw'>education</span>, data = <span class='kw'>qol_cancer</span>)
 
 <span class='co'># default rule</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Test for Practical Equivalence
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-1.99 1.99]
 #&gt; 
@@ -328,7 +328,7 @@ null hypothesis.</p><h3>Calculation of equivalence testing</h3>
 #&gt;  educationhigh  Rejected      0.00 % [ 9.33 19.38]
 #&gt; </div><div class='input'>
 <span class='co'># conditional equivalence test</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='no'>model</span>, <span class='kw'>rule</span> <span class='kw'>=</span> <span class='st'>"cet"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Conditional Equivalence Testing
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>, rule = <span class='st'>"cet"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Conditional Equivalence Testing
 #&gt; 
 #&gt; </span><span>  ROPE: [-1.99 1.99]
 #&gt; 
@@ -340,9 +340,9 @@ null hypothesis.</p><h3>Calculation of equivalence testing</h3>
 #&gt;  educationhigh  Rejected      0.00 % [10.14 18.57]
 #&gt; </div><div class='input'>
 <span class='co'># plot method</span>
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"see"</span>)) {
-  <span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='no'>model</span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>result</span>)
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://easystats.github.io/see'>"see"</a></span>)) {
+  <span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>)
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>result</span>)
 }</div><div class='output co'>#&gt; <span class='message'>Loading required package: see</span></div><div class='img'><img src='equivalence_test.lm-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

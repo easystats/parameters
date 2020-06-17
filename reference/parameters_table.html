@@ -167,14 +167,14 @@
     <p>Parameter table formatting</p>
     </div>
 
-    <pre class="usage"><span class='fu'>parameters_table</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>pretty_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>stars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>ci_digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>p_digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='no'>...</span>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/parameters_table.html'>parameters_table</a></span>(
+  <span class='kw'>x</span>,
+  pretty_names = <span class='fl'>TRUE</span>,
+  stars = <span class='fl'>FALSE</span>,
+  digits = <span class='fl'>2</span>,
+  ci_digits = <span class='fl'>2</span>,
+  p_digits = <span class='fl'>3</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -215,10 +215,10 @@
     <p>A data frame.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Sepal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
+<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Sepal.Width</span>, data = <span class='kw'>iris</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/parameters_table.html'>parameters_table</a></span>(<span class='kw'>x</span>))</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
 #&gt; 1                        (Intercept)        2.64 0.57 [ 1.51, 3.77] 4.62 144
 #&gt; 2               Species [versicolor]        0.90 0.80 [-0.68, 2.48] 1.13 144
 #&gt; 3                Species [virginica]        1.27 0.82 [-0.35, 2.88] 1.55 144
@@ -231,7 +231,7 @@
 #&gt; 3 0.123 
 #&gt; 4 &lt; .001
 #&gt; 5 0.503 
-#&gt; 6 0.411 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>, <span class='kw'>p_digits</span> <span class='kw'>=</span> <span class='st'>"scientific"</span>))</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
+#&gt; 6 0.411 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/parameters_table.html'>parameters_table</a></span>(<span class='kw'>x</span>, p_digits = <span class='st'>"scientific"</span>))</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
 #&gt; 1                        (Intercept)        2.64 0.57 [ 1.51, 3.77] 4.62 144
 #&gt; 2               Species [versicolor]        0.90 0.80 [-0.68, 2.48] 1.13 144
 #&gt; 3                Species [virginica]        1.27 0.82 [-0.35, 2.88] 1.55 144
@@ -245,10 +245,10 @@
 #&gt; 4 5.31104e-05
 #&gt; 5 5.02805e-01
 #&gt; 6 4.10634e-01</div><div class='input'><span class='co'># \donttest{</span>
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"rstanarm"</span>)) {
-  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>123</span>)
-  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.69</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))
-  <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='no'>x</span>))
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>)) {
+  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span>, data = <span class='kw'>iris</span>, refresh = <span class='fl'>0</span>, seed = <span class='fl'>123</span>)
+  <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.69</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))
+  <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/parameters_table.html'>parameters_table</a></span>(<span class='kw'>x</span>))
 }</div><div class='output co'>#&gt;              Parameter Median       69% CI       89% CI       95% CI   pd
 #&gt; 1          (Intercept)   5.01 [4.93, 5.07] [4.89, 5.12] [4.87, 5.15] 100%
 #&gt; 2 Species [versicolor]   0.93 [0.82, 1.02] [0.77, 1.09] [0.73, 1.13] 100%

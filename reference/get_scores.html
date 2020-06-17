@@ -164,17 +164,17 @@
     </div>
 
     <div class="ref-description">
-    <p><code>get_scores()</code> takes <code>n_items</code> amount of items that load the most (either by loading cutoff or number) on a component, and then computes their average.</p>
+    <p><code><a href='https://rdrr.io/pkg/parameters/man/get_scores.html'>get_scores()</a></code> takes <code>n_items</code> amount of items that load the most (either by loading cutoff or number) on a component, and then computes their average.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_scores</span>(<span class='no'>x</span>, <span class='kw'>n_items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/get_scores.html'>get_scores</a></span>(<span class='kw'>x</span>, n_items = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An object returned by <code><a href='principal_components.html'>principal_components</a></code>.</p></td>
+      <td><p>An object returned by <code><a href='https://rdrr.io/pkg/parameters/man/principal_components.html'>principal_components</a></code>.</p></td>
     </tr>
     <tr>
       <th>n_items</th>
@@ -187,7 +187,7 @@
     <p>A data frame with subscales, which are average sum scores for all items from each component.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>get_scores()</code> takes the results from <code><a href='principal_components.html'>principal_components</a></code>
+    <p><code><a href='https://rdrr.io/pkg/parameters/man/get_scores.html'>get_scores()</a></code> takes the results from <code><a href='https://rdrr.io/pkg/parameters/man/principal_components.html'>principal_components</a></code>
   and extracts the variables for each component found by the PCA. Then, for
   each of these "subscales", row means are calculated (which equals adding
   up the single items and dividing by the number of items). This results in
@@ -195,11 +195,11 @@
   the original, single items that were used to compute the PCA.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='principal_components.html'>principal_components</a></span>(<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>7</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='st'>"varimax"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
+<span class='kw'>pca</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/principal_components.html'>principal_components</a></span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='fl'>2</span>, rotation = <span class='st'>"varimax"</span>)
 
 <span class='co'># PCA extracted two components</span>
-<span class='no'>pca</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (varimax-rotation)
+<span class='kw'>pca</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (varimax-rotation)
 #&gt; 
 #&gt; </span><span>Variable |   RC1 |   RC2 | Complexity | Uniqueness |  MSA
 #&gt; ---------------------------------------------------------
@@ -213,10 +213,10 @@
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The 2 principal components (varimax rotation) accounted for 89.18% of the total variance of the original data (RC1 = 56.82%, RC2 = 32.36%).</span><span></div><div class='input'>
 <span class='co'># assignment of items to each component</span>
-<span class='fu'><a href='principal_components.html'>closest_component</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;  mpg  cyl disp   hp drat   wt qsec 
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/principal_components.html'>closest_component</a></span>(<span class='kw'>pca</span>)</div><div class='output co'>#&gt;  mpg  cyl disp   hp drat   wt qsec 
 #&gt;    1    1    1    2    1    1    2 </div><div class='input'>
 <span class='co'># now we want to have sum scores for each component</span>
-<span class='fu'>get_scores</span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;                     Component_1 Component_2
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/get_scores.html'>get_scores</a></span>(<span class='kw'>pca</span>)</div><div class='output co'>#&gt;                     Component_1 Component_2
 #&gt; Mazda RX4               38.7040      63.230
 #&gt; Mazda RX4 Wag           38.7550      63.510
 #&gt; Datsun 710              28.1940      55.805
@@ -251,7 +251,7 @@
 #&gt; Volvo 142E              30.6580      63.800</div><div class='input'>
 <span class='co'># compare to manually computed sum score for 2nd component, which</span>
 <span class='co'># consists of items "hp" and "qsec"</span>
-(<span class='no'>mtcars</span>$<span class='no'>hp</span> + <span class='no'>mtcars</span>$<span class='no'>qsec</span>) / <span class='fl'>2</span></div><div class='output co'>#&gt;  [1]  63.230  63.510  55.805  64.720  96.010  62.610 130.420  41.000  58.950
+(<span class='kw'>mtcars</span><span class='op'>$</span><span class='kw'>hp</span> <span class='op'>+</span> <span class='kw'>mtcars</span><span class='op'>$</span><span class='kw'>qsec</span>) <span class='op'>/</span> <span class='fl'>2</span></div><div class='output co'>#&gt;  [1]  63.230  63.510  55.805  64.720  96.010  62.610 130.420  41.000  58.950
 #&gt; [10]  70.650  70.950  98.700  98.800  99.000 111.490 116.410 123.710  42.735
 #&gt; [19]  35.260  42.450  58.505  83.435  83.650 130.205  96.025  42.450  53.850
 #&gt; [28]  64.950 139.250  95.250 174.800  63.800</div></span></pre>

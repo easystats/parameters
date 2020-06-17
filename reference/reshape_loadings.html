@@ -167,13 +167,13 @@
     <p>Reshape loadings between wide/long formats.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>reshape_loadings</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/reshape_loadings.html'>reshape_loadings</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for parameters_efa</span>
-<span class='fu'>reshape_loadings</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/reshape_loadings.html'>reshape_loadings</a></span>(<span class='kw'>x</span>, threshold = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>reshape_loadings</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>loadings_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/reshape_loadings.html'>reshape_loadings</a></span>(<span class='kw'>x</span>, threshold = <span class='kw'>NULL</span>, loadings_columns = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,13 +198,13 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>psych</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://personality-project.org/r/psych'>psych</a></span>)
 
-<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw pkg'>psych</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></span>(<span class='no'>attitude</span>, <span class='kw'>nfactors</span> <span class='kw'>=</span> <span class='fl'>3</span>))
-<span class='no'>loadings</span> <span class='kw'>&lt;-</span> <span class='fu'>reshape_loadings</span>(<span class='no'>pca</span>)
+<span class='kw'>pca</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>psych</span>::<span class='fu'><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></span>(<span class='kw'>attitude</span>, nfactors = <span class='fl'>3</span>))
+<span class='kw'>loadings</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/reshape_loadings.html'>reshape_loadings</a></span>(<span class='kw'>pca</span>)
 
-<span class='no'>loadings</span></div><div class='output co'>#&gt; Component |   Variable | Loading | Complexity | Uniqueness
+<span class='kw'>loadings</span></div><div class='output co'>#&gt; Component |   Variable | Loading | Complexity | Uniqueness
 #&gt; ----------------------------------------------------------
 #&gt; MR1       |     rating |    0.90 |       1.02 |       0.23
 #&gt; MR1       | complaints |    0.97 |       1.01 |       0.10
@@ -226,7 +226,7 @@
 #&gt; MR3       |   learning |   -0.28 |       2.51 |       0.24
 #&gt; MR3       |     raises |    0.25 |       2.35 |       0.23
 #&gt; MR3       |   critical |    0.48 |       1.46 |       0.67
-#&gt; MR3       |    advance |    0.07 |       1.04 |       0.22</div><div class='input'><span class='fu'>reshape_loadings</span>(<span class='no'>loadings</span>)</div><div class='output co'>#&gt; Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness
+#&gt; MR3       |    advance |    0.07 |       1.04 |       0.22</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/reshape_loadings.html'>reshape_loadings</a></span>(<span class='kw'>loadings</span>)</div><div class='output co'>#&gt; Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness
 #&gt; ------------------------------------------------------------
 #&gt; rating     |  0.90 | -0.07 | -0.05 |       1.02 |       0.23
 #&gt; complaints |  0.97 | -0.06 |  0.04 |       1.01 |       0.10

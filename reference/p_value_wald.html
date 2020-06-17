@@ -167,21 +167,21 @@
     <p>The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5% at p = 0.05.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ci_wald</span>(
-  <span class='no'>model</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>dof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span>, <span class='st'>"precision"</span>,
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_wald.html'>ci_wald</a></span>(
+  <span class='kw'>model</span>,
+  ci = <span class='fl'>0.95</span>,
+  dof = <span class='kw'>NULL</span>,
+  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span>, <span class='st'>"precision"</span>,
     <span class='st'>"scale"</span>, <span class='st'>"smooth_terms"</span>, <span class='st'>"full"</span>, <span class='st'>"marginal"</span>),
-  <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+  robust = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )
 
-<span class='fu'>p_value_wald</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_wald.html'>p_value_wald</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for merMod</span>
-<span class='fu'>p_value_wald</span>(<span class='no'>model</span>, <span class='kw'>dof</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_wald.html'>p_value_wald</a></span>(<span class='kw'>model</span>, dof = <span class='fl'>Inf</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -196,7 +196,7 @@
     </tr>
     <tr>
       <th>dof</th>
-      <td><p>Degrees of Freedom. If not specified, for <code>ci_wald()</code>, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters). For <code>p_value_wald()</code>, defaults to <code>Inf</code>.</p></td>
+      <td><p>Degrees of Freedom. If not specified, for <code><a href='https://rdrr.io/pkg/parameters/man/p_value_wald.html'>ci_wald()</a></code>, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters). For <code><a href='https://rdrr.io/pkg/parameters/man/p_value_wald.html'>p_value_wald()</a></code>, defaults to <code>Inf</code>.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -215,11 +215,11 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     </tr>
     <tr>
       <th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='https://rdrr.io/pkg/parameters/man/standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
+      <td><p>Arguments passed down to <code><a href='https://rdrr.io/pkg/parameters/man/standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
     </tr>
     </table>
 
@@ -232,10 +232,10 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>)) {
-  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Petal.Length</span> ~ <span class='no'>Sepal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-  <span class='fu'>p_value_wald</span>(<span class='no'>model</span>)
-  <span class='fu'>ci_wald</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.90</span>, <span class='fl'>0.95</span>))
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
+  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Petal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Length</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>), data = <span class='kw'>iris</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_wald.html'>p_value_wald</a></span>(<span class='kw'>model</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_wald.html'>ci_wald</a></span>(<span class='kw'>model</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.90</span>, <span class='fl'>0.95</span>))
 }</div><div class='output co'>#&gt;      Parameter CI     CI_low   CI_high
 #&gt; 1  (Intercept) 90 -1.5296038 1.6346530
 #&gt; 2 Sepal.Length 90  0.5592337 0.7090408

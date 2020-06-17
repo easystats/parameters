@@ -134,8 +134,12 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Run the following:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"parameters"</span>)</pre></div>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"parameters"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"parameters"</span>)
+</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="https://easystats.github.io/parameters">"parameters"</a></span>)
+</pre></div>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
@@ -162,19 +166,20 @@
 </p>
 <p><img src="reference/figures/figure1.png" align="center"></p>
 
-<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code><a href="reference/model_parameters.html">model_parameters()</a></code></a> function (that can be accessed via the <code><a href="reference/model_parameters.html">parameters()</a></code> shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom"><code><a href="https://rdrr.io/pkg/broom/man/reexports.html">broom::tidy()</a></code></a>, with some notable differences:</p>
+<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code>model_parameters()</code></a> function (that can be accessed via the <code><a href="reference/model_parameters.html">parameters()</a></code> shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom"><code>broom::tidy()</code></a>, with some notable differences:</p>
 <ul>
-<li>The column names of the returned data frame are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (<strong>however</strong>, you can get standardized (generic) column names using <a href="https://easystats.github.io/parameters/reference/standardize_names.html"><code><a href="reference/standardize_names.html">standardize_names()</a></code></a>).</li>
+<li>The column names of the returned data frame are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (<strong>however</strong>, you can get standardized (generic) column names using <a href="https://easystats.github.io/parameters/reference/standardize_names.html"><code>standardize_names()</code></a>).</li>
 <li>It is able to compute or extract indices not available by default, such as <strong><em>p</em>-values</strong>, <strong>CIs</strong>, etc.</li>
 <li>It includes <strong>feature engineering</strong> capabilities, including parameters <a href="https://easystats.github.io/parameters/reference/bootstrap_parameters.html"><strong>bootstrapping</strong></a>.</li>
 </ul>
 <div id="classical-regression-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#classical-regression-models" class="anchor"></a>Classical Regression Models</h3>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">Sepal.Width</span> ~ <span class="no">Petal.Length</span> * <span class="no">Species</span> + <span class="no">Petal.Width</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">iris</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">Sepal.Width</span> <span class="op">~</span> <span class="kw">Petal.Length</span> <span class="op">*</span> <span class="kw">Species</span> <span class="op">+</span> <span class="kw">Petal.Width</span>, data = <span class="kw">iris</span>)
 
 <span class="co"># regular model parameters</span>
-<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>)
+<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>(<span class="kw">model</span>)
 <span class="co">#&gt; Parameter                           | Coefficient |   SE |         95% CI |     t |  df |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                         |        2.89 | 0.36 | [ 2.18,  3.60] |  8.01 | 143 | &lt; .001</span>
@@ -186,7 +191,7 @@
 <span class="co">#&gt; Petal.Length * Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] | -0.50 | 143 | 0.618</span>
 
 <span class="co"># standardized parameters</span>
-<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>, <span class="kw">standardize</span> <span class="kw">=</span> <span class="st">"refit"</span>)
+<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>(<span class="kw">model</span>, standardize = <span class="st">"refit"</span>)
 <span class="co">#&gt; Parameter                           | Coefficient |   SE |         95% CI |     t |  df |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                         |        3.59 | 1.30 | [ 1.01,  6.17] |  2.75 | 143 | 0.007 </span>
@@ -195,37 +200,41 @@
 <span class="co">#&gt; Species [virginica]                 |       -5.51 | 1.38 | [-8.23, -2.79] | -4.00 | 143 | &lt; .001</span>
 <span class="co">#&gt; Petal.Width                         |        1.08 | 0.24 | [ 0.59,  1.56] |  4.41 | 143 | &lt; .001</span>
 <span class="co">#&gt; Petal.Length * Species [versicolor] |       -0.38 | 1.06 | [-2.48,  1.72] | -0.36 | 143 | 0.721 </span>
-<span class="co">#&gt; Petal.Length * Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] | -0.50 | 143 | 0.618</span></pre></div>
+<span class="co">#&gt; Petal.Length * Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] | -0.50 | 143 | 0.618</span>
+</pre></div>
 </div>
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mixed-models" class="anchor"></a>Mixed Models</h3>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">lme4</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/lme4/lme4">lme4</a></span>)
 
-<span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">Sepal.Width</span> ~ <span class="no">Petal.Length</span> + (<span class="fl">1</span><span class="kw">|</span><span class="no">Species</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">iris</span>)
+<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="kw">Sepal.Width</span> <span class="op">~</span> <span class="kw">Petal.Length</span> <span class="op">+</span> (<span class="fl">1</span><span class="op">|</span><span class="kw">Species</span>), data = <span class="kw">iris</span>)
 
 <span class="co"># model parameters with CI, df and p-values based on Wald approximation</span>
-<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>)
+<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>(<span class="kw">model</span>)
 <span class="co">#&gt; Parameter    | Coefficient |   SE |       95% CI |    t |  df |      p</span>
 <span class="co">#&gt; ----------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | 146 | &lt; .001</span>
 <span class="co">#&gt; Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | 146 | &lt; .001</span>
 
 <span class="co"># model parameters with CI, df and p-values based on Kenward-Roger approximation</span>
-<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>, <span class="kw">df_method</span> <span class="kw">=</span> <span class="st">"kenward"</span>)
+<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>(<span class="kw">model</span>, df_method = <span class="st">"kenward"</span>)
 <span class="co">#&gt; Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 </span>
-<span class="co">#&gt; Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | &lt; .001</span></pre></div>
+<span class="co">#&gt; Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | &lt; .001</span>
+</pre></div>
 </div>
 <div id="structural-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#structural-models" class="anchor"></a>Structural Models</h3>
 <p>Besides many types of regression models and packages, it also works for other types of models, such as <a href="https://easystats.github.io/parameters/articles/efa_cfa.html"><strong>structural models</strong></a> (EFA, CFA, SEM…).</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">psych</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://personality-project.org/r/psych">psych</a></span>)
 
-<span class="no">model</span> <span class="kw">&lt;-</span> <span class="kw pkg">psych</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span>(<span class="no">attitude</span>, <span class="kw">nfactors</span> <span class="kw">=</span> <span class="fl">3</span>)
-<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>(<span class="no">model</span>)
+<span class="kw">model</span> <span class="op">&lt;-</span> <span class="kw">psych</span>::<span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span>(<span class="kw">attitude</span>, nfactors = <span class="fl">3</span>)
+<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>(<span class="kw">model</span>)
 <span class="co">#&gt; # Rotated loadings from Factor Analysis (oblimin-rotation)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness</span>
@@ -238,7 +247,8 @@
 <span class="co">#&gt; critical   |  0.16 |  0.17 |  0.48 |       1.46 |       0.67</span>
 <span class="co">#&gt; advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span></pre></div>
+<span class="co">#&gt; The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span>
+</pre></div>
 </div>
 </div>
 <div id="variable-and-parameters-selection" class="section level2">
@@ -249,10 +259,11 @@
 <p><img src="reference/figures/figure2.png" align="center"></p>
 
 <p><a href="https://easystats.github.io/parameters/articles/parameters_selection.html"><code>parameters_selection()</code></a> can help you quickly select and retain the most relevant predictors using methods tailored for the model type.</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
 
-<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">disp</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="reference/select_parameters.html">select_parameters</a></span>() <span class="kw">%&gt;%</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">disp</span> <span class="op">~</span> <span class="kw">.</span>, data = <span class="kw">mtcars</span>) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="reference/select_parameters.html">select_parameters</a></span>() <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span>()
 <span class="co">#&gt; Parameter   | Coefficient |     SE |            95% CI |     t | df |      p</span>
 <span class="co">#&gt; ----------------------------------------------------------------------------</span>
@@ -261,7 +272,8 @@
 <span class="co">#&gt; hp          |        0.63 |   0.20 | [   0.22,   1.03] |  3.18 | 26 | 0.004 </span>
 <span class="co">#&gt; wt          |       80.45 |  12.22 | [  55.33, 105.57] |  6.58 | 26 | &lt; .001</span>
 <span class="co">#&gt; qsec        |      -14.68 |   6.14 | [ -27.31,  -2.05] | -2.39 | 26 | 0.024 </span>
-<span class="co">#&gt; carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | 26 | &lt; .001</span></pre></div>
+<span class="co">#&gt; carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | 26 | &lt; .001</span>
+</pre></div>
 </div>
 <div id="miscellaneous" class="section level2">
 <h2 class="hasAnchor">
@@ -270,14 +282,16 @@
 <div id="describe-a-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#describe-a-distribution" class="anchor"></a>Describe a Distribution</h3>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">iris</span>)
-<span class="fu"><a href="reference/describe_distribution.html">describe_distribution</a></span>(<span class="no">iris</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">iris</span>)
+<span class="fu"><a href="reference/describe_distribution.html">describe_distribution</a></span>(<span class="kw">iris</span>)
 <span class="co">#&gt; Variable     | Mean |   SD |  IQR |        Range | Skewness | Kurtosis |   n | n_Missing</span>
 <span class="co">#&gt; ----------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; Sepal.Length | 5.84 | 0.83 | 1.30 | [4.30, 7.90] |     0.31 |    -0.55 | 150 |         0</span>
 <span class="co">#&gt; Sepal.Width  | 3.06 | 0.44 | 0.52 | [2.00, 4.40] |     0.32 |     0.23 | 150 |         0</span>
 <span class="co">#&gt; Petal.Length | 3.76 | 1.77 | 3.52 | [1.00, 6.90] |    -0.27 |    -1.40 | 150 |         0</span>
-<span class="co">#&gt; Petal.Width  | 1.20 | 0.76 | 1.50 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0</span></pre></div>
+<span class="co">#&gt; Petal.Width  | 1.20 | 0.76 | 1.50 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0</span>
+</pre></div>
 </div>
 <div id="citation" class="section level3">
 <h3 class="hasAnchor">

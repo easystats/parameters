@@ -169,18 +169,18 @@
                assignment for each observation as vector.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cluster_analysis</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>n_clusters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"hclust"</span>, <span class='st'>"kmeans"</span>),
-  <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"euclidean"</span>, <span class='st'>"maximum"</span>, <span class='st'>"manhattan"</span>, <span class='st'>"canberra"</span>, <span class='st'>"binary"</span>, <span class='st'>"minkowski"</span>),
-  <span class='kw'>agglomeration</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ward"</span>, <span class='st'>"ward.D"</span>, <span class='st'>"ward.D2"</span>, <span class='st'>"single"</span>, <span class='st'>"complete"</span>, <span class='st'>"average"</span>,
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/cluster_analysis.html'>cluster_analysis</a></span>(
+  <span class='kw'>x</span>,
+  n_clusters = <span class='kw'>NULL</span>,
+  method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"hclust"</span>, <span class='st'>"kmeans"</span>),
+  distance = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"euclidean"</span>, <span class='st'>"maximum"</span>, <span class='st'>"manhattan"</span>, <span class='st'>"canberra"</span>, <span class='st'>"binary"</span>, <span class='st'>"minkowski"</span>),
+  agglomeration = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ward"</span>, <span class='st'>"ward.D"</span>, <span class='st'>"ward.D2"</span>, <span class='st'>"single"</span>, <span class='st'>"complete"</span>, <span class='st'>"average"</span>,
     <span class='st'>"mcquitty"</span>, <span class='st'>"median"</span>, <span class='st'>"centroid"</span>),
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>algorithm</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Hartigan-Wong"</span>, <span class='st'>"Lloyd"</span>, <span class='st'>"MacQueen"</span>),
-  <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>package</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"NbClust"</span>, <span class='st'>"mclust"</span>),
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  iterations = <span class='fl'>20</span>,
+  algorithm = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Hartigan-Wong"</span>, <span class='st'>"Lloyd"</span>, <span class='st'>"MacQueen"</span>),
+  force = <span class='fl'>TRUE</span>,
+  package = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"NbClust"</span>, <span class='st'>"mclust"</span>),
+  verbose = <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -193,7 +193,7 @@
     <tr>
       <th>n_clusters</th>
       <td><p>Number of clusters used for the cluster solution. By default,
-the number of clusters to extract is determined by calling <code><a href='n_clusters.html'>n_clusters</a></code>.</p></td>
+the number of clusters to extract is determined by calling <code><a href='https://rdrr.io/pkg/parameters/man/n_clusters.html'>n_clusters</a></code>.</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -252,25 +252,25 @@ the cluster analysis.</p></td>
   as <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(x)</a></code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code><a href='print.html'>print()</a></code> and <code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code> methods show the (standardized)
+    <p>The <code><a href='https://rdrr.io/pkg/parameters/man/print.html'>print()</a></code> and <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code> methods show the (standardized)
   mean value for each variable within each cluster. Thus, a higher absolute
   value indicates that a certain variable characteristic is more pronounced
   within that specific cluster (as compared to other cluster groups with lower
   absolute mean values).</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='n_clusters.html'>n_clusters</a></code> to determine the number of clusters to extract, <code><a href='cluster_discrimination.html'>cluster_discrimination</a></code> to determine the accuracy of cluster group classification and <code><a href='check_clusterstructure.html'>check_clusterstructure</a></code> to check suitability of data for clustering.</p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/n_clusters.html'>n_clusters</a></code> to determine the number of clusters to extract, <code><a href='https://rdrr.io/pkg/parameters/man/cluster_discrimination.html'>cluster_discrimination</a></code> to determine the accuracy of cluster group classification and <code><a href='https://rdrr.io/pkg/parameters/man/check_clusterstructure.html'>check_clusterstructure</a></code> to check suitability of data for clustering.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Hierarchical clustering of mtcars-dataset</span>
-<span class='no'>groups</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_analysis</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='fl'>3</span>)
-<span class='no'>groups</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Cluster Analysis (mean z-score by cluster)
+<span class='kw'>groups</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/cluster_analysis.html'>cluster_analysis</a></span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], <span class='fl'>3</span>)
+<span class='kw'>groups</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Cluster Analysis (mean z-score by cluster)
 #&gt; 
 #&gt; </span><span>         Term Group 1 Group 2 Group 3
 #&gt;  Sepal.Length   -1.01    0.09    1.24
@@ -288,9 +288,9 @@ the cluster analysis.</p></td>
 #&gt; Overall accuracy of classification: 97.33%
 #&gt; </span><span></div><div class='input'>
 <span class='co'># K-means clustering of mtcars-dataset, auto-detection of cluster-groups</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>groups</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_analysis</span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"k"</span>)
-<span class='no'>groups</span>
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>groups</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/cluster_analysis.html'>cluster_analysis</a></span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], method = <span class='st'>"k"</span>)
+<span class='kw'>groups</span>
 }</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

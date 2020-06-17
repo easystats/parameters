@@ -167,16 +167,16 @@
     <p>This function performs an automated selection of the 'best' parameters, updating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the <code>projpred</code> package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/select_parameters.html'>select_parameters</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for lm</span>
-<span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"both"</span>, <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/select_parameters.html'>select_parameters</a></span>(<span class='kw'>model</span>, direction = <span class='st'>"both"</span>, steps = <span class='fl'>1000</span>, k = <span class='fl'>2</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for merMod</span>
-<span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"backward"</span>, <span class='kw'>steps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/select_parameters.html'>select_parameters</a></span>(<span class='kw'>model</span>, direction = <span class='st'>"backward"</span>, steps = <span class='fl'>1000</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/select_parameters.html'>select_parameters</a></span>(<span class='kw'>model</span>, method = <span class='kw'>NULL</span>, cross_validation = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,8 +223,8 @@
     <p>The model refitted with optimal number of parameters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'>select_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>mtcars</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/select_parameters.html'>select_parameters</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; lm(formula = mpg ~ wt + qsec + am, data = mtcars)
 #&gt; 
@@ -232,8 +232,8 @@
 #&gt; (Intercept)           wt         qsec           am  
 #&gt;       9.618       -3.917        1.226        2.936  
 #&gt; </div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> * <span class='no'>disp</span> * <span class='no'>hp</span> * <span class='no'>wt</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'>select_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; 
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>cyl</span> <span class='op'>*</span> <span class='kw'>disp</span> <span class='op'>*</span> <span class='kw'>hp</span> <span class='op'>*</span> <span class='kw'>wt</span>, data = <span class='kw'>mtcars</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/select_parameters.html'>select_parameters</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; lm(formula = mpg ~ cyl + disp + hp + wt + cyl:disp + cyl:hp + 
 #&gt;     disp:hp + cyl:wt + disp:wt + hp:wt + cyl:disp:hp + cyl:hp:wt, 
@@ -248,12 +248,12 @@
 #&gt;   0.0850798  
 #&gt; </div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># lme4 -------------------------------------------</span>
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"lme4"</span>)) {
-  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(
-    <span class='no'>Sepal.Width</span> ~ <span class='no'>Sepal.Length</span> * <span class='no'>Petal.Width</span> * <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>),
-    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
+  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(
+    <span class='kw'>Sepal.Width</span> <span class='op'>~</span> <span class='kw'>Sepal.Length</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span> <span class='op'>*</span> <span class='kw'>Petal.Length</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>),
+    data = <span class='kw'>iris</span>
   )
-  <span class='fu'>select_parameters</span>(<span class='no'>model</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/select_parameters.html'>select_parameters</a></span>(<span class='kw'>model</span>)
 }</div><div class='output co'>#&gt; Linear mixed model fit by REML ['lmerMod']
 #&gt; Formula: Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 |  
 #&gt;     Species)
@@ -274,41 +274,38 @@
 #&gt;              Petal.Width:Petal.Length  Sepal.Length:Petal.Width:Petal.Length  
 #&gt;                              0.001866                               0.023319  </div><div class='input'>
 <span class='co'># rstanarm -------------------------------------------</span>
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"rstanarm"</span>)) {
-  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(
-    <span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>,
-    <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>)) {
+  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(
+    <span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>mtcars</span>,
+    iter = <span class='fl'>500</span>, refresh = <span class='fl'>0</span>, verbose = <span class='fl'>FALSE</span>
   )
-  <span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/select_parameters.html'>select_parameters</a></span>(<span class='kw'>model</span>, cross_validation = <span class='fl'>TRUE</span>)
 
-  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(
-    <span class='no'>mpg</span> ~ <span class='no'>cyl</span> * <span class='no'>disp</span> * <span class='no'>hp</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>,
-    <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(
+    <span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>cyl</span> <span class='op'>*</span> <span class='kw'>disp</span> <span class='op'>*</span> <span class='kw'>hp</span>, data = <span class='kw'>mtcars</span>,
+    iter = <span class='fl'>500</span>, refresh = <span class='fl'>0</span>, verbose = <span class='fl'>FALSE</span>
   )
-  <span class='fu'>select_parameters</span>(<span class='no'>model</span>, <span class='kw'>cross_validation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/select_parameters.html'>select_parameters</a></span>(<span class='kw'>model</span>, cross_validation = <span class='fl'>FALSE</span>)
 }</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; stan_glm
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
-#&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp + cyl:hp
+#&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp
 #&gt;  observations: 32
-#&gt;  predictors:   6
+#&gt;  predictors:   5
 #&gt; ------
 #&gt;             Median MAD_SD
-#&gt; (Intercept) 51.1    5.6  
-#&gt; cyl         -3.2    0.8  
+#&gt; (Intercept) 46.0    4.6  
+#&gt; cyl         -2.6    0.8  
 #&gt; disp        -0.1    0.0  
-#&gt; hp          -0.1    0.1  
+#&gt; hp           0.0    0.0  
 #&gt; cyl:disp     0.0    0.0  
-#&gt; cyl:hp       0.0    0.0  
 #&gt; 
 #&gt; Auxiliary parameter(s):
 #&gt;       Median MAD_SD
-#&gt; sigma 2.6    0.4   
+#&gt; sigma 2.7    0.4   
 #&gt; 
 #&gt; ------
 #&gt; * For help interpreting the printed output see ?print.stanreg

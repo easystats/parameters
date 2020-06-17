@@ -167,28 +167,28 @@
     <p>Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_parameters.html'>simulate_parameters</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>simulate_parameters</span>(
-  <span class='no'>model</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>,
-  <span class='no'>...</span>
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_parameters.html'>simulate_parameters</a></span>(
+  <span class='kw'>model</span>,
+  iterations = <span class='fl'>1000</span>,
+  centrality = <span class='st'>"median"</span>,
+  ci = <span class='fl'>0.95</span>,
+  ci_method = <span class='st'>"quantile"</span>,
+  test = <span class='st'>"p-value"</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for glmmTMB</span>
-<span class='fu'>simulate_parameters</span>(
-  <span class='no'>model</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>,
-  <span class='no'>...</span>
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_parameters.html'>simulate_parameters</a></span>(
+  <span class='kw'>model</span>,
+  iterations = <span class='fl'>1000</span>,
+  centrality = <span class='st'>"median"</span>,
+  ci = <span class='fl'>0.95</span>,
+  ci_method = <span class='st'>"quantile"</span>,
+  test = <span class='st'>"p-value"</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -241,8 +241,8 @@ included in the summary output.</p></td>
 
     
 <h3>Technical Details</h3>
-<p><code>simulate_parameters()</code> is a computationally faster alternative
-    to <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>. Simulated draws for coefficients are based
+<p><code><a href='https://rdrr.io/pkg/parameters/man/simulate_parameters.html'>simulate_parameters()</a></code> is a computationally faster alternative
+    to <code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_parameters.html'>bootstrap_parameters()</a></code>. Simulated draws for coefficients are based
     on a multivariate normal distribution (<code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>MASS::mvrnorm()</a></code>) with mean
     <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p><p></p><h3>Models with Zero-Inflation Component</h3>
 <p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
@@ -253,19 +253,19 @@ included in the summary output.</p></td>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge; New York: Cambridge University Press 2007: 140-143</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='bootstrap_model.html'>bootstrap_model</a></code>, <code><a href='bootstrap_parameters.html'>bootstrap_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_model.html'>bootstrap_model</a></code>, <code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_parameters.html'>bootstrap_parameters</a></code>, <code><a href='https://rdrr.io/pkg/parameters/man/simulate_model.html'>simulate_model</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>simulate_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Parameter                     | Coefficient |         95% CI |      p
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_parameters.html'>simulate_parameters</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; Parameter                     | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------------------------
 #&gt; (Intercept)                   |        3.53 | [ 3.22,  3.83] | &lt; .001
 #&gt; Speciesversicolor             |       -1.15 | [-1.86, -0.44] | &lt; .001
@@ -275,15 +275,15 @@ included in the summary output.</p></td>
 #&gt; Speciesversicolor:Petal.Width |       -0.77 | [-1.83,  0.29] | 0.162 
 #&gt; Speciesvirginica:Petal.Width  |       -0.38 | [-1.32,  0.58] | 0.446 </div><div class='input'>
 <span class='co'># \donttest{</span>
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"glmmTMB"</span>)) {
-  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
-    <span class='no'>count</span> ~ <span class='no'>spp</span> + <span class='no'>mined</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>site</span>),
-    <span class='kw'>ziformula</span> <span class='kw'>=</span> ~<span class='no'>mined</span>,
-    <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
-    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Salamanders</span>
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/glmmTMB'>"glmmTMB"</a></span>)) {
+  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
+    <span class='kw'>count</span> <span class='op'>~</span> <span class='kw'>spp</span> <span class='op'>+</span> <span class='kw'>mined</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>site</span>),
+    ziformula = <span class='op'>~</span><span class='kw'>mined</span>,
+    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
+    data = <span class='kw'>Salamanders</span>
   )
-  <span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)
-  <span class='fu'>simulate_parameters</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"zero_inflated"</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_parameters.html'>simulate_parameters</a></span>(<span class='kw'>model</span>, centrality = <span class='st'>"mean"</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_parameters.html'>simulate_parameters</a></span>(<span class='kw'>model</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), component = <span class='st'>"zero_inflated"</span>)
 }</div><div class='output co'>#&gt; Parameter   | Coefficient |    CI |         80% CI | 95% CI |      p
 #&gt; --------------------------------------------------------------------
 #&gt; (Intercept) |        0.78 | 80.00 | [ 0.40,  1.14] |        | 0.012 

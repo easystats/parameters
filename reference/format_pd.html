@@ -167,7 +167,7 @@
     <p>Probability of direction (pd) formatting</p>
     </div>
 
-    <pre class="usage"><span class='fu'>format_pd</span>(<span class='no'>pd</span>, <span class='kw'>stars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>stars_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"pd"</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/format_pd.html'>format_pd</a></span>(<span class='kw'>pd</span>, stars = <span class='fl'>FALSE</span>, stars_only = <span class='fl'>FALSE</span>, name = <span class='st'>"pd"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,7 +195,7 @@
     <p>A formatted string.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>format_pd</span>(<span class='fl'>0.12</span>)</div><div class='output co'>#&gt; [1] "pd = 12.00%"</div><div class='input'><span class='fu'>format_pd</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.12</span>, <span class='fl'>1</span>, <span class='fl'>0.9999</span>, <span class='fl'>0.98</span>, <span class='fl'>0.995</span>, <span class='fl'>0.96</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] "12.00%" "100%"   "99.99%" "98.00%" "99.50%" "96.00%"</div><div class='input'><span class='fu'>format_pd</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.12</span>, <span class='fl'>1</span>, <span class='fl'>0.9999</span>, <span class='fl'>0.98</span>, <span class='fl'>0.995</span>, <span class='fl'>0.96</span>), <span class='kw'>stars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "pd = 12.00%"    "pd = 100%***"   "pd = 99.99%***" "pd = 98.00%*"  
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/format_pd.html'>format_pd</a></span>(<span class='fl'>0.12</span>)</div><div class='output co'>#&gt; [1] "pd = 12.00%"</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/format_pd.html'>format_pd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.12</span>, <span class='fl'>1</span>, <span class='fl'>0.9999</span>, <span class='fl'>0.98</span>, <span class='fl'>0.995</span>, <span class='fl'>0.96</span>), name = <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] "12.00%" "100%"   "99.99%" "98.00%" "99.50%" "96.00%"</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/format_pd.html'>format_pd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.12</span>, <span class='fl'>1</span>, <span class='fl'>0.9999</span>, <span class='fl'>0.98</span>, <span class='fl'>0.995</span>, <span class='fl'>0.96</span>), stars = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "pd = 12.00%"    "pd = 100%***"   "pd = 99.99%***" "pd = 98.00%*"  
 #&gt; [5] "pd = 99.50%**"  "pd = 96.00%"   </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

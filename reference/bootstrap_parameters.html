@@ -167,14 +167,14 @@
     <p>Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bootstrap_parameters</span>(
-  <span class='no'>model</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"p-value"</span>,
-  <span class='no'>...</span>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/bootstrap_parameters.html'>bootstrap_parameters</a></span>(
+  <span class='kw'>model</span>,
+  iterations = <span class='fl'>1000</span>,
+  centrality = <span class='st'>"median"</span>,
+  ci = <span class='fl'>0.95</span>,
+  ci_method = <span class='st'>"quantile"</span>,
+  test = <span class='st'>"p-value"</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -219,7 +219,7 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
     <p>Bootstrapped parameters.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function first calls <code><a href='bootstrap_model.html'>bootstrap_model</a></code> to generate
+    <p>This function first calls <code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_model.html'>bootstrap_model</a></code> to generate
   bootstrapped coefficients. The resulting replicated for each coefficient
   are treated as "distribution", and is passed to <code><a href='https://rdrr.io/pkg/bayestestR/man/describe_posterior.html'>describe_posterior</a></code>
   to calculate the related indices defined in the <code>"test"</code> argument.</p>
@@ -228,13 +228,13 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
     <p>Davison, A. C., &amp; Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='bootstrap_model.html'>bootstrap_model</a></code>, <code><a href='simulate_parameters.html'>simulate_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_model.html'>bootstrap_model</a></code>, <code><a href='https://rdrr.io/pkg/parameters/man/simulate_parameters.html'>simulate_parameters</a></code>, <code><a href='https://rdrr.io/pkg/parameters/man/simulate_model.html'>simulate_model</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Width</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>bootstrap_parameters</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span>, data = <span class='kw'>iris</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/bootstrap_parameters.html'>bootstrap_parameters</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
 #&gt; 1                   (Intercept)   4.7766617  4.5135438 4.9897666 0.000000000
 #&gt; 2             Speciesversicolor  -0.7181220 -1.6069290 0.1527264 0.105894106
 #&gt; 3              Speciesvirginica   0.5204686 -0.7304722 1.7185077 0.401598402

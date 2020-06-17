@@ -126,12 +126,14 @@
 
     
     
-<p>This vignette explains the rational behind the <a href="https://easystats.github.io/parameters/reference/demean.html"><code><a href="../reference/demean.html">demean()</a></code></a> function. We give recommendations how to analyze multilevel or hierarchical data structures, when macro-indicators (or level-2 predictors, or higher-level units, or more general: <em>group-level predictors</em>) are used as covariates and the model suffers from <strong>heterogeneity bias</strong> <span class="citation">(Bell and Jones 2015)</span>.</p>
+<p>This vignette explains the rational behind the <a href="https://easystats.github.io/parameters/reference/demean.html"><code>demean()</code></a> function. We give recommendations how to analyze multilevel or hierarchical data structures, when macro-indicators (or level-2 predictors, or higher-level units, or more general: <em>group-level predictors</em>) are used as covariates and the model suffers from <strong>heterogeneity bias</strong> <span class="citation">(Bell and Jones 2015)</span>.</p>
 <div id="sample-data-used-in-this-vignette" class="section level1">
 <h1 class="hasAnchor">
 <a href="#sample-data-used-in-this-vignette" class="anchor"></a>Sample data used in this vignette</h1>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">parameters</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"qol_cancer"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://easystats.github.io/parameters">parameters</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"qol_cancer"</span>)
+</pre></div>
 <ul>
 <li>Variables:
 <ul>
@@ -155,9 +157,11 @@
 <h1 class="hasAnchor">
 <a href="#heterogeneity-bias" class="anchor"></a>Heterogeneity bias</h1>
 <p>Heterogeneity bias occurs when group-level predictors vary within and across groups, and hence fixed effects may correlate with group (or random) effects. This is a typical situation when analyzing longitudinal or panel data: Due to the repeated measurements of persons, the “person” (or subject-ID) is now a level-2 variable. Predictors at level-1 (“fixed effects”), e.g. self-rated health or income, now have an effect at level-1 (“within”-effect) and at higher-level units (level-2, the subject-level, which is the “between”-effect) (see also <a href="https://shouldbewriting.netlify.com/posts/2019-10-21-accounting-for-within-and-between-subject-effect/">this posting</a>). This inevitably leads to correlating fixed effects and error terms - which, in turn, results in biased estimates, because both the within- <em>and</em> between-effect are captured in <em>one</em> estimate.</p>
-<p>You can check if your model may suffer from heterogeneity bias using the <code><a href="../reference/demean.html">check_heterogeneity()</a></code> function:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/demean.html">check_heterogeneity</a></span>(<span class="no">qol_cancer</span>, <span class="kw">select</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"phq4"</span>, <span class="st">"education"</span>), <span class="kw">group</span> <span class="kw">=</span> <span class="st">"ID"</span>)
-<span class="co">#&gt; Possible heterogeneity bias due to following predictors: phq4</span></pre></body></html></div>
+<p>You can check if your model may suffer from heterogeneity bias using the <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> function:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="../reference/check_heterogeneity.html">check_heterogeneity</a></span>(<span class="kw">qol_cancer</span>, select = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"phq4"</span>, <span class="st">"education"</span>), group = <span class="st">"ID"</span>)
+<span class="co">#&gt; Possible heterogeneity bias due to following predictors: phq4</span>
+</pre></div>
 </div>
 <div id="adressing-heterogeneity-bias-the-fixed-effects-regression-fe-approach" class="section level1">
 <h1 class="hasAnchor">
@@ -167,10 +171,12 @@
 <div id="computing-the-de-meaned-and-group-meaned-variables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#computing-the-de-meaned-and-group-meaned-variables" class="anchor"></a>Computing the de-meaned and group-meaned variables</h2>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">qol_cancer</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
-  <span class="no">qol_cancer</span>,
-  <span class="fu"><a href="../reference/demean.html">demean</a></span>(<span class="no">qol_cancer</span>, <span class="kw">select</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"phq4"</span>, <span class="st">"QoL"</span>), <span class="kw">group</span> <span class="kw">=</span> <span class="st">"ID"</span>)
-)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">qol_cancer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
+  <span class="kw">qol_cancer</span>,
+  <span class="fu"><a href="../reference/check_heterogeneity.html">demean</a></span>(<span class="kw">qol_cancer</span>, select = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"phq4"</span>, <span class="st">"QoL"</span>), group = <span class="st">"ID"</span>)
+)
+</pre></div>
 <p>Now we have:</p>
 <ul>
 <li>
@@ -185,13 +191,14 @@
 <li>the group-level factor is included as predictor</li>
 <li>time-varying predictors are de-meaned (“person-mean centered”, indicating the “within-subject” effect)</li>
 </ul>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">fe_model1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(
-  <span class="no">QoL</span> ~ <span class="fl">0</span> + <span class="no">time</span> + <span class="no">phq4_within</span> + <span class="no">ID</span>,
-   <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw">fe_model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(
+  <span class="kw">QoL</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="kw">time</span> <span class="op">+</span> <span class="kw">phq4_within</span> <span class="op">+</span> <span class="kw">ID</span>,
+   data = <span class="kw">qol_cancer</span>
 )
 <span class="co"># we use only the first two rows, because the remaining rows are</span>
 <span class="co"># the estimates for "ID", which is not of interest here...</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">fe_model1</span>)[<span class="fl">1</span>:<span class="fl">2</span>, ]
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">fe_model1</span>)[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, ]
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------</span>
 <span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 374 | 0.089 </span>
@@ -200,11 +207,11 @@
 
 <span class="co"># instead of removing the intercept, we could also use the </span>
 <span class="co"># de-meaned response...</span>
-<span class="no">fe_model2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(
-  <span class="no">QoL_within</span> ~ <span class="no">time</span> + <span class="no">phq4_within</span> + <span class="no">ID</span>,
-   <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
+<span class="kw">fe_model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(
+  <span class="kw">QoL_within</span> <span class="op">~</span> <span class="kw">time</span> <span class="op">+</span> <span class="kw">phq4_within</span> <span class="op">+</span> <span class="kw">ID</span>,
+   data = <span class="kw">qol_cancer</span>
 )
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">fe_model2</span>)[<span class="fl">2</span>:<span class="fl">3</span>, ]
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">fe_model2</span>)[<span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, ]
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------</span>
 <span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 374 | 0.089 </span>
@@ -212,16 +219,17 @@
 
 
 <span class="co"># we compare the results with those from the "lfe"-package for panel data</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">lfe</span>)
-<span class="no">fe_model3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lfe/man/felm.html">felm</a></span>(
-  <span class="no">QoL</span> ~ <span class="no">time</span> + <span class="no">phq4</span> <span class="kw">|</span> <span class="no">ID</span>,
-   <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/sgaure/lfe">lfe</a></span>)
+<span class="kw">fe_model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lfe/man/felm.html">felm</a></span>(
+  <span class="kw">QoL</span> <span class="op">~</span> <span class="kw">time</span> <span class="op">+</span> <span class="kw">phq4</span> <span class="op">|</span> <span class="kw">ID</span>,
+   data = <span class="kw">qol_cancer</span>
 )
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">fe_model3</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">fe_model3</span>)
 <span class="co">#&gt; Parameter | Coefficient |   SE |         95% CI |     t |  df |      p</span>
 <span class="co">#&gt; ----------------------------------------------------------------------</span>
 <span class="co">#&gt; time      |        1.09 | 0.64 | [-0.16,  2.34] |  1.70 | 374 | 0.089 </span>
-<span class="co">#&gt; phq4      |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></pre></body></html></div>
+<span class="co">#&gt; phq4      |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span>
+</pre></div>
 <p>As we can see, the <em>within-effect</em> of PHQ-4 is <code>-3.66</code>, hence the mean of the change for an average individual case in our sample (or, the “net” effect), is <code>-3.66</code>.</p>
 <p>But what about the between-effect? How do people with higher PHQ-4 score differ from people with lower PHQ-4 score? Or what about educational inequalities? Do higher educated people have a higher PHQ-4 score than lower educated people?</p>
 <p>This question cannot be answered with FE regression. But: “Can one fit a multilevel model with varying intercepts (or coefficients) when the units and predictors correlate? The answer is yes. And the solution is simple.” <span class="citation">(Bafumi and Gelman 2006)</span></p>
@@ -239,12 +247,13 @@
 <li>When time-varying predictors are “decomposed” into their time-varying and time-invariant components (demeaning), then mixed models can model <strong>both</strong> within- and between-subject effects <span class="citation">(Bell, Fairbrother, and Jones 2019)</span> - this approach is essentially a further development of a long-known recommendation by Mundlak <span class="citation">(Mundlak 1978)</span>.</li>
 </ul>
 <p>For now, we will follow the last recommendation and use the within- and between-version of <code>phq4</code>.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">lme4</span>)
-<span class="no">mixed_1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
-  <span class="no">QoL</span> ~ <span class="no">time</span> + <span class="no">phq4_within</span> + <span class="no">phq4_between</span> + (<span class="fl">1</span> <span class="kw">|</span> <span class="no">ID</span>),
-   <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/lme4/lme4">lme4</a></span>)
+<span class="kw">mixed_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
+  <span class="kw">QoL</span> <span class="op">~</span> <span class="kw">time</span> <span class="op">+</span> <span class="kw">phq4_within</span> <span class="op">+</span> <span class="kw">phq4_between</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> <span class="kw">ID</span>),
+   data = <span class="kw">qol_cancer</span>
 )
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">mixed_1</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">mixed_1</span>)
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       71.53 | 1.56 | [68.48, 74.58] | 45.98 | 558 | &lt; .001</span>
@@ -263,18 +272,20 @@
 <span class="co">#&gt; phq4_between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | 558 | &lt; .001</span>
 
 <span class="co"># compare to FE-model</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">fe_model1</span>)[<span class="fl">1</span>:<span class="fl">2</span>, ]
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">fe_model1</span>)[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, ]
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------</span>
 <span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 374 | 0.089 </span>
-<span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span></pre></body></html></div>
+<span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | 374 | &lt; .001</span>
+</pre></div>
 <p>As we can see, the estimates and standard errors are identical. The argument <em>against</em> the use of mixed models, i.e. that using mixed models for panel data will yield biased estimates and standard errors, is based on an incorrect model specification <span class="citation">(Mundlak 1978)</span>. As such, when the (mixed) model is properly specified, the estimator of the mixed model is identical to the ‘within’ (i.e. FE) estimator.</p>
 <p>As a consequence, we cannot only use the above specified mixed model for panel data, we can even specify more complex models including within-effects, between-effects or random effects variation. A mixed models approach can model the causes of endogeneity explicitly by including the (separated) within- and between-effects of time-varying fixed effects and including time-constant fixed effects.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">mixed_2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
-  <span class="no">QoL</span> ~ <span class="no">time</span> + <span class="no">phq4_within</span> + <span class="no">phq4_between</span> + <span class="no">education</span> + (<span class="fl">1</span> + <span class="no">time</span> <span class="kw">|</span> <span class="no">ID</span>),
-   <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">mixed_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
+  <span class="kw">QoL</span> <span class="op">~</span> <span class="kw">time</span> <span class="op">+</span> <span class="kw">phq4_within</span> <span class="op">+</span> <span class="kw">phq4_between</span> <span class="op">+</span> <span class="kw">education</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> <span class="kw">time</span> <span class="op">|</span> <span class="kw">ID</span>),
+   data = <span class="kw">qol_cancer</span>
 )
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">mixed_2</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">mixed_2</span>)
 <span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI |     t |  df |      p</span>
 <span class="co">#&gt; -----------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)      |       67.36 | 2.48 | [62.49, 72.22] | 27.15 | 554 | &lt; .001</span>
@@ -292,7 +303,8 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI |      t |  df |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------------------</span>
-<span class="co">#&gt; phq4_between |       -6.13 | 0.52 | [-7.14, -5.11] | -11.84 | 554 | &lt; .001</span></pre></body></html></div>
+<span class="co">#&gt; phq4_between |       -6.13 | 0.52 | [-7.14, -5.11] | -11.84 | 554 | &lt; .001</span>
+</pre></div>
 <p>For more complex models, within-effects will naturally change slightly and are no longer identical to simpler FE models. This is no “bias”, but rather the result of building more complex models: FE models lack information of variation in the group-effects or between-subject effects. Furthermore, FE models cannot include random slopes, which means that fixed effects regressions are neglecting “cross-cluster differences in the effects of lower-level controls (which) reduces the precision of estimated context effects, resulting in (…) low statistical power” <span class="citation">(Heisig, Schaeffer, and Giesecke 2017)</span>.</p>
 </div>
 <div id="conclusion-complex-random-effects-within-between-models" class="section level1">
@@ -318,16 +330,19 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 </li>
 </ul>
 <p>In R-code, the model is written down like this:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">rewb</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
-  <span class="no">QoL</span> ~ <span class="no">time</span> + <span class="no">phq4_within</span> + <span class="no">phq4_between</span> + <span class="no">education</span> +
-    (<span class="fl">1</span> + <span class="no">time</span> <span class="kw">|</span> <span class="no">ID</span>) + (<span class="fl">1</span> + <span class="no">phq4_within</span> <span class="kw">|</span> <span class="no">ID</span>),
-   <span class="kw">data</span> <span class="kw">=</span> <span class="no">qol_cancer</span>
-)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw">rewb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
+  <span class="kw">QoL</span> <span class="op">~</span> <span class="kw">time</span> <span class="op">+</span> <span class="kw">phq4_within</span> <span class="op">+</span> <span class="kw">phq4_between</span> <span class="op">+</span> <span class="kw">education</span> <span class="op">+</span> 
+    (<span class="fl">1</span> <span class="op">+</span> <span class="kw">time</span> <span class="op">|</span> <span class="kw">ID</span>) <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> <span class="kw">phq4_within</span> <span class="op">|</span> <span class="kw">ID</span>),
+   data = <span class="kw">qol_cancer</span>
+)
+</pre></div>
 <p><strong>What about time-constant predictors?</strong></p>
 <p>After demeaning time-varying predictors, “at the higher level, the mean term is no longer constrained by Level 1 effects, so it is free to account for all the higher-level variance associated with that variable” <span class="citation">(Bell and Jones 2015)</span>.</p>
 <p>Thus, <em>time-constant <strong>categorical</strong></em> predictors, that only have a between-effect, can be simply included as fixed effects predictor (since they’re not constrained by level-1 effects). Time-constant <em>continuous</em> <strong>group-level predictors</strong> (for instance, GDP of countries) should be group-meaned, to have a proper “between”-effect <span class="citation">(Gelman and Hill 2007, Chap. 12.6.)</span>.</p>
 <p>The benefit of this kind of model is that you have information on within-, between- and other time-constant (i.e. between) effects or group-level predictors…</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">rewb</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">rewb</span>)
 <span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI |     t |  df |      p</span>
 <span class="co">#&gt; -----------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)      |       67.18 | 2.39 | [62.50, 71.86] | 28.13 | 551 | &lt; .001</span>
@@ -345,9 +360,11 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI |      t |  df |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------------------</span>
-<span class="co">#&gt; phq4_between |       -6.11 | 0.52 | [-7.13, -5.10] | -11.81 | 551 | &lt; .001</span></pre></body></html></div>
+<span class="co">#&gt; phq4_between |       -6.11 | 0.52 | [-7.13, -5.10] | -11.81 | 551 | &lt; .001</span>
+</pre></div>
 <p>… but you can also model the variation of (group) effects across time (and probably space), and you can even include more higher-level units (e.g. nested design or cross-classified design with more than two levels):</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/random_parameters.html">random_parameters</a></span>(<span class="no">rewb</span>)
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="fu"><a href="../reference/random_parameters.html">random_parameters</a></span>(<span class="kw">rewb</span>)
 <span class="co">#&gt; # Random Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Within-Group Variance              119.47 (10.93)</span>
@@ -361,37 +378,42 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt;   ID.phq4_within                     0.44</span>
 <span class="co">#&gt; N (groups per factor)</span>
 <span class="co">#&gt;   ID                                  188</span>
-<span class="co">#&gt; Observations                          564</span></pre></body></html></div>
+<span class="co">#&gt; Observations                          564</span>
+</pre></div>
+<p><strong>What about imbalanced groups, i.e. large differences in N per group?</strong></p>
+<p>See little example after this visual example…</p>
 </div>
 <div id="a-visual-example" class="section level1">
 <h1 class="hasAnchor">
 <a href="#a-visual-example" class="anchor"></a>A visual example</h1>
 <p>First, we generate some fake data that implies a linear relationship between outcome and independent variable. The objective is that the amount of typing errors depends on how fast (typing speed) you can type, however, the more typing experience you have, the faster you can type. Thus, the outcome measure is “amount of typing errors”, while our predictor is “typing speed”. Furthermore, we have repeated measurements of people with different “typing experience levels”.</p>
 <p>The results show that we will have two sources of variation: Overall, more experienced typists make less mistakes (group-level pattern). When typing faster, typists make more mistakes (individual-level pattern).</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">see</span>)
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://easystats.github.io/see">see</a></span>)
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
-<span class="no">n</span> <span class="kw">&lt;-</span> <span class="fl">5</span>
-<span class="no">b</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="fl">1.5</span>, <span class="kw">length.out</span> <span class="kw">=</span> <span class="fl">5</span>)
-<span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">2</span>, <span class="fl">2</span> * <span class="no">n</span>, <span class="fl">2</span>)
+<span class="kw">n</span> <span class="op">&lt;-</span> <span class="fl">5</span>
+<span class="kw">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="fl">1.5</span>, length.out = <span class="fl">5</span>)
+<span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">2</span>, <span class="fl">2</span> <span class="op">*</span> <span class="kw">n</span>, <span class="fl">2</span>)
 
-<span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="no">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="no">n</span>, <span class="kw">function</span>(<span class="no">i</span>) {
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="no">n</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">.2</span>),
-             <span class="kw">y</span> <span class="kw">=</span> <span class="fl">2</span> * <span class="no">x</span>[<span class="no">i</span>] + <span class="no">b</span>[<span class="no">i</span>] * <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="no">n</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">.2</span>) + <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">21</span>),
-             <span class="kw">grp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="fl">2</span> * <span class="no">i</span>))
+<span class="kw">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="kw">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span><span class="op">:</span><span class="kw">n</span>, <span class="fu">function</span>(<span class="kw">i</span>) {
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(x = <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="kw">n</span>, by = <span class="fl">.2</span>),
+             y = <span class="fl">2</span> <span class="op">*</span> <span class="kw">x</span>[<span class="kw">i</span>] <span class="op">+</span> <span class="kw">b</span>[<span class="kw">i</span>] <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="kw">n</span>, by = <span class="fl">.2</span>) <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">21</span>),
+             grp = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="fl">2</span> <span class="op">*</span> <span class="kw">i</span>))
 }))
 
-<span class="no">d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">grp</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fl">15</span> - (<span class="no">x</span> + <span class="fl">1.5</span> * <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="no">grp</span>)))) <span class="kw">%&gt;%</span>
+<span class="kw">d</span> <span class="op">&lt;-</span> <span class="kw">d</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="kw">grp</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(x = <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fl">15</span> <span class="op">-</span> (<span class="kw">x</span> <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="kw">grp</span>)))) <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>()
 
-<span class="no">labs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"very slow"</span>, <span class="st">"slow"</span>, <span class="st">"average"</span>, <span class="st">"fast"</span>, <span class="st">"very fast"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(<span class="no">d</span>$<span class="no">grp</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="no">labs</span>)
+<span class="kw">labs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"very slow"</span>, <span class="st">"slow"</span>, <span class="st">"average"</span>, <span class="st">"fast"</span>, <span class="st">"very fast"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(<span class="kw">d</span><span class="op">$</span><span class="kw">grp</span>) <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="kw">labs</span>)
 
-<span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">d</span>, <span class="fu"><a href="../reference/demean.html">demean</a></span>(<span class="no">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="kw">group</span> <span class="kw">=</span> <span class="st">"grp"</span>))</pre></body></html></div>
+<span class="kw">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">d</span>, <span class="fu"><a href="../reference/check_heterogeneity.html">demean</a></span>(<span class="kw">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x"</span>, <span class="st">"y"</span>), group = <span class="st">"grp"</span>))
+</pre></div>
 <p>Let’s look at the raw data…</p>
 <p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <div id="model-1-linear-relationship-between-typing-errors-and-typing-speed" class="section level2">
@@ -400,12 +422,14 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <p>We can now assume a (linear) relationship between typing errors and typing speed.</p>
 <p><img src="demean_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <p>Looking at the coefficients, we have following model with a coefficient of <code>-1.92</code>.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">m1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">y</span> ~ <span class="no">x</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m1</span>)
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="kw">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">y</span> <span class="op">~</span> <span class="kw">x</span>, data = <span class="kw">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">m1</span>)
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |      t |  df |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       30.20 | 1.42 | [27.39, 33.00] |  21.34 | 103 | &lt; .001</span>
-<span class="co">#&gt; x           |       -1.92 | 0.18 | [-2.27, -1.56] | -10.69 | 103 | &lt; .001</span></pre></body></html></div>
+<span class="co">#&gt; x           |       -1.92 | 0.18 | [-2.27, -1.56] | -10.69 | 103 | &lt; .001</span>
+</pre></div>
 <p>However, we have ignored the clustered structure in our data, in this example due to repeated measurements.</p>
 <p><img src="demean_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 </div>
@@ -415,11 +439,13 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <p>A fixed effects regression (FE-regression) would now remove all between-effects and include only the within-effects as well as the group-level indicator.</p>
 <p><img src="demean_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <p>This returns the coefficient of the “within”-effect, which is <code>1.2</code>, with a standard error of <code>0.07</code>. Note that the FE-model does <em>not</em> take the variation <em>between</em> subjects into account, thus resulting in (possibly) biased estimates, and biased standard errors.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">m2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">y</span> ~ <span class="fl">0</span> + <span class="no">x_within</span> + <span class="no">grp</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m2</span>)[<span class="fl">1</span>, ]
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="kw">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">y</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="kw">x_within</span> <span class="op">+</span> <span class="kw">grp</span>, data = <span class="kw">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">m2</span>)[<span class="fl">1</span>, ]
 <span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI |     t | df |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
-<span class="co">#&gt; x_within  |        1.20 | 0.07 | [1.06, 1.35] | 16.08 | 99 | &lt; .001</span></pre></body></html></div>
+<span class="co">#&gt; x_within  |        1.20 | 0.07 | [1.06, 1.35] | 16.08 | 99 | &lt; .001</span>
+</pre></div>
 </div>
 <div id="model-3-between-subject-effect-of-typing-speed" class="section level2">
 <h2 class="hasAnchor">
@@ -427,12 +453,14 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <p>To understand, why the above model 1 (<code>m1</code>) returns a biased estimate, which is a “weighted average” of the within- and between-effects, let us look at the between-effect now.</p>
 <p><img src="demean_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
 <p>As we can see, the between-effect is <code>-2.93</code>, which is different from the <code>-1.92</code> estimated in the model <code>m1</code>.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">m3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">y</span> ~ <span class="no">x_between</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m3</span>)
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="kw">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">y</span> <span class="op">~</span> <span class="kw">x_between</span>, data = <span class="kw">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">m3</span>)
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |      t |  df |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       37.83 | 0.62 | [36.59, 39.06] |  60.79 | 103 | &lt; .001</span>
-<span class="co">#&gt; x_between   |       -2.93 | 0.08 | [-3.09, -2.78] | -36.76 | 103 | &lt; .001</span></pre></body></html></div>
+<span class="co">#&gt; x_between   |       -2.93 | 0.08 | [-3.09, -2.78] | -36.76 | 103 | &lt; .001</span>
+</pre></div>
 </div>
 <div id="model-4-mixed-model-with-within--and-between-subjects" class="section level2">
 <h2 class="hasAnchor">
@@ -440,8 +468,9 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <p>Since FE-models can only model within-effects, we now use a mixed model with within- and between-effects.</p>
 <p><img src="demean_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 <p>We see, the estimate for the within-effects is <em>not</em> biased. Furthermore, we get the correct between-effect as well (standard errors differ, because the variance in the grouping structure is more accurately taken into account).</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">m4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">y</span> ~ <span class="no">x_between</span> + <span class="no">x_within</span> + (<span class="fl">1</span> <span class="kw">|</span> <span class="no">grp</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m4</span>)
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="kw">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="kw">y</span> <span class="op">~</span> <span class="kw">x_between</span> <span class="op">+</span> <span class="kw">x_within</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> <span class="kw">grp</span>), data = <span class="kw">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">m4</span>)
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |      t |  df |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       37.83 | 0.33 | [37.18, 38.48] | 114.46 | 100 | &lt; .001</span>
@@ -456,14 +485,16 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI |     t |  df |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------------</span>
-<span class="co">#&gt; x_within  |        1.20 | 0.07 | [1.06, 1.35] | 16.22 | 100 | &lt; .001</span></pre></body></html></div>
+<span class="co">#&gt; x_within  |        1.20 | 0.07 | [1.06, 1.35] | 16.22 | 100 | &lt; .001</span>
+</pre></div>
 </div>
 <div id="model-5-complex-random-effects-within-between-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-5-complex-random-effects-within-between-model" class="anchor"></a>Model 5: Complex Random-Effects Within-Between Model</h2>
 <p>Finally, we can also take the variation between subjects into account by adding a random slope. This model can be called a complex “REWB” (random-effects within-between) model. Due to the variation between subjects, we get larger standard errors for the within-effect.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">m5</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">y</span> ~ <span class="no">x_between</span> + <span class="no">x_within</span> + (<span class="fl">1</span> + <span class="no">x_within</span> <span class="kw">|</span> <span class="no">grp</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>)
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="no">m5</span>)
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="kw">m5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="kw">y</span> <span class="op">~</span> <span class="kw">x_between</span> <span class="op">+</span> <span class="kw">x_within</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> <span class="kw">x_within</span> <span class="op">|</span> <span class="kw">grp</span>), data = <span class="kw">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">m5</span>)
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |      t | df |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       37.95 | 0.34 | [37.29, 38.62] | 111.15 | 98 | &lt; .001</span>
@@ -478,8 +509,58 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI |     t | df |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
-<span class="co">#&gt; x_within  |        1.20 | 0.10 | [1.01, 1.40] | 12.16 | 98 | &lt; .001</span></pre></body></html></div>
+<span class="co">#&gt; x_within  |        1.20 | 0.10 | [1.01, 1.40] | 12.16 | 98 | &lt; .001</span>
+</pre></div>
 </div>
+</div>
+<div id="balanced-versus-imbalanced-groups" class="section level1">
+<h1 class="hasAnchor">
+<a href="#balanced-versus-imbalanced-groups" class="anchor"></a>Balanced versus imbalanced groups</h1>
+<p>The “simple” linear slope of the between-effect (and also from the within-effect) is (almost) identical in “classical” linear regression compared to linear mixed models when the groups are balanced, i.e. when the number of observation per group is similar or the same.</p>
+<p>Whenever group size is imbalanced, the “simple” linear slope will be adjusted. This leads to different estimates for between-effects between classical and mixed models regressions due to shrinkage - i.e. for larger variation of group sizes we find stronger regularization of estimates.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
+<span class="kw">n</span> <span class="op">&lt;-</span> <span class="fl">5</span>
+<span class="kw">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="fl">1.5</span>, length.out = <span class="fl">5</span>)
+<span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">2</span>, <span class="fl">2</span> <span class="op">*</span> <span class="kw">n</span>, <span class="fl">2</span>)
+
+<span class="kw">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="kw">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span><span class="op">:</span><span class="kw">n</span>, <span class="fu">function</span>(<span class="kw">i</span>) {
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(x = <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="kw">n</span>, by = <span class="fl">.2</span>),
+             y = <span class="fl">2</span> <span class="op">*</span> <span class="kw">x</span>[<span class="kw">i</span>] <span class="op">+</span> <span class="kw">b</span>[<span class="kw">i</span>] <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="kw">n</span>, by = <span class="fl">.2</span>) <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">21</span>),
+             grp = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="fl">2</span> <span class="op">*</span> <span class="kw">i</span>))
+}))
+
+<span class="co"># create imbalanced groups</span>
+<span class="kw">d</span><span class="op">$</span><span class="kw">grp</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw">d</span><span class="op">$</span><span class="kw">grp</span> <span class="op">==</span> <span class="fl">8</span>), <span class="fl">10</span>)] <span class="op">&lt;-</span> <span class="fl">6</span>
+<span class="kw">d</span><span class="op">$</span><span class="kw">grp</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw">d</span><span class="op">$</span><span class="kw">grp</span> <span class="op">==</span> <span class="fl">4</span>), <span class="fl">8</span>)] <span class="op">&lt;-</span> <span class="fl">2</span>
+<span class="kw">d</span><span class="op">$</span><span class="kw">grp</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw">d</span><span class="op">$</span><span class="kw">grp</span> <span class="op">==</span> <span class="fl">10</span>), <span class="fl">9</span>)] <span class="op">&lt;-</span> <span class="fl">6</span>
+
+<span class="kw">d</span> <span class="op">&lt;-</span> <span class="kw">d</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="kw">grp</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(x = <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fl">15</span> <span class="op">-</span> (<span class="kw">x</span> <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="kw">grp</span>)))) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>()
+
+<span class="kw">labs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"very slow"</span>, <span class="st">"slow"</span>, <span class="st">"average"</span>, <span class="st">"fast"</span>, <span class="st">"very fast"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(<span class="kw">d</span><span class="op">$</span><span class="kw">grp</span>) <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="kw">labs</span>)
+
+<span class="kw">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">d</span>, <span class="fu"><a href="../reference/check_heterogeneity.html">demean</a></span>(<span class="kw">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x"</span>, <span class="st">"y"</span>), group = <span class="st">"grp"</span>))
+
+<span class="co"># Between-subject effect of typing speed</span>
+<span class="kw">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">y</span> <span class="op">~</span> <span class="kw">x_between</span>, data = <span class="kw">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">m1</span>)
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |      t |  df |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       38.32 | 1.33 | [35.69, 40.95] |  28.87 | 103 | &lt; .001</span>
+<span class="co">#&gt; x_between   |       -2.81 | 0.16 | [-3.13, -2.49] | -17.47 | 103 | &lt; .001</span>
+
+<span class="co"># Between-subject effect of typing speed, accounting for goup structure</span>
+<span class="kw">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="kw">y</span> <span class="op">~</span> <span class="kw">x_between</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> <span class="kw">grp</span>), data = <span class="kw">d</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">m2</span>)
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       37.02 | 2.73 | [31.66, 42.38] | 13.54 | 101 | &lt; .001</span>
+<span class="co">#&gt; x_between   |       -2.71 | 0.35 | [-3.39, -2.03] | -7.81 | 101 | &lt; .001</span>
+</pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

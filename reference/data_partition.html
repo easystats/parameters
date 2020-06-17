@@ -167,7 +167,7 @@
     <p>Creates a training and a test set based on a dataframe. Can also be stratified (i.e., evenly spread a given factor) using the <code>group</code> argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>data_partition</span>(<span class='no'>x</span>, <span class='kw'>training_proportion</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/data_partition.html'>data_partition</a></span>(<span class='kw'>x</span>, training_proportion = <span class='fl'>0.7</span>, group = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,11 +191,12 @@
     <p>A list of two data frames, named <code>test</code> and <code>training</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>
-<span class='no'>df</span>$<span class='no'>Smell</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Strong"</span>, <span class='st'>"Light"</span>), <span class='fl'>75</span>)
+    <pre class="examples"><div class='input'><span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>iris</span>
+<span class='kw'>df</span><span class='op'>$</span><span class='kw'>Smell</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Strong"</span>, <span class='st'>"Light"</span>), <span class='fl'>75</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>data_partition</span>(<span class='no'>df</span>))</div><div class='output co'>#&gt; $training
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/data_partition.html'>data_partition</a></span>(<span class='kw'>df</span>))</div><div class='output co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
+#&gt; 61           5.0         2.0          3.5         1.0 versicolor Strong
 #&gt; 62           5.9         3.0          4.2         1.5 versicolor  Light
 #&gt; 84           6.0         2.7          5.1         1.6 versicolor  Light
 #&gt; 126          7.2         3.2          6.0         1.8  virginica  Light
@@ -210,7 +211,7 @@
 #&gt; 124          6.3         2.7          4.9         1.8  virginica  Light
 #&gt; 52           6.4         3.2          4.5         1.5 versicolor  Light
 #&gt; 66           6.7         3.1          4.4         1.4 versicolor  Light
-#&gt; 139          6.0         3.0          4.8         1.8  virginica Strong
+#&gt; 138          6.4         3.1          5.5         1.8  virginica  Light
 #&gt; 128          6.1         3.0          4.9         1.8  virginica  Light
 #&gt; 33           5.2         4.1          1.5         0.1     setosa Strong
 #&gt; 28           5.2         3.5          1.5         0.2     setosa  Light
@@ -229,7 +230,7 @@
 #&gt; 42           4.5         2.3          1.3         0.3     setosa  Light
 #&gt; 105          6.5         3.0          5.8         2.2  virginica Strong
 #&gt; 59           6.6         2.9          4.6         1.3 versicolor Strong
-#&gt; 135          6.1         2.6          5.6         1.4  virginica Strong
+#&gt; 127          6.2         2.8          4.8         1.8  virginica Strong
 #&gt; 69           6.2         2.2          4.5         1.5 versicolor Strong
 #&gt; 107          4.9         2.5          4.5         1.7  virginica Strong
 #&gt; 113          6.8         3.0          5.5         2.1  virginica Strong
@@ -241,63 +242,62 @@
 #&gt; 8            5.0         3.4          1.5         0.2     setosa  Light
 #&gt; 92           6.1         3.0          4.6         1.4 versicolor  Light
 #&gt; 16           5.7         4.4          1.5         0.4     setosa  Light
-#&gt; 108          7.3         2.9          6.3         1.8  virginica  Light
+#&gt; 130          7.2         3.0          5.8         1.6  virginica  Light
 #&gt; 12           4.8         3.4          1.6         0.2     setosa  Light
 #&gt; 78           6.7         3.0          5.0         1.7 versicolor  Light
-#&gt; 127          6.2         2.8          4.8         1.8  virginica Strong
+#&gt; 147          6.3         2.5          5.0         1.9  virginica Strong
 #&gt; 20           5.1         3.8          1.5         0.3     setosa  Light
 #&gt; 27           5.0         3.4          1.6         0.4     setosa Strong
-#&gt; 109          6.7         2.5          5.8         1.8  virginica Strong
+#&gt; 101          6.3         3.3          6.0         2.5  virginica Strong
 #&gt; 14           4.3         3.0          1.1         0.1     setosa  Light
-#&gt; 116          6.4         3.2          5.3         2.3  virginica  Light
+#&gt; 115          5.8         2.8          5.1         2.4  virginica Strong
 #&gt; 90           5.5         2.5          4.0         1.3 versicolor  Light
 #&gt; 68           5.8         2.7          4.1         1.0 versicolor  Light
-#&gt; 115          5.8         2.8          5.1         2.4  virginica Strong
-#&gt; 137          6.3         3.4          5.6         2.4  virginica Strong
+#&gt; 106          7.6         3.0          6.6         2.1  virginica  Light
+#&gt; 136          7.7         3.0          6.1         2.3  virginica  Light
 #&gt; 48           4.6         3.2          1.4         0.2     setosa  Light
 #&gt; 74           6.1         2.8          4.7         1.2 versicolor  Light
 #&gt; 88           6.3         2.3          4.4         1.3 versicolor  Light
-#&gt; 132          7.9         3.8          6.4         2.0  virginica  Light
-#&gt; 138          6.4         3.1          5.5         1.8  virginica  Light
-#&gt; 87           6.7         3.1          4.7         1.5 versicolor Strong
-#&gt; 91           5.5         2.6          4.4         1.2 versicolor Strong
+#&gt; 131          7.4         2.8          6.1         1.9  virginica Strong
+#&gt; 137          6.3         3.4          5.6         2.4  virginica Strong
+#&gt; 146          6.7         3.0          5.2         2.3  virginica  Light
 #&gt; 41           5.0         3.5          1.3         0.3     setosa Strong
 #&gt; 29           5.2         3.4          1.4         0.2     setosa Strong
-#&gt; 129          6.4         2.8          5.6         2.1  virginica Strong
-#&gt; 147          6.3         2.5          5.0         1.9  virginica Strong
-#&gt; 61           5.0         2.0          3.5         1.0 versicolor Strong
+#&gt; 134          6.3         2.8          5.1         1.5  virginica  Light
+#&gt; 94           5.0         2.3          3.3         1.0 versicolor  Light
+#&gt; 150          5.9         3.0          5.1         1.8  virginica  Light
 #&gt; 79           6.0         2.9          4.5         1.5 versicolor Strong
-#&gt; 145          6.7         3.3          5.7         2.5  virginica Strong
-#&gt; 136          7.7         3.0          6.1         2.3  virginica  Light
+#&gt; 144          6.8         3.2          5.9         2.3  virginica  Light
+#&gt; 123          7.7         2.8          6.7         2.0  virginica Strong
 #&gt; 53           6.9         3.1          4.9         1.5 versicolor Strong
 #&gt; 55           6.5         2.8          4.6         1.5 versicolor Strong
 #&gt; 54           5.5         2.3          4.0         1.3 versicolor  Light
-#&gt; 123          7.7         2.8          6.7         2.0  virginica Strong
+#&gt; 122          5.6         2.8          4.9         2.0  virginica  Light
 #&gt; 44           5.0         3.5          1.6         0.6     setosa  Light
-#&gt; 98           6.2         2.9          4.3         1.3 versicolor  Light
-#&gt; 110          7.2         3.6          6.1         2.5  virginica  Light
+#&gt; 97           5.7         2.9          4.2         1.3 versicolor Strong
+#&gt; 109          6.7         2.5          5.8         1.8  virginica Strong
 #&gt; 93           5.8         2.6          4.0         1.2 versicolor Strong
 #&gt; 39           4.4         3.0          1.3         0.2     setosa Strong
 #&gt; 65           5.6         2.9          3.6         1.3 versicolor Strong
 #&gt; 86           6.0         3.4          4.5         1.6 versicolor  Light
-#&gt; 101          6.3         3.3          6.0         2.5  virginica Strong
+#&gt; 121          6.9         3.2          5.7         2.3  virginica Strong
 #&gt; 24           5.1         3.3          1.7         0.5     setosa  Light
 #&gt; 25           4.8         3.4          1.9         0.2     setosa Strong
-#&gt; 130          7.2         3.0          5.8         1.6  virginica  Light
+#&gt; 119          7.7         2.6          6.9         2.3  virginica Strong
 #&gt; 30           4.7         3.2          1.6         0.2     setosa  Light
-#&gt; 122          5.6         2.8          4.9         2.0  virginica  Light
+#&gt; 110          7.2         3.6          6.1         2.5  virginica  Light
 #&gt; 5            5.0         3.6          1.4         0.2     setosa Strong
 #&gt; 9            4.4         2.9          1.4         0.2     setosa Strong
 #&gt; 73           6.3         2.5          4.9         1.5 versicolor Strong
-#&gt; 94           5.0         2.3          3.3         1.0 versicolor  Light
-#&gt; 106          7.6         3.0          6.6         2.1  virginica  Light
-#&gt; 72           6.1         2.8          4.0         1.3 versicolor  Light
-#&gt; 104          6.3         2.9          5.6         1.8  virginica  Light
-#&gt; 85           5.4         3.0          4.5         1.5 versicolor Strong
-#&gt; 146          6.7         3.0          5.2         2.3  virginica  Light
-#&gt; 134          6.3         2.8          5.1         1.5  virginica  Light
-#&gt; 70           5.6         2.5          3.9         1.1 versicolor  Light
+#&gt; 91           5.5         2.6          4.4         1.2 versicolor Strong
 #&gt; 118          7.7         3.8          6.7         2.2  virginica  Light
+#&gt; 72           6.1         2.8          4.0         1.3 versicolor  Light
+#&gt; 103          7.1         3.0          5.9         2.1  virginica Strong
+#&gt; 85           5.4         3.0          4.5         1.5 versicolor Strong
+#&gt; 145          6.7         3.3          5.7         2.5  virginica Strong
+#&gt; 142          6.9         3.1          5.1         2.3  virginica  Light
+#&gt; 70           5.6         2.5          3.9         1.1 versicolor  Light
+#&gt; 117          6.5         3.0          5.5         1.8  virginica Strong
 #&gt; 63           6.0         2.2          4.0         1.0 versicolor Strong
 #&gt; 47           5.1         3.8          1.6         0.2     setosa Strong
 #&gt; 81           5.5         2.4          3.8         1.1 versicolor Strong
@@ -330,26 +330,26 @@
 #&gt; 80           5.7         2.6          3.5         1.0 versicolor  Light
 #&gt; 82           5.5         2.4          3.7         1.0 versicolor  Light
 #&gt; 83           5.8         2.7          3.9         1.2 versicolor Strong
+#&gt; 87           6.7         3.1          4.7         1.5 versicolor Strong
 #&gt; 89           5.6         3.0          4.1         1.3 versicolor Strong
 #&gt; 96           5.7         3.0          4.2         1.2 versicolor  Light
-#&gt; 97           5.7         2.9          4.2         1.3 versicolor Strong
-#&gt; 103          7.1         3.0          5.9         2.1  virginica Strong
+#&gt; 98           6.2         2.9          4.3         1.3 versicolor  Light
+#&gt; 104          6.3         2.9          5.6         1.8  virginica  Light
+#&gt; 108          7.3         2.9          6.3         1.8  virginica  Light
 #&gt; 111          6.5         3.2          5.1         2.0  virginica Strong
 #&gt; 112          6.4         2.7          5.3         1.9  virginica  Light
-#&gt; 117          6.5         3.0          5.5         1.8  virginica Strong
-#&gt; 119          7.7         2.6          6.9         2.3  virginica Strong
-#&gt; 121          6.9         3.2          5.7         2.3  virginica Strong
+#&gt; 116          6.4         3.2          5.3         2.3  virginica  Light
 #&gt; 125          6.7         3.3          5.7         2.1  virginica Strong
-#&gt; 131          7.4         2.8          6.1         1.9  virginica Strong
+#&gt; 129          6.4         2.8          5.6         2.1  virginica Strong
+#&gt; 132          7.9         3.8          6.4         2.0  virginica  Light
+#&gt; 135          6.1         2.6          5.6         1.4  virginica Strong
+#&gt; 139          6.0         3.0          4.8         1.8  virginica Strong
 #&gt; 140          6.9         3.1          5.4         2.1  virginica  Light
 #&gt; 141          6.7         3.1          5.6         2.4  virginica Strong
-#&gt; 142          6.9         3.1          5.1         2.3  virginica  Light
 #&gt; 143          5.8         2.7          5.1         1.9  virginica Strong
-#&gt; 144          6.8         3.2          5.9         2.3  virginica  Light
 #&gt; 148          6.5         3.0          5.2         2.0  virginica  Light
 #&gt; 149          6.2         3.4          5.4         2.3  virginica Strong
-#&gt; 150          5.9         3.0          5.1         1.8  virginica  Light
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>data_partition</span>(<span class='no'>df</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"Species"</span>))</div><div class='output co'>#&gt; $training
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/data_partition.html'>data_partition</a></span>(<span class='kw'>df</span>, group = <span class='st'>"Species"</span>))</div><div class='output co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 28           5.2         3.5          1.5         0.2     setosa  Light
 #&gt; 31           4.8         3.1          1.6         0.2     setosa Strong
@@ -504,7 +504,7 @@
 #&gt; 144          6.8         3.2          5.9         2.3  virginica  Light
 #&gt; 147          6.3         2.5          5.0         1.9  virginica Strong
 #&gt; 148          6.5         3.0          5.2         2.0  virginica  Light
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>data_partition</span>(<span class='no'>df</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Smell"</span>)))</div><div class='output co'>#&gt; $training
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/data_partition.html'>data_partition</a></span>(<span class='kw'>df</span>, group = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Smell"</span>)))</div><div class='output co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 38           4.9         3.6          1.4         0.1     setosa  Light
 #&gt; 32           5.4         3.4          1.5         0.4     setosa  Light

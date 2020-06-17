@@ -167,7 +167,7 @@
     <p>Bayes Factor formatting</p>
     </div>
 
-    <pre class="usage"><span class='fu'>format_bf</span>(<span class='no'>bf</span>, <span class='kw'>stars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>stars_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"BF"</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/format_bf.html'>format_bf</a></span>(<span class='kw'>bf</span>, stars = <span class='fl'>FALSE</span>, stars_only = <span class='fl'>FALSE</span>, name = <span class='st'>"BF"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,7 +195,7 @@
     <p>A formatted string.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>format_bf</span>(<span class='fl'>1.20</span>)</div><div class='output co'>#&gt; [1] "BF = 1.20"</div><div class='input'><span class='fu'>format_bf</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1.20</span>, <span class='fl'>1557</span>, <span class='fl'>3.5</span>, <span class='fl'>12</span>), <span class='kw'>stars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "BF = 1.20"    "BF &gt; 999***"  "BF = 3.50*"   "BF = 12.00**"</div><div class='input'><span class='fu'>format_bf</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1.20</span>, <span class='fl'>1557</span>, <span class='fl'>3.5</span>, <span class='fl'>12</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] "1.20"  "&gt; 999" "3.50"  "12.00"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/format_bf.html'>format_bf</a></span>(<span class='fl'>1.20</span>)</div><div class='output co'>#&gt; [1] "BF = 1.20"</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/format_bf.html'>format_bf</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1.20</span>, <span class='fl'>1557</span>, <span class='fl'>3.5</span>, <span class='fl'>12</span>), stars = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "BF = 1.20"    "BF &gt; 999***"  "BF = 3.50*"   "BF = 12.00**"</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/format_bf.html'>format_bf</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1.20</span>, <span class='fl'>1557</span>, <span class='fl'>3.5</span>, <span class='fl'>12</span>), name = <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] "1.20"  "&gt; 999" "3.50"  "12.00"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

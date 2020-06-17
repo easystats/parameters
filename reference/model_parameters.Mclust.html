@@ -168,7 +168,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for Mclust</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,11 +185,11 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parameters</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mclust</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://mclust-org.github.io/mclust'>mclust</a></span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>mclust</span><span class='kw ns'>::</span><span class='fu'><a href='https://mclust-org.github.io/mclust/reference/Mclust.html'>Mclust</a></span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Gaussian finite mixture model fitted by EM algorithm
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>mclust</span>::<span class='fu'><a href='https://mclust-org.github.io/mclust/reference/Mclust.html'>Mclust</a></span>(<span class='kw'>iris</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], verbose = <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Gaussian finite mixture model fitted by EM algorithm
 #&gt; 
 #&gt; </span><span>Cluster | n_Obs | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width
 #&gt; -------------------------------------------------------------------------

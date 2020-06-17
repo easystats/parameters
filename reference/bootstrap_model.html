@@ -167,7 +167,7 @@
     <p>Bootstrap a statistical model n times to return a data frame of estimates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bootstrap_model</span>(<span class='no'>model</span>, <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/bootstrap_model.html'>bootstrap_model</a></span>(<span class='kw'>model</span>, iterations = <span class='fl'>1000</span>, verbose = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,11 +195,11 @@
     <p>A data frame.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='bootstrap_parameters.html'>bootstrap_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code>, <code><a href='simulate_parameters.html'>simulate_parameters</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_parameters.html'>bootstrap_parameters</a></code>, <code><a href='https://rdrr.io/pkg/parameters/man/simulate_model.html'>simulate_model</a></code>, <code><a href='https://rdrr.io/pkg/parameters/man/simulate_parameters.html'>simulate_parameters</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>bootstrap_model</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;   (Intercept)        wt       cyl
+    <pre class="examples"><div class='input'><span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/bootstrap_model.html'>bootstrap_model</a></span>(<span class='kw'>model</span>))</div><div class='output co'>#&gt;   (Intercept)        wt       cyl
 #&gt; 1    38.32019 -3.268411 -1.387621
 #&gt; 2    38.59563 -3.205922 -1.295143
 #&gt; 3    39.07240 -2.661856 -1.735625

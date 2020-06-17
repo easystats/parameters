@@ -201,7 +201,7 @@
 <a href="#simulate_parameters-and-simulate_model" class="anchor"></a><code>simulate_parameters()</code> and <code>simulate_model()</code>
 </h3>
 <ul>
-<li>has a nicer <code><a href="../reference/print.html">print()</a></code> method.</li>
+<li>has a nicer <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print()</a></code> method.</li>
 <li>now also simulate parameters from the dispersion model for <em>glmmTMB</em> objects.</li>
 <li>gets a <code>verbose</code> argument, to show or hide warnings and messages.</li>
 </ul>
@@ -223,7 +223,7 @@
 <h2 class="hasAnchor">
 <a href="#general" class="anchor"></a>General</h2>
 <ul>
-<li>We changed the computation of confidence intervals or standard errors, so these are now based on a t-distribution with degrees of freedom and not normal distribution assuming infinite degrees of freedom. This was implemented for most functions before and only affects few functions (like <code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> or CIs for standardized parameters from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when standardization method was <code>"posthoc"</code>).</li>
+<li>We changed the computation of confidence intervals or standard errors, so these are now based on a t-distribution with degrees of freedom and not normal distribution assuming infinite degrees of freedom. This was implemented for most functions before and only affects few functions (like <code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> or CIs for standardized parameters from <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> when standardization method was <code>"posthoc"</code>).</li>
 </ul>
 </div>
 <div id="new-supported-models-2" class="section level2">
@@ -239,7 +239,7 @@
 <a href="#new-functions" class="anchor"></a>New functions</h2>
 <ul>
 <li>
-<code><a href="../reference/demean.html">check_heterogeneity()</a></code> as a small helper to find variables that have a within- and between-effect related to a grouping variable (and thus, may result in heterogeneity bias, see <a href="https://easystats.github.io/parameters/articles/demean.html">this vignette</a>).</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/demean.html">check_heterogeneity()</a></code> as a small helper to find variables that have a within- and between-effect related to a grouping variable (and thus, may result in heterogeneity bias, see <a href="https://easystats.github.io/parameters/articles/demean.html">this vignette</a>).</li>
 </ul>
 </div>
 <div id="changes-to-functions-1" class="section level2">
@@ -274,12 +274,12 @@
 </h3>
 <ul>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Stan-models (<em>brms</em>, <em>rstanarm</em>) gains a <code>group_level</code> argument to show or hide parameters for group levels of random effects.</li>
-<li>Improved accuracy of confidence intervals in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with <code>standardize = "basic"</code> or <code>standardize = "posthoc"</code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for Stan-models (<em>brms</em>, <em>rstanarm</em>) gains a <code>group_level</code> argument to show or hide parameters for group levels of random effects.</li>
+<li>Improved accuracy of confidence intervals in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> with <code>standardize = "basic"</code> or <code>standardize = "posthoc"</code>.</li>
 <li>
-<code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> no longer passes <code>...</code> down to bootstrap-functions (i.e. when <code>bootstrap = TRUE</code>), as this might conflict with <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html">lme4::bootMer()</a></code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.merMod.html">model_parameters.merMod()</a></code> no longer passes <code>...</code> down to bootstrap-functions (i.e. when <code>bootstrap = TRUE</code>), as this might conflict with <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html">lme4::bootMer()</a></code>.</li>
 <li>For ordinal models (like <code><a href="https://rdrr.io/pkg/MASS/man/polr.html">MASS::polr()</a></code> or <code>ordinal::clm()</code>), a <code>Component</code> column is added, indicating intercept categories (<code>"alpha"</code>) and estimates (<code>"beta"</code>).</li>
-<li>The <code>select</code>-argument from <code><a href="../reference/print.html">print.parameters_model()</a></code> now gets a <code>"minimal"</code>-option as shortcut to print coefficients, confidence intervals and p-values only.</li>
+<li>The <code>select</code>-argument from <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print.parameters_model()</a></code> now gets a <code>"minimal"</code>-option as shortcut to print coefficients, confidence intervals and p-values only.</li>
 </ul>
 </div>
 <div id="other-changes" class="section level3">
@@ -287,9 +287,9 @@
 <a href="#other-changes" class="anchor"></a>Other changes</h3>
 <ul>
 <li>
-<code><a href="../reference/parameters_table.html">parameters_table()</a></code> and <code><a href="../reference/print.html">print.parameters_model()</a></code> now explicitly get arguments to define the digits for decimal places used in output.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/parameters_table.html">parameters_table()</a></code> and <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print.parameters_model()</a></code> now explicitly get arguments to define the digits for decimal places used in output.</li>
 <li>
-<code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="../reference/p_value.html">p_value()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>glmmTMB</em> models now also works for dispersion models.</li>
+<code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="https://rdrr.io/pkg/parameters/man/standard_error.html">standard_error()</a></code>, <code><a href="https://rdrr.io/pkg/parameters/man/p_value.html">p_value()</a></code> and <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for <em>glmmTMB</em> models now also works for dispersion models.</li>
 </ul>
 </div>
 </div>
@@ -299,8 +299,8 @@
 <ul>
 <li>Fixed issue in <code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> for mixed models.</li>
 <li>Fixed bug for <code>model_parameters.anova(..., eta_squared = "partial")</code> when called with non-mixed models.</li>
-<li>Fixed issue with wrong degrees of freedom in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>gam</em> models.</li>
-<li>Fixed issue with unused arguments in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
+<li>Fixed issue with wrong degrees of freedom in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for <em>gam</em> models.</li>
+<li>Fixed issue with unused arguments in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code>.</li>
 </ul>
 </div>
 </div>
@@ -323,15 +323,15 @@
 <a href="#model_parameters-1" class="anchor"></a>model_parameters()</h3>
 <ul>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> now also transforms standard errors when <code>exponentiate = TRUE</code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> now also transforms standard errors when <code>exponentiate = TRUE</code>.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/lavaan/man/lavTestLRT.html">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> gains a <code>type</code>-argument to compute type-1, type-2 or type-3 sums of squares.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> gains a <code>type</code>-argument to compute type-1, type-2 or type-3 sums of squares.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Bayesian models gains a <code>standardize</code> argument, to return standardized parameters from the posterior distribution.</li>
-<li>Improved <code><a href="../reference/print.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for nested <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> (repeated measurements).</li>
-<li>You can now control whether <code><a href="../reference/demean.html">demean()</a></code> should add attributes to indicate within- and between-effects. This is only relevant for the <code><a href="../reference/print.html">print()</a></code>-method of <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for Bayesian models gains a <code>standardize</code> argument, to return standardized parameters from the posterior distribution.</li>
+<li>Improved <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print()</a></code> method for <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for nested <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> (repeated measurements).</li>
+<li>You can now control whether <code><a href="https://rdrr.io/pkg/parameters/man/demean.html">demean()</a></code> should add attributes to indicate within- and between-effects. This is only relevant for the <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print()</a></code>-method of <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code>.</li>
 </ul>
 </div>
 </div>
@@ -339,7 +339,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> from <em>lmerTest</em> models.</li>
+<li>Fixed <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/lavaan/man/lavTestLRT.html">anova()</a></code> from <em>lmerTest</em> models.</li>
 </ul>
 </div>
 </div>
@@ -351,15 +351,15 @@
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <ul>
-<li>Alias <code>model_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>.</li>
-<li>Alias <code>parameters_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>.</li>
-<li>Alias <code>model_simulate()</code> was removed, please use <code><a href="../reference/simulate_model.html">simulate_model()</a></code>.</li>
-<li>Alias <code>parameters_simulate()</code> was removed, please use <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code>.</li>
-<li>Alias <code>parameters_selection()</code> was removed, please use <code><a href="../reference/select_parameters.html">select_parameters()</a></code>.</li>
-<li>Alias <code>parameters_reduction()</code> was removed, please use <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>.</li>
-<li>Functions <code>DDR()</code>, <code>ICA()</code> and <code>cmds()</code> are no longer exported, as these were intended to be used internally by <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> only.</li>
+<li>Alias <code>model_bootstrap()</code> was removed, please use <code><a href="https://rdrr.io/pkg/parameters/man/bootstrap_model.html">bootstrap_model()</a></code>.</li>
+<li>Alias <code>parameters_bootstrap()</code> was removed, please use <code><a href="https://rdrr.io/pkg/parameters/man/bootstrap_parameters.html">bootstrap_parameters()</a></code>.</li>
+<li>Alias <code>model_simulate()</code> was removed, please use <code><a href="https://rdrr.io/pkg/parameters/man/simulate_model.html">simulate_model()</a></code>.</li>
+<li>Alias <code>parameters_simulate()</code> was removed, please use <code><a href="https://rdrr.io/pkg/parameters/man/simulate_parameters.html">simulate_parameters()</a></code>.</li>
+<li>Alias <code>parameters_selection()</code> was removed, please use <code><a href="https://rdrr.io/pkg/parameters/man/select_parameters.html">select_parameters()</a></code>.</li>
+<li>Alias <code>parameters_reduction()</code> was removed, please use <code><a href="https://rdrr.io/pkg/parameters/man/reduce_parameters.html">reduce_parameters()</a></code>.</li>
+<li>Functions <code>DDR()</code>, <code>ICA()</code> and <code>cmds()</code> are no longer exported, as these were intended to be used internally by <code><a href="https://rdrr.io/pkg/parameters/man/reduce_parameters.html">reduce_parameters()</a></code> only.</li>
 <li>
-<code><a href="../reference/skewness.html">skewness()</a></code> and <code><a href="../reference/skewness.html">kurtosis()</a></code> always return a data frame.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/skewness.html">skewness()</a></code> and <code><a href="https://rdrr.io/pkg/parameters/man/skewness.html">kurtosis()</a></code> always return a data frame.</li>
 </ul>
 </div>
 <div id="new-supported-models-3" class="section level2">
@@ -376,12 +376,12 @@
 <h3 class="hasAnchor">
 <a href="#model_parameters-2" class="anchor"></a>model_parameters()</h3>
 <ul>
-<li>Improved print-method for <code><a href="../reference/model_parameters.stanreg.html">model_parameters.brmsfit()</a></code>.</li>
-<li>Improved print-method for <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> when fitting REWB-Models (see <code><a href="../reference/demean.html">demean()</a></code>).</li>
-<li>Improved efficiency for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) when <code>df_method = "kenward"</code>.</li>
+<li>Improved print-method for <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.stanreg.html">model_parameters.brmsfit()</a></code>.</li>
+<li>Improved print-method for <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.merMod.html">model_parameters.merMod()</a></code> when fitting REWB-Models (see <code><a href="https://rdrr.io/pkg/parameters/man/demean.html">demean()</a></code>).</li>
+<li>Improved efficiency for <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> (for linear mixed models) when <code>df_method = "kenward"</code>.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>p_adjust</code>-argument, to adjust p-values for multiple comparisons.</li>
-<li>Minor improvements for <code><a href="../reference/cluster_analysis.html">cluster_analysis()</a></code> when <code>method = "kmeans"</code> and <code>force = TRUE</code> (factors now also work for kmeans-clustering).</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> gets a <code>p_adjust</code>-argument, to adjust p-values for multiple comparisons.</li>
+<li>Minor improvements for <code><a href="https://rdrr.io/pkg/parameters/man/cluster_analysis.html">cluster_analysis()</a></code> when <code>method = "kmeans"</code> and <code>force = TRUE</code> (factors now also work for kmeans-clustering).</li>
 </ul>
 </div>
 <div id="p_value-ci-and-standard_error" class="section level3">
@@ -389,9 +389,9 @@
 <a href="#p_value-ci-and-standard_error" class="anchor"></a>p_value(), ci() and standard_error()</h3>
 <ul>
 <li>
-<code><a href="../reference/p_value_kenward.html">p_value_kenward()</a></code>, <code><a href="../reference/p_value_kenward.html">se_kenward()</a></code> etc. now give a warning when model was not fitted by REML.</li>
-<li>Added <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code> for <em>lavaan</em> and <em>blavaan</em> objects.</li>
-<li>Added <code><a href="../reference/standard_error.html">standard_error()</a></code> for <em>brmsfit</em> and <em>stanreg</em> objects.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/p_value_kenward.html">p_value_kenward()</a></code>, <code><a href="https://rdrr.io/pkg/parameters/man/p_value_kenward.html">se_kenward()</a></code> etc. now give a warning when model was not fitted by REML.</li>
+<li>Added <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="https://rdrr.io/pkg/parameters/man/standard_error.html">standard_error()</a></code> and <code><a href="https://rdrr.io/pkg/parameters/man/p_value.html">p_value()</a></code> for <em>lavaan</em> and <em>blavaan</em> objects.</li>
+<li>Added <code><a href="https://rdrr.io/pkg/parameters/man/standard_error.html">standard_error()</a></code> for <em>brmsfit</em> and <em>stanreg</em> objects.</li>
 </ul>
 </div>
 <div id="other-changes-1" class="section level3">
@@ -400,10 +400,10 @@
 <ul>
 <li>Run certain tests only locally, to reduce duration of CRAN checks.</li>
 <li>
-<code><a href="../reference/skewness.html">skewness()</a></code>, <code><a href="../reference/skewness.html">kurtosis()</a></code> and <code><a href="../reference/smoothness.html">smoothness()</a></code> get an <code>iteration</code> argument, to set the numbers of bootstrap replicates for computing standard errors.</li>
-<li>Improved print-method for <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/skewness.html">skewness()</a></code>, <code><a href="https://rdrr.io/pkg/parameters/man/skewness.html">kurtosis()</a></code> and <code><a href="https://rdrr.io/pkg/parameters/man/smoothness.html">smoothness()</a></code> get an <code>iteration</code> argument, to set the numbers of bootstrap replicates for computing standard errors.</li>
+<li>Improved print-method for <code><a href="https://rdrr.io/pkg/parameters/man/factor_analysis.html">factor_analysis()</a></code>.</li>
 <li>
-<code><a href="../reference/demean.html">demean()</a></code> now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic <em>panelr</em>-behaviour.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/demean.html">demean()</a></code> now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic <em>panelr</em>-behaviour.</li>
 </ul>
 </div>
 </div>
@@ -411,14 +411,14 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed minor issue with the <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.befa.html">model_parameters.befa()</a></code>.</li>
-<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with wrong order of degrees of freedom when <code>df_method</code> was different from default.</li>
-<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with accuracy of p-values when <code>df_method = "kenward</code>.</li>
-<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with wrong test statistic for <em>lmerModLmerTest</em> models.</li>
-<li>Fixed issue in <code><a href="../reference/format_parameters.html">format_parameters()</a></code> (which is used to format output of <code><a href="../reference/model_parameters.html">model_parameters()</a></code>) for factors, when variable name was also part of factor levels.</li>
+<li>Fixed minor issue with the <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print()</a></code>-method for <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.befa.html">model_parameters.befa()</a></code>.</li>
+<li>Fixed issues in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with wrong order of degrees of freedom when <code>df_method</code> was different from default.</li>
+<li>Fixed issues in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with accuracy of p-values when <code>df_method = "kenward</code>.</li>
+<li>Fixed issues in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> with wrong test statistic for <em>lmerModLmerTest</em> models.</li>
+<li>Fixed issue in <code><a href="https://rdrr.io/pkg/parameters/man/format_parameters.html">format_parameters()</a></code> (which is used to format output of <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code>) for factors, when variable name was also part of factor levels.</li>
 <li>Fixed issue in <code>degrees_of_freedem()</code> for <em>logistf</em>-models, which unintentionally printed the complete model summary.</li>
-<li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>mlm</em> models.</li>
-<li>Fixed issue in <code><a href="../reference/random_parameters.html">random_parameters()</a></code> for uncorrelated random effects.</li>
+<li>Fixed issue in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for <em>mlm</em> models.</li>
+<li>Fixed issue in <code><a href="https://rdrr.io/pkg/parameters/man/random_parameters.html">random_parameters()</a></code> for uncorrelated random effects.</li>
 </ul>
 </div>
 </div>
@@ -431,9 +431,9 @@
 <a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
-<code><a href="../reference/skewness.html">skewness()</a></code> now uses a different method to calculate the skewness by default. Different methods can be selected using the <code>type</code>-argument.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/skewness.html">skewness()</a></code> now uses a different method to calculate the skewness by default. Different methods can be selected using the <code>type</code>-argument.</li>
 <li>
-<code><a href="../reference/skewness.html">kurtosis()</a></code> now uses a different method to calculate the skewness by default. Different methods can be selected using the <code>type</code>-argument.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/skewness.html">kurtosis()</a></code> now uses a different method to calculate the skewness by default. Different methods can be selected using the <code>type</code>-argument.</li>
 </ul>
 </div>
 <div id="new-supported-models-4" class="section level2">
@@ -448,10 +448,10 @@
 <a href="#general-2" class="anchor"></a>General</h2>
 <ul>
 <li>Added new vignettes on ‘Standardized Model Parameters’ and ‘Robust Estimation of Standard Errors’, and vignettes are now also published on CRAN.</li>
-<li>Improved handling of robust statistics in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. This should now work for more models than before.</li>
-<li>Improved accuracy of <code><a href="../reference/ci.merMod.html">ci.merMod()</a></code> for <code>method = "satterthwaite"</code> and <code>method = "kenward"</code>.</li>
+<li>Improved handling of robust statistics in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code>. This should now work for more models than before.</li>
+<li>Improved accuracy of <code><a href="https://rdrr.io/pkg/parameters/man/ci.merMod.html">ci.merMod()</a></code> for <code>method = "satterthwaite"</code> and <code>method = "kenward"</code>.</li>
 <li>
-<code><a href="../reference/select_parameters.html">select_parameters()</a></code> for <em>stanreg</em> models, which was temporarily removed due to the CRAN removal of package <strong>projpred</strong>, is now re-implemented.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/select_parameters.html">select_parameters()</a></code> for <em>stanreg</em> models, which was temporarily removed due to the CRAN removal of package <strong>projpred</strong>, is now re-implemented.</li>
 </ul>
 </div>
 <div id="new-functions-1" class="section level2">
@@ -459,13 +459,13 @@
 <a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>
-<code><a href="../reference/p_value_betwithin.html">dof_betwithin()</a></code> to compute degrees of freedom based on a between-within approximation method (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for this method were added as well).</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/p_value_betwithin.html">dof_betwithin()</a></code> to compute degrees of freedom based on a between-within approximation method (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for this method were added as well).</li>
 <li>
-<code><a href="../reference/random_parameters.html">random_parameters()</a></code> that returns information about the random effects such as variances, R2 or ICC.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/random_parameters.html">random_parameters()</a></code> that returns information about the random effects such as variances, R2 or ICC.</li>
 <li>
-<code><a href="../reference/principal_components.html">closest_component()</a></code> as a small helper that returns the component index for each variable in a data frame that was used in <code><a href="../reference/principal_components.html">principal_components()</a></code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/principal_components.html">closest_component()</a></code> as a small helper that returns the component index for each variable in a data frame that was used in <code><a href="https://rdrr.io/pkg/parameters/man/principal_components.html">principal_components()</a></code>.</li>
 <li>
-<code><a href="../reference/get_scores.html">get_scores()</a></code> as a small helper to extract scales and calculate sum scores from a principal component analysis (PCA, <code><a href="../reference/principal_components.html">principal_components()</a></code>).</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/get_scores.html">get_scores()</a></code> as a small helper to extract scales and calculate sum scores from a principal component analysis (PCA, <code><a href="https://rdrr.io/pkg/parameters/man/principal_components.html">principal_components()</a></code>).</li>
 </ul>
 </div>
 <div id="changes-to-functions-4" class="section level2">
@@ -473,34 +473,34 @@
 <a href="#changes-to-functions-4" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
-<code><a href="../reference/n_clusters.html">n_clusters()</a></code> gets the option <code>"M3C"</code> for the <code>package</code>-argument, so you can try to determine the number of cluster by using the <code>M3C::M3C()</code> function.</li>
-<li>The <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>select</code>-argument, to print only selected columns of the parameters table.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/n_clusters.html">n_clusters()</a></code> gets the option <code>"M3C"</code> for the <code>package</code>-argument, so you can try to determine the number of cluster by using the <code>M3C::M3C()</code> function.</li>
+<li>The <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print()</a></code>-method for <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> gets a <code>select</code>-argument, to print only selected columns of the parameters table.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for meta-analysis models has an improved <code><a href="../reference/print.html">print()</a></code>-method for subgroups (see examples in <code><a href="../reference/model_parameters.rma.html">?model_parameters.rma</a></code>).</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for meta-analysis models has an improved <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print()</a></code>-method for subgroups (see examples in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.rma.html">?model_parameters.rma</a></code>).</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models gets a <code>details</code>-argument to additionally print information about the random effects.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for mixed models gets a <code>details</code>-argument to additionally print information about the random effects.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> now accepts the <code>df_method</code>-argument for more (mixed) models.</li>
-<li>The Intercept-parameter in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for meta-analysis models was renamed to <code>"Overall"</code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> now accepts the <code>df_method</code>-argument for more (mixed) models.</li>
+<li>The Intercept-parameter in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for meta-analysis models was renamed to <code>"Overall"</code>.</li>
 <li>
-<code><a href="../reference/skewness.html">skewness()</a></code> gets a <code>type</code>-argument, to compute different types of skewness.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/skewness.html">skewness()</a></code> gets a <code>type</code>-argument, to compute different types of skewness.</li>
 <li>
-<code><a href="../reference/skewness.html">kurtosis()</a></code> gets a <code>type</code>-argument, to compute different types of skewness.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/skewness.html">kurtosis()</a></code> gets a <code>type</code>-argument, to compute different types of skewness.</li>
 <li>
-<code><a href="../reference/describe_distribution.html">describe_distribution()</a></code> now also works on data frames and gets a nicer print-method.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/describe_distribution.html">describe_distribution()</a></code> now also works on data frames and gets a nicer print-method.</li>
 </ul>
 </div>
 <div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when <code>robust = TRUE</code>, which could sometimes mess up order of the statistic column.</li>
-<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with wrong <code>df</code> for <code>lme</code>-models.</li>
-<li>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> when <code>df_method</code> was not set to default.</li>
-<li>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> and <code>model_parameters.gee()</code> when <code>robust = TRUE</code>.</li>
+<li>Fixed issue in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> when <code>robust = TRUE</code>, which could sometimes mess up order of the statistic column.</li>
+<li>Fixed issues in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> with wrong <code>df</code> for <code>lme</code>-models.</li>
+<li>Fixed issues in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.merMod.html">model_parameters.merMod()</a></code> when <code>df_method</code> was not set to default.</li>
+<li>Fixed issues in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.merMod.html">model_parameters.merMod()</a></code> and <code>model_parameters.gee()</code> when <code>robust = TRUE</code>.</li>
 <li>Fixed issues with <em>coxph</em> models with only one parameter.</li>
-<li>Fixed issue in <code><a href="../reference/format_p.html">format_p()</a></code> when argument <code>digits</code> was <code>"apa"</code>.</li>
-<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>zeroinfl</code>-models.</li>
+<li>Fixed issue in <code><a href="https://rdrr.io/pkg/parameters/man/format_p.html">format_p()</a></code> when argument <code>digits</code> was <code>"apa"</code>.</li>
+<li>Fixed issues in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for <code>zeroinfl</code>-models.</li>
 </ul>
 </div>
 </div>
@@ -524,9 +524,9 @@
 <h2 class="hasAnchor">
 <a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
-<li>The column for degrees of freedom in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> was renamed from <code>df_residuals</code> to <code>df_error</code> for regression model objects, because these degrees of freedom actually were not always referring to <em>residuals</em> - we consider <code>df_error</code> as a more generic name.</li>
+<li>The column for degrees of freedom in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> was renamed from <code>df_residuals</code> to <code>df_error</code> for regression model objects, because these degrees of freedom actually were not always referring to <em>residuals</em> - we consider <code>df_error</code> as a more generic name.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for standardized parameters (i.e. <code>standardize</code> is not <code>NULL</code>) only returns standardized coefficients, CI and standard errors (and not both, unstandardized and standardized values).</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for standardized parameters (i.e. <code>standardize</code> is not <code>NULL</code>) only returns standardized coefficients, CI and standard errors (and not both, unstandardized and standardized values).</li>
 <li>
 <code>format_ci()</code> was removed and re-implemented in the <strong>insight</strong> package.</li>
 </ul>
@@ -536,17 +536,17 @@
 <a href="#renaming" class="anchor"></a>Renaming</h2>
 <ul>
 <li>
-<code>model_bootstrap()</code> was renamed to <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>. <code>model_bootstrap()</code> will remain as alias.</li>
+<code>model_bootstrap()</code> was renamed to <code><a href="https://rdrr.io/pkg/parameters/man/bootstrap_model.html">bootstrap_model()</a></code>. <code>model_bootstrap()</code> will remain as alias.</li>
 <li>
-<code>parameters_bootstrap()</code> was renamed to <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>. <code>parameters_bootstrap()</code> will remain as alias.</li>
+<code>parameters_bootstrap()</code> was renamed to <code><a href="https://rdrr.io/pkg/parameters/man/bootstrap_parameters.html">bootstrap_parameters()</a></code>. <code>parameters_bootstrap()</code> will remain as alias.</li>
 <li>
-<code>model_simulate()</code> was renamed to <code><a href="../reference/simulate_model.html">simulate_model()</a></code>. <code>model_simulate()</code> will remain as alias.</li>
+<code>model_simulate()</code> was renamed to <code><a href="https://rdrr.io/pkg/parameters/man/simulate_model.html">simulate_model()</a></code>. <code>model_simulate()</code> will remain as alias.</li>
 <li>
-<code>parameters_simulate()</code> was renamed to <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code>. <code>parameters_simulate()</code> will remain as alias.</li>
+<code>parameters_simulate()</code> was renamed to <code><a href="https://rdrr.io/pkg/parameters/man/simulate_parameters.html">simulate_parameters()</a></code>. <code>parameters_simulate()</code> will remain as alias.</li>
 <li>
-<code>parameters_selection()</code> was renamed to <code><a href="../reference/select_parameters.html">select_parameters()</a></code>. <code>parameters_selection()</code> will remain as alias.</li>
+<code>parameters_selection()</code> was renamed to <code><a href="https://rdrr.io/pkg/parameters/man/select_parameters.html">select_parameters()</a></code>. <code>parameters_selection()</code> will remain as alias.</li>
 <li>
-<code>parameters_reduction()</code> was renamed to <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>. <code>parameters_reduction()</code> will remain as alias.</li>
+<code>parameters_reduction()</code> was renamed to <code><a href="https://rdrr.io/pkg/parameters/man/reduce_parameters.html">reduce_parameters()</a></code>. <code>parameters_reduction()</code> will remain as alias.</li>
 </ul>
 </div>
 <div id="new-supported-models-5" class="section level2">
@@ -555,7 +555,7 @@
 <ul>
 <li>Added support for <code>vgam</code> (<em>VGAM</em>), <code>cgam</code>, <code>cgamm</code> (<em>cgam</em>), <code>complmrob</code> (<em>complmrob</em>), <code>cpglm</code>, <code>cpglmm</code> (<em>cplm</em>), <code>fixest</code> (<em>fixest</em>), <code>feglm</code> (<em>alpaca</em>), <code>glmx</code> (<em>glmx</em>), <code>glmmadmb</code> (<em>glmmADMB</em>), <code>mcmc</code> (<em>coda</em>), <code>mixor</code> (<em>mixor</em>).</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> now supports <code>blavaan</code> models (<em>blavaan</em>).</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> now supports <code>blavaan</code> models (<em>blavaan</em>).</li>
 </ul>
 </div>
 <div id="general-3" class="section level2">
@@ -571,30 +571,30 @@
 <a href="#new-functions-2" class="anchor"></a>New functions</h2>
 <ul>
 <li>
-<code><a href="../reference/p_value_satterthwaite.html">dof_satterthwaite()</a></code> and <code><a href="../reference/p_value_ml1.html">dof_ml1()</a></code> to compute degrees of freedom based on different approximation methods (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for these methods were added as well).</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/p_value_satterthwaite.html">dof_satterthwaite()</a></code> and <code><a href="https://rdrr.io/pkg/parameters/man/p_value_ml1.html">dof_ml1()</a></code> to compute degrees of freedom based on different approximation methods (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for these methods were added as well).</li>
 <li>
-<code><a href="../reference/rescale_weights.html">rescale_weights()</a></code> to rescale design (probability or sampling) weights for use in multilevel-models without survey-design.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/rescale_weights.html">rescale_weights()</a></code> to rescale design (probability or sampling) weights for use in multilevel-models without survey-design.</li>
 </ul>
 </div>
 <div id="changes-to-functions-5" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-5" class="anchor"></a>Changes to functions</h2>
 <ul>
-<li>Robust estimation (like <code><a href="../reference/standard_error_robust.html">standard_error_robust()</a></code> or <code><a href="../reference/standard_error_robust.html">ci_robust()</a></code>) can now also compute cluster-robust variance-covariance matrices, using the <em>clubSandwich</em> package.</li>
+<li>Robust estimation (like <code><a href="https://rdrr.io/pkg/parameters/man/standard_error_robust.html">standard_error_robust()</a></code> or <code><a href="https://rdrr.io/pkg/parameters/man/standard_error_robust.html">ci_robust()</a></code>) can now also compute cluster-robust variance-covariance matrices, using the <em>clubSandwich</em> package.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>robust</code>-argument, to compute robust standard errors, and confidence intervals and p-values based on robust standard errors.</li>
-<li>Arguments <code>p_method</code> and <code>ci_method</code> in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> were replaced by a single argument <code>df_method</code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> gets a <code>robust</code>-argument, to compute robust standard errors, and confidence intervals and p-values based on robust standard errors.</li>
+<li>Arguments <code>p_method</code> and <code>ci_method</code> in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.merMod.html">model_parameters.merMod()</a></code> were replaced by a single argument <code>df_method</code>.</li>
 <li>
-<code><a href="../reference/model_parameters.principal.html">model_parameters.principal()</a></code> includes a <code>MSA</code> column for objects from <code><a href="../reference/principal_components.html">principal_components()</a></code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.principal.html">model_parameters.principal()</a></code> includes a <code>MSA</code> column for objects from <code><a href="https://rdrr.io/pkg/parameters/man/principal_components.html">principal_components()</a></code>.</li>
 </ul>
 </div>
 <div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with non-typical ordering of coefficients for mixed models.</li>
+<li>Fixed issue in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> with non-typical ordering of coefficients for mixed models.</li>
 <li>Fixed issues with models of class <code>rlmerMod</code>.</li>
-<li>Fixed minor issues <code><a href="../reference/model_parameters.BFBayesFactor.html">model_parameters.BFBayesFactor()</a></code>.</li>
+<li>Fixed minor issues <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.BFBayesFactor.html">model_parameters.BFBayesFactor()</a></code>.</li>
 </ul>
 </div>
 </div>
@@ -607,7 +607,7 @@
 <a href="#breaking-changes-3" class="anchor"></a>Breaking changes</h2>
 <p>Parts of the <strong>parameter</strong> package are restructured and functions focussing on anything related to effect sizes are now re-implemented in a new package, <a href="https://github.com/easystats/effectsize"><strong>effectsize</strong></a>. In details, following breaking changes have been made:</p>
 <ul>
-<li>Functions for computing effect sizes (<code>cohens_f()</code>, <code>eta_squared()</code> etc.) have been removed and are now re-implemented in the <strong>effectsize</strong>-package.</li>
+<li>Functions for computing effect sizes (<code><a href="https://rdrr.io/pkg/sjstats/man/r2.html">cohens_f()</a></code>, <code>eta_squared()</code> etc.) have been removed and are now re-implemented in the <strong>effectsize</strong>-package.</li>
 <li>Functions for converting effect sizes (<code>d_to_odds()</code> etc.) have been removed and are now re-implemented in the <strong>effectsize</strong>-package.</li>
 <li>
 <code>standardize()</code> and <code>normalize()</code> (and hence, also <code>parameters_standardize()</code>) have been removed ;-( and are now re-implemented in the <strong>effectsize</strong>-package.</li>
@@ -619,9 +619,9 @@
 <ul>
 <li>Added support for <code>aareg</code> (<em>survival</em>), <code>bracl</code>, <code>brmultinom</code> (<em>brglm2</em>), <code>rma</code> (<em>metafor</em>) and <code>multinom</code> (<em>nnet</em>) to various functions.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>kmeans</code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for <code>kmeans</code>.</li>
 <li>
-<code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support <em>flexsurvreg</em> models (from package <strong>flexsurv</strong>).</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="https://rdrr.io/pkg/parameters/man/standard_error.html">standard_error()</a></code> and <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> now support <em>flexsurvreg</em> models (from package <strong>flexsurv</strong>).</li>
 </ul>
 </div>
 <div id="new-functions-3" class="section level2">
@@ -629,52 +629,52 @@
 <a href="#new-functions-3" class="anchor"></a>New functions</h2>
 <ul>
 <li>
-<code><a href="../reference/degrees_of_freedom.html">degrees_of_freedom()</a></code> to get DoFs.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/degrees_of_freedom.html">degrees_of_freedom()</a></code> to get DoFs.</li>
 <li>
-<code><a href="../reference/standard_error_robust.html">p_value_robust()</a></code>, <code><a href="../reference/standard_error_robust.html">ci_robust()</a></code> and <code><a href="../reference/standard_error_robust.html">standard_error_robust()</a></code> to compute robust standard errors, and p-values or confidence intervals based on robust standard errors.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/standard_error_robust.html">p_value_robust()</a></code>, <code><a href="https://rdrr.io/pkg/parameters/man/standard_error_robust.html">ci_robust()</a></code> and <code><a href="https://rdrr.io/pkg/parameters/man/standard_error_robust.html">standard_error_robust()</a></code> to compute robust standard errors, and p-values or confidence intervals based on robust standard errors.</li>
 <li>
-<code><a href="../reference/demean.html">demean()</a></code> to calculate de-meaned and group-meaned variables (centering within groups, for panel-data regression).</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/demean.html">demean()</a></code> to calculate de-meaned and group-meaned variables (centering within groups, for panel-data regression).</li>
 <li>
-<code><a href="../reference/n_parameters.html">n_parameters()</a></code> to get number of parameters.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/n_parameters.html">n_parameters()</a></code> to get number of parameters.</li>
 <li>
-<code><a href="../reference/n_clusters.html">n_clusters()</a></code> to determine the number of clusters to extract.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/n_clusters.html">n_clusters()</a></code> to determine the number of clusters to extract.</li>
 <li>
-<code><a href="../reference/cluster_analysis.html">cluster_analysis()</a></code> to return group indices based on cluster analysis.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/cluster_analysis.html">cluster_analysis()</a></code> to return group indices based on cluster analysis.</li>
 <li>
-<code><a href="../reference/cluster_discrimination.html">cluster_discrimination()</a></code> to determine the goodness of classification of cluster groups.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/cluster_discrimination.html">cluster_discrimination()</a></code> to determine the goodness of classification of cluster groups.</li>
 <li>
-<code><a href="../reference/check_clusterstructure.html">check_clusterstructure()</a></code> to check the suitability of data for clustering.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/check_clusterstructure.html">check_clusterstructure()</a></code> to check the suitability of data for clustering.</li>
 <li>
-<code><a href="../reference/check_multimodal.html">check_multimodal()</a></code> to check if a distribution is unimodal or multimodal.</li>
-<li>Add <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code>-methods for <code><a href="../reference/principal_components.html">principal_components()</a></code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/check_multimodal.html">check_multimodal()</a></code> to check if a distribution is unimodal or multimodal.</li>
+<li>Add <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-methods for <code><a href="https://rdrr.io/pkg/parameters/man/principal_components.html">principal_components()</a></code>.</li>
 </ul>
 </div>
 <div id="changes-to-functions-6" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-6" class="anchor"></a>Changes to functions</h2>
 <ul>
-<li>Added indices of model fit to <code><a href="../reference/n_factors.html">n_factors()</a></code> (<a href="https://doi.org/10.1177/0013164419865769">Finch, 2019</a>)</li>
+<li>Added indices of model fit to <code><a href="https://rdrr.io/pkg/parameters/man/n_factors.html">n_factors()</a></code> (<a href="https://doi.org/10.1177/0013164419865769">Finch, 2019</a>)</li>
 <li>
-<code><a href="../reference/standard_error.html">standard_error()</a></code> for mixed models gets an <code>effects</code> argument, to return standard errors for random effects.</li>
-<li>The <code>method</code>-argument for <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code> gets a new option, <code>"robust"</code>, to compute confidence intervals based on robust standard errors. Furthermore, <code><a href="../reference/p_value_wald.html">ci_wald()</a></code> gets a <code>robust</code>-argument to do the same.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/standard_error.html">standard_error()</a></code> for mixed models gets an <code>effects</code> argument, to return standard errors for random effects.</li>
+<li>The <code>method</code>-argument for <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code> gets a new option, <code>"robust"</code>, to compute confidence intervals based on robust standard errors. Furthermore, <code><a href="https://rdrr.io/pkg/parameters/man/p_value_wald.html">ci_wald()</a></code> gets a <code>robust</code>-argument to do the same.</li>
 <li>
-<code><a href="../reference/format_p.html">format_p()</a></code> gets a <code>digits</code>-argument to set the amount of digits for p-values.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/format_p.html">format_p()</a></code> gets a <code>digits</code>-argument to set the amount of digits for p-values.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> now accepts (non-documented) arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> to change the amount and style of formatting values. See <a href="https://easystats.github.io/parameters/reference/model_parameters.lm.html">examples in <code>model_parameters.lm()</code></a>.</li>
-<li>Improved <code><a href="../reference/print.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when used with Bayesian models.</li>
-<li>Added further method (gap-statistic) to <code><a href="../reference/n_clusters.html">n_clusters()</a></code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> now accepts (non-documented) arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> to change the amount and style of formatting values. See <a href="https://easystats.github.io/parameters/reference/model_parameters.lm.html">examples in <code>model_parameters.lm()</code></a>.</li>
+<li>Improved <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print()</a></code> method for <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> when used with Bayesian models.</li>
+<li>Added further method (gap-statistic) to <code><a href="https://rdrr.io/pkg/parameters/man/n_clusters.html">n_clusters()</a></code>.</li>
 </ul>
 </div>
 <div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Interaction terms in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
-<li>Fixed bug in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when a parameter occured multiple times in a model.</li>
+<li>Interaction terms in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
+<li>Fixed bug in <code><a href="https://rdrr.io/pkg/parameters/man/parameters_type.html">parameters_type()</a></code> when a parameter occured multiple times in a model.</li>
 <li>Fixed bug with <em>multinom</em>-support.</li>
-<li>Fixed bug in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for non-estimable GLMs.</li>
-<li>Fixed bug in <code><a href="../reference/p_value.html">p_value()</a></code> for <em>MASS::rlm</em> models.</li>
-<li>Fixed bug in <code><a href="../reference/reshape_loadings.html">reshape_loadings()</a></code> when converting loadings from wide to long and back again.</li>
+<li>Fixed bug in <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> for non-estimable GLMs.</li>
+<li>Fixed bug in <code><a href="https://rdrr.io/pkg/parameters/man/p_value.html">p_value()</a></code> for <em>MASS::rlm</em> models.</li>
+<li>Fixed bug in <code><a href="https://rdrr.io/pkg/parameters/man/reshape_loadings.html">reshape_loadings()</a></code> when converting loadings from wide to long and back again.</li>
 </ul>
 </div>
 </div>
@@ -695,9 +695,9 @@
 <a href="#general-4" class="anchor"></a>General</h2>
 <ul>
 <li>
-<code><a href="../reference/model_parameters.html">parameters()</a></code> is an alias for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">parameters()</a></code> is an alias for <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code>.</li>
 <li>
-<code><a href="../reference/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code>standardize()</code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now support many more model objects, including mixed models from packages <em>nlme</em>, <em>glmmTMB</em> or <em>GLMMadaptive</em>, zero-inflated models from package <em>pscl</em> or other modelling packages. Along with these changes, functions for specific model objects with zero-inflated component get a <code>component</code>-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/p_value.html">p_value()</a></code>, <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="https://rdrr.io/pkg/parameters/man/standard_error.html">standard_error()</a></code>, <code>standardize()</code> and <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> now support many more model objects, including mixed models from packages <em>nlme</em>, <em>glmmTMB</em> or <em>GLMMadaptive</em>, zero-inflated models from package <em>pscl</em> or other modelling packages. Along with these changes, functions for specific model objects with zero-inflated component get a <code>component</code>-argument to return the requested values for the complete model, the conditional (count) component or the zero-inflation component from the model only.</li>
 </ul>
 </div>
 <div id="new-functions-4" class="section level2">
@@ -707,11 +707,11 @@
 <li>
 <code>parameters_simulate()</code> and <code>model_simulate()</code>, as computational faster alternatives to <code>parameters_bootstrap()</code> and <code>model_bootstrap()</code>.</li>
 <li>
-<code><a href="../reference/data_partition.html">data_partition()</a></code> to partition data into a test and a training set.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/data_partition.html">data_partition()</a></code> to partition data into a test and a training set.</li>
 <li>
-<code><a href="../reference/standardize_names.html">standardize_names()</a></code> to standardize column names from data frames, in particular objects returned from <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/standardize_names.html">standardize_names()</a></code> to standardize column names from data frames, in particular objects returned from <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code>.</li>
 <li>
-<code><a href="../reference/p_value_kenward.html">se_kenward()</a></code> to calculate approximated standard errors for model parameters, based on the Kenward-Roger (1997) approach.</li>
+<code><a href="https://rdrr.io/pkg/parameters/man/p_value_kenward.html">se_kenward()</a></code> to calculate approximated standard errors for model parameters, based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
 <div id="changes-to-functions-7" class="section level2">
@@ -723,11 +723,11 @@
 <li>
 <code>format_ci()</code> gets a <code>bracket</code>-argument include or remove brackets around the ci-values.</li>
 <li>
-<code>eta_squared()</code>, <code>omega_squared()</code>, <code>epsilon_squared()</code> and <code>cohens_f()</code> now support more model objects.</li>
-<li>The <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now better aligns confidence intervals and p-values.</li>
+<code>eta_squared()</code>, <code>omega_squared()</code>, <code>epsilon_squared()</code> and <code><a href="https://rdrr.io/pkg/sjstats/man/r2.html">cohens_f()</a></code> now support more model objects.</li>
+<li>The <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print()</a></code>-method for <code><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">model_parameters()</a></code> now better aligns confidence intervals and p-values.</li>
 <li>
 <code>normalize()</code> gets a <code>include_bounds</code>-argument, to compress normalized variables so they do not contain zeros or ones.</li>
-<li>The <code>method</code>-argument for <code><a href="../reference/ci.merMod.html">ci.merMod()</a></code> can now also be <code>"kenward"</code> to compute confidence intervals with degrees of freedom based on the Kenward-Roger (1997) approach.</li>
+<li>The <code>method</code>-argument for <code><a href="https://rdrr.io/pkg/parameters/man/ci.merMod.html">ci.merMod()</a></code> can now also be <code>"kenward"</code> to compute confidence intervals with degrees of freedom based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
 <div id="bug-fixes-9" class="section level2">
@@ -735,7 +735,7 @@
 <a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue with wrong computation of wald-approximated confidence intervals.</li>
-<li>Fixed issue with wrong computation of degrees of freedom for <code><a href="../reference/p_value_kenward.html">p_value_kenward()</a></code>.</li>
+<li>Fixed issue with wrong computation of degrees of freedom for <code><a href="https://rdrr.io/pkg/parameters/man/p_value_kenward.html">p_value_kenward()</a></code>.</li>
 <li>
 <code>paramerers_standardize()</code> resp. <code>standardize()</code> for model objects now no longer standardizes <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> terms, count or ratio response variables, or variables of class <code>Surv</code> and <code>AsIs</code>.</li>
 </ul>
