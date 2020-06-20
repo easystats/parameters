@@ -370,6 +370,8 @@ The "simple" linear slope of the between-effect (and also from the within-effect
 
 Whenever group size is imbalanced, the "simple" linear slope will be adjusted. This leads to different estimates for between-effects between classical and mixed models regressions due to shrinkage - i.e. for larger variation of group sizes we find stronger regularization of estimates.
 
+Hence, for mixed models with larger differences in number of observation per random effects group, the between-effect will differ from the between-effect calculated by "classical" regression models. However, this shrinkage is a desired property of mixed models and usually improves the estimates.
+
 ```{r}
 set.seed(123)
 n <- 5
