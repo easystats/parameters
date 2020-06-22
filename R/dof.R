@@ -80,6 +80,10 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
     dof <- .degrees_of_freedom_fit(model)
   }
 
+  if (!is.null(dof) && length(dof) > 0 && all(dof == 0)) {
+    warning("Model has zero degrees of freedom!", call. = FALSE)
+  }
+
   dof
 }
 

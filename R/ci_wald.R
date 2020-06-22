@@ -26,6 +26,10 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
 #' @keywords internal
 .ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, method = "wald", se = NULL, ...) {
   params <- insight::get_parameters(model, effects = effects, component = component)
+
+  # check if all estimates are non-NA
+  params <- .check_rank_deficiency(params, verbose = FALSE)
+
   estimates <- params$Estimate
   method <- tolower(method)
 
@@ -60,7 +64,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
   }
 
   alpha <- (1 + ci) / 2
-  fac <- stats::qt(alpha, df = dof)
+  fac <- suppressWarnings(stats::qt(alpha, df = dof))
   out <- cbind(
     CI_low = estimates - se * fac,
     CI_high = estimates + se * fac
