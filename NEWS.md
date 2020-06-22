@@ -7,6 +7,7 @@
 ## Bug fixes
 
 * Fix CRAN check issues.
+* Fix issue in `model_parameters()` for models with non-estimable parameters or statistics.
 
 # parameters 0.8.0
 
