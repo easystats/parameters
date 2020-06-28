@@ -95,6 +95,7 @@ Suggests:
     metafor,
     mfx,
     mgcv,
+    multcomp,
     multimode,
     MuMIn,
     M3C,

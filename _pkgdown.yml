@@ -30,6 +30,7 @@ reference:
   - model_parameters.BFBayesFactor
   - model_parameters.rma
   - model_parameters.htest
+  - model_parameters.glht
   - print.parameters_model
 
 - title: "Standard Errors, Confidence Intervals and p-values"

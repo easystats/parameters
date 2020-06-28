@@ -15,6 +15,7 @@
 #'  \item{\link[=model_parameters.lavaan]{CFA and SEM} (\pkg{lavaan}, \pkg{blavaan})}
 #'  \item{\link[=model_parameters.kmeans]{Cluster models} (k-means, ...)}
 #'  \item{\link[=model_parameters.rma]{Meta-Analysis via linear (mixed) models} (\code{rma})}
+#'  \item{\link[=model_parameters.glht]{Hypothesis Testing} (\code{glht})}
 #'  }
 #'
 #' @param model Statistical Model.
