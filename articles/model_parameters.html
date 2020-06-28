@@ -113,7 +113,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="model_parameters_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Summary of Model Parameters</h1>
@@ -328,12 +328,12 @@
 </pre></div>
 <pre><code>#&gt; # Fixed effects 
 #&gt; 
-#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat | ESS |               Prior
-#&gt; -----------------------------------------------------------------------------------------------
-#&gt; (Intercept) |  52.62 | [ 41.85, 61.56] |   100% |        0% | 1.013 | 154 | Normal (0 +- 60.27)
-#&gt; wt          |  -8.25 | [-11.40, -3.92] |   100% |     0.20% | 1.008 | 151 | Normal (0 +- 15.40)
-#&gt; cyl         |  -3.54 | [ -5.17, -2.12] |   100% |     0.20% | 1.012 | 171 |  Normal (0 +- 8.44)
-#&gt; wt:cyl      |   0.74 | [  0.13,  1.19] | 98.80% |    34.00% | 1.010 | 149 |  Normal (0 +- 1.36)</code></pre>
+#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat |    ESS |               Prior
+#&gt; --------------------------------------------------------------------------------------------------
+#&gt; (Intercept) |  52.62 | [ 41.85, 61.56] |   100% |        0% | 1.013 | 153.65 | Normal (0 +- 60.27)
+#&gt; wt          |  -8.25 | [-11.40, -3.92] |   100% |     0.20% | 1.008 | 151.29 | Normal (0 +- 15.40)
+#&gt; cyl         |  -3.54 | [ -5.17, -2.12] |   100% |     0.20% | 1.012 | 171.19 |  Normal (0 +- 8.44)
+#&gt; wt:cyl      |   0.74 | [  0.13,  1.19] | 98.80% |    34.00% | 1.010 | 149.22 |  Normal (0 +- 1.36)</code></pre>
 <p>… as well as for (more complex) models from the <strong>brms</strong> package. For more complex models, other model components can be printed using the arguments <code>effects</code> and <code>component</code> arguments.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/paul-buerkner/brms">brms</a></span>)
