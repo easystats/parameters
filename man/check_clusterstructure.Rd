@@ -11,7 +11,7 @@ check_clusterstructure(x, standardize = TRUE, distance = "euclidean", ...)
 
 \item{standardize}{Standardize the dataframe before clustering (default).}
 
-\item{distance}{Distance method used. Other methods than "euclidean" (default) are exploratory in the context of clustering tendency. See \code{\link{dist}} for list of available methods.}
+\item{distance}{Distance method used. Other methods than "euclidean" (default) are exploratory in the context of clustering tendency. See \code{\link[stats:dist]{dist()}} for list of available methods.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

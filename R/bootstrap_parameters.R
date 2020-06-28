@@ -15,7 +15,7 @@
 #'
 #' @details This function first calls \code{\link{bootstrap_model}} to generate
 #'   bootstrapped coefficients. The resulting replicated for each coefficient
-#'   are treated as "distribution", and is passed to \code{\link[bayestestR]{describe_posterior}}
+#'   are treated as "distribution", and is passed to \code{\link[bayestestR:describe_posterior]{describe_posterior()}}
 #'   to calculate the related indices defined in the \code{"test"} argument.
 #'
 #' @examples

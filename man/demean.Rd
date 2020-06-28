@@ -135,7 +135,7 @@ A data frame with the group-/de-meaned variables, which get the suffix
     between-effects. A classical approach is to simply use the product
     term of the de-meaned variables (i.e. introducing the de-meaned variables
     as interaction term in the model formula, e.g. \code{y ~ x_within * time_within}).
-    This approach, however, might be subject to bias (see \cite{Giesselmann & Schmidt-Catran 2018}).
+    This approach, however, might be subject to bias (see \cite{Giesselmann & Schmidt-Catran 2020}).
     \cr \cr
     Another option is to first calculate the product term and then apply the
     de-meaning to it. This approach produces an estimator \dQuote{that reflects
@@ -186,7 +186,7 @@ demean(dat, select = c("a", "x*y"), group = "ID")
   \item Bell A, Fairbrother M, Jones K. 2019. Fixed and Random Effects Models: Making an Informed Choice. Quality & Quantity (53); 1051-1074
   \item Bell A, Jones K. 2015. Explaining Fixed Effects: Random Effects Modeling of Time-Series Cross-Sectional and Panel Data. Political Science Research and Methods, 3(1), 133–153.
   \item Gelman A, Hill J. 2007. Data Analysis Using Regression and Multilevel/Hierarchical Models. Analytical Methods for Social Research. Cambridge, New York: Cambridge University Press
-  \item Giesselmann M, Schmidt-Catran A. 2018. Interactions in fixed effects regression models (Discussion Papers of DIW Berlin No. 1748). DIW Berlin, German Institute for Economic Research. Retrieved from https://ideas.repec.org/p/diw/diwwpp/dp1748.html
+  \item Giesselmann M, Schmidt-Catran, AW. 2020. Interactions in fixed effects regression models. Sociological Methods & Research, 1–28. https://doi.org/10.1177/0049124120914934
   \item Heisig JP, Schaeffer M, Giesecke J. 2017. The Costs of Simplicity: Why Multilevel Models May Benefit from Accounting for Cross-Cluster Differences in the Effects of Controls. American Sociological Review 82 (4): 796–827.
   \item Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
 }

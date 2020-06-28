@@ -24,7 +24,6 @@ Parameters from Hypothesis Testing.
 \examples{
 \donttest{
 if (require("multcomp")) {
-  library(multcomp)
   # multiple linear model, swiss data
   lmod <- lm(Fertility ~ ., data = swiss)
   mod <- glht(
