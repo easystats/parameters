@@ -167,7 +167,7 @@ model_parameters(model)
 
 </p>
 
-[`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html)
+[`select_parameters()`](https://easystats.github.io/parameters/articles/parameters_selection.html)
 can help you quickly select and retain the most relevant predictors
 using methods tailored for the model type.
 

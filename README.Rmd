@@ -123,7 +123,7 @@ model_parameters(model)
 
 <p><img src='man/figures/figure2.png' align="center" /></p>
  
-[`parameters_selection()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can help you quickly select and retain the most relevant predictors using methods tailored for the model type.
+[`select_parameters()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can help you quickly select and retain the most relevant predictors using methods tailored for the model type.
 
 ```{r, warning=FALSE, message=FALSE}
 library(dplyr)
