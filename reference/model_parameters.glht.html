@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model Parameters — model_parameters • parameters</title>
+<title>Parameters from Hypothesis Testing — model_parameters.glht • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,24 +46,8 @@
 
 
 
-<meta property="og:title" content="Model Parameters — model_parameters" />
-<meta property="og:description" content="Compute and extract model parameters. See the documentation for your object's class:
-Correlations and t-tests
-ANOVAs
-Regression models (lm, glm, survey, ...)
-Additive models (gam, gamm, ...)
-Zero-inflated models (hurdle, zeroinfl, zerocount)
-Multinomial, ordinal and cumulative link models (bracl, multinom, mlm, ...)
-Mixed models (lme4, nlme, glmmTMB, ...)
-Bayesian tests (BayesFactor)
-Bayesian models (rstanarm, brms, MCMCglmm, ...)
-PCA and FA (psych)
-CFA and SEM (lavaan, blavaan)
-Cluster models (k-means, ...)
-Meta-Analysis via linear (mixed) models (rma)
-Hypothesis Testing (glht)
-
-" />
+<meta property="og:title" content="Parameters from Hypothesis Testing — model_parameters.glht" />
+<meta property="og:description" content="Parameters from Hypothesis Testing." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -174,65 +158,72 @@ Hypothesis Testing (glht)
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Model Parameters</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.R'><code>R/model_parameters.R</code></a></small>
-    <div class="hidden name"><code>model_parameters.Rd</code></div>
+    <h1>Parameters from Hypothesis Testing</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.glht.R'><code>R/model_parameters.glht.R</code></a></small>
+    <div class="hidden name"><code>model_parameters.glht.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute and extract model parameters. See the documentation for your object's class:</p><ul>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.htest.html'>Correlations and t-tests</a></p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.aov.html'>ANOVAs</a></p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.default.html'>Regression models</a> (<code>lm</code>, <code>glm</code>, <span class="pkg">survey</span>, ...)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.gam.html'>Additive models</a> (<code>gam</code>, <code>gamm</code>, ...)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.zeroinfl.html'>Zero-inflated models</a> (<code>hurdle</code>, <code>zeroinfl</code>, <code>zerocount</code>)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.mlm.html'>Multinomial, ordinal and cumulative link models</a> (<code>bracl</code>, <code>multinom</code>, <code>mlm</code>, ...)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.merMod.html'>Mixed models</a> (<span class="pkg">lme4</span>, <span class="pkg">nlme</span>, <span class="pkg">glmmTMB</span>, ...)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.BFBayesFactor.html'>Bayesian tests</a> (<span class="pkg">BayesFactor</span>)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.stanreg.html'>Bayesian models</a> (<span class="pkg">rstanarm</span>, <span class="pkg">brms</span>, <span class="pkg">MCMCglmm</span>, ...)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.principal.html'>PCA and FA</a> (<span class="pkg">psych</span>)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.lavaan.html'>CFA and SEM</a> (<span class="pkg">lavaan</span>, <span class="pkg">blavaan</span>)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.kmeans.html'>Cluster models</a> (k-means, ...)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.rma.html'>Meta-Analysis via linear (mixed) models</a> (<code>rma</code>)</p></li>
-<li><p><a href='https://rdrr.io/pkg/parameters/man/model_parameters.glht.html'>Hypothesis Testing</a> (<code>glht</code>)</p></li>
-</ul>
-
+    <p>Parameters from Hypothesis Testing.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
-
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>parameters</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for glht</span>
+<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, ci = <span class='fl'>0.95</span>, exponentiate = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Statistical Model.</p></td>
+      <td><p>Object of class <code><a href='https://rdrr.io/pkg/multcomp/man/glht.html'>glht</a></code> (<span class="pkg">multcomp</span>).</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+    </tr>
+    <tr>
+      <th>exponentiate</th>
+      <td><p>Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. <strong>Note:</strong> standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods. Non-documented arguments are <code>digits</code>, <code>p_digits</code> and <code>ci_digits</code> to set the number of digits for the output. See 'Examples' in <code><a href='https://rdrr.io/pkg/parameters/man/model_parameters.default.html'>model_parameters.default</a></code>.</p></td>
+      <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://rdrr.io/pkg/bayestestR/man/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of indices related to the model's parameters.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Standardization is based on <code><a href='https://rdrr.io/pkg/effectsize/man/standardize_parameters.html'>standardize_parameters</a></code>.
-  In case of <code>standardize = "refit"</code>, the data used to fit the model
-  will be standardized and the model is completely refitted. In such cases,
-  standard errors and confidence intervals refer to the standardized coefficient.</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>The <code><a href='https://rdrr.io/pkg/parameters/man/print.html'>print()</a></code> method has several arguments to tweak the output. There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/standardize_names.html'>standardize_names()</a></code> to rename
-  columns into a consistent, standardized naming scheme.</p></div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='http://multcomp.R-forge.R-project.org'>"multcomp"</a></span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://multcomp.R-forge.R-project.org'>multcomp</a></span>)
+  <span class='co'># multiple linear model, swiss data</span>
+  <span class='kw'>lmod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Fertility</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>swiss</span>)
+  <span class='kw'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/multcomp/man/glht.html'>glht</a></span>(
+    model = <span class='kw'>lmod</span>,
+    linfct = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+      <span class='st'>"Agriculture = 0"</span>,
+      <span class='st'>"Examination = 0"</span>,
+      <span class='st'>"Education = 0"</span>,
+      <span class='st'>"Catholic = 0"</span>,
+      <span class='st'>"Infant.Mortality = 0"</span>
+    )
+  )
+  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>mod</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: multcomp</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: mvtnorm</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘mvtnorm’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:mclust’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    dmvnorm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: survival</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: TH.data</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: MASS</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘MASS’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:multimode’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    geyser</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘TH.data’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:MASS’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    geyser</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:multimode’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    geyser</span></div><div class='output co'>#&gt; <span class='error'>Error in cs[, column_index]: incorrect number of dimensions</span></div><div class='input'><span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
