@@ -719,6 +719,17 @@ p_value.betamfx <- function(model, component = c("all", "conditional", "precisio
 # p-Values from Special Models -----------------------------------------------
 
 
+#' @importFrom insight find_parameters
+#' @export
+p_value.glht <- function(model, ...) {
+  s <- summary(model)
+  .data_frame(
+    Parameter = insight::find_parameters(model, flatten = TRUE),
+    p = unname(s$test$pvalues)
+  )
+}
+
+
 #' @importFrom stats na.omit
 #' @export
 p_value.robmixglm <- function(model, ...) {

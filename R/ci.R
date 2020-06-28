@@ -524,6 +524,28 @@ ci.betamfx <- function(x, ci = .95, component = c("all", "conditional", "precisi
 # Special models -----------------------------------------
 
 
+#' @importFrom stats pnorm
+#' @export
+ci.glht <- function(x, ci = .95, method = "robust", ...) {
+  s <- summary(x)
+  robust <- !is.null(method) && method == "robust"
+
+  if (robust) {
+    adjusted_ci <- 2 * stats::pnorm(s$test$qfunction(ci)) - 1
+    dof <- Inf
+  } else {
+    adjusted_ci <- ci
+    dof <- x$df
+  }
+  out <- ci_wald(model = x, ci = adjusted_ci, dof = dof, ...)
+
+  if (robust) {
+    out$CI <- 100 * ci
+  }
+  out
+}
+
+
 #' @rdname ci.merMod
 #' @export
 ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {

@@ -826,6 +826,16 @@ standard_error.bayesx <- function(model, ...) {
 # Other models ---------------------------------------------------------------
 
 
+#' @export
+standard_error.glht <- function(model, ...) {
+  s <- summary(model)
+  .data_frame(
+    Parameter = insight::find_parameters(model, flatten = TRUE),
+    SE = unname(s$test$sigma)
+  )
+}
+
+
 #' @importFrom stats na.omit
 #' @export
 standard_error.robmixglm <- function(model, ...) {

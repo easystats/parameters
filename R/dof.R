@@ -98,6 +98,11 @@ degrees_of_freedom.emmGrid <- function(model,...) {
 }
 
 #' @export
+degrees_of_freedom.glht <- function(model,...) {
+  model$df
+}
+
+#' @export
 degrees_of_freedom.logitor <- function(model,...) {
   degrees_of_freedom.default(model$fit, ...)
 }

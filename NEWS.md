@@ -2,7 +2,7 @@
 
 ## New supported models
 
-* `metaplus` (*metaplus*)
+* `metaplus` (*metaplus*), `glht` (*multcomp*)
 
 ## Bug fixes
 
