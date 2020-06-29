@@ -58,12 +58,12 @@ factor_analysis <- function(x, n = "auto", rotation = "none", sort = FALSE, thre
 factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, cor = NULL, ...) {
 
   # Standardize
-  if (standardize) {
+  if (standardize && is.null(cor)) {
     x <- as.data.frame(scale(x))
   }
 
   # N factors
-  n <- .get_n_factors(x, n = n, type = "FA", rotation = rotation)
+  n <- .get_n_factors(x, n = n, type = "FA", rotation = rotation, cor = cor)
 
   .FA_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, cor = cor, ...)
 }
@@ -90,7 +90,7 @@ factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = 
 
   # Pass cor if available
   if(!is.null(cor)) {
-    out <- model_parameters(psych::fa(cor, nfactors = n, rotate = rotation, n.obs=nrow(x), ...), sort = sort, threshold = threshold)
+    out <- model_parameters(psych::fa(cor, nfactors = n, rotate = rotation, n.obs = nrow(x), ...), sort = sort, threshold = threshold)
   } else{
     out <- model_parameters(psych::fa(x, nfactors = n, rotate = rotation, ...), sort = sort, threshold = threshold)
   }
