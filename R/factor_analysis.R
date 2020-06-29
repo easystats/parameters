@@ -3,6 +3,7 @@
 #' This function performs a Factor Analysis (FA).
 #'
 #' @inheritParams principal_components
+#' @inheritParams n_factors
 #'
 #' @details
 #'  \subsection{Complexity}{
@@ -46,7 +47,7 @@
 #' }
 #' @importFrom stats prcomp
 #' @export
-factor_analysis <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
+factor_analysis <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, cor = NULL, ...) {
   UseMethod("factor_analysis")
 }
 
@@ -54,7 +55,7 @@ factor_analysis <- function(x, n = "auto", rotation = "none", sort = FALSE, thre
 
 #' @importFrom stats prcomp na.omit
 #' @export
-factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
+factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, cor = NULL, ...) {
 
   # Standardize
   if (standardize) {
@@ -64,7 +65,7 @@ factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = 
   # N factors
   n <- .get_n_factors(x, n = n, type = "FA", rotation = rotation)
 
-  .FA_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, ...)
+  .FA_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, cor = cor, ...)
 }
 
 
@@ -73,7 +74,7 @@ factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = 
 
 
 #' @keywords internal
-.FA_rotate <- function(x, n, rotation, sort = FALSE, threshold = NULL, ...) {
+.FA_rotate <- function(x, n, rotation, sort = FALSE, threshold = NULL, cor = NULL, ...) {
   if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
     stop("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
   }
@@ -87,7 +88,14 @@ factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = 
     stop(sprintf("Package `psych` required for `%s`-rotation.", rotation), call. = FALSE)
   }
 
-  out <- model_parameters(psych::fa(x, nfactors = n, rotate = rotation, ...), sort = sort, threshold = threshold)
+  # Pass cor if available
+  if(!is.null(cor)) {
+    out <- model_parameters(psych::fa(cor, nfactors = n, rotate = rotation, n.obs=nrow(x), ...), sort = sort, threshold = threshold)
+  } else{
+    out <- model_parameters(psych::fa(x, nfactors = n, rotate = rotation, ...), sort = sort, threshold = threshold)
+  }
+
+
 
   attr(out, "data_set") <- x
   out

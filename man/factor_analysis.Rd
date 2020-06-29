@@ -11,6 +11,7 @@ factor_analysis(
   sort = FALSE,
   threshold = NULL,
   standardize = TRUE,
+  cor = NULL,
   ...
 )
 }
@@ -26,6 +27,8 @@ factor_analysis(
 \item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).}
 
 \item{standardize}{A logical value indicating whether the variables should be standardized (centered and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).}
+
+\item{cor}{An optional correlation matrix that can be used (note that the data must still be passed as the first argument). If \code{NULL}, will compute it by running \code{cor()} on the passed data.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

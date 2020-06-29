@@ -6,6 +6,7 @@
 
 ## Bug fixes
 
+* Allow correlation matrix to be passed to `factor_analysis()`.
 * Fix CRAN check issues.
 * Fix issue in `model_parameters()` for models with non-estimable parameters or statistics.
 
