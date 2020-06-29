@@ -673,6 +673,7 @@
   names(parameters) <- gsub("Pr..Chisq.", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr..Chi.", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi.sq", "Chisq", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Chi-Square", "Chisq", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("LR.Chisq", "Chisq", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("LR Chisq", "Chisq", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("p.value", "p", names(parameters), fixed = TRUE)
