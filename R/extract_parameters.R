@@ -678,7 +678,7 @@
   names(parameters) <- gsub("p.value", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("logLik", "Log_Likelihood", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("deviance", "Deviance", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("P", "p", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("^P$", "p", names(parameters))
   names(parameters) <- gsub("Df", "df", names(parameters), fixed = TRUE)
 
   # Reorder
