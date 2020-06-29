@@ -646,12 +646,11 @@
     parameters <- parameters[order(parameters$Group), ]
   } else if ("anova.rms" %in% class(model)) {
     parameters <- data.frame(model)
+    parameters$Parameter <- rownames(parameters)
   }
 
   # Rename
-  names(parameters) <- gsub("P", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr(>F)", "p", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Df", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("npar", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("NumDF", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi.Df", "Chisq_df", names(parameters), fixed = TRUE)
@@ -679,6 +678,8 @@
   names(parameters) <- gsub("p.value", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("logLik", "Log_Likelihood", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("deviance", "Deviance", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("P", "p", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Df", "df", names(parameters), fixed = TRUE)
 
   # Reorder
   row.names(parameters) <- NULL
