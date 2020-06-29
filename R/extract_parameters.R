@@ -644,9 +644,12 @@
       }
     }
     parameters <- parameters[order(parameters$Group), ]
+  } else if ("anova.rms" %in% class(model)) {
+    parameters <- data.frame(model)
   }
 
   # Rename
+  names(parameters) <- gsub("P", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr(>F)", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Df", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("npar", "df", names(parameters), fixed = TRUE)
@@ -654,11 +657,14 @@
   names(parameters) <- gsub("Chi.Df", "Chisq_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi DoF", "Chisq_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum Sq", "Sum_Squares", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Partial.SS", "Sum_Squares", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Sum of Sq", "Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Mean Sq", "Mean_Square", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("MS", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("F value", "F", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("d.f.", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.Df", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.DoF", "df_residual", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Sum of Sq", "Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chisq", "Chisq", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr(>Chi_Square)", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr(>ChiSquare)", "p", names(parameters), fixed = TRUE)

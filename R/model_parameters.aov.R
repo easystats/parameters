@@ -94,6 +94,12 @@ model_parameters.afex_aov <- function(model, omega_squared = NULL, eta_squared =
   }
 }
 
+#' @export
+model_parameters.anova.rms <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, type = NULL, ...) {
+  parameters <- .extract_parameters_anova(model)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
 
 
 
