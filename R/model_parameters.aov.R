@@ -86,19 +86,15 @@ model_parameters.anova <- model_parameters.aov
 model_parameters.aovlist <- model_parameters.aov
 
 #' @export
+model_parameters.anova.rms <- model_parameters.aov
+
+#' @export
 model_parameters.afex_aov <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, df_error = NULL, type = NULL, ...) {
   if (!is.null(model$aov)) {
     model_parameters(model$aov, omega_squared = omega_squared, eta_squared = eta_squared, epsilon_squared = epsilon_squared, df_error = df_error, type = type, ...)
   } else {
     NULL
   }
-}
-
-#' @export
-model_parameters.anova.rms <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, type = NULL, ...) {
-  parameters <- .extract_parameters_anova(model)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
-  parameters
 }
 
 
