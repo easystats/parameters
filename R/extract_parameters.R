@@ -647,29 +647,26 @@
   } else if ("anova.rms" %in% class(model)) {
     parameters <- data.frame(model)
     parameters$Parameter <- rownames(parameters)
+    parameters$Parameter[parameters$Parameter == "ERROR"] <- "Residuals"
+    parameters$Parameter[parameters$Parameter == "TOTAL"] <- "Total"
   }
 
   # Rename
-  names(parameters) <- gsub("Pr(>F)", "p", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("(Pr|P)\\(>.*\\)", "p", names(parameters))
   names(parameters) <- gsub("npar", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("NumDF", "df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("d.f.", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi.Df", "Chisq_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi DoF", "Chisq_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum Sq", "Sum_Squares", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Partial.SS", "Sum_Squares", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Partial.SS", "Partial_Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum of Sq", "Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Mean Sq", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("MS", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("F value", "F", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("d.f.", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.Df", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.DoF", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chisq", "Chisq", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Pr(>Chi_Square)", "p", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Pr(>ChiSquare)", "p", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Pr(>Chisq)", "p", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("P(>|Chi|)", "p", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Pr(>Chi)", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr..Chisq.", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr..Chi.", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi.sq", "Chisq", names(parameters), fixed = TRUE)
@@ -684,7 +681,7 @@
 
   # Reorder
   row.names(parameters) <- NULL
-  order <- c("Group", "Parameter", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_df", "RSS", "Sum_Squares", "df", "df_residual", "Mean_Square", "F", "p")
+  order <- c("Group", "Parameter", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_df", "RSS", "Sum_Squares", "Partial_Sum_Squares", "df", "df_residual", "Mean_Square", "F", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   .remove_backticks_from_parameter_names(parameters)
