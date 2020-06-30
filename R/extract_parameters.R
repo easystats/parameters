@@ -659,7 +659,7 @@
   names(parameters) <- gsub("Chi.Df", "Chisq_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi DoF", "Chisq_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum Sq", "Sum_Squares", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Partial.SS", "Partial_Sum_Squares", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Partial.SS", "Sum_Squares_Partial", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum of Sq", "Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Mean Sq", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("MS", "Mean_Square", names(parameters), fixed = TRUE)
