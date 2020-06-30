@@ -3,6 +3,7 @@
 ## New supported models
 
 * `metaplus` (*metaplus*), `glht` (*multcomp*)
+* Improved support for models from the *rms*  package.
 
 ## Bug fixes
 
