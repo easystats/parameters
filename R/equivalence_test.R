@@ -147,6 +147,9 @@ equivalence_test.lme <- equivalence_test.lm
 equivalence_test.gee <- equivalence_test.lm
 
 #' @export
+equivalence_test.gls <- equivalence_test.lm
+
+#' @export
 equivalence_test.feis <- equivalence_test.lm
 
 #' @export
@@ -160,6 +163,9 @@ equivalence_test.hurdle <- equivalence_test.lm
 
 #' @export
 equivalence_test.zeroinfl <- equivalence_test.lm
+
+#' @export
+equivalence_test.rma <- equivalence_test.lm
 
 
 
