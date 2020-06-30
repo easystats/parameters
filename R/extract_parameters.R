@@ -681,7 +681,7 @@
 
   # Reorder
   row.names(parameters) <- NULL
-  order <- c("Group", "Parameter", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_df", "RSS", "Sum_Squares", "Partial_Sum_Squares", "df", "df_residual", "Mean_Square", "F", "p")
+  order <- c("Group", "Parameter", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "df", "df_residual", "Mean_Square", "F", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   .remove_backticks_from_parameter_names(parameters)
