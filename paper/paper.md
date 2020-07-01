@@ -68,11 +68,11 @@ library(parameters)
 model <- lm(Sepal.Length ~ Species, data = iris)
 parameters(model)
 
-#> Parameter            | Coefficient |   SE |       95% CI |     t |  df |      p
-#> -------------------------------------------------------------------------------
-#> (Intercept)          |        5.01 | 0.07 | [4.86, 5.15] | 68.76 | 147 | < .001
-#> Species [versicolor] |        0.93 | 0.10 | [0.73, 1.13] |  9.03 | 147 | < .001
-#> Species [virginica]  |        1.58 | 0.10 | [1.38, 1.79] | 15.37 | 147 | < .001
+#> Parameter            | Coefficient |   SE |       95% CI |      p
+#> -----------------------------------------------------------------
+#> (Intercept)          |        5.01 | 0.07 | [4.86, 5.15] | < .001
+#> Species [versicolor] |        0.93 | 0.10 | [0.73, 1.13] | < .001
+#> Species [virginica]  |        1.58 | 0.10 | [1.38, 1.79] | < .001
 ```
 
 Extraction of robust indices is possible for many models, in particular models supported by the *sandwich* [@zeileis2006] and *clubSandwich* [@pustejovsky2020] packages.
@@ -80,36 +80,39 @@ Extraction of robust indices is possible for many models, in particular models s
 ``` r
 parameters(model, robust = TRUE)
 
-#> Parameter            | Coefficient |   SE |       95% CI |     t |  df |      p
-#> -------------------------------------------------------------------------------
-#> (Intercept)          |        5.01 | 0.05 | [4.91, 5.11] | 99.41 | 147 | < .001
-#> Species [versicolor] |        0.93 | 0.09 | [0.75, 1.11] | 10.42 | 147 | < .001
-#> Species [virginica]  |        1.58 | 0.10 | [1.38, 1.79] | 15.23 | 147 | < .001
+#> Parameter            | Coefficient |   SE |       95% CI |      p
+#> -----------------------------------------------------------------
+#> (Intercept)          |        5.01 | 0.05 | [4.91, 5.11] | < .001
+#> Species [versicolor] |        0.93 | 0.09 | [0.75, 1.11] | < .001
+#> Species [virginica]  |        1.58 | 0.10 | [1.38, 1.79] | < .001
 ```
 
 For linear mixed models, `parameters()` also allows to specify the method for approximating degrees of freedom, which may improve the accurracy for calculated standard errors or p-values.
 
 ``` r
 library(lme4)
-model <- lmer(Sepal.Length ~ Sepal.Width * Petal.Length + (1 | Species), data = iris)
+model <- lmer(
+  Sepal.Length ~ Sepal.Width * Petal.Length + (1 | Species), 
+  data = iris
+)
 
 parameters(model, digits = 3)
 
-#> Parameter                  | Coefficient |    SE |         95% CI |      t |  df |      p
-#> -----------------------------------------------------------------------------------------
-#> (Intercept)                |       0.707 | 0.652 | [-0.57,  1.98] |  1.085 | 144 | 0.278 
-#> Sepal.Width                |       0.731 | 0.156 | [ 0.43,  1.04] |  4.693 | 144 | < .001
-#> Petal.Length               |       1.023 | 0.143 | [ 0.74,  1.30] |  7.145 | 144 | < .001
-#> Sepal.Width * Petal.Length |      -0.084 | 0.040 | [-0.16, -0.01] | -2.106 | 144 | 0.035 
+#> Parameter                  | Coefficient |    SE |         95% CI |      p
+#> --------------------------------------------------------------------------
+#> (Intercept)                |       0.707 | 0.652 | [-0.57,  1.98] | 0.278 
+#> Sepal.Width                |       0.731 | 0.156 | [ 0.43,  1.04] | < .001
+#> Petal.Length               |       1.023 | 0.143 | [ 0.74,  1.30] | < .001
+#> Sepal.Width * Petal.Length |      -0.084 | 0.040 | [-0.16, -0.01] | 0.035 
 
 parameters(model, digits = 3, df_method = "kenward")
 
-#> Parameter                  | Coefficient |    SE |         95% CI |      t |     df |      p
-#> --------------------------------------------------------------------------------------------
-#> (Intercept)                |       0.707 | 0.654 | [-0.70,  2.11] |  1.082 |  13.76 | 0.298 
-#> Sepal.Width                |       0.731 | 0.157 | [ 0.42,  1.04] |  4.669 | 145.22 | < .001
-#> Petal.Length               |       1.023 | 0.145 | [ 0.74,  1.31] |  7.034 | 145.92 | < .001
-#> Sepal.Width * Petal.Length |      -0.084 | 0.040 | [-0.16, -0.01] | -2.106 | 144.02 | 0.037 
+#> Parameter                  | Coefficient |    SE |         95% CI |      p
+#> --------------------------------------------------------------------------
+#> (Intercept)                |       0.707 | 0.654 | [-0.70,  2.11] | 0.298 
+#> Sepal.Width                |       0.731 | 0.157 | [ 0.42,  1.04] | < .001
+#> Petal.Length               |       1.023 | 0.145 | [ 0.74,  1.31] | < .001
+#> Sepal.Width * Petal.Length |      -0.084 | 0.040 | [-0.16, -0.01] | 0.037 
 ```
 
 ## Visualisation
