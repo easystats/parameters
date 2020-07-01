@@ -16,4 +16,4 @@ p <- lm(Sepal.Length ~ Petal.Width * Species, data = iris) %>%
   parameters() %>%
   plot()
 
-ggplot2::ggsave("figure3.png", p, height = 5, width = 6)
+ggplot2::ggsave("figure3.png", p, height = 5, width = 7)
