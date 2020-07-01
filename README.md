@@ -50,6 +50,14 @@ these vignettes:
   - [Structural models (EFA, CFA,
     SEM…)](https://easystats.github.io/parameters/articles/efa_cfa.html)
 
+## Contributing and Support
+
+In case you want to file an issue or contribute in another way to the
+package, please follow [this
+guide](https://github.com/easystats/parameters/blob/master/.github/CONTRIBUTING.md).
+For questions about the functionality, you may either contact us via
+email or also file an issue.
+
 # Features
 
 ## Model’s parameters description

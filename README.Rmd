@@ -36,9 +36,7 @@ set.seed(333)
 
 `parameters`' primary goal is to provide utilities for processing the parameters of various statistical models (see [here](https://easystats.github.io/insight/) for a list of supported models). Beyond computing ***p*-values**, **CIs**, **Bayesian indices** and other measures for a wide variety of models, this package implements features like **bootstrapping** of parameters and models, **feature reduction** (feature extraction and variable selection).
 
-
 ## Installation
-
 
 Run the following:
 
@@ -48,8 +46,6 @@ install.packages("parameters")
 ```{r message=FALSE, warning=FALSE}
 library("parameters")
 ```
-
-
 
 ## Documentation
 
@@ -66,6 +62,11 @@ Click on the buttons above to access the package [documentation](https://easysta
 - [Parameters selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
 - [Feature reduction (PCA, cMDS, ICA...)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
 - [Structural models (EFA, CFA, SEM...)](https://easystats.github.io/parameters/articles/efa_cfa.html)
+
+## Contributing and Support
+
+In case you want to file an issue or contribute in another way to the package, please follow [this guide](https://github.com/easystats/parameters/blob/master/.github/CONTRIBUTING.md). For questions about the functionality, you may either contact us via email or also file an issue.
+
 
 # Features
  
