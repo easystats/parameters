@@ -9,7 +9,7 @@ format_order(order, textual = TRUE, ...)
 \arguments{
 \item{order}{value or vector of orders.}
 
-\item{textual}{Return number as words. If \code{FALSE}, will run \code{\link[insight]{format_value}}.}
+\item{textual}{Return number as words. If \code{FALSE}, will run \code{\link[insight:format_value]{format_value()}}.}
 
 \item{...}{Arguments to be passed to \code{\link[insight]{format_value}} if \code{textual} is \code{FALSE}.}
 }

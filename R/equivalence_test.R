@@ -562,6 +562,7 @@ plot.equivalence_test_lm <- function(x, ...) {
 
 # method-helper ----------------------
 
+#' @importFrom insight format_p
 .print_equitest_freq <- function(x, digits, ...) {
   # find the longest CI-value, so we can align the brackets in the output
   x$CI_low <- sprintf("%.*f", digits, x$CI_low)
@@ -573,7 +574,7 @@ plot.equivalence_test_lm <- function(x, ...) {
   x$ROPE_Percentage <- sprintf("%.*f %%", digits, 100 * x$ROPE_Percentage)
   x$conf.int <- sprintf("[%*s %*s]", maxlen_low, x$CI_low, maxlen_high, x$CI_high)
   if ("p" %in% colnames(x)) {
-    x$p <- format_p(x$p, name = NULL)
+    x$p <- insight::format_p(x$p, name = NULL)
   }
 
   CI <- unique(x$CI)

@@ -42,7 +42,8 @@ check_multimodal <- function(x, ...) {
   UseMethod("check_multimodal")
 }
 
-#' @importFrom stats logLik
+#' @importFrom insight format_p
+#' @importFrom stats logLik pchisq
 #' @export
 check_multimodal.data.frame <- function(x, ...) {
   if (!requireNamespace("mclust", quietly = TRUE)) {
@@ -57,7 +58,7 @@ check_multimodal.data.frame <- function(x, ...) {
   loglik <- logLik(model)
   loglik0 <- logLik(model_h0)
   rez <- list(Chisq = as.numeric(loglik - loglik0), df = attributes(loglik)$df - 2)
-  rez$p <- 1 - pchisq(rez$Chisq, df = rez$df)
+  rez$p <- 1 - stats::pchisq(rez$Chisq, df = rez$df)
 
   # Text
   text <- "The parametric mixture modelling test suggests that "
@@ -68,7 +69,7 @@ check_multimodal.data.frame <- function(x, ...) {
       insight::format_value(rez$df, protect_integers = TRUE),
       ") = ",
       insight::format_value(rez$Chisq),
-      ", ", format_p(rez$p), ").\n"
+      ", ", insight::format_p(rez$p), ").\n"
     )
     color <- "green"
   } else {
@@ -78,7 +79,7 @@ check_multimodal.data.frame <- function(x, ...) {
       insight::format_value(rez$df, protect_integers = TRUE),
       ") = ",
       insight::format_value(rez$Chisq),
-      ", ", format_p(rez$p), ").\n"
+      ", ", insight::format_p(rez$p), ").\n"
     )
     color <- "yellow"
   }
@@ -109,7 +110,7 @@ check_multimodal.numeric <- function(x, ...) {
       text,
       "the distribution is significantly multimodal (excess mass = ",
       insight::format_value(rez$excess_mass),
-      ", ", format_p(rez$p), ").\n"
+      ", ", insight::format_p(rez$p), ").\n"
     )
     color <- "green"
   } else {
@@ -117,7 +118,7 @@ check_multimodal.numeric <- function(x, ...) {
       text,
       "the hypothesis of a multimodal distribution cannot be rejected (excess mass = ",
       insight::format_value(rez$excess_mass),
-      ", ", format_p(rez$p), ").\n"
+      ", ", insight::format_p(rez$p), ").\n"
     )
     color <- "yellow"
   }

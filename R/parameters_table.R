@@ -5,7 +5,7 @@
 #' @param digits Number of decimal places for numeric values (except confidence intervals and p-values).
 #' @param ci_digits Number of decimal places for confidence intervals.
 #' @param p_digits Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.
-#' @inheritParams format_p
+#' @inheritParams insight::format_p
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -24,7 +24,7 @@
 #' @return A data frame.
 #'
 #' @importFrom tools toTitleCase
-#' @importFrom insight format_value format_ci
+#' @importFrom insight format_value format_ci format_p format_pd format_bf
 #' @importFrom stats na.omit
 #' @export
 parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, ci_digits = 2, p_digits = 3, ...) {
@@ -55,7 +55,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
   # P values
   if ("p" %in% names(x)) {
-    x$p <- format_p(x$p, stars = stars, name = NULL, missing = "", digits = p_digits)
+    x$p <- insight::format_p(x$p, stars = stars, name = NULL, missing = "", digits = p_digits)
     x$p <- format(x$p, justify = "left")
   }
 
@@ -96,8 +96,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   # Bayesian
   if ("Prior_Location" %in% names(x)) x$Prior_Location <- insight::format_value(x$Prior_Location, protect_integers = TRUE)
   if ("Prior_Scale" %in% names(x)) x$Prior_Scale <- insight::format_value(x$Prior_Scale, protect_integers = TRUE)
-  if ("BF" %in% names(x)) x$BF <- format_bf(x$BF, name = NULL, stars = stars)
-  if ("pd" %in% names(x)) x$pd <- format_pd(x$pd, name = NULL, stars = stars)
+  if ("BF" %in% names(x)) x$BF <- insight::format_bf(x$BF, name = NULL, stars = stars)
+  if ("pd" %in% names(x)) x$pd <- insight::format_pd(x$pd, name = NULL, stars = stars)
   if ("ROPE_Percentage" %in% names(x)) x$ROPE_Percentage <- format_rope(x$ROPE_Percentage, name = NULL)
   names(x)[names(x) == "ROPE_Percentage"] <- "% in ROPE"
 
