@@ -134,6 +134,6 @@ plot(parameters(model))
 
 # Acknowledgments
 
-*parameters* is part of the [*easystats*](https://github.com/easystats/easystats) ecosystem, a collaborative project created to facilitate the usage of R. Thus, we would like to thank the [members of easystats](https://github.com/orgs/easystats/people) of easystats as well as the users.
+*parameters* is part of the [*easystats*](https://github.com/easystats/easystats) ecosystem, a collaborative project created to facilitate the usage of R. Thus, we would like to thank the [members of easystats](https://github.com/orgs/easystats/people) as well as the users.
 
 # References
