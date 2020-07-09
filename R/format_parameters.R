@@ -246,12 +246,11 @@ format_parameters.parameters_model <- function(model) {
 
 #' @keywords internal
 .format_ordered <- function(degree) {
-  degree <- switch(
+  switch(
     degree,
-    ".L" = "1st",
-    ".Q" = "2nd",
-    ".C" = "3rd",
-    parameters::format_order(as.numeric(gsub("^", "", degree, fixed = TRUE)), textual = FALSE)
+    ".L" = "[linear]",
+    ".Q" = "[quadratic]",
+    ".C" = "[cubic]",
+    paste0("[", parameters::format_order(as.numeric(gsub("^", "", degree, fixed = TRUE)), textual = FALSE), " degree]")
   )
-  paste0("[", degree, " degree]")
 }

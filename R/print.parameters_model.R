@@ -60,6 +60,10 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     x[to_remove] <- NULL
   }
 
+  # remove columns that have only NA or Inf
+  to_remove <- sapply(x, function(col) all(is.na(col) | all(is.infinite(col))))
+  if (any(to_remove)) x[to_remove] <- NULL
+
   if (!is.null(attributes(x)$title)) {
     insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
   } else if (!is.null(res)) {
