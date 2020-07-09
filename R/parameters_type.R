@@ -167,6 +167,7 @@ parameters_type <- function(model, ...) {
   # ".clean_parameter_names()"
 
   cleaned_name <- .clean_parameter_names(name, full = TRUE)
+  cleaned_ordered_name <- gsub("(.*)((\\.|\\^).*)", "\\1", cleaned_name)
 
   # Intercept
   if (.in_intercepts(cleaned_name)) {
@@ -175,6 +176,18 @@ parameters_type <- function(model, ...) {
     # Numeric
   } else if (cleaned_name %in% reference$numeric) {
     return(c("numeric", "Association", name, name, NA, NA))
+
+    # Ordered factors
+  } else if (is.ordered(data[[cleaned_ordered_name]])) {
+    fac <- reference$levels_parent[match(cleaned_name, reference$levels)]
+    return(c(
+      "ordered",
+      "Association",
+      name,
+      fac,
+      .format_ordered(gsub(fac, "", name, fixed = TRUE)),
+      NA
+    ))
 
     # Factors
   } else if (cleaned_name %in% reference$levels) {
@@ -247,13 +260,20 @@ parameters_type <- function(model, ...) {
   out <- list()
   out$numeric <- names(data[sapply(data, is.numeric)])
 
+  # Ordered factors
+  out$ordered <- names(data[sapply(data, is.ordered)])
+
   # Factors
   out$factor <- names(data[sapply(data, is.factor) | sapply(data, is.character)])
 
   out$levels <- NA
   out$levels_parent <- NA
   for (fac in out$factor) {
-    levels <- paste0(fac, unique(data[[fac]]))
+    if (fac %in% out$ordered) {
+      levels <- paste0(fac, c(".L", ".Q", ".C", paste0("^", 4:1000))[1:length(unique(data[[fac]]))])
+    } else {
+      levels <- paste0(fac, unique(data[[fac]]))
+    }
     out$levels_parent <- c(out$levels_parent, rep(fac, length(levels)))
     out$levels <- c(out$levels, levels)
   }

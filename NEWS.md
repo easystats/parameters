@@ -5,6 +5,10 @@
 * `metaplus` (*metaplus*), `glht` (*multcomp*)
 * Improved support for models from the *rms*  package.
 
+## Changes to functions
+
+* Improved paramters formatting for ordered factors in `model_parameters()` (and `format_parameters()`).
+
 ## Bug fixes
 
 * Allow 'threshold' to be passed to `efa_to_cfa()` when the model is fro `factor_analysis()`.

@@ -201,6 +201,11 @@ format_parameters.parameters_model <- function(model) {
     name <- gsub("s(", "Smooth term (", name, fixed = TRUE)
   }
 
+  # Ordered
+  if (type == "ordered") {
+    name <- paste(variable, level)
+  }
+
   name
 }
 
@@ -237,4 +242,16 @@ format_parameters.parameters_model <- function(model) {
 #' @keywords internal
 .format_log <- function(name, variable, type) {
   paste0(variable, " [", gsub("(.*)\\((.*)\\)", "\\1", name), "]")
+}
+
+#' @keywords internal
+.format_ordered <- function(degree) {
+  degree <- switch(
+    degree,
+    ".L" = "1st",
+    ".Q" = "2nd",
+    ".C" = "3rd",
+    parameters::format_order(as.numeric(gsub("^", "", degree, fixed = TRUE)), textual = FALSE)
+  )
+  paste0("[", degree, " degree]")
 }
