@@ -7,11 +7,11 @@
 
 ## Changes to functions
 
-* Improved paramters formatting for ordered factors in `model_parameters()` (and `format_parameters()`).
+* Improved parameters formatting for ordered factors in `model_parameters()` (and `format_parameters()`).
 
 ## Bug fixes
 
-* Allow 'threshold' to be passed to `efa_to_cfa()` when the model is fro `factor_analysis()`.
+* Allow 'threshold' to be passed to `efa_to_cfa()` when the model is from `factor_analysis()`.
 * Allow correlation matrix to be passed to `factor_analysis()`.
 * Fix CRAN check issues.
 * Fix issue in `model_parameters()` for models with non-estimable parameters or statistics.
