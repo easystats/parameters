@@ -54,10 +54,13 @@ reference:
 - title: "Other Model Parameters"
   contents:
   - degrees_of_freedom
-  - equivalence_test
-  - equivalence_test.lm
   - n_parameters
   - random_parameters
+
+- title: "Equivalence Testing and NHST"
+  contents:
+  - equivalence_test
+  - equivalence_test.lm
 
 - title: "Parameters Engineering"
   contents:
