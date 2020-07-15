@@ -57,7 +57,7 @@ reference:
   - n_parameters
   - random_parameters
 
-- title: "Equivalence Testing and NHST"
+- title: "Effect Existence and Significance"
   contents:
   - equivalence_test
   - equivalence_test.lm
