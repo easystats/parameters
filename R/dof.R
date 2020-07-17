@@ -238,8 +238,10 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
     return(TRUE)
   }
   info <- insight::model_info(model, verbose = FALSE)
-  ## TODO remove is.list() when insight 0.8.3 on CRAN
-  if (is.null(info) || !is.list(info) || !info$is_mixed) {
+  if (is.null(info) || !info$is_mixed) {
+    if (method %in% c("profile", "wald")) {
+      return(TRUE)
+    }
     return(FALSE)
   }
   method <- tolower(method)

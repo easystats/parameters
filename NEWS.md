@@ -8,6 +8,7 @@
 ## Changes to functions
 
 * Improved parameters formatting for ordered factors in `model_parameters()` (and `format_parameters()`).
+* Argument `df_method` can now also be applied to GLMs, to allow calculation of confidence intervals based on Wald-approximation, not profiled confidence intervals. This speeds up computation of CIs for models fit to large data sets.
 
 ## Bug fixes
 
