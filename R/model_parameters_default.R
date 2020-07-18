@@ -11,6 +11,7 @@
 #' @param robust Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.
 #' @param component Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}), \code{"marginal"} (\pkg{mfx}) or \code{"all"}.
 #' @param p_adjust Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.
+#' @param df_method Method for computing degrees of freedom for confidence intervals (CI). Only applies to models of class \code{glm} or \code{polr}. May be \code{"profile"} or \code{"wald"}.
 #' @param ... Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.
 #'
 #' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
@@ -79,6 +80,42 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
   params
 }
+
+
+
+
+
+# GLM ------------------------
+
+#' @importFrom insight n_obs
+#' @rdname model_parameters.default
+#' @export
+model_parameters.glm <- function(model, ci = .95, df_method = "profile", bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, p_adjust = NULL, ...) {
+  if (insight::n_obs(model) > 1e4 && df_method == "profile") {
+    message("Profiled confidence intervals may take longer time to compute. Use 'df_method=\"wald\"' for faster computation of CIs.")
+  }
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    df_method = df_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    robust = robust,
+    p_adjust = p_adjust,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+#' @export
+model_parameters.polr <- model_parameters.glm
+
 
 
 

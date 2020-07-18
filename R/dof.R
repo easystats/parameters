@@ -53,9 +53,9 @@ degrees_of_freedom <- function(model, ...) {
 #' @export
 degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   method <- tolower(method)
-  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward", "nokr", "wald"))
+  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward", "nokr", "wald", "profile"))
 
-  if (!.dof_method_ok(model, method)) {
+  if (!.dof_method_ok(model, method) || method == "profile") {
     method <- "any"
   }
 
@@ -237,22 +237,31 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
   if (is.null(method)) {
     return(TRUE)
   }
-  if (inherits(model, c("polr", "glm")) && method %in% c("profile", "wald")) {
-    return(TRUE)
+
+  method <- tolower(method)
+  if (inherits(model, c("polr", "glm"))) {
+    if (method %in% c("analytical", "any", "fit", "profile", "wald", "nokr")) {
+      return(TRUE)
+    } else {
+      warning("'df_method' must be one of 'wald' or 'profile'. Using 'wald' now.", call. = FALSE)
+      return(FALSE)
+    }
   }
 
   info <- insight::model_info(model, verbose = FALSE)
   if (is.null(info) || !info$is_mixed) {
     return(FALSE)
   }
-  method <- tolower(method)
+
   if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1"))) {
-    warning("'df_method' must be one of 'wald', 'kenward', 'satterthwaite', 'betwithin' or ' ml1'. Using 'wald' now.", call. = FALSE)
+    warning("'df_method' must be one of 'wald', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", call. = FALSE)
     return(FALSE)
   }
+
   if (!info$is_linear && method %in% c("satterthwaite", "kenward", "kr")) {
     warning(sprintf("'%s'-degrees of freedoms are only available for linear mixed models.", method), call. = FALSE)
     return(FALSE)
   }
+
   return(TRUE)
 }
