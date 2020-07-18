@@ -466,6 +466,14 @@ ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "ze
 }
 
 
+#' @export
+ci.glmm <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  ci_wald(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE)
+}
+
+
+
 
 
 

@@ -309,6 +309,9 @@ print.parameters_random <- function(x, digits = 2, ...) {
     } else if (component_name %in% c("Within-Effects", "Between-Effects")) {
       s1 <- component_name
       s2 <- ""
+    } else if (grepl(tolower(split_column), tolower(component_name), fixed = TRUE)) {
+      s1 <- component_name
+      s2 <- ""
     } else {
       s1 <- component_name
       s2 <- split_column

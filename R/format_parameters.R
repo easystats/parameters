@@ -29,7 +29,42 @@ format_parameters <- function(model) {
 
 #' @export
 format_parameters.default <- function(model) {
-  original_names <- names <- insight::find_parameters(model, effects = "fixed", flatten = TRUE)
+  .format_parameter_default(model)
+}
+
+
+#' @export
+format_parameters.glmm <- function(model) {
+  .format_parameter_default(model, effects = "all")
+}
+
+
+#' @export
+format_parameters.rma <- function(model) {
+  params <- insight::find_parameters(model, flatten = TRUE)
+  names(params) <- params
+  params
+}
+
+
+#' @export
+format_parameters.parameters_model <- function(model) {
+  if (!is.null(attributes(model)$pretty_names)) {
+    model$Parameter <- attributes(model)$pretty_names[model$Parameter]
+  }
+  model
+}
+
+
+
+
+
+# Utilities ---------------------------------------------------------------
+
+
+
+.format_parameter_default <- function(model, effects = "fixed") {
+  original_names <- names <- insight::find_parameters(model, effects = effects, flatten = TRUE)
   info <- insight::model_info(model, verbose = FALSE)
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
@@ -140,31 +175,6 @@ format_parameters.default <- function(model) {
   names(names) <- original_names # types$Parameter
   names
 }
-
-
-#' @export
-format_parameters.rma <- function(model) {
-  params <- insight::find_parameters(model, flatten = TRUE)
-  names(params) <- params
-  params
-}
-
-
-#' @export
-format_parameters.parameters_model <- function(model) {
-  if (!is.null(attributes(model)$pretty_names)) {
-    model$Parameter <- attributes(model)$pretty_names[model$Parameter]
-  }
-  model
-}
-
-
-
-
-
-# Utilities ---------------------------------------------------------------
-
-
 
 
 #' @keywords internal

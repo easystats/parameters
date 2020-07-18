@@ -157,6 +157,27 @@ model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", 
 }
 
 
+#' @export
+model_parameters.glmm <- function(model, ci = .95, effects = c("all", "fixed", "random"), bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+  effects <- match.arg(effects)
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Effects"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    effects = effects,
+    robust = FALSE,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.clmm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, details = FALSE, df_method = NULL, ...) {

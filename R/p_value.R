@@ -392,6 +392,25 @@ p_value.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
 }
 
 
+#' @importFrom insight get_parameters
+#' @export
+p_value.glmm <- function(model, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  s <- summary(model)
+
+  out <- insight::get_parameters(model, effects = "all")
+  out$p <- c(s$coefmat[, 4], s$nucoefmat[, 4])
+  out <- out[, c("Parameter", "p", "Effects")]
+
+  if (effects != "all") {
+    out <- out[out$Effects == effects, , drop = FALSE]
+    out$Effects <- NULL
+  }
+
+  out
+}
+
+
 
 
 

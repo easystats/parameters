@@ -731,7 +731,7 @@ standard_error.polr <- function(model, method = NULL, ...) {
 standard_error.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
   effects <- match.arg(effects)
   stats <- model$Model[, "Std. Error"]
-  parms <- get_parameters(model, effects = effects)
+  parms <- insight::get_parameters(model, effects = effects)
 
   .data_frame(
     Parameter = parms$Parameter,
@@ -742,13 +742,33 @@ standard_error.mixor <- function(model, effects = c("all", "fixed", "random"), .
 
 
 
+#' @importFrom insight get_parameters get_varcov
+#' @export
+standard_error.glmm <- function(model, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  s <- summary(model)
+
+  out <- insight::get_parameters(model, effects = "all")
+  out$SE <- sqrt(diag(insight::get_varcov(model, effects = "all")))
+  out <- out[, c("Parameter", "SE", "Effects")]
+
+  if (effects != "all") {
+    out <- out[out$Effects == effects, , drop = FALSE]
+    out$Effects <- NULL
+  }
+
+  out
+}
+
+
+
 #' @rdname standard_error
 #' @importFrom insight get_parameters
 #' @export
 standard_error.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
   component <- match.arg(component)
   stats <- .get_se_from_summary(model)
-  parms <- get_parameters(model, component = component)
+  parms <- insight::get_parameters(model, component = component)
 
   .data_frame(
     Parameter = parms$Parameter,
@@ -905,7 +925,7 @@ standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi
 
   component <- match.arg(component)
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
-  params <- get_parameters(model)
+  params <- insight::get_parameters(model)
 
   tweedie <- .data_frame(
     Parameter = params$Parameter[params$Component == "conditional"],
@@ -1496,7 +1516,7 @@ standard_error.metaplus <- function(model, ...) {
 #' @export
 standard_error.averaging <- function(model, component = c("conditional", "full"), ...) {
   component <- match.arg(component)
-  params <- get_parameters(model, component = component)
+  params <- insight::get_parameters(model, component = component)
   if (component == "full") {
     s <- summary(model)$coefmat.full
   } else {
