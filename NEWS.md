@@ -2,7 +2,7 @@
 
 ## New supported models
 
-* `metaplus` (*metaplus*), `glht` (*multcomp*), `glmm`  (*glmm*)
+* `metaplus` (*metaplus*), `glht` (*multcomp*), `glmm`  (*glmm*), `manova` (*stats*)
 * Improved support for models from the *rms*  package.
 
 ## Changes to functions

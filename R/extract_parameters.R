@@ -595,7 +595,12 @@
 .extract_parameters_anova <- function(model) {
 
   # Processing
-  if ("aov" %in% class(model)) {
+  if ("manova" %in% class(model)) {
+    parameters <- as.data.frame(summary(model)$stats)
+    parameters$Parameter <- trimws(row.names(parameters))
+    parameters[["den Df"]] <- NULL
+    parameters[["num Df"]] <- NULL
+  } else if ("aov" %in% class(model)) {
     parameters <- as.data.frame(summary(model)[[1]])
     parameters$Parameter <- trimws(row.names(parameters))
   } else if ("anova" %in% class(model)) {
@@ -629,21 +634,18 @@
     if (names(model)[1L] == "(Intercept)") {
       model <- model[-1L]
     }
-    parameters <- data.frame()
-    rowmax <- 0
-    for (i in names(model)) {
-      temp <- as.data.frame(summary(model[[i]])[[1]])
+    parameters <- do.call(rbind, lapply(names(model), function(i) {
+      aov_summary <- summary(model[[i]])
+      if (inherits(aov_summary, "summary.manova")) {
+        temp <- as.data.frame(aov_summary$stats)
+      } else {
+        temp <- as.data.frame(aov_summary[[1]])
+      }
       temp$Parameter <- trimws(row.names(temp))
       temp$Group <- i
-      row.names(temp) <- 1:nrow(temp) + rowmax
-      rowmax <- nrow(temp)
-      if (nrow(parameters) == 0) {
-        parameters <- temp
-      } else {
-        parameters <- merge(parameters, temp, all = TRUE)
-      }
-    }
-    parameters <- parameters[order(parameters$Group), ]
+      temp
+    }))
+    # parameters <- parameters[order(parameters$Group), ]
   } else if ("anova.rms" %in% class(model)) {
     parameters <- data.frame(model)
     parameters$Parameter <- rownames(parameters)
@@ -663,6 +665,7 @@
   names(parameters) <- gsub("Sum of Sq", "Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Mean Sq", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("MS", "Mean_Square", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("approx F", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("F value", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.Df", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.DoF", "df_residual", names(parameters), fixed = TRUE)
@@ -681,7 +684,7 @@
 
   # Reorder
   row.names(parameters) <- NULL
-  order <- c("Group", "Parameter", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "df", "df_residual", "Mean_Square", "F", "p")
+  order <- c("Group", "Parameter", "Pillai", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "df", "df_residual", "Mean_Square", "F", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   .remove_backticks_from_parameter_names(parameters)
