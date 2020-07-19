@@ -634,7 +634,7 @@
     if (names(model)[1L] == "(Intercept)") {
       model <- model[-1L]
     }
-    parameters <- do.call(rbind, lapply(names(model), function(i) {
+    parameters <- Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE), lapply(names(model), function(i) {
       aov_summary <- summary(model[[i]])
       if (inherits(aov_summary, "summary.manova")) {
         temp <- as.data.frame(aov_summary$stats)
