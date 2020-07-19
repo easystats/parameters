@@ -47,7 +47,7 @@ The `parameters` package implements a helper that will **automatically pick a me
 
 ### Fit a powerful model
 
-If you are familiar with R and the formula interface, you know of the possibility of including a dot (`.`) in the formula, signifying **"all the remaining variables"**. Curiously, few are aware of the possibility of additionally easily adding **all the interaction terms**. This can be achieved using the `*.*` notation.
+If you are familiar with R and the formula interface, you know of the possibility of including a dot (`.`) in the formula, signifying **"all the remaining variables"**. Curiously, few are aware of the possibility of additionally easily adding **all the interaction terms**. This can be achieved using the `.*.` notation.
 
 Let's try that with the linear regression predicting **Sepal.Length** with the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R.
 
