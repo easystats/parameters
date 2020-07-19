@@ -31,6 +31,10 @@ select_parameters.stanreg <- function(model, method = NULL, cross_validation = F
 }
 
 
+#' @export
+select_parameters.brmsfit <- select_parameters.stanreg
+
+
 
 
 

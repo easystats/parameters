@@ -17,7 +17,7 @@ select_parameters(model, ...)
 \method{select_parameters}{stanreg}(model, method = NULL, cross_validation = FALSE, ...)
 }
 \arguments{
-\item{model}{A statistical model.}
+\item{model}{A statistical model (of class \code{lm}, \code{glm}, \code{merMod}, \code{stanreg} or \code{brmsfit}).}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -48,7 +48,23 @@ select_parameters(model, ...)
 The model refitted with optimal number of parameters.
 }
 \description{
-This function performs an automated selection of the 'best' parameters, updating and returning the "best" model. For frequentist simple GLMs, it performs an AIC-based stepwise selection. For Bayesian models, it uses the \code{projpred} package.
+This function performs an automated selection of the 'best' parameters, updating and returning the "best" model.
+}
+\details{
+\subsection{Classical lm and glm}{
+    For frequentist GLMs, \code{select_parameters()} performs an AIC-based
+    stepwise selection.
+  }
+  \subsection{Mixed models}{
+    For mixed models of class \code{merMod}, stepwise selection is
+    based on \code{\link[cAIC4:stepcAIC]{stepcAIC()}}. This step function
+    only searches the "best" model based on the random effects structure,
+    i.e. \code{select_parameters()} adds or excludes random effects until
+    the cAIC can't be improved further.
+  }
+  \subsection{Bayesian models}{
+    For Bayesian models, it uses the \code{projpred} package.
+  }
 }
 \examples{
 model <- lm(mpg ~ ., data = mtcars)

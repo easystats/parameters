@@ -27,6 +27,7 @@ knitr::opts_chunk$set(comment = "#>")
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
     !requireNamespace("performance", quietly = TRUE) ||
+    !requireNamespace("rstanarm", quietly = TRUE) ||
     !requireNamespace("lme4", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
@@ -52,7 +53,7 @@ If you are familiar with R and the formula interface, you know of the possibilit
 Let's try that with the linear regression predicting **Sepal.Length** with the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R.
 
 ```{r message=FALSE, warning=FALSE}
-model <- lm(Sepal.Length ~ .*., data=iris)
+model <- lm(Sepal.Length ~ .*., data = iris)
 summary(model)
 ```
 
@@ -98,13 +99,32 @@ Although appealing, please note that these automated selection methods are [**qu
 
 For simple linear regressions as above, the selection is made using the `step()` function (available in base R). This performs a [**stepwise**](https://en.wikipedia.org/wiki/Stepwise_regression) selection. However, this procedures is not available for other types of models, such as **mixed** or **Bayesian** models.
 
-### Mixed model
+### Mixed models
 
+For mixed models (of class `merMod`), stepwise selection is based on `cAIC4::stepcAIC()`. This step function only searches the "best" model based on the _random effects structure_, i.e. `select_parameters()` adds or excludes random effects until the cAIC can't be improved further.
 
 ```{r message=FALSE, warning=FALSE}
 library(lme4)
+data("qol_cancer")
 
-lmer(Sepal.Length ~ Sepal.Width * Petal.Length * Petal.Width + (1|Species), data = iris) %>%
-  select_parameters() %>%
+# multiple models are checked, however, initial models
+# already seems to be the best one...
+lmer(
+  QoL ~ time + phq4 + age + (1 + time | hospital / ID),
+  data = qol_cancer
+) select_parameters() %>%
   summary()
+```
+
+### Bayesian models
+
+For Bayesian models, `select_parameters()` uses the **projpred** package to select the best parameters for the model.
+
+```{r message=FALSE, warning=FALSE}
+library(rstanarm)
+model <- stan_glm(
+  mpg ~ ., data = mtcars,
+  iter = 500, refresh = 0, verbose = FALSE
+)
+select_parameters(model, cross_validation = TRUE)
 ```
