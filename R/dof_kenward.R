@@ -22,7 +22,7 @@ dof_kenward <- function(model) {
 }
 
 
-.adjusted_ddf <- function(adjusted_vcov, linear_coef, unadjusted_vcov = adjusted_vcov){
+.adjusted_ddf <- function(adjusted_vcov, linear_coef, unadjusted_vcov = adjusted_vcov) {
   if (!requireNamespace("Matrix", quietly = TRUE)) {
     stop("Package 'Matrix' required for this function to work. Please install it.")
   }
@@ -36,7 +36,7 @@ dof_kenward <- function(model) {
 
   A1 <- A2 <- 0
   theta_unadjusted_vcov <- theta %*% unadjusted_vcov
-  n.ggamma = length(P)
+  n.ggamma <- length(P)
   for (ii in 1:n.ggamma) {
     for (jj in c(ii:n.ggamma)) {
       e <- ifelse(ii == jj, 1, 2)
@@ -115,12 +115,12 @@ dof_kenward <- function(model) {
   n.ggamma <- length(ggamma)
 
   ## Find G_r:
-  G  <- NULL
+  G <- NULL
   Zt <- lme4::getME(model, "Zt")
   for (ss in 1:SS$n.RT) {
     ZZ <- .shget_Zt_group(ss, Zt, SS$Gp)
     n.lev <- SS$n.lev.by.RT2[ss] ## ; cat(sprintf("n.lev=%i\n", n.lev))
-    Ig    <- Matrix::sparseMatrix(1:n.lev, 1:n.lev, x = 1)
+    Ig <- Matrix::sparseMatrix(1:n.lev, 1:n.lev, x = 1)
     for (rr in 1:SS$n.parm.by.RT[ss]) {
       ## This is takes care of the case where there is random regression and several matrices have to be constructed.
       ## FIXME: I am not sure this is correct if there is a random quadratic term. The '2' below looks suspicious.

@@ -162,7 +162,7 @@ n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClus
   data <- data.frame(t(x))
   colnames(data) <- paste0('x', seq(1, ncol(data)))  # Add columns names as required by the package
 
-  suppressMessages(out <- M3C::M3C(data, method=2))
+  suppressMessages(out <- M3C::M3C(data, method = 2))
   out <- data.frame(n_Clusters = which.max(out$scores$PCSI), Method = "Consensus clustering algorithm (penalty term)", Package = "M3C")
 
   # Doesn't work
