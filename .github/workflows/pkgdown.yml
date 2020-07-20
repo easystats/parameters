@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages("remotes")
-          remotes::install_deps(dependencies = TRUE, repos = c("https://cran.rstudio.com/", "https://master.bioconductor.org/"))
+          remotes::install_deps(dependencies = TRUE)
           remotes::install_dev("pkgdown")
         shell: Rscript {0}
 
