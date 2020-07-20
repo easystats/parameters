@@ -112,7 +112,8 @@ data("qol_cancer")
 lmer(
   QoL ~ time + phq4 + age + (1 + time | hospital / ID),
   data = qol_cancer
-) select_parameters() %>%
+) %>% 
+  select_parameters() %>%
   summary()
 ```
 
