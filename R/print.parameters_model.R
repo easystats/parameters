@@ -268,6 +268,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
       "simplex" = "Monotonic Effects",
       "smooth_sd" = "Smooth Terms (SD)",
       "smooth_terms" = "Smooth Terms",
+      "sigma.fixed" = ,
       "sigma" = "Sigma",
       "Correlation" = "Correlation",
       "SD/Cor" = "SD / Correlation",
@@ -355,7 +356,7 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
     for (i in out) {
       insight::print_color(paste0("# ", attr(i, "main_title")), "blue")
       cat(" ")
-      insight::print_color(attr(i, "sub_title"), "red")
+      insight::print_color(gsub("  ", " ", attr(i, "sub_title"), fixed = TRUE), "red")
       cat("\n\n")
 
       rem <- which(colnames(i) %in% c("Parameter", "Component", "Effects", "Group", "Response", "Subgroup", "Function"))
