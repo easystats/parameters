@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -169,7 +169,7 @@
   mixed model and returns the result as a data frame.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/random_parameters.html'>random_parameters</a></span>(<span class='kw'>model</span>)</pre>
+    <pre class="usage"><span class='fu'>random_parameters</span>(<span class='kw'>model</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,7 +210,7 @@
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sleepstudy</span>)
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Reaction</span> <span class='op'>~</span> <span class='kw'>Days</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>+</span> <span class='kw'>Days</span> <span class='op'>|</span> <span class='kw'>Subject</span>), data = <span class='kw'>sleepstudy</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/random_parameters.html'>random_parameters</a></span>(<span class='kw'>model</span>)
+  <span class='fu'>random_parameters</span>(<span class='kw'>model</span>)
 }</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Random Effects
 #&gt; 
 #&gt; Within-Group Variance          </span><span>654.94 (25.59)

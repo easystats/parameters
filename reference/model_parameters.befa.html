@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for befa</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   sort = <span class='fl'>FALSE</span>,
   centrality = <span class='st'>"median"</span>,
@@ -235,9 +235,9 @@ included in the summary output.</p></td>
 <span class='co'># \donttest{</span>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"BayesFM"</span>)) {
   <span class='kw'>efa</span> <span class='op'>&lt;-</span> <span class='kw'>BayesFM</span>::<span class='fu'><a href='https://rdrr.io/pkg/BayesFM/man/befa.html'>befa</a></span>(<span class='kw'>mtcars</span>, iter = <span class='fl'>1000</span>)
-  <span class='kw'>results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>efa</span>, sort = <span class='fl'>TRUE</span>)
+  <span class='kw'>results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>efa</span>, sort = <span class='fl'>TRUE</span>)
   <span class='kw'>results</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/convert_efa_to_cfa.html'>efa_to_cfa</a></span>(<span class='kw'>results</span>)
+  <span class='fu'><a href='convert_efa_to_cfa.html'>efa_to_cfa</a></span>(<span class='kw'>results</span>)
 }</div><div class='output co'>#&gt; <span class='message'>Loading required package: BayesFM</span></div><div class='output co'>#&gt; starting MCMC sampling...
 #&gt;     5%
 #&gt;    10%

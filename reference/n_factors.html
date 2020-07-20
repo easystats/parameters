@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@
     <p>This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/n_factors.html'>n_factors</a></span>(
+    <pre class="usage"><span class='fu'>n_factors</span>(
   <span class='kw'>x</span>,
   type = <span class='st'>"FA"</span>,
   rotation = <span class='st'>"varimax"</span>,
@@ -178,7 +178,7 @@
   <span class='kw'>...</span>
 )
 
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/n_factors.html'>n_components</a></span>(
+<span class='fu'>n_components</span>(
   <span class='kw'>x</span>,
   type = <span class='st'>"PCA"</span>,
   rotation = <span class='st'>"varimax"</span>,
@@ -231,7 +231,7 @@
     <p>A data frame.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>. <code><a href='https://rdrr.io/pkg/parameters/man/n_factors.html'>n_components()</a></code> is a convenient short for <code><a href='https://rdrr.io/pkg/parameters/man/n_factors.html'>n_factors(type = "PCA")</a></code>.</p>
+    <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>. <code>n_components()</code> is a convenient short for <code>n_factors(type = "PCA")</code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -253,10 +253,10 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/n_factors.html'>n_factors</a></span>(<span class='kw'>mtcars</span>, type = <span class='st'>"PCA"</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
+<span class='fu'>n_factors</span>(<span class='kw'>mtcars</span>, type = <span class='st'>"PCA"</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
 #&gt; </span><span>The choice of 3 dimensions is supported by 5 (29.41%) methods out of 17 (Bartlett, CNG, SE Scree, R2, Velicer's MAP).</div><div class='input'>
-<span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/n_factors.html'>n_factors</a></span>(<span class='kw'>mtcars</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>], type = <span class='st'>"FA"</span>)
+<span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'>n_factors</span>(<span class='kw'>mtcars</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>], type = <span class='st'>"FA"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw'>result</span>)</div><div class='output co'>#&gt;    n_Factors              Method       Family
 #&gt; 1          1             Bentler      Bentler
 #&gt; 2          1 Optimal coordinates        Scree
@@ -280,14 +280,14 @@
 #&gt; 1         1        12
 #&gt; 2         2         6
 #&gt; 3         3         1</div><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/n_factors.html'>n_factors</a></span>(<span class='kw'>mtcars</span>, type = <span class='st'>"PCA"</span>, package = <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'huge':</span>
+<span class='fu'>n_factors</span>(<span class='kw'>mtcars</span>, type = <span class='st'>"PCA"</span>, package = <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'huge':</span>
 #&gt; <span class='message'>  method    from   </span>
 #&gt; <span class='message'>  plot.sim  BDgraph</span>
 #&gt; <span class='message'>  print.sim BDgraph</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
-#&gt; </span><span>The choice of 3 dimensions is supported by 6 (31.58%) methods out of 19 (Bartlett, CNG, SE Scree, R2, EGA (glasso), Velicer's MAP).</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/n_factors.html'>n_factors</a></span>(<span class='kw'>mtcars</span>, type = <span class='st'>"FA"</span>, algorithm = <span class='st'>"mle"</span>, package = <span class='st'>"all"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Method Agreement Procedure:
+#&gt; </span><span>The choice of 2 dimensions is supported by 6 (31.58%) methods out of 19 (Optimal coordinates, Parallel analysis, Kaiser criterion, EGA (glasso), EGA (TMFG), VSS complexity 2).</div><div class='input'><span class='fu'>n_factors</span>(<span class='kw'>mtcars</span>, type = <span class='st'>"FA"</span>, algorithm = <span class='st'>"mle"</span>, package = <span class='st'>"all"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
-#&gt; </span><span>The choice of 3 dimensions is supported by 7 (28.00%) methods out of 25 (Bartlett, CNG, SE Scree, R2, Velicer's MAP, BIC, BIC).</div><div class='input'><span class='co'># }</span></div></span></pre>
+#&gt; </span><span>The choice of 3 dimensions is supported by 8 (32.00%) methods out of 25 (Bartlett, CNG, SE Scree, R2, EGA (glasso), Velicer's MAP, BIC, BIC).</div><div class='input'><span class='co'># }</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

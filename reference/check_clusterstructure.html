@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@
     <p>This checks whether the data is appropriate for clustering using the Hopkins' H statistic of given data. If the value of Hopkins statistic is close to 0 (below 0.5), then we can reject the null hypothesis and conclude that the dataset is significantly clusterable. A value for H lower than 0.25 indicates a clustering tendency at the 90% confidence level. The visual assessment of cluster tendency (VAT) approach (Bezdek and Hathaway, 2002) consists in investigating the heatmap of the ordered dissimilarity matrix. Following this, one can potentially detect the clustering tendency by counting the number of square shaped blocks along the diagonal.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/check_clusterstructure.html'>check_clusterstructure</a></span>(<span class='kw'>x</span>, standardize = <span class='fl'>TRUE</span>, distance = <span class='st'>"euclidean"</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>check_clusterstructure</span>(<span class='kw'>x</span>, standardize = <span class='fl'>TRUE</span>, distance = <span class='st'>"euclidean"</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,14 +203,14 @@
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/check_kmo.html'>check_kmo</a></code>, <code><a href='https://rdrr.io/pkg/parameters/man/check_sphericity.html'>check_sphericity</a></code> and <code><a href='https://rdrr.io/pkg/parameters/man/check_factorstructure.html'>check_factorstructure</a></code>.</p></div>
+    <div class='dont-index'><p><code><a href='check_kmo.html'>check_kmo</a></code>, <code><a href='check_sphericity.html'>check_sphericity</a></code> and <code><a href='check_factorstructure.html'>check_factorstructure</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/check_clusterstructure.html'>check_clusterstructure</a></span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>])</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Clustering tendency
+<span class='fu'>check_clusterstructure</span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>])</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Clustering tendency
 #&gt; 
 #&gt; </span><span style='color: #00BB00;'>The dataset is suitable for clustering (Hopkins' H = 0.18).
-#&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/check_clusterstructure.html'>check_clusterstructure</a></span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>]))</div><div class='img'><img src='check_clusterstructure-1.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'>check_clusterstructure</span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>]))</div><div class='img'><img src='check_clusterstructure-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for stanreg</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   centrality = <span class='st'>"median"</span>,
   dispersion = <span class='fl'>FALSE</span>,
@@ -188,7 +188,7 @@
 )
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   centrality = <span class='st'>"median"</span>,
   dispersion = <span class='fl'>FALSE</span>,
@@ -308,7 +308,7 @@ If <code>model</code> is a data frame, arguments <code>diagnostic</code>, <code>
 There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/standardize_names.html'>standardize_names()</a></code> to rename
+    <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
   columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -319,21 +319,21 @@ There is also a <a href='https://easystats.github.io/see/articles/parameters.htm
     <span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Petal.Length</span> <span class='op'>*</span> <span class='kw'>Species</span>,
     data = <span class='kw'>iris</span>, iter = <span class='fl'>500</span>, refresh = <span class='fl'>0</span>
   )
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
 }</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.88), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.81), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.87). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.86), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.79), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
 #&gt; 
 #&gt; Parameter                      | Median |         89% CI |     pd | % in ROPE |  Rhat |    ESS |              Prior
 #&gt; -------------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                    |   4.08 | [ 3.53,  4.65] |   100% |        0% | 1.006 | 269.64 | Normal (0 +- 8.28)
-#&gt; Petal.Length                   |   0.63 | [ 0.27,  1.02] | 99.40% |     0.40% | 1.006 | 263.83 | Normal (0 +- 1.17)
-#&gt; Speciesversicolor              |  -1.61 | [-2.47, -0.70] | 99.40% |     0.40% | 1.001 | 365.90 | Normal (0 +- 2.07)
-#&gt; Speciesvirginica               |  -2.84 | [-3.75, -1.97] |   100% |        0% | 1.002 | 393.53 | Normal (0 +- 2.07)
-#&gt; Petal.Length:Speciesversicolor |   0.19 | [-0.25,  0.58] | 77.50% |    18.00% | 1.004 | 261.69 | Normal (0 +- 1.02)
-#&gt; Petal.Length:Speciesvirginica  |   0.34 | [-0.08,  0.72] | 90.60% |    10.70% | 1.006 | 255.62 | Normal (0 +- 0.78)
+#&gt; (Intercept)                    |   4.03 | [ 3.53,  4.56] |   100% |        0% | 1.022 | 200.71 | Normal (0 +- 8.28)
+#&gt; Petal.Length                   |   0.67 | [ 0.30,  0.99] | 98.90% |     1.10% | 1.022 | 181.51 | Normal (0 +- 1.17)
+#&gt; Speciesversicolor              |  -1.53 | [-2.41, -0.77] |   100% |        0% | 1.012 | 395.75 | Normal (0 +- 2.07)
+#&gt; Speciesvirginica               |  -2.79 | [-3.70, -2.00] |   100% |        0% | 1.008 | 407.03 | Normal (0 +- 2.07)
+#&gt; Petal.Length:Speciesversicolor |   0.14 | [-0.24,  0.52] | 71.70% |    23.50% | 1.022 | 219.99 | Normal (0 +- 1.02)
+#&gt; Petal.Length:Speciesvirginica  |   0.30 | [-0.08,  0.65] | 91.60% |    14.00% | 1.023 | 183.19 | Normal (0 +- 0.78)
 #&gt; </div><div class='input'><span class='co'># }</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

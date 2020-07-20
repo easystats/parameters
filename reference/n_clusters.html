@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@
     <p>This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/n_clusters.html'>n_clusters</a></span>(
+    <pre class="usage"><span class='fu'>n_clusters</span>(
   <span class='kw'>x</span>,
   standardize = <span class='fl'>TRUE</span>,
   force = <span class='fl'>FALSE</span>,
@@ -215,7 +215,7 @@ the number of clusters need numeric input only.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/n_clusters.html'>n_clusters</a></span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], package = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"NbClust"</span>, <span class='st'>"mclust"</span>, <span class='st'>"cluster"</span>))</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
+<span class='fu'>n_clusters</span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], package = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"NbClust"</span>, <span class='st'>"mclust"</span>, <span class='st'>"cluster"</span>))</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
 #&gt; </span><span>The choice of 2 clusters is supported by 12 (42.86%) methods out of 28 (CH, Cindex, DB, Silhouette, Beale, Ratkowsky, PtBiserial, McClain, Dunn, SDindex, Mixture, Tibs2001SEmax).</div><div class='input'><span class='co'># }</span></div></span></pre>
   </div>

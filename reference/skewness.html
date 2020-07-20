@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -167,15 +167,15 @@
     <p>Compute Skewness and Kurtosis</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/skewness.html'>skewness</a></span>(<span class='kw'>x</span>, na.rm = <span class='fl'>TRUE</span>, type = <span class='st'>"2"</span>, iterations = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>skewness</span>(<span class='kw'>x</span>, na.rm = <span class='fl'>TRUE</span>, type = <span class='st'>"2"</span>, iterations = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/skewness.html'>kurtosis</a></span>(<span class='kw'>x</span>, na.rm = <span class='fl'>TRUE</span>, type = <span class='st'>"2"</span>, iterations = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'>kurtosis</span>(<span class='kw'>x</span>, na.rm = <span class='fl'>TRUE</span>, type = <span class='st'>"2"</span>, iterations = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for parameters_kurtosis</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/print.html'>print</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>3</span>, test = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='print.html'>print</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>3</span>, test = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for parameters_skewness</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/print.html'>print</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>3</span>, test = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='print.html'>print</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>3</span>, test = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -227,7 +227,7 @@ for the relationship of skewness and distributions are:</p><ul>
 <li><p>Lognormal distribution can have a skewness of any positive value, depending on its parameters</p></li>
 </ul><p>(<cite>https://en.wikipedia.org/wiki/Skewness</cite>)</p>
 <h3>Types of Skewness</h3>
-<p><code><a href='https://rdrr.io/pkg/parameters/man/skewness.html'>skewness()</a></code> supports three different methods for estimating skewness, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
+<p><code>skewness()</code> supports three different methods for estimating skewness, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
 <li><p>Type "1" is the "classical" method, which is <code>g1 = (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5</code></p></li>
 <li><p>Type "2" first calculates the type-1 skewness, than adjusts the result: <code>G1 = g1 * sqrt(n * (n - 1)) / (n - 2)</code>. This is what SAS and SPSS usually return</p></li>
 <li><p>Type "3" first calculates the type-1 skewness, than adjusts the result: <code>b1 = g1 * ((1 - 1 / n))^1.5</code>. This is what Minitab usually returns.</p></li>
@@ -240,7 +240,7 @@ larger than zero indicates a "leptokurtic" distribution with <em>fatter</em> tai
 A kurtosis value below zero indicates a "platykurtic" distribution with <em>thinner</em>
 tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
 <h3>Types of Kurtosis</h3>
-<p><code><a href='https://rdrr.io/pkg/parameters/man/skewness.html'>kurtosis()</a></code> supports three different methods for estimating kurtosis, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
+<p><code>kurtosis()</code> supports three different methods for estimating kurtosis, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
 <li><p>Type "1" is the "classical" method, which is <code>g2 = n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3</code>.</p></li>
 <li><p>Type "2" first calculates the type-1 kurtosis, than adjusts the result: <code>G2 = ((n + 1) * g2 + 6) * (n - 1)/((n - 2) * (n - 3))</code>. This is what SAS and SPSS usually return</p></li>
 <li><p>Type "3" first calculates the type-1 kurtosis, than adjusts the result: <code>b2 = (g2 + 3) * (1 - 1 / n)^2 - 3</code>. This is what Minitab usually returns.</p></li>
@@ -259,11 +259,11 @@ tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/skewness.html'>skewness</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; Skewness |    SE
+    <pre class="examples"><div class='input'><span class='fu'>skewness</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; Skewness |    SE
 #&gt; ----------------
-#&gt; 0.062    | 0.077</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/skewness.html'>kurtosis</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; Kurtosis |    SE
+#&gt; 0.068    | 0.077</div><div class='input'><span class='fu'>kurtosis</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; Kurtosis |    SE
 #&gt; ----------------
-#&gt; 0.307    | 0.154</div></pre>
+#&gt; -0.091   | 0.154</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

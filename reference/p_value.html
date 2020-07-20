@@ -84,7 +84,7 @@ Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -169,63 +169,63 @@ Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds 
 
     <div class="ref-description">
     <p>This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:</p><ul>
-<li><p>Mixed models (<span class="pkg">lme4</span>): By default, p-values are based on Wald-test approximations (see <code><a href='https://rdrr.io/pkg/parameters/man/p_value_wald.html'>p_value_wald</a></code>). For certain situations, the "m-l-1" rule might be a better approximation. That is, for <code>method = "ml1"</code>, <code><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>p_value_ml1</a></code> is called. For <code>lmerMod</code> objects, if <code>method = "kenward"</code>, p-values are based on Kenward-Roger approximations, i.e. <code><a href='https://rdrr.io/pkg/parameters/man/p_value_kenward.html'>p_value_kenward</a></code> is called, and <code>method = "satterthwaite"</code> calls <code><a href='https://rdrr.io/pkg/parameters/man/p_value_satterthwaite.html'>p_value_satterthwaite</a></code>.</p></li>
+<li><p>Mixed models (<span class="pkg">lme4</span>): By default, p-values are based on Wald-test approximations (see <code><a href='ci_wald.html'>p_value_wald</a></code>). For certain situations, the "m-l-1" rule might be a better approximation. That is, for <code>method = "ml1"</code>, <code><a href='ci_ml1.html'>p_value_ml1</a></code> is called. For <code>lmerMod</code> objects, if <code>method = "kenward"</code>, p-values are based on Kenward-Roger approximations, i.e. <code><a href='ci_kenward.html'>p_value_kenward</a></code> is called, and <code>method = "satterthwaite"</code> calls <code><a href='ci_satterthwaite.html'>p_value_satterthwaite</a></code>.</p></li>
 <li><p>Bayesian models (<span class="pkg">rstanarm</span>, <span class="pkg">brms</span>): For Bayesian models, the p-values corresponds to the <em>probability of direction</em> (<code><a href='https://rdrr.io/pkg/bayestestR/man/p_direction.html'>p_direction</a></code>), which is converted to a p-value using <code><a href='https://rdrr.io/pkg/bayestestR/man/pd_to_p.html'>bayestestR::convert_pd_to_p()</a></code>.</p></li>
 </ul>
 
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>p_value</span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, method = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, method = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for lmerMod</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, method = <span class='st'>"wald"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, method = <span class='st'>"wald"</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for merMod</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, method = <span class='st'>"wald"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, method = <span class='st'>"wald"</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for rlmerMod</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, method = <span class='st'>"wald"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, method = <span class='st'>"wald"</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for glmmTMB</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(
+<span class='fu'>p_value</span>(
   <span class='kw'>model</span>,
   component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span>),
   <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for MixMod</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>), <span class='kw'>...</span>)
 
 <span class='co'># S3 method for mixor</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='kw'>...</span>)
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, ci = <span class='fl'>0.95</span>, adjust = <span class='st'>"none"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, ci = <span class='fl'>0.95</span>, adjust = <span class='st'>"none"</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for poissonmfx</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"marginal"</span>), <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"marginal"</span>), <span class='kw'>...</span>)
 
 <span class='co'># S3 method for betamfx</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(
+<span class='fu'>p_value</span>(
   <span class='kw'>model</span>,
   component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>, <span class='st'>"marginal"</span>),
   <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for averaging</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"full"</span>), <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"full"</span>), <span class='kw'>...</span>)
 
 <span class='co'># S3 method for DirichletRegModel</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>), <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>), <span class='kw'>...</span>)
 
 <span class='co'># S3 method for clm2</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span>), <span class='kw'>...</span>)
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span>), <span class='kw'>...</span>)
 
 <span class='co'># S3 method for gee</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>, method = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>p_value</span>(<span class='kw'>model</span>, method = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -236,11 +236,11 @@ Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds 
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed down to <code><a href='https://rdrr.io/pkg/parameters/man/standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
+      <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models, can be <code><a href='https://rdrr.io/pkg/parameters/man/p_value_wald.html'>"wald"</a></code> (default), <code><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>"ml1"</a></code>, <code><a href='https://rdrr.io/pkg/parameters/man/p_value_betwithin.html'>"betwithin"</a></code>, <code><a href='https://rdrr.io/pkg/parameters/man/p_value_satterthwaite.html'>"satterthwaite"</a></code> or <code><a href='https://rdrr.io/pkg/parameters/man/p_value_kenward.html'>"kenward"</a></code>. For models that are supported by the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> packages, may also be <code>method = "robust"</code> to compute p-values based ob robust standard errors.</p></td>
+      <td><p>For mixed models, can be <code><a href='ci_wald.html'>"wald"</a></code> (default), <code><a href='ci_ml1.html'>"ml1"</a></code>, <code><a href='ci_betwithin.html'>"betwithin"</a></code>, <code><a href='ci_satterthwaite.html'>"satterthwaite"</a></code> or <code><a href='ci_kenward.html'>"kenward"</a></code>. For models that are supported by the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> packages, may also be <code>method = "robust"</code> to compute p-values based ob robust standard errors.</p></td>
     </tr>
     <tr>
       <th>component</th>
@@ -272,7 +272,7 @@ is returned.</p></td>
     <p>The p-values.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code><a href='https://rdrr.io/pkg/parameters/man/standard_error_robust.html'>p_value_robust()</a></code> resp. <code><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value(method = "robust")</a></code>
+    <p><code><a href='standard_error_robust.html'>p_value_robust()</a></code> resp. <code>p_value(method = "robust")</code>
   rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package (the latter if
   <code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
   thus only work for those models supported by those packages.</p>
@@ -281,7 +281,7 @@ is returned.</p></td>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>iris</span>)
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Petal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Length</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>), data = <span class='kw'>iris</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value.html'>p_value</a></span>(<span class='kw'>model</span>)
+  <span class='fu'>p_value</span>(<span class='kw'>model</span>)
 }</div><div class='output co'>#&gt;      Parameter            p
 #&gt; 1  (Intercept) 9.561737e-01
 #&gt; 2 Sepal.Length 1.273781e-44</div></pre>

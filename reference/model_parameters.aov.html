@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for aov</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   omega_squared = <span class='kw'>NULL</span>,
   eta_squared = <span class='kw'>NULL</span>,
@@ -224,7 +224,7 @@
   <span class='kw'>df</span><span class='op'>$</span><span class='kw'>Sepal.Big</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>Sepal.Width</span> <span class='op'>&gt;=</span> <span class='fl'>3</span>, <span class='st'>"Yes"</span>, <span class='st'>"No"</span>)
 
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Big</span>, data = <span class='kw'>df</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
     <span class='kw'>model</span>,
     omega_squared = <span class='st'>"partial"</span>,
     eta_squared = <span class='st'>"partial"</span>,
@@ -232,8 +232,8 @@
   )
 
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/lavTestLRT.html'>anova</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Big</span>, data = <span class='kw'>df</span>))
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
     <span class='kw'>model</span>,
     omega_squared = <span class='st'>"partial"</span>,
     eta_squared = <span class='st'>"partial"</span>,
@@ -241,7 +241,7 @@
   )
 
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Big</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>Error</a></span>(<span class='kw'>Species</span>), data = <span class='kw'>df</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
 
   <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
     <span class='kw'>mm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Big</span> <span class='op'>+</span> <span class='kw'>Petal.Width</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>),
@@ -249,13 +249,13 @@
     <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/lavTestLRT.html'>anova</a></span>(<span class='kw'>mm</span>)
 
     <span class='co'># simple parameters table</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+    <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
 
     <span class='co'># parameters table including effect sizes</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+    <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
       <span class='kw'>model</span>,
       eta_squared = <span class='st'>"partial"</span>,
-      df_error = <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/p_value_satterthwaite.html'>dof_satterthwaite</a></span>(<span class='kw'>mm</span>)
+      df_error = <span class='fu'><a href='ci_satterthwaite.html'>dof_satterthwaite</a></span>(<span class='kw'>mm</span>)
     )
   }
 }</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; Parameter   | Sum_Squares | df | Mean_Square |      F | Eta_Sq (partial)

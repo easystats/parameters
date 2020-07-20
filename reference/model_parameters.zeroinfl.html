@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for zeroinfl</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   ci = <span class='fl'>0.95</span>,
   bootstrap = <span class='fl'>FALSE</span>,
@@ -194,7 +194,7 @@
     </tr>
     <tr>
       <th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='https://rdrr.io/pkg/parameters/man/model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
+      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
     </tr>
     <tr>
       <th>iterations</th>
@@ -214,7 +214,7 @@
     </tr>
     <tr>
       <th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='https://rdrr.io/pkg/parameters/man/standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>p_adjust</th>
@@ -231,7 +231,7 @@
     <p>A data frame of indices related to the model's parameters.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/standardize_names.html'>standardize_names()</a></code> to rename
+    <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
   columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -239,7 +239,7 @@
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='http://github.com/atahk/pscl'>"pscl"</a></span>)) {
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"bioChemists"</span>)
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pscl/man/zeroinfl.html'>zeroinfl</a></span>(<span class='kw'>art</span> <span class='op'>~</span> <span class='kw'>fem</span> <span class='op'>+</span> <span class='kw'>mar</span> <span class='op'>+</span> <span class='kw'>kid5</span> <span class='op'>+</span> <span class='kw'>ment</span> <span class='op'>|</span> <span class='kw'>kid5</span> <span class='op'>+</span> <span class='kw'>phd</span>, data = <span class='kw'>bioChemists</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
 }</div><div class='output co'>#&gt; <span class='message'>Loading required package: pscl</span></div><div class='output co'>#&gt; <span class='message'>Classes and Methods for R developed in the</span>
 #&gt; <span class='message'>Political Science Computational Laboratory</span>
 #&gt; <span class='message'>Department of Political Science</span>
@@ -247,21 +247,21 @@
 #&gt; <span class='message'>Simon Jackman</span>
 #&gt; <span class='message'>hurdle and zeroinfl functions by Achim Zeileis</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
 #&gt; 
-#&gt; </span><span>Parameter     | Coefficient |       SE |         95% CI |     z |  df |      p
-#&gt; ------------------------------------------------------------------------------
-#&gt; (Intercept)   |        0.56 |     0.07 | [ 0.43,  0.69] |  8.26 | 907 | &lt; .001
-#&gt; fem [Women]   |       -0.23 |     0.06 | [-0.34, -0.11] | -3.91 | 907 | &lt; .001
-#&gt; mar [Married] |        0.14 |     0.07 | [ 0.01,  0.27] |  2.07 | 907 | 0.038 
-#&gt; kid5          |       -0.17 |     0.05 | [-0.26, -0.07] | -3.43 | 907 | &lt; .001
-#&gt; ment          |        0.02 | 2.12e-03 | [ 0.02,  0.03] | 10.05 | 907 | &lt; .001
+#&gt; </span><span>Parameter     | Coefficient |   SE |         95% CI |     z |      p
+#&gt; --------------------------------------------------------------------
+#&gt; (Intercept)   |        0.56 | 0.07 | [ 0.43,  0.69] |  8.26 | &lt; .001
+#&gt; fem [Women]   |       -0.23 | 0.06 | [-0.34, -0.11] | -3.91 | &lt; .001
+#&gt; mar [Married] |        0.14 | 0.07 | [ 0.01,  0.27] |  2.07 | 0.038 
+#&gt; kid5          |       -0.17 | 0.05 | [-0.26, -0.07] | -3.43 | &lt; .001
+#&gt; ment          |        0.02 | 0.00 | [ 0.02,  0.03] | 10.05 | &lt; .001
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |  df |     p
-#&gt; -----------------------------------------------------------------------
-#&gt; (Intercept) |       -0.93 | 0.43 | [-1.78, -0.08] | -2.14 | 907 | 0.032
-#&gt; kid5        |        0.05 | 0.22 | [-0.38,  0.47] |  0.21 | 907 | 0.831
-#&gt; phd         |       -0.25 | 0.14 | [-0.51,  0.02] | -1.84 | 907 | 0.065
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |     p
+#&gt; -----------------------------------------------------------------
+#&gt; (Intercept) |       -0.93 | 0.43 | [-1.78, -0.08] | -2.14 | 0.032
+#&gt; kid5        |        0.05 | 0.22 | [-0.38,  0.47] |  0.21 | 0.831
+#&gt; phd         |       -0.25 | 0.14 | [-0.51,  0.02] | -1.84 | 0.065
 #&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

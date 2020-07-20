@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -168,13 +168,13 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for PCA</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, sort = <span class='fl'>FALSE</span>, threshold = <span class='kw'>NULL</span>, labels = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, sort = <span class='fl'>FALSE</span>, threshold = <span class='kw'>NULL</span>, labels = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for principal</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, sort = <span class='fl'>FALSE</span>, threshold = <span class='kw'>NULL</span>, labels = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, sort = <span class='fl'>FALSE</span>, threshold = <span class='kw'>NULL</span>, labels = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for omega</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -229,7 +229,7 @@
 
 <span class='co'># Principal Component Analysis (PCA) ---------</span>
 <span class='kw'>pca</span> <span class='op'>&lt;-</span> <span class='kw'>psych</span>::<span class='fu'><a href='https://rdrr.io/pkg/psych/man/principal.html'>principal</a></span>(<span class='kw'>attitude</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>pca</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (varimax-rotation)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>pca</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (varimax-rotation)
 #&gt; 
 #&gt; </span><span>Variable   |  PC1 | Complexity | Uniqueness
 #&gt; -------------------------------------------
@@ -243,7 +243,7 @@
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The unique principal component (varimax rotation) accounted for 53.09% of the total variance of the original data.</span><span></div><div class='input'>
 <span class='kw'>pca</span> <span class='op'>&lt;-</span> <span class='kw'>psych</span>::<span class='fu'><a href='https://rdrr.io/pkg/psych/man/principal.html'>principal</a></span>(<span class='kw'>attitude</span>, nfactors = <span class='fl'>3</span>, rotate = <span class='st'>"none"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>pca</span>, sort = <span class='fl'>TRUE</span>, threshold = <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>pca</span>, sort = <span class='fl'>TRUE</span>, threshold = <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable   |  PC1 |   PC2 |   PC3 | Complexity | Uniqueness
 #&gt; -----------------------------------------------------------
@@ -256,7 +256,7 @@
 #&gt; critical   | 0.36 |  0.64 |  0.65 |       2.54 |       0.04
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The 3 principal components accounted for 81.49% of the total variance of the original data (PC1 = 53.09%, PC2 = 16.30%, PC3 = 12.10%).</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/principal_components.html'>principal_components</a></span>(<span class='kw'>attitude</span>, n = <span class='fl'>3</span>, sort = <span class='fl'>TRUE</span>, threshold = <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
+<span class='fu'><a href='principal_components.html'>principal_components</a></span>(<span class='kw'>attitude</span>, n = <span class='fl'>3</span>, sort = <span class='fl'>TRUE</span>, threshold = <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable   |  PC1 |   PC2 |   PC3 | Complexity
 #&gt; ----------------------------------------------
@@ -271,7 +271,7 @@
 #&gt; </span><span style='color: #BBBB00;'>The 3 principal components accounted for 81.49% of the total variance of the original data (PC1 = 53.09%, PC2 = 16.30%, PC3 = 12.10%).</span><span></div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Exploratory Factor Analysis (EFA) ---------</span>
 <span class='kw'>efa</span> <span class='op'>&lt;-</span> <span class='kw'>psych</span>::<span class='fu'><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></span>(<span class='kw'>attitude</span>, nfactors = <span class='fl'>3</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>efa</span>, threshold = <span class='st'>"max"</span>, sort = <span class='fl'>TRUE</span>, labels = <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='kw'>attitude</span>)))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Factor Analysis (oblimin-rotation)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>efa</span>, threshold = <span class='st'>"max"</span>, sort = <span class='fl'>TRUE</span>, labels = <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='kw'>attitude</span>)))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Factor Analysis (oblimin-rotation)
 #&gt; 
 #&gt; </span><span>Variable   | Label |  MR1 |  MR2 |  MR3 | Complexity | Uniqueness
 #&gt; -----------------------------------------------------------------
@@ -286,7 +286,7 @@
 #&gt; </span><span style='color: #BBBB00;'>The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span><span></div><div class='input'><span class='co'># }</span>
 
 <span class='co'># Omega ---------</span>
-<span class='kw'>omega</span> <span class='op'>&lt;-</span> <span class='kw'>psych</span>::<span class='fu'><a href='https://rdrr.io/pkg/psych/man/omega.html'>omega</a></span>(<span class='kw'>mtcars</span>, nfactors = <span class='fl'>3</span>)</div><div class='img'><img src='model_parameters.principal-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>omega</span>)
+<span class='kw'>omega</span> <span class='op'>&lt;-</span> <span class='kw'>psych</span>::<span class='fu'><a href='https://rdrr.io/pkg/psych/man/omega.html'>omega</a></span>(<span class='kw'>mtcars</span>, nfactors = <span class='fl'>3</span>)</div><div class='img'><img src='model_parameters.principal-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>omega</span>)
 <span class='kw'>params</span></div><div class='output co'>#&gt; Composite | Omega (total) | Omega (hierarchical) | Omega (group)
 #&gt; ----------------------------------------------------------------
 #&gt; g         |          0.97 |                 0.57 |          0.26
@@ -304,11 +304,11 @@
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://factominer.free.fr'>FactoMineR</a></span>)
 
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>FactoMineR</span>::<span class='fu'><a href='https://rdrr.io/pkg/FactoMineR/man/PCA.html'>PCA</a></span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], ncp = <span class='fl'>2</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>))<span class='op'>$</span><span class='kw'>scores</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>))<span class='op'>$</span><span class='kw'>scores</span>
 
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>FactoMineR</span>::<span class='fu'><a href='https://rdrr.io/pkg/FactoMineR/man/FAMD.html'>FAMD</a></span>(<span class='kw'>iris</span>, ncp = <span class='fl'>2</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
 }</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

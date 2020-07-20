@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mlm</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   ci = <span class='fl'>0.95</span>,
   bootstrap = <span class='fl'>FALSE</span>,
@@ -180,7 +180,7 @@
 )
 
 <span class='co'># S3 method for multinom</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   ci = <span class='fl'>0.95</span>,
   bootstrap = <span class='fl'>FALSE</span>,
@@ -192,7 +192,7 @@
 )
 
 <span class='co'># S3 method for bracl</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   ci = <span class='fl'>0.95</span>,
   bootstrap = <span class='fl'>FALSE</span>,
@@ -204,7 +204,7 @@
 )
 
 <span class='co'># S3 method for DirichletRegModel</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   ci = <span class='fl'>0.95</span>,
   bootstrap = <span class='fl'>FALSE</span>,
@@ -228,7 +228,7 @@
     </tr>
     <tr>
       <th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='https://rdrr.io/pkg/parameters/man/model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
+      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
     </tr>
     <tr>
       <th>iterations</th>
@@ -264,11 +264,11 @@
     <p>Multinomial or cumulative link models, i.e. models where the
   response value (dependent variable) is categorical and has more than two
   levels, usually return coefficients for each response level. Hence, the
-  output from <code><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters()</a></code> will split the coefficient tables
+  output from <code><a href='model_parameters.html'>model_parameters()</a></code> will split the coefficient tables
   by the different levels of the model's response.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/standardize_names.html'>standardize_names()</a></code> to rename
+    <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
   columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -281,30 +281,30 @@
     data = <span class='kw'>stemcell</span>,
     type = <span class='st'>"ML"</span>
   )
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
 }</div><div class='output co'>#&gt; <span class='message'>Loading required package: brglm2</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Response level: definitely
 #&gt; 
-#&gt; </span><span>Parameter       | Coefficient |   SE |         95% CI |     z | df |      p
-#&gt; ---------------------------------------------------------------------------
-#&gt; (Intercept)     |       -1.25 | 0.26 | [-1.76, -0.73] | -4.76 | 63 | &lt; .001
-#&gt; religion        |        0.44 | 0.10 | [ 0.23,  0.64] |  4.20 | 63 | &lt; .001
-#&gt; gender [female] |       -0.14 | 0.17 | [-0.47,  0.19] | -0.82 | 63 | 0.414 
+#&gt; </span><span>Parameter       | Coefficient |   SE |         95% CI |     z |      p
+#&gt; ----------------------------------------------------------------------
+#&gt; (Intercept)     |       -1.25 | 0.26 | [-1.76, -0.73] | -4.76 | &lt; .001
+#&gt; religion        |        0.44 | 0.10 | [ 0.23,  0.64] |  4.20 | &lt; .001
+#&gt; gender [female] |       -0.14 | 0.17 | [-0.47,  0.19] | -0.82 | 0.414 
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Response level: probably
 #&gt; 
-#&gt; </span><span>Parameter       | Coefficient |   SE |        95% CI |    z | df |     p
-#&gt; ------------------------------------------------------------------------
-#&gt; (Intercept)     |        0.47 | 0.29 | [-0.10, 1.04] | 1.62 | 63 | 0.105
-#&gt; religion        |        0.26 | 0.13 | [ 0.01, 0.51] | 2.01 | 63 | 0.044
-#&gt; gender [female] |        0.19 | 0.21 | [-0.22, 0.60] | 0.90 | 63 | 0.370
+#&gt; </span><span>Parameter       | Coefficient |   SE |        95% CI |    z |     p
+#&gt; -------------------------------------------------------------------
+#&gt; (Intercept)     |        0.47 | 0.29 | [-0.10, 1.04] | 1.62 | 0.105
+#&gt; religion        |        0.26 | 0.13 | [ 0.01, 0.51] | 2.01 | 0.044
+#&gt; gender [female] |        0.19 | 0.21 | [-0.22, 0.60] | 0.90 | 0.370
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Response level: probably not
 #&gt; 
-#&gt; </span><span>Parameter       | Coefficient |   SE |        95% CI |     z | df |     p
-#&gt; -------------------------------------------------------------------------
-#&gt; (Intercept)     |        0.43 | 0.39 | [-0.33, 1.18] |  1.11 | 63 | 0.268
-#&gt; religion        |        0.01 | 0.17 | [-0.33, 0.35] |  0.07 | 63 | 0.945
-#&gt; gender [female] |       -0.16 | 0.28 | [-0.71, 0.39] | -0.57 | 63 | 0.566
+#&gt; </span><span>Parameter       | Coefficient |   SE |        95% CI |     z |     p
+#&gt; --------------------------------------------------------------------
+#&gt; (Intercept)     |        0.43 | 0.39 | [-0.33, 1.18] |  1.11 | 0.268
+#&gt; religion        |        0.01 | 0.17 | [-0.33, 0.35] |  0.07 | 0.945
+#&gt; gender [female] |       -0.16 | 0.28 | [-0.71, 0.39] | -0.57 | 0.566
 #&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

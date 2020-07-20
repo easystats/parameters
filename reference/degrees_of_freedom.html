@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Degrees of Freedom (DoF) — degrees_of_freedom" />
-<meta property="og:description" content="Estimate or extract degrees of freedom of models." />
+<meta property="og:description" content="Estimate or extract degrees of freedom of models parameters." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -164,15 +164,15 @@
     </div>
 
     <div class="ref-description">
-    <p>Estimate or extract degrees of freedom of models.</p>
+    <p>Estimate or extract degrees of freedom of models parameters.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/degrees_of_freedom.html'>degrees_of_freedom</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>degrees_of_freedom</span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/degrees_of_freedom.html'>degrees_of_freedom</a></span>(<span class='kw'>model</span>, method = <span class='st'>"analytical"</span>, <span class='kw'>...</span>)
+<span class='fu'>degrees_of_freedom</span>(<span class='kw'>model</span>, method = <span class='st'>"analytical"</span>, <span class='kw'>...</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/degrees_of_freedom.html'>dof</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>dof</span>(<span class='kw'>model</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,33 +187,32 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>Can be <code>"analytical"</code> (default, DoFs are estimated based on the model type), <code>"fit"</code>, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), <code>"ml1"</code> (see <code><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see <code><a href='https://rdrr.io/pkg/parameters/man/p_value_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see <code><a href='https://rdrr.io/pkg/parameters/man/p_value_satterthwaite.html'>dof_satterthwaite</a></code>), <code>"kenward"</code> (see <code><a href='https://rdrr.io/pkg/parameters/man/p_value_kenward.html'>dof_kenward</a></code>) or <code>"any"</code>, which tries to extract DoF by any of those methods, whichever succeeds.</p></td>
+      <td><p>Can be <code>"analytical"</code> (default, DoFs are estimated based on the model type), <code>"fit"</code>, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), <code>"ml1"</code> (see <code><a href='ci_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see <code><a href='ci_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see <code><a href='ci_satterthwaite.html'>dof_satterthwaite</a></code>), <code>"kenward"</code> (see <code><a href='ci_kenward.html'>dof_kenward</a></code>) or <code>"any"</code>, which tries to extract DoF by any of those methods, whichever succeeds.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Methods for calculating degrees of freedom:</p><ul>
-<li><p><code>"analytical"</code> For models of class <code>lmerMod</code>, Kenward-Roger approximated degrees of freedoms are calculated, for other models, <code>n-k</code> (number of observations minus number of parameters).</p></li>
-<li><p><code>"fit"</code> Tries to extract residual degrees of freedom, and returns <code>Inf</code> if residual degrees of freedom could not be extracted.</p></li>
-<li><p><code>"any"</code> First tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.</p></li>
-<li><p><code>"nokr"</code> Same as <code>"analytical"</code>, but does not Kenward-Roger approximation for models of class <code>lmerMod</code>. Instead, always uses <code>n-k</code> to calculate df for any model.</p></li>
-<li><p><code>"wald"</code> Returns <code>Inf</code>.</p></li>
-<li><p><code>"kenward"</code> Calls <code><a href='https://rdrr.io/pkg/parameters/man/p_value_kenward.html'>dof_kenward</a></code>.</p></li>
-<li><p><code>"satterthwaite"</code> Calls <code><a href='https://rdrr.io/pkg/parameters/man/p_value_satterthwaite.html'>dof_satterthwaite</a></code>.</p></li>
-<li><p><code>"ml1"</code> Calls <code><a href='https://rdrr.io/pkg/parameters/man/p_value_ml1.html'>dof_ml1</a></code>.</p></li>
-<li><p><code>"betwithin"</code> Calls <code><a href='https://rdrr.io/pkg/parameters/man/p_value_betwithin.html'>dof_betwithin</a></code>.</p></li>
-</ul>
-
+<li><p><code>"analytical"</code> for models of class <code>lmerMod</code>, Kenward-Roger approximated degrees of freedoms are calculated, for other models, <code>n-k</code> (number of observations minus number of parameters).</p></li>
+<li><p><code>"fit"</code> tries to extract residual degrees of freedom, and returns <code>Inf</code> if residual degrees of freedom could not be extracted.</p></li>
+<li><p><code>"any"</code> first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.</p></li>
+<li><p><code>"nokr"</code> same as <code>"analytical"</code>, but does not Kenward-Roger approximation for models of class <code>lmerMod</code>. Instead, always uses <code>n-k</code> to calculate df for any model.</p></li>
+<li><p><code>"wald"</code> returns <code>Inf</code>.</p></li>
+<li><p><code>"kenward"</code> calls <code><a href='ci_kenward.html'>dof_kenward</a></code>.</p></li>
+<li><p><code>"satterthwaite"</code> calls <code><a href='ci_satterthwaite.html'>dof_satterthwaite</a></code>.</p></li>
+<li><p><code>"ml1"</code> calls <code><a href='ci_ml1.html'>dof_ml1</a></code>.</p></li>
+<li><p><code>"betwithin"</code> calls <code><a href='ci_betwithin.html'>dof_betwithin</a></code>.</p></li>
+</ul><p>For models with z-statistic, the returned degrees of freedom for model parameters is <code>Inf</code> (unless <code>method = "ml1"</code> or <code>method = "betwithin"</code>), because there is only one distribution for the related test statistic.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Petal.Length</span> <span class='op'>*</span> <span class='kw'>Species</span>, data = <span class='kw'>iris</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/degrees_of_freedom.html'>dof</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; [1] 144</div><div class='input'>
+<span class='fu'>dof</span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; [1] 144</div><div class='input'>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='kw'>vs</span> <span class='op'>~</span> <span class='kw'>mpg</span> <span class='op'>*</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>, family = <span class='st'>"binomial"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/degrees_of_freedom.html'>dof</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; [1] 28</div><div class='input'>
+<span class='fu'>dof</span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; [1] Inf</div><div class='input'>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Petal.Length</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>), data = <span class='kw'>iris</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/degrees_of_freedom.html'>dof</a></span>(<span class='kw'>model</span>)
+  <span class='fu'>dof</span>(<span class='kw'>model</span>)
 }</div><div class='output co'>#&gt; <span class='message'>Loading required package: lme4</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; [1]   2.53354 144.66692</div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>)) {
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(
@@ -222,8 +221,8 @@
     chains = <span class='fl'>2</span>,
     refresh = <span class='fl'>0</span>
   )
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/degrees_of_freedom.html'>dof</a></span>(<span class='kw'>model</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.19.3, packaged: 2020-02-11 05:16:41 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- bayesplot theme set to bayesplot::theme_default()</span></div><div class='output co'>#&gt; <span class='message'>   * Does _not_ affect other ggplot2 plots</span></div><div class='output co'>#&gt; <span class='message'>   * See ?bayesplot_theme_set for details on theme setting</span></div><div class='output co'>#&gt; [1] 144</div><div class='input'><span class='co'># }</span></div></pre>
+  <span class='fu'>dof</span>(<span class='kw'>model</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.19.3, packaged: 2020-02-11 05:16:41 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- bayesplot theme set to bayesplot::theme_default()</span></div><div class='output co'>#&gt; <span class='message'>   * Does _not_ affect other ggplot2 plots</span></div><div class='output co'>#&gt; <span class='message'>   * See ?bayesplot_theme_set for details on theme setting</span></div><div class='output co'>#&gt; [1] 144 144 144 144 144 144</div><div class='input'><span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

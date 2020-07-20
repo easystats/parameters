@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -242,7 +242,7 @@
 <a href="#mixed-model-with-zero-inflation-model" class="anchor"></a>Mixed Model with Zero-Inflation Model</h3>
 <div class="sourceCode" id="cb17"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://drizopoulos.github.io/GLMMadaptive">GLMMadaptive</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/glmmTMB">glmmTMB</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/glmmTMB/glmmTMB">glmmTMB</a></span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"Salamanders"</span>)
 <span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GLMMadaptive/man/mixed_model.html">mixed_model</a></span>(
   <span class="kw">count</span> <span class="op">~</span> <span class="kw">spp</span> <span class="op">+</span> <span class="kw">mined</span>,
@@ -283,7 +283,7 @@
 <h3 class="hasAnchor">
 <a href="#mixed-models-with-dispersion-model" class="anchor"></a>Mixed Models with Dispersion Model</h3>
 <div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/glmmTMB">glmmTMB</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/glmmTMB/glmmTMB">glmmTMB</a></span>)
 <span class="kw">sim1</span> <span class="op">&lt;-</span> <span class="fu">function</span>(<span class="kw">nfac</span> = <span class="fl">40</span>, <span class="kw">nt</span> = <span class="fl">100</span>, <span class="kw">facsd</span> = <span class="fl">0.1</span>, <span class="kw">tsd</span> = <span class="fl">0.15</span>, <span class="kw">mu</span> = <span class="fl">0</span>, <span class="kw">residsd</span> = <span class="fl">1</span>) {
   <span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span>(fac = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">letters</span>[<span class="fl">1</span><span class="op">:</span><span class="kw">nfac</span>]), t = <span class="fl">1</span><span class="op">:</span><span class="kw">nt</span>)
   <span class="kw">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">dat</span>)
@@ -304,17 +304,17 @@
 </pre></div>
 <pre><code>#&gt; # Fixed Effects component
 #&gt; 
-#&gt; Parameter   | Coefficient |   SE |            95% CI |       z |   df |      p
-#&gt; ------------------------------------------------------------------------------
-#&gt; (Intercept) |      200.03 | 0.10 | [ 199.84, 200.22] | 2056.35 | 5195 | &lt; .001
-#&gt; sd [ten]    |      -99.71 | 0.22 | [-100.14, -99.29] | -458.39 | 5195 | &lt; .001
+#&gt; Parameter   | Coefficient |   SE |            95% CI |       z |      p
+#&gt; -----------------------------------------------------------------------
+#&gt; (Intercept) |      200.03 | 0.10 | [ 199.84, 200.22] | 2056.35 | &lt; .001
+#&gt; sd [ten]    |      -99.71 | 0.22 | [-100.14, -99.29] | -458.39 | &lt; .001
 #&gt; 
 #&gt; # Dispersion component
 #&gt; 
-#&gt; Parameter   | Coefficient |   SE |       95% CI |      z |   df |      p
-#&gt; ------------------------------------------------------------------------
-#&gt; (Intercept) |        3.20 | 0.03 | [3.15, 3.26] | 115.48 | 5195 | &lt; .001
-#&gt; sd [ten]    |        1.39 | 0.04 | [1.31, 1.46] |  35.35 | 5195 | &lt; .001</code></pre>
+#&gt; Parameter   | Coefficient |   SE |       95% CI |      z |      p
+#&gt; -----------------------------------------------------------------
+#&gt; (Intercept) |        3.20 | 0.03 | [3.15, 3.26] | 115.48 | &lt; .001
+#&gt; sd [ten]    |        1.39 | 0.04 | [1.31, 1.46] |  35.35 | &lt; .001</code></pre>
 </div>
 <div id="bayesian-models" class="section level3">
 <h3 class="hasAnchor">
@@ -430,13 +430,13 @@
 </pre></div>
 <pre><code>#&gt; # Loadings from Factor Analysis (no rotation)
 #&gt; 
-#&gt; Variable     | Dim.1 |    Dim.2 |    Dim.3 | Complexity
-#&gt; -------------------------------------------------------
-#&gt; Sepal.Length |  0.75 |     0.07 |     0.10 |       1.05
-#&gt; Sepal.Width  |  0.23 |     0.51 |     0.23 |       1.86
-#&gt; Petal.Length |  0.98 | 1.32e-03 | 1.99e-03 |       1.00
-#&gt; Petal.Width  |  0.94 |     0.01 | 2.82e-05 |       1.00
-#&gt; Species      |  0.96 |     0.75 |     0.26 |       2.05
+#&gt; Variable     | Dim.1 | Dim.2 |    Dim.3 | Complexity
+#&gt; ----------------------------------------------------
+#&gt; Sepal.Length |  0.75 |  0.07 |     0.10 |       1.05
+#&gt; Sepal.Width  |  0.23 |  0.51 |     0.23 |       1.86
+#&gt; Petal.Length |  0.98 |  0.00 |     0.00 |       1.00
+#&gt; Petal.Width  |  0.94 |  0.01 | 2.82e-05 |       1.00
+#&gt; Species      |  0.96 |  0.75 |     0.26 |       2.05
 #&gt; 
 #&gt; The 3 latent factors accounted for 96.73% of the total variance of the original data (Dim.1 = 64.50%, Dim.2 = 22.37%, Dim.3 = 9.86%).</code></pre>
 </div>

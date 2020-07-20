@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -167,12 +167,12 @@
     <p>Enables a conversion between Exploratory Factor Analysis (EFA) and Confirmatory Factor Analysis (CFA) <code>lavaan</code>-ready structure.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/convert_efa_to_cfa.html'>convert_efa_to_cfa</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>convert_efa_to_cfa</span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for fa</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/convert_efa_to_cfa.html'>convert_efa_to_cfa</a></span>(<span class='kw'>model</span>, threshold = <span class='st'>"max"</span>, names = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'>convert_efa_to_cfa</span>(<span class='kw'>model</span>, threshold = <span class='st'>"max"</span>, names = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/convert_efa_to_cfa.html'>efa_to_cfa</a></span>(<span class='kw'>model</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>efa_to_cfa</span>(<span class='kw'>model</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,8 +205,8 @@
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://personality-project.org/r/psych'>"psych"</a></span>) <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='http://lavaan.org'>"lavaan"</a></span>)) {
   <span class='kw'>efa</span> <span class='op'>&lt;-</span> <span class='kw'>psych</span>::<span class='fu'><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></span>(<span class='kw'>attitude</span>, nfactors = <span class='fl'>3</span>)
 
-  <span class='kw'>model1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/convert_efa_to_cfa.html'>efa_to_cfa</a></span>(<span class='kw'>efa</span>)
-  <span class='kw'>model2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/convert_efa_to_cfa.html'>efa_to_cfa</a></span>(<span class='kw'>efa</span>, threshold = <span class='fl'>0.3</span>)
+  <span class='kw'>model1</span> <span class='op'>&lt;-</span> <span class='fu'>efa_to_cfa</span>(<span class='kw'>efa</span>)
+  <span class='kw'>model2</span> <span class='op'>&lt;-</span> <span class='fu'>efa_to_cfa</span>(<span class='kw'>efa</span>, threshold = <span class='fl'>0.3</span>)
 
   <span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/lavTestLRT.html'>anova</a></span>(
     <span class='kw'>lavaan</span>::<span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>cfa</a></span>(<span class='kw'>model1</span>, data = <span class='kw'>attitude</span>),

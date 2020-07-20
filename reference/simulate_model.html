@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -167,10 +167,10 @@
     <p>Simulate draws from a statistical model to return a data frame of estimates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_model.html'>simulate_model</a></span>(<span class='kw'>model</span>, iterations = <span class='fl'>1000</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>simulate_model</span>(<span class='kw'>model</span>, iterations = <span class='fl'>1000</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for glmmTMB</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_model.html'>simulate_model</a></span>(
+<span class='fu'>simulate_model</span>(
   <span class='kw'>model</span>,
   iterations = <span class='fl'>1000</span>,
   component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span>),
@@ -213,8 +213,8 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 
     
 <h3>Technical Details</h3>
-<p><code><a href='https://rdrr.io/pkg/parameters/man/simulate_model.html'>simulate_model()</a></code> is a computationally faster alternative
-    to <code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_model.html'>bootstrap_model()</a></code>. Simulated draws for coefficients are based
+<p><code>simulate_model()</code> is a computationally faster alternative
+    to <code><a href='bootstrap_model.html'>bootstrap_model()</a></code>. Simulated draws for coefficients are based
     on a multivariate normal distribution (<code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>MASS::mvrnorm()</a></code>) with mean
     <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p><p></p><h3>Models with Zero-Inflation Component</h3>
 <p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
@@ -225,44 +225,44 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/simulate_parameters.html'>simulate_parameters()</a></code>,
-<code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_model.html'>bootstrap_model()</a></code>,
-<code><a href='https://rdrr.io/pkg/parameters/man/bootstrap_parameters.html'>bootstrap_parameters()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='simulate_parameters.html'>simulate_parameters()</a></code>,
+<code><a href='bootstrap_model.html'>bootstrap_model()</a></code>,
+<code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_model.html'>simulate_model</a></span>(<span class='kw'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
-#&gt; 1    3.645478        -1.7374963        -1.861443   0.5365689    0.8741289
-#&gt; 2    3.645822        -1.0278417        -2.203887   0.3134411    0.8826593
-#&gt; 3    4.056671        -1.3388450        -1.935664  -0.2987805    0.6861919
-#&gt; 4    3.429552        -0.7350167        -2.362175   0.8084160    0.9561860
-#&gt; 5    3.579598        -1.5222448        -2.790637   0.1181707    0.9462831
-#&gt; 6    3.318029        -0.8102698        -2.089647   0.9933885    0.9850871
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
+#&gt; 1    3.430956        -0.7366426        -2.383682   0.3191382    0.9897494
+#&gt; 2    3.717697        -1.3510202        -2.641455   0.2358062    0.8909207
+#&gt; 3    3.503668        -1.0174458        -1.260035   0.4355245    0.9556576
+#&gt; 4    3.504042        -1.3886813        -2.912141   0.3197036    0.9813518
+#&gt; 5    3.532689        -1.1106085        -1.599979   1.2514388    0.8319626
+#&gt; 6    3.421949        -0.7035964        -2.735193   0.4777309    0.9823684
 #&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
-#&gt; 1                    -0.2600173                   -0.5747314
-#&gt; 2                    -0.6927658                   -0.2054433
-#&gt; 3                     0.5133169                    0.6526862
-#&gt; 4                    -1.4868808                   -0.7261728
-#&gt; 5                    -0.2426994                    0.1686944
-#&gt; 6                    -1.5576846                   -1.0489590</div><div class='input'>
+#&gt; 1                    -1.0830220                   -0.3204597
+#&gt; 2                    -0.4100781                    0.0182855
+#&gt; 3                    -0.9005071                   -0.9169932
+#&gt; 4                    -0.5849002                   -0.0343761
+#&gt; 5                    -1.2567994                   -1.2377586
+#&gt; 6                    -1.1908534                   -0.2085224</div><div class='input'>
 <span class='co'># \donttest{</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/glmmTMB'>"glmmTMB"</a></span>)) {
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span>)) {
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
     <span class='kw'>count</span> <span class='op'>~</span> <span class='kw'>spp</span> <span class='op'>+</span> <span class='kw'>mined</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>site</span>),
     ziformula = <span class='op'>~</span><span class='kw'>mined</span>,
     family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
     data = <span class='kw'>Salamanders</span>
   )
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_model.html'>simulate_model</a></span>(<span class='kw'>model</span>))
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/simulate_model.html'>simulate_model</a></span>(<span class='kw'>model</span>, component = <span class='st'>"zero_inflated"</span>))
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>))
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>, component = <span class='st'>"zero_inflated"</span>))
 }</div><div class='output co'>#&gt;   (Intercept)   minedno
-#&gt; 1   0.9020314 -1.827715
-#&gt; 2   0.9725184 -1.967595
-#&gt; 3   1.2453168 -2.078895
-#&gt; 4   0.9962294 -1.777180
-#&gt; 5   0.7174560 -1.904258
-#&gt; 6   0.3678969 -1.374131</div><div class='input'><span class='co'># }</span></div></pre>
+#&gt; 1   0.7426218 -1.837142
+#&gt; 2   1.1448737 -2.543993
+#&gt; 3   1.0955847 -2.334153
+#&gt; 4   0.4060518 -1.610549
+#&gt; 5   0.6777659 -1.544021
+#&gt; 6   0.8261939 -1.672823</div><div class='input'><span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

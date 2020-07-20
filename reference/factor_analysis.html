@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@
     <p>This function performs a Factor Analysis (FA).</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/factor_analysis.html'>factor_analysis</a></span>(
+    <pre class="usage"><span class='fu'>factor_analysis</span>(
   <span class='kw'>x</span>,
   n = <span class='st'>"auto"</span>,
   rotation = <span class='st'>"none"</span>,
@@ -187,7 +187,7 @@
     </tr>
     <tr>
       <th>n</th>
-      <td><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is set as the number of variables minus 1 (<code>ncol(x)-1</code>). If <code>n="auto"</code> (default) or <code>n=NULL</code>, the number of components is selected through <code><a href='https://rdrr.io/pkg/parameters/man/n_factors.html'>n_factors</a></code>. In <code><a href='https://rdrr.io/pkg/parameters/man/reduce_parameters.html'>reduce_parameters</a></code>, can also be <code>"max"</code>, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.</p></td>
+      <td><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is set as the number of variables minus 1 (<code>ncol(x)-1</code>). If <code>n="auto"</code> (default) or <code>n=NULL</code>, the number of components is selected through <code><a href='n_factors.html'>n_factors</a></code>. In <code><a href='reduce_parameters.html'>reduce_parameters</a></code>, can also be <code>"max"</code>, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.</p></td>
     </tr>
     <tr>
       <th>rotation</th>
@@ -248,7 +248,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/factor_analysis.html'>factor_analysis</a></span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='st'>"all"</span>, threshold = <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
+<span class='fu'>factor_analysis</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='st'>"all"</span>, threshold = <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable |   MR1 |   MR2 |  MR3 |  MR4 | MR5 | MR6 | Complexity | Uniqueness
 #&gt; ----------------------------------------------------------------------------
@@ -257,10 +257,10 @@
 #&gt; disp     |  0.95 |       |      | 0.20 |     |     |       1.13 |       0.03
 #&gt; hp       |  0.86 | -0.35 |      |      |     |     |       1.38 |       0.12
 #&gt; drat     | -0.72 | -0.40 | 0.29 |      |     |     |       1.96 |       0.24
-#&gt; wt       |  0.89 |  0.38 | 0.24 |      |     |     |       1.53 |   5.00e-03
+#&gt; wt       |  0.89 |  0.38 | 0.24 |      |     |     |       1.53 |       0.00
 #&gt; qsec     | -0.53 |  0.76 |      |      |     |     |       1.81 |       0.14
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 6 latent factors accounted for 90.99% of the total variance of the original data (MR1 = 71.60%, MR2 = 14.55%, MR3 = 2.91%, MR4 = 1.35%, MR5 = 0.45%, MR6 = 0.12%).</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/factor_analysis.html'>factor_analysis</a></span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='fl'>2</span>, rotation = <span class='st'>"oblimin"</span>, threshold = <span class='st'>"max"</span>, sort = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Factor Analysis (oblimin-rotation)
+#&gt; </span><span style='color: #BBBB00;'>The 6 latent factors accounted for 90.99% of the total variance of the original data (MR1 = 71.60%, MR2 = 14.55%, MR3 = 2.91%, MR4 = 1.35%, MR5 = 0.45%, MR6 = 0.12%).</span><span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='fl'>2</span>, rotation = <span class='st'>"oblimin"</span>, threshold = <span class='st'>"max"</span>, sort = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Factor Analysis (oblimin-rotation)
 #&gt; 
 #&gt; </span><span>Variable |   MR1 |  MR2 | Complexity | Uniqueness
 #&gt; -------------------------------------------------
@@ -270,9 +270,9 @@
 #&gt; drat     | -0.84 |      |       1.14 |       0.39
 #&gt; cyl      |  0.82 |      |       1.23 |       0.08
 #&gt; hp       |  0.60 |      |       1.94 |       0.18
-#&gt; qsec     |       | 1.00 |       1.00 |   4.75e-03
+#&gt; qsec     |       | 1.00 |       1.00 |       0.00
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 2 latent factors (oblimin rotation) accounted for 85.83% of the total variance of the original data (MR1 = 63.85%, MR2 = 21.99%).</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/factor_analysis.html'>factor_analysis</a></span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='fl'>2</span>, threshold = <span class='fl'>2</span>, sort = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
+#&gt; </span><span style='color: #BBBB00;'>The 2 latent factors (oblimin rotation) accounted for 85.83% of the total variance of the original data (MR1 = 63.85%, MR2 = 21.99%).</span><span></div><div class='input'><span class='fu'>factor_analysis</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='fl'>2</span>, threshold = <span class='fl'>2</span>, sort = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable |  MR1 |  MR2 | Complexity | Uniqueness
 #&gt; ------------------------------------------------
@@ -282,10 +282,10 @@
 #&gt; wt       |      | 0.36 |       1.33 |       0.10
 #&gt; hp       |      |      |       1.23 |       0.18
 #&gt; drat     |      |      |       1.49 |       0.39
-#&gt; qsec     |      | 0.83 |       1.74 |   4.75e-03
+#&gt; qsec     |      | 0.83 |       1.74 |       0.00
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The 2 latent factors accounted for 85.83% of the total variance of the original data (MR1 = 70.67%, MR2 = 15.16%).</span><span></div><div class='input'>
-<span class='kw'>efa</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/factor_analysis.html'>factor_analysis</a></span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>], n = <span class='fl'>2</span>)
+<span class='kw'>efa</span> <span class='op'>&lt;-</span> <span class='fu'>factor_analysis</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>], n = <span class='fl'>2</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>efa</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># (Explained) Variance of Components
 #&gt; 
 #&gt; </span><span>Parameter                       |   MR1 |   MR2
@@ -327,7 +327,7 @@
 #&gt; 31  1.32372015  3.27012728
 #&gt; 32 -0.87651282  0.43537850</div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Automated number of components</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/factor_analysis.html'>factor_analysis</a></span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], n = <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
+<span class='fu'>factor_analysis</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], n = <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable |   MR1 | Complexity | Uniqueness
 #&gt; ------------------------------------------

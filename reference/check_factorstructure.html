@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -164,10 +164,10 @@
     </div>
 
     <div class="ref-description">
-    <p>This checks whether the data is appropriate for Factor Analysis (FA) by running the <a href='https://rdrr.io/pkg/parameters/man/check_sphericity.html'>Bartlett's Test of Sphericity</a> and the <a href='https://rdrr.io/pkg/parameters/man/check_kmo.html'>Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA)</a>.</p>
+    <p>This checks whether the data is appropriate for Factor Analysis (FA) by running the <a href='check_sphericity.html'>Bartlett's Test of Sphericity</a> and the <a href='check_kmo.html'>Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA)</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/check_factorstructure.html'>check_factorstructure</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>check_factorstructure</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,11 +187,11 @@
     <p>A list of lists of indices related to sphericity and KMO.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/parameters/man/check_kmo.html'>check_kmo</a></code>, <code><a href='https://rdrr.io/pkg/parameters/man/check_sphericity.html'>check_sphericity</a></code> and <code><a href='https://rdrr.io/pkg/parameters/man/check_clusterstructure.html'>check_clusterstructure</a></code>.</p></div>
+    <div class='dont-index'><p><code><a href='check_kmo.html'>check_kmo</a></code>, <code><a href='check_sphericity.html'>check_sphericity</a></code> and <code><a href='check_clusterstructure.html'>check_clusterstructure</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/check_factorstructure.html'>check_factorstructure</a></span>(<span class='kw'>mtcars</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Is the data suitable for Factor Analysis?
+<span class='fu'>check_factorstructure</span>(<span class='kw'>mtcars</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Is the data suitable for Factor Analysis?
 #&gt; 
 #&gt; </span><span style='color: #00BB00;'>  - KMO: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = 0.83).
 #&gt;   - Sphericity: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analaysis (Chisq(55) = 408.01, p &lt; .001).</span><span></div></span></pre>

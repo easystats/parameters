@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -173,13 +173,13 @@
     <p>Most functions to fit multilevel and mixed effects models only
    allow to specify frequency weights, but not design (i.e. sampling or probability)
    weights, which should be used when analyzing complex samples and survey data.
-   <code><a href='https://rdrr.io/pkg/parameters/man/rescale_weights.html'>rescale_weights()</a></code> implements an algorithm proposed by <cite>Asparouhov (2006)</cite>
+   <code>rescale_weights()</code> implements an algorithm proposed by <cite>Asparouhov (2006)</cite>
    and <cite>Carle (2009)</cite> to rescale design weights in survey data to account for
    the grouping structure of multilevel models, which then can be used for
    multilevel modelling.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/parameters/man/rescale_weights.html'>rescale_weights</a></span>(<span class='kw'>data</span>, <span class='kw'>group</span>, <span class='kw'>probability_weights</span>, nest = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>rescale_weights</span>(<span class='kw'>data</span>, <span class='kw'>group</span>, <span class='kw'>probability_weights</span>, nest = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -248,13 +248,13 @@ from each group level of the variables in <code>group</code>.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/strengejacke/sjstats'>"sjstats"</a></span>)) {
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>nhanes_sample</span>, package = <span class='st'>"sjstats"</span>)
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/rescale_weights.html'>rescale_weights</a></span>(<span class='kw'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>))
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='kw'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>))
 
   <span class='co'># also works with multiple group-variables...</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/rescale_weights.html'>rescale_weights</a></span>(<span class='kw'>nhanes_sample</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>), <span class='st'>"WTINT2YR"</span>))
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='kw'>nhanes_sample</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>), <span class='st'>"WTINT2YR"</span>))
 
   <span class='co'># or nested structures.</span>
-  <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/rescale_weights.html'>rescale_weights</a></span>(
+  <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>rescale_weights</span>(
     data = <span class='kw'>nhanes_sample</span>,
     group = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>),
     probability_weights = <span class='st'>"WTINT2YR"</span>,
@@ -279,7 +279,7 @@ from each group level of the variables in <code>group</code>.</p></td>
 #&gt; 6     6 2.20        2        4       1       38 28232.10  0.6215579  0.4759935</div><div class='input'>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>) <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/strengejacke/sjstats'>"sjstats"</a></span>)) {
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>nhanes_sample</span>, package = <span class='st'>"sjstats"</span>)
-  <span class='kw'>nhanes_sample</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/rescale_weights.html'>rescale_weights</a></span>(<span class='kw'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>)
+  <span class='kw'>nhanes_sample</span> <span class='op'>&lt;-</span> <span class='fu'>rescale_weights</span>(<span class='kw'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>)
   <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>glmer</a></span>(
     <span class='kw'>total</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='kw'>RIAGENDR</span>) <span class='op'>*</span> (<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='kw'>age</span>) <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='kw'>RIDRETH1</span>)) <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>SDMVPSU</span>),
     family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),

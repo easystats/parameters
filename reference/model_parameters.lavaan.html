@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for lavaan</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   ci = <span class='fl'>0.95</span>,
   standardize = <span class='fl'>FALSE</span>,
@@ -230,8 +230,8 @@
                  textual =~ x4 + x5 + x6
                  speed   =~ x7 + x8 + x9 "
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>lavaan</span>::<span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>cfa</a></span>(<span class='kw'>structure</span>, data = <span class='kw'>HolzingerSwineford1939</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, standardize = <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, standardize = <span class='fl'>TRUE</span>)
 
   <span class='co'># Structural Equation Model (SEM) ------------</span>
 
@@ -265,8 +265,8 @@
       y6 ~~ y8
   "
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>lavaan</span>::<span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/sem.html'>sem</a></span>(<span class='kw'>structure</span>, data = <span class='kw'>PoliticalDemocracy</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, standardize = <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, standardize = <span class='fl'>TRUE</span>)
 }</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loading type
 #&gt; 
 #&gt; </span><span>Link        | Coefficient |   SE |       95% CI |      p

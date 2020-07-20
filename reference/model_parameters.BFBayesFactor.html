@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
   <span class='kw'>model</span>,
   centrality = <span class='st'>"median"</span>,
   dispersion = <span class='fl'>FALSE</span>,
@@ -250,7 +250,7 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>Type BFManual() to open the manual.</span>
 #&gt; <span class='message'>************</span></div><div class='input'><span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='fu'><a href='https://rdrr.io/pkg/parameters/man/model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; Parameter  | Median |       89% CI |   pd | % in ROPE |              Prior | Effects |   Component |    BF
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; Parameter  | Median |       89% CI |   pd | % in ROPE |              Prior | Effects |   Component |    BF
 #&gt; ----------------------------------------------------------------------------------------------------------
 #&gt; Difference |   0.98 | [0.77, 1.22] | 100% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | &gt; 999</div><div class='input'><span class='co'># }</span>
 </div></pre>
