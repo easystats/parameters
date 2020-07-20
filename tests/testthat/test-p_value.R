@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest || Sys.getenv("USER") == "travis") {
+if (.runThisTest) {
   if (require("testthat") &&
       require("parameters") &&
       require("lme4") &&
@@ -49,7 +49,7 @@ if (.runThisTest || Sys.getenv("USER") == "travis") {
       testthat::expect_equal(p_value(model)$p[1], 0, tol = 0.01)
 
       model <- insight::download_model("aovlist_2")
-      testthat::expect_equal(p_value(model)$p[1], 0.922, tol = 0.01)
+      testthat::expect_equal(p_value(model)$p[1], 0, tol = 0.01)
 
       model <- insight::download_model("aov_3")
       testthat::expect_equal(p_value(model)$p[1], 0, tol = 0.01)
