@@ -7,8 +7,8 @@
 #'    have a within- and/or between-effect.
 #'
 #' @param x A data frame. For \code{check_heterogeneity()}, may also be a mixed model object.
-#' @param select Character vector with names of variables to select that should be group- and de-meaned. For \code{check_heterogeneity()}, if \code{x} is a mixed model object, this argument be ignored.
-#' @param group Character vector with the name of the variable that indicates the group- or cluster-ID. For \code{check_heterogeneity()}, if \code{x} is a model object, this argument be ignored.
+#' @param select Character vector (or formula) with names of variables to select that should be group- and de-meaned. For \code{check_heterogeneity()}, if \code{x} is a mixed model object, this argument be ignored.
+#' @param group Character vector (or formula) with the name of the variable that indicates the group- or cluster-ID. For \code{check_heterogeneity()}, if \code{x} is a model object, this argument be ignored.
 #' @param suffix_demean,suffix_groupmean String value, will be appended to the names of the
 #'   group-meaned and de-meaned variables of \code{x}. By default, de-meaned
 #'   variables will be suffixed with \code{"_within"} and grouped-meaned variables
@@ -164,11 +164,23 @@
 #'   ID = c(1, 2, 3, 1, 2, 3, 1, 2)
 #' )
 #' demean(dat, select = c("a", "x*y"), group = "ID")
+#'
+#' # or in formula-notation
+#' demean(dat, select = ~a + x * y, group = ~ID)
 #' @importFrom stats ave
 #' @export
 demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean = "_between", add_attributes = TRUE, verbose = TRUE) {
   # ugly tibbles again...
   x <- as.data.frame(x)
+
+  if (inherits(select, "formula")) {
+    # formula to character, remove "~", split at "+"
+    select <- trimws(unlist(strsplit(gsub("~", "", .safe_deparse(select), fixed = TRUE), "+", fixed = TRUE)))
+  }
+
+  if (inherits(group, "formula")) {
+    group <- all.vars(group)
+  }
 
   interactions_no <- select[!grepl("(\\*|\\:)", select)]
   interactions_yes <- select[grepl("(\\*|\\:)", select)]

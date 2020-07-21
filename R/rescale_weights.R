@@ -10,11 +10,11 @@
 #'    multilevel modelling.
 #'
 #' @param data A data frame.
-#' @param group Variable names (as character vector),  indicating the grouping
-#'   structure (strata) of the survey data (level-2-cluster variable). It is
-#'   also possible to create weights for multiple group variables; in such cases,
-#'   each created weighting variable will be suffixed by the name of the group
-#'   variable.
+#' @param group Variable names (as character vector, or as formula), indicating
+#'   the grouping structure (strata) of the survey data (level-2-cluster variable).
+#'   It is also possible to create weights for multiple group variables; in such
+#'   cases, each created weighting variable will be suffixed by the name of the
+#'   group variable.
 #' @param probability_weights Variable indicating the probability (design or sampling)
 #'   weights of the survey data (level-1-weight).
 #' @param nest Logical, if \code{TRUE} and \code{group} indicates at least two
@@ -81,6 +81,10 @@
 #' }
 #' @export
 rescale_weights <- function(data, group, probability_weights, nest = FALSE) {
+
+  if (inherits(group, "formula")) {
+    group <- all.vars(group)
+  }
 
   # check if weight has missings. we need to remove them first,
   # and add back weights to correct cases later

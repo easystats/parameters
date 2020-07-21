@@ -20,9 +20,9 @@ demean(
 \arguments{
 \item{x}{A data frame. For \code{check_heterogeneity()}, may also be a mixed model object.}
 
-\item{select}{Character vector with names of variables to select that should be group- and de-meaned. For \code{check_heterogeneity()}, if \code{x} is a mixed model object, this argument be ignored.}
+\item{select}{Character vector (or formula) with names of variables to select that should be group- and de-meaned. For \code{check_heterogeneity()}, if \code{x} is a mixed model object, this argument be ignored.}
 
-\item{group}{Character vector with the name of the variable that indicates the group- or cluster-ID. For \code{check_heterogeneity()}, if \code{x} is a model object, this argument be ignored.}
+\item{group}{Character vector (or formula) with the name of the variable that indicates the group- or cluster-ID. For \code{check_heterogeneity()}, if \code{x} is a model object, this argument be ignored.}
 
 \item{suffix_demean, suffix_groupmean}{String value, will be appended to the names of the
 group-meaned and de-meaned variables of \code{x}. By default, de-meaned
@@ -179,6 +179,9 @@ dat <- data.frame(
   ID = c(1, 2, 3, 1, 2, 3, 1, 2)
 )
 demean(dat, select = c("a", "x*y"), group = "ID")
+
+# or in formula-notation
+demean(dat, select = ~a + x * y, group = ~ID)
 }
 \references{
 \itemize{

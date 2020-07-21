@@ -11,6 +11,12 @@ check_heterogeneity <- function(x, select = NULL, group = NULL) {
     data <- insight::get_data(x)
     select <- insight::find_predictors(x, effects = "fixed", component = "conditional", flatten = TRUE)
   } else {
+    if (inherits(select, "formula")) {
+      select <- all.vars(select)
+    }
+    if (inherits(group, "formula")) {
+      group <- all.vars(group)
+    }
     data <- x
   }
 

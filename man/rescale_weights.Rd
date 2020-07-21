@@ -9,11 +9,11 @@ rescale_weights(data, group, probability_weights, nest = FALSE)
 \arguments{
 \item{data}{A data frame.}
 
-\item{group}{Variable names (as character vector),  indicating the grouping
-structure (strata) of the survey data (level-2-cluster variable). It is
-also possible to create weights for multiple group variables; in such cases,
-each created weighting variable will be suffixed by the name of the group
-variable.}
+\item{group}{Variable names (as character vector, or as formula), indicating
+the grouping structure (strata) of the survey data (level-2-cluster variable).
+It is also possible to create weights for multiple group variables; in such
+cases, each created weighting variable will be suffixed by the name of the
+group variable.}
 
 \item{probability_weights}{Variable indicating the probability (design or sampling)
 weights of the survey data (level-1-weight).}
