@@ -11,9 +11,9 @@
 #' standard errors) may be biased in mixed models when the number of clusters
 #' is small (even if the sample size of level-1 units is high). In such cases
 #' it is recommended to approximate a more accurate number of degrees of freedom
-#' for such inferential statitics (see \cite{Li and Redden 2015}). The
+#' for such inferential statistics (see \cite{Li and Redden 2015}). The
 #' \emph{Between-within} denominator degrees of freedom approximation is
-#' recommended in particular for generalized linear mixed models with repeated
+#' recommended in particular for (generalized) linear mixed models with repeated
 #' measurements (longitudinal design). \code{dof_betwithin}) implements a heuristic
 #' based on the between-within approach. \strong{Note} that this implementation
 #' does not return exactly the same results as shown in \cite{Li and Redden 2015},
