@@ -4,6 +4,7 @@ if (.runThisTest) {
   if (require("testthat") && require("parameters") && require("rstanarm")) {
 
     data(mtcars)
+    set.seed(123)
     model <- stan_glm(
       vs ~ mpg + cyl,
       data = mtcars,
@@ -14,14 +15,13 @@ if (.runThisTest) {
     mp <- model_parameters(model)
 
     test_that("mp", {
-      expect_equal(mp$Median, c(9.1346, 0.0135, -1.61359), tolerance = 1e-3)
+      expect_equal(mp$Median, c(9.49991, -0.00217, -1.6445), tolerance = 1e-3)
       expect_equal(mp$Prior_Scale, c(2.5, 0.4148, 1.39984), tolerance = 1e-3)
     })
 
 
-    set.seed(123)
     pbcLong$ybern <- as.integer(pbcLong$logBili >= mean(pbcLong$logBili))
-
+    set.seed(123)
     model <- stan_mvmer(
       formula = list(
         ybern ~ year + (1 | id),
