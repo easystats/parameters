@@ -60,7 +60,12 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
     # residual df
     dof <- degrees_of_freedom(model, method = "any")
     # make sure we have a value for degrees of freedom
-    if (is.null(dof) || length(dof) == 0) dof <- Inf
+    if (is.null(dof) || length(dof) == 0) {
+      dof <- Inf
+    } else if (length(dof) > nrow(params)) {
+      # filter non-matching parameters
+      dof <- dof[1:nrow(params)]
+    }
   }
 
   alpha <- (1 + ci) / 2
