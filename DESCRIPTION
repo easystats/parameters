@@ -108,6 +108,7 @@ Suggests:
     projpred,
     pscl,
     psych,
+    quantreg,
     randomForest,
     rmarkdown,
     rstanarm,
