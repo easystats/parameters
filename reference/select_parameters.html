@@ -301,24 +301,25 @@
   <span class='fu'>select_parameters</span>(<span class='kw'>model</span>, cross_validation = <span class='fl'>FALSE</span>)
 }</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='message'>Instead of posterior_linpred(..., transform=TRUE) please call posterior_epred(), which provides equivalent functionality.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; stan_glm
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='message'>Instead of posterior_linpred(..., transform=TRUE) please call posterior_epred(), which provides equivalent functionality.</span></div><div class='output co'>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
-#&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp
+#&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp + cyl:hp
 #&gt;  observations: 32
-#&gt;  predictors:   5
+#&gt;  predictors:   6
 #&gt; ------
 #&gt;             Median MAD_SD
-#&gt; (Intercept) 45.9    4.9  
-#&gt; cyl         -2.6    0.9  
+#&gt; (Intercept) 50.9    5.5  
+#&gt; cyl         -3.3    0.9  
 #&gt; disp        -0.1    0.0  
-#&gt; hp           0.0    0.0  
+#&gt; hp          -0.1    0.1  
 #&gt; cyl:disp     0.0    0.0  
+#&gt; cyl:hp       0.0    0.0  
 #&gt; 
 #&gt; Auxiliary parameter(s):
 #&gt;       Median MAD_SD
-#&gt; sigma 2.7    0.3   
+#&gt; sigma 2.6    0.3   
 #&gt; 
 #&gt; ------
 #&gt; * For help interpreting the printed output see ?print.stanreg

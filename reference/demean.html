@@ -196,11 +196,11 @@
     </tr>
     <tr>
       <th>select</th>
-      <td><p>Character vector with names of variables to select that should be group- and de-meaned. For <code>check_heterogeneity()</code>, if <code>x</code> is a mixed model object, this argument be ignored.</p></td>
+      <td><p>Character vector (or formula) with names of variables to select that should be group- and de-meaned. For <code>check_heterogeneity()</code>, if <code>x</code> is a mixed model object, this argument be ignored.</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>Character vector with the name of the variable that indicates the group- or cluster-ID. For <code>check_heterogeneity()</code>, if <code>x</code> is a model object, this argument be ignored.</p></td>
+      <td><p>Character vector (or formula) with the name of the variable that indicates the group- or cluster-ID. For <code>check_heterogeneity()</code>, if <code>x</code> is a model object, this argument be ignored.</p></td>
     </tr>
     <tr>
       <th>suffix_demean, suffix_groupmean</th>
@@ -394,6 +394,16 @@ between-effects are printed in separated blocks.</p></td>
   ID = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)
 )
 <span class='fu'>demean</span>(<span class='kw'>dat</span>, select = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"x*y"</span>), group = <span class='st'>"ID"</span>)</div><div class='output co'>#&gt;   a_between x_y_between   a_within x_y_within
+#&gt; 1  2.666667    4.666667 -1.6666667 -0.6666667
+#&gt; 2  2.333333    4.000000 -0.3333333  2.0000000
+#&gt; 3  2.500000    4.500000  0.5000000 -1.5000000
+#&gt; 4  2.666667    4.666667  1.3333333  3.3333333
+#&gt; 5  2.333333    4.000000 -1.3333333  0.0000000
+#&gt; 6  2.500000    4.500000 -0.5000000  1.5000000
+#&gt; 7  2.666667    4.666667  0.3333333 -2.6666667
+#&gt; 8  2.333333    4.000000  1.6666667 -2.0000000</div><div class='input'>
+<span class='co'># or in formula-notation</span>
+<span class='fu'>demean</span>(<span class='kw'>dat</span>, select = <span class='op'>~</span><span class='kw'>a</span> <span class='op'>+</span> <span class='kw'>x</span> <span class='op'>*</span> <span class='kw'>y</span>, group = <span class='op'>~</span><span class='kw'>ID</span>)</div><div class='output co'>#&gt;   a_between x_y_between   a_within x_y_within
 #&gt; 1  2.666667    4.666667 -1.6666667 -0.6666667
 #&gt; 2  2.333333    4.000000 -0.3333333  2.0000000
 #&gt; 3  2.500000    4.500000  0.5000000 -1.5000000

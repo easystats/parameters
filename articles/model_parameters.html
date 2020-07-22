@@ -328,12 +328,12 @@
 </pre></div>
 <pre><code>#&gt; # Fixed effects 
 #&gt; 
-#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat |    ESS |               Prior
-#&gt; --------------------------------------------------------------------------------------------------
-#&gt; (Intercept) |  52.62 | [ 41.85, 61.56] |   100% |        0% | 1.013 | 153.65 | Normal (0 +- 60.27)
-#&gt; wt          |  -8.25 | [-11.40, -3.92] |   100% |     0.20% | 1.008 | 151.29 | Normal (0 +- 15.40)
-#&gt; cyl         |  -3.54 | [ -5.17, -2.12] |   100% |     0.20% | 1.012 | 171.19 |  Normal (0 +- 8.44)
-#&gt; wt:cyl      |   0.74 | [  0.13,  1.19] | 98.80% |    34.00% | 1.010 | 149.22 |  Normal (0 +- 1.36)</code></pre>
+#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat |    ESS |                   Prior
+#&gt; ------------------------------------------------------------------------------------------------------
+#&gt; (Intercept) |  52.02 | [ 43.82, 62.54] |   100% |        0% | 1.001 | 152.48 | Normal (20.09 +- 15.07)
+#&gt; wt          |  -7.88 | [-11.75, -4.60] |   100% |        0% | 0.998 | 155.87 |  Normal (0.00 +- 15.40)
+#&gt; cyl         |  -3.48 | [ -5.23, -2.05] |   100% |        0% | 1.005 | 181.75 |   Normal (0.00 +- 8.44)
+#&gt; wt:cyl      |   0.69 | [  0.22,  1.21] | 98.60% |    37.60% | 1.000 | 150.86 |   Normal (0.00 +- 1.36)</code></pre>
 <p>… as well as for (more complex) models from the <strong>brms</strong> package. For more complex models, other model components can be printed using the arguments <code>effects</code> and <code>component</code> arguments.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/paul-buerkner/brms">brms</a></span>)
