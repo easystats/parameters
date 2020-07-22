@@ -897,25 +897,11 @@ p_value.glmx <- function(model, ...) {
 
 #' @export
 p_value.rq <- function(model, ...) {
-  p <- tryCatch(
-    {
-      cs <- suppressWarnings(stats::coef(summary(model)))
-      cs[, "Pr(>|t|)"]
-    },
-    error = function(e) {
-      .get_pval_from_summary(
-        model,
-        cs = suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
-      )
-    }
-  )
+  p <- .get_quantreg_p(model)
 
   params <- insight::get_parameters(model)
-
-  .data_frame(
-    Parameter = params$Parameter,
-    p = p
-  )
+  params$p <- p
+  params[intersect(colnames(params), c("Parameter", "p", "Component"))]
 }
 
 #' @export
@@ -1540,5 +1526,53 @@ p_value.list <- function(model, ...) {
   }
 
   names(p) <- .remove_backticks_from_string(names(p))
+  p
+}
+
+
+
+#' @importFrom stats coef setNames
+#' @importFrom insight get_varcov
+.get_quantreg_p <- function(model) {
+  p <- tryCatch(
+    {
+      cs <- suppressWarnings(stats::coef(summary(model)))
+      cs[, "Pr(>|t|)"]
+    },
+    error = function(e) { NULL }
+  )
+
+  if (is.null(p)) {
+    p <- tryCatch(
+      {
+        .get_pval_from_summary(
+          model,
+          cs = suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
+        )
+      },
+      error = function(e) { NULL }
+    )
+  }
+
+  if (is.null(p)) {
+    p <- tryCatch(
+      {
+        sc <- summary(model)
+        if (all(unlist(lapply(sc, is.list)))) {
+          list_sc <- lapply(sc, function(i) {
+            .x <- as.data.frame(i)
+            .x$Parameter <- rownames(.x)
+            .x
+          })
+          out <- do.call(rbind, list_sc)
+          p <- stats::setNames(out[[grep("^coefficients\\.Pr", colnames(out))]], sprintf("tau (%g)", out$tau))
+        } else {
+          p <- stats::setNames(unname(sc$coefficients[, 6]), names(sc$coefficients[, 6]))
+        }
+      },
+      error = function(e) { NULL }
+    )
+  }
+
   p
 }

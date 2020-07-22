@@ -13,6 +13,12 @@
     standardize <- NULL
   }
 
+  # ==== model exceptions
+
+  if (inherits(model, c("crq", "crqs"))) {
+    merge_by <- c("Parameter", "Component")
+  }
+
 
   # ==== for refit, we completely refit the model, than extract parameters, ci etc. as usual
 
