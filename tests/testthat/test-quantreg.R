@@ -1,5 +1,6 @@
 if (require("testthat") &&
     require("parameters") &&
+    require("tripack") &&
     require("quantreg")) {
 
   # rqss ---------

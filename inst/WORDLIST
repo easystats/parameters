@@ -21,11 +21,13 @@ bife
 Biometrics
 Biometrika
 blavaan
+Blume
 BMC
 boostrapped
 brglm
 brms
 brmsfit
+cAIC
 canberra
 Carle
 Casal
@@ -50,9 +52,11 @@ coxph
 cplm
 CrossValidated
 Crujeiras
+D'Agostino
 Davison
 de
 De
+Delacre
 derivating
 DirichletReg
 df
@@ -64,6 +68,7 @@ DoFs
 doi
 dp
 DRR
+Dupont
 easystats
 EFA
 effectsize
@@ -90,11 +95,14 @@ Giesselmann
 github
 githuband
 GLMMadaptive
+glm
+glmm
 glmmADMB
 glmmTMB
 glmx
 Golino
 Gorsuch
+Greevy
 Gustafson
 HC
 HDI
@@ -153,6 +161,7 @@ modelled
 modelling
 Modelling
 MuMIn
+multcomp
 MSA
 multicollinearity
 multinom
@@ -180,8 +189,10 @@ projpred
 pscl
 PSU
 Psychometrika
+quantreg
 Recode
 repec
+reproducibility
 rescale
 rescaled
 Rescale
@@ -190,6 +201,7 @@ Rescaling
 Revelle
 REWB
 rlm
+rms
 robmixglm
 Rocklin
 Rodríguez
@@ -205,6 +217,7 @@ SBC
 Schaeffer
 SEM
 SEs
+SGPV
 Shachar
 Shi
 Shikano

@@ -1,6 +1,7 @@
 if (require("testthat") &&
   require("parameters") &&
   require("sandwich") &&
+  require("clubSandwich") &&
   require("effectsize")) {
 
   data(mtcars)

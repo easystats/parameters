@@ -120,6 +120,7 @@ Suggests:
     survival,
     testthat,
     TMB,
+    tripack,
     truncreg,
     VGAM
 Encoding: UTF-8

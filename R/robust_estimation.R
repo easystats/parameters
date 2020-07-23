@@ -13,7 +13,7 @@
 #'   covariance matrix estimators).
 #' @param vcov_type Character vector, specifying the estimation type for the
 #'   robust covariance matrix estimation (see \code{\link[sandwich:vcovHC]{vcovHC()}}
-#'   or \code{\link[clubSandwich:vcovCR]{vcovCR()}} for details).
+#'   or \code{clubSandwich::vcovCR()} for details).
 #' @param vcov_args List of named vectors, used as additional arguments that
 #'   are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
