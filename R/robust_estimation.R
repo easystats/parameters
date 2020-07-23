@@ -136,25 +136,17 @@ ci_robust <- function(model,
     if (!requireNamespace("clubSandwich", quietly = TRUE)) {
       stop("Package `clubSandwich` needed for this function. Please install and try again.")
     }
-    package <- "clubSandwich"
+    .vcov <- do.call(clubSandwich::vcovCR, c(list(obj = x, type = vcov_type), vcov_args))
   } else {
     if (!requireNamespace("sandwich", quietly = TRUE)) {
       stop("Package `sandwich` needed for this function. Please install and try again.")
     }
-    package <- "sandwich"
+    vcov_fun <- get(vcov_fun, asNamespace("sandwich"))
+    .vcov <- do.call(vcov_fun, c(list(x = x, type = vcov_type), vcov_args))
   }
 
   # get coefficients
   params <- insight::get_parameters(x)
-
-  # compute robust standard errors based on vcov
-  if (package == "sandwich") {
-    vcov_fun <- get(vcov_fun, asNamespace("sandwich"))
-    .vcov <- do.call(vcov_fun, c(list(x = x, type = vcov_type), vcov_args))
-  } else {
-    vcov_fun <- clubSandwich::vcovCR
-    .vcov <- do.call(vcov_fun, c(list(obj = x, type = vcov_type), vcov_args))
-  }
 
   se <- sqrt(diag(.vcov))
   dendf <- degrees_of_freedom(x, method = "any")
