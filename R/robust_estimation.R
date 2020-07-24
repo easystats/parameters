@@ -26,17 +26,21 @@
 #'   and will thus only work for those models supported by those packages.
 #'
 #' @examples
-#' # robust standard errors, calling sandwich::vcovHC(type="HC3") by default
-#' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
-#' standard_error_robust(model)
+#' if (require("sandwich")) {
+#'   # robust standard errors, calling sandwich::vcovHC(type="HC3") by default
+#'   model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
+#'   standard_error_robust(model)
+#' }
 #'
-#' # cluster-robust standard errors, using clubSandwich
-#' iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
-#' standard_error_robust(
-#'   model,
-#'   vcov_type = "CR2",
-#'   vcov_args = list(cluster = iris$cluster)
-#' )
+#' if (require("clubSandwich")) {
+#'   # cluster-robust standard errors, using clubSandwich
+#'   iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
+#'   standard_error_robust(
+#'     model,
+#'     vcov_type = "CR2",
+#'     vcov_args = list(cluster = iris$cluster)
+#'   )
+#' }
 #' @return A data frame.
 #' @export
 standard_error_robust <- function(model,

@@ -13,11 +13,12 @@
 
 ## Bug fixes
 
-* Allow 'threshold' to be passed to `efa_to_cfa()` when the model is from `factor_analysis()`.
+* Allow `threshold` to be passed to `efa_to_cfa()` when the model is from `factor_analysis()`.
 * Allow correlation matrix to be passed to `factor_analysis()`.
 * Fix CRAN check issues.
 * Fix issue in `model_parameters()` for models with non-estimable parameters or statistics.
 * Fix issue in `check_heterogeneity()` in case no predictor would cause heterogeneity bias.
+* Make sure *clubSandwich* is used conditionally in all places, to properly pass CRAN checks.
 
 # parameters 0.8.0
 
