@@ -47,7 +47,7 @@ The `model_parameters()` function (also accessible via the shortcut `parameters(
 
 - The names of the returned data frame are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using [`standardize_names()`](https://easystats.github.io/parameters/reference/standardize_names.html)).
 - It is able to compute or extract indices not available by default, such as ***p*-values**, **CIs**, etc.
-- It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/articles/bootstrapping.html).
+- It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/reference/bootstrap_model.html).
 
 
 ## Correlations and *t*-tests
