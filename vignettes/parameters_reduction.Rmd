@@ -85,7 +85,7 @@ pca <- principal_components(insight::get_predictors(model), n = "auto")
 pca
 ```
 
-The `principal_component()` function automatically selected one component (if the number of components is not specified, this function uses [`n_factors()`](https://easystats.github.io/parameters/articles/n_factors.html) to estimate the optimal number to keep) and returned the **loadings**, i.e., the relationship with all of the original variables. 
+The `principal_component()` function automatically selected one component (if the number of components is not specified, this function uses [`n_factors()`](https://easystats.github.io/parameters/reference/n_factors.html) to estimate the optimal number to keep) and returned the **loadings**, i.e., the relationship with all of the original variables. 
 
 As we can see here, it seems that our new component captured the essence (more than half of the total variance present in the original dataset) of all our other variables together. We can **extract** the values of this component for each of our observation using the `predict()` method and add in the response variable of our initial dataset.
 
