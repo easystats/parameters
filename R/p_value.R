@@ -1341,7 +1341,7 @@ p_value.plm <- function(model, ...) {
   p <- stats::coef(summary(model))
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(p[, 4])),
+    Parameter = .remove_backticks_from_string(rownames(p)),
     p = as.vector(p[, 4])
   )
 }

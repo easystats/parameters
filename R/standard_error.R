@@ -1231,7 +1231,7 @@ standard_error.plm <- function(model, ...) {
   se <- stats::coef(summary(model))
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(se[, 2])),
+    Parameter = .remove_backticks_from_string(rownames(se)),
     SE = as.vector(se[, 2])
   )
 }
