@@ -40,39 +40,39 @@ For the structural models obtained with \pkg{psych}, the following indices are p
 }
 \examples{
 library(parameters)
-library(psych)
+if (require("psych")) {
+  # Principal Component Analysis (PCA) ---------
+  pca <- psych::principal(attitude)
+  model_parameters(pca)
 
-# Principal Component Analysis (PCA) ---------
-pca <- psych::principal(attitude)
-model_parameters(pca)
+  pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
+  model_parameters(pca, sort = TRUE, threshold = 0.2)
 
-pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
-model_parameters(pca, sort = TRUE, threshold = 0.2)
+  principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 
-principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 \donttest{
-# Exploratory Factor Analysis (EFA) ---------
-efa <- psych::fa(attitude, nfactors = 3)
-model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
+  # Exploratory Factor Analysis (EFA) ---------
+  efa <- psych::fa(attitude, nfactors = 3)
+  model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
 }
 
-# Omega ---------
-omega <- psych::omega(mtcars, nfactors = 3)
-params <- model_parameters(omega)
-params
-summary(params)
-
+  # Omega ---------
+  omega <- psych::omega(mtcars, nfactors = 3)
+  params <- model_parameters(omega)
+  params
+  summary(params)
+}
 
 # FactoMineR ---------
 \dontrun{
-library(FactoMineR)
+if( require("FactoMineR")) {
+  model <- FactoMineR::PCA(iris[, 1:4], ncp = 2)
+  model_parameters(model)
+  attributes(model_parameters(model))$scores
 
-model <- FactoMineR::PCA(iris[, 1:4], ncp = 2)
-model_parameters(model)
-attributes(model_parameters(model))$scores
-
-model <- FactoMineR::FAMD(iris, ncp = 2)
-model_parameters(model)
+  model <- FactoMineR::FAMD(iris, ncp = 2)
+  model_parameters(model)
+}
 }
 }
 \references{

@@ -20,7 +20,6 @@
 #'   model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
 #'   model_parameters(model)
 #' }
-#'
 #' \donttest{
 #' if (require("glmmTMB")) {
 #'   data(Salamanders)

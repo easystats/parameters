@@ -69,11 +69,11 @@ Extract and compute indices and measures to describe parameters of generalized a
 }
 \examples{
 library(parameters)
-library(mgcv)
-
-dat <- gamSim(1, n = 400, dist = "normal", scale = 2)
-model <- gam(y ~ s(x0) + s(x1) + s(x2) + s(x3), data = dat)
-model_parameters(model)
+if (require("mgcv")) {
+  dat <- gamSim(1, n = 400, dist = "normal", scale = 2)
+  model <- gam(y ~ s(x0) + s(x1) + s(x2) + s(x3), data = dat)
+  model_parameters(model)
+}
 }
 \seealso{
 \code{\link[=standardize_names]{standardize_names()}} to rename

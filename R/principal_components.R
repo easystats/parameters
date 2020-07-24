@@ -49,23 +49,24 @@
 #'
 #' @examples
 #' library(parameters)
+#' if (require("psych")) {
+#'   principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
+#'   principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin",
+#'                        threshold = "max", sort = TRUE)
+#'   principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 #'
-#' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
-#' principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
-#' principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
+#'   pca <- principal_components(mtcars[, 1:5], n = 2, rotation = "varimax")
+#'   summary(pca)
+#'   predict(pca)
 #'
-#' pca <- principal_components(mtcars[, 1:5], n = 2, rotation = "varimax")
-#' summary(pca)
-#' predict(pca)
-#'
-#' # which variables from the original data belong to which extracted component?
-#' closest_component(pca)
+#'   # which variables from the original data belong to which extracted component?
+#'   closest_component(pca)
 #'
 #' \donttest{
-#' # Automated number of components
-#' principal_components(mtcars[, 1:4], n = "auto")
+#'   # Automated number of components
+#'   principal_components(mtcars[, 1:4], n = "auto")
 #' }
-#'
+#' }
 #' @return A data frame of loadings.
 #' @references \itemize{
 #'   \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and Psychological Measurement, 34(1):111–117

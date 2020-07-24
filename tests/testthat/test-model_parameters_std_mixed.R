@@ -1,8 +1,9 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest || Sys.getenv("USER") == "travis") {
+if (.runThisTest) {
   if (require("testthat") &&
     require("parameters") &&
+    require("effectsize") &&
     require("lme4")) {
 
     data(iris)

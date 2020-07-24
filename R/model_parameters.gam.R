@@ -12,11 +12,11 @@
 #'
 #' @examples
 #' library(parameters)
-#' library(mgcv)
-#'
-#' dat <- gamSim(1, n = 400, dist = "normal", scale = 2)
-#' model <- gam(y ~ s(x0) + s(x1) + s(x2) + s(x3), data = dat)
-#' model_parameters(model)
+#' if (require("mgcv")) {
+#'   dat <- gamSim(1, n = 400, dist = "normal", scale = 2)
+#'   model <- gam(y ~ s(x0) + s(x1) + s(x2) + s(x3), data = dat)
+#'   model_parameters(model)
+#' }
 #' @export
 model_parameters.gam <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, p_adjust = NULL, ...) {
   # Processing
