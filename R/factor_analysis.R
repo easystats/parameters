@@ -27,19 +27,19 @@
 #'
 #' @examples
 #' library(parameters)
+#' if (require("psych")) {
+#'   factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
+#'   factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
+#'   factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 #'
-#' factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
-#' factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
-#' factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
-#'
-#' efa <- factor_analysis(mtcars[, 1:5], n = 2)
-#' summary(efa)
-#' predict(efa)
+#'   efa <- factor_analysis(mtcars[, 1:5], n = 2)
+#'   summary(efa)
+#'   predict(efa)
 #' \donttest{
-#' # Automated number of components
-#' factor_analysis(mtcars[, 1:4], n = "auto")
+#'   # Automated number of components
+#'   factor_analysis(mtcars[, 1:4], n = "auto")
 #' }
-#'
+#' }
 #' @return A data frame of loadings.
 #' @references \itemize{
 #'   \item Hofmann, R. (1978). Complexity and simplicity as objective indices descriptive of factor solutions. Multivariate Behavioral Research, 13:2, 247-250, \doi{10.1207/s15327906mbr1302_9}

@@ -61,19 +61,19 @@ There is a \code{summary()}-method that prints the Eigenvalues and (explained) v
 }
 \examples{
 library(parameters)
+if (require("psych")) {
+  factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
+  factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
+  factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 
-factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
-factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
-factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
-
-efa <- factor_analysis(mtcars[, 1:5], n = 2)
-summary(efa)
-predict(efa)
+  efa <- factor_analysis(mtcars[, 1:5], n = 2)
+  summary(efa)
+  predict(efa)
 \donttest{
-# Automated number of components
-factor_analysis(mtcars[, 1:4], n = "auto")
+  # Automated number of components
+  factor_analysis(mtcars[, 1:4], n = "auto")
 }
-
+}
 }
 \references{
 \itemize{
