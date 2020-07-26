@@ -135,8 +135,12 @@ model_parameters.metaplus <- function(model, ci = .95, bootstrap = FALSE, iterat
 
   rma_parameters <- if (!is.null(model$slab) && !is.numeric(model$slab)) {
     sprintf("%s", model$slab)
-  } else {
+  } else if (is.null(model$k) && !is.null(model$slab) && is.numeric(model$slab)) {
+    sprintf("Study %i", model$slab)
+  } else if (!is.null(model$k)) {
     sprintf("Study %i", 1:model[["k"]])
+  } else {
+    sprintf("Study %i", 1:length(model$yi))
   }
 
   alpha <- (1 + ci) / 2

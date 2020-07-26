@@ -1,4 +1,10 @@
-# parameters 0.8.1
+# parameters 0.8.2.1
+
+## Bug fixes
+
+* Fix issue in `model_parameters.metaplus()` with random effects.
+
+# parameters 0.8.2
 
 ## New supported models
 
