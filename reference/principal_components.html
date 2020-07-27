@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
       </span>
     </div>
 
@@ -260,91 +260,24 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://personality-project.org/r/psych'>"psych"</a></span>)) {
+  <span class='fu'>principal_components</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='st'>"all"</span>, threshold = <span class='fl'>0.2</span>)
+  <span class='fu'>principal_components</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='fl'>2</span>, rotation = <span class='st'>"oblimin"</span>,
+                       threshold = <span class='st'>"max"</span>, sort = <span class='fl'>TRUE</span>)
+  <span class='fu'>principal_components</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='fl'>2</span>, threshold = <span class='fl'>2</span>, sort = <span class='fl'>TRUE</span>)
 
-<span class='fu'>principal_components</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='st'>"all"</span>, threshold = <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
-#&gt; 
-#&gt; </span><span>Variable |   PC1 |   PC2 |  PC3 |   PC4 |  PC5 |   PC6 | Complexity
-#&gt; -------------------------------------------------------------------
-#&gt; mpg      | -0.93 |       |      | -0.30 |      |       |       1.30
-#&gt; cyl      |  0.96 |       |      |       |      | -0.21 |       1.18
-#&gt; disp     |  0.95 |       |      | -0.23 |      |       |       1.16
-#&gt; hp       |  0.87 |  0.36 |      |       | 0.30 |       |       1.64
-#&gt; drat     | -0.75 |  0.48 | 0.44 |       |      |       |       2.47
-#&gt; wt       |  0.88 | -0.35 | 0.26 |       |      |       |       1.54
-#&gt; qsec     | -0.54 | -0.81 |      |       |      |       |       1.96
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 6 principal components accounted for 99.30% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%).</span><span></div><div class='input'><span class='fu'>principal_components</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='fl'>2</span>, rotation = <span class='st'>"oblimin"</span>, threshold = <span class='st'>"max"</span>, sort = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (oblimin-rotation)
-#&gt; 
-#&gt; </span><span>Variable |   TC1 |   TC2 | Complexity | Uniqueness |  MSA
-#&gt; ---------------------------------------------------------
-#&gt; wt       |  0.98 |       |       1.03 |       0.10 | 0.77
-#&gt; drat     | -0.95 |       |       1.19 |       0.21 | 0.85
-#&gt; disp     |  0.89 |       |       1.07 |       0.08 | 0.85
-#&gt; mpg      | -0.87 |       |       1.07 |       0.13 | 0.87
-#&gt; cyl      |  0.78 |       |       1.38 |       0.08 | 0.87
-#&gt; qsec     |       | -0.98 |       1.00 |       0.06 | 0.61
-#&gt; hp       |       |  0.61 |       1.97 |       0.10 | 0.90
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (TC1 = 63.90%, TC2 = 25.28%).</span><span></div><div class='input'><span class='fu'>principal_components</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='fl'>2</span>, threshold = <span class='fl'>2</span>, sort = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
-#&gt; 
-#&gt; </span><span>Variable |  PC1 |   PC2 | Complexity
-#&gt; ------------------------------------
-#&gt; cyl      | 0.96 |       |       1.02
-#&gt; disp     | 0.95 |       |       1.02
-#&gt; mpg      |      |       |       1.02
-#&gt; wt       |      |       |       1.30
-#&gt; hp       |      |       |       1.33
-#&gt; drat     |      |  0.48 |       1.71
-#&gt; qsec     |      | -0.81 |       1.75
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 2 principal components accounted for 89.18% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%).</span><span></div><div class='input'>
-<span class='kw'>pca</span> <span class='op'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>], n = <span class='fl'>2</span>, rotation = <span class='st'>"varimax"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>pca</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># (Explained) Variance of Components
-#&gt; 
-#&gt; </span><span>Parameter                       |   RC1 |   RC2
-#&gt; -----------------------------------------------
-#&gt; Eigenvalues                     | 4.038 | 0.562
-#&gt; Variance Explained              | 0.565 | 0.355
-#&gt; Variance Explained (Cumulative) | 0.565 | 0.920
-#&gt; Variance Explained (Proportion) | 0.614 | 0.386</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>pca</span>)</div><div class='output co'>#&gt;            RC1         RC2
-#&gt; 1  -0.23906186  0.38058456
-#&gt; 2  -0.23906186  0.38058456
-#&gt; 3  -0.87523403  0.30496365
-#&gt; 4  -0.83256507 -1.21853890
-#&gt; 5   0.37716377 -0.82007976
-#&gt; 6  -1.10127278 -1.86114104
-#&gt; 7   1.23453249 -0.26702364
-#&gt; 8  -1.30024506 -0.23007562
-#&gt; 9  -0.74129623  0.41446358
-#&gt; 10 -0.02461777  0.47612740
-#&gt; 11  0.02534454  0.45386195
-#&gt; 12  0.29853804 -0.88051969
-#&gt; 13  0.26641941 -0.86620618
-#&gt; 14  0.34136287 -0.89960437
-#&gt; 15  0.93247714 -1.25088059
-#&gt; 16  1.06844670 -1.03682781
-#&gt; 17  1.22799380 -0.41588998
-#&gt; 18 -1.30762202  0.71198099
-#&gt; 19 -0.60701035  2.14073148
-#&gt; 20 -1.25685030  0.99325379
-#&gt; 21 -0.90720118  0.02588588
-#&gt; 22 -0.15711335 -1.72688554
-#&gt; 23  0.18137850 -1.00150788
-#&gt; 24  1.72116683  0.68171810
-#&gt; 25  0.36060813 -0.98161661
-#&gt; 26 -1.12513535  0.63056351
-#&gt; 27 -0.46730967  1.39310467
-#&gt; 28 -1.05428733  0.43877634
-#&gt; 29  2.24906373  1.75900256
-#&gt; 30  0.13210722  0.33766027
-#&gt; 31  2.24244855  1.06973229
-#&gt; 32 -0.42316749  0.86380202</div><div class='input'>
-<span class='co'># which variables from the original data belong to which extracted component?</span>
-<span class='fu'>closest_component</span>(<span class='kw'>pca</span>)</div><div class='output co'>#&gt;  mpg  cyl disp   hp drat 
-#&gt;    1    1    1    1    2 </div><div class='input'>
+  <span class='kw'>pca</span> <span class='op'>&lt;-</span> <span class='fu'>principal_components</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>], n = <span class='fl'>2</span>, rotation = <span class='st'>"varimax"</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>pca</span>)
+  <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>pca</span>)
+
+  <span class='co'># which variables from the original data belong to which extracted component?</span>
+  <span class='fu'>closest_component</span>(<span class='kw'>pca</span>)
+
 <span class='co'># \donttest{</span>
-<span class='co'># Automated number of components</span>
-<span class='fu'>principal_components</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], n = <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
+  <span class='co'># Automated number of components</span>
+  <span class='fu'>principal_components</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], n = <span class='st'>"auto"</span>)
+<span class='co'># }</span>
+}</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Principal Component Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable |   PC1 | Complexity
 #&gt; -----------------------------
@@ -353,8 +286,7 @@
 #&gt; disp     |  0.95 |       1.00
 #&gt; hp       |  0.91 |       1.00
 #&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The unique principal component accounted for 87.55% of the total variance of the original data.</span><span></div><div class='input'><span class='co'># }</span>
-</div></span></pre>
+#&gt; </span><span style='color: #BBBB00;'>The unique principal component accounted for 87.55% of the total variance of the original data.</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

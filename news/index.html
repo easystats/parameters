@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
       </span>
     </div>
 
@@ -161,9 +161,21 @@
       <small>Source: <a href='https://github.com/easystats/parameters/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="parameters-081" class="section level1">
-<h1 class="page-header" data-toc-text="0.8.1">
-<a href="#parameters-081" class="anchor"></a>parameters 0.8.1<small> Unreleased </small>
+    <div id="parameters-0821" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.2.1">
+<a href="#parameters-0821" class="anchor"></a>parameters 0.8.2.1<small> Unreleased </small>
+</h1>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fix issue in <code>model_parameters.metaplus()</code> with random effects.</li>
+</ul>
+</div>
+</div>
+    <div id="parameters-082" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.2">
+<a href="#parameters-082" class="anchor"></a>parameters 0.8.2<small> 2020-07-24 </small>
 </h1>
 <div id="new-supported-models" class="section level2">
 <h2 class="hasAnchor">
@@ -183,15 +195,17 @@
 <li>Improved <code><a href="../reference/select_parameters.html">select_parameters()</a></code> for mixed models, and revised docs and associated vignette.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Allow ‘threshold’ to be passed to <code><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa()</a></code> when the model is from <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</li>
+<li>Allow <code>threshold</code> to be passed to <code><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa()</a></code> when the model is from <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</li>
 <li>Allow correlation matrix to be passed to <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</li>
 <li>Fix CRAN check issues.</li>
 <li>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for models with non-estimable parameters or statistics.</li>
+<li>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>plm</em> models with only one parameter.</li>
 <li>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> in case no predictor would cause heterogeneity bias.</li>
+<li>Make sure <em>clubSandwich</em> is used conditionally in all places, to properly pass CRAN checks.</li>
 </ul>
 </div>
 </div>
@@ -221,9 +235,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>fix issue with rank deficient models.</li>
 </ul>
@@ -307,9 +321,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue in <code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> for mixed models.</li>
 <li>Fixed bug for <code>model_parameters.anova(..., eta_squared = "partial")</code> when called with non-mixed models.</li>
@@ -349,9 +363,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/lavaan/man/lavTestLRT.html">anova()</a></code> from <em>lmerTest</em> models.</li>
 </ul>
@@ -421,9 +435,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed minor issue with the <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.befa.html">model_parameters.befa()</a></code>.</li>
 <li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with wrong order of degrees of freedom when <code>df_method</code> was different from default.</li>
@@ -504,9 +518,9 @@
 <code><a href="../reference/describe_distribution.html">describe_distribution()</a></code> now also works on data frames and gets a nicer print-method.</li>
 </ul>
 </div>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when <code>robust = TRUE</code>, which could sometimes mess up order of the statistic column.</li>
 <li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with wrong <code>df</code> for <code>lme</code>-models.</li>
@@ -522,9 +536,9 @@
 <h1 class="page-header" data-toc-text="0.4.1">
 <a href="#parameters-041" class="anchor"></a>parameters 0.4.1<small> 2020-01-17 </small>
 </h1>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix CRAN check issues, caused by removal of package ‘projpred’.</li>
 </ul>
@@ -602,9 +616,9 @@
 <code><a href="../reference/model_parameters.PCA.html">model_parameters.principal()</a></code> includes a <code>MSA</code> column for objects from <code><a href="../reference/principal_components.html">principal_components()</a></code>.</li>
 </ul>
 </div>
-<div id="bug-fixes-7" class="section level2">
+<div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with non-typical ordering of coefficients for mixed models.</li>
 <li>Fixed issues with models of class <code>rlmerMod</code>.</li>
@@ -674,14 +688,14 @@
 <li>
 <code><a href="https://rdrr.io/pkg/insight/man/format_p.html">format_p()</a></code> gets a <code>digits</code>-argument to set the amount of digits for p-values.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> now accepts (non-documented) arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> to change the amount and style of formatting values. See <a href="https://easystats.github.io/parameters/reference/model_parameters.lm.html">examples in <code>model_parameters.lm()</code></a>.</li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> now accepts (non-documented) arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> to change the amount and style of formatting values. See <a href="https://easystats.github.io/parameters/reference/model_parameters.default.html">examples in <code>model_parameters.default()</code></a>.</li>
 <li>Improved <code><a href="../reference/print.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when used with Bayesian models.</li>
 <li>Added further method (gap-statistic) to <code><a href="../reference/n_clusters.html">n_clusters()</a></code>.</li>
 </ul>
 </div>
-<div id="bug-fixes-8" class="section level2">
+<div id="bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Interaction terms in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> were denoted as nested interaction when one of the interaction terms was surrounded by a function, e.g. <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code> or <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</li>
 <li>Fixed bug in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when a parameter occured multiple times in a model.</li>
@@ -744,9 +758,9 @@
 <li>The <code>method</code>-argument for <code><a href="../reference/ci.merMod.html">ci.merMod()</a></code> can now also be <code>"kenward"</code> to compute confidence intervals with degrees of freedom based on the Kenward-Roger (1997) approach.</li>
 </ul>
 </div>
-<div id="bug-fixes-9" class="section level2">
+<div id="bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue with wrong computation of wald-approximated confidence intervals.</li>
 <li>Fixed issue with wrong computation of degrees of freedom for <code><a href="../reference/ci_kenward.html">p_value_kenward()</a></code>.</li>

@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
       </span>
     </div>
 
@@ -193,7 +193,7 @@
 #&gt; advance    | 0.68 |       1.00
 #&gt; 
 #&gt; The unique principal component accounted for 52.82% of the total variance of the original data.</code></pre>
-<p>The <code>principal_component()</code> function automatically selected one component (if the number of components is not specified, this function uses <a href="https://easystats.github.io/parameters/articles/n_factors.html"><code>n_factors()</code></a> to estimate the optimal number to keep) and returned the <strong>loadings</strong>, i.e., the relationship with all of the original variables.</p>
+<p>The <code>principal_component()</code> function automatically selected one component (if the number of components is not specified, this function uses <a href="https://easystats.github.io/parameters/reference/n_factors.html"><code>n_factors()</code></a> to estimate the optimal number to keep) and returned the <strong>loadings</strong>, i.e., the relationship with all of the original variables.</p>
 <p>As we can see here, it seems that our new component captured the essence (more than half of the total variance present in the original dataset) of all our other variables together. We can <strong>extract</strong> the values of this component for each of our observation using the <code><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">predict()</a></code> method and add in the response variable of our initial dataset.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="kw">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">predict</a></span>(<span class="kw">pca</span>)
