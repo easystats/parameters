@@ -35,6 +35,15 @@ plot.parameters_simulate <- function(x, ...) {
 
 
 #' @export
+plot.parameters_brms_meta <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot Bayesian meta-analysis. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
+}
+
+
+#' @export
 plot.n_factors <- function(x, ...) {
   if (!requireNamespace("see", quietly = TRUE)) {
     stop("Package 'see' needed to plot point-estimates. Please install it by running `install.packages('see')`.")

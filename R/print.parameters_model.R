@@ -81,6 +81,13 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     pretty_names <- FALSE
   }
 
+  # for bayesian meta, remove ROPE_CI
+  if (isTRUE(attributes(x)$is_bayes_meta)) {
+    x$CI <- NULL
+    x$ROPE_CI <- NULL
+    x$ROPE_low <- NULL
+    x$ROPE_high <- NULL
+  }
 
   split_by <- ""
   split_by <- c(split_by, ifelse("Component" %in% names(x) && .n_unique(x$Component) > 1, "Component", ""))
@@ -379,3 +386,6 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
 
 #' @export
 print.parameters_simulate <- print.parameters_model
+
+#' @export
+print.parameters_brms_meta <- print.parameters_model

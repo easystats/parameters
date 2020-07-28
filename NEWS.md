@@ -1,5 +1,9 @@
 # parameters 0.8.2.1
 
+## Changes to functions
+
+* `model_parameters()` gets a specific behaviour for brms-meta-analysis models.
+
 ## Bug fixes
 
 * Fix issue in `model_parameters.metaplus()` with random effects.
