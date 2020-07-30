@@ -257,6 +257,23 @@ p_value.zcpglm <- function(model, component = c("all", "conditional", "zi", "zer
 
 
 #' @export
+p_value.sem <- function(model, ...) {
+  if (!.is_semLme(model)) {
+    return(NULL)
+  }
+
+  stat <- insight::get_statistic(model)
+  p_from_stat <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+
+  .data_frame(
+    Parameter = stat$Parameter,
+    p = p_from_stat
+  )
+}
+
+
+
+#' @export
 p_value.lme <- function(model, ...) {
   cs <- stats::coef(summary(model))
   p <- cs[, 5]

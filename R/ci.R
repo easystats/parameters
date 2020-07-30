@@ -350,6 +350,9 @@ ci.vglm <- ci.gamlss
 #' @export
 ci.svyglm.glimML <- ci.gamlss
 
+#' @export
+ci.sem <- ci.gamlss
+
 
 #' @rdname ci.merMod
 #' @export

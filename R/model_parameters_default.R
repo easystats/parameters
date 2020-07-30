@@ -233,3 +233,8 @@ model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
+
+
+
+#' @export
+model_parameters.sem <- model_parameters.default

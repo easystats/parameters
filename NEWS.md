@@ -1,5 +1,9 @@
 # parameters 0.8.2.1
 
+## New supported model classes
+
+* Preliminary support for `semLME` (*smicd*)
+
 ## Changes to functions
 
 * `model_parameters()` gets a specific behaviour for brms-meta-analysis models.
