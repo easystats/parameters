@@ -847,6 +847,20 @@ standard_error.bayesx <- function(model, ...) {
 
 
 #' @export
+standard_error.mle2 <- function(x, ...) {
+  s <- summary(x)
+  .data_frame(
+    Parameter = names(s@coef[, 2]),
+    SE = unname(s@coef[, 2])
+  )
+}
+
+#' @export
+standard_error.mle <- standard_error.mle2
+
+
+
+#' @export
 standard_error.glht <- function(model, ...) {
   s <- summary(model)
   .data_frame(
