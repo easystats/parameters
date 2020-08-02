@@ -848,7 +848,10 @@ standard_error.bayesx <- function(model, ...) {
 
 #' @export
 standard_error.mle2 <- function(x, ...) {
-  s <- summary(x)
+  if (!requireNamespace("bbmle", quietly = TRUE)) {
+    stop("Package `bbmle` needs to be installed to extract standard errors.", call. = FALSE)
+  }
+  s <- bbmle::summary(x)
   .data_frame(
     Parameter = names(s@coef[, 2]),
     SE = unname(s@coef[, 2])

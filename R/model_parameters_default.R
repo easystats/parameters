@@ -116,7 +116,17 @@ model_parameters.glm <- function(model, ci = .95, df_method = "profile", bootstr
 #' @export
 model_parameters.polr <- model_parameters.glm
 
+#' @export
+model_parameters.negbin <- model_parameters.glm
 
+#' @export
+model_parameters.logistf <- model_parameters.glm
+
+#' @export
+model_parameters.mle2 <- model_parameters.glm
+
+#' @export
+model_parameters.mle <- model_parameters.glm
 
 
 

@@ -2,7 +2,7 @@
 
 ## New supported model classes
 
-* Preliminary support for `semLME` (*smicd*)
+* Preliminary support for `semLME` (*smicd*), `mle2` (*bbmle*), `mle` (*stats4*)
 
 ## Changes to functions
 

@@ -208,6 +208,13 @@ ci.negbin <- ci.glm
 #' @export
 ci.logistf <- ci.glm
 
+#' @export
+ci.mle2 <- ci.glm
+
+#' @export
+ci.mle <- ci.glm
+
+
 
 #' @rdname ci.merMod
 #' @export

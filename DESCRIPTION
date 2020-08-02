@@ -58,6 +58,7 @@ Suggests:
     aod,
     BayesFactor,
     BayesFM,
+    bbmle,
     betareg,
     boot,
     brglm2,

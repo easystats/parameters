@@ -755,6 +755,19 @@ p_value.betamfx <- function(model, component = c("all", "conditional", "precisio
 # p-Values from Special Models -----------------------------------------------
 
 
+#' @export
+p_value.mle2 <- function(x, ...) {
+  if (!requireNamespace("bbmle", quietly = TRUE)) {
+    stop("Package `bbmle` needs to be installed to extract p-values.", call. = FALSE)
+  }
+  s <- bbmle::summary(x)
+  .data_frame(
+    Parameter = names(s@coef[, 4]),
+    p = unname(s@coef[, 4])
+  )
+}
+
+
 #' @importFrom insight find_parameters
 #' @export
 p_value.glht <- function(model, ...) {
