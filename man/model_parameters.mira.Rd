@@ -14,12 +14,31 @@
 \description{
 Format models of class \code{mira}, obtained from \code{mice::width.mids()}.
 }
+\details{
+\code{model_parameters()} for objects of class \code{mira} works
+  similar to \code{mice::pool()}, i.e. it generates the pooled summary
+  of multiple imputed repeated regression analyses.
+}
 \examples{
 library(parameters)
 if (require("mice")) {
   data(nhanes2)
   imp <- mice(nhanes2)
   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+  model_parameters(fit)
+}
+
+# model_parameters() also works for models that have no "tidy"-method in mice
+if (require("mice") && require("gee")) {
+  data(warpbreaks)
+  set.seed(1234)
+  warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA
+  imp <- mice(warpbreaks)
+  fit <- with(data = imp, expr = gee(breaks ~ tension, id = wool))
+
+  # does not work:
+  # summary(pool(fit))
+
   model_parameters(fit)
 }
 }

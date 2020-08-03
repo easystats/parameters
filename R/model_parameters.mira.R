@@ -5,12 +5,30 @@
 #' @param model An object of class \code{mira}.
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @details \code{model_parameters()} for objects of class \code{mira} works
+#'   similar to \code{mice::pool()}, i.e. it generates the pooled summary
+#'   of multiple imputed repeated regression analyses.
+#'
 #' @examples
 #' library(parameters)
 #' if (require("mice")) {
 #'   data(nhanes2)
 #'   imp <- mice(nhanes2)
 #'   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+#'   model_parameters(fit)
+#' }
+#'
+#' # model_parameters() also works for models that have no "tidy"-method in mice
+#' if (require("mice") && require("gee")) {
+#'   data(warpbreaks)
+#'   set.seed(1234)
+#'   warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA
+#'   imp <- mice(warpbreaks)
+#'   fit <- with(data = imp, expr = gee(breaks ~ tension, id = wool))
+#'
+#'   # does not work:
+#'   # summary(pool(fit))
+#'
 #'   model_parameters(fit)
 #' }
 #' @importFrom stats var qt pt p.adjust.methods
@@ -20,7 +38,7 @@ model_parameters.mira <- function(model, ci = .95, exponentiate = FALSE, p_adjus
 
   # extract model parameters for each sub model
   all_models <- do.call(rbind, lapply(1:length(model$analyses), function(i) {
-    params <- model_parameters(model$analyses[[i]], df_method = "wald")
+    params <- suppressWarnings(model_parameters(model$analyses[[i]], df_method = "wald"))
     params$.id <- as.character(i)
     if (is.null(pretty_names)) pretty_names <- attr(params, "pretty_names", exact = TRUE)
     as.data.frame(params)
@@ -77,8 +95,13 @@ model_parameters.mira <- function(model, ci = .95, exponentiate = FALSE, p_adjus
   params$.id <- NULL
 
   # adjust p-values?
-  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
-    parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
+  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(params)) {
+    params$p <- stats::p.adjust(params$p, method = p_adjust)
+  }
+
+  # add pretty names
+  if (!is.null(pretty_names)) {
+    attr(params, "pretty_names") <- pretty_names
   }
 
   # final preparation
