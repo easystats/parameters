@@ -32,6 +32,16 @@
 #'
 #'   model_parameters(fit)
 #' }
+#'
+#' # and it works with pooled results
+#' if (require("mice")) {
+#'   data("nhanes2")
+#'   imp <- mice(nhanes2)
+#'   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+#'   pooled <- pool(fit)
+#'
+#'   model_parameters(pooled)
+#' }
 #' @importFrom stats var qt pt p.adjust.methods
 #' @export
 model_parameters.mira <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, ...) {

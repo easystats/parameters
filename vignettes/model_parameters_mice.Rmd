@@ -34,6 +34,8 @@ if (!requireNamespace("mice", quietly = TRUE) ||
 set.seed(333)
 ```
 
+## Model Parameters from `mira` objects
+
 `model_parameters()` can be used in combination with the *mice* package to deal with missing data, in particular to summaries regression models used with multiple imputed datasets. It computes pooled summaries of multiple imputed repeated regression analyses, i.e. of objects of class `mira`. Thus, `model_parameters()` for `mira`-objects is comparable to the `pool()`-function from *mice*, but only focuses on the final summary of parameters and does not include the diagnostic statistic per estimate.
 
 ```{r message=FALSE}
@@ -90,4 +92,17 @@ object <- list(analyses = analyses)
 class(object) <- c("mira", "matrix", "list")
 
 model_parameters(object)
+```
+
+## Model Parameters from `mipo` objects
+
+It is also possible to compute summaries of pooled objects of class `mipo`.
+
+```{r message=FALSE}
+data("nhanes2")
+imp <- mice(nhanes2)
+fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+pooled <- pool(fit)
+
+model_parameters(pooled)
 ```
