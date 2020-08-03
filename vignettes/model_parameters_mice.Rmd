@@ -42,7 +42,7 @@ library(parameters)
 
 data("nhanes2")
 imp <- mice(nhanes2)
-fit1 <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
 
 model_parameters(fit)
 ```
