@@ -1,5 +1,9 @@
 # parameters 0.8.2.1
 
+## General
+
+* Added vignette on model parameters and missing data.
+
 ## New supported model classes
 
 * Preliminary support for `semLME` (*smicd*), `mle2` (*bbmle*), `mle` (*stats4*)

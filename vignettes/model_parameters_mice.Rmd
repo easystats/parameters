@@ -1,0 +1,93 @@
+---
+title: "Model Parameters for Multiply Imputed Repeated Analyses"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, parameters, variable selection, feature selection]
+vignette: >
+  %\VignetteIndexEntry{Missing Data}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+options(digits = 2)
+knitr::opts_chunk$set(comment = "#>")
+
+if (!requireNamespace("mice", quietly = TRUE) ||
+    !requireNamespace("GLMMadaptive", quietly = TRUE) ||
+    !requireNamespace("lme4", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+
+set.seed(333)
+```
+
+`model_parameters()` can be used in combination with the *mice* package to deal with missing data, in particular to summaries regression models used with multiple imputed datasets. It computes pooled summaries of multiple imputed repeated regression analyses, i.e. of objects of class `mira`. Thus, `model_parameters()` for `mira`-objects is comparable to the `pool()`-function from *mice*, but only focuses on the final summary of parameters and does not include the diagnostic statistic per estimate.
+
+```{r message=FALSE}
+library(mice)
+library(parameters)
+
+data("nhanes2")
+imp <- mice(nhanes2)
+fit1 <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+
+model_parameters(fit)
+```
+
+Not all packages work with `with.mids()` from package *mice*. Thus, for some modeling packages, it's not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the *GLMMadpative* package here.
+
+First, we generate a dataset with missing values. We take the data `cbpp` from *lme4* and randomly assign some missing values into one of the predictors. Then we impute the data, using `mice()` from package *mice*.
+
+```{r message=FALSE}
+library(lme4)
+library(GLMMadaptive)
+
+data(cbpp)
+cbpp$period[sample(1:nrow(cbpp), size = 10)] <- NA
+
+imputed_data <- mice(cbpp)
+```
+
+Using `with` to compute multiple regression analyses for each imputed dataset fails.
+
+```{r message=FALSE, eval=FALSE}
+fit <- with(data = imputed_data, expr = GLMMadaptive::mixed_model(
+  cbind(incidence, size - incidence) ~ period,
+  random = ~ 1 | herd,
+  family = binomial
+))
+#> Error in as.data.frame(data) : 
+#>   argument "data" is missing, with no default
+```
+
+However, we can use a workaround by calculating the regression models for each imputed dataset manually, using `complete()` from package *mice*. Not that it is important to mimic the structure of `mira`-objects! The returned model objects have to be saved as a list named `analyses`. This list must be of class `mira` and `list`, and can be used with `model_parameters()`.
+
+```{r message=FALSE}
+analyses <- as.list(seq_len(imputed_data$m))
+for (i in seq_along(analyses)) {
+  data.i <- complete(imputed_data, i)
+  analyses[[i]] <- mixed_model(
+    cbind(incidence, size - incidence) ~ period,
+    random = ~ 1 | herd,
+    data = data.i,
+    family = binomial
+  )
+}
+object <- list(analyses = analyses)
+class(object) <- c("mira", "matrix", "list")
+
+model_parameters(object)
+```
