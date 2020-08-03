@@ -94,6 +94,7 @@ Suggests:
     mclust,
     MCMCglmm,
     metafor,
+    mice,
     mfx,
     mgcv,
     multcomp,

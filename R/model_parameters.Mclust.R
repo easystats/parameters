@@ -7,10 +7,10 @@
 #'
 #' @examples
 #' library(parameters)
-#' library(mclust)
-#'
-#' model <- mclust::Mclust(iris[1:4], verbose = FALSE)
-#' model_parameters(model)
+#' if (require("mclust")) {
+#'   model <- mclust::Mclust(iris[1:4], verbose = FALSE)
+#'   model_parameters(model)
+#' }
 #' @export
 model_parameters.Mclust <- function(model, ...) {
   params <- cbind(

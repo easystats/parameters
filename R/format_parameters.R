@@ -48,6 +48,10 @@ format_parameters.rma <- function(model) {
 
 
 #' @export
+format_parameters.mira <- format_parameters.rma
+
+
+#' @export
 format_parameters.parameters_model <- function(model) {
   if (!is.null(attributes(model)$pretty_names)) {
     model$Parameter <- attributes(model)$pretty_names[model$Parameter]

@@ -34,6 +34,7 @@ Compute and extract model parameters. See the documentation for your object's cl
  \item{\link[=model_parameters.kmeans]{Cluster models} (k-means, ...)}
  \item{\link[=model_parameters.rma]{Meta-Analysis via linear (mixed) models} (\code{rma})}
  \item{\link[=model_parameters.glht]{Hypothesis Testing} (\code{glht})}
+ \item{\link[=model_parameters.mira]{Multiply imputed repeated analyses} (\code{mira})}
  }
 }
 \details{

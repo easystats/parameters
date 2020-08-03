@@ -16,8 +16,8 @@ Format mixture models obtained for example by \code{mclust::Mclust}.
 }
 \examples{
 library(parameters)
-library(mclust)
-
-model <- mclust::Mclust(iris[1:4], verbose = FALSE)
-model_parameters(model)
+if (require("mclust")) {
+  model <- mclust::Mclust(iris[1:4], verbose = FALSE)
+  model_parameters(model)
+}
 }
