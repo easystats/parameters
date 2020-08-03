@@ -9,6 +9,12 @@
 \arguments{
 \item{model}{An object of class \code{mira}.}
 
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
+
+\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{

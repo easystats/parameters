@@ -4,6 +4,7 @@
 #'
 #' @param model An object of class \code{mira}.
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams model_parameters.default
 #'
 #' @details \code{model_parameters()} for objects of class \code{mira} works
 #'   similar to \code{mice::pool()}, i.e. it generates the pooled summary

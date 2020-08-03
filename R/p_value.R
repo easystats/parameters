@@ -760,7 +760,7 @@ p_value.mle2 <- function(model, ...) {
   if (!requireNamespace("bbmle", quietly = TRUE)) {
     stop("Package `bbmle` needs to be installed to extract p-values.", call. = FALSE)
   }
-  s <- bbmle::summary(x)
+  s <- bbmle::summary(model)
   .data_frame(
     Parameter = names(s@coef[, 4]),
     p = unname(s@coef[, 4])
