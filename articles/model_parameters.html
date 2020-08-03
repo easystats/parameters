@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
       </span>
     </div>
 
@@ -71,6 +71,9 @@
     </li>
     <li>
       <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
     <li>
       <a href="../articles/demean.html">Panel Data Analysis</a>
@@ -297,7 +300,7 @@
 <span class="kw">d2</span> <span class="op">&lt;-</span> <span class="fu">sim1</span>(mu = <span class="fl">200</span>, residsd = <span class="fl">5</span>)
 <span class="kw">d1</span><span class="op">$</span><span class="kw">sd</span> <span class="op">&lt;-</span> <span class="st">"ten"</span>
 <span class="kw">d2</span><span class="op">$</span><span class="kw">sd</span> <span class="op">&lt;-</span> <span class="st">"five"</span>
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">d1</span>, <span class="kw">d2</span>)
+<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/cbind.html">rbind</a></span>(<span class="kw">d1</span>, <span class="kw">d2</span>)
 <span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html">glmmTMB</a></span>(<span class="kw">x</span> <span class="op">~</span> <span class="kw">sd</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> <span class="kw">t</span>), dispformula =  <span class="op">~</span> <span class="kw">sd</span>, data = <span class="kw">dat</span>)
 
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>(<span class="kw">model</span>)

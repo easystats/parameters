@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
       </span>
     </div>
 
@@ -112,6 +112,9 @@
     </li>
     <li>
       <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
     <li>
       <a href="../articles/demean.html">Panel Data Analysis</a>
@@ -165,11 +168,20 @@
 <h1 class="page-header" data-toc-text="0.8.2.1">
 <a href="#parameters-0821" class="anchor"></a>parameters 0.8.2.1<small> Unreleased </small>
 </h1>
+<div id="general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general" class="anchor"></a>General</h2>
+<ul>
+<li>Added vignette on model parameters and missing data.</li>
+</ul>
+</div>
 <div id="new-supported-model-classes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-supported-model-classes" class="anchor"></a>New supported model classes</h2>
 <ul>
-<li>Preliminary support for <code>semLME</code> (<em>smicd</em>)</li>
+<li>Preliminary support for <code>semLME</code> (<em>smicd</em>), <code>mle2</code> (<em>bbmle</em>), <code>mle</code> (<em>stats4</em>)</li>
+<li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for objects of class <code>mira</code> (<em>mice</em>).</li>
 </ul>
 </div>
 <div id="changes-to-functions" class="section level2">
@@ -262,9 +274,9 @@
 <h1 class="page-header" data-toc-text="0.7.0">
 <a href="#parameters-070" class="anchor"></a>parameters 0.7.0<small> 2020-05-18 </small>
 </h1>
-<div id="general" class="section level2">
+<div id="general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general" class="anchor"></a>General</h2>
+<a href="#general-1" class="anchor"></a>General</h2>
 <ul>
 <li>We changed the computation of confidence intervals or standard errors, so these are now based on a t-distribution with degrees of freedom and not normal distribution assuming infinite degrees of freedom. This was implemented for most functions before and only affects few functions (like <code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> or CIs for standardized parameters from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when standardization method was <code>"posthoc"</code>).</li>
 </ul>
@@ -351,9 +363,9 @@
 <h1 class="page-header" data-toc-text="0.6.1">
 <a href="#parameters-061" class="anchor"></a>parameters 0.6.1<small> 2020-04-08 </small>
 </h1>
-<div id="general-1" class="section level2">
+<div id="general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-1" class="anchor"></a>General</h2>
+<a href="#general-2" class="anchor"></a>General</h2>
 <ul>
 <li>Remove ‘Zelig’ from suggested packages, as it was removed from CRAN.</li>
 </ul>
@@ -368,7 +380,7 @@
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now also transforms standard errors when <code>exponentiate = TRUE</code>.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/lavaan/man/lavTestLRT.html">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> gains a <code>type</code>-argument to compute type-1, type-2 or type-3 sums of squares.</li>
 <li>
@@ -382,7 +394,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/lavaan/man/lavTestLRT.html">anova()</a></code> from <em>lmerTest</em> models.</li>
+<li>Fixed <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">anova()</a></code> from <em>lmerTest</em> models.</li>
 </ul>
 </div>
 </div>
@@ -486,9 +498,9 @@
 <li>Added support for <code>cglm</code> (<em>cglm</em>), <code>DirichletRegModel</code> (<em>DirichletReg</em>)</li>
 </ul>
 </div>
-<div id="general-2" class="section level2">
+<div id="general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-2" class="anchor"></a>General</h2>
+<a href="#general-3" class="anchor"></a>General</h2>
 <ul>
 <li>Added new vignettes on ‘Standardized Model Parameters’ and ‘Robust Estimation of Standard Errors’, and vignettes are now also published on CRAN.</li>
 <li>Improved handling of robust statistics in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. This should now work for more models than before.</li>
@@ -601,9 +613,9 @@
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now supports <code>blavaan</code> models (<em>blavaan</em>).</li>
 </ul>
 </div>
-<div id="general-3" class="section level2">
+<div id="general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-3" class="anchor"></a>General</h2>
+<a href="#general-4" class="anchor"></a>General</h2>
 <ul>
 <li>Better handling of <code>clm2</code>, <code>clmm2</code> and <code>stanmvreg</code> models.</li>
 <li>Better handling of <code><a href="https://rdrr.io/pkg/psych/man/omega.html">psych::omega</a></code> models.</li>
@@ -733,9 +745,9 @@
 <code>format_value()</code> and <code>format_table()</code> have been removed and are now re-implemented in the <strong>insight</strong> package.</li>
 </ul>
 </div>
-<div id="general-4" class="section level2">
+<div id="general-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-4" class="anchor"></a>General</h2>
+<a href="#general-5" class="anchor"></a>General</h2>
 <ul>
 <li>
 <code><a href="../reference/model_parameters.html">parameters()</a></code> is an alias for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>

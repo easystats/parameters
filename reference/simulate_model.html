@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
       </span>
     </div>
 
@@ -113,6 +113,9 @@
     </li>
     <li>
       <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
     <li>
       <a href="../articles/demean.html">Panel Data Analysis</a>
@@ -233,19 +236,19 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
-#&gt; 1    3.430956        -0.7366426        -2.383682   0.3191382    0.9897494
-#&gt; 2    3.717697        -1.3510202        -2.641455   0.2358062    0.8909207
-#&gt; 3    3.503668        -1.0174458        -1.260035   0.4355245    0.9556576
-#&gt; 4    3.504042        -1.3886813        -2.912141   0.3197036    0.9813518
-#&gt; 5    3.532689        -1.1106085        -1.599979   1.2514388    0.8319626
-#&gt; 6    3.421949        -0.7035964        -2.735193   0.4777309    0.9823684
+#&gt; 1    3.651509         -1.368580        -2.864556  0.43092505    0.9032143
+#&gt; 2    3.504374         -2.010073        -1.822172  0.27355715    0.9749132
+#&gt; 3    3.632732         -1.346202        -2.176291 -0.06957351    0.9452339
+#&gt; 4    3.510512         -1.440668        -2.481691  0.24124897    0.9602783
+#&gt; 5    3.516097         -1.071802        -1.496980  0.81373862    0.9260369
+#&gt; 6    3.426399         -1.218919        -2.505659 -0.33037777    1.0704487
 #&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
-#&gt; 1                    -1.0830220                   -0.3204597
-#&gt; 2                    -0.4100781                    0.0182855
-#&gt; 3                    -0.9005071                   -0.9169932
-#&gt; 4                    -0.5849002                   -0.0343761
-#&gt; 5                    -1.2567994                   -1.2377586
-#&gt; 6                    -1.1908534                   -0.2085224</div><div class='input'>
+#&gt; 1                    -0.6185009                  -0.02963802
+#&gt; 2                    -0.1259296                  -0.54649842
+#&gt; 3                    -0.2549671                   0.01306101
+#&gt; 4                    -0.3662148                  -0.11988582
+#&gt; 5                    -1.1211628                  -1.06208629
+#&gt; 6                    -0.2884948                   0.17394201</div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span>)) {
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
@@ -257,12 +260,12 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>))
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>, component = <span class='st'>"zero_inflated"</span>))
 }</div><div class='output co'>#&gt;   (Intercept)   minedno
-#&gt; 1   0.7426218 -1.837142
-#&gt; 2   1.1448737 -2.543993
-#&gt; 3   1.0955847 -2.334153
-#&gt; 4   0.4060518 -1.610549
-#&gt; 5   0.6777659 -1.544021
-#&gt; 6   0.8261939 -1.672823</div><div class='input'><span class='co'># }</span></div></pre>
+#&gt; 1   0.7036706 -1.706245
+#&gt; 2   1.2076713 -2.101950
+#&gt; 3   0.8421899 -2.021328
+#&gt; 4   1.3807368 -2.425328
+#&gt; 5   0.4090723 -1.463242
+#&gt; 6   1.0279722 -1.734870</div><div class='input'><span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
       </span>
     </div>
 
@@ -71,6 +71,9 @@
     </li>
     <li>
       <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
     <li>
       <a href="../articles/demean.html">Panel Data Analysis</a>
@@ -172,7 +175,7 @@
 <h2 class="hasAnchor">
 <a href="#computing-the-de-meaned-and-group-meaned-variables" class="anchor"></a>Computing the de-meaned and group-meaned variables</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">qol_cancer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
+<span class="kw">qol_cancer</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/cbind.html">cbind</a></span>(
   <span class="kw">qol_cancer</span>,
   <span class="fu"><a href="../reference/check_heterogeneity.html">demean</a></span>(<span class="kw">qol_cancer</span>, select = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"phq4"</span>, <span class="st">"QoL"</span>), group = <span class="st">"ID"</span>)
 )
@@ -412,7 +415,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="kw">labs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"very slow"</span>, <span class="st">"slow"</span>, <span class="st">"average"</span>, <span class="st">"fast"</span>, <span class="st">"very fast"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(<span class="kw">d</span><span class="op">$</span><span class="kw">grp</span>) <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="kw">labs</span>)
 
-<span class="kw">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">d</span>, <span class="fu"><a href="../reference/check_heterogeneity.html">demean</a></span>(<span class="kw">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x"</span>, <span class="st">"y"</span>), group = <span class="st">"grp"</span>))
+<span class="kw">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/cbind.html">cbind</a></span>(<span class="kw">d</span>, <span class="fu"><a href="../reference/check_heterogeneity.html">demean</a></span>(<span class="kw">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x"</span>, <span class="st">"y"</span>), group = <span class="st">"grp"</span>))
 </pre></div>
 <p>Let’s look at the raw data…</p>
 <p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
@@ -544,7 +547,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="kw">labs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"very slow"</span>, <span class="st">"slow"</span>, <span class="st">"average"</span>, <span class="st">"fast"</span>, <span class="st">"very fast"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(<span class="kw">d</span><span class="op">$</span><span class="kw">grp</span>) <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="kw">labs</span>)
 
-<span class="kw">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">d</span>, <span class="fu"><a href="../reference/check_heterogeneity.html">demean</a></span>(<span class="kw">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x"</span>, <span class="st">"y"</span>), group = <span class="st">"grp"</span>))
+<span class="kw">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/cbind.html">cbind</a></span>(<span class="kw">d</span>, <span class="fu"><a href="../reference/check_heterogeneity.html">demean</a></span>(<span class="kw">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x"</span>, <span class="st">"y"</span>), group = <span class="st">"grp"</span>))
 
 <span class="co"># Between-subject effect of typing speed</span>
 <span class="kw">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">y</span> <span class="op">~</span> <span class="kw">x_between</span>, data = <span class="kw">d</span>)

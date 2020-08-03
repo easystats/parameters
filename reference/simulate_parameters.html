@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
       </span>
     </div>
 
@@ -113,6 +113,9 @@
     </li>
     <li>
       <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    </li>
+    <li>
+      <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
     <li>
       <a href="../articles/demean.html">Panel Data Analysis</a>
@@ -267,13 +270,13 @@ included in the summary output.</p></td>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
 <span class='fu'>simulate_parameters</span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; Parameter                     | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------------------------
-#&gt; (Intercept)                   |        3.53 | [ 3.21,  3.86] | &lt; .001
-#&gt; Speciesversicolor             |       -1.17 | [-1.83, -0.52] | &lt; .001
-#&gt; Speciesvirginica              |       -2.26 | [-3.08, -1.47] | &lt; .001
-#&gt; Petal.Width                   |        0.42 | [-0.52,  1.29] | 0.392 
-#&gt; Petal.Length                  |        0.94 | [ 0.79,  1.10] | &lt; .001
-#&gt; Speciesversicolor:Petal.Width |       -0.75 | [-1.73,  0.33] | 0.172 
-#&gt; Speciesvirginica:Petal.Width  |       -0.39 | [-1.30,  0.61] | 0.470 </div><div class='input'>
+#&gt; (Intercept)                   |        3.54 | [ 3.19,  3.85] | &lt; .001
+#&gt; Speciesversicolor             |       -1.15 | [-1.82, -0.44] | 0.002 
+#&gt; Speciesvirginica              |       -2.24 | [-3.11, -1.43] | &lt; .001
+#&gt; Petal.Width                   |        0.42 | [-0.55,  1.28] | 0.332 
+#&gt; Petal.Length                  |        0.93 | [ 0.78,  1.10] | &lt; .001
+#&gt; Speciesversicolor:Petal.Width |       -0.75 | [-1.80,  0.27] | 0.150 
+#&gt; Speciesvirginica:Petal.Width  |       -0.36 | [-1.30,  0.58] | 0.426 </div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span>)) {
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
@@ -286,10 +289,10 @@ included in the summary output.</p></td>
   <span class='fu'>simulate_parameters</span>(<span class='kw'>model</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), component = <span class='st'>"zero_inflated"</span>)
 }</div><div class='output co'>#&gt; Parameter   | Coefficient |    CI |         80% CI | 95% CI |      p
 #&gt; --------------------------------------------------------------------
-#&gt; (Intercept) |        0.78 | 80.00 | [ 0.44,  1.12] |        | 0.006 
-#&gt; (Intercept) |        0.78 | 95.00 | [ 0.25,  1.34] |        | 0.006 
-#&gt; minedno     |       -1.83 | 80.00 | [-2.26, -1.46] |        | &lt; .001
-#&gt; minedno     |       -1.83 | 95.00 | [-2.47, -1.24] |        | &lt; .001</div><div class='input'><span class='co'># }</span></div></pre>
+#&gt; (Intercept) |        0.78 | 80.00 | [ 0.41,  1.13] |        | 0.008 
+#&gt; (Intercept) |        0.78 | 95.00 | [ 0.23,  1.30] |        | 0.008 
+#&gt; minedno     |       -1.84 | 80.00 | [-2.25, -1.42] |        | &lt; .001
+#&gt; minedno     |       -1.84 | 95.00 | [-2.44, -1.21] |        | &lt; .001</div><div class='input'><span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
