@@ -165,6 +165,8 @@ ci.gam <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, ...)
 }
 
+#' @export
+ci.mipo <- ci.gam
 
 #' @export
 ci.list <- function(x, ci = .95, ...) {

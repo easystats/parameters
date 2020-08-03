@@ -248,3 +248,6 @@ model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations
 
 #' @export
 model_parameters.sem <- model_parameters.default
+
+#' @export
+model_parameters.mipo <- model_parameters.default

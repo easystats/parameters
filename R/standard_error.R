@@ -847,6 +847,15 @@ standard_error.bayesx <- function(model, ...) {
 
 
 #' @export
+standard_error.mipo <- function(model, ...) {
+  .data_frame(
+    Parameter = as.vector(summary(model)$term),
+    SE = as.vector(summary(model)$std.error)
+  )
+}
+
+
+#' @export
 standard_error.mle2 <- function(model, ...) {
   if (!requireNamespace("bbmle", quietly = TRUE)) {
     stop("Package `bbmle` needs to be installed to extract standard errors.", call. = FALSE)

@@ -111,6 +111,11 @@ degrees_of_freedom.glht <- function(model,...) {
 }
 
 #' @export
+degrees_of_freedom.mipo <- function(model,...) {
+  as.vector(summary(model)$df)
+}
+
+#' @export
 degrees_of_freedom.logitor <- function(model,...) {
   degrees_of_freedom.default(model$fit, ...)
 }

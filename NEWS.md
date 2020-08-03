@@ -6,7 +6,7 @@
 
 ## New supported model classes
 
-* Preliminary support for `semLME` (*smicd*), `mle2` (*bbmle*), `mle` (*stats4*)
+* Support for `mipo` (*mice*). Preliminary support for `semLME` (*smicd*), `mle2` (*bbmle*), `mle` (*stats4*)
 * `model_parameters()` for objects of class `mira` (*mice*).
 
 ## Changes to functions

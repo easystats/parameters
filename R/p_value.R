@@ -756,6 +756,15 @@ p_value.betamfx <- function(model, component = c("all", "conditional", "precisio
 
 
 #' @export
+p_value.mipo <- function(model, ...) {
+  .data_frame(
+    Parameter = as.vector(summary(model)$term),
+    p = as.vector(summary(model)$p.value)
+  )
+}
+
+
+#' @export
 p_value.mle2 <- function(model, ...) {
   if (!requireNamespace("bbmle", quietly = TRUE)) {
     stop("Package `bbmle` needs to be installed to extract p-values.", call. = FALSE)
