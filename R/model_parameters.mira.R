@@ -117,7 +117,7 @@ model_parameters.mira <- function(model, ci = .95, exponentiate = FALSE, p_adjus
 
 .barnad_rubin <- function(m, b, t, dfcom = 999999) {
   # fix for z-statistic
-  if (all(is.na(dfcom)) || all(is.infinite(dfcom))) {
+  if (is.null(dfcom) || all(is.na(dfcom)) || all(is.infinite(dfcom))) {
     return(Inf)
   }
   lambda <- (1 + 1 / m) * b / t
