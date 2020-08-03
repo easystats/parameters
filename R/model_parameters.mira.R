@@ -47,6 +47,9 @@ model_parameters.mira <- function(model, ci = .95, exponentiate = FALSE, p_adjus
 
   # find where to split parameters
   grp <- intersect(colnames(all_models), c("Parameter", "Response", "Component"))
+  for (i in grp) {
+    all_models[[i]] <- factor(all_models[[i]], levels = unique(all_models[[i]]))
+  }
   params <- split(all_models, all_models[grp])
 
 
@@ -94,6 +97,9 @@ model_parameters.mira <- function(model, ci = .95, exponentiate = FALSE, p_adjus
 
   # remove ID
   params$.id <- NULL
+
+  # factor back to char
+  params$Parameter <- as.character(params$Parameter)
 
   # adjust p-values?
   if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(params)) {
