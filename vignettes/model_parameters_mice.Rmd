@@ -73,7 +73,7 @@ fit <- with(data = imputed_data, expr = GLMMadaptive::mixed_model(
 #>   argument "data" is missing, with no default
 ```
 
-However, we can use a workaround by calculating the regression models for each imputed dataset manually, using `complete()` from package *mice*. Not that it is important to mimic the structure of `mira`-objects! The returned model objects have to be saved as a list named `analyses`. This list must be of class `mira` and `list`, and can be used with `model_parameters()`.
+However, we can use a workaround by calculating the regression models for each imputed dataset manually, using `complete()` from package *mice*. Please note that it is important to mimic the structure of `mira`-objects! The returned model objects have to be saved as a list named `analyses`. This list must be of class `mira` and `list`, and can be used with `model_parameters()`.
 
 ```{r message=FALSE}
 analyses <- as.list(seq_len(imputed_data$m))
