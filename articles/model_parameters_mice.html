@@ -174,8 +174,8 @@
 #&gt; (Intercept) |       19.33 | 4.26 | [ 10.39, 28.27] |  4.54 | 18.26 | &lt; .001
 #&gt; age [40-59] |       -6.32 | 1.95 | [-10.40, -2.23] | -3.25 | 18.26 | 0.004 
 #&gt; age [60-99] |       -7.61 | 2.79 | [-13.47, -1.75] | -2.72 | 18.26 | 0.014 
-#&gt; chl         |        0.06 | 0.02 | [  0.01,  0.11] |  2.36 | 18.26 | 0.029 
-#&gt; hyp [yes]   |        0.52 | 2.53 | [ -4.79,  5.83] |  0.21 | 18.26 | 0.840</code></pre>
+#&gt; hyp [yes]   |        0.52 | 2.53 | [ -4.79,  5.83] |  0.21 | 18.26 | 0.840 
+#&gt; chl         |        0.06 | 0.02 | [  0.01,  0.11] |  2.36 | 18.26 | 0.029</code></pre>
 <p>Not all packages work with <code><a href="http://stefvanbuuren.github.io/mice/reference/with.mids.html">with.mids()</a></code> from package <em>mice</em>. Thus, for some modeling packages, it’s not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the <em>GLMMadpative</em> package here.</p>
 <p>First, we generate a dataset with missing values. We take the data <code>cbpp</code> from <em>lme4</em> and randomly assign some missing values into one of the predictors. Then we impute the data, using <code><a href="http://stefvanbuuren.github.io/mice/reference/mice.html">mice()</a></code> from package <em>mice</em>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
