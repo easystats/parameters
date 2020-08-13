@@ -23,9 +23,22 @@ model_parameters.emmGrid <- function(model, ci = .95, p_adjust = NULL, ...) {
   names(params) <- gsub("asymp.LCL", "CI_low", names(params))
   names(params) <- gsub("asymp.UCL", "CI_high", names(params))
 
+  # check if we have CIs
+  if (!any(grepl("^CI_", colnames(params)))) {
+    df_column <- grep("(df|df_error)", colnames(params))
+    if (length(df_column) > 0) {
+      df <- params[[df_column[1]]]
+    } else {
+      df <- Inf
+    }
+    fac <- stats::qt((1 + ci) / 2, df = df)
+    params$CI_low <- params$Estimate - fac * params$SE
+    params$CI_high <- params$Estimate + fac * params$SE
+  }
+
   # Reorder
   estimate_pos <- which(colnames(s) == model@misc$estName)
-  order <- c(colnames(params)[1:(estimate_pos - 1)], "Estimate", "SE", "CI", "CI_low", "CI_high", "t", "z", "df", "df_error", "p")
+  order <- c(colnames(params)[1:(estimate_pos - 1)], "Estimate", "SE", "CI_low", "CI_high", "t", "z", "df", "df_error", "p")
   params <- params[order[order %in% names(params)]]
 
   params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, ...))
