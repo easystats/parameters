@@ -38,12 +38,14 @@ model_parameters.emmGrid <- function(model, ci = .95, p_adjust = NULL, ...) {
 
   # Reorder
   estimate_pos <- which(colnames(s) == model@misc$estName)
-  order <- c(colnames(params)[1:(estimate_pos - 1)], "Estimate", "SE", "CI_low", "CI_high", "t", "z", "df", "df_error", "p")
+  parameter_names <- colnames(params)[1:(estimate_pos - 1)]
+  order <- c(parameter_names, "Estimate", "SE", "CI_low", "CI_high", "t", "z", "df", "df_error", "p")
   params <- params[order[order %in% names(params)]]
 
   params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, ...))
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(params) <- c("parameters_model", "see_parameters_model", class(params))
+  attr(params, "parameter_names") <- parameter_names
 
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
   params
 }

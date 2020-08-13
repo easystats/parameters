@@ -59,6 +59,11 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       select <- colnames(x)[select]
     }
     select <- union(select, c("Parameter", "Component", "Effects", "Response", "Subgroup"))
+    # for emmGrid objects, we save specific parameter names as attribute
+    parameter_names <- attributes(x)$parameter_names
+    if (!is.null(parameter_names)) {
+      select <- c(parameter_names, select)
+    }
     to_remove <- setdiff(colnames(x), select)
     x[to_remove] <- NULL
   }
