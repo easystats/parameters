@@ -263,7 +263,7 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
   names(x_gm_list) <- select
 
 
-  # create de-meaned variables by substracting the group mean from each individual value
+  # create de-meaned variables by subtracting the group mean from each individual value
 
   x_dm_list <- lapply(select, function(i) dat[[i]] - x_gm_list[[i]])
   names(x_dm_list) <- select
