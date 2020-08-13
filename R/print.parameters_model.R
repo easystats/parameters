@@ -10,7 +10,8 @@
 #'   in a single table and a \code{Component} column is added to the output.
 #' @param select Character vector (or numeric index) of column names that should
 #'   be printed. If \code{NULL} (default), all columns are printed. The shortcut
-#'   \code{select = "minimal"} prints coefficient, confidence intervals and p-values.
+#'   \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
+#'   while \code{select = "short"} prints coefficient, standard errors and p-values.
 #' @inheritParams parameters_table
 #' @return \code{NULL}
 #'
@@ -52,6 +53,8 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   if (!is.null(select)) {
     if (all(select == "minimal")) {
       select <- c("Parameter", "Coefficient", "CI", "CI_low", "CI_high", "p")
+    } else if (all(select == "short")) {
+      select <- c("Parameter", "Coefficient", "SE", "p")
     } else if (is.numeric(select)) {
       select <- colnames(x)[select]
     }

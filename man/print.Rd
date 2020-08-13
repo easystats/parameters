@@ -28,7 +28,8 @@ in a single table and a \code{Component} column is added to the output.}
 
 \item{select}{Character vector (or numeric index) of column names that should
 be printed. If \code{NULL} (default), all columns are printed. The shortcut
-\code{select = "minimal"} prints coefficient, confidence intervals and p-values.}
+\code{select = "minimal"} prints coefficient, confidence intervals and p-values,
+while \code{select = "short"} prints coefficient, standard errors and p-values.}
 
 \item{digits}{Number of decimal places for numeric values (except confidence intervals and p-values).}
 
