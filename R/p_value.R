@@ -263,11 +263,13 @@ p_value.sem <- function(model, ...) {
   }
 
   stat <- insight::get_statistic(model)
-  p_from_stat <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+  if (is.null(stat)) {
+    return(NULL)
+  }
 
   .data_frame(
     Parameter = stat$Parameter,
-    p = p_from_stat
+    p = 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
   )
 }
 

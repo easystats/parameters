@@ -97,9 +97,13 @@
       } else {
         ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
       }
-      if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
-      ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
-      parameters <- merge(parameters, ci_df, by = merge_by)
+      if (!is.null(ci_df)) {
+        if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+        ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
+        parameters <- merge(parameters, ci_df, by = merge_by)
+      } else {
+        ci_cols <- c()
+      }
     } else {
       ci_cols <- c()
     }
@@ -109,11 +113,15 @@
   # ==== p value
 
   if (isTRUE(robust)) {
-    parameters <- merge(parameters, p_value_robust(model, ...), by = merge_by)
+    pval <- p_value_robust(model, ...)
   } else if (!is.null(df_method)) {
-    parameters <- merge(parameters, p_value(model, effects = effects, component = component, method = df_method), by = merge_by)
+    pval <- p_value(model, effects = effects, component = component, method = df_method)
   } else {
-    parameters <- merge(parameters, p_value(model, effects = effects, component = component), by = merge_by)
+    pval <- p_value(model, effects = effects, component = component)
+  }
+
+  if (!is.null(pval)) {
+    parameters <- merge(parameters, pval, by = merge_by)
   }
 
 
@@ -121,12 +129,16 @@
 
   if (is.null(standardize)) {
     if (isTRUE(robust)) {
-      parameters <- merge(parameters, standard_error_robust(model, ...), by = merge_by)
+      stderr <- standard_error_robust(model, ...)
     } else if (!is.null(df_method)) {
-      parameters <- merge(parameters, standard_error(model, effects = effects, component = component, method = df_method), by = merge_by)
+      stderr <- standard_error(model, effects = effects, component = component, method = df_method)
     } else {
-      parameters <- merge(parameters, standard_error(model, effects = effects, component = component), by = merge_by)
+      stderr <- standard_error(model, effects = effects, component = component)
     }
+  }
+
+  if (!is.null(stderr)) {
+    parameters <- merge(parameters, stderr, by = merge_by)
   }
 
 
@@ -134,7 +146,7 @@
 
   if (isTRUE(robust)) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
-  } else {
+  } else if (!is.null(statistic)) {
     parameters <- merge(parameters, statistic, by = merge_by)
   }
 
@@ -157,7 +169,9 @@
 
   # ==== Renaming
 
-  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters))
+  if ("Statistic" %in% names(parameters)) {
+    names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters))
+  }
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
 

@@ -51,6 +51,10 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
       )
     }
 
+    if (.is_empty_object(stderror)) {
+      return(NULL)
+    }
+
     # filter non-matching parameters
     stderror <- stderror[1:nrow(params), ]
     se <- stderror$SE
