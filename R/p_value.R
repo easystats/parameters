@@ -607,8 +607,14 @@ p_value.coxph <- function(model, method = NULL, ...) {
   }
 
   cs <- stats::coef(summary(model))
-  p <- cs[, 5]
+  p_column <- grep("^(Pr\\(>|p)", colnames(cs))
+  p <- cs[, p_column]
   params <- insight::get_parameters(model)
+
+  # check
+  if (length(p) > nrow(params)) {
+    p <- p[match(params$Parameter, .remove_backticks_from_string(rownames(cs)))]
+  }
 
   .data_frame(
     Parameter = params$Parameter,

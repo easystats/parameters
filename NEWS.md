@@ -15,6 +15,7 @@
 
 ## Bug fixes
 
+* Fix issue in `model_parameters()` for `coxph.penal` models.
 * Fix issue in `model_parameters.metaplus()` with random effects.
 * Fix issue in `check_heterogeneity()` when `x` was a mixed model.
 * Fix issue in `check_heterogeneity()` for data with missing values.

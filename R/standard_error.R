@@ -599,6 +599,11 @@ standard_error.coxph <- function(model, method = NULL, ...) {
   cs <- stats::coef(summary(model))
   se <- cs[, 3]
 
+  # check
+  if (length(se) > nrow(params)) {
+    se <- se[match(params$Parameter, .remove_backticks_from_string(rownames(cs)))]
+  }
+
   .data_frame(
     Parameter = params$Parameter,
     SE = as.vector(se)
