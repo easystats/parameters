@@ -19,6 +19,7 @@
 * Fix issue in `model_parameters.metaplus()` with random effects.
 * Fix issue in `check_heterogeneity()` when `x` was a mixed model.
 * Fix issue in `check_heterogeneity()` for data with missing values.
+* Fix issue in `print()` method for `model_parameters()` that printed empty lines for rows with complete missing values. Empty lines are now removed.
 
 # parameters 0.8.2
 
