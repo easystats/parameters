@@ -171,13 +171,14 @@
 
   if ("Statistic" %in% names(parameters)) {
     names(parameters) <- gsub("Statistic", gsub("(-|\\s)statistic", "", attr(statistic, "statistic", exact = TRUE)), names(parameters))
+    names(parameters) <- gsub("chi-squared", "chisq", names(parameters))
   }
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
 
   # ==== Reorder
 
-  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "chi-sq", "df", "df_error", "p", "Component", "Response", "Effects")
+  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "chi-squared", "df", "df_error", "p", "Component", "Response", "Effects")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
 
@@ -204,6 +205,12 @@
   if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
     parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
   }
+
+
+  # ==== remove all complete-missing cases
+
+  parameters <- parameters[apply(parameters, 1, function(i) !all(is.na(i))), ]
+
 
   rownames(parameters) <- NULL
   parameters
