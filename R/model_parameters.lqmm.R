@@ -36,11 +36,11 @@ model_parameters.lqm <- model_parameters.lqmm
   parameters$SE <- summary_table[, 2]
   parameters$t <- parameters$Estimate / parameters$SE
 
-  # ==== Conf Int
+  # ==== DF and Conf Int
 
-  df <- attr(cs$B, "R")
-  parameters$CI_low <- parameters$Coefficient - stats::qt((1 + ci) / 2, df = df - 1) * parameters$SE
-  parameters$CI_high <- parameters$Coefficient + stats::qt((1 + ci) / 2, df = df - 1) * parameters$SE
+  parameters$df <- attr(cs$B, "R") - 1
+  parameters$CI_low <- parameters$Coefficient - stats::qt((1 + ci) / 2, df = parameters$df) * parameters$SE
+  parameters$CI_high <- parameters$Coefficient + stats::qt((1 + ci) / 2, df = parameters$df) * parameters$SE
 
   # ==== p-value
 
@@ -52,6 +52,6 @@ model_parameters.lqm <- model_parameters.lqmm
 
   # ==== Reorder
 
-  col_order <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "p", "Component")
+  col_order <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "df", "p", "Component")
   parameters[col_order[col_order %in% names(parameters)]]
 }

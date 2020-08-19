@@ -111,6 +111,15 @@ degrees_of_freedom.glht <- function(model,...) {
 }
 
 #' @export
+degrees_of_freedom.lqmm <- function(model,...) {
+  out <- model_parameters(model, ...)
+  out$df
+}
+
+#' @export
+degrees_of_freedom.lqm <- degrees_of_freedom.lqmm
+
+#' @export
 degrees_of_freedom.mipo <- function(model,...) {
   as.vector(summary(model)$df)
 }
