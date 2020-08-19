@@ -544,6 +544,16 @@ ci.betamfx <- function(x, ci = .95, component = c("all", "conditional", "precisi
 # Special models -----------------------------------------
 
 
+#' @export
+ci.lqmm <- function(x, ...) {
+  out <- model_parameters(x, ...)
+  as.data.frame(out[c("Parameter", "CI_low", "CI_high")])
+}
+
+#' @export
+ci.lqm <- ci.lqmm
+
+
 #' @importFrom stats pnorm
 #' @export
 ci.glht <- function(x, ci = .95, method = "robust", ...) {

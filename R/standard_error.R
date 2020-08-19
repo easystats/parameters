@@ -852,6 +852,16 @@ standard_error.bayesx <- function(model, ...) {
 
 
 #' @export
+standard_error.lqmm <- function(model, ...) {
+  out <- model_parameters(model, ...)
+  as.data.frame(out[c("Parameter", "SE")])
+}
+
+#' @export
+standard_error.lqm <- standard_error.lqmm
+
+
+#' @export
 standard_error.mipo <- function(model, ...) {
   .data_frame(
     Parameter = as.vector(summary(model)$term),

@@ -764,6 +764,16 @@ p_value.betamfx <- function(model, component = c("all", "conditional", "precisio
 
 
 #' @export
+p_value.lqmm <- function(model, ...) {
+  out <- model_parameters(model, ...)
+  as.data.frame(out[c("Parameter", "p")])
+}
+
+#' @export
+p_value.lqm <- p_value.lqmm
+
+
+#' @export
 p_value.mipo <- function(model, ...) {
   .data_frame(
     Parameter = as.vector(summary(model)$term),
