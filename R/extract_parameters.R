@@ -127,18 +127,19 @@
 
   # ==== standard error - only if we don't already have SE for std. parameters
 
+  std_err <- NULL
   if (is.null(standardize)) {
     if (isTRUE(robust)) {
-      stderr <- standard_error_robust(model, ...)
+      std_err <- standard_error_robust(model, ...)
     } else if (!is.null(df_method)) {
-      stderr <- standard_error(model, effects = effects, component = component, method = df_method)
+      std_err <- standard_error(model, effects = effects, component = component, method = df_method)
     } else {
-      stderr <- standard_error(model, effects = effects, component = component)
+      std_err <- standard_error(model, effects = effects, component = component)
     }
   }
 
-  if (!is.null(stderr)) {
-    parameters <- merge(parameters, stderr, by = merge_by)
+  if (!is.null(std_err)) {
+    parameters <- merge(parameters, std_err, by = merge_by)
   }
 
 

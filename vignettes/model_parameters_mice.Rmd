@@ -49,7 +49,7 @@ fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
 model_parameters(fit)
 ```
 
-Not all packages work with `with.mids()` from package *mice*. Thus, for some modeling packages, it's not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the *GLMMadpative* package here.
+Not all packages work with `with.mids()` from package *mice*. Thus, for some modeling packages, it's not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the *GLMMadaptive* package here.
 
 First, we generate a dataset with missing values. We take the data `cbpp` from *lme4* and randomly assign some missing values into one of the predictors. Then we impute the data, using `mice()` from package *mice*.
 

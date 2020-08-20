@@ -56,7 +56,9 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
     }
 
     # filter non-matching parameters
-    stderror <- stderror[1:nrow(params), ]
+    if (nrow(stderror) != nrow(params)) {
+      stderror <- merge(stderror, params, sort = FALSE)
+    }
     se <- stderror$SE
   }
 

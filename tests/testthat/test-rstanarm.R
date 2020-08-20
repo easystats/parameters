@@ -36,7 +36,7 @@ if (.runThisTest && require("testthat") && require("parameters") && require("rst
     mp <- model_parameters(model)
 
     test_that("mp2", {
-      expect_equal(mp$Median, c(0.48514, 0.0303, 3.44273, 0.0802, -0.13036), tolerance = 1e-3)
+      expect_equal(mp$Median, c(0.48125, 0.03037, 3.44494, 0.07625, -0.12925), tolerance = 1e-3)
       expect_equal(mp$Response, c("y1", "y1", "y2", "y2", "y2"), tolerance = 1e-3)
       expect_equal(mp$Prior_Scale, c(4.9647, 0.3465, 5.57448, 1.39362, 0.38906), tolerance = 1e-3)
     })

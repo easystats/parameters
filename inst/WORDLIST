@@ -20,6 +20,7 @@ Bezdek
 bife
 Biometrics
 Biometrika
+bbmle
 blavaan
 Blume
 BMC
@@ -142,6 +143,7 @@ lme
 lmer
 lmerTest
 lmerModLmerTest
+lqmm
 loadings
 logistf
 Maechler
@@ -222,6 +224,7 @@ SGPV
 Shachar
 Shi
 Shikano
+smicd
 sphericity
 Sphericity
 stackexchange
