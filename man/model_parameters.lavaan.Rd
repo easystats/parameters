@@ -13,11 +13,19 @@
 )
 }
 \arguments{
-\item{model}{CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions (or from \pkg{blavaan}).}
+\item{model}{CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem}
+functions (or from \pkg{blavaan}).}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{standardize}{Return standardized parameters (standardized coefficients). See \code{lavaan::standardizedsolution}.}
+\item{standardize}{Return standardized parameters (standardized coefficients).
+Can be \code{TRUE} (or \code{"all"} or \code{"std.all"}) for standardized
+estimates based on both the variances of observed and latent variables;
+\code{"latent"} (or \code{"std.lv"}) for standardized estimates based
+on the variances of the latent variables only; or \code{"no_exogenous"}
+(or \code{"std.nox"}) for standardized estimates based on both the
+variances of observed and latent variables, but not the variances of
+exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 
 \item{type}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
 

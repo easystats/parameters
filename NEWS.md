@@ -12,6 +12,8 @@
 ## Changes to functions
 
 * `model_parameters()` gets a specific behaviour for brms-meta-analysis models.
+* `model_parameters()` for *lavaan* and *blavaan* now also prints self-defined parameters.
+* `model_parameters()` for *lavaan* and *blavaan* gains more option for standardized parameters.
 
 ## Bug fixes
 

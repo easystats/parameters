@@ -515,6 +515,14 @@
     stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
   }
 
+  # check for valid parameters
+  if (!is.logical(standardize)) {
+    if (!(standardize %in% c("all", "std.all", "latent", "std.lv", "no_exogenous", "std.nox"))) {
+      warning("'standardize' should be one of TRUE, 'all', 'std.all', 'latent', 'std.lv', 'no_exogenous' or 'std.nox'. Returning unstandardized solution.", call. = FALSE)
+      standardize <- FALSE
+    }
+  }
+
   # CI
   if (length(ci) > 1) {
     ci <- ci[1]
@@ -525,23 +533,50 @@
   data <- lavaan::parameterEstimates(model, se = TRUE, level = ci, ...)
   label <- data$label
 
-  if (isTRUE(standardize)) {
-    data <- lavaan::standardizedsolution(model, se = TRUE, level = ci, ...)
+  # check if standardized estimates are requested, and if so, which type
+  if (isTRUE(standardize) || !is.logical(standardize)) {
+    if (is.logical(standardize)) {
+      standardize <- "all"
+    }
+    type <- switch(
+      standardize,
+      "all" = ,
+      "std.all" = "std.all",
+      "latent" = ,
+      "std.lv" = "std.lv",
+      "no_exogenous" = ,
+      "std.nox" = "std.nox",
+      "std.all"
+    )
+    data <- lavaan::standardizedsolution(model, se = TRUE, level = ci, type = type, ...)
     names(data)[names(data) == "est.std"] <- "est"
   }
 
 
-
-  params <- data.frame(
-    To = data$lhs,
-    Operator = data$op,
-    From = data$rhs,
-    Coefficient = data$est,
-    SE = data$se,
-    CI_low = data$ci.lower,
-    CI_high = data$ci.upper,
-    p = data$pvalue
-  )
+  if (inherits(model, "blavaan")) {
+    params <- data.frame(
+      To = data$lhs,
+      Operator = data$op,
+      From = data$rhs,
+      Coefficient = data$est,
+      SE = data$se,
+      CI_low = data$ci.lower,
+      CI_high = data$ci.upper,
+      stringsAsFactors = FALSE
+    )
+  } else {
+    params <- data.frame(
+      To = data$lhs,
+      Operator = data$op,
+      From = data$rhs,
+      Coefficient = data$est,
+      SE = data$se,
+      CI_low = data$ci.lower,
+      CI_high = data$ci.upper,
+      p = data$pvalue,
+      stringsAsFactors = FALSE
+    )
+  }
 
   if (!is.null(label)) {
     params$Label <- label
@@ -557,58 +592,10 @@
     )
   )
   params$Type <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Type)
-  params$p <- ifelse(is.na(params$p), 0, params$p)
 
-  if ("group" %in% names(data)) {
-    params$Group <- data$group
+  if ("p" %in% colnames(params)) {
+    params$p <- ifelse(is.na(params$p), 0, params$p)
   }
-
-  params
-}
-
-
-
-
-#' @keywords internal
-.extract_parameters_blavaan <- function(model, ci = 0.95, standardize = FALSE, ...) {
-  if (!requireNamespace("lavaan", quietly = TRUE)) {
-    stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
-  }
-
-  # CI
-  if (length(ci) > 1) {
-    ci <- ci[1]
-    warning(paste0("blavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`."))
-  }
-
-  # Get estimates
-  if (standardize == FALSE) {
-    data <- lavaan::parameterEstimates(model, se = TRUE, level = ci, ...)
-  } else {
-    data <- lavaan::standardizedsolution(model, se = TRUE, level = ci, ...)
-    names(data)[names(data) == "est.std"] <- "est"
-  }
-
-
-
-  params <- data.frame(
-    To = data$lhs,
-    Operator = data$op,
-    From = data$rhs,
-    Coefficient = data$est,
-    SE = data$se,
-    CI_low = data$ci.lower,
-    CI_high = data$ci.upper
-  )
-
-  params$Type <- ifelse(params$Operator == "=~", "Loading",
-    ifelse(params$Operator == "~", "Regression",
-      ifelse(params$Operator == "~~", "Correlation",
-        ifelse(params$Operator == "~1", "Mean", NA)
-      )
-    )
-  )
-  params$Type <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Type)
 
   if ("group" %in% names(data)) {
     params$Group <- data$group

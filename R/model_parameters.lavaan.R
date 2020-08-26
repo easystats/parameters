@@ -2,8 +2,16 @@
 #'
 #' Format CFA/SEM objects from the (b)lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).
 #'
-#' @param model CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem} functions (or from \pkg{blavaan}).
-#' @param standardize Return standardized parameters (standardized coefficients). See \code{lavaan::standardizedsolution}.
+#' @param model CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem}
+#'   functions (or from \pkg{blavaan}).
+#' @param standardize Return standardized parameters (standardized coefficients).
+#'   Can be \code{TRUE} (or \code{"all"} or \code{"std.all"}) for standardized
+#'   estimates based on both the variances of observed and latent variables;
+#'   \code{"latent"} (or \code{"std.lv"}) for standardized estimates based
+#'   on the variances of the latent variables only; or \code{"no_exogenous"}
+#'   (or \code{"std.nox"}) for standardized estimates based on both the
+#'   variances of observed and latent variables, but not the variances of
+#'   exogenous covariates. See \code{lavaan::standardizedsolution} for details.
 #' @inheritParams model_parameters.default
 #' @param type What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.
 #' @param ... Arguments passed to or from other methods.
@@ -72,21 +80,8 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
 
 
 #' @export
-model_parameters.blavaan <- function(model, ci = 0.95, standardize = FALSE, type = c("regression", "correlation", "loading", "defined"), ...) {
-  params <- .extract_parameters_blavaan(model, ci = ci, standardize = standardize, ...)
+model_parameters.blavaan <- model_parameters.lavaan
 
-  # Filter
-  if (all(type == "all")) {
-    type <- c("regression", "correlation", "loading", "defined", "variance", "mean")
-  }
-  params <- params[tolower(params$Type) %in% type, ]
-
-  # add class-attribute for printing
-  class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
-  attr(params, "ci") <- ci
-  attr(params, "model") <- model
-  params
-}
 
 
 
