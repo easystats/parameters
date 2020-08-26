@@ -53,12 +53,12 @@
 #'   \item Merkle EC , Rosseel Y (2018). blavaan: Bayesian Structural Equation Models via Parameter Expansion. Journal of Statistical Software, 85(4), 1-30. http://www.jstatsoft.org/v85/i04/
 #' }
 #' @export
-model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type = c("regression", "correlation", "loading"), ...) {
+model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type = c("regression", "correlation", "loading", "defined"), ...) {
   params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, ...)
 
   # Filter
   if (all(type == "all")) {
-    type <- c("regression", "correlation", "loading", "variance", "mean")
+    type <- c("regression", "correlation", "loading", "variance", "defined", "mean")
   }
   params <- params[tolower(params$Type) %in% type, ]
 
@@ -72,12 +72,12 @@ model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type 
 
 
 #' @export
-model_parameters.blavaan <- function(model, ci = 0.95, standardize = FALSE, type = c("regression", "correlation", "loading"), ...) {
+model_parameters.blavaan <- function(model, ci = 0.95, standardize = FALSE, type = c("regression", "correlation", "loading", "defined"), ...) {
   params <- .extract_parameters_blavaan(model, ci = ci, standardize = standardize, ...)
 
   # Filter
   if (all(type == "all")) {
-    type <- c("regression", "correlation", "loading", "variance", "mean")
+    type <- c("regression", "correlation", "loading", "defined", "variance", "mean")
   }
   params <- params[tolower(params$Type) %in% type, ]
 

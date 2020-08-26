@@ -545,7 +545,9 @@
   params$Type <- ifelse(params$Operator == "=~", "Loading",
     ifelse(params$Operator == "~", "Regression",
       ifelse(params$Operator == "~~", "Correlation",
-        ifelse(params$Operator == "~1", "Mean", NA)
+        ifelse(params$Operator == ":=", "Defined",
+          ifelse(params$Operator == "~1", "Mean", NA)
+        )
       )
     )
   )
