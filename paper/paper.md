@@ -38,7 +38,7 @@ affiliations:
 
 # Summary
 
-The recent growth of data science is partly fuelled by the ever-growing amount of data and the joint important developments in statistical modelling, with new and powerful models and frameworks becomming accessible to users. Although there exist some generic functions to obtain model summaries and parameters, many package-specific modeling functions do not provide such methods to allow users to access such valuable information. 
+The recent growth of data science is partly fueled by the ever-growing amount of data and the joint important developments in statistical modeling, with new and powerful models and frameworks becoming accessible to users. Although there exist some generic functions to obtain model summaries and parameters, many package-specific modeling functions do not provide such methods to allow users to access such valuable information. 
 
 # Aims of the Package
 

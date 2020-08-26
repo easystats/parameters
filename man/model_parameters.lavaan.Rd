@@ -8,7 +8,7 @@
   model,
   ci = 0.95,
   standardize = FALSE,
-  type = c("regression", "correlation", "loading"),
+  type = c("regression", "correlation", "loading", "defined"),
   ...
 )
 }
