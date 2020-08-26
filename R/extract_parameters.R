@@ -522,9 +522,10 @@
   }
 
   # Get estimates
-  if (standardize == FALSE) {
-    data <- lavaan::parameterEstimates(model, se = TRUE, level = ci, ...)
-  } else {
+  data <- lavaan::parameterEstimates(model, se = TRUE, level = ci, ...)
+  label <- data$label
+
+  if (isTRUE(standardize)) {
     data <- lavaan::standardizedsolution(model, se = TRUE, level = ci, ...)
     names(data)[names(data) == "est.std"] <- "est"
   }
@@ -541,6 +542,10 @@
     CI_high = data$ci.upper,
     p = data$pvalue
   )
+
+  if (!is.null(label)) {
+    params$Label <- label
+  }
 
   params$Type <- ifelse(params$Operator == "=~", "Loading",
     ifelse(params$Operator == "~", "Regression",

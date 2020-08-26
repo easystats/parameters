@@ -207,6 +207,12 @@ print.parameters_random <- function(x, digits = 2, ...) {
     i
   })
 
+  # fix column output
+  if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {
+    x$From <- ifelse(x$Label == "" | x$Label == x$To, x$From, paste0(x$From, " (", x$Label, ")"))
+    x$Label <- NULL
+  }
+
   # set up split-factor
   if (length(split_column) > 1) {
     split_by <- lapply(split_column, function(i) x[[i]])
@@ -326,6 +332,9 @@ print.parameters_random <- function(x, digits = 2, ...) {
       s1 <- component_name
       s2 <- ""
     } else if (grepl(tolower(split_column), tolower(component_name), fixed = TRUE)) {
+      s1 <- component_name
+      s2 <- ""
+    } else if (split_column == "Type") {
       s1 <- component_name
       s2 <- ""
     } else {
