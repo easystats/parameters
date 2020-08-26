@@ -20,7 +20,7 @@ bibliography: paper.bib
 csl: apa.csl
 tags:
 - R
-- eaystats
+- easystats
 - parameters
 - regression
 - linear models
