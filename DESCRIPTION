@@ -104,7 +104,6 @@ Suggests:
     NbClust,
     nFactors,
     nlme,
-    panelr,
     performance,
     plm,
     projpred,
