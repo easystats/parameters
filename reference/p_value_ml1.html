@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -201,7 +201,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3>Small Sample Cluster corrected Degrees of Freedom</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Small Sample Cluster corrected Degrees of Freedom</h3>
 <p>Inferential statistics (like p-values, confidence intervals and
 standard errors) may be biased in mixed models when the number of clusters
 is small (even if the sample size of level-1 units is high). In such cases
@@ -211,12 +211,12 @@ for such inferential statitics (see <cite>Li and Redden 2015</cite>). The
 fewer degrees of freedom (<code>dof_ml1</code>) to calculate p-values
 (<code>p_value_ml1</code>), standard errors (<code>se_ml1</code>) and confidence intervals
 (<code><a href='https://rdrr.io/pkg/bayestestR/man/ci.html'>ci(method = "ml1")</a></code>).</p>
-<h3>Degrees of Freedom for Longitudinal Designs (Repeated Measures)</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Degrees of Freedom for Longitudinal Designs (Repeated Measures)</h3>
 <p>In particular for repeated measure designs (longitudinal data analysis),
 the <em>m-l-1</em> heuristic is likely to be more accurate than simply using the
 residual or infinite degrees of freedom, because <code>dof_ml1()</code> returns
 different degrees of freedom for within-cluster and between-cluster effects.</p>
-<h3>Limitations of the "m-l-1" Heuristic</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Limitations of the "m-l-1" Heuristic</h3>
 <p>Note that the "m-l-1" heuristic is not applicable (or at least less accurate)
 for complex multilevel designs, e.g. with cross-classified clusters. In such cases,
 more accurate approaches like the Kenward-Roger approximation (<code><a href='ci_kenward.html'>dof_kenward()</a></code>)
@@ -243,9 +243,11 @@ parameters, based on the "m-l-1" heuristic.</p></div>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Petal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Length</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>), data = <span class='kw'>iris</span>)
   <span class='fu'>p_value_ml1</span>(<span class='kw'>model</span>)
-}</div><div class='output co'>#&gt;      Parameter          p
+}
+</div><div class='output co'>#&gt;      Parameter          p
 #&gt; 1  (Intercept) 0.96504927
-#&gt; 2 Sepal.Length 0.04534945</div><div class='input'><span class='co'># }</span></div></pre>
+#&gt; 2 Sepal.Length 0.04534945</div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

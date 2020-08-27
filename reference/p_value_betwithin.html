@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -201,7 +201,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3>Small Sample Cluster corrected Degrees of Freedom</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Small Sample Cluster corrected Degrees of Freedom</h3>
 <p>Inferential statistics (like p-values, confidence intervals and
 standard errors) may be biased in mixed models when the number of clusters
 is small (even if the sample size of level-1 units is high). In such cases
@@ -213,7 +213,7 @@ measurements (longitudinal design). <code>dof_betwithin</code>) implements a heu
 based on the between-within approach. <strong>Note</strong> that this implementation
 does not return exactly the same results as shown in <cite>Li and Redden 2015</cite>,
 but similar.</p>
-<h3>Degrees of Freedom for Longitudinal Designs (Repeated Measures)</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Degrees of Freedom for Longitudinal Designs (Repeated Measures)</h3>
 <p>In particular for repeated measure designs (longitudinal data analysis),
 the <em>between-within</em> heuristic is likely to be more accurate than simply
 using the residual or infinite degrees of freedom, because <code>dof_betwithin()</code>
@@ -240,9 +240,11 @@ parameters, based on the "between-within" heuristic.</p></div>
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Reaction</span> <span class='op'>~</span> <span class='kw'>Days</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>+</span> <span class='kw'>Days</span> <span class='op'>|</span> <span class='kw'>Subject</span>), data = <span class='kw'>sleepstudy</span>)
   <span class='fu'>dof_betwithin</span>(<span class='kw'>model</span>)
   <span class='fu'>p_value_betwithin</span>(<span class='kw'>model</span>)
-}</div><div class='output co'>#&gt;     Parameter            p
+}
+</div><div class='output co'>#&gt;     Parameter            p
 #&gt; 1 (Intercept) 9.306054e-80
-#&gt; 2        Days 6.290140e-06</div><div class='input'><span class='co'># }</span></div></pre>
+#&gt; 2        Days 6.290140e-06</div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -337,6 +337,45 @@
 <p>All in all, it seems that the big 5 structure remains quite reliable.</p>
 </div>
 </div>
+</div>
+<div id="structural-equation-modeling" class="section level1">
+<h1 class="hasAnchor">
+<a href="#structural-equation-modeling" class="anchor"></a>Structural Equation Modeling</h1>
+<p>The last example shows one of the enormous amount of modeling possibilities for structural equation models, in particular an example for mediation analysis, i.e. a model that estimates indirect effects in partial mediation structures.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1234</span>)
+<span class="kw">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">100</span>)
+<span class="kw">M</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="kw">X</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">100</span>)
+<span class="kw">Y</span> <span class="op">&lt;-</span> <span class="fl">0.7</span> <span class="op">*</span> <span class="kw">M</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">100</span>)
+<span class="kw">Data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(X = <span class="kw">X</span>, Y = <span class="kw">Y</span>, M = <span class="kw">M</span>)
+
+<span class="kw">model</span> <span class="op">&lt;-</span> <span class="st">' # direct effect
+             Y ~ c*X
+           # mediator
+             M ~ a*X
+             Y ~ b*M
+           # indirect effect (a*b)
+             ab := a*b
+           # total effect
+             total := c + (a*b)
+         '</span>
+<span class="kw">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html">sem</a></span>(<span class="kw">model</span>, data = <span class="kw">Data</span>, test = <span class="st">"Satorra-Bentler"</span>)
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">fit</span>)
+</pre></div>
+<pre><code>#&gt; # Regression 
+#&gt; 
+#&gt; Link      | Coefficient |   SE |        95% CI |      p
+#&gt; -------------------------------------------------------
+#&gt; Y ~ X (c) |        0.04 | 0.10 | [-0.17, 0.24] | 0.728 
+#&gt; M ~ X (a) |        0.47 | 0.10 | [ 0.27, 0.68] | &lt; .001
+#&gt; Y ~ M (b) |        0.79 | 0.09 | [ 0.61, 0.97] | &lt; .001
+#&gt; 
+#&gt; # Defined 
+#&gt; 
+#&gt; Link             | Coefficient |   SE |       95% CI |      p
+#&gt; -------------------------------------------------------------
+#&gt; ab := a*b        |        0.37 | 0.09 | [0.19, 0.55] | &lt; .001
+#&gt; total := c+(a*b) |        0.41 | 0.12 | [0.17, 0.65] | 0.001</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

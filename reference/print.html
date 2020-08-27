@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -204,7 +204,8 @@ in a single table and a <code>Component</code> column is added to the output.</p
       <th>select</th>
       <td><p>Character vector (or numeric index) of column names that should
 be printed. If <code>NULL</code> (default), all columns are printed. The shortcut
-<code>select = "minimal"</code> prints coefficient, confidence intervals and p-values.</p></td>
+<code>select = "minimal"</code> prints coefficient, confidence intervals and p-values,
+while <code>select = "short"</code> prints coefficient, standard errors and p-values.</p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -246,7 +247,8 @@ be printed. If <code>NULL</code> (default), all columns are printed. The shortcu
   <span class='fu'>print</span>(<span class='kw'>mp</span>, select = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Parameter"</span>, <span class='st'>"Coefficient"</span>, <span class='st'>"SE"</span>))
 
   <span class='fu'>print</span>(<span class='kw'>mp</span>, select = <span class='st'>"minimal"</span>)
-}</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
+}
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
 #&gt; 
 #&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |      p
 #&gt; ------------------------------------------------------------------

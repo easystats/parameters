@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -338,42 +338,49 @@
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>)
 
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
 #&gt; -----------------------------------------------------------------------
 #&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 29 | &lt; .001
 #&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 29 | &lt; .001
 #&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 29 | 0.001 </div><div class='input'>
 <span class='co'># bootstrapped parameters</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, bootstrap = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, bootstrap = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
 #&gt; (Intercept) |       39.70 | [35.28, 43.93] | &lt; .001
 #&gt; wt          |       -3.18 | [-4.87, -1.94] | &lt; .001
 #&gt; cyl         |       -1.48 | [-2.25, -0.78] | &lt; .001</div><div class='input'>
 <span class='co'># standardized parameters</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, standardize = <span class='st'>"refit"</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |        t | df |      p
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, standardize = <span class='st'>"refit"</span>)
+</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |        t | df |      p
 #&gt; --------------------------------------------------------------------------
 #&gt; (Intercept) |    4.90e-17 | 0.08 | [-0.15,  0.15] | 6.50e-16 | 29 | &gt; .999
 #&gt; wt          |       -0.52 | 0.12 | [-0.77, -0.27] |    -4.22 | 29 | &lt; .001
 #&gt; cyl         |       -0.45 | 0.12 | [-0.70, -0.20] |    -3.64 | 29 | 0.001 </div><div class='input'>
 <span class='co'># different p-value style in output</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, p_digits = <span class='fl'>5</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |           p
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, p_digits = <span class='fl'>5</span>)
+</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |           p
 #&gt; ----------------------------------------------------------------------------
 #&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 29 | 3.04318e-20
 #&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 29 | 0.00022    
-#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 29 | 0.00106    </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, digits = <span class='fl'>3</span>, ci_digits = <span class='fl'>4</span>, p_digits = <span class='st'>"scientific"</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |    SE |             95% CI |      t | df |           p
+#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 29 | 0.00106    </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, digits = <span class='fl'>3</span>, ci_digits = <span class='fl'>4</span>, p_digits = <span class='st'>"scientific"</span>)
+</div><div class='output co'>#&gt; Parameter   | Coefficient |    SE |             95% CI |      t | df |           p
 #&gt; ----------------------------------------------------------------------------------
 #&gt; (Intercept) |      39.686 | 1.715 | [36.1787, 43.1938] | 23.141 | 29 | 3.04318e-20
 #&gt; wt          |      -3.191 | 0.757 | [-4.7390, -1.6429] | -4.216 | 29 | 2.22020e-04
 #&gt; cyl         |      -1.508 | 0.415 | [-2.3559, -0.6597] | -3.636 | 29 | 1.06428e-03</div><div class='input'>
 <span class='co'># logistic regression model</span>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='kw'>vs</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>, family = <span class='st'>"binomial"</span>)
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     z |     p
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     z |     p
 #&gt; -----------------------------------------------------------------
 #&gt; (Intercept) |       10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 0.011
 #&gt; wt          |        2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 0.174
 #&gt; cyl         |       -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 0.034</div><div class='input'>
 <span class='co'># show odds ratio / exponentiated coefficients</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, exponentiate = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Parameter   | Coefficient |       SE |                  95% CI |     z |     p
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, exponentiate = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; Parameter   | Coefficient |       SE |                  95% CI |     z |     p
 #&gt; ------------------------------------------------------------------------------
 #&gt; (Intercept) |    40911.34 | 1.71e+05 | [120.16,      6.95e+09] |  2.55 | 0.011
 #&gt; wt          |        8.17 |    12.63 | [  0.59,        514.10] |  1.36 | 0.174

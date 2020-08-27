@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -219,7 +219,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3>Skewness</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Skewness</h3>
 <p>Symmetric distributions have a <code>skewness</code> around zero, while
 a negative skewness values indicates a "left-skewed" distribution, and a
 positive skewness values indicates a "right-skewed" distribution. Examples
@@ -229,27 +229,27 @@ for the relationship of skewness and distributions are:</p><ul>
 <li><p>Exponential distribution has a skewness of 2</p></li>
 <li><p>Lognormal distribution can have a skewness of any positive value, depending on its parameters</p></li>
 </ul><p>(<cite>https://en.wikipedia.org/wiki/Skewness</cite>)</p>
-<h3>Types of Skewness</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Types of Skewness</h3>
 <p><code>skewness()</code> supports three different methods for estimating skewness, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
 <li><p>Type "1" is the "classical" method, which is <code>g1 = (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5</code></p></li>
 <li><p>Type "2" first calculates the type-1 skewness, than adjusts the result: <code>G1 = g1 * sqrt(n * (n - 1)) / (n - 2)</code>. This is what SAS and SPSS usually return</p></li>
 <li><p>Type "3" first calculates the type-1 skewness, than adjusts the result: <code>b1 = g1 * ((1 - 1 / n))^1.5</code>. This is what Minitab usually returns.</p></li>
 </ul>
 
-<h3>Kurtosis</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Kurtosis</h3>
 <p>The <code>kurtosis</code> is a measure of "tailedness" of a distribution. A distribution
 with a kurtosis values of about zero is called "mesokurtic". A kurtosis value
 larger than zero indicates a "leptokurtic" distribution with <em>fatter</em> tails.
 A kurtosis value below zero indicates a "platykurtic" distribution with <em>thinner</em>
 tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
-<h3>Types of Kurtosis</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Types of Kurtosis</h3>
 <p><code>kurtosis()</code> supports three different methods for estimating kurtosis, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
 <li><p>Type "1" is the "classical" method, which is <code>g2 = n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3</code>.</p></li>
 <li><p>Type "2" first calculates the type-1 kurtosis, than adjusts the result: <code>G2 = ((n + 1) * g2 + 6) * (n - 1)/((n - 2) * (n - 3))</code>. This is what SAS and SPSS usually return</p></li>
 <li><p>Type "3" first calculates the type-1 kurtosis, than adjusts the result: <code>b2 = (g2 + 3) * (1 - 1 / n)^2 - 3</code>. This is what Minitab usually returns.</p></li>
 </ul>
 
-<h3>Standard Errors</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Standard Errors</h3>
 <p>It is recommended to compute empirical (bootstrapped) standard errors (via the <code>iterations</code> argument) than relying on analytic standard errors (<cite>Wright &amp; Herrington, 2011</cite>).</p>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -262,11 +262,13 @@ tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>skewness</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; Skewness |    SE
+    <pre class="examples"><div class='input'><span class='fu'>skewness</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))
+</div><div class='output co'>#&gt; Skewness |    SE
 #&gt; ----------------
-#&gt; 0.036    | 0.077</div><div class='input'><span class='fu'>kurtosis</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; Kurtosis |    SE
+#&gt; -0.113   | 0.077</div><div class='input'><span class='fu'>kurtosis</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))
+</div><div class='output co'>#&gt; Kurtosis |    SE
 #&gt; ----------------
-#&gt; 0.105    | 0.154</div></pre>
+#&gt; 0.000    | 0.154</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

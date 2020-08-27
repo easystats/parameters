@@ -82,7 +82,7 @@ consistent and the same for any model object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -219,21 +219,24 @@ consistent and the same for any model object.</p>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>)
 <span class='kw'>mp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw'>mp</span>)</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high         t df_error
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw'>mp</span>)
+</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high         t df_error
 #&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893       29
 #&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808       29
 #&gt; 3         cyl   -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972       29
 #&gt;              p
 #&gt; 1 3.043182e-20
 #&gt; 2 2.220200e-04
-#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span>(<span class='kw'>mp</span>)</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high Statistic df
+#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span>(<span class='kw'>mp</span>)
+</div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high Statistic df
 #&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893 29
 #&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808 29
 #&gt; 3         cyl   -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972 29
 #&gt;              p
 #&gt; 1 3.043182e-20
 #&gt; 2 2.220200e-04
-#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span>(<span class='kw'>mp</span>, style = <span class='st'>"broom"</span>)</div><div class='output co'>#&gt;          term  estimate std.error  conf.low  conf.high statistic df.error
+#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span>(<span class='kw'>mp</span>, style = <span class='st'>"broom"</span>)
+</div><div class='output co'>#&gt;          term  estimate std.error  conf.low  conf.high statistic df.error
 #&gt; 1 (Intercept) 39.686261 1.7149840 36.178725 43.1937976 23.140893       29
 #&gt; 2          wt -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808       29
 #&gt; 3         cyl -1.507795 0.4146883 -2.355928 -0.6596622 -3.635972       29

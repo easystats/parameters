@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -240,7 +240,7 @@
 <p><em>Note:</em> By default, <code><a href="https://rdrr.io/pkg/psych/man/principal.html">psych::principal()</a></code> uses a <strong>varimax</strong> rotation to extract rotated components, possibly leading to discrepancies in the results.</p>
 <p>Finally, refit the model:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/cbind.html">cbind</a></span>(<span class="kw">attitude</span>, <span class="fu"><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">predict</a></span>(<span class="kw">pca</span>))
+<span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/cbind.html">cbind</a></span>(<span class="kw">attitude</span>, <span class="fu"><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">predict</a></span>(<span class="kw">pca</span>))
 
 <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span>(<span class="kw">model</span>, <span class="kw">rating</span> <span class="op">~</span> <span class="kw">PC1</span>, data = <span class="kw">df</span>) <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>()

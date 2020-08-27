@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -206,9 +206,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> (<span class='op'>-</span><span class='fl'>10</span><span class='op'>:</span><span class='fl'>10</span>)<span class='op'>^</span><span class='fl'>3</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>21</span>, <span class='fl'>0</span>, <span class='fl'>100</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>)</div><div class='img'><img src='smoothness-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>smoothness</span>(<span class='kw'>x</span>, method = <span class='st'>"cor"</span>)</div><div class='output co'>#&gt; [1] 0.9335455
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>)
+</div><div class='img'><img src='smoothness-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>smoothness</span>(<span class='kw'>x</span>, method = <span class='st'>"cor"</span>)
+</div><div class='output co'>#&gt; [1] 0.8760694
 #&gt; attr(,"class")
-#&gt; [1] "parameters_smoothness" "numeric"              </div><div class='input'><span class='fu'>smoothness</span>(<span class='kw'>x</span>, method = <span class='st'>"diff"</span>)</div><div class='output co'>#&gt; [1] 1.54135
+#&gt; [1] "parameters_smoothness" "numeric"              </div><div class='input'><span class='fu'>smoothness</span>(<span class='kw'>x</span>, method = <span class='st'>"diff"</span>)
+</div><div class='output co'>#&gt; [1] 2.074428
 #&gt; attr(,"class")
 #&gt; [1] "parameters_smoothness" "numeric"              </div></pre>
   </div>

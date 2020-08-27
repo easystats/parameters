@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -273,7 +273,8 @@ the cluster analysis.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Hierarchical clustering of mtcars-dataset</span>
 <span class='kw'>groups</span> <span class='op'>&lt;-</span> <span class='fu'>cluster_analysis</span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], <span class='fl'>3</span>)
-<span class='kw'>groups</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Cluster Analysis (mean z-score by cluster)
+<span class='kw'>groups</span>
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Cluster Analysis (mean z-score by cluster)
 #&gt; 
 #&gt; </span><span>         Term Group 1 Group 2 Group 3
 #&gt;  Sepal.Length   -1.01    0.09    1.24
@@ -294,7 +295,8 @@ the cluster analysis.</p></td>
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='kw'>groups</span> <span class='op'>&lt;-</span> <span class='fu'>cluster_analysis</span>(<span class='kw'>iris</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], method = <span class='st'>"k"</span>)
 <span class='kw'>groups</span>
-}</div></span></pre>
+}
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

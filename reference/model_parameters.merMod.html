@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -299,7 +299,8 @@
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>mtcars</span>)
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>gear</span>), data = <span class='kw'>mtcars</span>)
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
-}</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
+}
+</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
 #&gt; -----------------------------------------------------------------------
 #&gt; (Intercept) |       36.19 | 2.19 | [31.90, 40.48] | 16.52 | 28 | &lt; .001
 #&gt; wt          |       -5.05 | 0.64 | [-6.30, -3.79] | -7.89 | 28 | &lt; .001</div><div class='input'><span class='co'># \donttest{</span>
@@ -318,14 +319,17 @@
     <span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
     <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>result</span>)
   }
-}</div><div class='img'><img src='model_parameters.merMod-1.png' alt='' width='700' height='433' /></div><div class='input'>
+}
+</div><div class='img'><img src='model_parameters.merMod-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>gear</span>), data = <span class='kw'>mtcars</span>)
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, bootstrap = <span class='fl'>TRUE</span>, iterations = <span class='fl'>50</span>)
-}</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
+}
+</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
 #&gt; (Intercept) |       35.97 | [32.27, 40.48] | &lt; .001
-#&gt; wt          |       -4.90 | [-6.38, -3.94] | &lt; .001</div><div class='input'><span class='co'># }</span></div></pre>
+#&gt; wt          |       -4.90 | [-6.38, -3.94] | &lt; .001</div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

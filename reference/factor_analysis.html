@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -224,12 +224,12 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3>Complexity</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Complexity</h3>
 <p>Complexity represents the number of latent components needed to account
    for the observed variables. Whereas a perfect simple structure solution
    has a complexity of 1 in that each item would only load on one factor,
    a solution with evenly distributed items has a complexity greater than 1
-   (<cite>Hofman, 1978; Pettersson and Turkheimer, 2010</cite>) .</p><p></p><h3>FA or PCA?</h3>
+   (<cite>Hofman, 1978; Pettersson and Turkheimer, 2010</cite>) .</p><p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>FA or PCA?</h3>
 <p>There is a simplified rule of thumb that may help do decide whether to run
  a principal component analysis or a factor analysis:</p><ul>
 <li><p>Run <em>factor analysis</em> if you assume or wish to test a theoretical model of latent factors causing observed variables.</p></li>
@@ -262,7 +262,8 @@
   <span class='co'># Automated number of components</span>
   <span class='fu'>factor_analysis</span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], n = <span class='st'>"auto"</span>)
 <span class='co'># }</span>
-}</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
+}
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)
 #&gt; 
 #&gt; </span><span>Variable |   MR1 | Complexity | Uniqueness
 #&gt; ------------------------------------------

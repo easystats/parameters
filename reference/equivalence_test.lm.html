@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -254,7 +254,7 @@ this test (see below), statistical significance does not necessarily indicate
 whether the null hypothesis can be rejected or not, i.e. the classical
 interpretation of the p-value may differ from the results returned from
 the equivalence test.</p>
-<h3>Calculation of equivalence testing</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Calculation of equivalence testing</h3>
 <p></p><dl>
     <dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the &#8220;HDI+ROPE decision rule&#8221; <cite>(Kruschke, 2014, 2018)</cite>
       used for the <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>Bayesian counterpart</a></code>.
@@ -280,14 +280,14 @@ the equivalence test.</p>
   
 </dl>
 
-<h3>Levels of Confidence Intervals used for Equivalence Testing</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Levels of Confidence Intervals used for Equivalence Testing</h3>
 <p>For <code>rule = "classic"</code>, "narrow" confidence intervals are used for
   equivalence testing. "Narrow" means, the the intervals is not 1 - alpha,
   but 1 - 2 * alpha. Thus, if <code>ci = .95</code>, alpha is assumed to be 0.05
   and internally a ci-level of 0.90 is used. <code>rule = "cet"</code> uses
   both regular and narrow confidence intervals, while <code>rule = "bayes"</code>
   only uses the regular intervals.</p>
-<h3>Second Generation p-Value (SGPV)</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Second Generation p-Value (SGPV)</h3>
 <p>Second generation p-values (SGPV) were proposed as a statistic
   that represents &#8220;the proportion of data-supported hypotheses
   that are also null hypotheses&#8221; <cite>(Blume et al. 2018)</cite>. This statistic
@@ -295,13 +295,13 @@ the equivalence test.</p>
   returned by <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test()</a></code> (see <cite>Lakens and Delacre 2020</cite>
   for details on computation of the SGPV). Thus, the <code>"inside ROPE"</code>
   column reflects the SGPV.</p>
-<h3>Adjustment for multiple testing</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Adjustment for multiple testing</h3>
 <p>The calculation of p-values is somewhat "experimental". For parameters, where H0...</p><ul>
 <li><p>... is rejected, the p-value equals a NHST as if the upper / lower boundary of the ROPE (see <code>range</code>) would be the point-null to test against.</p></li>
 <li><p>... is accepted, the p-value is set to 1.</p></li>
 <li><p>... is undecided, the p-value equals a NHST against the point-null, however, the "uncertainty" (i.e. ROPE range) is added to the confidence intervals (so the upper confidence interval limit equals the regular upper confidence interval limit + half the ROPE range).</p></li>
 </ul><p>All p-values are then adjusted for multiple testing (using <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> with <code>method = "fdr"</code>).</p>
-<h3>ROPE range</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>ROPE range</h3>
 <p>Some attention is required for finding suitable values for the ROPE limits
   (argument <code>range</code>). See 'Details' in <code><a href='https://rdrr.io/pkg/bayestestR/man/rope_range.html'>rope_range</a></code>
   for further information.</p>
@@ -332,7 +332,8 @@ the equivalence test.</p>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>QoL</span> <span class='op'>~</span> <span class='kw'>time</span> <span class='op'>+</span> <span class='kw'>age</span> <span class='op'>+</span> <span class='kw'>education</span>, data = <span class='kw'>qol_cancer</span>)
 
 <span class='co'># default rule</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Test for Practical Equivalence
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>)
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-1.99 1.99]
 #&gt; 
@@ -344,7 +345,8 @@ the equivalence test.</p>
 #&gt;  educationhigh  Rejected      0.00 % [ 9.33 19.38]
 #&gt; </div><div class='input'>
 <span class='co'># conditional equivalence test</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>, rule = <span class='st'>"cet"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Conditional Equivalence Testing
+<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>, rule = <span class='st'>"cet"</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Conditional Equivalence Testing
 #&gt; 
 #&gt; </span><span>  ROPE: [-1.99 1.99]
 #&gt; 
@@ -359,7 +361,8 @@ the equivalence test.</p>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://easystats.github.io/see'>"see"</a></span>)) {
   <span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>)
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>result</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: see</span></div><div class='img'><img src='equivalence_test.lm-1.png' alt='' width='700' height='433' /></div></span></pre>
+}
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: see</span></div><div class='img'><img src='equivalence_test.lm-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

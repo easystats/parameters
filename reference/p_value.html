@@ -84,7 +84,7 @@ Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -285,7 +285,8 @@ is returned.</p></td>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>iris</span>)
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Petal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Length</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>), data = <span class='kw'>iris</span>)
   <span class='fu'>p_value</span>(<span class='kw'>model</span>)
-}</div><div class='output co'>#&gt;      Parameter            p
+}
+</div><div class='output co'>#&gt;      Parameter            p
 #&gt; 1  (Intercept) 9.561737e-01
 #&gt; 2 Sepal.Length 1.273781e-44</div></pre>
   </div>

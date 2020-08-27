@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -164,9 +164,9 @@
       <small>Source: <a href='https://github.com/easystats/parameters/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="parameters-0821" class="section level1">
-<h1 class="page-header" data-toc-text="0.8.2.1">
-<a href="#parameters-0821" class="anchor"></a>parameters 0.8.2.1<small> Unreleased </small>
+    <div id="parameters-083" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.3">
+<a href="#parameters-083" class="anchor"></a>parameters 0.8.3<small> Unreleased </small>
 </h1>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
@@ -179,7 +179,7 @@
 <h2 class="hasAnchor">
 <a href="#new-supported-model-classes" class="anchor"></a>New supported model classes</h2>
 <ul>
-<li>Support for <code>mipo</code> (<em>mice</em>). Preliminary support for <code>semLME</code> (<em>smicd</em>), <code>mle2</code> (<em>bbmle</em>), <code>mle</code> (<em>stats4</em>)</li>
+<li>Support for <code>mipo</code> (<em>mice</em>), <code>lqm</code> and <code>lqmm</code> (<em>lqmm</em>). Preliminary support for <code>semLME</code> (<em>smicd</em>), <code>mle2</code> (<em>bbmle</em>), <code>mle</code> (<em>stats4</em>)</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for objects of class <code>mira</code> (<em>mice</em>).</li>
 </ul>
@@ -190,13 +190,22 @@
 <ul>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a specific behaviour for brms-meta-analysis models.</li>
+<li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>lavaan</em> and <em>blavaan</em> now also prints self-defined parameters.</li>
+<li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>lavaan</em> and <em>blavaan</em> gains more option for standardized parameters.</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
+<li>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>coxph.penal</code> models.</li>
 <li>Fix issue in <code>model_parameters.metaplus()</code> with random effects.</li>
+<li>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> when <code>x</code> was a mixed model.</li>
+<li>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> for data with missing values.</li>
+<li>Fix issue in <code><a href="../reference/ci_ml1.html">dof_ml1()</a></code> when random-effect terms where character vectors.</li>
+<li>Fix issue in <code><a href="../reference/print.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> that printed empty lines for rows with complete missing values. Empty lines are now removed.</li>
 </ul>
 </div>
 </div>

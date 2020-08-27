@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -221,7 +221,8 @@
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 
 <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Sepal.Width</span>, data = <span class='kw'>iris</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='kw'>x</span>))</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='kw'>x</span>))
+</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
 #&gt; 1                        (Intercept)        2.64 0.57 [ 1.51, 3.77] 4.62 144
 #&gt; 2               Species [versicolor]        0.90 0.80 [-0.68, 2.48] 1.13 144
 #&gt; 3                Species [virginica]        1.27 0.82 [-0.35, 2.88] 1.55 144
@@ -234,7 +235,8 @@
 #&gt; 3 0.123 
 #&gt; 4 &lt; .001
 #&gt; 5 0.503 
-#&gt; 6 0.411 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='kw'>x</span>, p_digits = <span class='st'>"scientific"</span>))</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
+#&gt; 6 0.411 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='kw'>x</span>, p_digits = <span class='st'>"scientific"</span>))
+</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
 #&gt; 1                        (Intercept)        2.64 0.57 [ 1.51, 3.77] 4.62 144
 #&gt; 2               Species [versicolor]        0.90 0.80 [-0.68, 2.48] 1.13 144
 #&gt; 3                Species [virginica]        1.27 0.82 [-0.35, 2.88] 1.55 144
@@ -252,14 +254,16 @@
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span>, data = <span class='kw'>iris</span>, refresh = <span class='fl'>0</span>, seed = <span class='fl'>123</span>)
   <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.69</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))
   <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>parameters_table</span>(<span class='kw'>x</span>))
-}</div><div class='output co'>#&gt;              Parameter Median       69% CI       89% CI       95% CI   pd
+}
+</div><div class='output co'>#&gt;              Parameter Median       69% CI       89% CI       95% CI   pd
 #&gt; 1          (Intercept)   5.01 [4.94, 5.09] [4.88, 5.11] [4.86, 5.14] 100%
 #&gt; 2 Species [versicolor]   0.93 [0.82, 1.03] [0.76, 1.10] [0.74, 1.14] 100%
 #&gt; 3  Species [virginica]   1.58 [1.48, 1.69] [1.41, 1.75] [1.38, 1.78] 100%
 #&gt;   % in ROPE  Rhat     ESS                 Prior
 #&gt; 1        0% 1.000 3279.02 Normal (5.84 +- 2.07)
 #&gt; 2        0% 1.000 3458.46 Normal (0.00 +- 4.38)
-#&gt; 3        0% 1.000 3201.26 Normal (0.00 +- 4.38)</div><div class='input'><span class='co'># }</span></div></pre>
+#&gt; 3        0% 1.000 3201.26 Normal (0.00 +- 4.38)</div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

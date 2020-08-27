@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -215,11 +215,11 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3>Technical Details</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Technical Details</h3>
 <p><code>simulate_model()</code> is a computationally faster alternative
     to <code><a href='bootstrap_model.html'>bootstrap_model()</a></code>. Simulated draws for coefficients are based
     on a multivariate normal distribution (<code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>MASS::mvrnorm()</a></code>) with mean
-    <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p><p></p><h3>Models with Zero-Inflation Component</h3>
+    <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p><p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Models with Zero-Inflation Component</h3>
 <p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
     <span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
     which parameters should be simulated. For all other models, parameters
@@ -235,20 +235,21 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>))</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
-#&gt; 1    3.651509         -1.368580        -2.864556  0.43092505    0.9032143
-#&gt; 2    3.504374         -2.010073        -1.822172  0.27355715    0.9749132
-#&gt; 3    3.632732         -1.346202        -2.176291 -0.06957351    0.9452339
-#&gt; 4    3.510512         -1.440668        -2.481691  0.24124897    0.9602783
-#&gt; 5    3.516097         -1.071802        -1.496980  0.81373862    0.9260369
-#&gt; 6    3.426399         -1.218919        -2.505659 -0.33037777    1.0704487
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>))
+</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
+#&gt; 1    3.548538        -0.8002921        -2.705668   0.2420872    0.9952477
+#&gt; 2    3.430562        -0.8925972        -2.719864   0.6318340    0.9170112
+#&gt; 3    3.441984        -1.2549123        -2.020207   0.4948251    0.9754586
+#&gt; 4    3.980817        -1.1881879        -1.621348  -0.3647297    0.7738413
+#&gt; 5    3.352993        -0.9071342        -2.360938   0.4506966    1.0441573
+#&gt; 6    3.591991        -1.0115913        -2.413672   0.2026511    0.9171963
 #&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
-#&gt; 1                    -0.6185009                  -0.02963802
-#&gt; 2                    -0.1259296                  -0.54649842
-#&gt; 3                    -0.2549671                   0.01306101
-#&gt; 4                    -0.3662148                  -0.11988582
-#&gt; 5                    -1.1211628                  -1.06208629
-#&gt; 6                    -0.2884948                   0.17394201</div><div class='input'>
+#&gt; 1                    -1.0437390                  -0.12322707
+#&gt; 2                    -1.0126170                  -0.27270223
+#&gt; 3                    -0.8009302                  -0.62639029
+#&gt; 4                     0.2720911                   0.32882851
+#&gt; 5                    -1.1524506                  -0.55884244
+#&gt; 6                    -0.6091065                  -0.02737427</div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span>)) {
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
@@ -259,13 +260,15 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   )
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>))
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>, component = <span class='st'>"zero_inflated"</span>))
-}</div><div class='output co'>#&gt;   (Intercept)   minedno
-#&gt; 1   0.7036706 -1.706245
-#&gt; 2   1.2076713 -2.101950
-#&gt; 3   0.8421899 -2.021328
-#&gt; 4   1.3807368 -2.425328
-#&gt; 5   0.4090723 -1.463242
-#&gt; 6   1.0279722 -1.734870</div><div class='input'><span class='co'># }</span></div></pre>
+}
+</div><div class='output co'>#&gt;   (Intercept)   minedno
+#&gt; 1   0.7878315 -1.604564
+#&gt; 2   0.4873132 -1.593576
+#&gt; 3   0.8105688 -1.866888
+#&gt; 4   0.6953811 -1.667657
+#&gt; 5   0.9564770 -2.028792
+#&gt; 6   0.5198564 -1.516788</div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

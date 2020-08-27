@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -237,7 +237,8 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span>, data = <span class='kw'>iris</span>)
-<span class='fu'>bootstrap_parameters</span>(<span class='kw'>model</span>)</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
+<span class='fu'>bootstrap_parameters</span>(<span class='kw'>model</span>)
+</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
 #&gt; 1                   (Intercept)   4.7766617  4.5135438 4.9897666 0.000000000
 #&gt; 2             Speciesversicolor  -0.7181220 -1.6069290 0.1527264 0.105894106
 #&gt; 3              Speciesvirginica   0.5204686 -0.7304722 1.7185077 0.401598402

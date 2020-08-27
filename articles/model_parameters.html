@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -300,7 +300,7 @@
 <span class="kw">d2</span> <span class="op">&lt;-</span> <span class="fu">sim1</span>(mu = <span class="fl">200</span>, residsd = <span class="fl">5</span>)
 <span class="kw">d1</span><span class="op">$</span><span class="kw">sd</span> <span class="op">&lt;-</span> <span class="st">"ten"</span>
 <span class="kw">d2</span><span class="op">$</span><span class="kw">sd</span> <span class="op">&lt;-</span> <span class="st">"five"</span>
-<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/cbind.html">rbind</a></span>(<span class="kw">d1</span>, <span class="kw">d2</span>)
+<span class="kw">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/cbind.html">rbind</a></span>(<span class="kw">d1</span>, <span class="kw">d2</span>)
 <span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html">glmmTMB</a></span>(<span class="kw">x</span> <span class="op">~</span> <span class="kw">sd</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> <span class="kw">t</span>), dispformula =  <span class="op">~</span> <span class="kw">sd</span>, data = <span class="kw">dat</span>)
 
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>(<span class="kw">model</span>)
@@ -454,14 +454,12 @@
 
 <span class="kw">model</span> <span class="op">&lt;-</span> <span class="kw">lavaan</span>::<span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span>(<span class="st">' visual  =~ x1 + x2 + x3
                        textual =~ x4 + x5 + x6
-                       speed   =~ x7 + x8 + x9 '</span>
-                       textual =~ x4 + x5 + x6
-                       speed   =~ x7 + x8 + x9 ', 
+                       speed   =~ x7 + x8 + x9 '</span>, 
                        data = <span class="kw">HolzingerSwineford1939</span>)
 
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">model</span>)
 </pre></div>
-<pre><code>#&gt; # Loading type
+<pre><code>#&gt; # Loading 
 #&gt; 
 #&gt; Link          | Coefficient |   SE |       95% CI |      p
 #&gt; ----------------------------------------------------------
@@ -475,7 +473,7 @@
 #&gt; speed =~ x8   |        1.18 | 0.16 | [0.86, 1.50] | &lt; .001
 #&gt; speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001
 #&gt; 
-#&gt; # Correlation type
+#&gt; # Correlation 
 #&gt; 
 #&gt; Link              | Coefficient |   SE |       95% CI |      p
 #&gt; --------------------------------------------------------------

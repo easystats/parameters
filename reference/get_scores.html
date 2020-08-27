@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -202,7 +202,8 @@
 <span class='kw'>pca</span> <span class='op'>&lt;-</span> <span class='fu'><a href='principal_components.html'>principal_components</a></span>(<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span>], n = <span class='fl'>2</span>, rotation = <span class='st'>"varimax"</span>)
 
 <span class='co'># PCA extracted two components</span>
-<span class='kw'>pca</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (varimax-rotation)
+<span class='kw'>pca</span>
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (varimax-rotation)
 #&gt; 
 #&gt; </span><span>Variable |   RC1 |   RC2 | Complexity | Uniqueness |  MSA
 #&gt; ---------------------------------------------------------
@@ -216,10 +217,12 @@
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The 2 principal components (varimax rotation) accounted for 89.18% of the total variance of the original data (RC1 = 56.82%, RC2 = 32.36%).</span><span></div><div class='input'>
 <span class='co'># assignment of items to each component</span>
-<span class='fu'><a href='principal_components.html'>closest_component</a></span>(<span class='kw'>pca</span>)</div><div class='output co'>#&gt;  mpg  cyl disp   hp drat   wt qsec 
+<span class='fu'><a href='principal_components.html'>closest_component</a></span>(<span class='kw'>pca</span>)
+</div><div class='output co'>#&gt;  mpg  cyl disp   hp drat   wt qsec 
 #&gt;    1    1    1    2    1    1    2 </div><div class='input'>
 <span class='co'># now we want to have sum scores for each component</span>
-<span class='fu'>get_scores</span>(<span class='kw'>pca</span>)</div><div class='output co'>#&gt;                     Component_1 Component_2
+<span class='fu'>get_scores</span>(<span class='kw'>pca</span>)
+</div><div class='output co'>#&gt;                     Component_1 Component_2
 #&gt; Mazda RX4               38.7040      63.230
 #&gt; Mazda RX4 Wag           38.7550      63.510
 #&gt; Datsun 710              28.1940      55.805
@@ -254,7 +257,8 @@
 #&gt; Volvo 142E              30.6580      63.800</div><div class='input'>
 <span class='co'># compare to manually computed sum score for 2nd component, which</span>
 <span class='co'># consists of items "hp" and "qsec"</span>
-(<span class='kw'>mtcars</span><span class='op'>$</span><span class='kw'>hp</span> <span class='op'>+</span> <span class='kw'>mtcars</span><span class='op'>$</span><span class='kw'>qsec</span>) <span class='op'>/</span> <span class='fl'>2</span></div><div class='output co'>#&gt;  [1]  63.230  63.510  55.805  64.720  96.010  62.610 130.420  41.000  58.950
+(<span class='kw'>mtcars</span><span class='op'>$</span><span class='kw'>hp</span> <span class='op'>+</span> <span class='kw'>mtcars</span><span class='op'>$</span><span class='kw'>qsec</span>) <span class='op'>/</span> <span class='fl'>2</span>
+</div><div class='output co'>#&gt;  [1]  63.230  63.510  55.805  64.720  96.010  62.610 130.420  41.000  58.950
 #&gt; [10]  70.650  70.950  98.700  98.800  99.000 111.490 116.410 123.710  42.735
 #&gt; [19]  35.260  42.450  58.505  83.435  83.650 130.205  96.025  42.450  53.850
 #&gt; [28]  64.950 139.250  95.250 174.800  63.800</div></span></pre>

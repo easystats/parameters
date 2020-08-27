@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -129,13 +129,16 @@
 
     
     
-<p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> can be used in combination with the <em>mice</em> package to deal with missing data, in particular to summaries regression models used with multiple imputed datasets. It computes pooled summaries of multiple imputed repeated regression analyses, i.e. of objects of class <code>mira</code>. Thus, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>mira</code>-objects is comparable to the <code><a href="http://stefvanbuuren.github.io/mice/reference/pool.html">pool()</a></code>-function from <em>mice</em>, but only focuses on the final summary of parameters and does not include the diagnostic statistic per estimate.</p>
+<div id="model-parameters-from-mira-objects" class="section level2">
+<h2 class="hasAnchor">
+<a href="#model-parameters-from-mira-objects" class="anchor"></a>Model Parameters from <code>mira</code> objects</h2>
+<p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> can be used in combination with the <em>mice</em> package to deal with missing data, in particular to summaries regression models used with multiple imputed datasets. It computes pooled summaries of multiple imputed repeated regression analyses, i.e. of objects of class <code>mira</code>. Thus, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>mira</code>-objects is comparable to the <code><a href="https://rdrr.io/pkg/mice/man/pool.html">pool()</a></code>-function from <em>mice</em>, but only focuses on the final summary of parameters and does not include the diagnostic statistic per estimate.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/stefvanbuuren/mice">mice</a></span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://easystats.github.io/parameters">parameters</a></span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"nhanes2"</span>)
-<span class="kw">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/mice.html">mice</a></span>(<span class="kw">nhanes2</span>)
+<span class="kw">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/mice.html">mice</a></span>(<span class="kw">nhanes2</span>)
 </pre></div>
 <pre><code>#&gt; 
 #&gt;  iter imp variable
@@ -176,8 +179,8 @@
 #&gt; age [60-99] |       -7.61 | 2.79 | [-13.47, -1.75] | -2.72 | 18.26 | 0.014 
 #&gt; hyp [yes]   |        0.52 | 2.53 | [ -4.79,  5.83] |  0.21 | 18.26 | 0.840 
 #&gt; chl         |        0.06 | 0.02 | [  0.01,  0.11] |  2.36 | 18.26 | 0.029</code></pre>
-<p>Not all packages work with <code><a href="http://stefvanbuuren.github.io/mice/reference/with.mids.html">with.mids()</a></code> from package <em>mice</em>. Thus, for some modeling packages, it’s not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the <em>GLMMadpative</em> package here.</p>
-<p>First, we generate a dataset with missing values. We take the data <code>cbpp</code> from <em>lme4</em> and randomly assign some missing values into one of the predictors. Then we impute the data, using <code><a href="http://stefvanbuuren.github.io/mice/reference/mice.html">mice()</a></code> from package <em>mice</em>.</p>
+<p>Not all packages work with <code><a href="https://rdrr.io/pkg/mice/man/with.mids.html">with.mids()</a></code> from package <em>mice</em>. Thus, for some modeling packages, it’s not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the <em>GLMMadaptive</em> package here.</p>
+<p>First, we generate a dataset with missing values. We take the data <code>cbpp</code> from <em>lme4</em> and randomly assign some missing values into one of the predictors. Then we impute the data, using <code><a href="https://rdrr.io/pkg/mice/man/mice.html">mice()</a></code> from package <em>mice</em>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/lme4/lme4">lme4</a></span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://drizopoulos.github.io/GLMMadaptive">GLMMadaptive</a></span>)
@@ -185,7 +188,7 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">cbpp</span>)
 <span class="kw">cbpp</span><span class="op">$</span><span class="kw">period</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">cbpp</span>), size = <span class="fl">10</span>)] <span class="op">&lt;-</span> <span class="fl">NA</span>
 
-<span class="kw">imputed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/mice.html">mice</a></span>(<span class="kw">cbpp</span>)
+<span class="kw">imputed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/mice.html">mice</a></span>(<span class="kw">cbpp</span>)
 </pre></div>
 <pre><code>#&gt; 
 #&gt;  iter imp variable
@@ -217,20 +220,20 @@
 <p>Using <code>with</code> to compute multiple regression analyses for each imputed dataset fails.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="kw">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(data = <span class="kw">imputed_data</span>, expr = <span class="kw">GLMMadaptive</span>::<span class="fu"><a href="https://rdrr.io/pkg/GLMMadaptive/man/mixed_model.html">mixed_model</a></span>(
-  <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/cbind.html">cbind</a></span>(<span class="kw">incidence</span>, <span class="kw">size</span> <span class="op">-</span> <span class="kw">incidence</span>) <span class="op">~</span> <span class="kw">period</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/mice/man/cbind.html">cbind</a></span>(<span class="kw">incidence</span>, <span class="kw">size</span> <span class="op">-</span> <span class="kw">incidence</span>) <span class="op">~</span> <span class="kw">period</span>,
   random = <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="kw">herd</span>,
   family = <span class="kw">binomial</span>
 ))
 <span class="co">#&gt; Error in as.data.frame(data) : </span>
 <span class="co">#&gt;   argument "data" is missing, with no default</span>
 </pre></div>
-<p>However, we can use a workaround by calculating the regression models for each imputed dataset manually, using <code><a href="http://stefvanbuuren.github.io/mice/reference/complete.mids.html">complete()</a></code> from package <em>mice</em>. Please note that it is important to mimic the structure of <code>mira</code>-objects! The returned model objects have to be saved as a list named <code>analyses</code>. This list must be of class <code>mira</code> and <code>list</code>, and can be used with <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
+<p>However, we can use a workaround by calculating the regression models for each imputed dataset manually, using <code><a href="https://rdrr.io/pkg/mice/man/complete.mids.html">complete()</a></code> from package <em>mice</em>. Please note that it is important to mimic the structure of <code>mira</code>-objects! The returned model objects have to be saved as a list named <code>analyses</code>. This list must be of class <code>mira</code> and <code>list</code>, and can be used with <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="kw">analyses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span>(<span class="kw">imputed_data</span><span class="op">$</span><span class="kw">m</span>))
 <span class="co">for</span> (<span class="kw">i</span> <span class="co">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(<span class="kw">analyses</span>)) {
-  <span class="kw">data.i</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/complete.mids.html">complete</a></span>(<span class="kw">imputed_data</span>, <span class="kw">i</span>)
+  <span class="kw">data.i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/complete.mids.html">complete</a></span>(<span class="kw">imputed_data</span>, <span class="kw">i</span>)
   <span class="kw">analyses</span>[[<span class="kw">i</span>]] <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GLMMadaptive/man/mixed_model.html">mixed_model</a></span>(
-    <span class="fu"><a href="http://stefvanbuuren.github.io/mice/reference/cbind.html">cbind</a></span>(<span class="kw">incidence</span>, <span class="kw">size</span> <span class="op">-</span> <span class="kw">incidence</span>) <span class="op">~</span> <span class="kw">period</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/mice/man/cbind.html">cbind</a></span>(<span class="kw">incidence</span>, <span class="kw">size</span> <span class="op">-</span> <span class="kw">incidence</span>) <span class="op">~</span> <span class="kw">period</span>,
     random = <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="kw">herd</span>,
     data = <span class="kw">data.i</span>,
     family = <span class="kw">binomial</span>
@@ -247,11 +250,63 @@
 #&gt; period [2]  |       -0.42 | 0.32 | [-1.05,  0.21] | -1.32 | 0.187 
 #&gt; period [3]  |       -0.86 | 0.37 | [-1.58, -0.14] | -2.35 | 0.019 
 #&gt; period [4]  |       -1.09 | 0.47 | [-2.00, -0.17] | -2.33 | 0.020</code></pre>
+</div>
+<div id="model-parameters-from-mipo-objects" class="section level2">
+<h2 class="hasAnchor">
+<a href="#model-parameters-from-mipo-objects" class="anchor"></a>Model Parameters from <code>mipo</code> objects</h2>
+<p>It is also possible to compute summaries of pooled objects of class <code>mipo</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"nhanes2"</span>)
+<span class="kw">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/mice.html">mice</a></span>(<span class="kw">nhanes2</span>)
+</pre></div>
+<pre><code>#&gt; 
+#&gt;  iter imp variable
+#&gt;   1   1  bmi  hyp  chl
+#&gt;   1   2  bmi  hyp  chl
+#&gt;   1   3  bmi  hyp  chl
+#&gt;   1   4  bmi  hyp  chl
+#&gt;   1   5  bmi  hyp  chl
+#&gt;   2   1  bmi  hyp  chl
+#&gt;   2   2  bmi  hyp  chl
+#&gt;   2   3  bmi  hyp  chl
+#&gt;   2   4  bmi  hyp  chl
+#&gt;   2   5  bmi  hyp  chl
+#&gt;   3   1  bmi  hyp  chl
+#&gt;   3   2  bmi  hyp  chl
+#&gt;   3   3  bmi  hyp  chl
+#&gt;   3   4  bmi  hyp  chl
+#&gt;   3   5  bmi  hyp  chl
+#&gt;   4   1  bmi  hyp  chl
+#&gt;   4   2  bmi  hyp  chl
+#&gt;   4   3  bmi  hyp  chl
+#&gt;   4   4  bmi  hyp  chl
+#&gt;   4   5  bmi  hyp  chl
+#&gt;   5   1  bmi  hyp  chl
+#&gt;   5   2  bmi  hyp  chl
+#&gt;   5   3  bmi  hyp  chl
+#&gt;   5   4  bmi  hyp  chl
+#&gt;   5   5  bmi  hyp  chl</code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="kw">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(data = <span class="kw">imp</span>, exp = <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">bmi</span> <span class="op">~</span> <span class="kw">age</span> <span class="op">+</span> <span class="kw">hyp</span> <span class="op">+</span> <span class="kw">chl</span>))
+<span class="kw">pooled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/pool.html">pool</a></span>(<span class="kw">fit</span>)
+
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">pooled</span>)
+</pre></div>
+<pre><code>#&gt; Parameter   | Coefficient |   SE |          95% CI |     t |    df |      p
+#&gt; ---------------------------------------------------------------------------
+#&gt; (Intercept) |       17.94 | 3.76 | [  9.98, 25.90] |  4.77 | 16.44 | &lt; .001
+#&gt; age [40-59] |       -5.09 | 2.20 | [-10.08, -0.10] | -2.31 |  8.94 | 0.046 
+#&gt; age [60-99] |       -7.28 | 3.94 | [-19.69,  5.13] | -1.85 |  3.05 | 0.160 
+#&gt; hyp [yes]   |        1.56 | 2.90 | [ -6.36,  9.49] |  0.54 | 15.54 | 0.617 
+#&gt; chl         |        0.06 | 0.02 | [  0.01,  0.10] |  2.75 |  4.15 | 0.015</code></pre>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 
