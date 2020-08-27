@@ -625,7 +625,7 @@ ci.lavaan <- function(x, ci = .95, ...) {
 
 #' @export
 ci.blavaan <- function(x, ci = .95, ...) {
-  out <- .extract_parameters_blavaan(model = x, ci = ci, ...)
+  out <- .extract_parameters_lavaan(model = x, ci = ci, ...)
   out$CI <- ci * 100
   out[out$Operator != "~1", c("To", "Operator", "From", "CI", "CI_low", "CI_high")]
 }

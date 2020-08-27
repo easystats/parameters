@@ -1582,7 +1582,7 @@ standard_error.lavaan <- function(model, ...) {
 
 #' @export
 standard_error.blavaan <- function(model, ci = .95, ...) {
-  out <- .extract_parameters_blavaan(model, ...)
+  out <- .extract_parameters_lavaan(model, ...)
   out[out$Operator != "~1", c("To", "Operator", "From", "SE")]
 }
 
