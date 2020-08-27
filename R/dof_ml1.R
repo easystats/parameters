@@ -43,9 +43,16 @@ dof_ml1 <- function(model) {
 
 #' @importFrom stats ave var
 .get_df_ml1_approx <- function(x, g) {
+  if (!is.factor(g)) {
+    g <- as.factor(g)
+  }
   m <- nlevels(g)
   n <- length(x)
-  x <- as.numeric(x)
+  if (is.character(x)) {
+    x <- as.numeric(as.factor(x))
+  } else {
+    x <- as.numeric(x)
+  }
   x.bar <- stats::ave(x, g)
   var.within <- stats::var(x - x.bar)
   var.between <- stats::var(x.bar)
