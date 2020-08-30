@@ -235,6 +235,15 @@ parameters_type <- function(model, ...) {
     }
     return(c(type, "Association", name, var, NA, NA))
 
+    # exp-transformation
+  } else if (grepl("(exp|expm1)\\(", name)) {
+    type <- "exponentiation"
+    var <- gsub("(exp|expm1)\\((.*)\\)", "\\2", name)
+    if (grepl(",", var, fixed = TRUE)) {
+      var <- substr(var, start = 0, stop = regexpr(",", var, fixed = TRUE) - 1)
+    }
+    return(c(type, "Association", name, var, NA, NA))
+
     # As Is
   } else if (grepl("^I\\(", name)) {
     type <- "asis"
