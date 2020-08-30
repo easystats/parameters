@@ -23,6 +23,7 @@
 * Fix issue in `check_heterogeneity()` for data with missing values.
 * Fix issue in `dof_ml1()` when random-effect terms where character vectors.
 * Fix issue in `print()` method for `model_parameters()` that printed empty lines for rows with complete missing values. Empty lines are now removed.
+* Fix issue in `parameters_type()` when `exp()` was used in a model formula.
 
 # parameters 0.8.2
 
