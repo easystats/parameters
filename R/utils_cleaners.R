@@ -15,7 +15,7 @@
     c(
       "as.factor", "as.numeric", "factor", "offset", "lag", "diff", "catg",
       "asis", "matrx", "pol", "strata", "strat", "scale", "scored",
-      "interaction", "sqrt", "lsp", "pb", "lo", "t2", "te", "ti", "tt",
+      "interaction", "lsp", "pb", "lo", "t2", "te", "ti", "tt",
       "mi", "mo", "gp"
     )
   } else {

@@ -204,6 +204,16 @@ format_parameters.parameters_model <- function(model) {
     name <- .format_log(name = name, variable = variable, type = type)
   }
 
+  # exp-transformation
+  if (type == "exponentiation") {
+    name <- .format_log(name = name, variable = variable, type = type)
+  }
+
+  # log-transformation
+  if (type == "squareroot") {
+    name <- .format_log(name = name, variable = variable, type = type)
+  }
+
   # As Is
   if (type == "asis") {
     name <- variable

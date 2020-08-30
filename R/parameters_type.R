@@ -244,6 +244,15 @@ parameters_type <- function(model, ...) {
     }
     return(c(type, "Association", name, var, NA, NA))
 
+    # sqrt-transformation
+  } else if (grepl("sqrt\\(", name)) {
+    type <- "squareroot"
+    var <- gsub("sqrt\\((.*)\\)", "\\1", name)
+    if (grepl(",", var, fixed = TRUE)) {
+      var <- substr(var, start = 0, stop = regexpr(",", var, fixed = TRUE) - 1)
+    }
+    return(c(type, "Association", name, var, NA, NA))
+
     # As Is
   } else if (grepl("^I\\(", name)) {
     type <- "asis"
