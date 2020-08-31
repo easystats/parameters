@@ -79,15 +79,17 @@ model_parameters.stanmvreg <- function(model, centrality = "median", dispersion 
 
 
 
-#' @importFrom insight clean_parameters find_random get_response model_info
+#' @importFrom insight clean_parameters find_random get_response model_info is_multivariate
 #' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
 model_parameters.brmsfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", component = "all", exponentiate = FALSE, standardize = NULL, group_level = FALSE, ...) {
 
+  modelinfo <- insight::model_info(model)
+
   # Bayesian meta analysis
 
-  if (insight::model_info(model)$is_meta) {
+  if (!insight::is_multivariate(model) && isTRUE(modelinfo$is_meta)) {
 
     params <- .model_parameters_brms_meta(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, diagnostic = diagnostic, priors = priors, exponentiate = exponentiate, standardize = standardize, ...)
 
