@@ -215,7 +215,7 @@
 
   # ==== add within/between attributes
 
-  if (inherits(mode, c("glmmTMB", "MixMod"))) {
+  if (inherits(model, c("glmmTMB", "MixMod"))) {
     parameters <- .add_within_between_effects(model, parameters)
   }
 
