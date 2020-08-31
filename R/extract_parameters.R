@@ -213,6 +213,13 @@
   parameters <- parameters[apply(parameters, 1, function(i) !all(is.na(i))), ]
 
 
+  # ==== add within/between attributes
+
+  if (inherits(mode, c("glmmTMB", "MixMod"))) {
+    parameters <- .add_within_between_effects(model, parameters)
+  }
+
+
   rownames(parameters) <- NULL
   parameters
 }
@@ -407,7 +414,9 @@
   # this effect is used as "Component" value. by this, we get a nicer print
   # for model parameters...
 
-  parameters$Component <- "rewb-contextual"
+  if (is.null(parameters$Component)) {
+    parameters$Component <- "rewb-contextual"
+  }
 
   within_effects <- .find_within_between(model, "within-effect")
   if (!is.null(within_effects)) {
