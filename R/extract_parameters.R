@@ -457,6 +457,8 @@
 # Bayes function ------------------------------------------------------
 
 
+#' @importFrom bayestestR describe_posterior reshape_ci
+#' @importFrom insight is_multivariate
 #' @importFrom stats sd setNames na.omit
 #' @keywords internal
 .extract_parameters_bayesian <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, standardize = NULL, ...) {
@@ -464,6 +466,12 @@
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
     insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
     standardize <- NULL
+  }
+
+  # no ROPE for multi-response models
+  if (insight::is_multivariate(model)) {
+    test <- setdiff(test, c("rope", "p_rope"))
+    warning("Multivariate response models are not yet supported for tests 'rope' and 'p_rope'.", call. = FALSE)
   }
 
   # MCMCglmm need special handling
