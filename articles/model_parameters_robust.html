@@ -145,28 +145,56 @@
 <span class="co"># model parameters, where SE, CI and p-values are based on robust estimation</span>
 <span class="kw">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">model</span>, robust = <span class="fl">TRUE</span>)
 <span class="kw">mp</span>
-
+</pre></div>
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |        0.87 | 0.45 | [-0.03, 1.76] |  1.91 | 143 | 0.059 
+#&gt; Sepal.Length                        |        0.04 | 0.12 | [-0.19, 0.28] |  0.37 | 143 | 0.711 
+#&gt; Species [versicolor]                |       -0.78 | 0.69 | [-2.15, 0.59] | -1.12 | 143 | 0.265 
+#&gt; Species [virginica]                 |       -0.41 | 0.63 | [-1.66, 0.83] | -0.66 | 143 | 0.513 
+#&gt; Sepal.Width                         |        0.11 | 0.08 | [-0.05, 0.27] |  1.32 | 143 | 0.190 
+#&gt; Sepal.Length * Species [versicolor] |        0.61 | 0.13 | [ 0.35, 0.87] |  4.65 | 143 | &lt; .001
+#&gt; Sepal.Length * Species [virginica]  |        0.68 | 0.12 | [ 0.45, 0.91] |  5.75 | 143 | &lt; .001</code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="co"># compare standard errors to result from sandwich-package</span>
 <span class="kw">mp</span><span class="op">$</span><span class="kw">SE</span>
+</pre></div>
+<pre><code>#&gt; [1] 0.454 0.119 0.693 0.630 0.083 0.130 0.118</code></pre>
+<div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw">sandwich</span>::<span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovHC.html">vcovHC</a></span>(<span class="kw">model</span>))))
 </pre></div>
+<pre><code>#&gt; [1] 0.454 0.119 0.693 0.630 0.083 0.130 0.118</code></pre>
 </div>
 <div id="cluster-robust-covariance-matrix-estimation-sandwich" class="section level3">
 <h3 class="hasAnchor">
 <a href="#cluster-robust-covariance-matrix-estimation-sandwich" class="anchor"></a>Cluster-Robust Covariance Matrix Estimation (sandwich)</h3>
 <p>If another covariance matrix estimation is required, use the <code>vcov_estimation</code>-argument. This argument needs the suffix for the related <code>vcov*()</code>-functions as value, i.e. <code>vcov_estimation = "CL"</code> would call <code><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html">sandwich::vcovCL()</a></code>, or <code>vcov_estimation = "HAC"</code> would call <code><a href="https://rdrr.io/pkg/sandwich/man/vcovHAC.html">sandwich::vcovHAC()</a></code>.</p>
 <p>The specific estimation type can be changed with <code>vcov_type</code>. E.g., <code><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html">sandwich::vcovCL()</a></code> accepts estimation types HC0 to HC3. In the next example, we use a clustered covariance matrix estimation with HC1-estimation type.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="co"># change estimation-type</span>
 <span class="kw">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">model</span>, robust = <span class="fl">TRUE</span>, vcov_estimation = <span class="st">"CL"</span>, vcov_type = <span class="st">"HC1"</span>)
 <span class="kw">mp</span>
-
+</pre></div>
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |        0.87 | 0.42 | [ 0.03, 1.70] |  2.05 | 143 | 0.042 
+#&gt; Sepal.Length                        |        0.04 | 0.11 | [-0.18, 0.26] |  0.40 | 143 | 0.692 
+#&gt; Species [versicolor]                |       -0.78 | 0.65 | [-2.07, 0.51] | -1.19 | 143 | 0.237 
+#&gt; Species [virginica]                 |       -0.41 | 0.59 | [-1.57, 0.75] | -0.70 | 143 | 0.483 
+#&gt; Sepal.Width                         |        0.11 | 0.08 | [-0.05, 0.27] |  1.38 | 143 | 0.170 
+#&gt; Sepal.Length * Species [versicolor] |        0.61 | 0.12 | [ 0.37, 0.85] |  4.96 | 143 | &lt; .001
+#&gt; Sepal.Length * Species [virginica]  |        0.68 | 0.11 | [ 0.46, 0.90] |  6.15 | 143 | &lt; .001</code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="co"># compare standard errors to result from sandwich-package</span>
 <span class="kw">mp</span><span class="op">$</span><span class="kw">SE</span>
+</pre></div>
+<pre><code>#&gt; [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111</code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw">sandwich</span>::<span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html">vcovCL</a></span>(<span class="kw">model</span>))))
 </pre></div>
+<pre><code>#&gt; [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111</code></pre>
 <p>Usually, clustered covariance matrix estimation is used when there is a cluster-structure in the data. The variable indicating the cluster-structure can be defined in <code><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html">sandwich::vcovCL()</a></code> with the <code>cluster</code>-argument. In <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, additional arguments that should be passed down to functions from the <strong>sandwich</strong> package can be specified in <code>vcov_args</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
+<div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="kw">iris</span><span class="op">$</span><span class="kw">cluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="kw">LETTERS</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">8</span>], length.out = <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">iris</span>)))
 <span class="co"># change estimation-type, defining additional arguments</span>
 <span class="kw">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(
@@ -177,17 +205,31 @@
   vcov_args = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(cluster = <span class="kw">iris</span><span class="op">$</span><span class="kw">cluster</span>)
 )
 <span class="kw">mp</span>
-
+</pre></div>
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |        0.87 | 0.34 | [ 0.20, 1.53] |  2.57 | 143 | 0.011 
+#&gt; Sepal.Length                        |        0.04 | 0.07 | [-0.10, 0.19] |  0.61 | 143 | 0.540 
+#&gt; Species [versicolor]                |       -0.78 | 0.52 | [-1.80, 0.25] | -1.49 | 143 | 0.137 
+#&gt; Species [virginica]                 |       -0.41 | 0.26 | [-0.94, 0.11] | -1.56 | 143 | 0.120 
+#&gt; Sepal.Width                         |        0.11 | 0.07 | [-0.03, 0.25] |  1.52 | 143 | 0.131 
+#&gt; Sepal.Length * Species [versicolor] |        0.61 | 0.10 | [ 0.42, 0.80] |  6.29 | 143 | &lt; .001
+#&gt; Sepal.Length * Species [virginica]  |        0.68 | 0.05 | [ 0.58, 0.78] | 13.28 | 143 | &lt; .001</code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit">
 <span class="co"># compare standard errors to result from sandwich-package</span>
 <span class="kw">mp</span><span class="op">$</span><span class="kw">SE</span>
+</pre></div>
+<pre><code>#&gt; [1] 0.337 0.072 0.519 0.264 0.072 0.097 0.051</code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw">sandwich</span>::<span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html">vcovCL</a></span>(<span class="kw">model</span>, cluster = <span class="kw">iris</span><span class="op">$</span><span class="kw">cluster</span>))))
 </pre></div>
+<pre><code>#&gt; [1] 0.337 0.072 0.519 0.264 0.072 0.097 0.051</code></pre>
 </div>
 <div id="cluster-robust-covariance-matrix-estimation-clubsandwich" class="section level3">
 <h3 class="hasAnchor">
 <a href="#cluster-robust-covariance-matrix-estimation-clubsandwich" class="anchor"></a>Cluster-Robust Covariance Matrix Estimation (clubSandwich)</h3>
-<p>Cluster-robust estimation of the variance-covariance matrix can also be achieved using <code>clubSandwich::vcovCR()</code>. Thus, when <code>vcov_estimation = "CR"</code>, the related function from the <strong>clubSandwich</strong> package is called. Note that this function <em>requires</em> the specification of the <code>cluster</code>-argument.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
+<p>Cluster-robust estimation of the variance-covariance matrix can also be achieved using <code><a href="https://rdrr.io/pkg/clubSandwich/man/vcovCR.html">clubSandwich::vcovCR()</a></code>. Thus, when <code>vcov_estimation = "CR"</code>, the related function from the <strong>clubSandwich</strong> package is called. Note that this function <em>requires</em> the specification of the <code>cluster</code>-argument.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit">
 <span class="co"># create fake-cluster-variable, to demonstrate cluster robust standard errors</span>
 <span class="kw">iris</span><span class="op">$</span><span class="kw">cluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="kw">LETTERS</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">8</span>], length.out = <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">iris</span>)))
 
@@ -200,20 +242,43 @@
   vcov_args = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(cluster = <span class="kw">iris</span><span class="op">$</span><span class="kw">cluster</span>)
 )
 <span class="kw">mp</span>
-
+</pre></div>
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |        0.87 | 0.33 | [ 0.21, 1.52] |  2.62 | 143 | 0.010 
+#&gt; Sepal.Length                        |        0.04 | 0.07 | [-0.10, 0.18] |  0.63 | 143 | 0.531 
+#&gt; Species [versicolor]                |       -0.78 | 0.51 | [-1.78, 0.23] | -1.53 | 143 | 0.129 
+#&gt; Species [virginica]                 |       -0.41 | 0.26 | [-0.92, 0.10] | -1.60 | 143 | 0.112 
+#&gt; Sepal.Width                         |        0.11 | 0.07 | [-0.03, 0.25] |  1.55 | 143 | 0.123 
+#&gt; Sepal.Length * Species [versicolor] |        0.61 | 0.09 | [ 0.42, 0.79] |  6.42 | 143 | &lt; .001
+#&gt; Sepal.Length * Species [virginica]  |        0.68 | 0.05 | [ 0.58, 0.78] | 13.56 | 143 | &lt; .001</code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit">
 <span class="co"># compare standard errors to result from clubSsandwich-package</span>
 <span class="kw">mp</span><span class="op">$</span><span class="kw">SE</span>
-<span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw">clubSandwich</span>::<span class="fu">vcovCR</span>(<span class="kw">model</span>, type = <span class="st">"CR1"</span>, cluster = <span class="kw">iris</span><span class="op">$</span><span class="kw">cluster</span>))))
 </pre></div>
+<pre><code>#&gt; [1] 0.330 0.070 0.508 0.259 0.071 0.095 0.050</code></pre>
+<div class="sourceCode" id="cb23"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw">clubSandwich</span>::<span class="fu"><a href="https://rdrr.io/pkg/clubSandwich/man/vcovCR.html">vcovCR</a></span>(<span class="kw">model</span>, type = <span class="st">"CR1"</span>, cluster = <span class="kw">iris</span><span class="op">$</span><span class="kw">cluster</span>))))
+</pre></div>
+<pre><code>#&gt; [1] 0.330 0.070 0.508 0.259 0.071 0.095 0.050</code></pre>
 </div>
 <div id="robust-covariance-matrix-estimation-on-standardized-model-parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#robust-covariance-matrix-estimation-on-standardized-model-parameters" class="anchor"></a>Robust Covariance Matrix Estimation on Standardized Model Parameters</h3>
 <p>Finally, robust estimation can be combined with standardization. However, robust covariance matrix estimation only works for <code>standardize = "refit"</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
+<div class="sourceCode" id="cb25"><pre class="downlit">
 <span class="co"># model parameters, robust estimation on standardized model</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">model</span>, standardize = <span class="st">"refit"</span>, robust = <span class="fl">TRUE</span>)
 </pre></div>
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |         95% CI |      t |  df |      p
+#&gt; -------------------------------------------------------------------------------------------------
+#&gt; (Intercept)                         |       -1.30 | 0.07 | [-1.44, -1.16] | -18.70 | 143 | &lt; .001
+#&gt; Sepal.Length                        |        0.02 | 0.06 | [-0.09,  0.13] |   0.37 | 143 | 0.711 
+#&gt; Species [versicolor]                |        1.57 | 0.09 | [ 1.40,  1.74] |  17.84 | 143 | &lt; .001
+#&gt; Species [virginica]                 |        2.02 | 0.09 | [ 1.84,  2.20] |  22.49 | 143 | &lt; .001
+#&gt; Sepal.Width                         |        0.03 | 0.02 | [-0.01,  0.07] |   1.32 | 143 | 0.190 
+#&gt; Sepal.Length * Species [versicolor] |        0.28 | 0.06 | [ 0.16,  0.41] |   4.65 | 143 | &lt; .001
+#&gt; Sepal.Length * Species [virginica]  |        0.32 | 0.06 | [ 0.21,  0.43] |   5.75 | 143 | &lt; .001</code></pre>
 </div>
 </div>
 <div id="mixed-models" class="section level2">
@@ -223,8 +288,11 @@
 <h3 class="hasAnchor">
 <a href="#robust-covariance-matrix-estimation-for-mixed-models" class="anchor"></a>Robust Covariance Matrix Estimation for Mixed Models</h3>
 <p>For linear mixed models, that by definition have a clustered (“hierarchical” or multilevel) structure in the data, it is also possible to estimate a cluster-robust covariance matrix. This is possible due to the <strong>clubSandwich</strong> package, thus we need to define the same arguments as in the above example.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
+<div class="sourceCode" id="cb27"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/lme4/lme4">lme4</a></span>)
+</pre></div>
+<pre><code>#&gt; Loading required package: Matrix</code></pre>
+<div class="sourceCode" id="cb29"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">iris</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1234</span>)
 <span class="kw">iris</span><span class="op">$</span><span class="kw">grp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">iris</span>), replace = <span class="fl">TRUE</span>))
@@ -237,7 +305,17 @@
 
 <span class="co"># normal model parameters, like from 'summary()'</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">model</span>)
-
+</pre></div>
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                        |        1.55 | 0.40 | [ 0.77,  2.34] |  3.87 | 141 | &lt; .001
+#&gt; Species [versicolor]               |        0.41 | 0.55 | [-0.66,  1.49] |  0.75 | 141 | 0.453 
+#&gt; Species [virginica]                |       -0.41 | 0.58 | [-1.55,  0.73] | -0.70 | 141 | 0.482 
+#&gt; Sepal.Width                        |        0.66 | 0.11 | [ 0.44,  0.88] |  5.83 | 141 | &lt; .001
+#&gt; Petal.Length                       |        0.82 | 0.07 | [ 0.69,  0.95] | 12.52 | 141 | &lt; .001
+#&gt; Species [versicolor] * Sepal.Width |       -0.48 | 0.19 | [-0.85, -0.12] | -2.60 | 141 | 0.009 
+#&gt; Species [virginica] * Sepal.Width  |       -0.36 | 0.18 | [-0.71, -0.01] | -1.99 | 141 | 0.046</code></pre>
+<div class="sourceCode" id="cb31"><pre class="downlit">
 <span class="co"># model parameters, cluster robust estimation for mixed models</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(
   <span class="kw">model</span>, 
@@ -247,12 +325,21 @@
   vcov_args = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(cluster = <span class="kw">iris</span><span class="op">$</span><span class="kw">grp</span>)
 )
 </pre></div>
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                        |        1.55 | 0.40 | [ 0.76,  2.35] |  3.87 | 141 | &lt; .001
+#&gt; Species [versicolor]               |        0.41 | 0.80 | [-1.17,  1.99] |  0.75 | 141 | 0.608 
+#&gt; Species [virginica]                |       -0.41 | 0.19 | [-0.78, -0.03] | -0.70 | 141 | 0.033 
+#&gt; Sepal.Width                        |        0.66 | 0.10 | [ 0.46,  0.86] |  5.83 | 141 | &lt; .001
+#&gt; Petal.Length                       |        0.82 | 0.05 | [ 0.72,  0.91] | 12.52 | 141 | &lt; .001
+#&gt; Species [versicolor] * Sepal.Width |       -0.48 | 0.35 | [-1.18,  0.21] | -2.60 | 141 | 0.172 
+#&gt; Species [virginica] * Sepal.Width  |       -0.36 | 0.11 | [-0.57, -0.15] | -1.99 | 141 | &lt; .001</code></pre>
 </div>
 <div id="robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters" class="anchor"></a>Robust Covariance Matrix Estimation on Standardized Mixed Model Parameters</h3>
 <p>Again, robust estimation can be combined with standardization for linear mixed models as well, which in such cases also only works for <code>standardize = "refit"</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<div class="sourceCode" id="cb33"><pre class="downlit">
 <span class="co"># model parameters, cluster robust estimation on standardized mixed model</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(
   <span class="kw">model</span>, 
@@ -263,6 +350,15 @@
   vcov_args = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(cluster = <span class="kw">iris</span><span class="op">$</span><span class="kw">grp</span>)
 )
 </pre></div>
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI |     t |  df |      p
+#&gt; -----------------------------------------------------------------------------------------------
+#&gt; (Intercept)                        |        0.97 | 0.08 | [ 0.82,  1.12] |  4.74 | 141 | &lt; .001
+#&gt; Species [versicolor]               |       -1.29 | 0.33 | [-1.95, -0.63] | -4.91 | 141 | &lt; .001
+#&gt; Species [virginica]                |       -1.81 | 0.23 | [-2.26, -1.37] | -5.33 | 141 | &lt; .001
+#&gt; Sepal.Width                        |        0.35 | 0.05 | [ 0.24,  0.45] |  5.83 | 141 | &lt; .001
+#&gt; Petal.Length                       |        1.74 | 0.10 | [ 1.54,  1.94] | 12.52 | 141 | &lt; .001
+#&gt; Species [versicolor] * Sepal.Width |       -0.25 | 0.19 | [-0.62,  0.11] | -2.60 | 141 | 0.172 
+#&gt; Species [virginica] * Sepal.Width  |       -0.19 | 0.06 | [-0.30, -0.08] | -1.99 | 141 | &lt; .001</code></pre>
 </div>
 </div>
   </div>
@@ -282,7 +378,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>

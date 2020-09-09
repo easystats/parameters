@@ -132,7 +132,8 @@
 </h1></div>
 
 <p><strong><em>Describe and understand your model’s parameters!</em></strong></p>
-<p><code>parameters</code>’ primary goal is to provide utilities for processing the parameters of various statistical models (see <a href="https://easystats.github.io/insight/">here</a> for a list of supported models). Beyond computing <strong><em>p</em>-values</strong>, <strong>CIs</strong>, <strong>Bayesian indices</strong> and other measures for a wide variety of models, this package implements features like <strong>bootstrapping</strong> of parameters and models, <strong>feature reduction</strong> (feature extraction and variable selection).</p>
+<p><strong>parameters</strong>’ primary goal is to provide utilities for processing the parameters of various statistical models (see <a href="https://easystats.github.io/insight/">here</a> for a list of supported models). Beyond computing <em>p-values</em>, <em>CIs</em>, <em>Bayesian indices</em> and other measures for a wide variety of models, this package implements features like <em>bootstrapping</em> of parameters and models, <em>feature reduction</em> (feature extraction and variable selection), or tools for data reduction like functions to perform cluster, factor or principal component analysis.</p>
+<p>Another important goal of the <strong>parameters</strong> package is to facilitate and streamline the process of reporting results of statistical models, which includes the easy and intuitive calculation of standardized estimates or robust standard errors and p-values. <strong>parameters</strong> therefor offers a simple and unified syntax to process a large variety of (model) objects from many different packages.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -176,9 +177,9 @@
 
 <p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code>model_parameters()</code></a> function (that can be accessed via the <code><a href="reference/model_parameters.html">parameters()</a></code> shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom"><code>broom::tidy()</code></a>, with some notable differences:</p>
 <ul>
-<li>The column names of the returned data frame are <strong>specific</strong> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (<strong>however</strong>, you can get standardized (generic) column names using <a href="https://easystats.github.io/parameters/reference/standardize_names.html"><code>standardize_names()</code></a>).</li>
-<li>It is able to compute or extract indices not available by default, such as <strong><em>p</em>-values</strong>, <strong>CIs</strong>, etc.</li>
-<li>It includes <strong>feature engineering</strong> capabilities, including parameters <a href="https://easystats.github.io/parameters/reference/bootstrap_parameters.html"><strong>bootstrapping</strong></a>.</li>
+<li>The column names of the returned data frame are <em>specific</em> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (however, you can get standardized (generic) column names using <a href="https://easystats.github.io/parameters/reference/standardize_names.html"><code>standardize_names()</code></a>).</li>
+<li>It is able to compute or extract indices not available by default, such as <em>p-values</em>, <em>CIs</em>, etc.</li>
+<li>It includes <em>feature engineering</em> capabilities, including parameters <a href="https://easystats.github.io/parameters/reference/bootstrap_parameters.html">bootstrapping</a>.</li>
 </ul>
 <div id="classical-regression-models" class="section level3">
 <h3 class="hasAnchor">
@@ -372,6 +373,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://doi.org/10.21105/joss.02445"><img src="https://joss.theoj.org/papers/10.21105/joss.02445/status.svg" alt="DOI"></a></li>
 <li><a href="https://cran.r-project.org/package=parameters"><img src="http://www.r-pkg.org/badges/version/parameters" alt="CRAN"></a></li>
 <li><a href="https://cran.r-project.org/package=parameters"><img src="http://cranlogs.r-pkg.org/badges/parameters" alt="downloads"></a></li>
 </ul>
@@ -385,7 +387,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>
