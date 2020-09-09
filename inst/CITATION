@@ -1,16 +1,11 @@
 bibentry(
-    bibtype="Article",
-	  title="Describe and understand your model’s parameters",
-	  author=c(person("Daniel", "Lüdecke"), person("Mattan S.", "Ben-Shachar"), person("Dominique", "Makowski")),
-	  journal="CRAN",
-	  year="2020",
-	  note="R package",
-	  doi="10.5281/zenodo.3731932",
-	  url="https://easystats.github.io/parameters",
-
-	  textVersion =
-  	  paste("Lüdecke, Ben-Shachar & Makowski (2020). Describe and understand your model’s parameters. CRAN.",
-		  "Available from https://easystats.github.io/parameters."
-		  ),
-	  mheader = "To cite parameters in publications use:"
+  bibtype = "article",
+	title = "parameters: Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.",
+	volume = "5",
+	doi = "10.21105/joss.02445",
+	number = "53",
+	journal = "Journal of Open Source Software",
+	author = c(person("Daniel", "Lüdecke"), person("Mattan S.", "Ben-Shachar"), person("Indrajeet", "Patil"), person("Dominique", "Makowski")),
+	year = "2020",
+	pages = "2445"
 )

@@ -1,8 +1,9 @@
-# parameters 0.8.3
+# parameters 0.8.5
 
 ## General
 
 * Added vignette on model parameters and missing data.
+* Update citation.
 
 ## New supported model classes
 
