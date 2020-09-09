@@ -29,7 +29,7 @@ set.seed(333)
 
 # parameters <img src='man/figures/logo.png' align="right" height="139" />
 
-[![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.02445/status.svg)](https://doi.org/10.21105/joss.02445) [![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
 [![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
 
 ***Describe and understand your model's parameters!***

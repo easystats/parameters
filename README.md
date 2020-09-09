@@ -1,18 +1,28 @@
 
 # parameters <img src='man/figures/logo.png' align="right" height="139" />
 
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.02445/status.svg)](https://doi.org/10.21105/joss.02445)
 [![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
 [![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
 
 ***Describe and understand your model’s parameters\!***
 
-`parameters`’ primary goal is to provide utilities for processing the
+**parameters**’ primary goal is to provide utilities for processing the
 parameters of various statistical models (see
 [here](https://easystats.github.io/insight/) for a list of supported
-models). Beyond computing ***p*-values**, **CIs**, **Bayesian indices**
-and other measures for a wide variety of models, this package implements
-features like **bootstrapping** of parameters and models, **feature
-reduction** (feature extraction and variable selection).
+models). Beyond computing *p-values*, *CIs*, *Bayesian indices* and
+other measures for a wide variety of models, this package implements
+features like *bootstrapping* of parameters and models, *feature
+reduction* (feature extraction and variable selection), or tools for
+data reduction like functions to perform cluster, factor or principal
+component analysis.
+
+Another important goal of the **parameters** package is to facilitate
+and streamline the process of reporting results of statistical models,
+which includes the easy and intuitive calculation of standardized
+estimates or robust standard errors and p-values. **parameters**
+therefor offers a simple and unified syntax to process a large variety
+of (model) objects from many different packages.
 
 ## Installation
 
@@ -76,17 +86,16 @@ models in a consistent way. It can be considered as a lightweight
 alternative to [`broom::tidy()`](https://github.com/tidymodels/broom),
 with some notable differences:
 
-  - The column names of the returned data frame are **specific** to
-    their content. For instance, the column containing the statistic is
-    named following the statistic name, i.e., *t*, *z*, etc., instead of
-    a generic name such as *statistic* (**however**, you can get
-    standardized (generic) column names using
+  - The column names of the returned data frame are *specific* to their
+    content. For instance, the column containing the statistic is named
+    following the statistic name, i.e., *t*, *z*, etc., instead of a
+    generic name such as *statistic* (however, you can get standardized
+    (generic) column names using
     [`standardize_names()`](https://easystats.github.io/parameters/reference/standardize_names.html)).
   - It is able to compute or extract indices not available by default,
-    such as ***p*-values**, **CIs**, etc.
-  - It includes **feature engineering** capabilities, including
-    parameters
-    [**bootstrapping**](https://easystats.github.io/parameters/reference/bootstrap_parameters.html).
+    such as *p-values*, *CIs*, etc.
+  - It includes *feature engineering* capabilities, including parameters
+    [bootstrapping](https://easystats.github.io/parameters/reference/bootstrap_parameters.html).
 
 ### Classical Regression Models
 
