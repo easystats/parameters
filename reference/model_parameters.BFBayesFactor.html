@@ -245,6 +245,20 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of indices related to the model's parameters.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The meaning of the extracted parameters: For
+<code><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></code>: <code>Difference</code> is the raw difference
+between the means. For <code><a href='https://rdrr.io/pkg/BayesFactor/man/correlationBF.html'>correlationBF</a></code>: <code>rho</code>
+is the linear correlation estimate (equivalent to Pearson's <em>r</em>).
+<code><a href='https://rdrr.io/pkg/BayesFactor/man/lmBF.html'>lmBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/generalTestBF.html'>generalTestBF</a></code> /
+For <code><a href='https://rdrr.io/pkg/BayesFactor/man/regressionBF.html'>regressionBF</a></code> /
+<code><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></code>: in addition to parameters of the fixed
+and random effects, there are: <code>mu</code> is the (mean-centered) intercept;
+<code>sig2</code> is the model's sigma; <code>g</code> / <code>g_*</code> are the <em>g</em>
+parameters; See the
+<a href='https://doi.org/10.1016/j.jmp.2012.08.001'><em>Bayes Factors for
+ANOVAs</em> paper</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
