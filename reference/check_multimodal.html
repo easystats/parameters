@@ -194,7 +194,8 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://arxiv.org/abs/1803.00472'>"multimode"</a></span>)) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://arxiv.org/abs/1803.00472'>"multimode"</a></span>)) {
   <span class='co'># Univariate</span>
   <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>)
   <span class='fu'>check_multimodal</span>(<span class='kw'>x</span>)
@@ -203,7 +204,6 @@
 #&gt; 
 #&gt; </span><span style='color: #BBBB00;'>The Ameijeiras-Alonso et al. (2018) excess mass test suggests that the hypothesis of a multimodal distribution cannot be rejected (excess mass = 0.01, p = 0.546).
 #&gt; </span><span></div><div class='input'>
-<span class='co'># \donttest{</span>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://arxiv.org/abs/1803.00472'>"multimode"</a></span>) <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mclust-org.github.io/mclust'>"mclust"</a></span>)) {
   <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>2</span>))
   <span class='fu'>check_multimodal</span>(<span class='kw'>x</span>)

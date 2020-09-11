@@ -557,7 +557,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; (Intercept) |       38.32 | 1.33 | [35.69, 40.95] |  28.87 | 103 | &lt; .001</span>
 <span class="co">#&gt; x_between   |       -2.81 | 0.16 | [-3.13, -2.49] | -17.47 | 103 | &lt; .001</span>
 
-<span class="co"># Between-subject effect of typing speed, accounting for goup structure</span>
+<span class="co"># Between-subject effect of typing speed, accounting for group structure</span>
 <span class="kw">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="kw">y</span> <span class="op">~</span> <span class="kw">x_between</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> <span class="kw">grp</span>), data = <span class="kw">d</span>)
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>(<span class="kw">m2</span>)
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |  df |      p</span>

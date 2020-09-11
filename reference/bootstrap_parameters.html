@@ -234,7 +234,8 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
     <div class='dont-index'><p><code><a href='bootstrap_model.html'>bootstrap_model</a></code>, <code><a href='simulate_parameters.html'>simulate_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
 
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span>, data = <span class='kw'>iris</span>)
 <span class='fu'>bootstrap_parameters</span>(<span class='kw'>model</span>)
@@ -244,7 +245,8 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
 #&gt; 3              Speciesvirginica   0.5204686 -0.7304722 1.7185077 0.401598402
 #&gt; 4                   Petal.Width   0.9180041  0.2656675 1.9659747 0.003996004
 #&gt; 5 Speciesversicolor:Petal.Width   0.4702195 -0.6860819 1.4379762 0.399600400
-#&gt; 6  Speciesvirginica:Petal.Width  -0.2886256 -1.4616369 0.6301752 0.535464535</div></pre>
+#&gt; 6  Speciesvirginica:Petal.Width  -0.2886256 -1.4616369 0.6301752 0.535464535</div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
