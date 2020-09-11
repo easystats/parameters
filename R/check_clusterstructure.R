@@ -8,9 +8,11 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
+#' \donttest{
 #' library(parameters)
 #' check_clusterstructure(iris[, 1:4])
 #' plot(check_clusterstructure(iris[, 1:4]))
+#' }
 #' @return The H statistic (numeric)
 #'
 #' @seealso \code{\link{check_kmo}}, \code{\link{check_sphericity}} and \code{\link{check_factorstructure}}.

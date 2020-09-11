@@ -22,8 +22,10 @@ A data frame.
 Bootstrap a statistical model n times to return a data frame of estimates.
 }
 \examples{
+\donttest{
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 head(bootstrap_model(model))
+}
 }
 \seealso{
 \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}, \code{\link{simulate_parameters}}

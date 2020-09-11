@@ -15,13 +15,13 @@ check_multimodal(x, ...)
 For univariate distributions (one-dimensional vectors), this functions performs a Ameijeiras-Alonso et al. (2018) excess mass test. For multivariate distributions (dataframes), it uses mixture modelling. However, it seems that it always returns a significant result (suggesting that the distribution is multimodal). A better method might be needed here.
 }
 \examples{
+\donttest{
 if (require("multimode")) {
   # Univariate
   x <- rnorm(1000)
   check_multimodal(x)
 }
 
-\donttest{
 if (require("multimode") && require("mclust")) {
   x <- c(rnorm(1000), rnorm(1000, 2))
   check_multimodal(x)

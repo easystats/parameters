@@ -46,10 +46,12 @@ This function first calls \code{\link{bootstrap_model}} to generate
   to calculate the related indices defined in the \code{"test"} argument.
 }
 \examples{
+\donttest{
 library(parameters)
 
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 bootstrap_parameters(model)
+}
 }
 \references{
 Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.

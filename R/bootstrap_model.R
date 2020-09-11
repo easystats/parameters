@@ -12,8 +12,10 @@
 #' @seealso \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}, \code{\link{simulate_parameters}}
 #'
 #' @examples
+#' \donttest{
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' head(bootstrap_model(model))
+#' }
 #' @export
 bootstrap_model <- function(model, iterations = 1000, verbose = FALSE, ...) {
   UseMethod("bootstrap_model")

@@ -7,13 +7,13 @@
 #' @inheritParams check_factorstructure
 #'
 #' @examples
+#' \donttest{
 #' if (require("multimode")) {
 #'   # Univariate
 #'   x <- rnorm(1000)
 #'   check_multimodal(x)
 #' }
 #'
-#' \donttest{
 #' if (require("multimode") && require("mclust")) {
 #'   x <- c(rnorm(1000), rnorm(1000, 2))
 #'   check_multimodal(x)

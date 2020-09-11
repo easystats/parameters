@@ -19,10 +19,12 @@
 #'   to calculate the related indices defined in the \code{"test"} argument.
 #'
 #' @examples
+#' \donttest{
 #' library(parameters)
 #'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 #' bootstrap_parameters(model)
+#' }
 #' @importFrom tools toTitleCase
 #' @export
 bootstrap_parameters <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {

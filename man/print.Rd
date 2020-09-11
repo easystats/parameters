@@ -46,6 +46,7 @@ while \code{select = "short"} prints coefficient, standard errors and p-values.}
 A \code{print()}-method for objects from \code{\link[=model_parameters]{model_parameters()}}.
 }
 \examples{
+\donttest{
 library(parameters)
 if (require("glmmTMB")) {
   model <- glmmTMB(
@@ -63,5 +64,6 @@ if (require("glmmTMB")) {
   print(mp, select = c("Parameter", "Coefficient", "SE"))
 
   print(mp, select = "minimal")
+}
 }
 }

@@ -16,6 +16,7 @@
 #' @return \code{NULL}
 #'
 #' @examples
+#' \donttest{
 #' library(parameters)
 #' if (require("glmmTMB")) {
 #'   model <- glmmTMB(
@@ -33,6 +34,7 @@
 #'   print(mp, select = c("Parameter", "Coefficient", "SE"))
 #'
 #'   print(mp, select = "minimal")
+#' }
 #' }
 #' @importFrom insight format_table
 #' @export

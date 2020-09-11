@@ -403,7 +403,7 @@ d <- cbind(d, demean(d, c("x", "y"), group = "grp"))
 m1 <- lm(y ~ x_between, data = d)
 model_parameters(m1)
 
-# Between-subject effect of typing speed, accounting for goup structure
+# Between-subject effect of typing speed, accounting for group structure
 m2 <- lmer(y ~ x_between + (1 | grp), data = d)
 model_parameters(m2)
 ```
