@@ -5,6 +5,19 @@
 #' @param model Object of class \code{BFBayesFactor}.
 #' @inheritParams bayestestR::describe_posterior
 #'
+#' @details
+#' The meaning of the extracted parameters: For
+#' \code{\link[BayesFactor]{ttestBF}}: \code{Difference} is the raw difference
+#' between the means. For \code{\link[BayesFactor]{correlationBF}}: \code{rho}
+#' is the linear correlation estimate (equivalent to Pearson's \emph{r}).
+#' \code{\link[BayesFactor]{lmBF}} / \code{\link[BayesFactor]{generalTestBF}} /
+#' For \code{\link[BayesFactor]{regressionBF}} /
+#' \code{\link[BayesFactor]{anovaBF}}: in addition to parameters of the fixed
+#' and random effects, there are: \code{mu} is the (mean-centered) intercept;
+#' \code{sig2} is the model's sigma; \code{g} / \code{g_*} are the \emph{g}
+#' parameters; See the
+#' \href{https://doi.org/10.1016/j.jmp.2012.08.001}{\emph{Bayes Factors for
+#' ANOVAs} paper}.
 #'
 #' @examples
 #' \donttest{
