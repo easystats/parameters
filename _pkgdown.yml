@@ -31,19 +31,20 @@ reference:
   - model_parameters.rma
   - model_parameters.htest
   - model_parameters.glht
+  - random_parameters
   - print.parameters_model
 
-- title: "Standard Errors, Confidence Intervals and p-values"
+- title: "Standard Errors, Confidence Intervals, Degrees of Freesom and p-values"
   contents:
   - standard_error
   - ci.merMod
   - p_value
-
-- title: "Robust Estimation of SEs, CIs and p-values"
+  - degrees_of_freedom
+  - n_parameters
+- subtitle: "Robust Estimation Methods"
   contents:
   - standard_error_robust
-
-- title: "DoF-approximated SEs, CIs and p-values"
+- subtitle: "Approximation Methods"
   contents:
   - p_value_wald
   - p_value_kenward
@@ -51,42 +52,38 @@ reference:
   - p_value_betwithin
   - p_value_ml1
 
-- title: "Other Model Parameters"
-  contents:
-  - degrees_of_freedom
-  - n_parameters
-  - random_parameters
-
 - title: "Effect Existence and Significance"
   contents:
   - equivalence_test
   - equivalence_test.lm
 
-- title: "Parameters Engineering"
+- title: "Parameter Sampling"
   contents:
   - bootstrap_model
   - bootstrap_parameters
   - simulate_model
   - simulate_parameters
 
-- title: "Variable Preparation/Centering"
+- title: "Variable Preparation"
   contents:
   - demean
   - rescale_weights
+  - data_partition
+  - convert_data_to_numeric
 
 - title: "Feature Reduction"
   contents:
   - reduce_parameters
   - select_parameters
 
-- title: "Data Reduction: Cluster Analysis"
+- title: "Data Reduction"
+- subtitle: "Cluster Analysis"
   contents:
   - check_clusterstructure
   - cluster_analysis
   - cluster_discrimination
   - n_clusters
-
-- title: "Data Reduction: Factors and Principal Components"
+- subtitle: "Factors and Principal Components"
   contents:
   - check_factorstructure
   - check_kmo
@@ -97,6 +94,7 @@ reference:
   - n_factors
   - principal_components
   - reduce_data
+  - reshape_loadings
 
 - title: "Data Properties"
   contents:
@@ -104,12 +102,6 @@ reference:
   - check_multimodal
   - skewness
   - smoothness
-
-- title: "Miscellaneous"
-  contents:
-  - data_partition
-  - reshape_loadings
-  - convert_data_to_numeric
 
 - title: "Table and Value Formatting"
   contents:
