@@ -6,6 +6,7 @@ if (.runThisTest) {
     require("glmmTMB")) {
 
     data("fish")
+    data("Salamanders")
 
     m1 <- glmmTMB(
       count ~ child + camper + (1 | persons),
@@ -18,6 +19,13 @@ if (.runThisTest) {
       count ~ child + camper + (1 | persons),
       data = fish,
       family = poisson()
+    )
+
+    m3 <- glmmTMB(
+      count ~ spp + mined + (1 | site),
+      ziformula =  ~ spp + mined,
+      family = nbinom2,
+      data = Salamanders
     )
 
     test_that("ci", {
@@ -127,6 +135,28 @@ if (.runThisTest) {
         model_parameters(m2)$Coefficient,
         c(0.73785, -1.69166, 0.93516),
         tolerance = 1e-3
+      )
+      expect_equal(
+        model_parameters(m3)$Coefficient,
+        c(-0.6104, -0.9637, 0.1707, -0.3871, 0.4879, 0.5895, -0.1133,
+          1.4294, 0.91, 1.1614, -0.9393, 1.0424, -0.5623, -0.893, -2.5398,
+          -2.563, 0.4132),
+        tolerance = 1e-2
+      )
+      expect_equal(
+        model_parameters(m3)$Component,
+        c("conditional", "conditional", "conditional", "conditional",
+          "conditional", "conditional", "conditional", "conditional", "zero_inflated",
+          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated",
+          "zero_inflated", "zero_inflated", "zero_inflated", "dispersion"
+        )
+      )
+      expect_equal(
+        model_parameters(m3)$SE,
+        c(0.4052, 0.6436, 0.2353, 0.3424, 0.2383, 0.2278, 0.2439, 0.3666,
+          0.6279, 1.3346, 0.8005, 0.714, 0.7263, 0.7535, 2.1817, 0.6045,
+          NA),
+        tolerance = 1e-2
       )
     })
   }
