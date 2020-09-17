@@ -288,6 +288,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="random_parameters.html">random_parameters()</a></code> </p>
+        </td>
+        <td><p>Summary information from random effects</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="print.html">print(<i>&lt;parameters_model&gt;</i>)</a></code> </p>
         </td>
         <td><p>Print model parameters</p></td>
@@ -295,7 +301,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-standard-errors-confidence-intervals-and-p-values" class="hasAnchor"><a href="#section-standard-errors-confidence-intervals-and-p-values" class="anchor"></a>Standard Errors, Confidence Intervals and p-values</h2>
+          <h2 id="section-standard-errors-confidence-intervals-degrees-of-freesom-and-p-values" class="hasAnchor"><a href="#section-standard-errors-confidence-intervals-degrees-of-freesom-and-p-values" class="anchor"></a>Standard Errors, Confidence Intervals, Degrees of Freesom and p-values</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -322,15 +328,27 @@
           <p><code><a href="p_value.html">p_value()</a></code> </p>
         </td>
         <td><p>p-values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="degrees_of_freedom.html">degrees_of_freedom()</a></code> <code><a href="degrees_of_freedom.html">dof()</a></code> </p>
+        </td>
+        <td><p>Degrees of Freedom (DoF)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="n_parameters.html">n_parameters()</a></code> </p>
+        </td>
+        <td><p>Count number of parameters in a model</p></td>
       </tr>
     </tbody><tbody>
+      
       <tr>
         <th colspan="2">
-          <h2 id="section-robust-estimation-of-ses-cis-and-p-values" class="hasAnchor"><a href="#section-robust-estimation-of-ses-cis-and-p-values" class="anchor"></a>Robust Estimation of SEs, CIs and p-values</h2>
+          <h3 id="section-robust-estimation-methods" class="hasAnchor"><a href="#section-robust-estimation-methods" class="anchor"></a>Robust Estimation Methods</h3>
           <p class="section-desc"></p>
         </th>
       </tr>
-      
       
     </tbody><tbody>
       
@@ -343,13 +361,13 @@
         <td><p>Robust estimation</p></td>
       </tr>
     </tbody><tbody>
+      
       <tr>
         <th colspan="2">
-          <h2 id="section-dof-approximated-ses-cis-and-p-values" class="hasAnchor"><a href="#section-dof-approximated-ses-cis-and-p-values" class="anchor"></a>DoF-approximated SEs, CIs and p-values</h2>
+          <h3 id="section-approximation-methods" class="hasAnchor"><a href="#section-approximation-methods" class="anchor"></a>Approximation Methods</h3>
           <p class="section-desc"></p>
         </th>
       </tr>
-      
       
     </tbody><tbody>
       
@@ -388,37 +406,6 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-other-model-parameters" class="hasAnchor"><a href="#section-other-model-parameters" class="anchor"></a>Other Model Parameters</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="degrees_of_freedom.html">degrees_of_freedom()</a></code> <code><a href="degrees_of_freedom.html">dof()</a></code> </p>
-        </td>
-        <td><p>Degrees of Freedom (DoF)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="n_parameters.html">n_parameters()</a></code> </p>
-        </td>
-        <td><p>Count number of parameters in a model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="random_parameters.html">random_parameters()</a></code> </p>
-        </td>
-        <td><p>Summary information from random effects</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
           <h2 id="section-effect-existence-and-significance" class="hasAnchor"><a href="#section-effect-existence-and-significance" class="anchor"></a>Effect Existence and Significance</h2>
           <p class="section-desc"></p>
         </th>
@@ -444,7 +431,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-parameters-engineering" class="hasAnchor"><a href="#section-parameters-engineering" class="anchor"></a>Parameters Engineering</h2>
+          <h2 id="section-parameter-sampling" class="hasAnchor"><a href="#section-parameter-sampling" class="anchor"></a>Parameter Sampling</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -481,7 +468,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-variable-preparation-centering" class="hasAnchor"><a href="#section-variable-preparation-centering" class="anchor"></a>Variable Preparation/Centering</h2>
+          <h2 id="section-variable-preparation" class="hasAnchor"><a href="#section-variable-preparation" class="anchor"></a>Variable Preparation</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -502,6 +489,18 @@
           <p><code><a href="rescale_weights.html">rescale_weights()</a></code> </p>
         </td>
         <td><p>Rescale design weights for multilevel analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="data_partition.html">data_partition()</a></code> </p>
+        </td>
+        <td><p>Partition data into a test and a training set</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="convert_data_to_numeric.html">convert_data_to_numeric()</a></code> <code><a href="convert_data_to_numeric.html">data_to_numeric()</a></code> </p>
+        </td>
+        <td><p>Convert data to numeric</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -531,11 +530,20 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-data-reduction-cluster-analysis" class="hasAnchor"><a href="#section-data-reduction-cluster-analysis" class="anchor"></a>Data Reduction: Cluster Analysis</h2>
+          <h2 id="section-data-reduction" class="hasAnchor"><a href="#section-data-reduction" class="anchor"></a>Data Reduction</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       
+      
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-cluster-analysis" class="hasAnchor"><a href="#section-cluster-analysis" class="anchor"></a>Cluster Analysis</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
       
     </tbody><tbody>
       
@@ -566,13 +574,13 @@
         <td><p>Number of clusters to extract</p></td>
       </tr>
     </tbody><tbody>
+      
       <tr>
         <th colspan="2">
-          <h2 id="section-data-reduction-factors-and-principal-components" class="hasAnchor"><a href="#section-data-reduction-factors-and-principal-components" class="anchor"></a>Data Reduction: Factors and Principal Components</h2>
+          <h3 id="section-factors-and-principal-components" class="hasAnchor"><a href="#section-factors-and-principal-components" class="anchor"></a>Factors and Principal Components</h3>
           <p class="section-desc"></p>
         </th>
       </tr>
-      
       
     </tbody><tbody>
       
@@ -631,6 +639,12 @@
           <p><code><a href="reduce_parameters.html">reduce_parameters()</a></code> <code><a href="reduce_parameters.html">reduce_data()</a></code> </p>
         </td>
         <td><p>Dimensionality reduction (DR) / Features Reduction</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="reshape_loadings.html">reshape_loadings()</a></code> </p>
+        </td>
+        <td><p>Reshape loadings between wide/long formats</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -668,37 +682,6 @@
           <p><code><a href="smoothness.html">smoothness()</a></code> </p>
         </td>
         <td><p>Quantify the smoothness of a vector</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-miscellaneous" class="hasAnchor"><a href="#section-miscellaneous" class="anchor"></a>Miscellaneous</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="data_partition.html">data_partition()</a></code> </p>
-        </td>
-        <td><p>Partition data into a test and a training set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="reshape_loadings.html">reshape_loadings()</a></code> </p>
-        </td>
-        <td><p>Reshape loadings between wide/long formats</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="convert_data_to_numeric.html">convert_data_to_numeric()</a></code> <code><a href="convert_data_to_numeric.html">data_to_numeric()</a></code> </p>
-        </td>
-        <td><p>Convert data to numeric</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -779,7 +762,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

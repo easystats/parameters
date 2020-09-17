@@ -211,18 +211,18 @@
 #&gt; 4                 NA              NA                 NA</div><div class='input'>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='kw'>Sepal.Width</span>, <span class='fl'>2</span>), data = <span class='kw'>iris</span>)
 <span class='fu'>parameters_type</span>(<span class='kw'>model</span>)
-</div><div class='output co'>#&gt;               Parameter      Type        Link                  Term    Variable
-#&gt; 1           (Intercept) intercept        Mean           (Intercept)        &lt;NA&gt;
-#&gt; 2     Speciesversicolor    factor  Difference     Speciesversicolor     Species
-#&gt; 3      Speciesvirginica    factor  Difference      Speciesvirginica     Species
-#&gt; 4 poly(Sepal.Width, 2)1      poly Association poly(Sepal.Width, 2)1 Sepal.Width
-#&gt; 5 poly(Sepal.Width, 2)2      poly Association poly(Sepal.Width, 2)2 Sepal.Width
+</div><div class='output co'>#&gt;               Parameter      Type        Link              Term    Variable
+#&gt; 1           (Intercept) intercept        Mean       (Intercept)        &lt;NA&gt;
+#&gt; 2     Speciesversicolor    factor  Difference Speciesversicolor     Species
+#&gt; 3      Speciesvirginica    factor  Difference  Speciesvirginica     Species
+#&gt; 4 poly(Sepal.Width, 2)1   numeric Association       Sepal.Width Sepal.Width
+#&gt; 5 poly(Sepal.Width, 2)2   numeric Association       Sepal.Width Sepal.Width
 #&gt;        Level Secondary_Parameter Secondary_Type Secondary_Link Secondary_Term
 #&gt; 1       &lt;NA&gt;                &lt;NA&gt;             NA             NA             NA
 #&gt; 2 versicolor                &lt;NA&gt;             NA             NA             NA
 #&gt; 3  virginica                &lt;NA&gt;             NA             NA             NA
-#&gt; 4          1                &lt;NA&gt;             NA             NA             NA
-#&gt; 5          2                &lt;NA&gt;             NA             NA             NA
+#&gt; 4       &lt;NA&gt;                &lt;NA&gt;             NA             NA             NA
+#&gt; 5       &lt;NA&gt;                &lt;NA&gt;             NA             NA             NA
 #&gt;   Secondary_Variable Secondary_Level Tertiary_Parameter
 #&gt; 1                 NA              NA                 NA
 #&gt; 2                 NA              NA                 NA
@@ -231,18 +231,18 @@
 #&gt; 5                 NA              NA                 NA</div><div class='input'>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='kw'>Sepal.Width</span>, <span class='fl'>2</span>, raw = <span class='fl'>TRUE</span>), data = <span class='kw'>iris</span>)
 <span class='fu'>parameters_type</span>(<span class='kw'>model</span>)
-</div><div class='output co'>#&gt;                           Parameter      Type        Link                  Term
-#&gt; 1                       (Intercept) intercept        Mean           (Intercept)
-#&gt; 2                 Speciesversicolor    factor  Difference     Speciesversicolor
-#&gt; 3                  Speciesvirginica    factor  Difference      Speciesvirginica
-#&gt; 4 poly(Sepal.Width, 2, raw = TRUE)1  poly_raw Association poly(Sepal.Width, 2)1
-#&gt; 5 poly(Sepal.Width, 2, raw = TRUE)2  poly_raw Association poly(Sepal.Width, 2)2
+</div><div class='output co'>#&gt;                           Parameter      Type        Link              Term
+#&gt; 1                       (Intercept) intercept        Mean       (Intercept)
+#&gt; 2                 Speciesversicolor    factor  Difference Speciesversicolor
+#&gt; 3                  Speciesvirginica    factor  Difference  Speciesvirginica
+#&gt; 4 poly(Sepal.Width, 2, raw = TRUE)1   numeric Association       Sepal.Width
+#&gt; 5 poly(Sepal.Width, 2, raw = TRUE)2   numeric Association       Sepal.Width
 #&gt;      Variable      Level Secondary_Parameter Secondary_Type Secondary_Link
 #&gt; 1        &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;             NA             NA
 #&gt; 2     Species versicolor                &lt;NA&gt;             NA             NA
 #&gt; 3     Species  virginica                &lt;NA&gt;             NA             NA
-#&gt; 4 Sepal.Width          1                &lt;NA&gt;             NA             NA
-#&gt; 5 Sepal.Width          2                &lt;NA&gt;             NA             NA
+#&gt; 4 Sepal.Width       &lt;NA&gt;                &lt;NA&gt;             NA             NA
+#&gt; 5 Sepal.Width       &lt;NA&gt;                &lt;NA&gt;             NA             NA
 #&gt;   Secondary_Term Secondary_Variable Secondary_Level Tertiary_Parameter
 #&gt; 1             NA                 NA              NA                 NA
 #&gt; 2             NA                 NA              NA                 NA
@@ -500,7 +500,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
