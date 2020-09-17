@@ -71,7 +71,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   }
 
   # remove columns that have only NA or Inf
-  to_remove <- sapply(x, function(col) all(is.na(col) | all(is.infinite(col))))
+  to_remove <- sapply(x, function(col) all(is.na(col) | is.infinite(col)))
   if (any(to_remove)) x[to_remove] <- NULL
 
   if (!is.null(attributes(x)$title)) {

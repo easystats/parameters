@@ -439,7 +439,7 @@
     parameters$Component[interactions] <- "interactions"
   }
 
-  if (!("within" %in% parameters$Component) || !("between" %in% parameters$Component)) {
+  if ((!("within" %in% parameters$Component) || !("between" %in% parameters$Component)) && inherits(model, "merMod")) {
     parameters$Component <- NULL
   }
 

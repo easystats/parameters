@@ -30,7 +30,6 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
   # check if all estimates are non-NA
   params <- .check_rank_deficiency(params, verbose = FALSE)
 
-  estimates <- params$Estimate
   method <- tolower(method)
 
   # if we have adjusted SE, e.g. from kenward-roger, don't recompute
@@ -57,7 +56,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
 
     # filter non-matching parameters
     if (nrow(stderror) != nrow(params)) {
-      stderror <- merge(stderror, params, sort = FALSE)
+      params <- stderror <- merge(stderror, params, sort = FALSE)
     }
     se <- stderror$SE
   }
@@ -77,8 +76,8 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
   alpha <- (1 + ci) / 2
   fac <- suppressWarnings(stats::qt(alpha, df = dof))
   out <- cbind(
-    CI_low = estimates - se * fac,
-    CI_high = estimates + se * fac
+    CI_low = params$Estimate - se * fac,
+    CI_high = params$Estimate + se * fac
   )
 
   out <- as.data.frame(out)
