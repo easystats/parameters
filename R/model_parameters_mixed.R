@@ -108,12 +108,14 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
   # add dispersion parameter
-  dispersion_param <- insight::get_parameters(model, component = "dispersion")
-  if (!is.null(dispersion_param)) {
-    params[nrow(params) + 1, ] <- NA
-    params[nrow(params), "Parameter"] <- dispersion_param$Parameter[1]
-    params[nrow(params), "Coefficient"] <- dispersion_param$Estimate[1]
-    params[nrow(params), "Component"] <- dispersion_param$Component[1]
+  if (inherits(model, "glmmTMB")) {
+    dispersion_param <- insight::get_parameters(model, component = "dispersion")
+    if (!is.null(dispersion_param)) {
+      params[nrow(params) + 1, ] <- NA
+      params[nrow(params), "Parameter"] <- dispersion_param$Parameter[1]
+      params[nrow(params), "Coefficient"] <- dispersion_param$Estimate[1]
+      params[nrow(params), "Component"] <- dispersion_param$Component[1]
+    }
   }
 
 
