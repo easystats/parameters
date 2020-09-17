@@ -709,6 +709,8 @@ ci.effectsize_std_params <- function(x, ci = .95, ...) {
   .remove_backticks_from_parameter_names(do.call(rbind, out))
 }
 
+#' @export
+ci.effectsize_table <- ci.effectsize_std_params
 
 
 #' @export

@@ -130,6 +130,10 @@ standard_error.effectsize_std_params <- function(model, ...) {
   .remove_backticks_from_parameter_names(out)
 }
 
+#' @export
+standard_error.effectsize_table <- standard_error.effectsize_std_params
+
+
 
 #' @export
 standard_error.parameters_skewness <- function(model, ...) {
