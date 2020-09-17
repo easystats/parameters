@@ -4,6 +4,7 @@
 
 * Fixed issues with *glmmTMB* models with dispersion-parameter.
 * Fixed issue where `model_parameters()` for *glmmTMB* models falsely removed the `Component` column.
+* Fixed issue with missing CI columns in `model_parameters()` when `standardize` was one of the options except `"refit"`.
 * `parameters_type()` did not correctly detect interaction terms for specific patterns like `scale()` included in the interaction.
 
 # parameters 0.8.5
