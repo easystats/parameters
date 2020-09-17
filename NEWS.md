@@ -2,8 +2,9 @@
 
 ## Bug fixes
 
-* `parameters_type()` did not correctly detect interaction terms for specific patterns like `scale()` included in the interaction.
+* Fixed issues with *glmmTMB* models with dispersion-parameter.
 * Fixed issue where `model_parameters()` for *glmmTMB* models falsely removed the `Component` column.
+* `parameters_type()` did not correctly detect interaction terms for specific patterns like `scale()` included in the interaction.
 
 # parameters 0.8.5
 
