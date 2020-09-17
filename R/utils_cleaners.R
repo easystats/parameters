@@ -36,7 +36,9 @@
       }
       # some exceptions here...
     } else if (full && pattern[j] == "scale") {
-      x <- insight::clean_names(x)
+      if (grepl("^scale\\(", x)) {
+        x <- insight::clean_names(x)
+      }
     } else {
       p <- paste0(pattern[j], "\\(((\\w|\\.)*)\\)(.*)")
       x <- trimws(sub(p, "\\1\\3", x))
