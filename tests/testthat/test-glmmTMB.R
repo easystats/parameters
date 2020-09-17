@@ -148,10 +148,7 @@ if (.runThisTest) {
         c("conditional", "conditional", "conditional", "zero_inflated",
           "zero_inflated", "zero_inflated")
       )
-      expect_equal(
-        model_parameters(m2)$Component,
-        c("rewb-contextual", "rewb-contextual", "rewb-contextual")
-      )
+      expect_null(model_parameters(m2)$Component)
       expect_equal(
         model_parameters(m3)$Component,
         c("conditional", "conditional", "conditional", "conditional",
