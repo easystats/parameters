@@ -439,7 +439,7 @@
     parameters$Component[interactions] <- "interactions"
   }
 
-  if (((!("within" %in% parameters$Component) || !("between" %in% parameters$Component)) && inherits(model, "merMod")) || .n_unique(parameters$Component <= 1)) {
+  if (((!("within" %in% parameters$Component) || !("between" %in% parameters$Component)) && inherits(model, "merMod")) || all(parameters$Component == "rewb-contextual")) {
     parameters$Component <- NULL
   }
 
