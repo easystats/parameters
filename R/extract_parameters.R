@@ -418,7 +418,15 @@
     parameters$Component <- "rewb-contextual"
   }
 
+  # extract attributes that indicate within and between effects
   within_effects <- .find_within_between(model, "within-effect")
+  between_effects <- .find_within_between(model, "between-effect")
+
+  # if there are no attributes, return
+  if (is.null(within_effects) && is.null(between_effects)) {
+    return(parameters)
+  }
+
   if (!is.null(within_effects)) {
     index <- unique(unlist(sapply(within_effects, function(i) {
       grep(i, parameters$Parameter, fixed = TRUE)
@@ -426,7 +434,6 @@
     parameters$Component[index] <- "within"
   }
 
-  between_effects <- .find_within_between(model, "between-effect")
   if (!is.null(between_effects)) {
     index <- unique(unlist(sapply(between_effects, function(i) {
       grep(i, parameters$Parameter, fixed = TRUE)
