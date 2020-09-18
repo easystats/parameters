@@ -414,10 +414,6 @@
   # this effect is used as "Component" value. by this, we get a nicer print
   # for model parameters...
 
-  if (is.null(parameters$Component)) {
-    parameters$Component <- "rewb-contextual"
-  }
-
   # extract attributes that indicate within and between effects
   within_effects <- .find_within_between(model, "within-effect")
   between_effects <- .find_within_between(model, "between-effect")
@@ -425,6 +421,10 @@
   # if there are no attributes, return
   if (is.null(within_effects) && is.null(between_effects)) {
     return(parameters)
+  }
+
+  if (is.null(parameters$Component)) {
+    parameters$Component <- "rewb-contextual"
   }
 
   if (!is.null(within_effects)) {
