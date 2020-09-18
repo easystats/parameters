@@ -22,6 +22,16 @@ if (.runThisTest) {
     test_that("model_parameters", {
       expect_equal(mp$Coefficient, as.vector(unlist(fixef(model))), tolerance = 1e-3)
       expect_equal(mp$Parameter, gsub("^(cond\\.|zi\\.)", "", names(unlist(fixef(model)))))
+      expect_equal(
+        mp$Component,
+        c("conditional", "conditional", "conditional", "conditional",
+          "conditional", "conditional", "conditional", "conditional", "conditional",
+          "conditional", "conditional", "conditional", "conditional", "conditional",
+          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated",
+          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated",
+          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated",
+          "zero_inflated", "zero_inflated")
+      )
     })
 
 
