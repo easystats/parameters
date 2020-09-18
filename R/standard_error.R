@@ -122,6 +122,11 @@ standard_error.effectsize_std_params <- function(model, ...) {
     return(NULL)
   }
 
+  # for "refit" method
+  if (is.data.frame(se) && "SE" %in% colnames(se)) {
+    se <- se$SE
+  }
+
   out <- .data_frame(
     Parameter = model$Parameter,
     SE = as.vector(se)
