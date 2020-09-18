@@ -679,6 +679,11 @@ ci.effectsize_std_params <- function(x, ci = .95, ...) {
     return(NULL)
   }
 
+  # for "refit" method
+  if (is.data.frame(se) && "SE" %in% colnames(se)) {
+    se <- se$SE
+  }
+
   # check if we have model. if so, use df from model
   model <- .get_object(x)
   if (!is.null(model)) {
