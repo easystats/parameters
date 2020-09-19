@@ -18,6 +18,7 @@
   robust = FALSE,
   details = FALSE,
   p_adjust = NULL,
+  wb_component = TRUE,
   ...
 )
 
@@ -31,6 +32,7 @@
   exponentiate = FALSE,
   df_method = NULL,
   details = FALSE,
+  wb_component = FALSE,
   ...
 )
 
@@ -78,6 +80,8 @@
 \item{details}{Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+
+\item{wb_component}{Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 

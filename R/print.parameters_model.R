@@ -330,7 +330,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
     } else if (split_column == "Subgroup") {
       s1 <- component_name
       s2 <- ""
-    } else if (component_name %in% c("Within-Effects", "Between-Effects")) {
+    } else if (component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
       s1 <- component_name
       s2 <- ""
     } else if (grepl(tolower(split_column), tolower(component_name), fixed = TRUE)) {
