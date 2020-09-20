@@ -32,7 +32,7 @@
   exponentiate = FALSE,
   df_method = NULL,
   details = FALSE,
-  wb_component = FALSE,
+  wb_component = TRUE,
   ...
 )
 
