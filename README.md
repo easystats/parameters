@@ -226,17 +226,20 @@ describe_distribution(iris)
 
 In order to cite this package, please use the following citation:
 
-  - Lüdecke D, Ben-Shachar M, Makowski D (2019). “Describe and
-    understand your model’s parameters.” CRAN. R package,
-    <https://github.com/easystats/parameters>.
+  - Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). parameters:
+    Extracting, Computing and Exploring the Parameters of Statistical
+    Models using R. *Journal of Open Source Software*, *5*(53), 2445.
+    doi: 10.21105/joss.02445
 
 Corresponding BibTeX entry:
 
     @Article{,
-      title = {Describe and understand your model's parameters},
-      author = {Daniel Lüdecke and Mattan S. Ben-Shachar and Dominique Makowski},
-      journal = {CRAN},
-      year = {2019},
-      note = {R package},
-      url = {https://github.com/easystats/parameters},
+      title = {parameters: Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},
+      volume = {5},
+      doi = {10.21105/joss.02445},
+      number = {53},
+      journal = {Journal of Open Source Software},
+      author = {Daniel Lüdecke and Mattan S. Ben-Shachar and Indrajeet Patil and Dominique Makowski},
+      year = {2020},
+      pages = {2445},
     }
