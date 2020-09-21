@@ -115,12 +115,6 @@ if (require("glmmTMB")) {
     data = Salamanders
   )
   model_parameters(model, details = TRUE)
-
-  # plot-method
-  if (require("see")) {
-    result <- model_parameters(model)
-    plot(result)
-  }
 }
 
 if (require("lme4")) {
