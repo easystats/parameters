@@ -105,7 +105,6 @@ reference:
 
 - title: "Table and Value Formatting"
   contents:
-  - format_algorithm
   - format_bf
   - format_number
   - format_order
