@@ -249,7 +249,9 @@ while <code>select = "short"</code> prints coefficient, standard errors and p-va
 
   <span class='fu'>print</span>(<span class='kw'>mp</span>, select = <span class='st'>"minimal"</span>)
 }
-</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     z |      p
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |      p
 #&gt; ------------------------------------------------------------------
 #&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 0.194 
 #&gt; sppPR       |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | &lt; .001
@@ -259,21 +261,29 @@ while <code>select = "short"</code> prints coefficient, standard errors and p-va
 #&gt; sppDES-L    |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | &lt; .001
 #&gt; sppDF       |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 
 #&gt; minedno     |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |      p
+#&gt; ------------------------------------------------------------------
 #&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 
 #&gt; minedno     |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001
-#&gt; Parameter   | Coefficient |   SE |         95% CI |     z |      p
-#&gt; ------------------------------------------------------------------
-#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 0.194 
-#&gt; spp [PR]    |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | &lt; .001
-#&gt; spp [DM]    |        0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 0.051 
-#&gt; spp [EC-A]  |       -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 0.006 
-#&gt; spp [EC-L]  |        0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | &lt; .001
-#&gt; spp [DES-L] |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | &lt; .001
-#&gt; spp [DF]    |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 
-#&gt; mined [no]  |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001
-#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 
-#&gt; mined [no]  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001
-#&gt; Parameter   | Coefficient |   SE
+#&gt; 
+#&gt; Parameter   | Coefficient |   SE |         95% CI |     z |      p |     Component
+#&gt; ----------------------------------------------------------------------------------
+#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 0.194  |   conditional
+#&gt; spp [PR]    |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | &lt; .001 |   conditional
+#&gt; spp [DM]    |        0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 0.051  |   conditional
+#&gt; spp [EC-A]  |       -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 0.006  |   conditional
+#&gt; spp [EC-L]  |        0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | &lt; .001 |   conditional
+#&gt; spp [DES-L] |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | &lt; .001 |   conditional
+#&gt; spp [DF]    |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435  |   conditional
+#&gt; mined [no]  |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001 |   conditional
+#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004  | zero_inflated
+#&gt; mined [no]  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001 | zero_inflated
+#&gt; </span><span style='color: #0000BB;'># Fixed Effects component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |   SE
 #&gt; --------------------------------
 #&gt; (Intercept) |       -0.36 | 0.28
 #&gt; spp [PR]    |       -1.27 | 0.24
@@ -283,9 +293,17 @@ while <code>select = "short"</code> prints coefficient, standard errors and p-va
 #&gt; spp [DES-L] |        0.63 | 0.13
 #&gt; spp [DF]    |        0.12 | 0.15
 #&gt; mined [no]  |        1.27 | 0.27
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |   SE
+#&gt; --------------------------------
 #&gt; (Intercept) |        0.79 | 0.27
 #&gt; mined [no]  |       -1.84 | 0.31
-#&gt; Parameter   | Coefficient |         95% CI |      p
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Fixed Effects component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
 #&gt; (Intercept) |       -0.36 | [-0.90,  0.18] | 0.194 
 #&gt; spp [PR]    |       -1.27 | [-1.74, -0.80] | &lt; .001
@@ -295,9 +313,15 @@ while <code>select = "short"</code> prints coefficient, standard errors and p-va
 #&gt; spp [DES-L] |        0.63 | [ 0.38,  0.87] | &lt; .001
 #&gt; spp [DF]    |        0.12 | [-0.17,  0.40] | 0.435 
 #&gt; mined [no]  |        1.27 | [ 0.74,  1.80] | &lt; .001
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |         95% CI |      p
+#&gt; ---------------------------------------------------
 #&gt; (Intercept) |        0.79 | [ 0.26,  1.32] | 0.004 
-#&gt; mined [no]  |       -1.84 | [-2.46, -1.23] | &lt; .001</div><div class='input'><span class='co'># }</span>
-</div></pre>
+#&gt; mined [no]  |       -1.84 | [-2.46, -1.23] | &lt; .001
+#&gt; </div><div class='input'><span class='co'># }</span>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

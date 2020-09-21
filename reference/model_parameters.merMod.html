@@ -182,6 +182,7 @@
   robust = <span class='fl'>FALSE</span>,
   details = <span class='fl'>FALSE</span>,
   p_adjust = <span class='kw'>NULL</span>,
+  wb_component = <span class='fl'>TRUE</span>,
   <span class='kw'>...</span>
 )
 
@@ -196,6 +197,7 @@
   exponentiate = <span class='fl'>FALSE</span>,
   df_method = <span class='kw'>NULL</span>,
   details = <span class='fl'>FALSE</span>,
+  wb_component = <span class='fl'>TRUE</span>,
   <span class='kw'>...</span>
 )
 
@@ -269,6 +271,10 @@
       <td><p>Character vector, if not <code>NULL</code>, indicates the method to adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details.</p></td>
     </tr>
     <tr>
+      <th>wb_component</th>
+      <td><p>Logical, if <code>TRUE</code> and models contains within- and between-effects (see <code><a href='check_heterogeneity.html'>demean</a></code>), the <code>Component</code> column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the <code>Component</code> column indicates, which parameters belong to the conditional or zero-inflated component of the model.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://rdrr.io/pkg/bayestestR/man/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
@@ -313,14 +319,38 @@
     data = <span class='kw'>Salamanders</span>
   )
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, details = <span class='fl'>TRUE</span>)
-
-  <span class='co'># plot-method</span>
-  <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://easystats.github.io/see'>"see"</a></span>)) {
-    <span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
-    <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>result</span>)
-  }
 }
-</div><div class='img'><img src='model_parameters.merMod-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects
+#&gt; 
+#&gt; # Fixed Effects component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |      p
+#&gt; ------------------------------------------------------------------
+#&gt; (Intercept) |       -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 0.194 
+#&gt; spp [PR]    |       -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | &lt; .001
+#&gt; spp [DM]    |        0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 0.051 
+#&gt; spp [EC-A]  |       -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 0.006 
+#&gt; spp [EC-L]  |        0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | &lt; .001
+#&gt; spp [DES-L] |        0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | &lt; .001
+#&gt; spp [DF]    |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 
+#&gt; mined [no]  |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Zero-Inflated component
+#&gt; 
+#&gt; </span><span>Parameter   | Coefficient |   SE |         95% CI |     z |      p
+#&gt; ------------------------------------------------------------------
+#&gt; (Intercept) |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 
+#&gt; mined [no]  |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001
+#&gt; 
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Random Effects
+#&gt; 
+#&gt; Within-Group Variance      </span><span>0.51 (0.71)
+#&gt; </span><span style='color: #0000BB;'>Between-Group Variance
+#&gt; </span><span>  Random Intercept (site)  0.11 (0.33)
+#&gt; </span><span style='color: #0000BB;'>N (groups per factor)
+#&gt; </span><span>  site                       23
+#&gt; </span><span style='color: #0000BB;'>Observations               </span><span> 644</div><div class='input'>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>gear</span>), data = <span class='kw'>mtcars</span>)
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, bootstrap = <span class='fl'>TRUE</span>, iterations = <span class='fl'>50</span>)
@@ -329,7 +359,7 @@
 #&gt; ---------------------------------------------------
 #&gt; (Intercept) |       35.97 | [32.27, 40.48] | &lt; .001
 #&gt; wt          |       -4.90 | [-6.38, -3.94] | &lt; .001</div><div class='input'><span class='co'># }</span>
-</div></pre>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

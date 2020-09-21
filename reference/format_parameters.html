@@ -216,18 +216,20 @@
 #&gt;  "Species [virginica] : Sepal.Width" </div><div class='input'>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='kw'>Sepal.Width</span>, <span class='fl'>2</span>), data = <span class='kw'>iris</span>)
 <span class='fu'>format_parameters</span>(<span class='kw'>model</span>)
-</div><div class='output co'>#&gt;            (Intercept)      Speciesversicolor       Speciesvirginica 
-#&gt;          "(Intercept)" "Species [versicolor]"  "Species [virginica]" 
-#&gt;  poly(Sepal.Width, 2)1  poly(Sepal.Width, 2)2 
-#&gt;          "Sepal.Width"          "Sepal.Width" </div><div class='input'>
+</div><div class='output co'>#&gt;                (Intercept)          Speciesversicolor 
+#&gt;              "(Intercept)"     "Species [versicolor]" 
+#&gt;           Speciesvirginica      poly(Sepal.Width, 2)1 
+#&gt;      "Species [virginica]" "Sepal.Width [1st degree]" 
+#&gt;      poly(Sepal.Width, 2)2 
+#&gt; "Sepal.Width [2nd degree]" </div><div class='input'>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span>(<span class='kw'>Sepal.Width</span>, <span class='fl'>2</span>, raw = <span class='fl'>TRUE</span>), data = <span class='kw'>iris</span>)
 <span class='fu'>format_parameters</span>(<span class='kw'>model</span>)
 </div><div class='output co'>#&gt;                       (Intercept)                 Speciesversicolor 
 #&gt;                     "(Intercept)"            "Species [versicolor]" 
 #&gt;                  Speciesvirginica poly(Sepal.Width, 2, raw = TRUE)1 
-#&gt;             "Species [virginica]"                     "Sepal.Width" 
+#&gt;             "Species [virginica]"        "Sepal.Width [1st degree]" 
 #&gt; poly(Sepal.Width, 2, raw = TRUE)2 
-#&gt;                     "Sepal.Width" </div></pre>
+#&gt;        "Sepal.Width [2nd degree]" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
