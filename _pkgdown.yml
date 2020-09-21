@@ -107,7 +107,6 @@ reference:
   contents:
   - format_algorithm
   - format_bf
-  - format_model
   - format_number
   - format_order
   - format_p
