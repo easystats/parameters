@@ -24,6 +24,7 @@ reference:
   - model_parameters.lavaan
   - model_parameters.kmeans
   - model_parameters.Mclust
+  - model_parameters.mira
   - model_parameters.PCA
   - model_parameters.principal
   - model_parameters.stanreg
@@ -116,6 +117,10 @@ reference:
   - parameters_type
   - standardize_names
 
+- title: "Example Data Sets"
+  contents:
+  - qol_cancer
+  - fish
 
 navbar:
   type: default
