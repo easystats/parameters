@@ -373,18 +373,18 @@
 <span class='co'># logistic regression model</span>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='kw'>vs</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>, family = <span class='st'>"binomial"</span>)
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
-</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |     z |     p
-#&gt; -----------------------------------------------------------------
-#&gt; (Intercept) |       10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 0.011
-#&gt; wt          |        2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 0.174
-#&gt; cyl         |       -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 0.034</div><div class='input'>
+</div><div class='output co'>#&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |     p
+#&gt; --------------------------------------------------------------
+#&gt; (Intercept) |    10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 0.011
+#&gt; wt          |     2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 0.174
+#&gt; cyl         |    -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 0.034</div><div class='input'>
 <span class='co'># show odds ratio / exponentiated coefficients</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, exponentiate = <span class='fl'>TRUE</span>)
-</div><div class='output co'>#&gt; Parameter   | Coefficient |       SE |                  95% CI |     z |     p
-#&gt; ------------------------------------------------------------------------------
-#&gt; (Intercept) |    40911.34 | 1.71e+05 | [120.16,      6.95e+09] |  2.55 | 0.011
-#&gt; wt          |        8.17 |    12.63 | [  0.59,        514.10] |  1.36 | 0.174
-#&gt; cyl         |        0.05 |     0.07 | [  0.00,          0.34] | -2.12 | 0.034</div></pre>
+</div><div class='output co'>#&gt; Parameter   | Odds Ratio |       SE |                  95% CI |     z |     p
+#&gt; -----------------------------------------------------------------------------
+#&gt; (Intercept) |   40911.34 | 1.71e+05 | [120.16,      6.95e+09] |  2.55 | 0.011
+#&gt; wt          |       8.17 |    12.63 | [  0.59,        514.10] |  1.36 | 0.174
+#&gt; cyl         |       0.05 |     0.07 | [  0.00,          0.34] | -2.12 | 0.034</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
