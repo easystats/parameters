@@ -1,3 +1,9 @@
+# parameters 0.8.7
+
+## Changes to functions
+
+- `print()` for `model_parameters()` now names the coefficients column depending on the model type (i.e. `"Odds Ratios"` for logistic regression when `exponentiate = TRUE` etc.)
+
 # parameters 0.8.6
 
 ## Bug fixes

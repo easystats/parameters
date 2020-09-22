@@ -41,6 +41,7 @@
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
   orig_x <- x
   res <- attributes(x)$details
+  coef_name <- attributes(x)$coefficient_name
 
   # check if user supplied digits attributes
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
@@ -107,8 +108,13 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
   split_by <- split_by[nchar(split_by) > 0]
 
+  if (!is.null(coef_name)) {
+    colnames(x)[which(colnames(x) == "Coefficient")] <- coef_name
+    colnames(x)[which(colnames(x) == "Std_Coefficient")] <- paste0("Std_", coef_name)
+  }
+
   if (split_components && !is.null(split_by) && length(split_by)) {
-    .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
+    .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, ...)
   } else {
     formatted_table <- parameters_table(x, pretty_names = pretty_names, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
     cat(insight::format_table(formatted_table))
@@ -195,13 +201,15 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 
 #' @keywords internal
-.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, ...) {
+.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, ...) {
 
   # check if user supplied digits attributes
   is_ordinal_model <- attributes(x)$ordinal_model
   if (is.null(is_ordinal_model)) is_ordinal_model <- FALSE
 
+  # zero-inflated stuff
   is_zero_inflated <- (!is.null(x$Component) & "zero_inflated" %in% x$Component)
+  zi_coef_name <- attributes(x)$zi_coefficient_name
 
   # make sure we have correct order of levels from split-factor
   x[split_column] <- lapply(x[split_column], function(i) {
@@ -271,6 +279,12 @@ print.parameters_random <- function(x, digits = 2, ...) {
     attr(tables[[type]], "digits") <- digits
     attr(tables[[type]], "ci_digits") <- ci_digits
     attr(tables[[type]], "p_digits") <- p_digits
+
+    # rename columns for zero-inflation part
+    if (grepl("^zero", type) && !is.null(zi_coef_name) && !is.null(coef_column)) {
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- zi_coef_name
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
+    }
 
     formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, ...)
 

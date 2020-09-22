@@ -16,6 +16,26 @@
   attr(params, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)
   attr(params, "model_class") <- class(model)
 
+  # column name for coefficients
+  coef_col <- "Coefficient"
+  if (isTRUE(exponentiate)) {
+    if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+      coef_col <- "Odds Ratio"
+    } else if (info$is_binomial && !info$is_logit) {
+      coef_col <- "Risk Ratio"
+    } else if (info$is_count) {
+      coef_col <- "IRR"
+    }
+  } else {
+    if (info$is_binomial || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+      coef_col <- "Log-Odds"
+    } else if (info$is_count) {
+      coef_col <- "Log-Mean"
+    }
+  }
+  attr(params, "coefficient_name") <- coef_col
+  attr(params, "zi_coefficient_name") <- ifelse(isTRUE(exponentiate), "Odds Ratio", "Log-Odds")
+
 
   if (inherits(model, c("rma", "rma.uni"))) {
     attr(params, "data") <- insight::get_data(model)
