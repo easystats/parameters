@@ -260,3 +260,52 @@
 .is_semLme <- function(x) {
   all(inherits(x, c("sem", "lme")))
 }
+
+
+
+#' @importFrom stats sigma deviance
+#' @importFrom insight n_obs get_parameters get_variance_residual model_info
+.sigma <- function(x) {
+  s <- tryCatch(
+    {
+      stats::sigma(x)
+    },
+    error = function(e) { NULL }
+  )
+
+  if (.is_empty_object(s)) {
+    s <- tryCatch(
+      {
+        estimates <- insight::get_parameters(x)$Estimate
+        sqrt(stats::deviance(x) / (insight::n_obs(x) - sum(!is.na(estimates))))
+      },
+      error = function(e) { NULL }
+    )
+  }
+
+  if (.is_empty_object(s)) {
+    info <- insight::model_info(x)
+    if (info$is_mixed) {
+      s <- tryCatch(
+        {
+          sqrt(insight::get_variance_residual(x, verbose = FALSE))
+        },
+        error = function(e) { NULL }
+      )
+    }
+  }
+
+  if (.is_empty_object(s) && inherits(x, "brmsfit")) {
+    s <- tryCatch(
+      {
+        mean(insight::get_parameters(x, component = "sigma")[["sigma"]])
+      },
+      error = function(e) { NULL }
+    )
+  }
+
+  if (.is_empty_object(s)) {
+    return(NULL)
+  }
+  s
+}

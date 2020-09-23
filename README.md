@@ -112,7 +112,9 @@ model_parameters(model)
 #> Species [virginica]                 |       -1.92 | 0.59 | [-3.08, -0.76] | -3.28 | 143 | 0.001 
 #> Petal.Width                         |        0.62 | 0.14 | [ 0.34,  0.89] |  4.41 | 143 | < .001
 #> Petal.Length * Species [versicolor] |       -0.09 | 0.26 | [-0.61,  0.42] | -0.36 | 143 | 0.721 
-#> Petal.Length * Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] | -0.50 | 143 | 0.618
+#> Petal.Length * Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] | -0.50 | 143 | 0.618 
+#> 
+#> Residual standard deviation: 0.30
 
 # standardized parameters
 model_parameters(model, standardize = "refit")
@@ -124,7 +126,9 @@ model_parameters(model, standardize = "refit")
 #> Species [virginica]                 |       -5.51 | 1.38 | [-8.23, -2.79] | -4.00 | 143 | < .001
 #> Petal.Width                         |        1.08 | 0.24 | [ 0.59,  1.56] |  4.41 | 143 | < .001
 #> Petal.Length * Species [versicolor] |       -0.38 | 1.06 | [-2.48,  1.72] | -0.36 | 143 | 0.721 
-#> Petal.Length * Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] | -0.50 | 143 | 0.618
+#> Petal.Length * Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] | -0.50 | 143 | 0.618 
+#> 
+#> Residual standard deviation: 0.68
 ```
 
 ### Mixed Models
@@ -140,6 +144,8 @@ model_parameters(model)
 #> ----------------------------------------------------------------------
 #> (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | 146 | < .001
 #> Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | 146 | < .001
+#> 
+#> Residual standard deviation: 0.32
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
 model_parameters(model, df_method = "kenward")
@@ -147,6 +153,8 @@ model_parameters(model, df_method = "kenward")
 #> -------------------------------------------------------------------------
 #> (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 
 #> Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | < .001
+#> 
+#> Residual standard deviation: 0.32
 ```
 
 ### Structural Models
@@ -202,6 +210,8 @@ lm(disp ~ ., data = mtcars) %>%
 #> wt          |       80.45 |  12.22 | [  55.33, 105.57] |  6.58 | 26 | < .001
 #> qsec        |      -14.68 |   6.14 | [ -27.31,  -2.05] | -2.39 | 26 | 0.024 
 #> carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | 26 | < .001
+#> 
+#> Residual standard deviation: 29.57
 ```
 
 ## Miscellaneous

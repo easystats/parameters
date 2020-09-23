@@ -12,6 +12,8 @@
 #'   be printed. If \code{NULL} (default), all columns are printed. The shortcut
 #'   \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
 #'   while \code{select = "short"} prints coefficient, standard errors and p-values.
+#' @param show_sigma Logical, if \code{TRUE}, adds information about the residual
+#'   standard deviation.
 #' @inheritParams parameters_table
 #' @return \code{NULL}
 #'
@@ -38,10 +40,14 @@
 #' }
 #' @importFrom insight format_table
 #' @export
-print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
+print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, show_sigma = TRUE, ...) {
+  # save original input
   orig_x <- x
+
+  # save attributes
   res <- attributes(x)$details
   coef_name <- attributes(x)$coefficient_name
+  sigma <- attributes(x)$sigma
 
   # check if user supplied digits attributes
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
@@ -120,9 +126,19 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     cat(insight::format_table(formatted_table))
   }
 
+  # print residual standard deviation
+  if (!is.null(sigma) && isTRUE(show_sigma)) {
+    cat("\n")
+    insight::print_color(sprintf("Residual standard deviation: %.*f", digits, sigma), "blue")
+  }
+
   # print summary for random effects
   if (!is.null(res)) {
-    cat("\n")
+    if (isTRUE(show_sigma)) {
+      cat("\n\n")
+    } else {
+      cat("\n")
+    }
     .print_random_parameters(res, digits = digits)
   }
   invisible(orig_x)

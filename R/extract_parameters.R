@@ -220,6 +220,14 @@
   }
 
 
+  # ==== add sigma
+
+  if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
+    ## TODO replace with "get_sigma()" once insight update on CRAN
+    attr(parameters, "sigma") <- .sigma(model)
+  }
+
+
   rownames(parameters) <- NULL
   parameters
 }
@@ -400,6 +408,12 @@
   # column for nicer printing...
   if (isTRUE(wb_component)) {
     parameters <- .add_within_between_effects(model, parameters)
+  }
+
+  # add sigma
+  if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
+    ## TODO replace with "get_sigma()" once insight update on CRAN
+    attr(parameters, "sigma") <- .sigma(model)
   }
 
   rownames(parameters) <- NULL
