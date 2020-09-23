@@ -3,6 +3,7 @@
 ## Changes to functions
 
 - `print()` for `model_parameters()` now names the coefficients column depending on the model type (i.e. `"Odds Ratios"` for logistic regression when `exponentiate = TRUE` etc.)
+- `print()` for `model_parameters()` gains a `show_sigma` argument, to show or hide information on the residual standard deviation.
 
 # parameters 0.8.6
 
