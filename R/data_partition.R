@@ -56,6 +56,7 @@ data_partition <- function(x, training_proportion = 0.7, group = NULL) {
 
 #' @keywords internal
 .data_partition <- function(x, training_proportion = 0.8) {
+  set.seed(333)
   training_indices <- sample(1:nrow(x), size = training_proportion * nrow(x))
   test_indices <- (1:nrow(x))[-training_indices]
 
