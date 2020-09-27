@@ -16,7 +16,7 @@
 #' head(data_partition(df, group = "Species"))
 #' head(data_partition(df, group = c("Species", "Smell")))
 #' @export
-data_partition <- function(x, training_proportion = 0.7, group = NULL) {
+data_partition <- function(x, training_proportion = 0.7, group = NULL, seed = NULL) {
   if (!is.data.frame(x)) {
     x <- tryCatch(
       expr = {
@@ -31,7 +31,8 @@ data_partition <- function(x, training_proportion = 0.7, group = NULL) {
       stop("`x` needs to be a data frame, or an object that can be coerced to a data frame.")
     }
   }
-
+  if(is.null(seed) == FALSE){set.seed(seed)}
+  
   training <- data.frame()
   test <- data.frame()
 
@@ -56,7 +57,6 @@ data_partition <- function(x, training_proportion = 0.7, group = NULL) {
 
 #' @keywords internal
 .data_partition <- function(x, training_proportion = 0.8) {
-  set.seed(333)
   training_indices <- sample(1:nrow(x), size = training_proportion * nrow(x))
   test_indices <- (1:nrow(x))[-training_indices]
 
