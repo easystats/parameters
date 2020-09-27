@@ -5,6 +5,7 @@
 #' @param x A data frame, or an object that can be coerced to a data frame.
 #' @param training_proportion The proportion (between 0 and 1) of the training set. The remaining part will be used for the test set.
 #' @param group A character vector indicating the name(s) of the column(s) used for stratified partitioning.
+#' @param seed A random number generator seed. Enter an integer (e.g., 123) so that the random sampling will be the same each time you run the function.
 #'
 #' @return A list of two data frames, named \code{test} and \code{training}.
 #'
