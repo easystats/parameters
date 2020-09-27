@@ -141,9 +141,8 @@
 <p>If you are familiar with R and the formula interface, you know of the possibility of including a dot (<code>.</code>) in the formula, signifying <strong>“all the remaining variables”</strong>. Curiously, few are aware of the possibility of additionally easily adding <strong>all the interaction terms</strong>. This can be achieved using the <code>.*.</code> notation.</p>
 <p>Let’s try that with the linear regression predicting <strong>Sepal.Length</strong> with the <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set"><code>iris</code></a> dataset, included by default in R.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">.</span><span class="op">*</span><span class="kw">.</span>, data = <span class="kw">iris</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">model</span>)
-</pre></div>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">.</span><span class="op">*</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; 
 #&gt; Call:
 #&gt; lm(formula = Sepal.Length ~ . * ., data = iris)
@@ -184,22 +183,18 @@
 <p>As you might know, having a <strong>model that is too performant is not always a good thing</strong>. For instance, it can be a marker of <a href="https://en.wikipedia.org/wiki/Overfitting"><strong>overfitting</strong></a>: the model corresponds too closely to a particular set of data, and may therefore fail to predict future observations reliably. In multiple regressions, in can also fall under the <a href="https://en.wikipedia.org/wiki/Freedman%27s_paradox"><strong>Freedman’s paradox</strong></a>: some predictors that have actually no relation to the dependent variable being predicted will be <strong>spuriously found to be statistically significant</strong>.</p>
 <p>Let’s run a few checks using the <a href="https://github.com/easystats/performance"><strong>performance</strong></a> package:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://easystats.github.io/performance">performance</a></span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/">performance</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/pkg/performance/man/check_normality.html">check_normality</a></span>(<span class="kw">model</span>)
-</pre></div>
+<span class="fu"><a href="https://easystats.github.io/performance/reference/check_normality.html">check_normality</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; OK: residuals appear as normally distributed (p = 0.612).</code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/performance/man/check_heteroscedasticity.html">check_heteroscedasticity</a></span>(<span class="kw">model</span>)
-</pre></div>
+<span class="fu"><a href="https://easystats.github.io/performance/reference/check_heteroscedasticity.html">check_heteroscedasticity</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; OK: Error variance appears to be homoscedastic (p = 0.118).</code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/performance/man/check_autocorrelation.html">check_autocorrelation</a></span>(<span class="kw">model</span>)
-</pre></div>
+<span class="fu"><a href="https://easystats.github.io/performance/reference/check_autocorrelation.html">check_autocorrelation</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; OK: Residuals appear to be independent and not autocorrelated (p = 0.574).</code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/performance/man/check_collinearity.html">check_collinearity</a></span>(<span class="kw">model</span>)
-</pre></div>
+<span class="fu"><a href="https://easystats.github.io/performance/reference/check_collinearity.html">check_collinearity</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; # Check for Multicollinearity
 #&gt; 
 #&gt; High Correlation
@@ -222,10 +217,9 @@
 <a href="#parameters-selection" class="anchor"></a>Parameters selection</h3>
 <p>Time to do some variables selection. This can be easily done using the <code><a href="../reference/select_parameters.html">select_parameters()</a></code> function, that will <strong>automatically select the best variables</strong> and update the model accordingly. One way of using that is in a tidy pipeline (using <a href="https://cran.r-project.org/package=magrittr/README.html"><code>%&gt;%</code></a>), using this output to update a new model.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">.</span><span class="op">*</span><span class="kw">.</span>, data = <span class="kw">iris</span>) <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span>() <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>()
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">.</span><span class="op">*</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; 
 #&gt; Call:
 #&gt; lm(formula = Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + 
@@ -268,18 +262,17 @@
 <a href="#mixed-models" class="anchor"></a>Mixed models</h3>
 <p>For mixed models (of class <code>merMod</code>), stepwise selection is based on <code><a href="https://rdrr.io/pkg/cAIC4/man/stepcAIC.html">cAIC4::stepcAIC()</a></code>. This step function only searches the “best” model based on the <em>random effects structure</em>, i.e. <code><a href="../reference/select_parameters.html">select_parameters()</a></code> adds or excludes random effects until the cAIC can’t be improved further.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/lme4/lme4">lme4</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"qol_cancer"</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"qol_cancer"</span><span class="op">)</span>
 
 <span class="co"># multiple models are checked, however, initial models</span>
 <span class="co"># already seems to be the best one...</span>
-<span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(
-  <span class="kw">QoL</span> <span class="op">~</span> <span class="kw">time</span> <span class="op">+</span> <span class="kw">phq4</span> <span class="op">+</span> <span class="kw">age</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> <span class="kw">time</span> <span class="op">|</span> <span class="kw">hospital</span> <span class="op">/</span> <span class="kw">ID</span>),
-  data = <span class="kw">qol_cancer</span>
-) <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span>() <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>()
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span>
+  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">|</span> <span class="va">hospital</span> <span class="op">/</span> <span class="va">ID</span><span class="op">)</span>,
+  data <span class="op">=</span> <span class="va">qol_cancer</span>
+<span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; Linear mixed model fit by REML ['lmerMod']
 #&gt; Formula: QoL ~ time + phq4 + age + (1 + time | ID:hospital)
 #&gt;    Data: qol_cancer
@@ -315,13 +308,12 @@
 <a href="#bayesian-models" class="anchor"></a>Bayesian models</h3>
 <p>For Bayesian models, <code><a href="../reference/select_parameters.html">select_parameters()</a></code> uses the <strong>projpred</strong> package to select the best parameters for the model.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://mc-stan.org/rstanarm">rstanarm</a></span>)
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(
-  <span class="kw">mpg</span> <span class="op">~</span> <span class="kw">.</span>, data = <span class="kw">mtcars</span>,
-  iter = <span class="fl">500</span>, refresh = <span class="fl">0</span>, verbose = <span class="fl">FALSE</span>
-)
-<span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span>(<span class="kw">model</span>, cross_validation = <span class="fl">TRUE</span>)
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/">rstanarm</a></span><span class="op">)</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span>
+  <span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span>,
+  iter <span class="op">=</span> <span class="fl">500</span>, refresh <span class="op">=</span> <span class="fl">0</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span>
+<span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span>, cross_validation <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; stan_glm
 #&gt;  family:       gaussian [identity]
 #&gt;  formula:      mpg ~ wt

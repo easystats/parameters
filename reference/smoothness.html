@@ -170,7 +170,7 @@
     <p>Quantify the smoothness of a vector</p>
     </div>
 
-    <pre class="usage"><span class='fu'>smoothness</span>(<span class='kw'>x</span>, method = <span class='st'>"cor"</span>, lag = <span class='fl'>1</span>, iterations = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>smoothness</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"cor"</span>, lag <span class='op'>=</span> <span class='fl'>1</span>, iterations <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,12 +205,12 @@
     <p>https://stats.stackexchange.com/questions/24607/how-to-measure-smoothness-of-a-time-series-in-r</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> (<span class='op'>-</span><span class='fl'>10</span><span class='op'>:</span><span class='fl'>10</span>)<span class='op'>^</span><span class='fl'>3</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>21</span>, <span class='fl'>0</span>, <span class='fl'>100</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>)
-</div><div class='img'><img src='smoothness-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>smoothness</span>(<span class='kw'>x</span>, method = <span class='st'>"cor"</span>)
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>3</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>21</span>, <span class='fl'>0</span>, <span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='img'><img src='smoothness-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>smoothness</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"cor"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.8760694
 #&gt; attr(,"class")
-#&gt; [1] "parameters_smoothness" "numeric"              </div><div class='input'><span class='fu'>smoothness</span>(<span class='kw'>x</span>, method = <span class='st'>"diff"</span>)
+#&gt; [1] "parameters_smoothness" "numeric"              </div><div class='input'><span class='fu'>smoothness</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"diff"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 2.074428
 #&gt; attr(,"class")
 #&gt; [1] "parameters_smoothness" "numeric"              </div></pre>

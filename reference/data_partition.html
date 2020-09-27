@@ -170,7 +170,7 @@
     <p>Creates a training and a test set based on a dataframe. Can also be stratified (i.e., evenly spread a given factor) using the <code>group</code> argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>data_partition</span>(<span class='kw'>x</span>, training_proportion = <span class='fl'>0.7</span>, group = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>data_partition</span><span class='op'>(</span><span class='va'>x</span>, training_proportion <span class='op'>=</span> <span class='fl'>0.7</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,6 +187,10 @@
       <th>group</th>
       <td><p>A character vector indicating the name(s) of the column(s) used for stratified partitioning.</p></td>
     </tr>
+    <tr>
+      <th>seed</th>
+      <td><p>A random number generator seed. Enter an integer (e.g., 123) so that the random sampling will be the same each time you run the function.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -194,10 +198,10 @@
     <p>A list of two data frames, named <code>test</code> and <code>training</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>iris</span>
-<span class='kw'>df</span><span class='op'>$</span><span class='kw'>Smell</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Strong"</span>, <span class='st'>"Light"</span>), <span class='fl'>75</span>)
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>iris</span>
+<span class='va'>df</span><span class='op'>$</span><span class='va'>Smell</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Strong"</span>, <span class='st'>"Light"</span><span class='op'>)</span>, <span class='fl'>75</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>data_partition</span>(<span class='kw'>df</span>))
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>data_partition</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 61           5.0         2.0          3.5         1.0 versicolor Strong
@@ -353,7 +357,7 @@
 #&gt; 143          5.8         2.7          5.1         1.9  virginica Strong
 #&gt; 148          6.5         3.0          5.2         2.0  virginica  Light
 #&gt; 149          6.2         3.4          5.4         2.3  virginica Strong
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>data_partition</span>(<span class='kw'>df</span>, group = <span class='st'>"Species"</span>))
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>data_partition</span><span class='op'>(</span><span class='va'>df</span>, group <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 28           5.2         3.5          1.5         0.2     setosa  Light
@@ -509,7 +513,7 @@
 #&gt; 144          6.8         3.2          5.9         2.3  virginica  Light
 #&gt; 147          6.3         2.5          5.0         1.9  virginica Strong
 #&gt; 148          6.5         3.0          5.2         2.0  virginica  Light
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>data_partition</span>(<span class='kw'>df</span>, group = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Smell"</span>)))
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>data_partition</span><span class='op'>(</span><span class='va'>df</span>, group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Species"</span>, <span class='st'>"Smell"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 38           4.9         3.6          1.4         0.1     setosa  Light

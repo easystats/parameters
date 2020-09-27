@@ -170,29 +170,29 @@
     <p>Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>simulate_parameters</span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>simulate_parameters</span>(
-  <span class='kw'>model</span>,
-  iterations = <span class='fl'>1000</span>,
-  centrality = <span class='st'>"median"</span>,
-  ci = <span class='fl'>0.95</span>,
-  ci_method = <span class='st'>"quantile"</span>,
-  test = <span class='st'>"p-value"</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>simulate_parameters</span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
+  centrality <span class='op'>=</span> <span class='st'>"median"</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  ci_method <span class='op'>=</span> <span class='st'>"quantile"</span>,
+  test <span class='op'>=</span> <span class='st'>"p-value"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for glmmTMB</span>
-<span class='fu'>simulate_parameters</span>(
-  <span class='kw'>model</span>,
-  iterations = <span class='fl'>1000</span>,
-  centrality = <span class='st'>"median"</span>,
-  ci = <span class='fl'>0.95</span>,
-  ci_method = <span class='st'>"quantile"</span>,
-  test = <span class='st'>"p-value"</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>simulate_parameters</span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
+  centrality <span class='op'>=</span> <span class='st'>"median"</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  ci_method <span class='op'>=</span> <span class='st'>"quantile"</span>,
+  test <span class='op'>=</span> <span class='st'>"p-value"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -221,9 +221,9 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
     <tr>
       <th>ci_method</th>
       <td><p>The type of index used for Credible Interval. Can be
-<code>"HDI"</code> (default, see <code><a href='https://rdrr.io/pkg/bayestestR/man/hdi.html'>hdi</a></code>), <code>"ETI"</code>
-(see <code><a href='https://rdrr.io/pkg/bayestestR/man/eti.html'>eti</a></code>) or <code>"SI"</code>
-(see <code><a href='https://rdrr.io/pkg/bayestestR/man/si.html'>si</a></code>).</p></td>
+<code>"HDI"</code> (default, see <code><a href='https://easystats.github.io/bayestestR/reference/hdi.html'>hdi</a></code>), <code>"ETI"</code>
+(see <code><a href='https://easystats.github.io/bayestestR/reference/eti.html'>eti</a></code>) or <code>"SI"</code>
+(see <code><a href='https://easystats.github.io/bayestestR/reference/si.html'>si</a></code>).</p></td>
     </tr>
     <tr>
       <th>test</th>
@@ -232,7 +232,7 @@ list with one or more of these options: <code>"p_direction"</code> (or <code>"pd
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
 <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code><a href='https://rdrr.io/pkg/bayestestR/man/rope.html'>rope</a></code> or <code><a href='https://rdrr.io/pkg/bayestestR/man/p_direction.html'>p_direction</a></code>) and its results
+(e.g. <code><a href='https://easystats.github.io/bayestestR/reference/rope.html'>rope</a></code> or <code><a href='https://easystats.github.io/bayestestR/reference/p_direction.html'>p_direction</a></code>) and its results
 included in the summary output.</p></td>
     </tr>
     </table>
@@ -265,10 +265,10 @@ included in the summary output.</p></td>
     <div class='dont-index'><p><code><a href='bootstrap_model.html'>bootstrap_model</a></code>, <code><a href='bootstrap_parameters.html'>bootstrap_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
 
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
-<span class='fu'>simulate_parameters</span>(<span class='kw'>model</span>)
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Width</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Parameter                     | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------------------------
 #&gt; (Intercept)                   |        3.53 | [ 3.21,  3.84] | &lt; .001
@@ -279,16 +279,16 @@ included in the summary output.</p></td>
 #&gt; Speciesversicolor:Petal.Width |       -0.76 | [-1.76,  0.33] | 0.174 
 #&gt; Speciesvirginica:Petal.Width  |       -0.38 | [-1.35,  0.61] | 0.454 </div><div class='input'>
 <span class='co'># \donttest{</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span>)) {
-  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
-    <span class='kw'>count</span> <span class='op'>~</span> <span class='kw'>spp</span> <span class='op'>+</span> <span class='kw'>mined</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>site</span>),
-    ziformula = <span class='op'>~</span><span class='kw'>mined</span>,
-    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
-    data = <span class='kw'>Salamanders</span>
-  )
-  <span class='fu'>simulate_parameters</span>(<span class='kw'>model</span>, centrality = <span class='st'>"mean"</span>)
-  <span class='fu'>simulate_parameters</span>(<span class='kw'>model</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.8</span>, <span class='fl'>.95</span>), component = <span class='st'>"zero_inflated"</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span><span class='op'>(</span>
+    <span class='va'>count</span> <span class='op'>~</span> <span class='va'>spp</span> <span class='op'>+</span> <span class='va'>mined</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>site</span><span class='op'>)</span>,
+    ziformula <span class='op'>=</span> <span class='op'>~</span><span class='va'>mined</span>,
+    family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span><span class='op'>(</span><span class='op'>)</span>,
+    data <span class='op'>=</span> <span class='va'>Salamanders</span>
+  <span class='op'>)</span>
+  <span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, centrality <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span>
+  <span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.8</span>, <span class='fl'>.95</span><span class='op'>)</span>, component <span class='op'>=</span> <span class='st'>"zero_inflated"</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; Parameter   | Coefficient |    CI |         80% CI | 95% CI |      p
 #&gt; --------------------------------------------------------------------
 #&gt; (Intercept) |        0.80 | 80.00 | [ 0.45,  1.13] |        | 0.002 

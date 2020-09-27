@@ -171,7 +171,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mira</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, ci = <span class='fl'>0.95</span>, exponentiate = <span class='fl'>FALSE</span>, p_adjust = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>, p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,13 +205,13 @@
   of multiple imputed repeated regression analyses.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/stefvanbuuren/mice'>"mice"</a></span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>nhanes2</span>)
-  <span class='kw'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mice/man/mice.html'>mice</a></span>(<span class='kw'>nhanes2</span>)
-  <span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(data = <span class='kw'>imp</span>, exp = <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>bmi</span> <span class='op'>~</span> <span class='kw'>age</span> <span class='op'>+</span> <span class='kw'>hyp</span> <span class='op'>+</span> <span class='kw'>chl</span>))
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>fit</span>)
-}
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/stefvanbuuren/mice'>"mice"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>nhanes2</span><span class='op'>)</span>
+  <span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mice/man/mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span><span class='op'>)</span>
+  <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: mice</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘mice’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
@@ -243,24 +243,24 @@
 #&gt;   5   4  bmi  hyp  chl
 #&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |          95% CI |     t |    df |      p
 #&gt; ---------------------------------------------------------------------------
-#&gt; (Intercept) |       18.26 | 3.41 | [ 11.10, 25.41] |  5.35 | 18.26 | &lt; .001
-#&gt; age [40-59] |       -5.49 | 1.68 | [ -9.01, -1.97] | -3.27 | 18.26 | 0.004 
-#&gt; age [60-99] |       -7.16 | 2.47 | [-12.35, -1.98] | -2.90 | 18.26 | 0.009 
-#&gt; hyp [yes]   |        2.80 | 1.75 | [ -0.87,  6.46] |  1.60 | 18.26 | 0.126 
-#&gt; chl         |        0.06 | 0.02 | [  0.01,  0.10] |  2.85 | 18.26 | 0.011 </div><div class='input'>
+#&gt; (Intercept) |       20.06 | 3.39 | [ 12.94, 27.19] |  5.91 | 18.26 | &lt; .001
+#&gt; age [40-59] |       -5.00 | 2.16 | [ -9.54, -0.47] | -2.31 | 18.26 | 0.032 
+#&gt; age [60-99] |       -6.61 | 2.25 | [-11.34, -1.88] | -2.93 | 18.26 | 0.009 
+#&gt; hyp [yes]   |        2.35 | 3.41 | [ -4.81,  9.50] |  0.69 | 18.26 | 0.500 
+#&gt; chl         |        0.05 | 0.02 | [  0.01,  0.09] |  2.55 | 18.26 | 0.020 </div><div class='input'>
 <span class='co'># model_parameters() also works for models that have no "tidy"-method in mice</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/stefvanbuuren/mice'>"mice"</a></span>) <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"gee"</span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>warpbreaks</span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1234</span>)
-  <span class='kw'>warpbreaks</span><span class='op'>$</span><span class='kw'>tension</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>warpbreaks</span>), size = <span class='fl'>10</span>)] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
-  <span class='kw'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mice/man/mice.html'>mice</a></span>(<span class='kw'>warpbreaks</span>)
-  <span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(data = <span class='kw'>imp</span>, expr = <span class='fu'><a href='https://rdrr.io/pkg/gee/man/gee.html'>gee</a></span>(<span class='kw'>breaks</span> <span class='op'>~</span> <span class='kw'>tension</span>, id = <span class='kw'>wool</span>))
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/stefvanbuuren/mice'>"mice"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"gee"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+  <span class='va'>warpbreaks</span><span class='op'>$</span><span class='va'>tension</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
+  <span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mice/man/mice.html'>mice</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span>
+  <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, expr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/gee/man/gee.html'>gee</a></span><span class='op'>(</span><span class='va'>breaks</span> <span class='op'>~</span> <span class='va'>tension</span>, id <span class='op'>=</span> <span class='va'>wool</span><span class='op'>)</span><span class='op'>)</span>
 
   <span class='co'># does not work:</span>
   <span class='co'># summary(pool(fit))</span>
 
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>fit</span>)
-}
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: gee</span></div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  tension
@@ -298,14 +298,14 @@
 #&gt; tensionM    |      -11.24 | 4.31 | [-19.67, -2.80] | -2.61 | 0.009 
 #&gt; tensionH    |      -13.74 | 3.98 | [-21.54, -5.93] | -3.45 | &lt; .001</div><div class='input'>
 <span class='co'># and it works with pooled results</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/stefvanbuuren/mice'>"mice"</a></span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"nhanes2"</span>)
-  <span class='kw'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mice/man/mice.html'>mice</a></span>(<span class='kw'>nhanes2</span>)
-  <span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(data = <span class='kw'>imp</span>, exp = <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>bmi</span> <span class='op'>~</span> <span class='kw'>age</span> <span class='op'>+</span> <span class='kw'>hyp</span> <span class='op'>+</span> <span class='kw'>chl</span>))
-  <span class='kw'>pooled</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mice/man/pool.html'>pool</a></span>(<span class='kw'>fit</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/stefvanbuuren/mice'>"mice"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"nhanes2"</span><span class='op'>)</span>
+  <span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mice/man/mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span><span class='op'>)</span>
+  <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>pooled</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mice/man/pool.html'>pool</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
 
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>pooled</span>)
-}
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>pooled</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl

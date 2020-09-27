@@ -170,7 +170,7 @@
     <p>Bootstrap a statistical model n times to return a data frame of estimates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bootstrap_model</span>(<span class='kw'>model</span>, iterations = <span class='fl'>1000</span>, verbose = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>bootstrap_model</span><span class='op'>(</span><span class='va'>model</span>, iterations <span class='op'>=</span> <span class='fl'>1000</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,8 +202,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>bootstrap_model</span>(<span class='kw'>model</span>))
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>bootstrap_model</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   (Intercept)        wt       cyl
 #&gt; 1    38.32019 -3.268411 -1.387621
 #&gt; 2    38.59563 -3.205922 -1.295143

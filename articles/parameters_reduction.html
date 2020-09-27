@@ -135,9 +135,8 @@
 <a href="#quick-and-exploratory-method" class="anchor"></a>Quick and Exploratory Method</h2>
 <p>Let’s start by fitting a multiple regression with the <code>attitude</code> dataset, available is base R, to predict the overall <strong>rating</strong> by employees of their organization with the remaining variables (handling of employee <strong>complaints</strong>, special <strong>privileges</strong>, opportunity of <strong>learning</strong>, <strong>raises</strong>, a feedback considered too <strong>critical</strong> and opportunity of <strong>advancement</strong>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">rating</span> <span class="op">~</span> <span class="kw">.</span>, data = <span class="kw">attitude</span>)
-<span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>(<span class="kw">model</span>)
-</pre></div>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">attitude</span><span class="op">)</span>
+<span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; Parameter   | Coefficient |    SE |          95% CI |     t | df |      p
 #&gt; -------------------------------------------------------------------------
 #&gt; (Intercept) |       10.79 | 11.59 | [-13.19, 34.76] |  0.93 | 23 | 0.362 
@@ -149,9 +148,8 @@
 #&gt; advance     |       -0.22 |  0.18 | [ -0.59,  0.15] | -1.22 | 23 | 0.236</code></pre>
 <p>We can explore a reduction of the number of parameters with the <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">newmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span>(<span class="kw">model</span>)
-<span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>(<span class="kw">newmodel</span>)
-</pre></div>
+<span class="va">newmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">newmodel</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; Parameter                                                              | Coefficient |   SE |         95% CI |     t | df |      p
 #&gt; ----------------------------------------------------------------------------------------------------------------------------------
 #&gt; (Intercept)                                                            |       64.63 | 1.57 | [61.41, 67.85] | 41.19 | 27 | &lt; .001
@@ -163,9 +161,8 @@
 </blockquote>
 <p>This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is “<strong>PCA</strong>”, but other are available via the <code>method</code> argument, such as “<strong>cMDS</strong>”, “<strong>DRR</strong>” or “<strong>ICA</strong>”). Then, it names this new dimensions using the original variables that <em>correlate</em> the most with it. For instance, a variable named ‘V1_0.97/V4_-0.88’ means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span>(<span class="kw">model</span>, method = <span class="st">"cMDS"</span>) <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>()
-</pre></div>
+<span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"cMDS"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; Parameter                                                 | Coefficient |   SE |         95% CI |     t | df |      p
 #&gt; ---------------------------------------------------------------------------------------------------------------------
 #&gt; (Intercept)                                               |       64.63 | 1.41 | [61.73, 67.53] | 45.80 | 26 | &lt; .001
@@ -181,9 +178,8 @@
 <p>PCA is a widely used procedure that lies in-between dimension reduction and structural modelling. Indeed, one of the way of reducing the number of predictors is to extract a new set of uncorrelated variables that will <em>represent</em> variance of your initial dataset. But how the original variables relate between themselves can also be a question on its own.</p>
 <p>We can apply the <code><a href="../reference/principal_components.html">principal_components()</a></code> function to do the the predictors of the model:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/principal_components.html">principal_components</a></span>(<span class="kw">insight</span>::<span class="fu"><a href="https://rdrr.io/pkg/insight/man/get_predictors.html">get_predictors</a></span>(<span class="kw">model</span>), n = <span class="st">"auto"</span>)
-<span class="kw">pca</span>
-</pre></div>
+<span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_predictors.html">get_predictors</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span>
+<span class="va">pca</span></pre></div>
 <pre><code>#&gt; # Loadings from Principal Component Analysis (no rotation)
 #&gt; 
 #&gt; Variable   |  PC1 | Complexity
@@ -197,16 +193,14 @@
 #&gt; 
 #&gt; The unique principal component accounted for 52.82% of the total variance of the original data.</code></pre>
 <p>The <code>principal_component()</code> function automatically selected one component (if the number of components is not specified, this function uses <a href="https://easystats.github.io/parameters/reference/n_factors.html"><code>n_factors()</code></a> to estimate the optimal number to keep) and returned the <strong>loadings</strong>, i.e., the relationship with all of the original variables.</p>
-<p>As we can see here, it seems that our new component captured the essence (more than half of the total variance present in the original dataset) of all our other variables together. We can <strong>extract</strong> the values of this component for each of our observation using the <code><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">predict()</a></code> method and add in the response variable of our initial dataset.</p>
+<p>As we can see here, it seems that our new component captured the essence (more than half of the total variance present in the original dataset) of all our other variables together. We can <strong>extract</strong> the values of this component for each of our observation using the <code><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html">predict()</a></code> method and add in the response variable of our initial dataset.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="kw">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">predict</a></span>(<span class="kw">pca</span>)
-<span class="kw">newdata</span><span class="op">$</span><span class="kw">rating</span> <span class="op">&lt;-</span> <span class="kw">attitude</span><span class="op">$</span><span class="kw">rating</span>
-</pre></div>
+<span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html">predict</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span>
+<span class="va">newdata</span><span class="op">$</span><span class="va">rating</span> <span class="op">&lt;-</span> <span class="va">attitude</span><span class="op">$</span><span class="va">rating</span></pre></div>
 <p>We can know update the model with this new component:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span>(<span class="kw">model</span>, <span class="kw">rating</span> <span class="op">~</span> <span class="kw">PC1</span>, data = <span class="kw">newdata</span>) <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span>()
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">rating</span> <span class="op">~</span> <span class="va">PC1</span>, data <span class="op">=</span> <span class="va">newdata</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
 #&gt; -----------------------------------------------------------------------
 #&gt; (Intercept) |       64.63 | 1.67 | [61.22, 68.05] | 38.78 | 28 | &lt; .001
@@ -217,13 +211,12 @@
 <p>You can also use different packages for models, such as <a href="https://cran.r-project.org/package=psych"><code>psych</code></a> <span class="citation">(Revelle 2018)</span> or <a href="http://factominer.free.fr/"><code>FactoMineR</code></a> for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility, control and details when running such procedures. Thus, the functions from this package are <strong>fully supported</strong> by <code>parameters</code> through the <code><a href="../reference/model_parameters.html">model_parameters()</a></code> function.</p>
 <p>As such, the above analysis can be fully reproduced as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://personality-project.org/r/psych">psych</a></span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span>
 
 <span class="co"># Fit the PCA</span>
-<span class="kw">pca</span> <span class="op">&lt;-</span> <span class="kw">psych</span>::<span class="fu"><a href="https://rdrr.io/pkg/psych/man/principal.html">principal</a></span>(<span class="kw">attitude</span>, nfactors = <span class="fl">1</span>) <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>()
-<span class="kw">pca</span>
-</pre></div>
+<span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/principal.html">principal</a></span><span class="op">(</span><span class="va">attitude</span>, nfactors <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">pca</span></pre></div>
 <pre><code>#&gt; # Rotated loadings from Principal Component Analysis (varimax-rotation)
 #&gt; 
 #&gt; Variable   |  PC1 | Complexity | Uniqueness
@@ -240,11 +233,10 @@
 <p><em>Note:</em> By default, <code><a href="https://rdrr.io/pkg/psych/man/principal.html">psych::principal()</a></code> uses a <strong>varimax</strong> rotation to extract rotated components, possibly leading to discrepancies in the results.</p>
 <p>Finally, refit the model:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/cbind.html">cbind</a></span>(<span class="kw">attitude</span>, <span class="fu"><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">predict</a></span>(<span class="kw">pca</span>))
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/cbind.html">cbind</a></span><span class="op">(</span><span class="va">attitude</span>, <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html">predict</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span>(<span class="kw">model</span>, <span class="kw">rating</span> <span class="op">~</span> <span class="kw">PC1</span>, data = <span class="kw">df</span>) <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span>()
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">rating</span> <span class="op">~</span> <span class="va">PC1</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
 #&gt; -----------------------------------------------------------------------
 #&gt; (Intercept) |       64.63 | 1.37 | [61.83, 67.44] | 47.23 | 28 | &lt; .001

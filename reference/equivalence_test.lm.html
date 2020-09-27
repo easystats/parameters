@@ -171,27 +171,27 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for lm</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(
-  <span class='kw'>x</span>,
-  range = <span class='st'>"default"</span>,
-  ci = <span class='fl'>0.95</span>,
-  rule = <span class='st'>"bayes"</span>,
-  p_values = <span class='fl'>FALSE</span>,
-  verbose = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  range <span class='op'>=</span> <span class='st'>"default"</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  rule <span class='op'>=</span> <span class='st'>"bayes"</span>,
+  p_values <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for merMod</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(
-  <span class='kw'>x</span>,
-  range = <span class='st'>"default"</span>,
-  ci = <span class='fl'>0.95</span>,
-  rule = <span class='st'>"bayes"</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>),
-  p_values = <span class='fl'>FALSE</span>,
-  verbose = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  range <span class='op'>=</span> <span class='st'>"default"</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  rule <span class='op'>=</span> <span class='st'>"bayes"</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>,
+  p_values <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -244,7 +244,7 @@ statistics falls into the critical region(s), or fail to reject this
 hypothesis. In the latter case, all we can say is that no significant effect
 was observed, but one cannot conclude that the null hypothesis is true.&#8221;
 (<cite>Pernet 2017</cite>). One way to address this issues without Bayesian methods
-is <em>Equivalence Testing</em>, as implemented in <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test()</a></code>.
+is <em>Equivalence Testing</em>, as implemented in <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test()</a></code>.
 While you either can reject the null hypothesis or claim an inconclusive result
 in NHST, the equivalence test adds a third category, <em>"accept"</em>. Roughly
 speaking, the idea behind equivalence testing in a frequentist framework is
@@ -257,7 +257,7 @@ the equivalence test.</p>
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Calculation of equivalence testing</h3>
 <p></p><dl>
     <dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the &#8220;HDI+ROPE decision rule&#8221; <cite>(Kruschke, 2014, 2018)</cite>
-      used for the <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>Bayesian counterpart</a></code>.
+      used for the <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>Bayesian counterpart</a></code>.
       This means, if the confidence intervals are completely outside the ROPE,
       the "null hypothesis" for this parameter is "rejected". If the ROPE
       completely covers the CI, the null hypothesis is accepted. Else, it's
@@ -292,7 +292,7 @@ the equivalence test.</p>
   that represents &#8220;the proportion of data-supported hypotheses
   that are also null hypotheses&#8221; <cite>(Blume et al. 2018)</cite>. This statistic
   is actually computed in the same way as the percentage inside the ROPE as
-  returned by <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test()</a></code> (see <cite>Lakens and Delacre 2020</cite>
+  returned by <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test()</a></code> (see <cite>Lakens and Delacre 2020</cite>
   for details on computation of the SGPV). Thus, the <code>"inside ROPE"</code>
   column reflects the SGPV.</p>
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Adjustment for multiple testing</h3>
@@ -303,7 +303,7 @@ the equivalence test.</p>
 </ul><p>All p-values are then adjusted for multiple testing (using <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> with <code>method = "fdr"</code>).</p>
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>ROPE range</h3>
 <p>Some attention is required for finding suitable values for the ROPE limits
-  (argument <code>range</code>). See 'Details' in <code><a href='https://rdrr.io/pkg/bayestestR/man/rope_range.html'>rope_range</a></code>
+  (argument <code>range</code>). See 'Details' in <code><a href='https://easystats.github.io/bayestestR/reference/rope_range.html'>rope_range</a></code>
   for further information.</p>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -324,15 +324,15 @@ the equivalence test.</p>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>For more details, see <code><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test()</a></code>.
+    <div class='dont-index'><p>For more details, see <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test()</a></code>.
   Further readings can be found in the references.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>qol_cancer</span>)
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>QoL</span> <span class='op'>~</span> <span class='kw'>time</span> <span class='op'>+</span> <span class='kw'>age</span> <span class='op'>+</span> <span class='kw'>education</span>, data = <span class='kw'>qol_cancer</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qol_cancer</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>QoL</span> <span class='op'>~</span> <span class='va'>time</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>education</span>, data <span class='op'>=</span> <span class='va'>qol_cancer</span><span class='op'>)</span>
 
 <span class='co'># default rule</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>)
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-1.99 1.99]
@@ -345,7 +345,7 @@ the equivalence test.</p>
 #&gt;  educationhigh  Rejected      0.00 % [ 9.33 19.38]
 #&gt; </div><div class='input'>
 <span class='co'># conditional equivalence test</span>
-<span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>, rule = <span class='st'>"cet"</span>)
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test</a></span><span class='op'>(</span><span class='va'>model</span>, rule <span class='op'>=</span> <span class='st'>"cet"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Conditional Equivalence Testing
 #&gt; 
 #&gt; </span><span>  ROPE: [-1.99 1.99]
@@ -358,10 +358,10 @@ the equivalence test.</p>
 #&gt;  educationhigh  Rejected      0.00 % [10.14 18.57]
 #&gt; </div><div class='input'>
 <span class='co'># plot method</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://easystats.github.io/see'>"see"</a></span>)) {
-  <span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/bayestestR/man/equivalence_test.html'>equivalence_test</a></span>(<span class='kw'>model</span>)
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>result</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://easystats.github.io/see/'>"see"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: see</span></div><div class='img'><img src='equivalence_test.lm-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

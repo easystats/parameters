@@ -171,13 +171,13 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for lavaan</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(
-  <span class='kw'>model</span>,
-  ci = <span class='fl'>0.95</span>,
-  standardize = <span class='fl'>FALSE</span>,
-  type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"regression"</span>, <span class='st'>"correlation"</span>, <span class='st'>"loading"</span>, <span class='st'>"defined"</span>),
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  standardize <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"regression"</span>, <span class='st'>"correlation"</span>, <span class='st'>"loading"</span>, <span class='st'>"defined"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -228,23 +228,23 @@ exogenous covariates. See <code><a href='https://rdrr.io/pkg/lavaan/man/standard
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
 
 <span class='co'># lavaan -------------------------------------</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='http://lavaan.org'>"lavaan"</a></span>)) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://lavaan.org'>"lavaan"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
   <span class='co'># Confirmatory Factor Analysis (CFA) ---------</span>
 
-  <span class='kw'>structure</span> <span class='op'>&lt;-</span> <span class='st'>" visual  =~ x1 + x2 + x3
+  <span class='va'>structure</span> <span class='op'>&lt;-</span> <span class='st'>" visual  =~ x1 + x2 + x3
                  textual =~ x4 + x5 + x6
                  speed   =~ x7 + x8 + x9 "</span>
-  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>lavaan</span>::<span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>cfa</a></span>(<span class='kw'>structure</span>, data = <span class='kw'>HolzingerSwineford1939</span>)
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, standardize = <span class='fl'>TRUE</span>)
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>cfa</a></span><span class='op'>(</span><span class='va'>structure</span>, data <span class='op'>=</span> <span class='va'>HolzingerSwineford1939</span><span class='op'>)</span>
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
   <span class='co'># Structural Equation Model (SEM) ------------</span>
 
-  <span class='kw'>structure</span> <span class='op'>&lt;-</span> <span class='st'>"
+  <span class='va'>structure</span> <span class='op'>&lt;-</span> <span class='st'>"
     # latent variable definitions
       ind60 =~ x1 + x2 + x3
       dem60 =~ y1 + a*y2 + b*y3 + c*y4
@@ -259,10 +259,10 @@ exogenous covariates. See <code><a href='https://rdrr.io/pkg/lavaan/man/standard
       y4 ~~ y8
       y6 ~~ y8
   "</span>
-  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>lavaan</span>::<span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/sem.html'>sem</a></span>(<span class='kw'>structure</span>, data = <span class='kw'>PoliticalDemocracy</span>)
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, standardize = <span class='fl'>TRUE</span>)
-}
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/sem.html'>sem</a></span><span class='op'>(</span><span class='va'>structure</span>, data <span class='op'>=</span> <span class='va'>PoliticalDemocracy</span><span class='op'>)</span>
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loading 
 #&gt; 
 #&gt; </span><span>Link            | Coefficient |   SE |       95% CI |      p

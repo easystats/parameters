@@ -170,13 +170,13 @@
     <p>An approximate F-test based on the Kenward-Roger (1997) approach.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ci_kenward</span>(<span class='kw'>model</span>, ci = <span class='fl'>0.95</span>)
+    <pre class="usage"><span class='fu'>ci_kenward</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 
-<span class='fu'>dof_kenward</span>(<span class='kw'>model</span>)
+<span class='fu'>dof_kenward</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 
-<span class='fu'>p_value_kenward</span>(<span class='kw'>model</span>, dof = <span class='kw'>NULL</span>)
+<span class='fu'>p_value_kenward</span><span class='op'>(</span><span class='va'>model</span>, dof <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>se_kenward</span>(<span class='kw'>model</span>)</pre>
+<span class='fu'>se_kenward</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -225,10 +225,10 @@ of freedom based on Satterthwaite's method or the "m-l-1" rule.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
-  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Petal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Length</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>), data = <span class='kw'>iris</span>)
-  <span class='fu'>p_value_kenward</span>(<span class='kw'>model</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+  <span class='fu'>p_value_kenward</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt;      Parameter            p
 #&gt; 1  (Intercept) 9.605137e-01
 #&gt; 2 Sepal.Length 8.598429e-29</div><div class='input'><span class='co'># }</span>

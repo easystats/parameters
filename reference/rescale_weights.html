@@ -182,7 +182,7 @@
    multilevel modelling.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rescale_weights</span>(<span class='kw'>data</span>, <span class='kw'>group</span>, <span class='kw'>probability_weights</span>, nest = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>rescale_weights</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>group</span>, <span class='va'>probability_weights</span>, nest <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -249,22 +249,22 @@ from each group level of the variables in <code>group</code>.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/strengejacke/sjstats'>"sjstats"</a></span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>nhanes_sample</span>, package = <span class='st'>"sjstats"</span>)
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='kw'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>))
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/strengejacke/sjstats'>"sjstats"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>nhanes_sample</span>, package <span class='op'>=</span> <span class='st'>"sjstats"</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>rescale_weights</span><span class='op'>(</span><span class='va'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span><span class='op'>)</span><span class='op'>)</span>
 
   <span class='co'># also works with multiple group-variables...</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>rescale_weights</span>(<span class='kw'>nhanes_sample</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>), <span class='st'>"WTINT2YR"</span>))
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>rescale_weights</span><span class='op'>(</span><span class='va'>nhanes_sample</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span><span class='op'>)</span>, <span class='st'>"WTINT2YR"</span><span class='op'>)</span><span class='op'>)</span>
 
   <span class='co'># or nested structures.</span>
-  <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>rescale_weights</span>(
-    data = <span class='kw'>nhanes_sample</span>,
-    group = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span>),
-    probability_weights = <span class='st'>"WTINT2YR"</span>,
-    nest = <span class='fl'>TRUE</span>
-  )
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>x</span>)
-}
+  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>rescale_weights</span><span class='op'>(</span>
+    data <span class='op'>=</span> <span class='va'>nhanes_sample</span>,
+    group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"SDMVSTRA"</span>, <span class='st'>"SDMVPSU"</span><span class='op'>)</span>,
+    probability_weights <span class='op'>=</span> <span class='st'>"WTINT2YR"</span>,
+    nest <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: sjstats</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘sjstats’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:metafor’:</span>
 #&gt; <span class='message'></span>
@@ -281,16 +281,16 @@ from each group level of the variables in <code>group</code>.</p></td>
 #&gt; 4     4 1.32        2        4       2       33 34998.53  0.7937824  0.5941006
 #&gt; 5     1 2.00        2        1       1       41 14746.45  0.4285939  0.3068214
 #&gt; 6     6 2.20        2        4       1       38 28232.10  0.6215579  0.4759935</div><div class='input'>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>) <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/strengejacke/sjstats'>"sjstats"</a></span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>nhanes_sample</span>, package = <span class='st'>"sjstats"</span>)
-  <span class='kw'>nhanes_sample</span> <span class='op'>&lt;-</span> <span class='fu'>rescale_weights</span>(<span class='kw'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>glmer</a></span>(
-    <span class='kw'>total</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='kw'>RIAGENDR</span>) <span class='op'>*</span> (<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='kw'>age</span>) <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='kw'>RIDRETH1</span>)) <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>SDMVPSU</span>),
-    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
-    data = <span class='kw'>nhanes_sample</span>,
-    weights = <span class='kw'>pweights_a</span>
-  )
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/strengejacke/sjstats'>"sjstats"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>nhanes_sample</span>, package <span class='op'>=</span> <span class='st'>"sjstats"</span><span class='op'>)</span>
+  <span class='va'>nhanes_sample</span> <span class='op'>&lt;-</span> <span class='fu'>rescale_weights</span><span class='op'>(</span><span class='va'>nhanes_sample</span>, <span class='st'>"SDMVSTRA"</span>, <span class='st'>"WTINT2YR"</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>glmer</a></span><span class='op'>(</span>
+    <span class='va'>total</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>RIAGENDR</span><span class='op'>)</span> <span class='op'>*</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>age</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>RIDRETH1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>SDMVPSU</span><span class='op'>)</span>,
+    family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span><span class='op'>(</span><span class='op'>)</span>,
+    data <span class='op'>=</span> <span class='va'>nhanes_sample</span>,
+    weights <span class='op'>=</span> <span class='va'>pweights_a</span>
+  <span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; Generalized linear mixed model fit by maximum likelihood (Laplace
 #&gt;   Approximation) [glmerMod]
 #&gt;  Family: poisson  ( log )

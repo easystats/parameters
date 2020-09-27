@@ -170,16 +170,16 @@
     <p>Simulate draws from a statistical model to return a data frame of estimates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>simulate_model</span>(<span class='kw'>model</span>, iterations = <span class='fl'>1000</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span>, iterations <span class='op'>=</span> <span class='fl'>1000</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for glmmTMB</span>
-<span class='fu'>simulate_model</span>(
-  <span class='kw'>model</span>,
-  iterations = <span class='fl'>1000</span>,
-  component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span>),
-  verbose = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>simulate_model</span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span><span class='op'>)</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -233,9 +233,9 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Width</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>))
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Width</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
 #&gt; 1    3.548538        -0.8002921        -2.705668   0.2420872    0.9952477
 #&gt; 2    3.430562        -0.8925972        -2.719864   0.6318340    0.9170112
@@ -251,16 +251,16 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 #&gt; 5                    -1.1524506                  -0.55884244
 #&gt; 6                    -0.6091065                  -0.02737427</div><div class='input'>
 <span class='co'># \donttest{</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span>)) {
-  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span>(
-    <span class='kw'>count</span> <span class='op'>~</span> <span class='kw'>spp</span> <span class='op'>+</span> <span class='kw'>mined</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>site</span>),
-    ziformula = <span class='op'>~</span><span class='kw'>mined</span>,
-    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span>(),
-    data = <span class='kw'>Salamanders</span>
-  )
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>))
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>simulate_model</span>(<span class='kw'>model</span>, component = <span class='st'>"zero_inflated"</span>))
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span><span class='op'>(</span>
+    <span class='va'>count</span> <span class='op'>~</span> <span class='va'>spp</span> <span class='op'>+</span> <span class='va'>mined</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>site</span><span class='op'>)</span>,
+    ziformula <span class='op'>=</span> <span class='op'>~</span><span class='va'>mined</span>,
+    family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span><span class='op'>(</span><span class='op'>)</span>,
+    data <span class='op'>=</span> <span class='va'>Salamanders</span>
+  <span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='st'>"zero_inflated"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt;   (Intercept)   minedno
 #&gt; 1   0.7878315 -1.604564
 #&gt; 2   0.4873132 -1.593576

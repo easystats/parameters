@@ -170,15 +170,15 @@
     <p>Compute Skewness and Kurtosis</p>
     </div>
 
-    <pre class="usage"><span class='fu'>skewness</span>(<span class='kw'>x</span>, na.rm = <span class='fl'>TRUE</span>, type = <span class='st'>"2"</span>, iterations = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>skewness</span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"2"</span>, iterations <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>kurtosis</span>(<span class='kw'>x</span>, na.rm = <span class='fl'>TRUE</span>, type = <span class='st'>"2"</span>, iterations = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'>kurtosis</span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"2"</span>, iterations <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for parameters_kurtosis</span>
-<span class='fu'><a href='print.html'>print</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>3</span>, test = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fl'>3</span>, test <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for parameters_skewness</span>
-<span class='fu'><a href='print.html'>print</a></span>(<span class='kw'>x</span>, digits = <span class='fl'>3</span>, test = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fl'>3</span>, test <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -262,10 +262,10 @@ tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>skewness</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))
+    <pre class="examples"><div class='input'><span class='fu'>skewness</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Skewness |    SE
 #&gt; ----------------
-#&gt; -0.113   | 0.077</div><div class='input'><span class='fu'>kurtosis</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))
+#&gt; -0.113   | 0.077</div><div class='input'><span class='fu'>kurtosis</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Kurtosis  |    SE
 #&gt; -----------------
 #&gt; 1.041e-04 | 0.154</div></pre>

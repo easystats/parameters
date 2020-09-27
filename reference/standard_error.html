@@ -170,68 +170,68 @@
     <p><code>standard_error()</code> attempts to return standard errors of model parameters, while <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> attempts to return robust standard errors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>standard_error</span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for factor</span>
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>, force = <span class='fl'>FALSE</span>, verbose = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>, method = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for merMod</span>
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>, effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>), method = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for glmmTMB</span>
-<span class='fu'>standard_error</span>(
-  <span class='kw'>model</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>),
-  component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span>),
-  <span class='kw'>...</span>
-)
+<span class='fu'>standard_error</span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for MixMod</span>
-<span class='fu'>standard_error</span>(
-  <span class='kw'>model</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>),
-  component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
-  <span class='kw'>...</span>
-)
+<span class='fu'>standard_error</span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for zeroinfl</span>
-<span class='fu'>standard_error</span>(
-  <span class='kw'>model</span>,
-  component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>),
-  method = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>standard_error</span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span><span class='op'>)</span>,
+  method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for coxph</span>
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>, method = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mixor</span>
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>, effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span>), <span class='kw'>...</span>)
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for clm2</span>
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span>), <span class='kw'>...</span>)
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for betareg</span>
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>), <span class='kw'>...</span>)
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for DirichletRegModel</span>
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>), <span class='kw'>...</span>)
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for poissonmfx</span>
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"marginal"</span>), <span class='kw'>...</span>)
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for betamfx</span>
-<span class='fu'>standard_error</span>(
-  <span class='kw'>model</span>,
-  component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>, <span class='st'>"marginal"</span>),
-  <span class='kw'>...</span>
-)
+<span class='fu'>standard_error</span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for averaging</span>
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>, component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"full"</span>), <span class='kw'>...</span>)</pre>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"full"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -293,8 +293,8 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <p>For Bayesian models (from <span class="pkg">rstanarm</span> or <span class="pkg">brms</span>), the standard error is the SD of the posterior samples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Petal.Length</span> <span class='op'>~</span> <span class='kw'>Sepal.Length</span> <span class='op'>*</span> <span class='kw'>Species</span>, data = <span class='kw'>iris</span>)
-<span class='fu'>standard_error</span>(<span class='kw'>model</span>)
+    <pre class="examples"><div class='input'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>*</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                        Parameter        SE
 #&gt; 1                    (Intercept) 0.5310388
 #&gt; 2                   Sepal.Length 0.1058237

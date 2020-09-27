@@ -174,6 +174,10 @@
 <ul>
 <li>
 <code><a href="../reference/print.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now names the coefficients column depending on the model type (i.e. <code>"Odds Ratios"</code> for logistic regression when <code>exponentiate = TRUE</code> etc.)</li>
+<li>
+<code><a href="../reference/print.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>show_sigma</code> argument, to show or hide information on the residual standard deviation.</li>
+<li>
+<code><a href="../reference/data_partition.html">data_partition()</a></code> gets a <code>seed</code> argument, to explicitely set the seed before random sampling of test and training data.</li>
 </ul>
 </div>
 </div>
@@ -318,7 +322,7 @@
 <h2 class="hasAnchor">
 <a href="#general-1" class="anchor"></a>General</h2>
 <ul>
-<li>We changed the computation of confidence intervals or standard errors, so these are now based on a t-distribution with degrees of freedom and not normal distribution assuming infinite degrees of freedom. This was implemented for most functions before and only affects few functions (like <code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> or CIs for standardized parameters from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when standardization method was <code>"posthoc"</code>).</li>
+<li>We changed the computation of confidence intervals or standard errors, so these are now based on a t-distribution with degrees of freedom and not normal distribution assuming infinite degrees of freedom. This was implemented for most functions before and only affects few functions (like <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test()</a></code> or CIs for standardized parameters from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when standardization method was <code>"posthoc"</code>).</li>
 </ul>
 </div>
 <div id="new-supported-models-2" class="section level2">
@@ -384,7 +388,7 @@
 <li>
 <code><a href="../reference/parameters_table.html">parameters_table()</a></code> and <code><a href="../reference/print.html">print.parameters_model()</a></code> now explicitly get arguments to define the digits for decimal places used in output.</li>
 <li>
-<code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="../reference/p_value.html">p_value()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>glmmTMB</em> models now also works for dispersion models.</li>
+<code><a href="https://easystats.github.io/bayestestR/reference/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="../reference/p_value.html">p_value()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>glmmTMB</em> models now also works for dispersion models.</li>
 </ul>
 </div>
 </div>
@@ -392,7 +396,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed issue in <code><a href="https://rdrr.io/pkg/bayestestR/man/equivalence_test.html">equivalence_test()</a></code> for mixed models.</li>
+<li>Fixed issue in <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test()</a></code> for mixed models.</li>
 <li>Fixed bug for <code>model_parameters.anova(..., eta_squared = "partial")</code> when called with non-mixed models.</li>
 <li>Fixed issue with wrong degrees of freedom in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>gam</em> models.</li>
 <li>Fixed issue with unused arguments in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
@@ -420,7 +424,7 @@
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now also transforms standard errors when <code>exponentiate = TRUE</code>.</li>
 <li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</li>
 <li>
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> gains a <code>type</code>-argument to compute type-1, type-2 or type-3 sums of squares.</li>
 <li>
@@ -434,7 +438,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/GLMMadaptive/man/methods.html">anova()</a></code> from <em>lmerTest</em> models.</li>
+<li>Fixed <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html">anova()</a></code> from <em>lmerTest</em> models.</li>
 </ul>
 </div>
 </div>
@@ -485,7 +489,7 @@
 <ul>
 <li>
 <code><a href="../reference/ci_kenward.html">p_value_kenward()</a></code>, <code><a href="../reference/ci_kenward.html">se_kenward()</a></code> etc. now give a warning when model was not fitted by REML.</li>
-<li>Added <code><a href="https://rdrr.io/pkg/bayestestR/man/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code> for <em>lavaan</em> and <em>blavaan</em> objects.</li>
+<li>Added <code><a href="https://easystats.github.io/bayestestR/reference/ci.html">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code> for <em>lavaan</em> and <em>blavaan</em> objects.</li>
 <li>Added <code><a href="../reference/standard_error.html">standard_error()</a></code> for <em>brmsfit</em> and <em>stanreg</em> objects.</li>
 </ul>
 </div>
@@ -594,7 +598,7 @@
 <li>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> when <code>df_method</code> was not set to default.</li>
 <li>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> and <code>model_parameters.gee()</code> when <code>robust = TRUE</code>.</li>
 <li>Fixed issues with <em>coxph</em> models with only one parameter.</li>
-<li>Fixed issue in <code><a href="https://rdrr.io/pkg/insight/man/format_p.html">format_p()</a></code> when argument <code>digits</code> was <code>"apa"</code>.</li>
+<li>Fixed issue in <code><a href="https://easystats.github.io/insight/reference/format_p.html">format_p()</a></code> when argument <code>digits</code> was <code>"apa"</code>.</li>
 <li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>zeroinfl</code>-models.</li>
 </ul>
 </div>

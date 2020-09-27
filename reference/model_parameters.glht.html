@@ -171,7 +171,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for glht</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>, ci = <span class='fl'>0.95</span>, exponentiate = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,7 +190,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://rdrr.io/pkg/bayestestR/man/describe_posterior.html'>describe_posterior</a></code>.</p></td>
+      <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
     </table>
 
@@ -200,21 +200,21 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='http://multcomp.R-forge.R-project.org'>"multcomp"</a></span>)) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://multcomp.R-forge.R-project.org'>"multcomp"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='co'># multiple linear model, swiss data</span>
-  <span class='kw'>lmod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Fertility</span> <span class='op'>~</span> <span class='kw'>.</span>, data = <span class='kw'>swiss</span>)
-  <span class='kw'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/multcomp/man/glht.html'>glht</a></span>(
-    model = <span class='kw'>lmod</span>,
-    linfct = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+  <span class='va'>lmod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Fertility</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>swiss</span><span class='op'>)</span>
+  <span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/multcomp/man/glht.html'>glht</a></span><span class='op'>(</span>
+    model <span class='op'>=</span> <span class='va'>lmod</span>,
+    linfct <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
       <span class='st'>"Agriculture = 0"</span>,
       <span class='st'>"Examination = 0"</span>,
       <span class='st'>"Education = 0"</span>,
       <span class='st'>"Catholic = 0"</span>,
       <span class='st'>"Infant.Mortality = 0"</span>
-    )
-  )
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>mod</span>)
-}
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: multcomp</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: mvtnorm</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘mvtnorm’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:mclust’:</span>
 #&gt; <span class='message'></span>
@@ -226,7 +226,7 @@
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    geyser</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:multimode’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    geyser</span></div><div class='output co'>#&gt; Parameter             | Coefficient |   SE |         95% CI |     t | df |      p
+#&gt; <span class='message'>    geyser</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no 'nobs' method is available</span></div><div class='output co'>#&gt; Parameter             | Coefficient |   SE |         95% CI |     t | df |      p
 #&gt; ---------------------------------------------------------------------------------
 #&gt; Agriculture == 0      |       -0.17 | 0.07 | [-0.36,  0.01] | -2.45 | 41 | 0.079 
 #&gt; Examination == 0      |       -0.26 | 0.25 | [-0.93,  0.41] | -1.02 | 41 | 0.785 

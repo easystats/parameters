@@ -170,27 +170,27 @@
     <p>This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>n_factors</span>(
-  <span class='kw'>x</span>,
-  type = <span class='st'>"FA"</span>,
-  rotation = <span class='st'>"varimax"</span>,
-  algorithm = <span class='st'>"default"</span>,
-  package = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"nFactors"</span>, <span class='st'>"psych"</span>),
-  cor = <span class='kw'>NULL</span>,
-  safe = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)
+    <pre class="usage"><span class='fu'>n_factors</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  type <span class='op'>=</span> <span class='st'>"FA"</span>,
+  rotation <span class='op'>=</span> <span class='st'>"varimax"</span>,
+  algorithm <span class='op'>=</span> <span class='st'>"default"</span>,
+  package <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nFactors"</span>, <span class='st'>"psych"</span><span class='op'>)</span>,
+  cor <span class='op'>=</span> <span class='cn'>NULL</span>,
+  safe <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>n_components</span>(
-  <span class='kw'>x</span>,
-  type = <span class='st'>"PCA"</span>,
-  rotation = <span class='st'>"varimax"</span>,
-  algorithm = <span class='st'>"default"</span>,
-  package = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"nFactors"</span>, <span class='st'>"psych"</span>),
-  cor = <span class='kw'>NULL</span>,
-  safe = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>n_components</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  type <span class='op'>=</span> <span class='st'>"PCA"</span>,
+  rotation <span class='op'>=</span> <span class='st'>"varimax"</span>,
+  algorithm <span class='op'>=</span> <span class='st'>"default"</span>,
+  package <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nFactors"</span>, <span class='st'>"psych"</span><span class='op'>)</span>,
+  cor <span class='op'>=</span> <span class='cn'>NULL</span>,
+  safe <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -254,14 +254,14 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
 
-<span class='fu'>n_factors</span>(<span class='kw'>mtcars</span>, type = <span class='st'>"PCA"</span>)
+<span class='fu'>n_factors</span><span class='op'>(</span><span class='va'>mtcars</span>, type <span class='op'>=</span> <span class='st'>"PCA"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
 #&gt; </span><span>The choice of 3 dimensions is supported by 5 (29.41%) methods out of 17 (Bartlett, CNG, SE Scree, R2, Velicer's MAP).</div><div class='input'>
-<span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'>n_factors</span>(<span class='kw'>mtcars</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>], type = <span class='st'>"FA"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw'>result</span>)
+<span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>n_factors</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, type <span class='op'>=</span> <span class='st'>"FA"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    n_Factors              Method       Family
 #&gt; 1          1             Bentler      Bentler
 #&gt; 2          1 Optimal coordinates        Scree
@@ -281,18 +281,18 @@
 #&gt; 16         2                  R2     Scree_SE
 #&gt; 17         2      BIC (adjusted)          BIC
 #&gt; 18         2                CRMS          Fit
-#&gt; 19         3    VSS complexity 2          VSS</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>result</span>)
+#&gt; 19         3    VSS complexity 2          VSS</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   n_Factors n_Methods
 #&gt; 1         1        12
 #&gt; 2         2         6
 #&gt; 3         3         1</div><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>n_factors</span>(<span class='kw'>mtcars</span>, type = <span class='st'>"PCA"</span>, package = <span class='st'>"all"</span>)
+<span class='fu'>n_factors</span><span class='op'>(</span><span class='va'>mtcars</span>, type <span class='op'>=</span> <span class='st'>"PCA"</span>, package <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'huge':</span>
 #&gt; <span class='message'>  method    from   </span>
 #&gt; <span class='message'>  plot.sim  BDgraph</span>
 #&gt; <span class='message'>  print.sim BDgraph</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
-#&gt; </span><span>The choice of 1 dimensions is supported by 5 (26.32%) methods out of 19 (t, p, Acceleration factor, EGA (glasso), VSS complexity 1).</div><div class='input'><span class='fu'>n_factors</span>(<span class='kw'>mtcars</span>, type = <span class='st'>"FA"</span>, algorithm = <span class='st'>"mle"</span>, package = <span class='st'>"all"</span>)
+#&gt; </span><span>The choice of 1 dimensions is supported by 5 (26.32%) methods out of 19 (t, p, Acceleration factor, EGA (glasso), VSS complexity 1).</div><div class='input'><span class='fu'>n_factors</span><span class='op'>(</span><span class='va'>mtcars</span>, type <span class='op'>=</span> <span class='st'>"FA"</span>, algorithm <span class='op'>=</span> <span class='st'>"mle"</span>, package <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
 #&gt; </span><span>The choice of 3 dimensions is supported by 7 (28.00%) methods out of 25 (Bartlett, CNG, SE Scree, R2, Velicer's MAP, BIC, BIC).</div><div class='input'><span class='co'># }</span>

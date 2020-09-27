@@ -174,10 +174,10 @@ consistent and the same for any model object." />
 consistent and the same for any model object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>standardize_names</span>(<span class='kw'>data</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>standardize_names</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for parameters_model</span>
-<span class='fu'>standardize_names</span>(<span class='kw'>data</span>, style = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"easystats"</span>, <span class='st'>"broom"</span>), <span class='kw'>...</span>)</pre>
+<span class='fu'>standardize_names</span><span class='op'>(</span><span class='va'>data</span>, style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"easystats"</span>, <span class='st'>"broom"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,11 +215,11 @@ consistent and the same for any model object.</p>
   becomes <code>estimate</code> and so on.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/parameters'>parameters</a></span>)
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>)
-<span class='kw'>mp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span>(<span class='kw'>model</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='va'>mp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw'>mp</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>mp</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high         t df_error
 #&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893       29
 #&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808       29
@@ -227,7 +227,7 @@ consistent and the same for any model object.</p>
 #&gt;              p
 #&gt; 1 3.043182e-20
 #&gt; 2 2.220200e-04
-#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span>(<span class='kw'>mp</span>)
+#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span><span class='op'>(</span><span class='va'>mp</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;     Parameter Coefficient        SE    CI_low    CI_high Statistic df
 #&gt; 1 (Intercept)   39.686261 1.7149840 36.178725 43.1937976 23.140893 29
 #&gt; 2          wt   -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808 29
@@ -235,7 +235,7 @@ consistent and the same for any model object.</p>
 #&gt;              p
 #&gt; 1 3.043182e-20
 #&gt; 2 2.220200e-04
-#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span>(<span class='kw'>mp</span>, style = <span class='st'>"broom"</span>)
+#&gt; 3 1.064282e-03</div><div class='input'><span class='fu'>standardize_names</span><span class='op'>(</span><span class='va'>mp</span>, style <span class='op'>=</span> <span class='st'>"broom"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;          term  estimate std.error  conf.low  conf.high statistic df.error
 #&gt; 1 (Intercept) 39.686261 1.7149840 36.178725 43.1937976 23.140893       29
 #&gt; 2          wt -3.190972 0.7569065 -4.739020 -1.6429245 -4.215808       29

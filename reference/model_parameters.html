@@ -204,9 +204,9 @@ Multiply imputed repeated analyses (mira)
 
     </div>
 
-    <pre class="usage"><span class='fu'>model_parameters</span>(<span class='kw'>model</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>model_parameters</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>parameters</span>(<span class='kw'>model</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>parameters</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -226,7 +226,7 @@ Multiply imputed repeated analyses (mira)
     <p>A data frame of indices related to the model's parameters.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Standardization is based on <code><a href='https://rdrr.io/pkg/effectsize/man/standardize_parameters.html'>standardize_parameters()</a></code>.
+    <p>Standardization is based on <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters()</a></code>.
   In case of <code>standardize = "refit"</code>, the data used to fit the model
   will be standardized and the model is completely refitted. In such cases,
   standard errors and confidence intervals refer to the standardized coefficient.</p>
