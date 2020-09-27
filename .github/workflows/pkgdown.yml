@@ -37,6 +37,7 @@ jobs:
           install.packages("remotes")
           # To get links for homepage
           remotes::install_cran("devtools")
+          remotes::install_bioc("M3C")
           remotes::install_deps(dependencies = TRUE, quiet = TRUE)
           remotes::install_dev("pkgdown")
         shell: Rscript {0}
