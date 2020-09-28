@@ -18,19 +18,21 @@
 
   # column name for coefficients
   coef_col <- "Coefficient"
-  if (isTRUE(exponentiate)) {
-    if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
-      coef_col <- "Odds Ratio"
-    } else if (info$is_binomial && !info$is_logit) {
-      coef_col <- "Risk Ratio"
-    } else if (info$is_count) {
-      coef_col <- "IRR"
-    }
-  } else {
-    if (info$is_binomial || info$is_ordinal || info$is_multinomial || info$is_categorical) {
-      coef_col <- "Log-Odds"
-    } else if (info$is_count) {
-      coef_col <- "Log-Mean"
+  if (!info$family == "unknown") {
+    if (isTRUE(exponentiate)) {
+      if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+        coef_col <- "Odds Ratio"
+      } else if (info$is_binomial && !info$is_logit) {
+        coef_col <- "Risk Ratio"
+      } else if (info$is_count) {
+        coef_col <- "IRR"
+      }
+    } else {
+      if (info$is_binomial || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+        coef_col <- "Log-Odds"
+      } else if (info$is_count) {
+        coef_col <- "Log-Mean"
+      }
     }
   }
   attr(params, "coefficient_name") <- coef_col

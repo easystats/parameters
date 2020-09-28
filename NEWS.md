@@ -6,6 +6,10 @@
 * `print()` for `model_parameters()` gains a `show_sigma` argument, to show or hide information on the residual standard deviation.
 * `data_partition()` gets a `seed` argument, to explicitely set the seed before random sampling of test and training data.
 
+## Bug fixes
+
+* Fixed issue where `model_parameters()` for *emmGrid* objects falsely removed the `Coefficient` column.
+
 # parameters 0.8.6
 
 ## Bug fixes

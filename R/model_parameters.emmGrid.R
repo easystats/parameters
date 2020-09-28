@@ -42,6 +42,9 @@ model_parameters.emmGrid <- function(model, ci = .95, p_adjust = NULL, ...) {
   order <- c(parameter_names, "Estimate", "SE", "CI_low", "CI_high", "t", "z", "df", "df_error", "p")
   params <- params[order[order %in% names(params)]]
 
+  # rename
+  names(params) <- gsub("Estimate", "Coefficient", names(params))
+
   params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, ...))
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(params, "parameter_names") <- parameter_names
