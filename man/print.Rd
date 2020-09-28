@@ -13,7 +13,7 @@
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
-  show_sigma = TRUE,
+  show_sigma = FALSE,
   ...
 )
 }
@@ -38,7 +38,7 @@ while \code{select = "short"} prints coefficient, standard errors and p-values.}
 
 \item{p_digits}{Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.}
 
-\item{show_sigma}{Logical, if \code{TRUE}, adds information about the residual
+\item{show_sigma}{Logical, if \code{FALSE}, adds information about the residual
 standard deviation.}
 
 \item{...}{Arguments passed to or from other methods.}

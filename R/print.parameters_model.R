@@ -12,7 +12,7 @@
 #'   be printed. If \code{NULL} (default), all columns are printed. The shortcut
 #'   \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
 #'   while \code{select = "short"} prints coefficient, standard errors and p-values.
-#' @param show_sigma Logical, if \code{TRUE}, adds information about the residual
+#' @param show_sigma Logical, if \code{FALSE}, adds information about the residual
 #'   standard deviation.
 #' @inheritParams parameters_table
 #' @return \code{NULL}
