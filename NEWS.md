@@ -9,6 +9,7 @@
 ## Bug fixes
 
 * Fixed issue where `model_parameters()` for *emmGrid* objects falsely removed the `Coefficient` column.
+* Fixed issue in `parameters_type()` for factors with contrast-sum coding.
 
 # parameters 0.8.6
 
