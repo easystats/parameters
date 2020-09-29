@@ -17,6 +17,16 @@ if (require("testthat") && require("parameters")) {
   })
 
   data(iris)
+  iris$Species <- as.ordered(iris$Species)
+  contrasts(iris$Species) <- contr.treatment(3)
+  m <- lm(Sepal.Length ~ Species, data = iris)
+  test_that("parameters_type ordered factor", {
+    p_type <- parameters_type(m)
+    expect_equal(p_type$Type, c("intercept", "factor", "factor"))
+    expect_equal(p_type$Level, c(NA, "2", "3"))
+  })
+
+  data(iris)
   contrasts(iris$Species) <- contr.poly(3)
   m <- lm(Sepal.Length ~ Species, data = iris)
   test_that("parameters_type poly contrasts", {
