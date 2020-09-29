@@ -288,6 +288,27 @@ parameters_type <- function(model, ...) {
     }
   )
 
+  # if contrasts are given as matrix, find related contrast name
+  if (!is.null(contrast_coding)) {
+    contrast_coding <- lapply(contrast_coding, function(i) {
+      if (is.array(i)) {
+        cn <- colnames(i)
+        if (is.null(cn)) {
+          if (rowMeans(i)[1] == -1) {
+            i <- "contr.helmert"
+          } else {
+            i <- "contr.sum"
+          }
+        } else if (cn[1] == ".L") {
+          i <- "contr.poly"
+        } else if (cn[1] == "2") {
+          i <- "contr.treatment2"
+        }
+      }
+      i
+    })
+  }
+
   # Ordered factors
   out$ordered <- names(data[sapply(data, is.ordered)])
 
@@ -301,6 +322,8 @@ parameters_type <- function(model, ...) {
       levels <- paste0(fac, c(".L", ".Q", ".C", paste0("^", 4:1000))[1:length(unique(data[[fac]]))])
     } else if (!is.null(contrast_coding[[fac]]) && contrast_coding[[fac]] %in% c("contr.sum", "contr.bayes", "contr.helmert")) {
       levels <- paste0(fac, 1:length(unique(data[[fac]])))
+    } else if (!is.null(contrast_coding[[fac]]) && contrast_coding[[fac]] %in% c("contr.treatment2")) {
+      levels <- paste0(fac, 2:length(unique(data[[fac]])))
     } else if (!is.null(contrast_coding[[fac]]) && contrast_coding[[fac]] %in% c("contr.SAS")) {
       levels <- paste0(fac, rev(unique(data[[fac]])))
     } else {
