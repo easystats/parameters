@@ -83,7 +83,7 @@ parameters_type <- function(model, ...) {
   if (is.null(data)) {
     return(NULL)
   }
-  reference <- .list_factors_numerics(data)
+  reference <- .list_factors_numerics(data, model)
 
   # Get types
   main <- .parameters_type_table(names = params$Parameter, data, reference)
@@ -274,9 +274,19 @@ parameters_type <- function(model, ...) {
 
 
 #' @keywords internal
-.list_factors_numerics <- function(data) {
+.list_factors_numerics <- function(data, model) {
   out <- list()
   out$numeric <- names(data[sapply(data, is.numeric)])
+
+  # get contrast coding
+  contrast_coding <- tryCatch(
+    {
+      model$contrasts
+    },
+    error = function(e) {
+      NULL
+    }
+  )
 
   # Ordered factors
   out$ordered <- names(data[sapply(data, is.ordered)])
@@ -289,6 +299,8 @@ parameters_type <- function(model, ...) {
   for (fac in out$factor) {
     if (fac %in% out$ordered) {
       levels <- paste0(fac, c(".L", ".Q", ".C", paste0("^", 4:1000))[1:length(unique(data[[fac]]))])
+    } else if (!is.null(contrast_coding[[fac]]) && contrast_coding[[fac]] == "contr.sum") {
+      levels <- paste0(fac, 1:length(unique(data[[fac]])))
     } else {
       levels <- paste0(fac, unique(data[[fac]]))
     }
