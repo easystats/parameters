@@ -305,6 +305,9 @@ parameters_type <- function(model, ...) {
           i <- "contr.treatment2"
         } else if (cn[1] == "1") {
           i <- "contr.SAS2"
+        } else {
+          i <- "contr.custom"
+          attr(i, "column_names") <- cn
         }
       }
       i
@@ -328,6 +331,8 @@ parameters_type <- function(model, ...) {
       levels <- paste0(fac, 2:length(unique(data[[fac]])))
     } else if (!is.null(contrast_coding[[fac]]) && contrast_coding[[fac]] %in% c("contr.SAS")) {
       levels <- paste0(fac, rev(unique(data[[fac]])))
+    } else if (!is.null(contrast_coding[[fac]]) && contrast_coding[[fac]] %in% c("contr.custom")) {
+      levels <- paste0(fac, attributes(contrast_coding[[fac]])$column_names)
     } else {
       levels <- paste0(fac, unique(data[[fac]]))
     }
