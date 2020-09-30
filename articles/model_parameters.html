@@ -247,7 +247,7 @@
   data <span class="op">=</span> <span class="va">Salamanders</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; # Fixed Effects component
+<pre><code>#&gt; # Fixed Effects 
 #&gt; 
 #&gt; Parameter   | Log-Mean |   SE |        95% CI |     z |      p
 #&gt; --------------------------------------------------------------
@@ -260,7 +260,7 @@
 #&gt; spp [DF]    |    -0.11 | 0.24 | [-0.59, 0.37] | -0.46 | 0.642 
 #&gt; mined [no]  |     1.45 | 0.37 | [ 0.73, 2.17] |  3.95 | &lt; .001
 #&gt; 
-#&gt; # Zero-Inflated component
+#&gt; # Zero-Inflated 
 #&gt; 
 #&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |      p
 #&gt; ---------------------------------------------------------------
@@ -295,14 +295,14 @@
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html">glmmTMB</a></span><span class="op">(</span><span class="va">x</span> <span class="op">~</span> <span class="va">sd</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">t</span><span class="op">)</span>, dispformula <span class="op">=</span>  <span class="op">~</span> <span class="va">sd</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; # Fixed Effects component
+<pre><code>#&gt; # Fixed Effects 
 #&gt; 
 #&gt; Parameter   | Coefficient |   SE |            95% CI |       z |      p
 #&gt; -----------------------------------------------------------------------
 #&gt; (Intercept) |      200.03 | 0.10 | [ 199.84, 200.22] | 2056.35 | &lt; .001
 #&gt; sd [ten]    |      -99.71 | 0.22 | [-100.14, -99.29] | -458.39 | &lt; .001
 #&gt; 
-#&gt; # Dispersion component
+#&gt; # Dispersion 
 #&gt; 
 #&gt; Parameter   | Coefficient |   SE |       95% CI |      z |      p
 #&gt; -----------------------------------------------------------------
