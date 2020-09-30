@@ -20,9 +20,9 @@ closest_component(x)
 \arguments{
 \item{x}{A data frame or a statistical model.}
 
-\item{n}{Number of components to extract. If \code{n="all"}, then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n="auto"} (default) or \code{n=NULL}, the number of components is selected through \code{\link{n_factors}}. In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.}
+\item{n}{Number of components to extract. If \code{n="all"}, then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n="auto"} (default) or \code{n=NULL}, the number of components is selected through \code{\link{n_factors}} resp. \code{\link{n_components}}. In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.}
 
-\item{rotation}{If not \code{"none"}, the PCA / FA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, and \code{"cluster"}. See \code{\link[psych]{fa}} for details.}
+\item{rotation}{If not \code{"none"}, the PCA / FA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, or \code{"cluster"} (and more). See \code{\link[psych]{fa}} for details.}
 
 \item{sort}{Sort the loadings.}
 
@@ -70,6 +70,14 @@ This function performs a principal component analysis (PCA) and returns the load
  }
  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
  }
+ \subsection{Computing Item Scores}{
+   Use \code{\link{get_scores}} takes the results from \code{principal_components}
+   and extracts the variables for each component found by the PCA. Then, for
+   each of these "subscales", row means are calculated (which equals adding
+   up the single items and dividing by the number of items). This results in
+   a sum score for each component from the PCA, which is on the same scale as
+   the original, single items that were used to compute the PCA.
+ }
 }
 \note{
 There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{closest_component()} will return a numeric vector with the assigned component index for each column from the original data frame. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
@@ -104,5 +112,5 @@ if (require("psych")) {
 }
 }
 \seealso{
-\code{\link[performance]{check_itemscale}} to compute various measures of internal consistencies applied to the (sub)scales (i.e. components) extracted from the PCA.
+\code{\link[performance]{check_itemscale}} to compute various measures of internal consistencies applied to the (sub)scales (i.e. components) extracted from the PCA. Use \code{\link{get_scores}} to compute scores for each subscale.
 }

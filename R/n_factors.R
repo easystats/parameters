@@ -11,6 +11,8 @@
 #' @param cor An optional correlation matrix that can be used (note that the data must still be passed as the first argument). If \code{NULL}, will compute it by running \code{cor()} on the passed data.
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @details \code{n_components} is actually an alias for \code{n_factors}, with different defaults for the function arguments.
+#'
 #' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}. \code{n_components()} is a convenient short for \code{n_factors(type = "PCA")}.
 #'
 #' @examples
