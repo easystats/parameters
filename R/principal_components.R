@@ -43,12 +43,14 @@
 #'  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
 #'  }
 #'  \subsection{Computing Item Scores}{
-#'    Use \code{\link{get_scores}} takes the results from \code{principal_components}
-#'    and extracts the variables for each component found by the PCA. Then, for
-#'    each of these "subscales", row means are calculated (which equals adding
-#'    up the single items and dividing by the number of items). This results in
-#'    a sum score for each component from the PCA, which is on the same scale as
-#'    the original, single items that were used to compute the PCA.
+#'    Use \code{\link{get_scores}} to compute scores for the "subscales" represented
+#'    by the extracted principal components. \code{get_scores()} takes the results
+#'    from \code{principal_components()} and extracts the variables for each
+#'    component found by the PCA. Then, for each of these "subscales", row means
+#'    are calculated (which equals adding up the single items and dividing by
+#'    the number of items). This results in a sum score for each component from
+#'    the PCA, which is on the same scale as the original, single items that were
+#'    used to compute the PCA.
 #'  }
 #'
 #' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{closest_component()} will return a numeric vector with the assigned component index for each column from the original data frame. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
