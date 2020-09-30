@@ -296,7 +296,7 @@ simulate_model.vgam <- function(model, iterations = 1000, ...) {
 #' @export
 simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = FALSE, ...) {
   component <- match.arg(component)
-  info <- insight::model_info(model)
+  info <- insight::model_info(model, verbose = FALSE)
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
   if (!is.list(info)) {

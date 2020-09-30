@@ -52,3 +52,34 @@ model_parameters.emmGrid <- function(model, ci = .95, p_adjust = NULL, ...) {
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
   params
 }
+
+
+
+
+
+#' @export
+model_parameters.emm_list <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, ...) {
+  params <-
+    suppressMessages(suppressWarnings(
+      .extract_parameters_generic(
+        model,
+        ci = ci,
+        component = "conditional",
+        merge_by = c("Parameter", "Component"),
+        standardize = NULL,
+        effects = "fixed",
+        robust = FALSE,
+        df_method = NULL,
+        p_adjust = p_adjust,
+        ...
+      )
+    ))
+
+  if (exponentiate) params <- .exponentiate_parameters(params)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
+
+  params
+}

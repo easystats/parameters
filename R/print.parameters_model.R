@@ -317,6 +317,8 @@ print.parameters_random <- function(x, digits = 2, ...) {
       "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
       "dispersion" = "Dispersion",
       "marginal" = "Marginal Effects",
+      "emmeans" = "Estimated Marginal Means",
+      "contrasts" = "Contrasts",
       "simplex.fixed" = ,
       "simplex" = "Monotonic Effects",
       "smooth_sd" = "Smooth Terms (SD)",
@@ -371,7 +373,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
       s2 <- ""
     } else {
       s1 <- component_name
-      s2 <- split_column
+      s2 <- ifelse(tolower(split_column) == "component", "", split_column)
     }
 
 

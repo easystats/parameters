@@ -107,6 +107,18 @@ degrees_of_freedom.emmGrid <- function(model,...) {
 }
 
 #' @export
+degrees_of_freedom.emm_list <- function(model,...) {
+  s <- summary(model)
+  unname(unlist(lapply(s, function(i) {
+    if (is.null(i$df)) {
+      Inf
+    } else {
+      i$df
+    }
+  })))
+}
+
+#' @export
 degrees_of_freedom.glht <- function(model,...) {
   model$df
 }
@@ -167,6 +179,10 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
 .degrees_of_freedom_analytical <- function(model, kenward = TRUE) {
   nparam <- n_parameters(model)
   n <- insight::n_obs(model)
+
+  if (is.null(n)) {
+    n <- Inf
+  }
 
   if (isTRUE(kenward) && inherits(model, "lmerMod")) {
     dof <- as.numeric(dof_kenward(model))

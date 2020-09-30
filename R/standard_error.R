@@ -1535,6 +1535,26 @@ standard_error.emmGrid <- function(model, ...) {
 
 
 #' @export
+standard_error.emm_list <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  s <- summary(model)
+  se <- unlist(lapply(s, function(i) {
+    if (is.null(i$SE)) {
+      rep(NA, nrow(i))
+    } else {
+      i$SE
+    }
+  }))
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = unname(se),
+    Component = params$Component
+  )
+}
+
+
+#' @export
 standard_error.rma <- function(model, ...) {
   params <- insight::get_parameters(model)
   .data_frame(

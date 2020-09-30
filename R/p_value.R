@@ -526,6 +526,49 @@ p_value.emmGrid <- function(model, ci = .95, adjust = "none", ...) {
 }
 
 
+#' @export
+p_value.emm_list <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  s <- summary(model)
+
+  # p-values
+  p <- unlist(lapply(s, function(i) {
+    if (is.null(i$p)) {
+      rep(NA, nrow(i))
+    } else {
+      i$p
+    }
+  }))
+
+  # result
+  out <- .data_frame(
+    Parameter = params$Parameter,
+    p = as.vector(p),
+    Component = params$Component
+  )
+
+  # any missing values?
+  if (anyNA(out$p)) {
+
+    # standard errors
+    se <- unlist(lapply(s, function(i) {
+      if (is.null(i$SE)) {
+        rep(NA, nrow(i))
+      } else {
+        i$SE
+      }
+    }))
+
+    # test statistic and p-values
+    stat <- params$Estimate / se
+    df <- degrees_of_freedom(model)
+    p_val <- 2 * stats::pt(abs(stat), df = df, lower.tail = FALSE)
+    out$p[is.na(out$p)] <- p_val[is.na(out$p)]
+  }
+
+  out
+}
+
 
 #' @export
 p_value.svyglm.nb <- function(model, ...) {

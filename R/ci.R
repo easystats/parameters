@@ -545,6 +545,12 @@ ci.betamfx <- function(x, ci = .95, component = c("all", "conditional", "precisi
 
 
 #' @export
+ci.emm_list <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, dof = degrees_of_freedom(x), ...)
+}
+
+
+#' @export
 ci.lqmm <- function(x, ...) {
   out <- model_parameters(x, ...)
   as.data.frame(out[c("Parameter", "CI_low", "CI_high")])

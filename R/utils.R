@@ -284,8 +284,8 @@
   }
 
   if (.is_empty_object(s)) {
-    info <- insight::model_info(x)
-    if (info$is_mixed) {
+    info <- insight::model_info(x, verbose = FALSE)
+    if (!is.null(info) && info$is_mixed) {
       s <- tryCatch(
         {
           sqrt(insight::get_variance_residual(x, verbose = FALSE))

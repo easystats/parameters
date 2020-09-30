@@ -40,6 +40,12 @@ format_parameters.glmm <- function(model) {
 
 
 #' @export
+format_parameters.emm_list <- function(model) {
+  NULL
+}
+
+
+#' @export
 format_parameters.rma <- function(model) {
   params <- insight::find_parameters(model, flatten = TRUE)
   names(params) <- params
