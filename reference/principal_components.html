@@ -243,12 +243,14 @@
 <li><p>Run factor analysis if you assume or wish to test a theoretical model of latent factors causing observed variables.</p></li>
 <li><p>Run principal component analysis If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.</p></li>
 </ul><p>(Source: <a href='https://stats.stackexchange.com/q/1576/54740'>CrossValidated</a>)</p><p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Computing Item Scores</h3>
-<p>Use <code><a href='get_scores.html'>get_scores</a></code> takes the results from <code>principal_components</code>
-   and extracts the variables for each component found by the PCA. Then, for
-   each of these "subscales", row means are calculated (which equals adding
-   up the single items and dividing by the number of items). This results in
-   a sum score for each component from the PCA, which is on the same scale as
-   the original, single items that were used to compute the PCA.</p>
+<p>Use <code><a href='get_scores.html'>get_scores</a></code> to compute scores for the "subscales" represented
+   by the extracted principal components. <code><a href='get_scores.html'>get_scores()</a></code> takes the results
+   from <code>principal_components()</code> and extracts the variables for each
+   component found by the PCA. Then, for each of these "subscales", row means
+   are calculated (which equals adding up the single items and dividing by
+   the number of items). This results in a sum score for each component from
+   the PCA, which is on the same scale as the original, single items that were
+   used to compute the PCA.</p>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
