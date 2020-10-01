@@ -1524,13 +1524,20 @@ standard_error.emmGrid <- function(model, ...) {
   estimate_pos <- which(colnames(s) == model@misc$estName)
 
   if (length(estimate_pos)) {
-    .data_frame(
-      s[, 1:(estimate_pos - 1), drop = FALSE],
-      SE = s$SE
-    )
+    params <- s[, 1:(estimate_pos - 1), drop = FALSE]
+    if (ncol(params) >= 2) {
+      r <- apply(params, 1, function(i) paste0(colnames(params), " [", i, "]"))
+      out <- .data_frame(
+        Parameter = unname(sapply(as.data.frame(r), paste, collapse = ", ")),
+        SE = unname(s$SE)
+      )
+    } else {
+      out <- .data_frame(Parameter = as.vector(params[[1]]), SE = s$SE)
+    }
   } else {
-    return(NULL)
+    out <- NULL
   }
+  out
 }
 
 

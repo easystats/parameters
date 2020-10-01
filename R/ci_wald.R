@@ -25,7 +25,11 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
 #' @importFrom stats qt complete.cases
 #' @keywords internal
 .ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, method = "wald", se = NULL, ...) {
-  params <- insight::get_parameters(model, effects = effects, component = component)
+  if (inherits(model, "emmGrid")) {
+    params <- insight::get_parameters(model, effects = effects, component = component, merge_parameters = TRUE)
+  } else {
+    params <- insight::get_parameters(model, effects = effects, component = component)
+  }
 
   # check if all estimates are non-NA
   params <- .check_rank_deficiency(params, verbose = FALSE)
