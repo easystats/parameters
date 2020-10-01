@@ -544,10 +544,9 @@ ci.betamfx <- function(x, ci = .95, component = c("all", "conditional", "precisi
 # Special models -----------------------------------------
 
 
-#' @export
-ci.emm_list <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = degrees_of_freedom(x), ...)
-}
+# ci.emm_list
+# ci.emmGrid
+# - implamented in bayestestR
 
 
 #' @export
