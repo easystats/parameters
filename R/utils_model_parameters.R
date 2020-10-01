@@ -62,6 +62,10 @@
     attr(params, "p_digits") <- 3
   }
 
+  if ("s_value" %in% names(dot.arguments)) {
+    attr(params, "s_value") <- eval(dot.arguments[["s_value"]])
+  }
+
   params
 }
 

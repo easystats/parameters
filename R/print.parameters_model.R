@@ -48,6 +48,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   res <- attributes(x)$details
   coef_name <- attributes(x)$coefficient_name
   sigma <- attributes(x)$sigma
+  s_value <- attributes(x)$s_value
 
   # check if user supplied digits attributes
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
@@ -117,6 +118,11 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   if (!is.null(coef_name)) {
     colnames(x)[which(colnames(x) == "Coefficient")] <- coef_name
     colnames(x)[which(colnames(x) == "Std_Coefficient")] <- paste0("Std_", coef_name)
+  }
+
+  if (isTRUE(s_value) && "p" %in% colnames(x)) {
+    colnames(x)[colnames(x) == "p"] <- "s"
+    x[["s"]] <- log2(1 / x[["s"]])
   }
 
   if (split_components && !is.null(split_by) && length(split_by)) {
