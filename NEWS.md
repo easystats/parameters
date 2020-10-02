@@ -4,6 +4,10 @@
 
 * Preliminary support for `emm_list` objects.
 
+## General
+
+* Better support for (weighted) multivariate response models of class `mlm` for functions like `model_parameters()` or `simulate_parameters()`.
+
 ## Changes to functions
 
 * `print()` for `model_parameters()` now names the coefficients column depending on the model type (i.e. `"Odds Ratios"` for logistic regression when `exponentiate = TRUE` etc.)
