@@ -270,6 +270,9 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x)
+    if (is.list(range)) {
+      range <- range[[which.max(sapply(range, diff))]]
+    }
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }

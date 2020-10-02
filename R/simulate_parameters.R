@@ -120,3 +120,26 @@ simulate_parameters.glmmTMB <- function(model, iterations = 1000, centrality = "
 
   out
 }
+
+
+
+#' @export
+simulate_parameters.mlm <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+  data <- simulate_model(model, iterations = iterations, ...)
+  out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
+
+  out$Response <- NA
+  responses <- insight::find_response(model, combine = FALSE)
+  for (i in responses) {
+    out$Response[grepl(paste0(i, "$"), out$Parameter)] <- i
+    out$Parameter <- gsub(paste0(i, "$"), "", out$Parameter)
+  }
+
+  class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_class") <- class(model)
+  attr(out, "iterations") <- iterations
+  attr(out, "ci") <- ci
+
+  out
+}
