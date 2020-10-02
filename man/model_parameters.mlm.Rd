@@ -5,6 +5,7 @@
 \alias{model_parameters.multinom}
 \alias{model_parameters.bracl}
 \alias{model_parameters.DirichletRegModel}
+\alias{model_parameters.clm2}
 \title{Parameters from multinomial or cumulative link models}
 \usage{
 \method{model_parameters}{mlm}(
@@ -48,6 +49,18 @@
   component = c("all", "conditional", "precision"),
   standardize = NULL,
   exponentiate = FALSE,
+  ...
+)
+
+\method{model_parameters}{clm2}(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = c("all", "conditional", "scale"),
+  standardize = NULL,
+  exponentiate = FALSE,
+  p_adjust = NULL,
   ...
 )
 }

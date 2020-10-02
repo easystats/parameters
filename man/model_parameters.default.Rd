@@ -7,9 +7,6 @@
 \alias{model_parameters.betamfx}
 \alias{model_parameters.default}
 \alias{model_parameters.glm}
-\alias{model_parameters.betareg}
-\alias{model_parameters.clm2}
-\alias{model_parameters.glmx}
 \title{Parameters from (General) Linear Models}
 \usage{
 \method{model_parameters}{logitor}(
@@ -71,42 +68,6 @@
   standardize = NULL,
   exponentiate = FALSE,
   robust = FALSE,
-  p_adjust = NULL,
-  ...
-)
-
-\method{model_parameters}{betareg}(
-  model,
-  ci = 0.95,
-  bootstrap = FALSE,
-  iterations = 1000,
-  component = c("conditional", "precision", "all"),
-  standardize = NULL,
-  exponentiate = FALSE,
-  p_adjust = NULL,
-  ...
-)
-
-\method{model_parameters}{clm2}(
-  model,
-  ci = 0.95,
-  bootstrap = FALSE,
-  iterations = 1000,
-  component = c("all", "conditional", "scale"),
-  standardize = NULL,
-  exponentiate = FALSE,
-  p_adjust = NULL,
-  ...
-)
-
-\method{model_parameters}{glmx}(
-  model,
-  ci = 0.95,
-  bootstrap = FALSE,
-  iterations = 1000,
-  component = c("all", "conditional", "extra"),
-  standardize = NULL,
-  exponentiate = FALSE,
   p_adjust = NULL,
   ...
 )
