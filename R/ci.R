@@ -549,6 +549,13 @@ ci.betamfx <- function(x, ci = .95, component = c("all", "conditional", "precisi
 # - implamented in bayestestR
 
 
+
+#' @export
+ci.margins <- function(model, ci = .95, ...) {
+  ci_wald(model = model, ci = ci, dof = Inf, ...)
+}
+
+
 #' @export
 ci.lqmm <- function(x, ...) {
   out <- model_parameters(x, ...)

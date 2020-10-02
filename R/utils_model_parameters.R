@@ -1,7 +1,14 @@
 #' @keywords internal
 .add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
-  info <- insight::model_info(model, verbose = FALSE)
+  info <- tryCatch(
+    {
+      insight::model_info(model, verbose = FALSE)
+    },
+    error = function(e) {
+      NULL
+    }
+  )
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
   if (is.null(info) || !is.list(info)) {

@@ -861,6 +861,16 @@ standard_error.bayesx <- function(model, ...) {
 
 
 #' @export
+standard_error.margins <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = summary(model)$SE
+  )
+}
+
+
+#' @export
 standard_error.lqmm <- function(model, ...) {
   out <- model_parameters(model, ...)
   as.data.frame(out[c("Parameter", "SE")])

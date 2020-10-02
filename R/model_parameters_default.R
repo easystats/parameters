@@ -138,3 +138,44 @@ model_parameters.sem <- model_parameters.default
 
 #' @export
 model_parameters.mipo <- model_parameters.default
+
+#' @export
+model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, ...) {
+  # Parameters, Estimate and CI
+  params <- insight::get_parameters(model)
+  params <- .data_frame(
+    params,
+    SE = summary(model)$SE
+  )
+
+  # CI
+  params <- merge(params, ci(model, ci = ci), by = "Parameter", sort = FALSE)
+
+  # Statistic
+  statistic <- insight::get_statistic(model)
+  params <- merge(params, statistic, by = "Parameter", sort = FALSE)
+
+  # Statistic
+  params <- .data_frame(params, p = summary(model)$p)
+
+  # ==== Renaming
+
+  if ("Statistic" %in% names(params)) {
+    names(params) <- gsub("Statistic", gsub("(-|\\s)statistic", "", attr(statistic, "statistic", exact = TRUE)), names(params))
+    names(params) <- gsub("chi-squared", "chisq", names(params))
+  }
+  names(params) <- gsub("Estimate", "Coefficient", names(params))
+
+  # ==== adjust p-values?
+
+  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(params)) {
+    params$p <- stats::p.adjust(params$p, method = p_adjust)
+  }
+
+  if (exponentiate) params <- .exponentiate_parameters(params)
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
+
+  params
+}

@@ -807,6 +807,16 @@ p_value.betamfx <- function(model, component = c("all", "conditional", "precisio
 
 
 #' @export
+p_value.margins <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  .data_frame(
+    Parameter = params$Parameter,
+    p = summary(model)$p
+  )
+}
+
+
+#' @export
 p_value.lqmm <- function(model, ...) {
   out <- model_parameters(model, ...)
   as.data.frame(out[c("Parameter", "p")])
