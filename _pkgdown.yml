@@ -32,6 +32,7 @@ reference:
   - model_parameters.rma
   - model_parameters.htest
   - model_parameters.glht
+  - model_parameters.averaging
   - random_parameters
   - print.parameters_model
 
