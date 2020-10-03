@@ -556,8 +556,8 @@ ci.betamfx <- function(x, ci = .95, component = c("all", "conditional", "precisi
 
 
 #' @export
-ci.margins <- function(model, ci = .95, ...) {
-  ci_wald(model = model, ci = ci, dof = Inf, ...)
+ci.margins <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, dof = Inf, ...)
 }
 
 
