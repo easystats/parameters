@@ -175,6 +175,13 @@
 <li>Preliminary support for <code>emm_list</code> objects.</li>
 </ul>
 </div>
+<div id="general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general" class="anchor"></a>General</h2>
+<ul>
+<li>Better support for (weighted) multivariate response models of class <code>mlm</code> for functions like <code><a href="../reference/model_parameters.html">model_parameters()</a></code> or <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code>.</li>
+</ul>
+</div>
 <div id="changes-to-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
@@ -216,9 +223,9 @@
 <h1 class="page-header" data-toc-text="0.8.5">
 <a href="#parameters-085" class="anchor"></a>parameters 0.8.5<small> 2020-09-12 </small>
 </h1>
-<div id="general" class="section level2">
+<div id="general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general" class="anchor"></a>General</h2>
+<a href="#general-1" class="anchor"></a>General</h2>
 <ul>
 <li>Added vignette on model parameters and missing data.</li>
 <li>Update citation.</li>
@@ -333,9 +340,9 @@
 <h1 class="page-header" data-toc-text="0.7.0">
 <a href="#parameters-070" class="anchor"></a>parameters 0.7.0<small> 2020-05-18 </small>
 </h1>
-<div id="general-1" class="section level2">
+<div id="general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-1" class="anchor"></a>General</h2>
+<a href="#general-2" class="anchor"></a>General</h2>
 <ul>
 <li>We changed the computation of confidence intervals or standard errors, so these are now based on a t-distribution with degrees of freedom and not normal distribution assuming infinite degrees of freedom. This was implemented for most functions before and only affects few functions (like <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test()</a></code> or CIs for standardized parameters from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when standardization method was <code>"posthoc"</code>).</li>
 </ul>
@@ -422,9 +429,9 @@
 <h1 class="page-header" data-toc-text="0.6.1">
 <a href="#parameters-061" class="anchor"></a>parameters 0.6.1<small> 2020-04-08 </small>
 </h1>
-<div id="general-2" class="section level2">
+<div id="general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-2" class="anchor"></a>General</h2>
+<a href="#general-3" class="anchor"></a>General</h2>
 <ul>
 <li>Remove ‘Zelig’ from suggested packages, as it was removed from CRAN.</li>
 </ul>
@@ -557,9 +564,9 @@
 <li>Added support for <code>cglm</code> (<em>cglm</em>), <code>DirichletRegModel</code> (<em>DirichletReg</em>)</li>
 </ul>
 </div>
-<div id="general-3" class="section level2">
+<div id="general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-3" class="anchor"></a>General</h2>
+<a href="#general-4" class="anchor"></a>General</h2>
 <ul>
 <li>Added new vignettes on ‘Standardized Model Parameters’ and ‘Robust Estimation of Standard Errors’, and vignettes are now also published on CRAN.</li>
 <li>Improved handling of robust statistics in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. This should now work for more models than before.</li>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters from multinomial or cumulative link models — model_parameters.mlm • parameters</title>
+<title>Parameters from special models — model_parameters.averaging • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Parameters from multinomial or cumulative link models — model_parameters.mlm" />
-<meta property="og:description" content="Parameters from multinomial or cumulative link models" />
+<meta property="og:title" content="Parameters from special models — model_parameters.averaging" />
+<meta property="og:description" content="Parameters from special regression models not listed under one of the previous categories yet." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -161,70 +161,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameters from multinomial or cumulative link models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.multinom.R'><code>R/model_parameters.multinom.R</code></a></small>
-    <div class="hidden name"><code>model_parameters.mlm.Rd</code></div>
+    <h1>Parameters from special models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.other.R'><code>R/model_parameters.other.R</code></a></small>
+    <div class="hidden name"><code>model_parameters.averaging.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameters from multinomial or cumulative link models</p>
+    <p>Parameters from special regression models not listed under one of the previous categories yet.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for mlm</span>
+    <pre class="usage"><span class='co'># S3 method for averaging</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"full"</span><span class='op'>)</span>,
+  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for betareg</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
   <span class='va'>model</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"precision"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
-<span class='co'># S3 method for multinom</span>
+<span class='co'># S3 method for glmx</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
   <span class='va'>model</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
-  standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
-  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for bracl</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
-  standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
-  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for DirichletRegModel</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
-  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>,
-  standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
-  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for clm2</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
-  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span><span class='op'>)</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"extra"</span><span class='op'>)</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -236,23 +211,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>A model with multinomial or categorical response value.</p></td>
+      <td><p>Model object.</p></td>
     </tr>
     <tr>
       <th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
     </tr>
     <tr>
-      <th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>iterations</th>
-      <td><p>The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.</p></td>
-    </tr>
-    <tr>
-      <th>standardize</th>
-      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters</a></code>. Note that robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only works when <code>standardize="refit"</code>.</p></td>
+      <th>component</th>
+      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>), <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for <code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
@@ -267,21 +234,22 @@
       <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
     <tr>
-      <th>component</th>
-      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>), <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for <code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
+      <th>bootstrap</th>
+      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
+    </tr>
+    <tr>
+      <th>iterations</th>
+      <td><p>The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.</p></td>
+    </tr>
+    <tr>
+      <th>standardize</th>
+      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters</a></code>. Note that robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only works when <code>standardize="refit"</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of indices related to the model's parameters.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Multinomial or cumulative link models, i.e. models where the
-  response value (dependent variable) is categorical and has more than two
-  levels, usually return coefficients for each response level. Hence, the
-  output from <code><a href='model_parameters.html'>model_parameters()</a></code> will split the coefficient tables
-  by the different levels of the model's response.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
@@ -299,7 +267,7 @@
   <span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Response level: definitely
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: brglm2</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Response level: definitely
 #&gt; 
 #&gt; </span><span>Parameter       | Log-Odds |   SE |         95% CI |     z |      p
 #&gt; -------------------------------------------------------------------
