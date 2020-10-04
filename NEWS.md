@@ -17,6 +17,7 @@
 ## Bug fixes
 
 * Fixed issue where `model_parameters()` for *emmGrid* objects falsely removed the `Coefficient` column.
+* Fixed issue in `model_parameters()` for *vgam* objects.
 * Fixed issue in `parameters_type()` for factors with different effects-coding than treatment contrasts.
 
 # parameters 0.8.6
