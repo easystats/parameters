@@ -48,7 +48,7 @@ Depends:
     R (>= 3.2)
 Imports:
     bayestestR (>= 0.7.0),
-    insight (>= 0.8.1),
+    insight (>= 0.9.6.1),
     methods,
     stats,
     tools,
