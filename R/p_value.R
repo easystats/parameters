@@ -1495,17 +1495,13 @@ p_value.vglm <- function(model, ...) {
 
 
 
+#' @importFrom stats pchisq
 #' @export
 p_value.vgam <- function(model, ...) {
-  params <- insight::get_parameters(model)
   stat <- insight::get_statistic(model)
-  p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+  stat$p <- as.vector(stats::pchisq(stat$Statistic, df = degrees_of_freedom(model), lower.tail = FALSE))
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(stat$Parameter),
-    p = as.vector(p),
-    Component = params$Component
-  )
+  stat[c("Parameter", "p", "Component")]
 }
 
 

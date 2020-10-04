@@ -1416,6 +1416,8 @@ standard_error.vglm <- function(model, ...) {
 standard_error.vgam <- function(model, ...) {
   params <- insight::get_parameters(model)
   se <- sqrt(diag(insight::get_varcov(model)))
+  # sort
+  se <- se[params$Parameter]
   .data_frame(
     Parameter = .remove_backticks_from_string(names(se)),
     SE = as.vector(se),
