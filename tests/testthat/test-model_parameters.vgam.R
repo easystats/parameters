@@ -1,4 +1,4 @@
-if (require("testthat") && require("vgam") && require("parameters")) {
+if (require("testthat") && require("VGAM") && require("parameters")) {
   data("pneumo")
   data("hunua")
 

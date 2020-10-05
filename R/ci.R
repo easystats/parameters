@@ -601,6 +601,31 @@ ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precisi
 }
 
 
+# ci.vgam <- function(x, ci = .95, component = c("all", "conditional", "smooth"), ...) {
+#   component <- match.arg(component)
+#
+#   # dof and SE
+#   dof <- degrees_of_freedom(x)
+#   se <- standard_error(x)$SE
+#   params <- insight::get_parameters(x)
+#
+#   se <- se[!is.na(dof)]
+#   dof <- dof[!is.na(dof)]
+#   params_names <- names(dof)
+#
+#   # Wald CI for non-chisq parameters
+#   out <- ci_wald(model = x, ci = ci, dof = Inf)
+#
+#   chisq_fac <- stats::qchisq(se, df = dof, lower.tail = FALSE)
+#   for (i in 1:length(params_names)) {
+#     out$CI_low[out$Parameter == params_names[i]] <- params$Estimate[params$Parameter == params_names[i]] - se[i] * chisq_fac[i]
+#     out$CI_high[out$Parameter == params_names[i]] <- params$Estimate[params$Parameter == params_names[i]] + se[i] * chisq_fac[i]
+#   }
+#
+#   out
+# }
+
+
 #' @rdname ci.merMod
 #' @export
 ci.clm2 <- function(x, ci = .95, component = c("all", "conditional", "scale"), ...) {
