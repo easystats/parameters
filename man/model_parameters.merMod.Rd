@@ -124,6 +124,6 @@ if (require("lme4")) {
 }
 }
 \seealso{
-\code{\link[=standardize_names]{standardize_names()}} to rename
+\code{\link[insight:standardize_names]{standardize_names()}} to rename
   columns into a consistent, standardized naming scheme.
 }

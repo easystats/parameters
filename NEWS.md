@@ -1,5 +1,9 @@
 # parameters 0.8.7
 
+## Breaking changes
+
+* `standardize_names()` was moved to the *insight* package.
+
 ## New supported model classes
 
 * Preliminary support for `emm_list` objects.

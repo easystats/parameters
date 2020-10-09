@@ -23,7 +23,7 @@
 #' @param model Statistical Model.
 #' @param ... Arguments passed to or from other methods. Non-documented arguments are \code{digits}, \code{p_digits} and \code{ci_digits} to set the number of digits for the output. See 'Examples' in \code{\link{model_parameters.default}}.
 #'
-#' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
+#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
 #' @note The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.

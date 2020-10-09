@@ -116,7 +116,6 @@ reference:
   - format_rope
   - parameters_table
   - parameters_type
-  - standardize_names
 
 - title: "Example Data Sets"
   contents:

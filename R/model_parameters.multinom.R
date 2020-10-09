@@ -12,7 +12,7 @@
 #'   output from \code{model_parameters()} will split the coefficient tables
 #'   by the different levels of the model's response.
 #'
-#' @seealso \code{\link[=standardize_names]{standardize_names()}} to rename
+#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
 #' @examples

@@ -8,7 +8,7 @@
 #' @inheritParams model_parameters.default
 #' @inheritParams bayestestR::describe_posterior
 #'
-#' @seealso \code{\link[parameters:standardize_names]{standardize_names()}} to rename
+#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
 #' @note When \code{standardize = "refit"}, columns \code{diagnostic}, \code{bf_prior} and \code{priors} refer to the \emph{original} \code{model}.
