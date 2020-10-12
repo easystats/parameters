@@ -37,6 +37,11 @@ model_parameters.BFBayesFactor <- function(model, centrality = "median", dispers
     return(NULL)
   }
 
+  if (is.null(insight::get_parameters(model))) {
+    insight::print_color("Can't extract model parameters.\n", "red")
+    return(NULL)
+  }
+
   out <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, priors = priors, ...)
 
   # Add components and effects columns
