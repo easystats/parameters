@@ -42,7 +42,7 @@ check_multimodal <- function(x, ...) {
   UseMethod("check_multimodal")
 }
 
-#' @importFrom insight format_p
+#' @importFrom insight format_p format_value
 #' @importFrom stats logLik pchisq
 #' @export
 check_multimodal.data.frame <- function(x, ...) {
