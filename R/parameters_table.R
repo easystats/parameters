@@ -82,11 +82,11 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   other_ci_low <- names(x)[grep("_CI_low", names(x))]
   other_ci_high <- names(x)[grep("_CI_high", names(x))]
   if(length(other_ci_low) >= 1 & length(other_ci_low) == length(other_ci_high)) {
-    other <- paste0("_", unlist(strsplit(other_ci_low, "_CI_low")))
+    other <- unlist(strsplit(other_ci_low, "_CI_low"))
 
     # CI percentage
-    if (!is.null(attributes(x)[[paste0(other, "CI")]])) {
-      other_ci_colname <- sprintf("%i%% CI", attributes(x)[[paste0(other, "CI")]] * 100)
+    if (!is.null(attributes(x)[[paste0(other, "_CI")]])) {
+      other_ci_colname <- sprintf("%s %i%% CI", other, attributes(x)[[paste0(other, "_CI")]] * 100)
     } else if (!attributes(x)$ci){
       other_ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
     } else{
