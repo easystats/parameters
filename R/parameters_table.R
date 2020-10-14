@@ -85,8 +85,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     other <- unlist(strsplit(other_ci_low, "_CI_low"))
 
     # CI percentage
-    if (!is.null(attributes(x)[[paste0(other, "_CI")]])) {
-      other_ci_colname <- sprintf("%s %i%% CI", other, attributes(x)[[paste0(other, "_CI")]] * 100)
+    if (!is.null(attributes(x)[[paste0("ci_", other)]])) {
+      other_ci_colname <- sprintf("%s %i%% CI", other, attributes(x)[[paste0("ci_", other)]] * 100)
     } else if (!attributes(x)$ci){
       other_ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
     } else{
