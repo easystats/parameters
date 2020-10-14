@@ -66,7 +66,11 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     if (is.null(attributes(x)$ci)) {
       ci_colname <- "CI"
     } else {
-      ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
+      if length(unique(attributes(x)$ci) > 1){
+        ci_colname <- "?% CI"
+      } else{
+        ci_colname <- sprintf("%i%% CI", unique(attributes(x)$ci)[1] * 100)
+      }
     }
     # Get characters to align the CI
     for (i in 1:length(ci_colname)) {
