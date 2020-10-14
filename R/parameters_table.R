@@ -59,7 +59,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     x$p <- format(x$p, justify = "left")
   }
 
-  # CI
+  # Main CI
   ci_low <- names(x)[grep("CI_low*", names(x))]
   ci_high <- names(x)[grep("CI_high*", names(x))]
   if (length(ci_low) >= 1 & length(ci_low) == length(ci_high)) {
@@ -77,6 +77,32 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     x <- x[c(names(x)[0:(ci_position - 1)][!names(x)[0:(ci_position - 1)] %in% ci_colname], ci_colname, names(x)[ci_position:(length(names(x)) - 1)][!names(x)[ci_position:(length(names(x)) - 1)] %in% ci_colname])]
     x <- x[!names(x) %in% c(ci_low, ci_high)]
   }
+
+  # Other CIs
+  other_ci_low <- names(x)[grep("_CI_low", names(x))]
+  other_ci_high <- names(x)[grep("_CI_high", names(x))]
+  if(length(other_ci_low) >= 1 & length(other_ci_low) == length(other_ci_high)) {
+    other <- paste0("_", unlist(strsplit(other_ci_low, "_CI_low")))
+
+    # CI percentage
+    if (!is.null(attributes(x)[[paste0(other, "CI")]])) {
+      other_ci_colname <- sprintf("%i%% CI", attributes(x)[[paste0(other, "CI")]] * 100)
+    } else if (!attributes(x)$ci){
+      other_ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
+    } else{
+      other_ci_colname <- "CI"
+    }
+
+    # Get characters to align the CI
+    for (i in 1:length(ci_colname)) {
+      x[other_ci_colname[i]] <- insight::format_ci(x[[other_ci_low[i]]], x[[other_ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
+    }
+    # Replace at initial position
+    other_ci_position <- which(names(x) == other_ci_low[1])
+    x <- x[c(names(x)[0:(other_ci_position - 1)][!names(x)[0:(other_ci_position - 1)] %in% other_ci_colname], other_ci_colname, names(x)[other_ci_position:(length(names(x)) - 1)][!names(x)[other_ci_position:(length(names(x)) - 1)] %in% other_ci_colname])]
+    x <- x[!names(x) %in% c(other_ci_low, other_ci_high)]
+  }
+
 
   # Misc
   names(x)[names(x) == "Cohens_d"] <- "Cohen's d"
