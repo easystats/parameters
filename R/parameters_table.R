@@ -37,82 +37,42 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   att <- attributes(x)
   x <- as.data.frame(x)
 
-  # Format parameters names
+
+  # Format parameters names ----
   if (pretty_names & !is.null(att$pretty_names)) {
     x$Parameter <- att$pretty_names[x$Parameter]
   }
 
-  # Format specific columns
+
+  # Format specific columns ----
   if ("n_Obs" %in% names(x)) x$n_Obs <- insight::format_value(x$n_Obs, protect_integers = TRUE)
   if ("n_Missing" %in% names(x)) x$n_Missing <- insight::format_value(x$n_Missing, protect_integers = TRUE)
-  # generic df
-  if ("df" %in% names(x)) x$df <- insight::format_value(x$df, protect_integers = TRUE)
-  # residual df
-  if ("df_residual" %in% names(x)) x$df_residual <- insight::format_value(x$df_residual, protect_integers = TRUE)
-  names(x)[names(x) == "df_residual"] <- "df"
-  # df for errors
-  if ("df_error" %in% names(x)) x$df_error <- insight::format_value(x$df_error, protect_integers = TRUE)
-  names(x)[names(x) == "df_error"] <- "df"
 
-  # P values
+
+  # Format df columns ----
+  x <- .format_df_columns(x)
+
+
+  # P values ----
   if ("p" %in% names(x)) {
     x$p <- insight::format_p(x$p, stars = stars, name = NULL, missing = "", digits = p_digits)
     x$p <- format(x$p, justify = "left")
   }
 
-  # Main CI
-  ci_low <- names(x)[grep("^CI_low", names(x))]
-  ci_high <- names(x)[grep("^CI_high", names(x))]
-  if (length(ci_low) >= 1 & length(ci_low) == length(ci_high)) {
-    if (is.null(att$ci)) {
-      ci_colname <- "CI"
-    } else {
-      if (length(unique(stats::na.omit(att$ci))) > 1) {
-        ci_colname <- "?% CI"
-      } else {
-        ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(att$ci))[1] * 100)
-      }
-    }
-    # Get characters to align the CI
-    for (i in 1:length(ci_colname)) {
-      x[ci_colname[i]] <- insight::format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
-    }
-    # Replace at initial position
-    ci_position <- which(names(x) == ci_low[1])
-    x <- x[c(names(x)[0:(ci_position - 1)][!names(x)[0:(ci_position - 1)] %in% ci_colname], ci_colname, names(x)[ci_position:(length(names(x)) - 1)][!names(x)[ci_position:(length(names(x)) - 1)] %in% ci_colname])]
-    x <- x[!names(x) %in% c(ci_low, ci_high)]
-  }
 
-  # Other CIs
-  other_ci_low <- names(x)[grep("_CI_low", names(x))]
-  other_ci_high <- names(x)[grep("_CI_high", names(x))]
-  if (length(other_ci_low) >= 1 & length(other_ci_low) == length(other_ci_high)) {
-    other <- unlist(strsplit(other_ci_low, "_CI_low"))
+  # Main CI ----
+  x <- .format_main_ci_columns(x, att, ci_digits)
 
-    # CI percentage
-    if (!is.null(att[[paste0("ci_", other)]])) {
-      other_ci_colname <- sprintf("%s %i%% CI", other, unique(stats::na.omit(att[[paste0("ci_", other)]])) * 100)
-    } else if (!is.null(att$ci)) {
-      other_ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(att$ci)) * 100)
-    } else {
-      other_ci_colname <- "CI"
-    }
 
-    # Get characters to align the CI
-    for (i in 1:length(other_ci_colname)) {
-      x[other_ci_colname[i]] <- insight::format_ci(x[[other_ci_low[i]]], x[[other_ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
-    }
-    # Replace at initial position
-    other_ci_position <- which(names(x) == other_ci_low[1])
-    x <- x[c(names(x)[0:(other_ci_position - 1)][!names(x)[0:(other_ci_position - 1)] %in% other_ci_colname], other_ci_colname, names(x)[other_ci_position:(length(names(x)) - 1)][!names(x)[other_ci_position:(length(names(x)) - 1)] %in% other_ci_colname])]
-    x <- x[!names(x) %in% c(other_ci_low, other_ci_high)]
-  } else {
-    other_ci_colname <- c()
-  }
+  # Other CIs ----
+  out <- .format_other_ci_columns(x, att, ci_digits)
+  x <- out$x
+  other_ci_colname <- out$other_ci_colname
 
 
   # Misc
   names(x)[names(x) == "Cohens_d"] <- "Cohen's d"
+
 
   # Standardized
   std_cols <- names(x)[grepl("Std_", names(x))]
@@ -182,7 +142,92 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 
 
+
+
+# sub-routines ---------------
+
+
+.format_df_columns <- function(x) {
+  # generic df
+  if ("df" %in% names(x)) x$df <- insight::format_value(x$df, protect_integers = TRUE)
+  # residual df
+  if ("df_residual" %in% names(x)) x$df_residual <- insight::format_value(x$df_residual, protect_integers = TRUE)
+  names(x)[names(x) == "df_residual"] <- "df"
+  # df for errors
+  if ("df_error" %in% names(x)) x$df_error <- insight::format_value(x$df_error, protect_integers = TRUE)
+  names(x)[names(x) == "df_error"] <- "df"
+
+  x
+}
+
+
+.format_main_ci_columns <- function(x, att, ci_digits) {
+  # Main CI
+  ci_low <- names(x)[grep("^CI_low", names(x))]
+  ci_high <- names(x)[grep("^CI_high", names(x))]
+  if (length(ci_low) >= 1 & length(ci_low) == length(ci_high)) {
+    if (is.null(att$ci)) {
+      ci_colname <- "CI"
+    } else {
+      if (length(unique(stats::na.omit(att$ci))) > 1) {
+        ci_colname <- "?% CI"
+      } else {
+        ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(att$ci))[1] * 100)
+      }
+    }
+    # Get characters to align the CI
+    for (i in 1:length(ci_colname)) {
+      x[ci_colname[i]] <- insight::format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
+    }
+    # Replace at initial position
+    ci_position <- which(names(x) == ci_low[1])
+    x <- x[c(names(x)[0:(ci_position - 1)][!names(x)[0:(ci_position - 1)] %in% ci_colname], ci_colname, names(x)[ci_position:(length(names(x)) - 1)][!names(x)[ci_position:(length(names(x)) - 1)] %in% ci_colname])]
+    x <- x[!names(x) %in% c(ci_low, ci_high)]
+  }
+
+  x
+}
+
+
+
+.format_other_ci_columns <- function(x, att, ci_digits) {
+  other_ci_low <- names(x)[grep("_CI_low$", names(x))]
+  other_ci_high <- names(x)[grep("_CI_high$", names(x))]
+  if (length(other_ci_low) >= 1 & length(other_ci_low) == length(other_ci_high)) {
+    other <- unlist(strsplit(other_ci_low, "_CI_low"))
+
+    # CI percentage
+    if (!is.null(att[[paste0("ci_", other)]])) {
+      other_ci_colname <- sprintf("%s %i%% CI", other, unique(stats::na.omit(att[[paste0("ci_", other)]])) * 100)
+    } else if (!is.null(att$ci)) {
+      other_ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(att$ci)) * 100)
+    } else {
+      other_ci_colname <- "CI"
+    }
+
+    # Get characters to align the CI
+    for (i in 1:length(other_ci_colname)) {
+      x[other_ci_colname[i]] <- insight::format_ci(x[[other_ci_low[i]]], x[[other_ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
+    }
+    # Replace at initial position
+    other_ci_position <- which(names(x) == other_ci_low[1])
+    x <- x[c(names(x)[0:(other_ci_position - 1)][!names(x)[0:(other_ci_position - 1)] %in% other_ci_colname], other_ci_colname, names(x)[other_ci_position:(length(names(x)) - 1)][!names(x)[other_ci_position:(length(names(x)) - 1)] %in% other_ci_colname])]
+    x <- x[!names(x) %in% c(other_ci_low, other_ci_high)]
+  } else {
+    other_ci_colname <- c()
+  }
+
+  list(x = x, other_ci_colname = other_ci_colname)
+}
+
+
+
+
+
+
 # helper ---------------------
+
+
 .replace_words <- function(x, target, replacement) {
   for (i in 1:length(x)) {
     if (grepl(target, x[i])) {
@@ -191,6 +236,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   }
   x
 }
+
+
 
 .additional_arguments <- function(x, value, default) {
   args <- attributes(x)$additional_arguments
