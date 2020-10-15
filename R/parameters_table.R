@@ -34,11 +34,12 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
 
+  att <- attributes(x)
   x <- as.data.frame(x)
 
   # Format parameters names
-  if (pretty_names & !is.null(attributes(x)$pretty_names)) {
-    x$Parameter <- attributes(x)$pretty_names[x$Parameter]
+  if (pretty_names & !is.null(att$pretty_names)) {
+    x$Parameter <- att$pretty_names[x$Parameter]
   }
 
   # Format specific columns
@@ -63,13 +64,13 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   ci_low <- names(x)[grep("^CI_low.*", names(x))]
   ci_high <- names(x)[grep("^CI_high.*", names(x))]
   if (length(ci_low) >= 1 & length(ci_low) == length(ci_high)) {
-    if (is.null(attributes(x)$ci)) {
+    if (is.null(att$ci)) {
       ci_colname <- "CI"
     } else {
-      if (length(unique(na.omit(attributes(x)$ci))) > 1){
+      if (length(unique(stats::na.omit(att$ci))) > 1) {
         ci_colname <- "?% CI"
-      } else{
-        ci_colname <- sprintf("%i%% CI", unique(na.omit(attributes(x)$ci))[1] * 100)
+      } else {
+        ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(att$ci))[1] * 100)
       }
     }
     # Get characters to align the CI
@@ -85,15 +86,15 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   # Other CIs
   other_ci_low <- names(x)[grep("_CI_low", names(x))]
   other_ci_high <- names(x)[grep("_CI_high", names(x))]
-  if(length(other_ci_low) >= 1 & length(other_ci_low) == length(other_ci_high)) {
+  if (length(other_ci_low) >= 1 & length(other_ci_low) == length(other_ci_high)) {
     other <- unlist(strsplit(other_ci_low, "_CI_low"))
 
     # CI percentage
-    if (!is.null(attributes(x)[[paste0("ci_", other)]])) {
-      other_ci_colname <- sprintf("%s %i%% CI", other, attributes(x)[[paste0("ci_", other)]] * 100)
-    } else if (!is.null(attributes(x)$ci)){
-      other_ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
-    } else{
+    if (!is.null(att[[paste0("ci_", other)]])) {
+      other_ci_colname <- sprintf("%s %i%% CI", other, unique(stats::na.omit(att[[paste0("ci_", other)]])) * 100)
+    } else if (!is.null(att$ci)) {
+      other_ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(att$ci)) * 100)
+    } else {
       other_ci_colname <- "CI"
     }
 
@@ -105,6 +106,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     other_ci_position <- which(names(x) == other_ci_low[1])
     x <- x[c(names(x)[0:(other_ci_position - 1)][!names(x)[0:(other_ci_position - 1)] %in% other_ci_colname], other_ci_colname, names(x)[other_ci_position:(length(names(x)) - 1)][!names(x)[other_ci_position:(length(names(x)) - 1)] %in% other_ci_colname])]
     x <- x[!names(x) %in% c(other_ci_low, other_ci_high)]
+  } else {
+    other_ci_colname <- c()
   }
 
 
@@ -113,12 +116,20 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
   # Standardized
   std_cols <- names(x)[grepl("Std_", names(x))]
+  std_cis <- std_cols[std_cols %in% other_ci_colname]
+  std_cols <- std_cols[!std_cols %in% other_ci_colname]
+
   x[std_cols] <- insight::format_value(x[std_cols], digits = digits)
-  names(x)[grepl("Std_", names(x))] <- paste0(gsub("Std_", "", std_cols), " (std.)")
+  names(x)[names(x) == std_cols] <- paste0(gsub("Std_", "", std_cols), " (std.)")
+
+  std_cis_replacement <- strsplit(std_cis, " ")[[1]]
+  std_cis_replacement[grepl("Std_", std_cis_replacement)] <- paste0(gsub("Std_", "", std_cis_replacement[grepl("Std_", std_cis_replacement)]), " (std.)")
+  names(x)[names(x) == std_cis] <- paste(std_cis_replacement, collapse = " ")
 
   # Partial
   x[names(x)[grepl("_partial", names(x))]] <- insight::format_value(x[names(x)[grepl("_partial", names(x))]])
   names(x)[grepl("_partial", names(x))] <- paste0(gsub("_partial", "", names(x)[grepl("_partial", names(x))]), " (partial)")
+
 
   # metafor
   if ("Weight" %in% names(x)) x$Weight <- insight::format_value(x$Weight, protect_integers = TRUE)
@@ -172,6 +183,14 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 
 # helper ---------------------
+.replace_words <- function(x, target, replacement) {
+  for (i in 1:length(x)) {
+    if (grepl(target, x[i])) {
+      x[i] <- gsub(target, replacement, x[i])
+    }
+  }
+  x
+}
 
 .additional_arguments <- function(x, value, default) {
   args <- attributes(x)$additional_arguments
