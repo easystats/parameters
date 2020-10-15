@@ -167,7 +167,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   other_ci_low <- names(x)[grep("_CI_low$", names(x))]
   other_ci_high <- names(x)[grep("_CI_high$", names(x))]
   if (length(other_ci_low) >= 1 & length(other_ci_low) == length(other_ci_high)) {
-    other <- unlist(strsplit(other_ci_low, "_CI_low"))
+    other <- unlist(strsplit(other_ci_low, "_CI_low$"))
 
     # CI percentage
     if (!is.null(att[[paste0("ci_", other)]])) {
@@ -175,7 +175,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     } else if (!is.null(att$ci)) {
       other_ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(att$ci)) * 100)
     } else {
-      other_ci_colname <- "CI"
+      other_ci_colname <- paste(other, "CI")
     }
 
     # Get characters to align the CI
