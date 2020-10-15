@@ -14,6 +14,7 @@
   rope_range = "default",
   rope_ci = 0.89,
   priors = TRUE,
+  verbose = TRUE,
   ...
 )
 }
@@ -48,6 +49,8 @@ the bounds are set to \code{x +- 0.1*SD(response)}.}
 proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 }

@@ -22,7 +22,7 @@ standard_error(model, ...)
 
 \method{standard_error}{factor}(model, force = FALSE, verbose = TRUE, ...)
 
-\method{standard_error}{default}(model, method = NULL, ...)
+\method{standard_error}{default}(model, method = NULL, verbose = TRUE, ...)
 
 \method{standard_error}{merMod}(model, effects = c("fixed", "random"), method = NULL, ...)
 

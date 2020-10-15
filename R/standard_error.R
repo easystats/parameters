@@ -77,13 +77,15 @@ standard_error.data.frame <- function(model, verbose = TRUE, ...) {
 
 
 #' @export
-standard_error.list <- function(model, ...) {
+standard_error.list <- function(model, verbose = TRUE, ...) {
   if ("gam" %in% names(model)) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
     standard_error(model)
   } else {
-    insight::print_color("\nCould not extract standard errors from model object.\n", "red")
+    if (isTRUE(verbose)) {
+      insight::print_color("\nCould not extract standard errors from model object.\n", "red")
+    }
   }
 }
 
@@ -114,11 +116,13 @@ standard_error.xtabs <- standard_error.table
 
 #' @importFrom insight print_color
 #' @export
-standard_error.effectsize_std_params <- function(model, ...) {
+standard_error.effectsize_std_params <- function(model, verbose = TRUE, ...) {
   se <- attr(model, "standard_error")
 
   if (is.null(se)) {
-    insight::print_color("\nCould not extract standard errors of standardized coefficients.\n", "red")
+    if (isTRUE(verbose)) {
+      insight::print_color("\nCould not extract standard errors of standardized coefficients.\n", "red")
+    }
     return(NULL)
   }
 
@@ -160,7 +164,7 @@ standard_error.parameters_kurtosis <- standard_error.parameters_skewness
 
 #' @rdname standard_error
 #' @export
-standard_error.default <- function(model, method = NULL, ...) {
+standard_error.default <- function(model, method = NULL, verbose = TRUE, ...) {
   if (!is.null(method)) {
     method <- tolower(method)
   } else {
@@ -204,7 +208,9 @@ standard_error.default <- function(model, method = NULL, ...) {
 
 
     if (is.null(se)) {
-      insight::print_color("\nCould not extract standard errors from model object.\n", "red")
+      if (isTRUE(verbose)) {
+        insight::print_color("\nCould not extract standard errors from model object.\n", "red")
+      }
     } else {
       .data_frame(
         Parameter = names(se),
