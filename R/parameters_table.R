@@ -198,6 +198,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 #' @importFrom insight format_value
 .format_std_columns <- function(x, other_ci_colname, digits) {
   std_cols <- names(x)[grepl("Std_", names(x))]
+  std_cis <- NULL
+
   if (!is.null(other_ci_colname)) {
     std_cis <- std_cols[std_cols %in% other_ci_colname]
     std_cols <- std_cols[!std_cols %in% other_ci_colname]
@@ -206,9 +208,11 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   x[std_cols] <- insight::format_value(x[std_cols], digits = digits)
   names(x)[names(x) == std_cols] <- paste0(gsub("Std_", "", std_cols), " (std.)")
 
-  std_cis_replacement <- strsplit(std_cis, " ")[[1]]
-  std_cis_replacement[grepl("Std_", std_cis_replacement)] <- paste0(gsub("Std_", "", std_cis_replacement[grepl("Std_", std_cis_replacement)]), " (std.)")
-  names(x)[names(x) == std_cis] <- paste(std_cis_replacement, collapse = " ")
+  if (!is.null(std_cis) && length(std_cis)) {
+    std_cis_replacement <- strsplit(std_cis, " ")[[1]]
+    std_cis_replacement[grepl("Std_", std_cis_replacement)] <- paste0(gsub("Std_", "", std_cis_replacement[grepl("Std_", std_cis_replacement)]), " (std.)")
+    names(x)[names(x) == std_cis] <- paste(std_cis_replacement, collapse = " ")
+  }
 
   x
 }
