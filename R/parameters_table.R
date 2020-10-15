@@ -206,12 +206,12 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   }
 
   x[std_cols] <- insight::format_value(x[std_cols], digits = digits)
-  names(x)[names(x) == std_cols] <- paste0(gsub("Std_", "", std_cols), " (std.)")
+  names(x)[names(x) == std_cols] <- paste0(gsub("Std_Coefficient", "", std_cols), "Beta (std.)")
 
   if (!is.null(std_cis) && length(std_cis)) {
     std_cis_replacement <- strsplit(std_cis, " ")[[1]]
-    std_cis_replacement[grepl("Std_", std_cis_replacement)] <- paste0(gsub("Std_", "", std_cis_replacement[grepl("Std_", std_cis_replacement)]), " (std.)")
-    std_cis_replacement <- gsub("^Coefficient ", "", std_cis_replacement)
+    std_cis_replacement[grepl("Std_Coefficient", std_cis_replacement)] <- paste0(gsub("Std_Coefficient", "", std_cis_replacement[grepl("Std_Coefficient", std_cis_replacement)]), "Beta (std.)")
+    # std_cis_replacement <- gsub("^Coefficient ", "", std_cis_replacement)
     names(x)[names(x) == std_cis] <- paste(std_cis_replacement, collapse = " ")
   }
 
