@@ -74,52 +74,22 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   names(x)[names(x) == "Cohens_d"] <- "Cohen's d"
 
 
-  # Standardized
-  std_cols <- names(x)[grepl("Std_", names(x))]
-  std_cis <- std_cols[std_cols %in% other_ci_colname]
-  std_cols <- std_cols[!std_cols %in% other_ci_colname]
+  # Standardized ----
+  x <- .format_std_columns(x, other_ci_colname, digits)
 
-  x[std_cols] <- insight::format_value(x[std_cols], digits = digits)
-  names(x)[names(x) == std_cols] <- paste0(gsub("Std_", "", std_cols), " (std.)")
 
-  std_cis_replacement <- strsplit(std_cis, " ")[[1]]
-  std_cis_replacement[grepl("Std_", std_cis_replacement)] <- paste0(gsub("Std_", "", std_cis_replacement[grepl("Std_", std_cis_replacement)]), " (std.)")
-  names(x)[names(x) == std_cis] <- paste(std_cis_replacement, collapse = " ")
-
-  # Partial
+  # Partial ----
   x[names(x)[grepl("_partial", names(x))]] <- insight::format_value(x[names(x)[grepl("_partial", names(x))]])
   names(x)[grepl("_partial", names(x))] <- paste0(gsub("_partial", "", names(x)[grepl("_partial", names(x))]), " (partial)")
 
 
-  # metafor
+  # metafor ----
   if ("Weight" %in% names(x)) x$Weight <- insight::format_value(x$Weight, protect_integers = TRUE)
 
-  # Bayesian
-  if ("Prior_Location" %in% names(x)) x$Prior_Location <- insight::format_value(x$Prior_Location, protect_integers = TRUE)
-  if ("Prior_Scale" %in% names(x)) x$Prior_Scale <- insight::format_value(x$Prior_Scale, protect_integers = TRUE)
-  if ("BF" %in% names(x)) x$BF <- insight::format_bf(x$BF, name = NULL, stars = stars)
-  if ("pd" %in% names(x)) x$pd <- insight::format_pd(x$pd, name = NULL, stars = stars)
-  if ("ROPE_Percentage" %in% names(x)) x$ROPE_Percentage <- format_rope(x$ROPE_Percentage, name = NULL)
-  names(x)[names(x) == "ROPE_Percentage"] <- "% in ROPE"
 
-  # Priors
-  if (all(c("Prior_Distribution", "Prior_Location", "Prior_Scale") %in% names(x))) {
-    x$Prior <- paste0(
-      tools::toTitleCase(x$Prior_Distribution),
-      " (",
-      x$Prior_Location,
-      " +- ",
-      x$Prior_Scale,
-      ")"
-    )
+  # Bayesian ---
+  x <- .format_bayes_columns(x, stars)
 
-    col_position <- which(names(x) == "Prior_Distribution")
-    x <- x[c(names(x)[0:(col_position - 1)], "Prior", names(x)[col_position:(length(names(x)) - 1)])] # Replace at initial position
-    x$Prior_Distribution <- x$Prior_Location <- x$Prior_Scale <- NULL
-  }
-
-  if ("Rhat" %in% names(x)) x$Rhat <- insight::format_value(x$Rhat, digits = 3)
-  if ("ESS" %in% names(x)) x$ESS <- insight::format_value(x$ESS, protect_integers = TRUE)
 
   # Format remaining columns
   other_cols <- names(x)[sapply(x, is.numeric)]
@@ -220,6 +190,53 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   list(x = x, other_ci_colname = other_ci_colname)
 }
 
+
+
+.format_std_columns <- function(x, other_ci_colname, digits) {
+  std_cols <- names(x)[grepl("Std_", names(x))]
+  std_cis <- std_cols[std_cols %in% other_ci_colname]
+  std_cols <- std_cols[!std_cols %in% other_ci_colname]
+
+  x[std_cols] <- insight::format_value(x[std_cols], digits = digits)
+  names(x)[names(x) == std_cols] <- paste0(gsub("Std_", "", std_cols), " (std.)")
+
+  std_cis_replacement <- strsplit(std_cis, " ")[[1]]
+  std_cis_replacement[grepl("Std_", std_cis_replacement)] <- paste0(gsub("Std_", "", std_cis_replacement[grepl("Std_", std_cis_replacement)]), " (std.)")
+  names(x)[names(x) == std_cis] <- paste(std_cis_replacement, collapse = " ")
+
+  x
+}
+
+
+.format_bayes_columns <- function(x, stars) {
+  if ("Prior_Location" %in% names(x)) x$Prior_Location <- insight::format_value(x$Prior_Location, protect_integers = TRUE)
+  if ("Prior_Scale" %in% names(x)) x$Prior_Scale <- insight::format_value(x$Prior_Scale, protect_integers = TRUE)
+  if ("BF" %in% names(x)) x$BF <- insight::format_bf(x$BF, name = NULL, stars = stars)
+  if ("pd" %in% names(x)) x$pd <- insight::format_pd(x$pd, name = NULL, stars = stars)
+  if ("ROPE_Percentage" %in% names(x)) x$ROPE_Percentage <- format_rope(x$ROPE_Percentage, name = NULL)
+  names(x)[names(x) == "ROPE_Percentage"] <- "% in ROPE"
+
+  # Priors
+  if (all(c("Prior_Distribution", "Prior_Location", "Prior_Scale") %in% names(x))) {
+    x$Prior <- paste0(
+      tools::toTitleCase(x$Prior_Distribution),
+      " (",
+      x$Prior_Location,
+      " +- ",
+      x$Prior_Scale,
+      ")"
+    )
+
+    col_position <- which(names(x) == "Prior_Distribution")
+    x <- x[c(names(x)[0:(col_position - 1)], "Prior", names(x)[col_position:(length(names(x)) - 1)])] # Replace at initial position
+    x$Prior_Distribution <- x$Prior_Location <- x$Prior_Scale <- NULL
+  }
+
+  if ("Rhat" %in% names(x)) x$Rhat <- insight::format_value(x$Rhat, digits = 3)
+  if ("ESS" %in% names(x)) x$ESS <- insight::format_value(x$ESS, protect_integers = TRUE)
+
+  x
+}
 
 
 
