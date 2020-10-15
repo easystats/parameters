@@ -23,9 +23,7 @@
 #' }
 #' @return A data frame.
 #'
-#' @importFrom tools toTitleCase
-#' @importFrom insight format_value format_ci format_p format_pd format_bf
-#' @importFrom stats na.omit
+#' @importFrom insight format_value format_p
 #' @export
 parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, ci_digits = 2, p_digits = 3, ...) {
 
@@ -117,6 +115,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 # sub-routines ---------------
 
 
+#' @importFrom insight format_value
 .format_df_columns <- function(x) {
   # generic df
   if ("df" %in% names(x)) x$df <- insight::format_value(x$df, protect_integers = TRUE)
@@ -131,6 +130,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 }
 
 
+#' @importFrom insight format_ci
+#' @importFrom stats na.omit
 .format_main_ci_columns <- function(x, att, ci_digits) {
   # Main CI
   ci_low <- names(x)[grep("^CI_low", names(x))]
@@ -160,6 +161,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 
 
+#' @importFrom insight format_ci
+#' @importFrom stats na.omit
 .format_other_ci_columns <- function(x, att, ci_digits) {
   other_ci_low <- names(x)[grep("_CI_low$", names(x))]
   other_ci_high <- names(x)[grep("_CI_high$", names(x))]
@@ -192,6 +195,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 
 
+#' @importFrom insight format_value
 .format_std_columns <- function(x, other_ci_colname, digits) {
   std_cols <- names(x)[grepl("Std_", names(x))]
   std_cis <- std_cols[std_cols %in% other_ci_colname]
@@ -208,6 +212,9 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 }
 
 
+
+#' @importFrom insight format_value format_pd format_bf
+#' @importFrom tools toTitleCase
 .format_bayes_columns <- function(x, stars) {
   if ("Prior_Location" %in% names(x)) x$Prior_Location <- insight::format_value(x$Prior_Location, protect_integers = TRUE)
   if ("Prior_Scale" %in% names(x)) x$Prior_Scale <- insight::format_value(x$Prior_Scale, protect_integers = TRUE)
