@@ -61,8 +61,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   }
 
   # Main CI
-  ci_low <- names(x)[grep("^CI_low.*", names(x))]
-  ci_high <- names(x)[grep("^CI_high.*", names(x))]
+  ci_low <- names(x)[grep("^CI_low", names(x))]
+  ci_high <- names(x)[grep("^CI_high", names(x))]
   if (length(ci_low) >= 1 & length(ci_low) == length(ci_high)) {
     if (is.null(att$ci)) {
       ci_colname <- "CI"
