@@ -60,16 +60,16 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   }
 
   # Main CI
-  ci_low <- names(x)[grep("CI_low*", names(x))]
-  ci_high <- names(x)[grep("CI_high*", names(x))]
+  ci_low <- names(x)[grep("^CI_low.*", names(x))]
+  ci_high <- names(x)[grep("^CI_high.*", names(x))]
   if (length(ci_low) >= 1 & length(ci_low) == length(ci_high)) {
     if (is.null(attributes(x)$ci)) {
       ci_colname <- "CI"
     } else {
-      if length(unique(attributes(x)$ci) > 1){
+      if (length(unique(na.omit(attributes(x)$ci))) > 1){
         ci_colname <- "?% CI"
       } else{
-        ci_colname <- sprintf("%i%% CI", unique(attributes(x)$ci)[1] * 100)
+        ci_colname <- sprintf("%i%% CI", unique(na.omit(attributes(x)$ci))[1] * 100)
       }
     }
     # Get characters to align the CI
@@ -91,14 +91,14 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     # CI percentage
     if (!is.null(attributes(x)[[paste0("ci_", other)]])) {
       other_ci_colname <- sprintf("%s %i%% CI", other, attributes(x)[[paste0("ci_", other)]] * 100)
-    } else if (!attributes(x)$ci){
+    } else if (!is.null(attributes(x)$ci)){
       other_ci_colname <- sprintf("%i%% CI", attributes(x)$ci * 100)
     } else{
       other_ci_colname <- "CI"
     }
 
     # Get characters to align the CI
-    for (i in 1:length(ci_colname)) {
+    for (i in 1:length(other_ci_colname)) {
       x[other_ci_colname[i]] <- insight::format_ci(x[[other_ci_low[i]]], x[[other_ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
     }
     # Replace at initial position
