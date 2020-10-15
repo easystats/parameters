@@ -30,6 +30,7 @@ standard_error(model, ...)
   model,
   effects = c("fixed", "random"),
   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+  verbose = TRUE,
   ...
 )
 
@@ -37,6 +38,7 @@ standard_error(model, ...)
   model,
   effects = c("fixed", "random"),
   component = c("all", "conditional", "zi", "zero_inflated"),
+  verbose = TRUE,
   ...
 )
 
@@ -44,6 +46,7 @@ standard_error(model, ...)
   model,
   component = c("all", "conditional", "zi", "zero_inflated"),
   method = NULL,
+  verbose = TRUE,
   ...
 )
 

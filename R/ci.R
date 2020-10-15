@@ -440,12 +440,12 @@ ci.DirichletRegModel <- function(x, ci = .95, component = c("all", "conditional"
 
 #' @rdname ci.merMod
 #' @export
-ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), method = c("wald", "ml1", "betwithin", "robust"), ...) {
+ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), method = c("wald", "ml1", "betwithin", "robust"), verbose = TRUE, ...) {
   method <- tolower(method)
   method <- match.arg(method)
   component <- match.arg(component)
 
-  if (is.null(.check_component(x, component))) {
+  if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
   }
 
@@ -474,9 +474,9 @@ ci.zerocount <- ci.glmmTMB
 
 #' @rdname ci.merMod
 #' @export
-ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), verbose = TRUE, ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(x, component))) {
+  if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
   }
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
@@ -713,11 +713,13 @@ ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterth
 #' @importFrom insight print_color
 #' @importFrom stats qt
 #' @export
-ci.effectsize_std_params <- function(x, ci = .95, ...) {
+ci.effectsize_std_params <- function(x, ci = .95, verbose = TRUE, ...) {
   se <- attr(x, "standard_error")
 
   if (is.null(se)) {
-    insight::print_color("\nCould not extract standard errors of standardized coefficients.\n", "red")
+    if (isTRUE(verbose)) {
+      insight::print_color("\nCould not extract standard errors of standardized coefficients.\n", "red")
+    }
     return(NULL)
   }
 
@@ -798,9 +800,11 @@ ci.metaplus <- function(x, ...) {
 
 
 #' @keywords internal
-.check_component <- function(m, x) {
+.check_component <- function(m, x, verbose = TRUE) {
   if (!insight::model_info(m)$is_zero_inflated && x %in% c("zi", "zero_inflated")) {
-    insight::print_color("Model has no zero-inflation component!\n", "red")
+    if (isTRUE(verbose)) {
+      insight::print_color("Model has no zero-inflation component!\n", "red")
+    }
     x <- NULL
   }
   x

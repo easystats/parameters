@@ -9,6 +9,7 @@
 #' @param model A statistical model.
 #' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
 #' @param adjust Character value naming the method used to adjust p-values or confidence intervals. See \code{?emmeans::summary.emmGrid} for details.
+#' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
@@ -43,7 +44,7 @@ p_value <- function(model, ...) {
 
 #' @rdname p_value
 #' @export
-p_value.default <- function(model, method = NULL, ...) {
+p_value.default <- function(model, method = NULL, verbose = TRUE, ...) {
   if (!is.null(method)) {
     method <- tolower(method)
   } else {
@@ -91,7 +92,9 @@ p_value.default <- function(model, method = NULL, ...) {
   }
 
   if (is.null(p)) {
-    insight::print_color("\nCould not extract p-values from model object.\n", "red")
+    if (isTRUE(verbose)) {
+      insight::print_color("\nCould not extract p-values from model object.\n", "red")
+    }
   } else {
     .data_frame(
       Parameter = names(p),
@@ -176,9 +179,9 @@ p_value.speedlm <- function(model, ...) {
 
 
 #' @export
-p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, ...) {
+p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, verbose = TRUE, ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) {
+  if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
   }
 
@@ -345,9 +348,9 @@ p_value.rlmerMod <- function(model, method = "wald", ...) {
 
 #' @rdname p_value
 #' @export
-p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), ...) {
+p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = TRUE, ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) {
+  if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
   }
 
@@ -372,9 +375,9 @@ p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "ze
 
 #' @rdname p_value
 #' @export
-p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), verbose = TRUE, ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) {
+  if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
   }
 
@@ -1588,13 +1591,15 @@ p_value.data.frame <- function(model, ...) {
 
 
 #' @export
-p_value.list <- function(model, ...) {
+p_value.list <- function(model, verbose = TRUE, ...) {
   if ("gam" %in% names(model)) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
     p_value(model)
   } else {
-    insight::print_color("\nCould not extract p-values from model object.\n", "red")
+    if (isTRUE(verbose)) {
+      insight::print_color("\nCould not extract p-values from model object.\n", "red")
+    }
   }
 }
 

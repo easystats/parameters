@@ -361,7 +361,7 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
 
 #' @rdname standard_error
 #' @export
-standard_error.glmmTMB <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), ...) {
+standard_error.glmmTMB <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = TRUE, ...) {
   component <- match.arg(component)
   effects <- match.arg(effects)
 
@@ -383,7 +383,7 @@ standard_error.glmmTMB <- function(model, effects = c("fixed", "random"), compon
       return(NULL)
     }
   } else {
-    if (is.null(.check_component(model, component))) {
+    if (is.null(.check_component(model, component, verbose = verbose))) {
       return(NULL)
     }
 
@@ -410,7 +410,7 @@ standard_error.glmmTMB <- function(model, effects = c("fixed", "random"), compon
 #' @rdname standard_error
 #' @importFrom insight find_random
 #' @export
-standard_error.MixMod <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+standard_error.MixMod <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), verbose = TRUE, ...) {
   component <- match.arg(component)
   effects <- match.arg(effects)
 
@@ -436,7 +436,7 @@ standard_error.MixMod <- function(model, effects = c("fixed", "random"), compone
     }
     rand.se
   } else {
-    if (is.null(.check_component(model, component))) {
+    if (is.null(.check_component(model, component, verbose = verbose))) {
       return(NULL)
     }
 
@@ -467,9 +467,9 @@ standard_error.MixMod <- function(model, effects = c("fixed", "random"), compone
 
 #' @rdname standard_error
 #' @export
-standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, ...) {
+standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, verbose = TRUE, ...) {
   component <- match.arg(component)
-  if (is.null(.check_component(model, component))) {
+  if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
   }
 

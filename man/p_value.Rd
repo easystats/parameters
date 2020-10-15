@@ -20,7 +20,7 @@
 \usage{
 p_value(model, ...)
 
-\method{p_value}{default}(model, method = NULL, ...)
+\method{p_value}{default}(model, method = NULL, verbose = TRUE, ...)
 
 \method{p_value}{lmerMod}(model, method = "wald", ...)
 
@@ -31,10 +31,16 @@ p_value(model, ...)
 \method{p_value}{glmmTMB}(
   model,
   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+  verbose = TRUE,
   ...
 )
 
-\method{p_value}{MixMod}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
+\method{p_value}{MixMod}(
+  model,
+  component = c("all", "conditional", "zi", "zero_inflated"),
+  verbose = TRUE,
+  ...
+)
 
 \method{p_value}{mixor}(model, effects = c("all", "fixed", "random"), ...)
 
@@ -62,6 +68,8 @@ p_value(model, ...)
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 
 \item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
