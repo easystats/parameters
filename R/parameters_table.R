@@ -137,15 +137,19 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   ci_low <- names(x)[grep("^CI_low", names(x))]
   ci_high <- names(x)[grep("^CI_high", names(x))]
   if (length(ci_low) >= 1 & length(ci_low) == length(ci_high)) {
-    if (is.null(att$ci)) {
-      ci_colname <- "CI"
-    } else {
+    if (!is.null(att$ci)) {
       if (length(unique(stats::na.omit(att$ci))) > 1) {
         ci_colname <- "?% CI"
       } else {
         ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(att$ci))[1] * 100)
       }
+    } else if(!is.null(x$CI)){
+      ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(x$CI))[1] * 100)
+      x$CI <- NULL
+    } else {
+      ci_colname <- "CI"
     }
+
     # Get characters to align the CI
     for (i in 1:length(ci_colname)) {
       x[ci_colname[i]] <- insight::format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
@@ -224,10 +228,11 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   }
 
   x[std_cols] <- insight::format_value(x[std_cols], digits = digits)
-  names(x)[names(x) == std_cols] <- "Beta (std.)"
+  names(x)[names(x) == std_cols] <- .replace_words(std_cols, "Std_", "Std. ")
 
   if (!is.null(std_cis) && length(std_cis)) {
-    std_cis_replacement <- gsub("^Std_Coefficient(.*)", "Beta\\1", std_cis)
+    std_cis_replacement <- .replace_words(std_cis, "^Std_", "Std. ")
+    # std_cis_replacement <- gsub("^Std_Coefficient(.*)", "Std. Coef.\\1", std_cis)
     names(x)[names(x) == std_cis] <- std_cis_replacement
   }
 
