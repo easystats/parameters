@@ -1,5 +1,5 @@
 #' @keywords internal
-.add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, ...) {
+.add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, bootstrap=FALSE, iterations=1000, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   info <- tryCatch(
     {
@@ -22,6 +22,8 @@
   attr(params, "exponentiate") <- exponentiate
   attr(params, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)
   attr(params, "model_class") <- class(model)
+  attr(params, "bootstrap") <- bootstrap
+  attr(params, "iterations") <- iterations
 
   # column name for coefficients
   coef_col <- "Coefficient"
