@@ -50,6 +50,9 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   # Format df columns ----
   x <- .format_df_columns(x)
 
+  # Format frequentist stats ----
+  x <- .format_freq_stats(x)
+
 
   # P values ----
   if ("p" %in% names(x)) {
@@ -126,6 +129,18 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   if ("df_error" %in% names(x)) x$df_error <- insight::format_value(x$df_error, protect_integers = TRUE)
   names(x)[names(x) == "df_error"] <- "df"
 
+  x
+}
+
+
+#' @importFrom insight format_value
+.format_freq_stats <- function(x) {
+  if ("t" %in% names(x) && "df" %in% names(x)){
+    if(length(unique(x$df) == 1)){
+      names(x)[names(x) == "t"] <- paste0("t(", unique(x$df), ")")
+      x$df <- NULL
+    }
+  }
   x
 }
 
@@ -220,6 +235,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   # }
 
   std_cols <- names(x)[grepl("Std_", names(x))]
+  if(length(std_cols) == 0) return(x)
+
   std_cis <- NULL
 
   if (!is.null(other_ci_colname)) {
