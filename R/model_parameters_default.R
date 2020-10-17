@@ -75,7 +75,7 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, bootstrap, iterations, ...)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
