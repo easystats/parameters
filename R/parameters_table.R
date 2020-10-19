@@ -50,6 +50,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   # Format df columns ----
   x <- .format_df_columns(x)
 
+
   # Format frequentist stats ----
   x <- .format_freq_stats(x)
 
@@ -133,16 +134,19 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 }
 
 
+
 #' @importFrom stats na.omit
 .format_freq_stats <- function(x) {
   if ("t" %in% names(x) && "df" %in% names(x)) {
-    if (length(stats::na.omit(unique(x$df))) == 1) {
-      names(x)[names(x) == "t"] <- paste0("t(", unique(stats::na.omit(x$df)), ")")
+    df <- stats::na.omit(unique(x$df))
+    if (length(df) == 1 && !all(is.infinite(df))) {
+      names(x)[names(x) == "t"] <- paste0("t(", df, ")")
       x$df <- NULL
     }
   }
   x
 }
+
 
 
 #' @importFrom insight format_ci
@@ -216,24 +220,6 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 #' @importFrom insight format_value
 .format_std_columns <- function(x, other_ci_colname, digits) {
-  # std_cols <- names(x)[grepl("Std_", names(x))]
-  # std_cis <- NULL
-  #
-  # if (!is.null(other_ci_colname)) {
-  #   std_cis <- std_cols[std_cols %in% other_ci_colname]
-  #   std_cols <- std_cols[!std_cols %in% other_ci_colname]
-  # }
-  #
-  # x[std_cols] <- insight::format_value(x[std_cols], digits = digits)
-  # names(x)[names(x) == std_cols] <- paste0(gsub("Std_Coefficient", "", std_cols), "Beta (std.)")
-  #
-  # if (!is.null(std_cis) && length(std_cis)) {
-  #   std_cis_replacement <- strsplit(std_cis, " ")[[1]]
-  #   std_cis_replacement[grepl("Std_Coefficient", std_cis_replacement)] <- paste0(gsub("Std_Coefficient", "", std_cis_replacement[grepl("Std_Coefficient", std_cis_replacement)]), "Beta (std.)")
-  #   # std_cis_replacement <- gsub("^Coefficient ", "", std_cis_replacement)
-  #   names(x)[names(x) == std_cis] <- paste(std_cis_replacement, collapse = " ")
-  # }
-
   std_cols <- names(x)[grepl("Std_", names(x))]
   if (length(std_cols) == 0) return(x)
 
