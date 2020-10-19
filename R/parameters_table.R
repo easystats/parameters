@@ -137,13 +137,16 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 #' @importFrom stats na.omit
 .format_freq_stats <- function(x) {
-  if ("t" %in% names(x) && "df" %in% names(x)) {
-    df <- stats::na.omit(unique(x$df))
-    if (length(df) == 1 && !all(is.infinite(df))) {
-      names(x)[names(x) == "t"] <- paste0("t(", df, ")")
-      x$df <- NULL
+  for (stats in c("t", "Chi2")) {
+    if (stats %in% names(x) && "df" %in% names(x)) {
+      df <- stats::na.omit(unique(x$df))
+      if (length(df) == 1 && !all(is.infinite(df))) {
+        names(x)[names(x) == stats] <- paste0(stats, "(", df, ")")
+        x$df <- NULL
+      }
     }
   }
+
   x
 }
 

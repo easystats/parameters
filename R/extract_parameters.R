@@ -172,14 +172,15 @@
 
   if ("Statistic" %in% names(parameters)) {
     names(parameters) <- gsub("Statistic", gsub("(-|\\s)statistic", "", attr(statistic, "statistic", exact = TRUE)), names(parameters))
-    names(parameters) <- gsub("chi-squared", "chisq", names(parameters))
+    names(parameters) <- gsub("chi-squared", "Chi2", names(parameters))
   }
+  names(parameters) <- gsub("(c|C)hisq", "Chi2", names(parameters))
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
 
   # ==== Reorder
 
-  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "F", "chisq", "chi-squared", "df", "df_error", "p", "Component", "Response", "Effects")
+  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "z / Chi2", "F", "Chi2", "chisq", "chi-squared", "df", "df_error", "p", "Component", "Response", "Effects")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
 
@@ -720,8 +721,8 @@
   names(parameters) <- gsub("npar", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("NumDF", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("d.f.", "df", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Chi.Df", "Chisq_df", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Chi DoF", "Chisq_df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Chi.Df", "Chi2_df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Chi DoF", "Chi2_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum Sq", "Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Partial.SS", "Sum_Squares_Partial", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum of Sq", "Sum_Squares", names(parameters), fixed = TRUE)
@@ -731,13 +732,13 @@
   names(parameters) <- gsub("F value", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.Df", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.DoF", "df_residual", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Chisq", "Chisq", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Chisq", "Chi2", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr..Chisq.", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr..Chi.", "p", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Chi.sq", "Chisq", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Chi-Square", "Chisq", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("LR.Chisq", "Chisq", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("LR Chisq", "Chisq", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Chi.sq", "Chi2", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Chi-Square", "Chi2", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("LR.Chisq", "Chi2", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("LR Chisq", "Chi2", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("p.value", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("logLik", "Log_Likelihood", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("deviance", "Deviance", names(parameters), fixed = TRUE)
@@ -746,7 +747,7 @@
 
   # Reorder
   row.names(parameters) <- NULL
-  order <- c("Group", "Parameter", "Pillai", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chisq", "Chisq_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "df", "df_residual", "Mean_Square", "F", "p")
+  order <- c("Group", "Parameter", "Pillai", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chi2", "Chi2_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "df", "df_residual", "Mean_Square", "F", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   .remove_backticks_from_parameter_names(parameters)
@@ -763,7 +764,7 @@
     )
 
     if (model$method == "Pearson's Chi-squared test") {
-      out$Chisq <- model$statistic
+      out$Chi2 <- model$statistic
       out$df <- model$parameter
       out$p <- model$p.value
       out$Method <- "Pearson"

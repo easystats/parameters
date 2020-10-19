@@ -279,12 +279,12 @@ print.parameters_random <- function(x, digits = 2, ...) {
     }
 
 
-    if ("z / Chisq" %in% names(tables[[type]])) {
+    if ("z / Chi2" %in% names(tables[[type]])) {
       if (type == "smooth_terms") {
-        names(tables[[type]])[names(tables[[type]]) == "z / Chisq"] <- "Chisq"
+        names(tables[[type]])[names(tables[[type]]) == "z / Chi2"] <- "Chi2"
       }
       if (type == "conditional") {
-        names(tables[[type]])[names(tables[[type]]) == "z / Chisq"] <- "z"
+        names(tables[[type]])[names(tables[[type]]) == "z / Chi2"] <- "z"
       }
     }
 
