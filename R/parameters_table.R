@@ -133,11 +133,11 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 }
 
 
-#' @importFrom insight format_value
+#' @importFrom stats na.omit
 .format_freq_stats <- function(x) {
   if ("t" %in% names(x) && "df" %in% names(x)) {
-    if (length(na.omit(unique(x$df))) == 1) {
-      names(x)[names(x) == "t"] <- paste0("t(", unique(na.omit(x$df)), ")")
+    if (length(stats::na.omit(unique(x$df))) == 1) {
+      names(x)[names(x) == "t"] <- paste0("t(", unique(stats::na.omit(x$df)), ")")
       x$df <- NULL
     }
   }
