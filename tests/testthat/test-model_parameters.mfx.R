@@ -9,8 +9,8 @@ if (require("testthat") && require("insight") && require("parameters") && requir
   data = data.frame(y, x)
   model <- betamfx(y ~ x | x, data = data)
 
+  params <- suppressWarnings(model_parameters(model))
   test_that("model_parameters.betamfx", {
-    params <- model_parameters(model)
     testthat::expect_equal(params$Parameter, c("x", "(Intercept)", "x", "(Intercept)", "x"))
     testthat::expect_equal(params$Coefficient, c(0.02259, 1.35961, 0.13947, 0.07498, 0.12071), tolerance = 1e-2)
     testthat::expect_equal(params$Component, c("marginal", "conditional", "conditional", "precision", "precision"))
@@ -18,16 +18,16 @@ if (require("testthat") && require("insight") && require("parameters") && requir
 
 
   model <- betaor(y ~ x | x, data = data)
-
+  params <- suppressWarnings(model_parameters(model))
   test_that("model_parameters.betaor", {
-    params <- model_parameters(model)
     testthat::expect_equal(params$Parameter, c("(Intercept)", "x"))
     testthat::expect_equal(params$Coefficient, c(1.35961, 0.13947), tolerance = 1e-2)
     testthat::expect_null(params$Component)
   })
 
+
+  params <- suppressWarnings(model_parameters(model, component = "all"))
   test_that("model_parameters.betaor", {
-    params <- model_parameters(model, component = "all")
     testthat::expect_equal(params$Parameter, c("(Intercept)", "x", "(Intercept)", "x"))
     testthat::expect_equal(params$Coefficient, unname(do.call(rbind, coef(summary(model$fit)))[, 1]), tolerance = 1e-2)
     testthat::expect_equal(params$Component, c("conditional", "conditional", "precision", "precision"))
@@ -42,16 +42,16 @@ if (require("testthat") && require("insight") && require("parameters") && requir
   data = data.frame(y, x)
 
   model <- poissonmfx(formula = y ~ x, data = data)
-
+  params <- suppressWarnings(model_parameters(model))
   test_that("model_parameters.poissonmfx", {
-    params <- model_parameters(model)
     testthat::expect_equal(params$Parameter, c("x", "(Intercept)", "x"))
     testthat::expect_equal(params$Coefficient, c(1.46009, 0.96036, 0.54496), tolerance = 1e-2)
     testthat::expect_equal(params$Component, c("marginal", "conditional", "conditional"))
   })
 
+
+  params <- suppressWarnings(model_parameters(model, component = "cond"))
   test_that("model_parameters.poissonmfx", {
-    params <- model_parameters(model, component = "cond")
     testthat::expect_equal(params$Parameter, c("(Intercept)", "x"))
     testthat::expect_equal(params$Coefficient, c(0.96036, 0.54496), tolerance = 1e-2)
     testthat::expect_null(params$Component)

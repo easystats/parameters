@@ -61,10 +61,11 @@ if (require("testthat") &&
 
 
 
+  set.seed(333)
+  befa <- BayesFM::befa(mtcars, iter = 1000)
+  params <- suppressWarnings(parameters::model_parameters(befa, sort = TRUE))
+
   test_that("BayesFM", {
-    set.seed(333)
-    befa <- BayesFM::befa(mtcars, iter = 1000)
-    params <- parameters::model_parameters(befa, sort = TRUE)
     testthat::expect_equal(nrow(params), 11)
   })
 }

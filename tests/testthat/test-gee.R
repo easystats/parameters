@@ -28,9 +28,10 @@ if (require("testthat") &&
     )
   })
 
+  mp <- suppressWarnings(model_parameters(m1))
   test_that("model_parameters", {
     expect_equal(
-      model_parameters(m1)$Coefficient,
+      mp$Coefficient,
       c(36.38889, -10, -14.72222),
       tolerance = 1e-3
     )
