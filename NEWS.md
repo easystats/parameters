@@ -6,7 +6,7 @@
 
 ## New supported model classes
 
-* Preliminary support for `emm_list` objects.
+* Support for `maov` objects, preliminary support for `emm_list` objects.
 
 ## General
 
