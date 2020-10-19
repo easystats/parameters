@@ -17,6 +17,7 @@
 * `print()` for `model_parameters()` now names the coefficients column depending on the model type (i.e. `"Odds Ratios"` for logistic regression when `exponentiate = TRUE` etc.)
 * `print()` for `model_parameters()` gains a `show_sigma` argument, to show or hide information on the residual standard deviation.
 * `data_partition()` gets a `seed` argument, to explicitly set the seed before random sampling of test and training data.
+* Revised `parameters_table()`, to improve readability of printed output.
 
 ## Bug fixes
 
