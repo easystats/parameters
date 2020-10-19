@@ -135,8 +135,8 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 #' @importFrom insight format_value
 .format_freq_stats <- function(x) {
-  if ("t" %in% names(x) && "df" %in% names(x)){
-    if(length(unique(x$df) == 1)){
+  if ("t" %in% names(x) && "df" %in% names(x)) {
+    if (length(unique(x$df)) == 1) {
       names(x)[names(x) == "t"] <- paste0("t(", unique(x$df), ")")
       x$df <- NULL
     }
@@ -158,7 +158,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
       } else {
         ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(att$ci))[1] * 100)
       }
-    } else if(!is.null(x$CI)){
+    } else if (!is.null(x$CI)) {
       ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(x$CI))[1] * 100)
       x$CI <- NULL
     } else {
@@ -235,7 +235,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   # }
 
   std_cols <- names(x)[grepl("Std_", names(x))]
-  if(length(std_cols) == 0) return(x)
+  if (length(std_cols) == 0) return(x)
 
   std_cis <- NULL
 
@@ -245,11 +245,11 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   }
 
   x[std_cols] <- insight::format_value(x[std_cols], digits = digits)
-  names(x)[names(x) == std_cols] <- .replace_words(std_cols, "Std_", "Std. ")
+  names(x)[names(x) == std_cols] <- .replace_words(std_cols, "Std_Coefficient", "Std. Coef.")
 
   if (!is.null(std_cis) && length(std_cis)) {
-    std_cis_replacement <- .replace_words(std_cis, "^Std_", "Std. ")
-    # std_cis_replacement <- gsub("^Std_Coefficient(.*)", "Std. Coef.\\1", std_cis)
+    # std_cis_replacement <- .replace_words(std_cis, "^Std_", "Std. ")
+    std_cis_replacement <- gsub("^Std_Coefficient(.*)", "Std. Coef.\\1", std_cis)
     names(x)[names(x) == std_cis] <- std_cis_replacement
   }
 
