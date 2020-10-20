@@ -208,7 +208,7 @@
     temp_pars <- parameters
     class(temp_pars) <- c("parameters_model", class(temp_pars))
     attr(temp_pars, "ci") <- ci
-    attr(temp_pars, "obj_name") <- model # pass the model as is (this is a cheat - teehee!)
+    attr(temp_pars, "object_name") <- model # pass the model as is (this is a cheat - teehee!)
 
     std_parms <- effectsize::standardize_parameters(temp_pars, method = standardize)
     parameters$Std_Coefficient <- std_parms$Std_Coefficient
