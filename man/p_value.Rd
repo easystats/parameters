@@ -62,11 +62,6 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 }
 \value{
 The p-values.
-
- @examples
-data(iris)
-model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
-p_value(model)
 }
 \description{
 This function attempts to return, or compute, p-values of a model's parameters. See the documentation for your object's class:
@@ -80,4 +75,9 @@ This function attempts to return, or compute, p-values of a model's parameters. 
   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
   thus only work for those models supported by those packages.
+}
+\examples{
+data(iris)
+model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
+p_value(model)
 }

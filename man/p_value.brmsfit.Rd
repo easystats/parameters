@@ -11,15 +11,15 @@
 }
 \value{
 The p-values.
-
- @examples
-data(iris)
-model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
-p_value(model)
 }
 \description{
 This function attempts to return, or compute, p-values of Bayesian models.
 }
 \details{
 For Bayesian models, the p-values corresponds to the \emph{probability of direction} (\code{\link[bayestestR]{p_direction}}), which is converted to a p-value using \code{bayestestR::convert_pd_to_p()}.
+}
+\examples{
+data(iris)
+model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
+p_value(model)
 }

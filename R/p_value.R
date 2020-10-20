@@ -22,7 +22,7 @@
 #'
 #' @return The p-values.
 #'
-#'  @examples
+#' @examples
 #' data(iris)
 #' model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
 #' p_value(model)
