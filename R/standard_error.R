@@ -465,6 +465,26 @@ standard_error.MixMod <- function(model, effects = c("fixed", "random"), compone
 
 
 
+#' @export
+standard_error.HLfit <- function(model, method = NULL, ...) {
+  if (is.null(method)) method <- "wald"
+
+  if (method == "ml1") {
+    se_ml1(model)
+  } else if (method == "betwithin") {
+    se_betwithin(model)
+  } else {
+    utils::capture.output(se <- summary(model)$beta_table[, 2])
+    .data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+      SE = as.vector(se)
+    )
+  }
+}
+
+
+
+
 
 
 

@@ -1,10 +1,10 @@
 #' p-values
 #'
-#' This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
+#' This function attempts to return, or compute, p-values of a model's parameters. See the documentation for your object's class:
 #' \itemize{
-#' \item Mixed models (\pkg{lme4}): By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
-#' \item Bayesian models (\pkg{rstanarm}, \pkg{brms}): For Bayesian models, the p-values corresponds to the \emph{probability of direction} (\code{\link[bayestestR]{p_direction}}), which is converted to a p-value using \code{bayestestR::convert_pd_to_p()}.
-#' }
+#'  \item{\link[=p_value.lmerMod]{Mixed models} (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, ...)}
+#'  \item{\link[=p_value.brmsfit]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
+#'  }
 #'
 #' @param model A statistical model.
 #' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
@@ -20,13 +20,12 @@
 #'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
 #'   thus only work for those models supported by those packages.
 #'
-#' @examples
-#' if (require("lme4")) {
-#'   data(iris)
-#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#'   p_value(model)
-#' }
 #' @return The p-values.
+#'
+#'  @examples
+#' data(iris)
+#' model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
+#' p_value(model)
 #' @importFrom bayestestR p_direction convert_pd_to_p
 #' @importFrom stats coef vcov pt pnorm na.omit
 #' @importFrom insight get_statistic get_parameters find_parameters print_color
@@ -249,232 +248,6 @@ p_value.zcpglm <- function(model, component = c("all", "conditional", "zi", "zer
   out <- .filter_component(rbind(tweedie, zero), component)
   out
 }
-
-
-
-
-
-
-
-# p-Values from Mixed Models -----------------------------------------------
-
-
-#' @export
-p_value.sem <- function(model, ...) {
-  if (!.is_semLme(model)) {
-    return(NULL)
-  }
-
-  stat <- insight::get_statistic(model)
-  if (is.null(stat)) {
-    return(NULL)
-  }
-
-  .data_frame(
-    Parameter = stat$Parameter,
-    p = 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
-  )
-}
-
-
-
-#' @export
-p_value.lme <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  p <- cs[, 5]
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(cs)),
-    p = as.vector(p)
-  )
-}
-
-
-
-#' @rdname p_value
-#' @export
-p_value.lmerMod <- function(model, method = "wald", ...) {
-  method <- tolower(method)
-  method <- match.arg(method, c("wald", "ml1", "betwithin", "satterthwaite", "kr", "kenward"))
-  if (method == "wald") {
-    p_value_wald(model, ...)
-  } else if (method == "ml1") {
-    p_value_ml1(model, ...)
-  } else if (method == "betwithin") {
-    p_value_betwithin(model, ...)
-  } else if (method == "satterthwaite") {
-    p_value_satterthwaite(model, ...)
-  } else if (method %in% c("kr", "kenward")) {
-    p_value_kenward(model, ...)
-  }
-}
-
-
-
-#' @rdname p_value
-#' @export
-p_value.merMod <- function(model, method = "wald", ...) {
-  method <- tolower(method)
-  method <- match.arg(method, c("wald", "betwithin", "ml1"))
-  if (method == "wald") {
-    dof <- Inf
-  } else if (method == "ml1") {
-    dof <- dof_ml1(model)
-  } else {
-    dof <- dof_betwithin(model)
-  }
-  p_value_wald(model, dof, ...)
-}
-
-#' @export
-p_value.cpglmm <- p_value.merMod
-
-
-#' @rdname p_value
-#' @export
-p_value.rlmerMod <- function(model, method = "wald", ...) {
-  method <- match.arg(method, c("wald", "betwithin", "ml1"))
-  if (method == "wald") {
-    dof <- Inf
-  } else if (method == "ml1") {
-    dof <- dof_ml1(model)
-  } else {
-    dof <- dof_betwithin(model)
-  }
-  p_value_wald(model, dof, ...)
-}
-
-
-
-#' @rdname p_value
-#' @export
-p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = TRUE, ...) {
-  component <- match.arg(component)
-  if (is.null(.check_component(model, component, verbose = verbose))) {
-    return(NULL)
-  }
-
-  cs <- .compact_list(stats::coef(summary(model)))
-  x <- lapply(names(cs), function(i) {
-    .data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
-      p = as.vector(cs[[i]][, 4]),
-      Component = i
-    )
-  })
-
-  p <- do.call(rbind, x)
-  p$Component <- .rename_values(p$Component, "cond", "conditional")
-  p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
-  p$Component <- .rename_values(p$Component, "disp", "dispersion")
-
-  .filter_component(p, component)
-}
-
-
-
-#' @rdname p_value
-#' @export
-p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), verbose = TRUE, ...) {
-  component <- match.arg(component)
-  if (is.null(.check_component(model, component, verbose = verbose))) {
-    return(NULL)
-  }
-
-  s <- summary(model)
-  cs <- list(s$coef_table, s$coef_table_zi)
-  names(cs) <- c("conditional", "zero_inflated")
-  cs <- .compact_list(cs)
-  x <- lapply(names(cs), function(i) {
-    .data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
-      p = as.vector(cs[[i]][, 4]),
-      Component = i
-    )
-  })
-
-  p <- do.call(rbind, x)
-  .filter_component(p, component)
-}
-
-
-#' @rdname p_value
-#' @importFrom insight get_parameters
-#' @export
-p_value.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
-  effects <- match.arg(effects)
-  stats <- model$Model[, "P(>|z|)"]
-  parms <- get_parameters(model, effects = effects)
-
-  .data_frame(
-    Parameter = parms$Parameter,
-    p = stats[parms$Parameter],
-    Effects = parms$Effects
-  )
-}
-
-
-#' @importFrom insight get_parameters
-#' @export
-p_value.glmm <- function(model, effects = c("all", "fixed", "random"), ...) {
-  effects <- match.arg(effects)
-  s <- summary(model)
-
-  out <- insight::get_parameters(model, effects = "all")
-  out$p <- c(s$coefmat[, 4], s$nucoefmat[, 4])
-  out <- out[, c("Parameter", "p", "Effects")]
-
-  if (effects != "all") {
-    out <- out[out$Effects == effects, , drop = FALSE]
-    out$Effects <- NULL
-  }
-
-  out
-}
-
-
-
-
-
-
-
-# p-Values from Bayesian Models -----------------------------------------------
-
-
-#' @export
-p_value.MCMCglmm <- function(model, ...) {
-  nF <- model$Fixed$nfl
-  p <- 1 - colSums(model$Sol[, 1:nF, drop = FALSE] > 0) / dim(model$Sol)[1]
-
-  .data_frame(
-    Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
-    p = p
-  )
-}
-
-
-#' @export
-p_value.brmsfit <- function(model, ...) {
-  p <- bayestestR::p_direction(model)
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(p$Parameter),
-    p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE)
-  )
-}
-
-
-#' @export
-p_value.stanreg <- p_value.brmsfit
-
-
-#' @export
-p_value.BFBayesFactor <- p_value.brmsfit
-
-
-#' @export
-p_value.bcplm <- p_value.brmsfit
-
 
 
 
