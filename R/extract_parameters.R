@@ -155,12 +155,6 @@
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
 
 
-  # ==== Reorder
-
-  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "z / Chi2", "F", "Chi2", "chisq", "chi-squared", "df", "df_error", "p", "Component", "Response", "Effects")
-  parameters <- parameters[col_order[col_order %in% names(parameters)]]
-
-
   # ==== add intercept groups for ordinal models
 
   if (inherits(model, c("polr", "clm")) && !is.null(intercept_groups)) {
@@ -217,14 +211,22 @@
     attr(temp_pars, "obj_name") <- model # pass the model as is (this is a cheat - teehee!)
 
     std_parms <- effectsize::standardize_parameters(temp_pars, method = standardize)
-    parameters$Coefficient <- std_parms$Std_Coefficient
+    parameters$Std_Coefficient <- std_parms$Std_Coefficient
     parameters$SE <- attr(std_parms, "standard_error")
 
     if (!is.null(ci)) {
       parameters$CI_low <- std_parms$CI_low
       parameters$CI_high <- std_parms$CI_high
     }
+
+    coef_col <- "Std_Coefficient"
   }
+
+
+  # ==== Reorder
+
+  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "z / Chi2", "F", "Chi2", "chisq", "chi-squared", "df", "df_error", "p", "Component", "Response", "Effects")
+  parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   rownames(parameters) <- NULL
   parameters
