@@ -8,7 +8,7 @@
 #' @inheritParams standard_error
 #' @inheritParams ci.merMod
 #'
-#' @return The p-values.
+#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
 #'
 #' @examples
 #' if (require("pscl")) {
@@ -64,6 +64,7 @@ p_value.hurdle <- p_value.zeroinfl
 p_value.zerocount <- p_value.zeroinfl
 
 
+#' @rdname p_value.zeroinfl
 #' @importFrom utils capture.output
 #' @export
 p_value.zcpglm <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {

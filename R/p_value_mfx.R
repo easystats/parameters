@@ -1,15 +1,12 @@
-#' p-values for Models with Zero-Inflation
+#' p-values for Marginal Effects Models
 #'
-#' This function attempts to return, or compute, p-values of hurdle and zero-inflated models.
+#' This function attempts to return, or compute, p-values of marginal effects models from package \pkg{mfx}.
 #'
 #' @param model A statistical model.
 #' @param component Should all parameters, parameters for the conditional model, precision-component or marginal effects be returned? \code{component} may be one of \code{"conditional"}, \code{"precision"}, \code{"marginal"} or \code{"all"} (default).
-#' @inheritParams p_value
-#' @inheritParams simulate_model
-#' @inheritParams standard_error
-#' @inheritParams ci.merMod
+#' @param ... Currently not used.
 #'
-#' @return The p-values.
+#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
 #'
 #' @examples
 #' if (require("mfx")) {

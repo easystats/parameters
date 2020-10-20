@@ -6,10 +6,11 @@
 #'  \item{\link[=p_value.brmsfit]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
 #'  \item{\link[=p_value.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount}, ...)}
 #'  \item{\link[=p_value.poissonmfx]{Marginal effects models} (\pkg{mfx})}
+#'  \item{\link[=p_value.DirichletRegModel]{Models with special components} (\code{DirichletRegModel}, \code{clm2}, \code{cgam}, ...)}
 #'  }
 #'
 #' @param model A statistical model.
-#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
+#' @param method If \code{"robust"}, and if model is supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, computes p-values based on robust covariance matrix estimation.
 #' @param adjust Character value naming the method used to adjust p-values or confidence intervals. See \code{?emmeans::summary.emmGrid} for details.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.
@@ -22,7 +23,7 @@
 #'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
 #'   thus only work for those models supported by those packages.
 #'
-#' @return The p-values.
+#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
 #'
 #' @examples
 #' data(iris)
@@ -491,24 +492,6 @@ p_value.robmixglm <- function(model, ...) {
 }
 
 
-#' @rdname p_value
-#' @export
-p_value.averaging <- function(model, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
-  params <- get_parameters(model, component = component)
-  if (component == "full") {
-    s <- summary(model)$coefmat.full
-  } else {
-    s <- summary(model)$coefmat.subset
-  }
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(params$Parameter),
-    p = as.vector(s[, 5])
-  )
-}
-
-
 #' @export
 p_value.bayesx <- function(model, ...) {
   .data_frame(
@@ -517,81 +500,6 @@ p_value.bayesx <- function(model, ...) {
   )
 }
 
-
-#' @rdname p_value
-#' @export
-p_value.DirichletRegModel <- function(model, component = c("all", "conditional", "precision"), ...) {
-  component <- match.arg(component)
-  params <- insight::get_parameters(model)
-
-  out <- .data_frame(
-    Parameter = params$Parameter,
-    Response = params$Response,
-    p = as.vector(2 * stats::pnorm(-abs(params$Estimate / model$se)))
-  )
-
-  if (!is.null(params$Component)) {
-    out$Component <- params$Component
-  } else {
-    component <- "all"
-  }
-
-  if (component != "all") {
-    out <- out[out$Component == component, ]
-  }
-
-  out
-}
-
-
-#' @rdname p_value
-#' @export
-p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
-  component <- match.arg(component)
-
-  params <- insight::get_parameters(model)
-  cs <- stats::coef(summary(model))
-  p <- cs[, 4]
-
-  out <- .data_frame(
-    Parameter = params$Parameter,
-    Component = params$Component,
-    p = as.vector(p)
-  )
-
-  if (component != "all") {
-    out <- out[out$Component == component, ]
-  }
-
-  out
-}
-
-
-#' @export
-p_value.clmm2 <- p_value.clm2
-
-
-#' @export
-p_value.cgam <- function(model, component = c("all", "conditional", "smooth_terms"), ...) {
-  component <- match.arg(component)
-
-  params <- insight::get_parameters(model, component = "all")
-  cs <- summary(model)
-  p <- as.vector(cs$coefficients[, 4])
-  if (!is.null(cs$coefficients2)) p <- c(p, as.vector(cs$coefficients2[, "p.value"]))
-
-  out <- .data_frame(
-    Parameter = params$Parameter,
-    Component = params$Component,
-    p = as.vector(p)
-  )
-
-  if (component != "all") {
-    out <- out[out$Component == component, ]
-  }
-
-  out
-}
 
 
 #' @importFrom utils capture.output

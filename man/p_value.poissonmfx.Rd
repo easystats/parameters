@@ -4,7 +4,7 @@
 \alias{p_value.poissonmfx}
 \alias{p_value.betaor}
 \alias{p_value.betamfx}
-\title{p-values for Models with Zero-Inflation}
+\title{p-values for Marginal Effects Models}
 \usage{
 \method{p_value}{poissonmfx}(model, component = c("all", "conditional", "marginal"), ...)
 
@@ -21,13 +21,13 @@
 
 \item{component}{Should all parameters, parameters for the conditional model, precision-component or marginal effects be returned? \code{component} may be one of \code{"conditional"}, \code{"precision"}, \code{"marginal"} or \code{"all"} (default).}
 
-\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.}
+\item{...}{Currently not used.}
 }
 \value{
-The p-values.
+A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
 }
 \description{
-This function attempts to return, or compute, p-values of hurdle and zero-inflated models.
+This function attempts to return, or compute, p-values of marginal effects models from package \pkg{mfx}.
 }
 \examples{
 if (require("mfx")) {

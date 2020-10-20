@@ -12,7 +12,7 @@
 #'
 #' @details By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
 #'
-#' @return The p-values.
+#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
 #'
 #' @note \code{p_value_robust()} resp. \code{p_value(method = "robust")}
 #'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if

@@ -28,10 +28,11 @@
 #'
 #' @note For Bayesian models (from \pkg{rstanarm} or \pkg{brms}), the standard error is the SD of the posterior samples.
 #'
+#' @return A data frame with at least two columns: the parameter names and the standard errors. Depending on the model, may also include columns for model components etc.
+#'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
-#' @return A data frame.
 #' @importFrom stats coef vcov setNames var na.omit
 #' @importFrom insight get_varcov print_color get_parameters find_parameters
 #' @importFrom utils capture.output

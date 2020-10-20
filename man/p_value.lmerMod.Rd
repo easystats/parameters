@@ -49,7 +49,7 @@ a list of standard errors (per group level) for random intercepts and slopes
 is returned.}
 }
 \value{
-The p-values.
+A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
 }
 \description{
 This function attempts to return, or compute, p-values of mixed models.

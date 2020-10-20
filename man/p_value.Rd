@@ -4,9 +4,6 @@
 \alias{p_value}
 \alias{p_value.default}
 \alias{p_value.emmGrid}
-\alias{p_value.averaging}
-\alias{p_value.DirichletRegModel}
-\alias{p_value.clm2}
 \alias{p_value.gee}
 \title{p-values}
 \usage{
@@ -16,12 +13,6 @@ p_value(model, ...)
 
 \method{p_value}{emmGrid}(model, ci = 0.95, adjust = "none", ...)
 
-\method{p_value}{averaging}(model, component = c("conditional", "full"), ...)
-
-\method{p_value}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
-
-\method{p_value}{clm2}(model, component = c("all", "conditional", "scale"), ...)
-
 \method{p_value}{gee}(model, method = NULL, ...)
 }
 \arguments{
@@ -29,21 +20,16 @@ p_value(model, ...)
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.}
 
-\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.}
+\item{method}{If \code{"robust"}, and if model is supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, computes p-values based on robust covariance matrix estimation.}
 
 \item{verbose}{Toggle warnings and messages.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
 \item{adjust}{Character value naming the method used to adjust p-values or confidence intervals. See \code{?emmeans::summary.emmGrid} for details.}
-
-\item{component}{Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 }
 \value{
-The p-values.
+A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
 }
 \description{
 This function attempts to return, or compute, p-values of a model's parameters. See the documentation for your object's class:
@@ -52,6 +38,7 @@ This function attempts to return, or compute, p-values of a model's parameters. 
  \item{\link[=p_value.brmsfit]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
  \item{\link[=p_value.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount}, ...)}
  \item{\link[=p_value.poissonmfx]{Marginal effects models} (\pkg{mfx})}
+ \item{\link[=p_value.DirichletRegModel]{Models with special components} (\code{DirichletRegModel}, \code{clm2}, \code{cgam}, ...)}
  }
 }
 \note{

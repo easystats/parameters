@@ -45,6 +45,7 @@ reference:
   - p_value.brmsfit
   - p_value.zeroinfl
   - p_value.mfx
+  - p_value.DirichletRegModel
   - degrees_of_freedom
   - n_parameters
 - subtitle: "Robust Estimation Methods"

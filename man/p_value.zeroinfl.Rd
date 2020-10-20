@@ -2,6 +2,7 @@
 % Please edit documentation in R/p_value_zeroinflated.R
 \name{p_value.zeroinfl}
 \alias{p_value.zeroinfl}
+\alias{p_value.zcpglm}
 \title{p-values for Models with Zero-Inflation}
 \usage{
 \method{p_value}{zeroinfl}(
@@ -11,6 +12,8 @@
   verbose = TRUE,
   ...
 )
+
+\method{p_value}{zcpglm}(model, component = c("all", "conditional", "zi", "zero_inflated"), ...)
 }
 \arguments{
 \item{model}{A statistical model.}
@@ -20,14 +23,14 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 
-\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.}
+\item{method}{If \code{"robust"}, and if model is supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, computes p-values based on robust covariance matrix estimation.}
 
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.}
 }
 \value{
-The p-values.
+A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
 }
 \description{
 This function attempts to return, or compute, p-values of hurdle and zero-inflated models.

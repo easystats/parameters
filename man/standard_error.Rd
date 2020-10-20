@@ -105,7 +105,7 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 }
 \value{
-A data frame.
+A data frame with at least two columns: the parameter names and the standard errors. Depending on the model, may also include columns for model components etc.
 }
 \description{
 \code{standard_error()} attempts to return standard errors of model parameters, while \code{standard_error_robust()} attempts to return robust standard errors.
