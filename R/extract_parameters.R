@@ -65,48 +65,26 @@
   coef_col <- "Coefficient"
 
 
-  # ==== Std Coefficients for other methods than "refit"
-
-  if (!is.null(standardize)) {
-    # standardize model parameters and calculate related CI and SE
-    std_coef <- effectsize::standardize_parameters(model, method = standardize, ci = NULL)
-    parameters <- merge(parameters, std_coef, by = merge_by)
-    coef_col <- "Std_Coefficient"
-    # merge all data, including CI and SE for std. parameters
-    if (inherits(std_coef, c("effectsize_std_params", "effectsize_table"))) {
-      parameters <- merge(parameters, ci(std_coef, ci = ci), by = merge_by)
-      parameters <- merge(parameters, standard_error(std_coef), by = merge_by)
-    }
-    # if we have CIs, remember columns names to select later
-    if (!is.null(ci)) {
-      ci_cols <- c("CI_low", "CI_high")
-    } else {
-      ci_cols <- c()
-    }
-  }
-
-
   # ==== CI - only if we don't already have CI for std. parameters
 
-  if (is.null(standardize)) {
-    if (!is.null(ci)) {
-      if (isTRUE(robust)) {
-        ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
-      } else if (!is.null(df_method)) {
-        ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = df_method))
-      } else {
-        ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
-      }
-      if (!is.null(ci_df)) {
-        if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
-        ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
-        parameters <- merge(parameters, ci_df, by = merge_by)
-      } else {
-        ci_cols <- c()
-      }
+
+  if (!is.null(ci)) {
+    if (isTRUE(robust)) {
+      ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
+    } else if (!is.null(df_method)) {
+      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = df_method))
+    } else {
+      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
+    }
+    if (!is.null(ci_df)) {
+      if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+      ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
+      parameters <- merge(parameters, ci_df, by = merge_by)
     } else {
       ci_cols <- c()
     }
+  } else {
+    ci_cols <- c()
   }
 
 
@@ -128,14 +106,13 @@
   # ==== standard error - only if we don't already have SE for std. parameters
 
   std_err <- NULL
-  if (is.null(standardize)) {
-    if (isTRUE(robust)) {
-      std_err <- standard_error_robust(model, ...)
-    } else if (!is.null(df_method)) {
-      std_err <- standard_error(model, effects = effects, component = component, method = df_method)
-    } else {
-      std_err <- standard_error(model, effects = effects, component = component)
-    }
+
+  if (isTRUE(robust)) {
+    std_err <- standard_error_robust(model, ...)
+  } else if (!is.null(df_method)) {
+    std_err <- standard_error(model, effects = effects, component = component, method = df_method)
+  } else {
+    std_err <- standard_error(model, effects = effects, component = component)
   }
 
   if (!is.null(std_err)) {
@@ -176,12 +153,6 @@
   }
   names(parameters) <- gsub("(c|C)hisq", "Chi2", names(parameters))
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
-
-
-  # ==== Reorder
-
-  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "z / Chi2", "F", "Chi2", "chisq", "chi-squared", "df", "df_error", "p", "Component", "Response", "Effects")
-  parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
 
   # ==== add intercept groups for ordinal models
@@ -228,6 +199,34 @@
     attr(parameters, "sigma") <- .sigma(model)
   }
 
+
+
+  # ==== Std Coefficients for other methods than "refit"
+
+  if (!is.null(standardize)) {
+    # give minimal attributes required for standardization
+    temp_pars <- parameters
+    class(temp_pars) <- c("parameters_model", class(temp_pars))
+    attr(temp_pars, "ci") <- ci
+    attr(temp_pars, "object_name") <- model # pass the model as is (this is a cheat - teehee!)
+
+    std_parms <- effectsize::standardize_parameters(temp_pars, method = standardize)
+    parameters$Std_Coefficient <- std_parms$Std_Coefficient
+    parameters$SE <- attr(std_parms, "standard_error")
+
+    if (!is.null(ci)) {
+      parameters$CI_low <- std_parms$CI_low
+      parameters$CI_high <- std_parms$CI_high
+    }
+
+    coef_col <- "Std_Coefficient"
+  }
+
+
+  # ==== Reorder
+
+  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "z / Chi2", "F", "Chi2", "chisq", "chi-squared", "df", "df_error", "p", "Component", "Response", "Effects")
+  parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   rownames(parameters) <- NULL
   parameters
@@ -290,48 +289,30 @@
   df_error$SE <- attr(df, "se", exact = TRUE)
 
 
-  # Std Coefficients for other methods than "refit"
-  if (!is.null(standardize)) {
-    # standardize model parameters and calculate related CI and SE
-    std_coef <- effectsize::standardize_parameters(model, method = standardize, ci = NULL)
-    parameters <- merge(parameters, std_coef, by = "Parameter")
-    coef_col <- "Std_Coefficient"
-    # merge all data, including CI and SE for std. parameters
-    if (inherits(std_coef, c("effectsize_std_params", "effectsize_table"))) {
-      parameters <- merge(parameters, ci(std_coef, ci = ci), by = "Parameter")
-      parameters <- merge(parameters, standard_error(std_coef), by = "Parameter")
-    }
-    # if we have CIs, remember columns names to select later
-    if (!is.null(ci)) {
-      ci_cols <- c("CI_low", "CI_high")
-    } else {
-      ci_cols <- c()
-    }
-  }
+
 
 
   # CI - only if we don't already have CI for std. parameters
-  if (is.null(standardize)) {
-    if (!is.null(ci)) {
-      if (isTRUE(robust)) {
-        ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
-      } else if (df_method %in% c("kenward", "kr")) {
-        # special handling for KR-CIs, where we already have computed SE
-        ci_df <- .ci_kenward_dof(model, ci = ci, df_kr = df_error)
-      } else {
-        ci_df <- ci(model, ci = ci, method = df_method, effects = "fixed")
-      }
-      if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
-      ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
-      parameters <- merge(parameters, ci_df, by = "Parameter")
+
+  if (!is.null(ci)) {
+    if (isTRUE(robust)) {
+      ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
+    } else if (df_method %in% c("kenward", "kr")) {
+      # special handling for KR-CIs, where we already have computed SE
+      ci_df <- .ci_kenward_dof(model, ci = ci, df_kr = df_error)
     } else {
-      ci_cols <- c()
+      ci_df <- ci(model, ci = ci, method = df_method, effects = "fixed")
     }
+    if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+    ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
+    parameters <- merge(parameters, ci_df, by = "Parameter")
+  } else {
+    ci_cols <- c()
   }
 
 
   # standard error - only if we don't already have SE for std. parameters
-  if (is.null(standardize) || !("SE" %in% colnames(parameters))) {
+  if (!("SE" %in% colnames(parameters))) {
     if (isTRUE(robust)) {
       parameters <- merge(parameters, standard_error_robust(model, ...), by = "Parameter")
       # special handling for KR-SEs, which we already have computed from dof
@@ -361,7 +342,7 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (!isTRUE(robust) && is.null(standardize) && df_method %in% special_df_methods) {
+  if (!isTRUE(robust) && df_method %in% special_df_methods) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = "Parameter")
@@ -396,10 +377,6 @@
   names(parameters) <- gsub("t value", "t", names(parameters))
   names(parameters) <- gsub("z value", "z", names(parameters))
 
-  # Reorder
-  order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p")
-  parameters <- parameters[order[order %in% names(parameters)]]
-
   # adjust p-values?
   if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
     parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
@@ -416,6 +393,32 @@
     ## TODO replace with "get_sigma()" once insight update on CRAN
     attr(parameters, "sigma") <- .sigma(model)
   }
+
+  # Std Coefficients for other methods than "refit"
+  if (!is.null(standardize)) {
+    temp_pars <- parameters
+    class(temp_pars) <- c("parameters_model", class(temp_pars))
+    attr(temp_pars, "ci") <- ci
+    attr(temp_pars, "object_name") <- model # pass the model as is (this is a cheat - teehee!)
+
+    std_parms <- effectsize::standardize_parameters(temp_pars, method = standardize)
+    parameters$Std_Coefficient <- std_parms$Std_Coefficient
+    parameters$SE <- attr(std_parms, "standard_error")
+
+    if (!is.null(ci)) {
+      parameters$CI_low <- std_parms$CI_low
+      parameters$CI_high <- std_parms$CI_high
+    }
+
+    coef_col <- "Std_Coefficient"
+  }
+
+
+  # Reorder
+  order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p")
+  parameters <- parameters[order[order %in% names(parameters)]]
+
+
 
   rownames(parameters) <- NULL
   parameters
