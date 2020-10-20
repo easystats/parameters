@@ -4,6 +4,7 @@
 \alias{p_value.lmerMod}
 \alias{p_value.merMod}
 \alias{p_value.glmmTMB}
+\alias{p_value.MixMod}
 \alias{p_value.mixor}
 \title{p-values for Mixed Models}
 \usage{
@@ -14,6 +15,13 @@
 \method{p_value}{glmmTMB}(
   model,
   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+  verbose = TRUE,
+  ...
+)
+
+\method{p_value}{MixMod}(
+  model,
+  component = c("all", "conditional", "zi", "zero_inflated"),
   verbose = TRUE,
   ...
 )

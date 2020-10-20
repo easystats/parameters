@@ -44,6 +44,7 @@ reference:
   - p_value.lmerMod
   - p_value.brmsfit
   - p_value.zeroinfl
+  - p_value.mfx
   - degrees_of_freedom
   - n_parameters
 - subtitle: "Robust Estimation Methods"

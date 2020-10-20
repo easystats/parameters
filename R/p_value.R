@@ -5,6 +5,7 @@
 #'  \item{\link[=p_value.lmerMod]{Mixed models} (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, ...)}
 #'  \item{\link[=p_value.brmsfit]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
 #'  \item{\link[=p_value.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount}, ...)}
+#'  \item{\link[=p_value.poissonmfx]{Marginal effects models} (\pkg{mfx})}
 #'  }
 #'
 #' @param model A statistical model.
@@ -417,80 +418,6 @@ p_value.flexsurvreg <- function(model, ...) {
   )
 }
 
-
-
-
-
-# p-Values from mfx Models -----------------------------------------------
-
-
-#' @export
-p_value.logitor <- function(model, method = NULL, ...) {
-  p_value.default(model$fit, method = method, ...)
-}
-
-#' @export
-p_value.poissonirr <- p_value.logitor
-
-#' @export
-p_value.negbinirr <- p_value.logitor
-
-#' @rdname p_value
-#' @export
-p_value.poissonmfx <- function(model, component = c("all", "conditional", "marginal"), ...) {
-  parms <- insight::get_parameters(model, component = "all")
-  cs <- stats::coef(summary(model$fit))
-  p <- c(as.vector(model$mfxest[, 4]), as.vector(cs[, 4]))
-
-  out <- .data_frame(
-    Parameter = parms$Parameter,
-    p = p,
-    Component = parms$Component
-  )
-
-  component <- match.arg(component)
-  if (component != "all") {
-    out <- out[out$Component == component, ]
-  }
-
-  out
-}
-
-#' @export
-p_value.logitmfx <- p_value.poissonmfx
-
-#' @export
-p_value.probitmfx <- p_value.poissonmfx
-
-#' @export
-p_value.negbinmfx <- p_value.poissonmfx
-
-#' @export
-p_value.betaor <- function(model, component = c("all", "conditional", "precision"), ...) {
-  component = match.arg(component)
-  p_value.betareg(model$fit, component = component, ...)
-}
-
-#' @rdname p_value
-#' @export
-p_value.betamfx <- function(model, component = c("all", "conditional", "precision", "marginal"), ...) {
-  parms <- insight::get_parameters(model, component = "all")
-  cs <- do.call(rbind, stats::coef(summary(model$fit)))
-  p <- c(as.vector(model$mfxest[, 4]), as.vector(cs[, 4]))
-
-  out <- .data_frame(
-    Parameter = parms$Parameter,
-    p = p,
-    Component = parms$Component
-  )
-
-  component <- match.arg(component)
-  if (component != "all") {
-    out <- out[out$Component == component, ]
-  }
-
-  out
-}
 
 
 

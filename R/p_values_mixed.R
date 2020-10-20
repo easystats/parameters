@@ -133,7 +133,7 @@ p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "ze
 
 
 #' @importFrom insight find_parameters
-#' @rdname p_value
+#' @rdname p_value.lmerMod
 #' @export
 p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), verbose = TRUE, ...) {
   component <- match.arg(component)
