@@ -5,7 +5,7 @@
 #' @param model A statistical model.
 #' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
 #' @param verbose Toggle warnings and messages.
-#' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
+#' @inheritParams p_value
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
 #' @inheritParams ci.merMod

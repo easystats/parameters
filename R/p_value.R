@@ -4,13 +4,14 @@
 #' \itemize{
 #'  \item{\link[=p_value.lmerMod]{Mixed models} (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, ...)}
 #'  \item{\link[=p_value.brmsfit]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
+#'  \item{\link[=p_value.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount}, ...)}
 #'  }
 #'
 #' @param model A statistical model.
 #' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
 #' @param adjust Character value naming the method used to adjust p-values or confidence intervals. See \code{?emmeans::summary.emmGrid} for details.
 #' @param verbose Toggle warnings and messages.
-#' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
+#' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
 #' @inheritParams ci.merMod
@@ -26,7 +27,6 @@
 #' data(iris)
 #' model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
 #' p_value(model)
-#' @importFrom bayestestR p_direction convert_pd_to_p
 #' @importFrom stats coef vcov pt pnorm na.omit
 #' @importFrom insight get_statistic get_parameters find_parameters print_color
 #' @importFrom methods slot
@@ -167,88 +167,6 @@ p_value.speedlm <- function(model, ...) {
   }
   p
 }
-
-
-
-
-
-
-
-# p-Values from Zero-Inflated Models ------------------------------------------
-
-
-#' @export
-p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, verbose = TRUE, ...) {
-  component <- match.arg(component)
-  if (is.null(.check_component(model, component, verbose = verbose))) {
-    return(NULL)
-  }
-
-  robust <- !is.null(method) && method == "robust"
-  if (isTRUE(robust)) {
-    return(p_value_robust(model, ...))
-  }
-
-  cs <- .compact_list(stats::coef(summary(model)))
-  x <- lapply(names(cs), function(i) {
-    comp <- ifelse(i == "count", "conditional", "zi")
-    stats <- cs[[i]]
-
-    # remove log(theta)
-    theta <- grepl("Log(theta)", rownames(stats), fixed = TRUE)
-    if (any(theta)) {
-      stats <- stats[!theta, ]
-    }
-
-    .data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
-      p = as.vector(stats[, 4]),
-      Component = comp
-    )
-  })
-
-  p <- do.call(rbind, x)
-  p$Component <- .rename_values(p$Component, "cond", "conditional")
-  p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
-
-  .filter_component(p, component)
-}
-
-
-#' @export
-p_value.hurdle <- p_value.zeroinfl
-
-#' @export
-p_value.zerocount <- p_value.zeroinfl
-
-
-#' @importFrom utils capture.output
-#' @export
-p_value.zcpglm <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  if (!requireNamespace("cplm", quietly = TRUE)) {
-    stop("To use this function, please install package 'cplm'.")
-  }
-
-  component <- match.arg(component)
-  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
-  params <- get_parameters(model)
-
-  tweedie <- .data_frame(
-    Parameter = params$Parameter[params$Component == "conditional"],
-    p = as.vector(stats$tweedie[, "Pr(>|z|)"]),
-    Component = "conditional"
-  )
-
-  zero <- .data_frame(
-    Parameter = params$Parameter[params$Component == "zero_inflated"],
-    p = as.vector(stats$zero[, "Pr(>|z|)"]),
-    Component = "zero_inflated"
-  )
-
-  out <- .filter_component(rbind(tweedie, zero), component)
-  out
-}
-
 
 
 
