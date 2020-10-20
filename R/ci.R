@@ -431,6 +431,50 @@ ci.DirichletRegModel <- function(x, ci = .95, component = c("all", "conditional"
 
 
 
+#' @rdname ci.merMod
+#' @export
+ci.HLfit <- function(x, ci = 0.95, method = c("wald", "ml1", "betwithin", "profile", "boot"), iterations = 100, ...) {
+  method <- tolower(method)
+  method <- match.arg(method)
+
+  # Wald approx
+  if (method == "wald") {
+    out <- ci_wald(model = x, ci = ci, dof = Inf)
+
+    # ml1 approx
+  } else if (method == "ml1") {
+    out <- ci_ml1(x, ci)
+
+    # betwithin approx
+  } else if (method == "betwithin") {
+    out <- ci_betwithin(x, ci)
+
+    # profiled
+  } else if (method == "profile") {
+    nparms <- n_parameters(x)
+    conf <- stats::confint(x, parm = 1:nparms, level = ci, verbose = FALSE, boot_args = NULL)
+    if (nparms == 1) {
+      out <- as.data.frame(t(conf$interval))
+    } else {
+      out <- as.data.frame(do.call(rbind, lapply(conf, function(i) i$interval)))
+    }
+    colnames(out) <- c("CI_low", "CI_high")
+    out$Parameter <- insight::find_parameters(x, effects = "fixed", flatten = TRUE)
+    out$CI <- ci * 100
+    out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
+  }
+
+  #   # bootstrapping
+  # } else if (method == "boot") {
+  #   out <- stats::confint(x, parm = n_parameters(x), level = ci, verbose = FALSE, boot_args = list(nsim = iterations, showpbar = FALSE))
+  # }
+
+  out
+}
+
+
+
+
 
 
 

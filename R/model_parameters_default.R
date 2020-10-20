@@ -137,6 +137,9 @@ model_parameters.mle <- model_parameters.glm
 model_parameters.sem <- model_parameters.default
 
 #' @export
+model_parameters.HLfit <- model_parameters.default
+
+#' @export
 model_parameters.mipo <- model_parameters.default
 
 #' @export

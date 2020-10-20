@@ -6,7 +6,7 @@
 
 ## New supported model classes
 
-* Support for `maov` objects, preliminary support for `emm_list` objects.
+* Support for `maov` (*stats*), `HLfit` (*spaMM*), preliminary support for `emm_list` (*emmeans*).
 
 ## General
 

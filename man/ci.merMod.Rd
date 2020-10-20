@@ -7,6 +7,7 @@
 \alias{ci.polr}
 \alias{ci.mixor}
 \alias{ci.DirichletRegModel}
+\alias{ci.HLfit}
 \alias{ci.glmmTMB}
 \alias{ci.zeroinfl}
 \alias{ci.hurdle}
@@ -34,6 +35,14 @@
 \method{ci}{mixor}(x, ci = 0.95, effects = c("all", "fixed", "random"), ...)
 
 \method{ci}{DirichletRegModel}(x, ci = 0.95, component = c("all", "conditional", "precision"), ...)
+
+\method{ci}{HLfit}(
+  x,
+  ci = 0.95,
+  method = c("wald", "ml1", "betwithin", "profile", "boot"),
+  iterations = 100,
+  ...
+)
 
 \method{ci}{glmmTMB}(
   x,
@@ -111,6 +120,8 @@ is returned.}
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+
+\item{iterations}{The number of draws to simulate/bootstrap.}
 
 \item{verbose}{Show or hide possible warnings and messages.}
 }
