@@ -65,48 +65,26 @@
   coef_col <- "Coefficient"
 
 
-  # ==== Std Coefficients for other methods than "refit"
-
-  if (!is.null(standardize)) {
-    # standardize model parameters and calculate related CI and SE
-    std_coef <- effectsize::standardize_parameters(model, method = standardize, ci = NULL)
-    parameters <- merge(parameters, std_coef, by = merge_by)
-    coef_col <- "Std_Coefficient"
-    # merge all data, including CI and SE for std. parameters
-    if (inherits(std_coef, c("effectsize_std_params", "effectsize_table"))) {
-      parameters <- merge(parameters, ci(std_coef, ci = ci), by = merge_by)
-      parameters <- merge(parameters, standard_error(std_coef), by = merge_by)
-    }
-    # if we have CIs, remember columns names to select later
-    if (!is.null(ci)) {
-      ci_cols <- c("CI_low", "CI_high")
-    } else {
-      ci_cols <- c()
-    }
-  }
-
-
   # ==== CI - only if we don't already have CI for std. parameters
 
-  if (is.null(standardize)) {
-    if (!is.null(ci)) {
-      if (isTRUE(robust)) {
-        ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
-      } else if (!is.null(df_method)) {
-        ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = df_method))
-      } else {
-        ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
-      }
-      if (!is.null(ci_df)) {
-        if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
-        ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
-        parameters <- merge(parameters, ci_df, by = merge_by)
-      } else {
-        ci_cols <- c()
-      }
+
+  if (!is.null(ci)) {
+    if (isTRUE(robust)) {
+      ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
+    } else if (!is.null(df_method)) {
+      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = df_method))
+    } else {
+      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
+    }
+    if (!is.null(ci_df)) {
+      if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+      ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
+      parameters <- merge(parameters, ci_df, by = merge_by)
     } else {
       ci_cols <- c()
     }
+  } else {
+    ci_cols <- c()
   }
 
 
@@ -128,14 +106,13 @@
   # ==== standard error - only if we don't already have SE for std. parameters
 
   std_err <- NULL
-  if (is.null(standardize)) {
-    if (isTRUE(robust)) {
-      std_err <- standard_error_robust(model, ...)
-    } else if (!is.null(df_method)) {
-      std_err <- standard_error(model, effects = effects, component = component, method = df_method)
-    } else {
-      std_err <- standard_error(model, effects = effects, component = component)
-    }
+
+  if (isTRUE(robust)) {
+    std_err <- standard_error_robust(model, ...)
+  } else if (!is.null(df_method)) {
+    std_err <- standard_error(model, effects = effects, component = component, method = df_method)
+  } else {
+    std_err <- standard_error(model, effects = effects, component = component)
   }
 
   if (!is.null(std_err)) {
@@ -228,6 +205,26 @@
     attr(parameters, "sigma") <- .sigma(model)
   }
 
+
+
+  # ==== Std Coefficients for other methods than "refit"
+
+  if (!is.null(standardize)) {
+    # give minimal attributes required for standardization
+    temp_pars <- parameters
+    class(temp_pars) <- c("parameters_model", class(temp_pars))
+    attr(temp_pars, "ci") <- ci
+    attr(temp_pars, "obj_name") <- model # pass the model as is (this is a cheat - teehee!)
+
+    std_parms <- effectsize::standardize_parameters(temp_pars, method = standardize)
+    parameters$Coefficient <- std_parms$Std_Coefficient
+    parameters$SE <- attr(std_parms, "standard_error")
+
+    if (!is.null(ci)) {
+      parameters$CI_low <- std_parms$CI_low
+      parameters$CI_high <- std_parms$CI_high
+    }
+  }
 
   rownames(parameters) <- NULL
   parameters
