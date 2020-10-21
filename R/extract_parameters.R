@@ -1,7 +1,7 @@
 # generic function ------------------------------------------------------
 
 
-#' @importFrom insight get_statistic get_parameters
+#' @importFrom insight get_statistic get_parameters get_sigma
 #' @importFrom stats confint p.adjust.methods p.adjust
 #' @keywords internal
 .extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, p_adjust = NULL, wb_component = FALSE, ...) {
@@ -196,7 +196,7 @@
 
   if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
     ## TODO replace with "get_sigma()" once insight update on CRAN
-    attr(parameters, "sigma") <- .sigma(model)
+    attr(parameters, "sigma") <- as.numeric(insight::get_sigma(model))
   }
 
 
@@ -391,7 +391,7 @@
   # add sigma
   if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
     ## TODO replace with "get_sigma()" once insight update on CRAN
-    attr(parameters, "sigma") <- .sigma(model)
+    attr(parameters, "sigma") <- as.numeric(insight::get_sigma(model))
   }
 
   # Std Coefficients for other methods than "refit"

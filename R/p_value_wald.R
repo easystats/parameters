@@ -38,6 +38,13 @@ p_value_wald.HLfit <- function(model, dof = Inf, ...) {
 
 
 #' @export
+p_value_wald.merModList <- function(model, dof = Inf, ...) {
+  params <- suppressWarnings(summary(model))
+  .p_value_wald(params$fe, dof)
+}
+
+
+#' @export
 p_value_wald.rlmerMod <- function(model, dof = Inf, ...) {
   params <- as.data.frame(stats::coef(summary(model)))
   .p_value_wald(params, dof)
@@ -61,6 +68,8 @@ p_value_wald.cpglmm <- function(model, dof = Inf, ...) {
     p <- 2 * stats::pt(abs(params[, "t value"]), df = dof, lower.tail = FALSE)
   } else if ("t-value" %in% names(params)) {
     p <- 2 * stats::pt(abs(params[, "t-value"]), df = dof, lower.tail = FALSE)
+  } else if ("statistic" %in% names(params)) {
+    p <- 2 * stats::pt(abs(params[, "statistic"]), df = dof, lower.tail = FALSE)
   } else if ("z value" %in% names(params)) {
     p <- 2 * stats::pt(abs(params[, "z value"]), df = dof, lower.tail = FALSE)
   } else {

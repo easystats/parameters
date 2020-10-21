@@ -268,6 +268,17 @@ standard_error.mlm <- function(model, ...) {
 
 
 #' @export
+standard_error.merModList <- function(model, ...) {
+  s <- suppressWarnings(summary(model))
+  out <- .data_frame(
+    Parameter = s$fe$term,
+    SE = s$fe$std.error
+  )
+  .remove_backticks_from_parameter_names(out)
+}
+
+
+#' @export
 standard_error.tobit <- function(model, ...) {
   params <- insight::get_parameters(model)
   std.error <- standard_error.default(model, ...)

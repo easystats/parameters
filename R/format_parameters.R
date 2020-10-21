@@ -60,6 +60,12 @@ format_parameters.rma <- function(model) {
 
 
 #' @export
+format_parameters.merModList <- function(model) {
+  .format_parameter_default(model[[1]])
+}
+
+
+#' @export
 format_parameters.mira <- format_parameters.rma
 
 

@@ -101,6 +101,12 @@ p_value.HLfit <- p_value.merMod
 #' @export
 p_value.rlmerMod <- p_value.merMod
 
+#' @export
+p_value.merModList <- function(model, ...) {
+  dof <- degrees_of_freedom(model)
+  p_value_wald(model, dof, ...)
+}
+
 
 
 #' @importFrom insight find_parameters

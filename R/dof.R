@@ -102,6 +102,13 @@ dof <- degrees_of_freedom
 
 
 #' @export
+degrees_of_freedom.merModList <- function(model,...) {
+  s <- suppressWarnings(summary(model))
+  s$fe$df
+}
+
+
+#' @export
 degrees_of_freedom.emmGrid <- function(model,...) {
   summary(model)$df
 }

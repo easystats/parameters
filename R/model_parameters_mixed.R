@@ -221,6 +221,27 @@ model_parameters.cpglmm <- model_parameters.clmm
 model_parameters.rlmerMod <- model_parameters.clmm
 
 
+#' @export
+model_parameters.merModList <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, ...) {
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = FALSE,
+    iterations = 10,
+    merge_by = "Parameter",
+    standardize = NULL,
+    exponentiate = exponentiate,
+    robust = FALSE,
+    p_adjust = p_adjust,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+
 
 
 

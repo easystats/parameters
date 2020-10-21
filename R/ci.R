@@ -127,6 +127,12 @@ ci.bayesx <- function(x, ci = .95, ...) {
 
 
 #' @export
+ci.merModList <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, dof = NULL, robust = FALSE, component = "conditional")
+}
+
+
+#' @export
 ci.averaging <- function(x, ci = .95, component = c("conditional", "full"), ...) {
   component <- match.arg(component)
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
