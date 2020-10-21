@@ -54,7 +54,7 @@ standard_error_robust <- function(model,
   }
 
   # check for existing vcov-prefix
-  if (!grepl("^vcov", vcov_estimation)) {
+  if (!grepl("^(vcov|kernHAC|NeweyWest)", vcov_estimation)) {
     vcov_estimation <- paste0("vcov", vcov_estimation)
   }
 
@@ -83,7 +83,7 @@ p_value_robust <- function(model,
   }
 
   # check for existing vcov-prefix
-  if (!grepl("^vcov", vcov_estimation)) {
+  if (!grepl("^(vcov|kernHAC|NeweyWest)", vcov_estimation)) {
     vcov_estimation <- paste0("vcov", vcov_estimation)
   }
 
