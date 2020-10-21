@@ -148,8 +148,11 @@
   # ==== Renaming
 
   if ("Statistic" %in% names(parameters)) {
-    names(parameters) <- gsub("Statistic", gsub("(-|\\s)statistic", "", attr(statistic, "statistic", exact = TRUE)), names(parameters))
-    names(parameters) <- gsub("chi-squared", "Chi2", names(parameters))
+    stat_type <- attr(statistic, "statistic", exact = TRUE)
+    if (!is.null(stat_type)) {
+      names(parameters) <- gsub("Statistic", gsub("(-|\\s)statistic", "", stat_type), names(parameters))
+      names(parameters) <- gsub("chi-squared", "Chi2", names(parameters))
+    }
   }
   names(parameters) <- gsub("(c|C)hisq", "Chi2", names(parameters))
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
@@ -195,7 +198,6 @@
   # ==== add sigma
 
   if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
-    ## TODO replace with "get_sigma()" once insight update on CRAN
     attr(parameters, "sigma") <- as.numeric(insight::get_sigma(model))
   }
 
