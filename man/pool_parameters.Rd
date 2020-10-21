@@ -31,8 +31,8 @@ if (require("mice")) {
   models <- lapply(1:5, function(i) {
     lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
   })
-  mps <- lapply(models2, model_parameters)
-  pool_parameters(mps2)
+  mps <- lapply(models, model_parameters)
+  pool_parameters(mps)
 
   # should be identical to:
   m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
