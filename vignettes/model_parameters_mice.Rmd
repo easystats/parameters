@@ -94,6 +94,28 @@ class(object) <- c("mira", "matrix", "list")
 model_parameters(object)
 ```
 
+A maybe more straighforward way is to use `pool_parameters()`, which works on a list of `parameters_model` objects (as returned by `model_parameters()`). In case a model-object is not yet supported by `mice::with()`, you can instead fit multiple models to the imputed datasets, call `model_parameters()` for each model and then pool all parameters with `pool_parameters()`:
+
+```{r message=FALSE}
+library(mice)
+library(parameters)
+
+data("nhanes2")
+imp <- mice(nhanes2)
+
+# approach when model is supported by "mice"
+fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+summary(pool(fit))
+
+# approach when model is *not* supported by "mice"
+models <- lapply(1:5, function(i) {
+  lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
+})
+mps <- lapply(models, model_parameters)
+pool_parameters(mps)
+```
+
+
 ## Model Parameters from `mipo` objects
 
 It is also possible to compute summaries of pooled objects of class `mipo`.
