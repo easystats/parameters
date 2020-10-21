@@ -33,6 +33,7 @@ reference:
   - model_parameters.htest
   - model_parameters.glht
   - model_parameters.averaging
+  - pool_parameters
   - random_parameters
   - print.parameters_model
 

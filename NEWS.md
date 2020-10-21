@@ -8,6 +8,10 @@
 
 * Support for `maov` (*stats*), `HLfit` (*spaMM*), preliminary support for `emm_list` (*emmeans*), `merModList` (*merTools*).
 
+## New functions
+
+* (Somewhat) experimental `pool_parameters()` function, to pool parameters estimates from multiple models.
+
 ## General
 
 * Better support for (weighted) multivariate response models of class `mlm` for functions like `model_parameters()` or `simulate_parameters()`.
