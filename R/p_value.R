@@ -458,6 +458,15 @@ p_value.mipo <- function(model, ...) {
 
 
 #' @export
+p_value.mira <- function(model,...) {
+  if (!requireNamespace("mice", quietly = TRUE)) {
+    stop("Package 'mice' needed for this function to work. Please install it.")
+  }
+  p_value(mice::pool(model), ...)
+}
+
+
+#' @export
 p_value.mle2 <- function(model, ...) {
   if (!requireNamespace("bbmle", quietly = TRUE)) {
     stop("Package `bbmle` needs to be installed to extract p-values.", call. = FALSE)

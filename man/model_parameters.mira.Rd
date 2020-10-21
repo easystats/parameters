@@ -22,7 +22,7 @@ Format models of class \code{mira}, obtained from \code{mice::width.mids()}.
 }
 \details{
 \code{model_parameters()} for objects of class \code{mira} works
-  similar to \code{mice::pool()}, i.e. it generates the pooled summary
+  similar to \code{summary(mice::pool())}, i.e. it generates the pooled summary
   of multiple imputed repeated regression analyses.
 }
 \examples{

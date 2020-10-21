@@ -145,6 +145,14 @@ degrees_of_freedom.mipo <- function(model,...) {
 }
 
 #' @export
+degrees_of_freedom.mira <- function(model,...) {
+  if (!requireNamespace("mice", quietly = TRUE)) {
+    stop("Package 'mice' needed for this function to work. Please install it.")
+  }
+  degrees_of_freedom(mice::pool(model), ...)
+}
+
+#' @export
 degrees_of_freedom.vgam <- function(model,...) {
   params <- insight::get_parameters(model)
   out <- setNames(rep(NA, nrow(params)), params$Parameter)

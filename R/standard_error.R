@@ -928,6 +928,15 @@ standard_error.mipo <- function(model, ...) {
 
 
 #' @export
+standard_error.mira <- function(model,...) {
+  if (!requireNamespace("mice", quietly = TRUE)) {
+    stop("Package 'mice' needed for this function to work. Please install it.")
+  }
+  standard_error(mice::pool(model), ...)
+}
+
+
+#' @export
 standard_error.mle2 <- function(model, ...) {
   if (!requireNamespace("bbmle", quietly = TRUE)) {
     stop("Package `bbmle` needs to be installed to extract standard errors.", call. = FALSE)

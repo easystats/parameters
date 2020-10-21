@@ -180,6 +180,14 @@ ci.gam <- function(x, ci = .95, ...) {
 ci.mipo <- ci.gam
 
 #' @export
+ci.mira <- function(x, ci = .95, ...) {
+  if (!requireNamespace("mice", quietly = TRUE)) {
+    stop("Package 'mice' needed for this function to work. Please install it.")
+  }
+  ci(mice::pool(model), ci = ci, ...)
+}
+
+#' @export
 ci.list <- function(x, ci = .95, ...) {
   if ("gam" %in% names(x)) {
     x <- x$gam
