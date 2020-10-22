@@ -75,13 +75,13 @@ fit <- with(data = imputed_data, expr = GLMMadaptive::mixed_model(
 #>   argument "data" is missing, with no default
 ```
 
-However, we can use a workaround by using `pool_parameters()`, which works on a list of `parameters_model` objects (as returned by `model_parameters()`). So whenever a model-object is not yet supported by `mice::with()`, you can instead fit multiple models to the imputed datasets, call `model_parameters()` for each model and then pool all parameters with `pool_parameters()`:
+However, we can use a workaround by using `pool_parameters()`, which works on a list of model objects. So whenever a model-object is not yet supported by `mice::with()`, you can instead fit multiple models to the imputed datasets and pool all parameters with `pool_parameters()`:
 
 The steps would be:
 
-1. calculating the regression models for each imputed dataset manually, using `complete()` from package *mice* to get the imputed datasets.
-2. for each model, we call `model_parameters()` and save the results in a list.
-3. this list is then passed to `pool_parameters()`. 
+1. Calculate the regression models for each imputed dataset manually (either by using `complete()` from package *mice* to get the imputed datasets, or by accessing the datasets directly from the `mids` object)
+2. Save all model objects in a list.
+3. Pass ths list to `pool_parameters()`. 
 
 ```{r message=FALSE}
 models <- lapply(1:imputed_data$m, function(i) {
@@ -92,8 +92,7 @@ models <- lapply(1:imputed_data$m, function(i) {
     family = binomial
   )
 })
-mps <- lapply(models, model_parameters)
-pool_parameters(mps)
+pool_parameters(models)
 ```
 
 For comparison and to show that the results from `mice:pool()` and `pool_parameters()` are identical, we take an example that also works with the _mice_ package:
@@ -113,8 +112,7 @@ summary(pool(fit))
 models <- lapply(1:5, function(i) {
   lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
 })
-mps <- lapply(models, model_parameters)
-pool_parameters(mps)
+pool_parameters(models)
 ```
 
 

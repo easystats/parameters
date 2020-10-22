@@ -2,7 +2,9 @@
 #'
 #' This function "pools" (i.e. combines) model parameters in a similar fashion as \code{mice::pool()}. However, this function pools parameters from \code{parameters_model} objects, as returned by \code{\link{model_parameters}}.
 #'
-#' @param x A list of \code{parameters_model} objects, as returned by \code{\link{model_parameters}}.
+#' @param x A list of \code{parameters_model} objects, as returned by
+#'   \code{\link{model_parameters}}, or a list of model-objects that is
+#'   supported by \code{model_parameters()}.
 #' @param ... Currently not used.
 #' @inheritParams model_parameters.default
 #'
@@ -14,7 +16,9 @@
 #'   coefficient names for pooling. In such cases, coefficients of count and
 #'   zero-inflated model parts would be combined.
 #'
-#' @details Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}). The pooled degrees of freedom is based on the Barnard-Rubin adjustment for small samples (\cite{Barnard and Rubin, 1999}).
+#' @details Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}).
+#'   The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
+#'   small samples (\cite{Barnard and Rubin, 1999}).
 #'
 #' @references
 #' Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with multiple imputation. Biometrika, 86, 948-955.
@@ -28,8 +32,7 @@
 #'   models <- lapply(1:5, function(i) {
 #'     lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
 #'   })
-#'   mps <- lapply(models, model_parameters)
-#'   pool_parameters(mps)
+#'   pool_parameters(models)
 #'
 #'   # should be identical to:
 #'   m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
@@ -37,8 +40,13 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats var pt
+#' @importFrom insight is_model_supported is_model
 #' @export
 pool_parameters <- function(x, exponentiate = FALSE, ...) {
+
+  if (all(sapply(x, insight::is_model)) && all(sapply(x, insight::is_model_supported))) {
+    x <- lapply(x, model_parameters, ...)
+  }
 
   if (!all(sapply(x, inherits, "parameters_model"))) {
     stop("'x' must be a list of 'parameters_model' objects, as returned by the 'model_parameters()' function.", call. = FALSE)

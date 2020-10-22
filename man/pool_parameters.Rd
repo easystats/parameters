@@ -7,7 +7,9 @@
 pool_parameters(x, exponentiate = FALSE, ...)
 }
 \arguments{
-\item{x}{A list of \code{parameters_model} objects, as returned by \code{\link{model_parameters}}.}
+\item{x}{A list of \code{parameters_model} objects, as returned by
+\code{\link{model_parameters}}, or a list of model-objects that is
+supported by \code{model_parameters()}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
 
@@ -20,7 +22,9 @@ A data frame of indices related to the model's parameters.
 This function "pools" (i.e. combines) model parameters in a similar fashion as \code{mice::pool()}. However, this function pools parameters from \code{parameters_model} objects, as returned by \code{\link{model_parameters}}.
 }
 \details{
-Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}). The pooled degrees of freedom is based on the Barnard-Rubin adjustment for small samples (\cite{Barnard and Rubin, 1999}).
+Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}).
+  The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
+  small samples (\cite{Barnard and Rubin, 1999}).
 }
 \note{
 This function is still experimental. Results should be reliable,
@@ -39,8 +43,7 @@ if (require("mice")) {
   models <- lapply(1:5, function(i) {
     lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
   })
-  mps <- lapply(models, model_parameters)
-  pool_parameters(mps)
+  pool_parameters(models)
 
   # should be identical to:
   m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
