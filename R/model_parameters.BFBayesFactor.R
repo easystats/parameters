@@ -26,7 +26,6 @@
 #' model <- ttestBF(x = rnorm(100, 1, 1))
 #' model_parameters(model)
 #' }
-#'
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats na.omit
 #' @importFrom bayestestR bayesfactor_models
@@ -40,25 +39,29 @@ model_parameters.BFBayesFactor <- function(model, centrality = "median", dispers
     return(NULL)
   }
 
-  if (is.null(insight::get_parameters(model))) {
-    if (isTRUE(verbose)) {
-      insight::print_color("Can't extract model parameters.\n", "red")
+  if (.classify_BFBayesFactor(model)[1] == "xtable") {
+    out <- data.frame(BF = NA)
+  } else {
+    if (is.null(insight::get_parameters(model))) {
+      if (isTRUE(verbose)) {
+        insight::print_color("Can't extract model parameters.\n", "red")
+      }
+      return(NULL)
     }
-    return(NULL)
+
+    out <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, priors = priors, ...)
+
+    # Add components and effects columns
+    tryCatch(
+      {
+        params <- insight::clean_parameters(model)[, c("Parameter", "Effects", "Component")]
+        out <- merge(out, params, sort = FALSE)
+      },
+      error = function(e) {
+        NULL
+      }
+    )
   }
-
-  out <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, priors = priors, ...)
-
-  # Add components and effects columns
-  tryCatch(
-    {
-      params <- insight::clean_parameters(model)[, c("Parameter", "Effects", "Component")]
-      out <- merge(out, params, sort = FALSE)
-    },
-    error = function(e) {
-      NULL
-    }
-  )
 
   # Extract BF
   tryCatch(
@@ -70,7 +73,7 @@ model_parameters.BFBayesFactor <- function(model, centrality = "median", dispers
     }
   )
 
-  # Remove unecessary columns
+  # Remove unnecessary columns
   if ("CI" %in% names(out) && length(stats::na.omit(unique(out$CI))) == 1) {
     out$CI <- NULL
   }
@@ -87,4 +90,33 @@ model_parameters.BFBayesFactor <- function(model, centrality = "median", dispers
   class(out) <- c("parameters_model", class(out))
 
   out
+}
+
+
+
+
+
+# helper -------
+
+
+.classify_BFBayesFactor <- function(x) {
+  if (!requireNamespace("BayesFactor", quietly = TRUE)) {
+    stop("This function needs `BayesFactor` to be installed.")
+  }
+
+  if (any(class(x@denominator) %in% c("BFcorrelation"))) {
+    "correlation"
+  } else if (any(class(x@denominator) %in% c("BFoneSample"))) {
+    "ttest1"
+  } else if (any(class(x@denominator) %in% c("BFindepSample"))) {
+    "ttest2"
+  } else if (any(class(x@denominator) %in% c("BFmetat"))) {
+    "meta"
+  } else if (any(class(x@denominator) %in% c("BFlinearModel"))) {
+    "linear"
+  } else if (any(class(x@denominator) %in% c("BFcontingencyTable"))) {
+    "xtable"
+  } else {
+    class(x@denominator)
+  }
 }

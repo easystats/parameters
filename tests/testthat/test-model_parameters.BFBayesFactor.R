@@ -5,7 +5,7 @@ if (require("testthat") &&
 
   .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-  if (.runThisTest || Sys.getenv("USER") == "travis") {
+  if (.runThisTest) {
     test_that("model_parameters.BFBayesFactor", {
       skip_on_cran()
       model <- BayesFactor::ttestBF(iris$Sepal.Width, iris$Petal.Length, paired = TRUE)
@@ -28,7 +28,7 @@ if (require("testthat") &&
   df$gear <- as.factor(df$gear)
   df$am <- as.factor(df$am)
 
-  if (.runThisTest || Sys.getenv("USER") == "travis") {
+  if (.runThisTest) {
     test_that("model_parameters.BFBayesFactor", {
       skip_on_cran()
       model <- BayesFactor::ttestBF(formula = mpg ~ am, data = df)
