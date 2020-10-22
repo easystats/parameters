@@ -139,9 +139,15 @@ pool_parameters(models)
 
 It is also possible to compute summaries of pooled objects of class `mipo`.
 
-```{r message=FALSE}
+```{r message=FALSE, eval=FALSE}
 data("nhanes2")
 imp <- mice(nhanes2)
+```
+```{r message=FALSE, eval=TRUE, echo=FALSE, warning=FALSE}
+data("nhanes2")
+imp <- mice(nhanes2)
+```
+```{r message=FALSE}
 fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
 pooled <- pool(fit)
 
