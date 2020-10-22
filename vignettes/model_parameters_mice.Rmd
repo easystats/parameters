@@ -75,26 +75,28 @@ fit <- with(data = imputed_data, expr = GLMMadaptive::mixed_model(
 #>   argument "data" is missing, with no default
 ```
 
-However, we can use a workaround by calculating the regression models for each imputed dataset manually, using `complete()` from package *mice*. Please note that it is important to mimic the structure of `mira`-objects! The returned model objects have to be saved as a list named `analyses`. This list must be of class `mira` and `list`, and can be used with `model_parameters()`.
+However, we can use a workaround by using `pool_parameters()`, which works on a list of `parameters_model` objects (as returned by `model_parameters()`). So whenever a model-object is not yet supported by `mice::with()`, you can instead fit multiple models to the imputed datasets, call `model_parameters()` for each model and then pool all parameters with `pool_parameters()`:
+
+The steps would be:
+
+1. calculating the regression models for each imputed dataset manually, using `complete()` from package *mice* to get the imputed datasets.
+2. for each model, we call `model_parameters()` and save the results in a list.
+3. this list is then passed to `pool_parameters()`. 
 
 ```{r message=FALSE}
-analyses <- as.list(seq_len(imputed_data$m))
-for (i in seq_along(analyses)) {
-  data.i <- complete(imputed_data, i)
-  analyses[[i]] <- mixed_model(
+models <- lapply(1:imputed_data$m, function(i) {
+  mixed_model(
     cbind(incidence, size - incidence) ~ period,
     random = ~ 1 | herd,
     data = data.i,
     family = binomial
   )
-}
-object <- list(analyses = analyses)
-class(object) <- c("mira", "matrix", "list")
-
-model_parameters(object)
+})
+mps <- lapply(models, model_parameters)
+pool_parameters(mps)
 ```
 
-A maybe more straighforward way is to use `pool_parameters()`, which works on a list of `parameters_model` objects (as returned by `model_parameters()`). In case a model-object is not yet supported by `mice::with()`, you can instead fit multiple models to the imputed datasets, call `model_parameters()` for each model and then pool all parameters with `pool_parameters()`:
+For comparison and to show that the results from `mice:pool()` and `pool_parameters()` are identical, we take an example that also works with the _mice_ package:
 
 ```{r message=FALSE}
 library(mice)
