@@ -4,8 +4,15 @@
 #'
 #' @param x A list of \code{parameters_model} objects, as returned by \code{\link{model_parameters}}.
 #' @param ... Currently not used.
+#' @inheritParams model_parameters.default
 #'
-#' @note This function is still experimental. Results should be reliable, however, this function may not yet work with all types of models properly.
+#' @note This function is still experimental. Results should be reliable,
+#'   however, this function may not yet work with all types of models properly.
+#'   In particular models with identical names for coefficients (for instance,
+#'   models with zero-inflation, where predictors appear in the count and
+#'   zero-inflated part) may fail, since the coefficient table is grouped by
+#'   coefficient names for pooling. In such cases, coefficients of count and
+#'   zero-inflated model parts would be combined.
 #'
 #' @details Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}). The pooled degrees of freedom is based on the Barnard-Rubin adjustment for small samples (\cite{Barnard and Rubin, 1999}).
 #'
@@ -31,7 +38,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats var pt
 #' @export
-pool_parameters <- function(x, ...) {
+pool_parameters <- function(x, exponentiate = FALSE, ...) {
 
   if (!all(sapply(x, inherits, "parameters_model"))) {
     stop("'x' must be a list of 'parameters_model' objects, as returned by the 'model_parameters()' function.", call. = FALSE)
@@ -43,7 +50,7 @@ pool_parameters <- function(x, ...) {
   if (is.null(ci)) ci <- .95
   estimates <- split(params, factor(params$Parameter, levels = unique(x[[1]]$Parameter)))
 
-  out <- do.call(rbind, lapply(estimates, function(i) {
+  pooled_params <- do.call(rbind, lapply(estimates, function(i) {
     # pooled estimate
     pooled_estimate <- mean(i$Coefficient)
 
@@ -77,17 +84,15 @@ pool_parameters <- function(x, ...) {
     )
   }))
 
-  out$Parameter <- x[[1]]$Parameter
-  out <- out[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic", "df_error", "p")]
+  pooled_params$Parameter <- x[[1]]$Parameter
+  pooled_params <- pooled_params[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic", "df_error", "p")]
 
-  attr(out, "ci") <- ci
-  attr(out, "pretty_names") <- attributes(x[[1]])$pretty_names
-  attr(out, "digits") <- attributes(x[[1]])$digits
-  attr(out, "ci_digits") <- attributes(x[[1]])$ci_digits
-  attr(out, "p_digits") <- attributes(x[[1]])$p_digits
+  if (exponentiate) pooled_params <- .exponentiate_parameters(pooled_params)
+  # this needs to be done extra here, cannot call ".add_model_parameters_attributes()"
+  pooled_params <- .add_pooled_params_attributes(pooled_params, x[[1]], ci, exponentiate)
+  class(pooled_params) <- c("parameters_model", "see_parameters_model", class(pooled_params))
 
-  class(out) <- c("parameters_model", "see_parameters_model", class(out))
-  out
+  pooled_params
 }
 
 
@@ -102,4 +107,23 @@ pool_parameters <- function(x, ...) {
   dfold <- (m - 1) / lambda ^ 2
   dfobs <- (dfcom + 1) / (dfcom + 3) * dfcom * (1 - lambda)
   dfold * dfobs / (dfold + dfobs)
+}
+
+
+
+.add_pooled_params_attributes <- function(params, model, ci, exponentiate) {
+  attr(params, "ci") <- ci
+  attr(params, "exponentiate") <- exponentiate
+  attr(params, "pretty_names") <- attributes(model)$pretty_names
+  attr(params, "ordinal_model") <- attributes(model)$ordinal_model
+  attr(params, "model_class") <- attributes(model)$model_class
+  attr(params, "bootstrap") <- attributes(model)$bootstrap
+  attr(params, "iterations") <- attributes(model)$iterations
+  attr(params, "df_method") <- attributes(model)$df_method
+  attr(params, "coefficient_name") <- attributes(model)$coefficient_name
+  attr(params, "zi_coefficient_name") <- attributes(model)$zi_coefficient_name
+  attr(params, "digits") <- attributes(model)$digits
+  attr(params, "ci_digits") <- attributes(model)$ci_digits
+  attr(params, "p_digits") <- attributes(model)$p_digits
+  params
 }
