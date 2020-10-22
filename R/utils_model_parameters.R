@@ -1,5 +1,5 @@
 #' @keywords internal
-.add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, bootstrap=FALSE, iterations=1000, ...) {
+.add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, bootstrap=FALSE, iterations=1000, df_method=NULL, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   info <- tryCatch(
     {
@@ -24,6 +24,7 @@
   attr(params, "model_class") <- class(model)
   attr(params, "bootstrap") <- bootstrap
   attr(params, "iterations") <- iterations
+  attr(params, "df_method") <- df_method
 
   # column name for coefficients
   coef_col <- "Coefficient"

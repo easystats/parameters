@@ -54,7 +54,7 @@ model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_metho
 
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, bootstrap, iterations, df_method, ...)
 
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
