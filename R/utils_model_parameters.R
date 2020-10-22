@@ -1,5 +1,5 @@
 #' @keywords internal
-.add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, bootstrap=FALSE, iterations=1000, df_method=NULL, ...) {
+.add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, bootstrap = FALSE, iterations = 1000, df_method = NULL, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   info <- tryCatch(
     {
