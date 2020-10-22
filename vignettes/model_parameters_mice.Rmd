@@ -38,7 +38,17 @@ set.seed(333)
 
 `model_parameters()` can be used in combination with the *mice* package to deal with missing data, in particular to summaries regression models used with multiple imputed datasets. It computes pooled summaries of multiple imputed repeated regression analyses, i.e. of objects of class `mira`. Thus, `model_parameters()` for `mira`-objects is comparable to the `pool()`-function from *mice*, but only focuses on the final summary of parameters and does not include the diagnostic statistic per estimate.
 
-```{r message=FALSE}
+```{r message=FALSE, eval=FALSE}
+library(mice)
+library(parameters)
+
+data("nhanes2")
+imp <- mice(nhanes2)
+fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+
+model_parameters(fit)
+```
+```{r message=FALSE, eval=TRUE, echo=FALSE, warning=FALSE}
 library(mice)
 library(parameters)
 
@@ -53,7 +63,16 @@ Not all packages work with `with.mids()` from package *mice*. Thus, for some mod
 
 First, we generate a dataset with missing values. We take the data `cbpp` from *lme4* and randomly assign some missing values into one of the predictors. Then we impute the data, using `mice()` from package *mice*.
 
-```{r message=FALSE}
+```{r message=FALSE, eval=FALSE}
+library(lme4)
+library(GLMMadaptive)
+
+data(cbpp)
+cbpp$period[sample(1:nrow(cbpp), size = 10)] <- NA
+
+imputed_data <- mice(cbpp)
+```
+```{r message=FALSE, eval=TRUE, echo=FALSE, warning=FALSE}
 library(lme4)
 library(GLMMadaptive)
 
