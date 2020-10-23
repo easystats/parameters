@@ -4,7 +4,13 @@
 \alias{pool_parameters}
 \title{Pool Model Parameters}
 \usage{
-pool_parameters(x, exponentiate = FALSE, ...)
+pool_parameters(
+  x,
+  exponentiate = FALSE,
+  component = "conditional",
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A list of \code{parameters_model} objects, as returned by
@@ -12,6 +18,8 @@ pool_parameters(x, exponentiate = FALSE, ...)
 supported by \code{model_parameters()}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
+
+\item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}), \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for \code{MuMIn::model.avg()}) or \code{"all"}.}
 
 \item{...}{Currently not used.}
 }

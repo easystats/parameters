@@ -8,13 +8,13 @@
 #' @param ... Currently not used.
 #' @inheritParams model_parameters.default
 #'
-#' @note This function is still experimental. Results should be reliable,
-#'   however, this function may not yet work with all types of models properly.
-#'   In particular models with identical names for coefficients (for instance,
-#'   models with zero-inflation, where predictors appear in the count and
-#'   zero-inflated part) may fail, since the coefficient table is grouped by
-#'   coefficient names for pooling. In such cases, coefficients of count and
-#'   zero-inflated model parts would be combined.
+#' @note Models with multiple components, (for instance, models with zero-inflation,
+#'   where predictors appear in the count and zero-inflated part) may fail in
+#'   case of identical names for coefficients in the different model components,
+#'   since the coefficient table is grouped by coefficient names for pooling. In
+#'   such cases, coefficients of count and zero-inflated model parts would be
+#'   combined. Therefore, the \code{component} argument defaults to
+#'   \code{"conditional"} to avoid this.
 #'
 #' @details Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}).
 #'   The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
@@ -42,21 +42,53 @@
 #' @importFrom stats var pt
 #' @importFrom insight is_model_supported is_model
 #' @export
-pool_parameters <- function(x, exponentiate = FALSE, ...) {
+pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", verbose = TRUE, ...) {
 
+
+  # check input -----
+
+  original_model <- NULL
   if (all(sapply(x, insight::is_model)) && all(sapply(x, insight::is_model_supported))) {
-    x <- lapply(x, model_parameters, ...)
+    original_model <- .get_object(x[[1]])
+    x <- lapply(x, model_parameters, component = component, ...)
   }
 
   if (!all(sapply(x, inherits, "parameters_model"))) {
     stop("'x' must be a list of 'parameters_model' objects, as returned by the 'model_parameters()' function.", call. = FALSE)
   }
 
+  if (isTRUE(attributes(x[[1]])$exponentiate)) {
+    warning("Pooling on exponentiated parameters is not recommended. Please call 'model_parameters()' with 'exponentiate = FALSE', and rather call 'pool_parameters(..., exponentiate = TRUE)'.", call. = FALSE)
+  }
+
+
+  # only pool for specific component -----
+
+  original_x <- x
+  if ("Component" %in% colnames(x[[1]])) {
+    x <- lapply(x, function(i) {
+      i <- i[i$Component == component, ]
+      i$Component <- NULL
+      i
+    })
+    warning(paste0("Pooling only applied to the ", component, " model component."), call. = FALSE)
+  }
+
+
+  # preparation ----
+
   params <- do.call(rbind, x)
   len <- length(x)
-  ci <- attributes(x[[1]]$ci)
+  ci <- attributes(original_x[[1]]$ci)
   if (is.null(ci)) ci <- .95
+
+
+  # split multiply (imputed) datasets by parameters
+
   estimates <- split(params, factor(params$Parameter, levels = unique(x[[1]]$Parameter)))
+
+
+  # pool estimates etc. -----
 
   pooled_params <- do.call(rbind, lapply(estimates, function(i) {
     # pooled estimate
@@ -75,6 +107,7 @@ pool_parameters <- function(x, exponentiate = FALSE, ...) {
       pooled_df <- Inf
     }
 
+    # pooled statistic
     pooled_statistic <- pooled_estimate / pooled_se
 
     # confidence intervals
@@ -92,17 +125,33 @@ pool_parameters <- function(x, exponentiate = FALSE, ...) {
     )
   }))
 
+
+  # reorder ------
+
   pooled_params$Parameter <- x[[1]]$Parameter
   pooled_params <- pooled_params[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic", "df_error", "p")]
 
+
+  # final attributes -----
+
   if (exponentiate) pooled_params <- .exponentiate_parameters(pooled_params)
   # this needs to be done extra here, cannot call ".add_model_parameters_attributes()"
-  pooled_params <- .add_pooled_params_attributes(pooled_params, x[[1]], ci, exponentiate)
+  pooled_params <- .add_pooled_params_attributes(
+    pooled_params,
+    model_params = original_x[[1]],
+    info = insight::model_info(original_model, verbose = FALSE),
+    ci,
+    exponentiate
+  )
   class(pooled_params) <- c("parameters_model", "see_parameters_model", class(pooled_params))
 
   pooled_params
 }
 
+
+
+
+# helper ------
 
 
 .barnad_rubin <- function(m, b, t, dfcom = 999999) {
@@ -119,19 +168,21 @@ pool_parameters <- function(x, exponentiate = FALSE, ...) {
 
 
 
-.add_pooled_params_attributes <- function(params, model, ci, exponentiate) {
-  attr(params, "ci") <- ci
-  attr(params, "exponentiate") <- exponentiate
-  attr(params, "pretty_names") <- attributes(model)$pretty_names
-  attr(params, "ordinal_model") <- attributes(model)$ordinal_model
-  attr(params, "model_class") <- attributes(model)$model_class
-  attr(params, "bootstrap") <- attributes(model)$bootstrap
-  attr(params, "iterations") <- attributes(model)$iterations
-  attr(params, "df_method") <- attributes(model)$df_method
-  attr(params, "coefficient_name") <- attributes(model)$coefficient_name
-  attr(params, "zi_coefficient_name") <- attributes(model)$zi_coefficient_name
-  attr(params, "digits") <- attributes(model)$digits
-  attr(params, "ci_digits") <- attributes(model)$ci_digits
-  attr(params, "p_digits") <- attributes(model)$p_digits
-  params
+.add_pooled_params_attributes <- function(pooled_params, model_params, info, ci, exponentiate) {
+  attr(pooled_params, "ci") <- ci
+  attr(pooled_params, "exponentiate") <- exponentiate
+  attr(pooled_params, "pretty_names") <- attributes(model_params)$pretty_names
+  attr(pooled_params, "ordinal_model") <- attributes(pooled_params)$ordinal_model
+  attr(pooled_params, "model_class") <- attributes(pooled_params)$model_class
+  attr(pooled_params, "bootstrap") <- attributes(pooled_params)$bootstrap
+  attr(pooled_params, "iterations") <- attributes(pooled_params)$iterations
+  attr(pooled_params, "df_method") <- attributes(pooled_params)$df_method
+  # column name for coefficients
+  coef_col <- .find_coefficient_type(info, exponentiate)
+  attr(pooled_params, "coefficient_name") <- coef_col
+  attr(pooled_params, "zi_coefficient_name") <- ifelse(isTRUE(exponentiate), "Odds Ratio", "Log-Odds")
+  attr(pooled_params, "digits") <- attributes(pooled_params)$digits
+  attr(pooled_params, "ci_digits") <- attributes(pooled_params)$ci_digits
+  attr(pooled_params, "p_digits") <- attributes(pooled_params)$p_digits
+  pooled_params
 }

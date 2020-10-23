@@ -10,7 +10,7 @@
 
 ## New functions
 
-* (Somewhat) experimental `pool_parameters()` function, to pool parameters estimates from multiple models.
+* `pool_parameters()`, to pool parameters estimates from multiple models.
 
 ## General
 
