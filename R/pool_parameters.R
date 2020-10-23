@@ -71,7 +71,7 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
       i$Component <- NULL
       i
     })
-    warning(paste0("Pooling only applied to the ", component, " model component."), call. = FALSE)
+    warning(paste0("Pooling applied to the ", component, " model component."), call. = FALSE)
   }
 
 
