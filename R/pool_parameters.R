@@ -65,7 +65,7 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
   # only pool for specific component -----
 
   original_x <- x
-  if ("Component" %in% colnames(x[[1]])) {
+  if ("Component" %in% colnames(x[[1]]) && !.is_empty_object(component) && component != "all") {
     x <- lapply(x, function(i) {
       i <- i[i$Component == component, ]
       i$Component <- NULL
@@ -169,9 +169,13 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
 
 
 .add_pooled_params_attributes <- function(pooled_params, model_params, info, ci, exponentiate) {
+  pretty_names <- attributes(model_params)$pretty_names
+  if (length(pretty_names) < nrow(model_params)) {
+    pretty_names <- c(pretty_names, model_params$Parameter[(length(pretty_names) + 1):nrow(model_params)])
+  }
   attr(pooled_params, "ci") <- ci
   attr(pooled_params, "exponentiate") <- exponentiate
-  attr(pooled_params, "pretty_names") <- attributes(model_params)$pretty_names
+  attr(pooled_params, "pretty_names") <- pretty_names
   attr(pooled_params, "ordinal_model") <- attributes(pooled_params)$ordinal_model
   attr(pooled_params, "model_class") <- attributes(pooled_params)$model_class
   attr(pooled_params, "bootstrap") <- attributes(pooled_params)$bootstrap
