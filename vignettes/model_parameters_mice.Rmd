@@ -107,7 +107,7 @@ models <- lapply(1:imputed_data$m, function(i) {
   mixed_model(
     cbind(incidence, size - incidence) ~ period,
     random = ~ 1 | herd,
-    data = data.i,
+    data = imputed_data[[i]],
     family = binomial
   )
 })
