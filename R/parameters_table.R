@@ -253,14 +253,18 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 #' @importFrom insight format_value format_pd format_bf
 #' @importFrom tools toTitleCase
 .format_bayes_columns <- function(x, stars) {
-  if ("Prior_Location" %in% names(x)) x$Prior_Location <- insight::format_value(x$Prior_Location, protect_integers = TRUE)
-  if ("Prior_Scale" %in% names(x)) x$Prior_Scale <- insight::format_value(x$Prior_Scale, protect_integers = TRUE)
+  # Indices
   if ("BF" %in% names(x)) x$BF <- insight::format_bf(x$BF, name = NULL, stars = stars)
   if ("pd" %in% names(x)) x$pd <- insight::format_pd(x$pd, name = NULL, stars = stars)
   if ("ROPE_Percentage" %in% names(x)) x$ROPE_Percentage <- format_rope(x$ROPE_Percentage, name = NULL)
   names(x)[names(x) == "ROPE_Percentage"] <- "% in ROPE"
+  if ("Rhat" %in% names(x)) x$Rhat <- insight::format_value(x$Rhat, digits = 3)
+  if ("ESS" %in% names(x)) x$ESS <- insight::format_value(x$ESS, protect_integers = TRUE)
 
   # Priors
+  if ("Prior_Location" %in% names(x)) x$Prior_Location <- insight::format_value(x$Prior_Location, protect_integers = TRUE)
+  if ("Prior_Scale" %in% names(x)) x$Prior_Scale <- insight::format_value(x$Prior_Scale, protect_integers = TRUE)
+  if ("Prior_Distribution" %in% names(x)) x$Prior_Distribution <- ifelse(is.na(x$Prior_Distribution), "", x$Prior_Distribution)
   if (all(c("Prior_Distribution", "Prior_Location", "Prior_Scale") %in% names(x))) {
     x$Prior <- paste0(
       tools::toTitleCase(x$Prior_Distribution),
@@ -270,14 +274,14 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
       x$Prior_Scale,
       ")"
     )
+    x$Prior <- ifelse(x$Prior == " ( +- )", "", x$Prior)  # Remove empty
 
     col_position <- which(names(x) == "Prior_Distribution")
     x <- x[c(names(x)[0:(col_position - 1)], "Prior", names(x)[col_position:(length(names(x)) - 1)])] # Replace at initial position
     x$Prior_Distribution <- x$Prior_Location <- x$Prior_Scale <- NULL
   }
 
-  if ("Rhat" %in% names(x)) x$Rhat <- insight::format_value(x$Rhat, digits = 3)
-  if ("ESS" %in% names(x)) x$ESS <- insight::format_value(x$ESS, protect_integers = TRUE)
+
 
   x
 }
