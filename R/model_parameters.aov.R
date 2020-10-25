@@ -228,24 +228,24 @@ model_parameters.maov <- function(model, ...) {
   # Omega squared
   if (!is.null(omega_squared)) {
     fx <- effectsize::F_to_omega2(f = f_value, df = df_num, df_error = df_error, ci = NA)[[1]]
-    parameters$Omega_Sq_partial <- .fix_effectsize_rows(fx, parameters)
+    parameters$Omega2_partial <- .fix_effectsize_rows(fx, parameters)
   }
 
   # Eta squared
   if (!is.null(eta_squared)) {
     if (eta_squared == "adjusted") {
       fx <- effectsize::F_to_eta2_adj(f = f_value, df = df_num, df_error = df_error, ci = NA)[[1]]
-      parameters$Eta_Sq_partial <- .fix_effectsize_rows(fx, parameters)
+      parameters$Eta2_partial <- .fix_effectsize_rows(fx, parameters)
     } else {
       fx <- effectsize::F_to_eta2(f = f_value, df = df_num, df_error = df_error, ci = NA)[[1]]
-      parameters$Eta_Sq_partial <- .fix_effectsize_rows(fx, parameters)
+      parameters$Eta2_partial <- .fix_effectsize_rows(fx, parameters)
     }
   }
 
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
     fx <- effectsize::F_to_epsilon2(f = f_value, df = df_num, df_error = df_error, ci = NA)[[1]]
-    parameters$Epsilon_sq <- .fix_effectsize_rows(fx, parameters)
+    parameters$Epsilon2 <- .fix_effectsize_rows(fx, parameters)
   }
 
   parameters
