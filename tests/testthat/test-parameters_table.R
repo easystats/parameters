@@ -9,7 +9,7 @@ if (require("testthat") && require("parameters") && require("effectsize") && req
 
   x <- effectsize::effectsize(lm(Sepal.Length ~ Species, data = iris))
   t <- parameters::parameters_table(x)
-  testthat::expect_true(all(names(t) == c("Parameter","Std. Coefficient","95% CI")))
+  testthat::expect_true(all(names(t) == c("Parameter","Std. Coef.","95% CI")))
 
   x <- parameters::model_parameters(lm(Sepal.Length ~ Species, data = iris), standardize = "posthoc")
   t <- parameters::parameters_table(x)
