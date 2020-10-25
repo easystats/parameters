@@ -199,7 +199,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     if (!is.null(att[[paste0("ci_", other)]])) {
       other_ci_colname <- sprintf("%s %i%% CI", other, unique(stats::na.omit(att[[paste0("ci_", other)]])) * 100)
     } else if (!is.null(att$ci)) {
-      other_ci_colname <- sprintf("%i%% CI", unique(stats::na.omit(att$ci)) * 100)
+      other_ci_colname <- sprintf("%s %i%% CI", other, unique(stats::na.omit(att$ci)) * 100)
     } else {
       other_ci_colname <- paste(other, "CI")
     }
@@ -235,6 +235,9 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
   x[std_cols] <- insight::format_value(x[std_cols], digits = digits)
   names(x)[names(x) == std_cols] <- .replace_words(std_cols, "Std_Coefficient", "Std. Coef.")
+  names(x)[names(x) == std_cols] <- .replace_words(std_cols, "Std_Median", "Std. Median")
+  names(x)[names(x) == std_cols] <- .replace_words(std_cols, "Std_Mean", "Std. Mean")
+  names(x)[names(x) == std_cols] <- .replace_words(std_cols, "Std_MAP", "Std. MAP")
 
   if (!is.null(std_cis) && length(std_cis)) {
     # std_cis_replacement <- .replace_words(std_cis, "^Std_", "Std. ")
