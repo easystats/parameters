@@ -130,33 +130,33 @@ model_parameters.maov <- function(model, ...) {
   # Omega squared
   if (!is.null(omega_squared)) {
     if (omega_squared == "partial") {
-      fx <- effectsize::omega_squared(model, partial = TRUE)$Omega_Sq_partial
-      parameters$Omega_Sq_partial <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::omega_squared(model, partial = TRUE)$Omega2_partial
+      parameters$Omega2_partial <- .fix_effectsize_rows(fx, parameters)
     } else {
-      fx <- effectsize::omega_squared(model, partial = FALSE)$Omega_Sq
-      parameters$Omega_Sq <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::omega_squared(model, partial = FALSE)$Omega2
+      parameters$Omega2 <- .fix_effectsize_rows(fx, parameters)
     }
   }
 
   # Eta squared
   if (!is.null(eta_squared)) {
     if (eta_squared == "partial") {
-      fx <- effectsize::eta_squared(model, partial = TRUE)$Eta_Sq_partial
-      parameters$Eta_Sq_partial <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::eta_squared(model, partial = TRUE)$Eta2_partial
+      parameters$Eta2_partial <- .fix_effectsize_rows(fx, parameters)
     } else {
-      fx <- effectsize::eta_squared(model, partial = FALSE)$Eta_Sq
-      parameters$Eta_Sq <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::eta_squared(model, partial = FALSE)$Eta2
+      parameters$Eta2 <- .fix_effectsize_rows(fx, parameters)
     }
   }
 
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
     if (epsilon_squared == "partial") {
-      fx <- effectsize::epsilon_squared(model, partial = TRUE)$Epsilon_Sq_partial
-      parameters$Epsilon_Sq_partial <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::epsilon_squared(model, partial = TRUE)$Epsilon2_partial
+      parameters$Epsilon2_partial <- .fix_effectsize_rows(fx, parameters)
     } else {
-      fx <- effectsize::epsilon_squared(model, partial = FALSE)$Epsilon_Sq
-      parameters$Epsilon_Sq <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::epsilon_squared(model, partial = FALSE)$Epsilon2
+      parameters$Epsilon2 <- .fix_effectsize_rows(fx, parameters)
     }
   }
 
