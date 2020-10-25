@@ -48,7 +48,7 @@ Depends:
     R (>= 3.2)
 Imports:
     bayestestR (>= 0.7.5),
-    insight (>= 0.9.6.1),
+    insight (>= 0.10.0),
     methods,
     stats,
     tools,
@@ -71,7 +71,7 @@ Suggests:
     cplm,
     dplyr,
     DRR,
-    effectsize (>= 0.3.0),
+    effectsize (>= 0.4.0),
     EGAnet (>= 0.7),
     FactoMineR,
     fastICA,
