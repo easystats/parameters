@@ -7,6 +7,7 @@
 #'   supported by \code{model_parameters()}.
 #' @param ... Currently not used.
 #' @inheritParams model_parameters.default
+#' @inheritParams bootstrap_model
 #'
 #' @note Models with multiple components, (for instance, models with zero-inflation,
 #'   where predictors appear in the count and zero-inflated part) may fail in

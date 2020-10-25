@@ -19,6 +19,7 @@
 #'   model_parameters(fit)
 #' }
 #'
+#' \dontrun{
 #' # model_parameters() also works for models that have no "tidy"-method in mice
 #' if (require("mice") && require("gee")) {
 #'   data(warpbreaks)
@@ -31,7 +32,7 @@
 #'   # summary(pool(fit))
 #'
 #'   model_parameters(fit)
-#' }
+#' }}
 #'
 #' # and it works with pooled results
 #' if (require("mice")) {

@@ -187,7 +187,7 @@ ci.mira <- function(x, ci = .95, ...) {
   if (!requireNamespace("mice", quietly = TRUE)) {
     stop("Package 'mice' needed for this function to work. Please install it.")
   }
-  ci(mice::pool(model), ci = ci, ...)
+  ci(mice::pool(x), ci = ci, ...)
 }
 
 #' @export
