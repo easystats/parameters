@@ -845,6 +845,10 @@ p_value.gam <- function(model, ...) {
 }
 
 
+#' @export
+p_value.scam <- p_value.gam
+
+
 
 #' @export
 p_value.Gam <- function(model, ...) {

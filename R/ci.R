@@ -177,6 +177,9 @@ ci.gam <- function(x, ci = .95, ...) {
 }
 
 #' @export
+ci.scam <- ci.gam
+
+#' @export
 ci.mipo <- ci.gam
 
 #' @export

@@ -35,13 +35,13 @@ Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}).
   small samples (\cite{Barnard and Rubin, 1999}).
 }
 \note{
-This function is still experimental. Results should be reliable,
-  however, this function may not yet work with all types of models properly.
-  In particular models with identical names for coefficients (for instance,
-  models with zero-inflation, where predictors appear in the count and
-  zero-inflated part) may fail, since the coefficient table is grouped by
-  coefficient names for pooling. In such cases, coefficients of count and
-  zero-inflated model parts would be combined.
+Models with multiple components, (for instance, models with zero-inflation,
+  where predictors appear in the count and zero-inflated part) may fail in
+  case of identical names for coefficients in the different model components,
+  since the coefficient table is grouped by coefficient names for pooling. In
+  such cases, coefficients of count and zero-inflated model parts would be
+  combined. Therefore, the \code{component} argument defaults to
+  \code{"conditional"} to avoid this.
 }
 \examples{
 # example for multiple imputed datasets

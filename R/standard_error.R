@@ -1374,6 +1374,9 @@ standard_error.gam <- function(model, ...) {
   )
 }
 
+#' @export
+standard_error.scam <- standard_error.gam
+
 
 #' @export
 standard_error.gamm <- function(model, ...) {
