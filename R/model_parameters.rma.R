@@ -197,11 +197,9 @@ model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exp
   params <- as.data.frame(model$estimates)
   ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
 
-  # ignore ci for now
-  if (ci != .95) {
-    ci <- .95
-    warning("Argument 'ci' is currently ignored for models from metaBMA.", call. = FALSE)
-  }
+  # ignore ci
+  hpd_col <- colnames(params)[grepl("hpd(\\d+)_lower", colnames(params))]
+  ci <- as.numeric(gsub("hpd(\\d+)_lower", "\\1", hpd_col)) / 100
 
   ci_cols <- switch(
     toupper(ci_method),
