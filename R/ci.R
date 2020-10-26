@@ -857,12 +857,7 @@ ci.metaplus <- function(x, ...) {
 ci.meta_random <- function(x, method = "hdi", ...) {
   params <- as.data.frame(x$estimates)
   ci_method <- match.arg(method, choices = c("hdi", "eti"))
-
-  ci_cols <- switch(
-    toupper(ci_method),
-    "HDI" = c("hpd95_lower", "hpd95_upper"),
-    c("2.5%", "97.5%")
-  )
+  ci_cols <- .metabma_ci_columns(params, ci_method)
 
   out <- data.frame(
     Parameter = rownames(params),

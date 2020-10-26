@@ -196,16 +196,7 @@ model_parameters.metaplus <- function(model, ci = .95, bootstrap = FALSE, iterat
 model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exponentiate = FALSE, ...) {
   params <- as.data.frame(model$estimates)
   ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
-
-  # ignore ci
-  hpd_col <- colnames(params)[grepl("hpd(\\d+)_lower", colnames(params))]
-  ci <- as.numeric(gsub("hpd(\\d+)_lower", "\\1", hpd_col)) / 100
-
-  ci_cols <- switch(
-    toupper(ci_method),
-    "HDI" = sprintf(c("hpd%i_lower", "hpd%i_upper"), 100 * ci),
-    c(sprintf("%g%%", (100 * (1 - ci)) / 2), sprintf("%g%%", 100 - (100 * (1 - ci)) / 2))
-  )
+  ci_cols <- .metabma_ci_columns(params, ci_method)
 
   out <- data.frame(
     Parameter = rownames(params),
@@ -239,3 +230,20 @@ model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exp
 
 #' @export
 model_parameters.meta_fixed <- model_parameters.meta_random
+
+
+
+
+# helper ------
+
+.metabma_ci_columns <- function(params, ci_method) {
+  # ignore ci
+  hpd_col <- colnames(params)[grepl("hpd(\\d+)_lower", colnames(params))]
+  ci <- as.numeric(gsub("hpd(\\d+)_lower", "\\1", hpd_col)) / 100
+
+  switch(
+    toupper(ci_method),
+    "HDI" = sprintf(c("hpd%i_lower", "hpd%i_upper"), 100 * ci),
+    c(sprintf("%g%%", (100 * (1 - ci)) / 2), sprintf("%g%%", 100 - (100 * (1 - ci)) / 2))
+  )
+}
