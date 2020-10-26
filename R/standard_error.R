@@ -1650,6 +1650,22 @@ standard_error.metaplus <- function(model, ...) {
 }
 
 
+#' @export
+standard_error.meta_random <- function(model, ...) {
+  params <- as.data.frame(model$estimates)
+  out <- data.frame(
+    Parameter = .remove_backticks_from_string(rownames(params)),
+    SE = params$sd,
+    stringsAsFactors = FALSE
+  )
+  out$Parameter[grepl("d", out$Parameter)] <- "(Intercept)"
+  out
+}
+
+#' @export
+standard_error.meta_fixed <- standard_error.meta_random
+
+
 
 #' @rdname standard_error
 #' @export

@@ -190,6 +190,7 @@ model_parameters.metaplus <- function(model, ci = .95, bootstrap = FALSE, iterat
 #' @export
 model_parameters.meta_random <- function(model, ci_method = "hdi", exponentiate = FALSE, ...) {
   params <- as.data.frame(model$estimates)
+  ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
 
   ci_cols <- switch(
     toupper(ci_method),
@@ -215,6 +216,11 @@ model_parameters.meta_random <- function(model, ci_method = "hdi", exponentiate 
   # add BF
   out$BF[1] <- model$BF[2, 1]
 
+  if (exponentiate) out <- .exponentiate_parameters(out)
+  out <- .add_model_parameters_attributes(params = out, model = model, ci = .95, exponentiate = exponentiate, ci_method = ci_method, ...)
+
+  # final atributes
+  attr(out, "measure") <- "Estimate"
   attr(out, "object_name") <- .safe_deparse(substitute(model))
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 

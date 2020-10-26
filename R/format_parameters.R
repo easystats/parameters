@@ -60,6 +60,20 @@ format_parameters.rma <- function(model) {
 
 
 #' @export
+format_parameters.meta_random <- function(model) {
+  # params <- insight::find_parameters(model, flatten = TRUE)
+  # names(params) <- params
+  # params
+
+  ## TODO enable once insight 0.11.0 is on CRAN
+  NULL
+}
+
+#' @export
+format_parameters.meta_fixed <- format_parameters.meta_random
+
+
+#' @export
 format_parameters.merModList <- function(model) {
   .format_parameter_default(model[[1]])
 }
