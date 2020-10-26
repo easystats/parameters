@@ -198,19 +198,40 @@ model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exp
   params <- as.data.frame(model$estimates)
   ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
 
+  # parameters of studies included
+  study_params <- model$data
+  fac <- stats::qnorm((1 + ci) / 2, lower.tail = TRUE)
+
+  out_study <- data.frame(
+    Parameter = study_params$labels,
+    Coefficient = study_params$y,
+    SE = study_params$SE,
+    CI_low = study_params$y - fac * study_params$SE,
+    CI_high = study_params$y + fac * study_params$SE,
+    Weight = 1 / study_params$SE^2,
+    BF = NA,
+    Rhat = NA,
+    ESS = NA,
+    Component = "studies",
+    stringsAsFactors = FALSE
+  )
+
   # extract ci-level and find ci-columns
   ci <- .meta_bma_extract_ci(params)
   ci_cols <- .metabma_ci_columns(ci_method, ci)
 
+  # parameters of overall / tau
   out <- data.frame(
     Parameter = rownames(params),
     Coefficient = params$mean,
     SE = params$sd,
     CI_low = params[[ci_cols[1]]],
     CI_high = params[[ci_cols[2]]],
+    Weight = NA,
     BF = NA,
     Rhat = params$Rhat,
     ESS = params$n_eff,
+    Component = "meta",
     stringsAsFactors = FALSE
   )
 
@@ -220,12 +241,17 @@ model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exp
   # add BF
   out$BF[1] <- model$BF[2, 1]
 
+  # merge
+  out <- rbind(out_study, out)
+
   if (exponentiate) out <- .exponentiate_parameters(out)
   out <- .add_model_parameters_attributes(params = out, model = model, ci = ci, exponentiate = exponentiate, ci_method = ci_method, ...)
 
   # final atributes
   attr(out, "measure") <- "Estimate"
   attr(out, "object_name") <- .safe_deparse(substitute(model))
+
+  ## TODO remove once insight > 0.10.0 is on CRAN
   attr(out, "data") <- model$data$data
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 
@@ -243,6 +269,24 @@ model_parameters.meta_bma <- function(model, ci = .95, ci_method = "hdi", expone
   params <- as.data.frame(model$estimates)
   ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
 
+  # parameters of studies included
+  study_params <- model$meta$fixed$data
+  fac <- stats::qnorm((1 + ci) / 2, lower.tail = TRUE)
+
+  out_study <- data.frame(
+    Parameter = study_params$labels,
+    Coefficient = study_params$y,
+    SE = study_params$SE,
+    CI_low = study_params$y - fac * study_params$SE,
+    CI_high = study_params$y + fac * study_params$SE,
+    Weight = 1 / study_params$SE^2,
+    BF = NA,
+    Rhat = NA,
+    ESS = NA,
+    Component = "studies",
+    stringsAsFactors = FALSE
+  )
+
   # extract ci-level and find ci-columns
   ci <- .meta_bma_extract_ci(params)
   ci_cols <- .metabma_ci_columns(ci_method, ci)
@@ -253,14 +297,19 @@ model_parameters.meta_bma <- function(model, ci = .95, ci_method = "hdi", expone
     SE = params$sd,
     CI_low = params[[ci_cols[1]]],
     CI_high = params[[ci_cols[2]]],
+    Weight = NA,
     BF = NA,
     Rhat = params$Rhat,
     ESS = params$n_eff,
+    Component = "meta",
     stringsAsFactors = FALSE
   )
 
   # add BF
   out$BF <- c(NA, model$BF[2, 1], model$BF[4, 1])
+
+  # merge
+  out <- rbind(out_study, out)
 
   if (exponentiate) out <- .exponentiate_parameters(out)
   out <- .add_model_parameters_attributes(params = out, model = model, ci = ci, exponentiate = exponentiate, ci_method = ci_method, ...)
@@ -268,6 +317,8 @@ model_parameters.meta_bma <- function(model, ci = .95, ci_method = "hdi", expone
   # final attributes
   attr(out, "measure") <- "Estimate"
   attr(out, "object_name") <- .safe_deparse(substitute(model))
+
+  ## TODO remove once insight > 0.10.0 is on CRAN
   attr(out, "data") <- model$meta$fixed$data$data
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 

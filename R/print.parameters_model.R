@@ -148,7 +148,6 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "SI" = "support intervals",
       "uncertainty intervals"
     )
-    cat("\n")
     message(paste0("Using ", ci_method, " as credible intervals."))
   }
 
@@ -354,6 +353,8 @@ print.parameters_random <- function(x, digits = 2, ...) {
       "extra.fixed" = "Extra Parameters",
       "nu" = "Nu",
       "tau" = "Tau",
+      "meta" = "Meta-Parameters",
+      "studies" = "Studies",
       "within" = "Within-Effects",
       "between" = "Between-Effects",
       "interactions" = "(Cross-Level) Interactions",

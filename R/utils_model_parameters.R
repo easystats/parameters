@@ -38,6 +38,13 @@
     attr(params, "study_weights") <- 1 / model$vi
   }
 
+  if (packageVersion("insight") > "0.10.0") {
+    if (inherits(model, c("meta_random", "meta_fixed", "meta_bma"))) {
+      attr(params, "data") <- insight::get_data(model)
+      attr(params, "study_weights") <- 1 / params$SE^2
+    }
+  }
+
   if ("digits" %in% names(dot.arguments)) {
     attr(params, "digits") <- eval(dot.arguments[["digits"]])
   } else {

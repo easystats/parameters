@@ -16,13 +16,16 @@ if (require("testthat") && require("insight") && require("parameters") && requir
 
   test_that("model_parameters.meta_random", {
     params <- model_parameters(m)
-    expect_equal(params$Parameter, c("Overall", "tau"))
-    expect_equal(params$Coefficient, c(0.1950243, 0.1331831), tolerance = 1e-3)
-    expect_equal(params$CI_low, c(0.005415821, 0.021171257), tolerance = 1e-3)
+    expect_equal(params$Parameter, c("Goldstein, Cialdini, & Griskevicius (2008), Exp. 1", "Goldstein, Cialdini, & Griskevicius  (2008), Exp. 2",
+                                     "Schultz, Khazian, & Zaleski (2008), Exp. 2", "Schultz, Khazian, & Zaleski (2008), Exp. 3",
+                                     "Mair & Bergin-Seers (2010), Exp. 1", "Bohner & Schluter (2014), Exp. 1",
+                                     "Bohner & Schluter (2014), Exp. 2", "Overall", "tau"))
+    expect_equal(params$Coefficient, c(0.3806, 0.30494, 0.20554, 0.25084, 0.28768, -0.12154, -1.45792, 0.19502, 0.13318), tolerance = 1e-3)
+    expect_equal(params$CI_low, c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, 0.00542, 0.02117), tolerance = 1e-3)
     expect_equal(
       colnames(params),
-      c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "BF",
-        "Rhat", "ESS")
+      c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Weight",
+        "BF", "Rhat", "ESS", "Component")
     )
   })
 
@@ -38,13 +41,16 @@ if (require("testthat") && require("insight") && require("parameters") && requir
 
   test_that("model_parameters.meta_fixed", {
     params <- model_parameters(m2)
-    expect_equal(params$Parameter, "Overall")
-    expect_equal(params$Coefficient, 0.2116664, tolerance = 1e-3)
-    expect_equal(params$CI_low, 0.06031935, tolerance = 1e-3)
+    expect_equal(params$Parameter, c("Goldstein, Cialdini, & Griskevicius (2008), Exp. 1", "Goldstein, Cialdini, & Griskevicius  (2008), Exp. 2",
+                                     "Schultz, Khazian, & Zaleski (2008), Exp. 2", "Schultz, Khazian, & Zaleski (2008), Exp. 3",
+                                     "Mair & Bergin-Seers (2010), Exp. 1", "Bohner & Schluter (2014), Exp. 1",
+                                     "Bohner & Schluter (2014), Exp. 2", "Overall"))
+    expect_equal(params$Coefficient, c(0.3806, 0.30494, 0.20554, 0.25084, 0.28768, -0.12154, -1.45792, 0.21167), tolerance = 1e-3)
+    expect_equal(params$CI_low, c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, 0.06032), tolerance = 1e-3)
     expect_equal(
       colnames(params),
-      c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "BF",
-        "Rhat", "ESS")
+      c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Weight",
+        "BF", "Rhat", "ESS", "Component")
     )
   })
 
@@ -63,13 +69,16 @@ if (require("testthat") && require("insight") && require("parameters") && requir
 
     test_that("model_parameters.meta_random", {
       params <- model_parameters(m3)
-      expect_equal(params$Parameter, c("Overall", "tau"))
-      expect_equal(params$Coefficient, c(0.1950243, 0.1331831), tolerance = 1e-3)
-      expect_equal(params$CI_low, c(-0.05468293, 0.02117126), tolerance = 1e-3)
+      expect_equal(params$Parameter, c("Goldstein, Cialdini, & Griskevicius (2008), Exp. 1", "Goldstein, Cialdini, & Griskevicius  (2008), Exp. 2",
+                                       "Schultz, Khazian, & Zaleski (2008), Exp. 2", "Schultz, Khazian, & Zaleski (2008), Exp. 3",
+                                       "Mair & Bergin-Seers (2010), Exp. 1", "Bohner & Schluter (2014), Exp. 1",
+                                       "Bohner & Schluter (2014), Exp. 2", "Overall", "tau"))
+      expect_equal(params$Coefficient, c(0.3806, 0.30494, 0.20554, 0.25084, 0.28768, -0.12154, -1.45792, 0.19502, 0.13318), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, -0.05468, 0.02117), tolerance = 1e-3)
       expect_equal(
         colnames(params),
-        c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "BF",
-          "Rhat", "ESS")
+        c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Weight",
+          "BF", "Rhat", "ESS", "Component")
       )
     })
   }
