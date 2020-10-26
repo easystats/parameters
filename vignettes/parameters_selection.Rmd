@@ -123,8 +123,9 @@ For Bayesian models, `select_parameters()` uses the **projpred** package to sele
 
 ```{r message=FALSE, warning=FALSE}
 library(rstanarm)
+data(mtcars)
 model <- stan_glm(
-  mpg ~ ., data = mtcars,
+  mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb, data = mtcars,
   iter = 500, refresh = 0, verbose = FALSE
 )
 select_parameters(model, cross_validation = TRUE)
