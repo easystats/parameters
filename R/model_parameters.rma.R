@@ -226,7 +226,7 @@ model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exp
   out$BF[1] <- model$BF[2, 1]
 
   if (exponentiate) out <- .exponentiate_parameters(out)
-  out <- .add_model_parameters_attributes(params = out, model = model, ci = .95, exponentiate = exponentiate, ci_method = ci_method, ...)
+  out <- .add_model_parameters_attributes(params = out, model = model, ci = ci, exponentiate = exponentiate, ci_method = ci_method, ...)
 
   # final atributes
   attr(out, "measure") <- "Estimate"
