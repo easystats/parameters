@@ -6,7 +6,7 @@
 
 ## New supported model classes
 
-* Support for `maov` (*stats*), `HLfit` (*spaMM*), `scam` (*scam*), preliminary support for `emm_list` (*emmeans*), `merModList` (*merTools*), `meta_random` and `meta_fixed` (*metaBMA*).
+* Support for `maov` (*stats*), `HLfit` (*spaMM*), `scam` (*scam*), preliminary support for `emm_list` (*emmeans*), `merModList` (*merTools*), `meta_random`, `meta_bma` and `meta_fixed` (*metaBMA*).
 
 ## New functions
 
