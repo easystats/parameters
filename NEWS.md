@@ -17,7 +17,6 @@
 
 * Better support for (weighted) multivariate response models of class `mlm` for functions like `model_parameters()` or `simulate_parameters()`.
 
-
 ## Changes to functions
 
 ### Printing model parameters

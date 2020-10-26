@@ -1,3 +1,4 @@
+#' @importFrom utils packageVersion
 #' @keywords internal
 .add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, bootstrap = FALSE, iterations = 1000, df_method = NULL, ci_method = NULL, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
@@ -38,7 +39,7 @@
     attr(params, "study_weights") <- 1 / model$vi
   }
 
-  if (packageVersion("insight") > "0.10.0") {
+  if (utils::packageVersion("insight") > "0.10.0") {
     if (inherits(model, c("meta_random", "meta_fixed", "meta_bma"))) {
       attr(params, "data") <- insight::get_data(model)
       attr(params, "study_weights") <- 1 / params$SE^2

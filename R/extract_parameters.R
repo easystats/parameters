@@ -198,7 +198,13 @@
   # ==== add sigma
 
   if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
-    attr(parameters, "sigma") <- as.numeric(insight::get_sigma(model))
+    sig <- tryCatch(
+      {
+        suppressWarnings(insight::get_sigma(model))
+      },
+      error = function(e) { NULL }
+    )
+    attr(parameters, "sigma") <- as.numeric(sig)
   }
 
 
@@ -392,8 +398,13 @@
 
   # add sigma
   if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
-    ## TODO replace with "get_sigma()" once insight update on CRAN
-    attr(parameters, "sigma") <- as.numeric(insight::get_sigma(model))
+    sig <- tryCatch(
+      {
+        suppressWarnings(insight::get_sigma(model))
+      },
+      error = function(e) { NULL }
+    )
+    attr(parameters, "sigma") <- as.numeric(sig)
   }
 
   # Std Coefficients for other methods than "refit"
