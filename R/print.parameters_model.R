@@ -148,7 +148,8 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "SI" = "support intervals",
       "uncertainty intervals"
     )
-    message(paste0("\nUsing ", ci_method, " as credible intervals."))
+    cat("\n")
+    message(paste0("Using ", ci_method, " as credible intervals."))
   }
 
   # print summary for random effects
