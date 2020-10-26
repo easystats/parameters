@@ -28,7 +28,7 @@ knitr::opts_chunk$set(comment = "#>")
 if (!requireNamespace("dplyr", quietly = TRUE) ||
     !requireNamespace("performance", quietly = TRUE) ||
     !requireNamespace("rstanarm", quietly = TRUE) ||
-    !requireNamespace("projpred", quietly = TRUE) ||
+    # !requireNamespace("projpred", quietly = TRUE) ||
     !requireNamespace("lme4", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
@@ -118,6 +118,7 @@ lmer(
   summary()
 ```
 
+<!--
 ### Bayesian models
 
 For Bayesian models, `select_parameters()` uses the **projpred** package to select the best parameters for the model.
@@ -131,3 +132,4 @@ model <- stan_glm(
 )
 select_parameters(model, cross_validation = TRUE)
 ```
+//-->
