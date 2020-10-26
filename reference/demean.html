@@ -51,7 +51,11 @@
    variable that can be used in regression analysis to model the between-
    and within-subject effect. check_heterogeneity() checks if model
    predictors or variables may cause a heterogeneity bias, i.e. if variables
-   have a within- and/or between-effect." />
+   have a within- and/or between-effect.
+    
+   degroup() is more generic in terms of the centering-operation.
+   While demean() always uses mean-centering, degroup() can
+   also use the mode or median for centering." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -175,7 +179,11 @@
    variable that can be used in regression analysis to model the between-
    and within-subject effect. <code>check_heterogeneity()</code> checks if model
    predictors or variables may cause a heterogeneity bias, i.e. if variables
-   have a within- and/or between-effect.</p>
+   have a within- and/or between-effect.
+   <br /> <br />
+   <code>degroup()</code> is more generic in terms of the centering-operation.
+   While <code>demean()</code> always uses mean-centering, <code>degroup()</code> can
+   also use the mode or median for centering.</p>
     </div>
 
     <pre class="usage"><span class='fu'>check_heterogeneity</span><span class='op'>(</span><span class='va'>x</span>, select <span class='op'>=</span> <span class='cn'>NULL</span>, group <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
@@ -184,6 +192,17 @@
   <span class='va'>x</span>,
   <span class='va'>select</span>,
   <span class='va'>group</span>,
+  suffix_demean <span class='op'>=</span> <span class='st'>"_within"</span>,
+  suffix_groupmean <span class='op'>=</span> <span class='st'>"_between"</span>,
+  add_attributes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+
+<span class='fu'>degroup</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>select</span>,
+  <span class='va'>group</span>,
+  center <span class='op'>=</span> <span class='st'>"mean"</span>,
   suffix_demean <span class='op'>=</span> <span class='st'>"_within"</span>,
   suffix_groupmean <span class='op'>=</span> <span class='st'>"_between"</span>,
   add_attributes <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -222,6 +241,10 @@ between-effects are printed in separated blocks.</p></td>
     <tr>
       <th>verbose</th>
       <td><p>Toggle off warnings.</p></td>
+    </tr>
+    <tr>
+      <th>center</th>
+      <td><p>Method for centering. <code>demean()</code> always performs mean-centering, while <code>degroup()</code> can use <code>center = "median"</code> or <code>center = "mode"</code> for median- or mode-centering, and also <code>"min"</code> or <code>"max"</code>.</p></td>
     </tr>
     </table>
 
