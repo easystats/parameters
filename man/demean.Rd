@@ -48,7 +48,7 @@ between-effects are printed in separated blocks.}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{center}{Method for centering. \code{demean()} always performs mean-centering, while \code{degroup()} can use \code{center = "median"} or \code{center = "mode"} for median- or mode-centering.}
+\item{center}{Method for centering. \code{demean()} always performs mean-centering, while \code{degroup()} can use \code{center = "median"} or \code{center = "mode"} for median- or mode-centering, and also \code{"min"} or \code{"max"}.}
 }
 \value{
 A data frame with the group-/de-meaned variables, which get the suffix

@@ -13,7 +13,7 @@
 #' @param x A data frame. For \code{check_heterogeneity()}, may also be a mixed model object.
 #' @param select Character vector (or formula) with names of variables to select that should be group- and de-meaned. For \code{check_heterogeneity()}, if \code{x} is a mixed model object, this argument be ignored.
 #' @param group Character vector (or formula) with the name of the variable that indicates the group- or cluster-ID. For \code{check_heterogeneity()}, if \code{x} is a model object, this argument be ignored.
-#' @param center Method for centering. \code{demean()} always performs mean-centering, while \code{degroup()} can use \code{center = "median"} or \code{center = "mode"} for median- or mode-centering.
+#' @param center Method for centering. \code{demean()} always performs mean-centering, while \code{degroup()} can use \code{center = "median"} or \code{center = "mode"} for median- or mode-centering, and also \code{"min"} or \code{"max"}.
 #' @param suffix_demean,suffix_groupmean String value, will be appended to the names of the
 #'   group-meaned and de-meaned variables of \code{x}. By default, de-meaned
 #'   variables will be suffixed with \code{"_within"} and grouped-meaned variables
@@ -195,7 +195,7 @@ degroup <- function(x, select, group, center = "mean", suffix_demean = "_within"
   # ugly tibbles again...
   x <- as.data.frame(x)
 
-  center <- match.arg(tolower(center), choices = c("mean", "median", "mode"))
+  center <- match.arg(tolower(center), choices = c("mean", "median", "mode", "min", "max"))
 
   if (inherits(select, "formula")) {
     # formula to character, remove "~", split at "+"
@@ -287,6 +287,14 @@ degroup <- function(x, select, group, center = "mean", suffix_demean = "_within"
   } else if (center == "median") {
     x_gm_list <- lapply(select, function(i) {
       stats::ave(dat[[i]], dat[[group]], FUN = function(.gm) stats::median(.gm, na.rm = TRUE))
+    })
+  } else if (center == "min") {
+    x_gm_list <- lapply(select, function(i) {
+      stats::ave(dat[[i]], dat[[group]], FUN = function(.gm) min(.gm, na.rm = TRUE))
+    })
+  } else if (center == "max") {
+    x_gm_list <- lapply(select, function(i) {
+      stats::ave(dat[[i]], dat[[group]], FUN = function(.gm) max(.gm, na.rm = TRUE))
     })
   } else {
     x_gm_list <- lapply(select, function(i) {
