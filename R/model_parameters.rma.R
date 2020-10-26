@@ -226,6 +226,7 @@ model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exp
   # final atributes
   attr(out, "measure") <- "Estimate"
   attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "data") <- model$data$data
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 
   out
@@ -267,6 +268,7 @@ model_parameters.meta_bma <- function(model, ci = .95, ci_method = "hdi", expone
   # final attributes
   attr(out, "measure") <- "Estimate"
   attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "data") <- model$meta$fixed$data$data
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 
   out
