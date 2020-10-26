@@ -188,9 +188,14 @@ model_parameters.metaplus <- function(model, ci = .95, bootstrap = FALSE, iterat
 
 
 #' @export
-model_parameters.meta_random <- function(model, ci_method = "hdi", exponentiate = FALSE, ...) {
+model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exponentiate = FALSE, ...) {
   params <- as.data.frame(model$estimates)
   ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
+
+  # ignore ci for now
+  if (ci != .95) {
+    warning("Argument 'ci' is currently ignored for models from metaBMA.", call. = FALSE)
+  }
 
   ci_cols <- switch(
     toupper(ci_method),
