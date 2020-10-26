@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
       </span>
     </div>
 
@@ -164,15 +164,31 @@
       <small>Source: <a href='https://github.com/easystats/parameters/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="parameters-087" class="section level1">
-<h1 class="page-header" data-toc-text="0.8.7">
-<a href="#parameters-087" class="anchor"></a>parameters 0.8.7<small> Unreleased </small>
+    <div id="parameters-090" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.0">
+<a href="#parameters-090" class="anchor"></a>parameters 0.9.0<small> Unreleased </small>
 </h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>
+<code><a href="https://easystats.github.io/insight/reference/standardize_names.html">standardize_names()</a></code> was moved to the <em>insight</em> package.</li>
+</ul>
+</div>
 <div id="new-supported-model-classes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-supported-model-classes" class="anchor"></a>New supported model classes</h2>
 <ul>
-<li>Preliminary support for <code>emm_list</code> objects.</li>
+<li>Support for <code>maov</code> (<em>stats</em>), <code>HLfit</code> (<em>spaMM</em>), <code>scam</code> (<em>scam</em>), preliminary support for <code>emm_list</code> (<em>emmeans</em>), <code>merModList</code> (<em>merTools</em>), <code>meta_random</code> and <code>meta_fixed</code> (<em>metaBMA</em>).</li>
+</ul>
+</div>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>, to pool parameters estimates from multiple models.</li>
 </ul>
 </div>
 <div id="general" class="section level2">
@@ -185,22 +201,36 @@
 <div id="changes-to-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<div id="printing-model-parameters" class="section level3">
+<h3 class="hasAnchor">
+<a href="#printing-model-parameters" class="anchor"></a>Printing model parameters</h3>
 <ul>
 <li>
 <code><a href="../reference/print.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now names the coefficients column depending on the model type (i.e. <code>"Odds Ratios"</code> for logistic regression when <code>exponentiate = TRUE</code> etc.)</li>
 <li>
 <code><a href="../reference/print.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>show_sigma</code> argument, to show or hide information on the residual standard deviation.</li>
 <li>
-<code><a href="../reference/data_partition.html">data_partition()</a></code> gets a <code>seed</code> argument, to explicitly set the seed before random sampling of test and training data.</li>
+<code><a href="../reference/print.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> displays a message for Bayesian models, indicating which method to compute credible intervals was used.</li>
 </ul>
+</div>
+<div id="other-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other changes</h3>
+<ul>
+<li>
+<code><a href="../reference/data_partition.html">data_partition()</a></code> gets a <code>seed</code> argument, to explicitly set the seed before random sampling of test and training data.</li>
+<li>Revised <code><a href="../reference/parameters_table.html">parameters_table()</a></code>, to improve readability of printed output.</li>
+</ul>
+</div>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
+<li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>vgam</em> and <em>mira</em> objects.</li>
 <li>Fixed issue where <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>emmGrid</em> objects falsely removed the <code>Coefficient</code> column.</li>
-<li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>vgam</em> objects.</li>
 <li>Fixed issue in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> for factors with different effects-coding than treatment contrasts.</li>
+<li>Fixed issues due to latest <em>effectsize</em> update.</li>
 </ul>
 </div>
 </div>
@@ -356,9 +386,9 @@
 <code>averaging</code> (<em>MuMIn</em>), <code>bayesx</code> (<em>R2BayesX</em>), <code>afex_aov</code> (<em>afex</em>)</li>
 </ul>
 </div>
-<div id="new-functions" class="section level2">
+<div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions" class="anchor"></a>New functions</h2>
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> as a small helper to find variables that have a within- and between-effect related to a grouping variable (and thus, may result in heterogeneity bias, see <a href="https://easystats.github.io/parameters/articles/demean.html">this vignette</a>).</li>
@@ -404,9 +434,9 @@
 <li>The <code>select</code>-argument from <code><a href="../reference/print.html">print.parameters_model()</a></code> now gets a <code>"minimal"</code>-option as shortcut to print coefficients, confidence intervals and p-values only.</li>
 </ul>
 </div>
-<div id="other-changes" class="section level3">
+<div id="other-changes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other changes</h3>
+<a href="#other-changes-1" class="anchor"></a>Other changes</h3>
 <ul>
 <li>
 <code><a href="../reference/parameters_table.html">parameters_table()</a></code> and <code><a href="../reference/print.html">print.parameters_model()</a></code> now explicitly get arguments to define the digits for decimal places used in output.</li>
@@ -469,9 +499,9 @@
 <h1 class="page-header" data-toc-text="0.6.0">
 <a href="#parameters-060" class="anchor"></a>parameters 0.6.0<small> 2020-03-12 </small>
 </h1>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>Alias <code>model_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>.</li>
 <li>Alias <code>parameters_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>.</li>
@@ -516,9 +546,9 @@
 <li>Added <code><a href="../reference/standard_error.html">standard_error()</a></code> for <em>brmsfit</em> and <em>stanreg</em> objects.</li>
 </ul>
 </div>
-<div id="other-changes-1" class="section level3">
+<div id="other-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other-changes-1" class="anchor"></a>Other changes</h3>
+<a href="#other-changes-2" class="anchor"></a>Other changes</h3>
 <ul>
 <li>Run certain tests only locally, to reduce duration of CRAN checks.</li>
 <li>
@@ -548,9 +578,9 @@
 <h1 class="page-header" data-toc-text="0.5.0">
 <a href="#parameters-050" class="anchor"></a>parameters 0.5.0<small> 2020-02-09 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code><a href="../reference/skewness.html">skewness()</a></code> now uses a different method to calculate the skewness by default. Different methods can be selected using the <code>type</code>-argument.</li>
@@ -576,9 +606,9 @@
 <code><a href="../reference/select_parameters.html">select_parameters()</a></code> for <em>stanreg</em> models, which was temporarily removed due to the CRAN removal of package <strong>projpred</strong>, is now re-implemented.</li>
 </ul>
 </div>
-<div id="new-functions-1" class="section level2">
+<div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-1" class="anchor"></a>New functions</h2>
+<a href="#new-functions-2" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/ci_betwithin.html">dof_betwithin()</a></code> to compute degrees of freedom based on a between-within approximation method (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for this method were added as well).</li>

@@ -47,9 +47,12 @@
 
 
 <meta property="og:title" content="p-values — p_value" />
-<meta property="og:description" content="This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:
-Mixed models (lme4): By default, p-values are based on Wald-test approximations (see p_value_wald). For certain situations, the &quot;m-l-1&quot; rule might be a better approximation. That is, for method = &quot;ml1&quot;, p_value_ml1 is called. For lmerMod objects, if method = &quot;kenward&quot;, p-values are based on Kenward-Roger approximations, i.e. p_value_kenward is called, and method = &quot;satterthwaite&quot; calls p_value_satterthwaite.
-Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds to the probability of direction (p_direction), which is converted to a p-value using bayestestR::convert_pd_to_p().
+<meta property="og:description" content="This function attempts to return, or compute, p-values of a model's parameters. See the documentation for your object's class:
+Mixed models (lme4, nlme, glmmTMB, ...)
+Bayesian models (rstanarm, brms, MCMCglmm, ...)
+Zero-inflated models (hurdle, zeroinfl, zerocount, ...)
+Marginal effects models (mfx)
+Models with special components (DirichletRegModel, clm2, cgam, ...)
 
 " />
 <meta property="og:image" content="/logo.png" />
@@ -84,7 +87,7 @@ Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
       </span>
     </div>
 
@@ -171,9 +174,12 @@ Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds 
     </div>
 
     <div class="ref-description">
-    <p>This function attempts to return, or compute, p-values of a model's parameters. The nature of the p-values is different depending on the model:</p><ul>
-<li><p>Mixed models (<span class="pkg">lme4</span>): By default, p-values are based on Wald-test approximations (see <code><a href='ci_wald.html'>p_value_wald</a></code>). For certain situations, the "m-l-1" rule might be a better approximation. That is, for <code>method = "ml1"</code>, <code><a href='ci_ml1.html'>p_value_ml1</a></code> is called. For <code>lmerMod</code> objects, if <code>method = "kenward"</code>, p-values are based on Kenward-Roger approximations, i.e. <code><a href='ci_kenward.html'>p_value_kenward</a></code> is called, and <code>method = "satterthwaite"</code> calls <code><a href='ci_satterthwaite.html'>p_value_satterthwaite</a></code>.</p></li>
-<li><p>Bayesian models (<span class="pkg">rstanarm</span>, <span class="pkg">brms</span>): For Bayesian models, the p-values corresponds to the <em>probability of direction</em> (<code><a href='https://easystats.github.io/bayestestR/reference/p_direction.html'>p_direction</a></code>), which is converted to a p-value using <code><a href='https://easystats.github.io/bayestestR/reference/pd_to_p.html'>bayestestR::convert_pd_to_p()</a></code>.</p></li>
+    <p>This function attempts to return, or compute, p-values of a model's parameters. See the documentation for your object's class:</p><ul>
+<li><p><a href='p_value.lmerMod.html'>Mixed models</a> (<span class="pkg">lme4</span>, <span class="pkg">nlme</span>, <span class="pkg">glmmTMB</span>, ...)</p></li>
+<li><p><a href='p_value.brmsfit.html'>Bayesian models</a> (<span class="pkg">rstanarm</span>, <span class="pkg">brms</span>, <span class="pkg">MCMCglmm</span>, ...)</p></li>
+<li><p><a href='p_value.zeroinfl.html'>Zero-inflated models</a> (<code>hurdle</code>, <code>zeroinfl</code>, <code>zerocount</code>, ...)</p></li>
+<li><p><a href='p_value.poissonmfx.html'>Marginal effects models</a> (<span class="pkg">mfx</span>)</p></li>
+<li><p><a href='p_value.DirichletRegModel.html'>Models with special components</a> (<code>DirichletRegModel</code>, <code>clm2</code>, <code>cgam</code>, ...)</p></li>
 </ul>
 
     </div>
@@ -181,51 +187,10 @@ Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds 
     <pre class="usage"><span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for lmerMod</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='st'>"wald"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for merMod</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='st'>"wald"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for rlmerMod</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='st'>"wald"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for glmmTMB</span>
-<span class='fu'>p_value</span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span><span class='op'>)</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for MixMod</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for mixor</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for emmGrid</span>
 <span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, adjust <span class='op'>=</span> <span class='st'>"none"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for poissonmfx</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for betamfx</span>
-<span class='fu'>p_value</span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for averaging</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"full"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for DirichletRegModel</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for clm2</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for gee</span>
 <span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -239,26 +204,15 @@ Bayesian models (rstanarm, brms): For Bayesian models, the p-values corresponds 
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
+      <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where <code>method = "robust"</code> is supported.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models, can be <code><a href='ci_wald.html'>"wald"</a></code> (default), <code><a href='ci_ml1.html'>"ml1"</a></code>, <code><a href='ci_betwithin.html'>"betwithin"</a></code>, <code><a href='ci_satterthwaite.html'>"satterthwaite"</a></code> or <code><a href='ci_kenward.html'>"kenward"</a></code>. For models that are supported by the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> packages, may also be <code>method = "robust"</code> to compute p-values based ob robust standard errors.</p></td>
+      <td><p>If <code>"robust"</code>, and if model is supported by the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> packages, computes p-values based on robust covariance matrix estimation.</p></td>
     </tr>
     <tr>
-      <th>component</th>
-      <td><p>Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
-<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
-    </tr>
-    <tr>
-      <th>effects</th>
-      <td><p>Should standard errors for fixed effects or random effects
-be returned? Only applies to mixed models. May be abbreviated. When
-standard errors for random effects are requested, for each grouping factor
-a list of standard errors (per group level) for random intercepts and slopes
-is returned.</p></td>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -272,7 +226,7 @@ is returned.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The p-values.</p>
+    <p>A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p><code><a href='standard_error_robust.html'>p_value_robust()</a></code> resp. <code>p_value(method = "robust")</code>
@@ -281,14 +235,14 @@ is returned.</p></td>
   thus only work for those models supported by those packages.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-  <span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt;      Parameter            p
-#&gt; 1  (Intercept) 9.561737e-01
-#&gt; 2 Sepal.Length 1.273781e-44</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           Parameter            p
+#&gt; 1       (Intercept) 1.005180e-11
+#&gt; 2      Sepal.Length 1.121002e-28
+#&gt; 3 Speciesversicolor 9.645641e-67
+#&gt; 4  Speciesvirginica 4.917626e-71</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

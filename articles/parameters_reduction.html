@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
       </span>
     </div>
 
@@ -116,7 +116,8 @@
 
       
 
-      </header><script src="parameters_reduction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="parameters_reduction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="parameters_reduction_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="parameters_reduction_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Feature Reduction (PCA, cMDS, ICA…)</h1>
@@ -137,24 +138,24 @@
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">attitude</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter   | Coefficient |    SE |          95% CI |     t | df |      p
-#&gt; -------------------------------------------------------------------------
-#&gt; (Intercept) |       10.79 | 11.59 | [-13.19, 34.76] |  0.93 | 23 | 0.362 
-#&gt; complaints  |        0.61 |  0.16 | [  0.28,  0.95] |  3.81 | 23 | &lt; .001
-#&gt; privileges  |       -0.07 |  0.14 | [ -0.35,  0.21] | -0.54 | 23 | 0.596 
-#&gt; learning    |        0.32 |  0.17 | [ -0.03,  0.67] |  1.90 | 23 | 0.070 
-#&gt; raises      |        0.08 |  0.22 | [ -0.38,  0.54] |  0.37 | 23 | 0.715 
-#&gt; critical    |        0.04 |  0.15 | [ -0.27,  0.34] |  0.26 | 23 | 0.796 
-#&gt; advance     |       -0.22 |  0.18 | [ -0.59,  0.15] | -1.22 | 23 | 0.236</code></pre>
+<pre><code>#&gt; Parameter   | Coefficient |    SE |          95% CI | t(23) |      p
+#&gt; --------------------------------------------------------------------
+#&gt; (Intercept) |       10.79 | 11.59 | [-13.19, 34.76] |  0.93 | 0.362 
+#&gt; complaints  |        0.61 |  0.16 | [  0.28,  0.95] |  3.81 | &lt; .001
+#&gt; privileges  |       -0.07 |  0.14 | [ -0.35,  0.21] | -0.54 | 0.596 
+#&gt; learning    |        0.32 |  0.17 | [ -0.03,  0.67] |  1.90 | 0.070 
+#&gt; raises      |        0.08 |  0.22 | [ -0.38,  0.54] |  0.37 | 0.715 
+#&gt; critical    |        0.04 |  0.15 | [ -0.27,  0.34] |  0.26 | 0.796 
+#&gt; advance     |       -0.22 |  0.18 | [ -0.59,  0.15] | -1.22 | 0.236</code></pre>
 <p>We can explore a reduction of the number of parameters with the <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="va">newmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">newmodel</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter                                                              | Coefficient |   SE |         95% CI |     t | df |      p
-#&gt; ----------------------------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                                                            |       64.63 | 1.57 | [61.41, 67.85] | 41.19 | 27 | &lt; .001
-#&gt; raises_0.88/learning_0.82/complaints_0.78/privileges_0.70/advance_0.68 |        4.62 | 0.90 | [ 2.78,  6.46] |  5.16 | 27 | &lt; .001
-#&gt; critical_0.80                                                          |       -3.41 | 1.59 | [-6.67, -0.14] | -2.14 | 27 | 0.041</code></pre>
+<pre><code>#&gt; Parameter                                                              | Coefficient |   SE |         95% CI | t(27) |      p
+#&gt; -----------------------------------------------------------------------------------------------------------------------------
+#&gt; (Intercept)                                                            |       64.63 | 1.57 | [61.41, 67.85] | 41.19 | &lt; .001
+#&gt; raises_0.88/learning_0.82/complaints_0.78/privileges_0.70/advance_0.68 |        4.62 | 0.90 | [ 2.78,  6.46] |  5.16 | &lt; .001
+#&gt; critical_0.80                                                          |       -3.41 | 1.59 | [-6.67, -0.14] | -2.14 | 0.041</code></pre>
 <p>This quickly <em>hints</em> toward the fact that the model could be represented via <strong>two “latent” dimensions</strong>, one correlated with all the positive things that a company has to offer, and the other one related to the amount of negative critiques received by the employees. These two dimensions have a positive and negative relationship with the company rating, respectively.</p>
 <blockquote>
 <p>What does <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> exactly do?</p>
@@ -163,12 +164,12 @@
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"cMDS"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter                                                 | Coefficient |   SE |         95% CI |     t | df |      p
-#&gt; ---------------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                                               |       64.63 | 1.41 | [61.73, 67.53] | 45.80 | 26 | &lt; .001
-#&gt; raises_0.85/complaints_0.84/learning_0.83/privileges_0.74 |        0.43 | 0.07 | [ 0.28,  0.57] |  6.14 | 26 | &lt; .001
-#&gt; advance_-0.60                                             |        0.32 | 0.13 | [ 0.04,  0.59] |  2.36 | 26 | 0.026 
-#&gt; critical_-0.65                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 26 | 0.120</code></pre>
+<pre><code>#&gt; Parameter                                                 | Coefficient |   SE |         95% CI | t(26) |      p
+#&gt; ----------------------------------------------------------------------------------------------------------------
+#&gt; (Intercept)                                               |       64.63 | 1.41 | [61.73, 67.53] | 45.80 | &lt; .001
+#&gt; raises_0.85/complaints_0.84/learning_0.83/privileges_0.74 |        0.43 | 0.07 | [ 0.28,  0.57] |  6.14 | &lt; .001
+#&gt; advance_-0.60                                             |        0.32 | 0.13 | [ 0.04,  0.59] |  2.36 | 0.026 
+#&gt; critical_-0.65                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 0.120</code></pre>
 <p>A different method (<strong>Classical Multidimensional Scaling - cMDS</strong>) suggests that negative critiques do not have a significant impact on the rating, and that the lack of opportunities of career advancement is a separate dimension with an importance on its own.</p>
 <p>Although this function can be useful in exploratory data analysis, it’s best to perform the dimension reduction step in a <strong>separate and dedicated stage</strong>, as this is a very important process in the data analysis workflow.</p>
 </div>
@@ -201,10 +202,10 @@
 <div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">rating</span> <span class="op">~</span> <span class="va">PC1</span>, data <span class="op">=</span> <span class="va">newdata</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
-#&gt; -----------------------------------------------------------------------
-#&gt; (Intercept) |       64.63 | 1.67 | [61.22, 68.05] | 38.78 | 28 | &lt; .001
-#&gt; PC1         |        4.62 | 0.95 | [ 2.67,  6.57] |  4.86 | 28 | &lt; .001</code></pre>
+<pre><code>#&gt; Parameter   | Coefficient |   SE |         95% CI | t(28) |      p
+#&gt; ------------------------------------------------------------------
+#&gt; (Intercept) |       64.63 | 1.67 | [61.22, 68.05] | 38.78 | &lt; .001
+#&gt; PC1         |        4.62 | 0.95 | [ 2.67,  6.57] |  4.86 | &lt; .001</code></pre>
 <div id="using-the-psych-package-for-pca" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-the-psych-package-for-pca" class="anchor"></a>Using the <code>psych</code> package for PCA</h3>
@@ -237,10 +238,10 @@
 
 <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">rating</span> <span class="op">~</span> <span class="va">PC1</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter   | Coefficient |   SE |         95% CI |     t | df |      p
-#&gt; -----------------------------------------------------------------------
-#&gt; (Intercept) |       64.63 | 1.37 | [61.83, 67.44] | 47.23 | 28 | &lt; .001
-#&gt; PC1         |        9.69 | 1.39 | [ 6.84, 12.54] |  6.96 | 28 | &lt; .001</code></pre>
+<pre><code>#&gt; Parameter   | Coefficient |   SE |         95% CI | t(28) |      p
+#&gt; ------------------------------------------------------------------
+#&gt; (Intercept) |       64.63 | 1.37 | [61.83, 67.44] | 47.23 | &lt; .001
+#&gt; PC1         |        9.69 | 1.39 | [ 6.84, 12.54] |  6.96 | &lt; .001</code></pre>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">

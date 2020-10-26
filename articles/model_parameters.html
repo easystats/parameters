@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
       </span>
     </div>
 
@@ -116,7 +116,8 @@
 
       
 
-      </header><script src="model_parameters_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="model_parameters_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="model_parameters_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="model_parameters_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Summary of Model Parameters</h1>
@@ -144,15 +145,15 @@
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter1        |       Parameter2 |     r |     t |  df |     p |        95% CI |  Method
-#&gt; --------------------------------------------------------------------------------------------
-#&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 | -1.44 | 148 | 0.152 | [-0.27, 0.04] | Pearson</code></pre>
+<pre><code>#&gt; Parameter1        |       Parameter2 |     r | t(148) |     p |        95% CI |  Method
+#&gt; ---------------------------------------------------------------------------------------
+#&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 |  -1.44 | 0.152 | [-0.27, 0.04] | Pearson</code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter | Group | Mean_Group1 | Mean_Group2 | Difference |     t |    df |      p |          95% CI |                  Method
-#&gt; -------------------------------------------------------------------------------------------------------------------------------
-#&gt; mpg       |    vs |       16.62 |       24.56 |       7.94 | -4.67 | 22.72 | &lt; .001 | [-11.46, -4.42] | Welch Two Sample t-test</code></pre>
+<pre><code>#&gt; Parameter | Group | Mean_Group1 | Mean_Group2 | Difference | t(22.72) |      p |          95% CI |                  Method
+#&gt; --------------------------------------------------------------------------------------------------------------------------
+#&gt; mpg       |    vs |       16.62 |       24.56 |       7.94 |    -4.67 | &lt; .001 | [-11.46, -4.42] | Welch Two Sample t-test</code></pre>
 </div>
 <div id="bayesian" class="section level3">
 <h3 class="hasAnchor">
@@ -164,13 +165,13 @@
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; Parameter | Median |        89% CI |     pd | % in ROPE |              Prior | Effects |   Component |    BF
 #&gt; ------------------------------------------------------------------------------------------------------------
-#&gt; rho       |  -0.11 | [-0.23, 0.02] | 92.90% |    43.13% | Cauchy (0 +- 0.33) |   fixed | conditional | 0.509</code></pre>
+#&gt; rho       |  -0.11 | [-0.23, 0.02] | 92.25% |    44.23% | Cauchy (0 +- 0.33) |   fixed | conditional | 0.509</code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter  | Median |          89% CI |     pd | % in ROPE |              Prior | Effects |   Component |     BF
-#&gt; ----------------------------------------------------------------------------------------------------------------
-#&gt; Difference |  -7.30 | [-10.15, -4.58] | 99.98% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | 529.27</code></pre>
+<pre><code>#&gt; Parameter  | Median |        89% CI |     pd | % in ROPE |              Prior | Effects |   Component |     BF
+#&gt; --------------------------------------------------------------------------------------------------------------
+#&gt; Difference |   7.31 | [4.50, 10.12] | 99.98% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | 529.27</code></pre>
 </div>
 </div>
 <div id="anovas" class="section level2">
@@ -183,10 +184,10 @@
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>omega_squared <span class="op">=</span> <span class="st">"partial"</span>, eta_squared <span class="op">=</span> <span class="st">"partial"</span>, epsilon_squared <span class="op">=</span> <span class="st">"partial"</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter | Sum_Squares |  df | Mean_Square |      F |      p | Omega_Sq (partial) | Eta_Sq (partial) | Epsilon_Sq (partial)
-#&gt; ----------------------------------------------------------------------------------------------------------------------------
-#&gt; Species   |       63.21 |   2 |       31.61 | 119.26 | &lt; .001 |               0.61 |             0.62 |                 0.61
-#&gt; Residuals |       38.96 | 147 |        0.27 |        |        |                    |                  |</code></pre>
+<pre><code>#&gt; Parameter | Sum_Squares |  df | Mean_Square |      F |      p | Omega2 (partial) | Eta2 (partial) | Epsilon2 (partial)
+#&gt; ----------------------------------------------------------------------------------------------------------------------
+#&gt; Species   |       63.21 |   2 |       31.61 | 119.26 | &lt; .001 |             0.61 |           0.62 |               0.61
+#&gt; Residuals |       38.96 | 147 |        0.27 |        |        |                  |                |</code></pre>
 </div>
 <div id="repeated-measures" class="section level3">
 <h3 class="hasAnchor">
@@ -212,12 +213,12 @@
 <div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter        | Coefficient |   SE |         95% CI |     t | df |      p
-#&gt; ----------------------------------------------------------------------------
-#&gt; (Intercept)      |        2.04 | 0.39 | [ 1.27,  2.80] |  5.22 | 28 | &lt; .001
-#&gt; mpg [1st degree] |       -0.33 | 0.61 | [-1.53,  0.87] | -0.53 | 28 | 0.599 
-#&gt; mpg [2nd degree] |        0.10 | 0.32 | [-0.54,  0.74] |  0.31 | 28 | 0.762 
-#&gt; cyl              |       -0.26 | 0.06 | [-0.38, -0.14] | -4.14 | 28 | &lt; .001</code></pre>
+<pre><code>#&gt; Parameter        | Coefficient |   SE |         95% CI | t(28) |      p
+#&gt; -----------------------------------------------------------------------
+#&gt; (Intercept)      |        2.04 | 0.39 | [ 1.27,  2.80] |  5.22 | &lt; .001
+#&gt; mpg [1st degree] |       -0.33 | 0.61 | [-1.53,  0.87] | -0.53 | 0.599 
+#&gt; mpg [2nd degree] |        0.10 | 0.32 | [-0.54,  0.74] |  0.31 | 0.762 
+#&gt; cyl              |       -0.26 | 0.06 | [-0.38, -0.14] | -4.14 | &lt; .001</code></pre>
 </div>
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
@@ -227,10 +228,10 @@
 
 <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter    | Coefficient |   SE |       95% CI |    t |  df |      p
-#&gt; ----------------------------------------------------------------------
-#&gt; (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] | 3.56 | 146 | &lt; .001
-#&gt; Petal.Length |        0.28 | 0.06 | [0.17, 0.40] | 4.75 | 146 | &lt; .001</code></pre>
+<pre><code>#&gt; Parameter    | Coefficient |   SE |       95% CI | t(146) |      p
+#&gt; ------------------------------------------------------------------
+#&gt; (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] |   3.56 | &lt; .001
+#&gt; Petal.Length |        0.28 | 0.06 | [0.17, 0.40] |   4.75 | &lt; .001</code></pre>
 </div>
 <div id="mixed-model-with-zero-inflation-model" class="section level3">
 <h3 class="hasAnchor">

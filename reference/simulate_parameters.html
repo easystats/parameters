@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
       </span>
     </div>
 
@@ -271,13 +271,13 @@ included in the summary output.</p></td>
 <span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Parameter                     | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------------------------
-#&gt; (Intercept)                   |        3.53 | [ 3.21,  3.84] | &lt; .001
-#&gt; Speciesversicolor             |       -1.13 | [-1.81, -0.46] | &lt; .001
-#&gt; Speciesvirginica              |       -2.23 | [-3.07, -1.36] | &lt; .001
-#&gt; Petal.Width                   |        0.42 | [-0.54,  1.29] | 0.380 
+#&gt; (Intercept)                   |        3.53 | [ 3.23,  3.82] | &lt; .001
+#&gt; Speciesversicolor             |       -1.14 | [-1.82, -0.41] | 0.002 
+#&gt; Speciesvirginica              |       -2.26 | [-3.11, -1.42] | &lt; .001
+#&gt; Petal.Width                   |        0.42 | [-0.46,  1.26] | 0.344 
 #&gt; Petal.Length                  |        0.94 | [ 0.79,  1.09] | &lt; .001
-#&gt; Speciesversicolor:Petal.Width |       -0.76 | [-1.76,  0.33] | 0.174 
-#&gt; Speciesvirginica:Petal.Width  |       -0.38 | [-1.35,  0.61] | 0.454 </div><div class='input'>
+#&gt; Speciesversicolor:Petal.Width |       -0.77 | [-1.73,  0.24] | 0.134 
+#&gt; Speciesvirginica:Petal.Width  |       -0.37 | [-1.28,  0.53] | 0.412 </div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span><span class='op'>(</span>
@@ -289,12 +289,12 @@ included in the summary output.</p></td>
   <span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, centrality <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span>
   <span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.8</span>, <span class='fl'>.95</span><span class='op'>)</span>, component <span class='op'>=</span> <span class='st'>"zero_inflated"</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; Parameter   | Coefficient |    CI |         80% CI | 95% CI |      p
-#&gt; --------------------------------------------------------------------
-#&gt; (Intercept) |        0.80 | 80.00 | [ 0.45,  1.13] |        | 0.002 
-#&gt; (Intercept) |        0.80 | 95.00 | [ 0.24,  1.34] |        | 0.002 
-#&gt; minedno     |       -1.84 | 80.00 | [-2.25, -1.44] |        | &lt; .001
-#&gt; minedno     |       -1.84 | 95.00 | [-2.49, -1.19] |        | &lt; .001</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; Parameter   | Coefficient |    CI |          ?% CI |      p
+#&gt; -----------------------------------------------------------
+#&gt; (Intercept) |        0.79 | 80.00 | [ 0.46,  1.18] | 0.008 
+#&gt; (Intercept) |        0.79 | 95.00 | [ 0.23,  1.34] | 0.008 
+#&gt; minedno     |       -1.85 | 80.00 | [-2.26, -1.47] | &lt; .001
+#&gt; minedno     |       -1.85 | 95.00 | [-2.51, -1.20] | &lt; .001</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

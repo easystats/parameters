@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
       </span>
     </div>
 
@@ -222,13 +222,13 @@
 
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Sepal.Width</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'>parameters_table</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
-#&gt; 1                        (Intercept)        2.64 0.57 [ 1.51, 3.77] 4.62 144
-#&gt; 2               Species [versicolor]        0.90 0.80 [-0.68, 2.48] 1.13 144
-#&gt; 3                Species [virginica]        1.27 0.82 [-0.35, 2.88] 1.55 144
-#&gt; 4                        Sepal.Width        0.69 0.17 [ 0.36, 1.02] 4.17 144
-#&gt; 5 Species [versicolor] * Sepal.Width        0.17 0.26 [-0.34, 0.69] 0.67 144
-#&gt; 6  Species [virginica] * Sepal.Width        0.21 0.26 [-0.29, 0.72] 0.83 144
+</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI t(144)
+#&gt; 1                        (Intercept)        2.64 0.57 [ 1.51, 3.77]   4.62
+#&gt; 2               Species [versicolor]        0.90 0.80 [-0.68, 2.48]   1.13
+#&gt; 3                Species [virginica]        1.27 0.82 [-0.35, 2.88]   1.55
+#&gt; 4                        Sepal.Width        0.69 0.17 [ 0.36, 1.02]   4.17
+#&gt; 5 Species [versicolor] * Sepal.Width        0.17 0.26 [-0.34, 0.69]   0.67
+#&gt; 6  Species [virginica] * Sepal.Width        0.21 0.26 [-0.29, 0.72]   0.83
 #&gt;        p
 #&gt; 1 &lt; .001
 #&gt; 2 0.261 
@@ -236,13 +236,13 @@
 #&gt; 4 &lt; .001
 #&gt; 5 0.503 
 #&gt; 6 0.411 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'>parameters_table</span><span class='op'>(</span><span class='va'>x</span>, p_digits <span class='op'>=</span> <span class='st'>"scientific"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI    t  df
-#&gt; 1                        (Intercept)        2.64 0.57 [ 1.51, 3.77] 4.62 144
-#&gt; 2               Species [versicolor]        0.90 0.80 [-0.68, 2.48] 1.13 144
-#&gt; 3                Species [virginica]        1.27 0.82 [-0.35, 2.88] 1.55 144
-#&gt; 4                        Sepal.Width        0.69 0.17 [ 0.36, 1.02] 4.17 144
-#&gt; 5 Species [versicolor] * Sepal.Width        0.17 0.26 [-0.34, 0.69] 0.67 144
-#&gt; 6  Species [virginica] * Sepal.Width        0.21 0.26 [-0.29, 0.72] 0.83 144
+</div><div class='output co'>#&gt;                            Parameter Coefficient   SE        95% CI t(144)
+#&gt; 1                        (Intercept)        2.64 0.57 [ 1.51, 3.77]   4.62
+#&gt; 2               Species [versicolor]        0.90 0.80 [-0.68, 2.48]   1.13
+#&gt; 3                Species [virginica]        1.27 0.82 [-0.35, 2.88]   1.55
+#&gt; 4                        Sepal.Width        0.69 0.17 [ 0.36, 1.02]   4.17
+#&gt; 5 Species [versicolor] * Sepal.Width        0.17 0.26 [-0.34, 0.69]   0.67
+#&gt; 6  Species [virginica] * Sepal.Width        0.21 0.26 [-0.29, 0.72]   0.83
 #&gt;             p
 #&gt; 1 8.52612e-06
 #&gt; 2 2.61332e-01
@@ -255,14 +255,14 @@
   <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.69</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'>parameters_table</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;              Parameter Median       69% CI       89% CI       95% CI   pd
-#&gt; 1          (Intercept)   5.01 [4.94, 5.09] [4.88, 5.11] [4.86, 5.14] 100%
-#&gt; 2 Species [versicolor]   0.93 [0.82, 1.03] [0.76, 1.10] [0.74, 1.14] 100%
-#&gt; 3  Species [virginica]   1.58 [1.48, 1.69] [1.41, 1.75] [1.38, 1.78] 100%
-#&gt;   % in ROPE  Rhat     ESS                 Prior
-#&gt; 1        0% 1.000 3279.02 Normal (5.84 +- 2.07)
-#&gt; 2        0% 1.000 3458.46 Normal (0.00 +- 4.38)
-#&gt; 3        0% 1.000 3201.26 Normal (0.00 +- 4.38)</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt;              Parameter Median        ?% CI   pd % in ROPE  Rhat     ESS
+#&gt; 1          (Intercept)   5.01 [4.94, 5.09] 100%        0% 1.000 3279.02
+#&gt; 2 Species [versicolor]   0.93 [0.82, 1.03] 100%        0% 1.000 3458.46
+#&gt; 3  Species [virginica]   1.58 [1.48, 1.69] 100%        0% 1.000 3201.26
+#&gt;                   Prior
+#&gt; 1 Normal (5.84 +- 2.07)
+#&gt; 2 Normal (0.00 +- 4.38)
+#&gt; 3 Normal (0.00 +- 4.38)</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

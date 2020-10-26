@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
       </span>
     </div>
 
@@ -311,7 +311,7 @@ If <code>model</code> is a data frame, arguments <code>diagnostic</code>, <code>
 There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='standardize_names.html'>standardize_names()</a></code> to rename
+    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to rename
   columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -328,17 +328,17 @@ There is also a <a href='https://easystats.github.io/see/articles/parameters.htm
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.81), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.87). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.82), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.87). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
 #&gt; 
 #&gt; Parameter                      | Median |         89% CI |     pd | % in ROPE |  Rhat |    ESS |                 Prior
 #&gt; ----------------------------------------------------------------------------------------------------------------------
-#&gt; (Intercept)                    |   4.10 | [ 3.56,  4.70] |   100% |        0% | 1.033 | 178.42 | Normal (5.84 +- 2.07)
-#&gt; Petal.Length                   |   0.62 | [ 0.24,  0.99] | 98.90% |     2.20% | 1.033 | 182.39 | Normal (0.00 +- 1.17)
-#&gt; Speciesversicolor              |  -1.67 | [-2.59, -0.87] | 99.80% |     0.20% | 1.023 | 295.58 | Normal (0.00 +- 4.38)
-#&gt; Speciesvirginica               |  -2.98 | [-3.85, -2.11] |   100% |        0% | 1.025 | 216.11 | Normal (0.00 +- 4.38)
-#&gt; Petal.Length:Speciesversicolor |   0.21 | [-0.18,  0.62] | 79.20% |    17.90% | 1.035 | 173.60 | Normal (0.00 +- 1.02)
-#&gt; Petal.Length:Speciesvirginica  |   0.38 | [-0.04,  0.76] | 93.60% |     8.40% | 1.037 | 159.02 | Normal (0.00 +- 0.78)
-#&gt; </div><div class='input'><span class='co'># }</span>
+#&gt; (Intercept)                    |   4.11 | [ 3.49,  4.68] |   100% |        0% | 1.005 | 230.67 | Normal (5.84 +- 2.07)
+#&gt; Petal.Length                   |   0.62 | [ 0.18,  0.99] | 99.30% |     0.80% | 1.006 | 232.37 | Normal (0.00 +- 1.17)
+#&gt; Speciesversicolor              |  -1.68 | [-2.58, -0.81] | 99.70% |     0.30% | 1.001 | 283.13 | Normal (0.00 +- 4.38)
+#&gt; Speciesvirginica               |  -2.97 | [-3.84, -1.92] |   100% |        0% | 1.004 | 361.95 | Normal (0.00 +- 4.38)
+#&gt; Petal.Length:Speciesversicolor |   0.22 | [-0.26,  0.60] | 77.80% |    17.50% | 1.005 | 215.96 | Normal (0.00 +- 1.02)
+#&gt; Petal.Length:Speciesvirginica  |   0.37 | [-0.08,  0.75] | 89.10% |     9.90% | 1.006 | 231.72 | Normal (0.00 +- 0.78)
+#&gt; </div><div class='output co'>#&gt; <span class='message'>Using highest density intervals as credible intervals.</span></div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

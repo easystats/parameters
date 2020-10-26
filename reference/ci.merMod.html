@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
       </span>
     </div>
 
@@ -193,12 +193,22 @@
 <span class='co'># S3 method for DirichletRegModel</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
+<span class='co'># S3 method for HLfit</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"profile"</span>, <span class='st'>"boot"</span><span class='op'>)</span>,
+  iterations <span class='op'>=</span> <span class='fl'>100</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
 <span class='co'># S3 method for glmmTMB</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
   <span class='va'>x</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span><span class='op'>)</span>,
   method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"robust"</span><span class='op'>)</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -208,6 +218,7 @@
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span><span class='op'>)</span>,
   method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"robust"</span><span class='op'>)</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -217,6 +228,7 @@
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span><span class='op'>)</span>,
   method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"robust"</span><span class='op'>)</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -225,6 +237,7 @@
   <span class='va'>x</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span><span class='op'>)</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -268,7 +281,7 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models, can be <code><a href='ci_wald.html'>"wald"</a></code> (default), <code><a href='ci_ml1.html'>"ml1"</a></code> or <code><a href='ci_betwithin.html'>"betwithin"</a></code>. For linear mixed model, can also be <code><a href='ci_satterthwaite.html'>"satterthwaite"</a></code>, <code><a href='ci_kenward.html'>"kenward"</a></code> or <code>"boot"</code> and <code><a href='https://rdrr.io/pkg/lme4/man/confint.merMod.html'>lme4::confint.merMod</a></code>). For (generalized) linear models, can be <code>"robust"</code> to compute confidence intervals based on robust standard errors, and for generalized linear models, may also be <code>"profile"</code> (default) or <code>"wald"</code>.</p></td>
+      <td><p>For mixed models, can be <code><a href='ci_wald.html'>"wald"</a></code> (default), <code><a href='ci_ml1.html'>"ml1"</a></code> or <code><a href='ci_betwithin.html'>"betwithin"</a></code>. For linear mixed model, can also be <code><a href='ci_satterthwaite.html'>"satterthwaite"</a></code>, <code><a href='ci_kenward.html'>"kenward"</a></code> or <code>"boot"</code> and <code><a href='https://rdrr.io/pkg/lme4/man/confint.merMod.html'>lme4::confint.merMod</a></code>). For (generalized) linear models, can be <code>"robust"</code> to compute confidence intervals based on robust covariance matrix estimation, and for generalized linear models, may also be <code>"profile"</code> (default) or <code>"wald"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -288,6 +301,14 @@ is returned.</p></td>
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>iterations</th>
+      <td><p>The number of draws to simulate/bootstrap.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Show or hide possible warnings and messages.</p></td>
     </tr>
     </table>
 

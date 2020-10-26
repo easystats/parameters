@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
       </span>
     </div>
 
@@ -181,6 +181,7 @@
   rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
   rope_ci <span class='op'>=</span> <span class='fl'>0.89</span>,
   priors <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -237,6 +238,10 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
       <td><p>Add the prior used for each parameter.</p></td>
     </tr>
     <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Additional arguments to be passed to or from methods.</p></td>
     </tr>
@@ -269,10 +274,9 @@ ANOVAs</em> paper</a>.</p>
 #&gt; <span class='message'>Type BFManual() to open the manual.</span>
 #&gt; <span class='message'>************</span></div><div class='input'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Parameter  | Median |       89% CI |   pd | % in ROPE |              Prior | Effects |   Component |     BF
-#&gt; -----------------------------------------------------------------------------------------------------------
-#&gt; Difference |   0.98 | [0.77, 1.22] | 100% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | &gt; 1000</div><div class='input'><span class='co'># }</span>
-
+</div><div class='output co'>#&gt; Parameter  | Median |         89% CI |   pd | % in ROPE |              Prior | Effects |   Component |     BF
+#&gt; -------------------------------------------------------------------------------------------------------------
+#&gt; Difference |  -0.95 | [-1.11, -0.79] | 100% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | &gt; 1000</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
