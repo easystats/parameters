@@ -206,7 +206,7 @@ model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exp
   ci_cols <- switch(
     toupper(ci_method),
     "HDI" = sprintf(c("hpd%i_lower", "hpd%i_upper"), 100 * ci),
-    c(sprintf("%g%%", (100 * (1 - .95)) / 2), sprintf("%g%%", 100 - (100 * (1 - .95)) / 2))
+    c(sprintf("%g%%", (100 * (1 - ci)) / 2), sprintf("%g%%", 100 - (100 * (1 - ci)) / 2))
   )
 
   out <- data.frame(
