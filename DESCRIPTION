@@ -93,6 +93,7 @@ Suggests:
     Matrix,
     mclust,
     MCMCglmm,
+    metaBMA,
     metafor,
     mice,
     mfx,

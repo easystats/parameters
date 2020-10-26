@@ -31,7 +31,12 @@
 #'   model <- rma(yi, vi, mods = ~ alloc, data = dat, digits = 3, slab = author)
 #'   model_parameters(model)
 #' }
-#' }
+#'
+#' if (require("metaBMA")) {
+#'   data(towels)
+#'   m <- meta_random(logOR, SE, study, data = towels)
+#'   model_parameters(m)
+#' }}
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats qt pt setNames
 #' @export
@@ -194,13 +199,14 @@ model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exp
 
   # ignore ci for now
   if (ci != .95) {
+    ci <- .95
     warning("Argument 'ci' is currently ignored for models from metaBMA.", call. = FALSE)
   }
 
   ci_cols <- switch(
     toupper(ci_method),
-    "HDI" = c("hpd95_lower", "hpd95_upper"),
-    c("2.5%", "97.5%")
+    "HDI" = sprintf(c("hpd%i_lower", "hpd%i_upper"), 100 * ci),
+    c(sprintf("%g%%", (100 * (1 - .95)) / 2), sprintf("%g%%", 100 - (100 * (1 - .95)) / 2))
   )
 
   out <- data.frame(

@@ -62,5 +62,10 @@ if (require("metafor")) {
   model <- rma(yi, vi, mods = ~ alloc, data = dat, digits = 3, slab = author)
   model_parameters(model)
 }
-}
+
+if (require("metaBMA")) {
+  data(towels)
+  m <- meta_random(logOR, SE, study, data = towels)
+  model_parameters(m)
+}}
 }
