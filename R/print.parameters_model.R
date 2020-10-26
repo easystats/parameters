@@ -49,6 +49,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   coef_name <- attributes(x)$coefficient_name
   sigma <- attributes(x)$sigma
   s_value <- attributes(x)$s_value
+  ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
 
   # check if user supplied digits attributes
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
@@ -136,6 +137,18 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   if (!is.null(sigma) && isTRUE(show_sigma)) {
     cat("\n")
     insight::print_color(sprintf("Residual standard deviation: %.*f", digits, sigma), "blue")
+  }
+
+  # for Bayesian models
+  if (!is.null(ci_method)) {
+    ci_method <- switch(
+      toupper(ci_method),
+      "HDI" = "highest density intervals",
+      "ETI" = "equal-tailed intervals",
+      "SI" = "support intervals",
+      "uncertainty intervals"
+    )
+    message(paste0("\nUsing ", ci_method, " as credible intervals."))
   }
 
   # print summary for random effects

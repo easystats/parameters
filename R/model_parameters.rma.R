@@ -194,9 +194,13 @@ model_parameters.metaplus <- function(model, ci = .95, bootstrap = FALSE, iterat
 
 #' @export
 model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exponentiate = FALSE, ...) {
+  # process arguments
   params <- as.data.frame(model$estimates)
   ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
-  ci_cols <- .metabma_ci_columns(params, ci_method)
+
+  # extract ci-level and find ci-columns
+  ci <- .meta_bma_extract_ci(params)
+  ci_cols <- .metabma_ci_columns(ci_method, ci)
 
   out <- data.frame(
     Parameter = rownames(params),
@@ -232,15 +236,57 @@ model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exp
 model_parameters.meta_fixed <- model_parameters.meta_random
 
 
+#' @export
+model_parameters.meta_bma <- function(model, ci = .95, ci_method = "hdi", exponentiate = FALSE, ...) {
+  # process arguments
+  params <- as.data.frame(model$estimates)
+  ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
+
+  # extract ci-level and find ci-columns
+  ci <- .meta_bma_extract_ci(params)
+  ci_cols <- .metabma_ci_columns(ci_method, ci)
+
+  out <- data.frame(
+    Parameter = rownames(params),
+    Coefficient = params$mean,
+    SE = params$sd,
+    CI_low = params[[ci_cols[1]]],
+    CI_high = params[[ci_cols[2]]],
+    BF = NA,
+    Rhat = params$Rhat,
+    ESS = params$n_eff,
+    stringsAsFactors = FALSE
+  )
+
+  # add BF
+  out$BF <- c(NA, model$BF[2, 1], model$BF[4, 1])
+
+  if (exponentiate) out <- .exponentiate_parameters(out)
+  out <- .add_model_parameters_attributes(params = out, model = model, ci = ci, exponentiate = exponentiate, ci_method = ci_method, ...)
+
+  # final attributes
+  attr(out, "measure") <- "Estimate"
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  class(out) <- c("parameters_model", "see_parameters_model", class(params))
+
+  out
+}
+
+
+
+
 
 
 # helper ------
 
-.metabma_ci_columns <- function(params, ci_method) {
-  # ignore ci
-  hpd_col <- colnames(params)[grepl("hpd(\\d+)_lower", colnames(params))]
-  ci <- as.numeric(gsub("hpd(\\d+)_lower", "\\1", hpd_col)) / 100
 
+.meta_bma_extract_ci <- function(params) {
+  hpd_col <- colnames(params)[grepl("hpd(\\d+)_lower", colnames(params))]
+  as.numeric(gsub("hpd(\\d+)_lower", "\\1", hpd_col)) / 100
+}
+
+
+.metabma_ci_columns <- function(ci_method, ci) {
   switch(
     toupper(ci_method),
     "HDI" = sprintf(c("hpd%i_lower", "hpd%i_upper"), 100 * ci),

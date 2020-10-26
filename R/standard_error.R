@@ -1665,6 +1665,9 @@ standard_error.meta_random <- function(model, ...) {
 #' @export
 standard_error.meta_fixed <- standard_error.meta_random
 
+#' @export
+standard_error.meta_bma <- standard_error.meta_random
+
 
 
 #' @rdname standard_error

@@ -72,6 +72,10 @@ format_parameters.meta_random <- function(model) {
 #' @export
 format_parameters.meta_fixed <- format_parameters.meta_random
 
+#' @export
+format_parameters.meta_bma <- format_parameters.meta_random
+
+
 
 #' @export
 format_parameters.merModList <- function(model) {
