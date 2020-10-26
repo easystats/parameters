@@ -140,10 +140,11 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
   pooled_params <- .add_pooled_params_attributes(
     pooled_params,
     model_params = original_x[[1]],
-    info = insight::model_info(original_model, verbose = FALSE),
+    model = original_model,
     ci,
     exponentiate
   )
+
   class(pooled_params) <- c("parameters_model", "see_parameters_model", class(pooled_params))
 
   pooled_params
@@ -169,7 +170,9 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
 
 
 
-.add_pooled_params_attributes <- function(pooled_params, model_params, info, ci, exponentiate) {
+#' @importFrom insight find_formula
+.add_pooled_params_attributes <- function(pooled_params, model_params, model, ci, exponentiate) {
+  info <- insight::model_info(model, verbose = FALSE)
   pretty_names <- attributes(model_params)$pretty_names
   if (length(pretty_names) < nrow(model_params)) {
     pretty_names <- c(pretty_names, model_params$Parameter[(length(pretty_names) + 1):nrow(model_params)])
@@ -182,12 +185,14 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
   attr(pooled_params, "bootstrap") <- attributes(pooled_params)$bootstrap
   attr(pooled_params, "iterations") <- attributes(pooled_params)$iterations
   attr(pooled_params, "df_method") <- attributes(pooled_params)$df_method
+  attr(pooled_params, "digits") <- attributes(pooled_params)$digits
+  attr(pooled_params, "ci_digits") <- attributes(pooled_params)$ci_digits
+  attr(pooled_params, "p_digits") <- attributes(pooled_params)$p_digits
   # column name for coefficients
   coef_col <- .find_coefficient_type(info, exponentiate)
   attr(pooled_params, "coefficient_name") <- coef_col
   attr(pooled_params, "zi_coefficient_name") <- ifelse(isTRUE(exponentiate), "Odds Ratio", "Log-Odds")
-  attr(pooled_params, "digits") <- attributes(pooled_params)$digits
-  attr(pooled_params, "ci_digits") <- attributes(pooled_params)$ci_digits
-  attr(pooled_params, "p_digits") <- attributes(pooled_params)$p_digits
+  # formula
+  attr(pooled_params, "model_formula") <- insight::find_formula(model)
   pooled_params
 }

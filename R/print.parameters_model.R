@@ -401,6 +401,7 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
 
   # check if user supplied digits attributes
   ci <- .additional_arguments(x, "ci", .95)
+  ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
   digits <- .additional_arguments(x, "digits", 2)
   ci_digits <- .additional_arguments(x, "ci_digits", 2)
   p_digits <- .additional_arguments(x, "p_digits", 3)
@@ -437,6 +438,18 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
       cat("\n")
     }
   }
+
+  if (!is.null(ci_method)) {
+    ci_method <- switch(
+      toupper(ci_method),
+      "HDI" = "highest density intervals",
+      "ETI" = "equal-tailed intervals",
+      "SI" = "support intervals",
+      "uncertainty intervals"
+    )
+    message(paste0("Using ", ci_method, " as credible intervals."))
+  }
+
   invisible(orig_x)
 }
 

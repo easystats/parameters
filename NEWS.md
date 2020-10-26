@@ -1,4 +1,4 @@
-# parameters 0.8.7
+# parameters 0.9.0
 
 ## Breaking changes
 
@@ -6,7 +6,7 @@
 
 ## New supported model classes
 
-* Support for `maov` (*stats*), `HLfit` (*spaMM*), `scam` (*scam*), preliminary support for `emm_list` (*emmeans*), `merModList` (*merTools*).
+* Support for `maov` (*stats*), `HLfit` (*spaMM*), `scam` (*scam*), preliminary support for `emm_list` (*emmeans*), `merModList` (*merTools*), `meta_random` and `meta_fixed` (*metaBMA*).
 
 ## New functions
 
@@ -16,10 +16,17 @@
 
 * Better support for (weighted) multivariate response models of class `mlm` for functions like `model_parameters()` or `simulate_parameters()`.
 
+
 ## Changes to functions
+
+### Printing model parameters
 
 * `print()` for `model_parameters()` now names the coefficients column depending on the model type (i.e. `"Odds Ratios"` for logistic regression when `exponentiate = TRUE` etc.)
 * `print()` for `model_parameters()` gains a `show_sigma` argument, to show or hide information on the residual standard deviation.
+* `print()` for `model_parameters()` displays a message for Bayesian models, indicating which method to compute credible intervals was used.
+
+### Other changes
+
 * `data_partition()` gets a `seed` argument, to explicitly set the seed before random sampling of test and training data.
 * Revised `parameters_table()`, to improve readability of printed output.
 

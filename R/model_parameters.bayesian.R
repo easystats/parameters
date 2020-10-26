@@ -47,7 +47,7 @@ model_parameters.stanreg <- function(model, centrality = "median", dispersion = 
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
 
   attr(params, "parameter_info") <- insight::clean_parameters(model)
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -107,7 +107,7 @@ model_parameters.brmsfit <- function(model, centrality = "median", dispersion = 
     }
 
     if (exponentiate) params <- .exponentiate_parameters(params)
-    params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+    params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
 
     attr(params, "parameter_info") <- insight::clean_parameters(model)
     attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -196,6 +196,7 @@ model_parameters.brmsfit <- function(model, centrality = "median", dispersion = 
   attr(params, "pretty_names") <- cleaned_parameters
   attr(params, "cleaned_parameters") <- cleaned_parameters
   attr(params, "ci") <- ci
+  attr(params, "bayes_ci_method") <- ci_method
   attr(params, "exponentiate") <- exponentiate
   attr(params, "model_class") <- class(model)
   attr(params, "is_bayes_meta") <- TRUE
@@ -270,7 +271,7 @@ model_parameters.stanfit <- function(model, centrality = "median", dispersion = 
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
 
   attr(params, "parameter_info") <- insight::clean_parameters(model)
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)

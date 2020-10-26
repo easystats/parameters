@@ -184,3 +184,43 @@ model_parameters.metaplus <- function(model, ci = .95, bootstrap = FALSE, iterat
 
   out
 }
+
+
+
+#' @export
+model_parameters.meta_random <- function(model, ci_method = "hdi", exponentiate = FALSE, ...) {
+  params <- as.data.frame(model$estimates)
+
+  ci_cols <- switch(
+    toupper(ci_method),
+    "HDI" = c("hpd95_lower", "hpd95_upper"),
+    c("2.5%", "97.5%")
+  )
+
+  out <- data.frame(
+    Parameter = rownames(params),
+    Coefficient = params$mean,
+    SE = params$sd,
+    CI_low = params[[ci_cols[1]]],
+    CI_high = params[[ci_cols[2]]],
+    BF = NA,
+    Rhat = params$Rhat,
+    ESS = params$n_eff,
+    stringsAsFactors = FALSE
+  )
+
+  # fix intercept name
+  out$Parameter[out$Parameter == "d"] <- "Overall"
+
+  # add BF
+  out$BF[1] <- model$BF[2, 1]
+
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  class(out) <- c("parameters_model", "see_parameters_model", class(params))
+
+  out
+}
+
+
+#' @export
+model_parameters.meta_fixed <- model_parameters.meta_random
