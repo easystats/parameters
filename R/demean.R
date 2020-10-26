@@ -5,10 +5,15 @@
 #'    and within-subject effect. \code{check_heterogeneity()} checks if model
 #'    predictors or variables may cause a heterogeneity bias, i.e. if variables
 #'    have a within- and/or between-effect.
+#'    \cr \cr
+#'    \code{degroup()} is more generic in terms of the centering-operation.
+#'    While \code{demean()} always uses mean-centering, \code{degroup()} can
+#'    also use the mode or median for centering.
 #'
 #' @param x A data frame. For \code{check_heterogeneity()}, may also be a mixed model object.
 #' @param select Character vector (or formula) with names of variables to select that should be group- and de-meaned. For \code{check_heterogeneity()}, if \code{x} is a mixed model object, this argument be ignored.
 #' @param group Character vector (or formula) with the name of the variable that indicates the group- or cluster-ID. For \code{check_heterogeneity()}, if \code{x} is a model object, this argument be ignored.
+#' @param center Method for centering. \code{demean()} always performs mean-centering, while \code{degroup()} can use \code{center = "median"} or \code{center = "mode"} for median- or mode-centering.
 #' @param suffix_demean,suffix_groupmean String value, will be appended to the names of the
 #'   group-meaned and de-meaned variables of \code{x}. By default, de-meaned
 #'   variables will be suffixed with \code{"_within"} and grouped-meaned variables
@@ -167,11 +172,30 @@
 #'
 #' # or in formula-notation
 #' demean(dat, select = ~a + x * y, group = ~ID)
-#' @importFrom stats ave
 #' @export
 demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean = "_between", add_attributes = TRUE, verbose = TRUE) {
+  degroup(
+    x = x,
+    select = select,
+    group = group,
+    center = "mean",
+    suffix_demean = suffix_demean,
+    suffix_groupmean = suffix_groupmean,
+    add_attributes = add_attributes,
+    verbose = verbose
+  )
+}
+
+
+
+#' @rdname demean
+#' @importFrom stats median na.omit ave
+#' @export
+degroup <- function(x, select, group, center = "mean", suffix_demean = "_within", suffix_groupmean = "_between", add_attributes = TRUE, verbose = TRUE) {
   # ugly tibbles again...
   x <- as.data.frame(x)
+
+  center <- match.arg(tolower(center), choices = c("mean", "median", "mode"))
 
   if (inherits(select, "formula")) {
     # formula to character, remove "~", split at "+"
@@ -256,9 +280,19 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
   # for variables within each group (the group means). assign
   # mean values to a vector of same length as the data
 
-  x_gm_list <- lapply(select, function(i) {
-    stats::ave(dat[[i]], dat[[group]], FUN = function(.gm) mean(.gm, na.rm = TRUE))
-  })
+  if (center == "mode") {
+    x_gm_list <- lapply(select, function(i) {
+      stats::ave(dat[[i]], dat[[group]], FUN = function(.gm) .mode(stats::na.omit(.gm)))
+    })
+  } else if (center == "median") {
+    x_gm_list <- lapply(select, function(i) {
+      stats::ave(dat[[i]], dat[[group]], FUN = function(.gm) stats::median(.gm, na.rm = TRUE))
+    })
+  } else {
+    x_gm_list <- lapply(select, function(i) {
+      stats::ave(dat[[i]], dat[[group]], FUN = function(.gm) mean(.gm, na.rm = TRUE))
+    })
+  }
 
   names(x_gm_list) <- select
 
@@ -289,4 +323,16 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
   }
 
   cbind(x_gm, x_dm)
+}
+
+
+
+
+# helper ------------------
+
+.mode <- function(x) {
+  uniqv <- unique(x)
+  tab <- tabulate(match(x, uniqv))
+  idx <- which.max(tab)
+  uniqv[idx]
 }

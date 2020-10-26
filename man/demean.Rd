@@ -3,6 +3,7 @@
 \name{check_heterogeneity}
 \alias{check_heterogeneity}
 \alias{demean}
+\alias{degroup}
 \title{Compute group-meaned and de-meaned variables}
 \usage{
 check_heterogeneity(x, select = NULL, group = NULL)
@@ -11,6 +12,17 @@ demean(
   x,
   select,
   group,
+  suffix_demean = "_within",
+  suffix_groupmean = "_between",
+  add_attributes = TRUE,
+  verbose = TRUE
+)
+
+degroup(
+  x,
+  select,
+  group,
+  center = "mean",
   suffix_demean = "_within",
   suffix_groupmean = "_between",
   add_attributes = TRUE,
@@ -35,6 +47,8 @@ when printing \code{model_parameters()} - in such cases, the within- and
 between-effects are printed in separated blocks.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{center}{Method for centering. \code{demean()} always performs mean-centering, while \code{degroup()} can use \code{center = "median"} or \code{center = "mode"} for median- or mode-centering.}
 }
 \value{
 A data frame with the group-/de-meaned variables, which get the suffix
@@ -47,6 +61,10 @@ A data frame with the group-/de-meaned variables, which get the suffix
    and within-subject effect. \code{check_heterogeneity()} checks if model
    predictors or variables may cause a heterogeneity bias, i.e. if variables
    have a within- and/or between-effect.
+   \cr \cr
+   \code{degroup()} is more generic in terms of the centering-operation.
+   While \code{demean()} always uses mean-centering, \code{degroup()} can
+   also use the mode or median for centering.
 }
 \details{
 \subsection{Heterogeneity Bias}{

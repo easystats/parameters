@@ -11,6 +11,7 @@
 ## New functions
 
 * `pool_parameters()`, to pool parameters estimates from multiple models.
+* `degroup()`, as a more generic case for `demean()`.
 
 ## General
 
