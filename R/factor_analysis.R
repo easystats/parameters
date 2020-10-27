@@ -5,23 +5,7 @@
 #' @inheritParams principal_components
 #' @inheritParams n_factors
 #'
-#' @details
-#'  \subsection{Complexity}{
-#'    Complexity represents the number of latent components needed to account
-#'    for the observed variables. Whereas a perfect simple structure solution
-#'    has a complexity of 1 in that each item would only load on one factor,
-#'    a solution with evenly distributed items has a complexity greater than 1
-#'    (\cite{Hofman, 1978; Pettersson and Turkheimer, 2010}) .
-#'  }
-#'  \subsection{FA or PCA?}{
-#'  There is a simplified rule of thumb that may help do decide whether to run
-#'  a principal component analysis or a factor analysis:
-#'  \itemize{
-#'    \item Run \emph{factor analysis} if you assume or wish to test a theoretical model of latent factors causing observed variables.
-#'    \item Run \emph{principal component analysis} If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.
-#'  }
-#'  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
-#'  }
+#' @inherit principal_components details
 #'
 #' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component.
 #'

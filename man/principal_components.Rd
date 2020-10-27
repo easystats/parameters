@@ -65,8 +65,8 @@ This function performs a principal component analysis (PCA) and returns the load
  There is a simplified rule of thumb that may help do decide whether to run
  a factor analysis or a principal component analysis:
  \itemize{
-   \item Run factor analysis if you assume or wish to test a theoretical model of latent factors causing observed variables.
-   \item Run principal component analysis If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.
+   \item Run \emph{factor analysis} if you assume or wish to test a theoretical model of latent factors causing observed variables.
+   \item Run \emph{principal component analysis} If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.
  }
  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
  }
@@ -79,6 +79,10 @@ This function performs a principal component analysis (PCA) and returns the load
    the number of items). This results in a sum score for each component from
    the PCA, which is on the same scale as the original, single items that were
    used to compute the PCA.
+
+   One can also use \code{predict()} to back-predict scores for each component,
+   to which one can provide \code{newdata} or a vector of \code{names} for the
+   components.
  }
 }
 \note{
@@ -93,8 +97,9 @@ if (require("psych")) {
   principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 
   pca <- principal_components(mtcars[, 1:5], n = 2, rotation = "varimax")
-  summary(pca)
-  predict(pca)
+  pca  # Print loadings
+  summary(pca)  # Print information about the factors
+  predict(pca, names=c("Component1", "Component2"))  # Back-predict scores
 
   # which variables from the original data belong to which extracted component?
   closest_component(pca)
