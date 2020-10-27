@@ -26,6 +26,8 @@ simulate_model(model, iterations = 1000, ...)
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+
+\item{verbose}{Toggle warnings and messages.}
 }
 \value{
 A data frame.

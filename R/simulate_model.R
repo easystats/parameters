@@ -8,6 +8,7 @@
 #'   with zero-inflated component. \code{component} may be one of \code{"conditional"},
 #'   \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.
 #' @inheritParams bootstrap_model
+#' @inheritParams p_value
 #'
 #' @return A data frame.
 #'
