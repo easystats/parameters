@@ -45,17 +45,20 @@
 #' @export
 pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", verbose = TRUE, ...) {
 
-
-  # check input -----
+  # check input, save original model -----
 
   original_model <- NULL
   if (all(sapply(x, insight::is_model)) && all(sapply(x, insight::is_model_supported))) {
-    original_model <- .get_object(x[[1]])
+    original_model <- x[[1]]
     x <- lapply(x, model_parameters, component = component, ...)
   }
 
   if (!all(sapply(x, inherits, "parameters_model"))) {
     stop("'x' must be a list of 'parameters_model' objects, as returned by the 'model_parameters()' function.", call. = FALSE)
+  }
+
+  if (is.null(original_model)) {
+    original_model <- .get_object(x[[1]])
   }
 
   if (isTRUE(attributes(x[[1]])$exponentiate)) {
@@ -80,7 +83,7 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
 
   params <- do.call(rbind, x)
   len <- length(x)
-  ci <- attributes(original_x[[1]]$ci)
+  ci <- attributes(original_x[[1]])$ci
   if (is.null(ci)) ci <- .95
 
 
@@ -145,8 +148,19 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
     exponentiate
   )
 
-  class(pooled_params) <- c("parameters_model", "see_parameters_model", class(pooled_params))
 
+  # pool sigma ----
+
+  sig <- unlist(.compact_list(lapply(original_x, function(i) {
+    attributes(i)$sigma
+  })))
+
+  if (!.is_empty_object(sig)) {
+    attr(pooled_params, "sigma") <- mean(sig, na.rm = TRUE)
+  }
+
+
+  class(pooled_params) <- c("parameters_model", "see_parameters_model", class(pooled_params))
   pooled_params
 }
 

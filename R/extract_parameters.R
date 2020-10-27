@@ -195,20 +195,6 @@
   }
 
 
-  # ==== add sigma
-
-  if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
-    sig <- tryCatch(
-      {
-        suppressWarnings(insight::get_sigma(model))
-      },
-      error = function(e) { NULL }
-    )
-    attr(parameters, "sigma") <- as.numeric(sig)
-  }
-
-
-
   # ==== Std Coefficients for other methods than "refit"
 
   if (!is.null(standardize)) {
@@ -235,6 +221,20 @@
 
   col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "z / Chi2", "F", "Chi2", "chisq", "chi-squared", "Statistic", "df", "df_error", "p", "Component", "Response", "Effects")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
+
+
+  # ==== add sigma
+
+  if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
+    sig <- tryCatch(
+      {
+        suppressWarnings(insight::get_sigma(model))
+      },
+      error = function(e) { NULL }
+    )
+    attr(parameters, "sigma") <- as.numeric(sig)
+  }
+
 
   rownames(parameters) <- NULL
   parameters
@@ -396,17 +396,6 @@
     parameters <- .add_within_between_effects(model, parameters)
   }
 
-  # add sigma
-  if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
-    sig <- tryCatch(
-      {
-        suppressWarnings(insight::get_sigma(model))
-      },
-      error = function(e) { NULL }
-    )
-    attr(parameters, "sigma") <- as.numeric(sig)
-  }
-
   # Std Coefficients for other methods than "refit"
   if (!is.null(standardize)) {
     temp_pars <- parameters
@@ -431,6 +420,17 @@
   order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
+
+  # add sigma
+  if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
+    sig <- tryCatch(
+      {
+        suppressWarnings(insight::get_sigma(model))
+      },
+      error = function(e) { NULL }
+    )
+    attr(parameters, "sigma") <- as.numeric(sig)
+  }
 
 
   rownames(parameters) <- NULL

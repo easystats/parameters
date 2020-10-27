@@ -1,3 +1,10 @@
+# parameters 0.9.1
+
+## Bug fixes
+
+* `pool_parameters()` no longer ignores the `ci` argument.
+* `model_parameters()` did not properly save the `sigma` attribute, which is needed to printing residual standard deviation when `print(show_sigma = TRUE)`.
+
 # parameters 0.9.0
 
 ## Breaking changes
