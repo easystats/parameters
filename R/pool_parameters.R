@@ -48,6 +48,8 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
   # check input, save original model -----
 
   original_model <- NULL
+  obj_name <- deparse(substitute(x), width.cutoff = 500)
+
   if (all(sapply(x, insight::is_model)) && all(sapply(x, insight::is_model_supported))) {
     original_model <- x[[1]]
     x <- lapply(x, model_parameters, component = component, ...)
@@ -147,6 +149,7 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
     ci,
     exponentiate
   )
+  attr(pooled_params, "object_name") <- obj_name
 
 
   # pool sigma ----
