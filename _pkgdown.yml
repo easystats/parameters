@@ -74,6 +74,7 @@ reference:
 
 - title: "Variable Preparation"
   contents:
+  - center
   - demean
   - rescale_weights
   - data_partition

@@ -1,5 +1,9 @@
 # parameters 0.9.1
 
+## New functions
+
+* `center()`, to center variables.
+
 ## Bug fixes
 
 * `pool_parameters()` no longer ignores the `ci` argument.

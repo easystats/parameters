@@ -212,3 +212,7 @@ demean(dat, select = ~a + x * y, group = ~ID)
   \item Hoffman L. 2015. Longitudinal analysis: modeling within-person fluctuation and change. New York: Routledge
 }
 }
+\seealso{
+If grand-mean centering (instead of centering within-clusters)
+  is required, see \code{\link{center}}.
+}

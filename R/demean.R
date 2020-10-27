@@ -28,6 +28,9 @@
 #'   \code{"_between"} (for the group-meaned variable) and \code{"_within"} (for
 #'   the de-meaned variable) by default.
 #'
+#' @seealso If grand-mean centering (instead of centering within-clusters)
+#'   is required, see \code{\link{center}}.
+#'
 #' @details
 #'   \subsection{Heterogeneity Bias}{
 #'     Mixed models include different levels of sources of variability, i.e.
@@ -332,6 +335,7 @@ degroup <- function(x, select, group, center = "mean", suffix_demean = "_within"
 
   cbind(x_gm, x_dm)
 }
+
 
 
 
