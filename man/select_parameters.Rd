@@ -63,7 +63,7 @@ This function performs an automated selection of the 'best' parameters, updating
     the cAIC can't be improved further.
   }
   \subsection{Bayesian models}{
-    For Bayesian models, it uses the \code{projpred} package.
+    For Bayesian models, it uses the \pkg{projpred} package.
   }
 }
 \examples{
@@ -80,10 +80,11 @@ if (require("lme4")) {
     data = iris
   )
   select_parameters(model)
-}
+}}
 
+\dontrun{
 # rstanarm -------------------------------------------
-if (require("rstanarm")) {
+if (require("rstanarm") && require("projpred")) {
   model <- stan_glm(
     mpg ~ ., data = mtcars,
     iter = 500, refresh = 0, verbose = FALSE
@@ -95,6 +96,5 @@ if (require("rstanarm")) {
     iter = 500, refresh = 0, verbose = FALSE
   )
   select_parameters(model, cross_validation = FALSE)
-}
-}
+}}
 }

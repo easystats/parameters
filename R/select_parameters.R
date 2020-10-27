@@ -18,7 +18,7 @@
 #'     the cAIC can't be improved further.
 #'   }
 #'   \subsection{Bayesian models}{
-#'     For Bayesian models, it uses the \code{projpred} package.
+#'     For Bayesian models, it uses the \pkg{projpred} package.
 #'   }
 #'
 #' @examples
@@ -35,10 +35,11 @@
 #'     data = iris
 #'   )
 #'   select_parameters(model)
-#' }
+#' }}
 #'
+#' \dontrun{
 #' # rstanarm -------------------------------------------
-#' if (require("rstanarm")) {
+#' if (require("rstanarm") && require("projpred")) {
 #'   model <- stan_glm(
 #'     mpg ~ ., data = mtcars,
 #'     iter = 500, refresh = 0, verbose = FALSE
@@ -50,8 +51,7 @@
 #'     iter = 500, refresh = 0, verbose = FALSE
 #'   )
 #'   select_parameters(model, cross_validation = FALSE)
-#' }
-#' }
+#' }}
 #' @return The model refitted with optimal number of parameters.
 #' @export
 select_parameters <- function(model, ...) {
