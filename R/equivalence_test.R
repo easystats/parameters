@@ -14,9 +14,9 @@ bayestestR::equivalence_test
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param rule Character, indicating the rules when testing for practical equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See 'Details'.
 #' @param p_values Logical, if \code{TRUE}, adjusted p-values for equivalence testing are calculated.
-#' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.merMod
+#' @inheritParams p_value
 #'
 #' @seealso For more details, see \code{\link[bayestestR:equivalence_test]{equivalence_test()}}.
 #'   Further readings can be found in the references.

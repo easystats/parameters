@@ -46,7 +46,7 @@ attributes to indicate the within- and between-effects. This is only relevant
 when printing \code{model_parameters()} - in such cases, the within- and
 between-effects are printed in separated blocks.}
 
-\item{verbose}{Toggle off warnings.}
+\item{verbose}{Toggle warnings and messages.}
 
 \item{center}{Method for centering. \code{demean()} always performs mean-centering, while \code{degroup()} can use \code{center = "median"} or \code{center = "mode"} for median- or mode-centering, and also \code{"min"} or \code{"max"}.}
 }

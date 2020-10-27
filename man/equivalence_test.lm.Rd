@@ -38,7 +38,7 @@ to automatically define this range based on properties of the model's data.}
 
 \item{p_values}{Logical, if \code{TRUE}, adjusted p-values for equivalence testing are calculated.}
 
-\item{verbose}{Toggle off warnings.}
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
 

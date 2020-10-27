@@ -4,8 +4,8 @@
 #'
 #' @param model Statistical model.
 #' @param iterations The number of draws to simulate/bootstrap.
-#' @param verbose Show or hide possible warnings and messages.
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams p_value
 #'
 #' @return A data frame.
 #'

@@ -123,7 +123,7 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 
-\item{verbose}{Show or hide possible warnings and messages.}
+\item{verbose}{Toggle warnings and messages.}
 }
 \value{
 A data frame containing the CI bounds.

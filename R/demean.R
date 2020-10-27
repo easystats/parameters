@@ -22,7 +22,7 @@
 #'   attributes to indicate the within- and between-effects. This is only relevant
 #'   when printing \code{model_parameters()} - in such cases, the within- and
 #'   between-effects are printed in separated blocks.
-#' @param verbose Toggle off warnings.
+#' @inheritParams p_value
 #'
 #' @return A data frame with the group-/de-meaned variables, which get the suffix
 #'   \code{"_between"} (for the group-meaned variable) and \code{"_within"} (for

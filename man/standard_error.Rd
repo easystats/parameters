@@ -83,7 +83,7 @@ value \code{1} (unless the factor has numeric levels, which are converted
 to the corresponding numeric value). By default, \code{NA} is returned
 for factors or character vectors.}
 
-\item{verbose}{Toggle off warnings.}
+\item{verbose}{Toggle warnings and messages.}
 
 \item{method}{If \code{"robust"}, robust standard errors are computed
 by calling \code{\link[=standard_error_robust]{standard_error_robust()}}.

@@ -11,7 +11,7 @@ bootstrap_model(model, iterations = 1000, verbose = FALSE, ...)
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 
-\item{verbose}{Show or hide possible warnings and messages.}
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

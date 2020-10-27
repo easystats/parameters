@@ -3,8 +3,8 @@
 #' Parameters of BayesFactor objects.
 #'
 #' @param model Object of class \code{BFBayesFactor}.
-#' @param verbose Toggle warnings and messages.
 #' @inheritParams bayestestR::describe_posterior
+#' @inheritParams p_value
 #'
 #' @details
 #' The meaning of the extracted parameters: For

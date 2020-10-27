@@ -38,6 +38,8 @@ center(x, ...)
 median from the variables. If \code{FALSE}, variables are centered by
 subtracting the mean.}
 
+\item{verbose}{Toggle warnings and messages.}
+
 \item{select}{Character vector of column names. If \code{NULL} (the default), all
 variables will be selected.}
 

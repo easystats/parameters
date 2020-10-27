@@ -15,7 +15,6 @@
 #'   matrix estimators. For certain mixed models, \code{method} may also be one
 #'   of \code{"wald"}, \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}},
 #'   \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}.
-#' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
 #'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
 #'   and \code{vcov_args} can be passed down to \code{\link[=standard_error_robust]{standard_error_robust()}}.
@@ -25,6 +24,7 @@
 #'    a list of standard errors (per group level) for random intercepts and slopes
 #'    is returned.
 #' @inheritParams simulate_model
+#' @inheritParams p_value
 #'
 #' @note For Bayesian models (from \pkg{rstanarm} or \pkg{brms}), the standard error is the SD of the posterior samples.
 #'
