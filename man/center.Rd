@@ -26,6 +26,8 @@ center(x, ...)
 \arguments{
 \item{x}{A data frame, a (numeric or character) vector or a factor.}
 
+\item{...}{Currently not used.}
+
 \item{weights}{Can be \code{NULL} (for no weighting), or:
 \itemize{
   \item For data frames: a numeric vector of weights, or a character of the name of a column in the \code{data.frame} that contains the weights.

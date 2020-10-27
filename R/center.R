@@ -23,6 +23,7 @@
 #'   \item For data frames: a numeric vector of weights, or a character of the name of a column in the \code{data.frame} that contains the weights.
 #'   \item For numeric vectors: a numeric vector of weights.
 #' }
+#' @param ... Currently not used.
 #'
 #' @seealso If centering within-clusters (instead of grand-mean centering)
 #'   is required, see \code{\link{demean}}.
