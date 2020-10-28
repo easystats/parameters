@@ -73,7 +73,7 @@ if (require("sandwich")) {
   model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
   standard_error_robust(model)
 }
-
+\dontrun{
 if (require("clubSandwich")) {
   # cluster-robust standard errors, using clubSandwich
   iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
@@ -82,5 +82,5 @@ if (require("clubSandwich")) {
     vcov_type = "CR2",
     vcov_args = list(cluster = iris$cluster)
   )
-}
+}}
 }

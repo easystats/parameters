@@ -31,7 +31,7 @@
 #'   model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #'   standard_error_robust(model)
 #' }
-#'
+#' \dontrun{
 #' if (require("clubSandwich")) {
 #'   # cluster-robust standard errors, using clubSandwich
 #'   iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
@@ -40,7 +40,7 @@
 #'     vcov_type = "CR2",
 #'     vcov_args = list(cluster = iris$cluster)
 #'   )
-#' }
+#' }}
 #' @return A data frame.
 #' @export
 standard_error_robust <- function(model,
@@ -137,10 +137,12 @@ ci_robust <- function(model,
 
   # check if required package is available
   if (vcov_fun == "vcovCR") {
-    if (!requireNamespace("clubSandwich", quietly = TRUE)) {
-      stop("Package `clubSandwich` needed for this function. Please install and try again.")
-    }
-    .vcov <- do.call(clubSandwich::vcovCR, c(list(obj = x, type = vcov_type), vcov_args))
+    warning("Support for the 'clubSandwich' package was temporarily disabled, due to removal of that package from CRAN.", call. = FALSE)
+    ## TODO enable when clubSandwich back on CRAN
+    # if (!requireNamespace("clubSandwich", quietly = TRUE)) {
+    #   stop("Package `clubSandwich` needed for this function. Please install and try again.")
+    # }
+    # .vcov <- do.call(clubSandwich::vcovCR, c(list(obj = x, type = vcov_type), vcov_args))
   } else {
     if (!requireNamespace("sandwich", quietly = TRUE)) {
       stop("Package `sandwich` needed for this function. Please install and try again.")
