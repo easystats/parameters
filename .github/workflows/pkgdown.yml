@@ -6,7 +6,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: windows-latest
+    runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -37,7 +37,10 @@ jobs:
           install.packages("remotes")
           # To get links for homepage
           remotes::install_cran("devtools")
-          remotes::install_bioc("M3C")
+          remotes::install_bioc("M3C")          
+          # to resolve temporary issues
+          remotes::install_version("clubSandwich", version = "0.5.1")
+          remotes::install_version("V8", version = "3.2.0")
           remotes::install_deps(dependencies = TRUE, quiet = TRUE)
           remotes::install_dev("pkgdown")
         shell: Rscript {0}
