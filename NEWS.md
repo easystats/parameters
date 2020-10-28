@@ -1,14 +1,3 @@
-# parameters 0.9.1
-
-## New functions
-
-* `center()`, to center variables.
-
-## Bug fixes
-
-* `pool_parameters()` no longer ignores the `ci` argument.
-* `model_parameters()` did not properly save the `sigma` attribute, which is needed to printing residual standard deviation when `print(show_sigma = TRUE)`.
-
 # parameters 0.9.0
 
 ## Breaking changes
@@ -23,6 +12,7 @@
 
 * `pool_parameters()`, to pool parameters estimates from multiple models.
 * `degroup()`, as a more generic case for `demean()`.
+* `center()`, to center variables.
 
 ## General
 
