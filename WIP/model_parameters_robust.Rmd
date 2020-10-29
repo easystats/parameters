@@ -26,8 +26,7 @@ options(digits = 2)
 knitr::opts_chunk$set(comment = "#>")
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
-    ## TODO enable when clubSandwich back on CRAN
-    # !requireNamespace("clubSandwich", quietly = TRUE) ||
+    !requireNamespace("clubSandwich", quietly = TRUE) ||
     !requireNamespace("sandwich", quietly = TRUE) ||
     !requireNamespace("lme4", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
@@ -97,8 +96,6 @@ mp$SE
 unname(sqrt(diag(sandwich::vcovCL(model, cluster = iris$cluster))))
 ```
 
-<!--
-
 ### Cluster-Robust Covariance Matrix Estimation (clubSandwich)
 
 Cluster-robust estimation of the variance-covariance matrix can also be achieved using `clubSandwich::vcovCR()`. Thus, when `vcov_estimation = "CR"`, the related function from the **clubSandwich** package is called. Note that this function _requires_ the specification of the `cluster`-argument.
@@ -122,7 +119,6 @@ mp$SE
 unname(sqrt(diag(clubSandwich::vcovCR(model, type = "CR1", cluster = iris$cluster))))
 ```
 
--->
 
 ### Robust Covariance Matrix Estimation on Standardized Model Parameters
 
@@ -133,7 +129,6 @@ Finally, robust estimation can be combined with standardization. However, robust
 model_parameters(model, standardize = "refit", robust = TRUE)
 ```
 
-<!--
 
 ## Mixed Models
 
@@ -181,5 +176,3 @@ model_parameters(
   vcov_args = list(cluster = iris$grp)
 )
 ```
-
--->
