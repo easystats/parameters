@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters from PCA/FA — model_parameters.befa • parameters</title>
+<title>Centering (Grand-Mean Centering) — center • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Parameters from PCA/FA — model_parameters.befa" />
-<meta property="og:description" content="Format PCA/FA objects from the psych package (Revelle, 2016)." />
+<meta property="og:title" content="Centering (Grand-Mean Centering) — center" />
+<meta property="og:description" content="Performs a grand-mean centering of data." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -161,24 +161,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameters from PCA/FA</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.BayesFM.R'><code>R/model_parameters.BayesFM.R</code></a></small>
-    <div class="hidden name"><code>model_parameters.befa.Rd</code></div>
+    <h1>Centering (Grand-Mean Centering)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/center.R'><code>R/center.R</code></a></small>
+    <div class="hidden name"><code>center.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Format PCA/FA objects from the psych package (Revelle, 2016).</p>
+    <p>Performs a grand-mean centering of data.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for befa</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  sort <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  centrality <span class='op'>=</span> <span class='st'>"median"</span>,
-  dispersion <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.89</span>,
-  ci_method <span class='op'>=</span> <span class='st'>"hdi"</span>,
-  test <span class='op'>=</span> <span class='cn'>NULL</span>,
+    <pre class="usage"><span class='fu'>center</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>center</span><span class='op'>(</span><span class='va'>x</span>, weights <span class='op'>=</span> <span class='cn'>NULL</span>, robust <span class='op'>=</span> <span class='cn'>FALSE</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>center</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  select <span class='op'>=</span> <span class='cn'>NULL</span>,
+  exclude <span class='op'>=</span> <span class='cn'>NULL</span>,
+  weights <span class='op'>=</span> <span class='cn'>NULL</span>,
+  robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  force <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  append <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  suffix <span class='op'>=</span> <span class='st'>"_c"</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -186,89 +193,86 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>Bayesian EFA created by the <code><a href='https://rdrr.io/pkg/BayesFM/man/befa.html'>BayesFM::befa</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>sort</th>
-      <td><p>Sort the loadings.</p></td>
-    </tr>
-    <tr>
-      <th>centrality</th>
-      <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>dispersion</th>
-      <td><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></td>
-    </tr>
-    <tr>
-      <th>ci</th>
-      <td><p>Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code>.95</code> (95%) for frequentist models.</p></td>
-    </tr>
-    <tr>
-      <th>ci_method</th>
-      <td><p>The type of index used for Credible Interval. Can be
-<code>"HDI"</code> (default, see <code><a href='https://easystats.github.io/bayestestR/reference/hdi.html'>hdi</a></code>), <code>"ETI"</code>
-(see <code><a href='https://easystats.github.io/bayestestR/reference/eti.html'>eti</a></code>) or <code>"SI"</code>
-(see <code><a href='https://easystats.github.io/bayestestR/reference/si.html'>si</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>test</th>
-      <td><p>The indices of effect existence to compute. Character (vector) or
-list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
-<code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
-<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
-For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code><a href='https://easystats.github.io/bayestestR/reference/rope.html'>rope</a></code> or <code><a href='https://easystats.github.io/bayestestR/reference/p_direction.html'>p_direction</a></code>) and its results
-included in the summary output.</p></td>
+      <th>x</th>
+      <td><p>A data frame, a (numeric or character) vector or a factor.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <td><p>Currently not used.</p></td>
+    </tr>
+    <tr>
+      <th>weights</th>
+      <td><p>Can be <code>NULL</code> (for no weighting), or:</p><ul>
+<li><p>For data frames: a numeric vector of weights, or a character of the name of a column in the <code>data.frame</code> that contains the weights.</p></li>
+<li><p>For numeric vectors: a numeric vector of weights.</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>robust</th>
+      <td><p>Logical, if <code>TRUE</code>, centering is done by subtracting the
+median from the variables. If <code>FALSE</code>, variables are centered by
+subtracting the mean.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
+    </tr>
+    <tr>
+      <th>select</th>
+      <td><p>Character vector of column names. If <code>NULL</code> (the default), all
+variables will be selected.</p></td>
+    </tr>
+    <tr>
+      <th>exclude</th>
+      <td><p>Character vector of column names to be excluded from selection.</p></td>
+    </tr>
+    <tr>
+      <th>force</th>
+      <td><p>Logical, if <code>TRUE</code>, forces centering of factors as
+well. Factors are converted to numerical values, with the lowest level
+being the value <code>1</code> (unless the factor has numeric levels, which are
+converted to the corresponding numeric value).</p></td>
+    </tr>
+    <tr>
+      <th>append</th>
+      <td><p>Logical, if <code>TRUE</code> and <code>x</code> is a data frame, standardized
+variables will be added as additional columns; if <code>FALSE</code>,
+existing variables are overwritten.</p></td>
+    </tr>
+    <tr>
+      <th>suffix</th>
+      <td><p>Character value, will be appended to variable (column) names of
+<code>x</code>, if <code>x</code> is a data frame and <code>append = TRUE</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of loadings.</p>
+    <p>The centered variables.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>If centering within-clusters (instead of grand-mean centering)
+  is required, see <code><a href='check_heterogeneity.html'>demean</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
-<span class='co'># \donttest{</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"BayesFM"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>efa</span> <span class='op'>&lt;-</span> <span class='fu'>BayesFM</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/BayesFM/man/befa.html'>befa</a></span><span class='op'>(</span><span class='va'>mtcars</span>, iter <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span>
-  <span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>efa</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-  <span class='va'>results</span>
-  <span class='fu'><a href='convert_efa_to_cfa.html'>efa_to_cfa</a></span><span class='op'>(</span><span class='va'>results</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: BayesFM</span></div><div class='output co'>#&gt; starting MCMC sampling...
-#&gt;     5%
-#&gt;    10%
-#&gt;    15%
-#&gt;    20%
-#&gt;    25%
-#&gt;    30%
-#&gt;    35%
-#&gt;    40%
-#&gt;    45%
-#&gt; done with burn-in period
-#&gt;    50%
-#&gt;    55%
-#&gt;    60%
-#&gt;    65%
-#&gt;    70%
-#&gt;    75%
-#&gt;    80%
-#&gt;    85%
-#&gt;    90%
-#&gt;    95%
-#&gt;   100%
-#&gt; done with sampling!</div><div class='output co'>#&gt; # Latent variables
-#&gt; F1 =~ am + mpg + vs
-#&gt; F2 =~ carb + cyl + disp + hp + wt
-#&gt; F3 =~ drat + gear + qsec</div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 3.5 3.0 3.2 3.1 3.6 3.9</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>center</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  0.44266667 -0.05733333  0.14266667  0.04266667  0.54266667  0.84266667</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>center</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+#&gt; 1   -0.7433333  0.44266667       -2.358  -0.9993333  setosa
+#&gt; 2   -0.9433333 -0.05733333       -2.358  -0.9993333  setosa
+#&gt; 3   -1.1433333  0.14266667       -2.458  -0.9993333  setosa
+#&gt; 4   -1.2433333  0.04266667       -2.258  -0.9993333  setosa
+#&gt; 5   -0.8433333  0.54266667       -2.358  -0.9993333  setosa
+#&gt; 6   -0.4433333  0.84266667       -2.058  -0.7993333  setosa</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>center</span><span class='op'>(</span><span class='va'>iris</span>, force <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+#&gt; 1   -0.7433333  0.44266667       -2.358  -0.9993333      -1
+#&gt; 2   -0.9433333 -0.05733333       -2.358  -0.9993333      -1
+#&gt; 3   -1.1433333  0.14266667       -2.458  -0.9993333      -1
+#&gt; 4   -1.2433333  0.04266667       -2.258  -0.9993333      -1
+#&gt; 5   -0.8433333  0.54266667       -2.358  -0.9993333      -1
+#&gt; 6   -0.4433333  0.84266667       -2.058  -0.7993333      -1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

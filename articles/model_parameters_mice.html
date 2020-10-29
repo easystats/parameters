@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.1</span>
       </span>
     </div>
 
@@ -186,12 +186,12 @@
   <span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="../reference/pool_parameters.html">pool_parameters</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; Parameter   | Coefficient |   SE |         95% CI | Statistic |      p
-#&gt; ----------------------------------------------------------------------
-#&gt; (Intercept) |       -1.61 | 0.27 | [-2.13, -1.08] |     -6.00 | &lt; .001
-#&gt; period [2]  |       -0.42 | 0.32 | [-1.05,  0.21] |     -1.32 | 0.187 
-#&gt; period [3]  |       -0.86 | 0.37 | [-1.58, -0.14] |     -2.35 | 0.019 
-#&gt; period [4]  |       -1.09 | 0.47 | [-2.00, -0.17] |     -2.33 | 0.020</code></pre>
+<pre><code>#&gt; Parameter   | Log-Odds |   SE |         95% CI | Statistic |      p
+#&gt; -------------------------------------------------------------------
+#&gt; (Intercept) |    -1.61 | 0.27 | [-2.13, -1.08] |     -6.00 | &lt; .001
+#&gt; period [2]  |    -0.42 | 0.32 | [-1.05,  0.21] |     -1.32 | 0.187 
+#&gt; period [3]  |    -0.86 | 0.37 | [-1.58, -0.14] |     -2.35 | 0.019 
+#&gt; period [4]  |    -1.09 | 0.47 | [-2.00, -0.17] |     -2.33 | 0.020</code></pre>
 <p>For comparison and to show that the results from <code>mice:pool()</code> and <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code> are identical, we take an example that also works with the <em>mice</em> package:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/stefvanbuuren/mice">mice</a></span><span class="op">)</span>

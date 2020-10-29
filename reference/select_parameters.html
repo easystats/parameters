@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.1</span>
       </span>
     </div>
 
@@ -235,7 +235,7 @@
     only searches the "best" model based on the random effects structure,
     i.e. <code>select_parameters()</code> adds or excludes random effects until
     the cAIC can't be improved further.</p><p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Bayesian models</h3>
-<p>For Bayesian models, it uses the <code>projpred</code> package.</p>
+<p>For Bayesian models, it uses the <span class="pkg">projpred</span> package.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -272,7 +272,7 @@
     data <span class='op'>=</span> <span class='va'>iris</span>
   <span class='op'>)</span>
   <span class='fu'>select_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='op'>}</span>
+<span class='op'>}</span><span class='co'># }</span>
 </div><div class='output co'>#&gt; Linear mixed model fit by REML ['lmerMod']
 #&gt; Formula: Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 |  
 #&gt;     Species)
@@ -292,8 +292,9 @@
 #&gt;                             -0.282960                              -0.088409  
 #&gt;              Petal.Width:Petal.Length  Sepal.Length:Petal.Width:Petal.Length  
 #&gt;                              0.001866                               0.023319  </div><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm -------------------------------------------</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/projpred/'>"projpred"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
     <span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>,
     iter <span class='op'>=</span> <span class='fl'>500</span>, refresh <span class='op'>=</span> <span class='fl'>0</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
@@ -305,33 +306,7 @@
     iter <span class='op'>=</span> <span class='fl'>500</span>, refresh <span class='op'>=</span> <span class='fl'>0</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
   <span class='op'>)</span>
   <span class='fu'>select_parameters</span><span class='op'>(</span><span class='va'>model</span>, cross_validation <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='message'>Cross-validating best parameters...</span></div><div class='output co'>#&gt; <span class='message'>Instead of posterior_linpred(..., transform=TRUE) please call posterior_epred(), which provides equivalent functionality.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Instead of posterior_linpred(..., transform=TRUE) please call posterior_epred(), which provides equivalent functionality.</span></div><div class='output co'>#&gt; stan_glm
-#&gt;  family:       gaussian [identity]
-#&gt;  formula:      mpg ~ cyl + disp + hp + cyl:disp
-#&gt;  observations: 32
-#&gt;  predictors:   5
-#&gt; ------
-#&gt;             Median MAD_SD
-#&gt; (Intercept) 46.2    4.9  
-#&gt; cyl         -2.7    0.9  
-#&gt; disp        -0.1    0.0  
-#&gt; hp           0.0    0.0  
-#&gt; cyl:disp     0.0    0.0  
-#&gt; 
-#&gt; Auxiliary parameter(s):
-#&gt;       Median MAD_SD
-#&gt; sigma 2.6    0.3   
-#&gt; 
-#&gt; ------
-#&gt; * For help interpreting the printed output see ?print.stanreg
-#&gt; * For info on the priors used see ?prior_summary.stanreg</div><div class='input'><span class='co'># }</span>
+<span class='op'>}</span><span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

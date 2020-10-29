@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.1</span>
       </span>
     </div>
 
@@ -303,35 +303,6 @@
 #&gt; time -0.844              
 #&gt; phq4  0.033 -0.027       
 #&gt; age  -0.021 -0.003  0.107</code></pre>
-</div>
-<div id="bayesian-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bayesian-models" class="anchor"></a>Bayesian models</h3>
-<p>For Bayesian models, <code><a href="../reference/select_parameters.html">select_parameters()</a></code> uses the <strong>projpred</strong> package to select the best parameters for the model.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/">rstanarm</a></span><span class="op">)</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span>
-  <span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span>,
-  iter <span class="op">=</span> <span class="fl">500</span>, refresh <span class="op">=</span> <span class="fl">0</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-<span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span>, cross_validation <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
-<pre><code>#&gt; stan_glm
-#&gt;  family:       gaussian [identity]
-#&gt;  formula:      mpg ~ wt
-#&gt;  observations: 32
-#&gt;  predictors:   2
-#&gt; ------
-#&gt;             Median MAD_SD
-#&gt; (Intercept) 37.3    1.8  
-#&gt; wt          -5.3    0.6  
-#&gt; 
-#&gt; Auxiliary parameter(s):
-#&gt;       Median MAD_SD
-#&gt; sigma 3.1    0.4   
-#&gt; 
-#&gt; ------
-#&gt; * For help interpreting the printed output see ?print.stanreg
-#&gt; * For info on the priors used see ?prior_summary.stanreg</code></pre>
 </div>
 </div>
   </div>

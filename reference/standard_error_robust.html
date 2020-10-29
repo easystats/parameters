@@ -82,7 +82,7 @@ matrix, using the packages sandwich and clubSandwich." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.1</span>
       </span>
     </div>
 
@@ -259,7 +259,7 @@ and <code>vcov_args</code> can be passed down to <code>standard_error_robust()</
 #&gt; 3              Speciesversicolor 0.67252996
 #&gt; 4               Speciesvirginica 0.58942889
 #&gt; 5 Sepal.Length:Speciesversicolor 0.12045791
-#&gt; 6  Sepal.Length:Speciesvirginica 0.10558799</div><div class='input'>
+#&gt; 6  Sepal.Length:Speciesvirginica 0.10558799</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/jepusto/clubSandwich'>"clubSandwich"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='co'># cluster-robust standard errors, using clubSandwich</span>
   <span class='va'>iris</span><span class='op'>$</span><span class='va'>cluster</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span>, length.out <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
@@ -268,16 +268,8 @@ and <code>vcov_args</code> can be passed down to <code>standard_error_robust()</
     vcov_type <span class='op'>=</span> <span class='st'>"CR2"</span>,
     vcov_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>cluster <span class='op'>=</span> <span class='va'>iris</span><span class='op'>$</span><span class='va'>cluster</span><span class='op'>)</span>
   <span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: clubSandwich</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'clubSandwich':</span>
-#&gt; <span class='message'>  method    from    </span>
-#&gt; <span class='message'>  bread.mlm sandwich</span></div><div class='output co'>#&gt;                        Parameter         SE
-#&gt; 1                    (Intercept) 0.31972491
-#&gt; 2                   Sepal.Length 0.06451833
-#&gt; 3              Speciesversicolor 0.47235519
-#&gt; 4               Speciesvirginica 0.34252942
-#&gt; 5 Sepal.Length:Speciesversicolor 0.08746672
-#&gt; 6  Sepal.Length:Speciesvirginica 0.06624836</div></pre>
+<span class='op'>}</span><span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
