@@ -47,7 +47,7 @@ describe_distribution(x, ...)
 
 \item{range}{Return the range (min and max).}
 
-\item{ci}{Confidence Interval (CI) level. Default is \code{NULL}, i.e. no confidence intervals are computed. If not \code{NULL}, confidence intervals are based on bootstrap replicates (see \code{iterations}).}
+\item{ci}{Confidence Interval (CI) level. Default is \code{NULL}, i.e. no confidence intervals are computed. If not \code{NULL}, confidence intervals are based on bootstrap replicates (see \code{iterations}). If \code{centrality = "all"}, the bootstrapped confidence interval refers to the first centrality index (which is typically the median).}
 
 \item{iterations}{The number of bootstrap replicates for computing confidence intervals. Only applies when \code{ci} is not \code{NULL}.}
 

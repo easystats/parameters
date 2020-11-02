@@ -5,7 +5,7 @@
 #' @param x A numeric vector.
 #' @param range Return the range (min and max).
 #' @param include_factors Logical, if \code{TRUE}, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.
-#' @param ci Confidence Interval (CI) level. Default is \code{NULL}, i.e. no confidence intervals are computed. If not \code{NULL}, confidence intervals are based on bootstrap replicates (see \code{iterations}).
+#' @param ci Confidence Interval (CI) level. Default is \code{NULL}, i.e. no confidence intervals are computed. If not \code{NULL}, confidence intervals are based on bootstrap replicates (see \code{iterations}). If \code{centrality = "all"}, the bootstrapped confidence interval refers to the first centrality index (which is typically the median).
 #' @param iterations The number of bootstrap replicates for computing confidence intervals. Only applies when \code{ci} is not \code{NULL}.
 #' @param iqr Logical, if \code{TRUE}, the interquartile range is calculated (based on \code{\link[stats]{IQR}}, using \code{type = 6}).
 #' @inheritParams bayestestR::point_estimate
@@ -53,7 +53,7 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
   # Confidence Intervals
   if (!is.null(ci)) {
     if (!requireNamespace("boot", quietly = TRUE)) {
-      warning("Package 'boot' needed for bootstrapping SEs.", call. = FALSE)
+      warning("Package 'boot' needed for bootstrapping confidence intervals.", call. = FALSE)
     } else {
       results <- boot::boot(data = x, statistic = .boot_distribution, R = iterations, centrality = centrality)
       out_ci <- bayestestR::ci(results$t, ci = ci, verbose = FALSE)
@@ -90,6 +90,7 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
   class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
   attr(out, "data") <- x
   attr(out, "ci") <- ci
+  if (centrality == "all") attr(out, "first_centrality") <- colnames(out)[1]
   out
 }
 
@@ -213,6 +214,7 @@ describe_distribution.data.frame <- function(x, centrality = "mean", dispersion 
   class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   attr(out, "ci") <- ci
+  if (centrality == "all") attr(out, "first_centrality") <- colnames(out)[2]
   out
 }
 
@@ -234,6 +236,7 @@ describe_distribution.grouped_df <- function(x, centrality = "mean", dispersion 
   class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   attr(out, "ci") <- ci
+  if (centrality == "all") attr(out, "first_centrality") <- colnames(out)[2]
   out
 }
 
@@ -256,10 +259,18 @@ print.parameters_distribution <- function(x, digits = 2, ...) {
     x$CI_low <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = "auto", brackets = TRUE)
     x$CI_high <- NULL
     ci_lvl <- attributes(x)$ci
-    if (!is.null(ci_lvl)) {
-      colnames(x)[which(colnames(x) == "CI_low")] <- sprintf("%i%% CI", round(100 * ci_lvl))
+    centrality_ci <- attributes(x)$first_centrality
+
+    if (!is.null(centrality_ci)) {
+      ci_suffix <- paste0(" (", centrality_ci, ")")
     } else {
-      colnames(x)[which(colnames(x) == "CI_low")] <- "CI"
+      ci_suffix <- ""
+    }
+
+    if (!is.null(ci_lvl)) {
+      colnames(x)[which(colnames(x) == "CI_low")] <- sprintf("%i%% CI%s", round(100 * ci_lvl), ci_suffix)
+    } else {
+      colnames(x)[which(colnames(x) == "CI_low")] <- sprintf("CI%s", ci_suffix)
     }
   }
 

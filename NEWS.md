@@ -1,3 +1,9 @@
+# parameters 0.9.1
+
+## Changes to functions
+
+* `describe_distribution()` now includes the name of the centrality index in the `CI`-column, when `centrality = "all"`.
+
 # parameters 0.9.0
 
 ## Breaking changes
