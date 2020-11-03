@@ -1,5 +1,9 @@
 # parameters 0.9.1
 
+## New supported model classes
+
+* `model_parameters()` supports `Gam` models (*gam*).
+
 ## Changes to functions
 
 * `describe_distribution()` now includes the name of the centrality index in the `CI`-column, when `centrality = "all"`.
