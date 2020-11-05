@@ -82,12 +82,13 @@ model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL
 
   parameters <- .extract_parameters_anova(model)
 
-  if (inherits(model, "anova")) {
-    parameters <- .effectsizes_for_anova(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error, ci)
-  } else {
-    parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci)
-  }
+  # if (inherits(model, "anova")) {
+  #   parameters <- .effectsizes_for_anova(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error, ci)
+  # } else {
+  #   parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci)
+  # }
 
+  parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci)
   parameters <- .add_anova_attributes(parameters, model, ci, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
@@ -105,6 +106,9 @@ model_parameters.aovlist <- model_parameters.aov
 model_parameters.anova.rms <- model_parameters.aov
 
 #' @export
+model_parameters.maov <- model_parameters.aov
+
+#' @export
 model_parameters.afex_aov <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, df_error = NULL, type = NULL, ...) {
   if (!is.null(model$aov)) {
     model_parameters(model$aov, omega_squared = omega_squared, eta_squared = eta_squared, epsilon_squared = epsilon_squared, df_error = df_error, type = type, ...)
@@ -116,13 +120,6 @@ model_parameters.afex_aov <- function(model, omega_squared = NULL, eta_squared =
 #' @export
 model_parameters.Gam <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, df_error = NULL, type = NULL, ...) {
   model_parameters(summary(model)$parametric.anova, omega_squared = omega_squared, eta_squared = eta_squared, epsilon_squared = epsilon_squared, df_error = df_error, type = type, ...)
-}
-
-#' @export
-model_parameters.maov <- function(model, ...) {
-  parameters <- .extract_parameters_anova(model)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
-  parameters
 }
 
 
@@ -326,6 +323,7 @@ model_parameters.maov <- function(model, ...) {
 # data frame, automatically detecting the effect size name
 .add_effectsize_to_parameters <- function(fx, params) {
   fx$Parameter <- NULL
+  fx$Response <- NULL
   fx$Group <- NULL
   es <- colnames(fx)[1]
   valid_rows <- .valid_effectsize_rows(params)
