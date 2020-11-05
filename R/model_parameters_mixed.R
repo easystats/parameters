@@ -10,7 +10,7 @@
 #' @inheritParams model_parameters.default
 #'
 #' @details
-#' For mixed-effect \code{afev_aov} modelss, the underlying \code{aov} object is
+#' For mixed-effect \code{afev_aov} models, the underlying \code{aov} object is
 #' used (which required the model be fit with \code{include_aov = TRUE}), which
 #' might give slightly different results compared the anova table provided by
 #' \code{afex}.
