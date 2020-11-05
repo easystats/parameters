@@ -9,6 +9,12 @@
 #' @param wb_component Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.
 #' @inheritParams model_parameters.default
 #'
+#' @details
+#' For mixed-effect \code{afev_aov} modelss, the underlying \code{aov} object is
+#' used (which required the model be fit with \code{include_aov = TRUE}), which
+#' might give slightly different results compared the anova table provided by
+#' \code{afex}.
+#'
 #' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
