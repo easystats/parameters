@@ -285,6 +285,7 @@ model_parameters.maov <- function(model, ...) {
 # data frame, automatically detecting the effect size name
 .add_effectsize_to_parameters <- function(fx, params) {
   fx$Parameter <- NULL
+  fx$Group <- NULL
   es <- colnames(fx)[1]
   valid_rows <- .valid_effectsize_rows(params)
   params[[es]][valid_rows] <- fx[[es]]
