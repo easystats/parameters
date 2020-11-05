@@ -8,6 +8,7 @@
 #' @param epsilon_squared Compute epsilon squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.
 #' @param df_error Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for anova tables from mixed models. See 'Examples'.
 #' @param type Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, anova-tables using \code{car::Anova()} will be returned.
+#' @param ci Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return A data frame of indices related to the model's parameters.
@@ -56,7 +57,7 @@
 #'   }
 #' }
 #' @export
-model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, df_error = NULL, type = NULL, ...) {
+model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, df_error = NULL, type = NULL, ci = NULL, ...) {
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
     if (!requireNamespace("car", quietly = TRUE)) {
       warning("Package 'car' required for type-2 or type-3 anova. Defaulting to type-1.", call. = FALSE)

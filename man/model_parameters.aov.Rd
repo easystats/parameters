@@ -11,6 +11,7 @@
   epsilon_squared = NULL,
   df_error = NULL,
   type = NULL,
+  ci = NULL,
   ...
 )
 }
@@ -26,6 +27,8 @@
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for anova tables from mixed models. See 'Examples'.}
 
 \item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, anova-tables using \code{car::Anova()} will be returned.}
+
+\item{ci}{Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
