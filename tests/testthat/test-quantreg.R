@@ -23,7 +23,7 @@ if (require("testthat") &&
   data(stackloss)
   m1 <- rq(stack.loss ~ Air.Flow + Water.Temp, data = stackloss, tau = .25)
 
-  mp <- model_parameters(m1)
+  mp <- suppressWarnings(model_parameters(m1))
   test_that("mp_rq", {
     expect_identical(mp$Parameter, c("(Intercept)", "Air.Flow", "Water.Temp"))
     expect_equal(mp$Coefficient, c(-36, 0.5, 1), tolerance = 1e-3)
