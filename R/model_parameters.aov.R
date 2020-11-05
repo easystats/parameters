@@ -3,9 +3,9 @@
 #' Parameters from ANOVAs.
 #'
 #' @param model Object of class \link{aov}, \link{anova} or \code{aovlist}.
-#' @param omega_squared Compute omega squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.
-#' @param eta_squared Compute eta squared as index of effect size. Can be \code{"partial"} (adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for anova-tables from mixed models).
-#' @param epsilon_squared Compute epsilon squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.
+#' @param omega_squared Compute omega squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
+#' @param eta_squared Compute eta squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for anova-tables from mixed models).
+#' @param epsilon_squared Compute epsilon squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
 #' @param df_error Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for anova tables from mixed models. See 'Examples'.
 #' @param type Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, anova-tables using \code{car::Anova()} will be returned.
 #' @param ci Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.
@@ -127,6 +127,11 @@ model_parameters.maov <- function(model, ...) {
 
 
 .effectsizes_for_aov <- function(model, parameters, omega_squared, eta_squared, epsilon_squared, ci = NULL) {
+  # user actually does not want to compute effect sizes
+  if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
+    return(parameters)
+  }
+
   if (!requireNamespace("effectsize", quietly = TRUE)) {
     stop("Package 'effectsize' required for this function to work. Please install it.")
   }
@@ -137,6 +142,17 @@ model_parameters.maov <- function(model, ...) {
       warning("No residuals data found. Effect size cannot be computed.", call. = FALSE)
       return(parameters)
     }
+  }
+
+  # set defaults
+  if (isTRUE(omega_squared)) {
+    omega_squared <- "partial"
+  }
+  if (isTRUE(eta_squared)) {
+    eta_squared <- "partial"
+  }
+  if (isTRUE(epsilon_squared)) {
+    epsilon_squared <- "partial"
   }
 
 
@@ -185,6 +201,17 @@ model_parameters.maov <- function(model, ...) {
   # user actually does not want to compute effect sizes
   if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
     return(parameters)
+  }
+
+  # set defaults
+  if (isTRUE(omega_squared)) {
+    omega_squared <- "partial"
+  }
+  if (isTRUE(eta_squared)) {
+    eta_squared <- "partial"
+  }
+  if (isTRUE(epsilon_squared)) {
+    epsilon_squared <- "partial"
   }
 
   # check if we have any information on denominator df

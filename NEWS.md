@@ -1,5 +1,9 @@
 # parameters 0.9.1
 
+## Breaking changes
+
+* The default-method for effect sizes in `model_parameters()` for Anova-models (i.e. when arguments `omega_squared`, `eta_squared` or `epsilon_squared` are set to `TRUE` is now `"partial"`, as initially intended.
+
 ## New supported model classes
 
 * `model_parameters()` supports `Gam` models (*gam*).

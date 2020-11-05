@@ -18,11 +18,11 @@
 \arguments{
 \item{model}{Object of class \link{aov}, \link{anova} or \code{aovlist}.}
 
-\item{omega_squared}{Compute omega squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.}
+\item{omega_squared}{Compute omega squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.}
 
-\item{eta_squared}{Compute eta squared as index of effect size. Can be \code{"partial"} (adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for anova-tables from mixed models).}
+\item{eta_squared}{Compute eta squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for anova-tables from mixed models).}
 
-\item{epsilon_squared}{Compute epsilon squared as index of effect size. Can be \code{"partial"} (adjusted for effect size) or \code{"raw"}.}
+\item{epsilon_squared}{Compute epsilon squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.}
 
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for anova tables from mixed models. See 'Examples'.}
 
