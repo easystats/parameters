@@ -138,10 +138,10 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Run the following:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"parameters"</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/parameters/">"parameters"</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"parameters"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/parameters/">"parameters"</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
@@ -182,8 +182,8 @@
 <div id="classical-regression-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#classical-regression-models" class="anchor"></a>Classical Regression Models</h3>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">*</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">*</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 
 <span class="co"># regular model parameters</span>
 <span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
@@ -211,13 +211,13 @@
 <span class="co">#&gt; Petal.Length * Species [versicolor] |       -0.38 | 1.06 | [-2.48,  1.72] | -0.36 | 143 | 0.721 </span>
 <span class="co">#&gt; Petal.Length * Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] | -0.50 | 143 | 0.618 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard deviation: 0.68</span></pre></div>
+<span class="co">#&gt; Residual standard deviation: 0.68</span></code></pre></div>
 </div>
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mixed-models" class="anchor"></a>Mixed Models</h3>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span>
 
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 
@@ -237,14 +237,14 @@
 <span class="co">#&gt; (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 </span>
 <span class="co">#&gt; Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | &lt; .001</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard deviation: 0.32</span></pre></div>
+<span class="co">#&gt; Residual standard deviation: 0.32</span></code></pre></div>
 </div>
 <div id="structural-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#structural-models" class="anchor"></a>Structural Models</h3>
 <p>Besides many types of regression models and packages, it also works for other types of models, such as <a href="https://easystats.github.io/parameters/articles/efa_cfa.html"><strong>structural models</strong></a> (EFA, CFA, SEM…).</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span>
 
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">attitude</span>, nfactors <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
@@ -260,7 +260,7 @@
 <span class="co">#&gt; critical   |  0.16 |  0.17 |  0.48 |       1.46 |       0.67</span>
 <span class="co">#&gt; advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span></pre></div>
+<span class="co">#&gt; The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span></code></pre></div>
 </div>
 </div>
 <div id="variable-and-parameters-selection" class="section level2">
@@ -271,8 +271,8 @@
 <p><img src="reference/figures/figure2.png" align="center"></p>
 
 <p><a href="https://easystats.github.io/parameters/articles/parameters_selection.html"><code>select_parameters()</code></a> can help you quickly select and retain the most relevant predictors using methods tailored for the model type.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">disp</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -286,7 +286,7 @@
 <span class="co">#&gt; qsec        |      -14.68 |   6.14 | [ -27.31,  -2.05] | -2.39 | 26 | 0.024 </span>
 <span class="co">#&gt; carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | 26 | &lt; .001</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard deviation: 29.57</span></pre></div>
+<span class="co">#&gt; Residual standard deviation: 29.57</span></code></pre></div>
 </div>
 <div id="miscellaneous" class="section level2">
 <h2 class="hasAnchor">
@@ -295,15 +295,15 @@
 <div id="describe-a-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#describe-a-distribution" class="anchor"></a>Describe a Distribution</h3>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="reference/describe_distribution.html">describe_distribution</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="co">#&gt; Variable     | Mean |   SD |  IQR |        Range | Skewness | Kurtosis |   n | n_Missing</span>
 <span class="co">#&gt; ----------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; Sepal.Length | 5.84 | 0.83 | 1.30 | [4.30, 7.90] |     0.31 |    -0.55 | 150 |         0</span>
 <span class="co">#&gt; Sepal.Width  | 3.06 | 0.44 | 0.52 | [2.00, 4.40] |     0.32 |     0.23 | 150 |         0</span>
 <span class="co">#&gt; Petal.Length | 3.76 | 1.77 | 3.52 | [1.00, 6.90] |    -0.27 |    -1.40 | 150 |         0</span>
-<span class="co">#&gt; Petal.Width  | 1.20 | 0.76 | 1.50 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0</span></pre></div>
+<span class="co">#&gt; Petal.Width  | 1.20 | 0.76 | 1.50 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0</span></code></pre></div>
 </div>
 <div id="citation" class="section level3">
 <h3 class="hasAnchor">

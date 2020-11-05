@@ -168,6 +168,13 @@
 <h1 class="page-header" data-toc-text="0.9.1">
 <a href="#parameters-091" class="anchor"></a>parameters 0.9.1<small> Unreleased </small>
 </h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>The default-method for effect sizes in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (i.e. when arguments <code>omega_squared</code>, <code>eta_squared</code> or <code>epsilon_squared</code> are set to <code>TRUE</code> is now <code>"partial"</code>, as initially intended.</li>
+</ul>
+</div>
 <div id="new-supported-model-classes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-supported-model-classes" class="anchor"></a>New supported model classes</h2>
@@ -182,6 +189,8 @@
 <ul>
 <li>
 <code><a href="../reference/describe_distribution.html">describe_distribution()</a></code> now includes the name of the centrality index in the <code>CI</code>-column, when <code>centrality = "all"</code>.</li>
+<li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (of class <code>aov</code>, <code>anova</code> etc.) gains a <code>ci</code>-argument, to add confidence intervals to effect size parameters.</li>
 </ul>
 </div>
 </div>
@@ -189,9 +198,9 @@
 <h1 class="page-header" data-toc-text="0.9.0">
 <a href="#parameters-090" class="anchor"></a>parameters 0.9.0<small> 2020-10-29 </small>
 </h1>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code><a href="https://easystats.github.io/insight/reference/standardize_names.html">standardize_names()</a></code> was moved to the <em>insight</em> package.</li>
@@ -524,9 +533,9 @@
 <h1 class="page-header" data-toc-text="0.6.0">
 <a href="#parameters-060" class="anchor"></a>parameters 0.6.0<small> 2020-03-12 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>Alias <code>model_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>.</li>
 <li>Alias <code>parameters_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>.</li>
@@ -603,9 +612,9 @@
 <h1 class="page-header" data-toc-text="0.5.0">
 <a href="#parameters-050" class="anchor"></a>parameters 0.5.0<small> 2020-02-09 </small>
 </h1>
-<div id="breaking-changes-2" class="section level2">
+<div id="breaking-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-3" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code><a href="../reference/skewness.html">skewness()</a></code> now uses a different method to calculate the skewness by default. Different methods can be selected using the <code>type</code>-argument.</li>
