@@ -16,7 +16,7 @@ if (require("testthat") && require("VGAM") && require("parameters")) {
   hunua$x <- rnorm(nrow(hunua))
   m2 <- vgam(agaaus ~ s(altitude, df = 2) + s(x) + beitaw + corlae, binomialff, data = hunua)
 
-  test_that("model_parameters.truncreg", {
+  test_that("model_parameters.vgam", {
     params <- model_parameters(m1)
     expect_equal(params$Coefficient, as.vector(m1@coefficients[params$Parameter]), tolerance = 1e-3)
     expect_equal(params$Parameter, c("(Intercept):1", "(Intercept):2", "exposure.time", "s(let)"))
@@ -24,7 +24,7 @@ if (require("testthat") && require("VGAM") && require("parameters")) {
     expect_equal(as.vector(na.omit(params$df)), as.vector(m1@nl.df), tolerance = 1e-3)
   })
 
-  test_that("model_parameters.truncreg", {
+  test_that("model_parameters.vgam", {
     params <- model_parameters(m2)
     expect_equal(params$Coefficient, as.vector(m2@coefficients[params$Parameter]), tolerance = 1e-3)
     expect_equal(params$Parameter, c("(Intercept)", "beitaw", "corlae", "s(altitude, df = 2)", "s(x)"))
