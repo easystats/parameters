@@ -11,6 +11,12 @@
 #' @param ci Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @details
+#' For \code{afev_aov} models, the underlying \code{aov} object is used. This
+#' means that (1) the model must be fit with \code{include_aov = TRUE}); and (2)
+#' for mixed-effect ANOVAs, the resulting table might give slightly different
+#' results compared the anova table provided by \code{afex}.
+#'
 #' @return A data frame of indices related to the model's parameters.
 #'
 #' @note For anova-tables from mixed models (i.e. \code{anova(lmer())}), only partial or adjusted effect sizes can be computed.
