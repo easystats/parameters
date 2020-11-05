@@ -69,11 +69,12 @@ model_parameters.aov <- function(model, omega_squared = NULL, eta_squared = NULL
   parameters <- .extract_parameters_anova(model)
 
   if (inherits(model, "anova")) {
-    parameters <- .effectsizes_for_anova(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error)
+    parameters <- .effectsizes_for_anova(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error, ci)
   } else {
-    parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared)
+    parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci)
   }
 
+  parameters <- .add_anova_attributes(parameters, model, ci, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
@@ -119,7 +120,7 @@ model_parameters.maov <- function(model, ...) {
 
 
 
-.effectsizes_for_aov <- function(model, parameters, omega_squared, eta_squared, epsilon_squared) {
+.effectsizes_for_aov <- function(model, parameters, omega_squared, eta_squared, epsilon_squared, ci = NULL) {
   if (!requireNamespace("effectsize", quietly = TRUE)) {
     stop("Package 'effectsize' required for this function to work. Please install it.")
   }
@@ -136,34 +137,31 @@ model_parameters.maov <- function(model, ...) {
   # Omega squared
   if (!is.null(omega_squared)) {
     if (omega_squared == "partial") {
-      fx <- effectsize::omega_squared(model, partial = TRUE)$Omega2_partial
-      parameters$Omega2_partial <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::omega_squared(model, partial = TRUE, ci = ci)
     } else {
-      fx <- effectsize::omega_squared(model, partial = FALSE)$Omega2
-      parameters$Omega2 <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::omega_squared(model, partial = FALSE, ci = ci)
     }
+    parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
 
   # Eta squared
   if (!is.null(eta_squared)) {
     if (eta_squared == "partial") {
-      fx <- effectsize::eta_squared(model, partial = TRUE)$Eta2_partial
-      parameters$Eta2_partial <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::eta_squared(model, partial = TRUE, ci = ci)
     } else {
-      fx <- effectsize::eta_squared(model, partial = FALSE)$Eta2
-      parameters$Eta2 <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::eta_squared(model, partial = FALSE, ci = ci)
     }
+    parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
 
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
     if (epsilon_squared == "partial") {
-      fx <- effectsize::epsilon_squared(model, partial = TRUE)$Epsilon2_partial
-      parameters$Epsilon2_partial <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::epsilon_squared(model, partial = TRUE, ci = ci)
     } else {
-      fx <- effectsize::epsilon_squared(model, partial = FALSE)$Epsilon2
-      parameters$Epsilon2 <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::epsilon_squared(model, partial = FALSE, ci = ci)
     }
+    parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
 
   parameters
@@ -173,7 +171,7 @@ model_parameters.maov <- function(model, ...) {
 
 
 
-.effectsizes_for_anova <- function(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error) {
+.effectsizes_for_anova <- function(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error, ci = NULL) {
   if (!requireNamespace("effectsize", quietly = TRUE)) {
     stop("Package 'effectsize' required for this function to work. Please install it.")
   }
@@ -233,30 +231,35 @@ model_parameters.maov <- function(model, ...) {
 
   # Omega squared
   if (!is.null(omega_squared)) {
-    fx <- effectsize::F_to_omega2(f = f_value, df = df_num, df_error = df_error, ci = NA)[[1]]
-    parameters$Omega2_partial <- .fix_effectsize_rows(fx, parameters)
+    fx <- effectsize::F_to_omega2(f = f_value, df = df_num, df_error = df_error, ci = ci)
+    parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
 
   # Eta squared
   if (!is.null(eta_squared)) {
     if (eta_squared == "adjusted") {
-      fx <- effectsize::F_to_eta2_adj(f = f_value, df = df_num, df_error = df_error, ci = NA)[[1]]
-      parameters$Eta2_partial <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::F_to_eta2_adj(f = f_value, df = df_num, df_error = df_error, ci = ci)
     } else {
-      fx <- effectsize::F_to_eta2(f = f_value, df = df_num, df_error = df_error, ci = NA)[[1]]
-      parameters$Eta2_partial <- .fix_effectsize_rows(fx, parameters)
+      fx <- effectsize::F_to_eta2(f = f_value, df = df_num, df_error = df_error, ci = ci)
     }
+    parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
 
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
-    fx <- effectsize::F_to_epsilon2(f = f_value, df = df_num, df_error = df_error, ci = NA)[[1]]
-    parameters$Epsilon2 <- .fix_effectsize_rows(fx, parameters)
+    fx <- effectsize::F_to_epsilon2(f = f_value, df = df_num, df_error = df_error, ci = ci)
+    parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
 
   parameters
 }
 
+
+
+
+
+
+# helper --------------------------
 
 
 .fix_effectsize_rows <- function(fx, parameters) {
@@ -267,4 +270,31 @@ model_parameters.maov <- function(model, ...) {
     fx <- es
   }
   fx
+}
+
+
+# retrieves those rows in a "model_parameters" object where
+# the statistic column is not missing
+.valid_effectsize_rows <- function(parameters) {
+  stat_column <- colnames(parameters)[colnames(parameters) %in% c("F", "t", "z", "statistic")]
+  !is.na(parameters[[stat_column]])
+}
+
+
+# add effect size column and related CI to the parameters
+# data frame, automatically detecting the effect size name
+.add_effectsize_to_parameters <- function(fx, params) {
+  fx$Parameter <- NULL
+  es <- colnames(fx)[1]
+  valid_rows <- .valid_effectsize_rows(params)
+  params[[es]][valid_rows] <- fx[[es]]
+
+  if (!is.null(fx$CI_low)) {
+    ci_low <- paste0(gsub("_partial$", "", es), "_CI_low")
+    ci_high <- paste0(gsub("_partial$", "", es), "_CI_high")
+    params[[ci_low]][valid_rows] <- fx$CI_low
+    params[[ci_high]][valid_rows] <- fx$CI_high
+  }
+
+  params
 }

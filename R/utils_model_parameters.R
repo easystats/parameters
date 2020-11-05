@@ -137,3 +137,38 @@
 
   params
 }
+
+
+
+
+#' @keywords internal
+.add_anova_attributes <- function(params, model, ci, ...) {
+  dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
+
+  attr(params, "ci") <- ci
+  attr(params, "model_class") <- class(model)
+
+  if ("digits" %in% names(dot.arguments)) {
+    attr(params, "digits") <- eval(dot.arguments[["digits"]])
+  } else {
+    attr(params, "digits") <- 2
+  }
+
+  if ("ci_digits" %in% names(dot.arguments)) {
+    attr(params, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
+  } else {
+    attr(params, "ci_digits") <- 2
+  }
+
+  if ("p_digits" %in% names(dot.arguments)) {
+    attr(params, "p_digits") <- eval(dot.arguments[["p_digits"]])
+  } else {
+    attr(params, "p_digits") <- 3
+  }
+
+  if ("s_value" %in% names(dot.arguments)) {
+    attr(params, "s_value") <- eval(dot.arguments[["s_value"]])
+  }
+
+  params
+}

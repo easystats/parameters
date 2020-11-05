@@ -196,7 +196,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     other <- unlist(strsplit(other_ci_low, "_CI_low$"))
 
     # CI percentage
-    if (!is.null(att[[paste0("ci_", other)]])) {
+    if (length(other) == 1 && !is.null(att[[paste0("ci_", other)]])) {
       other_ci_colname <- sprintf("%s %i%% CI", other, unique(stats::na.omit(att[[paste0("ci_", other)]])) * 100)
     } else if (!is.null(att$ci)) {
       other_ci_colname <- sprintf("%s %i%% CI", other, unique(stats::na.omit(att$ci)) * 100)
@@ -206,12 +206,14 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
     # Get characters to align the CI
     for (i in 1:length(other_ci_colname)) {
-      x[other_ci_colname[i]] <- insight::format_ci(x[[other_ci_low[i]]], x[[other_ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
+      x[[other_ci_low[i]]] <- insight::format_ci(x[[other_ci_low[i]]], x[[other_ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
+      # rename lower CI into final CI column
+      other_ci_position <- which(names(x) == other_ci_low[i])
+      colnames(x)[other_ci_position] <- other_ci_colname[i]
+      # remove upper CI column
+      other_ci_position <- which(names(x) == other_ci_high[i])
+      x[[other_ci_position]] <- NULL
     }
-    # Replace at initial position
-    other_ci_position <- which(names(x) == other_ci_low[1])
-    x <- x[c(names(x)[0:(other_ci_position - 1)][!names(x)[0:(other_ci_position - 1)] %in% other_ci_colname], other_ci_colname, names(x)[other_ci_position:(length(names(x)) - 1)][!names(x)[other_ci_position:(length(names(x)) - 1)] %in% other_ci_colname])]
-    x <- x[!names(x) %in% c(other_ci_low, other_ci_high)]
   } else {
     other_ci_colname <- c()
   }
