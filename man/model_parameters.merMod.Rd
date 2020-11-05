@@ -95,12 +95,6 @@ A data frame of indices related to the model's parameters.
 \description{
 Parameters from (linear) mixed models.
 }
-\details{
-For mixed-effect \code{afev_aov} models, the underlying \code{aov} object is
-used (which required the model be fit with \code{include_aov = TRUE}), which
-might give slightly different results compared the anova table provided by
-\code{afex}.
-}
 \note{
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }

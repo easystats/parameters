@@ -38,6 +38,12 @@ A data frame of indices related to the model's parameters.
 \description{
 Parameters from ANOVAs.
 }
+\details{
+For \code{afev_aov} models, the underlying \code{aov} object is used. This
+means that (1) the model must be fit with \code{include_aov = TRUE}); and (2)
+for mixed-effect ANOVAs, the resulting table might give slightly different
+results compared the anova table provided by \code{afex}.
+}
 \note{
 For anova-tables from mixed models (i.e. \code{anova(lmer())}), only partial or adjusted effect sizes can be computed.
 }
