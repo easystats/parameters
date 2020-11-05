@@ -17,7 +17,7 @@ if (.runThisTest) {
 
       expect_equal(colnames(mp), c("Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
                                    "Omega2_partial", "Omega2_CI_low", "Omega2_CI_high", "Eta2_partial",
-                                   "Eta2_CI_low", "Eta2_CI_high", "Epsilon2", "Epsilon2_CI_low",
+                                   "Eta2_CI_low", "Eta2_CI_high", "Epsilon2_partial", "Epsilon2_CI_low",
                                    "Epsilon2_CI_high"))
 
       model <- aov(Sepal.Length ~ Species * Cat1 * Cat2, data = iris)
