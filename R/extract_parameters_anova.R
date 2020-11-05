@@ -20,6 +20,7 @@
   names(parameters) <- gsub("(Pr|P)\\(>.*\\)", "p", names(parameters))
   names(parameters) <- gsub("npar", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("NumDF", "df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("num Df", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("d.f.", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi.Df", "Chi2_df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi DoF", "Chi2_df", names(parameters), fixed = TRUE)
@@ -27,9 +28,11 @@
   names(parameters) <- gsub("Partial.SS", "Sum_Squares_Partial", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Sum of Sq", "Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Mean Sq", "Mean_Square", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("MSE", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("MS", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("approx F", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("F value", "F", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("den Df", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.Df", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.DoF", "df_residual", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chisq", "Chi2", names(parameters), fixed = TRUE)
@@ -145,8 +148,8 @@
 
   # If mixed models...
   sumsq <- names(parameters)[names(parameters) %in% c("Sum Sq", "Sum of Sq")]
-  df_num <- names(parameters)[names(parameters) %in% c("npar", "Df", "NumDF")]
-  mean_sq <- names(parameters)[names(parameters) %in% c("Mean Sq")]
+  df_num <- names(parameters)[names(parameters) %in% c("npar", "Df", "NumDF", "num Df")]
+  mean_sq <- names(parameters)[names(parameters) %in% c("Mean Sq", "MSE")]
 
   if (length(sumsq) != 0 && length(df_num) != 0) {
     parameters$Mean_Square <- parameters[[sumsq]] / parameters[[df_num]]
