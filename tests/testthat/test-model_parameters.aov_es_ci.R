@@ -78,7 +78,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
       mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
       es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
       expect_equivalent(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3)
-      expect_equivalent(mp$Omega2_CI_low, c(0.52133, 0, 0, 0, 0, 0, 0, NA), tolerance = 1e-3)
+      expect_equivalent(mp$Omega2_CI_low, c(0, 0.0284, 0, NA), tolerance = 1e-3)
       expect_equivalent(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3)
 
       expect_equal(colnames(mp), c("Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
