@@ -68,7 +68,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
   if (require("car")) {
     set.seed(123)
     data(Moore)
-    mod <-
+    model <-
       car::Anova(stats::lm(
         formula = conformity ~ fcategory * partner.status,
         data = Moore,
