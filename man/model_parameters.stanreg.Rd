@@ -84,7 +84,7 @@ Only applies to mixed models. May be abbreviated.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
 
-\item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only works when \code{standardize="refit"}.}
+\item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"}, \code{"pseudo"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only works when \code{standardize="refit"}.}
 
 \item{group_level}{Logical, for multilevel models (i.e. models with random effects) and when \code{effects = "all"} or \code{effects = "random"}, include the parameters for each group level from random effects. If \code{group_level = FALSE} (the default), only information on SD and COR are shown.}
 
