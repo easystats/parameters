@@ -71,7 +71,7 @@ Suggests:
     cplm,
     dplyr,
     DRR,
-    effectsize (>= 0.4.0),
+    effectsize (>= 0.4.0.001),
     EGAnet (>= 0.7),
     FactoMineR,
     fastICA,
@@ -130,3 +130,7 @@ Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
+Remotes:
+    easystats/effectsize
+  
+    
