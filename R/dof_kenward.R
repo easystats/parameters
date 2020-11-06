@@ -124,7 +124,7 @@ dof_kenward <- function(model) {
     for (rr in 1:SS$n.parm.by.RT[ss]) {
       ## This is takes care of the case where there is random regression and several matrices have to be constructed.
       ## FIXME: I am not sure this is correct if there is a random quadratic term. The '2' below looks suspicious.
-      ii.jj <- .index2UpperTriEntry(rr, SS$n.comp.by.RT[ss]) ##; cat("ii.jj:"); print(ii.jj)
+      ii.jj <- .index2UpperTriEntry(rr, SS$n.comp.by.RT[ss]) ## ; cat("ii.jj:"); print(ii.jj)
       ii.jj <- unique(ii.jj)
       if (length(ii.jj) == 1) {
         EE <- Matrix::sparseMatrix(
@@ -132,12 +132,12 @@ dof_kenward <- function(model) {
           ii.jj,
           x = 1,
           dims = rep(SS$n.comp.by.RT[ss], 2)
-       )
+        )
       } else {
         EE <- Matrix::sparseMatrix(ii.jj, ii.jj[2:1], dims = rep(SS$n.comp.by.RT[ss], 2))
       }
-      EE <- Ig %x% EE  ## Kronecker product
-      G  <- c(G, list(t(ZZ) %*% EE %*% ZZ))
+      EE <- Ig %x% EE ## Kronecker product
+      G <- c(G, list(t(ZZ) %*% EE %*% ZZ))
     }
   }
 
@@ -161,10 +161,10 @@ dof_kenward <- function(model) {
   ## result: index pair (i,j) with i>=j
   ## k: element in the vector of upper triangular elements
   ## example: N=3: k=1 -> (1,1), k=2 -> (1,2), k=3 -> (1,3), k=4 -> (2,2)
-  aa    <- cumsum(N:1)
+  aa <- cumsum(N:1)
   aaLow <- c(0, aa[-length(aa)])
-  i     <- which(aaLow < k & k <= aa)
-  j     <- k - N * i + N - i * (3 - i) / 2 + i
+  i <- which(aaLow < k & k <= aa)
+  j <- k - N * i + N - i * (3 - i) / 2 + i
   c(i, j)
 }
 
@@ -181,8 +181,8 @@ dof_kenward <- function(model) {
 
   SigmaInv <- chol2inv(chol(Matrix::forceSymmetric(as.matrix(SigmaG$Sigma))))
   n.ggamma <- SigmaG$n.ggamma
-  TT       <- as.matrix(SigmaInv %*% X)
-  HH       <- OO <- vector("list", n.ggamma)
+  TT <- as.matrix(SigmaInv %*% X)
+  HH <- OO <- vector("list", n.ggamma)
 
   for (ii in 1:n.ggamma) {
     HH[[ii]] <- as.matrix(SigmaG$G[[ii]] %*% SigmaInv)
@@ -222,12 +222,13 @@ dof_kenward <- function(model) {
   }
 
   eigenIE2 <- eigen(IE2, only.values = TRUE)$values
-  condi    <- min(abs(eigenIE2))
+  condi <- min(abs(eigenIE2))
 
-  WW <- if (condi > 1e-10)
+  WW <- if (condi > 1e-10) {
     as.matrix(Matrix::forceSymmetric(2 * solve(IE2)))
-  else
+  } else {
     as.matrix(Matrix::forceSymmetric(2 * MASS::ginv(IE2)))
+  }
 
   UU <- matrix(0, nrow = ncol(X), ncol = ncol(X))
   for (ii in 1:(n.ggamma - 1)) {
@@ -244,10 +245,10 @@ dof_kenward <- function(model) {
     UU <- UU + WW[ii, ii] * (QQ[[www]] - PP[[ii]] %*% Phi %*% PP[[ii]])
   }
 
-  GGAMMA <-  Phi %*% UU %*% Phi
-  PhiA   <-  Phi + 2 * GGAMMA
-  attr(PhiA, "P")     <- PP
-  attr(PhiA, "W")     <- WW
+  GGAMMA <- Phi %*% UU %*% Phi
+  PhiA <- Phi + 2 * GGAMMA
+  attr(PhiA, "P") <- PP
+  attr(PhiA, "W") <- WW
   attr(PhiA, "condi") <- condi
   PhiA
 
@@ -338,7 +339,7 @@ dof_kenward <- function(model) {
   ## S[i,j] symetric N times N matrix
   ## r the vector of upper triangular element  in row major order:
   ## r= c(S[1,1],S[1,2]...,S[1,j], S[1,N], S[2,2],...S[N,N]
-  ##Result: k: index of k-th element of r
+  ## Result: k: index of k-th element of r
   k <- if (i <= j) {
     (i - 1) * (N - i / 2) + j
   } else {
@@ -355,7 +356,7 @@ dof_kenward <- function(model) {
   }
 
   Gp <- lme4::getME(model, "Gp")
-  n.RT <- length(Gp) - 1  ## Number of random terms (i.e. of (|)'s)
+  n.RT <- length(Gp) - 1 ## Number of random terms (i.e. of (|)'s)
   n.lev.by.RT <- sapply(lme4::getME(model, "flist"), function(x) length(levels(x)))
   n.comp.by.RT <- .get.RT.dim.by.RT(model)
   n.parm.by.RT <- (n.comp.by.RT + 1) * n.comp.by.RT / 2
@@ -363,22 +364,23 @@ dof_kenward <- function(model) {
 
   n.lev.by.RT2 <- n.RE.by.RT / n.comp.by.RT ## Same as n.lev.by.RT2 ???
 
-  list(Gp           = Gp,           ## group.index
-       n.RT         = n.RT,         ## n.groupFac
-       n.lev.by.RT  = n.lev.by.RT,  ## nn.groupFacLevelsNew
-       n.comp.by.RT = n.comp.by.RT, ## nn.GGamma
-       n.parm.by.RT = n.parm.by.RT, ## mm.GGamma
-       n.RE.by.RT   = n.RE.by.RT,   ## ... Not returned before
-       n.lev.by.RT2 = n.lev.by.RT2, ## nn.groupFacLevels
-       n_rtrms      = lme4::getME(model, "n_rtrms")
+  list(
+    Gp = Gp, ## group.index
+    n.RT = n.RT, ## n.groupFac
+    n.lev.by.RT = n.lev.by.RT, ## nn.groupFacLevelsNew
+    n.comp.by.RT = n.comp.by.RT, ## nn.GGamma
+    n.parm.by.RT = n.parm.by.RT, ## mm.GGamma
+    n.RE.by.RT = n.RE.by.RT, ## ... Not returned before
+    n.lev.by.RT2 = n.lev.by.RT2, ## nn.groupFacLevels
+    n_rtrms = lme4::getME(model, "n_rtrms")
   )
 }
 
 
 ## Alternative to .get_Zt_group
 .shget_Zt_group <- function(ii.group, Zt, Gp, ...) {
-  zIndex.sub <-  (Gp[ii.group] + 1):Gp[ii.group + 1]
-  as.matrix(Zt[ zIndex.sub , ])
+  zIndex.sub <- (Gp[ii.group] + 1):Gp[ii.group + 1]
+  as.matrix(Zt[zIndex.sub, ])
 }
 
 
@@ -389,7 +391,7 @@ dof_kenward <- function(model) {
   }
   ## output: dimension (no of columns) of covariance matrix for random term ii
   if (inherits(model, "mer")) {
-    sapply(model@ST,function(X) nrow(X))
+    sapply(model@ST, function(X) nrow(X))
   } else {
     sapply(lme4::getME(model, "cnms"), length)
   }

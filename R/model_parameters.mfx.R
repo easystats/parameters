@@ -75,4 +75,3 @@ model_parameters.betamfx <- function(model, ci = .95, bootstrap = FALSE, iterati
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
-

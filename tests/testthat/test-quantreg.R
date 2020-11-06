@@ -1,7 +1,7 @@
 if (require("testthat") &&
-    require("parameters") &&
-    require("tripack") &&
-    require("quantreg")) {
+  require("parameters") &&
+  require("tripack") &&
+  require("quantreg")) {
 
   # rqss ---------
 
@@ -41,7 +41,7 @@ if (require("testthat") &&
   d <- (y > c)
 
   dat <- data.frame(y, x, c, d)
-  m1 <- crq(survival::Surv(pmax(y,c), d, type = "left") ~ x, method = "Portnoy", data = dat)
+  m1 <- crq(survival::Surv(pmax(y, c), d, type = "left") ~ x, method = "Portnoy", data = dat)
 
   mp <- model_parameters(m1)
   test_that("mp_rq", {

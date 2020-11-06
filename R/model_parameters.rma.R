@@ -14,7 +14,6 @@
 #'   model <- rma(yi = effectsize, sei = stderr, method = "REML", data = mydat)
 #'   model_parameters(model)
 #' }
-#'
 #' \dontrun{
 #' # with subgroups
 #' if (require("metafor")) {
@@ -28,7 +27,7 @@
 #'     data = dat.bcg
 #'   )
 #'   dat$alloc <- ifelse(dat$alloc == "random", "random", "other")
-#'   model <- rma(yi, vi, mods = ~ alloc, data = dat, digits = 3, slab = author)
+#'   model <- rma(yi, vi, mods = ~alloc, data = dat, digits = 3, slab = author)
 #'   model_parameters(model)
 #' }
 #'
@@ -36,7 +35,9 @@
 #'   data(towels)
 #'   m <- meta_random(logOR, SE, study, data = towels)
 #'   model_parameters(m)
-#' }}
+#' }
+#' }
+#'
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats qt pt setNames
 #' @export
@@ -64,7 +65,7 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
     }
   }
 
-  if (nrow(meta_analysis_overall) > 1 && !is.null(subgroups))  {
+  if (nrow(meta_analysis_overall) > 1 && !is.null(subgroups)) {
     meta_analysis_overall$Subgroup <- subgroups
     meta_analysis_overall$Parameter <- "(Intercept)"
   }

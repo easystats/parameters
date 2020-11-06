@@ -3,11 +3,10 @@ if (require("testthat") &&
   require("nlme") &&
   require("lme4") &&
   require("insight")) {
-
   data("sleepstudy")
   m1 <- nlme::lme(Reaction ~ Days,
-                  random = ~ 1 + Days | Subject,
-                  data = sleepstudy
+    random = ~ 1 + Days | Subject,
+    data = sleepstudy
   )
 
   test_that("ci", {

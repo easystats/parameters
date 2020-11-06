@@ -226,7 +226,9 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 #' @importFrom insight format_value
 .format_std_columns <- function(x, other_ci_colname, digits) {
   std_cols <- names(x)[grepl("Std_", names(x))]
-  if (length(std_cols) == 0) return(x)
+  if (length(std_cols) == 0) {
+    return(x)
+  }
 
   std_cis <- NULL
 
@@ -276,7 +278,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
       x$Prior_Scale,
       ")"
     )
-    x$Prior <- ifelse(x$Prior == " ( +- )", "", x$Prior)  # Remove empty
+    x$Prior <- ifelse(x$Prior == " ( +- )", "", x$Prior) # Remove empty
 
     col_position <- which(names(x) == "Prior_Distribution")
     x <- x[c(names(x)[0:(col_position - 1)], "Prior", names(x)[col_position:(length(names(x)) - 1)])] # Replace at initial position

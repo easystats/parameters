@@ -1,5 +1,4 @@
 if (require("testthat") && require("parameters") && require("lavaan")) {
-
   model <- "
     # measurement model
       ind60 =~ x1 + x2 + x3

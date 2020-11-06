@@ -46,8 +46,10 @@ if (require("testthat") &&
     )
     expect_equal(
       model_parameters(m2)$Component,
-      c("conditional", "conditional", "conditional", "conditional",
-        "conditional", "conditional", "zero_inflated")
+      c(
+        "conditional", "conditional", "conditional", "conditional",
+        "conditional", "conditional", "zero_inflated"
+      )
     )
   })
 
@@ -64,8 +66,10 @@ if (require("testthat") &&
   test_that("parameters_type", {
     expect_equal(
       parameters_type(m3)$Type,
-      c("intercept", "factor", "numeric", "factor", "numeric", "interaction",
-        "intercept", "numeric", "factor", "numeric", "interaction"),
+      c(
+        "intercept", "factor", "numeric", "factor", "numeric", "interaction",
+        "intercept", "numeric", "factor", "numeric", "interaction"
+      ),
       tolerance = 1e-4
     )
   })
@@ -73,9 +77,11 @@ if (require("testthat") &&
   test_that("parameters_type", {
     expect_equal(
       parameters_type(m3)$Link,
-      c("Mean", "Difference", "Association", "Difference", "Association",
+      c(
+        "Mean", "Difference", "Association", "Difference", "Association",
         "Difference", "Mean", "Association", "Difference", "Association",
-        "Difference"),
+        "Difference"
+      ),
       tolerance = 1e-4
     )
   })

@@ -230,7 +230,9 @@
       {
         suppressWarnings(insight::get_sigma(model))
       },
-      error = function(e) { NULL }
+      error = function(e) {
+        NULL
+      }
     )
     attr(parameters, "sigma") <- as.numeric(sig)
   }
@@ -427,7 +429,9 @@
       {
         suppressWarnings(insight::get_sigma(model))
       },
-      error = function(e) { NULL }
+      error = function(e) {
+        NULL
+      }
     )
     attr(parameters, "sigma") <- as.numeric(sig)
   }

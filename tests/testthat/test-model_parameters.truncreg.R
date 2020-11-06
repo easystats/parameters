@@ -14,7 +14,7 @@ if (require("testthat") && require("truncreg") && require("survival") && require
     testthat::expect_equal(params$t, c(1.36653, 1.89693, -3.64473, 2.90599), tolerance = 1e-3)
     testthat::expect_equal(
       colnames(params),
-      c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t",  "df_error", "p")
+      c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "df_error", "p")
     )
   })
 }

@@ -36,7 +36,7 @@ smoothness.numeric <- function(x, method = "cor", lag = 1, iterations = NULL, ..
     smooth <- stats::sd(diff(x, lag = lag)) / abs(mean(diff(x, lag = lag)))
   }
 
-  if (!is.null(iterations )) {
+  if (!is.null(iterations)) {
     if (!requireNamespace("boot", quietly = TRUE)) {
       warning("Package 'boot' needed for bootstrapping SEs.", call. = FALSE)
     } else {

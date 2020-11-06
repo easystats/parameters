@@ -26,7 +26,6 @@
 #'
 #' model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 #' dof(model)
-#'
 #' \donttest{
 #' if (require("lme4")) {
 #'   model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
@@ -102,19 +101,19 @@ dof <- degrees_of_freedom
 
 
 #' @export
-degrees_of_freedom.merModList <- function(model,...) {
+degrees_of_freedom.merModList <- function(model, ...) {
   s <- suppressWarnings(summary(model))
   s$fe$df
 }
 
 
 #' @export
-degrees_of_freedom.emmGrid <- function(model,...) {
+degrees_of_freedom.emmGrid <- function(model, ...) {
   summary(model)$df
 }
 
 #' @export
-degrees_of_freedom.emm_list <- function(model,...) {
+degrees_of_freedom.emm_list <- function(model, ...) {
   s <- summary(model)
   unname(unlist(lapply(s, function(i) {
     if (is.null(i$df)) {
@@ -126,12 +125,12 @@ degrees_of_freedom.emm_list <- function(model,...) {
 }
 
 #' @export
-degrees_of_freedom.glht <- function(model,...) {
+degrees_of_freedom.glht <- function(model, ...) {
   model$df
 }
 
 #' @export
-degrees_of_freedom.lqmm <- function(model,...) {
+degrees_of_freedom.lqmm <- function(model, ...) {
   out <- model_parameters(model, ...)
   out$df
 }
@@ -140,12 +139,12 @@ degrees_of_freedom.lqmm <- function(model,...) {
 degrees_of_freedom.lqm <- degrees_of_freedom.lqmm
 
 #' @export
-degrees_of_freedom.mipo <- function(model,...) {
+degrees_of_freedom.mipo <- function(model, ...) {
   as.vector(summary(model)$df)
 }
 
 #' @export
-degrees_of_freedom.mira <- function(model,...) {
+degrees_of_freedom.mira <- function(model, ...) {
   if (!requireNamespace("mice", quietly = TRUE)) {
     stop("Package 'mice' needed for this function to work. Please install it.")
   }
@@ -153,7 +152,7 @@ degrees_of_freedom.mira <- function(model,...) {
 }
 
 #' @export
-degrees_of_freedom.vgam <- function(model,...) {
+degrees_of_freedom.vgam <- function(model, ...) {
   params <- insight::get_parameters(model)
   out <- setNames(rep(NA, nrow(params)), params$Parameter)
   out[names(model@nl.df)] <- model@nl.df
@@ -161,7 +160,7 @@ degrees_of_freedom.vgam <- function(model,...) {
 }
 
 #' @export
-degrees_of_freedom.logitor <- function(model,...) {
+degrees_of_freedom.logitor <- function(model, ...) {
   degrees_of_freedom.default(model$fit, ...)
 }
 

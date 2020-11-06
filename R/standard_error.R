@@ -928,7 +928,7 @@ standard_error.mipo <- function(model, ...) {
 
 
 #' @export
-standard_error.mira <- function(model,...) {
+standard_error.mira <- function(model, ...) {
   if (!requireNamespace("mice", quietly = TRUE)) {
     stop("Package 'mice' needed for this function to work. Please install it.")
   }
@@ -1546,7 +1546,7 @@ standard_error.negbinmfx <- standard_error.poissonmfx
 
 #' @export
 standard_error.betaor <- function(model, component = c("all", "conditional", "precision"), ...) {
-  component = match.arg(component)
+  component <- match.arg(component)
   standard_error.betareg(model$fit, component = component, ...)
 }
 
@@ -1753,7 +1753,9 @@ standard_error.blavaan <- function(model, ci = .95, ...) {
         as.vector(sqrt(diag(vc)))
       }
     },
-    error = function(e) { NULL }
+    error = function(e) {
+      NULL
+    }
   )
 
   if (is.null(se)) {
@@ -1772,7 +1774,9 @@ standard_error.blavaan <- function(model, ci = .95, ...) {
           se <- stats::setNames(unname(sc$coefficients[, 4]), names(sc$coefficients[, 4]))
         }
       },
-      error = function(e) { NULL }
+      error = function(e) {
+        NULL
+      }
     )
   }
   se

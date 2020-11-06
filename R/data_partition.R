@@ -32,10 +32,10 @@ data_partition <- function(x, training_proportion = 0.7, group = NULL, seed = NU
       stop("`x` needs to be a data frame, or an object that can be coerced to a data frame.")
     }
   }
-  if (!is.null(seed)) { 
+  if (!is.null(seed)) {
     set.seed(seed)
   }
-  
+
   training <- data.frame()
   test <- data.frame()
 

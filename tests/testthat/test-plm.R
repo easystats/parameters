@@ -16,20 +16,20 @@ if (require("testthat") &&
   )
 
   test3333 <- data.frame(
-    ID = c('TOM', 'TOM', 'TOM', 'TOM', 'MARY', 'MARY', 'MARY', 'JOHN', 'JOHN'),
+    ID = c("TOM", "TOM", "TOM", "TOM", "MARY", "MARY", "MARY", "JOHN", "JOHN"),
     Year = c(1992:1995, 1991:1993, 1993:1994),
     ret = rnorm(9)
   )
   test3333 <- pdata.frame(test3333)
-  test3333['lag'] <- plm::lag(test3333$ret)
+  test3333["lag"] <- plm::lag(test3333$ret)
   test3333 <- na.omit(test3333)
-  test3333model <- ret~lag
+  test3333model <- ret ~ lag
   m3 <- plm::plm(
     test3333model,
     data = test3333,
-    model = 'within',
-    effect = 'individual',
-    index = c('ID', 'Year')
+    model = "within",
+    effect = "individual",
+    index = c("ID", "Year")
   )
 
   test_that("ci", {

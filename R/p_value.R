@@ -160,12 +160,14 @@ p_value.tobit <- function(model, ...) {
 p_value.speedlm <- function(model, ...) {
   p <- p_value.default(model, ...)
   if (!is.numeric(p$p)) {
-    p$p <- tryCatch({
-      as.numeric(as.character(p$p))
-    },
-    error = function(e) {
-      p$p
-    })
+    p$p <- tryCatch(
+      {
+        as.numeric(as.character(p$p))
+      },
+      error = function(e) {
+        p$p
+      }
+    )
   }
   p
 }
@@ -458,7 +460,7 @@ p_value.mipo <- function(model, ...) {
 
 
 #' @export
-p_value.mira <- function(model,...) {
+p_value.mira <- function(model, ...) {
   if (!requireNamespace("mice", quietly = TRUE)) {
     stop("Package 'mice' needed for this function to work. Please install it.")
   }
@@ -1189,7 +1191,9 @@ p_value.list <- function(model, verbose = TRUE, ...) {
       cs <- suppressWarnings(stats::coef(summary(model)))
       cs[, "Pr(>|t|)"]
     },
-    error = function(e) { NULL }
+    error = function(e) {
+      NULL
+    }
   )
 
   if (is.null(p)) {
@@ -1200,7 +1204,9 @@ p_value.list <- function(model, verbose = TRUE, ...) {
           cs = suppressWarnings(stats::coef(summary(model, covariance = TRUE)))
         )
       },
-      error = function(e) { NULL }
+      error = function(e) {
+        NULL
+      }
     )
   }
 
@@ -1220,7 +1226,9 @@ p_value.list <- function(model, verbose = TRUE, ...) {
           p <- stats::setNames(unname(sc$coefficients[, 6]), names(sc$coefficients[, 6]))
         }
       },
-      error = function(e) { NULL }
+      error = function(e) {
+        NULL
+      }
     )
   }
 

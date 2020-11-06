@@ -1,10 +1,9 @@
 if (require("testthat") &&
-    require("parameters") &&
-    require("psych") &&
-    require("lavaan") &&
-    require("BayesFM") &&
-    require("FactoMineR")) {
-
+  require("parameters") &&
+  require("psych") &&
+  require("lavaan") &&
+  require("BayesFM") &&
+  require("FactoMineR")) {
   test_that("principal_components", {
     set.seed(333)
 

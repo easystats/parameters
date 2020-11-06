@@ -1,12 +1,12 @@
 if (require("testthat") && require("insight") && require("parameters") && require("mfx")) {
   set.seed(12345)
-  n = 1000
-  x = rnorm(n)
+  n <- 1000
+  x <- rnorm(n)
 
-  y = rbeta(n, shape1 = plogis(1 + 0.5 * x), shape2 = (abs(0.2 * x)))
-  y = (y * (n - 1) + 0.5) / n
+  y <- rbeta(n, shape1 = plogis(1 + 0.5 * x), shape2 = (abs(0.2 * x)))
+  y <- (y * (n - 1) + 0.5) / n
 
-  data = data.frame(y, x)
+  data <- data.frame(y, x)
   model <- betamfx(y ~ x | x, data = data)
 
   params <- suppressWarnings(model_parameters(model))
@@ -35,11 +35,11 @@ if (require("testthat") && require("insight") && require("parameters") && requir
 
 
   set.seed(12345)
-  n = 1000
-  x = rnorm(n)
-  y = rnegbin(n, mu = exp(1 + 0.5 * x), theta = 0.5)
+  n <- 1000
+  x <- rnorm(n)
+  y <- rnegbin(n, mu = exp(1 + 0.5 * x), theta = 0.5)
 
-  data = data.frame(y, x)
+  data <- data.frame(y, x)
 
   model <- poissonmfx(formula = y ~ x, data = data)
   params <- suppressWarnings(model_parameters(model))

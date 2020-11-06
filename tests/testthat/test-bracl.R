@@ -2,7 +2,6 @@ if (require("testthat") &&
   require("parameters") &&
   require("utils") &&
   require("brglm2")) {
-
   data("stemcell")
   levels(stemcell$research) <- c("definitly", "alterly", "probably not", "definitely not")
   m1 <- bracl(research ~ as.numeric(religion) + gender, weights = frequency, data = stemcell, type = "ML")
@@ -15,10 +14,12 @@ if (require("testthat") &&
     )
     expect_equal(
       params$Parameter,
-      c("definitly:(Intercept)", "alterly:(Intercept)", "probably not:(Intercept)",
+      c(
+        "definitly:(Intercept)", "alterly:(Intercept)", "probably not:(Intercept)",
         "definitly:as.numeric(religion)", "alterly:as.numeric(religion)",
         "probably not:as.numeric(religion)", "definitly:genderfemale",
-        "alterly:genderfemale", "probably not:genderfemale")
+        "alterly:genderfemale", "probably not:genderfemale"
+      )
     )
     expect_equal(
       params$Coefficient,

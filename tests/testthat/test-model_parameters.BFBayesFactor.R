@@ -2,7 +2,6 @@ if (require("testthat") &&
   require("parameters") &&
   require("BayesFactor") &&
   require("logspline")) {
-
   .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
   if (.runThisTest) {

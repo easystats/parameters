@@ -69,7 +69,7 @@ p_value.negbinmfx <- p_value.poissonmfx
 #' @rdname p_value.poissonmfx
 #' @export
 p_value.betaor <- function(model, component = c("all", "conditional", "precision"), ...) {
-  component = match.arg(component)
+  component <- match.arg(component)
   p_value.betareg(model$fit, component = component, ...)
 }
 
