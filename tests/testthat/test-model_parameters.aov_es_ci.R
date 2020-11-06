@@ -174,7 +174,8 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
       ), class = "data.frame", ci = 0.95, model_class = c(
         "aov",
         "lm"
-      ), digits = 2, ci_digits = 2, p_digits = 3)
+      ), digits = 2, ci_digits = 2, p_digits = 3),
+      tolerance = 0.001
     )
   })
 
@@ -326,7 +327,8 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
         digits = 2,
         ci_digits = 2,
         p_digits = 3
-      )
+      ),
+      tolerance = 0.001
     )
   })
 
@@ -464,7 +466,8 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
       ), class = "data.frame", ci = 0.95, model_class = c(
         "maov",
         "aov", "mlm", "lm"
-      ), digits = 2, ci_digits = 2, p_digits = 3)
+      ), digits = 2, ci_digits = 2, p_digits = 3),
+      tolerance = 0.001
     )
   })
 
@@ -517,7 +520,8 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
       )), row.names = c(NA, -4L), class = "data.frame", ci = 0.5, model_class = c(
         "anova",
         "data.frame"
-      ), digits = 2, ci_digits = 2, p_digits = 3)
+      ), digits = 2, ci_digits = 2, p_digits = 3),
+      tolerance = 0.001
     )
   })
 
