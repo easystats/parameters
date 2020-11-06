@@ -334,64 +334,73 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   # manova ------------------------------------------------
 
-  # test_that("works with manova", {
-  #   testthat::skip_on_cran()
-  #
-  #   set.seed(123)
-  #   # fake a 2nd response variable
-  #   npk2 <- within(npk, foo <- rnorm(24))
-  #
-  #   # model
-  #   m <- manova(cbind(yield, foo) ~ block + N * P * K, npk2)
-  #
-  #   set.seed(123)
-  #   df_manova <-
-  #     as.data.frame(parameters::model_parameters(m,
-  #       ci = 0.99,
-  #       eta_squared = NULL,
-  #       omega_squared = "partial",
-  #       epsilon_squared = "partial"
-  #     ))
-  #
-  #   testthat::expect_equal(
-  #     df_manova,
-  #     structure(list(Parameter = c(
-  #       "block", "N", "P", "K", "N:P", "N:K",
-  #       "P:K", "Residuals"
-  #     ), Pillai = c(
-  #       0.883067422762204, 0.607644075860196,
-  #       0.0661452322660012, 0.387877219894175, 0.105732910542443, 0.173682169988875,
-  #       0.00319108713280279, NA
-  #     ), df = c(5, 1, 1, 1, 1, 1, 1, 12), F = c(
-  #       1.89748410765359,
-  #       8.5178844299551, 0.389566761377431, 3.4851254989222, 0.650287833287238,
-  #       1.1560345187347, 0.0176071652288221, NA
-  #     ), p = c(
-  #       0.096377338151606,
-  #       0.00582426569911999, 0.686335356549494, 0.0672375656314355, 0.540841321783317,
-  #       0.350194387588424, 0.982574567642381, NA
-  #     ), Omega2_partial = c(
-  #       -0.0878988423640142,
-  #       0.00646103797636744, -0.0406933499272959, -0.0413301468834696,
-  #       -0.0409171937691718, -0.0434027067555957, -0.0434677958886055,
-  #       NA
-  #     ), Omega2_CI_low = c(0, 0, 0, 0, 0, 0, 0, NA), Omega2_CI_high = c(
-  #       0,
-  #       0.391981215238936, 0, 0, 0, 0, 0, NA
-  #     ), Epsilon2_partial = c(
-  #       -0.128752505288263,
-  #       0.0118632135405797, -0.0778052394174465, -0.0790669109761701,
-  #       -0.0782485756868515, -0.0831830002436285, -0.0833125095450078,
-  #       NA
-  #     ), Epsilon2_CI_low = c(0, 0, 0, 0, 0, 0, 0, NA), Epsilon2_CI_high = c(
-  #       0,
-  #       0.415582890766113, 0, 0, 0, 0, 0, NA
-  #     )), row.names = c(NA, -8L), class = "data.frame", ci = 0.99, model_class = c(
-  #       "manova",
-  #       "maov", "aov", "mlm", "lm"
-  #     ), digits = 2, ci_digits = 2, p_digits = 3)
-  #   )
-  # })
+  test_that("works with manova", {
+    testthat::skip_on_cran()
+
+    set.seed(123)
+    # fake a 2nd response variable
+    npk2 <- within(npk, foo <- rnorm(24))
+
+    # model
+    m <- manova(cbind(yield, foo) ~ block + N * P * K, npk2)
+
+    set.seed(123)
+    df_manova <-
+      as.data.frame(parameters::model_parameters(m,
+        ci = 0.99,
+        eta_squared = NULL,
+        omega_squared = "partial",
+        epsilon_squared = "partial"
+      ))
+
+    testthat::expect_equal(
+      df_manova,
+      structure(list(Parameter = c(
+        "block", "N", "P", "K", "N:P", "N:K",
+        "P:K", "Residuals"
+      ), Pillai = c(
+        0.883067422762204, 0.607644075860196,
+        0.0661452322660012, 0.387877219894175, 0.105732910542443, 0.173682169988875,
+        0.00319108713280279, NA
+      ), df = c(5, 1, 1, 1, 1, 1, 1, 12), F = c(
+        1.89748410765359,
+        8.5178844299551, 0.389566761377431, 3.4851254989222, 0.650287833287238,
+        1.1560345187347, 0.0176071652288221, NA
+      ), p = c(
+        0.096377338151606,
+        0.00582426569911999, 0.686335356549494, 0.0672375656314355, 0.540841321783317,
+        0.350194387588424, 0.982574567642381, NA
+      ), Omega2_partial = c(
+        0.204090358414615,
+        0.517836084604949, -0.0955359355993293, 0.262002384597293, -0.0525860196550168,
+        0.0218046067729543, -0.163253068503321, NA
+      ), Omega2_CI_low = c(
+        0,
+        0, 0, 0, 0, 0, 0, NA
+      ), Omega2_CI_high = c(
+        0.375412349267798,
+        0.793388011257971, 0, 0.656217126790662, 0, 0.378992841908247,
+        0, NA
+      ), Epsilon2_partial = c(
+        0.208839424456561, 0.536306635107505,
+        -0.103646543685635, 0.276582168965843, -0.0568611057225668, 0.0234425645323064,
+        -0.178046897024869, NA
+      ), Epsilon2_CI_low = c(
+        0, 0, 0, 0, 0, 0,
+        0, NA
+      ), Epsilon2_CI_high = c(
+        0.367015545166029, 0.8020246591873,
+        0, 0.665404192255583, 0, 0.385354970386773, 0, NA
+      )), row.names = c(
+        NA,
+        -8L
+      ), class = "data.frame", ci = 0.99, model_class = c(
+        "manova",
+        "maov", "aov", "mlm", "lm"
+      ), digits = 2, ci_digits = 2, p_digits = 3),
+      tolerance = 0.001
+    )
+  })
 
   # maov ------------------------------------------------
 
