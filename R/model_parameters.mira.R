@@ -31,8 +31,7 @@
 #'   # summary(pool(fit))
 #'
 #'   model_parameters(fit)
-#' }
-#' }
+#' }}
 #'
 #'
 #' # and it works with pooled results

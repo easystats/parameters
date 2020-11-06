@@ -40,8 +40,7 @@
 #'     vcov_type = "CR2",
 #'     vcov_args = list(cluster = iris$cluster)
 #'   )
-#' }
-#' }
+#' }}
 #'
 #' @return A data frame.
 #' @export

@@ -45,7 +45,6 @@ if (require("metafor")) {
   model <- rma(yi = effectsize, sei = stderr, method = "REML", data = mydat)
   model_parameters(model)
 }
-
 \dontrun{
 # with subgroups
 if (require("metafor")) {
@@ -59,7 +58,7 @@ if (require("metafor")) {
     data = dat.bcg
   )
   dat$alloc <- ifelse(dat$alloc == "random", "random", "other")
-  model <- rma(yi, vi, mods = ~ alloc, data = dat, digits = 3, slab = author)
+  model <- rma(yi, vi, mods = ~alloc, data = dat, digits = 3, slab = author)
   model_parameters(model)
 }
 
@@ -67,5 +66,7 @@ if (require("metaBMA")) {
   data(towels)
   m <- meta_random(logOR, SE, study, data = towels)
   model_parameters(m)
-}}
+}
+}
+
 }

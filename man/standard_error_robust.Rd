@@ -83,4 +83,5 @@ if (require("clubSandwich")) {
     vcov_args = list(cluster = iris$cluster)
   )
 }}
+
 }

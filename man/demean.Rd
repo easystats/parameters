@@ -199,7 +199,7 @@ dat <- data.frame(
 demean(dat, select = c("a", "x*y"), group = "ID")
 
 # or in formula-notation
-demean(dat, select = ~a + x * y, group = ~ID)
+demean(dat, select = ~ a + x * y, group = ~ID)
 }
 \references{
 \itemize{
