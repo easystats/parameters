@@ -438,7 +438,7 @@ between-effects are printed in separated blocks.</p></td>
 #&gt; 7  2.666667    4.666667  0.3333333 -2.6666667
 #&gt; 8  2.333333    4.000000  1.6666667 -2.0000000</div><div class='input'>
 <span class='co'># or in formula-notation</span>
-<span class='fu'>demean</span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='op'>~</span><span class='va'>a</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>*</span> <span class='va'>y</span>, group <span class='op'>=</span> <span class='op'>~</span><span class='va'>ID</span><span class='op'>)</span>
+<span class='fu'>demean</span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='op'>~</span> <span class='va'>a</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>*</span> <span class='va'>y</span>, group <span class='op'>=</span> <span class='op'>~</span><span class='va'>ID</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   a_between x_y_between   a_within x_y_within
 #&gt; 1  2.666667    4.666667 -1.6666667 -0.6666667
 #&gt; 2  2.333333    4.000000 -0.3333333  2.0000000

@@ -173,7 +173,7 @@
 <ol style="list-style-type: decimal">
 <li>Calculate the regression models for each imputed dataset manually (either by using <code><a href="https://rdrr.io/pkg/mice/man/complete.mids.html">complete()</a></code> from package <em>mice</em> to get the imputed datasets, or by accessing the datasets directly from the <code>mids</code> object)</li>
 <li>Save all model objects in a list.</li>
-<li>Pass ths list to <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>.</li>
+<li>Pass the list to <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>.</li>
 </ol>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">imputed_data</span><span class="op">$</span><span class="va">m</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
