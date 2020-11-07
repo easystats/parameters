@@ -1,7 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest && require("testthat") && require("parameters") && require("rstanarm")) {
-
   data(mtcars)
   set.seed(123)
   model <- stan_glm(

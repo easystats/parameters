@@ -1,9 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest) {
-
   if (require("testthat") && require("parameters") && require("glmmTMB")) {
-
     data(Salamanders)
     model <- glmmTMB(
       count ~ spp + mined + spp * mined,
@@ -24,13 +22,15 @@ if (.runThisTest) {
       expect_equal(mp$Parameter, gsub("^(cond\\.|zi\\.)", "", names(unlist(fixef(model)))))
       expect_equal(
         mp$Component,
-        c("conditional", "conditional", "conditional", "conditional",
+        c(
+          "conditional", "conditional", "conditional", "conditional",
           "conditional", "conditional", "conditional", "conditional", "conditional",
           "conditional", "conditional", "conditional", "conditional", "conditional",
           "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated",
           "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated",
           "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated",
-          "zero_inflated", "zero_inflated")
+          "zero_inflated", "zero_inflated"
+        )
       )
     })
 
@@ -51,7 +51,7 @@ if (.runThisTest) {
     d2$sd <- "five"
     dat <- rbind(d1, d2)
 
-    model <- glmmTMB(x ~ sd + (1 | t), dispformula =  ~ sd, data = dat)
+    model <- glmmTMB(x ~ sd + (1 | t), dispformula = ~sd, data = dat)
     mp <- model_parameters(model)
 
     test_that("model_parameters", {
@@ -59,5 +59,4 @@ if (.runThisTest) {
       expect_equal(mp$Component, c("conditional", "conditional", "dispersion", "dispersion"))
     })
   }
-
 }

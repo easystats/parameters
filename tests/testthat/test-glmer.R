@@ -1,6 +1,6 @@
 if (require("testthat") &&
-    require("parameters") &&
-    require("lme4")) {
+  require("parameters") &&
+  require("lme4")) {
   data("cbpp")
   set.seed(123)
   model <- glmer(

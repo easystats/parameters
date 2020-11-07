@@ -71,4 +71,3 @@ select_parameters.brmsfit <- select_parameters.stanreg
   formula <- paste(insight::find_response(model), "~", formula)
   formula
 }
-

@@ -55,7 +55,8 @@
 #'
 #'   if (require("lme4")) {
 #'     mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species),
-#'                data = df)
+#'       data = df
+#'     )
 #'     model <- anova(mm)
 #'
 #'     # simple parameters table

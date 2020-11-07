@@ -75,6 +75,7 @@ Suggests:
     EGAnet (>= 0.7),
     FactoMineR,
     fastICA,
+    gam,
     gamlss,
     gee,
     geepack,

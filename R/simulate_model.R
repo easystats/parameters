@@ -35,7 +35,6 @@
 #' library(parameters)
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 #' head(simulate_model(model))
-#'
 #' \donttest{
 #' if (require("glmmTMB")) {
 #'   model <- glmmTMB(
@@ -335,7 +334,7 @@ simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all"
     d2 <- .simulate_model(model, iterations, component = "zero_inflated")
     colnames(d2) <- paste0(colnames(d2), "_zi")
     d <- cbind(d1, d2)
-  } else   if (all(component == c("conditional", "dispersion"))) {
+  } else if (all(component == c("conditional", "dispersion"))) {
     d1 <- .simulate_model(model, iterations, component = "conditional")
     d2 <- .simulate_model(model, iterations, component = "dispersion")
     colnames(d2) <- paste0(colnames(d2), "_disp")

@@ -4,7 +4,6 @@ if (require("testthat") &&
   ## TODO enable when clubSandwich back on CRAN
   # require("clubSandwich") &&
   require("effectsize")) {
-
   data(mtcars)
   mtcars$am <- as.factor(mtcars$am)
   model <- lm(mpg ~ wt * am + cyl + gear, data = mtcars)

@@ -54,7 +54,6 @@ Simulate draws from a statistical model to return a data frame of estimates.
 library(parameters)
 model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 head(simulate_model(model))
-
 \donttest{
 if (require("glmmTMB")) {
   model <- glmmTMB(

@@ -127,4 +127,3 @@ model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations
 
 #' @export
 model_parameters.clmm2 <- model_parameters.clm2
-

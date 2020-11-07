@@ -14,4 +14,3 @@ NULL
 #'
 #' @description A sample data set with longitudinal data, used in the vignette describing the \code{demean()} function.
 NULL
-

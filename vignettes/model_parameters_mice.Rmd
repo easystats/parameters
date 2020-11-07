@@ -81,7 +81,7 @@ The steps would be:
 
 1. Calculate the regression models for each imputed dataset manually (either by using `complete()` from package *mice* to get the imputed datasets, or by accessing the datasets directly from the `mids` object)
 2. Save all model objects in a list.
-3. Pass ths list to `pool_parameters()`. 
+3. Pass the list to `pool_parameters()`. 
 
 ```{r message=FALSE}
 models <- lapply(1:imputed_data$m, function(i) {

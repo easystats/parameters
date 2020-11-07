@@ -38,7 +38,7 @@ This function attempts to return, or compute, p-values of hurdle and zero-inflat
 \examples{
 if (require("pscl")) {
   data("bioChemists")
-  model <- zeroinfl(art ~ fem + mar + kid5| kid5 + phd, data = bioChemists)
+  model <- zeroinfl(art ~ fem + mar + kid5 | kid5 + phd, data = bioChemists)
   p_value(model)
   p_value(model, component = "zi")
 }

@@ -81,7 +81,6 @@
 #' }
 #' @export
 rescale_weights <- function(data, group, probability_weights, nest = FALSE) {
-
   if (inherits(group, "formula")) {
     group <- all.vars(group)
   }

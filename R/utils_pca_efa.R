@@ -114,7 +114,6 @@ print.parameters_pca_summary <- print.parameters_efa_summary
 #' @importFrom insight print_color print_colour
 #' @export
 print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-
   orig_x <- x
 
   if (inherits(x, "parameters_pca")) {
@@ -230,10 +229,10 @@ print.parameters_omega_summary <- function(x, ...) {
       text,
       " (",
       paste0(summary$Component,
-             " = ",
-             sprintf("%.2f", summary$Variance * 100),
-             "%",
-             collapse = ", "
+        " = ",
+        sprintf("%.2f", summary$Variance * 100),
+        "%",
+        collapse = ", "
       ),
       ")."
     )
@@ -293,7 +292,7 @@ sort.parameters_pca <- sort.parameters_efa
       loads[first:last, 1] <- item[ord$ix + first - 1]
       rownames(x)[first:last] <- rownames(x)[ord$ix + first - 1]
 
-      total.ord[first:last] <- total.ord[ord$ix + first - 1 ]
+      total.ord[first:last] <- total.ord[ord$ix + first - 1]
       first <- first + items[i]
     }
   }

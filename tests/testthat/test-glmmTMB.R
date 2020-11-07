@@ -4,7 +4,6 @@ if (.runThisTest) {
   if (require("testthat") &&
     require("parameters") &&
     require("glmmTMB")) {
-
     data("fish")
     data("Salamanders")
 
@@ -138,20 +137,25 @@ if (.runThisTest) {
       )
       expect_equal(
         model_parameters(m3)$Coefficient,
-        c(-0.6104, -0.9637, 0.1707, -0.3871, 0.4879, 0.5895, -0.1133,
+        c(
+          -0.6104, -0.9637, 0.1707, -0.3871, 0.4879, 0.5895, -0.1133,
           1.4294, 0.91, 1.1614, -0.9393, 1.0424, -0.5623, -0.893, -2.5398,
-          -2.563, 0.4132),
+          -2.563, 0.4132
+        ),
         tolerance = 1e-2
       )
       expect_equal(
         model_parameters(m1)$Component,
-        c("conditional", "conditional", "conditional", "zero_inflated",
-          "zero_inflated", "zero_inflated")
+        c(
+          "conditional", "conditional", "conditional", "zero_inflated",
+          "zero_inflated", "zero_inflated"
+        )
       )
       expect_null(model_parameters(m2)$Component)
       expect_equal(
         model_parameters(m3)$Component,
-        c("conditional", "conditional", "conditional", "conditional",
+        c(
+          "conditional", "conditional", "conditional", "conditional",
           "conditional", "conditional", "conditional", "conditional", "zero_inflated",
           "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated",
           "zero_inflated", "zero_inflated", "zero_inflated", "dispersion"
@@ -159,9 +163,11 @@ if (.runThisTest) {
       )
       expect_equal(
         model_parameters(m3)$SE,
-        c(0.4052, 0.6436, 0.2353, 0.3424, 0.2383, 0.2278, 0.2439, 0.3666,
+        c(
+          0.4052, 0.6436, 0.2353, 0.3424, 0.2383, 0.2278, 0.2439, 0.3666,
           0.6279, 1.3346, 0.8005, 0.714, 0.7263, 0.7535, 2.1817, 0.6045,
-          NA),
+          NA
+        ),
         tolerance = 1e-2
       )
     })

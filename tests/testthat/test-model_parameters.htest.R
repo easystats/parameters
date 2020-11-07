@@ -1,5 +1,4 @@
 if (require("testthat") && require("parameters")) {
-
   test_that("model_parameters.htest", {
     params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "pearson"))
     testthat::expect_equal(params$r, -0.852, tolerance = 0.05)
@@ -19,5 +18,4 @@ if (require("testthat") && require("parameters")) {
     params <- model_parameters(t.test(iris$Sepal.Width, mu = 1))
     testthat::expect_equal(params$Difference, 2.0573, tolerance = 0.05)
   })
-
 }

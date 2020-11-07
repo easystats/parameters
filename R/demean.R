@@ -174,7 +174,7 @@
 #' demean(dat, select = c("a", "x*y"), group = "ID")
 #'
 #' # or in formula-notation
-#' demean(dat, select = ~a + x * y, group = ~ID)
+#' demean(dat, select = ~ a + x * y, group = ~ID)
 #' @export
 demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean = "_between", add_attributes = TRUE, verbose = TRUE) {
   degroup(
