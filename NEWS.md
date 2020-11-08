@@ -6,6 +6,7 @@
 
 ## New supported model classes
 
+* `Glm` (*rms*).
 * `model_parameters()` supports `Gam` models (*gam*) and `pairwise.htest` objects.
 
 ## Changes to functions
