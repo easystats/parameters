@@ -745,7 +745,12 @@ ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterth
       ci_wald(model = x, ci = ci)
     } else {
       out <- lapply(ci, function(i) {
-        ci_list <- nlme::intervals(x, level = i, ...)
+        ci_list <- tryCatch({
+          nlme::intervals(x, level = i, ...)
+        },
+        error = function(e) {
+          nlme::intervals(x, level = i, which = "fixed", ...)
+        })
         .data_frame(
           Parameter = rownames(ci_list$fixed),
           CI = i * 100,

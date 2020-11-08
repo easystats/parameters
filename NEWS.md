@@ -13,6 +13,10 @@
 * `describe_distribution()` now includes the name of the centrality index in the `CI`-column, when `centrality = "all"`.
 * `model_parameters()` for Anova-models (of class `aov`, `anova` etc.) gains a `ci`-argument, to add confidence intervals to effect size parameters.
 
+## Bug fixes
+
+* Fixed issue in `ci()` for *lme* models with non-positive definite variance-covariance.
+
 # parameters 0.9.0
 
 ## Breaking changes
