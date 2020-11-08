@@ -6,11 +6,11 @@ if (require("testthat") && require("parameters")) {
     mp <- model_parameters(model)
 
     testthat::expect_equal(
-      mp$group1,
+      mp$Group1,
       c("Jun", "Jul", "Jul", "Aug", "Aug", "Aug", "Sep", "Sep", "Sep", "Sep")
     )
     testthat::expect_equal(
-      mp$p.value,
+      mp$p,
       c(1, 0.00026, 0.05113, 0.00019, 0.04987, 1, 1, 1, 0.00488, 0.00388),
       tolerance = 1e-3
     )
@@ -21,11 +21,11 @@ if (require("testthat") && require("parameters")) {
     mp <- model_parameters(model)
 
     testthat::expect_equal(
-      mp$group1,
+      mp$Group1,
       c("2", "3", "3", "4", "4", "4")
     )
     testthat::expect_equal(
-      mp$p.value,
+      mp$p,
       c(1, 1, 1, 0.11856, 0.09322, 0.12377),
       tolerance = 1e-3
     )

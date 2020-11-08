@@ -4,9 +4,9 @@ model_parameters.pairwise.htest <- function(model, ...) {
   m <- model$p.value
   parameters <-
     data.frame(
-      group1 = rep(rownames(m), each = ncol(m)),
-      group2 = rep(colnames(m), times = nrow(m)),
-      p.value = as.numeric(t(m)),
+      Group1 = rep(rownames(m), each = ncol(m)),
+      Group2 = rep(colnames(m), times = nrow(m)),
+      p = as.numeric(t(m)),
       stringsAsFactors = FALSE
     )
 

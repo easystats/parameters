@@ -154,7 +154,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       p_adjust
     )
     cat("\n")
-    insight::print_color(paste0("p-values adjusted using the ", p_adj_string, " method."), "blue")
+    insight::print_color(paste0("p-value adjustment method: ", p_adj_string), "blue")
   }
 
   # for Bayesian models
