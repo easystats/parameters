@@ -193,6 +193,13 @@
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (of class <code>aov</code>, <code>anova</code> etc.) gains a <code>ci</code>-argument, to add confidence intervals to effect size parameters.</li>
 </ul>
 </div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fixed issue in <code><a href="https://easystats.github.io/bayestestR/reference/ci.html">ci()</a></code> for <em>lme</em> models with non-positive definite variance-covariance.</li>
+</ul>
+</div>
 </div>
     <div id="parameters-090" class="section level1">
 <h1 class="page-header" data-toc-text="0.9.0">
@@ -257,9 +264,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>vgam</em> and <em>mira</em> objects.</li>
 <li>Fixed issue where <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>emmGrid</em> objects falsely removed the <code>Coefficient</code> column.</li>
@@ -272,9 +279,9 @@
 <h1 class="page-header" data-toc-text="0.8.6">
 <a href="#parameters-086" class="anchor"></a>parameters 0.8.6<small> 2020-09-21 </small>
 </h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issues with <em>glmmTMB</em> models with dispersion-parameter.</li>
 <li>Fixed issue where <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>glmmTMB</em> models falsely removed the <code>Component</code> column.</li>
@@ -317,9 +324,9 @@
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>lavaan</em> and <em>blavaan</em> gains more option for standardized parameters.</li>
 </ul>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>coxph.penal</code> models.</li>
 <li>Fix issue in <code>model_parameters.metaplus()</code> with random effects.</li>
@@ -353,9 +360,9 @@
 <li>Improved <code><a href="../reference/select_parameters.html">select_parameters()</a></code> for mixed models, and revised docs and associated vignette.</li>
 </ul>
 </div>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Allow <code>threshold</code> to be passed to <code><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa()</a></code> when the model is from <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</li>
 <li>Allow correlation matrix to be passed to <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</li>
@@ -393,9 +400,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>fix issue with rank deficient models.</li>
 </ul>
@@ -479,9 +486,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue in <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test()</a></code> for mixed models.</li>
 <li>Fixed bug for <code>model_parameters.anova(..., eta_squared = "partial")</code> when called with non-mixed models.</li>
@@ -521,9 +528,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html">anova()</a></code> from <em>lmerTest</em> models.</li>
 </ul>
@@ -593,9 +600,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-7" class="section level2">
+<div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed minor issue with the <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.befa.html">model_parameters.befa()</a></code>.</li>
 <li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with wrong order of degrees of freedom when <code>df_method</code> was different from default.</li>
@@ -676,9 +683,9 @@
 <code><a href="../reference/describe_distribution.html">describe_distribution()</a></code> now also works on data frames and gets a nicer print-method.</li>
 </ul>
 </div>
-<div id="bug-fixes-8" class="section level2">
+<div id="bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when <code>robust = TRUE</code>, which could sometimes mess up order of the statistic column.</li>
 <li>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with wrong <code>df</code> for <code>lme</code>-models.</li>
@@ -694,9 +701,9 @@
 <h1 class="page-header" data-toc-text="0.4.1">
 <a href="#parameters-041" class="anchor"></a>parameters 0.4.1<small> 2020-01-17 </small>
 </h1>
-<div id="bug-fixes-9" class="section level2">
+<div id="bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix CRAN check issues, caused by removal of package ‘projpred’.</li>
 </ul>
