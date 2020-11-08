@@ -4,8 +4,8 @@ if (require("testthat") &&
   require("lme4")) {
   data("mtcars")
   mtcars$cyl <- as.factor(mtcars$cyl)
-  model <- lme4::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars)
-  model2 <- lmerTest::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars)
+  model <- suppressMessages(lme4::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars))
+  model2 <- suppressMessages(lmerTest::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars))
 
   mp1 <- model_parameters(model, digits = 5)
   mp2 <- model_parameters(model, digits = 5, df_method = "s")
@@ -51,8 +51,8 @@ if (require("testthat") &&
 
   model <- lm(mpg ~ as.factor(gear) * hp + as.factor(am) + wt, data = mtcars)
   test_that("model_parameters, df_method-lm", {
-    testthat::expect_is(model_parameters(model), class = "parameters_model")
-    testthat::expect_is(model_parameters(model, df_method = "kenward"), class = "parameters_model")
+    expect_s3_class(model_parameters(model), "parameters_model")
+    expect_s3_class(model_parameters(model, df_method = "kenward"), "parameters_model")
   })
 
   unloadNamespace("lmerTest")
