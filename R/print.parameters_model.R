@@ -49,6 +49,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   coef_name <- attributes(x)$coefficient_name
   sigma <- attributes(x)$sigma
   s_value <- attributes(x)$s_value
+  p_adjust <- attributes(x)$p_adjust
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
 
   # check if user supplied digits attributes
@@ -137,6 +138,23 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   if (!is.null(sigma) && isTRUE(show_sigma)) {
     cat("\n")
     insight::print_color(sprintf("Residual standard deviation: %.*f", digits, sigma), "blue")
+  }
+
+  # print p-adjustment
+  if (!is.null(p_adjust) && p_adjust != "none") {
+    p_adj_string <- switch(
+      p_adjust,
+      "holm" = "Holm (1979)",
+      "hochberg" = "Hochberg (1988)",
+      "homnmel" = "Hochberg (1988)",
+      "bonferroni" = "Bonferroni",
+      "fdr" = ,
+      "BH" = "Benjamini & Hochberg (1995)",
+      "BY" = " Benjamini & Yekutieli (2001)",
+      p_adjust
+    )
+    cat("\n")
+    insight::print_color(paste0("p-value adjustment method: ", p_adj_string), "blue")
   }
 
   # for Bayesian models

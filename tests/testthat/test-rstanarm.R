@@ -30,7 +30,7 @@ if (.runThisTest && require("testthat") && require("parameters") && require("rst
     seed = 123
   )
 
-  mp <- model_parameters(model)
+  mp <- suppressWarnings(model_parameters(model))
 
   test_that("mp2", {
     expect_equal(mp$Median, c(0.48125, 0.03037, 3.44494, 0.07625, -0.12925), tolerance = 1e-2)
