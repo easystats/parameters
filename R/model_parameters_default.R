@@ -41,7 +41,15 @@
 #' model_parameters(model, exponentiate = TRUE)
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, p_adjust = NULL, ...) {
+model_parameters.default <- function(model,
+                                     ci = .95,
+                                     bootstrap = FALSE,
+                                     iterations = 1000,
+                                     standardize = NULL,
+                                     exponentiate = FALSE,
+                                     robust = FALSE,
+                                     p_adjust = NULL,
+                                     ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,

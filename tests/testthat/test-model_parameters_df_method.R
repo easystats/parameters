@@ -51,8 +51,8 @@ if (require("testthat") &&
 
   model <- lm(mpg ~ as.factor(gear) * hp + as.factor(am) + wt, data = mtcars)
   test_that("model_parameters, df_method-lm", {
-    testthat::expect_is(model_parameters(model), class = "parameters_model")
-    testthat::expect_is(model_parameters(model, df_method = "kenward"), class = "parameters_model")
+    testthat::expect_s3_class(model_parameters(model), class = "parameters_model")
+    testthat::expect_s3_class(model_parameters(model, df_method = "kenward"), class = "parameters_model")
   })
 
   unloadNamespace("lmerTest")
