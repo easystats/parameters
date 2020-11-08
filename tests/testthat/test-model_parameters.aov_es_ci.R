@@ -7,7 +7,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   test_that("works with aov", {
     testthat::skip_on_cran()
-    testthat::skip_on_ci()
+    #testthat::skip_on_ci()
     testthat::skip_on_appveyor()
     testthat::skip_on_travis()
 
@@ -65,7 +65,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   test_that("works with aovlist", {
     testthat::skip_on_cran()
-    testthat::skip_on_ci()
+    #testthat::skip_on_ci()
     testthat::skip_on_appveyor()
     testthat::skip_on_travis()
 
@@ -143,7 +143,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
   if (utils::packageVersion("effectsize") > "0.4.0") {
     test_that("works with manova", {
       testthat::skip_on_cran()
-      testthat::skip_on_ci()
+      #testthat::skip_on_ci()
       testthat::skip_on_appveyor()
       testthat::skip_on_travis()
 
@@ -218,7 +218,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   test_that("works with maov", {
     testthat::skip_on_cran()
-    testthat::skip_on_ci()
+    #testthat::skip_on_ci()
     testthat::skip_on_appveyor()
     testthat::skip_on_travis()
 
@@ -300,7 +300,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   test_that("works with Gam", {
     testthat::skip_on_cran()
-    testthat::skip_on_ci()
+    #testthat::skip_on_ci()
     testthat::skip_on_appveyor()
     testthat::skip_on_travis()
 
@@ -359,7 +359,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   test_that("works with anova", {
     testthat::skip_on_cran()
-    testthat::skip_on_ci()
+    #testthat::skip_on_ci()
     testthat::skip_on_appveyor()
     testthat::skip_on_travis()
 

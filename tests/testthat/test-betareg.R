@@ -1,6 +1,5 @@
 if (Sys.getenv("USER") != "travis") {
   if (require("testthat") && require("parameters") && require("betareg")) {
-    library(betareg)
     data("GasolineYield")
     data("FoodExpenditure")
 
