@@ -162,7 +162,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Correlations and t-tests</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.htest.R'><code>R/model_parameters.htest.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.htest.R'><code>R/model_parameters.htest.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.pairwise.htest.R'><code>R/model_parameters.pairwise.htest.R</code></a></small>
     <div class="hidden name"><code>model_parameters.htest.Rd</code></div>
     </div>
 
@@ -171,14 +171,17 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for htest</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for pairwise.htest</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Object of class <code>htest</code>.</p></td>
+      <td><p>Object of class <code>htest</code> or <code>pairwise.htest</code>.</p></td>
     </tr>
     <tr>
       <th>bootstrap</th>
@@ -214,7 +217,39 @@
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Parameter        | Mean |   mu | Difference | t(149) |      p |       95% CI |            Method
 #&gt; ------------------------------------------------------------------------------------------------
-#&gt; iris$Sepal.Width | 3.06 | 1.00 |       2.06 |  57.81 | &lt; .001 | [2.99, 3.13] | One Sample t-test</div></pre>
+#&gt; iris$Sepal.Width | 3.06 | 1.00 |       2.06 |  57.81 | &lt; .001 | [2.99, 3.13] | One Sample t-test</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>)</span>
+<span class='va'>airquality</span><span class='op'>$</span><span class='va'>Month</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>$</span><span class='va'>Month</span>, labels <span class='op'>=</span> <span class='va'>month.abb</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/pairwise.t.test.html'>pairwise.t.test</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>$</span><span class='va'>Ozone</span>, <span class='va'>airquality</span><span class='op'>$</span><span class='va'>Month</span><span class='op'>)</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Group1 | Group2 |      p
+#&gt; ------------------------
+#&gt; Jun    |    May | &gt; .999
+#&gt; Jul    |    May | &lt; .001
+#&gt; Jul    |    Jun | 0.051 
+#&gt; Aug    |    May | &lt; .001
+#&gt; Aug    |    Jun | 0.050 
+#&gt; Aug    |    Jul | &gt; .999
+#&gt; Sep    |    May | &gt; .999
+#&gt; Sep    |    Jun | &gt; .999
+#&gt; Sep    |    Jul | 0.005 
+#&gt; Sep    |    Aug | 0.004 
+#&gt; 
+#&gt; <span style='color: #0000BB;'>p-value adjustment method: Holm (1979)</span><span></div><div class='input'>
+<span class='va'>smokers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>83</span>, <span class='fl'>90</span>, <span class='fl'>129</span>, <span class='fl'>70</span><span class='op'>)</span>
+<span class='va'>patients</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>86</span>, <span class='fl'>93</span>, <span class='fl'>136</span>, <span class='fl'>82</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/pairwise.prop.test.html'>pairwise.prop.test</a></span><span class='op'>(</span><span class='va'>smokers</span>, <span class='va'>patients</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Group1 | Group2 |      p
+#&gt; ------------------------
+#&gt; 2      |      1 | &gt; .999
+#&gt; 3      |      1 | &gt; .999
+#&gt; 3      |      2 | &gt; .999
+#&gt; 4      |      1 | 0.119 
+#&gt; 4      |      2 | 0.093 
+#&gt; 4      |      3 | 0.124 
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'>p-value adjustment method: Holm (1979)</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
