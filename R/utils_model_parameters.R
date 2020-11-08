@@ -4,7 +4,7 @@
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   info <- tryCatch(
     {
-      insight::model_info(model, verbose = FALSE)
+      suppressWarnings(insight::model_info(model, verbose = FALSE))
     },
     error = function(e) {
       NULL
