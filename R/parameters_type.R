@@ -98,6 +98,8 @@ parameters_type <- function(model, ...) {
     interac <- out[paste0(out$Variable, out$Secondary_Variable) == i, ]
     if (!all(interac$Term %in% out$Parameter)) {
       out[paste0(out$Variable, out$Secondary_Variable) == i, "Type"] <- "nested"
+    } else if (!all(interac$Term %in% out$Parameter && interac$Secondary_Term %in% out$Parameter)) {
+      out[paste0(out$Variable, out$Secondary_Variable) == i, "Type"] <- "simple"
     }
   }
   for (i in unique(out$Secondary_Parameter)) {

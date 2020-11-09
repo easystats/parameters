@@ -95,9 +95,9 @@ if (require("testthat") && require("parameters") && require("splines")) {
       `Speciesvirginica:Petal.Length` = "Species [virginica] : Petal.Length",
       `Speciesversicolor:Sepal.Width` = "Species [versicolor] * Sepal.Width",
       `Speciesvirginica:Sepal.Width` = "Species [virginica] * Sepal.Width",
-      `Speciessetosa:Petal.Length:Sepal.Width` = "(Species [setosa] * Petal.Length) * Sepal.Width",
-      `Speciesversicolor:Petal.Length:Sepal.Width` = "(Species [versicolor] * Petal.Length) * Sepal.Width",
-      `Speciesvirginica:Petal.Length:Sepal.Width` = "(Species [virginica] * Petal.Length) * Sepal.Width"
+      `Speciessetosa:Petal.Length:Sepal.Width` = "Species [setosa] : Petal.Length : Sepal.Width",
+      `Speciesversicolor:Petal.Length:Sepal.Width` = "Species [versicolor] : Petal.Length : Sepal.Width",
+      `Speciesvirginica:Petal.Length:Sepal.Width` = "Species [virginica] : Petal.Length : Sepal.Width"
     ))
   })
 
@@ -241,4 +241,19 @@ if (require("testthat") && require("parameters") && require("splines")) {
       `SpeciesYes (Species):Petal.Width` = "Species [Yes (Species)] * Petal.Width"
     ))
   })
+
+  test_that("format_parameters-17", {
+    data(mtcars)
+    m1 <- lm(mpg ~ qsec:wt + wt:drat, data = mtcars)
+    m2 <- lm(mpg ~ qsec : wt + wt / drat, data = mtcars)
+    m3 <- lm(mpg ~ qsec:wt + wt:drat + wt, data = mtcars)
+    m4 <- lm(mpg ~ qsec : wt + wt / drat + wt, data = mtcars)
+    m5 <- lm(mpg ~ qsec * wt + wt : drat + wt, data = mtcars)
+    expect_equal(format_parameters(m1), c(`(Intercept)` = "(Intercept)", `qsec:wt` = "qsec : wt", `wt:drat` = "wt : drat"))
+    expect_equal(format_parameters(m2), c(`(Intercept)` = "(Intercept)", wt = "wt", `qsec:wt` = "qsec : wt", `wt:drat` = "wt : drat"))
+    expect_equal(format_parameters(m3), c(`(Intercept)` = "(Intercept)", wt = "wt", `qsec:wt` = "qsec : wt", `wt:drat` = "wt : drat"))
+    expect_equal(format_parameters(m4), c(`(Intercept)` = "(Intercept)", wt = "wt", `qsec:wt` = "qsec : wt", `wt:drat` = "wt : drat"))
+    expect_equal(format_parameters(m5), c(`(Intercept)` = "(Intercept)", qsec = "qsec", wt = "wt", `qsec:wt` = "qsec * wt", `wt:drat` = "wt : drat"))
+  })
+
 }

@@ -175,14 +175,15 @@ format_parameters.parameters_model <- function(model) {
     name <- types$Parameter[i]
 
     # No interaction
-    if (!types$Type[i] %in% c("interaction", "nested")) {
+    if (!types$Type[i] %in% c("interaction", "nested", "simple")) {
       type <- types[i, ]
       names[i] <- .format_parameter(name, variable = type$Variable, type = type$Type, level = type$Level)
 
       # Interaction or nesting
     } else {
       components <- unlist(strsplit(name, ":", fixed = TRUE))
-      is_nested <- types$Type[i] %in% "nested"
+      is_nested <- types$Type[i] == "nested"
+      is_simple <- types$Type[i] == "simple"
       for (j in 1:length(components)) {
         if (components[j] %in% types$Parameter) {
           type <- types[types$Parameter == components[j], ]
@@ -201,7 +202,7 @@ format_parameters.parameters_model <- function(model) {
           components[j] <- .format_parameter(components[j], variable = type[1, ]$Secondary_Variable, type = type[1, ]$Secondary_Type, level = type[1, ]$Secondary_Level)
         }
       }
-      names[i] <- .format_interaction(components, type = types[i, "Type"], is_nested = is_nested)
+      names[i] <- .format_interaction(components, type = types[i, "Type"], is_nested = is_nested, is_simple = is_simple)
     }
   }
 
@@ -272,8 +273,8 @@ format_parameters.parameters_model <- function(model) {
 
 #' @importFrom utils tail head
 #' @keywords internal
-.format_interaction <- function(components, type, is_nested = FALSE) {
-  sep <- ifelse(is_nested, " : ", " * ")
+.format_interaction <- function(components, type, is_nested = FALSE, is_simple = FALSE) {
+  sep <- ifelse(is_nested | is_simple, " : ", " * ")
 
   if (length(components) > 2) {
     if (type == "interaction") {
