@@ -9,13 +9,13 @@ if (.runThisTest) {
     test_that("p_value", {
       # h-tests
       model <- insight::download_model("htest_1")
-      testthat::expect_equal(p_value(model), 0.0413, tolerance = 0.01)
+      testthat::expect_equal(p_value(model), 0.04136799, tolerance = 0.01)
 
       model <- insight::download_model("htest_2")
-      testthat::expect_equal(p_value(model), 0.151, tolerance = 0.01)
+      testthat::expect_equal(p_value(model), 0.1518983, tolerance = 0.01)
 
       model <- insight::download_model("htest_3")
-      testthat::expect_equal(p_value(model), 0.183, tolerance = 0.01)
+      testthat::expect_equal(p_value(model), 0.182921, tolerance = 0.01)
 
       model <- insight::download_model("htest_4")
       testthat::expect_equal(p_value(model), 0, tolerance = 0.01)
@@ -93,10 +93,10 @@ if (.runThisTest) {
       testthat::expect_equal(p_value(model, method = "kr")$p[1], 0.319398, tolerance = 0.01)
 
       model <- insight::download_model("merMod_1")
-      testthat::expect_equal(p_value(model)$p[1], 0.065, tolerance = 0.01)
+      testthat::expect_equal(p_value(model)$p[1], 0.06578, tolerance = 0.01)
 
       model <- insight::download_model("merMod_2")
-      testthat::expect_equal(p_value(model)$p[1], 0.299, tolerance = 0.01)
+      testthat::expect_equal(p_value(model)$p[1], 0.29912, tolerance = 0.01)
     })
   }
 }
