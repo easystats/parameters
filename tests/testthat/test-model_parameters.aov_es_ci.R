@@ -10,9 +10,9 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     model <- aov(Sepal.Width ~ Species, data = iris)
     mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
     es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
-    expect_equivalent(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3)
-    expect_equivalent(mp$Omega2_CI_low, c(0.29018, NA), tolerance = 1e-3)
-    expect_equivalent(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3)
+    expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(mp$Omega2_CI_low, c(0.29018, NA), tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
       "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
@@ -24,9 +24,9 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     model <- aov(Sepal.Length ~ Species * Cat1 * Cat2, data = iris)
     mp <- model_parameters(model, eta_squared = "raw", ci = .9)
     es <- effectsize::eta_squared(model, partial = FALSE, ci = .9)
-    expect_equivalent(na.omit(mp$Eta2_CI_low), es$CI_low, tolerance = 1e-3)
-    expect_equivalent(mp$Eta2_CI_low, c(0.53866, 0, 0, 0, 0, 0, 0, NA), tolerance = 1e-3)
-    expect_equivalent(na.omit(mp$Eta2_CI_high), es$CI_high, tolerance = 1e-3)
+    expect_equal(na.omit(mp$Eta2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(mp$Eta2_CI_low, c(0.53866, 0, 0, 0, 0, 0, 0, NA), tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(na.omit(mp$Eta2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
       "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
@@ -42,8 +42,8 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
     mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
     es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
-    expect_equivalent(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3)
-    expect_equivalent(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3)
+    expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
       "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
@@ -58,8 +58,8 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     model <- aov(wt ~ cyl + Error(gear), data = mtcars)
     mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
     es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
-    expect_equivalent(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3)
-    expect_equivalent(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3)
+    expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
       "Group", "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
@@ -84,9 +84,9 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     test_that("model_parameters.car-anova", {
       mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
       es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
-      expect_equivalent(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3)
-      expect_equivalent(mp$Omega2_CI_low, c(0, 0.0284, 0, NA), tolerance = 1e-3)
-      expect_equivalent(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3)
+      expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
+      expect_equal(mp$Omega2_CI_low, c(0, 0.0284, 0, NA), tolerance = 1e-3, ignore_attr = TRUE)
+      expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
       expect_equal(colnames(mp), c(
         "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
@@ -107,9 +107,9 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
   test_that("model_parameters.maov", {
     mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
     es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
-    expect_equivalent(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3)
-    expect_equivalent(mp$Omega2_CI_low, c(0.71218, NA, 0.50841, NA, 0.53774, NA), tolerance = 1e-3)
-    expect_equivalent(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3)
+    expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(mp$Omega2_CI_low, c(0.71218, NA, 0.50841, NA, 0.53774, NA), tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
       "Response", "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
