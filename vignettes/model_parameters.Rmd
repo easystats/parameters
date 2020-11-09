@@ -247,7 +247,7 @@ parameters(model, effects = "all", component = "all")
 
 To include information about the random effect parameters (group levels), set `group_level = TRUE`:
 
-```{r}
+```{r warning=FALSE, message=FALSE, eval=FALSE}
 parameters(model, effects = "all", component = "conditional", group_level = TRUE)
 #> # Fixed effects 
 #> 
