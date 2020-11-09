@@ -34,7 +34,7 @@ if (require("testthat") &&
 
     testthat::expect_equal(nchar(model1), 109)
 
-    m1 <- lavaan::cfa(model1, data = attitude)
+    m1 <- suppressWarnings(lavaan::cfa(model1, data = attitude))
     params <- parameters::model_parameters(m1)
     testthat::expect_equal(c(nrow(params), ncol(params)), c(10, 9))
 

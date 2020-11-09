@@ -98,8 +98,12 @@ parameters_type <- function(model, ...) {
     interac <- out[paste0(out$Variable, out$Secondary_Variable) == i, ]
     if (!all(interac$Term %in% out$Parameter)) {
       out[paste0(out$Variable, out$Secondary_Variable) == i, "Type"] <- "nested"
-    } else if (!all(interac$Term %in% out$Parameter) || !all(interac$Secondary_Term %in% out$Parameter)) {
-      out[paste0(out$Variable, out$Secondary_Variable) == i, "Type"] <- "simple"
+    }
+    if (all(interac$Term %in% out$Parameter)) {
+      interac_sec_term <- interac$Secondary_Term[!is.na(interac$Secondary_Term)]
+      if (length(interac_sec_term) && !all(interac_sec_term %in% out$Parameter)) {
+        out[paste0(out$Variable, out$Secondary_Variable) == i, "Type"] <- "simple"
+      }
     }
   }
   for (i in unique(out$Secondary_Parameter)) {
