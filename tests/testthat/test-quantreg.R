@@ -10,7 +10,7 @@ if (require("testthat") &&
   CobarOre$w <- rnorm(nrow(CobarOre))
   m1 <- rqss(z ~ w + qss(cbind(x, y), lambda = .08), data = CobarOre)
 
-  mp <- model_parameters(m1)
+  mp <- suppressWarnings(model_parameters(m1))
   test_that("mp_rqss", {
     expect_identical(mp$Parameter, c("(Intercept)", "w"))
     expect_equal(mp$Coefficient, c(17.63057, 1.12506), tolerance = 1e-3)
