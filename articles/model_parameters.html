@@ -338,12 +338,12 @@
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; # Fixed effects 
 #&gt; 
-#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat |    ESS |                   Prior
-#&gt; ------------------------------------------------------------------------------------------------------
-#&gt; (Intercept) |  52.02 | [ 43.82, 62.54] |   100% |        0% | 1.001 | 152.48 | Normal (20.09 +- 15.07)
-#&gt; wt          |  -7.88 | [-11.75, -4.60] |   100% |        0% | 0.998 | 155.87 |  Normal (0.00 +- 15.40)
-#&gt; cyl         |  -3.48 | [ -5.23, -2.05] |   100% |        0% | 1.005 | 181.75 |   Normal (0.00 +- 8.44)
-#&gt; wt:cyl      |   0.69 | [  0.22,  1.21] | 98.60% |    37.60% | 1.000 | 150.86 |   Normal (0.00 +- 1.36)</code></pre>
+#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat | ESS |                   Prior
+#&gt; ---------------------------------------------------------------------------------------------------
+#&gt; (Intercept) |  52.02 | [ 43.82, 62.54] |   100% |        0% | 1.001 | 152 | Normal (20.09 +- 15.07)
+#&gt; wt          |  -7.88 | [-11.75, -4.60] |   100% |        0% | 0.998 | 156 |  Normal (0.00 +- 15.40)
+#&gt; cyl         |  -3.48 | [ -5.23, -2.05] |   100% |        0% | 1.005 | 182 |   Normal (0.00 +- 8.44)
+#&gt; wt:cyl      |   0.69 | [  0.22,  1.21] | 98.60% |    37.60% | 1.000 | 151 |   Normal (0.00 +- 1.36)</code></pre>
 <p>… as well as for (more complex) models from the <strong>brms</strong> package. For more complex models, other model components can be printed using the arguments <code>effects</code> and <code>component</code> arguments.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paul-buerkner/brms">brms</a></span><span class="op">)</span>
@@ -357,48 +357,76 @@
  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsfamily.html">zero_inflated_poisson</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span>
-<span class="co">#&gt; Parameter   | Median |         89% CI |     pd | % in ROPE | ESS |  Rhat</span>
-<span class="co">#&gt; ------------------------------------------------------------------------</span>
-<span class="co">#&gt; b_Intercept |  -0.87 | [-1.49, -0.08] | 96.80% |     4.80% |  78 | 1.000</span>
-<span class="co">#&gt; b_persons   |   0.84 | [ 0.60,  1.06] |   100% |        0% |  75 | 0.997</span>
-<span class="co">#&gt; b_child     |  -1.16 | [-1.32, -1.00] |   100% |        0% | 107 | 1.027</span>
-<span class="co">#&gt; b_camper1   |   0.74 | [ 0.52,  0.91] |   100% |        0% | 224 | 0.993</span>
+<span class="co">#&gt; # Fixed effects </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS</span>
+<span class="co">#&gt; -------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |  -0.86 | [-1.40, -0.12] | 97.88% |     0.68% | 1.014 |  178</span>
+<span class="co">#&gt; persons     |   0.84 | [ 0.64,  1.05] |   100% |        0% | 1.014 |  171</span>
+<span class="co">#&gt; child       |  -1.16 | [-1.30, -1.00] |   100% |        0% | 1.001 | 1421</span>
+<span class="co">#&gt; camper1     |   0.73 | [ 0.59,  0.88] |   100% |        0% | 1.000 | 3552</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Using highest density intervals as credible intervals.</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects (Count Model) </span>
+<span class="co">#&gt; # Fixed effects (conditional) </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter   | Median |         89% CI |     pd | % in ROPE | ESS |  Rhat</span>
-<span class="co">#&gt; ------------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept) |  -0.87 | [-1.49, -0.08] | 96.80% |     4.80% |  78 | 1.000</span>
-<span class="co">#&gt; persons     |   0.84 | [ 0.60,  1.06] |   100% |        0% |  75 | 0.997</span>
-<span class="co">#&gt; child       |  -1.16 | [-1.32, -1.00] |   100% |        0% | 107 | 1.027</span>
-<span class="co">#&gt; camper1     |   0.74 | [ 0.52,  0.91] |   100% |        0% | 224 | 0.993</span>
+<span class="co">#&gt; Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS</span>
+<span class="co">#&gt; -------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |  -0.86 | [-1.40, -0.12] | 97.88% |     0.68% | 1.014 |  178</span>
+<span class="co">#&gt; persons     |   0.84 | [ 0.64,  1.05] |   100% |        0% | 1.014 |  171</span>
+<span class="co">#&gt; child       |  -1.16 | [-1.30, -1.00] |   100% |        0% | 1.001 | 1421</span>
+<span class="co">#&gt; camper1     |   0.73 | [ 0.59,  0.88] |   100% |        0% | 1.000 | 3552</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # Fixed Effects (Zero-Inflated Model) </span>
+<span class="co">#&gt; # Fixed effects (zero-inflated) </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter   | Median |         89% CI |     pd | % in ROPE | ESS |  Rhat</span>
-<span class="co">#&gt; ------------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept) |  -0.76 | [-1.66,  0.51] | 87.20% |    10.40% |  98 | 0.992</span>
-<span class="co">#&gt; child       |   1.87 | [ 1.37,  2.43] |   100% |        0% | 262 | 0.999</span>
-<span class="co">#&gt; camper1     |  -0.83 | [-1.44, -0.22] | 99.20% |     0.80% | 168 | 0.997</span>
+<span class="co">#&gt; Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS</span>
+<span class="co">#&gt; -------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |  -0.65 | [-1.81,  0.37] | 84.72% |     7.25% | 1.007 |  988</span>
+<span class="co">#&gt; child       |   1.86 | [ 1.33,  2.39] |   100% |        0% | 1.003 |  999</span>
+<span class="co">#&gt; camper1     |  -0.81 | [-1.39, -0.23] | 98.75% |     1.65% | 1.001 | 2103</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # Random Effects (Count Model) </span>
+<span class="co">#&gt; # Random effects (conditional) SD/Cor: persons</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter | Median |        89% CI |     pd | % in ROPE | ESS |  Rhat</span>
+<span class="co">#&gt; Parameter   | Median |       89% CI |   pd | % in ROPE |  Rhat | ESS</span>
+<span class="co">#&gt; --------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |   0.12 | [0.00, 0.44] | 100% |    43.25% | 1.018 | 293</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random effects (zero-inflated) SD/Cor: persons</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter    | Median |       89% CI |   pd | % in ROPE |  Rhat | ESS</span>
 <span class="co">#&gt; ---------------------------------------------------------------------</span>
-<span class="co">#&gt; persons.1 |  -0.01 | [-0.40, 0.35] | 59.20% |    57.60% |  80 | 1.012</span>
-<span class="co">#&gt; persons.2 |   0.03 | [-0.15, 0.33] | 61.60% |    60.80% |  88 | 0.994</span>
-<span class="co">#&gt; persons.3 |  -0.02 | [-0.38, 0.11] | 63.20% |    64.80% |  66 | 1.008</span>
-<span class="co">#&gt; persons.4 |   0.00 | [-0.51, 0.29] | 51.20% |    62.40% |  76 | 0.992</span>
+<span class="co">#&gt; zi_Intercept |   1.29 | [0.52, 2.56] | 100% |        0% | 1.009 | 484</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # Random Effects (Zero-Inflated Model) </span>
+<span class="co">#&gt; Using highest density intervals as credible intervals.</span></code></pre></div>
+<p>To include information about the random effect parameters (group levels), set <code>group_level = TRUE</code>:</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"conditional"</span>, group_level <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; # Fixed effects </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter | Median |         89% CI |     pd | % in ROPE | ESS |  Rhat</span>
-<span class="co">#&gt; ----------------------------------------------------------------------</span>
-<span class="co">#&gt; persons.1 |   1.38 | [ 0.58,  2.66] | 97.60% |     1.60% | 108 | 0.992</span>
-<span class="co">#&gt; persons.2 |   0.27 | [-0.62,  1.40] | 68.80% |    13.60% | 100 | 1.002</span>
-<span class="co">#&gt; persons.3 |  -0.11 | [-1.36,  0.86] | 60.80% |    16.80% |  96 | 0.993</span>
-<span class="co">#&gt; persons.4 |  -1.19 | [-2.62, -0.31] | 95.20% |     0.80% | 115 | 0.992</span></code></pre></div>
+<span class="co">#&gt; Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS</span>
+<span class="co">#&gt; -------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |  -0.86 | [-1.40, -0.12] | 97.88% |     0.68% | 1.014 |  178</span>
+<span class="co">#&gt; persons     |   0.84 | [ 0.64,  1.05] |   100% |        0% | 1.014 |  171</span>
+<span class="co">#&gt; child       |  -1.16 | [-1.30, -1.00] |   100% |        0% | 1.001 | 1421</span>
+<span class="co">#&gt; camper1     |   0.73 | [ 0.59,  0.88] |   100% |        0% | 1.000 | 3552</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random effects Intercept: persons</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter |    Median |        89% CI |     pd | % in ROPE |  Rhat | ESS</span>
+<span class="co">#&gt; ------------------------------------------------------------------------</span>
+<span class="co">#&gt; persons.1 | -4.77e-03 | [-0.35, 0.36] | 54.00% |    61.05% | 1.019 | 182</span>
+<span class="co">#&gt; persons.2 |      0.02 | [-0.15, 0.34] | 65.18% |    62.30% | 1.011 | 230</span>
+<span class="co">#&gt; persons.3 |     -0.01 | [-0.23, 0.15] | 58.48% |    68.80% | 1.006 | 341</span>
+<span class="co">#&gt; persons.4 |  2.72e-03 | [-0.22, 0.34] | 52.78% |    62.28% | 1.009 | 250</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random effects SD/Cor: persons</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Median |       89% CI |   pd | % in ROPE |  Rhat | ESS</span>
+<span class="co">#&gt; --------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |   0.12 | [0.00, 0.44] | 100% |    43.25% | 1.018 | 293</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Using highest density intervals as credible intervals.</span></code></pre></div>
 </div>
 </div>
 <div id="structural-models-pca-efa-cfa-sem" class="section level2">
@@ -408,7 +436,7 @@
 <div id="principal-component-analysis-pca-and-exploratory-factor-analysis-efa" class="section level3">
 <h3 class="hasAnchor">
 <a href="#principal-component-analysis-pca-and-exploratory-factor-analysis-efa" class="anchor"></a>Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA)</h3>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span>
 
 <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/principal.html">pca</a></span><span class="op">(</span><span class="va">mtcars</span>, nfactors <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -430,7 +458,7 @@
 #&gt; carb     |  0.11 |  0.44 |  0.85 |       1.53 |       0.07
 #&gt; 
 #&gt; The 3 principal components (varimax rotation) accounted for 89.87% of the total variance of the original data (RC2 = 41.43%, RC3 = 29.06%, RC1 = 19.39%).</code></pre>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://factominer.free.fr">FactoMineR</a></span><span class="op">)</span>
 
 <span class="fu">FactoMineR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FactoMineR/man/FAMD.html">FAMD</a></span><span class="op">(</span><span class="va">iris</span>, ncp <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -453,7 +481,7 @@
 <div id="frequentist-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#frequentist-1" class="anchor"></a>Frequentist</h4>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://lavaan.org">lavaan</a></span><span class="op">)</span>
 
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="st">' visual  =~ x1 + x2 + x3
@@ -495,7 +523,7 @@
 <h2 class="hasAnchor">
 <a href="#meta-analysis" class="anchor"></a>Meta-Analysis</h2>
 <p><code><a href="../reference/model_parameters.html">parameters()</a></code> also works for <code>rma</code>-objects from the <strong>metafor</strong> package.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.metafor-project.org">metafor</a></span><span class="op">)</span>
 
 <span class="va">mydat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
