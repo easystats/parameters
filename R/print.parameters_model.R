@@ -432,6 +432,11 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
   orig_x <- x
   cp <- attributes(x)$parameter_info
 
+  # round ESS
+  if (!is.null(x$ESS)) {
+    x$ESS <- round(x$ESS)
+  }
+
   # check if user supplied digits attributes
   ci <- .additional_arguments(x, "ci", .95)
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
