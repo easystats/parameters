@@ -45,7 +45,7 @@ set.seed(333)
 
 The `model_parameters()` function (also accessible via the shortcut `parameters()`) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
 
-- The names of the returned data frame are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using [`standardize_names()`](https://easystats.github.io/parameters/reference/standardize_names.html)).
+- The names of the returned data frame are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using [`standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html)).
 - It is able to compute or extract indices not available by default, such as ***p*-values**, **CIs**, etc.
 - It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/reference/bootstrap_model.html).
 
@@ -82,13 +82,18 @@ BayesFactor::ttestBF(formula = mpg ~ vs, data = mtcars) %>%
 
 ## ANOVAs
 
-Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared()`, `epsilon_sqared()` or `omega_squared()`, were moved to the [**effectsize**-package](https://easystats.github.io/effectsize/). However, **parameters** uses these function to compute such indices for parameters summaries.
+Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared()`, `epsilon_sqared()` or `omega_squared()` are powered by the [**effectsize**-package](https://easystats.github.io/effectsize/). However, **parameters** uses these function to compute such indices for parameters summaries, including confidence intervals
 
 ### Simple
 
 ```{r, warning=FALSE, message=FALSE}
 aov(Sepal.Length ~ Species, data = iris) %>%
   parameters(omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial")
+```
+
+```{r, warning=FALSE, message=FALSE}
+aov(Sepal.Length ~ Species * Sepal.Width, data = iris) %>%
+  parameters(omega_squared = "partial", eta_squared = "partial", ci = .8)
 ```
 
 ### Repeated measures
@@ -110,6 +115,11 @@ aov(mpg ~ am + Error(gear), data = mtcars) %>%
 ```{r, warning=FALSE, message=FALSE}
 glm(vs ~ poly(mpg, 2) + cyl, data = mtcars) %>% 
   parameters()
+```
+
+```{r, warning=FALSE, message=FALSE}
+glm(vs ~ poly(mpg, 2) + cyl, data = mtcars) %>% 
+  parameters(exponentiate = TRUE, df_method = "wald")
 ```
 
 ### Mixed Models
