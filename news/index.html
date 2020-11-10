@@ -180,7 +180,7 @@
 <a href="#new-supported-model-classes" class="anchor"></a>New supported model classes</h2>
 <ul>
 <li><p><code>Glm</code> (<em>rms</em>).</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> supports <code>Gam</code> models (<em>gam</em>) and <code>pairwise.htest</code> objects.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> supports <code>Gam</code> models (<em>gam</em>), <code>htest</code> objects from <code><a href="https://rdrr.io/r/stats/oneway.test.html">oneway.test()</a></code> and <code>pairwise.htest</code> objects.</p></li>
 </ul>
 </div>
 <div id="changes-to-functions" class="section level2">
@@ -576,86 +576,6 @@
 <li><p>Fixed issue in <code>degrees_of_freedem()</code> for <em>logistf</em>-models, which unintentionally printed the complete model summary.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>mlm</em> models.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/random_parameters.html">random_parameters()</a></code> for uncorrelated random effects.</p></li>
-</ul>
-</div>
-</div>
-    <div id="parameters-050" class="section level1">
-<h1 class="page-header" data-toc-text="0.5.0">
-<a href="#parameters-050" class="anchor"></a>parameters 0.5.0<small> 2020-02-09 </small>
-</h1>
-<div id="breaking-changes-2" class="section level2">
-<h2 class="hasAnchor">
-<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
-<ul>
-<li><p><code><a href="../reference/skewness.html">skewness()</a></code> now uses a different method to calculate the skewness by default. Different methods can be selected using the <code>type</code>-argument.</p></li>
-<li><p><code><a href="../reference/skewness.html">kurtosis()</a></code> now uses a different method to calculate the skewness by default. Different methods can be selected using the <code>type</code>-argument.</p></li>
-</ul>
-</div>
-<div id="new-supported-models-4" class="section level2">
-<h2 class="hasAnchor">
-<a href="#new-supported-models-4" class="anchor"></a>New supported models</h2>
-<ul>
-<li>Added support for <code>cglm</code> (<em>cglm</em>), <code>DirichletRegModel</code> (<em>DirichletReg</em>)</li>
-</ul>
-</div>
-<div id="general-4" class="section level2">
-<h2 class="hasAnchor">
-<a href="#general-4" class="anchor"></a>General</h2>
-<ul>
-<li><p>Added new vignettes on ‘Standardized Model Parameters’ and ‘Robust Estimation of Standard Errors’, and vignettes are now also published on CRAN.</p></li>
-<li><p>Improved handling of robust statistics in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. This should now work for more models than before.</p></li>
-<li><p>Improved accuracy of <code><a href="../reference/ci.merMod.html">ci.merMod()</a></code> for <code>method = "satterthwaite"</code> and <code>method = "kenward"</code>.</p></li>
-<li><p><code><a href="../reference/select_parameters.html">select_parameters()</a></code> for <em>stanreg</em> models, which was temporarily removed due to the CRAN removal of package <strong>projpred</strong>, is now re-implemented.</p></li>
-</ul>
-</div>
-<div id="new-functions-2" class="section level2">
-<h2 class="hasAnchor">
-<a href="#new-functions-2" class="anchor"></a>New functions</h2>
-<ul>
-<li><p><code><a href="../reference/ci_betwithin.html">dof_betwithin()</a></code> to compute degrees of freedom based on a between-within approximation method (and related to that, <code>p_value_*()</code> and <code>se_*()</code> for this method were added as well).</p></li>
-<li><p><code><a href="../reference/random_parameters.html">random_parameters()</a></code> that returns information about the random effects such as variances, R2 or ICC.</p></li>
-<li><p><code><a href="../reference/principal_components.html">closest_component()</a></code> as a small helper that returns the component index for each variable in a data frame that was used in <code><a href="../reference/principal_components.html">principal_components()</a></code>.</p></li>
-<li><p><code><a href="../reference/get_scores.html">get_scores()</a></code> as a small helper to extract scales and calculate sum scores from a principal component analysis (PCA, <code><a href="../reference/principal_components.html">principal_components()</a></code>).</p></li>
-</ul>
-</div>
-<div id="changes-to-functions-8" class="section level2">
-<h2 class="hasAnchor">
-<a href="#changes-to-functions-8" class="anchor"></a>Changes to functions</h2>
-<ul>
-<li><p><code><a href="../reference/n_clusters.html">n_clusters()</a></code> gets the option <code>"M3C"</code> for the <code>package</code>-argument, so you can try to determine the number of cluster by using the <code><a href="https://rdrr.io/pkg/M3C/man/M3C.html">M3C::M3C()</a></code> function.</p></li>
-<li><p>The <code><a href="../reference/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>select</code>-argument, to print only selected columns of the parameters table.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for meta-analysis models has an improved <code><a href="../reference/print.html">print()</a></code>-method for subgroups (see examples in <code><a href="../reference/model_parameters.rma.html">?model_parameters.rma</a></code>).</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models gets a <code>details</code>-argument to additionally print information about the random effects.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> now accepts the <code>df_method</code>-argument for more (mixed) models.</p></li>
-<li><p>The Intercept-parameter in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for meta-analysis models was renamed to <code>"Overall"</code>.</p></li>
-<li><p><code><a href="../reference/skewness.html">skewness()</a></code> gets a <code>type</code>-argument, to compute different types of skewness.</p></li>
-<li><p><code><a href="../reference/skewness.html">kurtosis()</a></code> gets a <code>type</code>-argument, to compute different types of skewness.</p></li>
-<li><p><code><a href="../reference/describe_distribution.html">describe_distribution()</a></code> now also works on data frames and gets a nicer print-method.</p></li>
-</ul>
-</div>
-<div id="bug-fixes-9" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
-<ul>
-<li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when <code>robust = TRUE</code>, which could sometimes mess up order of the statistic column.</p></li>
-<li><p>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with wrong <code>df</code> for <code>lme</code>-models.</p></li>
-<li><p>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> when <code>df_method</code> was not set to default.</p></li>
-<li><p>Fixed issues in <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> and <code>model_parameters.gee()</code> when <code>robust = TRUE</code>.</p></li>
-<li><p>Fixed issues with <em>coxph</em> models with only one parameter.</p></li>
-<li><p>Fixed issue in <code><a href="https://easystats.github.io/insight/reference/format_p.html">format_p()</a></code> when argument <code>digits</code> was <code>"apa"</code>.</p></li>
-<li><p>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>zeroinfl</code>-models.</p></li>
-</ul>
-</div>
-</div>
-    <div id="parameters-041" class="section level1">
-<h1 class="page-header" data-toc-text="0.4.1">
-<a href="#parameters-041" class="anchor"></a>parameters 0.4.1<small> 2020-01-17 </small>
-</h1>
-<div id="bug-fixes-10" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
-<ul>
-<li>Fix CRAN check issues, caused by removal of package ‘projpred’.</li>
 </ul>
 </div>
 </div>
