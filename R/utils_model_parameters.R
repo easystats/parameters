@@ -28,6 +28,16 @@
   attr(params, "iterations") <- iterations
   attr(params, "df_method") <- df_method
 
+  model_formula <- tryCatch(
+    {
+      .safe_deparse(insight::find_formula(model)$conditional)
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+  attr(params, "model_formula") <- model_formula
+
   # column name for coefficients
   coef_col <- .find_coefficient_type(info, exponentiate)
   attr(params, "coefficient_name") <- coef_col

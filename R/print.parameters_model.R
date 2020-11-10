@@ -12,11 +12,11 @@
 #'   be printed. If \code{NULL} (default), all columns are printed. The shortcut
 #'   \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
 #'   while \code{select = "short"} prints coefficient, standard errors and p-values.
-#' @param show_sigma Logical, if \code{FALSE}, adds information about the residual
+#' @param show_sigma Logical, if \code{TRUE}, adds information about the residual
 #'   standard deviation.
+#' @param show_formula Logical, if \code{TRUE}, adds the model formula to the output.
 #' @inheritParams parameters_table
 #'
-#' @inheritSection format_parameters Notation of Interaction Terms
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @return \code{NULL}
 #'
@@ -43,7 +43,7 @@
 #' }
 #' @importFrom insight format_table
 #' @export
-print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, show_sigma = FALSE, ...) {
+print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, show_sigma = FALSE, show_formula = FALSE, ...) {
   # save original input
   orig_x <- x
 
@@ -53,6 +53,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   sigma <- attributes(x)$sigma
   s_value <- attributes(x)$s_value
   p_adjust <- attributes(x)$p_adjust
+  model_formula <- attributes(x)$model_formula
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
 
   # check if user supplied digits attributes
@@ -158,6 +159,12 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     )
     cat("\n")
     insight::print_color(paste0("p-value adjustment method: ", p_adj_string), "blue")
+  }
+
+  # print residual standard deviation
+  if (!is.null(model_formula) && isTRUE(show_formula)) {
+    cat("\n")
+    insight::print_color(paste("Model:", model_formula), "blue")
   }
 
   # for Bayesian models

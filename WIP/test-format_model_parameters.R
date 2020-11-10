@@ -3,27 +3,27 @@ if (require("testthat") && require("parameters") && require("splines")) {
 
   m <- lm(mpg ~ qsec:wt + wt:drat, data = mtcars)
   test_that("format_model_parameters-1", {
-    expect_equal(unname(format_parameters(m)), c("(Intercept)", "qsec * wt", "wt * drat"))
+    expect_equal(unname(format_parameters(m)), c("(Intercept)", "qsec : wt", "wt : drat"))
   })
 
   m <- lm(mpg ~ qsec : wt + wt / drat, data = mtcars)
   test_that("format_model_parameters-2", {
-    expect_equal(unname(format_parameters(m)), c("(Intercept)", "wt", "qsec * wt", "wt * drat"))
+    expect_equal(unname(format_parameters(m)), c("(Intercept)", "wt", "qsec : wt", "wt : drat"))
   })
 
   m <- lm(mpg ~ qsec:wt + wt:drat + wt, data = mtcars)
   test_that("format_model_parameters-3", {
-    expect_equal(unname(format_parameters(m)), c("(Intercept)", "wt", "qsec * wt", "wt * drat"))
+    expect_equal(unname(format_parameters(m)), c("(Intercept)", "wt", "qsec : wt", "wt : drat"))
   })
 
   m <- lm(mpg ~ qsec : wt + wt / drat + wt, data = mtcars)
   test_that("format_model_parameters-4", {
-    expect_equal(unname(format_parameters(m)), c("(Intercept)", "wt", "qsec * wt", "wt * drat"))
+    expect_equal(unname(format_parameters(m)), c("(Intercept)", "wt", "qsec : wt", "wt : drat"))
   })
 
   m <- lm(mpg ~ qsec * wt + wt : drat + wt, data = mtcars)
   test_that("format_model_parameters-5", {
-    expect_equal(unname(format_parameters(m)), c("(Intercept)", "qsec", "wt", "qsec * wt", "wt * drat"))
+    expect_equal(unname(format_parameters(m)), c("(Intercept)", "qsec", "wt", "qsec * wt", "wt : drat"))
   })
 
   m <- lm(mpg ~ wt + qsec + wt:qsec, data = mtcars)
@@ -44,8 +44,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
   test_that("format_model_parameters-8", {
     expect_equal(
       unname(format_parameters(m)),
-      c("(Intercept)", "Species [setosa] * Petal.Length", "Species [versicolor] * Petal.Length",
-        "Species [virginica] * Petal.Length")
+      c("(Intercept)", "Species [setosa] : Petal.Length", "Species [versicolor] : Petal.Length",
+        "Species [virginica] : Petal.Length")
     )
   })
 
@@ -54,8 +54,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
     expect_equal(
       unname(format_parameters(m)),
       c("(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Species [setosa] * Petal.Length", "Species [versicolor] * Petal.Length",
-        "Species [virginica] * Petal.Length")
+        "Species [setosa] : Petal.Length", "Species [versicolor] : Petal.Length",
+        "Species [virginica] : Petal.Length")
     )
   })
 
@@ -73,8 +73,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
     expect_equal(
       unname(format_parameters(m)),
       c("(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Species [setosa] * Petal.Length", "Species [versicolor] * Petal.Length",
-        "Species [virginica] * Petal.Length")
+        "Species [setosa] : Petal.Length", "Species [versicolor] : Petal.Length",
+        "Species [virginica] : Petal.Length")
     )
   })
 
@@ -83,8 +83,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
     expect_equal(
       unname(format_parameters(m)),
       c("(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Species [setosa] * Petal.Length", "Species [versicolor] * Petal.Length",
-        "Species [virginica] * Petal.Length")
+        "Species [setosa] : Petal.Length", "Species [versicolor] : Petal.Length",
+        "Species [virginica] : Petal.Length")
     )
   })
 
@@ -101,8 +101,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
   test_that("format_model_parameters-14", {
     expect_equal(
       unname(format_parameters(m)),
-      c("(Intercept)", "Petal.Length", "Species [versicolor] * Petal.Length",
-        "Species [virginica] * Petal.Length")
+      c("(Intercept)", "Petal.Length", "Species [versicolor] : Petal.Length",
+        "Species [virginica] : Petal.Length")
     )
   })
 
