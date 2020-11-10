@@ -12,7 +12,7 @@
 #' of covariates, included as main effects or not, etc.). Their interpretation
 #' depends of the full context of the model, which should not be inferred
 #' from the parameters table alone - rather, we recommend to use packages
-#' to calculate estimated marginal means or marginal effects, such as
+#' that calculate estimated marginal means or marginal effects, such as
 #' \CRANpkg{modelbased}, \CRANpkg{emmeans} or \CRANpkg{ggeffects}. To raise
 #' awareness for this issue, you may use \code{print(...,show_formula=TRUE)}
 #' to add the model-specification to the output of the
