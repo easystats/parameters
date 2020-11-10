@@ -674,11 +674,14 @@
 
 #' @keywords internal
 .extract_parameters_htest <- function(model) {
-  if (insight::model_info(model)$is_correlation) {
+  m_info <- insight::model_info(model)
+
+  if (m_info$is_correlation) {
     names <- unlist(strsplit(model$data.name, " and "))
     out <- data.frame(
       "Parameter1" = names[1],
-      "Parameter2" = names[2]
+      "Parameter2" = names[2],
+      stringsAsFactors = FALSE
     )
 
     if (model$method == "Pearson's Chi-squared test") {
@@ -707,7 +710,7 @@
       out$p <- model$p.value
       out$Method <- "Kendall"
     }
-  } else if (insight::model_info(model)$is_ttest) {
+  } else if (m_info$is_ttest) {
     if (grepl(" and ", model$data.name)) {
       names <- unlist(strsplit(model$data.name, " and "))
       out <- data.frame(
@@ -721,7 +724,8 @@
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
-        "Method" = model$method
+        "Method" = model$method,
+        stringsAsFactors = FALSE
       )
     } else if (grepl(" by ", model$data.name)) {
       names <- unlist(strsplit(model$data.name, " by "))
@@ -736,7 +740,8 @@
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
-        "Method" = model$method
+        "Method" = model$method,
+        stringsAsFactors = FALSE
       )
     } else {
       out <- data.frame(
@@ -749,9 +754,19 @@
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
-        "Method" = model$method
+        "Method" = model$method,
+        stringsAsFactors = FALSE
       )
     }
+  } else if (m_info$is_oneway) {
+    out <- data.frame(
+      "F" = model$statistic,
+      "df_num" = round(model$parameter[1]),
+      "df_denom" = round(model$parameter[2]),
+      "p" = model$p.value,
+      "Method" = model$method,
+      stringsAsFactors = FALSE
+    )
   } else {
     stop("model_parameters not implemented for such h-tests yet.")
   }
