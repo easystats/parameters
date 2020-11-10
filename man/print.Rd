@@ -56,7 +56,7 @@ also in \code{print()} for \code{model_parameters()}, uses both \code{*}
 and \code{:}, depending on the type of interaction. Whenever
 \emph{main effects} for all parameters of the interaction terms are present,
 the interaction is denoted as \code{*}. When at least one of the interaction
-terms is not included as main effect, the interaction is denoted as \code{:}:
+terms is not included as main effect, the interaction is denoted as \code{:}.
 
 \preformatted{m1 <- lm(mpg ~ qsec : wt + wt / drat, data = mtcars)
 model_parameters(m1)
@@ -89,7 +89,7 @@ covariates, included as main effects or not, etc.). Their interpretation
 depends of the full context of the model, which should not be inferred
 from the parameters table alone - rather, we recommend to use packages
 to calculate estimated marginal means or marginal effects, such as
-\pkg{modelbased}, \pkg{emmeans} or \pkg{ggeffects}.
+\CRANpkg{modelbased}, \CRANpkg{emmeans} or \CRANpkg{ggeffects}.
 }
 
 \examples{

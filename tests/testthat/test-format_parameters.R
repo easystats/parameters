@@ -90,14 +90,14 @@ if (require("testthat") && require("parameters") && require("splines")) {
     expect_equal(fp, c(
       `(Intercept)` = "(Intercept)", Speciesversicolor = "Species [versicolor]",
       Speciesvirginica = "Species [virginica]", Sepal.Width = "Sepal.Width",
-      `Speciessetosa:Petal.Length` = "Species [setosa] / Petal.Length",
-      `Speciesversicolor:Petal.Length` = "Species [versicolor] / Petal.Length",
-      `Speciesvirginica:Petal.Length` = "Species [virginica] / Petal.Length",
+      `Speciessetosa:Petal.Length` = "Species [setosa] : Petal.Length",
+      `Speciesversicolor:Petal.Length` = "Species [versicolor] : Petal.Length",
+      `Speciesvirginica:Petal.Length` = "Species [virginica] : Petal.Length",
       `Speciesversicolor:Sepal.Width` = "Species [versicolor] * Sepal.Width",
       `Speciesvirginica:Sepal.Width` = "Species [virginica] * Sepal.Width",
-      `Speciessetosa:Petal.Length:Sepal.Width` = "Species [setosa] * Petal.Length * Sepal.Width",
-      `Speciesversicolor:Petal.Length:Sepal.Width` = "Species [versicolor] * Petal.Length * Sepal.Width",
-      `Speciesvirginica:Petal.Length:Sepal.Width` = "Species [virginica] * Petal.Length * Sepal.Width"
+      `Speciessetosa:Petal.Length:Sepal.Width` = "Species [setosa] : Petal.Length : Sepal.Width",
+      `Speciesversicolor:Petal.Length:Sepal.Width` = "Species [versicolor] : Petal.Length : Sepal.Width",
+      `Speciesvirginica:Petal.Length:Sepal.Width` = "Species [virginica] : Petal.Length : Sepal.Width"
     ))
   })
 
