@@ -17,7 +17,7 @@ parameters_table(
 \arguments{
 \item{x}{A data frame of model's parameters.}
 
-\item{pretty_names}{Pretty parameters' names.}
+\item{pretty_names}{Return "pretty" (i.e. more human readable) parameter names.}
 
 \item{stars}{Add significance stars (e.g., p < .001***).}
 

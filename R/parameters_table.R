@@ -1,7 +1,7 @@
 #' Parameter table formatting
 #'
 #' @param x A data frame of model's parameters.
-#' @param pretty_names Pretty parameters' names.
+#' @param pretty_names Return "pretty" (i.e. more human readable) parameter names.
 #' @param digits Number of decimal places for numeric values (except confidence intervals and p-values).
 #' @param ci_digits Number of decimal places for confidence intervals.
 #' @param p_digits Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.

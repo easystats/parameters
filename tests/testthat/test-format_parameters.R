@@ -66,9 +66,9 @@ if (require("testthat") && require("parameters") && require("splines")) {
     fp <- format_parameters(model)
     expect_equal(fp, c(
       `(Intercept)` = "(Intercept)", Speciesversicolor = "Species [versicolor]",
-      Speciesvirginica = "Species [virginica]", `Speciessetosa:Petal.Length` = "Species [setosa] / Petal.Length",
-      `Speciesversicolor:Petal.Length` = "Species [versicolor] / Petal.Length",
-      `Speciesvirginica:Petal.Length` = "Species [virginica] / Petal.Length"
+      Speciesvirginica = "Species [virginica]", `Speciessetosa:Petal.Length` = "Species [setosa] : Petal.Length",
+      `Speciesversicolor:Petal.Length` = "Species [versicolor] : Petal.Length",
+      `Speciesvirginica:Petal.Length` = "Species [virginica] : Petal.Length"
     ))
   })
 
@@ -78,9 +78,9 @@ if (require("testthat") && require("parameters") && require("splines")) {
     expect_equal(fp, c(
       `(Intercept)` = "(Intercept)", Petal.Length = "Petal.Length",
       Speciesversicolor = "Species [versicolor]", Speciesvirginica = "Species [virginica]",
-      `Speciessetosa:Sepal.Width` = "Species [setosa] / Sepal.Width",
-      `Speciesversicolor:Sepal.Width` = "Species [versicolor] / Sepal.Width",
-      `Speciesvirginica:Sepal.Width` = "Species [virginica] / Sepal.Width"
+      `Speciessetosa:Sepal.Width` = "Species [setosa] : Sepal.Width",
+      `Speciesversicolor:Sepal.Width` = "Species [versicolor] : Sepal.Width",
+      `Speciesvirginica:Sepal.Width` = "Species [virginica] : Sepal.Width"
     ))
   })
 
@@ -106,15 +106,15 @@ if (require("testthat") && require("parameters") && require("splines")) {
     fp <- format_parameters(model)
     expect_equal(fp, c(
       `(Intercept)` = "(Intercept)", Speciesversicolor = "Species [versicolor]",
-      Speciesvirginica = "Species [virginica]", `Speciessetosa:Petal.Length` = "Species [setosa] / Petal.Length",
-      `Speciesversicolor:Petal.Length` = "Species [versicolor] / Petal.Length",
-      `Speciesvirginica:Petal.Length` = "Species [virginica] / Petal.Length",
-      `Speciessetosa:Sepal.Width` = "Species [setosa] / Sepal.Width",
-      `Speciesversicolor:Sepal.Width` = "Species [versicolor] / Sepal.Width",
-      `Speciesvirginica:Sepal.Width` = "Species [virginica] / Sepal.Width",
-      `Speciessetosa:Petal.Length:Sepal.Width` = "Species [setosa] / Petal.Length / Sepal.Width",
-      `Speciesversicolor:Petal.Length:Sepal.Width` = "Species [versicolor] / Petal.Length / Sepal.Width",
-      `Speciesvirginica:Petal.Length:Sepal.Width` = "Species [virginica] / Petal.Length / Sepal.Width"
+      Speciesvirginica = "Species [virginica]", `Speciessetosa:Petal.Length` = "Species [setosa] : Petal.Length",
+      `Speciesversicolor:Petal.Length` = "Species [versicolor] : Petal.Length",
+      `Speciesvirginica:Petal.Length` = "Species [virginica] : Petal.Length",
+      `Speciessetosa:Sepal.Width` = "Species [setosa] : Sepal.Width",
+      `Speciesversicolor:Sepal.Width` = "Species [versicolor] : Sepal.Width",
+      `Speciesvirginica:Sepal.Width` = "Species [virginica] : Sepal.Width",
+      `Speciessetosa:Petal.Length:Sepal.Width` = "Species [setosa] : Petal.Length : Sepal.Width",
+      `Speciesversicolor:Petal.Length:Sepal.Width` = "Species [versicolor] : Petal.Length : Sepal.Width",
+      `Speciesvirginica:Petal.Length:Sepal.Width` = "Species [virginica] : Petal.Length : Sepal.Width"
     ))
   })
 
@@ -124,15 +124,15 @@ if (require("testthat") && require("parameters") && require("splines")) {
     expect_equal(fp, c(
       `(Intercept)` = "(Intercept)", Petal.Length = "Petal.Length",
       Speciesversicolor = "Species [versicolor]", Speciesvirginica = "Species [virginica]",
-      `Speciessetosa:Sepal.Width` = "Species [setosa] / Sepal.Width",
-      `Speciesversicolor:Sepal.Width` = "Species [versicolor] / Sepal.Width",
-      `Speciesvirginica:Sepal.Width` = "Species [virginica] / Sepal.Width",
-      `Speciessetosa:Petal.Width` = "Species [setosa] / Petal.Width",
-      `Speciesversicolor:Petal.Width` = "Species [versicolor] / Petal.Width",
-      `Speciesvirginica:Petal.Width` = "Species [virginica] / Petal.Width",
-      `Speciessetosa:Sepal.Width:Petal.Width` = "Species [setosa] / Sepal.Width / Petal.Width",
-      `Speciesversicolor:Sepal.Width:Petal.Width` = "Species [versicolor] / Sepal.Width / Petal.Width",
-      `Speciesvirginica:Sepal.Width:Petal.Width` = "Species [virginica] / Sepal.Width / Petal.Width"
+      `Speciessetosa:Sepal.Width` = "Species [setosa] : Sepal.Width",
+      `Speciesversicolor:Sepal.Width` = "Species [versicolor] : Sepal.Width",
+      `Speciesvirginica:Sepal.Width` = "Species [virginica] : Sepal.Width",
+      `Speciessetosa:Petal.Width` = "Species [setosa] : Petal.Width",
+      `Speciesversicolor:Petal.Width` = "Species [versicolor] : Petal.Width",
+      `Speciesvirginica:Petal.Width` = "Species [virginica] : Petal.Width",
+      `Speciessetosa:Sepal.Width:Petal.Width` = "Species [setosa] : Sepal.Width : Petal.Width",
+      `Speciesversicolor:Sepal.Width:Petal.Width` = "Species [versicolor] : Sepal.Width : Petal.Width",
+      `Speciesvirginica:Sepal.Width:Petal.Width` = "Species [virginica] : Sepal.Width : Petal.Width"
     ))
   })
 
@@ -250,11 +250,11 @@ if (require("testthat") && require("parameters") && require("splines")) {
     m4 <- lm(mpg ~ qsec : wt + wt / drat + wt, data = mtcars)
     m5 <- lm(mpg ~ qsec * wt + wt : drat + wt, data = mtcars)
     m6 <- lm(mpg ~ wt + qsec + wt:qsec, data = mtcars)
-    # expect_equal(format_parameters(m1), c(`(Intercept)` = "(Intercept)", `qsec:wt` = "qsec : wt", `wt:drat` = "wt : drat"))
-    expect_equal(format_parameters(m2), c(`(Intercept)` = "(Intercept)", wt = "wt", `qsec:wt` = "qsec * wt", `wt:drat` = "wt / drat"))
-    expect_equal(format_parameters(m3), c(`(Intercept)` = "(Intercept)", wt = "wt", `qsec:wt` = "qsec * wt", `wt:drat` = "wt / drat"))
-    expect_equal(format_parameters(m4), c(`(Intercept)` = "(Intercept)", wt = "wt", `qsec:wt` = "qsec * wt", `wt:drat` = "wt / drat"))
-    expect_equal(format_parameters(m5), c(`(Intercept)` = "(Intercept)", qsec = "qsec", wt = "wt", `qsec:wt` = "qsec * wt", `wt:drat` = "wt / drat"))
+    expect_equal(format_parameters(m1), c(`(Intercept)` = "(Intercept)", `qsec:wt` = "qsec : wt", `wt:drat` = "wt : drat"))
+    expect_equal(format_parameters(m2), c(`(Intercept)` = "(Intercept)", wt = "wt", `qsec:wt` = "qsec : wt", `wt:drat` = "wt : drat"))
+    expect_equal(format_parameters(m3), c(`(Intercept)` = "(Intercept)", wt = "wt", `qsec:wt` = "qsec : wt", `wt:drat` = "wt : drat"))
+    expect_equal(format_parameters(m4), c(`(Intercept)` = "(Intercept)", wt = "wt", `qsec:wt` = "qsec : wt", `wt:drat` = "wt : drat"))
+    expect_equal(format_parameters(m5), c(`(Intercept)` = "(Intercept)", qsec = "qsec", wt = "wt", `qsec:wt` = "qsec * wt", `wt:drat` = "wt : drat"))
     expect_equal(format_parameters(m6), c(`(Intercept)` = "(Intercept)", wt = "wt", qsec = "qsec", `wt:qsec` = "wt * qsec"))
   })
 
