@@ -275,6 +275,8 @@ format_parameters.parameters_model <- function(model) {
 #' @keywords internal
 .format_interaction <- function(components, type, is_nested = FALSE, is_simple = FALSE) {
   # sep <- ifelse(is_nested | is_simple, " : ", " * ")
+  # sep <- ifelse(is_nested, " / ", " * ")
+  # sep <- ifelse(is_simple, " : ", ifelse(is_nested, " / ", " * "))
   sep <- ifelse(is_nested, " / ", " * ")
 
   if (length(components) > 2) {
