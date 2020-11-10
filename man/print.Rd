@@ -55,8 +55,8 @@ The notation of interaction terms in \code{format_parameters()}, and hence
 also in \code{print()} for \code{model_parameters()}, uses both \code{*}
 and \code{:}, depending on the type of interaction. Whenever
 \emph{main effects} for all parameters of the interaction terms are present,
-the interaction is denoted as \code{*}. When at least of term is not included
-as main effect, the interaction is denoted as \code{:}:
+the interaction is denoted as \code{*}. When at least one of the interaction
+terms is not included as main effect, the interaction is denoted as \code{:}:
 
 \preformatted{m1 <- lm(mpg ~ qsec : wt + wt / drat, data = mtcars)
 model_parameters(m1)

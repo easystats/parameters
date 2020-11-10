@@ -33,6 +33,9 @@
 #'   will be standardized and the model is completely refitted. In such cases,
 #'   standard errors and confidence intervals refer to the standardized coefficient.
 #'
+#' @inheritSection format_parameters Notation of Interaction Terms
+#' @inheritSection format_parameters Interpretation of Interaction Terms
+#'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters <- function(model, ...) {

@@ -47,6 +47,49 @@ Standardization is based on \code{\link[effectsize:standardize_parameters]{stand
 \note{
 The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
+\section{Notation of Interaction Terms}{
+
+The notation of interaction terms in \code{format_parameters()}, and hence
+also in \code{print()} for \code{model_parameters()}, uses both \code{*}
+and \code{:}, depending on the type of interaction. Whenever
+\emph{main effects} for all parameters of the interaction terms are present,
+the interaction is denoted as \code{*}. When at least one of the interaction
+terms is not included as main effect, the interaction is denoted as \code{:}:
+
+\preformatted{m1 <- lm(mpg ~ qsec : wt + wt / drat, data = mtcars)
+model_parameters(m1)
+> Parameter   | Coefficient |   SE |          95\% CI | t(28) |      p
+> -------------------------------------------------------------------
+> (Intercept) |       35.89 | 2.34 | [ 31.09, 40.68] | 15.34 | < .001
+> wt          |      -10.47 | 1.96 | [-14.48, -6.46] | -5.35 | < .001
+> qsec : wt   |        0.28 | 0.09 | [  0.10,  0.46] |  3.17 | 0.004
+> wt : drat   |        0.17 | 0.43 | [ -0.71,  1.05] |  0.39 | 0.701
+
+m2 <- lm(mpg ~ qsec * wt, data = mtcars)
+model_parameters(m2)
+> Parameter   | Coefficient |    SE |          95\% CI | t(28) |     p
+> -------------------------------------------------------------------
+> (Intercept) |      -13.11 | 29.38 | [-73.29, 47.06] | -0.45 | 0.659
+> qsec        |        2.76 |  1.63 | [ -0.58,  6.09] |  1.69 | 0.102
+> wt          |        5.50 |  9.29 | [-13.53, 24.53] |  0.59 | 0.559
+> qsec * wt   |       -0.59 |  0.52 | [ -1.65,  0.47] | -1.14 | 0.265}
+}
+
+\section{Interpretation of Interaction Terms}{
+
+Note that the \emph{interpretation} of model coefficients depends on many
+characteristics of the model. The number of parameters, and overall
+performance of the model, can differ \emph{or not} between \code{a * b}
+and \code{a / b}, suggesting that sometimes interaction terms give different
+parameterizations of the same model, but other times it gives completely
+different models (depending on \code{a} or \code{b} being factors of
+covariates, included as main effects or not, etc.). Their interpretation
+depends of the full context of the model, which should not be inferred
+from the parameters table alone - rather, we recommend to use packages
+to calculate estimated marginal means or marginal effects, such as
+\pkg{modelbased}, \pkg{emmeans} or \pkg{ggeffects}.
+}
+
 \seealso{
 \code{\link[insight:standardize_names]{standardize_names()}} to rename
   columns into a consistent, standardized naming scheme.
