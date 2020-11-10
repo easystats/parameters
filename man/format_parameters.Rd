@@ -43,6 +43,21 @@ model_parameters(m2)
 > qsec * wt   |       -0.59 |  0.52 | [ -1.65,  0.47] | -1.14 | 0.265}
 }
 
+\section{Interpretation of Interaction Terms}{
+
+Note that the \emph{interpretation} of model coefficients depends on many
+characteristics of the model. The number of parameters, and overall
+performance of the model, can differ \emph{or not} between \code{a * b}
+and \code{a / b}, suggesting that sometimes interaction terms give different
+parameterizations of the same model, but other times it gives completely
+different models (depending on \code{a} or \code{b} being factors of
+covariates, included as main effects or not, etc.). Their interpretation
+depends of the full context of the model, which should not be inferred
+from the parameters table alone - rather, we recommend to use packages
+to calculate estimated marginal means or marginal effects, such as
+\pkg{modelbased}, \pkg{emmeans} or \pkg{ggeffects}.
+}
+
 \examples{
 library(parameters)
 

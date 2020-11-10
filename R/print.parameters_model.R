@@ -17,6 +17,7 @@
 #' @inheritParams parameters_table
 #'
 #' @inheritSection format_parameters Notation of Interaction Terms
+#' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @return \code{NULL}
 #'
 #' @examples
