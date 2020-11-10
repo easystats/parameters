@@ -244,7 +244,7 @@ also in <code><a href='print.html'>print()</a></code> for <code>model_parameters
 and <code><a href='https://rdrr.io/r/base/Colon.html'>:</a></code>, depending on the type of interaction. Whenever
 <em>main effects</em> for all parameters of the interaction terms are present,
 the interaction is denoted as <code><a href='https://rdrr.io/r/base/Arithmetic.html'>*</a></code>. When at least one of the interaction
-terms is not included as main effect, the interaction is denoted as <code><a href='https://rdrr.io/r/base/Colon.html'>:</a></code>:</p>
+terms is not included as main effect, the interaction is denoted as <code><a href='https://rdrr.io/r/base/Colon.html'>:</a></code>.</p>
 <pre>m1 &lt;- lm(mpg ~ qsec : wt + wt / drat, data = mtcars)
 model_parameters(m1)
 &gt; Parameter   | Coefficient |   SE |          95% CI | t(28) |      p
@@ -277,7 +277,7 @@ covariates, included as main effects or not, etc.). Their interpretation
 depends of the full context of the model, which should not be inferred
 from the parameters table alone - rather, we recommend to use packages
 to calculate estimated marginal means or marginal effects, such as
-<span class="pkg">modelbased</span>, <span class="pkg">emmeans</span> or <span class="pkg">ggeffects</span>.</p>
+<a href='https://CRAN.R-project.org/package=modelbased'><span class="pkg">modelbased</span></a>, <a href='https://CRAN.R-project.org/package=emmeans'><span class="pkg">emmeans</span></a> or <a href='https://CRAN.R-project.org/package=ggeffects'><span class="pkg">ggeffects</span></a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to rename
