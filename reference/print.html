@@ -192,7 +192,7 @@
     </tr>
     <tr>
       <th>pretty_names</th>
-      <td><p>Pretty parameters' names.</p></td>
+      <td><p>Return "pretty" (i.e. more human readable) parameter names.</p></td>
     </tr>
     <tr>
       <th>split_components</th>
@@ -234,6 +234,34 @@ standard deviation.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>NULL</code></p>
+    <h2 class="hasAnchor" id="notation-of-interaction-terms"><a class="anchor" href="#notation-of-interaction-terms"></a>Notation of Interaction Terms</h2>
+
+    
+
+<p>The notation of interaction terms in <code><a href='format_parameters.html'>format_parameters()</a></code>, and hence
+also in <code>print()</code> for <code><a href='model_parameters.html'>model_parameters()</a></code>, uses both <code><a href='https://rdrr.io/r/base/Arithmetic.html'>*</a></code>
+and <code><a href='https://rdrr.io/r/base/Colon.html'>:</a></code>, depending on the type of interaction. Whenever
+<em>main effects</em> for all parameters of the interaction terms are present,
+the interaction is denoted as <code><a href='https://rdrr.io/r/base/Arithmetic.html'>*</a></code>. When at least of term is not included
+as main effect, the interaction is denoted as <code><a href='https://rdrr.io/r/base/Colon.html'>:</a></code>:</p>
+<pre>m1 &lt;- lm(mpg ~ qsec : wt + wt / drat, data = mtcars)
+model_parameters(m1)
+&gt; Parameter   | Coefficient |   SE |          95% CI | t(28) |      p
+&gt; -------------------------------------------------------------------
+&gt; (Intercept) |       35.89 | 2.34 | [ 31.09, 40.68] | 15.34 | &lt; .001
+&gt; wt          |      -10.47 | 1.96 | [-14.48, -6.46] | -5.35 | &lt; .001
+&gt; qsec : wt   |        0.28 | 0.09 | [  0.10,  0.46] |  3.17 | 0.004
+&gt; wt : drat   |        0.17 | 0.43 | [ -0.71,  1.05] |  0.39 | 0.701
+
+m2 &lt;- lm(mpg ~ qsec * wt, data = mtcars)
+model_parameters(m2)
+&gt; Parameter   | Coefficient |    SE |          95% CI | t(28) |     p
+&gt; -------------------------------------------------------------------
+&gt; (Intercept) |      -13.11 | 29.38 | [-73.29, 47.06] | -0.45 | 0.659
+&gt; qsec        |        2.76 |  1.63 | [ -0.58,  6.09] |  1.69 | 0.102
+&gt; wt          |        5.50 |  9.29 | [-13.53, 24.53] |  0.59 | 0.559
+&gt; qsec * wt   |       -0.59 |  0.52 | [ -1.65,  0.47] | -1.14 | 0.265</pre>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
