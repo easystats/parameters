@@ -767,6 +767,17 @@
       "Method" = model$method,
       stringsAsFactors = FALSE
     )
+  } else if (m_info$is_proptest) {
+    out <- data.frame(
+      "Parameter" = model$estimate,
+      "CI_low" = model$conf.int[1],
+      "CI_high" = model$conf.int[2],
+      "Chi2" = model$statistic,
+      "df" = round(model$parameter[1]),
+      "p" = model$p.value,
+      "Method" = model$method,
+      stringsAsFactors = FALSE
+    )
   } else {
     stop("model_parameters not implemented for such h-tests yet.")
   }
