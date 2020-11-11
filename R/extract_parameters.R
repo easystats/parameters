@@ -761,8 +761,8 @@
   } else if (m_info$is_onewaytest) {
     out <- data.frame(
       "F" = model$statistic,
-      "df_num" = round(model$parameter[1]),
-      "df_denom" = round(model$parameter[2]),
+      "df_num" = model$parameter[1],
+      "df_denom" = model$parameter[2],
       "p" = model$p.value,
       "Method" = model$method,
       stringsAsFactors = FALSE
@@ -772,7 +772,7 @@
       out <- data.frame(
         "Parameter" = model$estimate,
         "Chi2" = model$statistic,
-        "df" = round(model$parameter[1]),
+        "df" = model$parameter[1],
         stringsAsFactors = FALSE
       )
     } else {
@@ -781,7 +781,7 @@
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
         "Chi2" = model$statistic,
-        "df" = round(model$parameter[1]),
+        "df" = model$parameter[1],
         stringsAsFactors = FALSE
       )
     }

@@ -129,7 +129,9 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   # df for errors
   if ("df_error" %in% names(x)) x$df_error <- insight::format_value(x$df_error, protect_integers = TRUE)
   names(x)[names(x) == "df_error"] <- "df"
-
+  # denominator and numerator df
+  if ("df_num" %in% names(x)) x$df_num <- insight::format_value(x$df_num, protect_integers = TRUE)
+  if ("df_denom" %in% names(x)) x$df_denom <- insight::format_value(x$df_denom, protect_integers = TRUE)
   x
 }
 
