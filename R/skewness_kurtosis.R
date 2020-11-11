@@ -6,6 +6,7 @@
 #' @param iterations The number of bootstrap replicates for computing standard errors. If \code{NULL} (default), parametric standard errors are computed. See 'Details'.
 #' @param test Logical, if \code{TRUE}, tests if skewness or kurtosis is significantly different from zero.
 #' @param digits Number of decimal places.
+#' @param object An object returned by \code{skewness()} or \code{kurtosis()}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details \subsection{Skewness}{
@@ -273,13 +274,13 @@ print.parameters_kurtosis <- function(x, digits = 3, test = FALSE, ...) {
 }
 
 #' @rdname skewness
-#' @param object an object for which a summary is desired
 #' @export
 print.parameters_skewness <- print.parameters_kurtosis
 
+#' @importFrom stats pnorm
 #' @rdname skewness
 #' @export
-summary.parameters_skewness <- function(object, test = FALSE, ...){
+summary.parameters_skewness <- function(object, test = FALSE, ...) {
   if (test) {
     object$z <- object$Skewness / object$SE
     object$p <- 2 * (1 - stats::pnorm(abs(object$z)))
@@ -289,7 +290,7 @@ summary.parameters_skewness <- function(object, test = FALSE, ...){
 
 #' @rdname skewness
 #' @export
-summary.parameters_kurtosis <- function(object, test = FALSE, ...){
+summary.parameters_kurtosis <- function(object, test = FALSE, ...) {
   if (test) {
     object$z <- object$Kurtosis / object$SE
     object$p <- 2 * (1 - stats::pnorm(abs(object$z)))

@@ -17,9 +17,9 @@ kurtosis(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
 
 \method{print}{parameters_skewness}(x, digits = 3, test = FALSE, ...)
 
-\method{summary}{parameters_skewness}(object, test = FALSE)
+\method{summary}{parameters_skewness}(object, test = FALSE, ...)
 
-\method{summary}{parameters_kurtosis}(object, test = FALSE)
+\method{summary}{parameters_kurtosis}(object, test = FALSE, ...)
 }
 \arguments{
 \item{x}{A numeric vector or data.frame.}
@@ -36,7 +36,7 @@ kurtosis(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
 
 \item{test}{Logical, if \code{TRUE}, tests if skewness or kurtosis is significantly different from zero.}
 
-\item{object}{an object for which a summary is desired}
+\item{object}{An object returned by \code{skewness()} or \code{kurtosis()}.}
 }
 \value{
 Values of skewness or kurtosis.
