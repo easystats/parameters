@@ -5,7 +5,9 @@
 \alias{kurtosis}
 \alias{print.parameters_kurtosis}
 \alias{print.parameters_skewness}
-\title{Compute Skewness and Kurtosis}
+\alias{summary.parameters_skewness}
+\alias{summary.parameters_kurtosis}
+\title{Compute Skewness and (Excess) Kurtosis}
 \usage{
 skewness(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
 
@@ -14,6 +16,10 @@ kurtosis(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
 \method{print}{parameters_kurtosis}(x, digits = 3, test = FALSE, ...)
 
 \method{print}{parameters_skewness}(x, digits = 3, test = FALSE, ...)
+
+\method{summary}{parameters_skewness}(object, test = FALSE)
+
+\method{summary}{parameters_kurtosis}(object, test = FALSE)
 }
 \arguments{
 \item{x}{A numeric vector or data.frame.}
@@ -29,12 +35,14 @@ kurtosis(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
 \item{digits}{Number of decimal places.}
 
 \item{test}{Logical, if \code{TRUE}, tests if skewness or kurtosis is significantly different from zero.}
+
+\item{object}{an object for which a summary is desired}
 }
 \value{
 Values of skewness or kurtosis.
 }
 \description{
-Compute Skewness and Kurtosis
+Compute Skewness and (Excess) Kurtosis
 }
 \details{
 \subsection{Skewness}{

@@ -267,17 +267,35 @@ as.double.parameters_skewness <- as.numeric.parameters_skewness
 #' @rdname skewness
 #' @export
 print.parameters_kurtosis <- function(x, digits = 3, test = FALSE, ...) {
-  .print_skew_kurt(x, val = "Kurtosis", digits = digits, test = test, ...)
+  out <- summary(x, test = test)
+  cat(insight::format_table(out, digits = digits))
   invisible(x)
 }
 
 #' @rdname skewness
+#' @param object an object for which a summary is desired
 #' @export
-print.parameters_skewness <- function(x, digits = 3, test = FALSE, ...) {
-  .print_skew_kurt(x, val = "Skewness", digits = digits, test = test, ...)
-  invisible(x)
+print.parameters_skewness <- print.parameters_kurtosis
+
+#' @rdname skewness
+#' @export
+summary.parameters_skewness <- function(object, test = FALSE, ...){
+  if (test) {
+    object$z <- object$Skewness / object$SE
+    object$p <- 2 * (1 - stats::pnorm(abs(object$z)))
+  }
+  object
 }
 
+#' @rdname skewness
+#' @export
+summary.parameters_kurtosis <- function(object, test = FALSE, ...){
+  if (test) {
+    object$z <- object$Kurtosis / object$SE
+    object$p <- 2 * (1 - stats::pnorm(abs(object$z)))
+  }
+  object
+}
 
 
 
@@ -308,19 +326,6 @@ print.parameters_skewness <- function(x, digits = 3, test = FALSE, ...) {
     "III" = ,
     "Minitab" = "3"
   )
-}
-
-
-.print_skew_kurt <- function(x, val, digits = 3, test = FALSE, ...) {
-  if (test) {
-    x$z <- x[[val]] / x$SE
-    x$p <- 2 * (1 - stats::pnorm(abs(x$z)))
-  }
-
-  attr(x, "digits") <- digits
-  out <- parameters_table(x)
-
-  cat(insight::format_table(out, digits = digits))
 }
 
 
