@@ -1,4 +1,4 @@
-#' Compute Skewness and Kurtosis
+#' Compute Skewness and (Excess) Kurtosis
 #'
 #' @param x A numeric vector or data.frame.
 #' @param na.rm Remove missing values.
