@@ -174,6 +174,7 @@
   <span class='va'>x</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   component <span class='op'>=</span> <span class='st'>"conditional"</span>,
+  details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -194,6 +195,10 @@ supported by <code><a href='model_parameters.html'>model_parameters()</a></code>
     <tr>
       <th>component</th>
       <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>), <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for <code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>details</th>
+      <td><p>Logical, if <code>TRUE</code>, a summary of the random effects is included. See <code><a href='random_parameters.html'>random_parameters</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
