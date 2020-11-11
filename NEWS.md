@@ -21,6 +21,9 @@
 * `model_parameters()` for Anova-models (of class `aov`, `anova` etc.) gains a
   `ci`-argument, to add confidence intervals to effect size parameters.
 
+* `model_parameters()` for metafor-models is more stable when called from inside
+  functions.
+
 * `pool_parameters()` gains a `details`-argument. For mixed models, and if
   `details = TRUE`, random effect variances will also be pooled.
 

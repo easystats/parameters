@@ -831,16 +831,23 @@ ci.effectsize_table <- ci.effectsize_std_params
 #' @export
 ci.rma <- function(x, ci = .95, ...) {
   params <- insight::get_parameters(x)
-  out <- lapply(ci, function(i) {
-    model <- stats::update(x, level = i)
-    .data_frame(
-      Parameter = params[[1]],
-      CI = i * 100,
-      CI_low = as.vector(model$ci.lb),
-      CI_high = as.vector(model$ci.ub)
-    )
-  })
-  .remove_backticks_from_parameter_names(do.call(rbind, out))
+  tryCatch(
+    {
+      out <- lapply(ci, function(i) {
+        model <- stats::update(x, level = i)
+        .data_frame(
+          Parameter = params[[1]],
+          CI = i * 100,
+          CI_low = as.vector(model$ci.lb),
+          CI_high = as.vector(model$ci.ub)
+        )
+      })
+      .remove_backticks_from_parameter_names(do.call(rbind, out))
+    },
+    error = function(e) {
+      NULL
+    }
+  )
 }
 
 

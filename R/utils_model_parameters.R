@@ -45,13 +45,29 @@
 
 
   if (inherits(model, c("rma", "rma.uni"))) {
-    attr(params, "data") <- insight::get_data(model)
+    rma_data <- tryCatch(
+      {
+        insight::get_data(model)
+      },
+      error = function(e) {
+        NULL
+      }
+    )
+    attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / model$vi
   }
 
   if (utils::packageVersion("insight") > "0.10.0") {
     if (inherits(model, c("meta_random", "meta_fixed", "meta_bma"))) {
-      attr(params, "data") <- insight::get_data(model)
+      rma_data <- tryCatch(
+        {
+          insight::get_data(model)
+        },
+        error = function(e) {
+          NULL
+        }
+      )
+      attr(params, "data") <- rma_data
       attr(params, "study_weights") <- 1 / params$SE^2
     }
   }
