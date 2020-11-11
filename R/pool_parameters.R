@@ -8,6 +8,7 @@
 #' @param ... Currently not used.
 #' @inheritParams model_parameters.default
 #' @inheritParams bootstrap_model
+#' @inheritParams model_parameters.merMod
 #'
 #' @note Models with multiple components, (for instance, models with zero-inflation,
 #'   where predictors appear in the count and zero-inflated part) may fail in
@@ -29,7 +30,7 @@
 #' # example for multiple imputed datasets
 #' if (require("mice")) {
 #'   data("nhanes2")
-#'   imp <- mice(nhanes2)
+#'   imp <- mice(nhanes2, printFlag = FALSE)
 #'   models <- lapply(1:5, function(i) {
 #'     lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
 #'   })
@@ -43,7 +44,7 @@
 #' @importFrom stats var pt
 #' @importFrom insight is_model_supported is_model
 #' @export
-pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", verbose = TRUE, ...) {
+pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", details = FALSE, verbose = TRUE, ...) {
 
   # check input, save original model -----
 
@@ -52,7 +53,7 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
 
   if (all(sapply(x, insight::is_model)) && all(sapply(x, insight::is_model_supported))) {
     original_model <- x[[1]]
-    x <- lapply(x, model_parameters, component = component, ...)
+    x <- lapply(x, model_parameters, component = component, details = details, ...)
   }
 
   if (!all(sapply(x, inherits, "parameters_model"))) {
@@ -132,6 +133,22 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
   }))
 
 
+  # pool random effect variances -----
+
+  pooled_random <- NULL
+  if (details && !is.null(attributes(original_x[[1]])$details)) {
+    pooled_random <- attributes(original_x[[1]])$details
+    n_rows <- nrow(pooled_random)
+    for (i in 1:n_rows) {
+      re <- unlist(lapply(original_x, function(j) {
+        # random effects
+        attributes(j)$details$Value[i]
+      }))
+      pooled_random$Value[i] <- mean(re, na.rm = TRUE)
+    }
+  }
+
+
   # reorder ------
 
   pooled_params$Parameter <- x[[1]]$Parameter
@@ -150,6 +167,7 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
     exponentiate
   )
   attr(pooled_params, "object_name") <- obj_name
+  attr(pooled_params, "details") <- pooled_random
 
 
   # pool sigma ----

@@ -21,6 +21,9 @@
 * `model_parameters()` for Anova-models (of class `aov`, `anova` etc.) gains a
   `ci`-argument, to add confidence intervals to effect size parameters.
 
+* `pool_parameters()` gains a `details`-argument. For mixed models, and if
+  `details = TRUE`, random effect variances will also be pooled.
+
 ## Bug fixes
 
 * Fixed issue in `ci()` for *lme* models with non-positive definite
