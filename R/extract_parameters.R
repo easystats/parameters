@@ -758,7 +758,7 @@
         stringsAsFactors = FALSE
       )
     }
-  } else if (m_info$is_oneway) {
+  } else if (m_info$is_onewaytest) {
     out <- data.frame(
       "F" = model$statistic,
       "df_num" = round(model$parameter[1]),
@@ -768,16 +768,38 @@
       stringsAsFactors = FALSE
     )
   } else if (m_info$is_proptest) {
+    if (is.null(model$conf.int)) {
+      out <- data.frame(
+        "Parameter" = model$estimate,
+        "Chi2" = model$statistic,
+        "df" = round(model$parameter[1]),
+        stringsAsFactors = FALSE
+      )
+    } else {
+      out <- data.frame(
+        "Parameter" = model$estimate,
+        "CI_low" = model$conf.int[1],
+        "CI_high" = model$conf.int[2],
+        "Chi2" = model$statistic,
+        "df" = round(model$parameter[1]),
+        stringsAsFactors = FALSE
+      )
+    }
+    out$Null_value <- model$null.value
+    out$p <- model$p.value
+    out$Method <- model$method
+  } else if (m_info$is_binomtest) {
     out <- data.frame(
       "Parameter" = model$estimate,
       "CI_low" = model$conf.int[1],
       "CI_high" = model$conf.int[2],
-      "Chi2" = model$statistic,
-      "df" = round(model$parameter[1]),
-      "p" = model$p.value,
-      "Method" = model$method,
+      "Success" = model$statistic,
+      "Trials" = model$parameter,
       stringsAsFactors = FALSE
     )
+    out$Null_value <- model$null.value
+    out$p <- model$p.value
+    out$Method <- model$method
   } else {
     stop("model_parameters not implemented for such h-tests yet.")
   }
