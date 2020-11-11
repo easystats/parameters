@@ -52,7 +52,7 @@ Models with multiple components, (for instance, models with zero-inflation,
 # example for multiple imputed datasets
 if (require("mice")) {
   data("nhanes2")
-  imp <- mice(nhanes2)
+  imp <- mice(nhanes2, printFlag = FALSE)
   models <- lapply(1:5, function(i) {
     lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
   })
