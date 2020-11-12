@@ -167,7 +167,7 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
     names(params) <- gsub("Statistic", gsub("(-|\\s)statistic", "", attr(statistic, "statistic", exact = TRUE)), names(params))
     names(params) <- gsub("chi-squared", "Chi2", names(params))
   }
-  names(parameters) <- gsub("(c|C)hisq", "Chi2", names(parameters))
+  names(params) <- gsub("(c|C)hisq", "Chi2", names(params))
   names(params) <- gsub("Estimate", "Coefficient", names(params))
 
   # ==== adjust p-values?
