@@ -38,7 +38,17 @@ model_parameters.lqm <- model_parameters.lqmm
 
   # ==== DF and Conf Int
 
-  parameters$df <- attr(cs$B, "R") - 1
+  parameters$df <- tryCatch(
+    {
+      if (!is.null(cs$rdf)) {
+        cs$rdf
+      } else {
+        attr(cs$B, "R") - 1
+      }
+    }, error = function(e) {
+      Inf
+    }
+  )
   parameters$CI_low <- parameters$Coefficient - stats::qt((1 + ci) / 2, df = parameters$df) * parameters$SE
   parameters$CI_high <- parameters$Coefficient + stats::qt((1 + ci) / 2, df = parameters$df) * parameters$SE
 
