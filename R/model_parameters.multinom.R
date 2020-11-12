@@ -29,14 +29,32 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @inheritParams simulate_model
+#' @importFrom insight get_response
 #' @export
 model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, p_adjust = NULL, ...) {
+  # detect number of levels of response
+  nl <- tryCatch(
+    {
+      nlevels(insight::get_response(model))
+    },
+    error = function(e) {
+      0
+    }
+  )
+
+  # merge by response as well if more than 2 levels
+  if (nl > 2) {
+    merge_by <- c("Parameter", "Response")
+  } else {
+    merge_by <- "Parameter"
+  }
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
     bootstrap = bootstrap,
     iterations = iterations,
-    merge_by = c("Parameter", "Response"),
+    merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
     robust = FALSE,

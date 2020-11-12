@@ -936,12 +936,14 @@ p_value.htest <- function(model, ...) {
 p_value.multinom <- function(model, ...) {
   stat <- insight::get_statistic(model)
   p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
-
-  .data_frame(
+  out <- .data_frame(
     Parameter = stat$Parameter,
-    p = as.vector(p),
-    Response = stat$Response
+    p = as.vector(p)
   )
+  if (!is.null(stat$Response)) {
+    out$Response <- stat$Response
+  }
+  out
 }
 
 #' @export
