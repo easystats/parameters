@@ -111,11 +111,16 @@ model_parameters.maov <- model_parameters.aov
 
 #' @export
 model_parameters.afex_aov <- function(model, omega_squared = NULL, eta_squared = NULL, epsilon_squared = NULL, df_error = NULL, type = NULL, ...) {
-  if (!is.null(model$aov)) {
-    model_parameters(model$aov, omega_squared = omega_squared, eta_squared = eta_squared, epsilon_squared = epsilon_squared, df_error = df_error, type = type, ...)
+  if (inherits(model$Anova, "Anova.mlm")) {
+    params <- model$anova_table
+    with_df_and_p <- summary(model$Anova)$univariate.tests
+    params$`Sum Sq` <- with_df_and_p[-1,1]
+    params$`Error SS` <- with_df_and_p[-1,3]
+    out <- model_parameters(params, omega_squared = omega_squared, eta_squared = eta_squared, epsilon_squared = epsilon_squared, df_error = df_error, type = type, ...)
   } else {
-    NULL
+    out <- model_parameters(model$Anova, omega_squared = omega_squared, eta_squared = eta_squared, epsilon_squared = epsilon_squared, df_error = df_error, type = type, ...)
   }
+  out
 }
 
 #' @export
