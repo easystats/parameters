@@ -11,7 +11,7 @@
 * `Glm` (*rms*).
 
 * `model_parameters()` supports `Gam` models (*gam*), `htest` objects from 
-  `oneway.test()`, `prop.test()` and `pairwise.htest` objects.
+  `oneway.test()`, `chisq.test()`, `prop.test()` and `pairwise.htest` objects.
 
 ## Changes to functions
 

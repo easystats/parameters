@@ -767,6 +767,14 @@
       "Method" = model$method,
       stringsAsFactors = FALSE
     )
+  } else if (m_info$is_chi2test) {
+    out <- data.frame(
+      "Chi2" = model$statistic,
+      "df" = model$parameter,
+      "p" = model$p.value,
+      "Method" = model$method,
+      stringsAsFactors = FALSE
+    )
   } else if (m_info$is_proptest) {
     if (is.null(model$conf.int)) {
       out <- data.frame(
