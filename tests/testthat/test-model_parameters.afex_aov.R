@@ -16,4 +16,7 @@ if (require("testthat") &&
     expect_equal(colnames(mp1), c("Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p"))
     expect_equal(colnames(mp2), c("Parameter", "Sum_Squares", "Sum_Squares_Error", "df", "df_error", "Mean_Square", "F", "p"))
   })
+
+  unloadNamespace("afex")
+  unloadNamespace("lmerTest")
 }
