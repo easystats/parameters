@@ -62,7 +62,7 @@ that calculate estimated marginal means or marginal effects, such as
 \CRANpkg{modelbased}, \CRANpkg{emmeans} or \CRANpkg{ggeffects}. To raise
 awareness for this issue, you may use \code{print(...,show_formula=TRUE)}
 to add the model-specification to the output of the
-\code{\link[print.parameters_model]{print()}} method for \code{model_parameters()}.
+\code{\link[=print.parameters_model]{print()}} method for \code{model_parameters()}.
 }
 
 \seealso{

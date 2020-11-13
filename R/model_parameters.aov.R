@@ -11,8 +11,6 @@
 #' @param ci Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @details
-#'
 #' @return A data frame of indices related to the model's parameters.
 #'
 #' @note For ANOVA-tables from mixed models (i.e. \code{anova(lmer())}), only partial or adjusted effect sizes can be computed.

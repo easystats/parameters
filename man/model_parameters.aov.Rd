@@ -38,9 +38,6 @@ A data frame of indices related to the model's parameters.
 \description{
 Parameters from ANOVAs.
 }
-\details{
-
-}
 \note{
 For ANOVA-tables from mixed models (i.e. \code{anova(lmer())}), only partial or adjusted effect sizes can be computed.
 }
