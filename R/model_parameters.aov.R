@@ -220,20 +220,25 @@ model_parameters.Gam <- function(model, omega_squared = NULL, eta_squared = NULL
 
 # retrieves those rows in a "model_parameters" object where
 # the statistic column is not missing
-.valid_effectsize_rows <- function(parameters) {
+.valid_effectsize_rows <- function(parameters, fx_params) {
   stat_column <- colnames(parameters)[colnames(parameters) %in% c("F", "t", "z", "statistic")]
-  !is.na(parameters[[stat_column]])
+  out <- !is.na(parameters[[stat_column]])
+  if (sum(out) > length(fx_params)) {
+    out <- out & !is.na(match(parameters$Parameter, fx_params))
+  }
+  out
 }
 
 
 # add effect size column and related CI to the parameters
 # data frame, automatically detecting the effect size name
 .add_effectsize_to_parameters <- function(fx, params) {
+  fx_params <- fx$Parameter
   fx$Parameter <- NULL
   fx$Response <- NULL
   fx$Group <- NULL
   es <- colnames(fx)[1]
-  valid_rows <- .valid_effectsize_rows(params)
+  valid_rows <- .valid_effectsize_rows(params, fx_params)
   params[[es]][valid_rows] <- fx[[es]]
 
   if (!is.null(fx$CI_low)) {
