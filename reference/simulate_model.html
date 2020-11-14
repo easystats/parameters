@@ -237,19 +237,19 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Width</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
-#&gt; 1    3.395873        -1.0499478        -2.001419  0.78879191    1.0042085
-#&gt; 2    3.408029        -0.8393807        -2.286893  0.58336908    0.9787091
-#&gt; 3    3.469620        -1.4918520        -2.289942  0.68326777    0.9634427
-#&gt; 4    3.518610        -0.7520276        -1.075355  1.28831167    0.7917844
-#&gt; 5    3.572096        -1.4300109        -2.042793 -0.08283743    0.9801967
-#&gt; 6    3.584556        -1.4552495        -2.154706  0.73926228    0.8277842
+#&gt; 1    3.710868        -0.6573496        -1.615852  -0.2795765    0.8603510
+#&gt; 2    3.404043        -1.3286714        -1.959238   0.2639058    1.0724560
+#&gt; 3    3.658973        -1.1226745        -1.902277   0.2452941    0.8916794
+#&gt; 4    3.663237        -1.3981684        -2.681054  -0.4592579    0.9927272
+#&gt; 5    3.528323        -1.2343298        -2.385527   0.3970249    0.9495291
+#&gt; 6    3.202763        -1.0341525        -2.089578   0.9724297    1.0388532
 #&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
-#&gt; 1                    -1.2807550                  -0.94731180
-#&gt; 2                    -1.2164884                  -0.53683669
-#&gt; 3                    -0.8472007                  -0.63802540
-#&gt; 4                    -1.4278570                  -1.40870207
-#&gt; 5                    -0.1972190                  -0.08100027
-#&gt; 6                    -0.4868599                  -0.51083764</div><div class='input'><span class='co'># \donttest{</span>
+#&gt; 1                   -0.27578825                    0.1289375
+#&gt; 2                   -0.84165209                   -0.6302809
+#&gt; 3                   -0.54465323                   -0.3340608
+#&gt; 4                    0.05093328                    0.5402299
+#&gt; 5                   -0.72815626                   -0.3381219
+#&gt; 6                   -1.53581677                   -1.0729418</div><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span><span class='op'>(</span>
     <span class='va'>count</span> <span class='op'>~</span> <span class='va'>spp</span> <span class='op'>+</span> <span class='va'>mined</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>site</span><span class='op'>)</span>,
@@ -261,12 +261,12 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='st'>"zero_inflated"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div><div class='output co'>#&gt;   (Intercept)   minedno
-#&gt; 1   1.1588728 -2.206423
-#&gt; 2   0.2632384 -1.214664
-#&gt; 3   1.6467073 -2.524699
-#&gt; 4   0.4816272 -1.250780
-#&gt; 5   0.5359887 -1.722735
-#&gt; 6   0.8796121 -1.845702</div><div class='input'><span class='co'># }</span>
+#&gt; 1   1.2303485 -2.160457
+#&gt; 2   0.4146898 -1.521437
+#&gt; 3   1.0009119 -2.080498
+#&gt; 4   0.4058910 -1.640327
+#&gt; 5   0.7137019 -1.689948
+#&gt; 6   0.6250885 -1.437202</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

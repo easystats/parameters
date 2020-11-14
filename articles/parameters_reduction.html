@@ -233,7 +233,7 @@
 <p><em>Note:</em> By default, <code><a href="https://rdrr.io/pkg/psych/man/principal.html">psych::principal()</a></code> uses a <strong>varimax</strong> rotation to extract rotated components, possibly leading to discrepancies in the results.</p>
 <p>Finally, refit the model:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/cbind.html">cbind</a></span><span class="op">(</span><span class="va">attitude</span>, <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html">predict</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/cbind.html">cbind</a></span><span class="op">(</span><span class="va">attitude</span>, <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html">predict</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">rating</span> <span class="op">~</span> <span class="va">PC1</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
