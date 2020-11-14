@@ -1,6 +1,6 @@
-#' Parameters from Correlations and t-tests
+#' Parameters from hypothesis tests
 #'
-#' Parameters of h-tests (correlations, t-tests).
+#' Parameters of h-tests (correlations, t-tests, chi-squared, ...).
 #'
 #' @param model Object of class \code{htest} or \code{pairwise.htest}.
 #' @param bootstrap Should estimates be bootstrapped?

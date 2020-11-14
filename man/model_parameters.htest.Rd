@@ -4,7 +4,7 @@
 \name{model_parameters.htest}
 \alias{model_parameters.htest}
 \alias{model_parameters.pairwise.htest}
-\title{Parameters from Correlations and t-tests}
+\title{Parameters from hypothesis tests}
 \usage{
 \method{model_parameters}{htest}(
   model,
@@ -35,7 +35,7 @@ applies to objects from \code{chisq.test()}.}
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters of h-tests (correlations, t-tests).
+Parameters of h-tests (correlations, t-tests, chi-squared, ...).
 }
 \examples{
 model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")

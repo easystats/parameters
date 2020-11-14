@@ -2,7 +2,7 @@
 #'
 #' Compute and extract model parameters. See the documentation for your object's class:
 #' \itemize{
-#'  \item{\link[=model_parameters.htest]{Correlations, t-tests, ...}}
+#'  \item{\link[=model_parameters.htest]{Correlations, t-tests, ...} (\code{htest}, \code{pairwise.htest})}
 #'  \item{\link[=model_parameters.aov]{ANOVAs} (\code{aov}, \code{anova}, \pkg{afex}, ...)}
 #'  \item{\link[=model_parameters.default]{Regression models} (\code{lm}, \code{glm}, \pkg{survey}, ...)}
 #'  \item{\link[=model_parameters.gam]{Additive models} (\code{gam}, \code{gamm}, ...)}
