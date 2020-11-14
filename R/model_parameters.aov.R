@@ -6,8 +6,8 @@
 #' @param omega_squared Compute omega squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
 #' @param eta_squared Compute eta squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for ANOVA-tables from mixed models).
 #' @param epsilon_squared Compute epsilon squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
-#' @param df_error Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for ANOVA-tables from mixed models. See 'Examples'.
-#' @param type Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, ANOVA-tables using \code{car::Anova()} will be returned.
+#' @param df_error Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for ANOVA-tables from mixed models. See 'Examples'. (Ignored for \code{afex_aov}.)
+#' @param type Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for \code{afex_aov}.)
 #' @param ci Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -110,10 +110,13 @@ model_parameters.afex_aov <- function(model, omega_squared = NULL, eta_squared =
     with_df_and_p <- summary(model$Anova)$univariate.tests
     params$`Sum Sq` <- with_df_and_p[-1,1]
     params$`Error SS` <- with_df_and_p[-1,3]
-    out <- model_parameters(params, omega_squared = omega_squared, eta_squared = eta_squared, epsilon_squared = epsilon_squared, df_error = df_error, type = type, ...)
+    out <- model_parameters(params, df_error = NULL, type = NULL, ...)
   } else {
-    out <- model_parameters(model$Anova, omega_squared = omega_squared, eta_squared = eta_squared, epsilon_squared = epsilon_squared, df_error = df_error, type = type, ...)
+    out <- model_parameters(model$Anova, df_error = NULL, type = attr(model, "type"), ...)
   }
+
+  out <- .effectsizes_for_aov(model, out, omega_squared = omega_squared, eta_squared = eta_squared, epsilon_squared = epsilon_squared, ...)
+
   out
 }
 
@@ -143,7 +146,7 @@ model_parameters.Gam <- function(model, omega_squared = NULL, eta_squared = NULL
 
   # Sanity checks
   if (!is.null(omega_squared) | !is.null(eta_squared) | !is.null(epsilon_squared)) {
-    if (!"Residuals" %in% parameters$Parameter) {
+    if (!"Residuals" %in% parameters$Parameter & !inherits(model, "afex_aov")) {
       warning("No residuals data found. Effect size cannot be computed.", call. = FALSE)
       return(parameters)
     }
