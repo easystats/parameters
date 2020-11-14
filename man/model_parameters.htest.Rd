@@ -6,12 +6,15 @@
 \alias{model_parameters.pairwise.htest}
 \title{Parameters from Correlations and t-tests}
 \usage{
-\method{model_parameters}{htest}(model, bootstrap = FALSE, ...)
+\method{model_parameters}{htest}(model, ci = 0.95, bootstrap = FALSE, ...)
 
 \method{model_parameters}{pairwise.htest}(model, ...)
 }
 \arguments{
 \item{model}{Object of class \code{htest} or \code{pairwise.htest}.}
+
+\item{ci}{Level of confidence intervals, when test statistic can be included.
+Currently only applies to objects from \code{chisq.test()}.}
 
 \item{bootstrap}{Should estimates be bootstrapped?}
 

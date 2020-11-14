@@ -4,6 +4,8 @@
 #'
 #' @param model Object of class \code{htest} or \code{pairwise.htest}.
 #' @param bootstrap Should estimates be bootstrapped?
+#' @param ci Level of confidence intervals, when test statistic can be included.
+#'   Currently only applies to objects from \code{chisq.test()}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
