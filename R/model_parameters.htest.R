@@ -262,12 +262,12 @@ model_parameters.htest <- function(model, ci = 0.95, bootstrap = FALSE, ...) {
     es <- effectsize::phi(model$observed, ci = ci)
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
-    names(es)[ci_cols] <- paste0("Phi_", names(es)[ci_cols])
+    names(es)[ci_cols] <- paste0("phi_", names(es)[ci_cols])
     out <- cbind(out, es)
 
     # reorder
     col_order <- c("Chi2", "df", "Cramers_v", "Cramers_CI_low", "Cramers_CI_high",
-                   "Phi", "Phi_CI_low", "Phi_CI_high", "p", "method")
+                   "phi", "phi_CI_low", "phi_CI_high", "p", "method")
     out <- out[col_order[col_order %in% names(out)]]
   }
   out
