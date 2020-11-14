@@ -74,6 +74,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
   # Misc
   names(x)[names(x) == "Cohens_d"] <- "Cohen's d"
+  names(x)[names(x) == "Cramers_v"] <- "Cramer's V"
 
 
   # Standardized ----
