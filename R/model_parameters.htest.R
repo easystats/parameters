@@ -62,7 +62,9 @@ model_parameters.htest <- function(model, ci = 0.95, bootstrap = FALSE, ...) {
     out <- .extract_htest_oneway(model)
   } else if (m_info$is_chi2test) {
     out <- .extract_htest_chi2(model)
-    out <- .add_effectsize_chi2(model, out, ci = ci)
+    if (!grepl("^McNemar", model$method)) {
+      out <- .add_effectsize_chi2(model, out, ci = ci)
+    }
   } else if (m_info$is_proptest) {
     out <- .extract_htest_prop(model)
   } else if (m_info$is_binomtest) {
