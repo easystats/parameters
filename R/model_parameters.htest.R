@@ -274,8 +274,9 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
   }
 
   # reorder
-  col_order <- c("Chi2", "df", "Cramers_v", "Cramers_CI_low", "Cramers_CI_high",
-                 "phi", "phi_CI_low", "phi_CI_high", "p", "method")
+  col_order <- c("Chi2", "df", "Cramers_v", "Cramers_v_adjusted", "Cramers_CI_low",
+                 "Cramers_CI_high", "phi", "phi_adjusted", "phi_CI_low",
+                 "phi_CI_high", "p", "method")
   out <- out[col_order[col_order %in% names(out)]]
   out
 }

@@ -72,9 +72,11 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   other_ci_colname <- out$other_ci_colname
 
 
-  # Misc
+  # Misc / Effect Sizes
   names(x)[names(x) == "Cohens_d"] <- "Cohen's d"
   names(x)[names(x) == "Cramers_v"] <- "Cramer's V"
+  names(x)[names(x) == "phi_adjusted"] <- "phi (adj.)"
+  names(x)[names(x) == "Cramers_v_adjusted"] <- "Cramer's V (adj.)"
 
 
   # Standardized ----
