@@ -18,4 +18,14 @@ if (require("testthat") && require("parameters")) {
     params <- model_parameters(t.test(iris$Sepal.Width, mu = 1))
     testthat::expect_equal(params$Difference, 2.0573, tolerance = 0.05)
   })
+
+  if (require("effectsize")) {
+    data(mtcars)
+    mp <- model_parameters(stats::chisq.test(table(mtcars$am)))
+    test_that("model_parameters.htest", {
+      expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
+      expect_equal(mp$phi, 0.8175, tolerance = 1e-3)
+      expect_equal(colnames(mp), c("Chi2", "df", "Cramers_v", "Cramers_CI_low", "Cramers_CI_high", "phi", "phi_CI_low", "phi_CI_high", "p"))
+    })
+  }
 }
