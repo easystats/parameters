@@ -6,15 +6,26 @@
 \alias{model_parameters.pairwise.htest}
 \title{Parameters from Correlations and t-tests}
 \usage{
-\method{model_parameters}{htest}(model, ci = 0.95, bootstrap = FALSE, ...)
+\method{model_parameters}{htest}(
+  model,
+  cramers_v = NULL,
+  phi = NULL,
+  ci = 0.95,
+  bootstrap = FALSE,
+  ...
+)
 
 \method{model_parameters}{pairwise.htest}(model, ...)
 }
 \arguments{
 \item{model}{Object of class \code{htest} or \code{pairwise.htest}.}
 
-\item{ci}{Level of confidence intervals, when test statistic can be included.
-Currently only applies to objects from \code{chisq.test()}.}
+\item{cramers_v, phi}{Compute Cramer's V or phi as index of effect size.
+Can be \code{"raw"} or \code{"adjusted"} (effect size will be bias-corrected).
+Only applies to objects from \code{chisq.test()}.}
+
+\item{ci}{Level of confidence intervals for Cramer's V or phi. Currently only
+applies to objects from \code{chisq.test()}.}
 
 \item{bootstrap}{Should estimates be bootstrapped?}
 

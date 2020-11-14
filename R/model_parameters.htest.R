@@ -4,8 +4,11 @@
 #'
 #' @param model Object of class \code{htest} or \code{pairwise.htest}.
 #' @param bootstrap Should estimates be bootstrapped?
-#' @param ci Level of confidence intervals, when test statistic can be included.
-#'   Currently only applies to objects from \code{chisq.test()}.
+#' @param cramers_v,phi Compute Cramer's V or phi as index of effect size.
+#'   Can be \code{"raw"} or \code{"adjusted"} (effect size will be bias-corrected).
+#'   Only applies to objects from \code{chisq.test()}.
+#' @param ci Level of confidence intervals for Cramer's V or phi. Currently only
+#'   applies to objects from \code{chisq.test()}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -32,11 +35,11 @@
 #' model_parameters(model)
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.htest <- function(model, ci = 0.95, bootstrap = FALSE, ...) {
+model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95, bootstrap = FALSE, ...) {
   if (bootstrap) {
     stop("Bootstrapped h-tests are not yet implemented.")
   } else {
-    parameters <- .extract_parameters_htest(model, ci = ci)
+    parameters <- .extract_parameters_htest(model, cramers_v = cramers_v, phi = phi, ci = ci)
   }
 
   attr(parameters, "ci") <- ci
@@ -51,7 +54,7 @@ model_parameters.htest <- function(model, ci = 0.95, bootstrap = FALSE, ...) {
 
 
 #' @keywords internal
-.extract_parameters_htest <- function(model, ci = 0.95) {
+.extract_parameters_htest <- function(model, cramers_v = NULL, phi = NULL, ci = 0.95) {
   m_info <- insight::model_info(model)
 
   if (m_info$is_correlation) {
@@ -63,7 +66,7 @@ model_parameters.htest <- function(model, ci = 0.95, bootstrap = FALSE, ...) {
   } else if (m_info$is_chi2test) {
     out <- .extract_htest_chi2(model)
     if (!grepl("^McNemar", model$method)) {
-      out <- .add_effectsize_chi2(model, out, ci = ci)
+      out <- .add_effectsize_chi2(model, out, cramers_v = cramers_v, phi = phi, ci = ci)
     }
   } else if (m_info$is_proptest) {
     out <- .extract_htest_prop(model)
@@ -251,26 +254,28 @@ model_parameters.htest <- function(model, ci = 0.95, bootstrap = FALSE, ...) {
 
 # effectsizes ---------------------
 
-.add_effectsize_chi2 <- function(model, out, ci = .95) {
-  if (requireNamespace("effectsize", quietly = TRUE)) {
+.add_effectsize_chi2 <- function(model, out, cramers_v = NULL, phi = NULL, ci = .95) {
+  if (!is.null(cramers_v) && requireNamespace("effectsize", quietly = TRUE)) {
     # Cramers V
-    es <- effectsize::cramers_v(model$observed, ci = ci)
+    es <- effectsize::cramers_v(model$observed, ci = ci, adjust = cramers_v == "adjusted")
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("Cramers_", names(es)[ci_cols])
     out <- cbind(out, es)
+  }
 
+  if (!is.null(phi) && requireNamespace("effectsize", quietly = TRUE)) {
     # Phi
-    es <- effectsize::phi(model$observed, ci = ci)
+    es <- effectsize::phi(model$observed, ci = ci, adjust = phi == "adjusted")
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("phi_", names(es)[ci_cols])
     out <- cbind(out, es)
-
-    # reorder
-    col_order <- c("Chi2", "df", "Cramers_v", "Cramers_CI_low", "Cramers_CI_high",
-                   "phi", "phi_CI_low", "phi_CI_high", "p", "method")
-    out <- out[col_order[col_order %in% names(out)]]
   }
+
+  # reorder
+  col_order <- c("Chi2", "df", "Cramers_v", "Cramers_CI_low", "Cramers_CI_high",
+                 "phi", "phi_CI_low", "phi_CI_high", "p", "method")
+  out <- out[col_order[col_order %in% names(out)]]
   out
 }

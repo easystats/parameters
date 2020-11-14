@@ -22,6 +22,9 @@
 * `model_parameters()` for Anova-models (of class `aov`, `anova` etc.) gains a
   `ci`-argument, to add confidence intervals to effect size parameters.
 
+* `model_parameters()` for `htest` objects gains a `cramers_v` and `phi`
+  argument, to compute effect size parameters for objects from `chisq.test()`.
+
 * `model_parameters()` for metafor-models is more stable when called from inside
   functions.
 
