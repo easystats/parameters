@@ -152,6 +152,9 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     }
   }
 
+  if ("Success" %in% names(x)) x$Success <- insight::format_value(x$Success, protect_integers = TRUE)
+  if ("Trials" %in% names(x)) x$Trials <- insight::format_value(x$Trials, protect_integers = TRUE)
+
   x
 }
 

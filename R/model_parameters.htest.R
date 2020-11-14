@@ -42,8 +42,11 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
     parameters <- .extract_parameters_htest(model, cramers_v = cramers_v, phi = phi, ci = ci)
   }
 
-  attr(parameters, "ci") <- ci
-  attr(parameters, "ci_test") <- attributes(model$conf.int)$conf.level
+  if (!is.null(parameters$Method)) {
+    parameters$Method <- trimws(gsub("with continuity correction", "", parameters$Method))
+  }
+
+  parameters <- .add_htest_parameters_attributes(parameters, model, ci, ...)
   class(parameters) <- c("parameters_model", class(parameters))
   parameters
 }
@@ -51,6 +54,9 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
 
 
 
+
+
+# ==== extract parameters ====
 
 
 #' @keywords internal
@@ -79,8 +85,6 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
   row.names(out) <- NULL
   out
 }
-
-
 
 
 
@@ -122,6 +126,7 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
   }
   out
 }
+
 
 
 # extract htest ttest ----------------------
@@ -178,6 +183,7 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
 }
 
 
+
 # extract htest oneway ----------------------
 
 .extract_htest_oneway <- function(model) {
@@ -190,6 +196,7 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
     stringsAsFactors = FALSE
   )
 }
+
 
 
 # extract htest chi2 ----------------------
@@ -205,26 +212,27 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
 }
 
 
+
 # extract htest prop ----------------------
 
+#' @importFrom insight format_value
 .extract_htest_prop <- function(model) {
-  if (is.null(model$conf.int)) {
-    out <- data.frame(
-      "Parameter" = model$estimate,
-      "Chi2" = model$statistic,
-      "df" = model$parameter[1],
-      stringsAsFactors = FALSE
-    )
-  } else {
-    out <- data.frame(
-      "Parameter" = model$estimate,
-      "CI_low" = model$conf.int[1],
-      "CI_high" = model$conf.int[2],
-      "Chi2" = model$statistic,
-      "df" = model$parameter[1],
-      stringsAsFactors = FALSE
+  out <- data.frame(
+    Proportion = paste0(insight::format_value(model$estimate, as_percent = TRUE), collapse = " / "),
+    stringsAsFactors = FALSE
+  )
+  if (length(model$estimate) == 2) {
+    out$Difference <- insight::format_value(
+      abs(model$estimate[1] - model$estimate[2]),
+      as_percent = TRUE
     )
   }
+  if (!is.null(model$conf.int)) {
+    out$CI_low <- model$conf.int[1]
+    out$CI_high <- model$conf.int[2]
+  }
+  out$Chi2 <- model$statistic
+  out$df <- model$parameter[1]
   out$Null_value <- model$null.value
   out$p <- model$p.value
   out$Method <- model$method
@@ -232,11 +240,12 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
 }
 
 
+
 # extract htest binom ----------------------
 
 .extract_htest_binom <- function(model) {
   out <- data.frame(
-    "Parameter" = model$estimate,
+    "Probability" = model$estimate,
     "CI_low" = model$conf.int[1],
     "CI_high" = model$conf.int[2],
     "Success" = model$statistic,
@@ -252,7 +261,8 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
 
 
 
-# effectsizes ---------------------
+
+# ==== effectsizes =====
 
 .add_effectsize_chi2 <- function(model, out, cramers_v = NULL, phi = NULL, ci = .95) {
   if (!is.null(cramers_v) && requireNamespace("effectsize", quietly = TRUE)) {
@@ -279,4 +289,36 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
                  "phi_CI_high", "p", "method")
   out <- out[col_order[col_order %in% names(out)]]
   out
+}
+
+
+
+
+
+# ==== add attributes ====
+
+
+.add_htest_parameters_attributes <- function(params, model, ci = 0.95, ...) {
+  dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
+  if ("digits" %in% names(dot.arguments)) {
+    attr(params, "digits") <- eval(dot.arguments[["digits"]])
+  } else {
+    attr(params, "digits") <- 2
+  }
+
+  if ("ci_digits" %in% names(dot.arguments)) {
+    attr(params, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
+  } else {
+    attr(params, "ci_digits") <- 2
+  }
+
+  if ("p_digits" %in% names(dot.arguments)) {
+    attr(params, "p_digits") <- eval(dot.arguments[["p_digits"]])
+  } else {
+    attr(params, "p_digits") <- 3
+  }
+
+  attr(params, "ci") <- ci
+  attr(params, "ci_test") <- attributes(model$conf.int)$conf.level
+  params
 }
