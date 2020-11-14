@@ -50,17 +50,6 @@ format_parameters.glmm <- function(model) {
 }
 
 
-#' @export
-format_parameters.emm_list <- function(model) {
-  NULL
-}
-
-
-#' @export
-format_parameters.margins <- function(model) {
-  NULL
-}
-
 
 #' @export
 format_parameters.rma <- function(model) {
@@ -70,14 +59,16 @@ format_parameters.rma <- function(model) {
 }
 
 
+#' @importFrom utils packageVersion
 #' @export
 format_parameters.meta_random <- function(model) {
-  # params <- insight::find_parameters(model, flatten = TRUE)
-  # names(params) <- params
-  # params
-
-  ## TODO enable once insight 0.11.0 is on CRAN
-  NULL
+  if (utils::packageVersion("insight") > "0.10.0") {
+    params <- insight::find_parameters(model, flatten = TRUE)
+    names(params) <- params
+    params
+  } else {
+    NULL
+  }
 }
 
 #' @export
@@ -105,6 +96,33 @@ format_parameters.parameters_model <- function(model) {
   }
   model
 }
+
+
+
+
+
+
+
+# not supported -------------------------------
+
+
+#' @export
+format_parameters.emm_list <- function(model) {
+  NULL
+}
+
+
+#' @export
+format_parameters.margins <- function(model) {
+  NULL
+}
+
+
+#' @export
+format_parameters.mle2 <- function(model) {
+  NULL
+}
+
 
 
 

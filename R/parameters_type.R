@@ -80,7 +80,7 @@ parameters_type <- function(model, ...) {
 
 
   data <- insight::get_data(model)
-  if (is.null(data)) {
+  if (is.null(data) || nrow(data) == 0) {
     return(NULL)
   }
   reference <- .list_factors_numerics(data, model)
