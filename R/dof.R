@@ -230,7 +230,7 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
   info <- insight::model_info(model, verbose = FALSE)
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
-  if (!is.null(info) && is.list(info) && info$is_bayesian && !inherits(model, c("bayesx", "blmerMod"))) {
+  if (!is.null(info) && is.list(info) && info$is_bayesian && !inherits(model, c("bayesx", "blmerMod", "bglmerMod"))) {
     model <- bayestestR::bayesian_as_frequentist(model)
   }
 
