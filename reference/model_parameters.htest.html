@@ -171,7 +171,14 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for htest</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  cramers_v <span class='op'>=</span> <span class='cn'>NULL</span>,
+  phi <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for pairwise.htest</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -184,9 +191,15 @@
       <td><p>Object of class <code>htest</code> or <code>pairwise.htest</code>.</p></td>
     </tr>
     <tr>
+      <th>cramers_v, phi</th>
+      <td><p>Compute Cramer's V or phi as index of effect size.
+Can be <code>"raw"</code> or <code>"adjusted"</code> (effect size will be bias-corrected).
+Only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code>.</p></td>
+    </tr>
+    <tr>
       <th>ci</th>
-      <td><p>Level of confidence intervals, when test statistic can be included.
-Currently only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code>.</p></td>
+      <td><p>Level of confidence intervals for Cramer's V or phi. Currently only
+applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code>.</p></td>
     </tr>
     <tr>
       <th>bootstrap</th>
