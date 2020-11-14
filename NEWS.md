@@ -32,8 +32,8 @@
 * Fixed issue in `ci()` for *lme* models with non-positive definite
   variance-covariance.
   
-* Fixed issue in `model_parameters()` for `nnet::multinom()`, `lqmm::lqm()` and 
-  `margins::margins()` models.
+* Fixed issue in `model_parameters()` for `nnet::multinom()`, `lqmm::lqm()`,
+  and `margins::margins()` models, and models from package *blme*.
 
 # parameters 0.9.0
 
