@@ -324,6 +324,18 @@ format_parameters.mle2 <- function(model) {
 #' @keywords internal
 .format_factor <- function(name, variable) {
   level <- sub(variable, "", name)
+  # special handling for "cut()"
+  pattern_cut_right <- "^\\((.*),(.*)\\]$"
+  pattern_cut_left <- "^\\[(.*),(.*)\\)$"
+  if (all(grepl(pattern_cut_right, level))) {
+    lower_bounds <- gsub(pattern_cut_right, "\\1", level)
+    upper_bounds <- gsub(pattern_cut_right, "\\2", level)
+    level <- paste0(as.numeric(lower_bounds) + 1, "-", upper_bounds)
+  } else if (all(grepl(pattern_cut_left, level))) {
+    lower_bounds <- gsub(pattern_cut_left, "\\1", level)
+    upper_bounds <- gsub(pattern_cut_left, "\\2", level)
+    level <- paste0(lower_bounds, "-", as.numeric(upper_bounds) - 1)
+  }
   paste0(variable, " [", level, "]")
 }
 
