@@ -899,6 +899,12 @@ standard_error.bayesx <- function(model, ...) {
 
 
 #' @export
+standard_error.mediate <- function(model, ...) {
+  NULL
+}
+
+
+#' @export
 standard_error.margins <- function(model, ...) {
   params <- insight::get_parameters(model)
   .data_frame(

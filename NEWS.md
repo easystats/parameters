@@ -8,7 +8,7 @@
 
 ## New supported model classes
 
-* `Glm` (*rms*).
+* `Glm` (*rms*), `mediate` (*mediation*).
 
 * `model_parameters()` supports `Gam` models (*gam*), `ridgelm` (*MASS*), 
   `htest` objects from `oneway.test()`, `chisq.test()`, `prop.test()`,

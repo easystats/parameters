@@ -431,6 +431,33 @@ p_value.flexsurvreg <- function(model, ...) {
 
 
 #' @export
+p_value.mediate <- function(model, ...) {
+  info <- model_info(model$model.y)
+  if (info$is_linear && !model$INT) {
+    out <- data.frame(
+      Parameter = c("ACME", "ADE", "Total Effect", "Prop. Mediated"),
+      p = c(model$d0.p, model$z0.p, model$tau.p, model$n0.p),
+      stringsAsFactors = FALSE
+    )
+  } else {
+    out <- data.frame(
+      Parameter = c(
+        "ACME (control)", "ACME (treated)", "ADE (control)", "ADE (treated)",
+        "Total Effect", "Prop. Mediated (control)", "Prop. Mediated (treated)",
+        "ACME (average)", "ADE (average)", "Prop. Mediated (average)"
+      ),
+      p = c(
+        model$d0.p, model$d1.p, model$z0.p, model$z1.p, model$tau.p, model$n0.p,
+        model$n1.p, model$d.avg.p, model$z.avg.p, model$n.avg.p
+      ),
+      stringsAsFactors = FALSE
+    )
+  }
+  out
+}
+
+
+#' @export
 p_value.margins <- function(model, ...) {
   params <- insight::get_parameters(model)
   .data_frame(

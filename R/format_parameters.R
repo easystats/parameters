@@ -66,6 +66,17 @@ format_parameters.rma <- function(model) {
 }
 
 
+#' @export
+format_parameters.mediate <- function(model) {
+  params <- insight::find_parameters(model, flatten = TRUE)
+  params <- trimws(gsub("(.*)\\((.*)\\)$", "\\1", params))
+  names(params) <- params
+  params[params == "ACME"] <- "Indirect Effect (ACME)"
+  params[params == "ADE"] <- "Direct Effect (ACME)"
+  params
+}
+
+
 #' @importFrom utils packageVersion
 #' @export
 format_parameters.meta_random <- function(model) {

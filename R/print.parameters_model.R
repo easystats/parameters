@@ -275,10 +275,15 @@ print.parameters_random <- function(x, digits = 2, ...) {
   zi_coef_name <- attributes(x)$zi_coefficient_name
 
   # make sure we have correct order of levels from split-factor
-  x[split_column] <- lapply(x[split_column], function(i) {
-    if (!is.factor(i)) i <- factor(i, levels = unique(i))
-    i
-  })
+  if (all(attributes(x)$model_class == "mediate")) {
+    x$Component <- factor(x$Component, levels = c("control", "treated", "average", "Total Effect"))
+    x$Parameter <- trimws(gsub("(.*)\\((.*)\\)$", "\\1", x$Parameter))
+  } else {
+    x[split_column] <- lapply(x[split_column], function(i) {
+      if (!is.factor(i)) i <- factor(i, levels = unique(i))
+      i
+    })
+  }
 
   # fix column output
   if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {

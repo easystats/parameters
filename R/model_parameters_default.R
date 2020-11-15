@@ -158,7 +158,7 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
   statistic <- insight::get_statistic(model)
   params <- merge(params, statistic, by = "Parameter", sort = FALSE)
 
-  # Statistic
+  # p-value
   params <- .data_frame(params, p = summary(model)$p)
 
   # ==== Renaming
@@ -174,6 +174,34 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
 
   if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(params)) {
     params$p <- stats::p.adjust(params$p, method = p_adjust)
+  }
+
+  if (exponentiate) params <- .exponentiate_parameters(params)
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
+
+  params
+}
+
+
+
+#' @export
+model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, ...) {
+  # Parameters, Estimate and CI
+  params <- insight::get_parameters(model)
+
+  # CI
+  params <- merge(params, ci(model, ci = ci), by = "Parameter", sort = FALSE)
+  params$CI <- NULL
+
+  # p-value
+  params <- merge(params, p_value(model), by = "Parameter", sort = FALSE)
+
+  # ==== Renaming
+
+  if (any(grepl("\\(control\\)$", params$Parameter))) {
+    params$Component <- gsub("(.*)\\((.*)\\)$", "\\2", params$Parameter)
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)

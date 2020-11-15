@@ -616,6 +616,69 @@ ci.betamfx <- function(x, ci = .95, component = c("all", "conditional", "precisi
 
 
 
+
+#' @importFrom insight get_parameters model_info
+#' @importFrom stats quantile
+#' @export
+ci.mediate <- function(x, ci = .95, ...) {
+  info <- insight::model_info(x$model.y)
+  alpha <- (1 + ci) / 2
+  if (info$is_linear && !x$INT) {
+    out <- data.frame(
+      Parameter = c("ACME", "ADE", "Total Effect", "Prop. Mediated"),
+      CI = 100 * ci,
+      CI_low = c(
+        stats::quantile(x$d0.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$z0.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$tau.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$n0.sims, probs = 1 - alpha, names = FALSE)
+      ),
+      CI_high = c(
+        stats::quantile(x$d0.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$z0.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$tau.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$n0.sims, probs = alpha, names = FALSE)
+      ),
+      stringsAsFactors = FALSE
+    )
+  } else {
+    out <- data.frame(
+      Parameter = c("ACME (control)", "ACME (treated)", "ADE (control)",
+                    "ADE (treated)", "Total Effect", "Prop. Mediated (control)",
+                    "Prop. Mediated (treated)", "ACME (average)", "ADE (average)",
+                    "Prop. Mediated (average)"),
+      CI = 100 * ci,
+      CI_low = c(
+        stats::quantile(x$d0.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$d1.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$z0.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$z1.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$tau.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$n0.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$n1.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$d.avg.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$z.avg.sims, probs = 1 - alpha, names = FALSE),
+        stats::quantile(x$n.avg.sims, probs = 1 - alpha, names = FALSE)
+      ),
+      CI_high = c(
+        stats::quantile(x$d0.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$d1.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$z0.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$z1.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$tau.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$n0.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$n1.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$d.avg.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$z.avg.sims, probs = alpha, names = FALSE),
+        stats::quantile(x$n.avg.sims, probs = alpha, names = FALSE)
+      ),
+      stringsAsFactors = FALSE
+    )
+  }
+  out
+}
+
+
 #' @export
 ci.margins <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, dof = Inf, ...)

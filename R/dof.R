@@ -160,6 +160,11 @@ degrees_of_freedom.vgam <- function(model, ...) {
 }
 
 #' @export
+degrees_of_freedom.mediate <- function(model, ...) {
+  NULL
+}
+
+#' @export
 degrees_of_freedom.logitor <- function(model, ...) {
   degrees_of_freedom.default(model$fit, ...)
 }
