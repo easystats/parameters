@@ -138,7 +138,6 @@ ci_robust <- function(model,
 
   # check if required package is available
   if (vcov_fun == "vcovCR") {
-    warning("Support for the 'clubSandwich' package was temporarily disabled, due to removal of that package from CRAN.", call. = FALSE)
     if (!requireNamespace("clubSandwich", quietly = TRUE)) {
       stop("Package `clubSandwich` needed for this function. Please install and try again.")
     }
