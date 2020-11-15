@@ -72,7 +72,7 @@ format_parameters.mediate <- function(model) {
   params <- trimws(gsub("(.*)\\((.*)\\)$", "\\1", params))
   names(params) <- params
   params[params == "ACME"] <- "Indirect Effect (ACME)"
-  params[params == "ADE"] <- "Direct Effect (ACME)"
+  params[params == "ADE"] <- "Direct Effect (ADE)"
   params
 }
 
