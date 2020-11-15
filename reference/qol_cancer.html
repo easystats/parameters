@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Sample data set — qol_cancer" />
-<meta property="og:description" content="A sample data set with longitudinal data, used in the vignette describing the demean() function." />
+<meta property="og:description" content="A sample data set with longitudinal data, used in the vignette describing the demean() function. Health-related quality of life from cancer-patients was measured at three time points (pre-surgery, 6 and 12 months after surgery)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -162,15 +162,28 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sample data set</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/fish.R'><code>R/fish.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
     <div class="hidden name"><code>qol_cancer.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A sample data set with longitudinal data, used in the vignette describing the <code><a href='check_heterogeneity.html'>demean()</a></code> function.</p>
+    <p>A sample data set with longitudinal data, used in the vignette describing the <code><a href='check_heterogeneity.html'>demean()</a></code> function. Health-related quality of life from cancer-patients was measured at three time points (pre-surgery, 6 and 12 months after surgery).</p>
     </div>
 
 
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data frame with 564 rows and 7 variables:</p><dl>
+  <dt>ID</dt><dd><p>Patient ID</p></dd>
+  <dt>QoL</dt><dd><p>Quality of Life Score</p></dd>
+  <dt>time</dt><dd><p>Timepoint of measurement</p></dd>
+  <dt>age</dt><dd><p>Age in years</p></dd>
+  <dt>phq4</dt><dd><p>Patients' Health Questionnaire, 4-item version</p></dd>
+  <dt>hospital</dt><dd><p>Hospital ID, where patient was treated</p></dd>
+  <dt>education</dt><dd><p>Patients' educational level</p></dd>
+
+</dl>
 
 
   </div>
