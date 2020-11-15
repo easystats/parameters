@@ -40,7 +40,14 @@ format_parameters <- function(model) {
 
 #' @export
 format_parameters.default <- function(model) {
-  .format_parameter_default(model)
+  tryCatch(
+    {
+      .format_parameter_default(model)
+    },
+    error = function(e) {
+      NULL
+    }
+  )
 }
 
 

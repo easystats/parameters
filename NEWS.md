@@ -16,8 +16,7 @@
 
 ## Changes to functions
 
-* `describe_distribution()` now includes the name of the centrality index in the
-  `CI`-column, when `centrality = "all"`.
+### `model_parameters()`
 
 * `model_parameters()` for Anova-models (of class `aov`, `anova` etc.) gains a
   `ci`-argument, to add confidence intervals to effect size parameters.
@@ -27,6 +26,13 @@
 
 * `model_parameters()` for metafor-models is more stable when called from inside
   functions.
+  
+* Slightly revised and improved the `print()` method for `model_parameters()`.
+
+### Other functions
+
+* `describe_distribution()` now includes the name of the centrality index in the
+  `CI`-column, when `centrality = "all"`.
 
 * `pool_parameters()` gains a `details`-argument. For mixed models, and if
   `details = TRUE`, random effect variances will also be pooled.
@@ -38,6 +44,7 @@
   
 * Fixed issue in `model_parameters()` for `nnet::multinom()`, `lqmm::lqm()`,
   and `margins::margins()` models, and models from package *blme*.
+
 
 # parameters 0.9.0
 
