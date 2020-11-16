@@ -1,4 +1,8 @@
-#' Parameter names formatting
+#' @title Parameter names formatting
+#' @name format_parameters
+#'
+#' @description This functions formats the names of model parameters (coefficients)
+#'   to make them more human-readable.
 #'
 #' @param model A statistical model.
 #'
@@ -30,7 +34,7 @@
 #'
 #' model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
 #' format_parameters(model)
-#' @return The formatted parameter names.
+#' @return A (names) character vector with formatted parameter names. The value names refer to the original names of the coefficients.
 #' @importFrom utils tail head
 #' @export
 format_parameters <- function(model) {

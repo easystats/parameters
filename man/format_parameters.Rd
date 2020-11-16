@@ -10,10 +10,11 @@ format_parameters(model)
 \item{model}{A statistical model.}
 }
 \value{
-The formatted parameter names.
+A (names) character vector with formatted parameter names. The value names refer to the original names of the coefficients.
 }
 \description{
-Parameter names formatting
+This functions formats the names of model parameters (coefficients)
+  to make them more human-readable.
 }
 \section{Interpretation of Interaction Terms}{
 
