@@ -23,7 +23,7 @@ bibliography: bibliography.bib
 library(knitr)
 options(knitr.kable.NA = '')
 options(digits = 2)
-knitr::opts_chunk$set(comment = "#>")
+knitr::opts_chunk$set(comment = "#>", tidy.opts = list(width.cutoff = 100))
 
 if (!requireNamespace("broom", quietly = TRUE) ||
     !requireNamespace("magrittr", quietly = TRUE)) {
@@ -47,7 +47,7 @@ We start with a model that does not make much sense, but it is useful for demons
 ```{r}
 data(iris)
 iris$Petlen <- cut(iris$Petal.Length, breaks = c(0, 3, 7))
-model <- lm(Sepal.Width ~ poly(Sepal.Length, 2) * Species + Petlen, data = iris)
+model <- lm(Sepal.Width ~ poly(Sepal.Length, 2) + Species + Petlen, data = iris)
 
 summary(model)
 ```
@@ -123,7 +123,7 @@ We can get a similar tabular output using *broom*.
 tidy(model, conf.int = TRUE)
 ```
 
-Some improvement according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the `parameters_table()` function is a convenient function that does all the work for you. 
+Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the `parameters_table()` function is a convenient function that does all the work for you. 
 
 `parameters_table()` requires a data frame with model parameters as input, however, there are some requirements to make `parameters_table()` work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from *broom* or the [*easystats* packages](https://easystats.github.io/easystats).
 
