@@ -15,7 +15,7 @@ parameters_table(
 )
 }
 \arguments{
-\item{x}{A data frame of model's parameters.}
+\item{x}{A data frame of model's parameters, as returned by \code{model_parameters()}. May also be a result from \code{broom::tidy()}.}
 
 \item{pretty_names}{Return "pretty" (i.e. more human readable) parameter names.}
 
@@ -33,11 +33,12 @@ parameters_table(
 A data frame.
 }
 \description{
-Parameter table formatting
+This functions takes a data frame with model parameters as input
+  and formats certain columns into a more readable layout (like collapsing
+  separate columns for lower and upper confidence interval values). Furthermore,
+  column names are formatted as well.
 }
 \examples{
-library(parameters)
-
 x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
 as.data.frame(parameters_table(x))
 as.data.frame(parameters_table(x, p_digits = "scientific"))
@@ -46,6 +47,5 @@ if (require("rstanarm")) {
   model <- stan_glm(Sepal.Length ~ Species, data = iris, refresh = 0, seed = 123)
   x <- model_parameters(model, ci = c(0.69, 0.89, 0.95))
   as.data.frame(parameters_table(x))
-}
-}
+}}
 }

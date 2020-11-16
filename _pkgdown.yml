@@ -150,11 +150,13 @@ navbar:
         href: articles/model_parameters_mice.html
       - text: Panel Data Analysis
         href: articles/demean.html
-  - text: Parameters Selection
-    href: articles/parameters_selection.html
+  - text: Formatting Model Parameters
+    href: articles/model_parameters_formatting.html
   - text: Dimension Reduction
     menu:
       - text: 'Feature reduction (PCA, cMDS, ICA...)'
         href: articles/parameters_reduction.html
       - text: 'Structural models (EFA, CFA, SEM...)'
         href: articles/efa_cfa.html
+      - text: Parameters Selection
+        href: articles/parameters_selection.html

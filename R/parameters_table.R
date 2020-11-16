@@ -1,6 +1,12 @@
-#' Parameter table formatting
+#' @title Parameter table formatting
+#' @name parameters_table
 #'
-#' @param x A data frame of model's parameters.
+#' @description This functions takes a data frame with model parameters as input
+#'   and formats certain columns into a more readable layout (like collapsing
+#'   separate columns for lower and upper confidence interval values). Furthermore,
+#'   column names are formatted as well.
+#'
+#' @param x A data frame of model's parameters, as returned by \code{model_parameters()}. May also be a result from \code{broom::tidy()}.
 #' @param pretty_names Return "pretty" (i.e. more human readable) parameter names.
 #' @param digits Number of decimal places for numeric values (except confidence intervals and p-values).
 #' @param ci_digits Number of decimal places for confidence intervals.
@@ -9,8 +15,6 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
-#' library(parameters)
-#'
 #' x <- model_parameters(lm(Sepal.Length ~ Species * Sepal.Width, data = iris))
 #' as.data.frame(parameters_table(x))
 #' as.data.frame(parameters_table(x, p_digits = "scientific"))
@@ -19,8 +23,7 @@
 #'   model <- stan_glm(Sepal.Length ~ Species, data = iris, refresh = 0, seed = 123)
 #'   x <- model_parameters(model, ci = c(0.69, 0.89, 0.95))
 #'   as.data.frame(parameters_table(x))
-#' }
-#' }
+#' }}
 #' @return A data frame.
 #'
 #' @importFrom insight format_value format_p
@@ -60,10 +63,15 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     x$p <- insight::format_p(x$p, stars = stars, name = NULL, missing = "", digits = p_digits)
     x$p <- format(x$p, justify = "left")
   }
+  if ("p.value" %in% names(x)) {
+    x$p.value <- insight::format_p(x$p.value, stars = stars, name = NULL, missing = "", digits = p_digits)
+    x$p.value <- format(x$p.value, justify = "left")
+  }
 
 
   # Main CI ----
   x <- .format_main_ci_columns(x, att, ci_digits)
+  x <- .format_broom_ci_columns(x, ci_digits)
 
 
   # Other CIs ----
@@ -227,6 +235,31 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   }
 
   list(x = x, other_ci_colname = other_ci_colname)
+}
+
+
+
+#' @importFrom insight format_ci
+.format_broom_ci_columns <- function(x, ci_digits) {
+  if (!any(grepl("conf.low", names(x), fixed = TRUE))) {
+    return(x)
+  }
+  if (!any(grepl("conf.high", names(x), fixed = TRUE))) {
+    return(x)
+  }
+  tryCatch(
+    {
+      ci_low <- names(x)[which(names(x) == "conf.low")]
+      ci_high <- names(x)[which(names(x) == "conf.high")]
+      x$conf.int <- insight::format_ci(x[[ci_low]], x[[ci_high]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
+      x$conf.low <- NULL
+      x$conf.high <- NULL
+      x
+    },
+    error = function(e) {
+      x
+    }
+  )
 }
 
 
