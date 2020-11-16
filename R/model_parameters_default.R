@@ -12,6 +12,7 @@
 #' @param component Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}), \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for \code{MuMIn::model.avg()}) or \code{"all"}.
 #' @param p_adjust Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.
 #' @param df_method Method for computing degrees of freedom for confidence intervals (CI). Only applies to models of class \code{glm} or \code{polr}. May be \code{"profile"} or \code{"wald"}.
+#' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.
 #'
 #' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
@@ -41,7 +42,16 @@
 #' model_parameters(model, exponentiate = TRUE)
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, p_adjust = NULL, ...) {
+model_parameters.default <- function(model,
+                                     ci = .95,
+                                     bootstrap = FALSE,
+                                     iterations = 1000,
+                                     standardize = NULL,
+                                     exponentiate = FALSE,
+                                     robust = FALSE,
+                                     p_adjust = NULL,
+                                     verbose = TRUE,
+                                     ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -61,7 +71,21 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 
 
-.model_parameters_generic <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, merge_by = "Parameter", standardize = NULL, exponentiate = FALSE, effects = "fixed", component = "conditional", robust = FALSE, df_method = NULL, p_adjust = NULL, ...) {
+.model_parameters_generic <- function(model,
+                                      ci = .95,
+                                      bootstrap = FALSE,
+                                      iterations = 1000,
+                                      merge_by = "Parameter",
+                                      standardize = NULL,
+                                      exponentiate = FALSE,
+                                      effects = "fixed",
+                                      component = "conditional",
+                                      robust = FALSE,
+                                      df_method = NULL,
+                                      p_adjust = NULL,
+                                      verbose = TRUE,
+                                      ...) {
+
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
   mc <- match.call()
@@ -90,7 +114,17 @@ model_parameters.default <- function(model, ci = .95, bootstrap = FALSE, iterati
 #' @importFrom insight n_obs
 #' @rdname model_parameters.default
 #' @export
-model_parameters.glm <- function(model, ci = .95, df_method = "profile", bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, p_adjust = NULL, ...) {
+model_parameters.glm <- function(model,
+                                 ci = .95,
+                                 df_method = "profile",
+                                 bootstrap = FALSE,
+                                 iterations = 1000,
+                                 standardize = NULL,
+                                 exponentiate = FALSE,
+                                 robust = FALSE,
+                                 p_adjust = NULL,
+                                 verbose = TRUE,
+                                 ...) {
   if (insight::n_obs(model) > 1e4 && df_method == "profile") {
     message("Profiled confidence intervals may take longer time to compute. Use 'df_method=\"wald\"' for faster computation of CIs.")
   }

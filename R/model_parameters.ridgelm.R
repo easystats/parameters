@@ -1,5 +1,5 @@
 #' @export
-model_parameters.ridgelm <- function(model, ...) {
+model_parameters.ridgelm <- function(model, verbose = TRUE, ...) {
   parameters <- insight::get_parameters(model)
   parameters$Scale <- as.vector(model$scales)
 

@@ -12,10 +12,11 @@
   phi = NULL,
   ci = 0.95,
   bootstrap = FALSE,
+  verbose = TRUE,
   ...
 )
 
-\method{model_parameters}{pairwise.htest}(model, ...)
+\method{model_parameters}{pairwise.htest}(model, verbose = TRUE, ...)
 }
 \arguments{
 \item{model}{Object of class \code{htest} or \code{pairwise.htest}.}
@@ -28,6 +29,8 @@ Only applies to objects from \code{chisq.test()}.}
 applies to objects from \code{chisq.test()}.}
 
 \item{bootstrap}{Should estimates be bootstrapped?}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

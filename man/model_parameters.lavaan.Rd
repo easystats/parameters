@@ -9,6 +9,7 @@
   ci = 0.95,
   standardize = FALSE,
   type = c("regression", "correlation", "loading", "defined"),
+  verbose = TRUE,
   ...
 )
 }
@@ -28,6 +29,8 @@ variances of observed and latent variables, but not the variances of
 exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 
 \item{type}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

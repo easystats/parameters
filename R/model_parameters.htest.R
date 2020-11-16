@@ -9,6 +9,7 @@
 #'   Only applies to objects from \code{chisq.test()}.
 #' @param ci Level of confidence intervals for Cramer's V or phi. Currently only
 #'   applies to objects from \code{chisq.test()}.
+#' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -35,7 +36,14 @@
 #' model_parameters(model)
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95, bootstrap = FALSE, ...) {
+model_parameters.htest <- function(model,
+                                   cramers_v = NULL,
+                                   phi = NULL,
+                                   ci = .95,
+                                   bootstrap = FALSE,
+                                   verbose = TRUE,
+                                   ...) {
+
   if (bootstrap) {
     stop("Bootstrapped h-tests are not yet implemented.")
   } else {
@@ -60,7 +68,11 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
 
 
 #' @keywords internal
-.extract_parameters_htest <- function(model, cramers_v = NULL, phi = NULL, ci = 0.95) {
+.extract_parameters_htest <- function(model,
+           cramers_v = NULL,
+           phi = NULL,
+           ci = 0.95) {
+
   m_info <- insight::model_info(model)
 
   if (m_info$is_correlation) {
@@ -264,7 +276,12 @@ model_parameters.htest <- function(model, cramers_v = NULL, phi = NULL, ci = .95
 
 # ==== effectsizes =====
 
-.add_effectsize_chi2 <- function(model, out, cramers_v = NULL, phi = NULL, ci = .95) {
+.add_effectsize_chi2 <- function(model,
+           out,
+           cramers_v = NULL,
+           phi = NULL,
+           ci = .95) {
+
   if (!is.null(cramers_v) && requireNamespace("effectsize", quietly = TRUE)) {
     # Cramers V
     es <- effectsize::cramers_v(model$observed, ci = ci, adjust = cramers_v == "adjusted")

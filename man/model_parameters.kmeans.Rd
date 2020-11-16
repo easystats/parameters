@@ -4,10 +4,12 @@
 \alias{model_parameters.kmeans}
 \title{Parameters from Cluster Models (k-means, ...)}
 \usage{
-\method{model_parameters}{kmeans}(model, ...)
+\method{model_parameters}{kmeans}(model, verbose = TRUE, ...)
 }
 \arguments{
 \item{model}{Cluster model.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

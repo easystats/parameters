@@ -41,8 +41,17 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats qt pt setNames
 #' @export
-model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
-  meta_analysis_overall <- .model_parameters_generic(
+model_parameters.rma <- function(model,
+                                 ci = .95,
+                                 bootstrap = FALSE,
+                                 iterations = 1000,
+                                 standardize = NULL,
+                                 exponentiate = FALSE,
+                                 verbose = TRUE,
+                                 ...) {
+
+  meta_analysis_overall <-
+    .model_parameters_generic(
     model = model,
     ci = ci,
     bootstrap = bootstrap,
@@ -127,8 +136,17 @@ model_parameters.rma <- function(model, ci = .95, bootstrap = FALSE, iterations 
 
 
 #' @export
-model_parameters.metaplus <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
-  meta_analysis_overall <- suppressWarnings(.model_parameters_generic(
+model_parameters.metaplus <- function(model,
+                                      ci = .95,
+                                      bootstrap = FALSE,
+                                      iterations = 1000,
+                                      standardize = NULL,
+                                      exponentiate = FALSE,
+                                      verbose = TRUE,
+                                      ...) {
+
+  meta_analysis_overall <-
+    suppressWarnings(.model_parameters_generic(
     model = model,
     ci = ci,
     bootstrap = bootstrap,
@@ -194,7 +212,13 @@ model_parameters.metaplus <- function(model, ci = .95, bootstrap = FALSE, iterat
 
 
 #' @export
-model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exponentiate = FALSE, ...) {
+model_parameters.meta_random <- function(model,
+                                         ci = .95,
+                                         ci_method = "hdi",
+                                         exponentiate = FALSE,
+                                         verbose = TRUE,
+                                         ...) {
+
   # process arguments
   params <- as.data.frame(model$estimates)
   ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
@@ -246,7 +270,15 @@ model_parameters.meta_random <- function(model, ci = .95, ci_method = "hdi", exp
   out <- rbind(out_study, out)
 
   if (exponentiate) out <- .exponentiate_parameters(out)
-  out <- .add_model_parameters_attributes(params = out, model = model, ci = ci, exponentiate = exponentiate, ci_method = ci_method, ...)
+  out <-
+    .add_model_parameters_attributes(
+      params = out,
+      model = model,
+      ci = ci,
+      exponentiate = exponentiate,
+      ci_method = ci_method,
+      ...
+    )
 
   # final atributes
   attr(out, "measure") <- "Estimate"
@@ -265,7 +297,13 @@ model_parameters.meta_fixed <- model_parameters.meta_random
 
 
 #' @export
-model_parameters.meta_bma <- function(model, ci = .95, ci_method = "hdi", exponentiate = FALSE, ...) {
+model_parameters.meta_bma <- function(model,
+                                      ci = .95,
+                                      ci_method = "hdi",
+                                      exponentiate = FALSE,
+                                      verbose = TRUE,
+                                      ...) {
+
   # process arguments
   params <- as.data.frame(model$estimates)
   ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
@@ -313,7 +351,15 @@ model_parameters.meta_bma <- function(model, ci = .95, ci_method = "hdi", expone
   out <- rbind(out_study, out)
 
   if (exponentiate) out <- .exponentiate_parameters(out)
-  out <- .add_model_parameters_attributes(params = out, model = model, ci = ci, exponentiate = exponentiate, ci_method = ci_method, ...)
+  out <-
+    .add_model_parameters_attributes(
+      params = out,
+      model = model,
+      ci = ci,
+      exponentiate = exponentiate,
+      ci_method = ci_method,
+      ...
+    )
 
   # final attributes
   attr(out, "measure") <- "Estimate"

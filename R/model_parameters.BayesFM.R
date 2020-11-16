@@ -5,6 +5,7 @@
 #' @param model Bayesian EFA created by the \code{BayesFM::befa}.
 #' @inheritParams principal_components
 #' @inheritParams bayestestR::describe_posterior
+#' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -20,7 +21,15 @@
 #' @return A data frame of loadings.
 #'
 #' @export
-model_parameters.befa <- function(model, sort = FALSE, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = NULL, ...) {
+model_parameters.befa <- function(model,
+                                  sort = FALSE,
+                                  centrality = "median",
+                                  dispersion = FALSE,
+                                  ci = .89,
+                                  ci_method = "hdi",
+                                  test = NULL,
+                                  verbose = TRUE,
+                                  ...) {
   if (!attr(model, "post.column.switch") | !attr(model, "post.sign.switch")) {
     if (!requireNamespace("BayesFM", quietly = TRUE)) {
       stop("Package 'BayesFM' required for this function to work. Please install it by running `install.packages('BayesFM')`.")
@@ -63,10 +72,28 @@ model_parameters.befa <- function(model, sort = FALSE, centrality = "median", di
     for (comp in unique(loadings$Component)) {
       chunk <- loadings[loadings$Variable == var & loadings$Component == comp, ]
       if (nrow(chunk) == 0) {
-        rez <- bayestestR::describe_posterior(loadings$Loading, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, ...)
+        rez <-
+          bayestestR::describe_posterior(
+            loadings$Loading,
+            centrality = centrality,
+            dispersion = dispersion,
+            ci = ci,
+            ci_method = ci_method,
+            test = test,
+            ...
+          )
         rez[1, ] <- NA
       } else {
-        rez <- bayestestR::describe_posterior(chunk$Loading, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, ...)
+        rez <-
+          bayestestR::describe_posterior(
+            chunk$Loading,
+            centrality = centrality,
+            dispersion = dispersion,
+            ci = ci,
+            ci_method = ci_method,
+            test = test,
+            ...
+          )
       }
       long_loadings <- rbind(
         long_loadings,

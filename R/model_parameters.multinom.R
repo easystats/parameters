@@ -31,7 +31,16 @@
 #' @inheritParams simulate_model
 #' @importFrom insight get_response
 #' @export
-model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, p_adjust = NULL, ...) {
+model_parameters.mlm <- function(model,
+                                 ci = .95,
+                                 bootstrap = FALSE,
+                                 iterations = 1000,
+                                 standardize = NULL,
+                                 exponentiate = FALSE,
+                                 p_adjust = NULL,
+                                 verbose = TRUE,
+                                 ...) {
+
   # detect number of levels of response
   nl <- tryCatch(
     {
@@ -49,18 +58,19 @@ model_parameters.mlm <- function(model, ci = .95, bootstrap = FALSE, iterations 
     merge_by <- "Parameter"
   }
 
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = merge_by,
-    standardize = standardize,
-    exponentiate = exponentiate,
-    robust = FALSE,
-    p_adjust = p_adjust,
-    ...
-  )
+  out <-
+    .model_parameters_generic(
+      model = model,
+      ci = ci,
+      bootstrap = bootstrap,
+      iterations = iterations,
+      merge_by = merge_by,
+      standardize = standardize,
+      exponentiate = exponentiate,
+      robust = FALSE,
+      p_adjust = p_adjust,
+      ...
+    )
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
@@ -84,7 +94,15 @@ model_parameters.bracl <- model_parameters.mlm
 
 #' @rdname model_parameters.mlm
 #' @export
-model_parameters.DirichletRegModel <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "precision"), standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.DirichletRegModel <- function(model,
+                                               ci = .95,
+                                               bootstrap = FALSE,
+                                               iterations = 1000,
+                                               component = c("all", "conditional", "precision"),
+                                               standardize = NULL,
+                                               exponentiate = FALSE,
+                                               verbose = TRUE,
+                                               ...) {
   component <- match.arg(component)
   if (component == "all") {
     merge_by <- c("Parameter", "Component", "Response")
@@ -115,7 +133,16 @@ model_parameters.DirichletRegModel <- function(model, ci = .95, bootstrap = FALS
 
 #' @rdname model_parameters.mlm
 #' @export
-model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "scale"), standardize = NULL, exponentiate = FALSE, p_adjust = NULL, ...) {
+model_parameters.clm2 <- function(model,
+                                  ci = .95,
+                                  bootstrap = FALSE,
+                                  iterations = 1000,
+                                  component = c("all", "conditional", "scale"),
+                                  standardize = NULL,
+                                  exponentiate = FALSE,
+                                  p_adjust = NULL,
+                                  verbose = TRUE,
+                                  ...) {
   component <- match.arg(component)
   if (component == "all") {
     merge_by <- c("Parameter", "Component")
@@ -125,18 +152,19 @@ model_parameters.clm2 <- function(model, ci = .95, bootstrap = FALSE, iterations
 
   ## TODO check merge by
 
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    component = component,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = c("Parameter", "Component"),
-    standardize = standardize,
-    exponentiate = exponentiate,
-    p_adjust = p_adjust,
-    ...
-  )
+  out <-
+    .model_parameters_generic(
+      model = model,
+      ci = ci,
+      component = component,
+      bootstrap = bootstrap,
+      iterations = iterations,
+      merge_by = c("Parameter", "Component"),
+      standardize = standardize,
+      exponentiate = exponentiate,
+      p_adjust = p_adjust,
+      ...
+    )
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out

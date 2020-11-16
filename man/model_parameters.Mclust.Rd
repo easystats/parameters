@@ -4,7 +4,7 @@
 \alias{model_parameters.Mclust}
 \title{Parameters from Mixture Models}
 \usage{
-\method{model_parameters}{Mclust}(model, ...)
+\method{model_parameters}{Mclust}(model, verbose = TRUE, ...)
 }
 \arguments{
 \item{model}{Mixture model.}

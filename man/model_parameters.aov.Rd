@@ -12,6 +12,7 @@
   df_error = NULL,
   type = NULL,
   ci = NULL,
+  verbose = TRUE,
   ...
 )
 }
@@ -29,6 +30,8 @@
 \item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for \code{afex_aov}.)}
 
 \item{ci}{Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

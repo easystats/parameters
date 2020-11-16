@@ -40,7 +40,20 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_method = "wald", iterations = 1000, standardize = NULL, exponentiate = FALSE, robust = FALSE, details = FALSE, p_adjust = NULL, wb_component = TRUE, ...) {
+model_parameters.merMod <- function(model,
+                                    ci = .95,
+                                    bootstrap = FALSE,
+                                    df_method = "wald",
+                                    iterations = 1000,
+                                    standardize = NULL,
+                                    exponentiate = FALSE,
+                                    robust = FALSE,
+                                    details = FALSE,
+                                    p_adjust = NULL,
+                                    wb_component = TRUE,
+                                    verbose = TRUE,
+                                    ...) {
+
   # p-values, CI and se might be based of wald, or KR
   df_method <- tolower(df_method)
   df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin", "satterthwaite", "kenward"))
@@ -49,12 +62,32 @@ model_parameters.merMod <- function(model, ci = .95, bootstrap = FALSE, df_metho
   if (bootstrap) {
     params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    params <- .extract_parameters_mixed(model, ci = ci, df_method = df_method, robust = robust, standardize = standardize, p_adjust = p_adjust, wb_component = wb_component, ...)
+    params <-
+      .extract_parameters_mixed(
+        model,
+        ci = ci,
+        df_method = df_method,
+        robust = robust,
+        standardize = standardize,
+        p_adjust = p_adjust,
+        wb_component = wb_component,
+        ...
+      )
   }
 
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, bootstrap, iterations, df_method, ...)
+  params <-
+    .add_model_parameters_attributes(
+      params,
+      model,
+      ci,
+      exponentiate,
+      bootstrap,
+      iterations,
+      df_method,
+      ...
+    )
 
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
@@ -79,7 +112,18 @@ model_parameters.lme <- model_parameters.merMod
 #' @inheritParams simulate_model
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), standardize = NULL, exponentiate = FALSE, df_method = NULL, details = FALSE, wb_component = TRUE, ...) {
+model_parameters.glmmTMB <- function(model,
+                                     ci = .95,
+                                     bootstrap = FALSE,
+                                     iterations = 1000,
+                                     component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                                     standardize = NULL,
+                                     exponentiate = FALSE,
+                                     df_method = NULL,
+                                     details = FALSE,
+                                     wb_component = TRUE,
+                                     verbose = TRUE,
+                                     ...) {
   component <- match.arg(component)
 
   # p-values, CI and se might be based on different df-methods
@@ -98,7 +142,17 @@ model_parameters.glmmTMB <- function(model, ci = .95, bootstrap = FALSE, iterati
   if (bootstrap) {
     params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    params <- .extract_parameters_generic(model, ci = ci, component = component, standardize = standardize, robust = FALSE, df_method = df_method, wb_component = wb_component, ...)
+    params <-
+      .extract_parameters_generic(
+        model,
+        ci = ci,
+        component = component,
+        standardize = standardize,
+        robust = FALSE,
+        df_method = df_method,
+        wb_component = wb_component,
+        ...
+      )
   }
 
 
@@ -138,7 +192,16 @@ model_parameters.MixMod <- model_parameters.glmmTMB
 
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", "random"), bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, details = FALSE, ...) {
+model_parameters.mixor <- function(model,
+                                   ci = .95,
+                                   effects = c("all", "fixed", "random"),
+                                   bootstrap = FALSE,
+                                   iterations = 1000,
+                                   standardize = NULL,
+                                   exponentiate = FALSE,
+                                   details = FALSE,
+                                   verbose = TRUE,
+                                   ...) {
   effects <- match.arg(effects)
   out <- .model_parameters_generic(
     model = model,
@@ -164,7 +227,15 @@ model_parameters.mixor <- function(model, ci = .95, effects = c("all", "fixed", 
 
 
 #' @export
-model_parameters.glmm <- function(model, ci = .95, effects = c("all", "fixed", "random"), bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, ...) {
+model_parameters.glmm <- function(model,
+                                  ci = .95,
+                                  effects = c("all", "fixed", "random"),
+                                  bootstrap = FALSE,
+                                  iterations = 1000,
+                                  standardize = NULL,
+                                  exponentiate = FALSE,
+                                  verbose = TRUE,
+                                  ...) {
   effects <- match.arg(effects)
   out <- .model_parameters_generic(
     model = model,
@@ -186,7 +257,17 @@ model_parameters.glmm <- function(model, ci = .95, effects = c("all", "fixed", "
 
 #' @rdname model_parameters.merMod
 #' @export
-model_parameters.clmm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, standardize = NULL, exponentiate = FALSE, details = FALSE, df_method = NULL, ...) {
+model_parameters.clmm <- function(model,
+                                  ci = .95,
+                                  bootstrap = FALSE,
+                                  iterations = 1000,
+                                  standardize = NULL,
+                                  exponentiate = FALSE,
+                                  details = FALSE,
+                                  df_method = NULL,
+                                  verbose = TRUE,
+                                  ...) {
+
   # p-values, CI and se might be based on differen df-methods
   df_method <- .check_df_method(df_method)
 
@@ -222,7 +303,12 @@ model_parameters.rlmerMod <- model_parameters.clmm
 
 
 #' @export
-model_parameters.merModList <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, ...) {
+model_parameters.merModList <- function(model,
+                                        ci = .95,
+                                        exponentiate = FALSE,
+                                        p_adjust = NULL,
+                                        verbose = TRUE,
+                                        ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -239,10 +325,6 @@ model_parameters.merModList <- function(model, ci = .95, exponentiate = FALSE, p
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
-
-
-
-
 
 
 

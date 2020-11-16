@@ -33,35 +33,100 @@
 #' @importFrom insight get_priors
 #' @inheritParams insight::get_parameters
 #' @export
-model_parameters.stanreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", exponentiate = FALSE, standardize = NULL, group_level = FALSE, ...) {
+model_parameters.stanreg <-
+  function(model,
+           centrality = "median",
+           dispersion = FALSE,
+           ci = .89,
+           ci_method = "hdi",
+           test = c("pd", "rope"),
+           rope_range = "default",
+           rope_ci = 1.0,
+           bf_prior = NULL,
+           diagnostic = c("ESS", "Rhat"),
+           priors = TRUE,
+           effects = "fixed",
+           exponentiate = FALSE,
+           standardize = NULL,
+           group_level = FALSE,
+           verbose = TRUE,
+           ...) {
 
-  # Processing
-  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, standardize = standardize, ...)
 
-  if (effects == "fixed") {
-    attr(params, "pretty_names") <- format_parameters(model)
-  } else {
-    random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE))
-    if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
-    params <- .add_pretty_names(params, model, effects = effects, component = NULL)
+    # Processing
+    params <-
+      .extract_parameters_bayesian(
+        model,
+        centrality = centrality,
+        dispersion = dispersion,
+        ci = ci,
+        ci_method = ci_method,
+        test = test,
+        rope_range = rope_range,
+        rope_ci = rope_ci,
+        bf_prior = bf_prior,
+        diagnostic = diagnostic,
+        priors = priors,
+        effects = effects,
+        standardize = standardize,
+        ...
+      )
+
+    if (effects == "fixed") {
+      attr(params, "pretty_names") <- format_parameters(model)
+    } else {
+      random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE))
+      if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
+      params <- .add_pretty_names(params, model, effects = effects, component = NULL)
+    }
+
+    if (exponentiate) params <- .exponentiate_parameters(params)
+    params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
+
+    attr(params, "parameter_info") <- insight::clean_parameters(model)
+    attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+    class(params) <- c("parameters_stan", "parameters_model", "see_parameters_model", class(params))
+
+    params
   }
-
-  if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
-
-  attr(params, "parameter_info") <- insight::clean_parameters(model)
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(params) <- c("parameters_stan", "parameters_model", "see_parameters_model", class(params))
-
-  params
-}
 
 
 #' @export
-model_parameters.stanmvreg <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = "pd", rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", standardize = NULL, ...) {
+model_parameters.stanmvreg <- function(model,
+                                       centrality = "median",
+                                       dispersion = FALSE,
+                                       ci = .89,
+                                       ci_method = "hdi",
+                                       test = "pd",
+                                       rope_range = "default",
+                                       rope_ci = 1.0,
+                                       bf_prior = NULL,
+                                       diagnostic = c("ESS", "Rhat"),
+                                       priors = TRUE,
+                                       effects = "fixed",
+                                       standardize = NULL,
+                                       verbose = TRUE,
+                                       ...) {
+
 
   # Processing
-  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, standardize = standardize, ...)
+  params <-
+    .extract_parameters_bayesian(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = bf_prior,
+      diagnostic = diagnostic,
+      priors = priors,
+      effects = effects,
+      standardize = standardize,
+      ...
+    )
   params$Parameter <- gsub("^(.*)\\|(.*)", "\\2", params$Parameter)
 
   if (effects == "fixed") {
@@ -83,42 +148,106 @@ model_parameters.stanmvreg <- function(model, centrality = "median", dispersion 
 #' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
-model_parameters.brmsfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = "fixed", component = "all", exponentiate = FALSE, standardize = NULL, group_level = FALSE, ...) {
-  modelinfo <- insight::model_info(model)
+model_parameters.brmsfit <-
+  function(model,
+           centrality = "median",
+           dispersion = FALSE,
+           ci = .89,
+           ci_method = "hdi",
+           test = c("pd", "rope"),
+           rope_range = "default",
+           rope_ci = 1.0,
+           bf_prior = NULL,
+           diagnostic = c("ESS", "Rhat"),
+           priors = TRUE,
+           effects = "fixed",
+           component = "all",
+           exponentiate = FALSE,
+           standardize = NULL,
+           group_level = FALSE,
+           verbose = TRUE,
+           ...) {
+    modelinfo <- insight::model_info(model)
 
-  # Bayesian meta analysis
+    # Bayesian meta analysis
 
-  if (!insight::is_multivariate(model) && isTRUE(modelinfo$is_meta)) {
-    params <- .model_parameters_brms_meta(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, diagnostic = diagnostic, priors = priors, exponentiate = exponentiate, standardize = standardize, ...)
-  } else {
-
-    # Processing
-    params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, effects = effects, component = component, standardize = standardize, ...)
-
-    if (effects == "fixed" && component == "conditional") {
-      attr(params, "pretty_names") <- format_parameters(model)
+    if (!insight::is_multivariate(model) && isTRUE(modelinfo$is_meta)) {
+      params <-
+        .model_parameters_brms_meta(
+          model,
+          centrality = centrality,
+          dispersion = dispersion,
+          ci = ci,
+          ci_method = ci_method,
+          test = test,
+          rope_range = rope_range,
+          rope_ci = rope_ci,
+          diagnostic = diagnostic,
+          priors = priors,
+          exponentiate = exponentiate,
+          standardize = standardize,
+          ...
+        )
     } else {
-      random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE))
-      if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
-      params <- .add_pretty_names(params, model, effects = effects, component = component)
+
+      # Processing
+      params <-
+        .extract_parameters_bayesian(
+          model,
+          centrality = centrality,
+          dispersion = dispersion,
+          ci = ci,
+          ci_method = ci_method,
+          test = test,
+          rope_range = rope_range,
+          rope_ci = rope_ci,
+          bf_prior = bf_prior,
+          diagnostic = diagnostic,
+          priors = priors,
+          effects = effects,
+          component = component,
+          standardize = standardize,
+          ...
+        )
+
+      if (effects == "fixed" && component == "conditional") {
+        attr(params, "pretty_names") <- format_parameters(model)
+      } else {
+        random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE))
+        if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
+        params <- .add_pretty_names(params, model, effects = effects, component = component)
+      }
+
+      if (exponentiate) params <- .exponentiate_parameters(params)
+      params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
+
+      attr(params, "parameter_info") <- insight::clean_parameters(model)
+      attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+      class(params) <- unique(c("parameters_stan", "see_parameters_model", "parameters_model", class(params)))
     }
 
-    if (exponentiate) params <- .exponentiate_parameters(params)
-    params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
-
-    attr(params, "parameter_info") <- insight::clean_parameters(model)
-    attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-    class(params) <- unique(c("parameters_stan", "see_parameters_model", "parameters_model", class(params)))
+    params
   }
-
-  params
-}
 
 
 # brms meta analysis -------
 
 #' @importFrom insight get_parameters
-.model_parameters_brms_meta <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, diagnostic = c("ESS", "Rhat"), priors = TRUE, exponentiate = FALSE, standardize = NULL, ...) {
+.model_parameters_brms_meta <- function(model,
+                                        centrality = "median",
+                                        dispersion = FALSE,
+                                        ci = .89,
+                                        ci_method = "hdi",
+                                        test = c("pd", "rope"),
+                                        rope_range = "default",
+                                        rope_ci = 1.0,
+                                        diagnostic = c("ESS", "Rhat"),
+                                        priors = TRUE,
+                                        exponentiate = FALSE,
+                                        standardize = NULL,
+                                        verbose = TRUE,
+                                        ...) {
+
 
   # parameters
   smd <- insight::get_parameters(model, effects = "fixed")
@@ -126,36 +255,39 @@ model_parameters.brmsfit <- function(model, centrality = "median", dispersion = 
   studies[] <- lapply(studies, function(i) i + smd[[1]])
   tau <- insight::get_parameters(model, effects = "random", parameters = "^sd_")
 
-  params <- bayestestR::describe_posterior(
-    cbind(studies, smd),
-    centrality = centrality,
-    dispersion = dispersion,
-    ci = ci,
-    ci_method = ci_method,
-    test = test,
-    rope_range = rope_range,
-    rope_ci = rope_ci,
-    ...
-  )
+  params <-
+    bayestestR::describe_posterior(
+      cbind(studies, smd),
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      ...
+    )
 
-  params_diagnostics <- bayestestR::diagnostic_posterior(
-    model,
-    effects = "all",
-    diagnostic = diagnostic,
-    ...
-  )
+  params_diagnostics <-
+    bayestestR::diagnostic_posterior(
+      model,
+      effects = "all",
+      diagnostic = diagnostic,
+      ...
+    )
 
-  params_tau <- bayestestR::describe_posterior(
-    tau,
-    centrality = centrality,
-    dispersion = dispersion,
-    ci = ci,
-    ci_method = ci_method,
-    test = test,
-    rope_range = rope_range,
-    rope_ci = rope_ci,
-    ...
-  )
+  params_tau <-
+    bayestestR::describe_posterior(
+      tau,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      ...
+    )
 
   # add weights
   params$Weight <- 1 / c(insight::get_response(model)[[2]], NA)
@@ -207,10 +339,36 @@ model_parameters.brmsfit <- function(model, centrality = "median", dispersion = 
 
 
 #' @export
-model_parameters.MCMCglmm <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, ...) {
+model_parameters.MCMCglmm <- function(model,
+                                      centrality = "median",
+                                      dispersion = FALSE,
+                                      ci = .89,
+                                      ci_method = "hdi",
+                                      test = c("pd", "rope"),
+                                      rope_range = "default",
+                                      rope_ci = 1.0,
+                                      bf_prior = NULL,
+                                      diagnostic = c("ESS", "Rhat"),
+                                      priors = TRUE,
+                                      verbose = TRUE,
+                                      ...) {
 
   # Processing
-  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
+  params <-
+    .extract_parameters_bayesian(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = bf_prior,
+      diagnostic = diagnostic,
+      priors = priors,
+      ...
+    )
 
   attr(params, "pretty_names") <- format_parameters(model)
   attr(params, "ci") <- ci
@@ -223,7 +381,17 @@ model_parameters.MCMCglmm <- function(model, centrality = "median", dispersion =
 
 
 #' @export
-model_parameters.mcmc <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, ...) {
+model_parameters.mcmc <- function(model,
+                                  centrality = "median",
+                                  dispersion = FALSE,
+                                  ci = .89,
+                                  ci_method = "hdi",
+                                  test = c("pd", "rope"),
+                                  rope_range = "default",
+                                  rope_ci = 1.0,
+                                  verbose = TRUE,
+                                  ...) {
+
 
   # Processing
   params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = NULL, diagnostic = NULL, priors = FALSE, ...)
@@ -240,10 +408,37 @@ model_parameters.data.frame <- model_parameters.mcmc
 
 
 #' @export
-model_parameters.bcplm <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, ...) {
+model_parameters.bcplm <- function(model,
+                                   centrality = "median",
+                                   dispersion = FALSE,
+                                   ci = .89,
+                                   ci_method = "hdi",
+                                   test = c("pd", "rope"),
+                                   rope_range = "default",
+                                   rope_ci = 1.0,
+                                   bf_prior = NULL,
+                                   diagnostic = c("ESS", "Rhat"),
+                                   priors = TRUE,
+                                   verbose = TRUE,
+                                   ...) {
+
 
   # Processing
-  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
+  params <-
+    .extract_parameters_bayesian(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = bf_prior,
+      diagnostic = diagnostic,
+      priors = priors,
+      ...
+    )
 
   attr(params, "ci") <- ci
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -257,10 +452,40 @@ model_parameters.bayesQR <- model_parameters.bcplm
 
 
 #' @export
-model_parameters.stanfit <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, diagnostic = c("ESS", "Rhat"), effects = "fixed", exponentiate = FALSE, standardize = NULL, group_level = FALSE, ...) {
+model_parameters.stanfit <- function(model,
+                                     centrality = "median",
+                                     dispersion = FALSE,
+                                     ci = .89,
+                                     ci_method = "hdi",
+                                     test = c("pd", "rope"),
+                                     rope_range = "default",
+                                     rope_ci = 1.0,
+                                     diagnostic = c("ESS", "Rhat"),
+                                     effects = "fixed",
+                                     exponentiate = FALSE,
+                                     standardize = NULL,
+                                     group_level = FALSE,
+                                     verbose = TRUE,
+                                     ...) {
 
   # Processing
-  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = NULL, diagnostic = diagnostic, priors = FALSE, effects = effects, standardize = standardize, ...)
+  params <-
+    .extract_parameters_bayesian(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = NULL,
+      diagnostic = diagnostic,
+      priors = FALSE,
+      effects = effects,
+      standardize = standardize,
+      ...
+    )
 
   if (effects != "fixed") {
     random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE))

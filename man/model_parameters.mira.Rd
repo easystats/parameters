@@ -4,7 +4,14 @@
 \alias{model_parameters.mira}
 \title{Parameters from multiply imputed repeated analyses}
 \usage{
-\method{model_parameters}{mira}(model, ci = 0.95, exponentiate = FALSE, p_adjust = NULL, ...)
+\method{model_parameters}{mira}(
+  model,
+  ci = 0.95,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{model}{An object of class \code{mira}.}
@@ -14,6 +21,8 @@
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -46,7 +55,9 @@ if (require("mice") && require("gee")) {
   # summary(pool(fit))
 
   model_parameters(fit)
-}}
+}
+}
+
 
 
 # and it works with pooled results

@@ -12,7 +12,7 @@
 #'   model_parameters(model)
 #' }
 #' @export
-model_parameters.Mclust <- function(model, ...) {
+model_parameters.Mclust <- function(model, verbose = TRUE, ...) {
   params <- cbind(
     data.frame(
       Cluster = as.data.frame(table(model$classification))$Var1,

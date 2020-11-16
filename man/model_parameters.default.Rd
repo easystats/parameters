@@ -18,6 +18,7 @@
   exponentiate = TRUE,
   robust = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -31,6 +32,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -44,6 +46,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -56,6 +59,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -69,6 +73,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 }
@@ -88,6 +93,8 @@
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 
