@@ -19,6 +19,7 @@
   details = FALSE,
   p_adjust = NULL,
   wb_component = TRUE,
+  verbose = TRUE,
   ...
 )
 
@@ -33,6 +34,7 @@
   df_method = NULL,
   details = FALSE,
   wb_component = TRUE,
+  verbose = TRUE,
   ...
 )
 
@@ -45,6 +47,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   details = FALSE,
+  verbose = TRUE,
   ...
 )
 
@@ -57,6 +60,7 @@
   exponentiate = FALSE,
   details = FALSE,
   df_method = NULL,
+  verbose = TRUE,
   ...
 )
 }
@@ -82,6 +86,8 @@
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 
