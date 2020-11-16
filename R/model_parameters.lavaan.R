@@ -61,7 +61,13 @@
 #'   \item Merkle EC , Rosseel Y (2018). blavaan: Bayesian Structural Equation Models via Parameter Expansion. Journal of Statistical Software, 85(4), 1-30. http://www.jstatsoft.org/v85/i04/
 #' }
 #' @export
-model_parameters.lavaan <- function(model, ci = 0.95, standardize = FALSE, type = c("regression", "correlation", "loading", "defined"), ...) {
+model_parameters.lavaan <- function(model,
+                                    ci = 0.95,
+                                    standardize = FALSE,
+                                    type = c("regression", "correlation", "loading", "defined"),
+                                    verbose = TRUE,
+                                    ...) {
+
   params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, ...)
 
   # Filter

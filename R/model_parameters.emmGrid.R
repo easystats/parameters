@@ -1,5 +1,9 @@
 #' @export
-model_parameters.emmGrid <- function(model, ci = .95, p_adjust = NULL, ...) {
+model_parameters.emmGrid <- function(model,
+                                     ci = .95,
+                                     p_adjust = NULL,
+                                     verbose = TRUE,
+                                     ...) {
   if (is.null(p_adjust)) {
     p_adjust <- "none"
   }
@@ -55,10 +59,13 @@ model_parameters.emmGrid <- function(model, ci = .95, p_adjust = NULL, ...) {
 
 
 
-
-
 #' @export
-model_parameters.emm_list <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, ...) {
+model_parameters.emm_list <- function(model,
+                                      ci = .95,
+                                      exponentiate = FALSE,
+                                      p_adjust = NULL,
+                                      verbose = TRUE,
+                                      ...) {
   params <-
     suppressMessages(suppressWarnings(
       .extract_parameters_generic(

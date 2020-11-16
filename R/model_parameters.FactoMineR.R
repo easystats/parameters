@@ -1,6 +1,11 @@
 #' @rdname model_parameters.principal
 #' @export
-model_parameters.PCA <- function(model, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+model_parameters.PCA <- function(model,
+                                 sort = FALSE,
+                                 threshold = NULL,
+                                 labels = NULL,
+                                 verbose = TRUE,
+                                 ...) {
   loadings <- as.data.frame(model$var$coord)
   n <- model$call$ncp
 

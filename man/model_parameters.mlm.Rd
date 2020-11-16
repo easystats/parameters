@@ -16,6 +16,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -27,6 +28,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -38,6 +40,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -49,6 +52,7 @@
   component = c("all", "conditional", "precision"),
   standardize = NULL,
   exponentiate = FALSE,
+  verbose = TRUE,
   ...
 )
 
@@ -61,6 +65,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 }
@@ -78,6 +83,8 @@
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 

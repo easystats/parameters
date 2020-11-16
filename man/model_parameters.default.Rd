@@ -18,6 +18,7 @@
   exponentiate = TRUE,
   robust = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -31,6 +32,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -44,6 +46,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -91,11 +94,11 @@
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 
+\item{verbose}{Toggle warnings and messages.}
+
 \item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 
 \item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}), \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for \code{MuMIn::model.avg()}) or \code{"all"}.}
-
-\item{verbose}{Toggle warnings and messages.}
 
 \item{df_method}{Method for computing degrees of freedom for confidence intervals (CI). Only applies to models of class \code{glm} or \code{polr}. May be \code{"profile"} or \code{"wald"}.}
 }

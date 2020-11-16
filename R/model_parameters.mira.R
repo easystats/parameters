@@ -3,8 +3,8 @@
 #' Format models of class \code{mira}, obtained from \code{mice::width.mids()}.
 #'
 #' @param model An object of class \code{mira}.
-#' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.default
+#' @param ... Arguments passed to or from other methods.
 #'
 #' @details \code{model_parameters()} for objects of class \code{mira} works
 #'   similar to \code{summary(mice::pool())}, i.e. it generates the pooled summary
@@ -31,7 +31,9 @@
 #'   # summary(pool(fit))
 #'
 #'   model_parameters(fit)
-#' }}
+#' }
+#' }
+#'
 #'
 #'
 #' # and it works with pooled results
@@ -44,7 +46,12 @@
 #'   model_parameters(pooled)
 #' }
 #' @export
-model_parameters.mira <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, ...) {
+model_parameters.mira <- function(model,
+                                  ci = .95,
+                                  exponentiate = FALSE,
+                                  p_adjust = NULL,
+                                  verbose = TRUE,
+                                  ...) {
   if (!requireNamespace("mice", quietly = TRUE)) {
     stop("Package 'mice' needed for this function to work. Please install it.")
   }

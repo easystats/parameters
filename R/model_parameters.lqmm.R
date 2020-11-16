@@ -1,5 +1,12 @@
 #' @export
-model_parameters.lqmm <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, p_adjust = NULL, ...) {
+model_parameters.lqmm <- function(model,
+                                  ci = .95,
+                                  bootstrap = FALSE,
+                                  iterations = 1000,
+                                  p_adjust = NULL,
+                                  verbose = TRUE,
+                                  ...) {
+
   # Processing
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
@@ -45,7 +52,8 @@ model_parameters.lqm <- model_parameters.lqmm
       } else {
         attr(cs$B, "R") - 1
       }
-    }, error = function(e) {
+    },
+    error = function(e) {
       Inf
     }
   )

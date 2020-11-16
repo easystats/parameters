@@ -1,6 +1,6 @@
 #' @rdname model_parameters.htest
 #' @export
-model_parameters.pairwise.htest <- function(model, ...) {
+model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   m <- model$p.value
   parameters <-
     data.frame(
@@ -19,12 +19,13 @@ model_parameters.pairwise.htest <- function(model, ...) {
 
 
 
-
-
-
-
 #' @keywords internal
-.add_htest_attributes <- function(params, model, p_adjust = NULL, ...) {
+.add_htest_attributes <- function(params,
+                                  model,
+                                  p_adjust = NULL,
+                                  verbose = TRUE,
+                                  ...) {
+
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
 
   attr(params, "p_adjust") <- p_adjust

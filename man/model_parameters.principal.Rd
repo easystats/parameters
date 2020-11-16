@@ -7,11 +7,25 @@
 \alias{model_parameters.omega}
 \title{Parameters from Structural Models (PCA, EFA, ...)}
 \usage{
-\method{model_parameters}{PCA}(model, sort = FALSE, threshold = NULL, labels = NULL, ...)
+\method{model_parameters}{PCA}(
+  model,
+  sort = FALSE,
+  threshold = NULL,
+  labels = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{model_parameters}{principal}(model, sort = FALSE, threshold = NULL, labels = NULL, ...)
+\method{model_parameters}{principal}(
+  model,
+  sort = FALSE,
+  threshold = NULL,
+  labels = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{model_parameters}{omega}(model, ...)
+\method{model_parameters}{omega}(model, verbose = TRUE, ...)
 }
 \arguments{
 \item{model}{PCA or FA created by the \pkg{psych} or \pkg{FactoMineR} packages (e.g. through \code{psych::principal},  \code{psych::fa} or \code{psych::omega}).}

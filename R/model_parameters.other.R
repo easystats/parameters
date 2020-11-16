@@ -23,7 +23,14 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @inheritParams simulate_model
 #' @export
-model_parameters.averaging <- function(model, ci = .95, component = c("conditional", "full"), exponentiate = FALSE, p_adjust = NULL, ...) {
+model_parameters.averaging <- function(model,
+                                       ci = .95,
+                                       component = c("conditional", "full"),
+                                       exponentiate = FALSE,
+                                       p_adjust = NULL,
+                                       verbose = TRUE,
+                                       ...) {
+
   component <- match.arg(component)
   out <- .model_parameters_generic(
     model = model,
@@ -43,7 +50,17 @@ model_parameters.averaging <- function(model, ci = .95, component = c("condition
 
 #' @rdname model_parameters.averaging
 #' @export
-model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("conditional", "precision", "all"), standardize = NULL, exponentiate = FALSE, p_adjust = NULL, ...) {
+model_parameters.betareg <- function(model,
+                                     ci = .95,
+                                     bootstrap = FALSE,
+                                     iterations = 1000,
+                                     component = c("conditional", "precision", "all"),
+                                     standardize = NULL,
+                                     exponentiate = FALSE,
+                                     p_adjust = NULL,
+                                     verbose = TRUE,
+                                     ...) {
+
   component <- match.arg(component)
   if (component == "all") {
     merge_by <- c("Parameter", "Component")
@@ -73,7 +90,17 @@ model_parameters.betareg <- function(model, ci = .95, bootstrap = FALSE, iterati
 
 #' @rdname model_parameters.averaging
 #' @export
-model_parameters.glmx <- function(model, ci = .95, bootstrap = FALSE, iterations = 1000, component = c("all", "conditional", "extra"), standardize = NULL, exponentiate = FALSE, p_adjust = NULL, ...) {
+model_parameters.glmx <- function(model,
+                                  ci = .95,
+                                  bootstrap = FALSE,
+                                  iterations = 1000,
+                                  component = c("all", "conditional", "extra"),
+                                  standardize = NULL,
+                                  exponentiate = FALSE,
+                                  p_adjust = NULL,
+                                  verbose = TRUE,
+                                  ...) {
+
   component <- match.arg(component)
   if (component == "all") {
     merge_by <- c("Parameter", "Component")

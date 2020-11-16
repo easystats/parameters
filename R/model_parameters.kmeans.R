@@ -3,6 +3,7 @@
 #' Format cluster models obtained for example by \code{\link{kmeans}}.
 #'
 #' @param model Cluster model.
+#' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -11,7 +12,7 @@
 #' model <- kmeans(iris[1:4], centers = 3)
 #' model_parameters(model)
 #' @export
-model_parameters.kmeans <- function(model, ...) {
+model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
   params <- cbind(
     data.frame(
       Cluster = row.names(model$centers),

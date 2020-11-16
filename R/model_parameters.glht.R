@@ -26,7 +26,12 @@
 #' }
 #' }
 #' @export
-model_parameters.glht <- function(model, ci = .95, exponentiate = FALSE, ...) {
+model_parameters.glht <- function(model,
+           ci = .95,
+           exponentiate = FALSE,
+           verbose = TRUE,
+           ...) {
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,

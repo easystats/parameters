@@ -59,7 +59,12 @@
 #'   \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate statistics (6th ed.). Boston: Pearson Education.
 #' }
 #' @export
-model_parameters.principal <- function(model, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+model_parameters.principal <- function(model,
+                                       sort = FALSE,
+                                       threshold = NULL,
+                                       labels = NULL,
+                                       verbose = TRUE,
+                                       ...) {
 
   # n
   n <- model$factors
@@ -153,7 +158,7 @@ model_parameters.fa <- model_parameters.principal
 
 #' @rdname model_parameters.principal
 #' @export
-model_parameters.omega <- function(model, ...) {
+model_parameters.omega <- function(model, verbose = TRUE, ...) {
 
   # Table of omega coefficients
   table_om <- model$omega.group
