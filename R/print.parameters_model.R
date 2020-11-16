@@ -442,6 +442,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 
 
+#' @importFrom insight print_parameters
 #' @export
 print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
   orig_x <- x
