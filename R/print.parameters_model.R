@@ -20,6 +20,8 @@
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @return \code{NULL}
 #'
+#' @seealso There is a dedicated method to use inside rmarkdown files, \code{\link{to_table}}.
+#'
 #' @examples
 #' \donttest{
 #' library(parameters)
@@ -39,8 +41,7 @@
 #'   print(mp, select = c("Parameter", "Coefficient", "SE"))
 #'
 #'   print(mp, select = "minimal")
-#' }
-#' }
+#' }}
 #' @importFrom insight format_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, show_sigma = FALSE, show_formula = FALSE, ...) {

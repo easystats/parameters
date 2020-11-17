@@ -2,6 +2,11 @@
 % Please edit documentation in R/to_table.R
 \name{to_table.parameters_model}
 \alias{to_table.parameters_model}
+\alias{to_table.parameters_sem}
+\alias{to_table.parameters_stan}
+\alias{to_table.parameters_efa_summary}
+\alias{to_table.parameters_efa}
+\alias{to_table.equivalence_test_lm}
 \title{Export tables into different output formats}
 \usage{
 \method{to_table}{parameters_model}(
@@ -15,6 +20,24 @@
   p_digits = 3,
   ...
 )
+
+\method{to_table}{parameters_sem}(x, format = "markdown", digits = 2, ci_digits = 2, p_digits = 3, ...)
+
+\method{to_table}{parameters_stan}(x, split_components = TRUE, select = NULL, ...)
+
+\method{to_table}{parameters_efa_summary}(x, format = "markdown", digits = 3, ...)
+
+\method{to_table}{parameters_efa}(
+  x,
+  format = "markdown",
+  digits = 2,
+  sort = FALSE,
+  threshold = NULL,
+  labels = NULL,
+  ...
+)
+
+\method{to_table}{equivalence_test_lm}(x, format = "markdown", digits = 2, ...)
 }
 \arguments{
 \item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}},
@@ -46,29 +69,20 @@ while \code{select = "short"} prints coefficient, standard errors and p-values.}
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-A character vector
+A character vector. If \code{format = "markdown"}, the return value
+  will be a character vector in markdown-table format.
 }
 \description{
 Export tables (i.e. data frame) into different output formats
 }
-\section{Interpretation of Interaction Terms}{
-
-Note that the \emph{interpretation} of interaction terms depends on many
-characteristics of the model. The number of parameters, and overall
-performance of the model, can differ \emph{or not} between \code{a * b}
-\code{a : b}, and \code{a / b}, suggesting that sometimes interaction terms
-give different parameterizations of the same model, but other times it gives
-completely different models (depending on \code{a} or \code{b} being factors
-of covariates, included as main effects or not, etc.). Their interpretation
-depends of the full context of the model, which should not be inferred
-from the parameters table alone - rather, we recommend to use packages
-that calculate estimated marginal means or marginal effects, such as
-\CRANpkg{modelbased}, \CRANpkg{emmeans} or \CRANpkg{ggeffects}. To raise
-awareness for this issue, you may use \code{print(...,show_formula=TRUE)}
-to add the model-specification to the output of the
-\code{\link[=print.parameters_model]{print()}} method for \code{model_parameters()}.
+\details{
+\code{to_table()} is useful when the table-output from functions,
+  which is usually printed as formatted text-table to console, should
+  be formatted for pretty table-rendering in markdown documents, or if
+  knitted from rmarkdown to PDF or Word files. See
+  \href{https://easystats.github.io/parameters/articles/model_parameters_formatting.html}{vignette}
+  for examples.
 }
-
 \examples{
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 mp <- model_parameters(model)

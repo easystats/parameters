@@ -88,6 +88,8 @@ if (require("glmmTMB")) {
   print(mp, select = c("Parameter", "Coefficient", "SE"))
 
   print(mp, select = "minimal")
+}}
 }
-}
+\seealso{
+There is a dedicated method to use inside rmarkdown files, \code{\link{to_table}}.
 }

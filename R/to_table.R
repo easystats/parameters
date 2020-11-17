@@ -11,8 +11,15 @@
 #' @inheritParams print.parameters_model
 #' @inheritParams parameters_table
 #'
-#' @inheritSection format_parameters Interpretation of Interaction Terms
-#' @return A character vector
+#' @return A character vector. If \code{format = "markdown"}, the return value
+#'   will be a character vector in markdown-table format.
+#'
+#' @details \code{to_table()} is useful when the table-output from functions,
+#'   which is usually printed as formatted text-table to console, should
+#'   be formatted for pretty table-rendering in markdown documents, or if
+#'   knitted from rmarkdown to PDF or Word files. See
+#'   \href{https://easystats.github.io/parameters/articles/model_parameters_formatting.html}{vignette}
+#'   for examples.
 #'
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
@@ -78,6 +85,7 @@ to_table.parameters_brms_meta <- to_table.parameters_model
 # SEM models ------------------------
 
 
+#' @rdname to_table.parameters_model
 #' @export
 to_table.parameters_sem <- function(x, format = "markdown", digits = 2, ci_digits = 2, p_digits = 3, ...) {
   # check if user supplied digits attributes
@@ -98,6 +106,7 @@ to_table.parameters_sem <- function(x, format = "markdown", digits = 2, ci_digit
 # Stan models ------------------------
 
 
+#' @rdname to_table.parameters_model
 #' @importFrom insight print_parameters
 #' @export
 to_table.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
@@ -159,6 +168,7 @@ to_table.parameters_stan <- function(x, split_components = TRUE, select = NULL, 
 # PCA /EFA  models ------------------------
 
 
+#' @rdname to_table.parameters_model
 #' @importFrom insight format_table
 #' @export
 to_table.parameters_efa_summary <- function(x, format = "markdown", digits = 3, ...) {
@@ -176,6 +186,7 @@ to_table.parameters_efa_summary <- function(x, format = "markdown", digits = 3, 
 #' @export
 to_table.parameters_pca_summary <- to_table.parameters_efa_summary
 
+#' @rdname to_table.parameters_model
 #' @export
 to_table.parameters_efa <- function(x, format = "markdown", digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
   if (inherits(x, "parameters_pca")) {
@@ -229,6 +240,7 @@ to_table.parameters_pca <- to_table.parameters_efa
 # Equivalence tests ------------------------
 
 
+#' @rdname to_table.parameters_model
 #' @export
 to_table.equivalence_test_lm <- function(x, format = "markdown", digits = 2, ...) {
   rule <- attributes(x)$rule
