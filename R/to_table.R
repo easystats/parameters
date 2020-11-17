@@ -68,6 +68,9 @@ to_table.parameters_model <- function(x, format = "markdown", pretty_names = TRU
     formatted_table
   } else {
     formatted_table <- parameters_table(x, pretty_names = pretty_names, digits = digits, ci_width = NULL, ci_brackets = c("(", ")"), ci_digits = ci_digits, p_digits = p_digits, ...)
+    # replace brackets by parenthesis
+    formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
+    formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
     insight::format_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
   }
 }
@@ -150,6 +153,10 @@ to_table.parameters_stan <- function(x, split_components = TRUE, select = NULL, 
       attr(i, "p_digits") <- p_digits
 
       formatted_table <- parameters_table(i, pretty_names = FALSE, ci_width = NULL, ci_brackets = c("(", ")"), ...)
+      # replace brackets by parenthesis
+      formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
+      formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
+
       final_table <- c(
         final_table,
         insight::format_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
@@ -271,6 +278,10 @@ to_table.equivalence_test_lm <- function(x, format = "markdown", digits = 2, ...
   col_order <- c("Parameter", "H0", "% in ROPE", colnames(formatted_table)[grepl(" CI$", colnames(formatted_table))])
   col_order <- c(col_order, setdiff(colnames(formatted_table), col_order))
   formatted_table <- formatted_table[col_order]
+
+  # replace brackets by parenthesis
+  formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
+  formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
 
   if (!is.null(rope)) {
     names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf("%% in ROPE (%.*f, %.*f)", digits, rope[1], digits, rope[2])

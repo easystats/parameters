@@ -162,7 +162,7 @@ parameters_type <- function(model, ...) {
 
 #' @importFrom utils tail head
 #' @keywords internal
-.parameters_type_basic <- function(name, data, reference) {
+.parameters_type_basic <- function(name, data, reference, brackets = c("[", "]")) {
   if (is.na(name)) {
     return(c(NA, NA, NA, NA, NA, NA))
   }
@@ -191,7 +191,7 @@ parameters_type <- function(model, ...) {
       "Association",
       name,
       fac,
-      .format_ordered(gsub(fac, "", name, fixed = TRUE)),
+      .format_ordered(gsub(fac, "", name, fixed = TRUE), brackets = brackets),
       NA
     ))
 

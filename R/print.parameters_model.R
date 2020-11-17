@@ -392,6 +392,10 @@ print.parameters_random <- function(x, digits = 2, ...) {
       } else {
         table_caption <- ""
       }
+      # replace brackets by parenthesis
+      formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
+      formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
+      # final output
       final_table <- c(
         final_table,
         "",

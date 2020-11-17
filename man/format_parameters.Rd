@@ -4,10 +4,14 @@
 \alias{format_parameters}
 \title{Parameter names formatting}
 \usage{
-format_parameters(model)
+format_parameters(model, ...)
 }
 \arguments{
 \item{model}{A statistical model.}
+
+\item{...}{Currently not used.}
+
+\item{brackets}{A character vector of length two, indicating the opening and closing brackets.}
 }
 \value{
 A (names) character vector with formatted parameter names. The value names refer to the original names of the coefficients.
