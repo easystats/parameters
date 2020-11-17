@@ -1,5 +1,5 @@
 #' @title Print model parameters
-#' @name print
+#' @name print.parameters_model
 #'
 #' @description A \code{print()}-method for objects from \code{\link[=model_parameters]{model_parameters()}}.
 #'

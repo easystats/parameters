@@ -138,6 +138,9 @@ equivalence_test.lm <- function(x, range = "default", ci = .95, rule = "bayes", 
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
   out <- .equivalence_test_frequentist(x, range, ci, rule, p_values, verbose, ...)
 
+  if (is.null(attr(out, "pretty_names", exact = TRUE))) {
+    attr(out, "pretty_names") <- format_parameters(x)
+  }
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   attr(out, "rule") <- rule
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
@@ -208,6 +211,9 @@ equivalence_test.merMod <- function(x, range = "default", ci = .95, rule = "baye
 
   # ==== result ====
 
+  if (is.null(attr(out, "pretty_names", exact = TRUE))) {
+    attr(out, "pretty_names") <- format_parameters(x)
+  }
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   attr(out, "rule") <- rule
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
@@ -248,6 +254,9 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
   out <- equivalence_test(as.data.frame(x), range = range, ci = ci, verbose = verbose, ...)
 
+  if (is.null(attr(out, "pretty_names", exact = TRUE))) {
+    attr(out, "pretty_names") <- format_parameters(x)
+  }
   attr(out, "object_name") <- attr(x, "object_name")
   attr(out, "data") <- x
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", "equivalence_test_simulate_model", class(out)))
@@ -549,6 +558,20 @@ print.equivalence_test_lm <- function(x, digits = 2, ...) {
 
   .rope <- attr(x, "rope", exact = TRUE)
   cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, .rope[1], digits, .rope[2]))
+
+  # set pretty names
+  x <- tryCatch(
+    {
+      pretty_names <- attr(x, "pretty_names", exact = TRUE)
+      if (!is.null(pretty_names)) {
+        x$Parameter[match(names(pretty_names), x$Parameter)] <- pretty_names
+      }
+      x
+    },
+    error = function(e) {
+      x
+    }
+  )
 
   if ("Component" %in% colnames(x)) {
     x <- x[x$Component %in% c("conditional", "count"), ]

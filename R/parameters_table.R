@@ -105,11 +105,15 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
   # Bayesian ---
   x <- .format_bayes_columns(x, stars)
 
+  # ROPE %
+  if ("ROPE_Percentage" %in% names(x)) {
+    x$ROPE_Percentage <- insight::format_value(x$ROPE_Percentage, digits = digits, as_percent = TRUE)
+    names(x)[names(x) == "ROPE_Percentage"] <- "% in ROPE"
+  }
 
   # Format remaining columns
   other_cols <- names(x)[sapply(x, is.numeric)]
   x[other_cols[other_cols %in% names(x)]] <- insight::format_value(x[other_cols[other_cols %in% names(x)]], digits = digits)
-
 
   # SEM links
   if (all(c("To", "Operator", "From") %in% names(x))) {

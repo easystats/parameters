@@ -13,15 +13,17 @@
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
-  show_sigma = FALSE,
-  show_formula = FALSE,
   ...
 )
 }
 \arguments{
-\item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
+\item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}},
+\code{\link[=simulate_parameters]{simulate_parameters()}},
+\code{\link[=equivalence_test.lm]{equivalence_test()}} or
+\code{\link[=principal_components]{principal_components()}}.}
 
-\item{format}{String, indicating the output format. By default, \code{"markdown"} is used.}
+\item{format}{String, indicating the output format. Currently, only
+\code{"markdown"} is supported.}
 
 \item{pretty_names}{Return "pretty" (i.e. more human readable) parameter names.}
 
@@ -40,11 +42,6 @@ while \code{select = "short"} prints coefficient, standard errors and p-values.}
 \item{ci_digits}{Number of decimal places for confidence intervals.}
 
 \item{p_digits}{Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.}
-
-\item{show_sigma}{Logical, if \code{TRUE}, adds information about the residual
-standard deviation.}
-
-\item{show_formula}{Logical, if \code{TRUE}, adds the model formula to the output.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

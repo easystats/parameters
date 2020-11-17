@@ -168,7 +168,7 @@ model_parameters(model)
 
 ## Formatting the Parameters Table in Markdown
 
-Finally, the `to_table()` allows to format the output in markdown-format, to create pretty rendered table inside markdown documents. These tables also look great when knitting markdown-documents into Word or PDF.
+`to_table()` allows to format the output of functions like `model_parameters()` or `simulate_parameters()` in markdown-format, to create pretty rendered tables inside markdown documents. These tables are still pretty formatted when knitting markdown-documents into Word or PDF.
 
 ```{r}
 model_parameters(model) %>% to_table()

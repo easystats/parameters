@@ -2,19 +2,13 @@
 #'
 #' Export tables (i.e. data frame) into different output formats
 #'
-#' @param x An object returned by \code{\link[=model_parameters]{model_parameters()}}.
-#' @param format String, indicating the output format. By default, \code{"markdown"} is used.
-#' @param split_components Logical, if \code{TRUE} (default), For models with
-#'   multiple components (zero-inflation, smooth terms, ...), each component is
-#'   printed in a separate table. If \code{FALSE}, model parameters are printed
-#'   in a single table and a \code{Component} column is added to the output.
-#' @param select Character vector (or numeric index) of column names that should
-#'   be printed. If \code{NULL} (default), all columns are printed. The shortcut
-#'   \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
-#'   while \code{select = "short"} prints coefficient, standard errors and p-values.
-#' @param show_sigma Logical, if \code{TRUE}, adds information about the residual
-#'   standard deviation.
-#' @param show_formula Logical, if \code{TRUE}, adds the model formula to the output.
+#' @param x An object returned by \code{\link[=model_parameters]{model_parameters()}},
+#'   \code{\link[=simulate_parameters]{simulate_parameters()}},
+#'   \code{\link[=equivalence_test.lm]{equivalence_test()}} or
+#'   \code{\link[=principal_components]{principal_components()}}.
+#' @param format String, indicating the output format. Currently, only
+#'   \code{"markdown"} is supported.
+#' @inheritParams print.parameters_model
 #' @inheritParams parameters_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
@@ -25,7 +19,7 @@
 #' mp <- model_parameters(model)
 #' to_table(mp)
 #' @export
-to_table.parameters_model <- function(x, format = "markdown", pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, show_sigma = FALSE, show_formula = FALSE, ...) {
+to_table.parameters_model <- function(x, format = "markdown", pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
   # save original input
   orig_x <- x
 
@@ -71,8 +65,37 @@ to_table.parameters_model <- function(x, format = "markdown", pretty_names = TRU
   }
 }
 
+#' @export
+to_table.parameters_simulate <- to_table.parameters_model
+
+#' @export
+to_table.parameters_brms_meta <- to_table.parameters_model
 
 
+
+
+
+# SEM models ------------------------
+
+
+#' @export
+to_table.parameters_sem <- function(x, format = "markdown", digits = 2, ci_digits = 2, p_digits = 3, ...) {
+  # check if user supplied digits attributes
+  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
+  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+
+  formatted_table <- .print_model_parms_components(x, pretty_names = TRUE, split_column = "Type", digits = digits, ci_digits = ci_digits, p_digits = p_digits, format = "markdown", ci_width = NULL, ci_brackets = c("(", ")"), ...)
+  attr(formatted_table, "format") <- "pipe"
+  class(formatted_table) <- c("knitr_kable", "character")
+  formatted_table
+}
+
+
+
+
+
+# Stan models ------------------------
 
 
 #' @importFrom insight print_parameters
@@ -131,13 +154,124 @@ to_table.parameters_stan <- function(x, split_components = TRUE, select = NULL, 
 
 
 
+
+
+# PCA /EFA  models ------------------------
+
+
+#' @importFrom insight format_table
 #' @export
-to_table.parameters_simulate <- to_table.parameters_model
+to_table.parameters_efa_summary <- function(x, format = "markdown", digits = 3, ...) {
+  table_caption <- "(Explained) Variance of Components"
+
+  if ("Parameter" %in% names(x)) {
+    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+  } else if ("Component" %in% names(x)) {
+    names(x) <- c("Copmponent", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+  }
+
+  insight::format_table(x, digits = digits, format = format, caption = table_caption, align = "firstleft")
+}
 
 #' @export
-to_table.parameters_brms_meta <- to_table.parameters_model
+to_table.parameters_pca_summary <- to_table.parameters_efa_summary
+
+#' @export
+to_table.parameters_efa <- function(x, format = "markdown", digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+  if (inherits(x, "parameters_pca")) {
+    method <- "Principal Component Analysis"
+  } else {
+    method <- "Factor Analysis"
+  }
+
+  # Labels
+  if (!is.null(labels)) {
+    x$Label <- labels
+    x <- x[c("Variable", "Label", names(x)[!names(x) %in% c("Variable", "Label")])]
+  }
+
+  # Sorting
+  if (isTRUE(sort)) {
+    x <- .sort_loadings(x)
+  }
+
+  # Replace by NA all cells below threshold
+  if (!is.null(threshold)) {
+    x <- .filter_loadings(x, threshold = threshold)
+  }
 
 
+  rotation_name <- attr(x, "rotation", exact = TRUE)
+
+  if (is.null(rotation_name) || rotation_name == "none") {
+    table_caption <- sprintf("Loadings from %s (no rotation)", method)
+  } else {
+    table_caption <- sprintf("Rotated loadings from %s (%s-rotation)", method, rotation_name)
+  }
+
+  final_table <- insight::format_table(x, digits = digits, format = format, caption = table_caption, align = "firstleft", ...)
+
+  if (!is.null(attributes(x)$type)) {
+    final_table <- c(final_table, .text_components_variance(x))
+    attr(final_table, "format") <- "pipe"
+    class(final_table) <- c("knitr_kable", "character")
+  }
+  final_table
+}
+
+#' @export
+to_table.parameters_pca <- to_table.parameters_efa
+
+
+
+
+
+# Equivalence tests ------------------------
+
+
+#' @export
+to_table.equivalence_test_lm <- function(x, format = "markdown", digits = 2, ...) {
+  rule <- attributes(x)$rule
+  rope <- attributes(x)$rope
+
+  if (!is.null(rule)) {
+    if (rule == "cet") {
+      table_caption <- "Conditional Equivalence Testing"
+    } else if (rule == "classic") {
+      table_caption <- "TOST-test for Practical Equivalence"
+    } else {
+      table_caption <- "Test for Practical Equivalence"
+    }
+  } else {
+    table_caption <- "Test for Practical Equivalence"
+  }
+
+  if ("Component" %in% colnames(x)) {
+    x <- x[x$Component %in% c("conditional", "count"), ]
+  }
+
+  formatted_table <- parameters_table(x, pretty_names = TRUE, digits = digits, ci_width = NULL, ci_brackets = c("(", ")"), ...)
+
+  colnames(formatted_table)[which(colnames(formatted_table) == "ROPE_Equivalence")] <- "H0"
+  formatted_table$ROPE_low <- NULL
+  formatted_table$ROPE_high <- NULL
+
+  col_order <- c("Parameter", "H0", "% in ROPE", colnames(formatted_table)[grepl(" CI$", colnames(formatted_table))])
+  col_order <- c(col_order, setdiff(colnames(formatted_table), col_order))
+  formatted_table <- formatted_table[col_order]
+
+  if (!is.null(rope)) {
+    names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf("%% in ROPE (%.*f, %.*f)", digits, rope[1], digits, rope[2])
+  }
+
+  insight::format_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
+}
+
+
+
+
+
+# Reexports models ------------------------
 
 #' @importFrom insight to_table
 #' @export
