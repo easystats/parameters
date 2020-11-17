@@ -161,21 +161,37 @@ model_parameters.htest <- function(model,
       stringsAsFactors = FALSE
     )
   } else if (grepl(" by ", model$data.name)) {
-    names <- unlist(strsplit(model$data.name, " by "))
-    out <- data.frame(
-      "Parameter" = names[1],
-      "Group" = names[2],
-      "Mean_Group1" = model$estimate[1],
-      "Mean_Group2" = model$estimate[2],
-      "Difference" = model$estimate[2] - model$estimate[1],
-      "t" = model$statistic,
-      "df" = model$parameter,
-      "p" = model$p.value,
-      "CI_low" = model$conf.int[1],
-      "CI_high" = model$conf.int[2],
-      "Method" = model$method,
-      stringsAsFactors = FALSE
-    )
+    if (length(model$estimate) == 1) {
+      names <- unlist(strsplit(model$data.name, " by "))
+      out <- data.frame(
+        "Parameter" = names[1],
+        "Group" = names[2],
+        "Mean_Difference" = model$estimate,
+        "t" = model$statistic,
+        "df" = model$parameter,
+        "p" = model$p.value,
+        "CI_low" = model$conf.int[1],
+        "CI_high" = model$conf.int[2],
+        "Method" = model$method,
+        stringsAsFactors = FALSE
+      )
+    } else {
+      names <- unlist(strsplit(model$data.name, " by "))
+      out <- data.frame(
+        "Parameter" = names[1],
+        "Group" = names[2],
+        "Mean_Group1" = model$estimate[1],
+        "Mean_Group2" = model$estimate[2],
+        "Difference" = model$estimate[2] - model$estimate[1],
+        "t" = model$statistic,
+        "df" = model$parameter,
+        "p" = model$p.value,
+        "CI_low" = model$conf.int[1],
+        "CI_high" = model$conf.int[2],
+        "Method" = model$method,
+        stringsAsFactors = FALSE
+      )
+    }
   } else {
     out <- data.frame(
       "Parameter" = model$data.name,
