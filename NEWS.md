@@ -14,6 +14,10 @@
   `htest` objects from `oneway.test()`, `chisq.test()`, `prop.test()`,
   `mcnemar.test()` and `pairwise.htest` objects.
 
+## New functions
+
+* `to_table()`, to format output from package-functions into markdown-format.
+
 ## Changes to functions
 
 ### `model_parameters()`
