@@ -9,6 +9,8 @@ parameters_table(
   pretty_names = TRUE,
   stars = FALSE,
   digits = 2,
+  ci_width = "auto",
+  ci_brackets = TRUE,
   ci_digits = 2,
   p_digits = 3,
   ...
@@ -22,6 +24,10 @@ parameters_table(
 \item{stars}{Add significance stars (e.g., p < .001***).}
 
 \item{digits}{Number of decimal places for numeric values (except confidence intervals and p-values).}
+
+\item{ci_width}{Minimum width of the returned string for confidence intervals. If not \code{NULL} and width is larger than the string's length, leading whitespaces are added to the string. If \code{width="auto"}, width will be set to the length of the longest string.}
+
+\item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are encompassed in square brackets (else in parantheses).}
 
 \item{ci_digits}{Number of decimal places for confidence intervals.}
 

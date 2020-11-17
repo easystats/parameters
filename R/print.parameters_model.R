@@ -264,7 +264,9 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 
 #' @keywords internal
-.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, ...) {
+.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, ...) {
+
+  final_table <- NULL
 
   # check if user supplied digits attributes
   is_ordinal_model <- attributes(x)$ordinal_model
@@ -354,7 +356,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
       colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
 
-    formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, ...)
+    formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
 
     component_name <- switch(
       type,
@@ -431,12 +433,30 @@ print.parameters_random <- function(x, digits = 2, ...) {
     }
 
 
-    # Print
-    if (component_name != "rewb-contextual") {
-      insight::print_color(sprintf("# %s %s\n\n", s1, tolower(s2)), "blue")
+    if (is.null(format)) {
+      # Print
+      if (component_name != "rewb-contextual") {
+        insight::print_color(sprintf("# %s %s\n\n", s1, tolower(s2)), "blue")
+      }
+      cat(insight::format_table(formatted_table))
+      cat("\n")
+    } else if (format == "markdown") {
+      # Print
+      if (component_name != "rewb-contextual") {
+        table_caption <- sprintf("# %s %s", s1, tolower(s2))
+      } else {
+        table_caption <- ""
+      }
+      final_table <- c(
+        final_table,
+        "",
+        insight::format_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
+      )
     }
-    cat(insight::format_table(formatted_table))
-    cat("\n")
+  }
+
+  if (format == "markdown") {
+    return(final_table)
   }
 }
 

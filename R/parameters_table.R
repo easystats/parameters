@@ -9,6 +9,8 @@
 #' @param x A data frame of model's parameters, as returned by \code{model_parameters()}. May also be a result from \code{broom::tidy()}.
 #' @param pretty_names Return "pretty" (i.e. more human readable) parameter names.
 #' @param digits Number of decimal places for numeric values (except confidence intervals and p-values).
+#' @param ci_width Minimum width of the returned string for confidence intervals. If not \code{NULL} and width is larger than the string's length, leading whitespaces are added to the string. If \code{width="auto"}, width will be set to the length of the longest string.
+#' @param ci_brackets Logical, if \code{TRUE} (default), CI-values are encompassed in square brackets (else in parantheses).
 #' @param ci_digits Number of decimal places for confidence intervals.
 #' @param p_digits Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.
 #' @inheritParams insight::format_p
@@ -28,7 +30,7 @@
 #'
 #' @importFrom insight format_value format_p
 #' @export
-parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, ci_digits = 2, p_digits = 3, ...) {
+parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, ci_width = "auto", ci_brackets = TRUE, ci_digits = 2, p_digits = 3, ...) {
 
   # check if user supplied digits attributes
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
@@ -70,12 +72,12 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 
   # Main CI ----
-  x <- .format_main_ci_columns(x, att, ci_digits)
-  x <- .format_broom_ci_columns(x, ci_digits)
+  x <- .format_main_ci_columns(x, att, ci_digits, ci_width, ci_brackets)
+  x <- .format_broom_ci_columns(x, ci_digits, ci_width, ci_brackets)
 
 
   # Other CIs ----
-  out <- .format_other_ci_columns(x, att, ci_digits)
+  out <- .format_other_ci_columns(x, att, ci_digits, ci_width, ci_brackets)
   x <- out$x
   other_ci_colname <- out$other_ci_colname
 
@@ -170,7 +172,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 #' @importFrom insight format_ci
 #' @importFrom stats na.omit
-.format_main_ci_columns <- function(x, att, ci_digits) {
+.format_main_ci_columns <- function(x, att, ci_digits, ci_width = "auto", ci_brackets = TRUE) {
   # Main CI
   ci_low <- names(x)[grep("^CI_low", names(x))]
   ci_high <- names(x)[grep("^CI_high", names(x))]
@@ -190,7 +192,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
     # Get characters to align the CI
     for (i in 1:length(ci_colname)) {
-      x[ci_colname[i]] <- insight::format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
+      x[ci_colname[i]] <- insight::format_ci(x[[ci_low[i]]], x[[ci_high[i]]], ci = NULL, digits = ci_digits, width = ci_width, brackets = ci_brackets)
     }
     # Replace at initial position
     ci_position <- which(names(x) == ci_low[1])
@@ -205,7 +207,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 #' @importFrom insight format_ci
 #' @importFrom stats na.omit
-.format_other_ci_columns <- function(x, att, ci_digits) {
+.format_other_ci_columns <- function(x, att, ci_digits, ci_width = "auto", ci_brackets = TRUE) {
   other_ci_low <- names(x)[grep("_CI_low$", names(x))]
   other_ci_high <- names(x)[grep("_CI_high$", names(x))]
   if (length(other_ci_low) >= 1 & length(other_ci_low) == length(other_ci_high)) {
@@ -222,7 +224,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
     # Get characters to align the CI
     for (i in 1:length(other_ci_colname)) {
-      x[[other_ci_low[i]]] <- insight::format_ci(x[[other_ci_low[i]]], x[[other_ci_high[i]]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
+      x[[other_ci_low[i]]] <- insight::format_ci(x[[other_ci_low[i]]], x[[other_ci_high[i]]], ci = NULL, digits = ci_digits, width = ci_width, brackets = ci_brackets)
       # rename lower CI into final CI column
       other_ci_position <- which(names(x) == other_ci_low[i])
       colnames(x)[other_ci_position] <- other_ci_colname[i]
@@ -240,7 +242,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
 
 
 #' @importFrom insight format_ci
-.format_broom_ci_columns <- function(x, ci_digits) {
+.format_broom_ci_columns <- function(x, ci_digits, ci_width = "auto", ci_brackets = TRUE) {
   if (!any(grepl("conf.low", names(x), fixed = TRUE))) {
     return(x)
   }
@@ -251,7 +253,7 @@ parameters_table <- function(x, pretty_names = TRUE, stars = FALSE, digits = 2, 
     {
       ci_low <- names(x)[which(names(x) == "conf.low")]
       ci_high <- names(x)[which(names(x) == "conf.high")]
-      x$conf.int <- insight::format_ci(x[[ci_low]], x[[ci_high]], ci = NULL, digits = ci_digits, width = "auto", brackets = TRUE)
+      x$conf.int <- insight::format_ci(x[[ci_low]], x[[ci_high]], ci = NULL, digits = ci_digits, width = ci_width, brackets = ci_brackets)
       x$conf.low <- NULL
       x$conf.high <- NULL
       x

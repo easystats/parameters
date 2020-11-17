@@ -1,5 +1,31 @@
+#' Export tables into different output formats
+#'
+#' Export tables (i.e. data frame) into different output formats
+#'
+#' @param x An object returned by \code{\link[=model_parameters]{model_parameters()}}.
+#' @param format String, indicating the output format. By default, \code{"markdown"} is used.
+#' @param split_components Logical, if \code{TRUE} (default), For models with
+#'   multiple components (zero-inflation, smooth terms, ...), each component is
+#'   printed in a separate table. If \code{FALSE}, model parameters are printed
+#'   in a single table and a \code{Component} column is added to the output.
+#' @param select Character vector (or numeric index) of column names that should
+#'   be printed. If \code{NULL} (default), all columns are printed. The shortcut
+#'   \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
+#'   while \code{select = "short"} prints coefficient, standard errors and p-values.
+#' @param show_sigma Logical, if \code{TRUE}, adds information about the residual
+#'   standard deviation.
+#' @param show_formula Logical, if \code{TRUE}, adds the model formula to the output.
+#' @inheritParams parameters_table
+#'
+#' @inheritSection format_parameters Interpretation of Interaction Terms
+#' @return A character vector
+#'
+#' @examples
+#' model <- lm(mpg ~ wt + cyl, data = mtcars)
+#' mp <- model_parameters(model)
+#' to_table(mp)
 #' @export
-knit_print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, show_sigma = FALSE, show_formula = FALSE, ...) {
+to_table.parameters_model <- function(x, format = "markdown", pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, show_sigma = FALSE, show_formula = FALSE, ...) {
   # save original input
   orig_x <- x
 
@@ -48,6 +74,8 @@ knit_print.parameters_model <- function(x, pretty_names = TRUE, split_components
     table_caption <- attributes(x)$title
   } else if (!is.null(res)) {
     table_caption <- "Fixed Effects"
+  } else {
+    table_caption <- NULL
   }
 
   # For Bayesian models, we need to prettify parameter names here...
@@ -88,9 +116,17 @@ knit_print.parameters_model <- function(x, pretty_names = TRUE, split_components
   }
 
   if (split_components && !is.null(split_by) && length(split_by)) {
-    .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, ...)
+    formatted_table <- .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = "markdown", ci_width = NULL, ci_brackets = c("(", ")"), ...)
+    attr(formatted_table, "format") <- "pipe"
+    class(formatted_table) <- c("knitr_kable", "character")
+    formatted_table
   } else {
-    formatted_table <- parameters_table(x, pretty_names = pretty_names, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
-    insight::format_table(formatted_table, style = "markdown", caption = table_caption)
+    formatted_table <- parameters_table(x, pretty_names = pretty_names, digits = digits, ci_width = NULL, ci_brackets = c("(", ")"), ci_digits = ci_digits, p_digits = p_digits, ...)
+    insight::format_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
   }
 }
+
+
+#' @importFrom insight to_table
+#' @export
+insight::to_table
