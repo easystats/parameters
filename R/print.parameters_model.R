@@ -443,7 +443,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
     } else if (format == "markdown") {
       # Print
       if (component_name != "rewb-contextual") {
-        table_caption <- sprintf("# %s %s", s1, tolower(s2))
+        table_caption <- sprintf("%s %s", s1, tolower(s2))
       } else {
         table_caption <- ""
       }
