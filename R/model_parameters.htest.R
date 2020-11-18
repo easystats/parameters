@@ -103,7 +103,7 @@ model_parameters.htest <- function(model,
 # extract htest correlation ----------------------
 
 .extract_htest_correlation <- function(model) {
-  names <- unlist(strsplit(model$data.name, " and "))
+  names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
   out <- data.frame(
     "Parameter1" = names[1],
     "Parameter2" = names[2],
@@ -145,7 +145,7 @@ model_parameters.htest <- function(model,
 
 .extract_htest_ttest <- function(model) {
   if (grepl(" and ", model$data.name)) {
-    names <- unlist(strsplit(model$data.name, " and "))
+    names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
     out <- data.frame(
       "Parameter1" = names[1],
       "Parameter2" = names[2],
@@ -162,7 +162,7 @@ model_parameters.htest <- function(model,
     )
   } else if (grepl(" by ", model$data.name)) {
     if (length(model$estimate) == 1) {
-      names <- unlist(strsplit(model$data.name, " by "))
+      names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
       out <- data.frame(
         "Parameter" = names[1],
         "Group" = names[2],
@@ -176,7 +176,7 @@ model_parameters.htest <- function(model,
         stringsAsFactors = FALSE
       )
     } else {
-      names <- unlist(strsplit(model$data.name, " by "))
+      names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
       out <- data.frame(
         "Parameter" = names[1],
         "Group" = names[2],
