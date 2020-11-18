@@ -298,6 +298,10 @@ model_parameters.htest <- function(model,
            phi = NULL,
            ci = .95) {
 
+  if (is.null(cramers_v) && is.null(phi)) {
+    return(out)
+  }
+
   if (!is.null(cramers_v) && requireNamespace("effectsize", quietly = TRUE)) {
     # Cramers V
     es <- effectsize::cramers_v(model$observed, ci = ci, adjust = cramers_v == "adjusted")
@@ -319,7 +323,7 @@ model_parameters.htest <- function(model,
   # reorder
   col_order <- c("Chi2", "df", "Cramers_v", "Cramers_v_adjusted", "Cramers_CI_low",
                  "Cramers_CI_high", "phi", "phi_adjusted", "phi_CI_low",
-                 "phi_CI_high", "p", "method")
+                 "phi_CI_high", "p", "Method", "method")
   out <- out[col_order[col_order %in% names(out)]]
   out
 }
