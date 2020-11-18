@@ -227,14 +227,13 @@ to_table.parameters_efa <- function(x, format = "markdown", digits = 2, sort = F
     table_caption <- sprintf("Rotated loadings from %s (%s-rotation)", method, rotation_name)
   }
 
-  final_table <- insight::format_table(x, digits = digits, format = format, caption = table_caption, align = "firstleft", ...)
-
   if (!is.null(attributes(x)$type)) {
-    final_table <- c(final_table, .text_components_variance(x))
-    attr(final_table, "format") <- "pipe"
-    class(final_table) <- c("knitr_kable", "character")
+    footer <- .text_components_variance(x)
+  } else {
+    footer <- NULL
   }
-  final_table
+
+  insight::format_table(x, digits = digits, format = format, caption = table_caption, align = "firstleft", footer = footer, ...)
 }
 
 #' @export
