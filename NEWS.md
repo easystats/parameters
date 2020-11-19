@@ -17,6 +17,7 @@
 ## New functions
 
 * `to_table()`, to format output from package-functions into markdown-format.
+  `table_to_markdown` is an alias for `to_table(format = "markdown")`.
 
 ## Changes to functions
 

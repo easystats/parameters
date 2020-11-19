@@ -85,7 +85,8 @@ A character vector. If \code{format = "markdown"}, the return value
   will be a character vector in markdown-table format.
 }
 \description{
-Export tables (i.e. data frame) into different output formats
+Export tables (i.e. data frame) into different output formats.
+  \code{table_to_markdown()} is a alias for \code{to_table(format = "markdown")}.
 }
 \details{
 \code{to_table()} is useful when the table-output from functions,
