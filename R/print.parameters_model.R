@@ -90,7 +90,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   }
 
   # print p-adjustment
-  if (!is.null(p_adjust) && p_adjust != "none") {
+  if (!is.null(p_adjust) && p_adjust != "none" && "p" %in% colnames(x)) {
     p_adj_string <- switch(
       p_adjust,
       "holm" = "Holm (1979)",
