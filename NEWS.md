@@ -6,6 +6,9 @@
   (i.e. when arguments `omega_squared`, `eta_squared` or `epsilon_squared` are
   set to `TRUE`) is now `"partial"`, as initially intended.
 
+* Some re-exports for functions that were moved to *insight* longer ago, were
+  now removed.
+
 ## New supported model classes
 
 * `Glm` (*rms*), `mediate` (*mediation*).
