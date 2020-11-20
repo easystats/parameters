@@ -51,7 +51,6 @@ Imports:
     insight (>= 0.10.0),
     methods,
     stats,
-    tools,
     utils
 Suggests:
     AER,

@@ -39,7 +39,7 @@ model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
 }
 
 
-#' @importFrom insight format_table
+#' @importFrom insight export_table
 #' @export
 print.parameters_clusters <- function(x, digits = 2, ...) {
   insight::print_color("# K-means Cluster Means", "blue")
@@ -48,7 +48,7 @@ print.parameters_clusters <- function(x, digits = 2, ...) {
   insight::print_colour(.text_components_variance(x), "yellow")
   cat("\n\n")
 
-  cat(insight::format_table(x, digits = digits, ...))
+  cat(insight::export_table(x, digits = digits, ...))
 
   invisible(x)
 }

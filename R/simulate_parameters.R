@@ -46,7 +46,6 @@
 #' }
 #' }
 #' @importFrom bayestestR describe_posterior
-#' @importFrom tools toTitleCase
 #' @export
 simulate_parameters <- function(model, ...) {
   UseMethod("simulate_parameters")

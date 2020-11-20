@@ -11,6 +11,7 @@
 \alias{format_rope}
 \alias{format_bf}
 \alias{format_pd}
+\alias{parameters_table}
 \alias{standardize_names}
 \alias{table_to_markdown}
 \alias{to_table}
@@ -23,6 +24,6 @@ below to see their documentation.
 \describe{
   \item{bayestestR}{\code{\link[bayestestR]{ci}}, \code{\link[bayestestR]{equivalence_test}}}
 
-  \item{insight}{\code{\link[insight]{format_bf}}, \code{\link[insight]{format_number}}, \code{\link[insight]{format_p}}, \code{\link[insight]{format_pd}}, \code{\link[insight]{format_rope}}, \code{\link[insight]{standardize_names}}, \code{\link[insight:to_table]{table_to_markdown}}, \code{\link[insight]{to_table}}}
+  \item{insight}{\code{\link[insight]{format_bf}}, \code{\link[insight]{format_number}}, \code{\link[insight]{format_p}}, \code{\link[insight]{format_pd}}, \code{\link[insight]{format_rope}}, \code{\link[insight]{parameters_table}}, \code{\link[insight]{standardize_names}}, \code{\link[insight:to_table]{table_to_markdown}}, \code{\link[insight]{to_table}}}
 }}
 

@@ -15,7 +15,7 @@
 #' @param show_sigma Logical, if \code{TRUE}, adds information about the residual
 #'   standard deviation.
 #' @param show_formula Logical, if \code{TRUE}, adds the model formula to the output.
-#' @inheritParams parameters_table
+#' @inheritParams insight::parameters_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @return \code{NULL}
@@ -42,7 +42,7 @@
 #'
 #'   print(mp, select = "minimal")
 #' }}
-#' @importFrom insight format_table
+#' @importFrom insight export_table parameters_table
 #' @export
 print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, show_sigma = FALSE, show_formula = FALSE, ...) {
   # save original input
@@ -79,8 +79,8 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   if (split_components && !is.null(split_by) && length(split_by)) {
     .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, ...)
   } else {
-    formatted_table <- parameters_table(x, pretty_names = pretty_names, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
-    cat(insight::format_table(formatted_table))
+    formatted_table <- insight::parameters_table(x, pretty_names = pretty_names, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
+    cat(insight::export_table(formatted_table))
   }
 
   # print residual standard deviation
@@ -301,7 +301,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
       colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
 
-    formatted_table <- parameters_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
+    formatted_table <- insight::parameters_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
 
     component_name <- switch(
       type,
@@ -383,7 +383,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
       if (component_name != "rewb-contextual") {
         insight::print_color(sprintf("# %s %s\n\n", s1, tolower(s2)), "blue")
       }
-      cat(insight::format_table(formatted_table))
+      cat(insight::export_table(formatted_table))
       cat("\n")
     } else if (format == "markdown") {
       # Print
@@ -399,7 +399,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
       final_table <- c(
         final_table,
         "",
-        insight::format_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
+        insight::export_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
       )
     }
   }
@@ -456,8 +456,8 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
       attr(i, "ci_digits") <- ci_digits
       attr(i, "p_digits") <- p_digits
 
-      formatted_table <- parameters_table(i, pretty_names = FALSE, ...)
-      cat(insight::format_table(formatted_table))
+      formatted_table <- insight::parameters_table(i, pretty_names = FALSE, ...)
+      cat(insight::export_table(formatted_table))
       cat("\n")
     }
   }

@@ -11,7 +11,7 @@
 #' @param format String, indicating the output format. Currently, only
 #'   \code{"markdown"} is supported.
 #' @inheritParams print.parameters_model
-#' @inheritParams parameters_table
+#' @inheritParams insight::parameters_table
 #'
 #' @return A character vector. If \code{format = "markdown"}, the return value
 #'   will be a character vector in markdown-table format.
@@ -69,11 +69,11 @@ to_table.parameters_model <- function(x, format = "markdown", pretty_names = TRU
     class(formatted_table) <- c("knitr_kable", "character")
     formatted_table
   } else {
-    formatted_table <- parameters_table(x, pretty_names = pretty_names, digits = digits, ci_width = NULL, ci_brackets = c("(", ")"), ci_digits = ci_digits, p_digits = p_digits, ...)
+    formatted_table <- insight::parameters_table(x, pretty_names = pretty_names, digits = digits, ci_width = NULL, ci_brackets = c("(", ")"), ci_digits = ci_digits, p_digits = p_digits, ...)
     # replace brackets by parenthesis
     formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
     formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
-    insight::format_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
+    insight::export_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
   }
 }
 
@@ -154,14 +154,14 @@ to_table.parameters_stan <- function(x, split_components = TRUE, select = NULL, 
       attr(i, "ci_digits") <- ci_digits
       attr(i, "p_digits") <- p_digits
 
-      formatted_table <- parameters_table(i, pretty_names = FALSE, ci_width = NULL, ci_brackets = c("(", ")"), ...)
+      formatted_table <- insight::parameters_table(i, pretty_names = FALSE, ci_width = NULL, ci_brackets = c("(", ")"), ...)
       # replace brackets by parenthesis
       formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
       formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
 
       final_table <- c(
         final_table,
-        insight::format_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
+        insight::export_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
       )
     }
     attr(final_table, "format") <- "pipe"
@@ -178,7 +178,7 @@ to_table.parameters_stan <- function(x, split_components = TRUE, select = NULL, 
 
 
 #' @rdname to_table.parameters_model
-#' @importFrom insight format_table
+#' @importFrom insight export_table
 #' @export
 to_table.parameters_efa_summary <- function(x, format = "markdown", digits = 3, ...) {
   table_caption <- "(Explained) Variance of Components"
@@ -189,7 +189,7 @@ to_table.parameters_efa_summary <- function(x, format = "markdown", digits = 3, 
     names(x) <- c("Copmponent", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
   }
 
-  insight::format_table(x, digits = digits, format = format, caption = table_caption, align = "firstleft")
+  insight::export_table(x, digits = digits, format = format, caption = table_caption, align = "firstleft")
 }
 
 #' @export
@@ -235,7 +235,7 @@ to_table.parameters_efa <- function(x, format = "markdown", digits = 2, sort = F
     footer <- NULL
   }
 
-  insight::format_table(x, digits = digits, format = format, caption = table_caption, align = "firstleft", footer = footer, ...)
+  insight::export_table(x, digits = digits, format = format, caption = table_caption, align = "firstleft", footer = footer, ...)
 }
 
 #' @export
@@ -270,7 +270,7 @@ to_table.equivalence_test_lm <- function(x, format = "markdown", digits = 2, ...
     x <- x[x$Component %in% c("conditional", "count"), ]
   }
 
-  formatted_table <- parameters_table(x, pretty_names = TRUE, digits = digits, ci_width = NULL, ci_brackets = c("(", ")"), ...)
+  formatted_table <- insight::parameters_table(x, pretty_names = TRUE, digits = digits, ci_width = NULL, ci_brackets = c("(", ")"), ...)
 
   colnames(formatted_table)[which(colnames(formatted_table) == "ROPE_Equivalence")] <- "H0"
   formatted_table$ROPE_low <- NULL
@@ -288,7 +288,7 @@ to_table.equivalence_test_lm <- function(x, format = "markdown", digits = 2, ...
     names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf("%% in ROPE (%.*f, %.*f)", digits, rope[1], digits, rope[2])
   }
 
-  insight::format_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
+  insight::export_table(formatted_table, format = format, caption = table_caption, align = "firstleft")
 }
 
 

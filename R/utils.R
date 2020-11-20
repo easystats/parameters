@@ -269,3 +269,12 @@
 .is_semLme <- function(x) {
   all(inherits(x, c("sem", "lme")))
 }
+
+
+
+# capitalizes the first letter in a string
+.capitalize <- function(x) {
+  capped <- grep("^[A-Z]", x, invert = TRUE)
+  substr(x[capped], 1, 1) <- toupper(substr(x[capped], 1, 1))
+  x
+}

@@ -269,7 +269,7 @@ as.double.parameters_skewness <- as.numeric.parameters_skewness
 #' @export
 print.parameters_kurtosis <- function(x, digits = 3, test = FALSE, ...) {
   out <- summary(x, test = test)
-  cat(insight::format_table(out, digits = digits))
+  cat(insight::export_table(out, digits = digits))
   invisible(x)
 }
 

@@ -318,13 +318,12 @@ print.n_clusters <- print.n_factors
 
 
 #' Bartlett, Anderson and Lawley Procedures
-#' @importFrom tools toTitleCase
 #' @keywords internal
 .n_factors_bartlett <- function(eigen_values = NULL, model = "factors", nobs = NULL) {
   nfac <- nFactors::nBartlett(eigen_values, N = nobs, alpha = 0.05, details = FALSE, model = model)$nFactors
   data.frame(
     n_Factors = as.numeric(nfac),
-    Method = tools::toTitleCase(names(nfac)),
+    Method = .capitalize(names(nfac)),
     Family = "Barlett"
   )
 }

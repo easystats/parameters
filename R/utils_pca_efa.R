@@ -88,7 +88,7 @@ predict.parameters_pca <- predict.parameters_efa
 # print -------------------------------------------------------------------
 
 
-#' @importFrom insight format_table
+#' @importFrom insight export_table
 #' @export
 print.parameters_efa_summary <- function(x, digits = 3, ...) {
   insight::print_color("# (Explained) Variance of Components\n\n", "blue")
@@ -99,7 +99,7 @@ print.parameters_efa_summary <- function(x, digits = 3, ...) {
     names(x) <- c("Copmponent", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
   }
 
-  cat(insight::format_table(x, digits = digits, ...))
+  cat(insight::export_table(x, digits = digits, ...))
 
   invisible(x)
 }
@@ -147,7 +147,7 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
     insight::print_color(sprintf("# Rotated loadings from %s (%s-rotation)\n\n", method, rotation_name), "blue")
   }
 
-  cat(insight::format_table(x, digits = digits, ...))
+  cat(insight::export_table(x, digits = digits, ...))
 
   if (!is.null(attributes(x)$type)) {
     cat("\n")
@@ -167,7 +167,7 @@ print.parameters_pca <- print.parameters_efa
 print.parameters_omega <- function(x, ...) {
   orig_x <- x
   names(x) <- c("Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)")
-  cat(insight::format_table(x))
+  cat(insight::export_table(x))
   invisible(orig_x)
 }
 
@@ -176,7 +176,7 @@ print.parameters_omega <- function(x, ...) {
 print.parameters_omega_summary <- function(x, ...) {
   orig_x <- x
   names(x) <- c("Composite", "Total Variance (%)", "Variance due to General Factor (%)", "Variance due to Group Factor (%)")
-  cat(insight::format_table(x))
+  cat(insight::export_table(x))
   invisible(orig_x)
 }
 

@@ -107,7 +107,7 @@ n_parameters.blavaan <- n_parameters.lavaan
 
 
 
-#' @importFrom insight format_table
+#' @importFrom insight export_table
 #' @export
 print.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...) {
   # check if user supplied digits attributes

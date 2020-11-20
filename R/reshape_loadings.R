@@ -43,6 +43,7 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 
 
 
+#' @importFrom insight export_table parameters_table
 #' @importFrom stats reshape
 #' @keywords internal
 .wide_loadings <- function(loadings, loadings_columns = "Loading", component_column = "Component", variable_column = "Variable", ...) {
@@ -123,10 +124,10 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 
 
 
-#' @importFrom insight format_table
+#' @importFrom insight export_table
 #' @export
 print.parameters_loadings <- function(x, ...) {
-  formatted_table <- parameters_table(x)
-  cat(insight::format_table(formatted_table))
+  formatted_table <- insight::parameters_table(x)
+  cat(insight::export_table(formatted_table))
   invisible(x)
 }

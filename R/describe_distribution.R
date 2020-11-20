@@ -279,11 +279,11 @@ print.parameters_distribution <- function(x, digits = 2, ...) {
     for (i in names(grps)) {
       grps[[i]][[".group"]] <- NULL
       insight::print_color(sprintf("# %s\n\n", i), "blue")
-      cat(insight::format_table(grps[[i]]))
+      cat(insight::export_table(grps[[i]]))
       cat("\n")
     }
   } else {
-    cat(insight::format_table(x))
+    cat(insight::export_table(x))
   }
 
   invisible(orig_x)

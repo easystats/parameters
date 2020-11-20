@@ -198,3 +198,21 @@
 
   params
 }
+
+
+
+.additional_arguments <- function(x, value, default) {
+  args <- attributes(x)$additional_arguments
+
+  if (length(args) > 0 && value %in% names(args)) {
+    out <- args[[value]]
+  } else {
+    out <- attributes(x)[[value]]
+  }
+
+  if (is.null(out)) {
+    out <- default
+  }
+
+  out
+}
