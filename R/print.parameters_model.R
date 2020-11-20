@@ -77,7 +77,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
 
   # print everything now...
   if (split_components && !is.null(split_by) && length(split_by)) {
-    .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, ...)
+    .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = NULL, ...)
   } else {
     formatted_table <- insight::parameters_table(x, pretty_names = pretty_names, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
     cat(insight::export_table(formatted_table))
@@ -404,7 +404,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
     }
   }
 
-  if (format == "markdown") {
+  if (!is.null(format) && format == "markdown") {
     return(final_table)
   }
 }
