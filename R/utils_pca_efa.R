@@ -91,16 +91,13 @@ predict.parameters_pca <- predict.parameters_efa
 #' @importFrom insight export_table
 #' @export
 print.parameters_efa_summary <- function(x, digits = 3, ...) {
-  insight::print_color("# (Explained) Variance of Components\n\n", "blue")
-
   if ("Parameter" %in% names(x)) {
     x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
   } else if ("Component" %in% names(x)) {
     names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
   }
 
-  cat(insight::export_table(x, digits = digits, ...))
-
+  cat(insight::export_table(x, digits = digits, caption = c("# (Explained) Variance of Components", "blue"), format = "text", ...))
   invisible(x)
 }
 
@@ -114,53 +111,12 @@ print.parameters_pca_summary <- print.parameters_efa_summary
 #' @importFrom insight print_color print_colour
 #' @export
 print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  orig_x <- x
-
-  if (inherits(x, "parameters_pca")) {
-    method <- "Principal Component Analysis"
-  } else {
-    method <- "Factor Analysis"
-  }
-
-  # Labels
-  if (!is.null(labels)) {
-    x$Label <- labels
-    x <- x[c("Variable", "Label", names(x)[!names(x) %in% c("Variable", "Label")])]
-  }
-
-  # Sorting
-  if (isTRUE(sort)) {
-    x <- .sort_loadings(x)
-  }
-
-  # Replace by NA all cells below threshold
-  if (!is.null(threshold)) {
-    x <- .filter_loadings(x, threshold = threshold)
-  }
-
-
-  rotation_name <- attr(x, "rotation", exact = TRUE)
-
-  if (is.null(rotation_name) || rotation_name == "none") {
-    insight::print_color(sprintf("# Loadings from %s (no rotation)\n\n", method), "blue")
-  } else {
-    insight::print_color(sprintf("# Rotated loadings from %s (%s-rotation)\n\n", method, rotation_name), "blue")
-  }
-
-  cat(insight::export_table(x, digits = digits, ...))
-
-  if (!is.null(attributes(x)$type)) {
-    cat("\n")
-    insight::print_colour(.text_components_variance(x), "yellow")
-    cat("\n")
-  }
-
-  invisible(orig_x)
+  cat(.print_parameters_cfa_efa(x, threshold, format = "text", digits, labels, ...))
+  invisible(x)
 }
 
 #' @export
 print.parameters_pca <- print.parameters_efa
-
 
 
 #' @export
@@ -182,8 +138,67 @@ print.parameters_omega_summary <- function(x, ...) {
 
 
 
+
+
+# print-helper ----------------------
+
+
+.print_parameters_cfa_efa <- function(x, threshold, format, digits, labels, ...) {
+  # Method
+  if (inherits(x, "parameters_pca")) {
+    method <- "Principal Component Analysis"
+  } else {
+    method <- "Factor Analysis"
+  }
+
+  # Rotation
+  rotation_name <- attr(x, "rotation", exact = TRUE)
+
+  # Labels
+  if (!is.null(labels)) {
+    x$Label <- labels
+    x <- x[c("Variable", "Label", names(x)[!names(x) %in% c("Variable", "Label")])]
+  }
+
+  # Sorting
+  if (isTRUE(sort)) {
+    x <- .sort_loadings(x)
+  }
+
+  # Replace by NA all cells below threshold
+  if (!is.null(threshold)) {
+    x <- .filter_loadings(x, threshold = threshold)
+  }
+
+  # table caption
+  if (is.null(rotation_name) || rotation_name == "none") {
+    if (format == "markdown") {
+      table_caption <- sprintf("Loadings from %s (no rotation)", method)
+    } else {
+      table_caption <- c(sprintf("# Loadings from %s (no rotation)", method), "blue")
+    }
+  } else {
+    if (format == "markdown") {
+      table_caption <- sprintf("Rotated loadings from %s (%s-rotation)", method, rotation_name)
+    } else {
+      table_caption <- c(sprintf("# Rotated loadings from %s (%s-rotation)", method, rotation_name), "blue")
+    }
+  }
+
+  # footer
+  if (!is.null(attributes(x)$type)) {
+    footer <- c(.text_components_variance(x, sep = ifelse(format == "markdown", "", "\n")), "yellow")
+  } else {
+    footer <- NULL
+  }
+
+  insight::export_table(x, digits = digits, format = format, caption = table_caption, footer = footer, align = "firstleft", ...)
+}
+
+
+
 #' @keywords internal
-.text_components_variance <- function(x) {
+.text_components_variance <- function(x, sep = "") {
   type <- attributes(x)$type
   if (type %in% c("prcomp", "principal", "pca")) {
     type <- "principal component"
@@ -237,7 +252,7 @@ print.parameters_omega_summary <- function(x, ...) {
       ")."
     )
   }
-  text
+  paste0(sep, text)
 }
 
 

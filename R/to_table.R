@@ -198,44 +198,7 @@ to_table.parameters_pca_summary <- to_table.parameters_efa_summary
 #' @rdname to_table.parameters_model
 #' @export
 to_table.parameters_efa <- function(x, format = "markdown", digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  if (inherits(x, "parameters_pca")) {
-    method <- "Principal Component Analysis"
-  } else {
-    method <- "Factor Analysis"
-  }
-
-  # Labels
-  if (!is.null(labels)) {
-    x$Label <- labels
-    x <- x[c("Variable", "Label", names(x)[!names(x) %in% c("Variable", "Label")])]
-  }
-
-  # Sorting
-  if (isTRUE(sort)) {
-    x <- .sort_loadings(x)
-  }
-
-  # Replace by NA all cells below threshold
-  if (!is.null(threshold)) {
-    x <- .filter_loadings(x, threshold = threshold)
-  }
-
-
-  rotation_name <- attr(x, "rotation", exact = TRUE)
-
-  if (is.null(rotation_name) || rotation_name == "none") {
-    table_caption <- sprintf("Loadings from %s (no rotation)", method)
-  } else {
-    table_caption <- sprintf("Rotated loadings from %s (%s-rotation)", method, rotation_name)
-  }
-
-  if (!is.null(attributes(x)$type)) {
-    footer <- .text_components_variance(x)
-  } else {
-    footer <- NULL
-  }
-
-  insight::export_table(x, digits = digits, format = format, caption = table_caption, align = "firstleft", footer = footer, ...)
+  .print_parameters_cfa_efa(x, threshold, format, digits, labels, ...)
 }
 
 #' @export
