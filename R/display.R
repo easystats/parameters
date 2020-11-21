@@ -73,15 +73,7 @@ display.parameters_sem <- function(x, format = "markdown", digits = 2, ci_digits
 #' @importFrom insight export_table
 #' @export
 display.parameters_efa_summary <- function(x, format = "markdown", digits = 3, ...) {
-  table_caption <- "(Explained) Variance of Components"
-
-  if ("Parameter" %in% names(x)) {
-    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
-  } else if ("Component" %in% names(x)) {
-    names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
-  }
-
-  insight::export_table(x, digits = digits, format = format, caption = table_caption, align = "firstleft")
+  print_md(x, digits = digits, ...)
 }
 
 #' @export
@@ -90,7 +82,7 @@ display.parameters_pca_summary <- display.parameters_efa_summary
 #' @rdname display.parameters_model
 #' @export
 display.parameters_efa <- function(x, format = "markdown", digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  .print_parameters_cfa_efa(x, threshold, format, digits, labels, ...)
+  print_md(x = x, digits = digits, sort = sort, threshold = threshold, labels = labels, ...)
 }
 
 #' @export

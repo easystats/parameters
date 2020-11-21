@@ -111,7 +111,7 @@ print.parameters_pca_summary <- print.parameters_efa_summary
 #' @importFrom insight print_color print_colour
 #' @export
 print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  cat(.print_parameters_cfa_efa(x, threshold, format = "text", digits, labels, ...))
+  cat(.print_parameters_cfa_efa(x, threshold = threshold, sort = sort, format = "text", digits = digits, labels = labels, ...))
   invisible(x)
 }
 
@@ -143,7 +143,7 @@ print.parameters_omega_summary <- function(x, ...) {
 # print-helper ----------------------
 
 
-.print_parameters_cfa_efa <- function(x, threshold, format, digits, labels, ...) {
+.print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, ...) {
   # Method
   if (inherits(x, "parameters_pca")) {
     method <- "Principal Component Analysis"

@@ -40,7 +40,14 @@ print_md.parameters_stan <- function(x, split_components = TRUE, select = NULL, 
 
 #' @export
 print_md.parameters_efa_summary <- function(x, digits = 3, ...) {
-  display(x = x, digits = digits, format = "markdown", ...)
+  table_caption <- "(Explained) Variance of Components"
+
+  if ("Parameter" %in% names(x)) {
+    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+  } else if ("Component" %in% names(x)) {
+    names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+  }
+  insight::export_table(x, digits = digits, format = "markdown", caption = table_caption, align = "firstleft")
 }
 
 #' @export
@@ -48,7 +55,7 @@ print_md.parameters_pca_summary <- print_md.parameters_efa_summary
 
 #' @export
 print_md.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  display(x = x, digits = digits, threshold = threshold, labels = labels, format = "markdown", ...)
+  .print_parameters_cfa_efa(x, threshold = threshold, sort = sort, format = "markdown", digits = digits, labels = labels, ...)
 }
 
 #' @export
