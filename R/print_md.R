@@ -33,8 +33,6 @@ print_md.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, 
 
 #' @export
 print_md.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
-  ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
-
   formatted_table <- format(split_components = split_components, select = select, format = "markdown", ...)
   insight::export_table(formatted_table, format = "markdown")
 }
