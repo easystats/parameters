@@ -296,7 +296,7 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
       "SI" = "support intervals",
       "uncertainty intervals"
     )
-    message(paste0("Using ", ci_method, " as credible intervals."))
+    message(paste0("\nUsing ", ci_method, " as credible intervals."))
   }
 
   invisible(orig_x)
