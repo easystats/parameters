@@ -96,7 +96,7 @@ print.parameters_efa_summary <- function(x, digits = 3, ...) {
   if ("Parameter" %in% names(x)) {
     x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
   } else if ("Component" %in% names(x)) {
-    names(x) <- c("Copmponent", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+    names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
   }
 
   cat(insight::export_table(x, digits = digits, ...))
