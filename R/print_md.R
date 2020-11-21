@@ -28,7 +28,8 @@ print_md.parameters_simulate <- print_md.parameters_model
 
 #' @export
 print_md.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...) {
-  display(x = x, digits = digits, ci_digits = ci_digits, format = "markdown", ...)
+  formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "markdown", ...)
+  insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 
 #' @export

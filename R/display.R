@@ -59,13 +59,7 @@ display.parameters_stan <- function(x, split_components = TRUE, select = NULL, f
 #' @rdname display.parameters_model
 #' @export
 display.parameters_sem <- function(x, format = "markdown", digits = 2, ci_digits = 2, p_digits = 3, ...) {
-  # check if user supplied digits attributes
-  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
-  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
-  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
-
-  formatted_table <- .print_model_parms_components(x, pretty_names = TRUE, split_column = "Type", digits = digits, ci_digits = ci_digits, p_digits = p_digits, format = "markdown", ci_width = NULL, ci_brackets = c("(", ")"), ...)
-  insight::export_table(formatted_table, format = format, align = "firstleft", ...)
+  print_md(x = x, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
 }
 
 
