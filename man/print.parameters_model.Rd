@@ -91,5 +91,5 @@ if (require("glmmTMB")) {
 }}
 }
 \seealso{
-There is a dedicated method to use inside rmarkdown files, \code{\link{to_table}}.
+There is a dedicated method to use inside rmarkdown files, \code{\link[=print_md.parameters_model]{print_md()}}.
 }

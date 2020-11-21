@@ -45,7 +45,7 @@ Standardization is based on \code{\link[effectsize:standardize_parameters]{stand
   standard errors and confidence intervals refer to the standardized coefficient.
 }
 \note{
-The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated method for use inside rmarkdown files, \code{\link{to_table}}.
+The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated method for use inside rmarkdown files, \code{\link[=print_md.parameters_model]{print_md()}}.
 }
 \section{Interpretation of Interaction Terms}{
 

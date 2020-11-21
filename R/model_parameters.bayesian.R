@@ -72,14 +72,12 @@ model_parameters.stanreg <-
         ...
       )
 
-    if (effects == "fixed") {
-      attr(params, "pretty_names") <- format_parameters(model)
-    } else {
+    if (effects != "fixed") {
       random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE))
       if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
-      params <- .add_pretty_names(params, model, effects = effects, component = NULL)
     }
 
+    params <- .add_pretty_names(params, model)
     if (exponentiate) params <- .exponentiate_parameters(params)
     params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
 
@@ -127,13 +125,9 @@ model_parameters.stanmvreg <- function(model,
       standardize = standardize,
       ...
     )
-  params$Parameter <- gsub("^(.*)\\|(.*)", "\\2", params$Parameter)
 
-  if (effects == "fixed") {
-    attr(params, "pretty_names") <- format_parameters(model)
-  } else {
-    params <- .add_pretty_names(params, model, effects = effects, component = NULL)
-  }
+  params$Parameter <- gsub("^(.*)\\|(.*)", "\\2", params$Parameter)
+  params <- .add_pretty_names(params, model)
 
   attr(params, "ci") <- ci
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -210,14 +204,12 @@ model_parameters.brmsfit <-
           ...
         )
 
-      if (effects == "fixed" && component == "conditional") {
-        attr(params, "pretty_names") <- format_parameters(model)
-      } else {
+      if (!(effects == "fixed" && component == "conditional")) {
         random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE))
         if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
-        params <- .add_pretty_names(params, model, effects = effects, component = component)
       }
 
+      params <- .add_pretty_names(params, model)
       if (exponentiate) params <- .exponentiate_parameters(params)
       params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
 

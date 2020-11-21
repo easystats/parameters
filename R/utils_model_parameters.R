@@ -142,24 +142,12 @@
 
 
 #' @importFrom insight clean_parameters
-.add_pretty_names <- function(params, model, effects = NULL, component = NULL) {
+.add_pretty_names <- function(params, model) {
   attr(params, "model_class") <- class(model)
-  clean_params <- insight::clean_parameters(model)
-
-  if (is.null(effects)) {
-    effects <- "fixed"
-  } else if (effects == "all") {
-    effects <- c("fixed", "random")
-  }
-
-  if (is.null(component)) {
-    component <- "conditional"
-  } else if (component == "all") {
-    component <- c("conditional", "zi", "zero_inflated", "dispersion")
-  }
-
-  clean_params <- clean_params[clean_params$Component %in% component & clean_params$Effects %in% effects, ]
-  attr(params, "cleaned_parameters") <- clean_params$Cleaned_Parameter
+  cp <- insight::clean_parameters(model)
+  clean_params <- cp[cp$Parameter %in% params$Parameter, ]
+  attr(params, "cleaned_parameters") <- setNames(clean_params$Cleaned_Parameter[match(params$Parameter, clean_params$Parameter)], params$Parameter)
+  attr(params, "pretty_names") <- setNames(clean_params$Cleaned_Parameter[match(params$Parameter, clean_params$Parameter)], params$Parameter)
 
   params
 }
