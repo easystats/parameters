@@ -64,7 +64,6 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, fo
     out <- insight::print_parameters(cp, x)
 
     for (i in out) {
-      colnames(i)[1] <- "Parameter"
       attr(i, "ci") <- ci
       attr(i, "digits") <- digits
       attr(i, "ci_digits") <- ci_digits
@@ -80,6 +79,7 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, fo
 
       rem <- which(colnames(i) %in% c("Parameter", "Component", "Effects", "Group", "Response", "Subgroup", "Function"))
       i <- i[, -rem]
+      colnames(i)[1] <- "Parameter"
 
       formatted_table <- insight::parameters_table(i, pretty_names = FALSE, ...)
 
