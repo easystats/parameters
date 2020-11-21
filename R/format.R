@@ -64,16 +64,11 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, fo
     out <- insight::print_parameters(cp, x)
 
     for (i in out) {
-      rem <- which(colnames(i) %in% c("Parameter", "Component", "Effects", "Group", "Response", "Subgroup", "Function"))
-      i <- i[, -rem]
-
       colnames(i)[1] <- "Parameter"
       attr(i, "ci") <- ci
       attr(i, "digits") <- digits
       attr(i, "ci_digits") <- ci_digits
       attr(i, "p_digits") <- p_digits
-
-      formatted_table <- insight::parameters_table(i, pretty_names = FALSE, ...)
 
       if (is.null(format) || format == "text") {
         table_caption <- c(paste0("# ", attr(i, "main_title")), "blue")
@@ -81,6 +76,14 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, fo
       } else {
         table_caption <- c(paste0("# ", attr(i, "main_title")), "blue")
         subtitle <- c(trimws(gsub("  ", " ", attr(i, "sub_title"), fixed = TRUE)), "red")
+      }
+
+      rem <- which(colnames(i) %in% c("Parameter", "Component", "Effects", "Group", "Response", "Subgroup", "Function"))
+      i <- i[, -rem]
+
+      formatted_table <- insight::parameters_table(i, pretty_names = FALSE, ...)
+
+      if (!is.null(format) && format == "markdown") {
         # replace brackets by parenthesis
         formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
         formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
@@ -101,11 +104,11 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, fo
 # sem-models ---------------------------------
 
 #' @export
-format.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, format = NULL, ...) {
+format.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, format = NULL, ci_brackets = TRUE, ...) {
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
   if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
 
-  .print_model_parms_components(x, pretty_names = TRUE, split_column = "Type", digits = digits, ci_digits = ci_digits, p_digits = p_digits, format = format, ci_width = NULL, ci_brackets = c("(", ")"), ...)
+  .print_model_parms_components(x, pretty_names = TRUE, split_column = "Type", digits = digits, ci_digits = ci_digits, p_digits = p_digits, format = format, ci_width = NULL, ci_brackets = ci_brackets, ...)
 }
 

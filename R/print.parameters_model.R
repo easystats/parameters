@@ -285,7 +285,7 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
   orig_x <- x
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
 
-  formatted_table <- format(x, split_components = split_components, select = select, format = "text", ...)
+  formatted_table <- format(x, split_components = split_components, select = select, format = "text", ci_width = "auto", ci_brackets = TRUE, ...)
   cat(insight::export_table(formatted_table, format = "text"))
 
   if (!is.null(ci_method)) {
