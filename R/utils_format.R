@@ -76,6 +76,10 @@
 
 
 
+# this function is actually similar to "insight::print_parameters()", but more
+# sophisticated, to ensure nicely outputs even for complicated or complex models,
+# or edge cases...
+
 #' @keywords internal
 .print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, ...) {
 

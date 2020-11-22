@@ -1,6 +1,28 @@
+# model parameters -----------------------------------------------------------------
+
+
+#' @export
+model_parameters.parameters_efa <- function(model, ...) {
+  x <- attributes(model)$summary
+
+  if ("parameters_efa" %in% class(model)) {
+    class(x) <- c("parameters_efa_summary", class(model))
+  } else {
+    class(x) <- c("parameters_pca_summary", class(model))
+  }
+  x
+}
+
+
+#' @export
+model_parameters.parameters_pca <- model_parameters.parameters_efa
+
+
+
+
+
+
 # summary -----------------------------------------------------------------
-
-
 
 
 #' @export
@@ -26,29 +48,9 @@ summary.parameters_efa <- function(object, ...) {
   x
 }
 
+
 #' @export
 summary.parameters_pca <- summary.parameters_efa
-
-
-
-#' @export
-model_parameters.parameters_efa <- function(model, ...) {
-  x <- attributes(model)$summary
-
-  if ("parameters_efa" %in% class(model)) {
-    class(x) <- c("parameters_efa_summary", class(model))
-  } else {
-    class(x) <- c("parameters_pca_summary", class(model))
-  }
-  x
-}
-
-#' @export
-model_parameters.parameters_pca <- model_parameters.parameters_efa
-
-
-
-
 
 
 #' @export
@@ -58,8 +60,13 @@ summary.parameters_omega <- function(object, ...) {
   table_var
 }
 
-# predict -----------------------------------------------------------------
 
+
+
+
+
+
+# predict -----------------------------------------------------------------
 
 
 #' @export
@@ -101,11 +108,9 @@ print.parameters_efa_summary <- function(x, digits = 3, ...) {
   invisible(x)
 }
 
+
 #' @export
 print.parameters_pca_summary <- print.parameters_efa_summary
-
-
-
 
 
 #' @importFrom insight print_color print_colour
@@ -114,6 +119,7 @@ print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, 
   cat(.print_parameters_cfa_efa(x, threshold = threshold, sort = sort, format = "text", digits = digits, labels = labels, ...))
   invisible(x)
 }
+
 
 #' @export
 print.parameters_pca <- print.parameters_efa
@@ -135,6 +141,7 @@ print.parameters_omega_summary <- function(x, ...) {
   cat(insight::export_table(x))
   invisible(orig_x)
 }
+
 
 
 
@@ -259,6 +266,7 @@ print.parameters_omega_summary <- function(x, ...) {
 
 
 
+
 # sort --------------------------------------------------------------------
 
 
@@ -267,10 +275,9 @@ sort.parameters_efa <- function(x, ...) {
   .sort_loadings(x)
 }
 
+
 #' @export
 sort.parameters_pca <- sort.parameters_efa
-
-
 
 
 #' @keywords internal
@@ -318,6 +325,10 @@ sort.parameters_pca <- sort.parameters_efa
 
   loadings
 }
+
+
+
+
 
 # Filter --------------------------------------------------------------------
 

@@ -1,3 +1,5 @@
+# normal print ----------------------------
+
 #' @rdname display.parameters_model
 #' @export
 print_md.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
@@ -26,6 +28,12 @@ print_md.parameters_brms_meta <- print_md.parameters_model
 #' @export
 print_md.parameters_simulate <- print_md.parameters_model
 
+
+
+
+
+# Stan / SEM print ----------------------------
+
 #' @export
 print_md.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...) {
   formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "markdown",  ci_width = NULL, ci_brackets = c("(", ")"), ...)
@@ -37,6 +45,12 @@ print_md.parameters_stan <- function(x, split_components = TRUE, select = NULL, 
   formatted_table <- format(split_components = split_components, select = select, format = "markdown",  ci_width = NULL, ci_brackets = c("(", ")"), ...)
   insight::export_table(formatted_table, format = "markdown")
 }
+
+
+
+
+
+# PCA / EFA / CFA ----------------------------
 
 #' @export
 print_md.parameters_efa_summary <- function(x, digits = 3, ...) {
@@ -60,6 +74,12 @@ print_md.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NUL
 
 #' @export
 print_md.parameters_pca <- print_md.parameters_efa
+
+
+
+
+
+# Equivalence test ----------------------------
 
 #' @export
 print_md.equivalence_test_lm <- function(x, digits = 2, ...) {

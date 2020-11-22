@@ -117,8 +117,17 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   invisible(orig_x)
 }
 
+#' @export
+print.parameters_simulate <- print.parameters_model
+
+#' @export
+print.parameters_brms_meta <- print.parameters_model
 
 
+
+
+
+# Random effects ------------------
 
 #' @export
 print.parameters_random <- function(x, digits = 2, ...) {
@@ -129,6 +138,41 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 
 
+
+# Stan models ------------------
+
+#' @importFrom insight print_parameters
+#' @export
+print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
+  orig_x <- x
+  ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
+
+  formatted_table <- format(x, split_components = split_components, select = select, format = "text", ci_width = "auto", ci_brackets = TRUE, ...)
+  cat(insight::export_table(formatted_table, format = "text"))
+
+  if (!is.null(ci_method)) {
+    ci_method <- switch(
+      toupper(ci_method),
+      "HDI" = "highest density intervals",
+      "ETI" = "equal-tailed intervals",
+      "SI" = "support intervals",
+      "uncertainty intervals"
+    )
+    message(paste0("\nUsing ", ci_method, " as credible intervals."))
+  }
+
+  invisible(orig_x)
+}
+
+
+
+
+
+
+# helper --------------------
+
+
+#' @importFrom insight print_color
 #' @keywords internal
 .print_random_parameters <- function(random_params, digits = 2) {
   insight::print_color("# Random Effects\n\n", "blue")
@@ -184,36 +228,3 @@ print.parameters_random <- function(x, digits = 2, ...) {
     }
   }
 }
-
-
-
-
-#' @importFrom insight print_parameters
-#' @export
-print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
-  orig_x <- x
-  ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
-
-  formatted_table <- format(x, split_components = split_components, select = select, format = "text", ci_width = "auto", ci_brackets = TRUE, ...)
-  cat(insight::export_table(formatted_table, format = "text"))
-
-  if (!is.null(ci_method)) {
-    ci_method <- switch(
-      toupper(ci_method),
-      "HDI" = "highest density intervals",
-      "ETI" = "equal-tailed intervals",
-      "SI" = "support intervals",
-      "uncertainty intervals"
-    )
-    message(paste0("\nUsing ", ci_method, " as credible intervals."))
-  }
-
-  invisible(orig_x)
-}
-
-
-#' @export
-print.parameters_simulate <- print.parameters_model
-
-#' @export
-print.parameters_brms_meta <- print.parameters_model
