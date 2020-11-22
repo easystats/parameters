@@ -141,13 +141,13 @@ model %>%
   parameters_table()
 ```
 
-## Formatting the Parameters Table
+## Exporting the Parameters Table
 
-Finally, `format_table()` from *insight* formats data frame and returns a character vector that can be printed to the console or inside rmarkdown documents. The data frame then looks more "table-like".
+Finally, `export_table()` from *insight* formats the data frame and returns a character vector that can be printed to the console or inside rmarkdown documents. The data frame then looks more "table-like".
 
 ```{r}
 data(mtcars)
-cat(format_table(mtcars[1:8, 1:5]))
+cat(export_table(mtcars[1:8, 1:5]))
 ```
 
 Putting all this together allows us to create nice tabular outputs of parameters tables. This can be done using *broom*:
@@ -156,7 +156,7 @@ Putting all this together allows us to create nice tabular outputs of parameters
 model %>% 
   tidy(conf.int = TRUE) %>% 
   parameters_table() %>% 
-  format_table() %>% 
+  export_table() %>% 
   cat()
 ```
 
@@ -168,7 +168,7 @@ model_parameters(model)
 
 ## Formatting the Parameters Table in Markdown
 
-`format_table()` provides a few options to generate tables in markdown-format. This allows to easily render nice-looking tables inside markdown-documents. First of all, use `format = "markdown"` to activate the markdown-formatting. `caption` can be used to add a table caption. Furthermore, `align` allows to choose an alignment for all table columns, or to specify the alignment for each column individually.
+`export_table()` provides a few options to generate tables in markdown-format. This allows to easily render nice-looking tables inside markdown-documents. First of all, use `format = "markdown"` to activate the markdown-formatting. `caption` can be used to add a table caption. Furthermore, `align` allows to choose an alignment for all table columns, or to specify the alignment for each column individually.
 
 The following table has six columns. Using `align = "lcccrr"` would left-align the first column, center columns two to four, and right-align the last two columns.
 
@@ -177,15 +177,15 @@ model %>%
   tidy(conf.int = TRUE) %>% 
   # parenthesis look better in markdown-tables, so we use "brackets" here
   parameters_table(brackets = c("(", ")")) %>% 
-  format_table(format = "markdown", caption = "My Table", align = "lcccrr")
+  export_table(format = "markdown", caption = "My Table", align = "lcccrr")
 ```
 
-`to_table()` is a convenient wrapper around `parameters_table()` and `format_table(format = "markdown")`, and allows to directly format the output of functions like `model_parameters()`, `simulate_parameters()` or other _parameters_ functions in markdown-format.
+`print_md()` is a convenient wrapper around `parameters_table()` and `export_table(format = "markdown")`, and allows to directly format the output of functions like `model_parameters()`, `simulate_parameters()` or other _parameters_ functions in markdown-format.
 
-These tables are also nicely formatted when knitting markdown-documents into Word or PDF. `to_table()` applies some default settings that have proven to work well for markdown, PDF or Word tables.
+These tables are also nicely formatted when knitting markdown-documents into Word or PDF. `print_md()` applies some default settings that have proven to work well for markdown, PDF or Word tables.
 
 ```{r}
-model_parameters(model) %>% to_table()
+model_parameters(model) %>% print_md()
 ```
 
-`to_table()` is considered as the main-function for users who want to generate nicely rendered tables inside markdown-documents.
+`print_md()` is considered as the main-function for users who want to generate nicely rendered tables inside markdown-documents.
