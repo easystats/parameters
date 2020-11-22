@@ -94,7 +94,7 @@
   zi_coef_name <- attributes(x)$zi_coefficient_name
 
   # make sure we have correct order of levels from split-factor
-  if (all(attributes(x)$model_class == "mediate")) {
+  if (!is.null(attributes(x)$model_class) && all(attributes(x)$model_class == "mediate")) {
     x$Component <- factor(x$Component, levels = c("control", "treated", "average", "Total Effect"))
     x$Parameter <- trimws(gsub("(.*)\\((.*)\\)$", "\\1", x$Parameter))
   } else {
