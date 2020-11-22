@@ -58,11 +58,8 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
     add_attr <- attributes(out)$additional_attributes
 
     final_table <- lapply(out, function(i) {
-      a <- attributes(i)
-      attributes(i) <- utils::modifyList(add_attr, attributes(i))
-      param_table <- insight::parameters_table(i, ci_width = ci_width, ci_brackets = ci_brackets)
+      param_table <- insight::parameters_table(i, ci_width = ci_width, ci_brackets = ci_brackets, preserve_attributes = TRUE)
       param_table$Group <- NULL
-      attributes(param_table) <- utils::modifyList(a, attributes(param_table))
       param_table
     })
   }
