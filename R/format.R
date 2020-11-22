@@ -35,7 +35,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
 
 #' @importFrom insight print_parameters parameters_table
 #' @export
-format.parameters_stan <- function(x, split_components = TRUE, select = NULL, format = NULL, ...) {
+format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
   cp <- attributes(x)$parameter_info
   final_table <- list()
 
@@ -43,13 +43,6 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, fo
   if (!is.null(x$ESS)) {
     x$ESS <- round(x$ESS)
   }
-
-  # check if user supplied digits attributes
-  ci <- .additional_arguments(x, "ci", .95)
-  ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
-  digits <- .additional_arguments(x, "digits", 2)
-  ci_digits <- .additional_arguments(x, "ci_digits", 2)
-  p_digits <- .additional_arguments(x, "p_digits", 3)
 
   if (!split_components || is.null(cp)) {
     NextMethod()
@@ -61,38 +54,17 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, fo
       x[to_remove] <- NULL
     }
 
-    out <- insight::print_parameters(cp, x)
+    out <- insight::print_parameters(cp, x, keep_parameter_column = FALSE)
+    add_attr <- attributes(out)$additional_attributes
 
-    for (i in out) {
-      attr(i, "ci") <- ci
-      attr(i, "digits") <- digits
-      attr(i, "ci_digits") <- ci_digits
-      attr(i, "p_digits") <- p_digits
-
-      if (is.null(format) || format == "text") {
-        table_caption <- c(paste0("# ", attr(i, "main_title")), "blue")
-        subtitle <- c(trimws(gsub("  ", " ", attr(i, "sub_title"), fixed = TRUE)), "red")
-      } else {
-        table_caption <- c(paste0("# ", attr(i, "main_title")), "blue")
-        subtitle <- c(trimws(gsub("  ", " ", attr(i, "sub_title"), fixed = TRUE)), "red")
-      }
-
-      rem <- which(colnames(i) %in% c("Parameter", "Component", "Effects", "Group", "Response", "Subgroup", "Function"))
-      i <- i[, -rem]
-      colnames(i)[1] <- "Parameter"
-
-      formatted_table <- insight::parameters_table(i, pretty_names = FALSE, ...)
-
-      if (!is.null(format) && format == "markdown") {
-        # replace brackets by parenthesis
-        formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
-        formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
-      }
-
-      attr(formatted_table, "table_caption") <- table_caption
-      attr(formatted_table, "table_subtitle") <- subtitle
-      final_table <- c(final_table, list(formatted_table))
-    }
+    final_table <- lapply(out, function(i) {
+      a <- attributes(i)
+      attributes(i) <- utils::modifyList(add_attr, attributes(i))
+      param_table <- insight::parameters_table(i, ci_width = ci_width, ci_brackets = ci_brackets)
+      param_table$Group <- NULL
+      attributes(param_table) <- utils::modifyList(a, attributes(param_table))
+      param_table
+    })
   }
 
   .compact_list(final_table)
