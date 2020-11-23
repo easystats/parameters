@@ -19,8 +19,17 @@
 
 ## New functions
 
-* `to_table()`, to format output from package-functions into markdown-format.
-  `table_to_markdown` is an alias for `to_table(format = "markdown")`.
+### printing and table Formatting
+
+* `display()`, to format output from package-functions into different formats.
+
+* `print_md()` as an alias for `display(format = "markdown")`. This allows to
+  print tabular outputs from data frames (as returned by most functions in
+  _parameters_) into nicely rendered markdown tables.
+
+* `format()`, to create a "pretty data frame" with nicer column names and
+  formatted values. This is one of the worker-functions behind `print()` or 
+  `print_md()`.
 
 ## Changes to functions
 
