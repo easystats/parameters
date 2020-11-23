@@ -9,6 +9,7 @@
 \alias{equivalence_test}
 \alias{print_md}
 \alias{parameters_table}
+\alias{format_p}
 \alias{standardize_names}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -19,6 +20,6 @@ below to see their documentation.
 \describe{
   \item{bayestestR}{\code{\link[bayestestR]{ci}}, \code{\link[bayestestR]{equivalence_test}}}
 
-  \item{insight}{\code{\link[insight]{display}}, \code{\link[insight]{parameters_table}}, \code{\link[insight:display]{print_md}}, \code{\link[insight]{standardize_names}}}
+  \item{insight}{\code{\link[insight]{display}}, \code{\link[insight]{format_p}}, \code{\link[insight]{parameters_table}}, \code{\link[insight:display]{print_md}}, \code{\link[insight]{standardize_names}}}
 }}
 
