@@ -1,3 +1,4 @@
+#' @inheritParams model_parameters.default
 #' @rdname model_parameters.principal
 #' @export
 model_parameters.PCA <- function(model,

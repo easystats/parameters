@@ -133,7 +133,7 @@ model %>%
   parameters_table()
 ```
 
-When the parameters table also includes degrees of freedom, and the degrees of freedom are the same for each parameter, then this information is included in the statistic-column. This is usuall the default for `model_parameters()`:
+When the parameters table also includes degrees of freedom, and the degrees of freedom are the same for each parameter, then this information is included in the statistic-column. This is usually the default for `model_parameters()`:
 
 ```{r}
 model %>% 

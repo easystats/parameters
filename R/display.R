@@ -4,7 +4,7 @@
 #' @description Prints tables (i.e. data frame) in different output formats.
 #'   \code{table_to_markdown()} is a alias for \code{display(format = "markdown")}.
 #'
-#' @param x An object returned by \code{\link[=model_parameters]{model_parameters()}},
+#' @param object An object returned by \code{\link[=model_parameters]{model_parameters()}},
 #'   \code{\link[=simulate_parameters]{simulate_parameters()}},
 #'   \code{\link[=equivalence_test.lm]{equivalence_test()}} or
 #'   \code{\link[=principal_components]{principal_components()}}.
@@ -28,8 +28,8 @@
 #' mp <- model_parameters(model)
 #' display(mp)
 #' @export
-display.parameters_model <- function(x, format = "markdown", pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
-  print_md(x = x, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
+display.parameters_model <- function(object, format = "markdown", pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
+  print_md(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
 }
 
 #' @export
@@ -46,8 +46,8 @@ display.parameters_brms_meta <- display.parameters_model
 
 #' @rdname display.parameters_model
 #' @export
-display.parameters_stan <- function(x, split_components = TRUE, select = NULL, format = "markdown", ...) {
-  print_md(x = x, split_components = split_components, select = select, ...)
+display.parameters_stan <- function(object, split_components = TRUE, select = NULL, format = "markdown", ...) {
+  print_md(x = object, split_components = split_components, select = select, ...)
 }
 
 
@@ -58,8 +58,8 @@ display.parameters_stan <- function(x, split_components = TRUE, select = NULL, f
 
 #' @rdname display.parameters_model
 #' @export
-display.parameters_sem <- function(x, format = "markdown", digits = 2, ci_digits = 2, p_digits = 3, ...) {
-  print_md(x = x, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
+display.parameters_sem <- function(object, format = "markdown", digits = 2, ci_digits = 2, p_digits = 3, ...) {
+  print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
 }
 
 
@@ -72,17 +72,19 @@ display.parameters_sem <- function(x, format = "markdown", digits = 2, ci_digits
 #' @rdname display.parameters_model
 #' @importFrom insight export_table
 #' @export
-display.parameters_efa_summary <- function(x, format = "markdown", digits = 3, ...) {
-  print_md(x, digits = digits, ...)
+display.parameters_efa_summary <- function(object, format = "markdown", digits = 3, ...) {
+  print_md(x = object, digits = digits, ...)
 }
 
 #' @export
 display.parameters_pca_summary <- display.parameters_efa_summary
 
+
+#' @inheritParams model_parameters.principal
 #' @rdname display.parameters_model
 #' @export
-display.parameters_efa <- function(x, format = "markdown", digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  print_md(x = x, digits = digits, sort = sort, threshold = threshold, labels = labels, ...)
+display.parameters_efa <- function(object, format = "markdown", digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+  print_md(x = object, digits = digits, sort = sort, threshold = threshold, labels = labels, ...)
 }
 
 #' @export
@@ -97,8 +99,8 @@ display.parameters_pca <- display.parameters_efa
 
 #' @rdname display.parameters_model
 #' @export
-display.equivalence_test_lm <- function(x, format = "markdown", digits = 2, ...) {
-  print_md(x = x, digits = digits, ...)
+display.equivalence_test_lm <- function(object, format = "markdown", digits = 2, ...) {
+  print_md(x = object, digits = digits, ...)
 }
 
 

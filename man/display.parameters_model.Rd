@@ -11,7 +11,7 @@
 \title{Print tables in different output formats}
 \usage{
 \method{display}{parameters_model}(
-  x,
+  object,
   format = "markdown",
   pretty_names = TRUE,
   split_components = TRUE,
@@ -22,14 +22,27 @@
   ...
 )
 
-\method{display}{parameters_stan}(x, split_components = TRUE, select = NULL, format = "markdown", ...)
+\method{display}{parameters_stan}(
+  object,
+  split_components = TRUE,
+  select = NULL,
+  format = "markdown",
+  ...
+)
 
-\method{display}{parameters_sem}(x, format = "markdown", digits = 2, ci_digits = 2, p_digits = 3, ...)
+\method{display}{parameters_sem}(
+  object,
+  format = "markdown",
+  digits = 2,
+  ci_digits = 2,
+  p_digits = 3,
+  ...
+)
 
-\method{display}{parameters_efa_summary}(x, format = "markdown", digits = 3, ...)
+\method{display}{parameters_efa_summary}(object, format = "markdown", digits = 3, ...)
 
 \method{display}{parameters_efa}(
-  x,
+  object,
   format = "markdown",
   digits = 2,
   sort = FALSE,
@@ -38,7 +51,7 @@
   ...
 )
 
-\method{display}{equivalence_test_lm}(x, format = "markdown", digits = 2, ...)
+\method{display}{equivalence_test_lm}(object, format = "markdown", digits = 2, ...)
 
 \method{print_md}{parameters_model}(
   x,
@@ -52,11 +65,6 @@
 )
 }
 \arguments{
-\item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}},
-\code{\link[=simulate_parameters]{simulate_parameters()}},
-\code{\link[=equivalence_test.lm]{equivalence_test()}} or
-\code{\link[=principal_components]{principal_components()}}.}
-
 \item{format}{String, indicating the output format. Currently, only
 \code{"markdown"} is supported.}
 
@@ -79,6 +87,17 @@ while \code{select = "short"} prints coefficient, standard errors and p-values.}
 \item{p_digits}{Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{sort}{Sort the loadings.}
+
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).}
+
+\item{labels}{A character vector containing labels to be added to the loadings data. Usually, the question related to the item.}
+
+\item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}},
+\code{\link[=simulate_parameters]{simulate_parameters()}},
+\code{\link[=equivalence_test.lm]{equivalence_test()}} or
+\code{\link[=principal_components]{principal_components()}}.}
 }
 \value{
 A character vector. If \code{format = "markdown"}, the return value

@@ -97,6 +97,7 @@ Suggests:
     Matrix,
     mclust,
     MCMCglmm,
+    mediation,
     metaBMA,
     metafor,
     mice,

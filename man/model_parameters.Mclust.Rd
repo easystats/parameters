@@ -9,6 +9,8 @@
 \arguments{
 \item{model}{Mixture model.}
 
+\item{verbose}{Toggle warnings and messages.}
+
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{

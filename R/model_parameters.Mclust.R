@@ -4,6 +4,7 @@
 #'
 #' @param model Mixture model.
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams model_parameters.default
 #'
 #' @examples
 #' library(parameters)

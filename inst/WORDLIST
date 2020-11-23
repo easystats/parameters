@@ -20,6 +20,7 @@ Casal
 Catran
 Cattell
 Cattell's
+Cramer's
 CrossValidated
 Crujeiras
 D'Agostino
@@ -116,6 +117,7 @@ Struyf
 TOST
 Tabachnick
 Thiyagarajan
+Timepoint
 Turkheimer
 VSS
 Valls
@@ -125,6 +127,7 @@ Wisenbaker
 Zoski
 afex
 al
+blme
 bbmle
 behaviour
 bife
@@ -194,6 +197,7 @@ panelr
 performant
 platykurtic
 plm
+pre
 projpred
 quantreg
 reproducibility
@@ -201,6 +205,7 @@ rescale
 rescaled
 rms
 robmixglm
+rmarkdown
 rstanarm
 smicd
 spaMM

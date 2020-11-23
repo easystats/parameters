@@ -44,6 +44,7 @@ format_parameters <- function(model, ...) {
 }
 
 
+#' @rdname format_parameters
 #' @export
 format_parameters.default <- function(model, brackets = c("[", "]"), ...) {
   tryCatch(

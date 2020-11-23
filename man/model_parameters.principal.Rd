@@ -36,6 +36,8 @@
 
 \item{labels}{A character vector containing labels to be added to the loadings data. Usually, the question related to the item.}
 
+\item{verbose}{Toggle warnings and messages.}
+
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
