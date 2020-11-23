@@ -50,6 +50,7 @@ if (require("testthat") &&
       expect_equal(colnames(mp), "BF")
     })
 
+    data(puzzles)
     result <- anovaBF(RT ~ shape*color + ID, data = puzzles, whichRandom = "ID",
                       whichModels = 'top', progress = FALSE)
     mp <- model_parameters(result, verbose = FALSE)
