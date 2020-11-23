@@ -114,7 +114,7 @@ reference:
 
 - title: "Table and Value Formatting"
   contents:
-  - display
+  - display.parameters_model
   - format_order
   - format_parameters
   - parameters_type
