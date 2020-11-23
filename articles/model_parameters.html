@@ -165,15 +165,15 @@
 
 <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html">correlationBF</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter | Median |        89% CI |     pd | % in ROPE |              Prior | Effects |   Component |    BF
-#&gt; ------------------------------------------------------------------------------------------------------------
-#&gt; rho       |  -0.11 | [-0.23, 0.02] | 92.25% |    44.23% | Cauchy (0 +- 0.33) |   fixed | conditional | 0.509</code></pre>
+<pre><code>#&gt; Parameter | Median |        89% CI |     pd | % in ROPE |              Prior |    BF
+#&gt; ------------------------------------------------------------------------------------
+#&gt; rho       |  -0.11 | [-0.23, 0.02] | 92.25% |    44.23% | Cauchy (0 +- 0.33) | 0.509</code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter  | Median |        89% CI |     pd | % in ROPE |              Prior | Effects |   Component |     BF
-#&gt; --------------------------------------------------------------------------------------------------------------
-#&gt; Difference |   7.31 | [4.50, 10.12] | 99.98% |        0% | Cauchy (0 +- 0.71) |   fixed | conditional | 529.27</code></pre>
+<pre><code>#&gt; Parameter  | Median |        89% CI |     pd | % in ROPE |              Prior |     BF
+#&gt; --------------------------------------------------------------------------------------
+#&gt; Difference |   7.31 | [4.50, 10.12] | 99.98% |        0% | Cauchy (0 +- 0.71) | 529.27</code></pre>
 </div>
 </div>
 <div id="anovas" class="section level2">
