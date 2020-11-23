@@ -51,7 +51,7 @@ model_parameters.BFBayesFactor <- function(model,
   if (.classify_BFBayesFactor(model)[1] == "xtable") {
     out <- data.frame(BF = NA)
   } else {
-    if (is.null(insight::get_parameters(model))) {
+    if (is.null(insight::get_parameters(model, verbose = verbose))) {
       if (isTRUE(verbose)) {
         insight::print_color("Can't extract model parameters.\n", "red")
       }
@@ -69,6 +69,7 @@ model_parameters.BFBayesFactor <- function(model,
         rope_range = rope_range,
         rope_ci = rope_ci,
         priors = priors,
+        verbose = verbose,
         ...
       )
 
