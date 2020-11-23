@@ -110,7 +110,7 @@ Suggests:
     NbClust,
     nFactors,
     nlme,
-    performance,
+    performance (>= 0.5.1.1),
     plm,
     projpred,
     pscl,
@@ -132,7 +132,9 @@ Suggests:
     VGAM
 Encoding: UTF-8
 Language: en-US
-Remotes: easystats/insight
+Remotes: 
+  easystats/insight
+  easystats/performance
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Config/testthat/edition: 3
