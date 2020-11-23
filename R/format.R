@@ -27,6 +27,10 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
     formatted_table <- insight::parameters_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
   }
 
+  # remove unique columns
+  if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
+  if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+
   formatted_table
 }
 
