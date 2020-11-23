@@ -44,7 +44,7 @@ if (require("testthat") &&
   if (.runThisTest) {
     data(raceDolls)
     bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
-    mp <- BayesFactor::model_parameters(bf)
+    mp <- model_parameters(bf)
 
     test_that("model_parameters.BFBayesFactor", {
       expect_equal(colnames(mp), "BF")
