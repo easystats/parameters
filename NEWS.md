@@ -1,4 +1,4 @@
-# parameters 0.9.1
+# parameters 0.10.0
 
 ## Breaking changes
 
@@ -19,7 +19,7 @@
 
 ## New functions
 
-### printing and table Formatting
+### Printing and table Formatting
 
 * `display()`, to format output from package-functions into different formats.
 
