@@ -48,7 +48,7 @@ Depends:
     R (>= 3.2)
 Imports:
     bayestestR (>= 0.7.5),
-    insight (>= 0.10.0),
+    insight (>= 0.10.0.1),
     methods,
     stats,
     utils
@@ -132,6 +132,7 @@ Suggests:
     VGAM
 Encoding: UTF-8
 Language: en-US
+Remotes: easystats/insight
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Config/testthat/edition: 3
