@@ -114,14 +114,9 @@ reference:
 
 - title: "Table and Value Formatting"
   contents:
-  - format_bf
-  - format_number
+  - display
   - format_order
-  - format_p
   - format_parameters
-  - format_pd
-  - format_rope
-  - parameters_table
   - parameters_type
 
 - title: "Example Data Sets"
