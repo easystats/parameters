@@ -123,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -137,6 +137,9 @@
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -208,10 +211,10 @@
     <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>3</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>21</span>, <span class='fl'>0</span>, <span class='fl'>100</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div><div class='img'><img src='smoothness-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>smoothness</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"cor"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.9011508
+</div><div class='output co'>#&gt; [1] 0.9178754
 #&gt; attr(,"class")
 #&gt; [1] "parameters_smoothness" "numeric"              </div><div class='input'><span class='fu'>smoothness</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"diff"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 1.631644
+</div><div class='output co'>#&gt; [1] 1.561499
 #&gt; attr(,"class")
 #&gt; [1] "parameters_smoothness" "numeric"              </div></pre>
   </div>

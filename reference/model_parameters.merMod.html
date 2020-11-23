@@ -123,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -137,6 +137,9 @@
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -183,6 +186,7 @@
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -198,6 +202,7 @@
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -211,6 +216,7 @@
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -224,6 +230,7 @@
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -275,6 +282,10 @@
       <td><p>Logical, if <code>TRUE</code> and models contains within- and between-effects (see <code><a href='check_heterogeneity.html'>demean</a></code>), the <code>Component</code> column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the <code>Component</code> column indicates, which parameters belong to the conditional or zero-inflated component of the model.</p></td>
     </tr>
     <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
@@ -322,9 +333,9 @@
 <span class='op'>}</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects
 #&gt; 
-#&gt; # Fixed Effects 
+#&gt; # Fixed Effects </span><span>
 #&gt; 
-#&gt; </span><span>Parameter   | Log-Mean |   SE |         95% CI |     z |      p
+#&gt; Parameter   | Log-Mean |   SE |         95% CI |     z |      p
 #&gt; ---------------------------------------------------------------
 #&gt; (Intercept) |    -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 0.194 
 #&gt; spp [PR]    |    -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | &lt; .001
@@ -335,13 +346,12 @@
 #&gt; spp [DF]    |     0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 
 #&gt; mined [no]  |     1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Zero-Inflated 
+#&gt; </span><span style='color: #0000BB;'># Zero-Inflated </span><span>
 #&gt; 
-#&gt; </span><span>Parameter   | Log-Odds |   SE |         95% CI |     z |      p
+#&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |      p
 #&gt; ---------------------------------------------------------------
 #&gt; (Intercept) |     0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 
 #&gt; mined [no]  |    -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001
-#&gt; 
 #&gt; 
 #&gt; </span><span style='color: #0000BB;'># Random Effects
 #&gt; 

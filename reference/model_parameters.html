@@ -141,7 +141,7 @@ Multiply imputed repeated analyses (mira)
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -155,6 +155,9 @@ Multiply imputed repeated analyses (mira)
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -234,7 +237,7 @@ Multiply imputed repeated analyses (mira)
   standard errors and confidence intervals refer to the standardized coefficient.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The <code><a href='print.html'>print()</a></code> method has several arguments to tweak the output. There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <p>The <code><a href='print.parameters_model.html'>print()</a></code> method has several arguments to tweak the output. There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>, and a dedicated method for use inside rmarkdown files, <code><a href='display.parameters_model.html'>print_md()</a></code>.</p>
     <h2 class="hasAnchor" id="interpretation-of-interaction-terms"><a class="anchor" href="#interpretation-of-interaction-terms"></a>Interpretation of Interaction Terms</h2>
 
     
@@ -250,9 +253,9 @@ depends of the full context of the model, which should not be inferred
 from the parameters table alone - rather, we recommend to use packages
 that calculate estimated marginal means or marginal effects, such as
 <a href='https://CRAN.R-project.org/package=modelbased'><span class="pkg">modelbased</span></a>, <a href='https://CRAN.R-project.org/package=emmeans'><span class="pkg">emmeans</span></a> or <a href='https://CRAN.R-project.org/package=ggeffects'><span class="pkg">ggeffects</span></a>. To raise
-awareness for this issue, you may use <code><a href='print.html'>print(...,show_formula=TRUE)</a></code>
+awareness for this issue, you may use <code><a href='https://rdrr.io/r/base/print.html'>print(...,show_formula=TRUE)</a></code>
 to add the model-specification to the output of the
-<code><a href='print.html'>print()</a></code> method for <code>model_parameters()</code>.</p>
+<code><a href='print.parameters_model.html'>print()</a></code> method for <code>model_parameters()</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to rename

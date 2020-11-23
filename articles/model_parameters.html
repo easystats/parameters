@@ -81,7 +81,7 @@
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -95,6 +95,9 @@
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -265,7 +268,7 @@
   data <span class="op">=</span> <span class="va">Salamanders</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed Effects 
+<pre><code>#&gt; # Fixed Effects
 #&gt; 
 #&gt; Parameter   | Log-Mean |   SE |        95% CI |     z |      p
 #&gt; --------------------------------------------------------------
@@ -278,7 +281,7 @@
 #&gt; spp [DF]    |    -0.11 | 0.24 | [-0.59, 0.37] | -0.46 | 0.642 
 #&gt; mined [no]  |     1.45 | 0.37 | [ 0.73, 2.17] |  3.95 | &lt; .001
 #&gt; 
-#&gt; # Zero-Inflated 
+#&gt; # Zero-Inflated
 #&gt; 
 #&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |      p
 #&gt; ---------------------------------------------------------------
@@ -313,14 +316,14 @@
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html">glmmTMB</a></span><span class="op">(</span><span class="va">x</span> <span class="op">~</span> <span class="va">sd</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">t</span><span class="op">)</span>, dispformula <span class="op">=</span>  <span class="op">~</span> <span class="va">sd</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed Effects 
+<pre><code>#&gt; # Fixed Effects
 #&gt; 
 #&gt; Parameter   | Coefficient |   SE |            95% CI |       z |      p
 #&gt; -----------------------------------------------------------------------
 #&gt; (Intercept) |      200.03 | 0.10 | [ 199.84, 200.22] | 2056.35 | &lt; .001
 #&gt; sd [ten]    |      -99.71 | 0.22 | [-100.14, -99.29] | -458.39 | &lt; .001
 #&gt; 
-#&gt; # Dispersion 
+#&gt; # Dispersion
 #&gt; 
 #&gt; Parameter   | Coefficient |   SE |       95% CI |      z |      p
 #&gt; -----------------------------------------------------------------
@@ -336,9 +339,9 @@
 
 <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">*</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed effects 
+<pre><code>#&gt; # Fixed effects
 #&gt; 
-#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat | ESS |                   Prior
+#&gt; Parameter   | Median |              CI |     pd | % in ROPE |  Rhat | ESS |                   Prior
 #&gt; ---------------------------------------------------------------------------------------------------
 #&gt; (Intercept) |  52.02 | [ 43.82, 62.54] |   100% |        0% | 1.001 | 152 | Normal (20.09 +- 15.07)
 #&gt; wt          |  -7.88 | [-11.75, -4.60] |   100% |        0% | 0.998 | 156 |  Normal (0.00 +- 15.40)
@@ -490,7 +493,7 @@
                        data <span class="op">=</span> <span class="va">HolzingerSwineford1939</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Loading 
+<pre><code>#&gt; # Loading
 #&gt; 
 #&gt; Link          | Coefficient |   SE |       95% CI |      p
 #&gt; ----------------------------------------------------------
@@ -504,7 +507,7 @@
 #&gt; speed =~ x8   |        1.18 | 0.16 | [0.86, 1.50] | &lt; .001
 #&gt; speed =~ x9   |        1.08 | 0.15 | [0.79, 1.38] | &lt; .001
 #&gt; 
-#&gt; # Correlation 
+#&gt; # Correlation
 #&gt; 
 #&gt; Link              | Coefficient |   SE |       95% CI |      p
 #&gt; --------------------------------------------------------------

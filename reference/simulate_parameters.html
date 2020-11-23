@@ -123,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -137,6 +137,9 @@
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -269,15 +272,15 @@ included in the summary output.</p></td>
 
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Width</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Parameter                     | Coefficient |         95% CI |      p
+</div><div class='output co'>#&gt; Parameter                     | Coefficient | CI_low | CI_high |    p
 #&gt; ---------------------------------------------------------------------
-#&gt; (Intercept)                   |        3.53 | [ 3.22,  3.83] | &lt; .001
-#&gt; Speciesversicolor             |       -1.15 | [-1.81, -0.48] | 0.002 
-#&gt; Speciesvirginica              |       -2.21 | [-3.11, -1.37] | &lt; .001
-#&gt; Petal.Width                   |        0.41 | [-0.52,  1.32] | 0.386 
-#&gt; Petal.Length                  |        0.93 | [ 0.79,  1.09] | &lt; .001
-#&gt; Speciesversicolor:Petal.Width |       -0.76 | [-1.70,  0.22] | 0.152 
-#&gt; Speciesvirginica:Petal.Width  |       -0.37 | [-1.32,  0.60] | 0.440 </div><div class='input'><span class='co'># \donttest{</span>
+#&gt; (Intercept)                   |        3.53 |   3.21 |    3.83 | 0.00
+#&gt; Speciesversicolor             |       -1.17 |  -1.84 |   -0.50 | 0.00
+#&gt; Speciesvirginica              |       -2.27 |  -3.14 |   -1.39 | 0.00
+#&gt; Petal.Width                   |        0.40 |  -0.48 |    1.32 | 0.42
+#&gt; Petal.Length                  |        0.94 |   0.79 |    1.09 | 0.00
+#&gt; Speciesversicolor:Petal.Width |       -0.73 |  -1.73 |    0.27 | 0.19
+#&gt; Speciesvirginica:Petal.Width  |       -0.37 |  -1.33 |    0.53 | 0.50</div><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span><span class='op'>(</span>
     <span class='va'>count</span> <span class='op'>~</span> <span class='va'>spp</span> <span class='op'>+</span> <span class='va'>mined</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>site</span><span class='op'>)</span>,
@@ -288,12 +291,12 @@ included in the summary output.</p></td>
   <span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, centrality <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span>
   <span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.8</span>, <span class='fl'>.95</span><span class='op'>)</span>, component <span class='op'>=</span> <span class='st'>"zero_inflated"</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; Parameter   | Coefficient |    CI |          ?% CI |      p
-#&gt; -----------------------------------------------------------
-#&gt; (Intercept) |        0.78 | 80.00 | [ 0.43,  1.12] | 0.002 
-#&gt; (Intercept) |        0.78 | 95.00 | [ 0.25,  1.29] | 0.002 
-#&gt; minedno     |       -1.83 | 80.00 | [-2.25, -1.43] | &lt; .001
-#&gt; minedno     |       -1.83 | 95.00 | [-2.45, -1.25] | &lt; .001</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; Parameter   | Coefficient | CI | CI_low | CI_high |     p
+#&gt; ---------------------------------------------------------
+#&gt; (Intercept) |        0.81 | 80 |   0.46 |     1.1 | 0.004
+#&gt; (Intercept) |        0.81 | 95 |   0.26 |     1.3 | 0.004
+#&gt; minedno     |       -1.86 | 80 |  -2.26 |    -1.5 | 0.000
+#&gt; minedno     |       -1.86 | 95 |  -2.48 |    -1.2 | 0.000</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -123,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -137,6 +137,9 @@
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -176,6 +179,7 @@
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   standardize <span class='op'>=</span> <span class='cn'>FALSE</span>,
   type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"regression"</span>, <span class='st'>"correlation"</span>, <span class='st'>"loading"</span>, <span class='st'>"defined"</span><span class='op'>)</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -205,6 +209,10 @@ exogenous covariates. See <code><a href='https://rdrr.io/pkg/lavaan/man/standard
     <tr>
       <th>type</th>
       <td><p>What type of links to return. Can be <code>"all"</code> or some of <code><a href='https://rdrr.io/r/base/c.html'>c("regression", "correlation", "loading", "variance", "mean")</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -263,9 +271,9 @@ exogenous covariates. See <code><a href='https://rdrr.io/pkg/lavaan/man/standard
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loading 
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loading </span><span>
 #&gt; 
-#&gt; </span><span>Link            | Coefficient |   SE |       95% CI |      p
+#&gt; Link            | Coefficient |   SE |       95% CI |      p
 #&gt; ------------------------------------------------------------
 #&gt; ind60 =~ x1     |        0.92 | 0.02 | [0.88, 0.97] | &lt; .001
 #&gt; ind60 =~ x2     |        0.97 | 0.02 | [0.94, 1.01] | &lt; .001
@@ -279,25 +287,24 @@ exogenous covariates. See <code><a href='https://rdrr.io/pkg/lavaan/man/standard
 #&gt; dem65 =~ y7 (b) |        0.80 | 0.05 | [0.71, 0.89] | &lt; .001
 #&gt; dem65 =~ y8 (c) |        0.83 | 0.04 | [0.75, 0.91] | &lt; .001
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Regression 
+#&gt; </span><span style='color: #0000BB;'># Regression </span><span>
 #&gt; 
-#&gt; </span><span>Link          | Coefficient |   SE |       95% CI |      p
+#&gt; Link          | Coefficient |   SE |       95% CI |      p
 #&gt; ----------------------------------------------------------
 #&gt; dem60 ~ ind60 |        0.45 | 0.10 | [0.25, 0.65] | &lt; .001
 #&gt; dem65 ~ ind60 |        0.19 | 0.07 | [0.05, 0.33] | 0.008 
 #&gt; dem65 ~ dem60 |        0.88 | 0.05 | [0.78, 0.98] | &lt; .001
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Correlation 
+#&gt; </span><span style='color: #0000BB;'># Correlation </span><span>
 #&gt; 
-#&gt; </span><span>Link     | Coefficient |   SE |        95% CI |      p
+#&gt; Link     | Coefficient |   SE |        95% CI |      p
 #&gt; ------------------------------------------------------
 #&gt; y1 ~~ y5 |        0.28 | 0.14 | [ 0.00, 0.56] | 0.049 
 #&gt; y2 ~~ y4 |        0.29 | 0.11 | [ 0.07, 0.52] | 0.011 
 #&gt; y2 ~~ y6 |        0.36 | 0.10 | [ 0.17, 0.54] | &lt; .001
 #&gt; y3 ~~ y7 |        0.17 | 0.13 | [-0.09, 0.43] | 0.208 
 #&gt; y4 ~~ y8 |        0.11 | 0.13 | [-0.14, 0.36] | 0.388 
-#&gt; y6 ~~ y8 |        0.34 | 0.11 | [ 0.12, 0.55] | 0.002 
-#&gt; </div></span></pre>
+#&gt; y6 ~~ y8 |        0.34 | 0.11 | [ 0.12, 0.55] | 0.002 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

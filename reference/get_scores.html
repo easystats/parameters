@@ -123,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -137,6 +137,9 @@
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -203,9 +206,9 @@
 
 <span class='co'># PCA extracted two components</span>
 <span class='va'>pca</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (varimax-rotation)
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Rotated loadings from Principal Component Analysis (varimax-rotation)</span><span>
 #&gt; 
-#&gt; </span><span>Variable |   RC1 |   RC2 | Complexity | Uniqueness |  MSA
+#&gt; Variable |   RC1 |   RC2 | Complexity | Uniqueness |  MSA
 #&gt; ---------------------------------------------------------
 #&gt; mpg      | -0.84 | -0.42 |       1.47 |       0.13 | 0.87
 #&gt; cyl      |  0.77 |  0.58 |       1.86 |       0.08 | 0.87
@@ -214,8 +217,8 @@
 #&gt; drat     | -0.89 |  0.01 |       1.00 |       0.21 | 0.85
 #&gt; wt       |  0.93 |  0.17 |       1.07 |       0.10 | 0.77
 #&gt; qsec     | -0.03 | -0.97 |       1.00 |       0.06 | 0.61
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The 2 principal components (varimax rotation) accounted for 89.18% of the total variance of the original data (RC1 = 56.82%, RC2 = 32.36%).</span><span></div><div class='input'>
+#&gt; </span><span style='color: #BBBB00;'>
+#&gt; The 2 principal components (varimax rotation) accounted for 89.18% of the total variance of the original data (RC1 = 56.82%, RC2 = 32.36%).</span><span></div><div class='input'>
 <span class='co'># assignment of items to each component</span>
 <span class='fu'><a href='principal_components.html'>closest_component</a></span><span class='op'>(</span><span class='va'>pca</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;  mpg  cyl disp   hp drat   wt qsec 

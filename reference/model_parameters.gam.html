@@ -123,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -137,6 +137,9 @@
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -180,6 +183,7 @@
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -192,6 +196,7 @@
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"smooth_terms"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -204,6 +209,7 @@
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"smooth_terms"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -243,6 +249,10 @@
       <td><p>Character vector, if not <code>NULL</code>, indicates the method to adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details.</p></td>
     </tr>
     <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
@@ -273,21 +283,20 @@
 #&gt; <span class='message'>    lmList</span></div><div class='output co'>#&gt; <span class='message'>This is mgcv 1.8-33. For overview type 'help("mgcv-package")'.</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘mgcv’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:mclust’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    mvn</span></div><div class='output co'>#&gt; Gu &amp; Wahba 4 term additive model</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects 
+#&gt; <span class='message'>    mvn</span></div><div class='output co'>#&gt; Gu &amp; Wahba 4 term additive model</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects </span><span>
 #&gt; 
-#&gt; </span><span>Parameter   | Coefficient |   SE |       95% CI | t(384.49) |      p
+#&gt; Parameter   | Coefficient |   SE |       95% CI | t(384.49) |      p
 #&gt; --------------------------------------------------------------------
 #&gt; (Intercept) |        8.02 | 0.10 | [7.82, 8.22] |     78.64 | &lt; .001
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Smooth Terms 
+#&gt; </span><span style='color: #0000BB;'># Smooth Terms </span><span>
 #&gt; 
-#&gt; </span><span>Parameter        | Coefficient |     F |   df |      p
+#&gt; Parameter        | Coefficient |     F |   df |      p
 #&gt; ------------------------------------------------------
 #&gt; Smooth term (x0) |        3.10 |  9.32 | 3.85 | &lt; .001
 #&gt; Smooth term (x1) |        2.73 | 89.80 | 3.39 | &lt; .001
 #&gt; Smooth term (x2) |        7.69 | 89.83 | 8.56 | &lt; .001
-#&gt; Smooth term (x3) |        1.00 |  0.41 | 1.00 | 0.522 
-#&gt; </div></span></pre>
+#&gt; Smooth term (x3) |        1.00 |  0.41 | 1.00 | 0.522 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

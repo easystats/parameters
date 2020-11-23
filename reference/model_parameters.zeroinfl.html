@@ -123,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -137,6 +137,9 @@
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -181,6 +184,7 @@
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -224,6 +228,10 @@
       <td><p>Character vector, if not <code>NULL</code>, indicates the method to adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details.</p></td>
     </tr>
     <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
@@ -249,9 +257,9 @@
 #&gt; <span class='message'>Department of Political Science</span>
 #&gt; <span class='message'>Stanford University</span>
 #&gt; <span class='message'>Simon Jackman</span>
-#&gt; <span class='message'>hurdle and zeroinfl functions by Achim Zeileis</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects 
+#&gt; <span class='message'>hurdle and zeroinfl functions by Achim Zeileis</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects </span><span>
 #&gt; 
-#&gt; </span><span>Parameter     | Log-Mean |       SE |         95% CI |     z |      p
+#&gt; Parameter     | Log-Mean |       SE |         95% CI |     z |      p
 #&gt; ---------------------------------------------------------------------
 #&gt; (Intercept)   |     0.56 |     0.07 | [ 0.43,  0.69] |  8.26 | &lt; .001
 #&gt; fem [Women]   |    -0.23 |     0.06 | [-0.34, -0.11] | -3.91 | &lt; .001
@@ -259,14 +267,13 @@
 #&gt; kid5          |    -0.17 |     0.05 | [-0.26, -0.07] | -3.43 | &lt; .001
 #&gt; ment          |     0.02 | 2.12e-03 | [ 0.02,  0.03] | 10.05 | &lt; .001
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Zero-Inflated 
+#&gt; </span><span style='color: #0000BB;'># Zero-Inflated </span><span>
 #&gt; 
-#&gt; </span><span>Parameter   | Log-Odds |   SE |         95% CI |     z |     p
+#&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |     p
 #&gt; --------------------------------------------------------------
 #&gt; (Intercept) |    -0.93 | 0.43 | [-1.78, -0.08] | -2.14 | 0.032
 #&gt; kid5        |     0.05 | 0.22 | [-0.38,  0.47] |  0.21 | 0.831
-#&gt; phd         |    -0.25 | 0.14 | [-0.51,  0.02] | -1.84 | 0.065
-#&gt; </div></span></pre>
+#&gt; phd         |    -0.25 | 0.14 | [-0.51,  0.02] | -1.84 | 0.065</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -123,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -137,6 +137,9 @@
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -187,6 +190,7 @@
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -208,6 +212,7 @@
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -288,6 +293,10 @@ Only applies to mixed models. May be abbreviated.</p></td>
       <td><p>Logical, for multilevel models (i.e. models with random effects) and when <code>effects = "all"</code> or <code>effects = "random"</code>, include the parameters for each group level from random effects. If <code>group_level = FALSE</code> (the default), only information on SD and COR are shown.</p></td>
     </tr>
     <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
@@ -330,15 +339,15 @@ There is also a <a href='https://easystats.github.io/see/articles/parameters.htm
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.87), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.79), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.85). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
 #&gt; 
-#&gt; Parameter                      | Median |         89% CI |     pd | % in ROPE |  Rhat | ESS |                 Prior
+#&gt; Parameter                      | Median |             CI |     pd | % in ROPE |  Rhat | ESS |                 Prior
 #&gt; -------------------------------------------------------------------------------------------------------------------
 #&gt; (Intercept)                    |   4.15 | [ 3.63,  4.68] |   100% |        0% | 1.029 | 171 | Normal (5.84 +- 2.07)
 #&gt; Petal.Length                   |   0.59 | [ 0.22,  0.93] | 99.50% |     1.30% | 1.032 | 160 | Normal (0.00 +- 1.17)
 #&gt; Speciesversicolor              |  -1.74 | [-2.60, -0.91] | 99.80% |     0.20% | 1.020 | 180 | Normal (0.00 +- 4.38)
 #&gt; Speciesvirginica               |  -3.04 | [-3.98, -2.14] |   100% |        0% | 1.014 | 275 | Normal (0.00 +- 4.38)
 #&gt; Petal.Length:Speciesversicolor |   0.24 | [-0.13,  0.63] | 82.60% |    15.00% | 1.036 | 136 | Normal (0.00 +- 1.02)
-#&gt; Petal.Length:Speciesvirginica  |   0.40 | [-0.01,  0.77] | 94.50% |     6.40% | 1.033 | 150 | Normal (0.00 +- 0.78)
-#&gt; </div><div class='output co'>#&gt; <span class='message'>Using highest density intervals as credible intervals.</span></div><div class='input'><span class='co'># }</span>
+#&gt; Petal.Length:Speciesvirginica  |   0.40 | [-0.01,  0.77] | 94.50% |     6.40% | 1.033 | 150 | Normal (0.00 +- 0.78)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Using highest density intervals as credible intervals.</span></div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -123,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../articles/parameters_selection.html">Parameters Selection</a>
+  <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -137,6 +137,9 @@
     </li>
     <li>
       <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    </li>
+    <li>
+      <a href="../articles/parameters_selection.html">Parameters Selection</a>
     </li>
   </ul>
 </li>
@@ -177,6 +180,7 @@
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"full"</span><span class='op'>)</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -190,6 +194,7 @@
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -203,6 +208,7 @@
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -228,6 +234,10 @@
     <tr>
       <th>p_adjust</th>
       <td><p>Character vector, if not <code>NULL</code>, indicates the method to adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -267,30 +277,29 @@
   <span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: brglm2</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Response level: definitely
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: brglm2</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Response level: definitely</span><span>
 #&gt; 
-#&gt; </span><span>Parameter       | Log-Odds |   SE |         95% CI |     z |      p
+#&gt; Parameter       | Log-Odds |   SE |         95% CI |     z |      p
 #&gt; -------------------------------------------------------------------
 #&gt; (Intercept)     |    -1.25 | 0.26 | [-1.76, -0.73] | -4.76 | &lt; .001
 #&gt; religion        |     0.44 | 0.10 | [ 0.23,  0.64] |  4.20 | &lt; .001
 #&gt; gender [female] |    -0.14 | 0.17 | [-0.47,  0.19] | -0.82 | 0.414 
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Response level: probably
+#&gt; </span><span style='color: #0000BB;'># Response level: probably</span><span>
 #&gt; 
-#&gt; </span><span>Parameter       | Log-Odds |   SE |        95% CI |    z |     p
+#&gt; Parameter       | Log-Odds |   SE |        95% CI |    z |     p
 #&gt; ----------------------------------------------------------------
 #&gt; (Intercept)     |     0.47 | 0.29 | [-0.10, 1.04] | 1.62 | 0.105
 #&gt; religion        |     0.26 | 0.13 | [ 0.01, 0.51] | 2.01 | 0.044
 #&gt; gender [female] |     0.19 | 0.21 | [-0.22, 0.60] | 0.90 | 0.370
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Response level: probably not
+#&gt; </span><span style='color: #0000BB;'># Response level: probably not</span><span>
 #&gt; 
-#&gt; </span><span>Parameter       | Log-Odds |   SE |        95% CI |     z |     p
+#&gt; Parameter       | Log-Odds |   SE |        95% CI |     z |     p
 #&gt; -----------------------------------------------------------------
 #&gt; (Intercept)     |     0.43 | 0.39 | [-0.33, 1.18] |  1.11 | 0.268
 #&gt; religion        |     0.01 | 0.17 | [-0.33, 0.35] |  0.07 | 0.945
-#&gt; gender [female] |    -0.16 | 0.28 | [-0.71, 0.39] | -0.57 | 0.566
-#&gt; </div></span></pre>
+#&gt; gender [female] |    -0.16 | 0.28 | [-0.71, 0.39] | -0.57 | 0.566</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
