@@ -1,5 +1,7 @@
 # usual models ---------------------------------
 
+#' @inheritParams print.parameters_model
+#' @rdname display.parameters_model
 #' @export
 format.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
   # save attributes

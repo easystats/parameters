@@ -2,9 +2,12 @@
 % Please edit documentation in R/format_parameters.R
 \name{format_parameters}
 \alias{format_parameters}
+\alias{format_parameters.default}
 \title{Parameter names formatting}
 \usage{
 format_parameters(model, ...)
+
+\method{format_parameters}{default}(model, brackets = c("[", "]"), ...)
 }
 \arguments{
 \item{model}{A statistical model.}

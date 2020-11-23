@@ -2,7 +2,7 @@
 #' @name display.parameters_model
 #'
 #' @description Prints tables (i.e. data frame) in different output formats.
-#'   \code{table_to_markdown()} is a alias for \code{display(format = "markdown")}.
+#'   \code{print_md()} is a alias for \code{display(format = "markdown")}.
 #'
 #' @param object An object returned by \code{\link[=model_parameters]{model_parameters()}},
 #'   \code{\link[=simulate_parameters]{simulate_parameters()}},
