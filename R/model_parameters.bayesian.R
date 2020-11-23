@@ -142,84 +142,83 @@ model_parameters.stanmvreg <- function(model,
 #' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
-model_parameters.brmsfit <-
-  function(model,
-           centrality = "median",
-           dispersion = FALSE,
-           ci = .89,
-           ci_method = "hdi",
-           test = c("pd", "rope"),
-           rope_range = "default",
-           rope_ci = 1.0,
-           bf_prior = NULL,
-           diagnostic = c("ESS", "Rhat"),
-           priors = TRUE,
-           effects = "fixed",
-           component = "all",
-           exponentiate = FALSE,
-           standardize = NULL,
-           group_level = FALSE,
-           verbose = TRUE,
-           ...) {
-    modelinfo <- insight::model_info(model)
+model_parameters.brmsfit <- function(model,
+                                     centrality = "median",
+                                     dispersion = FALSE,
+                                     ci = .89,
+                                     ci_method = "hdi",
+                                     test = c("pd", "rope"),
+                                     rope_range = "default",
+                                     rope_ci = 1.0,
+                                     bf_prior = NULL,
+                                     diagnostic = c("ESS", "Rhat"),
+                                     priors = TRUE,
+                                     effects = "fixed",
+                                     component = "all",
+                                     exponentiate = FALSE,
+                                     standardize = NULL,
+                                     group_level = FALSE,
+                                     verbose = TRUE,
+                                     ...) {
+  modelinfo <- insight::model_info(model)
 
-    # Bayesian meta analysis
+  # Bayesian meta analysis
 
-    if (!insight::is_multivariate(model) && isTRUE(modelinfo$is_meta)) {
-      params <-
-        .model_parameters_brms_meta(
-          model,
-          centrality = centrality,
-          dispersion = dispersion,
-          ci = ci,
-          ci_method = ci_method,
-          test = test,
-          rope_range = rope_range,
-          rope_ci = rope_ci,
-          diagnostic = diagnostic,
-          priors = priors,
-          exponentiate = exponentiate,
-          standardize = standardize,
-          ...
-        )
-    } else {
+  if (!insight::is_multivariate(model) && isTRUE(modelinfo$is_meta)) {
+    params <-
+      .model_parameters_brms_meta(
+        model,
+        centrality = centrality,
+        dispersion = dispersion,
+        ci = ci,
+        ci_method = ci_method,
+        test = test,
+        rope_range = rope_range,
+        rope_ci = rope_ci,
+        diagnostic = diagnostic,
+        priors = priors,
+        exponentiate = exponentiate,
+        standardize = standardize,
+        ...
+      )
+  } else {
 
-      # Processing
-      params <-
-        .extract_parameters_bayesian(
-          model,
-          centrality = centrality,
-          dispersion = dispersion,
-          ci = ci,
-          ci_method = ci_method,
-          test = test,
-          rope_range = rope_range,
-          rope_ci = rope_ci,
-          bf_prior = bf_prior,
-          diagnostic = diagnostic,
-          priors = priors,
-          effects = effects,
-          component = component,
-          standardize = standardize,
-          ...
-        )
+    # Processing
+    params <-
+      .extract_parameters_bayesian(
+        model,
+        centrality = centrality,
+        dispersion = dispersion,
+        ci = ci,
+        ci_method = ci_method,
+        test = test,
+        rope_range = rope_range,
+        rope_ci = rope_ci,
+        bf_prior = bf_prior,
+        diagnostic = diagnostic,
+        priors = priors,
+        effects = effects,
+        component = component,
+        standardize = standardize,
+        ...
+      )
 
-      if (!(effects == "fixed" && component == "conditional")) {
-        random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE))
-        if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
-      }
-
-      params <- .add_pretty_names(params, model)
-      if (exponentiate) params <- .exponentiate_parameters(params)
-      params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
-
-      attr(params, "parameter_info") <- insight::clean_parameters(model)
-      attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-      class(params) <- unique(c("parameters_stan", "see_parameters_model", "parameters_model", class(params)))
+    if (!(effects == "fixed" && component == "conditional")) {
+      random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE))
+      if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
     }
 
-    params
+    params <- .add_pretty_names(params, model)
+    if (exponentiate) params <- .exponentiate_parameters(params)
+    params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, ...)
+
+    attr(params, "parameter_info") <- insight::clean_parameters(model)
+    attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+    class(params) <- unique(c("parameters_stan", "see_parameters_model", "parameters_model", class(params)))
   }
+
+  params
+}
 
 
 # brms meta analysis -------

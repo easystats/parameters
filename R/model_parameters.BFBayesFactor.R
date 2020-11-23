@@ -29,6 +29,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats na.omit
 #' @importFrom bayestestR bayesfactor_models
+#' @importFrom insight get_priors
 #' @export
 model_parameters.BFBayesFactor <- function(model,
                                            centrality = "median",
@@ -49,7 +50,8 @@ model_parameters.BFBayesFactor <- function(model,
   }
 
   if (.classify_BFBayesFactor(model)[1] == "xtable") {
-    out <- data.frame(BF = NA)
+    out <- insight::get_priors(model)
+    colnames(out)[which(colnames(out) != "Parameter")] <- paste0("Prior_", colnames(out)[which(colnames(out) != "Parameter")])
   } else {
     if (is.null(insight::get_parameters(model, verbose = verbose))) {
       if (isTRUE(verbose)) {

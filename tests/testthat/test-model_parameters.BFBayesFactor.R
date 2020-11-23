@@ -47,7 +47,7 @@ if (require("testthat") &&
     mp <- model_parameters(bf)
 
     test_that("model_parameters.BFBayesFactor", {
-      expect_equal(colnames(mp), "BF")
+      expect_equal(colnames(mp), c("Parameter", "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF"))
     })
 
     data(puzzles)
