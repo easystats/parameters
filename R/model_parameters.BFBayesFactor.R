@@ -109,7 +109,7 @@ model_parameters.BFBayesFactor <- function(model,
   # ==== remove Component column if not needed
 
   if (.n_unique(out$Component) == 1) out$Component <- NULL
-  if (.n_unique(out$Effects) == 1 || effects == "fixed") out$Effects <- NULL
+  if (.n_unique(out$Effects) == 1) out$Effects <- NULL
 
   attr(out, "ci") <- ci
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
