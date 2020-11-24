@@ -211,6 +211,7 @@ model_parameters.metaplus <- function(model,
 
 
 
+#' @importFrom insight get_priors
 #' @export
 model_parameters.meta_random <- function(model,
                                          ci = .95,
@@ -238,6 +239,9 @@ model_parameters.meta_random <- function(model,
     Rhat = NA,
     ESS = NA,
     Component = "studies",
+    Prior_Distribution = NA,
+    Prior_Location = NA,
+    Prior_Scale = NA,
     stringsAsFactors = FALSE
   )
 
@@ -259,6 +263,13 @@ model_parameters.meta_random <- function(model,
     Component = "meta",
     stringsAsFactors = FALSE
   )
+
+  # add prior information
+  priors <- insight::get_priors(model)
+
+  out$Prior_Distribution <- priors$Distribution
+  out$Prior_Location <- priors$Location
+  out$Prior_Scale <- priors$Scale
 
   # fix intercept name
   out$Parameter[out$Parameter == "d"] <- "Overall"
