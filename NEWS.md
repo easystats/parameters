@@ -15,7 +15,8 @@
 
 * `model_parameters()` supports `Gam` models (*gam*), `ridgelm` (*MASS*), 
   `htest` objects from `oneway.test()`, `chisq.test()`, `prop.test()`,
-  `mcnemar.test()` and `pairwise.htest` objects.
+  `mcnemar.test()` and `pairwise.htest` objects, `mcmc.list` (e.g. from
+  *bayesGARCH*).
 
 ## New functions
 

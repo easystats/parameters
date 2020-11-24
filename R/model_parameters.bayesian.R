@@ -397,6 +397,9 @@ model_parameters.mcmc <- function(model,
 #' @export
 model_parameters.data.frame <- model_parameters.mcmc
 
+#' @export
+model_parameters.mcmc.list <- model_parameters.mcmc
+
 
 #' @export
 model_parameters.bcplm <- function(model,
