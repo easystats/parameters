@@ -164,7 +164,8 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
     model_params = original_x[[1]],
     model = original_model,
     ci,
-    exponentiate
+    exponentiate,
+    verbose = verbose
   )
   attr(pooled_params, "object_name") <- obj_name
   attr(pooled_params, "details") <- pooled_random
@@ -206,7 +207,7 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
 
 
 #' @importFrom insight find_formula
-.add_pooled_params_attributes <- function(pooled_params, model_params, model, ci, exponentiate) {
+.add_pooled_params_attributes <- function(pooled_params, model_params, model, ci, exponentiate, verbose = TRUE) {
   info <- insight::model_info(model, verbose = FALSE)
   pretty_names <- attributes(model_params)$pretty_names
   if (length(pretty_names) < nrow(model_params)) {
@@ -215,6 +216,7 @@ pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", 
   attr(pooled_params, "ci") <- ci
   attr(pooled_params, "exponentiate") <- exponentiate
   attr(pooled_params, "pretty_names") <- pretty_names
+  attr(pooled_params, "verbose") <- verbose
   attr(pooled_params, "ordinal_model") <- attributes(pooled_params)$ordinal_model
   attr(pooled_params, "model_class") <- attributes(pooled_params)$model_class
   attr(pooled_params, "bootstrap") <- attributes(pooled_params)$bootstrap

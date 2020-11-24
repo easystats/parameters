@@ -288,6 +288,7 @@ model_parameters.meta_random <- function(model,
       ci = ci,
       exponentiate = exponentiate,
       ci_method = ci_method,
+      verbose = verbose,
       ...
     )
 
@@ -369,6 +370,7 @@ model_parameters.meta_bma <- function(model,
       ci = ci,
       exponentiate = exponentiate,
       ci_method = ci_method,
+      verbose = verbose,
       ...
     )
 

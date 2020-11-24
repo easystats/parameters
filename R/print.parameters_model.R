@@ -53,6 +53,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
+  verbose <- .additional_arguments(x, "verbose", TRUE)
 
   # print header
   if (!is.null(attributes(x)$title)) {
@@ -71,7 +72,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   }
 
   # print p-adjustment
-  if (!is.null(p_adjust) && p_adjust != "none" && "p" %in% colnames(x)) {
+  if (!is.null(p_adjust) && p_adjust != "none" && "p" %in% colnames(x) && isTRUE(verbose)) {
     p_adj_string <- switch(
       p_adjust,
       "holm" = "Holm (1979)",
@@ -94,7 +95,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
   }
 
   # for Bayesian models
-  if (!is.null(ci_method)) {
+  if (!is.null(ci_method) && isTRUE(verbose)) {
     ci_method <- switch(
       toupper(ci_method),
       "HDI" = "highest density intervals",
@@ -102,7 +103,7 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
       "SI" = "support intervals",
       "uncertainty intervals"
     )
-    message(paste0("Using ", ci_method, " as credible intervals."))
+    message(paste0("\nUsing ", ci_method, " as credible intervals."))
   }
 
   # print summary for random effects
@@ -145,11 +146,12 @@ print.parameters_random <- function(x, digits = 2, ...) {
 print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
   orig_x <- x
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
+  verbose <- .additional_arguments(x, "verbose", TRUE)
 
   formatted_table <- format(x, split_components = split_components, select = select, format = "text", ci_width = "auto", ci_brackets = TRUE, ...)
   cat(insight::export_table(formatted_table, format = "text"))
 
-  if (!is.null(ci_method)) {
+  if (!is.null(ci_method) && isTRUE(verbose)) {
     ci_method <- switch(
       toupper(ci_method),
       "HDI" = "highest density intervals",
