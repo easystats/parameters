@@ -247,46 +247,9 @@ describe_distribution.grouped_df <- function(x, centrality = "mean", dispersion 
 
 #' @export
 print.parameters_distribution <- function(x, digits = 2, ...) {
-  orig_x <- x
-
-  if (all(c("Min", "Max") %in% names(x))) {
-    x$Min <- insight::format_ci(x$Min, x$Max, ci = NULL, digits = digits, width = "auto", brackets = TRUE)
-    x$Max <- NULL
-    colnames(x)[which(colnames(x) == "Min")] <- "Range"
-  }
-
-  if (all(c("CI_low", "CI_high") %in% names(x))) {
-    x$CI_low <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = "auto", brackets = TRUE)
-    x$CI_high <- NULL
-    ci_lvl <- attributes(x)$ci
-    centrality_ci <- attributes(x)$first_centrality
-
-    if (!is.null(centrality_ci)) {
-      ci_suffix <- paste0(" (", centrality_ci, ")")
-    } else {
-      ci_suffix <- ""
-    }
-
-    if (!is.null(ci_lvl)) {
-      colnames(x)[which(colnames(x) == "CI_low")] <- sprintf("%i%% CI%s", round(100 * ci_lvl), ci_suffix)
-    } else {
-      colnames(x)[which(colnames(x) == "CI_low")] <- sprintf("CI%s", ci_suffix)
-    }
-  }
-
-  if (".group" %in% colnames(x)) {
-    grps <- split(x, x[[".group"]])
-    for (i in names(grps)) {
-      grps[[i]][[".group"]] <- NULL
-      insight::print_color(sprintf("# %s\n\n", i), "blue")
-      cat(insight::export_table(grps[[i]]))
-      cat("\n")
-    }
-  } else {
-    cat(insight::export_table(x))
-  }
-
-  invisible(orig_x)
+  formatted_table <- format(x, digits = digits, format = "text", ci_width = NULL, ci_brackets = TRUE, ...)
+  cat(insight::export_table(formatted_table, format = "text", digits = digits))
+  invisible(x)
 }
 
 

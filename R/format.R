@@ -87,3 +87,57 @@ format.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, fo
   .print_model_parms_components(x, pretty_names = TRUE, split_column = "Type", digits = digits, ci_digits = ci_digits, p_digits = p_digits, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
 }
 
+
+
+
+
+# distribution ---------------------------------
+
+#' @export
+format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_width = "auto", ci_brackets = TRUE, ...) {
+  if (all(c("Min", "Max") %in% names(x))) {
+    x$Min <- insight::format_ci(x$Min, x$Max, ci = NULL, digits = digits, width = ci_width, brackets = ci_brackets)
+    x$Max <- NULL
+    colnames(x)[which(colnames(x) == "Min")] <- "Range"
+  }
+
+  if (all(c("CI_low", "CI_high") %in% names(x))) {
+    x$CI_low <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = ci_width, brackets = ci_brackets)
+    x$CI_high <- NULL
+    ci_lvl <- attributes(x)$ci
+    centrality_ci <- attributes(x)$first_centrality
+
+    if (!is.null(centrality_ci)) {
+      ci_suffix <- paste0(" (", centrality_ci, ")")
+    } else {
+      ci_suffix <- ""
+    }
+
+    if (!is.null(ci_lvl)) {
+      colnames(x)[which(colnames(x) == "CI_low")] <- sprintf("%i%% CI%s", round(100 * ci_lvl), ci_suffix)
+    } else {
+      colnames(x)[which(colnames(x) == "CI_low")] <- sprintf("CI%s", ci_suffix)
+    }
+  }
+
+
+  if (".group" %in% colnames(x)) {
+    final_table <- list()
+    grps <- split(x, x[[".group"]])
+    for (i in names(grps)) {
+      grps[[i]][[".group"]] <- NULL
+      table_caption <- NULL
+      if (is.null(format) || format == "text") {
+        table_caption <- c(sprintf("# %s", i), "blue")
+      } else if (format == "markdown") {
+        table_caption <- sprintf("%s", i)
+      }
+      attr(grps[[i]], "table_caption") <- table_caption
+      final_table <- c(final_table, list(grps[[i]]))
+    }
+  } else {
+    final_table <- x
+  }
+
+  final_table
+}
