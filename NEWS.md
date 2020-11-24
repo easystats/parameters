@@ -47,6 +47,9 @@
 * `model_parameters()` for *metaBMA*-models now includes prior information for
   the meta-parameters.
 
+* `model_parameters()` for meta-analysis-models gains a `include_studies`-argument,
+  to include or remove studies from the output.
+  
 * Slightly revised and improved the `print()` method for `model_parameters()`.
 
 ### Other functions
