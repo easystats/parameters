@@ -241,7 +241,7 @@ standard deviation.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>NULL</code></p>
+    <p>Insivibly returns the original input object.</p>
     <h2 class="hasAnchor" id="interpretation-of-interaction-terms"><a class="anchor" href="#interpretation-of-interaction-terms"></a>Interpretation of Interaction Terms</h2>
 
     
@@ -260,6 +260,17 @@ that calculate estimated marginal means or marginal effects, such as
 awareness for this issue, you may use <code><a href='https://rdrr.io/r/base/print.html'>print(...,show_formula=TRUE)</a></code>
 to add the model-specification to the output of the
 <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code> method for <code><a href='model_parameters.html'>model_parameters()</a></code>.</p>
+    <h2 class="hasAnchor" id="labeling-the-degrees-of-freedom"><a class="anchor" href="#labeling-the-degrees-of-freedom"></a>Labeling the Degrees of Freedom</h2>
+
+    
+
+<p>Throughout the <span class="pkg">parameters</span> package, we decided to label the residual
+degrees of freedom <em>df_error</em>. The reason for this is that the degrees
+of freedom not always refer to the residuals. For certain models, they refer
+to the estimate error - in a linear model these are the same, but in - for
+instance - any mixed effects model, this isn't strictly true. Hence, we
+think that <code>df_error</code> is the most generic label for these degrees of
+freedom.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>There is a dedicated method to use inside rmarkdown files, <code><a href='display.parameters_model.html'>print_md()</a></code>.</p></div>
