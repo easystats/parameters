@@ -47,6 +47,17 @@ Standardization is based on \code{\link[effectsize:standardize_parameters]{stand
 \note{
 The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated method for use inside rmarkdown files, \code{\link[=print_md.parameters_model]{print_md()}}.
 }
+\section{Labeling the Degrees of Freedom}{
+
+Throughout the \pkg{parameters} package, we decided to label the residual
+degrees of freedom \emph{df_error}. The reason for this is that the degrees
+of freedom not always refer to the residuals. For certain models, they refer
+to the estimate error - in a linear model these are the same, but in - for
+instance - any mixed effects model, this isn't strictly true. Hence, we
+think that \code{df_error} is the most generic label for these degrees of
+freedom.
+}
+
 \section{Interpretation of Interaction Terms}{
 
 Note that the \emph{interpretation} of interaction terms depends on many

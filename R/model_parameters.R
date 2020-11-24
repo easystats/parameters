@@ -33,6 +33,15 @@
 #'   will be standardized and the model is completely refitted. In such cases,
 #'   standard errors and confidence intervals refer to the standardized coefficient.
 #'
+#' @section Labeling the Degrees of Freedom:
+#' Throughout the \pkg{parameters} package, we decided to label the residual
+#' degrees of freedom \emph{df_error}. The reason for this is that the degrees
+#' of freedom not always refer to the residuals. For certain models, they refer
+#' to the estimate error - in a linear model these are the same, but in - for
+#' instance - any mixed effects model, this isn't strictly true. Hence, we
+#' think that \code{df_error} is the most generic label for these degrees of
+#' freedom.
+#'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #'
 #' @return A data frame of indices related to the model's parameters.

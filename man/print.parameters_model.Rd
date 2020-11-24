@@ -46,7 +46,7 @@ standard deviation.}
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-\code{NULL}
+Insivibly returns the original input object.
 }
 \description{
 A \code{print()}-method for objects from \code{\link[=model_parameters]{model_parameters()}}.
@@ -67,6 +67,17 @@ that calculate estimated marginal means or marginal effects, such as
 awareness for this issue, you may use \code{print(...,show_formula=TRUE)}
 to add the model-specification to the output of the
 \code{\link[=print.parameters_model]{print()}} method for \code{model_parameters()}.
+}
+
+\section{Labeling the Degrees of Freedom}{
+
+Throughout the \pkg{parameters} package, we decided to label the residual
+degrees of freedom \emph{df_error}. The reason for this is that the degrees
+of freedom not always refer to the residuals. For certain models, they refer
+to the estimate error - in a linear model these are the same, but in - for
+instance - any mixed effects model, this isn't strictly true. Hence, we
+think that \code{df_error} is the most generic label for these degrees of
+freedom.
 }
 
 \examples{

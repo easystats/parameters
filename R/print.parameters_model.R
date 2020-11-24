@@ -18,7 +18,9 @@
 #' @inheritParams insight::parameters_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
-#' @return \code{NULL}
+#' @inheritSection model_parameters Labeling the Degrees of Freedom
+#'
+#' @return Insivibly returns the original input object.
 #'
 #' @seealso There is a dedicated method to use inside rmarkdown files, \code{\link[=print_md.parameters_model]{print_md()}}.
 #'
