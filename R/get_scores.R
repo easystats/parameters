@@ -32,7 +32,7 @@
 #' @export
 get_scores <- function(x, n_items = NULL) {
   subscales <- closest_component(x)
-  data_set <- attributes(x)$data_set
+  data_set <- attributes(x)$data
 
   out <- lapply(sort(unique(subscales)), function(.subscale) {
     columns <- names(subscales)[subscales == .subscale]

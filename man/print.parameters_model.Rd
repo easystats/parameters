@@ -46,7 +46,7 @@ standard deviation.}
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-Insivibly returns the original input object.
+Invisibly returns the original input object.
 }
 \description{
 A \code{print()}-method for objects from \code{\link[=model_parameters]{model_parameters()}}.
