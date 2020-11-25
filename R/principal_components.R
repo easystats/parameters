@@ -125,7 +125,7 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
   # Rotation
   if (rotation != "none") {
     loadings <- .pca_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, original_data = original_data, ...)
-    attr(loadings, "data_name") <- data_name
+    attr(loadings, "data") <- attr(loadings, "data_name") <- data_name
     return(loadings)
   }
 
@@ -196,8 +196,8 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
   # for each variable, so we know which column in the original data set belongs
   # to which extracted component...
   attr(loadings, "closest_component") <- .closest_component(loadings, loadings_columns = loading_cols, variable_names = colnames(x))
-  attr(loadings, "data_name") <- data_name
-  attr(loadings, "data") <- attr(loadings, "data_set") <- original_data
+  attr(loadings, "data") <- attr(loadings, "data_name") <- data_name
+  attr(loadings, "data_set") <- original_data
 
   # add class-attribute for printing
   class(loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(loadings)))
