@@ -225,7 +225,39 @@
 #&gt;    1    1    1    2    1    1    2 </div><div class='input'>
 <span class='co'># now we want to have sum scores for each component</span>
 <span class='fu'>get_scores</span><span class='op'>(</span><span class='va'>pca</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in apply(items, 1, function(i) ifelse(sum(!is.na(i)) &gt;= .n_items,     mean(i, na.rm = TRUE), NA)): dim(X) must have a positive length</span></div><div class='input'>
+</div><div class='output co'>#&gt;                     Component_1 Component_2
+#&gt; Mazda RX4               38.7040      63.230
+#&gt; Mazda RX4 Wag           38.7550      63.510
+#&gt; Datsun 710              28.1940      55.805
+#&gt; Hornet 4 Drive          58.3390      64.720
+#&gt; Hornet Sportabout       78.6580      96.010
+#&gt; Valiant                 51.0640      62.610
+#&gt; Duster 360              77.8160     130.420
+#&gt; Merc 240D               36.3960      41.000
+#&gt; Merc 230                34.9340      58.950
+#&gt; Merc 280                40.0320      70.650
+#&gt; Merc 280C               39.7520      70.950
+#&gt; Merc 450SE              61.4680      98.700
+#&gt; Merc 450SL              61.5800      98.800
+#&gt; Merc 450SLC             61.1700      99.000
+#&gt; Cadillac Fleetwood      99.7160     111.490
+#&gt; Lincoln Continental     97.3648     116.410
+#&gt; Chrysler Imperial       94.2550     123.710
+#&gt; Fiat 128                24.2760      42.735
+#&gt; Honda Civic             23.3290      35.260
+#&gt; Toyota Corolla          23.0110      42.450
+#&gt; Toyota Corona           30.3530      58.505
+#&gt; Dodge Challenger        69.5560      83.435
+#&gt; AMC Javelin             66.7570      83.650
+#&gt; Camaro Z28              75.7740     130.205
+#&gt; Pontiac Firebird        86.8250      96.025
+#&gt; Fiat X1-9               23.2630      42.450
+#&gt; Porsche 914-2           31.3740      53.850
+#&gt; Lotus Europa            26.9566      64.950
+#&gt; Ford Pantera L          76.4380     139.250
+#&gt; Ferrari Dino            35.4180      95.250
+#&gt; Maserati Bora           66.2220     174.800
+#&gt; Volvo 142E              30.6580      63.800</div><div class='input'>
 <span class='co'># compare to manually computed sum score for 2nd component, which</span>
 <span class='co'># consists of items "hp" and "qsec"</span>
 <span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>hp</span> <span class='op'>+</span> <span class='va'>mtcars</span><span class='op'>$</span><span class='va'>qsec</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>2</span>
