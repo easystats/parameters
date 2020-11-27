@@ -67,7 +67,15 @@
 
 #' @keywords internal
 .intercepts <- function() {
-  c("(intercept)_zi", "intercept (zero-inflated)", "intercept", "zi_intercept", "(intercept)", "b_intercept", "b_zi_intercept")
+  c(
+    "(intercept)_zi",
+    "intercept (zero-inflated)",
+    "intercept",
+    "zi_intercept",
+    "(intercept)",
+    "b_intercept",
+    "b_zi_intercept"
+  )
 }
 
 #' @keywords internal

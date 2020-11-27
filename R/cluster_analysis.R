@@ -60,9 +60,28 @@
 #' }
 #' @importFrom stats dist na.omit hclust kmeans cutree complete.cases
 #' @export
-cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"),
-                             distance = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
-                             agglomeration = c("ward", "ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid"),
+cluster_analysis <- function(x,
+                             n_clusters = NULL,
+                             method = c("hclust", "kmeans"),
+                             distance = c(
+                               "euclidean",
+                               "maximum",
+                               "manhattan",
+                               "canberra",
+                               "binary",
+                               "minkowski"
+                             ),
+                             agglomeration = c(
+                               "ward",
+                               "ward.D",
+                               "ward.D2",
+                               "single",
+                               "complete",
+                               "average",
+                               "mcquitty",
+                               "median",
+                               "centroid"
+                             ),
                              iterations = 20,
                              algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
                              force = TRUE,

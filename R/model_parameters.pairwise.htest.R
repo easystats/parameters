@@ -25,7 +25,6 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                   p_adjust = NULL,
                                   verbose = TRUE,
                                   ...) {
-
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
 
   attr(params, "p_adjust") <- p_adjust

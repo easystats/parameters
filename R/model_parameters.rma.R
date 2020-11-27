@@ -49,18 +49,17 @@ model_parameters.rma <- function(model,
                                  exponentiate = FALSE,
                                  verbose = TRUE,
                                  ...) {
-
   meta_analysis_overall <-
     .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = "Parameter",
-    standardize = standardize,
-    exponentiate = exponentiate,
-    ...
-  )
+      model = model,
+      ci = ci,
+      bootstrap = bootstrap,
+      iterations = iterations,
+      merge_by = "Parameter",
+      standardize = standardize,
+      exponentiate = exponentiate,
+      ...
+    )
 
   subgroups <- NULL
   group_variable <- NULL
@@ -144,18 +143,17 @@ model_parameters.metaplus <- function(model,
                                       exponentiate = FALSE,
                                       verbose = TRUE,
                                       ...) {
-
   meta_analysis_overall <-
     suppressWarnings(.model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = "Parameter",
-    standardize = standardize,
-    exponentiate = exponentiate,
-    ...
-  ))
+      model = model,
+      ci = ci,
+      bootstrap = bootstrap,
+      iterations = iterations,
+      merge_by = "Parameter",
+      standardize = standardize,
+      exponentiate = exponentiate,
+      ...
+    ))
 
   rma_parameters <- if (!is.null(model$slab) && !is.numeric(model$slab)) {
     sprintf("%s", model$slab)

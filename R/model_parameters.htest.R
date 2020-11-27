@@ -43,7 +43,6 @@ model_parameters.htest <- function(model,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
                                    ...) {
-
   if (bootstrap) {
     stop("Bootstrapped h-tests are not yet implemented.")
   } else {
@@ -69,10 +68,9 @@ model_parameters.htest <- function(model,
 
 #' @keywords internal
 .extract_parameters_htest <- function(model,
-           cramers_v = NULL,
-           phi = NULL,
-           ci = 0.95) {
-
+                                      cramers_v = NULL,
+                                      phi = NULL,
+                                      ci = 0.95) {
   m_info <- insight::model_info(model)
 
   if (m_info$is_correlation) {
@@ -293,11 +291,10 @@ model_parameters.htest <- function(model,
 # ==== effectsizes =====
 
 .add_effectsize_chi2 <- function(model,
-           out,
-           cramers_v = NULL,
-           phi = NULL,
-           ci = .95) {
-
+                                 out,
+                                 cramers_v = NULL,
+                                 phi = NULL,
+                                 ci = .95) {
   if (is.null(cramers_v) && is.null(phi)) {
     return(out)
   }
@@ -321,9 +318,11 @@ model_parameters.htest <- function(model,
   }
 
   # reorder
-  col_order <- c("Chi2", "df", "Cramers_v", "Cramers_v_adjusted", "Cramers_CI_low",
-                 "Cramers_CI_high", "phi", "phi_adjusted", "phi_CI_low",
-                 "phi_CI_high", "p", "Method", "method")
+  col_order <- c(
+    "Chi2", "df", "Cramers_v", "Cramers_v_adjusted", "Cramers_CI_low",
+    "Cramers_CI_high", "phi", "phi_adjusted", "phi_CI_low",
+    "phi_CI_high", "p", "Method", "method"
+  )
   out <- out[col_order[col_order %in% names(out)]]
   out
 }

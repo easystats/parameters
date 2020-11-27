@@ -41,10 +41,21 @@
 #'   print(mp, select = c("Parameter", "Coefficient", "SE"))
 #'
 #'   print(mp, select = "minimal")
-#' }}
+#' }
+#' }
+#'
 #' @importFrom insight export_table parameters_table
 #' @export
-print.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, show_sigma = FALSE, show_formula = FALSE, ...) {
+print.parameters_model <- function(x,
+                                   pretty_names = TRUE,
+                                   split_components = TRUE,
+                                   select = NULL,
+                                   digits = 2,
+                                   ci_digits = 2,
+                                   p_digits = 3,
+                                   show_sigma = FALSE,
+                                   show_formula = FALSE,
+                                   ...) {
   # save original input
   orig_x <- x
 
@@ -61,7 +72,19 @@ print.parameters_model <- function(x, pretty_names = TRUE, split_components = TR
     insight::print_color("# Fixed Effects\n\n", "blue")
   }
 
-  formatted_table <- format(x, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_width = "auto", ci_brackets = TRUE, format = "text")
+  formatted_table <-
+    format(
+      x,
+      pretty_names = pretty_names,
+      split_components = split_components,
+      select = select,
+      digits = digits,
+      ci_digits = ci_digits,
+      p_digits = p_digits,
+      ci_width = "auto",
+      ci_brackets = TRUE,
+      format = "text"
+    )
   cat(insight::export_table(formatted_table, format = "text"))
 
   # print residual standard deviation

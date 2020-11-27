@@ -82,4 +82,3 @@ format.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, fo
 
   .print_model_parms_components(x, pretty_names = TRUE, split_column = "Type", digits = digits, ci_digits = ci_digits, p_digits = p_digits, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
 }
-

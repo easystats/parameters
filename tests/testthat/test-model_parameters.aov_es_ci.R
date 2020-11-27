@@ -124,7 +124,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
 if (FALSE) {
   if (require("insight") && require("effectsize") && require("testthat") && require("parameters")
-      && require("car") && require("gam")) {
+  && require("car") && require("gam")) {
 
     # aov ------------------------------------------------
 
@@ -137,9 +137,9 @@ if (FALSE) {
       set.seed(123)
       df_aov <-
         as.data.frame(parameters::model_parameters(npk.aov,
-                                                   ci = 0.95,
-                                                   eta_squared = "partial",
-                                                   omega_squared = "raw"
+          ci = 0.95,
+          eta_squared = "partial",
+          omega_squared = "raw"
         ))
 
       testthat::expect_equal(
@@ -192,9 +192,9 @@ if (FALSE) {
       set.seed(123)
       df_aovE <-
         as.data.frame(parameters::model_parameters(npk.aovE,
-                                                   ci = 0.90,
-                                                   eta_squared = "raw",
-                                                   omega_squared = "partial"
+          ci = 0.90,
+          eta_squared = "raw",
+          omega_squared = "partial"
         ))
 
       testthat::expect_equal(
@@ -234,8 +234,10 @@ if (FALSE) {
               0.481666666666673,
               185.286666666667
             ),
-            df = c(1, 4, 1, 1,
-                   1, 1, 1, 1, 12),
+            df = c(
+              1, 4, 1, 1,
+              1, 1, 1, 1, 12
+            ),
             Mean_Square = c(
               37.0016666666666,
               76.5733333333334,
@@ -319,8 +321,10 @@ if (FALSE) {
           row.names = c(NA, -9L),
           class = "data.frame",
           ci = 0.9,
-          model_class = c("aovlist",
-                          "listof"),
+          model_class = c(
+            "aovlist",
+            "listof"
+          ),
           digits = 2,
           ci_digits = 2,
           p_digits = 3
@@ -345,10 +349,10 @@ if (FALSE) {
         set.seed(123)
         df_manova <-
           as.data.frame(parameters::model_parameters(m,
-                                                     ci = 0.99,
-                                                     eta_squared = NULL,
-                                                     omega_squared = "partial",
-                                                     epsilon_squared = "partial"
+            ci = 0.99,
+            eta_squared = NULL,
+            omega_squared = "partial",
+            epsilon_squared = "partial"
           ))
 
         testthat::expect_equal(
@@ -404,10 +408,10 @@ if (FALSE) {
       set.seed(123)
       df_maov <-
         as.data.frame(parameters::model_parameters(m,
-                                                   ci = 0.95,
-                                                   eta_squared = "partial",
-                                                   omega_squared = "raw",
-                                                   epsilon_squared = "raw"
+          ci = 0.95,
+          eta_squared = "partial",
+          omega_squared = "raw",
+          epsilon_squared = "raw"
         ))
 
       testthat::expect_equal(
@@ -489,8 +493,8 @@ if (FALSE) {
       set.seed(123)
       df_Gam <-
         as.data.frame(parameters::model_parameters(g,
-                                                   ci = 0.50,
-                                                   omega_squared = "partial"
+          ci = 0.50,
+          omega_squared = "partial"
         ))
 
       testthat::expect_equal(
@@ -542,10 +546,10 @@ if (FALSE) {
       set.seed(123)
       df_car <-
         as.data.frame(parameters::model_parameters(mod,
-                                                   ci = 0.89,
-                                                   eta_squared = "raw",
-                                                   omega_squared = "partial",
-                                                   epsilon_squared = "raw"
+          ci = 0.89,
+          eta_squared = "raw",
+          omega_squared = "partial",
+          epsilon_squared = "raw"
         ))
 
       testthat::expect_equal(
@@ -571,38 +575,60 @@ if (FALSE) {
               87.744463924964,
               20.9683066933067
             ),
-            F = c(0.276958464357662,
-                  10.1206921894899, 4.18462326063615, NA),
+            F = c(
+              0.276958464357662,
+              10.1206921894899, 4.18462326063615, NA
+            ),
             p = c(
               0.759564473545402,
               0.00287422991075648,
               0.0225724417916786,
               NA
             ),
-            Omega2_partial = c(-0.0332021359560262,
-                               0.16852504689992, 0.123989486951785, NA),
-            Omega2_CI_low = c(0,
-                              0.0309899250644307, 0, NA),
-            Omega2_CI_high = c(0, 0.338882655432455,
-                               0.272531060676589, NA),
-            Eta2 = c(0.00954307605193938, 0.174362851640174,
-                     0.14418832844695, NA),
-            Eta2_CI_low = c(0, 0.0340186024875703,
-                            0.00261502892178969, NA),
-            Eta2_CI_high = c(0.0574165319729867,
-                             0.345007422402552, 0.272956223959914, NA),
-            Epsilon2 = c(-0.024913628761442,
-                         0.157134499233483, 0.109731623633568, NA),
-            Epsilon2_CI_low = c(0,
-                                0.0253657240863739, 0, NA),
-            Epsilon2_CI_high = c(0, 0.326739989608251,
-                                 0.254500512500744, NA)
+            Omega2_partial = c(
+              -0.0332021359560262,
+              0.16852504689992, 0.123989486951785, NA
+            ),
+            Omega2_CI_low = c(
+              0,
+              0.0309899250644307, 0, NA
+            ),
+            Omega2_CI_high = c(
+              0, 0.338882655432455,
+              0.272531060676589, NA
+            ),
+            Eta2 = c(
+              0.00954307605193938, 0.174362851640174,
+              0.14418832844695, NA
+            ),
+            Eta2_CI_low = c(
+              0, 0.0340186024875703,
+              0.00261502892178969, NA
+            ),
+            Eta2_CI_high = c(
+              0.0574165319729867,
+              0.345007422402552, 0.272956223959914, NA
+            ),
+            Epsilon2 = c(
+              -0.024913628761442,
+              0.157134499233483, 0.109731623633568, NA
+            ),
+            Epsilon2_CI_low = c(
+              0,
+              0.0253657240863739, 0, NA
+            ),
+            Epsilon2_CI_high = c(
+              0, 0.326739989608251,
+              0.254500512500744, NA
+            )
           ),
           row.names = c(NA, -4L),
           class = "data.frame",
           ci = 0.89,
-          model_class = c("anova",
-                          "data.frame"),
+          model_class = c(
+            "anova",
+            "data.frame"
+          ),
           digits = 2,
           ci_digits = 2,
           p_digits = 3
