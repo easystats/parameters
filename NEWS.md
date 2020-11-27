@@ -1,4 +1,4 @@
-# parameters 0.9.1
+# parameters 0.10.0
 
 ## Breaking changes
 
@@ -15,12 +15,22 @@
 
 * `model_parameters()` supports `Gam` models (*gam*), `ridgelm` (*MASS*), 
   `htest` objects from `oneway.test()`, `chisq.test()`, `prop.test()`,
-  `mcnemar.test()` and `pairwise.htest` objects.
+  `mcnemar.test()` and `pairwise.htest` objects, `mcmc.list` (e.g. from
+  *bayesGARCH*).
 
 ## New functions
 
-* `to_table()`, to format output from package-functions into markdown-format.
-  `table_to_markdown` is an alias for `to_table(format = "markdown")`.
+### Printing and table Formatting
+
+* `display()`, to format output from package-functions into different formats.
+
+* `print_md()` as an alias for `display(format = "markdown")`. This allows to
+  print tabular outputs from data frames (as returned by most functions in
+  _parameters_) into nicely rendered markdown tables.
+
+* `format()`, to create a "pretty data frame" with nicer column names and
+  formatted values. This is one of the worker-functions behind `print()` or 
+  `print_md()`.
 
 ## Changes to functions
 
@@ -32,8 +42,14 @@
 * `model_parameters()` for `htest` objects gains a `cramers_v` and `phi`
   argument, to compute effect size parameters for objects from `chisq.test()`.
 
-* `model_parameters()` for metafor-models is more stable when called from inside
+* `model_parameters()` for `metafor`-models is more stable when called from inside
   functions.
+  
+* `model_parameters()` for *metaBMA*-models now includes prior information for
+  the meta-parameters.
+
+* `model_parameters()` for meta-analysis-models gains a `include_studies`-argument,
+  to include or remove studies from the output.
   
 * Slightly revised and improved the `print()` method for `model_parameters()`.
 

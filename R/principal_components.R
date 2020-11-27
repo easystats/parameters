@@ -149,6 +149,7 @@ principal_components.data.frame <- function(x,
         ...
       )
     attr(loadings, "data") <- data_name
+
     return(loadings)
   }
 
@@ -218,9 +219,11 @@ principal_components.data.frame <- function(x,
   # here we match the original columns in the data set with the assigned components
   # for each variable, so we know which column in the original data set belongs
   # to which extracted component...
+
   attr(loadings, "closest_component") <-
     .closest_component(loadings, loadings_columns = loading_cols, variable_names = colnames(x))
   attr(loadings, "data") <- data_name
+
   attr(loadings, "data_set") <- original_data
 
   # add class-attribute for printing

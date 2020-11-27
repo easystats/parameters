@@ -49,7 +49,7 @@ model_parameters.emmGrid <- function(model,
   # rename
   names(params) <- gsub("Estimate", "Coefficient", names(params))
 
-  params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, ...))
+  params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, verbose = verbose, ...))
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(params, "parameter_names") <- parameter_names
 
@@ -83,7 +83,7 @@ model_parameters.emm_list <- function(model,
     ))
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
 
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))

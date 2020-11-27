@@ -116,15 +116,11 @@ reference:
 
 - title: "Table and Value Formatting"
   contents:
-  - format_bf
-  - format_number
+  - display.parameters_model
   - format_order
-  - format_p
   - format_parameters
-  - format_pd
-  - format_rope
-  - parameters_table
   - parameters_type
+  - print_md
 
 - title: "Example Data Sets"
   contents:

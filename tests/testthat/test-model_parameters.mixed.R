@@ -26,4 +26,19 @@ if (require("testthat") &&
 
     # TODO: Not sure how to deal with bootstrapped mixed models... As it throws an unreasonable amount of singular fits...
   })
+
+  data("qol_cancer")
+  qol_cancer <- cbind(
+    qol_cancer,
+    demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
+  )
+  model <- lmer(
+    QoL ~ time + phq4_within + phq4_between + (1 | ID),
+    data = qol_cancer
+  )
+  mp <- model_parameters(model)
+
+  test_that("model_parameters.mixed", {
+    expect_equal(mp$Component, c("rewb-contextual", "rewb-contextual", "within", "between"))
+  })
 }

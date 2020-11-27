@@ -31,13 +31,37 @@ if (require("testthat") &&
     test_that("model_parameters.BFBayesFactor", {
       skip_on_cran()
       model <- BayesFactor::ttestBF(formula = mpg ~ am, data = df)
-      testthat::expect_equal(parameters::model_parameters(model)$BF, 86, tolerance = 2)
+      expect_equal(model_parameters(model)$BF, 86, tolerance = 2)
     })
   }
 
   test_that("model_parameters.BFBayesFactor", {
     set.seed(123)
     model <- BayesFactor::anovaBF(mpg ~ gear * am, data = df, )
-    testthat::expect_equal(parameters::model_parameters(model)$Median, c(20.69277, -3.24014, 3.24014, 25.28076, 0.79331), tolerance = 2)
+    expect_equal(model_parameters(model)$Median, c(20.69277, -3.24014, 3.24014, 25.28076, 0.79331), tolerance = 2)
   })
+
+  if (.runThisTest) {
+    data(raceDolls)
+    bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
+    mp <- model_parameters(bf)
+
+    test_that("model_parameters.BFBayesFactor", {
+      expect_equal(colnames(mp), c("Parameter", "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF"))
+    })
+
+    data(puzzles)
+    result <- anovaBF(RT ~ shape*color + ID, data = puzzles, whichRandom = "ID",
+                      whichModels = 'top', progress = FALSE)
+    mp <- model_parameters(result, verbose = FALSE)
+
+    test_that("model_parameters.BFBayesFactor", {
+      expect_equal(colnames(mp), c("Parameter", "Median", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+                                   "Prior_Distribution", "Prior_Location", "Prior_Scale", "Effects",
+                                   "Component", "BF"))
+      expect_equal(mp$Effects, c("fixed", "fixed", "fixed", "fixed", "fixed", "random", "random",
+                                 "random", "random", "random", "random", "random", "random", "random",
+                                 "random", "random", "random", "fixed", "fixed", "fixed", "fixed"))
+    })
+  }
 }

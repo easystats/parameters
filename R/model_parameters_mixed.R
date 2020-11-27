@@ -86,6 +86,7 @@ model_parameters.merMod <- function(model,
       bootstrap,
       iterations,
       df_method,
+      verbose = verbose,
       ...
     )
 
@@ -169,7 +170,7 @@ model_parameters.glmmTMB <- function(model,
 
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
 
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)

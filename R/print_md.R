@@ -127,6 +127,18 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ...) {
 
 
 
+# distribution print ----------------------------
+
+#' @export
+print_md.parameters_distribution <- function(x, digits = 2, ...) {
+  formatted_table <- format(x = x, digits = digits, format = "markdown",  ci_width = NULL, ci_brackets = c("(", ")"), ...)
+  insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
+}
+
+
+
+
+
 # Reexports models ------------------------
 
 #' @importFrom insight print_md
