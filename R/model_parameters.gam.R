@@ -8,6 +8,8 @@
 #' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
+#' @details
+#'
 #' @return A data frame of indices related to the model's parameters.
 #'
 #' @examples
@@ -48,6 +50,22 @@ model_parameters.gam <- function(model,
   # fix statistic column
   if ("t" %in% names(parameters) && !is.null(parameters$Component) && "smooth_terms" %in% parameters$Component) {
     names(parameters)[names(parameters) == "t"] <- "t / F"
+  }
+
+  # fix estimated df column
+  if ("smooth_terms" %in% parameters$Component && !("df" %in% names(parameters))) {
+    parameters$df <- parameters$Coefficient
+    parameters$df[parameters$Component != "smooth_terms"] <- NA
+    parameters$Coefficient[parameters$Component == "smooth_terms"] <- NA
+    # reorder
+    insert_column <- which(names(parameters) == "df_error")
+    if (!length(insert_column)) {
+      insert_column <- which(names(parameters) == "p")
+    }
+    if (length(insert_column)) {
+      n_col <- ncol(parameters)
+      parameters <- parameters[c(1:(insert_column - 1), n_col, insert_column:(n_col - 1))]
+    }
   }
 
   if (exponentiate) parameters <- .exponentiate_parameters(parameters)
