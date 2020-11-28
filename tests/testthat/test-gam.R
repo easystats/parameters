@@ -32,10 +32,21 @@ if (require("testthat") &&
   .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
   if (.runThisTest) {
+    mp <- model_parameters(m1)
     test_that("model_parameters", {
       expect_equal(
-        model_parameters(m1)$Coefficient,
-        c(7.97176, 3.63421, 2.97192, 8.29867, 1.04607),
+        mp$Coefficient,
+        c(7.97176, NA, NA, NA, NA),
+        tolerance = 1e-3
+      )
+      expect_equal(
+        mp$df,
+        c(NA, 3.63421, 2.97192, 8.29867, 1.04607),
+        tolerance = 1e-3
+      )
+      expect_equal(
+        mp$df_error,
+        c(383.04913, 383.04913, 383.04913, 383.04913, 383.04913),
         tolerance = 1e-3
       )
     })
