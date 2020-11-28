@@ -262,9 +262,9 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
 
 
   # special cases
-  if (inherits(model, "gam")) {
-    dof <- .dof_fit_gam(model, dof)
-  }
+  # if (inherits(model, "gam")) {
+  #   dof <- .dof_fit_gam(model, dof)
+  # }
 
   dof
 }
