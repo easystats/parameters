@@ -245,10 +245,10 @@ if (require("testthat") && require("parameters") && require("splines")) {
   test_that("format_parameters-19", {
     data(mtcars)
     m1 <- lm(mpg ~ qsec:wt + wt:drat, data = mtcars)
-    m2 <- lm(mpg ~ qsec : wt + wt / drat, data = mtcars)
+    m2 <- lm(mpg ~ qsec:wt + wt / drat, data = mtcars)
     m3 <- lm(mpg ~ qsec:wt + wt:drat + wt, data = mtcars)
-    m4 <- lm(mpg ~ qsec : wt + wt / drat + wt, data = mtcars)
-    m5 <- lm(mpg ~ qsec * wt + wt : drat + wt, data = mtcars)
+    m4 <- lm(mpg ~ qsec:wt + wt / drat + wt, data = mtcars)
+    m5 <- lm(mpg ~ qsec * wt + wt:drat + wt, data = mtcars)
     m6 <- lm(mpg ~ wt + qsec + wt:qsec, data = mtcars)
     expect_equal(format_parameters(m1), c(`(Intercept)` = "(Intercept)", `qsec:wt` = "qsec * wt", `wt:drat` = "wt * drat"))
     expect_equal(format_parameters(m2), c(`(Intercept)` = "(Intercept)", wt = "wt", `qsec:wt` = "qsec * wt", `wt:drat` = "wt * drat"))
@@ -257,5 +257,4 @@ if (require("testthat") && require("parameters") && require("splines")) {
     expect_equal(format_parameters(m5), c(`(Intercept)` = "(Intercept)", qsec = "qsec", wt = "wt", `qsec:wt` = "qsec * wt", `wt:drat` = "wt * drat"))
     expect_equal(format_parameters(m6), c(`(Intercept)` = "(Intercept)", wt = "wt", qsec = "qsec", `wt:qsec` = "wt * qsec"))
   })
-
 }

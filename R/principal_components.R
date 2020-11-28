@@ -62,25 +62,27 @@
 #' @seealso \code{\link[performance]{check_itemscale}} to compute various measures of internal consistencies applied to the (sub)scales (i.e. components) extracted from the PCA. Use \code{\link{get_scores}} to compute scores for each subscale.
 #'
 #' @examples
+#' \donttest{
 #' library(parameters)
 #' if (require("psych")) {
 #'   principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
-#'   principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin",
-#'                        threshold = "max", sort = TRUE)
+#'   principal_components(mtcars[, 1:7],
+#'     n = 2, rotation = "oblimin",
+#'     threshold = "max", sort = TRUE
+#'   )
 #'   principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 #'
 #'   pca <- principal_components(mtcars[, 1:5], n = 2, rotation = "varimax")
-#'   pca  # Print loadings
-#'   summary(pca)  # Print information about the factors
-#'   predict(pca, names=c("Component1", "Component2"))  # Back-predict scores
+#'   pca # Print loadings
+#'   summary(pca) # Print information about the factors
+#'   predict(pca, names = c("Component1", "Component2")) # Back-predict scores
 #'
 #'   # which variables from the original data belong to which extracted component?
 #'   closest_component(pca)
-#'
-#' \donttest{
-#'   # Automated number of components
-#'   principal_components(mtcars[, 1:4], n = "auto")
 #' }
+#'
+#' # Automated number of components
+#' principal_components(mtcars[, 1:4], n = "auto")
 #' }
 #' @return A data frame of loadings.
 #' @references \itemize{
@@ -91,7 +93,13 @@
 #' }
 #' @importFrom stats prcomp
 #' @export
-principal_components <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
+principal_components <- function(x,
+                                 n = "auto",
+                                 rotation = "none",
+                                 sort = FALSE,
+                                 threshold = NULL,
+                                 standardize = TRUE,
+                                 ...) {
   UseMethod("principal_components")
 }
 
@@ -105,7 +113,13 @@ closest_component <- function(x) {
 
 #' @importFrom stats prcomp na.omit setNames
 #' @export
-principal_components.data.frame <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, ...) {
+principal_components.data.frame <- function(x,
+                                            n = "auto",
+                                            rotation = "none",
+                                            sort = FALSE,
+                                            threshold = NULL,
+                                            standardize = TRUE,
+                                            ...) {
   # save name of data set
   data_name <- deparse(substitute(x))
 
@@ -124,8 +138,18 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
 
   # Rotation
   if (rotation != "none") {
-    loadings <- .pca_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, original_data = original_data, ...)
-    attr(loadings, "data") <- attr(loadings, "data_name") <- data_name
+    loadings <-
+      .pca_rotate(
+        x,
+        n,
+        rotation = rotation,
+        sort = sort,
+        threshold = threshold,
+        original_data = original_data,
+        ...
+      )
+    attr(loadings, "data") <- data_name
+
     return(loadings)
   }
 
@@ -195,8 +219,11 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
   # here we match the original columns in the data set with the assigned components
   # for each variable, so we know which column in the original data set belongs
   # to which extracted component...
-  attr(loadings, "closest_component") <- .closest_component(loadings, loadings_columns = loading_cols, variable_names = colnames(x))
-  attr(loadings, "data") <- attr(loadings, "data_name") <- data_name
+
+  attr(loadings, "closest_component") <-
+    .closest_component(loadings, loadings_columns = loading_cols, variable_names = colnames(x))
+  attr(loadings, "data") <- data_name
+
   attr(loadings, "data_set") <- original_data
 
   # add class-attribute for printing

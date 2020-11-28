@@ -89,25 +89,27 @@ This function performs a principal component analysis (PCA) and returns the load
 There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{closest_component()} will return a numeric vector with the assigned component index for each column from the original data frame. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
+\donttest{
 library(parameters)
 if (require("psych")) {
   principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
-  principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin",
-                       threshold = "max", sort = TRUE)
+  principal_components(mtcars[, 1:7],
+    n = 2, rotation = "oblimin",
+    threshold = "max", sort = TRUE
+  )
   principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 
   pca <- principal_components(mtcars[, 1:5], n = 2, rotation = "varimax")
-  pca  # Print loadings
-  summary(pca)  # Print information about the factors
-  predict(pca, names=c("Component1", "Component2"))  # Back-predict scores
+  pca # Print loadings
+  summary(pca) # Print information about the factors
+  predict(pca, names = c("Component1", "Component2")) # Back-predict scores
 
   # which variables from the original data belong to which extracted component?
   closest_component(pca)
-
-\donttest{
-  # Automated number of components
-  principal_components(mtcars[, 1:4], n = "auto")
 }
+
+# Automated number of components
+principal_components(mtcars[, 1:4], n = "auto")
 }
 }
 \references{

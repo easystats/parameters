@@ -36,13 +36,13 @@ print_md.parameters_simulate <- print_md.parameters_model
 
 #' @export
 print_md.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...) {
-  formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "markdown",  ci_width = NULL, ci_brackets = c("(", ")"), ...)
+  formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "markdown", ci_width = NULL, ci_brackets = c("(", ")"), ...)
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 
 #' @export
 print_md.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
-  formatted_table <- format(split_components = split_components, select = select, format = "markdown",  ci_width = NULL, ci_brackets = c("(", ")"), ...)
+  formatted_table <- format(split_components = split_components, select = select, format = "markdown", ci_width = NULL, ci_brackets = c("(", ")"), ...)
   insight::export_table(formatted_table, format = "markdown")
 }
 

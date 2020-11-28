@@ -134,7 +134,13 @@ bayestestR::equivalence_test
 #'   plot(result)
 #' }
 #' @export
-equivalence_test.lm <- function(x, range = "default", ci = .95, rule = "bayes", p_values = FALSE, verbose = TRUE, ...) {
+equivalence_test.lm <- function(x,
+                                range = "default",
+                                ci = .95,
+                                rule = "bayes",
+                                p_values = FALSE,
+                                verbose = TRUE,
+                                ...) {
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
   out <- .equivalence_test_frequentist(x, range, ci, rule, p_values, verbose, ...)
 
@@ -192,7 +198,14 @@ equivalence_test.rma <- equivalence_test.lm
 
 #' @rdname equivalence_test.lm
 #' @export
-equivalence_test.merMod <- function(x, range = "default", ci = .95, rule = "bayes", effects = c("fixed", "random"), p_values = FALSE, verbose = TRUE, ...) {
+equivalence_test.merMod <- function(x,
+                                    range = "default",
+                                    ci = .95,
+                                    rule = "bayes",
+                                    effects = c("fixed", "random"),
+                                    p_values = FALSE,
+                                    verbose = TRUE,
+                                    ...) {
 
   # ==== argument matching ====
 
@@ -237,7 +250,11 @@ equivalence_test.MixMod <- equivalence_test.merMod
 
 #' @importFrom bayestestR rope_range
 #' @export
-equivalence_test.parameters_simulate_model <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
+equivalence_test.parameters_simulate_model <- function(x,
+                                                       range = "default",
+                                                       ci = .95,
+                                                       verbose = TRUE,
+                                                       ...) {
 
   # ==== retrieve model, to define rope range for simulated model parameters ====
 
@@ -273,7 +290,13 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 
 #' @importFrom bayestestR equivalence_test rope_range
 #' @keywords internal
-.equivalence_test_frequentist <- function(x, range = "default", ci = .95, rule = "bayes", p_values = FALSE, verbose = TRUE, ...) {
+.equivalence_test_frequentist <- function(x,
+                                          range = "default",
+                                          ci = .95,
+                                          rule = "bayes",
+                                          p_values = FALSE,
+                                          verbose = TRUE,
+                                          ...) {
 
   # ==== define rope range ====
 
@@ -339,7 +362,12 @@ equivalence_test.parameters_simulate_model <- function(x, range = "default", ci 
 #' @importFrom insight get_parameters
 #' @importFrom bayestestR rope_range
 #' @keywords internal
-.equivalence_test_frequentist_random <- function(x, range = "default", ci = .95, rule = "bayes", verbose = TRUE, ...) {
+.equivalence_test_frequentist_random <- function(x,
+                                                 range = "default",
+                                                 ci = .95,
+                                                 rule = "bayes",
+                                                 verbose = TRUE,
+                                                 ...) {
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x)
   } else if (!all(is.numeric(range)) | length(range) != 2) {

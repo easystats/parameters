@@ -33,7 +33,10 @@
 #' }
 #' }
 #' @export
-ci.merMod <- function(x, ci = 0.95, method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot"), ...) {
+ci.merMod <- function(x,
+                      ci = 0.95,
+                      method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot"),
+                      ...) {
   method <- tolower(method)
   method <- match.arg(method)
 
@@ -450,7 +453,11 @@ ci.DirichletRegModel <- function(x, ci = .95, component = c("all", "conditional"
 
 #' @rdname ci.merMod
 #' @export
-ci.HLfit <- function(x, ci = 0.95, method = c("wald", "ml1", "betwithin", "profile", "boot"), iterations = 100, ...) {
+ci.HLfit <- function(x,
+                     ci = 0.95,
+                     method = c("wald", "ml1", "betwithin", "profile", "boot"),
+                     iterations = 100,
+                     ...) {
   method <- tolower(method)
   method <- match.arg(method)
 
@@ -501,7 +508,12 @@ ci.HLfit <- function(x, ci = 0.95, method = c("wald", "ml1", "betwithin", "profi
 
 #' @rdname ci.merMod
 #' @export
-ci.glmmTMB <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), method = c("wald", "ml1", "betwithin", "robust"), verbose = TRUE, ...) {
+ci.glmmTMB <- function(x,
+                       ci = .95,
+                       component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                       method = c("wald", "ml1", "betwithin", "robust"),
+                       verbose = TRUE,
+                       ...) {
   method <- tolower(method)
   method <- match.arg(method)
   component <- match.arg(component)
@@ -535,7 +547,11 @@ ci.zerocount <- ci.glmmTMB
 
 #' @rdname ci.merMod
 #' @export
-ci.MixMod <- function(x, ci = .95, component = c("all", "conditional", "zi", "zero_inflated"), verbose = TRUE, ...) {
+ci.MixMod <- function(x,
+                      ci = .95,
+                      component = c("all", "conditional", "zi", "zero_inflated"),
+                      verbose = TRUE,
+                      ...) {
   component <- match.arg(component)
   if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
@@ -643,10 +659,12 @@ ci.mediate <- function(x, ci = .95, ...) {
     )
   } else {
     out <- data.frame(
-      Parameter = c("ACME (control)", "ACME (treated)", "ADE (control)",
-                    "ADE (treated)", "Total Effect", "Prop. Mediated (control)",
-                    "Prop. Mediated (treated)", "ACME (average)", "ADE (average)",
-                    "Prop. Mediated (average)"),
+      Parameter = c(
+        "ACME (control)", "ACME (treated)", "ADE (control)",
+        "ADE (treated)", "Total Effect", "Prop. Mediated (control)",
+        "Prop. Mediated (treated)", "ACME (average)", "ADE (average)",
+        "Prop. Mediated (average)"
+      ),
       CI = 100 * ci,
       CI_low = c(
         stats::quantile(x$d0.sims, probs = 1 - alpha, names = FALSE),
@@ -808,12 +826,14 @@ ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterth
       ci_wald(model = x, ci = ci)
     } else {
       out <- lapply(ci, function(i) {
-        ci_list <- tryCatch({
-          nlme::intervals(x, level = i, ...)
-        },
-        error = function(e) {
-          nlme::intervals(x, level = i, which = "fixed", ...)
-        })
+        ci_list <- tryCatch(
+          {
+            nlme::intervals(x, level = i, ...)
+          },
+          error = function(e) {
+            nlme::intervals(x, level = i, which = "fixed", ...)
+          }
+        )
         .data_frame(
           Parameter = rownames(ci_list$fixed),
           CI = i * 100,

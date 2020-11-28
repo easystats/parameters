@@ -90,7 +90,6 @@ format.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, fo
 
 
 
-
 # distribution ---------------------------------
 
 #' @export
@@ -141,3 +140,4 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
   final_table
 }
+

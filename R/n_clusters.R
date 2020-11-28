@@ -18,7 +18,12 @@
 #' n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
 #' }
 #' @export
-n_clusters <- function(x, standardize = TRUE, force = FALSE, package = c("NbClust", "mclust", "cluster", "M3C"), fast = TRUE, ...) {
+n_clusters <- function(x,
+                       standardize = TRUE,
+                       force = FALSE,
+                       package = c("NbClust", "mclust", "cluster", "M3C"),
+                       fast = TRUE,
+                       ...) {
   if (all(package == "all")) {
     package <- c("NbClust", "mclust", "cluster", "M3C")
   }

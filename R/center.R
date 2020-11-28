@@ -96,7 +96,16 @@ center.character <- function(x, weights = NULL, robust = FALSE, verbose = TRUE, 
 
 #' @rdname center
 #' @export
-center.data.frame <- function(x, select = NULL, exclude = NULL, weights = NULL, robust = FALSE, force = FALSE, append = FALSE, suffix = "_c", verbose = TRUE, ...) {
+center.data.frame <- function(x,
+                              select = NULL,
+                              exclude = NULL,
+                              weights = NULL,
+                              robust = FALSE,
+                              force = FALSE,
+                              append = FALSE,
+                              suffix = "_c",
+                              verbose = TRUE,
+                              ...) {
   # check for formula notation, convert to character vector
   if (inherits(select, "formula")) {
     select <- all.vars(select)

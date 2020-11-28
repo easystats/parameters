@@ -44,7 +44,14 @@
 #' }
 #' @importFrom stats cor
 #' @export
-n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default", package = c("nFactors", "psych"), cor = NULL, safe = TRUE, ...) {
+n_factors <- function(x,
+                      type = "FA",
+                      rotation = "varimax",
+                      algorithm = "default",
+                      package = c("nFactors", "psych"),
+                      cor = NULL,
+                      safe = TRUE,
+                      ...) {
   if (all(package == "all")) {
     package <- c("nFactors", "EGAnet", "psych")
   }
@@ -63,7 +70,7 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
   out <- data.frame()
 
   # nFactors -------------------------------------------
-  if ("nFactors" %in% c(package)) {
+  if ("nFactors" %in% package) {
     if (!requireNamespace("nFactors", quietly = TRUE)) {
       stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('nFactors')`.")
     }
@@ -227,14 +234,25 @@ n_factors <- function(x, type = "FA", rotation = "varimax", algorithm = "default
 
 #' @rdname n_factors
 #' @export
-n_components <- function(x, type = "PCA", rotation = "varimax", algorithm = "default", package = c("nFactors", "psych"), cor = NULL, safe = TRUE, ...) {
-  n_factors(x, type = type, rotation = rotation, algorithm = algorithm, package = package, cor = cor, safe = safe, ...)
+n_components <- function(x,
+                         type = "PCA",
+                         rotation = "varimax",
+                         algorithm = "default",
+                         package = c("nFactors", "psych"),
+                         cor = NULL,
+                         safe = TRUE,
+                         ...) {
+  n_factors(
+    x,
+    type = type,
+    rotation = rotation,
+    algorithm = algorithm,
+    package = package,
+    cor = cor,
+    safe = safe,
+    ...
+  )
 }
-
-
-
-
-
 
 
 
@@ -427,7 +445,12 @@ print.n_clusters <- print.n_factors
 # psych ------------------------
 
 #' @keywords internal
-.n_factors_vss <- function(x = NULL, cor = NULL, nobs = NULL, type = "FA", rotation = "varimax", algorithm = "default") {
+.n_factors_vss <- function(x = NULL,
+                           cor = NULL,
+                           nobs = NULL,
+                           type = "FA",
+                           rotation = "varimax",
+                           algorithm = "default") {
   if (algorithm == "default") {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
       algorithm <- "minres"
@@ -473,7 +496,12 @@ print.n_clusters <- print.n_factors
 
 
 #' @keywords internal
-.n_factors_fit <- function(x = NULL, cor = NULL, nobs = NULL, type = "FA", rotation = "varimax", algorithm = "default") {
+.n_factors_fit <- function(x = NULL,
+                           cor = NULL,
+                           nobs = NULL,
+                           type = "FA",
+                           rotation = "varimax",
+                           algorithm = "default") {
   if (algorithm == "default") {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
       algorithm <- "minres"
@@ -553,51 +581,69 @@ print.n_clusters <- print.n_factors
 
 #' @importFrom stats lm
 #' @keywords internal
-.nBentler <- function(x, N, model = model, log = TRUE, alpha = 0.05, cor = TRUE, details = TRUE, ...) {
-  if (!requireNamespace("nFactors", quietly = TRUE)) {
-    stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('lattice')`.")
-  }
-
-  lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
-  if (length(which(lambda < 0)) > 0) {
-    stop("These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted.")
-  }
-
-  minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)
-  maxPar <- c(max(lambda), stats::lm(lambda ~ I(length(lambda):1))$coef[2])
-
-
-  n <- N
-  significance <- alpha
-  min.k <- 3
-  LRT <- data.frame(
-    q = numeric(length(lambda) - min.k), k = numeric(length(lambda) - min.k),
-    LRT = numeric(length(lambda) - min.k), a = numeric(length(lambda) - min.k),
-    b = numeric(length(lambda) - min.k),
-    p = numeric(length(lambda) - min.k),
-    convergence = numeric(length(lambda) - min.k)
-  )
-  bentler.n <- 0
-  for (i in 1:(length(lambda) - min.k)) {
-    temp <- nFactors::bentlerParameters(x = lambda, N = n, nFactors = i, log = log, cor = cor, minPar = minPar, maxPar = maxPar, graphic = FALSE)
-    LRT[i, 3] <- temp$lrt
-    LRT[i, 4] <- ifelse(is.null(temp$coef[1]), NA, temp$coef[1])
-    LRT[i, 5] <- ifelse(is.null(temp$coef[2]), NA, temp$coef[2])
-    LRT[i, 6] <- ifelse(is.null(temp$p.value), NA, temp$p.value)
-    LRT[i, 7] <- ifelse(is.null(temp$convergence), NA, temp$convergence)
-    LRT[i, 2] <- i
-    LRT[i, 1] <- length(lambda) - i
-  }
-  # LRT     <- LRT[order(LRT[,1],decreasing = TRUE),]
-  for (i in 1:(length(lambda) - min.k)) {
-    if (i == 1) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
-    if (i > 1) {
-      if (LRT$p[i - 1] <= 0.05) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+.nBentler <-
+  function(x,
+           N,
+           model = model,
+           log = TRUE,
+           alpha = 0.05,
+           cor = TRUE,
+           details = TRUE,
+           ...) {
+    if (!requireNamespace("nFactors", quietly = TRUE)) {
+      stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('lattice')`.")
     }
+
+    lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
+    if (length(which(lambda < 0)) > 0) {
+      stop("These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted.")
+    }
+
+    minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)
+    maxPar <- c(max(lambda), stats::lm(lambda ~ I(length(lambda):1))$coef[2])
+
+
+    n <- N
+    significance <- alpha
+    min.k <- 3
+    LRT <- data.frame(
+      q = numeric(length(lambda) - min.k), k = numeric(length(lambda) - min.k),
+      LRT = numeric(length(lambda) - min.k), a = numeric(length(lambda) - min.k),
+      b = numeric(length(lambda) - min.k),
+      p = numeric(length(lambda) - min.k),
+      convergence = numeric(length(lambda) - min.k)
+    )
+    bentler.n <- 0
+    for (i in 1:(length(lambda) - min.k)) {
+      temp <-
+        nFactors::bentlerParameters(
+          x = lambda,
+          N = n,
+          nFactors = i,
+          log = log,
+          cor = cor,
+          minPar = minPar,
+          maxPar = maxPar,
+          graphic = FALSE
+        )
+      LRT[i, 3] <- temp$lrt
+      LRT[i, 4] <- ifelse(is.null(temp$coef[1]), NA, temp$coef[1])
+      LRT[i, 5] <- ifelse(is.null(temp$coef[2]), NA, temp$coef[2])
+      LRT[i, 6] <- ifelse(is.null(temp$p.value), NA, temp$p.value)
+      LRT[i, 7] <- ifelse(is.null(temp$convergence), NA, temp$convergence)
+      LRT[i, 2] <- i
+      LRT[i, 1] <- length(lambda) - i
+    }
+    # LRT     <- LRT[order(LRT[,1],decreasing = TRUE),]
+    for (i in 1:(length(lambda) - min.k)) {
+      if (i == 1) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+      if (i > 1) {
+        if (LRT$p[i - 1] <= 0.05) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+      }
+    }
+    if (bentler.n == 0) bentler.n <- length(lambda)
+    if (details == TRUE) details <- LRT else details <- NULL
+    res <- list(detail = details, nFactors = bentler.n)
+    class(res) <- c("nFactors", "list")
+    res
   }
-  if (bentler.n == 0) bentler.n <- length(lambda)
-  if (details == TRUE) details <- LRT else details <- NULL
-  res <- list(detail = details, nFactors = bentler.n)
-  class(res) <- c("nFactors", "list")
-  res
-}
