@@ -101,8 +101,8 @@ if (require("psych")) {
 \donttest{
   # Automated number of components
   factor_analysis(mtcars[, 1:4], n = "auto")
-}}
-
+}
+}
 }
 \references{
 \itemize{
