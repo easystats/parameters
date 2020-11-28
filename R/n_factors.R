@@ -44,192 +44,191 @@
 #' }
 #' @importFrom stats cor
 #' @export
-n_factors <-
-  function(x,
-           type = "FA",
-           rotation = "varimax",
-           algorithm = "default",
-           package = c("nFactors", "psych"),
-           cor = NULL,
-           safe = TRUE,
-           ...) {
-    if (all(package == "all")) {
-      package <- c("nFactors", "EGAnet", "psych")
-    }
-
-    # Initialize parameters
-    nobs <- nrow(x)
-
-    # Correlation matrix
-    if (is.null(cor)) {
-      cor <- stats::cor(x, use = "pairwise.complete.obs")
-    }
-    eigen_values <- eigen(cor)$values
-
-
-    # Initialize dataframe
-    out <- data.frame()
-
-    # nFactors -------------------------------------------
-    if ("nFactors" %in% c(package)) {
-      if (!requireNamespace("nFactors", quietly = TRUE)) {
-        stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('nFactors')`.")
-      }
-
-      # Model
-      if (tolower(type) %in% c("fa", "factor", "efa")) {
-        model <- "factors"
-      } else {
-        model <- "components"
-      }
-
-      # Compute all
-      if (safe) {
-        out <- rbind(
-          out,
-          tryCatch(.n_factors_bartlett(eigen_values, model, nobs),
-            warning = function(w) data.frame(),
-            error = function(e) data.frame()
-          )
-        )
-        out <- rbind(
-          out,
-          tryCatch(.n_factors_bentler(eigen_values, model, nobs),
-            warning = function(w) data.frame(),
-            error = function(e) data.frame()
-          )
-        )
-        out <- rbind(
-          out,
-          tryCatch(.n_factors_cng(eigen_values, model),
-            warning = function(w) data.frame(),
-            error = function(e) data.frame()
-          )
-        )
-        out <- rbind(
-          out,
-          tryCatch(.n_factors_mreg(eigen_values, model),
-            warning = function(w) data.frame(),
-            error = function(e) data.frame()
-          )
-        )
-        out <- rbind(
-          out,
-          tryCatch(.n_factors_scree(eigen_values, model),
-            warning = function(w) data.frame(),
-            error = function(e) data.frame()
-          )
-        )
-        out <- rbind(
-          out,
-          tryCatch(.n_factors_sescree(eigen_values, model),
-            warning = function(w) data.frame(),
-            error = function(e) data.frame()
-          )
-        )
-      } else {
-        out <- rbind(
-          out,
-          .n_factors_bartlett(eigen_values, model, nobs)
-        )
-        out <- rbind(
-          out,
-          .n_factors_bentler(eigen_values, model, nobs)
-        )
-        out <- rbind(
-          out,
-          .n_factors_cng(eigen_values, model)
-        )
-        out <- rbind(
-          out,
-          .n_factors_mreg(eigen_values, model)
-        )
-        out <- rbind(
-          out,
-          .n_factors_scree(eigen_values, model)
-        )
-        out <- rbind(
-          out,
-          .n_factors_sescree(eigen_values, model)
-        )
-      }
-    }
-
-    # EGAnet -------------------------------------------
-    if ("EGAnet" %in% c(package)) {
-      if (!requireNamespace("EGAnet", quietly = TRUE)) {
-        stop("Package 'EGAnet' required for this function to work. Please install it by running `install.packages('EGAnet')`.")
-      }
-
-      if (safe) {
-        out <- rbind(
-          out,
-          tryCatch(.n_factors_ega(x, cor, nobs, eigen_values, type),
-            warning = function(w) data.frame(),
-            error = function(e) data.frame()
-          )
-        )
-      } else {
-        out <- rbind(
-          out,
-          .n_factors_ega(x, cor, nobs, eigen_values, type)
-        )
-      }
-    }
-
-
-    # psych -------------------------------------------
-    if ("psych" %in% c(package)) {
-      if (!requireNamespace("psych", quietly = TRUE)) {
-        stop("Package 'psych' required for this function to work. Please install it by running `install.packages('psych')`.")
-      }
-
-      if (safe) {
-        out <- rbind(
-          out,
-          tryCatch(.n_factors_vss(x, cor, nobs, type, rotation, algorithm),
-            warning = function(w) data.frame(),
-            error = function(e) data.frame()
-          )
-        )
-        out <- rbind(
-          out,
-          tryCatch(.n_factors_fit(x, cor, nobs, type, rotation, algorithm),
-            warning = function(w) data.frame(),
-            error = function(e) data.frame()
-          )
-        )
-      } else {
-        out <- rbind(
-          out,
-          .n_factors_vss(x, cor, nobs, type, rotation, algorithm)
-        )
-        out <- rbind(
-          out,
-          .n_factors_fit(x, cor, nobs, type, rotation, algorithm)
-        )
-      }
-    }
-
-    # OUTPUT ----------------------------------------------
-    # TODO created weighted composite score
-
-    out <- out[!is.na(out$n_Factors), ] # Remove empty methods
-    out <- out[order(out$n_Factors), ] # Arrange by n factors
-    row.names(out) <- NULL # Reset row index
-
-    # Add summary
-    by_factors <- .data_frame(
-      n_Factors = as.numeric(unique(out$n_Factors)),
-      n_Methods = as.numeric(by(out, as.factor(out$n_Factors), function(out) n <- nrow(out)))
-    )
-
-    attr(out, "summary") <- by_factors
-    attr(out, "n") <- min(as.numeric(as.character(by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")])))
-
-    class(out) <- c("n_factors", "see_n_factors", class(out))
-    out
+n_factors <- function(x,
+                      type = "FA",
+                      rotation = "varimax",
+                      algorithm = "default",
+                      package = c("nFactors", "psych"),
+                      cor = NULL,
+                      safe = TRUE,
+                      ...) {
+  if (all(package == "all")) {
+    package <- c("nFactors", "EGAnet", "psych")
   }
+
+  # Initialize parameters
+  nobs <- nrow(x)
+
+  # Correlation matrix
+  if (is.null(cor)) {
+    cor <- stats::cor(x, use = "pairwise.complete.obs")
+  }
+  eigen_values <- eigen(cor)$values
+
+
+  # Initialize dataframe
+  out <- data.frame()
+
+  # nFactors -------------------------------------------
+  if ("nFactors" %in% package) {
+    if (!requireNamespace("nFactors", quietly = TRUE)) {
+      stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('nFactors')`.")
+    }
+
+    # Model
+    if (tolower(type) %in% c("fa", "factor", "efa")) {
+      model <- "factors"
+    } else {
+      model <- "components"
+    }
+
+    # Compute all
+    if (safe) {
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_bartlett(eigen_values, model, nobs),
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_bentler(eigen_values, model, nobs),
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_cng(eigen_values, model),
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_mreg(eigen_values, model),
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_scree(eigen_values, model),
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_sescree(eigen_values, model),
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
+        )
+      )
+    } else {
+      out <- rbind(
+        out,
+        .n_factors_bartlett(eigen_values, model, nobs)
+      )
+      out <- rbind(
+        out,
+        .n_factors_bentler(eigen_values, model, nobs)
+      )
+      out <- rbind(
+        out,
+        .n_factors_cng(eigen_values, model)
+      )
+      out <- rbind(
+        out,
+        .n_factors_mreg(eigen_values, model)
+      )
+      out <- rbind(
+        out,
+        .n_factors_scree(eigen_values, model)
+      )
+      out <- rbind(
+        out,
+        .n_factors_sescree(eigen_values, model)
+      )
+    }
+  }
+
+  # EGAnet -------------------------------------------
+  if ("EGAnet" %in% c(package)) {
+    if (!requireNamespace("EGAnet", quietly = TRUE)) {
+      stop("Package 'EGAnet' required for this function to work. Please install it by running `install.packages('EGAnet')`.")
+    }
+
+    if (safe) {
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_ega(x, cor, nobs, eigen_values, type),
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
+        )
+      )
+    } else {
+      out <- rbind(
+        out,
+        .n_factors_ega(x, cor, nobs, eigen_values, type)
+      )
+    }
+  }
+
+
+  # psych -------------------------------------------
+  if ("psych" %in% c(package)) {
+    if (!requireNamespace("psych", quietly = TRUE)) {
+      stop("Package 'psych' required for this function to work. Please install it by running `install.packages('psych')`.")
+    }
+
+    if (safe) {
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_vss(x, cor, nobs, type, rotation, algorithm),
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
+        )
+      )
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_fit(x, cor, nobs, type, rotation, algorithm),
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
+        )
+      )
+    } else {
+      out <- rbind(
+        out,
+        .n_factors_vss(x, cor, nobs, type, rotation, algorithm)
+      )
+      out <- rbind(
+        out,
+        .n_factors_fit(x, cor, nobs, type, rotation, algorithm)
+      )
+    }
+  }
+
+  # OUTPUT ----------------------------------------------
+  # TODO created weighted composite score
+
+  out <- out[!is.na(out$n_Factors), ] # Remove empty methods
+  out <- out[order(out$n_Factors), ] # Arrange by n factors
+  row.names(out) <- NULL # Reset row index
+
+  # Add summary
+  by_factors <- .data_frame(
+    n_Factors = as.numeric(unique(out$n_Factors)),
+    n_Methods = as.numeric(by(out, as.factor(out$n_Factors), function(out) n <- nrow(out)))
+  )
+
+  attr(out, "summary") <- by_factors
+  attr(out, "n") <- min(as.numeric(as.character(by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")])))
+
+  class(out) <- c("n_factors", "see_n_factors", class(out))
+  out
+}
 
 
 
@@ -446,132 +445,130 @@ print.n_clusters <- print.n_factors
 # psych ------------------------
 
 #' @keywords internal
-.n_factors_vss <-
-  function(x = NULL,
-           cor = NULL,
-           nobs = NULL,
-           type = "FA",
-           rotation = "varimax",
-           algorithm = "default") {
-    if (algorithm == "default") {
-      if (tolower(type) %in% c("fa", "factor", "efa")) {
-        algorithm <- "minres"
-      } else {
-        algorithm <- "pc"
-      }
+.n_factors_vss <- function(x = NULL,
+                           cor = NULL,
+                           nobs = NULL,
+                           type = "FA",
+                           rotation = "varimax",
+                           algorithm = "default") {
+  if (algorithm == "default") {
+    if (tolower(type) %in% c("fa", "factor", "efa")) {
+      algorithm <- "minres"
+    } else {
+      algorithm <- "pc"
     }
-
-
-    # Compute VSS
-    vss <- psych::VSS(
-      cor,
-      n = ncol(x) - 1,
-      n.obs = nobs,
-      rotate = rotation,
-      fm = algorithm,
-      plot = FALSE
-    )
-
-    # Format results
-    stats <- vss$vss.stats
-    stats$map <- vss$map
-    stats$n_Factors <- seq_len(nrow(stats))
-    names(stats) <- gsub("cfit.", "VSS_Complexity_", names(stats))
-
-    # Indices
-    vss_1 <- which.max(stats$VSS_Complexity_1)
-    vss_2 <- which.max(stats$VSS_Complexity_2)
-    velicer_MAP <- which.min(stats$map)
-    BIC_reg <- which.min(stats$BIC)
-    BIC_adj <- which.min(stats$SABIC)
-    BIC_reg <- ifelse(length(BIC_reg) == 0, NA, BIC_reg)
-    BIC_adj <- ifelse(length(BIC_adj) == 0, NA, BIC_adj)
-
-    data.frame(
-      n_Factors = as.numeric(c(vss_1, vss_2, velicer_MAP, BIC_reg, BIC_adj)),
-      Method = c("VSS complexity 1", "VSS complexity 2", "Velicer's MAP", "BIC", "BIC (adjusted)"),
-      Family = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC")
-    )
   }
+
+
+  # Compute VSS
+  vss <- psych::VSS(
+    cor,
+    n = ncol(x) - 1,
+    n.obs = nobs,
+    rotate = rotation,
+    fm = algorithm,
+    plot = FALSE
+  )
+
+  # Format results
+  stats <- vss$vss.stats
+  stats$map <- vss$map
+  stats$n_Factors <- seq_len(nrow(stats))
+  names(stats) <- gsub("cfit.", "VSS_Complexity_", names(stats))
+
+  # Indices
+  vss_1 <- which.max(stats$VSS_Complexity_1)
+  vss_2 <- which.max(stats$VSS_Complexity_2)
+  velicer_MAP <- which.min(stats$map)
+  BIC_reg <- which.min(stats$BIC)
+  BIC_adj <- which.min(stats$SABIC)
+  BIC_reg <- ifelse(length(BIC_reg) == 0, NA, BIC_reg)
+  BIC_adj <- ifelse(length(BIC_adj) == 0, NA, BIC_adj)
+
+  data.frame(
+    n_Factors = as.numeric(c(vss_1, vss_2, velicer_MAP, BIC_reg, BIC_adj)),
+    Method = c("VSS complexity 1", "VSS complexity 2", "Velicer's MAP", "BIC", "BIC (adjusted)"),
+    Family = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC")
+  )
+}
 
 
 
 
 #' @keywords internal
-.n_factors_fit <-
-  function(x = NULL,
-           cor = NULL,
-           nobs = NULL,
-           type = "FA",
-           rotation = "varimax",
-           algorithm = "default") {
-    if (algorithm == "default") {
-      if (tolower(type) %in% c("fa", "factor", "efa")) {
-        algorithm <- "minres"
-      } else {
-        algorithm <- "pc"
-      }
+.n_factors_fit <- function(x = NULL,
+                           cor = NULL,
+                           nobs = NULL,
+                           type = "FA",
+                           rotation = "varimax",
+                           algorithm = "default") {
+  if (algorithm == "default") {
+    if (tolower(type) %in% c("fa", "factor", "efa")) {
+      algorithm <- "minres"
+    } else {
+      algorithm <- "pc"
     }
+  }
 
-    rez <- data.frame()
-    for (n in 1:(ncol(cor) - 1)) {
-      if (tolower(type) %in% c("fa", "factor", "efa")) {
-        factors <- tryCatch(psych::fa(cor,
-          nfactors = n,
-          n.obs = nobs,
-          rotate = rotation,
-          fm = algorithm
-        ),
-        warning = function(w) NA,
-        error = function(e) NA
-        )
-      } else {
-        factors <- tryCatch(psych::pca(cor,
-          nfactors = n,
-          n.obs = nobs,
-          rotate = rotation
-        ),
-        warning = function(w) NA,
-        error = function(e) NA
-        )
-      }
-
-      if (all(is.na(factors))) {
-        next
-      }
-
-      rmsea <- ifelse(is.null(factors$RMSEA), NA, factors$RMSEA[1])
-      rmsr <- ifelse(is.null(factors$rms), NA, factors$rms)
-      crms <- ifelse(is.null(factors$crms), NA, factors$crms)
-      bic <- ifelse(is.null(factors$BIC), NA, factors$BIC)
-      tli <- ifelse(is.null(factors$TLI), NA, factors$TLI)
-
-      rez <- rbind(
-        rez,
-        data.frame(
-          n = n,
-          TLI = tli,
-          Fit = factors$fit.off,
-          RMSEA = rmsea,
-          RMSR = rmsr,
-          CRMS = crms,
-          BIC = bic
-        )
+  rez <- data.frame()
+  for (n in 1:(ncol(cor) - 1)) {
+    if (tolower(type) %in% c("fa", "factor", "efa")) {
+      factors <- tryCatch(psych::fa(cor,
+        nfactors = n,
+        n.obs = nobs,
+        rotate = rotation,
+        fm = algorithm
+      ),
+      warning = function(w) NA,
+      error = function(e) NA
+      )
+    } else {
+      factors <- tryCatch(psych::pca(cor,
+        nfactors = n,
+        n.obs = nobs,
+        rotate = rotation
+      ),
+      warning = function(w) NA,
+      error = function(e) NA
       )
     }
 
-    TLI <- ifelse(all(is.na(rez$TLI)), NA, rez[!is.na(rez$TLI) & rez$TLI == min(rez$TLI, na.rm = TRUE), "n"])
-    RMSEA <- ifelse(all(is.na(rez$RMSEA)), NA, rez[!is.na(rez$RMSEA) & rez$RMSEA == max(rez$RMSEA, na.rm = TRUE), "n"])
-    RMSR <- ifelse(all(is.na(rez$RMSR)), NA, rez[!is.na(rez$RMSR) & rez$RMSR == min(rez$RMSR, na.rm = TRUE), "n"])
-    CRMS <- ifelse(all(is.na(rez$CRMS)), NA, rez[!is.na(rez$CRMS) & rez$CRMS == min(rez$CRMS, na.rm = TRUE), "n"])
-    BIC <- ifelse(all(is.na(rez$BIC)), NA, rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"])
+    if (all(is.na(factors))) {
+      next
+    }
 
-    data.frame(
-      n_Factors = c(TLI, RMSEA, CRMS, BIC),
-      Method = c("TLI", "RMSEA", "CRMS", "BIC"),
-      Family = c("Fit", "Fit", "Fit", "Fit")
+    rmsea <- ifelse(is.null(factors$RMSEA), NA, factors$RMSEA[1])
+    rmsr <- ifelse(is.null(factors$rms), NA, factors$rms)
+    crms <- ifelse(is.null(factors$crms), NA, factors$crms)
+    bic <- ifelse(is.null(factors$BIC), NA, factors$BIC)
+    tli <- ifelse(is.null(factors$TLI), NA, factors$TLI)
+
+    rez <- rbind(
+      rez,
+      data.frame(
+        n = n,
+        TLI = tli,
+        Fit = factors$fit.off,
+        RMSEA = rmsea,
+        RMSR = rmsr,
+        CRMS = crms,
+        BIC = bic
+      )
     )
   }
+
+  TLI <- ifelse(all(is.na(rez$TLI)), NA, rez[!is.na(rez$TLI) & rez$TLI == min(rez$TLI, na.rm = TRUE), "n"])
+  RMSEA <- ifelse(all(is.na(rez$RMSEA)), NA, rez[!is.na(rez$RMSEA) & rez$RMSEA == max(rez$RMSEA, na.rm = TRUE), "n"])
+  RMSR <- ifelse(all(is.na(rez$RMSR)), NA, rez[!is.na(rez$RMSR) & rez$RMSR == min(rez$RMSR, na.rm = TRUE), "n"])
+  CRMS <- ifelse(all(is.na(rez$CRMS)), NA, rez[!is.na(rez$CRMS) & rez$CRMS == min(rez$CRMS, na.rm = TRUE), "n"])
+  BIC <- ifelse(all(is.na(rez$BIC)), NA, rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"])
+
+  data.frame(
+    n_Factors = c(TLI, RMSEA, CRMS, BIC),
+    Method = c("TLI", "RMSEA", "CRMS", "BIC"),
+    Family = c("Fit", "Fit", "Fit", "Fit")
+  )
+}
 
 
 

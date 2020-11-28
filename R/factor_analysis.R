@@ -23,7 +23,9 @@
 #'
 #'   # Automated number of components
 #'   factor_analysis(mtcars[, 1:4], n = "auto")
-#' }}
+#' }
+#' }
+#'
 #' @return A data frame of loadings.
 #' @references \itemize{
 #'   \item Hofmann, R. (1978). Complexity and simplicity as objective indices descriptive of factor solutions. Multivariate Behavioral Research, 13:2, 247-250, \doi{10.1207/s15327906mbr1302_9}
@@ -88,25 +90,23 @@ factor_analysis.data.frame <- function(x,
 
   # Pass cor if available
   if (!is.null(cor)) {
-    out <-
-      model_parameters(
-        psych::fa(
-          cor,
-          nfactors = n,
-          rotate = rotation,
-          n.obs = nrow(x),
-          ...
-        ),
-        sort = sort,
-        threshold = threshold
-      )
+    out <- model_parameters(
+      psych::fa(
+        cor,
+        nfactors = n,
+        rotate = rotation,
+        n.obs = nrow(x),
+        ...
+      ),
+      sort = sort,
+      threshold = threshold
+    )
   } else {
-    out <-
-      model_parameters(
-        psych::fa(x, nfactors = n, rotate = rotation, ...),
-        sort = sort,
-        threshold = threshold
-      )
+    out <- model_parameters(
+      psych::fa(x, nfactors = n, rotate = rotation, ...),
+      sort = sort,
+      threshold = threshold
+    )
   }
 
   attr(out, "data_set") <- x

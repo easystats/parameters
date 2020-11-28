@@ -59,15 +59,14 @@ bootstrap_parameters <- function(model,
     p_value <- FALSE
   }
 
-  parameters <-
-    bayestestR::describe_posterior(
-      data,
-      centrality = centrality,
-      ci = ci,
-      ci_method = ci_method,
-      test = test,
-      ...
-    )
+  parameters <- bayestestR::describe_posterior(
+    data,
+    centrality = centrality,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    ...
+  )
 
   # Remove unnecessary columns
   if ("CI" %in% names(parameters) && .n_unique(parameters$CI) == 1) {

@@ -72,19 +72,18 @@ print.parameters_model <- function(x,
     insight::print_color("# Fixed Effects\n\n", "blue")
   }
 
-  formatted_table <-
-    format(
-      x,
-      pretty_names = pretty_names,
-      split_components = split_components,
-      select = select,
-      digits = digits,
-      ci_digits = ci_digits,
-      p_digits = p_digits,
-      ci_width = "auto",
-      ci_brackets = TRUE,
-      format = "text"
-    )
+  formatted_table <- format(
+    x,
+    pretty_names = pretty_names,
+    split_components = split_components,
+    select = select,
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    ci_width = "auto",
+    ci_brackets = TRUE,
+    format = "text"
+  )
   cat(insight::export_table(formatted_table, format = "text"))
 
   # print residual standard deviation
@@ -169,7 +168,15 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
   orig_x <- x
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
 
-  formatted_table <- format(x, split_components = split_components, select = select, format = "text", ci_width = "auto", ci_brackets = TRUE, ...)
+  formatted_table <- format(
+    x,
+    split_components = split_components,
+    select = select,
+    format = "text",
+    ci_width = "auto",
+    ci_brackets = TRUE,
+    ...
+  )
   cat(insight::export_table(formatted_table, format = "text"))
 
   if (!is.null(ci_method)) {
