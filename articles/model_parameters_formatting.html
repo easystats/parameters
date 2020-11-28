@@ -250,12 +250,12 @@
 #&gt; 4 Speciesversicolor      -1.01     0.278     -3.62  4.12e-  4   -1.56     -0.456
 #&gt; 5 Speciesvirginica       -0.991    0.285     -3.48  6.72e-  4   -1.55     -0.428
 #&gt; 6 Petlen(3,7]            -0.136    0.282     -0.482 6.30e-  1   -0.693     0.421</code></pre>
-<p>Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the <code><a href="https://easystats.github.io/insight/reference/parameters_table.html">parameters_table()</a></code> function is a convenient function that does all the work for you.</p>
-<p><code><a href="https://easystats.github.io/insight/reference/parameters_table.html">parameters_table()</a></code> requires a data frame with model parameters as input, however, there are some requirements to make <code><a href="https://easystats.github.io/insight/reference/parameters_table.html">parameters_table()</a></code> work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from <em>broom</em> or the <a href="https://easystats.github.io/easystats"><em>easystats</em> packages</a>.</p>
+<p>Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the <code><a href="https://easystats.github.io/insight/reference/format_table.html">parameters_table()</a></code> function is a convenient function that does all the work for you.</p>
+<p><code><a href="https://easystats.github.io/insight/reference/format_table.html">parameters_table()</a></code> requires a data frame with model parameters as input, however, there are some requirements to make <code><a href="https://easystats.github.io/insight/reference/format_table.html">parameters_table()</a></code> work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from <em>broom</em> or the <a href="https://easystats.github.io/easystats"><em>easystats</em> packages</a>.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span>conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://easystats.github.io/insight/reference/parameters_table.html">parameters_table</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html">parameters_table</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt;                     term estimate std.error statistic p.value       conf.int
 #&gt; 1            (Intercept)     3.81      0.06     65.50  &lt; .001 [ 3.70,  3.93]
 #&gt; 2 poly(Sepal.Length, 2)1     4.06      0.47      8.70  &lt; .001 [ 3.14,  4.98]
@@ -267,7 +267,7 @@
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://easystats.github.io/insight/reference/parameters_table.html">parameters_table</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html">parameters_table</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt;                   Parameter Coefficient   SE         95% CI t(144)      p
 #&gt; 1               (Intercept)        3.81 0.06 [ 3.70,  3.93]  65.50 &lt; .001
 #&gt; 2 Sepal.Length [1st degree]        4.06 0.47 [ 3.14,  4.98]   8.70 &lt; .001
@@ -297,7 +297,7 @@
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span>conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://easystats.github.io/insight/reference/parameters_table.html">parameters_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html">parameters_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://easystats.github.io/insight/reference/export_table.html">export_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; term                   | estimate | std.error | statistic | p.value |       conf.int
@@ -329,7 +329,7 @@
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span>conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># parenthesis look better in markdown-tables, so we use "brackets" here</span>
-  <span class="fu"><a href="https://easystats.github.io/insight/reference/parameters_table.html">parameters_table</a></span><span class="op">(</span>brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html">parameters_table</a></span><span class="op">(</span>brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://easystats.github.io/insight/reference/export_table.html">export_table</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"markdown"</span>, caption <span class="op">=</span> <span class="st">"My Table"</span>, align <span class="op">=</span> <span class="st">"lcccrr"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>My Table</caption>
@@ -392,7 +392,7 @@
 </tr>
 </tbody>
 </table>
-<p><code><a href="https://easystats.github.io/insight/reference/display.html">print_md()</a></code> is a convenient wrapper around <code><a href="https://easystats.github.io/insight/reference/parameters_table.html">parameters_table()</a></code> and <code><a href="https://easystats.github.io/insight/reference/export_table.html">export_table(format = "markdown")</a></code>, and allows to directly format the output of functions like <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code> or other <em>parameters</em> functions in markdown-format.</p>
+<p><code><a href="https://easystats.github.io/insight/reference/display.html">print_md()</a></code> is a convenient wrapper around <code><a href="https://easystats.github.io/insight/reference/format_table.html">parameters_table()</a></code> and <code><a href="https://easystats.github.io/insight/reference/export_table.html">export_table(format = "markdown")</a></code>, and allows to directly format the output of functions like <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code> or other <em>parameters</em> functions in markdown-format.</p>
 <p>These tables are also nicely formatted when knitting markdown-documents into Word or PDF. <code><a href="https://easystats.github.io/insight/reference/display.html">print_md()</a></code> applies some default settings that have proven to work well for markdown, PDF or Word tables.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">print_md</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
