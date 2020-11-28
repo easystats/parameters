@@ -44,7 +44,12 @@
 #' @importFrom stats var pt
 #' @importFrom insight is_model_supported is_model
 #' @export
-pool_parameters <- function(x, exponentiate = FALSE, component = "conditional", details = FALSE, verbose = TRUE, ...) {
+pool_parameters <- function(x,
+                            exponentiate = FALSE,
+                            component = "conditional",
+                            details = FALSE,
+                            verbose = TRUE,
+                            ...) {
 
   # check input, save original model -----
 

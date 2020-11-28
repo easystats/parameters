@@ -56,9 +56,23 @@ simulate_parameters <- function(model, ...) {
 
 #' @rdname simulate_parameters
 #' @export
-simulate_parameters.default <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+simulate_parameters.default <- function(model,
+                                        iterations = 1000,
+                                        centrality = "median",
+                                        ci = .95,
+                                        ci_method = "quantile",
+                                        test = "p-value",
+                                        ...) {
   data <- simulate_model(model, iterations = iterations, ...)
-  out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
+  out <-
+    .summary_bootstrap(
+      data = data,
+      test = test,
+      centrality = centrality,
+      ci = ci,
+      ci_method = ci_method,
+      ...
+    )
 
   params <- insight::get_parameters(model)
   if ("Effects" %in% colnames(params) && .n_unique(params$Effects) > 1) {
@@ -76,9 +90,23 @@ simulate_parameters.default <- function(model, iterations = 1000, centrality = "
 
 
 #' @export
-simulate_parameters.zeroinfl <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+simulate_parameters.zeroinfl <- function(model,
+                                         iterations = 1000,
+                                         centrality = "median",
+                                         ci = .95,
+                                         ci_method = "quantile",
+                                         test = "p-value",
+                                         ...) {
   data <- simulate_model(model, iterations = iterations, ...)
-  out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
+  out <-
+    .summary_bootstrap(
+      data = data,
+      test = test,
+      centrality = centrality,
+      ci = ci,
+      ci_method = ci_method,
+      ...
+    )
 
   params <- insight::get_parameters(model)
   if ("Effects" %in% colnames(params) && .n_unique(params$Effects) > 1) {
@@ -109,9 +137,23 @@ simulate_parameters.zerocount <- simulate_parameters.zeroinfl
 
 
 #' @export
-simulate_parameters.multinom <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+simulate_parameters.multinom <- function(model,
+                                         iterations = 1000,
+                                         centrality = "median",
+                                         ci = .95,
+                                         ci_method = "quantile",
+                                         test = "p-value",
+                                         ...) {
   data <- simulate_model(model, iterations = iterations, ...)
-  out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
+  out <-
+    .summary_bootstrap(
+      data = data,
+      test = test,
+      centrality = centrality,
+      ci = ci,
+      ci_method = ci_method,
+      ...
+    )
 
   params <- insight::get_parameters(model)
   out$Parameter <- params$Parameter
@@ -131,9 +173,23 @@ simulate_parameters.multinom <- function(model, iterations = 1000, centrality = 
 
 #' @rdname simulate_parameters
 #' @export
-simulate_parameters.glmmTMB <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+simulate_parameters.glmmTMB <- function(model,
+                                        iterations = 1000,
+                                        centrality = "median",
+                                        ci = .95,
+                                        ci_method = "quantile",
+                                        test = "p-value",
+                                        ...) {
   data <- simulate_model(model, iterations = iterations, ...)
-  out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
+  out <-
+    .summary_bootstrap(
+      data = data,
+      test = test,
+      centrality = centrality,
+      ci = ci,
+      ci_method = ci_method,
+      ...
+    )
 
   params <- insight::get_parameters(model, ...)
   if ("Effects" %in% colnames(params) && .n_unique(params$Effects) > 1) {
@@ -155,9 +211,23 @@ simulate_parameters.glmmTMB <- function(model, iterations = 1000, centrality = "
 
 
 #' @export
-simulate_parameters.mlm <- function(model, iterations = 1000, centrality = "median", ci = .95, ci_method = "quantile", test = "p-value", ...) {
+simulate_parameters.mlm <- function(model,
+                                    iterations = 1000,
+                                    centrality = "median",
+                                    ci = .95,
+                                    ci_method = "quantile",
+                                    test = "p-value",
+                                    ...) {
   data <- simulate_model(model, iterations = iterations, ...)
-  out <- .summary_bootstrap(data = data, test = test, centrality = centrality, ci = ci, ci_method = ci_method, ...)
+  out <-
+    .summary_bootstrap(
+      data = data,
+      test = test,
+      centrality = centrality,
+      ci = ci,
+      ci_method = ci_method,
+      ...
+    )
 
   out$Response <- NA
   responses <- insight::find_response(model, combine = FALSE)

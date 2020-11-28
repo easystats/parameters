@@ -30,7 +30,6 @@ model_parameters.zeroinfl <- function(model,
                                       p_adjust = NULL,
                                       verbose = TRUE,
                                       ...) {
-
   component <- match.arg(component)
 
   # fix argument, if model has no zi-part

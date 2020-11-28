@@ -359,7 +359,11 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
       # Classic and Satterthwaite SE
       if (method %in% c("wald", "satterthwaite")) {
         .data_frame(
-          Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+          Parameter = insight::find_parameters(model,
+            effects = "fixed",
+            component = "conditional",
+            flatten = TRUE
+          ),
           SE = .get_se_from_summary(model)
         )
         # ml1 approx
@@ -379,7 +383,11 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
 
 #' @rdname standard_error
 #' @export
-standard_error.glmmTMB <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = TRUE, ...) {
+standard_error.glmmTMB <- function(model,
+                                   effects = c("fixed", "random"),
+                                   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                                   verbose = TRUE,
+                                   ...) {
   component <- match.arg(component)
   effects <- match.arg(effects)
 
@@ -428,7 +436,11 @@ standard_error.glmmTMB <- function(model, effects = c("fixed", "random"), compon
 #' @rdname standard_error
 #' @importFrom insight find_random
 #' @export
-standard_error.MixMod <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), verbose = TRUE, ...) {
+standard_error.MixMod <- function(model,
+                                  effects = c("fixed", "random"),
+                                  component = c("all", "conditional", "zi", "zero_inflated"),
+                                  verbose = TRUE,
+                                  ...) {
   component <- match.arg(component)
   effects <- match.arg(effects)
 
@@ -505,7 +517,11 @@ standard_error.HLfit <- function(model, method = NULL, ...) {
 
 #' @rdname standard_error
 #' @export
-standard_error.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, verbose = TRUE, ...) {
+standard_error.zeroinfl <- function(model,
+                                    component = c("all", "conditional", "zi", "zero_inflated"),
+                                    method = NULL,
+                                    verbose = TRUE,
+                                    ...) {
   component <- match.arg(component)
   if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
@@ -610,10 +626,6 @@ standard_error.svyglm <- function(model, ...) {
     SE = as.vector(se)
   )
 }
-
-
-
-
 
 
 
@@ -861,7 +873,10 @@ standard_error.bracl <- function(model, ...) {
 
 
 #' @export
-standard_error.stanreg <- function(model, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+standard_error.stanreg <- function(model,
+                                   effects = c("fixed", "random"),
+                                   component = c("all", "conditional", "zi", "zero_inflated"),
+                                   ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 

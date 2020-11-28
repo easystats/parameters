@@ -31,7 +31,14 @@
 #' }
 #' @importFrom stats prcomp
 #' @export
-factor_analysis <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, cor = NULL, ...) {
+factor_analysis <- function(x,
+                            n = "auto",
+                            rotation = "none",
+                            sort = FALSE,
+                            threshold = NULL,
+                            standardize = TRUE,
+                            cor = NULL,
+                            ...) {
   UseMethod("factor_analysis")
 }
 
@@ -39,7 +46,14 @@ factor_analysis <- function(x, n = "auto", rotation = "none", sort = FALSE, thre
 
 #' @importFrom stats prcomp na.omit
 #' @export
-factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = FALSE, threshold = NULL, standardize = TRUE, cor = NULL, ...) {
+factor_analysis.data.frame <- function(x,
+                                       n = "auto",
+                                       rotation = "none",
+                                       sort = FALSE,
+                                       threshold = NULL,
+                                       standardize = TRUE,
+                                       cor = NULL,
+                                       ...) {
 
   # Standardize
   if (standardize && is.null(cor)) {
@@ -74,12 +88,24 @@ factor_analysis.data.frame <- function(x, n = "auto", rotation = "none", sort = 
 
   # Pass cor if available
   if (!is.null(cor)) {
-    out <- model_parameters(psych::fa(cor, nfactors = n, rotate = rotation, n.obs = nrow(x), ...), sort = sort, threshold = threshold)
-  } else{
-    out <- model_parameters(psych::fa(x, nfactors = n, rotate = rotation, ...), sort = sort, threshold = threshold)
+    out <- model_parameters(
+      psych::fa(
+        cor,
+        nfactors = n,
+        rotate = rotation,
+        n.obs = nrow(x),
+        ...
+      ),
+      sort = sort,
+      threshold = threshold
+    )
+  } else {
+    out <- model_parameters(
+      psych::fa(x, nfactors = n, rotate = rotation, ...),
+      sort = sort,
+      threshold = threshold
+    )
   }
-
-
 
   attr(out, "data_set") <- x
   out

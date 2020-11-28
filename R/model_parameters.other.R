@@ -30,7 +30,6 @@ model_parameters.averaging <- function(model,
                                        p_adjust = NULL,
                                        verbose = TRUE,
                                        ...) {
-
   component <- match.arg(component)
   out <- .model_parameters_generic(
     model = model,
@@ -60,7 +59,6 @@ model_parameters.betareg <- function(model,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
-
   component <- match.arg(component)
   if (component == "all") {
     merge_by <- c("Parameter", "Component")
@@ -100,7 +98,6 @@ model_parameters.glmx <- function(model,
                                   p_adjust = NULL,
                                   verbose = TRUE,
                                   ...) {
-
   component <- match.arg(component)
   if (component == "all") {
     merge_by <- c("Parameter", "Component")

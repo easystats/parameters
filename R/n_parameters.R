@@ -81,7 +81,10 @@ n_parameters.wbm <- n_parameters.merMod
 # Models with random effects and other components ----------------------------
 
 #' @export
-n_parameters.MixMod <- function(x, effects = c("fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+n_parameters.MixMod <- function(x,
+                                effects = c("fixed", "random"),
+                                component = c("all", "conditional", "zi", "zero_inflated"),
+                                ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
   length(insight::find_parameters(x, effects = effects, component = component, flatten = TRUE, ...))
@@ -139,7 +142,10 @@ n_parameters.vgam <- n_parameters.gam
 
 #' @rdname n_parameters
 #' @export
-n_parameters.brmsfit <- function(x, effects = c("all", "fixed", "random"), component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "simplex", "sigma", "smooth_terms"), ...) {
+n_parameters.brmsfit <- function(x,
+                                 effects = c("all", "fixed", "random"),
+                                 component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "simplex", "sigma", "smooth_terms"),
+                                 ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
   length(insight::find_parameters(x, effects = effects, component = component, flatten = TRUE, ...))
@@ -147,7 +153,10 @@ n_parameters.brmsfit <- function(x, effects = c("all", "fixed", "random"), compo
 
 
 #' @export
-n_parameters.stanreg <- function(x, effects = c("all", "fixed", "random"), component = c("all", "conditional", "smooth_terms"), ...) {
+n_parameters.stanreg <- function(x,
+                                 effects = c("all", "fixed", "random"),
+                                 component = c("all", "conditional", "smooth_terms"),
+                                 ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
   length(insight::find_parameters(x, effects = effects, component = component, flatten = TRUE, ...))

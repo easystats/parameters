@@ -55,6 +55,7 @@ For the structural models obtained with \pkg{psych}, the following indices are p
 }
 }
 \examples{
+\donttest{
 library(parameters)
 if (require("psych")) {
   # Principal Component Analysis (PCA) ---------
@@ -66,11 +67,11 @@ if (require("psych")) {
 
   principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 
-\donttest{
+
   # Exploratory Factor Analysis (EFA) ---------
   efa <- psych::fa(attitude, nfactors = 3)
   model_parameters(efa, threshold = "max", sort = TRUE, labels = as.character(1:ncol(attitude)))
-}
+
 
   # Omega ---------
   omega <- psych::omega(mtcars, nfactors = 3)
@@ -80,16 +81,14 @@ if (require("psych")) {
 }
 
 # FactoMineR ---------
-\dontrun{
-if( require("FactoMineR")) {
+if (require("FactoMineR")) {
   model <- FactoMineR::PCA(iris[, 1:4], ncp = 2)
   model_parameters(model)
   attributes(model_parameters(model))$scores
 
   model <- FactoMineR::FAMD(iris, ncp = 2)
   model_parameters(model)
-}
-}
+}}
 }
 \references{
 \itemize{

@@ -81,11 +81,6 @@ select_parameters.lm <- function(model, direction = "both", steps = 1000, k = 2,
 
 
 
-
-
-
-
-
 #' @importFrom insight find_random
 #' @rdname select_parameters
 #' @export
