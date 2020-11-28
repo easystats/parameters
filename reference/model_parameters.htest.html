@@ -178,6 +178,7 @@
   <span class='va'>model</span>,
   cramers_v <span class='op'>=</span> <span class='cn'>NULL</span>,
   phi <span class='op'>=</span> <span class='cn'>NULL</span>,
+  standardized_d <span class='op'>=</span> <span class='cn'>NULL</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -199,6 +200,13 @@
       <td><p>Compute Cramer's V or phi as index of effect size.
 Can be <code>"raw"</code> or <code>"adjusted"</code> (effect size will be bias-corrected).
 Only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>standardized_d</th>
+      <td><p>If <code>TRUE</code>, compute standardized d as index of
+effect size. Only applies to objects from <code><a href='https://rdrr.io/r/stats/t.test.html'>t.test()</a></code>. Calculation of
+<code>d</code> is based on the t-value (see <code>t_to_d()</code>)
+for details.</p></td>
     </tr>
     <tr>
       <th>ci</th>
