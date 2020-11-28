@@ -8,7 +8,16 @@
 #' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
-#' @details To do... Explain df.
+#' @details The reporting of degrees of freedom \emph{for the spline terms}
+#' slightly differs from the output of \code{summary(model)}, for example in the
+#' case of \code{mgcv::gam()}. The \emph{estimated degrees of freedom}, column
+#' \code{edf} in the summary-output, is named \code{df} in the returned data
+#' frame, while the column \code{df_error} in the returned data frame refers to
+#' the residual degrees of freedom that are returned by \code{df.residual()}.
+#' Hence, the values in the the column \code{df_error} differ from the column
+#' \code{Ref.df} from the summary, which is intentional, as these reference
+#' degrees of freedom \dQuote{is not very interpretable}
+#' (\href{https://r.789695.n4.nabble.com/ref-df-in-mgcv-gam-tp4756194p4756195.html}{web}).
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'
