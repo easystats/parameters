@@ -110,13 +110,13 @@ model_parameters.htest <- function(model,
 
   if (model$method == "Pearson's Chi-squared test") {
     out$Chi2 <- model$statistic
-    out$df <- model$parameter
+    out$df_error <- model$parameter
     out$p <- model$p.value
     out$Method <- "Pearson"
   } else if (grepl("Pearson", model$method)) {
     out$r <- model$estimate
     out$t <- model$statistic
-    out$df <- model$parameter
+    out$df_error <- model$parameter
     out$p <- model$p.value
     out$CI_low <- model$conf.int[1]
     out$CI_high <- model$conf.int[2]
@@ -124,13 +124,13 @@ model_parameters.htest <- function(model,
   } else if (grepl("Spearman", model$method)) {
     out$rho <- model$estimate
     out$S <- model$statistic
-    out$df <- model$parameter
+    out$df_error <- model$parameter
     out$p <- model$p.value
     out$Method <- "Spearman"
   } else {
     out$tau <- model$estimate
     out$z <- model$statistic
-    out$df <- model$parameter
+    out$df_error <- model$parameter
     out$p <- model$p.value
     out$Method <- "Kendall"
   }
@@ -151,7 +151,7 @@ model_parameters.htest <- function(model,
       "Mean_Parameter2" = model$estimate[2],
       "Difference" = model$estimate[1] - model$estimate[2],
       "t" = model$statistic,
-      "df" = model$parameter,
+      "df_error" = model$parameter,
       "p" = model$p.value,
       "CI_low" = model$conf.int[1],
       "CI_high" = model$conf.int[2],
@@ -166,7 +166,7 @@ model_parameters.htest <- function(model,
         "Group" = names[2],
         "Mean_Difference" = model$estimate,
         "t" = model$statistic,
-        "df" = model$parameter,
+        "df_error" = model$parameter,
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
@@ -182,7 +182,7 @@ model_parameters.htest <- function(model,
         "Mean_Group2" = model$estimate[2],
         "Difference" = model$estimate[2] - model$estimate[1],
         "t" = model$statistic,
-        "df" = model$parameter,
+        "df_error" = model$parameter,
         "p" = model$p.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
@@ -197,7 +197,7 @@ model_parameters.htest <- function(model,
       "mu" = model$null.value,
       "Difference" = model$estimate - model$null.value,
       "t" = model$statistic,
-      "df" = model$parameter,
+      "df_error" = model$parameter,
       "p" = model$p.value,
       "CI_low" = model$conf.int[1],
       "CI_high" = model$conf.int[2],
@@ -215,8 +215,8 @@ model_parameters.htest <- function(model,
 .extract_htest_oneway <- function(model) {
   data.frame(
     "F" = model$statistic,
-    "df_num" = model$parameter[1],
-    "df_denom" = model$parameter[2],
+    "df" = model$parameter[1],
+    "df_error" = model$parameter[2],
     "p" = model$p.value,
     "Method" = model$method,
     stringsAsFactors = FALSE
@@ -319,7 +319,7 @@ model_parameters.htest <- function(model,
 
   # reorder
   col_order <- c(
-    "Chi2", "df", "Cramers_v", "Cramers_v_adjusted", "Cramers_CI_low",
+    "Chi2", "df", "df_error", "Cramers_v", "Cramers_v_adjusted", "Cramers_CI_low",
     "Cramers_CI_high", "phi", "phi_adjusted", "phi_CI_low",
     "phi_CI_high", "p", "Method", "method"
   )
