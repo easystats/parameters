@@ -10,7 +10,6 @@
 #' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component.
 #'
 #' @examples
-#' \donttest{
 #' library(parameters)
 #' if (require("psych")) {
 #'   factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
@@ -20,11 +19,10 @@
 #'   efa <- factor_analysis(mtcars[, 1:5], n = 2)
 #'   summary(efa)
 #'   predict(efa)
-#'
+#' \donttest{
 #'   # Automated number of components
 #'   factor_analysis(mtcars[, 1:4], n = "auto")
-#' }
-#' }
+#' }}
 #'
 #' @return A data frame of loadings.
 #' @references \itemize{

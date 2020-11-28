@@ -99,7 +99,6 @@ if (require("rstanarm") && require("projpred")) {
     iter = 500, refresh = 0, verbose = FALSE
   )
   select_parameters(model, cross_validation = FALSE)
-}
-}
+}}
 
 }
