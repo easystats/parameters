@@ -113,12 +113,12 @@ aov(mpg ~ am + Error(gear), data = mtcars) %>%
 ### GLMs
 
 ```{r, warning=FALSE, message=FALSE}
-glm(vs ~ poly(mpg, 2) + cyl, data = mtcars) %>% 
+glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>% 
   parameters()
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-glm(vs ~ poly(mpg, 2) + cyl, data = mtcars) %>% 
+glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>% 
   parameters(exponentiate = TRUE, df_method = "wald")
 ```
 

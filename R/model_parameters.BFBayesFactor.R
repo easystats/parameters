@@ -29,6 +29,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats na.omit
 #' @importFrom bayestestR bayesfactor_models
+#' @importFrom insight get_priors
 #' @export
 model_parameters.BFBayesFactor <- function(model,
                                            centrality = "median",
@@ -49,9 +50,10 @@ model_parameters.BFBayesFactor <- function(model,
   }
 
   if (.classify_BFBayesFactor(model)[1] == "xtable") {
-    out <- data.frame(BF = NA)
+    out <- insight::get_priors(model)
+    colnames(out)[which(colnames(out) != "Parameter")] <- paste0("Prior_", colnames(out)[which(colnames(out) != "Parameter")])
   } else {
-    if (is.null(insight::get_parameters(model))) {
+    if (is.null(insight::get_parameters(model, verbose = verbose))) {
       if (isTRUE(verbose)) {
         insight::print_color("Can't extract model parameters.\n", "red")
       }
@@ -69,6 +71,7 @@ model_parameters.BFBayesFactor <- function(model,
         rope_range = rope_range,
         rope_ci = rope_ci,
         priors = priors,
+        verbose = verbose,
         ...
       )
 
@@ -105,6 +108,11 @@ model_parameters.BFBayesFactor <- function(model,
     out$ROPE_low <- NULL
     out$ROPE_high <- NULL
   }
+
+  # ==== remove Component column if not needed
+
+  if (.n_unique(out$Component) == 1) out$Component <- NULL
+  if (.n_unique(out$Effects) == 1) out$Effects <- NULL
 
   attr(out, "ci") <- ci
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)

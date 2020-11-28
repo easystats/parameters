@@ -18,7 +18,9 @@
 #' @inheritParams insight::parameters_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
-#' @return \code{NULL}
+#' @inheritSection model_parameters Labeling the Degrees of Freedom
+#'
+#' @return Invisibly returns the original input object.
 #'
 #' @seealso There is a dedicated method to use inside rmarkdown files, \code{\link[=print_md.parameters_model]{print_md()}}.
 #'
@@ -64,6 +66,7 @@ print.parameters_model <- function(x,
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
+  verbose <- .additional_arguments(x, "verbose", TRUE)
 
   # print header
   if (!is.null(attributes(x)$title)) {
@@ -93,7 +96,7 @@ print.parameters_model <- function(x,
   }
 
   # print p-adjustment
-  if (!is.null(p_adjust) && p_adjust != "none" && "p" %in% colnames(x)) {
+  if (!is.null(p_adjust) && p_adjust != "none" && "p" %in% colnames(x) && isTRUE(verbose)) {
     p_adj_string <- switch(
       p_adjust,
       "holm" = "Holm (1979)",
@@ -116,7 +119,7 @@ print.parameters_model <- function(x,
   }
 
   # for Bayesian models
-  if (!is.null(ci_method)) {
+  if (!is.null(ci_method) && isTRUE(verbose)) {
     ci_method <- switch(
       toupper(ci_method),
       "HDI" = "highest density intervals",
@@ -124,7 +127,7 @@ print.parameters_model <- function(x,
       "SI" = "support intervals",
       "uncertainty intervals"
     )
-    message(paste0("Using ", ci_method, " as credible intervals."))
+    message(paste0("\nUsing ", ci_method, " as credible intervals."))
   }
 
   # print summary for random effects
@@ -167,6 +170,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
 print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
   orig_x <- x
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
+  verbose <- .additional_arguments(x, "verbose", TRUE)
 
   formatted_table <- format(
     x,
@@ -179,7 +183,7 @@ print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...
   )
   cat(insight::export_table(formatted_table, format = "text"))
 
-  if (!is.null(ci_method)) {
+  if (!is.null(ci_method) && isTRUE(verbose)) {
     ci_method <- switch(
       toupper(ci_method),
       "HDI" = "highest density intervals",

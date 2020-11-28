@@ -1,6 +1,6 @@
 #' @importFrom utils packageVersion
 #' @keywords internal
-.add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, bootstrap = FALSE, iterations = 1000, df_method = NULL, ci_method = NULL, ...) {
+.add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, bootstrap = FALSE, iterations = 1000, df_method = NULL, ci_method = NULL, verbose = TRUE, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   info <- tryCatch(
     {
@@ -21,6 +21,7 @@
   }
   attr(params, "ci") <- ci
   attr(params, "bayes_ci_method") <- ci_method
+  attr(params, "verbose") <- verbose
   attr(params, "exponentiate") <- exponentiate
   attr(params, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)
   attr(params, "model_class") <- class(model)

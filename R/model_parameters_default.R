@@ -99,7 +99,7 @@ model_parameters.default <- function(model,
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, bootstrap, iterations, ...)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, bootstrap, iterations, verbose = verbose, ...)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
@@ -177,7 +177,7 @@ model_parameters.HLfit <- model_parameters.default
 model_parameters.mipo <- model_parameters.default
 
 #' @export
-model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, ...) {
+model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, verbose = TRUE, ...) {
   # Parameters, Estimate and CI
   params <- insight::get_parameters(model)
   params <- .data_frame(
@@ -212,7 +212,7 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
 
   if (exponentiate) params <- .exponentiate_parameters(params)
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
@@ -221,7 +221,7 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
 
 
 #' @export
-model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, ...) {
+model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, verbose = TRUE, ...) {
   # Parameters, Estimate and CI
   params <- insight::get_parameters(model)
 
@@ -240,7 +240,7 @@ model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, ...)
 
   if (exponentiate) params <- .exponentiate_parameters(params)
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ...)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params

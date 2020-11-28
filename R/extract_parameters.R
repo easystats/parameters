@@ -419,7 +419,7 @@
 
 
   # Reorder
-  order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p")
+  order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p", "Component")
   parameters <- parameters[order[order %in% names(parameters)]]
 
 
