@@ -8,7 +8,7 @@
 #' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
-#' @details
+#' @details To do... Explain df.
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'

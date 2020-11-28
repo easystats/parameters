@@ -72,6 +72,9 @@ A data frame of indices related to the model's parameters.
 \description{
 Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s).
 }
+\details{
+To do... Explain df.
+}
 \examples{
 library(parameters)
 if (require("mgcv")) {
