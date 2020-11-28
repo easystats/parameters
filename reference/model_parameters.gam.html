@@ -267,7 +267,16 @@
     <p>A data frame of indices related to the model's parameters.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>To do... Explain df.</p>
+    <p>The reporting of degrees of freedom <em>for the spline terms</em>
+slightly differs from the output of <code><a href='https://rdrr.io/r/base/summary.html'>summary(model)</a></code>, for example in the
+case of <code><a href='https://rdrr.io/pkg/mgcv/man/gam.html'>mgcv::gam()</a></code>. The <em>estimated degrees of freedom</em>, column
+<code>edf</code> in the summary-output, is named <code>df</code> in the returned data
+frame, while the column <code>df_error</code> in the returned data frame refers to
+the residual degrees of freedom that are returned by <code><a href='https://rdrr.io/r/stats/df.residual.html'>df.residual()</a></code>.
+Hence, the values in the the column <code>df_error</code> differ from the column
+<code>Ref.df</code> from the summary, which is intentional, as these reference
+degrees of freedom &#8220;is not very interpretable&#8221;
+(<a href='https://r.789695.n4.nabble.com/ref-df-in-mgcv-gam-tp4756194p4756195.html'>web</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to rename
