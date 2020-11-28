@@ -12,6 +12,16 @@ if (require("testthat") && require("parameters")) {
     params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length))
     expect_equal(params$Difference, -2.786, tolerance = 0.05)
 
+    params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), standardized_d = TRUE)
+    expect_equal(params$d, -4.854459, tolerance = 0.05)
+    expect_equal(params$d_CI_low, -5.3674, tolerance = 0.05)
+    expect_equal(
+      colnames(params),
+      c("Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
+        "Difference", "t", "df_error", "CI_low", "CI_high", "d", "d_CI_low",
+        "d_CI_high", "p", "Method")
+    )
+
     params <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs))
     expect_equal(params$Difference, 7.940, tolerance = 0.05)
 

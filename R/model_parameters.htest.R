@@ -7,6 +7,10 @@
 #' @param cramers_v,phi Compute Cramer's V or phi as index of effect size.
 #'   Can be \code{"raw"} or \code{"adjusted"} (effect size will be bias-corrected).
 #'   Only applies to objects from \code{chisq.test()}.
+#' @param standardized_d If \code{TRUE}, compute standardized d as index of
+#'   effect size. Only applies to objects from \code{t.test()}. Calculation of
+#'   \code{d} is based on the t-value (see \code{\link[=effectsize:t_to_d]{t_to_d()}})
+#'   for details.
 #' @param ci Level of confidence intervals for Cramer's V or phi. Currently only
 #'   applies to objects from \code{chisq.test()}.
 #' @inheritParams model_parameters.default
@@ -39,6 +43,7 @@
 model_parameters.htest <- function(model,
                                    cramers_v = NULL,
                                    phi = NULL,
+                                   standardized_d = NULL,
                                    ci = .95,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
@@ -46,7 +51,13 @@ model_parameters.htest <- function(model,
   if (bootstrap) {
     stop("Bootstrapped h-tests are not yet implemented.")
   } else {
-    parameters <- .extract_parameters_htest(model, cramers_v = cramers_v, phi = phi, ci = ci)
+    parameters <- .extract_parameters_htest(
+      model,
+      cramers_v = cramers_v,
+      phi = phi,
+      standardized_d = standardized_d,
+      ci = ci
+    )
   }
 
   if (!is.null(parameters$Method)) {
@@ -70,6 +81,7 @@ model_parameters.htest <- function(model,
 .extract_parameters_htest <- function(model,
                                       cramers_v = NULL,
                                       phi = NULL,
+                                      standardized_d = NULL,
                                       ci = 0.95) {
   m_info <- insight::model_info(model)
 
@@ -77,6 +89,7 @@ model_parameters.htest <- function(model,
     out <- .extract_htest_correlation(model)
   } else if (m_info$is_ttest) {
     out <- .extract_htest_ttest(model)
+    out <- .add_effectsize_ttest(model, out, standardized_d, ci = ci)
   } else if (m_info$is_onewaytest) {
     out <- .extract_htest_oneway(model)
   } else if (m_info$is_chi2test) {
@@ -141,7 +154,7 @@ model_parameters.htest <- function(model,
 
 # extract htest ttest ----------------------
 
-.extract_htest_ttest <- function(model) {
+.extract_htest_ttest <- function(model, standardized_d = NULL) {
   if (grepl(" and ", model$data.name)) {
     names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
     out <- data.frame(
@@ -322,6 +335,36 @@ model_parameters.htest <- function(model,
     "Chi2", "df", "df_error", "Cramers_v", "Cramers_v_adjusted", "Cramers_CI_low",
     "Cramers_CI_high", "phi", "phi_adjusted", "phi_CI_low",
     "phi_CI_high", "p", "Method", "method"
+  )
+  out <- out[col_order[col_order %in% names(out)]]
+  out
+}
+
+
+
+
+.add_effectsize_ttest <- function(model,
+                                  out,
+                                  standardized_d = NULL,
+                                  ci = .95) {
+  if (is.null(standardized_d)) {
+    return(out)
+  }
+
+  if (requireNamespace("effectsize", quietly = TRUE)) {
+    # standardized d
+    es <- effectsize::effectsize(model, ci = ci)
+    es$CI <- NULL
+    ci_cols <- grepl("^CI", names(es))
+    names(es)[ci_cols] <- paste0("d_", names(es)[ci_cols])
+    out <- cbind(out, es)
+  }
+
+  # reorder
+  col_order <- c(
+    "Parameter1", "Parameter2", "Parameter", "Group", "Mean_Parameter1",
+    "Mean_Parameter2", "mu", "Difference", "Mean_Difference", "t", "df_error",
+    "CI_low", "CI_high", "d", "d_CI_low", "d_CI_high", "p", "Method", "method"
   )
   out <- out[col_order[col_order %in% names(out)]]
   out
