@@ -62,7 +62,7 @@ model_parameters.gam <- function(model,
   }
 
   # fix estimated df column
-  if ("smooth_terms" %in% parameters$Component && !("df" %in% names(parameters))) {
+  if (inherits(model, "gam") && "smooth_terms" %in% parameters$Component && !("df" %in% names(parameters))) {
     parameters$df <- parameters$Coefficient
     parameters$df[parameters$Component != "smooth_terms"] <- NA
     parameters$Coefficient[parameters$Component == "smooth_terms"] <- NA
