@@ -51,7 +51,7 @@ if (require("testthat") && require("parameters") && require("psych")) {
 
   data(bfi)
   d <- na.omit(bfi[, 1:25])
-  model <- psych::fa(data, nfactors = 5)
+  model <- psych::fa(d, nfactors = 5)
   mp <- model_parameters(model, sort = TRUE, threshold = "max")
 
   test_that("predict model_parameters fa", {
