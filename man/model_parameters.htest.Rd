@@ -28,7 +28,7 @@ Only applies to objects from \code{chisq.test()}.}
 
 \item{standardized_d}{If \code{TRUE}, compute standardized d as index of
 effect size. Only applies to objects from \code{t.test()}. Calculation of
-\code{d} is based on the t-value (see \code{\link[=effectsize:t_to_d]{t_to_d()}})
+\code{d} is based on the t-value (see \code{\link[effectsize]{t_to_d}})
 for details.}
 
 \item{ci}{Level of confidence intervals for Cramer's V or phi. Currently only

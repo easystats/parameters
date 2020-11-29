@@ -51,6 +51,9 @@
 * `model_parameters()` for meta-analysis-models gains a `include_studies`-argument,
   to include or remove studies from the output.
   
+* `model_parameters()` for gam-models now includes the residual df for smooth
+   terms, and no longer the reference df.
+  
 * Slightly revised and improved the `print()` method for `model_parameters()`.
 
 ### Other functions
@@ -67,7 +70,8 @@
   variance-covariance.
   
 * Fixed issue in `model_parameters()` for `nnet::multinom()`, `lqmm::lqm()`,
-  and `margins::margins()` models, and models from package *blme*.
+  `mgcv::gam()`, and `margins::margins()` models, and models from package 
+  *blme*.
 
 
 # parameters 0.9.0
