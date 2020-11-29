@@ -213,6 +213,7 @@
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>metafor</code>-models is more stable when called from inside functions.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>metaBMA</em>-models now includes prior information for the meta-parameters.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for meta-analysis-models gains a <code>include_studies</code>-argument, to include or remove studies from the output.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for gam-models now includes the residual df for smooth terms, and no longer the reference df.</p></li>
 <li><p>Slightly revised and improved the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
 </ul>
 </div>
@@ -230,7 +231,7 @@
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fixed issue in <code><a href="https://easystats.github.io/bayestestR/reference/ci.html">ci()</a></code> for <em>lme</em> models with non-positive definite variance-covariance.</p></li>
-<li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/nnet/man/multinom.html">nnet::multinom()</a></code>, <code>lqmm::lqm()</code>, and <code>margins::margins()</code> models, and models from package <em>blme</em>.</p></li>
+<li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/nnet/man/multinom.html">nnet::multinom()</a></code>, <code>lqmm::lqm()</code>, <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html">mgcv::gam()</a></code>, and <code>margins::margins()</code> models, and models from package <em>blme</em>.</p></li>
 </ul>
 </div>
 </div>
