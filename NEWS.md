@@ -40,7 +40,9 @@
   `ci`-argument, to add confidence intervals to effect size parameters.
 
 * `model_parameters()` for `htest` objects gains a `cramers_v` and `phi`
-  argument, to compute effect size parameters for objects from `chisq.test()`.
+  argument, to compute effect size parameters for objects from `chisq.test()`,
+  and a `standardized_D` argument, to compute effect size parameters for 
+  objects from `t.test()`.
 
 * `model_parameters()` for `metafor`-models is more stable when called from inside
   functions.
