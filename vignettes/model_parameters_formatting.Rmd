@@ -125,7 +125,7 @@ tidy(model, conf.int = TRUE)
 
 Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the `parameters_table()` function is a convenient function that does all the work for you (**note:** this function will be renamed into `format_table()` in a future update). 
 
-`parameters_table()` requires a data frame with model parameters as input, however, there are some requirements to make `parameters_table()` work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from *broom* or the [*easystats* packages](https://easystats.github.io/easystats).
+`parameters_table()` requires a data frame with model parameters as input, however, there are some requirements to make `parameters_table()` work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from *broom* or the [*easystats* packages](https://easystats.github.io/easystats/).
 
 ```{r}
 model %>% 

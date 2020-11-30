@@ -80,7 +80,7 @@ The main issue of the model seems to be the high [multicollinearity](https://en.
 
 ### Parameters selection
 
-Time to do some variables selection. This can be easily done using the `select_parameters()` function, that will **automatically select the best variables** and update the model accordingly. One way of using that is in a tidy pipeline (using [`%>%`](https://cran.r-project.org/package=magrittr/README.html)), using this output to update a new model.
+Time to do some variables selection. This can be easily done using the `select_parameters()` function, that will **automatically select the best variables** and update the model accordingly. One way of using that is in a tidy pipeline (using [`%>%`](https://cran.r-project.org/package=magrittr/)), using this output to update a new model.
 
 
 ```{r message=FALSE, warning=FALSE}
