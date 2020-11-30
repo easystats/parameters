@@ -35,7 +35,7 @@
 #'
 #' @section Labeling the Degrees of Freedom:
 #' Throughout the \pkg{parameters} package, we decided to label the residual
-#' degrees of freedom \emph{df_error}. The reason for this is that the degrees
+#' degrees of freedom \emph{df_error}. The reason for this is that these degrees
 #' of freedom not always refer to the residuals. For certain models, they refer
 #' to the estimate error - in a linear model these are the same, but in - for
 #' instance - any mixed effects model, this isn't strictly true. Hence, we

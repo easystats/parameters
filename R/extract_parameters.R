@@ -219,7 +219,10 @@
 
   # ==== Reorder
 
-  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "z / Chisq", "z / Chi2", "F", "Chi2", "chisq", "chi-squared", "Statistic", "df", "df_error", "p", "Component", "Response", "Effects")
+  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "t/F",
+                 "z / Chisq", "z/Chisq", "z / Chi2", "z/Chi2", "F", "Chi2",
+                 "chisq", "chi-squared", "Statistic", "df", "df_error", "p",
+                 "Component", "Response", "Effects")
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
 
