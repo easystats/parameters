@@ -218,7 +218,7 @@
 <div id="parameters-selection" class="section level3">
 <h3 class="hasAnchor">
 <a href="#parameters-selection" class="anchor"></a>Parameters selection</h3>
-<p>Time to do some variables selection. This can be easily done using the <code><a href="../reference/select_parameters.html">select_parameters()</a></code> function, that will <strong>automatically select the best variables</strong> and update the model accordingly. One way of using that is in a tidy pipeline (using <a href="https://cran.r-project.org/package=magrittr/README.html"><code>%&gt;%</code></a>), using this output to update a new model.</p>
+<p>Time to do some variables selection. This can be easily done using the <code><a href="../reference/select_parameters.html">select_parameters()</a></code> function, that will <strong>automatically select the best variables</strong> and update the model accordingly. One way of using that is in a tidy pipeline (using <a href="https://cran.r-project.org/package=magrittr/"><code>%&gt;%</code></a>), using this output to update a new model.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">.</span><span class="op">*</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
