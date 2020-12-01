@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Principal Component Analysis (PCA)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/principal_components.R'><code>R/principal_components.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/principal_components.R'><code>R/principal_components.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/utils_pca_efa.R'><code>R/utils_pca_efa.R</code></a></small>
     <div class="hidden name"><code>principal_components.Rd</code></div>
     </div>
 
@@ -185,7 +185,10 @@
 
 <span class='fu'>closest_component</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>rotated_data</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+<span class='fu'>rotated_data</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='co'># S3 method for parameters_efa</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>object</span>, newdata <span class='op'>=</span> <span class='cn'>NULL</span>, names <span class='op'>=</span> <span class='cn'>NULL</span>, keep_na <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -217,6 +220,22 @@
     <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
+      <th>object</th>
+      <td><p>An object of class <code>parameters_pca</code> or <code>parameters_efa</code></p></td>
+    </tr>
+    <tr>
+      <th>newdata</th>
+      <td><p>An optional data frame in which to look for variables with which to predict. If omitted, the fitted values are used.</p></td>
+    </tr>
+    <tr>
+      <th>names</th>
+      <td><p>Optional character vector to name columns of the returned data frame.</p></td>
+    </tr>
+    <tr>
+      <th>keep_na</th>
+      <td><p>Logical, if <code>TRUE</code>, predictions also return observations with missing values from the original data, hence the number of rows of predicted data and original data is equal.</p></td>
     </tr>
     </table>
 
