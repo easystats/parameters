@@ -1,6 +1,7 @@
-#' Kenward-Roger approximation for SEs, CIs and p-values
+#' @title Kenward-Roger approximation for SEs, CIs and p-values
+#' @name p_value_kenward
 #'
-#' An approximate F-test based on the Kenward-Roger (1997) approach.
+#' @description An approximate F-test based on the Kenward-Roger (1997) approach.
 #'
 #' @param model A statistical model.
 #' @param dof Degrees of Freedom.

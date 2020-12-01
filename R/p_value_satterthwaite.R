@@ -1,6 +1,7 @@
-#' Satterthwaite approximation for SEs, CIs and p-values
+#' @title Satterthwaite approximation for SEs, CIs and p-values
+#' @name p_value_satterthwaite
 #'
-#' An approximate F-test based on the Satterthwaite (1946) approach.
+#' @description An approximate F-test based on the Satterthwaite (1946) approach.
 #'
 #' @param model A statistical model.
 #' @param dof Degrees of Freedom.

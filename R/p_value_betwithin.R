@@ -1,6 +1,7 @@
-#' Between-within approximation for SEs, CIs and p-values
+#' @title Between-within approximation for SEs, CIs and p-values
+#' @name p_value_betwithin
 #'
-#' Approximation of degrees of freedom based on a "between-within" heuristic.
+#' @description Approximation of degrees of freedom based on a "between-within" heuristic.
 #'
 #' @param model A mixed model.
 #' @param dof Degrees of Freedom.

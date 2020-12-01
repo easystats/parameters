@@ -1,6 +1,7 @@
-#' "m-l-1" approximation for SEs, CIs and p-values
+#' @title "m-l-1" approximation for SEs, CIs and p-values
+#' @name p_value_ml1
 #'
-#' Approximation of degrees of freedom based on a "m-l-1" heuristic as suggested by Elff et al. (2019).
+#' @description Approximation of degrees of freedom based on a "m-l-1" heuristic as suggested by Elff et al. (2019).
 #'
 #' @param model A mixed model.
 #' @param dof Degrees of Freedom.
