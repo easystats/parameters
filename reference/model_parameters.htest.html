@@ -234,9 +234,9 @@ applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.html'>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>mpg</span>, <span class='va'>mtcars</span><span class='op'>$</span><span class='va'>cyl</span>, method <span class='op'>=</span> <span class='st'>"pearson"</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Parameter1 | Parameter2 |     r | t(30) | df_error |      p |         95% CI |  Method
-#&gt; --------------------------------------------------------------------------------------
-#&gt; mtcars$mpg | mtcars$cyl | -0.85 | -8.92 |       30 | &lt; .001 | [-0.93, -0.72] | Pearson</div><div class='input'>
+</div><div class='output co'>#&gt; Parameter1 | Parameter2 |     r | t(30) |      p |         95% CI |  Method
+#&gt; ---------------------------------------------------------------------------
+#&gt; mtcars$mpg | mtcars$cyl | -0.85 | -8.92 | &lt; .001 | [-0.93, -0.72] | Pearson</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span>, <span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference | t(225.68) |      p |         95% CI |                  Method
