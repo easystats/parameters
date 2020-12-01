@@ -57,7 +57,7 @@
 #'    components.
 #'  }
 #'
-#' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{closest_component()} will return a numeric vector with the assigned component index for each column from the original data frame. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{closest_component()} will return a numeric vector with the assigned component index for each column from the original data frame. \code{rotated_data()} will return the rotated data, including missing values, so it matches the original data frame. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @seealso \code{\link[performance]{check_itemscale}} to compute various measures of internal consistencies applied to the (sub)scales (i.e. components) extracted from the PCA. Use \code{\link{get_scores}} to compute scores for each subscale.
 #'
@@ -91,7 +91,6 @@
 #'   \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
 #'   \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate statistics (6th ed.). Boston: Pearson Education.
 #' }
-#' @importFrom stats prcomp
 #' @export
 principal_components <- function(x,
                                  n = "auto",
@@ -111,7 +110,33 @@ closest_component <- function(x) {
 
 
 
-#' @importFrom stats prcomp na.omit setNames
+#' @rdname principal_components
+#' @export
+rotated_data <- function(x) {
+  original_data <- attributes(x)$data_set
+  rotated_matrix <- as.data.frame(attributes(x)$model$x)
+  out <- NULL
+
+  if (!is.null(original_data) && !is.null(rotated_matrix)) {
+    compl_cases <- attributes(x)$complete_cases
+    if (is.null(compl_cases) && nrow(original_data) != nrow(rotated_matrix)) {
+      warning("Could not retrieve information about missing data.", call. = FALSE)
+      return(NULL)
+    }
+    original_data$.parameters_merge_id <- 1:nrow(original_data)
+    rotated_matrix$.parameters_merge_id <- (1:nrow(original_data))[compl_cases]
+    out <- merge(original_data, rotated_matrix, by = ".parameters_merge_id", all = TRUE, sort = FALSE)
+    out$.parameters_merge_id <- NULL
+  } else {
+    warning("Either the original or the rotated data could not be retrieved.", call. = FALSE)
+    return(NULL)
+  }
+  out
+}
+
+
+
+#' @importFrom stats prcomp na.omit setNames complete.cases
 #' @export
 principal_components.data.frame <- function(x,
                                             n = "auto",
@@ -203,6 +228,7 @@ principal_components.data.frame <- function(x,
   attr(loadings, "n") <- n
   attr(loadings, "type") <- "prcomp"
   attr(loadings, "loadings_columns") <- loading_cols
+  attr(loadings, "complete_cases") <- stats::complete.cases(original_data)
 
   # Sorting
   if (isTRUE(sort)) {
@@ -253,7 +279,7 @@ principal_components.data.frame <- function(x,
 
 
 
-
+#' @importFrom stats complete.cases
 #' @keywords internal
 .pca_rotate <- function(x, n, rotation, sort = FALSE, threshold = NULL, original_data = NULL, ...) {
   if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
@@ -280,6 +306,7 @@ principal_components.data.frame <- function(x,
   out <- model_parameters(pca, sort = sort, threshold = threshold)
 
   attr(out, "data_set") <- original_data
+  attr(out, "complete_cases") <- stats::complete.cases(original_data)
   out
 }
 

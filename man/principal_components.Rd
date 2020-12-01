@@ -3,6 +3,7 @@
 \name{principal_components}
 \alias{principal_components}
 \alias{closest_component}
+\alias{rotated_data}
 \title{Principal Component Analysis (PCA)}
 \usage{
 principal_components(
@@ -16,6 +17,8 @@ principal_components(
 )
 
 closest_component(x)
+
+rotated_data(x)
 }
 \arguments{
 \item{x}{A data frame or a statistical model.}
@@ -86,7 +89,7 @@ This function performs a principal component analysis (PCA) and returns the load
  }
 }
 \note{
-There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{closest_component()} will return a numeric vector with the assigned component index for each column from the original data frame. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{closest_component()} will return a numeric vector with the assigned component index for each column from the original data frame. \code{rotated_data()} will return the rotated data, including missing values, so it matches the original data frame. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
 \donttest{

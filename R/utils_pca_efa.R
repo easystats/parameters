@@ -69,12 +69,24 @@ summary.parameters_omega <- function(object, ...) {
 # predict -----------------------------------------------------------------
 
 
+#' @importFrom stats predict
 #' @export
-predict.parameters_efa <- function(object, newdata = NULL, names = NULL, ...) {
+predict.parameters_efa <- function(object, newdata = NULL, names = NULL, keep_na = FALSE, ...) {
   if (is.null(newdata)) {
     out <- as.data.frame(attributes(object)$scores)
+    if (isTRUE(keep_na)) {
+      compl_cases <- attributes(object)$complete_cases
+      if (is.null(compl_cases)) {
+        warning("Could not retrieve information about missing data. Returning prediction only for complete cases.", call. = FALSE)
+      } else {
+        original_data <- data.frame(.parameters_merge_id = 1:length(compl_cases))
+        out$.parameters_merge_id <- (1:nrow(original_data))[compl_cases]
+        out <- merge(original_data, out, by = ".parameters_merge_id", all = TRUE, sort = TRUE)
+        out$.parameters_merge_id <- NULL
+      }
+    }
   } else {
-    out <- as.data.frame(predict(attributes(object)$model, newdata = newdata, ...))
+    out <- as.data.frame(stats::predict(attributes(object)$model, newdata = newdata, ...))
   }
   if (!is.null(names)) {
     names(out)[1:length(c(names))] <- names
