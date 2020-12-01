@@ -147,9 +147,9 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter1        |       Parameter2 |     r | t(148) |     p |        95% CI |  Method
-#&gt; ---------------------------------------------------------------------------------------
-#&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 |  -1.44 | 0.152 | [-0.27, 0.04] | Pearson</code></pre>
+<pre><code>#&gt; Parameter1        |       Parameter2 |     r | t(148) | df_error |     p |        95% CI |  Method
+#&gt; --------------------------------------------------------------------------------------------------
+#&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 |  -1.44 |      148 | 0.152 | [-0.27, 0.04] | Pearson</code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
