@@ -1,6 +1,7 @@
-#' p-values for Models with Special Components
+#' @title p-values for Models with Special Components
+#' @name p_value.DirichletRegModel
 #'
-#' This function attempts to return, or compute, p-values of models with special model components.
+#' @description This function attempts to return, or compute, p-values of models with special model components.
 #'
 #' @param model A statistical model.
 #' @param component Should all parameters, parameters for the conditional model, precision- or scale-component or smooth_terms be returned? \code{component} may be one of \code{"conditional"}, \code{"precision"}, \code{"scale"}, \code{"smooth_terms"}, \code{"full"} or \code{"all"} (default).

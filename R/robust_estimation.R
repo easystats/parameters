@@ -1,6 +1,7 @@
-#' Robust estimation
+#' @title Robust estimation
+#' @name standard_error_robust
 #'
-#' \code{standard_error_robust()}, \code{ci_robust()} and \code{p_value_robust()}
+#' @description \code{standard_error_robust()}, \code{ci_robust()} and \code{p_value_robust()}
 #' attempt to return indices based on robust estimation of the variance-covariance
 #' matrix, using the packages \pkg{sandwich} and \pkg{clubSandwich}.
 #'

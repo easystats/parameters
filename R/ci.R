@@ -1,6 +1,7 @@
-#' Confidence Intervals (CI)
+#' @title Confidence Intervals (CI)
+#' @name ci.merMod
 #'
-#' Compute confidence intervals (CI) for frequentist models.
+#' @description Compute confidence intervals (CI) for frequentist models.
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
