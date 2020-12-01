@@ -8,6 +8,8 @@
 \alias{display}
 \alias{equivalence_test}
 \alias{print_md}
+\alias{format_bf}
+\alias{format_pd}
 \alias{parameters_table}
 \alias{format_p}
 \alias{standardize_names}
@@ -20,6 +22,6 @@ below to see their documentation.
 \describe{
   \item{bayestestR}{\code{\link[bayestestR]{ci}}, \code{\link[bayestestR]{equivalence_test}}}
 
-  \item{insight}{\code{\link[insight]{display}}, \code{\link[insight]{format_p}}, \code{\link[insight:format_table]{parameters_table}}, \code{\link[insight:display]{print_md}}, \code{\link[insight]{standardize_names}}}
+  \item{insight}{\code{\link[insight]{display}}, \code{\link[insight]{format_bf}}, \code{\link[insight]{format_p}}, \code{\link[insight]{format_pd}}, \code{\link[insight:format_table]{parameters_table}}, \code{\link[insight:display]{print_md}}, \code{\link[insight]{standardize_names}}}
 }}
 
