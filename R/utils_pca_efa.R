@@ -76,6 +76,20 @@ predict.parameters_efa <- function(object, newdata = NULL, names = NULL, ...) {
   } else {
     out <- as.data.frame(predict(attributes(object)$model, newdata = newdata, ...))
   }
+  
+  # Check if the length of the predicted is same as original data
+  original_data <- attributes(object)$data_set
+  missing <- unique(which(is.na(original_data), arr.ind=TRUE)[, 1])
+  if(length(missing) > 0){
+    # Run through each missing row and insert it in the predicted
+    for(i in sort(missing)){
+      split <- split(out, cumsum(1:nrow(out) %in% i))
+      upper_part <- split[[1]]
+      upper_part[nrow(upper_part) + 1, ] <- NA
+      out <- rbind(upper_part, split[[2]])
+      rownames(out) <- NULL
+    } 
+  }
 
   if (!is.null(names)) {
     names(out)[1:length(c(names))] <- names

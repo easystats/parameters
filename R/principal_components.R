@@ -112,6 +112,9 @@ principal_components.data.frame <- function(x, n = "auto", rotation = "none", so
   # original data
   original_data <- x
 
+  # remove missings
+  x <- stats::na.omit(x)
+
   # PCA
   model <- stats::prcomp(x, retx = TRUE, center = TRUE, scale. = standardize, ...)
 
