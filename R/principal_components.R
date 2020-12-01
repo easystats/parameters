@@ -8,6 +8,10 @@
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).
 #' @param standardize A logical value indicating whether the variables should be standardized (centered and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).
+#' @param object An object of class \code{parameters_pca} or \code{parameters_efa}
+#' @param newdata An optional data frame in which to look for variables with which to predict. If omitted, the fitted values are used.
+#' @param names Optional character vector to name columns of the returned data frame.
+#' @param keep_na Logical, if \code{TRUE}, predictions also return observations with missing values from the original data, hence the number of rows of predicted data and original data is equal.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details
