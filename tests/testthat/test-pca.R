@@ -55,7 +55,8 @@ if (require("testthat") && require("parameters") && require("psych")) {
   mp <- model_parameters(model, sort = TRUE, threshold = "max")
 
   test_that("predict model_parameters fa", {
-    out <- head(predict(mp, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness")), 5)
+    pr <- suppressWarnings(predict(mp, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness")))
+    out <- head(pr, 5)
     expect_equal(
       out$Neuroticism,
       c(-0.22242, 0.1618, 0.61907, -0.11692, -0.17372),
