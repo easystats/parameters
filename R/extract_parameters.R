@@ -4,7 +4,7 @@
 #' @importFrom insight get_statistic get_parameters get_sigma
 #' @importFrom stats confint p.adjust.methods p.adjust
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, p_adjust = NULL, wb_component = FALSE, ...) {
+.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, p_adjust = NULL, wb_component = FALSE, verbose = TRUE, ...) {
 
   # ==== check if standardization is required and package available
 
@@ -27,7 +27,7 @@
     standardize <- NULL
   }
 
-  parameters <- insight::get_parameters(model, effects = effects, component = component)
+  parameters <- insight::get_parameters(model, effects = effects, component = component, verbose = verbose)
   statistic <- insight::get_statistic(model, component = component)
 
   # check if all estimates are non-NA
@@ -70,11 +70,11 @@
 
   if (!is.null(ci)) {
     if (isTRUE(robust)) {
-      ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
+      ci_df <- suppressMessages(ci_robust(model, ci = ci, verbose = verbose, ...))
     } else if (!is.null(df_method)) {
-      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = df_method))
+      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = df_method, verbose = verbose))
     } else {
-      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component))
+      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, verbose = verbose))
     }
     if (!is.null(ci_df)) {
       if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
@@ -93,9 +93,9 @@
   if (isTRUE(robust)) {
     pval <- p_value_robust(model, ...)
   } else if (!is.null(df_method)) {
-    pval <- p_value(model, effects = effects, component = component, method = df_method)
+    pval <- p_value(model, effects = effects, component = component, method = df_method, verbose = verbose)
   } else {
-    pval <- p_value(model, effects = effects, component = component)
+    pval <- p_value(model, effects = effects, component = component, verbose = verbose)
   }
 
   if (!is.null(pval)) {
@@ -110,9 +110,9 @@
   if (isTRUE(robust)) {
     std_err <- standard_error_robust(model, ...)
   } else if (!is.null(df_method)) {
-    std_err <- standard_error(model, effects = effects, component = component, method = df_method)
+    std_err <- standard_error(model, effects = effects, component = component, method = df_method, verbose = verbose)
   } else {
-    std_err <- standard_error(model, effects = effects, component = component)
+    std_err <- standard_error(model, effects = effects, component = component, verbose = verbose)
   }
 
   if (!is.null(std_err)) {

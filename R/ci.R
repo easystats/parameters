@@ -1003,7 +1003,7 @@ ci.meta_bma <- ci.meta_random
 .check_component <- function(m, x, verbose = TRUE) {
   if (!insight::model_info(m)$is_zero_inflated && x %in% c("zi", "zero_inflated")) {
     if (isTRUE(verbose)) {
-      insight::print_color("Model has no zero-inflation component!\n", "red")
+      message("Model has no zero-inflation component!")
     }
     x <- NULL
   }

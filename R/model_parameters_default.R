@@ -62,6 +62,7 @@ model_parameters.default <- function(model,
     exponentiate = exponentiate,
     robust = robust,
     p_adjust = p_adjust,
+    verbose = verbose,
     ...
   )
 
@@ -95,7 +96,7 @@ model_parameters.default <- function(model,
   if (bootstrap) {
     params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    params <- .extract_parameters_generic(model, ci = ci, component = component, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, p_adjust = p_adjust, ...)
+    params <- .extract_parameters_generic(model, ci = ci, component = component, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, p_adjust = p_adjust, verbose = verbose, ...)
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)

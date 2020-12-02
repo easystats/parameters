@@ -55,7 +55,7 @@ model_parameters.BFBayesFactor <- function(model,
   } else {
     if (is.null(insight::get_parameters(model, verbose = verbose))) {
       if (isTRUE(verbose)) {
-        insight::print_color("Can't extract model parameters.\n", "red")
+        warning("Can't extract model parameters.", call. = FALSE)
       }
       return(NULL)
     }

@@ -94,7 +94,7 @@ p_value.default <- function(model, method = NULL, verbose = TRUE, ...) {
 
   if (is.null(p)) {
     if (isTRUE(verbose)) {
-      insight::print_color("\nCould not extract p-values from model object.\n", "red")
+      warning("Could not extract p-values from model object.", call. = FALSE)
     }
   } else {
     .data_frame(
@@ -1168,7 +1168,7 @@ p_value.list <- function(model, verbose = TRUE, ...) {
     p_value(model)
   } else {
     if (isTRUE(verbose)) {
-      insight::print_color("\nCould not extract p-values from model object.\n", "red")
+      warning("Could not extract p-values from model object.", call. = FALSE)
     }
   }
 }

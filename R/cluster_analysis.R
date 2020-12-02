@@ -108,7 +108,9 @@ cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"
         n_cl
       },
       error = function(e) {
-        insight::print_color("Could not extract number of cluster. Please provide argument 'n_clusters'.\n", "red")
+        if (isTRUE(verbose)) {
+          warning("Could not extract number of cluster. Please provide argument 'n_clusters'.", call. = FALSE)
+        }
         1
       }
     )
