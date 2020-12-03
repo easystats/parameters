@@ -26,6 +26,14 @@ if (require("testthat") && require("parameters")) {
 
 
 
+  test_that("print digits model_parameters.lm", {
+    model <- lm(mpg ~ wt, data = mtcars)
+    params <- model_parameters(model, digits = 4, ci_digits = 5)
+    out <- capture.output(print(params))
+    expect_equal(out[3], "(Intercept) |     37.2851 | 1.8776 | [33.45050, 41.11975] | 19.8576 | < .001")
+  })
+
+
   test_that("model_parameters.glm - binomial", {
     set.seed(333)
     model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")

@@ -68,6 +68,12 @@ print.parameters_model <- function(x,
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
+  # check if user supplied digits attributes
+  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
+  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+
+
   # print header
   if (!is.null(attributes(x)$title)) {
     insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
@@ -167,15 +173,30 @@ print.parameters_random <- function(x, digits = 2, ...) {
 # Stan models ------------------
 
 #' @export
-print.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
+print.parameters_stan <- function(x,
+                                  split_components = TRUE,
+                                  select = NULL,
+                                  digits = 2,
+                                  ci_digits = 2,
+                                  p_digits = 3,
+                                  ...) {
   orig_x <- x
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
   verbose <- .additional_arguments(x, "verbose", TRUE)
+
+  # check if user supplied digits attributes
+  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
+  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+
 
   formatted_table <- format(
     x,
     split_components = split_components,
     select = select,
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
     format = "text",
     ci_width = "auto",
     ci_brackets = TRUE,

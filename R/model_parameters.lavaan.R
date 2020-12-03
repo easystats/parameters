@@ -109,6 +109,11 @@ n_parameters.blavaan <- n_parameters.lavaan
 #' @importFrom insight export_table
 #' @export
 print.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...) {
+  # check if user supplied digits attributes
+  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
+  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+
   formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "text", ci_brackets = TRUE, ci_width = "auto", ...)
   cat(insight::export_table(formatted_table, format = "text", ...))
   invisible(x)

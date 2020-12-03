@@ -2,7 +2,14 @@
 
 #' @rdname display.parameters_model
 #' @export
-print_md.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
+print_md.parameters_model <- function(x,
+                                      pretty_names = TRUE,
+                                      split_components = TRUE,
+                                      select = NULL,
+                                      digits = 2,
+                                      ci_digits = 2,
+                                      p_digits = 3,
+                                      ...) {
   # table caption
   res <- attributes(x)$details
   if (!is.null(attributes(x)$title)) {
@@ -12,6 +19,12 @@ print_md.parameters_model <- function(x, pretty_names = TRUE, split_components =
   } else {
     table_caption <- NULL
   }
+
+  # check if user supplied digits attributes
+  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
+  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+
 
   formatted_table <- format(x, format = "markdown", pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = c("(", ")"))
 
@@ -36,13 +49,23 @@ print_md.parameters_simulate <- print_md.parameters_model
 
 #' @export
 print_md.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...) {
+  # check if user supplied digits attributes
+  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
+  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+
   formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "markdown", ci_width = NULL, ci_brackets = c("(", ")"), ...)
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 
 #' @export
-print_md.parameters_stan <- function(x, split_components = TRUE, select = NULL, ...) {
-  formatted_table <- format(split_components = split_components, select = select, format = "markdown", ci_width = NULL, ci_brackets = c("(", ")"), ...)
+print_md.parameters_stan <- function(x, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
+  # check if user supplied digits attributes
+  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
+  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+
+  formatted_table <- format(split_components = split_components, select = select, format = "markdown", digits = digits, ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = c("(", ")"), ...)
   insight::export_table(formatted_table, format = "markdown")
 }
 

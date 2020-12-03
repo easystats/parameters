@@ -9,11 +9,6 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   coef_name <- attributes(x)$coefficient_name
   s_value <- attributes(x)$s_value
 
-  # check if user supplied digits attributes
-  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
-  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
-  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
-
   # prepare output, to have in shape for printing
   x <- .prepare_x_for_print(x, select, coef_name, s_value)
 
