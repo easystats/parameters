@@ -9,7 +9,7 @@
 #'
 #' format_p_adjust("holm")
 #' format_p_adjust("bonferroni")
-#' @return String.
+#' @return A string with the full surname(s) of the author(s), including year of publication, for the adjustment-method.
 #' @export
 format_p_adjust <- function(method) {
   method <- tolower(method)

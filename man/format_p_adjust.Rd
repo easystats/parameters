@@ -10,7 +10,7 @@ format_p_adjust(method)
 \item{method}{Name of the method.}
 }
 \value{
-String.
+A string with the full surname(s) of the author(s), including year of publication, for the adjustment-method.
 }
 \description{
 Format the name of the p-value adjustment methods.
