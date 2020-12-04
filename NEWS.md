@@ -1,5 +1,9 @@
 # parameters 0.10.1
 
+## New functions
+
++ `format_p_adjust()`, to create pretty names for p-adjustment methods.
+
 ## Bug fixes
 
 * Undocumented arguments `digits`, `ci_digits` and `p_digits` worked for 
