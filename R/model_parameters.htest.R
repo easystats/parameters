@@ -121,17 +121,15 @@ model_parameters.htest <- function(model,
     stringsAsFactors = FALSE
   )
 
-  ## TODO replace "out$df" with "out$df_error" later, when correlation > 0.4.0 is on CRAN
-
   if (model$method == "Pearson's Chi-squared test") {
     out$Chi2 <- model$statistic
-    out$df <- model$parameter
+    out$df_error <- model$parameter
     out$p <- model$p.value
     out$Method <- "Pearson"
   } else if (grepl("Pearson", model$method)) {
     out$r <- model$estimate
     out$t <- model$statistic
-    out$df <- model$parameter
+    out$df_error <- model$parameter
     out$p <- model$p.value
     out$CI_low <- model$conf.int[1]
     out$CI_high <- model$conf.int[2]
@@ -139,13 +137,13 @@ model_parameters.htest <- function(model,
   } else if (grepl("Spearman", model$method)) {
     out$rho <- model$estimate
     out$S <- model$statistic
-    out$df <- model$parameter
+    out$df_error <- model$parameter
     out$p <- model$p.value
     out$Method <- "Spearman"
   } else {
     out$tau <- model$estimate
     out$z <- model$statistic
-    out$df <- model$parameter
+    out$df_error <- model$parameter
     out$p <- model$p.value
     out$Method <- "Kendall"
   }
