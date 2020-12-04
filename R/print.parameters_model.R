@@ -104,29 +104,18 @@ print.parameters_model <- function(x,
   footer <- NULL
 
   # footer: residual standard deviation
-  if (!is.null(sigma) && isTRUE(show_sigma)) {
-    footer <- sprintf("\nResidual standard deviation: %.*f", digits, sigma)
+  if (isTRUE(show_sigma)) {
+    footer <- .add_footer_sigma(footer, digits, sigma)
   }
 
   # footer: p-adjustment
-  if (!is.null(p_adjust) && p_adjust != "none" && "p" %in% colnames(x) && isTRUE(verbose)) {
-    p_adj_string <- switch(
-      p_adjust,
-      "holm" = "Holm (1979)",
-      "hochberg" = "Hochberg (1988)",
-      "homnmel" = "Hochberg (1988)",
-      "bonferroni" = "Bonferroni",
-      "fdr" = ,
-      "BH" = "Benjamini & Hochberg (1995)",
-      "BY" = " Benjamini & Yekutieli (2001)",
-      p_adjust
-    )
-    footer <- paste0(footer, "\np-value adjustment method: ", p_adj_string)
+  if ("p" %in% colnames(x) && isTRUE(verbose)) {
+    footer <- .add_footer_padjust(footer, p_adjust)
   }
 
   # footer: model formula
-  if (!is.null(model_formula) && isTRUE(show_formula)) {
-    footer <- paste0(footer, "\nModel: ", model_formula)
+  if (isTRUE(show_formula)) {
+    footer <- .add_footer_formula(footer, model_formula)
   }
 
   # add color code, if we have a footer
@@ -137,15 +126,8 @@ print.parameters_model <- function(x,
   cat(insight::export_table(formatted_table, format = "text", footer = footer))
 
   # for Bayesian models
-  if (!is.null(ci_method) && isTRUE(verbose)) {
-    ci_method <- switch(
-      toupper(ci_method),
-      "HDI" = "highest density intervals",
-      "ETI" = "equal-tailed intervals",
-      "SI" = "support intervals",
-      "uncertainty intervals"
-    )
-    message(paste0("\nUsing ", ci_method, " as credible intervals."))
+  if (isTRUE(verbose)) {
+    .print_footer_cimethod(ci_method)
   }
 
   # print summary for random effects
@@ -216,15 +198,8 @@ print.parameters_stan <- function(x,
   )
   cat(insight::export_table(formatted_table, format = "text"))
 
-  if (!is.null(ci_method) && isTRUE(verbose)) {
-    ci_method <- switch(
-      toupper(ci_method),
-      "HDI" = "highest density intervals",
-      "ETI" = "equal-tailed intervals",
-      "SI" = "support intervals",
-      "uncertainty intervals"
-    )
-    message(paste0("\nUsing ", ci_method, " as credible intervals."))
+  if (isTRUE(verbose)) {
+    .print_footer_cimethod(ci_method)
   }
 
   invisible(orig_x)
@@ -292,5 +267,64 @@ print.parameters_stan <- function(x,
       insight::print_color(format("Observations", width = max_len), color = "blue")
       cat(sprintf("%s\n", i$Value))
     }
+  }
+}
+
+
+
+
+
+# footer functions ------------------
+
+
+# footer: residual standard deviation
+.add_footer_sigma <- function(footer = NULL, digits, sigma) {
+  if (!is.null(sigma)) {
+    footer <- paste0(footer, sprintf("\nResidual standard deviation: %.*f", digits, sigma))
+  }
+  footer
+}
+
+
+# footer: p-adjustment
+.add_footer_padjust <- function(footer = NULL, p_adjust) {
+  if (!is.null(p_adjust) && p_adjust != "none") {
+    p_adj_string <- switch(
+      p_adjust,
+      "holm" = "Holm (1979)",
+      "hochberg" = "Hochberg (1988)",
+      "homnmel" = "Hochberg (1988)",
+      "bonferroni" = "Bonferroni",
+      "fdr" = ,
+      "BH" = "Benjamini & Hochberg (1995)",
+      "BY" = " Benjamini & Yekutieli (2001)",
+      p_adjust
+    )
+    footer <- paste0(footer, "\np-value adjustment method: ", p_adj_string)
+  }
+  footer
+}
+
+
+# footer: model formula
+.add_footer_formula <- function(footer = NULL, model_formula) {
+  if (!is.null(model_formula)) {
+    footer <- paste0(footer, "\nModel: ", model_formula)
+  }
+  footer
+}
+
+
+# footer: type of uncertainty interval
+.print_footer_cimethod <- function(ci_method = NULL) {
+  if (!is.null(ci_method)) {
+    ci_method <- switch(
+      toupper(ci_method),
+      "HDI" = "highest density intervals",
+      "ETI" = "equal-tailed intervals",
+      "SI" = "support intervals",
+      "uncertainty intervals"
+    )
+    message(paste0("\nUsing ", ci_method, " as credible intervals."))
   }
 }
