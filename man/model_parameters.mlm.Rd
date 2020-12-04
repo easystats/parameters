@@ -2,25 +2,12 @@
 % Please edit documentation in R/model_parameters.multinom.R
 \name{model_parameters.mlm}
 \alias{model_parameters.mlm}
-\alias{model_parameters.multinom}
 \alias{model_parameters.bracl}
 \alias{model_parameters.DirichletRegModel}
 \alias{model_parameters.clm2}
 \title{Parameters from multinomial or cumulative link models}
 \usage{
 \method{model_parameters}{mlm}(
-  model,
-  ci = 0.95,
-  bootstrap = FALSE,
-  iterations = 1000,
-  standardize = NULL,
-  exponentiate = FALSE,
-  p_adjust = NULL,
-  verbose = TRUE,
-  ...
-)
-
-\method{model_parameters}{multinom}(
   model,
   ci = 0.95,
   bootstrap = FALSE,

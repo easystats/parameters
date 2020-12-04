@@ -40,6 +40,35 @@ model_parameters.mlm <- function(model,
                                  p_adjust = NULL,
                                  verbose = TRUE,
                                  ...) {
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Response"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    robust = FALSE,
+    p_adjust = p_adjust,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+#' @rdname model_parameters.mlm
+#' @export
+model_parameters.bracl <- function(model,
+                                   ci = .95,
+                                   bootstrap = FALSE,
+                                   iterations = 1000,
+                                   standardize = NULL,
+                                   exponentiate = FALSE,
+                                   p_adjust = NULL,
+                                   verbose = TRUE,
+                                   ...) {
 
   # detect number of levels of response
   nl <- tryCatch(
@@ -77,18 +106,14 @@ model_parameters.mlm <- function(model,
 }
 
 
-#' @rdname model_parameters.mlm
 #' @export
-model_parameters.multinom <- model_parameters.mlm
+model_parameters.multinom <- model_parameters.bracl
 
 
 #' @export
-model_parameters.brmultinom <- model_parameters.mlm
+model_parameters.brmultinom <- model_parameters.bracl
 
 
-#' @rdname model_parameters.mlm
-#' @export
-model_parameters.bracl <- model_parameters.mlm
 
 
 
