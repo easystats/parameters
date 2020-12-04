@@ -2,7 +2,7 @@
 
 ## New functions
 
-+ `format_p_adjust()`, to create pretty names for p-adjustment methods.
+* `format_p_adjust()`, to create pretty names for p-adjustment methods.
 
 ## Bug fixes
 
