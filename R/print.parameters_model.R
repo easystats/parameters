@@ -129,7 +129,12 @@ print.parameters_model <- function(x,
     footer <- paste0(footer, "\nModel: ", model_formula)
   }
 
-  cat(insight::export_table(formatted_table, format = "text", footer = c(footer, "blue")))
+  # add color code, if we have a footer
+  if (!is.null(footer)) {
+    footer <- c(footer, "blue")
+  }
+
+  cat(insight::export_table(formatted_table, format = "text", footer = footer))
 
   # for Bayesian models
   if (!is.null(ci_method) && isTRUE(verbose)) {
