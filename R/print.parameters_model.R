@@ -289,18 +289,7 @@ print.parameters_stan <- function(x,
 # footer: p-adjustment
 .add_footer_padjust <- function(footer = NULL, p_adjust) {
   if (!is.null(p_adjust) && p_adjust != "none") {
-    p_adj_string <- switch(
-      p_adjust,
-      "holm" = "Holm (1979)",
-      "hochberg" = "Hochberg (1988)",
-      "homnmel" = "Hochberg (1988)",
-      "bonferroni" = "Bonferroni",
-      "fdr" = ,
-      "BH" = "Benjamini & Hochberg (1995)",
-      "BY" = " Benjamini & Yekutieli (2001)",
-      p_adjust
-    )
-    footer <- paste0(footer, "\np-value adjustment method: ", p_adj_string)
+    footer <- paste0(footer, "\np-value adjustment method: ", format_p_adjust(p_adjust))
   }
   footer
 }
