@@ -2,7 +2,9 @@
 
 ## Bug fixes
 
-* Undocumented arguments `digits`, `ci_digits` and `p_digits` worked for `print()`, but not when directly called inside `model_parameters()`. Now, `model_parameters(model, digits = 5, ci_digits = 8)` works again.
+* Undocumented arguments `digits`, `ci_digits` and `p_digits` worked for 
+  `print()`, but not when directly called inside `model_parameters()`. Now,
+  `model_parameters(model, digits = 5, ci_digits = 8)` works again.
 
 # parameters 0.10.0
 
