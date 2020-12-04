@@ -14,7 +14,15 @@ model_parameters.lqmm <- function(model,
     parameters <- .extract_parameters_lqmm(model, ci = ci, p_adjust = p_adjust, ...)
   }
 
-  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate = FALSE, verbose = verbose, ...)
+  parameters <- .add_model_parameters_attributes(
+    parameters,
+    model,
+    ci,
+    exponentiate = FALSE,
+    p_adjust = p_adjust,
+    verbose = verbose,
+    ...
+  )
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 

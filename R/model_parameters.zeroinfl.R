@@ -42,21 +42,29 @@ model_parameters.zeroinfl <- function(model,
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <-
-      .extract_parameters_generic(
-        model,
-        ci = ci,
-        component = component,
-        standardize = standardize,
-        robust = robust,
-        p_adjust = p_adjust,
-        ...
-      )
+    parameters <- .extract_parameters_generic(
+      model,
+      ci = ci,
+      component = component,
+      standardize = standardize,
+      robust = robust,
+      p_adjust = p_adjust,
+      ...
+    )
   }
 
 
   if (exponentiate) parameters <- .exponentiate_parameters(parameters)
-  parameters <- .add_model_parameters_attributes(parameters, model, ci, exponentiate, verbose = verbose, ...)
+
+  parameters <- .add_model_parameters_attributes(
+    parameters,
+    model,
+    ci,
+    exponentiate,
+    p_adjust = p_adjust,
+    verbose = verbose,
+    ...
+  )
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 

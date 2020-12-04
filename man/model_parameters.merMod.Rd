@@ -33,6 +33,7 @@
   exponentiate = FALSE,
   df_method = NULL,
   details = FALSE,
+  p_adjust = NULL,
   wb_component = TRUE,
   verbose = TRUE,
   ...

@@ -63,10 +63,16 @@ print.parameters_model <- function(x,
 
   # get attributes
   res <- attributes(x)$details
+  sigma <- attributes(x)$sigma
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
   ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
   verbose <- .additional_arguments(x, "verbose", TRUE)
+
+  # set defaults, if necessary
+  if (is.null(sigma)) {
+    show_sigma <- FALSE
+  }
 
   # check if user supplied digits attributes
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
@@ -93,15 +99,16 @@ print.parameters_model <- function(x,
     ci_brackets = TRUE,
     format = "text"
   )
-  cat(insight::export_table(formatted_table, format = "text"))
 
-  # print residual standard deviation
+  # prepare footer
+  footer <- NULL
+
+  # footer: residual standard deviation
   if (!is.null(sigma) && isTRUE(show_sigma)) {
-    cat("\n")
-    insight::print_color(sprintf("Residual standard deviation: %.*f", digits, sigma), "blue")
+    footer <- sprintf("\nResidual standard deviation: %.*f", digits, sigma)
   }
 
-  # print p-adjustment
+  # footer: p-adjustment
   if (!is.null(p_adjust) && p_adjust != "none" && "p" %in% colnames(x) && isTRUE(verbose)) {
     p_adj_string <- switch(
       p_adjust,
@@ -114,15 +121,15 @@ print.parameters_model <- function(x,
       "BY" = " Benjamini & Yekutieli (2001)",
       p_adjust
     )
-    cat("\n")
-    insight::print_color(paste0("p-value adjustment method: ", p_adj_string), "blue")
+    footer <- paste0(footer, "\np-value adjustment method: ", p_adj_string)
   }
 
-  # print residual standard deviation
+  # footer: model formula
   if (!is.null(model_formula) && isTRUE(show_formula)) {
-    cat("\n")
-    insight::print_color(paste("Model:", model_formula), "blue")
+    footer <- paste0(footer, "\nModel: ", model_formula)
   }
+
+  cat(insight::export_table(formatted_table, format = "text", footer = c(footer, "blue")))
 
   # for Bayesian models
   if (!is.null(ci_method) && isTRUE(verbose)) {

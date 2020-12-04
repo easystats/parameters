@@ -1,6 +1,16 @@
 #' @importFrom utils packageVersion
 #' @keywords internal
-.add_model_parameters_attributes <- function(params, model, ci, exponentiate = FALSE, bootstrap = FALSE, iterations = 1000, df_method = NULL, ci_method = NULL, verbose = TRUE, ...) {
+.add_model_parameters_attributes <- function(params,
+                                             model,
+                                             ci,
+                                             exponentiate = FALSE,
+                                             bootstrap = FALSE,
+                                             iterations = 1000,
+                                             df_method = NULL,
+                                             ci_method = NULL,
+                                             p_adjust = NULL,
+                                             verbose = TRUE,
+                                             ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   info <- tryCatch(
     {
@@ -28,6 +38,7 @@
   attr(params, "bootstrap") <- bootstrap
   attr(params, "iterations") <- iterations
   attr(params, "df_method") <- df_method
+  attr(params, "p_adjust") <- p_adjust
 
   model_formula <- tryCatch(
     {

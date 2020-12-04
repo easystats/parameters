@@ -96,11 +96,34 @@ model_parameters.default <- function(model,
   if (bootstrap) {
     params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    params <- .extract_parameters_generic(model, ci = ci, component = component, merge_by = merge_by, standardize = standardize, effects = effects, robust = robust, df_method = df_method, p_adjust = p_adjust, verbose = verbose, ...)
+    params <- .extract_parameters_generic(
+      model,
+      ci = ci,
+      component = component,
+      merge_by = merge_by,
+      standardize = standardize,
+      effects = effects,
+      robust = robust,
+      df_method = df_method,
+      p_adjust = p_adjust,
+      verbose = verbose,
+      ...
+    )
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, bootstrap, iterations, verbose = verbose, ...)
+  params <- .add_model_parameters_attributes(
+    params,
+    model,
+    ci,
+    exponentiate,
+    bootstrap,
+    iterations,
+    df_method = df_method,
+    p_adjust = p_adjust,
+    verbose = verbose,
+    ...
+  )
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
@@ -212,8 +235,18 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)
+
+  params <- .add_model_parameters_attributes(
+    params,
+    model,
+    ci,
+    exponentiate,
+    p_adjust = p_adjust,
+    verbose = verbose,
+    ...
+  )
+
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params

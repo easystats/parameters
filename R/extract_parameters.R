@@ -4,7 +4,18 @@
 #' @importFrom insight get_statistic get_parameters get_sigma
 #' @importFrom stats confint p.adjust.methods p.adjust
 #' @keywords internal
-.extract_parameters_generic <- function(model, ci, component, merge_by = c("Parameter", "Component"), standardize = NULL, effects = "fixed", robust = FALSE, df_method = NULL, p_adjust = NULL, wb_component = FALSE, verbose = TRUE, ...) {
+.extract_parameters_generic <- function(model,
+                                        ci,
+                                        component,
+                                        merge_by = c("Parameter", "Component"),
+                                        standardize = NULL,
+                                        effects = "fixed",
+                                        robust = FALSE,
+                                        df_method = NULL,
+                                        p_adjust = NULL,
+                                        wb_component = FALSE,
+                                        verbose = TRUE,
+                                        ...) {
 
   # ==== check if standardization is required and package available
 

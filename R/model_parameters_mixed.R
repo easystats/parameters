@@ -77,18 +77,19 @@ model_parameters.merMod <- function(model,
 
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <-
-    .add_model_parameters_attributes(
-      params,
-      model,
-      ci,
-      exponentiate,
-      bootstrap,
-      iterations,
-      df_method,
-      verbose = verbose,
-      ...
-    )
+
+  params <- .add_model_parameters_attributes(
+    params,
+    model,
+    ci,
+    exponentiate,
+    bootstrap,
+    iterations,
+    df_method,
+    p_adjust = p_adjust,
+    verbose = verbose,
+    ...
+  )
 
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
@@ -122,6 +123,7 @@ model_parameters.glmmTMB <- function(model,
                                      exponentiate = FALSE,
                                      df_method = NULL,
                                      details = FALSE,
+                                     p_adjust = NULL,
                                      wb_component = TRUE,
                                      verbose = TRUE,
                                      ...) {
@@ -143,17 +145,17 @@ model_parameters.glmmTMB <- function(model,
   if (bootstrap) {
     params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    params <-
-      .extract_parameters_generic(
-        model,
-        ci = ci,
-        component = component,
-        standardize = standardize,
-        robust = FALSE,
-        df_method = df_method,
-        wb_component = wb_component,
-        ...
-      )
+    params <- .extract_parameters_generic(
+      model,
+      ci = ci,
+      component = component,
+      standardize = standardize,
+      robust = FALSE,
+      df_method = df_method,
+      p_adjust = p_adjust,
+      wb_component = wb_component,
+      ...
+    )
   }
 
 
@@ -170,7 +172,17 @@ model_parameters.glmmTMB <- function(model,
 
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
+
+  params <- .add_model_parameters_attributes(
+    params,
+    model,
+    ci,
+    exponentiate,
+    df_method = df_method,
+    p_adjust = p_adjust,
+    verbose = verbose,
+    ...
+  )
 
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)

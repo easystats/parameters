@@ -79,7 +79,15 @@ model_parameters.stanreg <-
 
     params <- .add_pretty_names(params, model)
     if (exponentiate) params <- .exponentiate_parameters(params)
-    params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, verbose = verbose, ...)
+    params <- .add_model_parameters_attributes(
+      params,
+      model,
+      ci,
+      exponentiate,
+      ci_method = ci_method,
+      verbose = verbose,
+      ...
+    )
 
     attr(params, "parameter_info") <- insight::clean_parameters(model)
     attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -487,7 +495,15 @@ model_parameters.stanfit <- function(model,
   }
 
   if (exponentiate) params <- .exponentiate_parameters(params)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, verbose = verbose, ...)
+  params <- .add_model_parameters_attributes(
+    params,
+    model,
+    ci,
+    exponentiate,
+    ci_method = ci_method,
+    verbose = verbose,
+    ...
+  )
 
   attr(params, "parameter_info") <- insight::clean_parameters(model)
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
