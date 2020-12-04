@@ -119,6 +119,7 @@ reference:
   - display.parameters_model
   - format_order
   - format_parameters
+  - format_p_adjust
   - parameters_type
   - print_md
 
