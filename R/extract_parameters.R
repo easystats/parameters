@@ -83,9 +83,24 @@
     if (isTRUE(robust)) {
       ci_df <- suppressMessages(ci_robust(model, ci = ci, verbose = verbose, ...))
     } else if (!is.null(df_method)) {
-      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, method = df_method, verbose = verbose))
+      ci_df <- suppressMessages(
+        ci(
+          model,
+          ci = ci,
+          effects = effects,
+          component = component,
+          method = df_method,
+          verbose = verbose
+        )
+      )
     } else {
-      ci_df <- suppressMessages(ci(model, ci = ci, effects = effects, component = component, verbose = verbose))
+      ci_df <- suppressMessages(ci(
+        model,
+        ci = ci,
+        effects = effects,
+        component = component,
+        verbose = verbose
+      ))
     }
     if (!is.null(ci_df)) {
       if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
@@ -104,9 +119,19 @@
   if (isTRUE(robust)) {
     pval <- p_value_robust(model, ...)
   } else if (!is.null(df_method)) {
-    pval <- p_value(model, effects = effects, component = component, method = df_method, verbose = verbose)
+    pval <- p_value(
+      model,
+      effects = effects,
+      component = component,
+      method = df_method,
+      verbose = verbose
+    )
   } else {
-    pval <- p_value(model, effects = effects, component = component, verbose = verbose)
+    pval <- p_value(model,
+      effects = effects,
+      component = component,
+      verbose = verbose
+    )
   }
 
   if (!is.null(pval)) {
@@ -121,9 +146,19 @@
   if (isTRUE(robust)) {
     std_err <- standard_error_robust(model, ...)
   } else if (!is.null(df_method)) {
-    std_err <- standard_error(model, effects = effects, component = component, method = df_method, verbose = verbose)
+    std_err <- standard_error(
+      model,
+      effects = effects,
+      component = component,
+      method = df_method,
+      verbose = verbose
+    )
   } else {
-    std_err <- standard_error(model, effects = effects, component = component, verbose = verbose)
+    std_err <- standard_error(model,
+      effects = effects,
+      component = component,
+      verbose = verbose
+    )
   }
 
   if (!is.null(std_err)) {
@@ -230,10 +265,12 @@
 
   # ==== Reorder
 
-  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "t/F",
-                 "z / Chisq", "z/Chisq", "z / Chi2", "z/Chi2", "F", "Chi2",
-                 "chisq", "chi-squared", "Statistic", "df", "df_error", "p",
-                 "Component", "Response", "Effects")
+  col_order <- c(
+    "Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "t/F",
+    "z / Chisq", "z/Chisq", "z / Chi2", "z/Chi2", "F", "Chi2",
+    "chisq", "chi-squared", "Statistic", "df", "df_error", "p",
+    "Component", "Response", "Effects"
+  )
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
 
@@ -264,7 +301,14 @@
 
 #' @importFrom stats confint
 #' @keywords internal
-.extract_parameters_mixed <- function(model, ci = .95, df_method = "wald", standardize = NULL, robust = FALSE, p_adjust = NULL, wb_component = FALSE, ...) {
+.extract_parameters_mixed <- function(model,
+                                      ci = .95,
+                                      df_method = "wald",
+                                      standardize = NULL,
+                                      robust = FALSE,
+                                      p_adjust = NULL,
+                                      wb_component = FALSE,
+                                      ...) {
   # check if standardization is required and package available
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
     insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
@@ -528,7 +572,19 @@
 #' @importFrom insight is_multivariate
 #' @importFrom stats sd setNames na.omit
 #' @keywords internal
-.extract_parameters_bayesian <- function(model, centrality = "median", dispersion = FALSE, ci = .89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 1.0, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, standardize = NULL, ...) {
+.extract_parameters_bayesian <- function(model,
+                                         centrality = "median",
+                                         dispersion = FALSE,
+                                         ci = .89,
+                                         ci_method = "hdi",
+                                         test = c("pd", "rope"),
+                                         rope_range = "default",
+                                         rope_ci = 1.0,
+                                         bf_prior = NULL,
+                                         diagnostic = c("ESS", "Rhat"),
+                                         priors = TRUE,
+                                         standardize = NULL,
+                                         ...) {
   # check if standardization is required and package available
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
     insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
@@ -543,19 +599,66 @@
 
   # MCMCglmm need special handling
   if (inherits(model, "MCMCglmm")) {
-    parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, diagnostic = "ESS", ...)
+    parameters <- bayestestR::describe_posterior(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      diagnostic = "ESS",
+      ...
+    )
   } else if (!is.null(standardize)) {
-    parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
+    parameters <- bayestestR::describe_posterior(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = bf_prior,
+      diagnostic = diagnostic,
+      priors = priors,
+      ...
+    )
 
     # Don't test BF on standardized params
     test_no_BF <- test[!test %in% c("bf", "bayesfactor", "bayes_factor")]
     if (length(test_no_BF) == 0) test_no_BF <- NULL
     std_post <- effectsize::standardize_posteriors(model, method = standardize)
-    std_parameters <- bayestestR::describe_posterior(std_post, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test_no_BF, rope_range = rope_range, rope_ci = rope_ci, ...)
+    std_parameters <- bayestestR::describe_posterior(
+      std_post,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test_no_BF,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      ...
+    )
 
     parameters <- merge(std_parameters, parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))], sort = FALSE)
   } else {
-    parameters <- bayestestR::describe_posterior(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, diagnostic = diagnostic, priors = priors, ...)
+    parameters <- bayestestR::describe_posterior(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = bf_prior,
+      diagnostic = diagnostic,
+      priors = priors,
+      ...
+    )
   }
 
   if (length(ci) > 1) {
