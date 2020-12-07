@@ -90,7 +90,7 @@ model_parameters.aov <- function(model,
   #   parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci)
   # }
 
-  parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci)
+  parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci, verbose = verbose)
   parameters <- .add_anova_attributes(parameters, model, ci, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
@@ -136,6 +136,7 @@ model_parameters.afex_aov <- function(model,
       omega_squared = omega_squared,
       eta_squared = eta_squared,
       epsilon_squared = epsilon_squared,
+      verbose = verbose,
       ...
     )
 
@@ -171,7 +172,7 @@ model_parameters.Gam <- function(model,
 
 
 
-.effectsizes_for_aov <- function(model, parameters, omega_squared, eta_squared, epsilon_squared, ci = NULL) {
+.effectsizes_for_aov <- function(model, parameters, omega_squared, eta_squared, epsilon_squared, ci = NULL, verbose = TRUE) {
   # user actually does not want to compute effect sizes
   if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
     return(parameters)
@@ -204,9 +205,9 @@ model_parameters.Gam <- function(model,
   # Omega squared
   if (!is.null(omega_squared)) {
     if (omega_squared == "partial") {
-      fx <- effectsize::omega_squared(model, partial = TRUE, ci = ci)
+      fx <- effectsize::omega_squared(model, partial = TRUE, ci = ci, verbose = verbose)
     } else {
-      fx <- effectsize::omega_squared(model, partial = FALSE, ci = ci)
+      fx <- effectsize::omega_squared(model, partial = FALSE, ci = ci, verbose = verbose)
     }
     parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
@@ -214,9 +215,9 @@ model_parameters.Gam <- function(model,
   # Eta squared
   if (!is.null(eta_squared)) {
     if (eta_squared == "partial") {
-      fx <- effectsize::eta_squared(model, partial = TRUE, ci = ci)
+      fx <- effectsize::eta_squared(model, partial = TRUE, ci = ci, verbose = verbose)
     } else {
-      fx <- effectsize::eta_squared(model, partial = FALSE, ci = ci)
+      fx <- effectsize::eta_squared(model, partial = FALSE, ci = ci, verbose = verbose)
     }
     parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
@@ -224,9 +225,9 @@ model_parameters.Gam <- function(model,
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
     if (epsilon_squared == "partial") {
-      fx <- effectsize::epsilon_squared(model, partial = TRUE, ci = ci)
+      fx <- effectsize::epsilon_squared(model, partial = TRUE, ci = ci, verbose = verbose)
     } else {
-      fx <- effectsize::epsilon_squared(model, partial = FALSE, ci = ci)
+      fx <- effectsize::epsilon_squared(model, partial = FALSE, ci = ci, verbose = verbose)
     }
     parameters <- .add_effectsize_to_parameters(fx, parameters)
   }

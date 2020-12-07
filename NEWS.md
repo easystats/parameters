@@ -6,6 +6,8 @@
 
 ## Bug fixes
 
+* Fixed breaking code / failing tests due to latest _effectsize_ update.
+
 * Fixed issue with `model_parameters()` for models of class `mlm`.
 
 * Undocumented arguments `digits`, `ci_digits` and `p_digits` worked for 

@@ -8,16 +8,16 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   test_that("model_parameters.aov", {
     model <- aov(Sepal.Width ~ Species, data = iris)
-    mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
-    es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
+    mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9))
+    es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(mp$Omega2_CI_low, c(0.29018, NA), tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
       "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
-      "Omega2_partial", "Omega2_CI_low", "Omega2_CI_high", "Eta2_partial",
-      "Eta2_CI_low", "Eta2_CI_high", "Epsilon2_partial", "Epsilon2_CI_low",
+      "Omega2", "Omega2_CI_low", "Omega2_CI_high", "Eta2",
+      "Eta2_CI_low", "Eta2_CI_high", "Epsilon2", "Epsilon2_CI_low",
       "Epsilon2_CI_high"
     ))
 
@@ -105,16 +105,16 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
   model <- aov(fit)
 
   test_that("model_parameters.maov", {
-    mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
-    es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
+    mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9))
+    es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(mp$Omega2_CI_low, c(0.71218, NA, 0.50841, NA, 0.53774, NA), tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
       "Response", "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
-      "Omega2_partial", "Omega2_CI_low", "Omega2_CI_high", "Eta2_partial",
-      "Eta2_CI_low", "Eta2_CI_high", "Epsilon2_partial", "Epsilon2_CI_low",
+      "Omega2", "Omega2_CI_low", "Omega2_CI_high", "Eta2",
+      "Eta2_CI_low", "Eta2_CI_high", "Epsilon2", "Epsilon2_CI_low",
       "Epsilon2_CI_high"
     ))
   })
