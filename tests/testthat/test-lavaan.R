@@ -18,7 +18,7 @@ if (require("testthat") && require("parameters") && require("lavaan")) {
   m <- sem(model, data = PoliticalDemocracy, test = "Satorra-Bentler")
 
   test_that("unstandardized", {
-    mp <- model_parameters(m)
+    mp <- model_parameters(m, eta_squared = "raw")
     ml <- parameterEstimates(m, se = TRUE)
     ml <- ml[(ml$lhs != ml$rhs) & (ml$op != "~1"), ]
 

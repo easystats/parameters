@@ -12,7 +12,6 @@
 #'   (or \code{"std.nox"}) for standardized estimates based on both the
 #'   variances of observed and latent variables, but not the variances of
 #'   exogenous covariates. See \code{lavaan::standardizedsolution} for details.
-#' @param omega_squared,eta_squared,epsilon_squared These arguments are ignored as they are not relevant for this method.
 #' @inheritParams model_parameters.default
 #' @param type What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.
 #' @param ... Arguments passed to or from other methods.
@@ -67,10 +66,8 @@ model_parameters.lavaan <- function(model,
                                     standardize = FALSE,
                                     type = c("regression", "correlation", "loading", "defined"),
                                     verbose = TRUE,
-                                    omega_squared = NULL,
-                                    eta_squared = NULL,
-                                    epsilon_squared = NULL,
                                     ...) {
+
   params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, ...)
 
   # Filter

@@ -707,8 +707,35 @@
     warning(paste0("lavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`."))
   }
 
+  # collect dots
+  dot_args <- list(...)
+
+  # list all argument names from the `lavaan` function
+  dot_args <- dot_args[names(dot_args) %in% c(
+    "zstat",
+    "pvalue",
+    "standardized",
+    "fmi",
+    "level",
+    "boot.ci.type",
+    "cov.std",
+    "fmi.options",
+    "rsquare",
+    "remove.system.eq",
+    "remove.eq",
+    "remove.ineq",
+    "remove.def",
+    "remove.nonfree",
+    "add.attributes",
+    "output",
+    "header"
+  )]
+
   # Get estimates
-  data <- lavaan::parameterEstimates(model, se = TRUE, level = ci, ...)
+  data <- do.call(lavaan::parameterEstimates, c(
+    list(object = model, se = TRUE, ci = TRUE, level = ci),
+    dot_args
+  ))
   label <- data$label
 
   # check if standardized estimates are requested, and if so, which type

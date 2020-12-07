@@ -10,9 +10,6 @@
   standardize = FALSE,
   type = c("regression", "correlation", "loading", "defined"),
   verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
   ...
 )
 }
@@ -34,8 +31,6 @@ exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 \item{type}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
 
 \item{verbose}{Toggle warnings and messages.}
-
-\item{omega_squared, eta_squared, epsilon_squared}{These arguments are ignored as they are not relevant for this method.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
