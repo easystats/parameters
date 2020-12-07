@@ -17,7 +17,7 @@
 )
 }
 \arguments{
-\item{model}{Object of class \code{\link{aov}}, \code{\link{anova}} or \code{aovlist}.}
+\item{model}{Object of class \code{\link{aov}}, \code{\link{anova}}, \code{aovlist}, \code{Gam}, \code{\link{manova}}, or \code{maov}.}
 
 \item{omega_squared}{Compute omega squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.}
 
@@ -39,7 +39,7 @@
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters from ANOVAs.
+Parameters from ANOVAs
 }
 \note{
 For ANOVA-tables from mixed models (i.e. \code{anova(lmer())}), only partial or adjusted effect sizes can be computed.

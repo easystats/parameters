@@ -35,7 +35,7 @@ model_parameters.lqm <- model_parameters.lqmm
 
 
 .extract_parameters_lqmm <- function(model, ci, p_adjust, ...) {
-  cs <- summary(model, ...)
+  cs <- summary(model)
   parameters <- insight::get_parameters(model)
 
   if (is.list(cs$tTable)) {
