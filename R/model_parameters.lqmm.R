@@ -1,7 +1,3 @@
-#' Parameters from lqm/lqmm models
-#'
-#' @param omega_squared,eta_squared,epsilon_squared These arguments are ignored as they are not relevant for this method.
-#' @inheritParams model_parameters.default
 #' @export
 model_parameters.lqmm <- function(model,
                                   ci = .95,
@@ -9,9 +5,6 @@ model_parameters.lqmm <- function(model,
                                   iterations = 1000,
                                   p_adjust = NULL,
                                   verbose = TRUE,
-                                  omega_squared = NULL,
-                                  eta_squared = NULL,
-                                  epsilon_squared = NULL,
                                   ...) {
 
   # Processing
@@ -42,7 +35,7 @@ model_parameters.lqm <- model_parameters.lqmm
 
 
 .extract_parameters_lqmm <- function(model, ci, p_adjust, ...) {
-  cs <- summary(model, ...)
+  cs <- summary(model)
   parameters <- insight::get_parameters(model)
 
   if (is.list(cs$tTable)) {
