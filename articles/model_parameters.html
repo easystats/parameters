@@ -186,10 +186,10 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>omega_squared <span class="op">=</span> <span class="st">"partial"</span>, eta_squared <span class="op">=</span> <span class="st">"partial"</span>, epsilon_squared <span class="op">=</span> <span class="st">"partial"</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter | Sum_Squares |  df | Mean_Square |      F |      p | Omega2 (partial) | Eta2 (partial) | Epsilon2 (partial)
-#&gt; ----------------------------------------------------------------------------------------------------------------------
-#&gt; Species   |       63.21 |   2 |       31.61 | 119.26 | &lt; .001 |             0.61 |           0.62 |               0.61
-#&gt; Residuals |       38.96 | 147 |        0.27 |        |        |                  |                |</code></pre>
+<pre><code>#&gt; Parameter | Sum_Squares |  df | Mean_Square |      F |      p | Omega2 | Eta2 | Epsilon2
+#&gt; ----------------------------------------------------------------------------------------
+#&gt; Species   |       63.21 |   2 |       31.61 | 119.26 | &lt; .001 |   0.61 | 0.62 |     0.61
+#&gt; Residuals |       38.96 | 147 |        0.27 |        |        |        |      |</code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>omega_squared <span class="op">=</span> <span class="st">"partial"</span>, eta_squared <span class="op">=</span> <span class="st">"partial"</span>, ci <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span></code></pre></div>

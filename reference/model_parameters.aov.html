@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Parameters from ANOVAs — model_parameters.aov" />
-<meta property="og:description" content="Parameters from ANOVAs." />
+<meta property="og:description" content="Parameters from ANOVAs" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -170,7 +170,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Parameters from ANOVAs.</p>
+    <p>Parameters from ANOVAs</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for aov</span>
@@ -191,7 +191,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Object of class <code><a href='https://rdrr.io/r/stats/aov.html'>aov</a></code>, <code><a href='https://rdrr.io/pkg/lavaan/man/lavTestLRT.html'>anova</a></code> or <code>aovlist</code>.</p></td>
+      <td><p>Object of class <code><a href='https://rdrr.io/r/stats/aov.html'>aov</a></code>, <code><a href='https://rdrr.io/pkg/lavaan/man/lavTestLRT.html'>anova</a></code>, <code>aovlist</code>, <code>Gam</code>, <code><a href='https://rdrr.io/r/stats/manova.html'>manova</a></code>, or <code>maov</code>.</p></td>
     </tr>
     <tr>
       <th>omega_squared</th>
@@ -284,7 +284,15 @@
     <span class='op'>)</span>
   <span class='op'>}</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='warning'>Warning: No residuals data found. Effect size cannot be computed.</span></div><div class='output co'>#&gt; Parameter   | Sum_Squares | df | Mean_Square |      F
+</div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial omega squared is equvilant to omega squared.</span>
+#&gt; <span class='message'>Returning omega squared.</span></div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial eta squared is equvilant to eta squared.</span>
+#&gt; <span class='message'>Returning eta squared.</span></div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial epsilon squared is equvilant to epsilon squared.</span>
+#&gt; <span class='message'>Returning epsilon squared.</span></div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial omega squared is equvilant to omega squared.</span>
+#&gt; <span class='message'>Returning omega squared.</span></div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial eta squared is equvilant to eta squared.</span>
+#&gt; <span class='message'>Returning eta squared.</span></div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial omega squared is equvilant to omega squared.</span>
+#&gt; <span class='message'>Returning omega squared.</span></div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial eta squared is equvilant to eta squared.</span>
+#&gt; <span class='message'>Returning eta squared.</span></div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial epsilon squared is equvilant to epsilon squared.</span>
+#&gt; <span class='message'>Returning epsilon squared.</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='warning'>Warning: No residuals data found. Effect size cannot be computed.</span></div><div class='output co'>#&gt; Parameter   | Sum_Squares | df | Mean_Square |      F
 #&gt; -----------------------------------------------------
 #&gt; Sepal.Big   |        1.10 |  1 |        1.10 |   4.96
 #&gt; Petal.Width |       68.50 |  1 |       68.50 | 309.23</div></pre>
