@@ -22,9 +22,10 @@
 #'
 #' @examples
 #' \donttest{
-#' library(BayesFactor)
-#' model <- ttestBF(x = rnorm(100, 1, 1))
-#' model_parameters(model)
+#' if (require("BayesFactor")) {
+#'   model <- ttestBF(x = rnorm(100, 1, 1))
+#'   model_parameters(model)
+#' }
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats na.omit
