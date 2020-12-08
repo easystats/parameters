@@ -20,10 +20,10 @@
 #'
 #' @examples
 #' \donttest{
-#' library(parameters)
-#'
-#' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-#' bootstrap_parameters(model)
+#' if (require("boot")) {
+#'   model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+#'   bootstrap_parameters(model)
+#' }
 #' }
 #' @export
 bootstrap_parameters <- function(model,
