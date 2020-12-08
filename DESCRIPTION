@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.10.0
+Version: 0.10.1
 Authors@R: 
   c(
     person("Daniel", 
@@ -73,7 +73,7 @@ Suggests:
     cplm,
     dplyr,
     DRR,
-    effectsize (>= 0.4.0),
+    effectsize (>= 0.4.1),
     EGAnet (>= 0.7),
     FactoMineR,
     fastICA,
@@ -87,7 +87,6 @@ Suggests:
     GPArotation,
     lavaan,
     lavaSearch2,
-    lfe,
     lme4,
     lmerTest,
     logspline,
