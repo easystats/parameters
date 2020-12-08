@@ -56,5 +56,14 @@ if (require("testthat") && require("parameters")) {
       expect_equal(mp$phi_adjusted, 0.0538348, tolerance = 1e-3)
       expect_equal(colnames(mp), c("Chi2", "df", "phi_adjusted", "phi_CI_low", "phi_CI_high", "p", "Method"))
     })
+
+    mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), standardized_d = TRUE)
+    test_that("model_parameters-t-test standardized d", {
+      expect_equal(mp$d, -1.958435, tolerance = 1e-3)
+      expect_equal(colnames(mp),
+                   c("Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference",
+                     "t", "df_error", "CI_low", "CI_high", "d", "d_CI_low", "d_CI_high",
+                     "p", "Method"))
+    })
   }
 }

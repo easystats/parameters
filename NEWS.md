@@ -1,3 +1,10 @@
+# parameters 0.10.2
+
+## Bug fixes
+
+* `model_parameters()` for t-tests when `standardize_D = TRUE`, did not return
+  columns for the group-specific means.
+
 # parameters 0.10.1
 
 ## New functions
@@ -23,6 +30,11 @@
 * The default-method for effect sizes in `model_parameters()` for Anova-models
   (i.e. when arguments `omega_squared`, `eta_squared` or `epsilon_squared` are
   set to `TRUE`) is now `"partial"`, as initially intended.
+
+* Column names for degrees of freedom were revised. `"df_residual"` was replaced
+  by the more generic `"df_error"`. Moreover, models of class `htest` now also
+  have the column name `"df_error"` and no longer `"df"` (where applicable).
+  
 
 * Some re-exports for functions that were moved to *insight* longer ago, were
   now removed.

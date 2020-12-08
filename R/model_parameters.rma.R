@@ -313,9 +313,6 @@ model_parameters.meta_random <- function(model,
   # final atributes
   attr(out, "measure") <- "Estimate"
   attr(out, "object_name") <- .safe_deparse(substitute(model))
-
-  ## TODO remove once insight > 0.10.0 is on CRAN
-  attr(out, "data") <- model$data$data
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 
   out
@@ -401,9 +398,6 @@ model_parameters.meta_bma <- function(model,
   # final attributes
   attr(out, "measure") <- "Estimate"
   attr(out, "object_name") <- .safe_deparse(substitute(model))
-
-  ## TODO remove once insight > 0.10.0 is on CRAN
-  attr(out, "data") <- model$meta$fixed$data$data
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 
   out

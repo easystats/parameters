@@ -363,8 +363,9 @@ model_parameters.htest <- function(model,
   # reorder
   col_order <- c(
     "Parameter1", "Parameter2", "Parameter", "Group", "Mean_Parameter1",
-    "Mean_Parameter2", "mu", "Difference", "Mean_Difference", "t", "df_error",
-    "CI_low", "CI_high", "d", "d_CI_low", "d_CI_high", "p", "Method", "method"
+    "Mean_Parameter2", "Mean_Group1", "Mean_Group2",  "mu", "Difference",
+    "Mean_Difference", "t", "df_error", "CI_low", "CI_high", "d", "d_CI_low",
+    "d_CI_high", "p", "Method", "method"
   )
   out <- out[col_order[col_order %in% names(out)]]
   out
