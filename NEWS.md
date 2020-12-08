@@ -2,7 +2,7 @@
 
 ## Bug fixes
 
-* `model_parameters()` for t-tests when `standardize_D = TRUE`, did not return
+* `model_parameters()` for t-tests when `standardize_d = TRUE`, did not return
   columns for the group-specific means.
 
 # parameters 0.10.1

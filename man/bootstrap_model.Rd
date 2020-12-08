@@ -23,8 +23,10 @@ Bootstrap a statistical model n times to return a data frame of estimates.
 }
 \examples{
 \donttest{
-model <- lm(mpg ~ wt + cyl, data = mtcars)
-head(bootstrap_model(model))
+if (require("boot")) {
+  model <- lm(mpg ~ wt + cyl, data = mtcars)
+  head(bootstrap_model(model))
+}
 }
 }
 \seealso{

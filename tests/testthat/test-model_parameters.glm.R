@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters")) {
+if (require("testthat") && require("parameters") && require("boot")) {
   data(mtcars)
   test_that("model_parameters.lm", {
     model <- lm(mpg ~ wt, data = mtcars)
