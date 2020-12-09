@@ -9,6 +9,8 @@
 * `model_parameters()` for t-tests when `standardize_d = TRUE`, did not return
   columns for the group-specific means.
 
+* Fixed issue in `p_value()` for `fixest::feols()`.
+
 # parameters 0.10.1
 
 ## New functions
