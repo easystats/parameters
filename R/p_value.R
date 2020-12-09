@@ -669,10 +669,11 @@ p_value.complmrob <- function(model, ...) {
 p_value.fixest <- function(model, ...) {
   stats <- summary(model)$coeftable
   params <- insight::get_parameters(model)
+  stat_col <- which(colnames(stats) %in% c("Pr(>|t|)", "Pr(>|z|)"))
 
   .data_frame(
     Parameter = params$Parameter,
-    p = as.vector(stats[, "Pr(>|z|)"])
+    p = as.vector(stats[[stat_col]])
   )
 }
 
