@@ -392,6 +392,20 @@ p_value.coxme <- function(model, ...) {
 
 
 #' @export
+p_value.coxr <- function(model, ...) {
+  stat <- insight::get_statistic(model)
+
+  if (!is.null(stat)) {
+    .data_frame(
+      Parameter = stat$Parameter,
+      p = as.vector(2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE))
+    )
+  }
+}
+
+
+
+#' @export
 p_value.survreg <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
   if (isTRUE(robust)) {

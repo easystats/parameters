@@ -1,5 +1,9 @@
 # parameters 0.10.2
 
+## New supported model classes
+
+* `coxr` (*coxrobust*).
+
 ## Bug fixes
 
 * `model_parameters()` for t-tests when `standardize_d = TRUE`, did not return

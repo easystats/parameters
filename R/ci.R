@@ -338,6 +338,9 @@ ci.geeglm <- ci.gamlss
 ci.coxph <- ci.gamlss
 
 #' @export
+ci.coxr <- ci.gamlss
+
+#' @export
 ci.aareg <- ci.gamlss
 
 #' @export

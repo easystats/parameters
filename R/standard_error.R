@@ -670,6 +670,16 @@ standard_error.coxph <- function(model, method = NULL, ...) {
 }
 
 
+#' @export
+standard_error.coxr <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  vc <- insight::get_varcov(model)
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(sqrt(diag(vc)))
+  )
+}
+
 
 #' @export
 standard_error.survreg <- function(model, method = NULL, ...) {
