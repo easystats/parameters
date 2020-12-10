@@ -154,6 +154,9 @@ ci.lm <- function(x, ci = .95, method = NULL, ...) {
 ci.lm_robust <- ci.lm
 
 #' @export
+ci.coeftest <- ci.lm
+
+#' @export
 ci.comlmrob <- ci.lm
 
 #' @export
@@ -997,18 +1000,6 @@ ci.meta_bma <- ci.meta_random
 
 
 
-# lmtest::coeftest -------------------------------------------------------
-
-#' @export
-ci.coeftest <- function(model, ci=0.95, ...) {
-  out <- stats::confint(model, level=ci)
-  out <- .data_frame(
-    Parameter = .remove_backticks_from_string(row.names(out)),
-    CI_low = out[, 1],
-    CI_high = out[, 2]
-  )
-  out
-}
 
 
 # helper -----------------------------------------

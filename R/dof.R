@@ -130,6 +130,11 @@ degrees_of_freedom.glht <- function(model, ...) {
 }
 
 #' @export
+degrees_of_freedom.coeftest <- function(model, ...) {
+  attributes(model)$df
+}
+
+#' @export
 degrees_of_freedom.lqmm <- function(model, ...) {
   out <- model_parameters(model, ...)
   out$df
