@@ -130,7 +130,7 @@ model_parameters.coeftest <- function(model,
                                       ci = .95,
                                       verbose = TRUE,
                                       ...) {
-  out <- parameters:::.model_parameters_generic(
+  out <- .model_parameters_generic(
     model = model,
     ci = ci,
     merge_by = "Parameter",

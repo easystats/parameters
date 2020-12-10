@@ -997,8 +997,8 @@ ci.meta_bma <- ci.meta_random
 # lmtest::coeftest -------------------------------------------------------
 
 #' @export
-ci.coeftest <- function(model, ci=0.95, vcov.=NULL, df=NULL, ...) {
-  out <- confint(model, level=ci, vcov.=vcov., df=df)
+ci.coeftest <- function(model, ci=0.95, ...) {
+  out <- stats::confint(model, level=ci)
   out <- .data_frame(
     Parameter = .remove_backticks_from_string(row.names(out)),
     CI_low = out[, 1],
