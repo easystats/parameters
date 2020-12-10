@@ -1726,6 +1726,15 @@ standard_error.blavaan <- function(model, ci = .95, ...) {
 
 
 
+# lmtest::coeftest -------------------------------------------------------
+#' @export
+standard_error.coeftest <- function(model, ...) {
+  .data_frame(
+    Parameter = .remove_backticks_from_string(row.names(model)),
+    SE = model[, "Std. Error"]
+  )
+}
+
 
 
 

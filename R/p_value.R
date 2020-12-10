@@ -1131,6 +1131,16 @@ p_value.bife <- function(model, ...) {
 
 
 
+# lmtest::coeftest -------------------------------------------------------
+
+#' @export
+p_value.coeftest <- function(model, ...) {
+  .data_frame(
+    Parameter = .remove_backticks_from_string(row.names(model)),
+    p = model[, 4]
+  )
+}
+
 
 
 
