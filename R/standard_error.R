@@ -682,6 +682,10 @@ standard_error.coxr <- function(model, ...) {
 
 
 #' @export
+standard_error.ivFixed <- standard_error.coxr
+
+
+#' @export
 standard_error.survreg <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
   if (isTRUE(robust)) {

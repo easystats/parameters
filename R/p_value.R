@@ -404,6 +404,18 @@ p_value.coxr <- function(model, ...) {
 }
 
 
+#' @export
+p_value.ivFixed <- function(model, ...) {
+  stat <- insight::get_statistic(model)
+
+  if (!is.null(stat)) {
+    .data_frame(
+      Parameter = stat$Parameter,
+      p = as.vector(2 * stats::pt(abs(stat$Statistic), df = degrees_of_freedom(model), lower.tail = FALSE))
+    )
+  }
+}
+
 
 #' @export
 p_value.survreg <- function(model, method = NULL, ...) {

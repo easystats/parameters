@@ -146,17 +146,7 @@ model_parameters.coeftest <- function(model,
 # ivprobit -------------------------------------------------------
 
 #' @export
-model_parameters.ivprobit <- function(model,
-                                      ci = .95,
-                                      verbose = TRUE,
-                                      ...) {
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    merge_by = "Parameter",
-    verbose = verbose,
-    ...
-  )
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff=500)
-  out
-}
+model_parameters.ivprobit <- model_parameters.coeftest
+
+#' @export
+model_parameters.ivFixed <- model_parameters.coeftest

@@ -166,6 +166,9 @@ ci.comlmrob <- ci.lm
 ci.rq <- ci.lm
 
 #' @export
+ci.ivFixed <- ci.lm
+
+#' @export
 ci.rqss <- ci.lm
 
 #' @export

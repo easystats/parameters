@@ -29,6 +29,11 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   formatted_table
 }
 
+#' @export
+format.parameters_simulate <- format.parameters_model
+
+#' @export
+format.parameters_brms_meta <- format.parameters_model
 
 
 

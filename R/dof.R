@@ -149,6 +149,11 @@ degrees_of_freedom.mipo <- function(model, ...) {
 }
 
 #' @export
+degrees_of_freedom.ivFixed <- function(model, ...) {
+  as.vector(model$df)
+}
+
+#' @export
 degrees_of_freedom.mira <- function(model, ...) {
   if (!requireNamespace("mice", quietly = TRUE)) {
     stop("Package 'mice' needed for this function to work. Please install it.")
