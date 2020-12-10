@@ -1004,7 +1004,6 @@ ci.coeftest <- function(model, ci=0.95, ...) {
     CI_low = out[, 1],
     CI_high = out[, 2]
   )
-  row.names(out) <- NULL
   out
 }
 
