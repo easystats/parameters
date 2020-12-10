@@ -445,6 +445,15 @@ p_value.flexsurvreg <- function(model, ...) {
 
 
 #' @export
+p_value.ivprobit <- function(model, ...) {
+  .data_frame(
+    Parameter = model$names,
+    p = as.vector(model$pval)
+  )
+}
+
+
+#' @export
 p_value.mediate <- function(model, ...) {
   info <- model_info(model$model.y)
   if (info$is_linear && !model$INT) {

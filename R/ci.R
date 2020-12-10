@@ -154,6 +154,9 @@ ci.lm <- function(x, ci = .95, method = NULL, ...) {
 ci.lm_robust <- ci.lm
 
 #' @export
+ci.ivprobit <- ci.lm
+
+#' @export
 ci.coeftest <- ci.lm
 
 #' @export

@@ -940,6 +940,15 @@ standard_error.margins <- function(model, ...) {
 
 
 #' @export
+standard_error.ivprobit <- function(model, ...) {
+  .data_frame(
+    Parameter = model$names,
+    SE = as.vector(model$se)
+  )
+}
+
+
+#' @export
 standard_error.lqmm <- function(model, ...) {
   out <- model_parameters(model, ...)
   as.data.frame(out[c("Parameter", "SE")])
