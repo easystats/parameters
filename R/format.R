@@ -61,9 +61,11 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
     }
 
     out <- insight::print_parameters(cp, x, keep_parameter_column = FALSE)
-    add_attr <- attributes(out)$additional_attributes
 
     final_table <- lapply(out, function(i) {
+      if (identical(format, "markdown")) {
+        attr(i, "table_caption") <- attributes(i)$main_title
+      }
       param_table <- insight::parameters_table(i, ci_width = ci_width, ci_brackets = ci_brackets, preserve_attributes = TRUE)
       param_table$Group <- NULL
       param_table
