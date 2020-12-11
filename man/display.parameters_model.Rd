@@ -22,6 +22,7 @@
   caption = NULL,
   subtitle = NULL,
   footer = NULL,
+  align = NULL,
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
@@ -81,6 +82,7 @@
   caption = NULL,
   subtitle = NULL,
   footer = NULL,
+  align = NULL,
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
@@ -131,6 +133,9 @@ no caption or subtitle is printed.}
 \item{footer}{Table footer, as string. For markdown-formatted tables, table
 footers, due to the limitation in markdown rendering, are actually just a
 new text line under the table.}
+
+\item{align}{Only applies to HTML tables. May be one of \code{"left"},
+\code{"right"} or \code{"center"}.}
 
 \item{digits}{Number of decimal places for numeric values (except confidence intervals and p-values).}
 

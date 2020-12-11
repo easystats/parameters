@@ -9,6 +9,7 @@ print_html.parameters_model <- function(x,
                                         caption = NULL,
                                         subtitle = NULL,
                                         footer = NULL,
+                                        align = NULL,
                                         digits = 2,
                                         ci_digits = 2,
                                         p_digits = 3,
@@ -34,7 +35,7 @@ print_html.parameters_model <- function(x,
   formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
   formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
 
-  insight::export_table(formatted_table, format = "html", caption = table_caption, subtitle = subtitle, footer = footer, ...)
+  insight::export_table(formatted_table, format = "html", caption = table_caption, subtitle = subtitle, footer = footer, align = align, ...)
 }
 
 #' @export

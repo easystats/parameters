@@ -10,6 +10,8 @@
 #'   \code{\link[=principal_components]{principal_components()}}.
 #' @param format String, indicating the output format. Can be \code{"markdown"}
 #'   or \code{"html"}.
+#' @param align Only applies to HTML tables. May be one of \code{"left"},
+#'   \code{"right"} or \code{"center"}.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::parameters_table
 #' @inheritParams insight::export_table
@@ -37,12 +39,13 @@ display.parameters_model <- function(object,
                                      caption = NULL,
                                      subtitle = NULL,
                                      footer = NULL,
+                                     align = NULL,
                                      digits = 2,
                                      ci_digits = 2,
                                      p_digits = 3,
                                      ...) {
   if (identical(format, "html")) {
-    print_html(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, caption = caption, subtitle = subtitle, footer = footer, ci_digits = ci_digits, p_digits = p_digits, ...)
+    print_html(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, caption = caption, subtitle = subtitle, footer = footer, ci_digits = ci_digits, p_digits = p_digits, align = align, ...)
   } else {
     print_md(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, caption = caption, subtitle = subtitle, footer = footer, ci_digits = ci_digits, p_digits = p_digits, ...)
   }
