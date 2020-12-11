@@ -8,8 +8,8 @@
 #'   \code{\link[=simulate_parameters]{simulate_parameters()}},
 #'   \code{\link[=equivalence_test.lm]{equivalence_test()}} or
 #'   \code{\link[=principal_components]{principal_components()}}.
-#' @param format String, indicating the output format. Currently, only
-#'   \code{"markdown"} is supported.
+#' @param format String, indicating the output format. Can be \code{"markdown"}
+#'   or \code{"html"}.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::parameters_table
 #'
@@ -29,7 +29,11 @@
 #' display(mp)
 #' @export
 display.parameters_model <- function(object, format = "markdown", pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
-  print_md(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
+  if (identical(format, "html")) {
+    print_html(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
+  } else {
+    print_md(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
+  }
 }
 
 #' @export

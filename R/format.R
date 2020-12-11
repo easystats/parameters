@@ -9,6 +9,12 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   coef_name <- attributes(x)$coefficient_name
   s_value <- attributes(x)$s_value
 
+  if (identical(format, "html")) {
+    coef_name <- NULL
+    attr(x, "coefficient_name") <- NULL
+    attr(x, "zi_coefficient_name") <- NULL
+  }
+
   # prepare output, to have in shape for printing
   x <- .prepare_x_for_print(x, select, coef_name, s_value)
 
