@@ -91,20 +91,4 @@ p_value.cgam <- function(model, component = c("all", "conditional", "smooth_term
 
 
 
-#' @importFrom insight get_parameters
-#' @rdname p_value.DirichletRegModel
-#' @export
-p_value.averaging <- function(model, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
-  params <- insight::get_parameters(model, component = component)
-  if (component == "full") {
-    s <- summary(model)$coefmat.full
-  } else {
-    s <- summary(model)$coefmat.subset
-  }
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(params$Parameter),
-    p = as.vector(s[, 5])
-  )
-}

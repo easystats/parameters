@@ -3,17 +3,11 @@
 \name{p_value}
 \alias{p_value}
 \alias{p_value.default}
-\alias{p_value.emmGrid}
-\alias{p_value.gee}
 \title{p-values}
 \usage{
 p_value(model, ...)
 
 \method{p_value}{default}(model, method = NULL, verbose = TRUE, ...)
-
-\method{p_value}{emmGrid}(model, ci = 0.95, adjust = "none", ...)
-
-\method{p_value}{gee}(model, method = NULL, ...)
 }
 \arguments{
 \item{model}{A statistical model.}
@@ -24,8 +18,6 @@ p_value(model, ...)
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
-
 \item{adjust}{Character value naming the method used to adjust p-values or confidence intervals. See \code{?emmeans::summary.emmGrid} for details.}
 }
 \value{
@@ -35,7 +27,7 @@ A data frame with at least two columns: the parameter names and the p-values. De
 This function attempts to return, or compute, p-values of a model's parameters. See the documentation for your object's class:
 \itemize{
  \item{\link[=p_value.lmerMod]{Mixed models} (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, ...)}
- \item{\link[=p_value.brmsfit]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
+ \item{\link[=p_value.stanreg]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
  \item{\link[=p_value.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount}, ...)}
  \item{\link[=p_value.poissonmfx]{Marginal effects models} (\pkg{mfx})}
  \item{\link[=p_value.DirichletRegModel]{Models with special components} (\code{DirichletRegModel}, \code{clm2}, \code{cgam}, ...)}

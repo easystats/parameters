@@ -91,9 +91,6 @@ simulate_model.feglm <- simulate_model.default
 simulate_model.iv_robust <- simulate_model.default
 
 #' @export
-simulate_model.fixest <- simulate_model.default
-
-#' @export
 simulate_model.rq <- simulate_model.default
 
 #' @export
@@ -175,12 +172,6 @@ simulate_model.polr <- simulate_model.default
 simulate_model.coxph <- simulate_model.default
 
 #' @export
-simulate_model.svyglm.nb <- simulate_model.default
-
-#' @export
-simulate_model.svyglm.zip <- simulate_model.default
-
-#' @export
 simulate_model.logistf <- simulate_model.default
 
 #' @export
@@ -188,9 +179,6 @@ simulate_model.truncreg <- simulate_model.default
 
 #' @export
 simulate_model.glimML <- simulate_model.default
-
-#' @export
-simulate_model.ivreg <- simulate_model.default
 
 #' @export
 simulate_model.lrm <- simulate_model.default
@@ -210,8 +198,6 @@ simulate_model.vglm <- simulate_model.default
 #' @export
 simulate_model.censReg <- simulate_model.default
 
-#' @export
-simulate_model.tobit <- simulate_model.default
 
 #' @export
 simulate_model.survreg <- simulate_model.default

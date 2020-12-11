@@ -84,20 +84,6 @@ format_parameters.mediate <- function(model, ...) {
 }
 
 
-#' @importFrom utils packageVersion
-#' @export
-format_parameters.meta_random <- function(model, ...) {
-  params <- insight::find_parameters(model, flatten = TRUE)
-  names(params) <- params
-  params
-}
-
-#' @export
-format_parameters.meta_fixed <- format_parameters.meta_random
-
-#' @export
-format_parameters.meta_bma <- format_parameters.meta_random
-
 
 
 #' @export
@@ -106,8 +92,6 @@ format_parameters.merModList <- function(model, brackets = c("[", "]"), ...) {
 }
 
 
-#' @export
-format_parameters.mira <- format_parameters.rma
 
 
 #' @export
