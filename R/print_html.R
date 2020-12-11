@@ -14,8 +14,6 @@ print_html.parameters_model <- function(x,
   res <- attributes(x)$details
   if (!is.null(attributes(x)$title)) {
     table_caption <- attributes(x)$title
-  } else if (!is.null(res)) {
-    table_caption <- "Fixed Effects"
   } else {
     table_caption <- NULL
   }
