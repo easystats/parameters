@@ -65,7 +65,7 @@ print_md.parameters_stan <- function(x, split_components = TRUE, select = NULL, 
   if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
 
-  formatted_table <- format(split_components = split_components, select = select, format = "markdown", digits = digits, ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = c("(", ")"), ...)
+  formatted_table <- format(x = x, split_components = split_components, select = select, format = "markdown", digits = digits, ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = c("(", ")"), ...)
   insight::export_table(formatted_table, format = "markdown")
 }
 
