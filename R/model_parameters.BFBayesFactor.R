@@ -50,43 +50,37 @@ model_parameters.BFBayesFactor <- function(model,
     return(NULL)
   }
 
-  if (.classify_BFBayesFactor(model)[1] == "xtable") {
-    out <- insight::get_priors(model)
-    colnames(out)[which(colnames(out) != "Parameter")] <- paste0("Prior_", colnames(out)[which(colnames(out) != "Parameter")])
-  } else {
-    if (is.null(insight::get_parameters(model, verbose = verbose))) {
-      if (isTRUE(verbose)) {
-        warning("Can't extract model parameters.", call. = FALSE)
-      }
-      return(NULL)
+  if (is.null(insight::get_parameters(model, verbose = verbose))) {
+    if (isTRUE(verbose)) {
+      warning("Can't extract model parameters.", call. = FALSE)
     }
-
-    out <-
-      bayestestR::describe_posterior(
-        model,
-        centrality = centrality,
-        dispersion = dispersion,
-        ci = ci,
-        ci_method = ci_method,
-        test = test,
-        rope_range = rope_range,
-        rope_ci = rope_ci,
-        priors = priors,
-        verbose = verbose,
-        ...
-      )
-
-    # Add components and effects columns
-    tryCatch(
-      {
-        params <- insight::clean_parameters(model)[, c("Parameter", "Effects", "Component")]
-        out <- merge(out, params, sort = FALSE)
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    return(NULL)
   }
+
+  out <- bayestestR::describe_posterior(
+    model,
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    priors = priors,
+    verbose = verbose,
+    ...
+  )
+
+  # Add components and effects columns
+  tryCatch(
+    {
+      params <- insight::clean_parameters(model)[, c("Parameter", "Effects", "Component")]
+      out <- merge(out, params, sort = FALSE)
+    },
+    error = function(e) {
+      NULL
+    }
+  )
 
   # Extract BF
   tryCatch(
