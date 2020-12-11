@@ -166,7 +166,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Print tables in different output formats</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/display.R'><code>R/display.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/format.R'><code>R/format.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/print_md.R'><code>R/print_md.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/display.R'><code>R/display.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/format.R'><code>R/format.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/print_html.R'><code>R/print_html.R</code></a>, and 1 more</small>
     <div class="hidden name"><code>display.parameters_model.Rd</code></div>
     </div>
 
@@ -239,6 +239,17 @@
   <span class='va'>...</span>
 <span class='op'>)</span>
 
+<span class='fu'>print_html.parameters_model</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  pretty_names <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  split_components <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  select <span class='op'>=</span> <span class='cn'>NULL</span>,
+  digits <span class='op'>=</span> <span class='fl'>2</span>,
+  ci_digits <span class='op'>=</span> <span class='fl'>2</span>,
+  p_digits <span class='op'>=</span> <span class='fl'>3</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
 <span class='co'># S3 method for parameters_model</span>
 <span class='fu'><a href='https://easystats.github.io/insight/reference/display.html'>print_md</a></span><span class='op'>(</span>
   <span class='va'>x</span>,
@@ -263,8 +274,8 @@
     </tr>
     <tr>
       <th>format</th>
-      <td><p>String, indicating the output format. Currently, only
-<code>"markdown"</code> is supported.</p></td>
+      <td><p>String, indicating the output format. Can be <code>"markdown"</code>
+or <code>"html"</code>.</p></td>
     </tr>
     <tr>
       <th>pretty_names</th>
