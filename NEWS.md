@@ -12,6 +12,9 @@
 
 * Fixed issue in `p_value()` for `fixest::feols()`.
 
+* Fixed issue in `model_parameters()` for multinomial models when response
+  was a character vector (and no factor).
+
 # parameters 0.10.1
 
 ## New functions
