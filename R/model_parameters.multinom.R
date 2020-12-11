@@ -73,7 +73,7 @@ model_parameters.bracl <- function(model,
   # detect number of levels of response
   nl <- tryCatch(
     {
-      nlevels(insight::get_response(model))
+      nlevels(factor(insight::get_response(model)))
     },
     error = function(e) {
       0
