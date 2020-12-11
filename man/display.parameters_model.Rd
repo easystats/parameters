@@ -19,6 +19,9 @@
   pretty_names = TRUE,
   split_components = TRUE,
   select = NULL,
+  caption = NULL,
+  subtitle = NULL,
+  footer = NULL,
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
@@ -70,11 +73,14 @@
   ...
 )
 
-print_html.parameters_model(
+\method{print_html}{parameters_model}(
   x,
   pretty_names = TRUE,
   split_components = TRUE,
   select = NULL,
+  caption = NULL,
+  subtitle = NULL,
+  footer = NULL,
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
@@ -86,6 +92,9 @@ print_html.parameters_model(
   pretty_names = TRUE,
   split_components = TRUE,
   select = NULL,
+  caption = NULL,
+  subtitle = NULL,
+  footer = NULL,
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
@@ -112,6 +121,16 @@ in a single table and a \code{Component} column is added to the output.}
 be printed. If \code{NULL} (default), all columns are printed. The shortcut
 \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
 while \code{select = "short"} prints coefficient, standard errors and p-values.}
+
+\item{caption}{Table caption and subtitle, as string. If \code{NULL},
+no caption or subtitle is printed.}
+
+\item{subtitle}{Table caption and subtitle, as string. If \code{NULL},
+no caption or subtitle is printed.}
+
+\item{footer}{Table footer, as string. For markdown-formatted tables, table
+footers, due to the limitation in markdown rendering, are actually just a
+new text line under the table.}
 
 \item{digits}{Number of decimal places for numeric values (except confidence intervals and p-values).}
 

@@ -6,6 +6,9 @@ print_md.parameters_model <- function(x,
                                       pretty_names = TRUE,
                                       split_components = TRUE,
                                       select = NULL,
+                                      caption = NULL,
+                                      subtitle = NULL,
+                                      footer = NULL,
                                       digits = 2,
                                       ci_digits = 2,
                                       p_digits = 3,
@@ -15,9 +18,13 @@ print_md.parameters_model <- function(x,
   if (!is.null(attributes(x)$title)) {
     table_caption <- attributes(x)$title
   } else if (!is.null(res)) {
-    table_caption <- "Fixed Effects"
+    if (is.null(caption)) {
+      table_caption <- "Fixed Effects"
+    } else {
+      table_caption <- caption
+    }
   } else {
-    table_caption <- NULL
+    table_caption <- caption
   }
 
   # check if user supplied digits attributes
@@ -32,7 +39,7 @@ print_md.parameters_model <- function(x,
   formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
   formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
 
-  insight::export_table(formatted_table, format = "markdown", caption = table_caption, align = "firstleft", ...)
+  insight::export_table(formatted_table, format = "markdown", caption = table_caption, subtitle = subtitle, footer = footer, align = "firstleft", ...)
 }
 
 #' @export

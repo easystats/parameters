@@ -275,10 +275,7 @@
   }
 
   if (identical(format, "html")) {
-    out <- do.call(rbind, final_table)
-    ## TODO fix table name
-    attr(out, "table_caption") <- "Model"
-    out
+    do.call(rbind, final_table)
   } else {
     .compact_list(final_table)
   }

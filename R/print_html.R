@@ -6,16 +6,20 @@ print_html.parameters_model <- function(x,
                                         pretty_names = TRUE,
                                         split_components = TRUE,
                                         select = NULL,
+                                        caption = NULL,
+                                        subtitle = NULL,
+                                        footer = NULL,
                                         digits = 2,
                                         ci_digits = 2,
                                         p_digits = 3,
                                         ...) {
   # table caption
-  res <- attributes(x)$details
-  if (!is.null(attributes(x)$title)) {
+  if (!is.null(attributes(x)$title) && is.null(caption)) {
     table_caption <- attributes(x)$title
+  } else if (!is.null(caption)) {
+    table_caption <- caption
   } else {
-    table_caption <- NULL
+    table_caption <- "Regression Model"
   }
 
   # check if user supplied digits attributes
@@ -30,7 +34,7 @@ print_html.parameters_model <- function(x,
   formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
   formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
 
-  insight::export_table(formatted_table, format = "html", caption = table_caption, ...)
+  insight::export_table(formatted_table, format = "html", caption = table_caption, subtitle = subtitle, footer = footer, ...)
 }
 
 #' @export
