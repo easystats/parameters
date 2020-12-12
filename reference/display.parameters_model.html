@@ -185,6 +185,7 @@
   caption <span class='op'>=</span> <span class='cn'>NULL</span>,
   subtitle <span class='op'>=</span> <span class='cn'>NULL</span>,
   footer <span class='op'>=</span> <span class='cn'>NULL</span>,
+  align <span class='op'>=</span> <span class='cn'>NULL</span>,
   digits <span class='op'>=</span> <span class='fl'>2</span>,
   ci_digits <span class='op'>=</span> <span class='fl'>2</span>,
   p_digits <span class='op'>=</span> <span class='fl'>3</span>,
@@ -251,6 +252,7 @@
   caption <span class='op'>=</span> <span class='cn'>NULL</span>,
   subtitle <span class='op'>=</span> <span class='cn'>NULL</span>,
   footer <span class='op'>=</span> <span class='cn'>NULL</span>,
+  align <span class='op'>=</span> <span class='cn'>NULL</span>,
   digits <span class='op'>=</span> <span class='fl'>2</span>,
   ci_digits <span class='op'>=</span> <span class='fl'>2</span>,
   p_digits <span class='op'>=</span> <span class='fl'>3</span>,
@@ -320,6 +322,11 @@ no caption or subtitle is printed.</p></td>
       <td><p>Table footer, as string. For markdown-formatted tables, table
 footers, due to the limitation in markdown rendering, are actually just a
 new text line under the table.</p></td>
+    </tr>
+    <tr>
+      <th>align</th>
+      <td><p>Only applies to HTML tables. May be one of <code>"left"</code>,
+<code>"right"</code> or <code>"center"</code>.</p></td>
     </tr>
     <tr>
       <th>digits</th>
