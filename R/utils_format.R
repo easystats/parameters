@@ -255,7 +255,7 @@
       if (component_name != "rewb-contextual") {
         table_caption <- c(sprintf("# %s %s", s1, tolower(s2)), "blue")
       }
-    } else if (format == "markdown") {
+    } else if (format %in% c("markdown", "html")) {
       # Print
       if (component_name != "rewb-contextual") {
         table_caption <- sprintf("%s %s", s1, tolower(s2))
@@ -265,9 +265,18 @@
       formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
     }
 
-    attr(formatted_table, "table_caption") <- table_caption
+    if (identical(format, "html")) {
+      formatted_table$Component <- table_caption
+    } else {
+      attr(formatted_table, "table_caption") <- table_caption
+    }
+
     final_table <- c(final_table, list(formatted_table))
   }
 
-  .compact_list(final_table)
+  if (identical(format, "html")) {
+    do.call(rbind, final_table)
+  } else {
+    .compact_list(final_table)
+  }
 }

@@ -15,6 +15,8 @@
 * Fixed issue in `model_parameters()` for multinomial models when response
   was a character vector (and no factor).
 
+* Fixed issue in `print_md()` for model-parameters objects from Bayesian models.
+
 # parameters 0.10.1
 
 ## New functions
