@@ -63,13 +63,14 @@ degrees_of_freedom.emm_list <- function(model, ...) {
 }
 
 
+#' @rdname p_value
 #' @export
-p_value.emmGrid <- function(model, ci = .95, p_adjust = "none", ...) {
-  s <- summary(model, level = ci, adjust = p_adjust)
+p_value.emmGrid <- function(model, ci = .95, adjust = "none", ...) {
+  s <- summary(model, level = ci, adjust = adjust)
   estimate_pos <- which(colnames(s) == model@misc$estName)
 
   if (length(estimate_pos)) {
-    stat <- insight::get_statistic(model, ci = ci, adjust = p_adjust)
+    stat <- insight::get_statistic(model, ci = ci, adjust = adjust)
     p <- 2 * stats::pt(abs(stat$Statistic), df = s$df, lower.tail = FALSE)
 
     .data_frame(
