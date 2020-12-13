@@ -10,11 +10,11 @@ if (.runThisTest) {
 
       test_that("model_parameters.aov", {
         model <- aov(Sepal.Width ~ Species, data = iris)
-        mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE)
+        mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE))
         testthat::expect_equal(sum(mp$df), 149)
         testthat::expect_equal(colnames(mp), c(
           "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
-          "Omega2_partial", "Eta2_partial", "Epsilon2_partial"
+          "Omega2", "Eta2", "Epsilon2"
         ))
 
         model <- aov(Sepal.Length ~ Species * Cat1 * Cat2, data = iris)
