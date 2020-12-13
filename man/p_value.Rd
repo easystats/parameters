@@ -21,6 +21,8 @@ p_value(model, ...)
 
 \item{verbose}{Toggle warnings and messages.}
 
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+
 \item{adjust}{Character value naming the method used to adjust p-values or confidence intervals. See \code{?emmeans::summary.emmGrid} for details.}
 }
 \value{

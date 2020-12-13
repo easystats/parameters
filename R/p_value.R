@@ -14,6 +14,7 @@
 #' @param adjust Character value naming the method used to adjust p-values or confidence intervals. See \code{?emmeans::summary.emmGrid} for details.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.
+#' @inheritParams ci.merMod
 #'
 #' @note \code{p_value_robust()} resp. \code{p_value(method = "robust")}
 #'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
