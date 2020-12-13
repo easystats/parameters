@@ -69,7 +69,6 @@ ci.averaging <- function(x, ci = .95, component = c("conditional", "full"), ...)
 #'   model_parameters(model)
 #' }
 #' @return A data frame of indices related to the model's parameters.
-#' @inheritParams simulate_model
 #' @export
 model_parameters.averaging <- function(model,
                                        ci = .95,
