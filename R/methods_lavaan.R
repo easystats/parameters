@@ -23,7 +23,7 @@ standard_error.lavaan <- function(model, ...) {
 
 
 #' @export
-standard_error.blavaan <- function(model, ci = .95, ...) {
+standard_error.blavaan <- function(model, ...) {
   out <- .extract_parameters_lavaan(model, ...)
   out[out$Operator != "~1", c("To", "Operator", "From", "SE")]
 }
@@ -37,7 +37,7 @@ p_value.lavaan <- function(model, ...) {
 
 
 #' @export
-p_value.blavaan <- function(model, ci = .95, ...) {
+p_value.blavaan <- function(model, ...) {
   out <- .extract_parameters_lavaan(model, ...)
   out[out$Operator != "~1", c("To", "Operator", "From", "p")]
 }
@@ -174,47 +174,3 @@ predict.parameters_sem <- function(object, newdata = NULL, ...) {
 
   as.data.frame(lavaan::lavPredict(attributes(object)$model, newdata = newdata, method = "EBM", ...))
 }
-
-#' @export
-ci.lavaan <- function(x, ci = .95, ...) {
-  out <- .extract_parameters_lavaan(model = x, ci = ci, ...)
-  out$CI <- ci * 100
-  out[out$Operator != "~1", c("To", "Operator", "From", "CI", "CI_low", "CI_high")]
-}
-
-
-#' @export
-ci.blavaan <- function(x, ci = .95, ...) {
-  out <- .extract_parameters_lavaan(model = x, ci = ci, ...)
-  out$CI <- ci * 100
-  out[out$Operator != "~1", c("To", "Operator", "From", "CI", "CI_low", "CI_high")]
-}
-
-
-#' @export
-standard_error.lavaan <- function(model, ...) {
-  out <- .extract_parameters_lavaan(model, ...)
-  out[out$Operator != "~1", c("To", "Operator", "From", "SE")]
-}
-
-
-#' @export
-standard_error.blavaan <- function(model, ci = .95, ...) {
-  out <- .extract_parameters_lavaan(model, ...)
-  out[out$Operator != "~1", c("To", "Operator", "From", "SE")]
-}
-
-
-#' @export
-p_value.lavaan <- function(model, ...) {
-  out <- .extract_parameters_lavaan(model, ...)
-  out[out$Operator != "~1", c("To", "Operator", "From", "p")]
-}
-
-
-#' @export
-p_value.blavaan <- function(model, ci = .95, ...) {
-  out <- .extract_parameters_lavaan(model, ...)
-  out[out$Operator != "~1", c("To", "Operator", "From", "p")]
-}
-
