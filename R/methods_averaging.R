@@ -3,49 +3,6 @@
 #################### .averaging
 
 
-#' @rdname standard_error
-#' @export
-standard_error.averaging <- function(model, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
-  params <- insight::get_parameters(model, component = component)
-  if (component == "full") {
-    s <- summary(model)$coefmat.full
-  } else {
-    s <- summary(model)$coefmat.subset
-  }
-  .data_frame(
-    Parameter = .remove_backticks_from_string(params$Parameter),
-    SE = as.vector(s[, 3])
-  )
-}
-
-
-#' @importFrom insight get_parameters
-#' @rdname p_value.DirichletRegModel
-#' @export
-p_value.averaging <- function(model, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
-  params <- insight::get_parameters(model, component = component)
-  if (component == "full") {
-    s <- summary(model)$coefmat.full
-  } else {
-    s <- summary(model)$coefmat.subset
-  }
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(params$Parameter),
-    p = as.vector(s[, 5])
-  )
-}
-
-
-#' @export
-ci.averaging <- function(x, ci = .95, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
-  ci_wald(model = x, ci = ci, dof = Inf, component = component)
-}
-
-
 #' Parameters from special models
 #'
 #' Parameters from special regression models not listed under one of the previous categories yet.
@@ -90,4 +47,47 @@ model_parameters.averaging <- function(model,
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
+}
+
+
+#' @rdname standard_error
+#' @export
+standard_error.averaging <- function(model, component = c("conditional", "full"), ...) {
+  component <- match.arg(component)
+  params <- insight::get_parameters(model, component = component)
+  if (component == "full") {
+    s <- summary(model)$coefmat.full
+  } else {
+    s <- summary(model)$coefmat.subset
+  }
+  .data_frame(
+    Parameter = .remove_backticks_from_string(params$Parameter),
+    SE = as.vector(s[, 3])
+  )
+}
+
+
+#' @importFrom insight get_parameters
+#' @rdname p_value.DirichletRegModel
+#' @export
+p_value.averaging <- function(model, component = c("conditional", "full"), ...) {
+  component <- match.arg(component)
+  params <- insight::get_parameters(model, component = component)
+  if (component == "full") {
+    s <- summary(model)$coefmat.full
+  } else {
+    s <- summary(model)$coefmat.subset
+  }
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(params$Parameter),
+    p = as.vector(s[, 5])
+  )
+}
+
+
+#' @export
+ci.averaging <- function(x, ci = .95, component = c("conditional", "full"), ...) {
+  component <- match.arg(component)
+  ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }

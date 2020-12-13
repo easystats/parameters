@@ -1,11 +1,6 @@
 # classes: .BFBayesFactor
 
 
-#' @include methods_brms.R
-#' @export
-p_value.BFBayesFactor <- p_value.brmsfit
-
-
 #' Parameters from BayesFactor objects
 #'
 #' Parameters of BayesFactor objects.
@@ -125,6 +120,10 @@ model_parameters.BFBayesFactor <- function(model,
 }
 
 
+#' @include methods_brms.R
+#' @export
+p_value.BFBayesFactor <- p_value.brmsfit
+
 
 
 
@@ -148,6 +147,8 @@ model_parameters.BFBayesFactor <- function(model,
     "linear"
   } else if (any(class(x@denominator) %in% c("BFcontingencyTable"))) {
     "xtable"
+  } else if (any(class(x@denominator) %in% c("BFproportion"))) {
+    "proptest"
   } else {
     class(x@denominator)
   }

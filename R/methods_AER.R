@@ -1,10 +1,10 @@
 # classes: .tobit, .gamlss
 
-# The `AER::ivreg` is being spun off to a separate package. The methods in 
+# The `AER::ivreg` is being spun off to a separate package. The methods in
 # `methods_ivreg.R` should work for objects produce by `AER`.
 
 
-#################### .tobit
+#################### .tobit ------
 
 #' @include methods_gamlss.R
 #' @export
@@ -32,7 +32,9 @@ standard_error.tobit <- function(model, ...) {
 }
 
 
-#################### .gamlss
+
+
+#################### .gamlss ------
 
 #' @export
 standard_error.gamlss <- function(model, ...) {

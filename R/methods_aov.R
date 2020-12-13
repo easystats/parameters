@@ -1,45 +1,7 @@
 # classes: .aov, .anova, aovlist, anova.rms, maov, afex_aov
- 
-
-#################### .aov
 
 
-#' @export
-standard_error.aov <- function(model, ...) {
-  params <- model_parameters(model)
-
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = params$SE
-  )
-}
-
-
-#' @export
-p_value.aov <- function(model, ...) {
-  params <- model_parameters(model)
-
-  if (nrow(params) == 0) {
-    return(NA)
-  }
-
-  if ("Group" %in% names(params)) {
-    params <- params[params$Group == "Within", ]
-  }
-
-  if ("Residuals" %in% params$Parameter) {
-    params <- params[params$Parameter != "Residuals", ]
-  }
-
-  if (!"p" %in% names(params)) {
-    return(NA)
-  }
-
-  .data_frame(
-    Parameter = params$Parameter,
-    p = params$p
-  )
-}
+#################### .aov ------
 
 
 #' Parameters from ANOVAs
@@ -141,7 +103,47 @@ model_parameters.aov <- function(model,
 }
 
 
-#################### .anova
+#' @export
+standard_error.aov <- function(model, ...) {
+  params <- model_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = params$SE
+  )
+}
+
+
+#' @export
+p_value.aov <- function(model, ...) {
+  params <- model_parameters(model)
+
+  if (nrow(params) == 0) {
+    return(NA)
+  }
+
+  if ("Group" %in% names(params)) {
+    params <- params[params$Group == "Within", ]
+  }
+
+  if ("Residuals" %in% params$Parameter) {
+    params <- params[params$Parameter != "Residuals", ]
+  }
+
+  if (!"p" %in% names(params)) {
+    return(NA)
+  }
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = params$p
+  )
+}
+
+
+
+
+#################### .anova ------
 
 
 #' @export
@@ -156,7 +158,9 @@ p_value.anova <- p_value.aov
 model_parameters.anova <- model_parameters.aov
 
 
-#################### .aov.list
+
+
+#################### .aov.list  ------
 
 
 #' @export
@@ -172,7 +176,8 @@ model_parameters.aovlist <- model_parameters.aov
 
 
 
-#################### others
+
+#################### others  ------
 
 
 #' @export
@@ -202,19 +207,20 @@ model_parameters.afex_aov <- function(model,
     out <- model_parameters(model$Anova, df_error = NULL, type = attr(model, "type"), ...)
   }
 
-  out <-
-    .effectsizes_for_aov(
-      model,
-      out,
-      omega_squared = omega_squared,
-      eta_squared = eta_squared,
-      epsilon_squared = epsilon_squared,
-      verbose = verbose,
-      ...
-    )
+  out <- .effectsizes_for_aov(
+    model,
+    out,
+    omega_squared = omega_squared,
+    eta_squared = eta_squared,
+    epsilon_squared = epsilon_squared,
+    verbose = verbose,
+    ...
+  )
 
   out
 }
+
+
 
 
 # helper ------------------------------
@@ -282,6 +288,8 @@ model_parameters.afex_aov <- function(model,
 
   parameters
 }
+
+
 
 
 # internals --------------------------

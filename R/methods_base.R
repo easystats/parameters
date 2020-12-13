@@ -3,6 +3,11 @@
 model_parameters.data.frame <- model_parameters.mcmc
 
 
+
+
+# Standard Errors from standard classes ---------------------------------------------
+
+
 #' @rdname standard_error
 #' @export
 standard_error.factor <- function(model, force = FALSE, verbose = TRUE, ...) {
@@ -98,6 +103,7 @@ standard_error.effectsize_std_params <- function(model, verbose = TRUE, ...) {
 
 
 
+
 # p-Values from standard classes ---------------------------------------------
 
 
@@ -111,7 +117,6 @@ p_value.numeric <- function(model, ...) {
     )
   ))
 }
-
 
 
 #' @export
