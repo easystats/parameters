@@ -176,15 +176,14 @@ simulate_parameters.multinom <- function(model,
                                          test = "p-value",
                                          ...) {
   data <- simulate_model(model, iterations = iterations, ...)
-  out <-
-    .summary_bootstrap(
-      data = data,
-      test = test,
-      centrality = centrality,
-      ci = ci,
-      ci_method = ci_method,
-      ...
-    )
+  out <- .summary_bootstrap(
+    data = data,
+    test = test,
+    centrality = centrality,
+    ci = ci,
+    ci_method = ci_method,
+    ...
+  )
 
   params <- insight::get_parameters(model)
   out$Parameter <- params$Parameter
