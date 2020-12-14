@@ -53,7 +53,15 @@ model_parameters.bracl <- function(model,
 
 
 #' @export
-ci.bracl <- ci.multinom
+ci.bracl <- function(x, ci = .95, method = NULL, ...) {
+  robust <- !is.null(method) && method == "robust"
+  params <- insight::get_parameters(x)
+  out <- ci_wald(model = x, ci = ci, dof = Inf, robust = robust, ...)
+  if ("Response" %in% colnames(params)) {
+    out$Response <- params$Response
+  }
+  out
+}
 
 
 #' @export
@@ -98,15 +106,7 @@ model_parameters.multinom <- model_parameters.bracl
 
 
 #' @export
-ci.multinom <- function(x, ci = .95, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
-  params <- insight::get_parameters(x)
-  out <- ci_wald(model = x, ci = ci, dof = Inf, robust = robust, ...)
-  if ("Response" %in% colnames(params)) {
-    out$Response <- params$Response
-  }
-  out
-}
+ci.multinom <- ci.bracl
 
 
 #' @export
@@ -212,7 +212,7 @@ model_parameters.brmultinom <- model_parameters.bracl
 
 
 #' @export
-ci.brmultinom <- ci.multinom
+ci.brmultinom <- ci.bracl
 
 
 #' @export
