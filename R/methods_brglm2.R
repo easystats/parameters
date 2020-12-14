@@ -1,3 +1,102 @@
+# classes: .bracl, .multinom, .brmultinom
+
+
+############# .bracl --------------
+
+
+#' @rdname model_parameters.mlm
+#' @export
+model_parameters.bracl <- function(model,
+                                   ci = .95,
+                                   bootstrap = FALSE,
+                                   iterations = 1000,
+                                   standardize = NULL,
+                                   exponentiate = FALSE,
+                                   p_adjust = NULL,
+                                   verbose = TRUE,
+                                   ...) {
+
+  # detect number of levels of response
+  nl <- tryCatch(
+    {
+      nlevels(factor(insight::get_response(model)))
+    },
+    error = function(e) {
+      0
+    }
+  )
+
+  # merge by response as well if more than 2 levels
+  if (nl > 2) {
+    merge_by <- c("Parameter", "Response")
+  } else {
+    merge_by <- "Parameter"
+  }
+
+  out <-
+    .model_parameters_generic(
+      model = model,
+      ci = ci,
+      bootstrap = bootstrap,
+      iterations = iterations,
+      merge_by = merge_by,
+      standardize = standardize,
+      exponentiate = exponentiate,
+      robust = FALSE,
+      p_adjust = p_adjust,
+      ...
+    )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+#' @export
+ci.bracl <- ci.multinom
+
+
+#' @export
+standard_error.bracl <- function(model, ...) {
+  smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
+  se <- smry[[2]]
+  names(se) <- rownames(smry)
+
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(se),
+    Response = params$Response
+  )
+}
+
+
+#' @export
+p_value.bracl <- function(model, ...) {
+  smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
+  p <- smry[[4]]
+  names(p) <- rownames(smry)
+
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = as.vector(p),
+    Response = params$Response
+  )
+}
+
+
+
+
+############# .multinom --------------
+
+
+#' @export
+model_parameters.multinom <- model_parameters.bracl
+
+
 #' @export
 ci.multinom <- function(x, ci = .95, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
@@ -70,110 +169,6 @@ p_value.multinom <- function(model, ...) {
 
 
 #' @export
-ci.brmultinom <- ci.multinom
-
-
-#' @export
-ci.bracl <- ci.multinom
-
-
-#' @export
-standard_error.brmultinom <- standard_error.multinom
-
-
-#' @export
-standard_error.bracl <- function(model, ...) {
-  smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
-  se <- smry[[2]]
-  names(se) <- rownames(smry)
-
-  params <- insight::get_parameters(model)
-
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = as.vector(se),
-    Response = params$Response
-  )
-}
-
-
-#' @export
-p_value.brmultinom <- p_value.multinom
-
-
-#' @export
-p_value.bracl <- function(model, ...) {
-  smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
-  p <- smry[[4]]
-  names(p) <- rownames(smry)
-
-  params <- insight::get_parameters(model)
-
-  .data_frame(
-    Parameter = params$Parameter,
-    p = as.vector(p),
-    Response = params$Response
-  )
-}
-
-
-#' @rdname model_parameters.mlm
-#' @export
-model_parameters.bracl <- function(model,
-                                   ci = .95,
-                                   bootstrap = FALSE,
-                                   iterations = 1000,
-                                   standardize = NULL,
-                                   exponentiate = FALSE,
-                                   p_adjust = NULL,
-                                   verbose = TRUE,
-                                   ...) {
-
-  # detect number of levels of response
-  nl <- tryCatch(
-    {
-      nlevels(factor(insight::get_response(model)))
-    },
-    error = function(e) {
-      0
-    }
-  )
-
-  # merge by response as well if more than 2 levels
-  if (nl > 2) {
-    merge_by <- c("Parameter", "Response")
-  } else {
-    merge_by <- "Parameter"
-  }
-
-  out <-
-    .model_parameters_generic(
-      model = model,
-      ci = ci,
-      bootstrap = bootstrap,
-      iterations = iterations,
-      merge_by = merge_by,
-      standardize = standardize,
-      exponentiate = exponentiate,
-      robust = FALSE,
-      p_adjust = p_adjust,
-      ...
-    )
-
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  out
-}
-
-
-#' @export
-model_parameters.brmultinom <- model_parameters.bracl
-
-
-#' @export
-model_parameters.multinom <- model_parameters.bracl
-
-
-#' @export
 simulate_parameters.multinom <- function(model,
                                          iterations = 1000,
                                          centrality = "median",
@@ -207,3 +202,22 @@ simulate_parameters.multinom <- function(model,
 }
 
 
+
+
+############# .brmultinom --------------
+
+
+#' @export
+model_parameters.brmultinom <- model_parameters.bracl
+
+
+#' @export
+ci.brmultinom <- ci.multinom
+
+
+#' @export
+standard_error.brmultinom <- standard_error.multinom
+
+
+#' @export
+p_value.brmultinom <- p_value.multinom

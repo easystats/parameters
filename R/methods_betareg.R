@@ -1,3 +1,41 @@
+#' @rdname model_parameters.averaging
+#' @export
+model_parameters.betareg <- function(model,
+                                     ci = .95,
+                                     bootstrap = FALSE,
+                                     iterations = 1000,
+                                     component = c("conditional", "precision", "all"),
+                                     standardize = NULL,
+                                     exponentiate = FALSE,
+                                     p_adjust = NULL,
+                                     verbose = TRUE,
+                                     ...) {
+  component <- match.arg(component)
+  if (component == "all") {
+    merge_by <- c("Parameter", "Component")
+  } else {
+    merge_by <- "Parameter"
+  }
+
+  ## TODO check merge by
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    component = component,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
 
 #' @rdname ci.merMod
 #' @export
@@ -50,43 +88,3 @@ p_value.betareg <- function(model, component = c("all", "conditional", "precisio
 
   out
 }
-
-
-#' @rdname model_parameters.averaging
-#' @export
-model_parameters.betareg <- function(model,
-                                     ci = .95,
-                                     bootstrap = FALSE,
-                                     iterations = 1000,
-                                     component = c("conditional", "precision", "all"),
-                                     standardize = NULL,
-                                     exponentiate = FALSE,
-                                     p_adjust = NULL,
-                                     verbose = TRUE,
-                                     ...) {
-  component <- match.arg(component)
-  if (component == "all") {
-    merge_by <- c("Parameter", "Component")
-  } else {
-    merge_by <- "Parameter"
-  }
-
-  ## TODO check merge by
-
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    component = component,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = c("Parameter", "Component"),
-    standardize = standardize,
-    exponentiate = exponentiate,
-    p_adjust = p_adjust,
-    ...
-  )
-
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  out
-}
-
