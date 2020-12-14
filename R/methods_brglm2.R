@@ -33,19 +33,18 @@ model_parameters.bracl <- function(model,
     merge_by <- "Parameter"
   }
 
-  out <-
-    .model_parameters_generic(
-      model = model,
-      ci = ci,
-      bootstrap = bootstrap,
-      iterations = iterations,
-      merge_by = merge_by,
-      standardize = standardize,
-      exponentiate = exponentiate,
-      robust = FALSE,
-      p_adjust = p_adjust,
-      ...
-    )
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = merge_by,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    robust = FALSE,
+    p_adjust = p_adjust,
+    ...
+  )
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
