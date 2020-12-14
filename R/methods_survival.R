@@ -1,4 +1,8 @@
-# classes: .coxph, .aareg, .survreg
+# classes: .coxph, .aareg, .survreg, .riskRegression
+
+
+#################### .coxph ------
+
 
 #' @export
 ci.coxph <- ci.gamlss
@@ -52,6 +56,11 @@ p_value.coxph <- function(model, method = NULL, ...) {
 }
 
 
+
+
+#################### .aareg ------
+
+
 #' @export
 standard_error.aareg <- function(model, ...) {
   s <- summary(model)
@@ -78,6 +87,12 @@ p_value.aareg <- function(model, ...) {
 
 #' @export
 ci.aareg <- ci.gamlss
+
+
+
+
+#################### .survreg ------
+
 
 #' @export
 standard_error.survreg <- function(model, method = NULL, ...) {
@@ -107,5 +122,32 @@ p_value.survreg <- function(model, method = NULL, ...) {
   .data_frame(
     Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
+  )
+}
+
+
+
+
+#################### .riskRegression ------
+
+
+#' @importFrom stats coef
+#' @importFrom utils capture.output
+#' @export
+standard_error.riskRegression <- function(model, ...) {
+  junk <- utils::capture.output(cs <- stats::coef(model))
+  .data_frame(
+    Parameter = .remove_backticks_from_string(as.vector(cs[, 1])),
+    SE = as.numeric(cs[, "StandardError"])
+  )
+}
+
+
+#' @export
+p_value.riskRegression <- function(model, ...) {
+  junk <- utils::capture.output(cs <- stats::coef(model))
+  .data_frame(
+    Parameter = .remove_backticks_from_string(as.vector(cs[, 1])),
+    p = as.numeric(cs[, "Pvalue"])
   )
 }
