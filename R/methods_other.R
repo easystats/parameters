@@ -1,3 +1,6 @@
+############# .complmrob --------------
+
+
 #' @export
 standard_error.complmrob <- function(model, ...) {
   stats <- summary(model)$stats
@@ -23,14 +26,10 @@ p_value.complmrob <- function(model, ...) {
 #' @export
 ci.comlmrob <- ci.lm
 
-#' @export
-p_value.Gam <- function(model, ...) {
-  p.aov <- stats::na.omit(summary(model)$parametric.anova)
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(p.aov)),
-    p = as.vector(p.aov[, 5])
-  )
-}
+
+
+
+############# .Gam --------------
 
 
 #' @export
@@ -50,5 +49,15 @@ model_parameters.Gam <- function(model,
     df_error = df_error,
     type = type,
     ...
+  )
+}
+
+
+#' @export
+p_value.Gam <- function(model, ...) {
+  p.aov <- stats::na.omit(summary(model)$parametric.anova)
+  .data_frame(
+    Parameter = .remove_backticks_from_string(rownames(p.aov)),
+    p = as.vector(p.aov[, 5])
   )
 }

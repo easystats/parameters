@@ -227,6 +227,7 @@ Collate:
     'methods_effect_size.R'
     'methods_estimatr.R'
     'methods_feis.R'
+    'methods_fitdistr.R'
     'methods_fixest.R'
     'methods_flexsurvreg.R'
     'methods_mgcv.R'
