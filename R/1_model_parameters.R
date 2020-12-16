@@ -1,3 +1,7 @@
+# default methods, glm (almost default)
+
+#################### .default ----------------------
+
 #' Model Parameters
 #'
 #' Compute and extract model parameters. See the documentation for your object's class:
@@ -185,3 +189,46 @@ model_parameters.default <- function(model,
 
   params
 }
+
+
+
+
+#################### .glm ----------------------
+
+
+#' @importFrom insight n_obs
+#' @rdname model_parameters.default
+#' @export
+model_parameters.glm <- function(model,
+                                 ci = .95,
+                                 df_method = "profile",
+                                 bootstrap = FALSE,
+                                 iterations = 1000,
+                                 standardize = NULL,
+                                 exponentiate = FALSE,
+                                 robust = FALSE,
+                                 p_adjust = NULL,
+                                 verbose = TRUE,
+                                 ...) {
+  if (insight::n_obs(model) > 1e4 && df_method == "profile") {
+    message("Profiled confidence intervals may take longer time to compute. Use 'df_method=\"wald\"' for faster computation of CIs.")
+  }
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    df_method = df_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    robust = robust,
+    p_adjust = p_adjust,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+

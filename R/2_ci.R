@@ -19,6 +19,24 @@ ci.default <- function(x, ci = .95, method = NULL, ...) {
 }
 
 
+#' @rdname ci.merMod
+#' @export
+ci.glm <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
+  method <- match.arg(method)
+  if (method == "profile") {
+    out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
+    out <- do.call(rbind, out)
+  } else if (method == "robust") {
+    out <- ci_wald(model = x, ci = ci, robust = TRUE, ...)
+  } else {
+    out <- ci_wald(model = x, ci = ci)
+  }
+
+  row.names(out) <- NULL
+  out
+}
+
+
 # helper -----------------------------------------
 
 
