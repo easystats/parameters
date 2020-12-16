@@ -4,36 +4,7 @@
 #################### .gam ------
 
 
-#' Parameters from Generalized Additive (Mixed) Models
-#'
-#' Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s).
-#'
-#' @param model A gam/gamm model.
-#' @inheritParams model_parameters.default
-#'
-#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
-#'   columns into a consistent, standardized naming scheme.
-#'
-#' @details The reporting of degrees of freedom \emph{for the spline terms}
-#' slightly differs from the output of \code{summary(model)}, for example in the
-#' case of \code{mgcv::gam()}. The \emph{estimated degrees of freedom}, column
-#' \code{edf} in the summary-output, is named \code{df} in the returned data
-#' frame, while the column \code{df_error} in the returned data frame refers to
-#' the residual degrees of freedom that are returned by \code{df.residual()}.
-#' Hence, the values in the the column \code{df_error} differ from the column
-#' \code{Ref.df} from the summary, which is intentional, as these reference
-#' degrees of freedom \dQuote{is not very interpretable}
-#' (\href{https://r.789695.n4.nabble.com/ref-df-in-mgcv-gam-tp4756194p4756195.html}{web}).
-#'
-#' @return A data frame of indices related to the model's parameters.
-#'
-#' @examples
-#' library(parameters)
-#' if (require("mgcv")) {
-#'   dat <- gamSim(1, n = 400, dist = "normal", scale = 2)
-#'   model <- gam(y ~ s(x0) + s(x1) + s(x2) + s(x3), data = dat)
-#'   model_parameters(model)
-#' }
+#' @rdname model_parameters.cgam
 #' @export
 model_parameters.gam <- function(model,
                                  ci = .95,
