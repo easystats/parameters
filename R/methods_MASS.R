@@ -1,5 +1,4 @@
 
-#' @include methods_glm.R
 #' @export
 ci.negbin <- ci.glm
 
