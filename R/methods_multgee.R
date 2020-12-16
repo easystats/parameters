@@ -1,6 +1,6 @@
 
 #' @export
-ci.LORgee <- ci.gamlss
+ci.LORgee <- ci.tobit
 
 
 #' @export

@@ -1,13 +1,13 @@
 #' @export
-ci.gee <- ci.gamlss
+ci.gee <- ci.tobit
 
 
 #' @export
-ci.geeglm <- ci.gamlss
+ci.geeglm <- ci.tobit
 
 
 #' @export
-ci.survreg <- ci.gamlss
+ci.survreg <- ci.tobit
 
 
 #' @export

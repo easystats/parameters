@@ -1,6 +1,6 @@
 
 #' @export
-ci.plm <- ci.gamlss
+ci.plm <- ci.tobit
 
 
 #' @export

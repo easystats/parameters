@@ -1,3 +1,3 @@
 
 #' @export
-ci.feis <- ci.gamlss
+ci.feis <- ci.tobit

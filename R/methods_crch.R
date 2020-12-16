@@ -1,5 +1,5 @@
 #' @export
-ci.crch <- ci.gamlss
+ci.crch <- ci.tobit
 
 
 #' @export

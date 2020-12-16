@@ -78,7 +78,6 @@ format_parameters.mira <- format_parameters.rma
 
 # model_parameters ---------------------------------
 
-#' @include model_parameters.R
 #' @export
 model_parameters.mipo <- model_parameters.default
 

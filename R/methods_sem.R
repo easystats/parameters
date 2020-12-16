@@ -1,6 +1,6 @@
 
 #' @export
-ci.sem <- ci.gamlss
+ci.sem <- ci.tobit
 
 
 #' @export

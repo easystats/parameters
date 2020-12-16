@@ -5,7 +5,7 @@
 
 
 #' @export
-ci.coxph <- ci.gamlss
+ci.coxph <- ci.tobit
 
 
 #' @rdname standard_error
@@ -86,7 +86,7 @@ p_value.aareg <- function(model, ...) {
 
 
 #' @export
-ci.aareg <- ci.gamlss
+ci.aareg <- ci.tobit
 
 
 

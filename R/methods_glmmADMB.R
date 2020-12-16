@@ -1,3 +1,3 @@
 
 #' @export
-ci.glmmadmb <- ci.gamlss
+ci.glmmadmb <- ci.tobit

@@ -1,6 +1,6 @@
 
 #' @export
-ci.flexsurvreg <- ci.gamlss
+ci.flexsurvreg <- ci.tobit
 
 
 #' @export

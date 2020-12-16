@@ -14,7 +14,6 @@ standard_error.lm <- function(model, method = NULL, ...) {
 }
 
 
-#' @include p_value.R
 #' @export
 p_value.lm <- p_value.default
 

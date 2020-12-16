@@ -2,7 +2,7 @@
 
 
 #' @export
-ci.truncreg <- ci.gamlss
+ci.truncreg <- ci.tobit
 
 
 #' @export

@@ -2,7 +2,7 @@
 p_value.bcplm <- p_value.brmsfit
 
 #' @export
-ci.cpglm <- ci.gamlss
+ci.cpglm <- ci.tobit
 
 #' @export
-ci.cpglmm <- ci.gamlss
+ci.cpglmm <- ci.tobit

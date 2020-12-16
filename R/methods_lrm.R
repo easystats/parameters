@@ -1,18 +1,18 @@
 
 #' @export
-ci.lrm <- ci.gamlss
+ci.lrm <- ci.tobit
 
 
 #' @export
-ci.psm <- ci.gamlss
+ci.psm <- ci.tobit
 
 
 #' @export
-ci.ols <- ci.gamlss
+ci.ols <- ci.tobit
 
 
 #' @export
-ci.rms <- ci.gamlss
+ci.rms <- ci.tobit
 
 
 #' @export

@@ -1,8 +1,8 @@
 #' @export
-ci.fixest <- ci.gamlss
+ci.fixest <- ci.tobit
 
 #' @export
-ci.feglm <- ci.gamlss
+ci.feglm <- ci.tobit
 
 #' @export
 simulate_model.fixest <- simulate_model.default

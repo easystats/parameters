@@ -41,13 +41,13 @@ standard_error.svyglm <- function(model, ...) {
 # confidence intervals -----------------------------------
 
 #' @export
-ci.svyglm.nb <- ci.gamlss
+ci.svyglm.nb <- ci.tobit
 
 #' @export
-ci.svyglm.glimML <- ci.gamlss
+ci.svyglm.glimML <- ci.tobit
 
 #' @export
-ci.svyglm.zip <- ci.gamlss
+ci.svyglm.zip <- ci.tobit
 
 
 # p values -----------------------------------------------

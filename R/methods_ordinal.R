@@ -1,6 +1,6 @@
 
 #' @export
-ci.clm <- ci.gamlss
+ci.clm <- ci.tobit
 
 #' @rdname ci.merMod
 #' @export

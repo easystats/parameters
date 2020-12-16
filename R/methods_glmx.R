@@ -1,5 +1,5 @@
 #' @export
-ci.glmx <- ci.gamlss
+ci.glmx <- ci.tobit
 
 
 #' @export

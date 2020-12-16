@@ -1,55 +1,7 @@
-
-#' @export
-ci.gam <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, ...)
-}
-
-#' @export
-ci.list <- function(x, ci = .95, ...) {
-  if ("gam" %in% names(x)) {
-    x <- x$gam
-    class(x) <- c("gam", "lm", "glm")
-    ci(x, ci = ci, ...)
-  } else {
-    return(NULL)
-  }
-}
+# classes: .gam, .list
 
 
-#' @export
-standard_error.gam <- function(model, ...) {
-  p.table <- summary(model)$p.table
-  s.table <- summary(model)$s.table
-  n_cond <- nrow(p.table)
-  n_smooth <- nrow(s.table)
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(c(rownames(p.table), rownames(s.table))),
-    SE = c(as.vector(p.table[, 2]), rep(NA, n_smooth)),
-    Component = c(rep("conditional", n_cond), rep("smooth_terms", n_smooth))
-  )
-}
-
-
-#' @export
-p_value.gam <- function(model, ...) {
-  p.table <- summary(model)$p.table
-  s.table <- summary(model)$s.table
-
-  d1 <- .data_frame(
-    Parameter = rownames(p.table),
-    p = as.vector(p.table[, 4]),
-    Component = "conditional"
-  )
-
-  d2 <- .data_frame(
-    Parameter = rownames(s.table),
-    p = as.vector(s.table[, 4]),
-    Component = "smooth_terms"
-  )
-
-  .remove_backticks_from_parameter_names(rbind(d1, d2))
-}
+#################### .gam ------
 
 
 #' Parameters from Generalized Additive (Mixed) Models
@@ -149,6 +101,53 @@ model_parameters.gam <- function(model,
 
 
 #' @export
+ci.gam <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, ...)
+}
+
+
+#' @export
+standard_error.gam <- function(model, ...) {
+  p.table <- summary(model)$p.table
+  s.table <- summary(model)$s.table
+  n_cond <- nrow(p.table)
+  n_smooth <- nrow(s.table)
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(c(rownames(p.table), rownames(s.table))),
+    SE = c(as.vector(p.table[, 2]), rep(NA, n_smooth)),
+    Component = c(rep("conditional", n_cond), rep("smooth_terms", n_smooth))
+  )
+}
+
+
+#' @export
+p_value.gam <- function(model, ...) {
+  p.table <- summary(model)$p.table
+  s.table <- summary(model)$s.table
+
+  d1 <- .data_frame(
+    Parameter = rownames(p.table),
+    p = as.vector(p.table[, 4]),
+    Component = "conditional"
+  )
+
+  d2 <- .data_frame(
+    Parameter = rownames(s.table),
+    p = as.vector(s.table[, 4]),
+    Component = "smooth_terms"
+  )
+
+  .remove_backticks_from_parameter_names(rbind(d1, d2))
+}
+
+
+
+
+#################### .list ------
+
+
+#' @export
 model_parameters.list <- function(model,
                                   ci = .95,
                                   bootstrap = FALSE,
@@ -170,3 +169,15 @@ model_parameters.list <- function(model,
   }
 }
 
+
+
+#' @export
+ci.list <- function(x, ci = .95, ...) {
+  if ("gam" %in% names(x)) {
+    x <- x$gam
+    class(x) <- c("gam", "lm", "glm")
+    ci(x, ci = ci, ...)
+  } else {
+    return(NULL)
+  }
+}

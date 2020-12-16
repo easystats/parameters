@@ -1,6 +1,6 @@
 
 #' @export
-ci.coxr <- ci.gamlss
+ci.coxr <- ci.tobit
 
 
 #' @export

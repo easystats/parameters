@@ -1,10 +1,10 @@
 
 #' @export
-ci.speedglm <- ci.gamlss
+ci.speedglm <- ci.tobit
 
 
 #' @export
-ci.speedlm <- ci.gamlss
+ci.speedlm <- ci.tobit
 
 
 #' @export

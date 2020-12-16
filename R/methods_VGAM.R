@@ -2,7 +2,7 @@
 
 
 #' @export
-ci.vglm <- ci.gamlss
+ci.vglm <- ci.tobit
 
 
 #' @export

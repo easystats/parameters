@@ -1,9 +1,8 @@
 
 #' @export
-ci.censReg <- ci.gamlss
+ci.censReg <- ci.tobit
 
 
-#' @include standard_error.R
 #' @export
 standard_error.censReg <- standard_error.default
 
