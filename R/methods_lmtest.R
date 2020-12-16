@@ -4,7 +4,7 @@ degrees_of_freedom.coeftest <- function(model, ...) {
 }
 
 #' @export
-ci.coeftest <- ci.lm
+ci.coeftest <- ci.default
 
 #' @export
 p_value.coeftest <- function(model, ...) {

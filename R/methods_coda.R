@@ -1,2 +1,2 @@
 #' @export
-model_parameters.mcmc.list <- model_parameters.mcmc
+model_parameters.mcmc.list <- model_parameters.data.frame

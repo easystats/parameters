@@ -1,11 +1,10 @@
 
-#' @include methods_lm.R
 #' @export
-ci.BBmm <- ci.lm
+ci.BBmm <- ci.default
 
 
 #' @export
-ci.BBreg <- ci.lm
+ci.BBreg <- ci.default
 
 
 #' @export
@@ -42,6 +41,3 @@ p_value.BBreg <- function(model, ...) {
     p = as.data.frame(summary(model)$coefficients)$p.value
   )
 }
-
-
-

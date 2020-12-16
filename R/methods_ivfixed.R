@@ -1,6 +1,6 @@
 
 #' @export
-ci.ivFixed <- ci.lm
+ci.ivFixed <- ci.default
 
 
 #' @export

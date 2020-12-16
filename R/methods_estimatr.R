@@ -1,6 +1,6 @@
 
 #' @export
-ci.lm_robust <- ci.lm
+ci.lm_robust <- ci.default
 
 
 #' @export

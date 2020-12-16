@@ -1,6 +1,6 @@
 
 #' @export
-ci.ivprobit <- ci.lm
+ci.ivprobit <- ci.default
 
 
 #' @export

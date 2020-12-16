@@ -24,7 +24,7 @@ p_value.complmrob <- function(model, ...) {
 
 
 #' @export
-ci.comlmrob <- ci.lm
+ci.comlmrob <- ci.default
 
 
 

@@ -1,17 +1,17 @@
 #' @export
-ci.rq <- ci.lm
+ci.rq <- ci.default
 
 
 #' @export
-ci.rqss <- ci.lm
+ci.rqss <- ci.default
 
 
 #' @export
-ci.crq <- ci.lm
+ci.crq <- ci.default
 
 
 #' @export
-ci.nlrq <- ci.lm
+ci.nlrq <- ci.default
 
 
 #' @export
