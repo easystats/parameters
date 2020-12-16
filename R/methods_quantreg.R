@@ -218,6 +218,6 @@ p_value.rqss <- function(model, component = c("all", "conditional", "smooth_term
 }
 
 
-#' @rdname model_parameters.gam
+#' @rdname model_parameters.cgam
 #' @export
 model_parameters.rqss <- model_parameters.cgam

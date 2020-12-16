@@ -12,4 +12,4 @@ p_value.scam <- p_value.gam
 
 
 #' @export
-model_parameters.scam <- model_parameters.gam
+model_parameters.scam <- model_parameters.cgam

@@ -16,9 +16,10 @@ standard_error.cgam <- function(model, ...) {
 }
 
 
-#' Parameters from Generalized Additive (Mixed) Models
+#' @title Parameters from Generalized Additive (Mixed) Models
+#' @name model_parameters.cgam
 #'
-#' Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s).
+#' @description Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s).
 #'
 #' @param model A gam/gamm model.
 #' @inheritParams model_parameters.default
