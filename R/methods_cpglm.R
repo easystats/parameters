@@ -1,42 +1,82 @@
+# classes: .tobit
 
+
+#' Parameters from Zero-Inflated Models
+#'
+#' Parameters from zero-inflated models.
+#'
+#' @param model A model with zero-inflation component.
+#' @inheritParams model_parameters.default
+#' @inheritParams simulate_model
+#'
+#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
+#'   columns into a consistent, standardized naming scheme.
+#'
+#' @examples
+#' library(parameters)
+#' if (require("pscl")) {
+#'   data("bioChemists")
+#'   model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
+#'   model_parameters(model)
+#' }
+#' @return A data frame of indices related to the model's parameters.
+#' @inheritParams simulate_model
 #' @export
-model_parameters.bcplm <- function(model,
-                                   centrality = "median",
-                                   dispersion = FALSE,
-                                   ci = .89,
-                                   ci_method = "hdi",
-                                   test = c("pd", "rope"),
-                                   rope_range = "default",
-                                   rope_ci = 1.0,
-                                   bf_prior = NULL,
-                                   diagnostic = c("ESS", "Rhat"),
-                                   priors = TRUE,
-                                   verbose = TRUE,
-                                   ...) {
+model_parameters.zcpglm <- function(model,
+                                    ci = .95,
+                                    bootstrap = FALSE,
+                                    iterations = 1000,
+                                    component = c("all", "conditional", "zi", "zero_inflated"),
+                                    standardize = NULL,
+                                    exponentiate = FALSE,
+                                    robust = FALSE,
+                                    p_adjust = NULL,
+                                    verbose = TRUE,
+                                    ...) {
+  component <- match.arg(component)
+
+  # fix argument, if model has no zi-part
+  if (!insight::model_info(model)$is_zero_inflated && component != "conditional") {
+    component <- "conditional"
+  }
 
 
   # Processing
-  params <- .extract_parameters_bayesian(
+  if (bootstrap) {
+    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+  } else {
+    parameters <- .extract_parameters_generic(
+      model,
+      ci = ci,
+      component = component,
+      standardize = standardize,
+      robust = robust,
+      p_adjust = p_adjust,
+      ...
+    )
+  }
+
+
+  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
+
+  parameters <- .add_model_parameters_attributes(
+    parameters,
     model,
-    centrality = centrality,
-    dispersion = dispersion,
-    ci = ci,
-    ci_method = ci_method,
-    test = test,
-    rope_range = rope_range,
-    rope_ci = rope_ci,
-    bf_prior = bf_prior,
-    diagnostic = diagnostic,
-    priors = priors,
+    ci,
+    exponentiate,
+    p_adjust = p_adjust,
+    verbose = verbose,
     ...
   )
+  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
-  attr(params, "ci") <- ci
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(params) <- c("parameters_model", "see_parameters_model", class(params))
-
-  params
+  parameters
 }
+
+
+#' @export
+model_parameters.bcplm <- model_parameters.bayesQR
 
 
 #' @importFrom utils capture.output
@@ -118,11 +158,56 @@ p_value.cpglm <- function(model, ...) {
 }
 
 
-#' @include methods_pscl.R
+#' @rdname model_parameters.merMod
 #' @export
-model_parameters.zcpglm <- model_parameters.zeroinfl
+model_parameters.cpglmm <- function(model,
+                                    ci = .95,
+                                    bootstrap = FALSE,
+                                    iterations = 1000,
+                                    standardize = NULL,
+                                    exponentiate = FALSE,
+                                    details = FALSE,
+                                    df_method = NULL,
+                                    verbose = TRUE,
+                                    ...) {
+
+  # p-values, CI and se might be based on different df-methods
+  df_method <- .check_df_method(df_method)
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    effects = "fixed",
+    robust = FALSE,
+    df_method = df_method,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+
+  if (isTRUE(details)) {
+    attr(out, "details") <- .randomeffects_summary(model)
+  }
+
+  out
+}
 
 
-#' @include methods_ordinal.R
-#' @export
-model_parameters.cpglmm <- model_parameters.clmm
+# tools --------------------
+
+.check_df_method <- function(df_method) {
+  if (!is.null(df_method)) {
+    df_method <- tolower(df_method)
+    if (df_method %in% c("satterthwaite", "kenward", "kr")) {
+      warning("Satterthwaite or Kenward-Rogers approximation of degrees of freedom is only available for linear mixed models.", call. = FALSE)
+      df_method <- "wald"
+    }
+    df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin"))
+  }
+  df_method
+}

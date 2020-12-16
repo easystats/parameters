@@ -69,6 +69,5 @@ standard_error.MixMod <- function(model,
 }
 
 
-#' @include methods_glmmTMB.R
 #' @export
 model_parameters.MixMod <- model_parameters.glmmTMB

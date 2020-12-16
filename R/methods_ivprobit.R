@@ -22,4 +22,4 @@ p_value.ivprobit <- function(model, ...) {
 
 
 #' @export
-model_parameters.ivprobit <- model_parameters.coeftest
+model_parameters.ivprobit <- model_parameters.ivFixed

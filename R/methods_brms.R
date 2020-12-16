@@ -1,13 +1,3 @@
-#' @include methods_rstanarm.R
-#' @export
-standard_error.brmsfit <- standard_error.stanreg
-
-
-#' @include methods_rstanarm.R
-#' @export
-p_value.brmsfit <- p_value.stanreg
-
-
 #' @importFrom insight clean_parameters find_random get_response model_info is_multivariate
 #' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
@@ -197,3 +187,23 @@ model_parameters.brmsfit <- function(model,
   params
 }
 
+
+#' @export
+standard_error.brmsfit <- function(model,
+                                   effects = c("fixed", "random"),
+                                   component = c("all", "conditional", "zi", "zero_inflated"),
+                                   ...) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+
+  params <- insight::get_parameters(model, effects = effects, component = component, ...)
+
+  .data_frame(
+    Parameter = colnames(params),
+    SE = unname(sapply(params, stats::sd, na.rm = TRUE))
+  )
+}
+
+
+#' @export
+p_value.brmsfit <- p_value.BFBayesFactor

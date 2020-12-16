@@ -1,28 +1,3 @@
-
-#' @export
-ci.gamm <- function(x, ci = .95, ...) {
-  x <- x$gam
-  class(x) <- c("gam", "lm", "glm")
-  ci(x, ci = ci, ...)
-}
-
-
-#' @export
-standard_error.gamm <- function(model, ...) {
-  model <- model$gam
-  class(model) <- c("gam", "lm", "glm")
-  standard_error(model)
-}
-
-
-#' @export
-p_value.gamm <- function(model, ...) {
-  model <- model$gam
-  class(model) <- c("gam", "lm", "glm")
-  p_value(model)
-}
-
-
 #' @export
 model_parameters.gamm <- function(model,
                                   ci = .95,
@@ -43,4 +18,13 @@ model_parameters.gamm <- function(model,
 }
 
 
+#' @export
+ci.gamm <- ci.gamm4
 
+
+#' @export
+standard_error.gamm <- standard_error.gamm4
+
+
+#' @export
+p_value.gamm <- p_value.gamm4
