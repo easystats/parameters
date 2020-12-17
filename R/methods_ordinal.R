@@ -1,4 +1,47 @@
 
+#' @rdname model_parameters.mlm
+#' @export
+model_parameters.clm2 <- function(model,
+                                  ci = .95,
+                                  bootstrap = FALSE,
+                                  iterations = 1000,
+                                  component = c("all", "conditional", "scale"),
+                                  standardize = NULL,
+                                  exponentiate = FALSE,
+                                  p_adjust = NULL,
+                                  verbose = TRUE,
+                                  ...) {
+  component <- match.arg(component)
+  if (component == "all") {
+    merge_by <- c("Parameter", "Component")
+  } else {
+    merge_by <- "Parameter"
+  }
+
+  ## TODO check merge by
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    component = component,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+#' @export
+model_parameters.clmm2 <- model_parameters.clm2
+
+
 #' @export
 ci.clm <- ci.tobit
 

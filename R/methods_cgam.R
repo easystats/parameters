@@ -1,21 +1,3 @@
-
-#' @export
-standard_error.cgam <- function(model, ...) {
-  sc <- summary(model)
-  se <- as.vector(sc$coefficients[, "StdErr"])
-
-  params <- insight::get_parameters(model, component = "all")
-
-  if (!is.null(sc$coefficients2)) se <- c(se, rep(NA, nrow(sc$coefficients2)))
-
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = se,
-    Component = params$Component
-  )
-}
-
-
 #' @title Parameters from Generalized Additive (Mixed) Models
 #' @name model_parameters.cgam
 #'
@@ -66,19 +48,35 @@ model_parameters.cgam <- function(model,
 
   ## TODO check merge by
 
-  out <-
-    .model_parameters_generic(
-      model = model,
-      ci = ci,
-      component = component,
-      bootstrap = bootstrap,
-      iterations = iterations,
-      merge_by = merge_by,
-      standardize = standardize,
-      exponentiate = exponentiate,
-      ...
-    )
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    component = component,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = merge_by,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
+}
+
+
+#' @export
+standard_error.cgam <- function(model, ...) {
+  sc <- summary(model)
+  se <- as.vector(sc$coefficients[, "StdErr"])
+
+  params <- insight::get_parameters(model, component = "all")
+
+  if (!is.null(sc$coefficients2)) se <- c(se, rep(NA, nrow(sc$coefficients2)))
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = se,
+    Component = params$Component
+  )
 }

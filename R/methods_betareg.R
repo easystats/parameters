@@ -68,6 +68,7 @@ standard_error.betareg <- function(model, component = c("all", "conditional", "p
 }
 
 
+#' @rdname p_value.DirichletRegModel
 #' @export
 p_value.betareg <- function(model, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
