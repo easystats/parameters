@@ -17,6 +17,7 @@ describe_distribution(x, ...)
   range = TRUE,
   ci = NULL,
   iterations = 100,
+  threshold = 0.1,
   ...
 )
 
@@ -31,6 +32,7 @@ describe_distribution(x, ...)
   include_factors = FALSE,
   ci = NULL,
   iterations = 100,
+  threshold = 0.1,
   ...
 )
 }
@@ -50,6 +52,8 @@ describe_distribution(x, ...)
 \item{ci}{Confidence Interval (CI) level. Default is \code{NULL}, i.e. no confidence intervals are computed. If not \code{NULL}, confidence intervals are based on bootstrap replicates (see \code{iterations}). If \code{centrality = "all"}, the bootstrapped confidence interval refers to the first centrality index (which is typically the median).}
 
 \item{iterations}{The number of bootstrap replicates for computing confidence intervals. Only applies when \code{ci} is not \code{NULL}.}
+
+\item{threshold}{For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.}
 
 \item{include_factors}{Logical, if \code{TRUE}, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.}
 }

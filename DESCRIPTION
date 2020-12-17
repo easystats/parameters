@@ -138,7 +138,7 @@ Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
-Remotes: easystats/insight
+Remotes: easystats/insight, easystats/bayestestR
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/testthat/start-first: watcher, parallel*
