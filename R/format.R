@@ -127,6 +127,15 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     }
   }
 
+  if ("Trimmed_Mean" %in% colnames(x)) {
+    threshold <- attributes(x)$threshold
+    if (is.null(threshold)) {
+      trim_name <- "Trimmed"
+    } else {
+      trim_name <- sprintf("Trimmed (%g%%)", round(100 * threshold))
+    }
+    colnames(x)[which(colnames(x) == "Trimmed_Mean")] <- trim_name
+  }
 
   if (".group" %in% colnames(x)) {
     final_table <- list()
