@@ -1,81 +1,7 @@
-
-#' @rdname ci.merMod
-#' @export
-ci.glmmTMB <- function(x,
-                       ci = .95,
-                       component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
-                       method = c("wald", "ml1", "betwithin", "robust"),
-                       verbose = TRUE,
-                       ...) {
-  method <- tolower(method)
-  method <- match.arg(method)
-  component <- match.arg(component)
-
-  if (is.null(.check_component(x, component, verbose = verbose))) {
-    return(NULL)
-  }
-
-  if (method == "robust") {
-    ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = TRUE)
-  } else if (method == "wald") {
-    ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = FALSE)
-  } else if (method == "ml1") {
-    ci_ml1(model = x, ci = ci)
-  } else if (method == "betwithin") {
-    ci_betwithin(model = x, ci = ci)
-  }
-}
+# Package glmmTMB
 
 
-#' @rdname standard_error
-#' @export
-standard_error.glmmTMB <- function(model,
-                                   effects = c("fixed", "random"),
-                                   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
-                                   verbose = TRUE,
-                                   ...) {
-  component <- match.arg(component)
-  effects <- match.arg(effects)
-
-  if (effects == "random") {
-    if (requireNamespace("TMB", quietly = TRUE) && requireNamespace("glmmTMB", quietly = TRUE)) {
-      s1 <- TMB::sdreport(model$obj, getJointPrecision = TRUE)
-      s2 <- sqrt(s1$diag.cov.random)
-      rand.ef <- glmmTMB::ranef(model)[[1]]
-      rand.se <- lapply(rand.ef, function(.x) {
-        cnt <- nrow(.x) * ncol(.x)
-        s3 <- s2[1:cnt]
-        s2 <- s2[-(1:cnt)]
-        d <- as.data.frame(matrix(sqrt(s3), ncol = ncol(.x), byrow = TRUE))
-        colnames(d) <- colnames(.x)
-        d
-      })
-      rand.se
-    } else {
-      return(NULL)
-    }
-  } else {
-    if (is.null(.check_component(model, component, verbose = verbose))) {
-      return(NULL)
-    }
-
-    cs <- .compact_list(stats::coef(summary(model)))
-    x <- lapply(names(cs), function(i) {
-      .data_frame(
-        Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
-        SE = as.vector(cs[[i]][, 2]),
-        Component = i
-      )
-    })
-
-    se <- do.call(rbind, x)
-    se$Component <- .rename_values(se$Component, "cond", "conditional")
-    se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
-    se$Component <- .rename_values(se$Component, "disp", "dispersion")
-
-    .filter_component(se, component)
-  }
-}
+# model_parameters -----
 
 
 #' @importFrom stats coef
@@ -161,6 +87,125 @@ model_parameters.glmmTMB <- function(model,
 
   params
 }
+
+
+# ci -----
+
+
+#' @rdname ci.merMod
+#' @export
+ci.glmmTMB <- function(x,
+                       ci = .95,
+                       component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                       method = c("wald", "ml1", "betwithin", "robust"),
+                       verbose = TRUE,
+                       ...) {
+  method <- tolower(method)
+  method <- match.arg(method)
+  component <- match.arg(component)
+
+  if (is.null(.check_component(x, component, verbose = verbose))) {
+    return(NULL)
+  }
+
+  if (method == "robust") {
+    ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = TRUE)
+  } else if (method == "wald") {
+    ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = FALSE)
+  } else if (method == "ml1") {
+    ci_ml1(model = x, ci = ci)
+  } else if (method == "betwithin") {
+    ci_betwithin(model = x, ci = ci)
+  }
+}
+
+
+# standard_error -----
+
+
+#' @rdname standard_error
+#' @export
+standard_error.glmmTMB <- function(model,
+                                   effects = c("fixed", "random"),
+                                   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                                   verbose = TRUE,
+                                   ...) {
+  component <- match.arg(component)
+  effects <- match.arg(effects)
+
+  if (effects == "random") {
+    if (requireNamespace("TMB", quietly = TRUE) && requireNamespace("glmmTMB", quietly = TRUE)) {
+      s1 <- TMB::sdreport(model$obj, getJointPrecision = TRUE)
+      s2 <- sqrt(s1$diag.cov.random)
+      rand.ef <- glmmTMB::ranef(model)[[1]]
+      rand.se <- lapply(rand.ef, function(.x) {
+        cnt <- nrow(.x) * ncol(.x)
+        s3 <- s2[1:cnt]
+        s2 <- s2[-(1:cnt)]
+        d <- as.data.frame(matrix(sqrt(s3), ncol = ncol(.x), byrow = TRUE))
+        colnames(d) <- colnames(.x)
+        d
+      })
+      rand.se
+    } else {
+      return(NULL)
+    }
+  } else {
+    if (is.null(.check_component(model, component, verbose = verbose))) {
+      return(NULL)
+    }
+
+    cs <- .compact_list(stats::coef(summary(model)))
+    x <- lapply(names(cs), function(i) {
+      .data_frame(
+        Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+        SE = as.vector(cs[[i]][, 2]),
+        Component = i
+      )
+    })
+
+    se <- do.call(rbind, x)
+    se$Component <- .rename_values(se$Component, "cond", "conditional")
+    se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
+    se$Component <- .rename_values(se$Component, "disp", "dispersion")
+
+    .filter_component(se, component)
+  }
+}
+
+
+# p_value -----
+
+
+#' @importFrom insight find_parameters
+#' @importFrom stats coef
+#' @rdname p_value.lmerMod
+#' @export
+p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = TRUE, ...) {
+  component <- match.arg(component)
+  if (is.null(.check_component(model, component, verbose = verbose))) {
+    return(NULL)
+  }
+
+  cs <- .compact_list(stats::coef(summary(model)))
+  x <- lapply(names(cs), function(i) {
+    .data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+      p = as.vector(cs[[i]][, 4]),
+      Component = i
+    )
+  })
+
+  p <- do.call(rbind, x)
+  p$Component <- .rename_values(p$Component, "cond", "conditional")
+  p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
+  p$Component <- .rename_values(p$Component, "disp", "dispersion")
+
+  .filter_component(p, component)
+}
+
+
+# simulate_parameters -----
 
 
 #' @rdname simulate_parameters

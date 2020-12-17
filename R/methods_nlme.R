@@ -1,16 +1,9 @@
-#' @export
-ci.gls <- ci.biglm
+# Package nlme; .lme, .gls
 
+############### .lme --------------
 
 #' @export
-p_value.gls <- function(model, ...) {
-  cs <- summary(model)$tTable
-  p <- cs[, 4]
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(cs)),
-    p = as.vector(p)
-  )
-}
+model_parameters.lme <- model_parameters.merMod
 
 
 #' @rdname ci.merMod
@@ -56,9 +49,42 @@ ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterth
 }
 
 
+#' @importFrom stats coef
+#' @export
+p_value.lme <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- cs[, 5]
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(rownames(cs)),
+    p = as.vector(p)
+  )
+}
+
+
+#' @export
+standard_error.lme <- standard_error.default
+
+
+
+
+############### .gls --------------
+
+
 #' @export
 standard_error.gls <- standard_error.default
 
 
 #' @export
-standard_error.lme <- standard_error.default
+ci.gls <- ci.biglm
+
+
+#' @export
+p_value.gls <- function(model, ...) {
+  cs <- summary(model)$tTable
+  p <- cs[, 4]
+  .data_frame(
+    Parameter = .remove_backticks_from_string(rownames(cs)),
+    p = as.vector(p)
+  )
+}

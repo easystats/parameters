@@ -1,4 +1,7 @@
-# classes: .tobit
+# classes: .cpglm, .bcpglm, .zcpglm, .cpglmm
+
+
+########## .zcpglm ---------------
 
 
 #' Parameters from Zero-Inflated Models
@@ -75,27 +78,6 @@ model_parameters.zcpglm <- function(model,
 }
 
 
-#' @export
-model_parameters.bcplm <- model_parameters.bayesQR
-
-
-#' @importFrom utils capture.output
-#' @export
-standard_error.cpglm <- function(model, ...) {
-  if (!requireNamespace("cplm", quietly = TRUE)) {
-    stop("To use this function, please install package 'cplm'.")
-  }
-
-  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
-  params <- insight::get_parameters(model)
-
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = as.vector(stats[, "Std. Error"])
-  )
-}
-
-
 #' @importFrom utils capture.output
 #' @export
 standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
@@ -124,21 +106,22 @@ standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi
 }
 
 
+
+
+########## .bcpglm ---------------
+
+
 #' @export
-standard_error.cpglmm <- function(model, ...) {
-  if (!requireNamespace("cplm", quietly = TRUE)) {
-    stop("To use this function, please install package 'cplm'.")
-  }
+model_parameters.bcplm <- model_parameters.bayesQR
 
-  stats <- cplm::summary(model)$coefs
-  params <- insight::get_parameters(model)
 
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = as.vector(stats[, "Std. Error"])
-  )
-}
+#' @export
+p_value.bcplm <- p_value.brmsfit
 
+
+
+
+########## .cpglm ---------------
 
 
 #' @importFrom utils capture.output
@@ -156,6 +139,32 @@ p_value.cpglm <- function(model, ...) {
     p = as.vector(stats[, "Pr(>|t|)"])
   )
 }
+
+
+#' @importFrom utils capture.output
+#' @export
+standard_error.cpglm <- function(model, ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, "Std. Error"])
+  )
+}
+
+
+#' @export
+ci.cpglm <- ci.tobit
+
+
+
+
+########## .cpglmm ---------------
 
 
 #' @rdname model_parameters.merMod
@@ -196,6 +205,43 @@ model_parameters.cpglmm <- function(model,
 
   out
 }
+
+
+#' @rdname p_value.lmerMod
+#' @export
+p_value.cpglmm <- function(model, method = "wald", ...) {
+  method <- match.arg(tolower(method), c("wald", "betwithin", "ml1"))
+  if (method == "wald") {
+    dof <- Inf
+  } else if (method == "ml1") {
+    dof <- dof_ml1(model)
+  } else {
+    dof <- dof_betwithin(model)
+  }
+  p_value_wald(model, dof, ...)
+}
+
+
+#' @export
+ci.cpglmm <- ci.tobit
+
+
+#' @export
+standard_error.cpglmm <- function(model, ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  stats <- cplm::summary(model)$coefs
+  params <- insight::get_parameters(model)
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(stats[, "Std. Error"])
+  )
+}
+
+
 
 
 # tools --------------------
