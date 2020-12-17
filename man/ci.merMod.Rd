@@ -22,7 +22,7 @@
 \alias{ci.HLfit}
 \title{Confidence Intervals (CI)}
 \usage{
-\method{ci}{default}(x, ci = 0.95, method = NULL, ...)
+\method{ci}{default}(x, ci = 0.95, dof = Inf, method = NULL, ...)
 
 \method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald", "robust"), ...)
 
@@ -108,6 +108,8 @@
 \item{x}{A statistical model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+
+\item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.}
 
 \item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}} or \code{\link[=p_value_betwithin]{"betwithin"}}. For linear mixed model, can also be \code{\link[=p_value_satterthwaite]{"satterthwaite"}}, \code{\link[=p_value_kenward]{"kenward"}} or \code{"boot"} and \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust covariance matrix estimation, and for generalized linear models, may also be \code{"profile"} (default) or \code{"wald"}.}
 

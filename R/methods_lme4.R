@@ -11,6 +11,7 @@
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
 #' @inheritParams p_value
+#' @inheritParams ci_wald
 #'
 #' @return A data frame containing the CI bounds.
 #'

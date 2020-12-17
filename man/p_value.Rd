@@ -32,7 +32,7 @@ A data frame with at least two columns: the parameter names and the p-values. De
 This function attempts to return, or compute, p-values of a model's parameters. See the documentation for your object's class:
 \itemize{
  \item{\link[=p_value.lmerMod]{Mixed models} (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, ...)}
- \item{\link[=p_value.stanreg]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
+ \item{\link[=p_value.BFBayesFactor]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
  \item{\link[=p_value.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount}, ...)}
  \item{\link[=p_value.poissonmfx]{Marginal effects models} (\pkg{mfx})}
  \item{\link[=p_value.DirichletRegModel]{Models with special components} (\code{DirichletRegModel}, \code{clm2}, \code{cgam}, ...)}

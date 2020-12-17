@@ -67,7 +67,7 @@ p_value.vgam <- function(model, ...) {
 
 
 #' @export
-model_parameters.vgam <- model_parameters.cgam
+model_parameters.vgam <- model_parameters.gam
 
 # ci.vgam <- function(x, ci = .95, component = c("all", "conditional", "smooth"), ...) {
 #   component <- match.arg(component)

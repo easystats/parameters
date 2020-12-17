@@ -1,6 +1,6 @@
 #' @rdname ci.merMod
 #' @export
-ci.default <- function(x, ci = .95, method = NULL, ...) {
+ci.default <- function(x, ci = .95, dof = Inf, method = NULL, ...) {
   if (!is.null(method)) {
     method <- tolower(method)
   } else {
@@ -8,13 +8,13 @@ ci.default <- function(x, ci = .95, method = NULL, ...) {
   }
 
   if (method == "robust") {
-    ci_wald(model = x, ci = ci, dof = Inf, robust = TRUE)
+    ci_wald(model = x, ci = ci, dof = dof, robust = TRUE)
   } else if (method == "ml1") {
     ci_ml1(model = x, ci = ci)
   } else if (method == "betwithin") {
     ci_betwithin(model = x, ci = ci)
   } else {
-    ci_wald(model = x, ci = ci, dof = Inf, robust = FALSE)
+    ci_wald(model = x, ci = ci, dof = dof, robust = FALSE)
   }
 }
 
