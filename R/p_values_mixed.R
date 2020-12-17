@@ -21,28 +21,11 @@ p_value.sem <- function(model, ...) {
 
 
 
-#' @rdname p_value.lmerMod
 #' @export
-p_value.merMod <- function(model, method = "wald", ...) {
-  method <- match.arg(tolower(method), c("wald", "betwithin", "ml1"))
-  if (method == "wald") {
-    dof <- Inf
-  } else if (method == "ml1") {
-    dof <- dof_ml1(model)
-  } else {
-    dof <- dof_betwithin(model)
-  }
-  p_value_wald(model, dof, ...)
-}
+p_value.HLfit <- p_value.cpglmm
 
 #' @export
-p_value.cpglmm <- p_value.merMod
-
-#' @export
-p_value.HLfit <- p_value.merMod
-
-#' @export
-p_value.rlmerMod <- p_value.merMod
+p_value.rlmerMod <- p_value.cpglmm
 
 #' @export
 p_value.merModList <- function(model, ...) {

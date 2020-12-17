@@ -45,7 +45,8 @@
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters from zero-inflated models.
+Parameters from zero-inflated models (from packages like \pkg{pscl},
+  \pkg{cplm} or \pkg{countreg}).
 }
 \examples{
 library(parameters)

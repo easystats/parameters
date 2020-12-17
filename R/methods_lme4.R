@@ -1,3 +1,57 @@
+# Package lme4; .merMod, .lmerMod
+
+############# .lmerMod -----------------
+
+
+#' p-values for Mixed Models
+#'
+#' This function attempts to return, or compute, p-values of mixed models.
+#'
+#' @param model A statistical model.
+#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
+#' @inheritParams p_value
+#' @inheritParams simulate_model
+#' @inheritParams standard_error
+#' @inheritParams ci.merMod
+#'
+#' @details By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
+#'
+#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
+#'
+#' @note \code{p_value_robust()} resp. \code{p_value(method = "robust")}
+#'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
+#'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
+#'   thus only work for those models supported by those packages.
+#'
+#' @examples
+#' if (require("lme4")) {
+#'   data(iris)
+#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+#'   p_value(model)
+#' }
+#' @export
+p_value.lmerMod <- function(model, method = "wald", ...) {
+  method <- tolower(method)
+  method <- match.arg(method, c("wald", "ml1", "betwithin", "satterthwaite", "kr", "kenward"))
+  if (method == "wald") {
+    p_value_wald(model, ...)
+  } else if (method == "ml1") {
+    p_value_ml1(model, ...)
+  } else if (method == "betwithin") {
+    p_value_betwithin(model, ...)
+  } else if (method == "satterthwaite") {
+    p_value_satterthwaite(model, ...)
+  } else if (method %in% c("kr", "kenward")) {
+    p_value_kenward(model, ...)
+  }
+}
+
+
+
+
+############# .merMod -----------------
+
+
 #' @title Parameters from Mixed Models
 #' @name model_parameters.merMod
 #'
@@ -178,50 +232,6 @@ ci.merMod <- function(x,
 }
 
 
-#' p-values for Mixed Models
-#'
-#' This function attempts to return, or compute, p-values of mixed models.
-#'
-#' @param model A statistical model.
-#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
-#' @inheritParams p_value
-#' @inheritParams simulate_model
-#' @inheritParams standard_error
-#' @inheritParams ci.merMod
-#'
-#' @details By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
-#'
-#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
-#'
-#' @note \code{p_value_robust()} resp. \code{p_value(method = "robust")}
-#'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-#'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
-#'   thus only work for those models supported by those packages.
-#'
-#' @examples
-#' if (require("lme4")) {
-#'   data(iris)
-#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#'   p_value(model)
-#' }
-#' @export
-p_value.lmerMod <- function(model, method = "wald", ...) {
-  method <- tolower(method)
-  method <- match.arg(method, c("wald", "ml1", "betwithin", "satterthwaite", "kr", "kenward"))
-  if (method == "wald") {
-    p_value_wald(model, ...)
-  } else if (method == "ml1") {
-    p_value_ml1(model, ...)
-  } else if (method == "betwithin") {
-    p_value_betwithin(model, ...)
-  } else if (method == "satterthwaite") {
-    p_value_satterthwaite(model, ...)
-  } else if (method %in% c("kr", "kenward")) {
-    p_value_kenward(model, ...)
-  }
-}
-
-
 #' @rdname standard_error
 #' @export
 standard_error.merMod <- function(model, effects = c("fixed", "random"), method = NULL, ...) {
@@ -260,9 +270,9 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
       if (method %in% c("wald", "satterthwaite")) {
         .data_frame(
           Parameter = insight::find_parameters(model,
-            effects = "fixed",
-            component = "conditional",
-            flatten = TRUE
+                                               effects = "fixed",
+                                               component = "conditional",
+                                               flatten = TRUE
           ),
           SE = .get_se_from_summary(model)
         )
@@ -278,3 +288,8 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
     }
   }
 }
+
+
+#' @rdname p_value.lmerMod
+#' @export
+p_value.merMod <- p_value.cpglmm
