@@ -1,6 +1,6 @@
 #' Parameters from Bayesian Models
 #'
-#' Parameters of Bayesian models.
+#' Parameters from Bayesian models.
 #'
 #' @param model Bayesian model. May also be a data frame with posterior samples.
 #' @param ci Credible Interval (CI) level. Default to 0.89 (89\%). See \code{\link[bayestestR]{ci}} for further details.

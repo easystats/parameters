@@ -19,7 +19,8 @@
 #' }
 #' }
 #' @return A data frame of loadings.
-#'
+#' @importFrom stats reshape
+#' @importFrom bayestestR describe_posterior
 #' @export
 model_parameters.befa <- function(model,
                                   sort = FALSE,
