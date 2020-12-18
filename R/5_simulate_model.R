@@ -260,17 +260,6 @@ simulate_model.list <- function(model, iterations = 1000, ...) {
 
 
 
-#' @export
-simulate_model.vgam <- function(model, iterations = 1000, ...) {
-  out <- .simulate_model(model, iterations, component = "all")
-  class(out) <- c("parameters_simulate_model", class(out))
-  out
-}
-
-
-
-
-
 
 
 # Models with zero-inflation components ---------------------------------------

@@ -16,23 +16,22 @@ model_parameters.stanfit <- function(model,
                                      ...) {
 
   # Processing
-  params <-
-    .extract_parameters_bayesian(
-      model,
-      centrality = centrality,
-      dispersion = dispersion,
-      ci = ci,
-      ci_method = ci_method,
-      test = test,
-      rope_range = rope_range,
-      rope_ci = rope_ci,
-      bf_prior = NULL,
-      diagnostic = diagnostic,
-      priors = FALSE,
-      effects = effects,
-      standardize = standardize,
-      ...
-    )
+  params <- .extract_parameters_bayesian(
+    model,
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    bf_prior = NULL,
+    diagnostic = diagnostic,
+    priors = FALSE,
+    effects = effects,
+    standardize = standardize,
+    ...
+  )
 
   if (effects != "fixed") {
     random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE))

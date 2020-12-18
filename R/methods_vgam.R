@@ -1,35 +1,11 @@
 # classes: .vglm, .vgam
 
 
-#' @export
-ci.vglm <- ci.tobit
+########### .vgam ---------------
 
 
 #' @export
-p_value.vglm <- function(model, ...) {
-  if (!requireNamespace("VGAM", quietly = TRUE)) {
-    stop("Package `VGAM` required.", call. = FALSE)
-  }
-
-  cs <- VGAM::summary(model)@coef3
-  p <- cs[, 4]
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(names(p)),
-    p = as.vector(p)
-  )
-}
-
-
-#' @importFrom insight get_varcov
-#' @export
-standard_error.vglm <- function(model, ...) {
-  se <- sqrt(diag(insight::get_varcov(model)))
-  .data_frame(
-    Parameter = .remove_backticks_from_string(names(se)),
-    SE = as.vector(se)
-  )
-}
+model_parameters.vgam <- model_parameters.gam
 
 
 #' @importFrom insight get_varcov
@@ -67,7 +43,51 @@ p_value.vgam <- function(model, ...) {
 
 
 #' @export
-model_parameters.vgam <- model_parameters.gam
+simulate_model.vgam <- function(model, iterations = 1000, ...) {
+  out <- .simulate_model(model, iterations, component = "all")
+  class(out) <- c("parameters_simulate_model", class(out))
+  out
+}
+
+
+
+
+########### .vglm ---------------
+
+
+#' @export
+ci.vglm <- ci.tobit
+
+
+#' @export
+p_value.vglm <- function(model, ...) {
+  if (!requireNamespace("VGAM", quietly = TRUE)) {
+    stop("Package `VGAM` required.", call. = FALSE)
+  }
+
+  cs <- VGAM::summary(model)@coef3
+  p <- cs[, 4]
+
+  .data_frame(
+    Parameter = .remove_backticks_from_string(names(p)),
+    p = as.vector(p)
+  )
+}
+
+
+#' @importFrom insight get_varcov
+#' @export
+standard_error.vglm <- function(model, ...) {
+  se <- sqrt(diag(insight::get_varcov(model)))
+  .data_frame(
+    Parameter = .remove_backticks_from_string(names(se)),
+    SE = as.vector(se)
+  )
+}
+
+
+
+
 
 # ci.vgam <- function(x, ci = .95, component = c("all", "conditional", "smooth"), ...) {
 #   component <- match.arg(component)

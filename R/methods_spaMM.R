@@ -6,8 +6,7 @@ ci.HLfit <- function(x,
                      method = c("wald", "ml1", "betwithin", "profile", "boot"),
                      iterations = 100,
                      ...) {
-  method <- tolower(method)
-  method <- match.arg(method)
+  method <- match.arg(tolower(method))
 
   # Wald approx
   if (method == "wald") {
