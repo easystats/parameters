@@ -1,4 +1,40 @@
 #' @export
+model_parameters.lqmm <- function(model,
+                                  ci = .95,
+                                  bootstrap = FALSE,
+                                  iterations = 1000,
+                                  p_adjust = NULL,
+                                  verbose = TRUE,
+                                  ...) {
+
+  # Processing
+  if (bootstrap) {
+    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+  } else {
+    parameters <- .extract_parameters_lqmm(model, ci = ci, p_adjust = p_adjust, ...)
+  }
+
+  parameters <- .add_model_parameters_attributes(
+    parameters,
+    model,
+    ci,
+    exponentiate = FALSE,
+    p_adjust = p_adjust,
+    verbose = verbose,
+    ...
+  )
+  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+
+  parameters
+}
+
+
+#' @export
+model_parameters.lqm <- model_parameters.lqmm
+
+
+#' @export
 ci.lqmm <- function(x, ...) {
   out <- model_parameters(x, ...)
   as.data.frame(out[c("Parameter", "CI_low", "CI_high")])
@@ -42,40 +78,10 @@ p_value.lqmm <- function(model, ...) {
 p_value.lqm <- p_value.lqmm
 
 
-#' @export
-model_parameters.lqmm <- function(model,
-                                  ci = .95,
-                                  bootstrap = FALSE,
-                                  iterations = 1000,
-                                  p_adjust = NULL,
-                                  verbose = TRUE,
-                                  ...) {
-
-  # Processing
-  if (bootstrap) {
-    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
-  } else {
-    parameters <- .extract_parameters_lqmm(model, ci = ci, p_adjust = p_adjust, ...)
-  }
-
-  parameters <- .add_model_parameters_attributes(
-    parameters,
-    model,
-    ci,
-    exponentiate = FALSE,
-    p_adjust = p_adjust,
-    verbose = verbose,
-    ...
-  )
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
-
-  parameters
-}
 
 
-#' @export
-model_parameters.lqm <- model_parameters.lqmm
+# helper ------------------
+
 
 .extract_parameters_lqmm <- function(model, ci, p_adjust, ...) {
   cs <- summary(model)

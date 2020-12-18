@@ -88,6 +88,9 @@ simulate_model.cpglmm <- simulate_model.default
 simulate_model.feglm <- simulate_model.default
 
 #' @export
+simulate_model.fixest <- simulate_model.default
+
+#' @export
 simulate_model.iv_robust <- simulate_model.default
 
 #' @export

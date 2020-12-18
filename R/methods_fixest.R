@@ -1,11 +1,8 @@
+# .fixest -----------------------
+
 #' @export
 ci.fixest <- ci.tobit
 
-#' @export
-ci.feglm <- ci.tobit
-
-#' @export
-simulate_model.fixest <- simulate_model.default
 
 #' @export
 standard_error.fixest <- function(model, ...) {
@@ -18,6 +15,7 @@ standard_error.fixest <- function(model, ...) {
   )
 }
 
+
 #' @export
 p_value.fixest <- function(model, ...) {
   stats <- summary(model)$coeftable
@@ -29,6 +27,14 @@ p_value.fixest <- function(model, ...) {
     p = as.vector(stats[[stat_col]])
   )
 }
+
+
+
+
+# .feglm -----------------------
+
+#' @export
+ci.feglm <- ci.tobit
 
 
 #' @export
