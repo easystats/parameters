@@ -36,34 +36,6 @@ p_value.DirichletRegModel <- function(model, component = c("all", "conditional",
 
 
 
-#' @importFrom stats coef
-#' @importFrom insight get_parameters
-#' @rdname p_value.DirichletRegModel
-#' @export
-p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
-  component <- match.arg(component)
-
-  params <- insight::get_parameters(model)
-  cs <- stats::coef(summary(model))
-  p <- cs[, 4]
-
-  out <- .data_frame(
-    Parameter = params$Parameter,
-    Component = params$Component,
-    p = as.vector(p)
-  )
-
-  if (component != "all") {
-    out <- out[out$Component == component, ]
-  }
-
-  out
-}
-
-#' @export
-p_value.clmm2 <- p_value.clm2
-
-
 
 #' @importFrom insight get_parameters
 #' @rdname p_value.DirichletRegModel

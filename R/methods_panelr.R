@@ -1,45 +1,6 @@
-#' @export
-standard_error.wbm <- function(model, ...) {
-  s <- summary(model)
-  se <- c(
-    s$within_table[, "S.E."],
-    s$between_table[, "S.E."],
-    s$ints_table[, "S.E."]
-  )
-  params <- insight::get_parameters(model, effects = "fixed")
+# .wbm, .wbgee
 
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = as.vector(se),
-    Component = params$Component
-  )
-}
-
-
-#' @export
-standard_error.wbgee <- standard_error.wbm
-
-
-#' @export
-p_value.wbm <- function(model, ...) {
-  s <- summary(model)
-  p <- c(
-    s$within_table[, "p"],
-    s$between_table[, "p"],
-    s$ints_table[, "p"]
-  )
-  params <- insight::get_parameters(model, effects = "fixed")
-
-  .data_frame(
-    Parameter = params$Parameter,
-    p = as.vector(p),
-    Component = params$Component
-  )
-}
-
-
-#' @export
-p_value.wbgee <- p_value.wbm
+# model parameters -------------------
 
 
 #' @inheritParams model_parameters.merMod
@@ -78,3 +39,57 @@ model_parameters.wbm <- function(model,
 
 #' @export
 model_parameters.wbgee <- model_parameters.wbm
+
+
+
+
+# standard errors -------------------
+
+
+#' @export
+standard_error.wbm <- function(model, ...) {
+  s <- summary(model)
+  se <- c(
+    s$within_table[, "S.E."],
+    s$between_table[, "S.E."],
+    s$ints_table[, "S.E."]
+  )
+  params <- insight::get_parameters(model, effects = "fixed")
+
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = as.vector(se),
+    Component = params$Component
+  )
+}
+
+
+#' @export
+standard_error.wbgee <- standard_error.wbm
+
+
+
+
+# p values -------------------
+
+
+#' @export
+p_value.wbm <- function(model, ...) {
+  s <- summary(model)
+  p <- c(
+    s$within_table[, "p"],
+    s$between_table[, "p"],
+    s$ints_table[, "p"]
+  )
+  params <- insight::get_parameters(model, effects = "fixed")
+
+  .data_frame(
+    Parameter = params$Parameter,
+    p = as.vector(p),
+    Component = params$Component
+  )
+}
+
+
+#' @export
+p_value.wbgee <- p_value.wbm

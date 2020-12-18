@@ -1,3 +1,5 @@
+# model parameters -------------------
+
 
 #' @rdname model_parameters.mlm
 #' @export
@@ -42,6 +44,16 @@ model_parameters.clm2 <- function(model,
 model_parameters.clmm2 <- model_parameters.clm2
 
 
+#' @rdname model_parameters.merMod
+#' @export
+model_parameters.clmm <- model_parameters.cpglmm
+
+
+
+
+# CI ---------------------
+
+
 #' @export
 ci.clm <- ci.tobit
 
@@ -56,6 +68,10 @@ ci.clm2 <- function(x, ci = .95, component = c("all", "conditional", "scale"), .
 
 #' @export
 ci.clmm2 <- ci.clm2
+
+
+
+# standard errors -----------------
 
 
 #' @rdname standard_error
@@ -78,10 +94,54 @@ standard_error.clm2 <- function(model, component = c("all", "conditional", "scal
 standard_error.clmm2 <- standard_error.clm2
 
 
-#' @export
-model_parameters.clmm2 <- model_parameters.clm2
 
 
-#' @rdname model_parameters.merMod
+# p values ----------------
+
+
+#' @importFrom stats coef
+#' @importFrom insight get_parameters
+#' @rdname p_value.DirichletRegModel
 #' @export
-model_parameters.clmm <- model_parameters.cpglmm
+p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
+  component <- match.arg(component)
+
+  params <- insight::get_parameters(model)
+  cs <- stats::coef(summary(model))
+  p <- cs[, 4]
+
+  out <- .data_frame(
+    Parameter = params$Parameter,
+    Component = params$Component,
+    p = as.vector(p)
+  )
+
+  if (component != "all") {
+    out <- out[out$Component == component, ]
+  }
+
+  out
+}
+
+#' @export
+p_value.clmm2 <- p_value.clm2
+
+
+
+
+# simulate model -------------------
+
+
+#' @export
+simulate_model.clm2 <- function(model, iterations = 1000, component = c("all", "conditional", "scale"), ...) {
+  component <- match.arg(component)
+  out <- .simulate_model(model, iterations, component = component)
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
+}
+
+
+#' @export
+simulate_model.clmm2 <- simulate_model.clm2

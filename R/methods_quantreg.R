@@ -1,3 +1,18 @@
+# quantreg: .rq, .rqss, .crq, .nlrq
+
+# model parameters ---------------------
+
+
+#' @rdname model_parameters.cgam
+#' @export
+model_parameters.rqss <- model_parameters.cgam
+
+
+
+
+# ci ---------------------
+
+
 #' @export
 ci.rq <- ci.default
 
@@ -12,6 +27,11 @@ ci.crq <- ci.default
 
 #' @export
 ci.nlrq <- ci.default
+
+
+
+
+# standard errors ---------------------
 
 
 #' @export
@@ -110,6 +130,11 @@ standard_error.rqss <- function(model, component = c("all", "conditional", "smoo
   }
   se
 }
+
+
+
+
+# p values ---------------------
 
 
 #' @export
@@ -216,8 +241,3 @@ p_value.rqss <- function(model, component = c("all", "conditional", "smooth_term
 
   p
 }
-
-
-#' @rdname model_parameters.cgam
-#' @export
-model_parameters.rqss <- model_parameters.cgam

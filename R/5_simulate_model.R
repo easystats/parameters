@@ -389,21 +389,6 @@ simulate_model.betaor <- function(model, iterations = 1000, component = c("all",
 simulate_model.betamfx <- simulate_model.betaor
 
 #' @export
-simulate_model.clm2 <- function(model, iterations = 1000, component = c("all", "conditional", "scale"), ...) {
-  component <- match.arg(component)
-  out <- .simulate_model(model, iterations, component = component)
-
-  class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- .safe_deparse(substitute(model))
-  out
-}
-
-
-#' @export
-simulate_model.clmm2 <- simulate_model.clm2
-
-
-#' @export
 simulate_model.glmx <- function(model, iterations = 1000, component = c("all", "conditional", "extra"), ...) {
   component <- match.arg(component)
   out <- .simulate_model(model, iterations, component = component)

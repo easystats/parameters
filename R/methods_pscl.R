@@ -1,14 +1,39 @@
+# .zeroinfl, .hurdle, .zerocount
+
+# model parameters -----------------
+
+#' @export
+model_parameters.zeroinfl <- model_parameters.zcpglm
+
+#' @export
+model_parameters.hurdle <- model_parameters.zcpglm
+
+
+#' @export
+model_parameters.zerocount <- model_parameters.zcpglm
+
+
+
+
+# ci -----------------
 
 #' @rdname ci.merMod
 #' @export
 ci.zeroinfl <- ci.glmmTMB
 
+
 #' @rdname ci.merMod
 #' @export
 ci.hurdle <- ci.glmmTMB
 
+
 #' @export
 ci.zerocount <- ci.glmmTMB
+
+
+
+
+# standard error -----------------
 
 
 #' @rdname standard_error
@@ -63,16 +88,9 @@ standard_error.hurdle <- standard_error.zeroinfl
 standard_error.zerocount <- standard_error.zeroinfl
 
 
-#' @export
-model_parameters.zeroinfl <- model_parameters.zcpglm
-
-#' @export
-model_parameters.hurdle <- model_parameters.zcpglm
 
 
-#' @export
-model_parameters.zerocount <- model_parameters.zcpglm
-
+# simulate paramaters -----------------
 
 #' @export
 simulate_parameters.zeroinfl <- function(model,
@@ -114,8 +132,10 @@ simulate_parameters.zeroinfl <- function(model,
   out
 }
 
+
 #' @export
 simulate_parameters.hurdle <- simulate_parameters.zeroinfl
+
 
 #' @export
 simulate_parameters.zerocount <- simulate_parameters.zeroinfl
