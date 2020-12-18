@@ -90,6 +90,60 @@ standard_error.zerocount <- standard_error.zeroinfl
 
 
 
+# p values -----------------------
+
+
+#' @rdname p_value.zcpglm
+#' @importFrom stats coef
+#' @importFrom insight find_parameters
+#' @export
+p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, verbose = TRUE, ...) {
+  component <- match.arg(component)
+  if (is.null(.check_component(model, component, verbose = verbose))) {
+    return(NULL)
+  }
+
+  robust <- !is.null(method) && method == "robust"
+  if (isTRUE(robust)) {
+    return(p_value_robust(model, ...))
+  }
+
+  cs <- .compact_list(stats::coef(summary(model)))
+  x <- lapply(names(cs), function(i) {
+    comp <- ifelse(i == "count", "conditional", "zi")
+    stats <- cs[[i]]
+
+    # remove log(theta)
+    theta <- grepl("Log(theta)", rownames(stats), fixed = TRUE)
+    if (any(theta)) {
+      stats <- stats[!theta, ]
+    }
+
+    .data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = comp, flatten = TRUE),
+      p = as.vector(stats[, 4]),
+      Component = comp
+    )
+  })
+
+  p <- do.call(rbind, x)
+  p$Component <- .rename_values(p$Component, "cond", "conditional")
+  p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
+
+  .filter_component(p, component)
+}
+
+
+#' @export
+p_value.hurdle <- p_value.zeroinfl
+
+
+#' @export
+p_value.zerocount <- p_value.zeroinfl
+
+
+
+
 # simulate paramaters -----------------
 
 #' @export

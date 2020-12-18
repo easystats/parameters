@@ -1,4 +1,8 @@
 
+#' @export
+model_parameters.MixMod <- model_parameters.glmmTMB
+
+
 #' @rdname ci.merMod
 #' @export
 ci.MixMod <- function(x,
@@ -69,5 +73,27 @@ standard_error.MixMod <- function(model,
 }
 
 
+#' @importFrom insight find_parameters
+#' @rdname p_value.lmerMod
 #' @export
-model_parameters.MixMod <- model_parameters.glmmTMB
+p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), verbose = TRUE, ...) {
+  component <- match.arg(component)
+  if (is.null(.check_component(model, component, verbose = verbose))) {
+    return(NULL)
+  }
+
+  s <- summary(model)
+  cs <- list(s$coef_table, s$coef_table_zi)
+  names(cs) <- c("conditional", "zero_inflated")
+  cs <- .compact_list(cs)
+  x <- lapply(names(cs), function(i) {
+    .data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+      p = as.vector(cs[[i]][, 4]),
+      Component = i
+    )
+  })
+
+  p <- do.call(rbind, x)
+  .filter_component(p, component)
+}

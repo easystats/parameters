@@ -1,51 +1,3 @@
-
-#' @importFrom stats pnorm
-#' @export
-ci.glht <- function(x, ci = .95, method = "robust", ...) {
-  s <- summary(x)
-  robust <- !is.null(method) && method == "robust"
-  if (robust) {
-    adjusted_ci <- 2 * stats::pnorm(s$test$qfunction(ci)) - 1
-    dof <- Inf
-  } else {
-    adjusted_ci <- ci
-    dof <- x$df
-  }
-  out <- ci_wald(model = x, ci = adjusted_ci, dof = dof, ...)
-  if (robust) {
-    out$CI <- 100 * ci
-  }
-  out
-}
-
-
-#' @export
-standard_error.glht <- function(model, ...) {
-  s <- summary(model)
-  .data_frame(
-    Parameter = insight::find_parameters(model, flatten = TRUE),
-    SE = unname(s$test$sigma)
-  )
-}
-
-
-#' @export
-degrees_of_freedom.glht <- function(model, ...) {
-  model$df
-}
-
-
-#' @importFrom insight find_parameters
-#' @export
-p_value.glht <- function(model, ...) {
-  s <- summary(model)
-  .data_frame(
-    Parameter = insight::find_parameters(model, flatten = TRUE),
-    p = unname(s$test$pvalues)
-  )
-}
-
-
 #' Parameters from Hypothesis Testing
 #'
 #' Parameters from Hypothesis Testing.
@@ -94,4 +46,51 @@ model_parameters.glht <- function(model,
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
+}
+
+
+#' @importFrom stats pnorm
+#' @export
+ci.glht <- function(x, ci = .95, method = "robust", ...) {
+  s <- summary(x)
+  robust <- !is.null(method) && method == "robust"
+  if (robust) {
+    adjusted_ci <- 2 * stats::pnorm(s$test$qfunction(ci)) - 1
+    dof <- Inf
+  } else {
+    adjusted_ci <- ci
+    dof <- x$df
+  }
+  out <- ci_wald(model = x, ci = adjusted_ci, dof = dof, ...)
+  if (robust) {
+    out$CI <- 100 * ci
+  }
+  out
+}
+
+
+#' @export
+standard_error.glht <- function(model, ...) {
+  s <- summary(model)
+  .data_frame(
+    Parameter = insight::find_parameters(model, flatten = TRUE),
+    SE = unname(s$test$sigma)
+  )
+}
+
+
+#' @export
+degrees_of_freedom.glht <- function(model, ...) {
+  model$df
+}
+
+
+#' @importFrom insight find_parameters
+#' @export
+p_value.glht <- function(model, ...) {
+  s <- summary(model)
+  .data_frame(
+    Parameter = insight::find_parameters(model, flatten = TRUE),
+    p = unname(s$test$pvalues)
+  )
 }

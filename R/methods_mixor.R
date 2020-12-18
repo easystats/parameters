@@ -1,28 +1,4 @@
 
-#' @rdname ci.merMod
-#' @export
-ci.mixor <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
-  effects <- match.arg(effects)
-  ci_wald(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE, ...)
-}
-
-
-#' @rdname standard_error
-#' @importFrom insight get_parameters
-#' @export
-standard_error.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
-  effects <- match.arg(effects)
-  stats <- model$Model[, "Std. Error"]
-  parms <- insight::get_parameters(model, effects = effects)
-
-  .data_frame(
-    Parameter = parms$Parameter,
-    SE = stats[parms$Parameter],
-    Effects = parms$Effects
-  )
-}
-
-
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.mixor <- function(model,
@@ -56,4 +32,44 @@ model_parameters.mixor <- function(model,
   }
 
   out
+}
+
+
+#' @rdname ci.merMod
+#' @export
+ci.mixor <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  ci_wald(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE, ...)
+}
+
+
+#' @rdname standard_error
+#' @importFrom insight get_parameters
+#' @export
+standard_error.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  stats <- model$Model[, "Std. Error"]
+  parms <- insight::get_parameters(model, effects = effects)
+
+  .data_frame(
+    Parameter = parms$Parameter,
+    SE = stats[parms$Parameter],
+    Effects = parms$Effects
+  )
+}
+
+
+#' @rdname p_value.lmerMod
+#' @importFrom insight get_parameters
+#' @export
+p_value.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  stats <- model$Model[, "P(>|z|)"]
+  parms <- insight::get_parameters(model, effects = effects)
+
+  .data_frame(
+    Parameter = parms$Parameter,
+    p = stats[parms$Parameter],
+    Effects = parms$Effects
+  )
 }

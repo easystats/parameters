@@ -108,6 +108,53 @@ standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi
 }
 
 
+#' p-values for Models with Zero-Inflation
+#'
+#' This function attempts to return, or compute, p-values of hurdle and zero-inflated models.
+#'
+#' @param model A statistical model.
+#' @inheritParams p_value
+#' @inheritParams simulate_model
+#' @inheritParams standard_error
+#' @inheritParams ci.merMod
+#'
+#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
+#'
+#' @examples
+#' if (require("pscl")) {
+#'   data("bioChemists")
+#'   model <- zeroinfl(art ~ fem + mar + kid5 | kid5 + phd, data = bioChemists)
+#'   p_value(model)
+#'   p_value(model, component = "zi")
+#' }
+#' @importFrom utils capture.output
+#' @export
+p_value.zcpglm <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
+  if (!requireNamespace("cplm", quietly = TRUE)) {
+    stop("To use this function, please install package 'cplm'.")
+  }
+
+  component <- match.arg(component)
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  params <- get_parameters(model)
+
+  tweedie <- .data_frame(
+    Parameter = params$Parameter[params$Component == "conditional"],
+    p = as.vector(stats$tweedie[, "Pr(>|z|)"]),
+    Component = "conditional"
+  )
+
+  zero <- .data_frame(
+    Parameter = params$Parameter[params$Component == "zero_inflated"],
+    p = as.vector(stats$zero[, "Pr(>|z|)"]),
+    Component = "zero_inflated"
+  )
+
+  out <- .filter_component(rbind(tweedie, zero), component)
+  out
+}
+
+
 
 
 ########## .bcpglm ---------------

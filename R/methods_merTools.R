@@ -1,28 +1,5 @@
 
 #' @export
-ci.merModList <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = NULL, robust = FALSE, component = "conditional")
-}
-
-#' @export
-standard_error.merModList <- function(model, ...) {
-  s <- suppressWarnings(summary(model))
-  out <- .data_frame(
-    Parameter = s$fe$term,
-    SE = s$fe$std.error
-  )
-  .remove_backticks_from_parameter_names(out)
-}
-
-
-#' @export
-degrees_of_freedom.merModList <- function(model, ...) {
-  s <- suppressWarnings(summary(model))
-  s$fe$df
-}
-
-
-#' @export
 model_parameters.merModList <- function(model,
                                         ci = .95,
                                         exponentiate = FALSE,
@@ -46,3 +23,33 @@ model_parameters.merModList <- function(model,
   out
 }
 
+
+#' @export
+ci.merModList <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, dof = NULL, robust = FALSE, component = "conditional")
+}
+
+
+#' @export
+standard_error.merModList <- function(model, ...) {
+  s <- suppressWarnings(summary(model))
+  out <- .data_frame(
+    Parameter = s$fe$term,
+    SE = s$fe$std.error
+  )
+  .remove_backticks_from_parameter_names(out)
+}
+
+
+#' @export
+degrees_of_freedom.merModList <- function(model, ...) {
+  s <- suppressWarnings(summary(model))
+  s$fe$df
+}
+
+
+#' @export
+p_value.merModList <- function(model, ...) {
+  dof <- degrees_of_freedom(model)
+  p_value_wald(model, dof, ...)
+}

@@ -1,4 +1,8 @@
 
+#' @export
+model_parameters.HLfit <- model_parameters.default
+
+
 #' @rdname ci.merMod
 #' @export
 ci.HLfit <- function(x,
@@ -63,4 +67,4 @@ standard_error.HLfit <- function(model, method = NULL, ...) {
 
 
 #' @export
-model_parameters.HLfit <- model_parameters.default
+p_value.HLfit <- p_value.cpglmm

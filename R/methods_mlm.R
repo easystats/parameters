@@ -3,58 +3,6 @@
 #################### .mlm
 
 
-#' @export
-standard_error.mlm <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  se <- lapply(names(cs), function(x) {
-    params <- cs[[x]]
-    .data_frame(
-      Parameter = rownames(params),
-      SE = params[, "Std. Error"],
-      Response = gsub("^Response (.*)", "\\1", x)
-    )
-  })
-  .remove_backticks_from_parameter_names(do.call(rbind, se))
-}
-
-
-#' @export
-p_value.mlm <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  p <- lapply(names(cs), function(x) {
-    params <- cs[[x]]
-    .data_frame(
-      Parameter = rownames(params),
-      p = params[, "Pr(>|t|)"],
-      Response = gsub("^Response (.*)", "\\1", x)
-    )
-  })
-  .remove_backticks_from_parameter_names(do.call(rbind, p))
-}
-
-
-#' @export
-ci.mlm <- function(x, ci = .95, ...) {
-  if (is.null(insight::find_weights(x))) {
-    out <- lapply(ci, function(i) {
-      .ci <- stats::confint(x, level = i, ...)
-      rn <- rownames(.ci)
-      .data_frame(
-        Parameter = gsub("^(.*):(.*)", "\\2", rn),
-        CI = i,
-        CI_low = .ci[, 1],
-        CI_high = .ci[, 2],
-        Response = gsub("^(.*):(.*)", "\\1", rn)
-      )
-    })
-    out <- .remove_backticks_from_parameter_names(do.call(rbind, out))
-  } else {
-    out <- .data_frame(ci_wald(x, ci = ci, ...), Response = insight::get_parameters(x)$Response)
-  }
-  out
-}
-
-
 #' Parameters from multinomial or cumulative link models
 #'
 #' Parameters from multinomial or cumulative link models
@@ -116,6 +64,58 @@ model_parameters.mlm <- function(model,
 
 
 #' @export
+standard_error.mlm <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  se <- lapply(names(cs), function(x) {
+    params <- cs[[x]]
+    .data_frame(
+      Parameter = rownames(params),
+      SE = params[, "Std. Error"],
+      Response = gsub("^Response (.*)", "\\1", x)
+    )
+  })
+  .remove_backticks_from_parameter_names(do.call(rbind, se))
+}
+
+
+#' @export
+p_value.mlm <- function(model, ...) {
+  cs <- stats::coef(summary(model))
+  p <- lapply(names(cs), function(x) {
+    params <- cs[[x]]
+    .data_frame(
+      Parameter = rownames(params),
+      p = params[, "Pr(>|t|)"],
+      Response = gsub("^Response (.*)", "\\1", x)
+    )
+  })
+  .remove_backticks_from_parameter_names(do.call(rbind, p))
+}
+
+
+#' @export
+ci.mlm <- function(x, ci = .95, ...) {
+  if (is.null(insight::find_weights(x))) {
+    out <- lapply(ci, function(i) {
+      .ci <- stats::confint(x, level = i, ...)
+      rn <- rownames(.ci)
+      .data_frame(
+        Parameter = gsub("^(.*):(.*)", "\\2", rn),
+        CI = i,
+        CI_low = .ci[, 1],
+        CI_high = .ci[, 2],
+        Response = gsub("^(.*):(.*)", "\\1", rn)
+      )
+    })
+    out <- .remove_backticks_from_parameter_names(do.call(rbind, out))
+  } else {
+    out <- .data_frame(ci_wald(x, ci = ci, ...), Response = insight::get_parameters(x)$Response)
+  }
+  out
+}
+
+
+#' @export
 simulate_parameters.mlm <- function(model,
                                     iterations = 1000,
                                     centrality = "median",
@@ -149,6 +149,3 @@ simulate_parameters.mlm <- function(model,
 
   out
 }
-
-
-

@@ -1,5 +1,9 @@
 
 #' @export
+model_parameters.sem <- model_parameters.default
+
+
+#' @export
 ci.sem <- ci.tobit
 
 
@@ -19,5 +23,21 @@ standard_error.sem <- function(model, ...) {
 }
 
 
+#' @importFrom insight get_statistic
+#' @importFrom stats pnorm
 #' @export
-model_parameters.sem <- model_parameters.default
+p_value.sem <- function(model, ...) {
+  if (!.is_semLme(model)) {
+    return(NULL)
+  }
+
+  stat <- insight::get_statistic(model)
+  if (is.null(stat)) {
+    return(NULL)
+  }
+
+  .data_frame(
+    Parameter = stat$Parameter,
+    p = 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+  )
+}
