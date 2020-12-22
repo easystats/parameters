@@ -27,7 +27,7 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
 .extract_wrs2_t1way <- function(model) {
   # effect sizes are by default contained for `t1way` but not `rmanova`
   if ("t1way" %in% as.character(model$call)) {
-    out <- data.frame(
+    data.frame(
       "F" = model$test,
       "df" = model$df1,
       "df_error" = model$df2,
@@ -39,7 +39,7 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
       stringsAsFactors = FALSE
     )
   } else if ("rmanova" %in% as.character(model$call)) {
-    out <- data.frame(
+    data.frame(
       "F" = model$test,
       "df" = model$df1,
       "df_error" = model$df2,
@@ -78,12 +78,11 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   parameters
 }
 
-
 # extract WRS2 ttest ----------------------
 
 .extract_wrs2_yuen <- function(model) {
   if ("yuen" %in% as.character(model$call)) {
-    out <- data.frame(
+    data.frame(
       "Difference" = model$diff,
       "Difference_CI_low" =  model$conf.int[1],
       "Difference_CI_high" =  model$conf.int[2],
@@ -95,7 +94,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
       stringsAsFactors = FALSE
     )
   } else if ("yuend" %in% as.character(model$call)) {
-    out <- data.frame(
+    data.frame(
       "Difference" = model$diff,
       "Difference_CI_low" =  model$conf.int[1],
       "Difference_CI_high" =  model$conf.int[2],
@@ -107,4 +106,52 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
       stringsAsFactors = FALSE
     )
   }
+}
+
+
+#' Parameters from \code{WRS2} objects
+#'
+#' @param model Object of class \code{mcp1} or \code{mcp2}.
+#' @param ... Arguments passed to or from other methods.
+#' @inheritParams model_parameters.default
+#'
+#' @examples
+#' if (require("WRS2")) {
+#'   library(WRS2)
+#'
+#'   model1 <- lincon(libido ~ dose, data = viagra)
+#'   model_parameters(model1)
+#'
+#'   model2 <- rmmcp(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster)
+#'   model_parameters(model2)
+#' }
+#' @return A data frame of indices related to the model's parameters.
+#' @export
+
+model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_mcp(model)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  class(parameters) <- c("parameters_model", class(parameters))
+  parameters
+}
+
+#' @rdname model_parameters.mcp1
+#' @export
+
+model_parameters.mcp2 <- model_parameters.mcp1
+
+# extract WRS2 post hoc comparisons ----------------------
+
+.extract_wrs2_mcp <- function(model) {
+  # component of the object containing results from multiple comparisons
+  out <- as.data.frame(model$comp)
+
+  # rename to `eaystats` conventions
+  names(out)[1:5] <- c("Group1", "Group2", "Psihat", "CI_low", "CI_high")
+
+  # convert names to character
+  out$Group1 <- as.character(out$Group1)
+  out$Group2 <- as.character(out$Group2)
+
+  out
 }

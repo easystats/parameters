@@ -1,4 +1,7 @@
 if (require("testthat") && require("parameters") && require("WRS2")) {
+
+  # model_parameters.t1way ---------------------------------------------------
+
   test_that("model_parameters.t1way", {
     set.seed(123)
     df_b <- as.data.frame(model_parameters(t1way(libido ~ dose, data = viagra)))
@@ -63,6 +66,8 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
     )
   })
 
+  # model_parameters.yuen ---------------------------------------------------
+
   test_that("model_parameters.yuen", {
     set.seed(123)
     df_b <- as.data.frame(model_parameters(yuen(Anxiety ~ Group, data = spider)))
@@ -122,6 +127,69 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
         ),
         title = "Yuen's test on trimmed means for dependent samples",
         model_class = "yuen",
+        digits = 2,
+        ci_digits = 2,
+        p_digits = 3,
+        ci = 0.95
+      ),
+      tolerance = 0.001
+    )
+  })
+
+  # model_parameters.mcp ---------------------------------------------------
+
+  test_that("model_parameters.mcp", {
+    set.seed(123)
+    df_b <- as.data.frame(model_parameters(lincon(libido ~ dose, data = viagra)))
+
+    set.seed(123)
+    df_w <- as.data.frame(model_parameters(rmmcp(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster)))
+
+    # between-subjects
+    expect_equal(
+      df_b,
+      structure(
+        list(
+          Group1 = c('1', '1', '2'),
+          Group2 = c('2', '3', '3'),
+          Psihat = c(-1,
+                     -3, -2),
+          CI_low = c(-5.3185800135384, -7.3185800135384, -6.3185800135384),
+          CI_high = c(3.3185800135384, 1.3185800135384, 2.3185800135384),
+          p.value = c(0.435330942514376, 0.180509539510735, 0.316604846750915)
+        ),
+        class = "data.frame",
+        row.names = c(NA, -3L),
+        model_class = "mcp1",
+        digits = 2,
+        ci_digits = 2,
+        p_digits = 3,
+        ci = 0.95
+      ),
+      tolerance = 0.001
+    )
+
+    # within-subjects
+    expect_equal(
+      df_w,
+      structure(
+        list(
+          Group1 = c('1', '1', '2'),
+          Group2 = c('2', '3', '3'),
+          Psihat = c(0.0214285714285715,
+                     0.114285714285714, 0.0821428571428571),
+          CI_low = c(-0.0216368317742901,
+                     0.0214755794006548, 0.00891056424896097),
+          CI_high = c(0.0644939746314331,
+                      0.207095849170774, 0.155375150036753),
+          p.value = c(0.195004531096295,
+                      0.00491556623286327, 0.00877739635342234),
+          p.crit = c(0.05, 0.0169,
+                     0.025)
+        ),
+        class = "data.frame",
+        row.names = c(NA, -3L),
+        model_class = "mcp2",
         digits = 2,
         ci_digits = 2,
         p_digits = 3,
