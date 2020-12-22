@@ -115,6 +115,21 @@ ci.mlm <- function(x, ci = .95, ...) {
 }
 
 
+#' @importFrom insight find_response
+#' @export
+simulate_model.mlm <- function(model, iterations = 1000, ...) {
+  responses <- insight::find_response(model, combine = FALSE)
+  out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed")
+
+  cn <- paste0(colnames(out), rep(responses, each = length(colnames(out)) / length(responses)))
+  colnames(out) <- cn
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
+}
+
+
 #' @export
 simulate_parameters.mlm <- function(model,
                                     iterations = 1000,

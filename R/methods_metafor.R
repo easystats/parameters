@@ -201,3 +201,11 @@ standard_error.rma <- function(model, ...) {
     SE = model[["se"]]
   )
 }
+
+
+#' @export
+format_parameters.rma <- function(model, ...) {
+  params <- insight::find_parameters(model, flatten = TRUE)
+  names(params) <- params
+  params
+}

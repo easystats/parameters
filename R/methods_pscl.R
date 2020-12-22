@@ -144,6 +144,21 @@ p_value.zerocount <- p_value.zeroinfl
 
 
 
+# simulate model -----------------
+
+
+#' @export
+simulate_model.zeroinfl <- simulate_model.glmmTMB
+
+#' @export
+simulate_model.hurdle <- simulate_model.zeroinfl
+
+#' @export
+simulate_model.zerocount <- simulate_model.zeroinfl
+
+
+
+
 # simulate paramaters -----------------
 
 #' @export

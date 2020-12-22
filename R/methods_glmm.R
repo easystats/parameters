@@ -1,4 +1,3 @@
-
 #' @export
 model_parameters.glmm <- function(model,
                                   ci = .95,
@@ -70,4 +69,10 @@ p_value.glmm <- function(model, effects = c("all", "fixed", "random"), ...) {
   }
 
   out
+}
+
+
+#' @export
+format_parameters.glmm <- function(model, brackets = c("[", "]"), ...) {
+  .format_parameter_default(model, effects = "all", brackets = brackets)
 }

@@ -1,3 +1,148 @@
+# model parameters ---------------------
+
+
+#' @rdname model_parameters.default
+#' @export
+model_parameters.logitor <- function(model,
+                                     ci = .95,
+                                     bootstrap = FALSE,
+                                     iterations = 1000,
+                                     standardize = NULL,
+                                     exponentiate = TRUE,
+                                     robust = FALSE,
+                                     p_adjust = NULL,
+                                     verbose = TRUE,
+                                     ...) {
+  model_parameters.default(
+    model$fit,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    robust = robust,
+    p_adjust = p_adjust,
+    ...
+  )
+}
+
+
+#' @export
+model_parameters.poissonirr <- model_parameters.logitor
+
+
+#' @export
+model_parameters.negbinirr <- model_parameters.logitor
+
+
+#' @rdname model_parameters.default
+#' @export
+model_parameters.poissonmfx <- function(model,
+                                        ci = .95,
+                                        bootstrap = FALSE,
+                                        iterations = 1000,
+                                        component = c("all", "conditional", "marginal"),
+                                        standardize = NULL,
+                                        exponentiate = FALSE,
+                                        robust = FALSE,
+                                        p_adjust = NULL,
+                                        verbose = TRUE,
+                                        ...) {
+  component <- match.arg(component)
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    component = component,
+    robust = robust,
+    p_adjust = p_adjust,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+#' @export
+model_parameters.logitmfx <- model_parameters.poissonmfx
+
+
+#' @export
+model_parameters.probitmfx <- model_parameters.poissonmfx
+
+
+#' @export
+model_parameters.negbinmfx <- model_parameters.poissonmfx
+
+
+#' @export
+model_parameters.betaor <- function(model,
+                                    ci = .95,
+                                    bootstrap = FALSE,
+                                    iterations = 1000,
+                                    component = c("conditional", "precision", "all"),
+                                    standardize = NULL,
+                                    exponentiate = FALSE,
+                                    p_adjust = NULL,
+                                    verbose = TRUE,
+                                    ...) {
+  component <- match.arg(component)
+  model_parameters.betareg(
+    model$fit,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    component = component,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    ...
+  )
+}
+
+
+#' @rdname model_parameters.default
+#' @export
+model_parameters.betamfx <- function(model,
+                                     ci = .95,
+                                     bootstrap = FALSE,
+                                     iterations = 1000,
+                                     component = c("all", "conditional", "precision", "marginal"),
+                                     standardize = NULL,
+                                     exponentiate = FALSE,
+                                     robust = FALSE,
+                                     p_adjust = NULL,
+                                     verbose = TRUE,
+                                     ...) {
+  component <- match.arg(component)
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    component = component,
+    robust = robust,
+    p_adjust = p_adjust,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
+
+
+
+# ci ------------------
+
 
 #' @export
 ci.logitor <- function(x, ci = .95, method = NULL, ...) {
@@ -5,11 +150,14 @@ ci.logitor <- function(x, ci = .95, method = NULL, ...) {
   ci_wald(model = x$fit, ci = ci, robust = robust, ...)
 }
 
+
 #' @export
 ci.poissonirr <- ci.logitor
 
+
 #' @export
 ci.negbinirr <- ci.logitor
+
 
 #' @rdname ci.merMod
 #' @export
@@ -19,20 +167,25 @@ ci.poissonmfx <- function(x, ci = .95, component = c("all", "conditional", "marg
   ci_wald(model = x, ci = ci, component = component, robust = robust, ...)
 }
 
+
 #' @export
 ci.negbinmfx <- ci.poissonmfx
+
 
 #' @export
 ci.logitmfx <- ci.poissonmfx
 
+
 #' @export
 ci.probitmfx <- ci.poissonmfx
+
 
 #' @export
 ci.betaor <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
   ci_wald(model = x$fit, ci = ci, dof = Inf, component = component)
 }
+
 
 #' @rdname ci.merMod
 #' @export
@@ -41,6 +194,11 @@ ci.betamfx <- function(x, ci = .95, component = c("all", "conditional", "precisi
   robust <- !is.null(method) && method == "robust"
   ci_wald(model = x, ci = ci, component = component, robust = robust, ...)
 }
+
+
+
+
+# standard error ------------------
 
 
 #' @export
@@ -52,11 +210,14 @@ standard_error.logitor <- function(model, ...) {
   standard_error.lm(model$fit, ...)
 }
 
+
 #' @export
 standard_error.poissonirr <- standard_error.logitor
 
+
 #' @export
 standard_error.negbinirr <- standard_error.logitor
+
 
 #' @rdname standard_error
 #' @export
@@ -79,20 +240,25 @@ standard_error.poissonmfx <- function(model, component = c("all", "conditional",
   out
 }
 
+
 #' @export
 standard_error.logitmfx <- standard_error.poissonmfx
+
 
 #' @export
 standard_error.probitmfx <- standard_error.poissonmfx
 
+
 #' @export
 standard_error.negbinmfx <- standard_error.poissonmfx
+
 
 #' @export
 standard_error.betaor <- function(model, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
   standard_error.betareg(model$fit, component = component, ...)
 }
+
 
 #' @rdname standard_error
 #' @export
@@ -114,6 +280,11 @@ standard_error.betamfx <- function(model, component = c("all", "conditional", "p
 
   out
 }
+
+
+
+
+# degrees of freedom ------------------
 
 
 #' @export
@@ -152,6 +323,11 @@ degrees_of_freedom.betaor <- degrees_of_freedom.logitor
 
 #' @export
 degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
+
+
+
+
+# p values ------------------
 
 
 #' p-values for Marginal Effects Models
@@ -204,21 +380,25 @@ p_value.logitor <- function(model, method = NULL, ...) {
   p_value.default(model$fit, method = method, ...)
 }
 
+
 #' @export
 p_value.poissonirr <- p_value.logitor
+
 
 #' @export
 p_value.negbinirr <- p_value.logitor
 
+
 #' @export
 p_value.logitmfx <- p_value.poissonmfx
+
 
 #' @export
 p_value.probitmfx <- p_value.poissonmfx
 
+
 #' @export
 p_value.negbinmfx <- p_value.poissonmfx
-
 
 
 #' @rdname p_value.poissonmfx
@@ -227,7 +407,6 @@ p_value.betaor <- function(model, component = c("all", "conditional", "precision
   component <- match.arg(component)
   p_value.betareg(model$fit, component = component, ...)
 }
-
 
 
 #' @importFrom stats coef
@@ -253,141 +432,18 @@ p_value.betamfx <- function(model, component = c("all", "conditional", "precisio
   out
 }
 
-#' @rdname model_parameters.default
-#' @export
-model_parameters.logitor <- function(model,
-                                     ci = .95,
-                                     bootstrap = FALSE,
-                                     iterations = 1000,
-                                     standardize = NULL,
-                                     exponentiate = TRUE,
-                                     robust = FALSE,
-                                     p_adjust = NULL,
-                                     verbose = TRUE,
-                                     ...) {
-  model_parameters.default(
-    model$fit,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    standardize = standardize,
-    exponentiate = exponentiate,
-    robust = robust,
-    p_adjust = p_adjust,
-    ...
-  )
-}
+
+
+
+# simulate model ------------------
+
 
 #' @export
-model_parameters.poissonirr <- model_parameters.logitor
-
-#' @export
-model_parameters.negbinirr <- model_parameters.logitor
-
-
-
-
-#' @rdname model_parameters.default
-#' @export
-model_parameters.poissonmfx <- function(model,
-                                        ci = .95,
-                                        bootstrap = FALSE,
-                                        iterations = 1000,
-                                        component = c("all", "conditional", "marginal"),
-                                        standardize = NULL,
-                                        exponentiate = FALSE,
-                                        robust = FALSE,
-                                        p_adjust = NULL,
-                                        verbose = TRUE,
-                                        ...) {
+simulate_model.betaor <- function(model, iterations = 1000, component = c("all", "conditional", "precision"), ...) {
   component <- match.arg(component)
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = c("Parameter", "Component"),
-    standardize = standardize,
-    exponentiate = exponentiate,
-    component = component,
-    robust = robust,
-    p_adjust = p_adjust,
-    ...
-  )
-
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  out
-}
-
-#' @export
-model_parameters.logitmfx <- model_parameters.poissonmfx
-
-#' @export
-model_parameters.probitmfx <- model_parameters.poissonmfx
-
-#' @export
-model_parameters.negbinmfx <- model_parameters.poissonmfx
-
-
-
-
-
-#' @export
-model_parameters.betaor <- function(model,
-                                    ci = .95,
-                                    bootstrap = FALSE,
-                                    iterations = 1000,
-                                    component = c("conditional", "precision", "all"),
-                                    standardize = NULL,
-                                    exponentiate = FALSE,
-                                    p_adjust = NULL,
-                                    verbose = TRUE,
-                                    ...) {
-  component <- match.arg(component)
-  model_parameters.betareg(
-    model$fit,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    component = component,
-    standardize = standardize,
-    exponentiate = exponentiate,
-    p_adjust = p_adjust,
-    ...
-  )
-}
-
-#' @rdname model_parameters.default
-#' @export
-model_parameters.betamfx <- function(model,
-                                     ci = .95,
-                                     bootstrap = FALSE,
-                                     iterations = 1000,
-                                     component = c("all", "conditional", "precision", "marginal"),
-                                     standardize = NULL,
-                                     exponentiate = FALSE,
-                                     robust = FALSE,
-                                     p_adjust = NULL,
-                                     verbose = TRUE,
-                                     ...) {
-  component <- match.arg(component)
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = c("Parameter", "Component"),
-    standardize = standardize,
-    exponentiate = exponentiate,
-    component = component,
-    robust = robust,
-    p_adjust = p_adjust,
-    ...
-  )
-
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  out
+  simulate_model.betareg(model$fit, iterations = iterations, component = component, ...)
 }
 
 
-
+#' @export
+simulate_model.betamfx <- simulate_model.betaor

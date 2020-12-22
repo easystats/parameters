@@ -96,6 +96,7 @@ model_parameters.emm_list <- function(model,
 
 
 
+
 # standard errors -----------------
 
 
@@ -140,6 +141,7 @@ standard_error.emm_list <- function(model, ...) {
     Component = params$Component
   )
 }
+
 
 
 
@@ -232,3 +234,15 @@ p_value.emm_list <- function(model, ...) {
 
   out
 }
+
+
+
+
+# format parameters -----------------
+
+
+#' @export
+format_parameters.emm_list <- function(model, ...) {
+  NULL
+}
+

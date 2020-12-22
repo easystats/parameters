@@ -89,3 +89,14 @@ p_value.betareg <- function(model, component = c("all", "conditional", "precisio
 
   out
 }
+
+
+#' @export
+simulate_model.betareg <- function(model, iterations = 1000, component = c("all", "conditional", "precision"), ...) {
+  component <- match.arg(component)
+  out <- .simulate_model(model, iterations, component = component)
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
+}

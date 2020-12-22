@@ -28,3 +28,11 @@ standard_error.gamm <- standard_error.gamm4
 
 #' @export
 p_value.gamm <- p_value.gamm4
+
+
+#' @export
+simulate_model.gamm <- function(model, iterations = 1000, ...) {
+  model <- model$gam
+  class(model) <- c("gam", "lm", "glm")
+  simulate_model(model, iterations = iterations, ...)
+}

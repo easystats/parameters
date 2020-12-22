@@ -26,6 +26,7 @@
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
+  ci_brackets = c("(", ")"),
   ...
 )
 
@@ -43,6 +44,7 @@
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
+  ci_brackets = c("(", ")"),
   ...
 )
 
@@ -86,6 +88,7 @@
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
+  ci_brackets = c("(", ")"),
   ...
 )
 
@@ -100,6 +103,7 @@
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
+  ci_brackets = c("(", ")"),
   ...
 )
 }
@@ -143,6 +147,8 @@ new text line under the table.}
 
 \item{p_digits}{Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.}
 
+\item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are encompassed in square brackets (else in parentheses).}
+
 \item{...}{Arguments passed to or from other methods.}
 
 \item{sort}{Sort the loadings.}
@@ -154,8 +160,6 @@ new text line under the table.}
 \item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
 
 \item{ci_width}{Minimum width of the returned string for confidence intervals. If not \code{NULL} and width is larger than the string's length, leading whitespaces are added to the string. If \code{width="auto"}, width will be set to the length of the longest string.}
-
-\item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are encompassed in square brackets (else in parentheses).}
 }
 \value{
 A character vector. If \code{format = "markdown"}, the return value

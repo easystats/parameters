@@ -113,6 +113,26 @@ p_value.gam <- function(model, ...) {
 }
 
 
+#' @importFrom insight get_varcov
+#' @export
+simulate_model.gam <- function(model, iterations = 1000, ...) {
+  if (!requireNamespace("MASS", quietly = TRUE)) {
+    stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  if (is.null(iterations)) iterations <- 1000
+
+  beta <- stats::coef(model)
+  varcov <- insight::get_varcov(model, component = "all")
+
+  out <- as.data.frame(MASS::mvrnorm(n = iterations, mu = beta, Sigma = varcov))
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
+}
+
+
 
 
 #################### .list ------
@@ -141,7 +161,6 @@ model_parameters.list <- function(model,
 }
 
 
-
 #' @export
 ci.list <- function(x, ci = .95, ...) {
   if ("gam" %in% names(x)) {
@@ -150,5 +169,15 @@ ci.list <- function(x, ci = .95, ...) {
     ci(x, ci = ci, ...)
   } else {
     return(NULL)
+  }
+}
+
+
+#' @export
+simulate_model.list <- function(model, iterations = 1000, ...) {
+  if ("gam" %in% names(model)) {
+    model <- model$gam
+    class(model) <- c("gam", "lm", "glm")
+    simulate_model(model, iterations = iterations, ...)
   }
 }

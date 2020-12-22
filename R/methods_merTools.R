@@ -1,4 +1,3 @@
-
 #' @export
 model_parameters.merModList <- function(model,
                                         ci = .95,
@@ -52,4 +51,10 @@ degrees_of_freedom.merModList <- function(model, ...) {
 p_value.merModList <- function(model, ...) {
   dof <- degrees_of_freedom(model)
   p_value_wald(model, dof, ...)
+}
+
+
+#' @export
+format_parameters.merModList <- function(model, brackets = c("[", "]"), ...) {
+  .format_parameter_default(model[[1]], brackets = brackets)
 }

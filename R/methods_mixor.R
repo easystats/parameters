@@ -73,3 +73,14 @@ p_value.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
     Effects = parms$Effects
   )
 }
+
+
+#' @export
+simulate_model.mixor <- function(model, iterations = 1000, effects = c("all", "fixed", "random"), ...) {
+  effects <- match.arg(effects)
+  out <- .simulate_model(model, iterations, component = "conditional", effects = effects)
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
+}

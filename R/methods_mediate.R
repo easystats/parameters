@@ -1,3 +1,29 @@
+#' @export
+model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, verbose = TRUE, ...) {
+  # Parameters, Estimate and CI
+  params <- insight::get_parameters(model)
+
+  # CI
+  params <- merge(params, ci(model, ci = ci), by = "Parameter", sort = FALSE)
+  params$CI <- NULL
+
+  # p-value
+  params <- merge(params, p_value(model), by = "Parameter", sort = FALSE)
+
+  # ==== Renaming
+
+  if (any(grepl("\\(control\\)$", params$Parameter))) {
+    params$Component <- gsub("(.*)\\((.*)\\)$", "\\2", params$Parameter)
+  }
+
+  if (exponentiate) params <- .exponentiate_parameters(params)
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
+
+  params
+}
+
 
 #' @importFrom insight get_parameters model_info
 #' @importFrom stats quantile
@@ -103,27 +129,11 @@ p_value.mediate <- function(model, ...) {
 
 
 #' @export
-model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, verbose = TRUE, ...) {
-  # Parameters, Estimate and CI
-  params <- insight::get_parameters(model)
-
-  # CI
-  params <- merge(params, ci(model, ci = ci), by = "Parameter", sort = FALSE)
-  params$CI <- NULL
-
-  # p-value
-  params <- merge(params, p_value(model), by = "Parameter", sort = FALSE)
-
-  # ==== Renaming
-
-  if (any(grepl("\\(control\\)$", params$Parameter))) {
-    params$Component <- gsub("(.*)\\((.*)\\)$", "\\2", params$Parameter)
-  }
-
-  if (exponentiate) params <- .exponentiate_parameters(params)
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
-  class(params) <- c("parameters_model", "see_parameters_model", class(params))
-
+format_parameters.mediate <- function(model, ...) {
+  params <- insight::find_parameters(model, flatten = TRUE)
+  params <- trimws(gsub("(.*)\\((.*)\\)$", "\\1", params))
+  names(params) <- params
+  params[params == "ACME"] <- "Indirect Effect (ACME)"
+  params[params == "ADE"] <- "Direct Effect (ADE)"
   params
 }

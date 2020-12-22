@@ -1,3 +1,6 @@
+#' @export
+model_parameters.mle2 <- model_parameters.glm
+
 
 #' @export
 ci.mle2 <- ci.glm
@@ -30,4 +33,6 @@ p_value.mle2 <- function(model, ...) {
 
 
 #' @export
-model_parameters.mle2 <- model_parameters.glm
+format_parameters.mle2 <- function(model, ...) {
+  NULL
+}

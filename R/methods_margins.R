@@ -1,30 +1,4 @@
 #' @export
-ci.margins <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = Inf, ...)
-}
-
-
-#' @export
-standard_error.margins <- function(model, ...) {
-  params <- insight::get_parameters(model)
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = summary(model)$SE
-  )
-}
-
-
-#' @export
-p_value.margins <- function(model, ...) {
-  params <- insight::get_parameters(model)
-  .data_frame(
-    Parameter = params$Parameter,
-    p = summary(model)$p
-  )
-}
-
-
-#' @export
 model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, verbose = TRUE, ...) {
   # Parameters, Estimate and CI
   params <- insight::get_parameters(model)
@@ -76,3 +50,34 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
   params
 }
 
+
+#' @export
+ci.margins <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, dof = Inf, ...)
+}
+
+
+#' @export
+standard_error.margins <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  .data_frame(
+    Parameter = params$Parameter,
+    SE = summary(model)$SE
+  )
+}
+
+
+#' @export
+p_value.margins <- function(model, ...) {
+  params <- insight::get_parameters(model)
+  .data_frame(
+    Parameter = params$Parameter,
+    p = summary(model)$p
+  )
+}
+
+
+#' @export
+format_parameters.margins <- function(model, ...) {
+  NULL
+}

@@ -97,3 +97,7 @@ p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zer
   p <- do.call(rbind, x)
   .filter_component(p, component)
 }
+
+
+#' @export
+simulate_model.MixMod <- simulate_model.glmmTMB
