@@ -114,7 +114,12 @@ or both be returned? Only applies to mixed models. May be abbreviated.}
  instrumental variables (so called fixed-effects regressions), or models
  with marginal effects from \pkg{mfx}. May be abbreviated. Note that the
 \emph{conditional} component is also called \emph{count} or \emph{mean}
-component, depending on the model.}
+component, depending on the model. There are two convenient shortcuts:
+If \code{component = "location"}, location parameters such as \code{conditional},
+\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned.
+For \code{component = "distributional"} (or \code{"auxiliary"}), components
+like \code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and
+other auxiliary parameters) are returned.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
 

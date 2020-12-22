@@ -1,6 +1,6 @@
 #' Parameters from \code{WRS2} objects
 #'
-#' @param model Object of class \code{t1way}.
+#' @param model Object of class \code{t1way}, \code{yuen}, \code{mcp1} or \code{mcp2}.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.default
 #'
@@ -52,23 +52,6 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
 }
 
 
-#' Parameters from \code{WRS2} objects
-#'
-#' @param model Object of class \code{yuen}.
-#' @param ... Arguments passed to or from other methods.
-#' @inheritParams model_parameters.default
-#'
-#' @examples
-#' if (require("WRS2")) {
-#'   model1 <- yuen(Anxiety ~ Group, data = spider)
-#'   model_parameters(model1)
-#'
-#'   before <- c(190, 210, 300, 240, 280, 170, 280, 250, 240, 220)
-#'   after <- c(210, 210, 340, 190, 260, 180, 200, 220, 230, 200)
-#'   model2 <- yuend(before, after)
-#'   model_parameters(model2)
-#' }
-#' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_yuen(model)
@@ -111,21 +94,6 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 }
 
 
-#' Parameters from \code{WRS2} objects
-#'
-#' @param model Object of class \code{mcp1} or \code{mcp2}.
-#' @param ... Arguments passed to or from other methods.
-#' @inheritParams model_parameters.default
-#'
-#' @examples
-#' if (require("WRS2")) {
-#'   model1 <- lincon(libido ~ dose, data = viagra)
-#'   model_parameters(model1)
-#'
-#'   model2 <- rmmcp(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster)
-#'   model_parameters(model2)
-#' }
-#' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_mcp(model)
@@ -135,7 +103,6 @@ model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
 }
 
 
-#' @rdname model_parameters.mcp1
 #' @export
 model_parameters.mcp2 <- model_parameters.mcp1
 
