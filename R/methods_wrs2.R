@@ -83,7 +83,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 .extract_wrs2_yuen <- function(model) {
   fcall <- .safe_deparse(model$call)
 
-  if (grepl("^(yuen\\(|WRS2::yuen\\())", fcall)) {
+  if (grepl("^(yuen\\(|WRS2::yuen\\()", fcall)) {
     data.frame(
       "Difference" = model$diff,
       "Difference_CI_low" =  model$conf.int[1],
