@@ -6,6 +6,14 @@
   `ivprobit` (*ivprobit*), `riskRegression` (*riskRegression*),
   `fitdistr` (*MASS*).
 
+## New functions
+
+### Printing and table Formatting
+
+* `print_html()` as an alias for `display(format = "html")`. This allows to
+  print tabular outputs from data frames (as returned by most functions in
+  _parameters_) into nicely rendered HTML markdown tables.
+
 ## Bug fixes
 
 * `model_parameters()` for t-tests when `standardize_d = TRUE`, did not return
@@ -50,7 +58,6 @@
 * Column names for degrees of freedom were revised. `"df_residual"` was replaced
   by the more generic `"df_error"`. Moreover, models of class `htest` now also
   have the column name `"df_error"` and no longer `"df"` (where applicable).
-  
 
 * Some re-exports for functions that were moved to *insight* longer ago, were
   now removed.
