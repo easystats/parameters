@@ -16,7 +16,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   }
 
   # remove method for htest
-  if (!is.null(attributes(x)$model_class) && attributes(x)$model_class %in% c("htest", "t1way", "yuen")) {
+  if (!is.null(attributes(x)$model_class) && any(attributes(x)$model_class %in% c("htest", "t1way", "yuen"))) {
     x$Method <- NULL
   }
 
