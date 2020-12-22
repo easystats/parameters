@@ -12,8 +12,8 @@
 #'   \code{d} is based on the t-value (see \code{\link[effectsize]{t_to_d}})
 #'   for details.
 #' @param omega_squared,eta_squared,epsilon_squared Logical, if \code{TRUE},
-#'   computes \emph{partial} Omega, Eta or Epsilon squared as index of effect
-#'   size. Only applies to objects from \code{oneway.test()}.
+#'   returns the non-partial effect size Omega, Eta or Epsilon squared. Only
+#'   applies to objects from \code{oneway.test()}.
 #' @param ci Level of confidence intervals for effect size statistic. Currently
 #'   only applies to objects from \code{chisq.test()} or \code{oneway.test()}.
 #' @inheritParams model_parameters.default
