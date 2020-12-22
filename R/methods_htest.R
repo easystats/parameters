@@ -471,7 +471,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       out <- cbind(out, es)
     }
     # epsilon squared
-    if (!is.null(eta_squared)) {
+    if (!is.null(epsilon_squared)) {
       es <- effectsize::effectsize(model, ci = ci, type = "epsilon", partial = TRUE, verbose = verbose)
       es$CI <- NULL
       ci_cols <- grepl("^CI", names(es))
