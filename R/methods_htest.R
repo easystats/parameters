@@ -389,7 +389,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   if (!is.null(phi) && requireNamespace("effectsize", quietly = TRUE)) {
     # Phi
-    es <- effectsize::phi(model$observed, ci = ci, adjust = phi == "adjusted", verbose = verbose)
+    ## TODO add verbose
+    es <- effectsize::phi(model$observed, ci = ci, adjust = phi == "adjusted")
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("phi_", names(es)[ci_cols])
