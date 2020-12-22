@@ -395,7 +395,6 @@ ci.meta_bma <- ci.meta_random
 
 # format_parameters -----------------------------------
 
-#' @importFrom utils packageVersion
 #' @export
 format_parameters.meta_random <- function(model, ...) {
   params <- insight::find_parameters(model, flatten = TRUE)
