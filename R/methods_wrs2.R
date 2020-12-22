@@ -2,6 +2,7 @@
 #'
 #' @param model Object of class \code{t1way}.
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams model_parameters.default
 #'
 #' @examples
 #' if (require("WRS2")) {
@@ -53,6 +54,7 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
 #'
 #' @param model Object of class \code{yuen}.
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams model_parameters.default
 #'
 #' @examples
 #' if (require("WRS2")) {

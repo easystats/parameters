@@ -9,6 +9,8 @@
 \arguments{
 \item{model}{Object of class \code{yuen}.}
 
+\item{verbose}{Toggle warnings and messages.}
+
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
