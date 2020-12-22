@@ -140,6 +140,7 @@ canberra
 ci
 clubSandwich
 clusterable
+coxrobust
 cplm
 de
 derivating
@@ -163,6 +164,8 @@ http
 https
 hyperspectral
 interpretable
+ivfixed
+ivprobit
 joss
 jstatsoft
 kmeans
@@ -172,9 +175,9 @@ lm
 lme
 lmerModLmerTest
 lmerTest
+lmtest
 loadings
 logistf
-lqm
 lqmm
 meaned
 merTools
@@ -201,6 +204,7 @@ quantreg
 reproducibility
 rescale
 rescaled
+riskRegression
 rmarkdown
 rms
 robmixglm
