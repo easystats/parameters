@@ -21,8 +21,6 @@ Parameters from \code{WRS2} objects
 }
 \examples{
 if (require("WRS2")) {
-  library(WRS2)
-
   model1 <- yuen(Anxiety ~ Group, data = spider)
   model_parameters(model1)
 

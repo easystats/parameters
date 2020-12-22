@@ -24,8 +24,6 @@ Parameters from \code{WRS2} objects
 }
 \examples{
 if (require("WRS2")) {
-  library(WRS2)
-
   model1 <- lincon(libido ~ dose, data = viagra)
   model_parameters(model1)
 

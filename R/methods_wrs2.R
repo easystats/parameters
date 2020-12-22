@@ -14,13 +14,13 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-
 model_parameters.t1way <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_t1way(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", class(parameters))
   parameters
 }
+
 
 # extract WRS2 anova ----------------------
 
@@ -50,6 +50,7 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
   }
 }
 
+
 #' Parameters from \code{WRS2} objects
 #'
 #' @param model Object of class \code{yuen}.
@@ -58,8 +59,6 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
 #'
 #' @examples
 #' if (require("WRS2")) {
-#'   library(WRS2)
-#'
 #'   model1 <- yuen(Anxiety ~ Group, data = spider)
 #'   model_parameters(model1)
 #'
@@ -70,13 +69,13 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-
 model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_yuen(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", class(parameters))
   parameters
 }
+
 
 # extract WRS2 ttest ----------------------
 
@@ -117,8 +116,6 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 #'
 #' @examples
 #' if (require("WRS2")) {
-#'   library(WRS2)
-#'
 #'   model1 <- lincon(libido ~ dose, data = viagra)
 #'   model_parameters(model1)
 #'
@@ -127,7 +124,6 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-
 model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_mcp(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
@@ -135,10 +131,11 @@ model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
   parameters
 }
 
+
 #' @rdname model_parameters.mcp1
 #' @export
-
 model_parameters.mcp2 <- model_parameters.mcp1
+
 
 # extract WRS2 post hoc comparisons ----------------------
 
