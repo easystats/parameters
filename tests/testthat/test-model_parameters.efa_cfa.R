@@ -51,10 +51,10 @@ if (require("testthat") &&
 
 
   test_that("FactoMineR", {
-    x <- model_parameters(FactoMineR::PCA(mtcars, ncp = 3), threshold = 0.2, sort = TRUE)
+    x <- suppressWarnings(model_parameters(FactoMineR::PCA(mtcars, ncp = 3), threshold = 0.2, sort = TRUE))
     testthat::expect_equal(c(ncol(x), nrow(x)), c(5, 11))
 
-    x <- model_parameters(FactoMineR::FAMD(iris, ncp = 3), threshold = 0.2, sort = TRUE)
+    x <- suppressWarnings(model_parameters(FactoMineR::FAMD(iris, ncp = 3), threshold = 0.2, sort = TRUE))
     testthat::expect_equal(c(ncol(x), nrow(x)), c(5, 5))
   })
 
