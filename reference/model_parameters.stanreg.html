@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters from Bayesian Models — model_parameters.stanreg • parameters</title>
+<title>Parameters from Bayesian Models — model_parameters.data.frame • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Parameters from Bayesian Models — model_parameters.stanreg" />
-<meta property="og:description" content="Parameters of Bayesian models." />
+<meta property="og:title" content="Parameters from Bayesian Models — model_parameters.data.frame" />
+<meta property="og:description" content="Parameters from Bayesian models." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/parameters/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -165,15 +165,15 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Bayesian Models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.bayesian.R'><code>R/model_parameters.bayesian.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/methods_base.R'><code>R/methods_base.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_brms.R'><code>R/methods_brms.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_rstanarm.R'><code>R/methods_rstanarm.R</code></a></small>
     <div class="hidden name"><code>model_parameters.stanreg.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameters of Bayesian models.</p>
+    <p>Parameters from Bayesian models.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for stanreg</span>
+    <pre class="usage"><span class='co'># S3 method for data.frame</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
   <span class='va'>model</span>,
   centrality <span class='op'>=</span> <span class='st'>"median"</span>,
@@ -183,13 +183,6 @@
   test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pd"</span>, <span class='st'>"rope"</span><span class='op'>)</span>,
   rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
   rope_ci <span class='op'>=</span> <span class='fl'>1</span>,
-  bf_prior <span class='op'>=</span> <span class='cn'>NULL</span>,
-  diagnostic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span><span class='op'>)</span>,
-  priors <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
-  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
-  group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -214,6 +207,27 @@
   group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for stanreg</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  centrality <span class='op'>=</span> <span class='st'>"median"</span>,
+  dispersion <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.89</span>,
+  ci_method <span class='op'>=</span> <span class='st'>"hdi"</span>,
+  test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pd"</span>, <span class='st'>"rope"</span><span class='op'>)</span>,
+  rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
+  rope_ci <span class='op'>=</span> <span class='fl'>1</span>,
+  bf_prior <span class='op'>=</span> <span class='cn'>NULL</span>,
+  diagnostic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span><span class='op'>)</span>,
+  priors <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
+  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
+  group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -225,7 +239,11 @@
     </tr>
     <tr>
       <th>centrality</th>
-      <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
+      <td><p>Only for models with posterior samples, and when
+<code>summary = TRUE</code>. In this case, <code>centrality = "mean"</code> would
+calculate means of posterior samples for each parameter, while
+<code>centrality = "median"</code> would use the more robust median value as
+measure of central tendency.</p></td>
     </tr>
     <tr>
       <th>dispersion</th>
@@ -264,6 +282,14 @@ the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
 proportion of HDI, to use for the percentage in ROPE.</p></td>
     </tr>
     <tr>
+      <th>verbose</th>
+      <td><p>Toggle messages and warnings.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Currently not used.</p></td>
+    </tr>
+    <tr>
       <th>bf_prior</th>
       <td><p>Distribution representing a prior for the computation of Bayes factors / SI. Used if the input is a posterior, otherwise (in the case of models) ignored.</p></td>
     </tr>
@@ -277,8 +303,19 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should parameters for fixed effects, random effects
+or both be returned? Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should all parameters, parameters for the
+ conditional model, the zero-inflated part of the model, the dispersion
+ term, the instrumental variables or marginal effects be returned? Applies
+ to models with zero-inflated and/or dispersion formula, or to models with
+ instrumental variables (so called fixed-effects regressions), or models
+ with marginal effects from <span class="pkg">mfx</span>. May be abbreviated. Note that the
+<em>conditional</em> component is also called <em>count</em> or <em>mean</em>
+component, depending on the model.</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
@@ -291,18 +328,6 @@ Only applies to mixed models. May be abbreviated.</p></td>
     <tr>
       <th>group_level</th>
       <td><p>Logical, for multilevel models (i.e. models with random effects) and when <code>effects = "all"</code> or <code>effects = "random"</code>, include the parameters for each group level from random effects. If <code>group_level = FALSE</code> (the default), only information on SD and COR are shown.</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>component</th>
-      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>), <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for <code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
     </tr>
     </table>
 
@@ -337,7 +362,7 @@ There is also a <a href='https://easystats.github.io/see/articles/parameters.htm
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='message'>Possible multicollinearity between Petal.Length:Speciesversicolor and Speciesversicolor (r = 0.86), Petal.Length:Speciesvirginica and Speciesvirginica (r = 0.81), Petal.Length:Speciesvirginica and Petal.Length:Speciesversicolor (r = 0.86). This might lead to inappropriate results. See 'Details' in '?rope'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed effects</span><span> 
 #&gt; 
-#&gt; Parameter                      | Median |             CI |     pd | % in ROPE |  Rhat | ESS |                 Prior
+#&gt; Parameter                      | Median |         89% CI |     pd | % in ROPE |  Rhat | ESS |                 Prior
 #&gt; -------------------------------------------------------------------------------------------------------------------
 #&gt; (Intercept)                    |   4.14 | [ 3.51,  4.64] |   100% |        0% | 1.013 | 283 | Normal (5.84 +- 2.07)
 #&gt; Petal.Length                   |   0.60 | [ 0.22,  0.97] | 99.40% |     1.30% | 1.012 | 289 | Normal (0.00 +- 1.17)

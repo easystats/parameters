@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Parameters from BayesFactor objects — model_parameters.BFBayesFactor" />
-<meta property="og:description" content="Parameters of BayesFactor objects." />
+<meta property="og:description" content="Parameters from BayesFactor objects." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/parameters/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -165,12 +165,12 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from BayesFactor objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.BFBayesFactor.R'><code>R/model_parameters.BFBayesFactor.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/methods_BayesFactor.R'><code>R/methods_BayesFactor.R</code></a></small>
     <div class="hidden name"><code>model_parameters.BFBayesFactor.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Parameters of BayesFactor objects.</p>
+    <p>Parameters from BayesFactor objects.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for BFBayesFactor</span>
@@ -255,33 +255,26 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     <p>A data frame of indices related to the model's parameters.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The meaning of the extracted parameters: For
-<code><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></code>: <code>Difference</code> is the raw difference
-between the means. For <code><a href='https://rdrr.io/pkg/BayesFactor/man/correlationBF.html'>correlationBF</a></code>: <code>rho</code>
-is the linear correlation estimate (equivalent to Pearson's <em>r</em>).
-<code><a href='https://rdrr.io/pkg/BayesFactor/man/lmBF.html'>lmBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/generalTestBF.html'>generalTestBF</a></code> /
-For <code><a href='https://rdrr.io/pkg/BayesFactor/man/regressionBF.html'>regressionBF</a></code> /
-<code><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></code>: in addition to parameters of the fixed
-and random effects, there are: <code>mu</code> is the (mean-centered) intercept;
-<code>sig2</code> is the model's sigma; <code>g</code> / <code>g_*</code> are the <em>g</em>
-parameters; See the
-<a href='https://doi.org/10.1016/j.jmp.2012.08.001'><em>Bayes Factors for
-ANOVAs</em> paper</a>.</p>
+    <p>The meaning of the extracted parameters:</p><ul>
+<li><p>For <code><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></code>: <code>Difference</code> is the raw difference between the means.</p></li>
+<li><p>For <code><a href='https://rdrr.io/pkg/BayesFactor/man/correlationBF.html'>correlationBF</a></code>: <code>rho</code> is the linear correlation estimate (equivalent to Pearson's <em>r</em>).</p></li>
+<li><p>For <code><a href='https://rdrr.io/pkg/BayesFactor/man/lmBF.html'>lmBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/generalTestBF.html'>generalTestBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/regressionBF.html'>regressionBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></code>: in addition to parameters of the fixed and random effects, there are: <code>mu</code> is the (mean-centered) intercept; <code>sig2</code> is the model's sigma; <code>g</code> / <code>g_*</code> are the <em>g</em> parameters; See the <a href='https://doi.org/10.1016/j.jmp.2012.08.001'><em>Bayes Factors for ANOVAs</em> paper</a>.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://richarddmorey.github.io/BayesFactor/'>"BayesFactor"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='op'>}</span>
+<span class='op'>}</span><span class='co'># }</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: BayesFactor</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: coda</span></div><div class='output co'>#&gt; <span class='message'>************</span>
 #&gt; <span class='message'>Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>Type BFManual() to open the manual.</span>
 #&gt; <span class='message'>************</span></div><div class='output co'>#&gt; Parameter  | Median |         89% CI |   pd | % in ROPE |              Prior |     BF
 #&gt; -------------------------------------------------------------------------------------
-#&gt; Difference |  -0.95 | [-1.11, -0.79] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 1000</div><div class='input'><span class='co'># }</span>
-</div></pre>
+#&gt; Difference |  -0.95 | [-1.11, -0.79] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 1000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

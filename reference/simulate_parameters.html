@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simulate Model Parameters — simulate_parameters • parameters</title>
+<title>Simulate Model Parameters — simulate_parameters.glmmTMB • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Simulate Model Parameters — simulate_parameters" />
+<meta property="og:title" content="Simulate Model Parameters — simulate_parameters.glmmTMB" />
 <meta property="og:description" content="Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping." />
 <meta property="og:image" content="/logo.png" />
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/parameters/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Simulate Model Parameters</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/simulate_parameters.R'><code>R/simulate_parameters.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/methods_glmmTMB.R'><code>R/methods_glmmTMB.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/simulate_parameters.R'><code>R/simulate_parameters.R</code></a></small>
     <div class="hidden name"><code>simulate_parameters.Rd</code></div>
     </div>
 
@@ -173,9 +173,7 @@
     <p>Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for default</span>
+    <pre class="usage"><span class='co'># S3 method for glmmTMB</span>
 <span class='fu'>simulate_parameters</span><span class='op'>(</span>
   <span class='va'>model</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
@@ -186,7 +184,9 @@
   <span class='va'>...</span>
 <span class='op'>)</span>
 
-<span class='co'># S3 method for glmmTMB</span>
+<span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for default</span>
 <span class='fu'>simulate_parameters</span><span class='op'>(</span>
   <span class='va'>model</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
@@ -203,10 +203,6 @@
     <tr>
       <th>model</th>
       <td><p>Statistical model (no Bayesian models).</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     <tr>
       <th>iterations</th>
@@ -237,6 +233,10 @@ list with one or more of these options: <code>"p_direction"</code> (or <code>"pd
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
 (e.g. <code><a href='https://easystats.github.io/bayestestR/reference/rope.html'>rope</a></code> or <code><a href='https://easystats.github.io/bayestestR/reference/p_direction.html'>p_direction</a></code>) and its results
 included in the summary output.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
 

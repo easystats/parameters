@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/parameters/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from hypothesis tests</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.htest.R'><code>R/model_parameters.htest.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.pairwise.htest.R'><code>R/model_parameters.pairwise.htest.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/methods_htest.R'><code>R/methods_htest.R</code></a></small>
     <div class="hidden name"><code>model_parameters.htest.Rd</code></div>
     </div>
 
@@ -179,6 +179,9 @@
   cramers_v <span class='op'>=</span> <span class='cn'>NULL</span>,
   phi <span class='op'>=</span> <span class='cn'>NULL</span>,
   standardized_d <span class='op'>=</span> <span class='cn'>NULL</span>,
+  omega_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
+  eta_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
+  epsilon_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -209,9 +212,15 @@ effect size. Only applies to objects from <code><a href='https://rdrr.io/r/stats
 for details.</p></td>
     </tr>
     <tr>
+      <th>omega_squared, eta_squared, epsilon_squared</th>
+      <td><p>Logical, if <code>TRUE</code>,
+returns the non-partial effect size Omega, Eta or Epsilon squared. Only
+applies to objects from <code><a href='https://rdrr.io/r/stats/oneway.test.html'>oneway.test()</a></code>.</p></td>
+    </tr>
+    <tr>
       <th>ci</th>
-      <td><p>Level of confidence intervals for Cramer's V or phi. Currently only
-applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code>.</p></td>
+      <td><p>Level of confidence intervals for effect size statistic. Currently
+only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code> or <code><a href='https://rdrr.io/r/stats/oneway.test.html'>oneway.test()</a></code>.</p></td>
     </tr>
     <tr>
       <th>bootstrap</th>
@@ -234,24 +243,32 @@ applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.html'>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>mpg</span>, <span class='va'>mtcars</span><span class='op'>$</span><span class='va'>cyl</span>, method <span class='op'>=</span> <span class='st'>"pearson"</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Parameter1 | Parameter2 |     r | t(30) |      p |         95% CI |  Method
-#&gt; ---------------------------------------------------------------------------
-#&gt; mtcars$mpg | mtcars$cyl | -0.85 | -8.92 | &lt; .001 | [-0.93, -0.72] | Pearson</div><div class='input'>
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Pearson
+#&gt; 
+#&gt; </span><span>Parameter1 | Parameter2 |     r | t(30) |      p |         95% CI
+#&gt; -----------------------------------------------------------------
+#&gt; mtcars$mpg | mtcars$cyl | -0.85 | -8.92 | &lt; .001 | [-0.93, -0.72]</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span>, <span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference | t(225.68) |      p |         95% CI |                  Method
-#&gt; -----------------------------------------------------------------------------------------------------------------------------------------------------
-#&gt; iris$Sepal.Width | iris$Sepal.Length |            3.06 |            5.84 |      -2.79 |    -36.46 | &lt; .001 | [-2.94, -2.64] | Welch Two Sample t-test</div><div class='input'>
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Welch Two Sample t-test
+#&gt; 
+#&gt; </span><span>Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference | t(225.68) |      p |         95% CI
+#&gt; ---------------------------------------------------------------------------------------------------------------------------
+#&gt; iris$Sepal.Width | iris$Sepal.Length |            3.06 |            5.84 |      -2.79 |    -36.46 | &lt; .001 | [-2.94, -2.64]</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>mtcars</span><span class='op'>$</span><span class='va'>vs</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Parameter  |     Group | Mean_Group1 | Mean_Group2 | Difference | t(22.72) |      p |          95% CI |                  Method
-#&gt; -------------------------------------------------------------------------------------------------------------------------------
-#&gt; mtcars$mpg | mtcars$vs |       16.62 |       24.56 |       7.94 |    -4.67 | &lt; .001 | [-11.46, -4.42] | Welch Two Sample t-test</div><div class='input'>
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Welch Two Sample t-test
+#&gt; 
+#&gt; </span><span>Parameter  |     Group | Mean_Group1 | Mean_Group2 | Difference | t(22.72) |      p |          95% CI
+#&gt; -----------------------------------------------------------------------------------------------------
+#&gt; mtcars$mpg | mtcars$vs |       16.62 |       24.56 |       7.94 |    -4.67 | &lt; .001 | [-11.46, -4.42]</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span>, mu <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Parameter        | Mean |   mu | Difference | t(149) |      p |       95% CI |            Method
-#&gt; ------------------------------------------------------------------------------------------------
-#&gt; iris$Sepal.Width | 3.06 | 1.00 |       2.06 |  57.81 | &lt; .001 | [2.99, 3.13] | One Sample t-test</div><div class='input'>
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># One Sample t-test
+#&gt; 
+#&gt; </span><span>Parameter        | Mean |   mu | Difference | t(149) |      p |       95% CI
+#&gt; ----------------------------------------------------------------------------
+#&gt; iris$Sepal.Width | 3.06 | 1.00 |       2.06 |  57.81 | &lt; .001 | [2.99, 3.13]</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>)</span>
 <span class='va'>airquality</span><span class='op'>$</span><span class='va'>Month</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>$</span><span class='va'>Month</span>, labels <span class='op'>=</span> <span class='va'>month.abb</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>)</span>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/pairwise.t.test.html'>pairwise.t.test</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>$</span><span class='va'>Ozone</span>, <span class='va'>airquality</span><span class='op'>$</span><span class='va'>Month</span><span class='op'>)</span>
@@ -268,7 +285,7 @@ applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.html'>
 #&gt; Sep    |    Jun | &gt; .999
 #&gt; Sep    |    Jul | 0.005 
 #&gt; Sep    |    Aug | 0.004 
-#&gt; <span style='color: #0000BB;'>
+#&gt; </span><span style='color: #0000BB;'>
 #&gt; p-value adjustment method: Holm (1979)</span><span></div><div class='input'>
 <span class='va'>smokers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>83</span>, <span class='fl'>90</span>, <span class='fl'>129</span>, <span class='fl'>70</span><span class='op'>)</span>
 <span class='va'>patients</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>86</span>, <span class='fl'>93</span>, <span class='fl'>136</span>, <span class='fl'>82</span><span class='op'>)</span>

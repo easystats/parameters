@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters from (General) Linear Models — model_parameters.logitor • parameters</title>
+<title>Parameters from (General) Linear Models — model_parameters.default • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Parameters from (General) Linear Models — model_parameters.logitor" />
+<meta property="og:title" content="Parameters from (General) Linear Models — model_parameters.default" />
 <meta property="og:description" content="Extract and compute indices and measures to describe parameters of (general) linear models (GLMs)." />
 <meta property="og:image" content="/logo.png" />
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/parameters/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from (General) Linear Models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.mfx.R'><code>R/model_parameters.mfx.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters_default.R'><code>R/model_parameters_default.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/1_model_parameters.R'><code>R/1_model_parameters.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_mfx.R'><code>R/methods_mfx.R</code></a></small>
     <div class="hidden name"><code>model_parameters.default.Rd</code></div>
     </div>
 
@@ -173,7 +173,36 @@
     <p>Extract and compute indices and measures to describe parameters of (general) linear models (GLMs).</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for logitor</span>
+    <pre class="usage"><span class='co'># S3 method for default</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
+  standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
+  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for glm</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  df_method <span class='op'>=</span> <span class='st'>"profile"</span>,
+  bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
+  standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
+  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for logitor</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
   <span class='va'>model</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
@@ -215,35 +244,6 @@
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for default</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
-  standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
-  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for glm</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  df_method <span class='op'>=</span> <span class='st'>"profile"</span>,
-  bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
-  standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
-  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -259,7 +259,7 @@
     </tr>
     <tr>
       <th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
+      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.data.frame.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
     </tr>
     <tr>
       <th>iterations</th>
@@ -290,12 +290,12 @@
       <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
     <tr>
-      <th>component</th>
-      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>), <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for <code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
-    </tr>
-    <tr>
       <th>df_method</th>
       <td><p>Method for computing degrees of freedom for confidence intervals (CI). Only applies to models of class <code>glm</code> or <code>polr</code>. May be <code>"profile"</code> or <code>"wald"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>), <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for <code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
     </tr>
     </table>
 
@@ -321,9 +321,9 @@
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, bootstrap <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------
-#&gt; (Intercept) |       39.90 | [35.37, 44.06] | &lt; .001
-#&gt; wt          |       -3.20 | [-4.84, -1.95] | &lt; .001
-#&gt; cyl         |       -1.49 | [-2.24, -0.74] | 0.002 </div><div class='input'>
+#&gt; (Intercept) |       39.90 | [35.22, 44.13] | &lt; .001
+#&gt; wt          |       -3.23 | [-4.87, -1.89] | &lt; .001
+#&gt; cyl         |       -1.49 | [-2.25, -0.75] | 0.002 </div><div class='input'>
 <span class='co'># standardized parameters</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='st'>"refit"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |    t(29) |      p

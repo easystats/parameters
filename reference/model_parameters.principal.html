@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/parameters/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Structural Models (PCA, EFA, ...)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.FactoMineR.R'><code>R/model_parameters.FactoMineR.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters.psych.R'><code>R/model_parameters.psych.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/methods_FactorMineR.R'><code>R/methods_FactorMineR.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_psych.R'><code>R/methods_psych.R</code></a></small>
     <div class="hidden name"><code>model_parameters.principal.Rd</code></div>
     </div>
 
@@ -287,7 +287,7 @@
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>FactoMineR</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/FactoMineR/man/FAMD.html'>FAMD</a></span><span class='op'>(</span><span class='va'>iris</span>, ncp <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span><span class='co'># }</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: FactoMineR</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: FactoMineR</span></div><div class='output co'>#&gt; <span class='warning'>Warning: ggrepel: 93 unlabeled data points (too many overlaps). Consider increasing max.overlaps</span></div><div class='output co'>#&gt; <span class='warning'>Warning: ggrepel: 93 unlabeled data points (too many overlaps). Consider increasing max.overlaps</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)</span><span>
 #&gt; 
 #&gt; Variable     | Dim.1 |    Dim.2 | Complexity
 #&gt; --------------------------------------------

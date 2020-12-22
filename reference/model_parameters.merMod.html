@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters from Mixed Models — model_parameters.merMod • parameters</title>
+<title>Parameters from Mixed Models — model_parameters.cpglmm • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Parameters from Mixed Models — model_parameters.merMod" />
+<meta property="og:title" content="Parameters from Mixed Models — model_parameters.cpglmm" />
 <meta property="og:description" content="Parameters from (linear) mixed models." />
 <meta property="og:image" content="/logo.png" />
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/parameters/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Mixed Models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/model_parameters_mixed.R'><code>R/model_parameters_mixed.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/methods_cplm.R'><code>R/methods_cplm.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_glmmTMB.R'><code>R/methods_glmmTMB.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_lme4.R'><code>R/methods_lme4.R</code></a>, and 2 more</small>
     <div class="hidden name"><code>model_parameters.merMod.Rd</code></div>
     </div>
 
@@ -173,19 +173,16 @@
     <p>Parameters from (linear) mixed models.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for merMod</span>
+    <pre class="usage"><span class='co'># S3 method for cpglmm</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
   <span class='va'>model</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  df_method <span class='op'>=</span> <span class='st'>"wald"</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
-  wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -200,6 +197,23 @@
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  details <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
+  wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for merMod</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  df_method <span class='op'>=</span> <span class='st'>"wald"</span>,
+  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
+  standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
+  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -248,15 +262,11 @@
     </tr>
     <tr>
       <th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>df_method</th>
-      <td><p>Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be <code>"wald"</code> (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see <code><a href='ci_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see <code><a href='ci_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see <code><a href='ci_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see <code><a href='ci_kenward.html'>dof_kenward</a></code>). Note that when <code>df_method</code> is not <code>"wald"</code>, robust standard errors etc. cannot be computed.</p></td>
+      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.data.frame.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
     </tr>
     <tr>
       <th>iterations</th>
-      <td><p>The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.</p></td>
+      <td><p>The number of draws to simulate/bootstrap.</p></td>
     </tr>
     <tr>
       <th>standardize</th>
@@ -267,12 +277,27 @@
       <td><p>Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. <strong>Note:</strong> standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.</p></td>
     </tr>
     <tr>
-      <th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
-    </tr>
-    <tr>
       <th>details</th>
       <td><p>Logical, if <code>TRUE</code>, a summary of the random effects is included. See <code><a href='random_parameters.html'>random_parameters</a></code> for details.</p></td>
+    </tr>
+    <tr>
+      <th>df_method</th>
+      <td><p>Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be <code>"wald"</code> (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see <code><a href='ci_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see <code><a href='ci_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see <code><a href='ci_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see <code><a href='ci_kenward.html'>dof_kenward</a></code>). Note that when <code>df_method</code> is not <code>"wald"</code>, robust standard errors etc. cannot be computed.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
+<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>p_adjust</th>
@@ -283,16 +308,8 @@
       <td><p>Logical, if <code>TRUE</code> and models contains within- and between-effects (see <code><a href='check_heterogeneity.html'>demean</a></code>), the <code>Component</code> column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the <code>Component</code> column indicates, which parameters belong to the conditional or zero-inflated component of the model.</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>component</th>
-      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>), <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for <code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
+      <th>robust</th>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>effects</th>

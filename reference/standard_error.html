@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/parameters/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Standard Errors</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/standard_error.R'><code>R/standard_error.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/4_standard_error.R'><code>R/4_standard_error.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_DirichletReg.R'><code>R/methods_DirichletReg.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_averaging.R'><code>R/methods_averaging.R</code></a>, and 10 more</small>
     <div class="hidden name"><code>standard_error.Rd</code></div>
     </div>
 
@@ -175,14 +175,20 @@
 
     <pre class="usage"><span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for factor</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
-
 <span class='co'># S3 method for default</span>
 <span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for merMod</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='co'># S3 method for DirichletRegModel</span>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for averaging</span>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"full"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for factor</span>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for betareg</span>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for glmmTMB</span>
 <span class='fu'>standard_error</span><span class='op'>(</span>
@@ -190,6 +196,19 @@
   effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span><span class='op'>)</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for merMod</span>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for poissonmfx</span>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for betamfx</span>
+<span class='fu'>standard_error</span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -202,6 +221,12 @@
   <span class='va'>...</span>
 <span class='op'>)</span>
 
+<span class='co'># S3 method for mixor</span>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for clm2</span>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
 <span class='co'># S3 method for zeroinfl</span>
 <span class='fu'>standard_error</span><span class='op'>(</span>
   <span class='va'>model</span>,
@@ -212,32 +237,7 @@
 <span class='op'>)</span>
 
 <span class='co'># S3 method for coxph</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for mixor</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for clm2</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for betareg</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for DirichletRegModel</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for poissonmfx</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for betamfx</span>
-<span class='fu'>standard_error</span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for averaging</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"full"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -253,18 +253,6 @@ if <code>method = "robust"</code>, arguments <code>vcov_estimation</code>, <code
 and <code>vcov_args</code> can be passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>force</th>
-      <td><p>Logical, if <code>TRUE</code>, factors are converted to numerical
-values to calculate the standard error, with the lowest level being the
-value <code>1</code> (unless the factor has numeric levels, which are converted
-to the corresponding numeric value). By default, <code>NA</code> is returned
-for factors or character vectors.</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr>
-    <tr>
       <th>method</th>
       <td><p>If <code>"robust"</code>, robust standard errors are computed
 by calling <code><a href='standard_error_robust.html'>standard_error_robust()</a></code>.
@@ -275,12 +263,8 @@ of <code>"wald"</code>, <code><a href='ci_ml1.html'>"ml1"</a></code>, <code><a h
 <code><a href='ci_satterthwaite.html'>"satterthwaite"</a></code> or <code><a href='ci_kenward.html'>"kenward"</a></code>.</p></td>
     </tr>
     <tr>
-      <th>effects</th>
-      <td><p>Should standard errors for fixed effects or random effects
-be returned? Only applies to mixed models. May be abbreviated. When
-standard errors for random effects are requested, for each grouping factor
-a list of standard errors (per group level) for random intercepts and slopes
-is returned.</p></td>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
     </tr>
     <tr>
       <th>component</th>
@@ -288,6 +272,22 @@ is returned.</p></td>
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>force</th>
+      <td><p>Logical, if <code>TRUE</code>, factors are converted to numerical
+values to calculate the standard error, with the lowest level being the
+value <code>1</code> (unless the factor has numeric levels, which are converted
+to the corresponding numeric value). By default, <code>NA</code> is returned
+for factors or character vectors.</p></td>
+    </tr>
+    <tr>
+      <th>effects</th>
+      <td><p>Should standard errors for fixed effects or random effects
+be returned? Only applies to mixed models. May be abbreviated. When
+standard errors for random effects are requested, for each grouping factor
+a list of standard errors (per group level) for random intercepts and slopes
+is returned.</p></td>
     </tr>
     </table>
 

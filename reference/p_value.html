@@ -87,7 +87,7 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1.1</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -154,7 +154,7 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/parameters/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -172,15 +172,15 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>p-values</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/p_value.R'><code>R/p_value.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/3_p_value.R'><code>R/3_p_value.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_emmeans.R'><code>R/methods_emmeans.R</code></a></small>
     <div class="hidden name"><code>p_value.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This function attempts to return, or compute, p-values of a model's parameters. See the documentation for your object's class:</p><ul>
-<li><p><a href='p_value.lmerMod.html'>Mixed models</a> (<span class="pkg">lme4</span>, <span class="pkg">nlme</span>, <span class="pkg">glmmTMB</span>, ...)</p></li>
-<li><p><a href='p_value.brmsfit.html'>Bayesian models</a> (<span class="pkg">rstanarm</span>, <span class="pkg">brms</span>, <span class="pkg">MCMCglmm</span>, ...)</p></li>
-<li><p><a href='p_value.zeroinfl.html'>Zero-inflated models</a> (<code>hurdle</code>, <code>zeroinfl</code>, <code>zerocount</code>, ...)</p></li>
+<li><p><a href='p_value.cpglmm.html'>Mixed models</a> (<span class="pkg">lme4</span>, <span class="pkg">nlme</span>, <span class="pkg">glmmTMB</span>, ...)</p></li>
+<li><p><a href='p_value.BFBayesFactor.html'>Bayesian models</a> (<span class="pkg">rstanarm</span>, <span class="pkg">brms</span>, <span class="pkg">MCMCglmm</span>, ...)</p></li>
+<li><p><a href='p_value.zcpglm.html'>Zero-inflated models</a> (<code>hurdle</code>, <code>zeroinfl</code>, <code>zerocount</code>, ...)</p></li>
 <li><p><a href='p_value.poissonmfx.html'>Marginal effects models</a> (<span class="pkg">mfx</span>)</p></li>
 <li><p><a href='p_value.DirichletRegModel.html'>Models with special components</a> (<code>DirichletRegModel</code>, <code>clm2</code>, <code>cgam</code>, ...)</p></li>
 </ul>
@@ -193,10 +193,7 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
 <span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, adjust <span class='op'>=</span> <span class='st'>"none"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for gee</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, adjust <span class='op'>=</span> <span class='st'>"none"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

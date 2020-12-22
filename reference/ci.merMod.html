@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Confidence Intervals (CI) — ci.merMod • parameters</title>
+<title>Confidence Intervals (CI) — ci.default • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Confidence Intervals (CI) — ci.merMod" />
+<meta property="og:title" content="Confidence Intervals (CI) — ci.default" />
 <meta property="og:description" content="Compute confidence intervals (CI) for frequentist models." />
 <meta property="og:image" content="/logo.png" />
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.1.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/parameters/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Confidence Intervals (CI)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/ci.R'><code>R/ci.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/2_ci.R'><code>R/2_ci.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_DirichletReg.R'><code>R/methods_DirichletReg.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_betareg.R'><code>R/methods_betareg.R</code></a>, and 10 more</small>
     <div class="hidden name"><code>ci.merMod.Rd</code></div>
     </div>
 
@@ -173,37 +173,17 @@
     <p>Compute confidence intervals (CI) for frequentist models.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for merMod</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"satterthwaite"</span>, <span class='st'>"kenward"</span>, <span class='st'>"boot"</span><span class='op'>)</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for default</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='co'># S3 method for default</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, dof <span class='op'>=</span> <span class='cn'>Inf</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for glm</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"profile"</span>, <span class='st'>"wald"</span>, <span class='st'>"robust"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for polr</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"profile"</span>, <span class='st'>"wald"</span>, <span class='st'>"robust"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for mixor</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
 <span class='co'># S3 method for DirichletRegModel</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for HLfit</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"profile"</span>, <span class='st'>"boot"</span><span class='op'>)</span>,
-  iterations <span class='op'>=</span> <span class='fl'>100</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
+<span class='co'># S3 method for betareg</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for glmmTMB</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
@@ -214,6 +194,53 @@
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
+
+<span class='co'># S3 method for merMod</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"satterthwaite"</span>, <span class='st'>"kenward"</span>, <span class='st'>"boot"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for polr</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"profile"</span>, <span class='st'>"wald"</span>, <span class='st'>"robust"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for poissonmfx</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>,
+  method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for betamfx</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>,
+  method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for MixMod</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span><span class='op'>)</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for mixor</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for lme</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"ml1"</span>, <span class='st'>"satterthwaite"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for clm2</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for zeroinfl</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
@@ -235,41 +262,14 @@
   <span class='va'>...</span>
 <span class='op'>)</span>
 
-<span class='co'># S3 method for MixMod</span>
+<span class='co'># S3 method for HLfit</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
   <span class='va'>x</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span><span class='op'>)</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"ml1"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"profile"</span>, <span class='st'>"boot"</span><span class='op'>)</span>,
+  iterations <span class='op'>=</span> <span class='fl'>100</span>,
   <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for poissonmfx</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>,
-  method <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for betamfx</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span>, <span class='st'>"marginal"</span><span class='op'>)</span>,
-  method <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for betareg</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"precision"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for clm2</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for lme</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"ml1"</span>, <span class='st'>"satterthwaite"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -283,12 +283,27 @@
       <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
     </tr>
     <tr>
+      <th>dof</th>
+      <td><p>Degrees of Freedom. If not specified, for <code><a href='ci_wald.html'>ci_wald()</a></code>, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters). For <code><a href='ci_wald.html'>p_value_wald()</a></code>, defaults to <code>Inf</code>.</p></td>
+    </tr>
+    <tr>
       <th>method</th>
       <td><p>For mixed models, can be <code><a href='ci_wald.html'>"wald"</a></code> (default), <code><a href='ci_ml1.html'>"ml1"</a></code> or <code><a href='ci_betwithin.html'>"betwithin"</a></code>. For linear mixed model, can also be <code><a href='ci_satterthwaite.html'>"satterthwaite"</a></code>, <code><a href='ci_kenward.html'>"kenward"</a></code> or <code>"boot"</code> and <code><a href='https://rdrr.io/pkg/lme4/man/confint.merMod.html'>lme4::confint.merMod</a></code>). For (generalized) linear models, can be <code>"robust"</code> to compute confidence intervals based on robust covariance matrix estimation, and for generalized linear models, may also be <code>"profile"</code> (default) or <code>"wald"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
+<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -299,19 +314,8 @@ a list of standard errors (per group level) for random intercepts and slopes
 is returned.</p></td>
     </tr>
     <tr>
-      <th>component</th>
-      <td><p>Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
-<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
-    </tr>
-    <tr>
       <th>iterations</th>
       <td><p>The number of draws to simulate/bootstrap.</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
     </tr>
     </table>
 
