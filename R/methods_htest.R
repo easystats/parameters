@@ -1,14 +1,3 @@
-#' @export
-standard_error.htest <- function(model, ...) {
-}
-
-
-#' @export
-p_value.htest <- function(model, ...) {
-  model$p.value
-}
-
-
 #' Parameters from hypothesis tests
 #'
 #' Parameters of h-tests (correlations, t-tests, chi-squared, ...).
@@ -22,8 +11,10 @@ p_value.htest <- function(model, ...) {
 #'   effect size. Only applies to objects from \code{t.test()}. Calculation of
 #'   \code{d} is based on the t-value (see \code{\link[effectsize]{t_to_d}})
 #'   for details.
-#' @param ci Level of confidence intervals for Cramer's V or phi. Currently only
-#'   applies to objects from \code{chisq.test()}.
+#' @param omega_squared Compute Omega squared as index of effect size.
+#'   Only applies to objects from \code{oneway.test()}.
+#' @param ci Level of confidence intervals for effect size statistic. Currently only
+#'   applies to objects from \code{chisq.test()} or \code{oneway.test()}.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -55,6 +46,7 @@ model_parameters.htest <- function(model,
                                    cramers_v = NULL,
                                    phi = NULL,
                                    standardized_d = NULL,
+                                   omega_squared = NULL,
                                    ci = .95,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
@@ -67,7 +59,9 @@ model_parameters.htest <- function(model,
       cramers_v = cramers_v,
       phi = phi,
       standardized_d = standardized_d,
-      ci = ci
+      omega_squared = omega_squared,
+      ci = ci,
+      ...
     )
   }
 
@@ -81,6 +75,15 @@ model_parameters.htest <- function(model,
 }
 
 
+#' @export
+standard_error.htest <- function(model, ...) {
+}
+
+
+#' @export
+p_value.htest <- function(model, ...) {
+  model$p.value
+}
 
 
 
@@ -93,7 +96,9 @@ model_parameters.htest <- function(model,
                                       cramers_v = NULL,
                                       phi = NULL,
                                       standardized_d = NULL,
-                                      ci = 0.95) {
+                                      omega_squared = NULL,
+                                      ci = 0.95,
+                                      ...) {
   m_info <- insight::model_info(model)
 
   if (m_info$is_correlation) {
@@ -103,6 +108,7 @@ model_parameters.htest <- function(model,
     out <- .add_effectsize_ttest(model, out, standardized_d, ci = ci)
   } else if (m_info$is_onewaytest) {
     out <- .extract_htest_oneway(model)
+    out <- .add_effectsize_oneway(model, out, omega_squared, ci = ci)
   } else if (m_info$is_chi2test) {
     out <- .extract_htest_chi2(model)
     if (!grepl("^McNemar", model$method)) {
@@ -122,7 +128,9 @@ model_parameters.htest <- function(model,
 
 
 
+
 # extract htest correlation ----------------------
+
 
 .extract_htest_correlation <- function(model) {
   names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
@@ -163,7 +171,9 @@ model_parameters.htest <- function(model,
 
 
 
+
 # extract htest ttest ----------------------
+
 
 .extract_htest_ttest <- function(model, standardized_d = NULL) {
   if (grepl(" and ", model$data.name)) {
@@ -234,7 +244,9 @@ model_parameters.htest <- function(model,
 
 
 
+
 # extract htest oneway ----------------------
+
 
 .extract_htest_oneway <- function(model) {
   data.frame(
@@ -249,7 +261,9 @@ model_parameters.htest <- function(model,
 
 
 
+
 # extract htest chi2 ----------------------
+
 
 .extract_htest_chi2 <- function(model) {
   data.frame(
@@ -263,7 +277,9 @@ model_parameters.htest <- function(model,
 
 
 
+
 # extract htest prop ----------------------
+
 
 #' @importFrom insight format_value
 .extract_htest_prop <- function(model) {
@@ -291,7 +307,9 @@ model_parameters.htest <- function(model,
 
 
 
+
 # extract htest binom ----------------------
+
 
 .extract_htest_binom <- function(model) {
   out <- data.frame(
@@ -313,6 +331,7 @@ model_parameters.htest <- function(model,
 
 
 # ==== effectsizes =====
+
 
 .add_effectsize_chi2 <- function(model,
                                  out,
@@ -382,6 +401,31 @@ model_parameters.htest <- function(model,
   out
 }
 
+
+
+
+.add_effectsize_oneway <- function(model,
+                                   out,
+                                   omega_squared = NULL,
+                                   ci = .95) {
+  if (is.null(omega_squared)) {
+    return(out)
+  }
+
+  if (requireNamespace("effectsize", quietly = TRUE)) {
+    # omega_squared
+    es <- effectsize::effectsize(model, ci = ci, type = "omega", partial = TRUE)
+    es$CI <- NULL
+    ci_cols <- grepl("^CI", names(es))
+    names(es)[ci_cols] <- paste0("Omega2_", names(es)[ci_cols])
+    out <- cbind(out, es)
+  }
+
+  # reorder
+  col_order <- c("F", "df", "df_error", "Omega2", "Omega2_CI_low", "Omega2_CI_high", "p", "Method", "method")
+  out <- out[col_order[col_order %in% names(out)]]
+  out
+}
 
 
 

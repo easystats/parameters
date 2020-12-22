@@ -26,11 +26,13 @@ options(digits = 2)
 knitr::opts_chunk$set(comment = "#>", tidy.opts = list(width.cutoff = 100))
 
 if (!requireNamespace("broom", quietly = TRUE) ||
+    !requireNamespace("gt", quietly = TRUE) ||
     !requireNamespace("magrittr", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
   library(broom)
+  library(gt)
   library(magrittr)
   library(insight)
 }

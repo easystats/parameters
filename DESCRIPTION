@@ -90,6 +90,7 @@ Suggests:
     GLMMadaptive,
     glmmTMB,
     GPArotation,
+    gt,
     lavaan,
     lavaSearch2,
     lme4,
