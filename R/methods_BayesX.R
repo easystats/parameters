@@ -1,0 +1,22 @@
+#' @export
+standard_error.bayesx <- function(model, ...) {
+  .data_frame(
+    Parameter = find_parameters(model, component = "conditional", flatten = TRUE),
+    SE = model$fixed.effects[, 2]
+  )
+}
+
+
+#' @export
+ci.bayesx <- function(x, ci = .95, ...) {
+  ci_wald(model = x, ci = ci, dof = Inf, robust = FALSE, component = "conditional")
+}
+
+
+#' @export
+p_value.bayesx <- function(model, ...) {
+  .data_frame(
+    Parameter = find_parameters(model, component = "conditional", flatten = TRUE),
+    p = model$fixed.effects[, 4]
+  )
+}

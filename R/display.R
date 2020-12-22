@@ -43,11 +43,12 @@ display.parameters_model <- function(object,
                                      digits = 2,
                                      ci_digits = 2,
                                      p_digits = 3,
+                                     ci_brackets = c("(", ")"),
                                      ...) {
   if (identical(format, "html")) {
-    print_html(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, caption = caption, subtitle = subtitle, footer = footer, ci_digits = ci_digits, p_digits = p_digits, align = align, ...)
+    print_html(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, caption = caption, subtitle = subtitle, footer = footer, ci_digits = ci_digits, p_digits = p_digits, align = align, ci_brackets = ci_brackets, ...)
   } else {
-    print_md(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, caption = caption, subtitle = subtitle, footer = footer, ci_digits = ci_digits, p_digits = p_digits, ...)
+    print_md(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, caption = caption, subtitle = subtitle, footer = footer, ci_digits = ci_digits, p_digits = p_digits, ci_brackets = ci_brackets, ...)
   }
 }
 
@@ -77,8 +78,14 @@ display.parameters_stan <- function(object, split_components = TRUE, select = NU
 
 #' @rdname display.parameters_model
 #' @export
-display.parameters_sem <- function(object, format = "markdown", digits = 2, ci_digits = 2, p_digits = 3, ...) {
-  print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ...)
+display.parameters_sem <- function(object,
+                                   format = "markdown",
+                                   digits = 2,
+                                   ci_digits = 2,
+                                   p_digits = 3,
+                                   ci_brackets = c("(", ")"),
+                                   ...) {
+    print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_brackets = ci_brackets, ...)
 }
 
 

@@ -6,7 +6,7 @@ if (require("testthat") && require("parameters") && require("bbmle")) {
   LL <- function(ymax = 15, xhalf = 6) {
     -sum(stats::dpois(y, lambda = ymax / (1 + x / xhalf), log = TRUE))
   }
-  model <- mle2(LL)
+  model <- suppressWarnings(mle2(LL))
 
   test_that("model_parameters.mle2", {
     params <- model_parameters(model)

@@ -45,10 +45,12 @@ format.parameters_brms_meta <- format.parameters_model
 
 # stan models ----------------------------
 
+#' @importFrom utils modifyList
 #' @importFrom insight print_parameters parameters_table
 #' @export
 format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
   cp <- attributes(x)$parameter_info
+  att <- attributes(x)
   final_table <- list()
 
   # round ESS
@@ -72,8 +74,10 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
       if (identical(format, "markdown")) {
         attr(i, "table_caption") <- attributes(i)$main_title
       }
+      attributes(i) <- utils::modifyList(att, attributes(i))
       param_table <- insight::parameters_table(i, ci_width = ci_width, ci_brackets = ci_brackets, preserve_attributes = TRUE)
       param_table$Group <- NULL
+      param_table$Response <- NULL
       param_table
     })
   }
@@ -127,6 +131,15 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     }
   }
 
+  if ("Trimmed_Mean" %in% colnames(x)) {
+    threshold <- attributes(x)$threshold
+    if (is.null(threshold)) {
+      trim_name <- "Trimmed"
+    } else {
+      trim_name <- sprintf("Trimmed (%g%%)", round(100 * threshold))
+    }
+    colnames(x)[which(colnames(x) == "Trimmed_Mean")] <- trim_name
+  }
 
   if (".group" %in% colnames(x)) {
     final_table <- list()

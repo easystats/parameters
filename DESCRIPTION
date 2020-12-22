@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.10.1
+Version: 0.10.1.1
 Authors@R: 
   c(
     person("Daniel", 
@@ -31,7 +31,12 @@ Authors@R:
     person(given = "Zen J.",
            family = "Lau",
            role = c("ctb"),
-           email = "zenjuen.lau@ntu.edu.sg")
+           email = "zenjuen.lau@ntu.edu.sg"),
+    person(given = "Vincent",
+           family = "Arel-Bundock",
+           role = c("ctb"),
+           email = "vincent.arel-bundock@umontreal.ca",
+           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@vincentab"))
   )
 Description: Utilities for processing the parameters of various
     statistical models. Beyond computing p values, CIs, and other indices
@@ -133,6 +138,7 @@ Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
+Remotes: easystats/insight, easystats/bayestestR
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/testthat/start-first: watcher, parallel*

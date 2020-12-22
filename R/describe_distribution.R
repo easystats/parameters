@@ -29,7 +29,7 @@ describe_distribution <- function(x, ...) {
 #' @importFrom stats na.omit IQR
 #' @importFrom bayestestR ci
 #' @export
-describe_distribution.numeric <- function(x, centrality = "mean", dispersion = TRUE, iqr = TRUE, range = TRUE, ci = NULL, iterations = 100, ...) {
+describe_distribution.numeric <- function(x, centrality = "mean", dispersion = TRUE, iqr = TRUE, range = TRUE, ci = NULL, iterations = 100, threshold = .1, ...) {
   out <- data.frame(.temp = 0)
 
   # Missing
@@ -40,7 +40,7 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
   # Point estimates
   out <- cbind(
     out,
-    bayestestR::point_estimate(x, centrality = centrality, dispersion = dispersion, ...)
+    bayestestR::point_estimate(x, centrality = centrality, dispersion = dispersion, threshold = threshold, ...)
   )
 
 
@@ -90,6 +90,7 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
   class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
   attr(out, "data") <- x
   attr(out, "ci") <- ci
+  attr(out, "threshold") <- threshold
   if (centrality == "all") attr(out, "first_centrality") <- colnames(out)[1]
   out
 }
@@ -200,10 +201,10 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
 
 #' @rdname describe_distribution
 #' @export
-describe_distribution.data.frame <- function(x, centrality = "mean", dispersion = TRUE, iqr = TRUE, range = TRUE, include_factors = FALSE, ci = NULL, iterations = 100, ...) {
+describe_distribution.data.frame <- function(x, centrality = "mean", dispersion = TRUE, iqr = TRUE, range = TRUE, include_factors = FALSE, ci = NULL, iterations = 100, threshold = .1, ...) {
   out <- do.call(rbind, lapply(x, function(i) {
     if ((include_factors && is.factor(i)) || (!is.character(i) && !is.factor(i))) {
-      describe_distribution(i, centrality = centrality, dispersion = dispersion, iqr = iqr, range = range, ci = ci, iterations = iterations)
+      describe_distribution(i, centrality = centrality, dispersion = dispersion, iqr = iqr, range = range, ci = ci, iterations = iterations, threshold = threshold)
     }
   }))
 
@@ -214,6 +215,7 @@ describe_distribution.data.frame <- function(x, centrality = "mean", dispersion 
   class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   attr(out, "ci") <- ci
+  attr(out, "threshold") <- threshold
   if (centrality == "all") attr(out, "first_centrality") <- colnames(out)[2]
   out
 }
@@ -222,13 +224,13 @@ describe_distribution.data.frame <- function(x, centrality = "mean", dispersion 
 
 
 #' @export
-describe_distribution.grouped_df <- function(x, centrality = "mean", dispersion = TRUE, iqr = TRUE, range = TRUE, include_factors = FALSE, ci = NULL, iterations = 100, ...) {
+describe_distribution.grouped_df <- function(x, centrality = "mean", dispersion = TRUE, iqr = TRUE, range = TRUE, include_factors = FALSE, ci = NULL, iterations = 100, threshold = .1, ...) {
   group_vars <- setdiff(colnames(attributes(x)$groups), ".rows")
   group_data <- expand.grid(lapply(x[group_vars], function(i) unique(sort(i))))
   groups <- split(x, x[group_vars])
 
   out <- do.call(rbind, lapply(1:length(groups), function(i) {
-    d <- describe_distribution.data.frame(groups[[i]], centrality = centrality, dispersion = dispersion, iqr = iqr, range = range, include_factors = include_factors, ci = ci, iterations = iterations, ...)
+    d <- describe_distribution.data.frame(groups[[i]], centrality = centrality, dispersion = dispersion, iqr = iqr, range = range, include_factors = include_factors, ci = ci, iterations = iterations, threshold = threshold, ...)
     d[[".group"]] <- paste(sprintf("%s=%s", group_vars, sapply(group_data[i, ], as.character)), collapse = " | ")
     d
   }))
@@ -236,6 +238,7 @@ describe_distribution.grouped_df <- function(x, centrality = "mean", dispersion 
   class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   attr(out, "ci") <- ci
+  attr(out, "threshold") <- threshold
   if (centrality == "all") attr(out, "first_centrality") <- colnames(out)[2]
   out
 }

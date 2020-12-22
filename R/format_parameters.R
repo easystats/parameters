@@ -59,58 +59,6 @@ format_parameters.default <- function(model, brackets = c("[", "]"), ...) {
 
 
 #' @export
-format_parameters.glmm <- function(model, brackets = c("[", "]"), ...) {
-  .format_parameter_default(model, effects = "all", brackets = brackets)
-}
-
-
-
-#' @export
-format_parameters.rma <- function(model, ...) {
-  params <- insight::find_parameters(model, flatten = TRUE)
-  names(params) <- params
-  params
-}
-
-
-#' @export
-format_parameters.mediate <- function(model, ...) {
-  params <- insight::find_parameters(model, flatten = TRUE)
-  params <- trimws(gsub("(.*)\\((.*)\\)$", "\\1", params))
-  names(params) <- params
-  params[params == "ACME"] <- "Indirect Effect (ACME)"
-  params[params == "ADE"] <- "Direct Effect (ADE)"
-  params
-}
-
-
-#' @importFrom utils packageVersion
-#' @export
-format_parameters.meta_random <- function(model, ...) {
-  params <- insight::find_parameters(model, flatten = TRUE)
-  names(params) <- params
-  params
-}
-
-#' @export
-format_parameters.meta_fixed <- format_parameters.meta_random
-
-#' @export
-format_parameters.meta_bma <- format_parameters.meta_random
-
-
-
-#' @export
-format_parameters.merModList <- function(model, brackets = c("[", "]"), ...) {
-  .format_parameter_default(model[[1]], brackets = brackets)
-}
-
-
-#' @export
-format_parameters.mira <- format_parameters.rma
-
-
-#' @export
 format_parameters.parameters_model <- function(model, ...) {
   if (!is.null(attributes(model)$pretty_names)) {
     model$Parameter <- attributes(model)$pretty_names[model$Parameter]
@@ -121,36 +69,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
 
 
-
-
-
-# not supported -------------------------------
-
-
-#' @export
-format_parameters.emm_list <- function(model, ...) {
-  NULL
-}
-
-
-#' @export
-format_parameters.margins <- function(model, ...) {
-  NULL
-}
-
-
-#' @export
-format_parameters.mle2 <- function(model, ...) {
-  NULL
-}
-
-
-
-
-
-
 # Utilities ---------------------------------------------------------------
-
 
 
 .format_parameter_default <- function(model, effects = "fixed", brackets = c("[", "]")) {
@@ -360,15 +279,18 @@ format_parameters.mle2 <- function(model, ...) {
   paste0(variable, " ", brackets[1], level, brackets[2])
 }
 
+
 #' @keywords internal
 .format_poly <- function(name, variable, type, degree, brackets = c("[", "]")) {
   paste0(variable, " ", brackets[1], format_order(as.numeric(degree), textual = FALSE), " degree", brackets[2])
 }
 
+
 #' @keywords internal
 .format_log <- function(name, variable, type, brackets = c("[", "]")) {
   paste0(variable, " ", brackets[1], gsub("(.*)\\((.*)\\)", "\\1", name), brackets[2])
 }
+
 
 #' @keywords internal
 .format_ordered <- function(degree, brackets = c("[", "]")) {

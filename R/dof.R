@@ -100,115 +100,6 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
 dof <- degrees_of_freedom
 
 
-#' @export
-degrees_of_freedom.merModList <- function(model, ...) {
-  s <- suppressWarnings(summary(model))
-  s$fe$df
-}
-
-
-#' @export
-degrees_of_freedom.emmGrid <- function(model, ...) {
-  summary(model)$df
-}
-
-#' @export
-degrees_of_freedom.emm_list <- function(model, ...) {
-  s <- summary(model)
-  unname(unlist(lapply(s, function(i) {
-    if (is.null(i$df)) {
-      Inf
-    } else {
-      i$df
-    }
-  })))
-}
-
-#' @export
-degrees_of_freedom.glht <- function(model, ...) {
-  model$df
-}
-
-#' @export
-degrees_of_freedom.coeftest <- function(model, ...) {
-  attributes(model)$df
-}
-
-#' @export
-degrees_of_freedom.lqmm <- function(model, ...) {
-  out <- model_parameters(model, ...)
-  out$df
-}
-
-#' @export
-degrees_of_freedom.lqm <- degrees_of_freedom.lqmm
-
-#' @export
-degrees_of_freedom.mipo <- function(model, ...) {
-  as.vector(summary(model)$df)
-}
-
-#' @export
-degrees_of_freedom.ivFixed <- function(model, ...) {
-  as.vector(model$df)
-}
-
-#' @export
-degrees_of_freedom.mira <- function(model, ...) {
-  if (!requireNamespace("mice", quietly = TRUE)) {
-    stop("Package 'mice' needed for this function to work. Please install it.")
-  }
-  degrees_of_freedom(mice::pool(model), ...)
-}
-
-#' @export
-degrees_of_freedom.vgam <- function(model, ...) {
-  params <- insight::get_parameters(model)
-  out <- setNames(rep(NA, nrow(params)), params$Parameter)
-  out[names(model@nl.df)] <- model@nl.df
-  out
-}
-
-#' @export
-degrees_of_freedom.mediate <- function(model, ...) {
-  NULL
-}
-
-#' @export
-degrees_of_freedom.logitor <- function(model, ...) {
-  degrees_of_freedom.default(model$fit, ...)
-}
-
-#' @export
-degrees_of_freedom.poissonirr <- degrees_of_freedom.logitor
-
-#' @export
-degrees_of_freedom.negbinirr <- degrees_of_freedom.logitor
-
-#' @export
-degrees_of_freedom.poissonmfx <- degrees_of_freedom.logitor
-
-#' @export
-degrees_of_freedom.logitmfx <- degrees_of_freedom.logitor
-
-#' @export
-degrees_of_freedom.negbinmfx <- degrees_of_freedom.logitor
-
-#' @export
-degrees_of_freedom.probitmfx <- degrees_of_freedom.logitor
-
-#' @export
-degrees_of_freedom.betaor <- degrees_of_freedom.logitor
-
-#' @export
-degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
-
-
-
-
-
-
-
 # Analytical approach ------------------------------
 
 
@@ -229,11 +120,6 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
 
   dof
 }
-
-
-
-
-
 
 
 # Model approach (Residual df) ------------------------------
@@ -292,11 +178,6 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
   }
   dof
 }
-
-
-
-
-
 
 
 # Helper, check args ------------------------------

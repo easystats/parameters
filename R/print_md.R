@@ -12,6 +12,7 @@ print_md.parameters_model <- function(x,
                                       digits = 2,
                                       ci_digits = 2,
                                       p_digits = 3,
+                                      ci_brackets = c("(", ")"),
                                       ...) {
   # table caption
   res <- attributes(x)$details
@@ -33,11 +34,13 @@ print_md.parameters_model <- function(x,
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
 
 
-  formatted_table <- format(x, format = "markdown", pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = c("(", ")"))
+  formatted_table <- format(x, format = "markdown", pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = ci_brackets)
 
   # replace brackets by parenthesis
-  formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
-  formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
+  if (!is.null(ci_brackets)) {
+    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
+    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+  }
 
   insight::export_table(formatted_table, format = "markdown", caption = table_caption, subtitle = subtitle, footer = footer, align = "firstleft", ...)
 }
@@ -55,13 +58,18 @@ print_md.parameters_simulate <- print_md.parameters_model
 # Stan / SEM print ----------------------------
 
 #' @export
-print_md.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...) {
-  # check if user supplied digits attributes
+print_md.parameters_sem <- function(x,
+                                    digits = 2,
+                                    ci_digits = 2,
+                                    p_digits = 3,
+                                    ci_brackets = c("(", ")"),
+                                    ...) {
+    # check if user supplied digits attributes
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
   if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
 
-  formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "markdown", ci_width = NULL, ci_brackets = c("(", ")"), ...)
+  formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "markdown", ci_width = NULL, ci_brackets = ci_brackets, ...)
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 

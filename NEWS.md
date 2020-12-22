@@ -3,7 +3,8 @@
 ## New supported model classes
 
 * `coxr` (*coxrobust*), `coeftest` (*lmtest*), `ivfixed` (*ivfixed*), 
-  `ivprobit` (*ivprobit*).
+  `ivprobit` (*ivprobit*), `riskRegression` (*riskRegression*),
+  `fitdistr` (*MASS*).
 
 ## Bug fixes
 
@@ -16,6 +17,9 @@
   was a character vector (and no factor).
 
 * Fixed issue in `print_md()` for model-parameters objects from Bayesian models.
+
+* Fixed issues with printing of model parameters for multivariate response 
+  models from *brms*.
 
 # parameters 0.10.1
 
