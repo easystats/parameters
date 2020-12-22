@@ -15,6 +15,11 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
     attr(x, "zi_coefficient_name") <- NULL
   }
 
+  # remove method for htest
+  if (identical(attributes(x)$model_class, "htest")) {
+    x$Method <- NULL
+  }
+
   # prepare output, to have in shape for printing
   x <- .prepare_x_for_print(x, select, coef_name, s_value)
 

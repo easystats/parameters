@@ -482,7 +482,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 .add_htest_parameters_attributes <- function(params, model, ci = 0.95, ...) {
   attr(params, "title") <- params$Method
-  attr(params, "table_caption") <- params$Method
+  attr(params, "model_class") <- class(model)
 
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   if ("digits" %in% names(dot.arguments)) {
@@ -522,7 +522,6 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   attr(params, "p_adjust") <- p_adjust
   attr(params, "model_class") <- class(model)
   attr(params, "title") <- params$Method
-  attr(params, "table_caption") <- params$Method
 
   if ("digits" %in% names(dot.arguments)) {
     attr(params, "digits") <- eval(dot.arguments[["digits"]])
