@@ -19,7 +19,7 @@ reference:
   - model_parameters.aov
   - model_parameters.befa
   - model_parameters.default
-  - model_parameters.zeroinfl
+  - model_parameters.zcpglm
   - model_parameters.gam
   - model_parameters.mlm
   - model_parameters.merMod
@@ -45,7 +45,7 @@ reference:
   - ci.merMod
   - p_value
   - p_value.lmerMod
-  - p_value.brmsfit
+  - p_value.BFBayesFactor
   - p_value.zeroinfl
   - p_value.poissonmfx
   - p_value.DirichletRegModel
