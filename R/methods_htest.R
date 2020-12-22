@@ -11,9 +11,9 @@
 #'   effect size. Only applies to objects from \code{t.test()}. Calculation of
 #'   \code{d} is based on the t-value (see \code{\link[effectsize]{t_to_d}})
 #'   for details.
-#' @param omega_squared,eta_squared Logical, if \code{TRUE}, computes
-#'   \emph{partial} Omega or Eta squared as index of effect size. Only applies
-#'   to objects from \code{oneway.test()}.
+#' @param omega_squared,eta_squared,epsilon_squared Logical, if \code{TRUE},
+#'   computes \emph{partial} Omega, Eta or Epsilon squared as index of effect
+#'   size. Only applies to objects from \code{oneway.test()}.
 #' @param ci Level of confidence intervals for effect size statistic. Currently
 #'   only applies to objects from \code{chisq.test()} or \code{oneway.test()}.
 #' @inheritParams model_parameters.default
@@ -49,6 +49,7 @@ model_parameters.htest <- function(model,
                                    standardized_d = NULL,
                                    omega_squared = NULL,
                                    eta_squared = NULL,
+                                   epsilon_squared = NULL,
                                    ci = .95,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
@@ -63,6 +64,7 @@ model_parameters.htest <- function(model,
       standardized_d = standardized_d,
       omega_squared = omega_squared,
       eta_squared = eta_squared,
+      epsilon_squared = epsilon_squared,
       ci = ci,
       verbose = verbose,
       ...
@@ -127,6 +129,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                       standardized_d = NULL,
                                       omega_squared = NULL,
                                       eta_squared = NULL,
+                                      epsilon_squared = epsilon_squared,
                                       ci = 0.95,
                                       verbose = TRUE,
                                       ...) {
@@ -139,7 +142,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     out <- .add_effectsize_ttest(model, out, standardized_d, ci = ci, verbose = verbose)
   } else if (m_info$is_onewaytest) {
     out <- .extract_htest_oneway(model)
-    out <- .add_effectsize_oneway(model, out, omega_squared, eta_squared, ci = ci, verbose = verbose)
+    out <- .add_effectsize_oneway(model, out, omega_squared, eta_squared, epsilon_squared, ci = ci, verbose = verbose)
   } else if (m_info$is_chi2test) {
     out <- .extract_htest_chi2(model)
     if (!grepl("^McNemar", model$method)) {
@@ -441,6 +444,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                    out,
                                    omega_squared = NULL,
                                    eta_squared = NULL,
+                                   epsilon_squared = NULL,
                                    ci = .95,
                                    verbose = TRUE) {
   if (is.null(omega_squared) && is.null(eta_squared)) {
@@ -464,12 +468,20 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       names(es)[ci_cols] <- paste0("Eta2_", names(es)[ci_cols])
       out <- cbind(out, es)
     }
+    # epsilon squared
+    if (!is.null(eta_squared)) {
+      es <- effectsize::effectsize(model, ci = ci, type = "epsilon", partial = TRUE, verbose = verbose)
+      es$CI <- NULL
+      ci_cols <- grepl("^CI", names(es))
+      names(es)[ci_cols] <- paste0("Epsilon2_", names(es)[ci_cols])
+      out <- cbind(out, es)
+    }
   }
 
   # reorder
   col_order <- c("F", "df", "df_error", "Eta2", "Eta2_CI_low", "Eta2_CI_high",
-                 "Omega2", "Omega2_CI_low", "Omega2_CI_high", "p", "Method",
-                 "method")
+                 "Omega2", "Omega2_CI_low", "Omega2_CI_high", "Epsilon2",
+                 "Epsilon2_CI_low", "Epsilon2_CI_high", "p", "Method", "method")
   out <- out[col_order[col_order %in% names(out)]]
   out
 }
