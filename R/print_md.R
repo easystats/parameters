@@ -119,6 +119,7 @@ print_md.parameters_pca <- print_md.parameters_efa
 
 # Equivalence test ----------------------------
 
+#' @importFrom insight format_table
 #' @export
 print_md.equivalence_test_lm <- function(x, digits = 2, ...) {
   rule <- attributes(x)$rule
@@ -140,7 +141,7 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ...) {
     x <- x[x$Component %in% c("conditional", "count"), ]
   }
 
-  formatted_table <- insight::parameters_table(x, pretty_names = TRUE, digits = digits, ci_width = NULL, ci_brackets = c("(", ")"), ...)
+  formatted_table <- insight::format_table(x, pretty_names = TRUE, digits = digits, ci_width = NULL, ci_brackets = c("(", ")"), ...)
 
   colnames(formatted_table)[which(colnames(formatted_table) == "ROPE_Equivalence")] <- "H0"
   formatted_table$ROPE_low <- NULL

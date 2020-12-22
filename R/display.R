@@ -13,7 +13,7 @@
 #' @param align Only applies to HTML tables. May be one of \code{"left"},
 #'   \code{"right"} or \code{"center"}.
 #' @inheritParams print.parameters_model
-#' @inheritParams insight::parameters_table
+#' @inheritParams insight::format_table
 #' @inheritParams insight::export_table
 #'
 #' @return A character vector. If \code{format = "markdown"}, the return value

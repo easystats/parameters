@@ -172,7 +172,7 @@
       colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
 
-    formatted_table <- insight::parameters_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
+    formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
 
     component_name <- switch(
       type,

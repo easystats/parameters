@@ -15,7 +15,7 @@
 #' @param show_sigma Logical, if \code{TRUE}, adds information about the residual
 #'   standard deviation.
 #' @param show_formula Logical, if \code{TRUE}, adds the model formula to the output.
-#' @inheritParams insight::parameters_table
+#' @inheritParams insight::format_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection model_parameters Labeling the Degrees of Freedom
@@ -46,7 +46,7 @@
 #' }
 #' }
 #'
-#' @importFrom insight export_table parameters_table
+#' @importFrom insight export_table
 #' @export
 print.parameters_model <- function(x,
                                    pretty_names = TRUE,

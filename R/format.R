@@ -25,7 +25,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   if (split_components && !is.null(split_by) && length(split_by)) {
     formatted_table <- .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
   } else {
-    formatted_table <- insight::parameters_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
+    formatted_table <- insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
   }
 
   # remove unique columns
@@ -46,7 +46,7 @@ format.parameters_brms_meta <- format.parameters_model
 # stan models ----------------------------
 
 #' @importFrom utils modifyList
-#' @importFrom insight print_parameters parameters_table
+#' @importFrom insight print_parameters format_table
 #' @export
 format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
   cp <- attributes(x)$parameter_info
@@ -75,7 +75,7 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
         attr(i, "table_caption") <- attributes(i)$main_title
       }
       attributes(i) <- utils::modifyList(att, attributes(i))
-      param_table <- insight::parameters_table(i, ci_width = ci_width, ci_brackets = ci_brackets, preserve_attributes = TRUE)
+      param_table <- insight::format_table(i, ci_width = ci_width, ci_brackets = ci_brackets, preserve_attributes = TRUE)
       param_table$Group <- NULL
       param_table$Response <- NULL
       param_table

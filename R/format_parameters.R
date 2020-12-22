@@ -176,11 +176,11 @@ format_parameters.parameters_model <- function(model, ...) {
   }
 
   # "types$Parameter" here is cleaned, i.e. patterns like "log()", "as.factor()"
-  # etc. are removed. However, these patterns are needed in "parameters_table()",
+  # etc. are removed. However, these patterns are needed in "format_table()",
   # code-line x$Parameter <- attributes(x)$pretty_names[x$Parameter]
   # when we use "types$Parameter" here, matching of pretty names does not work,
   # so output will be NA resp. blank fields... Thus, I think we should use
-  # the original paramter-names here.
+  # the original parameter-names here.
 
   names(names) <- original_names # types$Parameter
   names
