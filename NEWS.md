@@ -18,6 +18,9 @@
 
 * Fixed issue in `print_md()` for model-parameters objects from Bayesian models.
 
+* Fixed issues with printing of model parameters for multivariate response 
+  models from *brms*.
+
 # parameters 0.10.1
 
 ## New functions
