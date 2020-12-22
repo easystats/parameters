@@ -33,7 +33,7 @@ print_html.parameters_model <- function(x,
   formatted_table <- format(x, format = "html", pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = ci_brackets)
 
   # replace brackets by parenthesis
-  if (!is.null(ci_brackets)) {
+  if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
     formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
     formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
   }

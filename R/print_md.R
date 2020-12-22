@@ -37,7 +37,7 @@ print_md.parameters_model <- function(x,
   formatted_table <- format(x, format = "markdown", pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = ci_brackets)
 
   # replace brackets by parenthesis
-  if (!is.null(ci_brackets)) {
+  if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
     formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
     formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
   }
@@ -121,7 +121,7 @@ print_md.parameters_pca <- print_md.parameters_efa
 
 #' @importFrom insight format_table
 #' @export
-print_md.equivalence_test_lm <- function(x, digits = 2, ...) {
+print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"), ...) {
   rule <- attributes(x)$rule
   rope <- attributes(x)$rope
 
@@ -141,7 +141,7 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ...) {
     x <- x[x$Component %in% c("conditional", "count"), ]
   }
 
-  formatted_table <- insight::format_table(x, pretty_names = TRUE, digits = digits, ci_width = NULL, ci_brackets = c("(", ")"), ...)
+  formatted_table <- insight::format_table(x, pretty_names = TRUE, digits = digits, ci_width = NULL, ci_brackets = ci_brackets, ...)
 
   colnames(formatted_table)[which(colnames(formatted_table) == "ROPE_Equivalence")] <- "H0"
   formatted_table$ROPE_low <- NULL
@@ -152,8 +152,10 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ...) {
   formatted_table <- formatted_table[col_order]
 
   # replace brackets by parenthesis
-  formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
-  formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
+  if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
+    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
+    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+  }
 
   if (!is.null(rope)) {
     names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf("%% in ROPE (%.*f, %.*f)", digits, rope[1], digits, rope[2])
@@ -169,8 +171,8 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ...) {
 # distribution print ----------------------------
 
 #' @export
-print_md.parameters_distribution <- function(x, digits = 2, ...) {
-  formatted_table <- format(x = x, digits = digits, format = "markdown",  ci_width = NULL, ci_brackets = c("(", ")"), ...)
+print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(", ")"), ...) {
+  formatted_table <- format(x = x, digits = digits, format = "markdown",  ci_width = NULL, ci_brackets = ci_brackets, ...)
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 

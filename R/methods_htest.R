@@ -11,10 +11,11 @@
 #'   effect size. Only applies to objects from \code{t.test()}. Calculation of
 #'   \code{d} is based on the t-value (see \code{\link[effectsize]{t_to_d}})
 #'   for details.
-#' @param omega_squared Compute Omega squared as index of effect size.
-#'   Only applies to objects from \code{oneway.test()}.
-#' @param ci Level of confidence intervals for effect size statistic. Currently only
-#'   applies to objects from \code{chisq.test()} or \code{oneway.test()}.
+#' @param omega_squared,eta_squared Logical, if \code{TRUE}, computes
+#'   \emph{partial} Omega or Eta squared as index of effect size. Only applies
+#'   to objects from \code{oneway.test()}.
+#' @param ci Level of confidence intervals for effect size statistic. Currently
+#'   only applies to objects from \code{chisq.test()} or \code{oneway.test()}.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -47,6 +48,7 @@ model_parameters.htest <- function(model,
                                    phi = NULL,
                                    standardized_d = NULL,
                                    omega_squared = NULL,
+                                   eta_squared = NULL,
                                    ci = .95,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
@@ -60,7 +62,9 @@ model_parameters.htest <- function(model,
       phi = phi,
       standardized_d = standardized_d,
       omega_squared = omega_squared,
+      eta_squared = eta_squared,
       ci = ci,
+      verbose = verbose,
       ...
     )
   }
@@ -88,6 +92,31 @@ p_value.htest <- function(model, ...) {
 
 
 
+# .pairwise.htest --------------------
+
+
+#' @rdname model_parameters.htest
+#' @export
+model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
+  m <- model$p.value
+  parameters <-
+    data.frame(
+      Group1 = rep(rownames(m), each = ncol(m)),
+      Group2 = rep(colnames(m), times = nrow(m)),
+      p = as.numeric(t(m)),
+      stringsAsFactors = FALSE
+    )
+
+  parameters <- stats::na.omit(parameters)
+
+  parameters <- .add_htest_attributes(parameters, model, p_adjust = model$p.adjust.method)
+  class(parameters) <- c("parameters_model", class(parameters))
+  parameters
+}
+
+
+
+
 # ==== extract parameters ====
 
 
@@ -97,7 +126,9 @@ p_value.htest <- function(model, ...) {
                                       phi = NULL,
                                       standardized_d = NULL,
                                       omega_squared = NULL,
+                                      eta_squared = NULL,
                                       ci = 0.95,
+                                      verbose = TRUE,
                                       ...) {
   m_info <- insight::model_info(model)
 
@@ -105,14 +136,14 @@ p_value.htest <- function(model, ...) {
     out <- .extract_htest_correlation(model)
   } else if (m_info$is_ttest) {
     out <- .extract_htest_ttest(model)
-    out <- .add_effectsize_ttest(model, out, standardized_d, ci = ci)
+    out <- .add_effectsize_ttest(model, out, standardized_d, ci = ci, verbose = verbose)
   } else if (m_info$is_onewaytest) {
     out <- .extract_htest_oneway(model)
-    out <- .add_effectsize_oneway(model, out, omega_squared, ci = ci)
+    out <- .add_effectsize_oneway(model, out, omega_squared, eta_squared, ci = ci, verbose = verbose)
   } else if (m_info$is_chi2test) {
     out <- .extract_htest_chi2(model)
     if (!grepl("^McNemar", model$method)) {
-      out <- .add_effectsize_chi2(model, out, cramers_v = cramers_v, phi = phi, ci = ci)
+      out <- .add_effectsize_chi2(model, out, cramers_v = cramers_v, phi = phi, ci = ci, verbose = verbose)
     }
   } else if (m_info$is_proptest) {
     out <- .extract_htest_prop(model)
@@ -337,14 +368,15 @@ p_value.htest <- function(model, ...) {
                                  out,
                                  cramers_v = NULL,
                                  phi = NULL,
-                                 ci = .95) {
+                                 ci = .95,
+                                 verbose = TRUE) {
   if (is.null(cramers_v) && is.null(phi)) {
     return(out)
   }
 
   if (!is.null(cramers_v) && requireNamespace("effectsize", quietly = TRUE)) {
     # Cramers V
-    es <- effectsize::cramers_v(model$observed, ci = ci, adjust = cramers_v == "adjusted")
+    es <- effectsize::cramers_v(model$observed, ci = ci, adjust = cramers_v == "adjusted", verbose = verbose)
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("Cramers_", names(es)[ci_cols])
@@ -353,7 +385,7 @@ p_value.htest <- function(model, ...) {
 
   if (!is.null(phi) && requireNamespace("effectsize", quietly = TRUE)) {
     # Phi
-    es <- effectsize::phi(model$observed, ci = ci, adjust = phi == "adjusted")
+    es <- effectsize::phi(model$observed, ci = ci, adjust = phi == "adjusted", verbose = verbose)
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("phi_", names(es)[ci_cols])
@@ -376,14 +408,15 @@ p_value.htest <- function(model, ...) {
 .add_effectsize_ttest <- function(model,
                                   out,
                                   standardized_d = NULL,
-                                  ci = .95) {
+                                  ci = .95,
+                                  verbose = TRUE) {
   if (is.null(standardized_d)) {
     return(out)
   }
 
   if (requireNamespace("effectsize", quietly = TRUE)) {
     # standardized d
-    es <- effectsize::effectsize(model, ci = ci)
+    es <- effectsize::effectsize(model, ci = ci, verbose = verbose)
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("d_", names(es)[ci_cols])
@@ -407,22 +440,36 @@ p_value.htest <- function(model, ...) {
 .add_effectsize_oneway <- function(model,
                                    out,
                                    omega_squared = NULL,
-                                   ci = .95) {
-  if (is.null(omega_squared)) {
+                                   eta_squared = NULL,
+                                   ci = .95,
+                                   verbose = TRUE) {
+  if (is.null(omega_squared) && is.null(eta_squared)) {
     return(out)
   }
 
   if (requireNamespace("effectsize", quietly = TRUE)) {
     # omega_squared
-    es <- effectsize::effectsize(model, ci = ci, type = "omega", partial = TRUE)
-    es$CI <- NULL
-    ci_cols <- grepl("^CI", names(es))
-    names(es)[ci_cols] <- paste0("Omega2_", names(es)[ci_cols])
-    out <- cbind(out, es)
+    if (!is.null(omega_squared)) {
+      es <- effectsize::effectsize(model, ci = ci, type = "omega", partial = TRUE, verbose = verbose)
+      es$CI <- NULL
+      ci_cols <- grepl("^CI", names(es))
+      names(es)[ci_cols] <- paste0("Omega2_", names(es)[ci_cols])
+      out <- cbind(out, es)
+    }
+    # eta squared
+    if (!is.null(eta_squared)) {
+      es <- effectsize::effectsize(model, ci = ci, type = "eta", partial = TRUE, verbose = verbose)
+      es$CI <- NULL
+      ci_cols <- grepl("^CI", names(es))
+      names(es)[ci_cols] <- paste0("Eta2_", names(es)[ci_cols])
+      out <- cbind(out, es)
+    }
   }
 
   # reorder
-  col_order <- c("F", "df", "df_error", "Omega2", "Omega2_CI_low", "Omega2_CI_high", "p", "Method", "method")
+  col_order <- c("F", "df", "df_error", "Eta2", "Eta2_CI_low", "Eta2_CI_high",
+                 "Omega2", "Omega2_CI_low", "Omega2_CI_high", "p", "Method",
+                 "method")
   out <- out[col_order[col_order %in% names(out)]]
   out
 }
@@ -434,6 +481,9 @@ p_value.htest <- function(model, ...) {
 
 
 .add_htest_parameters_attributes <- function(params, model, ci = 0.95, ...) {
+  attr(params, "title") <- params$Method
+  attr(params, "table_caption") <- params$Method
+
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   if ("digits" %in% names(dot.arguments)) {
     attr(params, "digits") <- eval(dot.arguments[["digits"]])
@@ -459,25 +509,6 @@ p_value.htest <- function(model, ...) {
 }
 
 
-#' @rdname model_parameters.htest
-#' @export
-model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
-  m <- model$p.value
-  parameters <-
-    data.frame(
-      Group1 = rep(rownames(m), each = ncol(m)),
-      Group2 = rep(colnames(m), times = nrow(m)),
-      p = as.numeric(t(m)),
-      stringsAsFactors = FALSE
-    )
-
-  parameters <- stats::na.omit(parameters)
-
-  parameters <- .add_htest_attributes(parameters, model, p_adjust = model$p.adjust.method)
-  class(parameters) <- c("parameters_model", class(parameters))
-  parameters
-}
-
 
 
 #' @keywords internal
@@ -490,6 +521,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   attr(params, "p_adjust") <- p_adjust
   attr(params, "model_class") <- class(model)
+  attr(params, "title") <- params$Method
+  attr(params, "table_caption") <- params$Method
 
   if ("digits" %in% names(dot.arguments)) {
     attr(params, "digits") <- eval(dot.arguments[["digits"]])
