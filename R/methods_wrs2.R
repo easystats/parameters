@@ -25,8 +25,9 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
 # extract WRS2 anova ----------------------
 
 .extract_wrs2_t1way <- function(model) {
+  fcall <- .safe_deparse(model$call)
   # effect sizes are by default contained for `t1way` but not `rmanova`
-  if ("t1way" %in% as.character(model$call)) {
+  if (grepl("^(t1way|WRS2::t1way)", fcall)) {
     data.frame(
       "F" = model$test,
       "df" = model$df1,
@@ -38,7 +39,7 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
       "Method" = "A heteroscedastic one-way ANOVA for trimmed means",
       stringsAsFactors = FALSE
     )
-  } else if ("rmanova" %in% as.character(model$call)) {
+  } else if (grepl("^(rmanova|WRS2::rmanova)", fcall)) {
     data.frame(
       "F" = model$test,
       "df" = model$df1,
@@ -80,7 +81,9 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 # extract WRS2 ttest ----------------------
 
 .extract_wrs2_yuen <- function(model) {
-  if ("yuen" %in% as.character(model$call)) {
+  fcall <- .safe_deparse(model$call)
+
+  if (grepl("^(yuen\\(|WRS2::yuen\\())", fcall)) {
     data.frame(
       "Difference" = model$diff,
       "Difference_CI_low" =  model$conf.int[1],
@@ -92,7 +95,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
       "Method" = "Yuen's test on trimmed means for independent samples",
       stringsAsFactors = FALSE
     )
-  } else if ("yuend" %in% as.character(model$call)) {
+  } else if (grepl("^(yuend|WRS2::yuend)", fcall)) {
     data.frame(
       "Difference" = model$diff,
       "Difference_CI_low" =  model$conf.int[1],
