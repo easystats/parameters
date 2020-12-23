@@ -1,3 +1,13 @@
+linux <- tryCatch({
+  si <- Sys.info()
+  if (!is.null(si["sysname"])) {
+    si["sysname"] == "Linux" || grepl("^linux", R.version$os)
+  } else {
+    FALSE
+  }
+})
+
+
 if (require("testthat") &&
   require("parameters") &&
   require("psych") &&
@@ -49,15 +59,15 @@ if (require("testthat") &&
   })
 
 
+  if (!linux) {
+    test_that("FactoMineR", {
+      x <- suppressWarnings(model_parameters(FactoMineR::PCA(mtcars, ncp = 3), threshold = 0.2, sort = TRUE))
+      testthat::expect_equal(c(ncol(x), nrow(x)), c(5, 11))
 
-  test_that("FactoMineR", {
-    x <- suppressWarnings(model_parameters(FactoMineR::PCA(mtcars, ncp = 3), threshold = 0.2, sort = TRUE))
-    testthat::expect_equal(c(ncol(x), nrow(x)), c(5, 11))
-
-    x <- suppressWarnings(model_parameters(FactoMineR::FAMD(iris, ncp = 3), threshold = 0.2, sort = TRUE))
-    testthat::expect_equal(c(ncol(x), nrow(x)), c(5, 5))
-  })
-
+      x <- suppressWarnings(model_parameters(FactoMineR::FAMD(iris, ncp = 3), threshold = 0.2, sort = TRUE))
+      testthat::expect_equal(c(ncol(x), nrow(x)), c(5, 5))
+    })
+  }
 
 
   set.seed(333)
