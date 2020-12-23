@@ -117,8 +117,8 @@ model_parameters.mcp2 <- model_parameters.mcp1
   names(out)[1:5] <- c("Group1", "Group2", "Psihat", "CI_low", "CI_high")
 
   # convert names to character
-  out$Group1 <- as.character(out$Group1)
-  out$Group2 <- as.character(out$Group2)
+  out$Group1 <- model$fnames[model$comp[, 1]]
+  out$Group2 <- model$fnames[model$comp[, 2]]
 
   out
 }

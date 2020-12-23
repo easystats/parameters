@@ -8,6 +8,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   res <- attributes(x)$details
   coef_name <- attributes(x)$coefficient_name
   s_value <- attributes(x)$s_value
+  m_class <- attributes(x)$model_class
 
   if (identical(format, "html")) {
     coef_name <- NULL
@@ -16,8 +17,15 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   }
 
   # remove method for htest
-  if (!is.null(attributes(x)$model_class) && any(attributes(x)$model_class %in% c("htest", "t1way", "yuen"))) {
+  if (!is.null(m_class) && any(m_class %in% c("htest", "t1way", "yuen"))) {
     x$Method <- NULL
+  }
+
+  # Special print for mcp from WRS2
+  if (!is.null(m_class) && any(m_class %in% c("mcp1", "mcp2"))) {
+    x$Group1 <-  paste(x$Group1, x$Group2, sep = " vs. ")
+    x$Group2 <- NULL
+    colnames(x)[1] <- "Group"
   }
 
   # prepare output, to have in shape for printing
