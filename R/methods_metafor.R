@@ -127,7 +127,7 @@ model_parameters.rma <- function(model,
   out$Parameter[out$Parameter == "(Intercept)"] <- "Overall"
 
   # filter studies?
-  if (!isTRUE(include_studies)) {
+  if (isFALSE(include_studies)) {
     out <- out[out$Parameter == "Overall", ]
   }
 

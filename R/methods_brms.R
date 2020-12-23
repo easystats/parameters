@@ -25,47 +25,45 @@ model_parameters.brmsfit <- function(model,
   # Bayesian meta analysis
 
   if (!insight::is_multivariate(model) && isTRUE(modelinfo$is_meta)) {
-    params <-
-      .model_parameters_brms_meta(
-        model,
-        centrality = centrality,
-        dispersion = dispersion,
-        ci = ci,
-        ci_method = ci_method,
-        test = test,
-        rope_range = rope_range,
-        rope_ci = rope_ci,
-        diagnostic = diagnostic,
-        priors = priors,
-        exponentiate = exponentiate,
-        standardize = standardize,
-        ...
-      )
+    params <- .model_parameters_brms_meta(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      diagnostic = diagnostic,
+      priors = priors,
+      exponentiate = exponentiate,
+      standardize = standardize,
+      ...
+    )
   } else {
 
     # Processing
-    params <-
-      .extract_parameters_bayesian(
-        model,
-        centrality = centrality,
-        dispersion = dispersion,
-        ci = ci,
-        ci_method = ci_method,
-        test = test,
-        rope_range = rope_range,
-        rope_ci = rope_ci,
-        bf_prior = bf_prior,
-        diagnostic = diagnostic,
-        priors = priors,
-        effects = effects,
-        component = component,
-        standardize = standardize,
-        ...
-      )
+    params <- .extract_parameters_bayesian(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = bf_prior,
+      diagnostic = diagnostic,
+      priors = priors,
+      effects = effects,
+      component = component,
+      standardize = standardize,
+      ...
+    )
 
     if (!(effects == "fixed" && component == "conditional")) {
       random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE))
-      if (length(random_effect_levels) && !isTRUE(group_level)) params <- params[-random_effect_levels, ]
+      if (length(random_effect_levels) && isFALSE(group_level)) params <- params[-random_effect_levels, ]
     }
 
     params <- .add_pretty_names(params, model)

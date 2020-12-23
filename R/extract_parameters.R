@@ -410,7 +410,7 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (!isTRUE(robust) && df_method %in% special_df_methods) {
+  if (isFALSE(robust) && df_method %in% special_df_methods) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = "Parameter")

@@ -66,7 +66,7 @@ model_parameters.metaplus <- function(model,
   out <- out[!(out$Parameter %in% c("tau2", "vinv")), ]
 
   # filter studies?
-  if (!isTRUE(include_studies)) {
+  if (isFALSE(include_studies)) {
     out <- out[out$Parameter == "Overall", ]
   }
 
@@ -200,7 +200,7 @@ model_parameters.meta_random <- function(model,
   out <- rbind(out_study, out)
 
   # filter studies?
-  if (!isTRUE(include_studies)) {
+  if (isFALSE(include_studies)) {
     out <- out[out$Parameter %in% c("Overall", "tau"), ]
   }
 
@@ -339,7 +339,7 @@ model_parameters.meta_bma <- function(model,
   out <- rbind(out_study, out)
 
   # filter studies?
-  if (!isTRUE(include_studies)) {
+  if (isFALSE(include_studies)) {
     out <- out[out$Parameter %in% c("averaged", "fixed", "random"), ]
   }
 
