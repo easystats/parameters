@@ -150,8 +150,8 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
       df_b,
       structure(
         list(
-          Group1 = c('1', '1', '2'),
-          Group2 = c('2', '3', '3'),
+          Group1 = c('placebo', 'placebo', 'low'),
+          Group2 = c('low', 'high', 'high'),
           Psihat = c(-1,
                      -3, -2),
           CI_low = c(-5.3185800135384, -7.3185800135384, -6.3185800135384),
@@ -174,8 +174,8 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
       df_w,
       structure(
         list(
-          Group1 = c('1', '1', '2'),
-          Group2 = c('2', '3', '3'),
+          Group1 = c('Wine A', 'Wine A', 'Wine B'),
+          Group2 = c('Wine B', 'Wine C', 'Wine C'),
           Psihat = c(0.0214285714285715,
                      0.114285714285714, 0.0821428571428571),
           CI_low = c(-0.0216368317742901,
