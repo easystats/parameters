@@ -1,4 +1,4 @@
-# quantreg: .rq, .rqss, .crq, .nlrq
+# quantreg: .rq, .rqss, .crq, .nlrq, .rqs
 
 # model parameters ---------------------
 
@@ -6,6 +6,31 @@
 #' @rdname model_parameters.cgam
 #' @export
 model_parameters.rqss <- model_parameters.cgam
+
+
+#' @export
+model_parameters.rqs <- function(model,
+                                  ci = .95,
+                                  bootstrap = FALSE,
+                                  iterations = 1000,
+                                  standardize = NULL,
+                                  exponentiate = FALSE,
+                                  verbose = TRUE,
+                                  ...) {
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
 
 
 
@@ -29,6 +54,11 @@ ci.crq <- ci.default
 ci.nlrq <- ci.default
 
 
+#' @export
+ci.rqs <- ci.default
+
+
+
 
 
 # standard errors ---------------------
@@ -45,6 +75,30 @@ standard_error.rq <- function(model, ...) {
   params <- insight::get_parameters(model)
   params$SE <- se
   params[intersect(colnames(params), c("Parameter", "SE", "Component"))]
+}
+
+
+#' @export
+standard_error.rqs <- function(model, ...) {
+  se <- tryCatch(
+    {
+      s <- suppressWarnings(summary(model, covariance = TRUE))
+      cs <- do.call(rbind, lapply(s, stats::coef))
+      cs[, "Std. Error"]
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+
+  params <- insight::get_parameters(model)
+  data.frame(
+    Parameter = params$Parameter,
+    SE = se,
+    Component = params$Component,
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
 }
 
 
@@ -148,6 +202,30 @@ p_value.rq <- function(model, ...) {
 
 
 #' @export
+p_value.rqs <- function(model, ...) {
+  p <- tryCatch(
+    {
+      s <- suppressWarnings(summary(model, covariance = TRUE))
+      cs <- do.call(rbind, lapply(s, stats::coef))
+      cs[, "Pr(>|t|)"]
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+
+  params <- insight::get_parameters(model)
+  data.frame(
+    Parameter = params$Parameter,
+    p = p,
+    Component = params$Component,
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+}
+
+
+#' @export
 p_value.crq <- p_value.rq
 
 
@@ -240,4 +318,24 @@ p_value.rqss <- function(model, component = c("all", "conditional", "smooth_term
   }
 
   p
+}
+
+
+
+
+# degrees of freedom ---------------------
+
+
+#' @export
+degrees_of_freedom.rqs <- function(model, ...) {
+  tryCatch(
+    {
+      s <- suppressWarnings(summary(model, covariance = TRUE))
+      cs <- lapply(s, function(i) i$rdf)
+      unique(unlist(cs))
+    },
+    error = function(e) {
+      NULL
+    }
+  )
 }

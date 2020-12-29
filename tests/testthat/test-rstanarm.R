@@ -1,6 +1,15 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && require("testthat") && require("parameters") && require("rstanarm")) {
+osx <- tryCatch({
+  si <- Sys.info()
+  if (!is.null(si["sysname"])) {
+    si["sysname"] == "Darwin" || grepl("^darwin", R.version$os)
+  } else {
+    FALSE
+  }
+})
+
+if (.runThisTest && !osx && require("testthat") && require("parameters") && require("rstanarm")) {
   data(mtcars)
   set.seed(123)
   model <- stan_glm(
