@@ -6,7 +6,7 @@
 
 #' Parameters from ANOVAs
 #'
-#' @param model Object of class \code{\link{aov}}, \code{\link{anova}}, \code{aovlist}, \code{Gam}, \code{\link{manova}}, \code{\link{Anova.mlm}} or \code{maov}.
+#' @param model Object of class \code{\link{aov}}, \code{\link{anova}}, \code{aovlist}, \code{Gam}, \code{\link{manova}}, \code{Anova.mlm}, \code{afex_aov} or \code{maov}.
 #' @param omega_squared Compute omega squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
 #' @param eta_squared Compute eta squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for ANOVA-tables from mixed models).
 #' @param epsilon_squared Compute epsilon squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
@@ -88,16 +88,15 @@ model_parameters.aov <- function(model,
     }
   }
 
+  # extract standard parameters
   parameters <- .extract_parameters_anova(model)
 
-  # if (inherits(model, "anova")) {
-  #   parameters <- .effectsizes_for_anova(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error, ci)
-  # } else {
-  #   parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci)
-  # }
-
+  # add effect sizes, if available
   parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci, verbose = verbose)
+
+  # add attributes
   parameters <- .add_anova_attributes(parameters, model, ci, ...)
+
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
