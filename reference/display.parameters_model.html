@@ -259,6 +259,9 @@
   ci_digits <span class='op'>=</span> <span class='fl'>2</span>,
   p_digits <span class='op'>=</span> <span class='fl'>3</span>,
   ci_brackets <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"("</span>, <span class='st'>")"</span><span class='op'>)</span>,
+  show_sigma <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show_formula <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -371,6 +374,19 @@ new text line under the table.</p></td>
     <tr>
       <th>ci_width</th>
       <td><p>Minimum width of the returned string for confidence intervals. If not <code>NULL</code> and width is larger than the string's length, leading whitespaces are added to the string. If <code>width="auto"</code>, width will be set to the length of the longest string.</p></td>
+    </tr>
+    <tr>
+      <th>show_sigma</th>
+      <td><p>Logical, if <code>TRUE</code>, adds information about the residual
+standard deviation.</p></td>
+    </tr>
+    <tr>
+      <th>show_formula</th>
+      <td><p>Logical, if <code>TRUE</code>, adds the model formula to the output.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
     </tr>
     </table>
 
