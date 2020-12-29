@@ -10,6 +10,8 @@
     parameters <- .extract_anova_aov(model)
   } else if ("anova" %in% class(model)) {
     parameters <- .extract_anova_anova(model)
+  } else if ("Anova.mlm" %in% class(model)) {
+    parameters <- .extract_anova_mlm(model)
   } else if ("aovlist" %in% class(model)) {
     parameters <- .extract_anova_aovlist(model)
   } else if ("anova.rms" %in% class(model)) {
@@ -17,13 +19,14 @@
   }
 
   # Rename
+
+  # p-values
   names(parameters) <- gsub("(Pr|P)\\(>.*\\)", "p", names(parameters))
-  names(parameters) <- gsub("npar", "df", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("NumDF", "df", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("num Df", "df", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("d.f.", "df", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Chi.Df", "Chi2_df", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Chi DoF", "Chi2_df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Pr..Chisq.", "p", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Pr..Chi.", "p", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("p.value", "p", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("^P$", "p", names(parameters))
+  # squares
   names(parameters) <- gsub("Sum Sq", "Sum_Squares", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Error SS", "Sum_Squares_Error", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Partial.SS", "Sum_Squares_Partial", names(parameters), fixed = TRUE)
@@ -31,30 +34,41 @@
   names(parameters) <- gsub("Mean Sq", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("MSE", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("MS", "Mean_Square", names(parameters), fixed = TRUE)
+  # statistic
   names(parameters) <- gsub("approx F", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("F values", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("F value", "F", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("den Df", "df_error", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Res.Df", "df_error", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Resid. Df", "df_error", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Res.DoF", "df_error", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chisq", "Chi2", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Pr..Chisq.", "p", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Pr..Chi.", "p", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi.sq", "Chi2", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi-Square", "Chi2", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("LR.Chisq", "Chi2", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("LR Chisq", "Chi2", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("p.value", "p", names(parameters), fixed = TRUE)
+  # other
   names(parameters) <- gsub("logLik", "Log_Likelihood", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("deviance", "Deviance", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("^P$", "p", names(parameters))
-  names(parameters) <- gsub("Df", "df", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Resid. Dev", "Deviance_error", names(parameters), fixed = TRUE)
+  # error-df
+  if (!"df_error" %in% names(parameters)) {
+    names(parameters) <- gsub("den Df", "df_error", names(parameters), fixed = TRUE)
+    names(parameters) <- gsub("Res.Df", "df_error", names(parameters), fixed = TRUE)
+    names(parameters) <- gsub("Resid. Df", "df_error", names(parameters), fixed = TRUE)
+    names(parameters) <- gsub("Res.DoF", "df_error", names(parameters), fixed = TRUE)
+  }
+  # df
+  if (!"df" %in% names(parameters)) {
+    names(parameters) <- gsub("npar", "df", names(parameters), fixed = TRUE)
+    names(parameters) <- gsub("NumDF", "df", names(parameters), fixed = TRUE)
+    names(parameters) <- gsub("num Df", "df", names(parameters), fixed = TRUE)
+    names(parameters) <- gsub("d.f.", "df", names(parameters), fixed = TRUE)
+    names(parameters) <- gsub("Df", "df", names(parameters), fixed = TRUE)
+  }
+  # other df
+  names(parameters) <- gsub("Chi.Df", "Chi2_df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Chi DoF", "Chi2_df", names(parameters), fixed = TRUE)
 
   # Reorder
   row.names(parameters) <- NULL
-  order <- c("Response", "Group", "Parameter", "Pillai", "AIC", "BIC", "Log_Likelihood", "Chi2", "Chi2_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "Sum_Squares_Error", "df", "Deviance", "df_error", "Deviance_error", "Mean_Square", "F", "Rao", "p")
+  order <- c("Response", "Group", "Parameter", "Pillai", "AIC", "BIC", "Log_Likelihood", "Chi2", "Chi2_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "Sum_Squares_Error", "df", "Deviance", "Statistic", "df_num", "df_error", "Deviance_error", "Mean_Square", "F", "Rao", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   .remove_backticks_from_parameter_names(parameters)
@@ -112,7 +126,6 @@
 }
 
 
-
 # aovlist -----
 
 .extract_anova_aovlist <- function(model) {
@@ -168,4 +181,89 @@
     parameters$Df <- round(parameters[[sumsq]] / parameters$Mean_Square)
   }
   parameters
+}
+
+
+# Anova.mlm -------------
+
+#' @importFrom stats pf
+.extract_anova_mlm <- function(model) {
+  out <- lapply(1:length(model$terms), function(i) {
+    if (model$repeated) {
+      qr_value <- qr(model$SSPE[[i]])
+    } else {
+      qr_value <- qr(model$SSPE)
+    }
+    eigs <- Re(eigen(qr.coef(qr_value, model$SSP[[i]]), symmetric = FALSE)$values)
+    test <- switch(model$test,
+                   "Pillai" = .pillai_test(eigs, model$df[i], model$error.df),
+                   "Wilks" = .wilks_test(eigs, model$df[i], model$error.df),
+                   "Hotelling-Lawley" = .hl_test(eigs, model$df[i], model$error.df),
+                   "Roy" = .roy_test(eigs, model$df[i], model$error.df))
+    data.frame(
+      Parameter = model$terms[i],
+      df = model$df[i],
+      Statistic = test[1],
+      `F` = test[2],
+      df_num = test[3],
+      df_error = test[4],
+      p = stats::pf(test[2], test[3], test[4], lower.tail = FALSE),
+      stringsAsFactors = FALSE
+    )
+  })
+
+  do.call(rbind, out)
+}
+
+
+
+
+# test helper -------------
+
+
+.pillai_test <- function(eig, q, df.res) {
+  test <- sum(eig / (1 + eig))
+  p <- length(eig)
+  s <- min(p, q)
+  n <- 0.5 * (df.res - p - 1)
+  m <- 0.5 * (abs(p - q) - 1)
+  tmp1 <- 2 * m + s + 1
+  tmp2 <- 2 * n + s + 1
+  c(test, (tmp2 / tmp1 * test) / (s - test), s * tmp1, s * tmp2)
+}
+
+
+.roy_test <- function(eig, q, df.res) {
+  p <- length(eig)
+  test <- max(eig)
+  tmp1 <- max(p, q)
+  tmp2 <- df.res - tmp1 + q
+  c(test, (tmp2 * test) / tmp1, tmp1, tmp2)
+}
+
+
+.hl_test <- function(eig, q, df.res) {
+  test <- sum(eig)
+  p <- length(eig)
+  m <- 0.5 * (abs(p - q) - 1)
+  n <- 0.5 * (df.res - p - 1)
+  s <- min(p, q)
+  tmp1 <- 2 * m + s + 1
+  tmp2 <- 2 * (s * n + 1)
+  c(test, (tmp2 * test) / s / s / tmp1, s * tmp1, tmp2)
+}
+
+
+.wilks_test <- function(eig, q, df.res) {
+  test <- prod(1 / (1 + eig))
+  p <- length(eig)
+  tmp1 <- df.res - 0.5 * (p - q + 1)
+  tmp2 <- (p * q - 2) / 4
+  tmp3 <- p ^ 2 + q ^ 2 - 5
+  tmp3 <- if (tmp3 > 0)
+    sqrt(((p * q) ^ 2 - 4) / tmp3)
+  else
+    1
+  c(test, ((test ^ (-1 / tmp3) - 1) * (tmp1 * tmp3 - 2 * tmp2)) / p / q,
+    p * q, tmp1 * tmp3 - 2 * tmp2)
 }

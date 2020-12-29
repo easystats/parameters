@@ -176,6 +176,10 @@
   attr(params, "ci") <- ci
   attr(params, "model_class") <- class(model)
 
+  if (inherits(model, "Anova.mlm")) {
+    attr(params, "anova_test") <- model$test
+  }
+
   if ("digits" %in% names(dot.arguments)) {
     attr(params, "digits") <- eval(dot.arguments[["digits"]])
   } else {

@@ -6,7 +6,7 @@
 
 #' Parameters from ANOVAs
 #'
-#' @param model Object of class \code{\link{aov}}, \code{\link{anova}}, \code{aovlist}, \code{Gam}, \code{\link{manova}}, or \code{maov}.
+#' @param model Object of class \code{\link{aov}}, \code{\link{anova}}, \code{aovlist}, \code{Gam}, \code{\link{manova}}, \code{\link{Anova.mlm}} or \code{maov}.
 #' @param omega_squared Compute omega squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
 #' @param eta_squared Compute eta squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for ANOVA-tables from mixed models).
 #' @param epsilon_squared Compute epsilon squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
@@ -160,6 +160,7 @@ model_parameters.anova <- model_parameters.aov
 
 
 
+
 #################### .aov.list  ------
 
 
@@ -182,6 +183,10 @@ model_parameters.aovlist <- model_parameters.aov
 
 #' @export
 model_parameters.anova.rms <- model_parameters.aov
+
+
+#' @export
+model_parameters.Anova.mlm <- model_parameters.aov
 
 
 #' @export

@@ -17,7 +17,7 @@
 )
 }
 \arguments{
-\item{model}{Object of class \code{\link{aov}}, \code{\link{anova}}, \code{aovlist}, \code{Gam}, \code{\link{manova}}, or \code{maov}.}
+\item{model}{Object of class \code{\link{aov}}, \code{\link{anova}}, \code{aovlist}, \code{Gam}, \code{\link{manova}}, \code{\link{Anova.mlm}} or \code{maov}.}
 
 \item{omega_squared}{Compute omega squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.}
 
