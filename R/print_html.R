@@ -14,6 +14,9 @@ print_html.parameters_model <- function(x,
                                         ci_digits = 2,
                                         p_digits = 3,
                                         ci_brackets = c("(", ")"),
+                                        show_sigma = FALSE,
+                                        show_formula = FALSE,
+                                        verbose = TRUE,
                                         ...) {
   # table caption
   if (!is.null(attributes(x)$title) && is.null(caption)) {
@@ -37,6 +40,9 @@ print_html.parameters_model <- function(x,
     formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
   }
 
+  if (is.null(footer)) {
+    footer <- .format_footer(x, digits = digits, verbose = verbose, show_sigma = show_sigma, show_formula = show_formula, type = "html")
+  }
   insight::export_table(formatted_table, format = "html", caption = table_caption, subtitle = subtitle, footer = footer, align = align, ...)
 }
 

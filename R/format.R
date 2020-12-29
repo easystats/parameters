@@ -175,3 +175,112 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   final_table
 }
 
+
+
+
+
+# footer functions ------------------
+
+.format_footer <- function(x, digits = 2, verbose = TRUE, show_sigma = FALSE, show_formula = FALSE, type = "text") {
+  # prepare footer
+  footer <- NULL
+  type <- tolower(type)
+
+  p_adjust <- attributes(x)$p_adjust
+  model_formula <- attributes(x)$model_formula
+  anova_test <- attributes(x)$anova_test
+
+  # footer: residual standard deviation
+  if (isTRUE(show_sigma)) {
+    footer <- .add_footer_sigma(footer, digits, sigma, type)
+  }
+
+  # footer: p-adjustment
+  if ("p" %in% colnames(x) && isTRUE(verbose)) {
+    footer <- .add_footer_padjust(footer, p_adjust, type)
+  }
+
+  # footer: model formula
+  if (isTRUE(show_formula)) {
+    footer <- .add_footer_formula(footer, model_formula, type)
+  }
+
+  # footer: anova test
+  if (!is.null(anova_test)) {
+    footer <- .add_footer_anova_test(footer, anova_test, type)
+  }
+
+  # add color code, if we have a footer
+  if (!is.null(footer) && type == "text") {
+    footer <- c(footer, "blue")
+  }
+
+  footer
+}
+
+
+# footer: residual standard deviation
+.add_footer_sigma <- function(footer = NULL, digits, sigma, type = "text") {
+  if (!is.null(sigma)) {
+    if (type == "text") {
+      footer <- paste0(footer, sprintf("\nResidual standard deviation: %.*f", digits, sigma))
+    } else if (type == "html") {
+      footer <- c(footer, sprintf("Residual standard deviation: %.*f", digits, sigma))
+    }
+  }
+  footer
+}
+
+
+# footer: residual standard deviation
+.add_footer_anova_test <- function(footer = NULL, test, type = "text") {
+  if (!is.null(test)) {
+    if (type == "text") {
+      footer <- paste0(footer, sprintf("\n%s test statistic", test))
+    } else if (type == "html") {
+      footer <- c(footer, sprintf("\n%s test statistic", test))
+    }
+  }
+  footer
+}
+
+
+# footer: p-adjustment
+.add_footer_padjust <- function(footer = NULL, p_adjust, type = "text") {
+  if (!is.null(p_adjust) && p_adjust != "none") {
+    if (type == "text") {
+      footer <- paste0(footer, "\np-value adjustment method: ", format_p_adjust(p_adjust))
+    } else if (type == "html") {
+      footer <- c(footer, paste0("p-value adjustment method: ", format_p_adjust(p_adjust)))
+    }
+  }
+  footer
+}
+
+
+# footer: model formula
+.add_footer_formula <- function(footer = NULL, model_formula, type = "text") {
+  if (!is.null(model_formula)) {
+    if (type == "text") {
+      footer <- paste0(footer, "\nModel: ", model_formula)
+    } else if (type == "html") {
+      footer <- c(footer, paste0("Model: ", model_formula))
+    }
+  }
+  footer
+}
+
+
+# footer: type of uncertainty interval
+.print_footer_cimethod <- function(ci_method = NULL) {
+  if (!is.null(ci_method)) {
+    ci_method <- switch(
+      toupper(ci_method),
+      "HDI" = "highest density intervals",
+      "ETI" = "equal-tailed intervals",
+      "SI" = "support intervals",
+      "uncertainty intervals"
+    )
+    message(paste0("\nUsing ", ci_method, " as credible intervals."))
+  }
+}

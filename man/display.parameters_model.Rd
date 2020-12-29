@@ -89,6 +89,9 @@
   ci_digits = 2,
   p_digits = 3,
   ci_brackets = c("(", ")"),
+  show_sigma = FALSE,
+  show_formula = FALSE,
+  verbose = TRUE,
   ...
 )
 
@@ -160,6 +163,13 @@ new text line under the table.}
 \item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
 
 \item{ci_width}{Minimum width of the returned string for confidence intervals. If not \code{NULL} and width is larger than the string's length, leading whitespaces are added to the string. If \code{width="auto"}, width will be set to the length of the longest string.}
+
+\item{show_sigma}{Logical, if \code{TRUE}, adds information about the residual
+standard deviation.}
+
+\item{show_formula}{Logical, if \code{TRUE}, adds the model formula to the output.}
+
+\item{verbose}{Toggle warnings and messages.}
 }
 \value{
 A character vector. If \code{format = "markdown"}, the return value
