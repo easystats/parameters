@@ -32,6 +32,7 @@
   names(parameters) <- gsub("MSE", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("MS", "Mean_Square", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("approx F", "F", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("F values", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("F value", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("den Df", "df_error", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.Df", "df_error", names(parameters), fixed = TRUE)
@@ -146,7 +147,10 @@
       parameters$Parameter <- unlist(strsplit(info, "\n", fixed = TRUE))
     }
   } else if (length(attributes(model)$heading) > 2) {
-    parameters$Parameter <- attributes(model)$heading[-1:-2]
+    p_names <- attributes(model)$heading[-1:-2]
+    if (nrow(parameters) == length(p_names)) {
+      parameters$Parameter <- p_names
+    }
   }
 
   # If mixed models...

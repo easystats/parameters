@@ -11,4 +11,14 @@ if (require("insight") && require("testthat") && require("parameters")) {
     expect_equal(mp$Deviance_error, c(43.22973, 29.67517, 19.23255, 10.48692), tolerance = 1e-3)
     expect_equal(mp$p, c(NA, 0.00023, 0.00123, 0.01262), tolerance = 1e-3)
   })
+
+  if (require("car")) {
+    a <- car::Anova(m, type = 3, test.statistic = "F")
+    mp <- model_parameters(a)
+
+    test_that("model_parameters.anova", {
+      expect_equal(colnames(mp), c("Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p"))
+      expect_equal(mp[["F"]], c(53.40138, 60.42944, 13.96887, NA), tolerance = 1e-3)
+    })
+  }
 }
