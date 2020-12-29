@@ -31,5 +31,18 @@ if (require("insight") && require("testthat") && require("parameters")) {
       expect_equal(mp[["F"]], c(158.2578, 6.60593, 3.71327, 3.28975), tolerance = 1e-3)
       expect_equal(mp$Statistic, c(0.9268, 0.67387, 0.22903, 0.4039), tolerance = 1e-3)
     })
+
+
+    if (require("MASS")) {
+      data(housing)
+      m <- polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
+      a <- car::Anova(m)
+      mp <- model_parameters(a)
+
+      test_that("model_parameters_Anova.mlm", {
+        expect_equal(colnames(mp), c("Parameter", "Chi2", "df", "p"))
+        expect_equal(mp$Chi2, c(108.2392, 55.91008, 14.30621), tolerance = 1e-3)
+      })
+    }
   }
 }

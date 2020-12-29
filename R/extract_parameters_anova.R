@@ -38,11 +38,11 @@
   names(parameters) <- gsub("approx F", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("F values", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("F value", "F", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("LR.Chisq", "Chi2", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("LR Chisq", "Chi2", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chisq", "Chi2", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi.sq", "Chi2", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chi-Square", "Chi2", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("LR.Chisq", "Chi2", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("LR Chisq", "Chi2", names(parameters), fixed = TRUE)
   # other
   names(parameters) <- gsub("logLik", "Log_Likelihood", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("deviance", "Deviance", names(parameters), fixed = TRUE)
