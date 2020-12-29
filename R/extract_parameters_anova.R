@@ -35,6 +35,7 @@
   names(parameters) <- gsub("F value", "F", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("den Df", "df_error", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.Df", "df_error", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Resid. Df", "df_error", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Res.DoF", "df_error", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Chisq", "Chi2", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Pr..Chisq.", "p", names(parameters), fixed = TRUE)
@@ -48,10 +49,11 @@
   names(parameters) <- gsub("deviance", "Deviance", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("^P$", "p", names(parameters))
   names(parameters) <- gsub("Df", "df", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Resid. Dev", "Deviance_error", names(parameters), fixed = TRUE)
 
   # Reorder
   row.names(parameters) <- NULL
-  order <- c("Response", "Group", "Parameter", "Pillai", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chi2", "Chi2_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "Sum_Squares_Error", "df", "df_error", "Mean_Square", "F", "p")
+  order <- c("Response", "Group", "Parameter", "Pillai", "AIC", "BIC", "Log_Likelihood", "Deviance", "Chi2", "Chi2_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "Sum_Squares_Error", "df", "df_error", "Deviance_error", "Mean_Square", "F", "p")
   parameters <- parameters[order[order %in% names(parameters)]]
 
   .remove_backticks_from_parameter_names(parameters)
