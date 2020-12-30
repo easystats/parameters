@@ -182,6 +182,7 @@
   df_error <span class='op'>=</span> <span class='cn'>NULL</span>,
   type <span class='op'>=</span> <span class='cn'>NULL</span>,
   ci <span class='op'>=</span> <span class='cn'>NULL</span>,
+  test <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -216,6 +217,10 @@
     <tr>
       <th>ci</th>
       <td><p>Confidence Interval (CI) level for effect sizes <code>omega_squared</code>, <code>eta_squared</code> etc. The default, <code>NULL</code>, will compute no confidence intervals. <code>ci</code> should be a scalar between 0 and 1.</p></td>
+    </tr>
+    <tr>
+      <th>test</th>
+      <td><p>String, indicating the type of test for <code>Anova.mlm</code> to be returned. If <code>"multivariate"</code> (or <code>NULL</code>), returns the summary of the multivariate test (that is also given by the <code>print</code>-method). If <code>test = "univariate"</code>, returns the summary of the univariate test.</p></td>
     </tr>
     <tr>
       <th>verbose</th>

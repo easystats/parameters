@@ -182,6 +182,7 @@
   omega_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
   eta_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
   epsilon_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cohens_g <span class='op'>=</span> <span class='cn'>NULL</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -216,6 +217,11 @@ for details.</p></td>
       <td><p>Logical, if <code>TRUE</code>,
 returns the non-partial effect size Omega, Eta or Epsilon squared. Only
 applies to objects from <code><a href='https://rdrr.io/r/stats/oneway.test.html'>oneway.test()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>cohens_g</th>
+      <td><p>If <code>TRUE</code>, compute Cohen's g as index of effect size.
+Only applies to objects from <code><a href='https://rdrr.io/r/stats/mcnemar.test.html'>mcnemar.test()</a></code>.</p></td>
     </tr>
     <tr>
       <th>ci</th>
