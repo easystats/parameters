@@ -5,7 +5,7 @@
 * `coxr` (*coxrobust*), `coeftest` (*lmtest*), `ivfixed` (*ivfixed*), 
   `ivprobit` (*ivprobit*), `riskRegression` (*riskRegression*),
   `fitdistr` (*MASS*), `yuen`, `t1way`, `mcp1` and `mcp2` (*WRS2*),
-  `Anova.mlm` (*car*), `rqs` (*quantreg*).
+  `Anova.mlm` (*car*), `rqs` (*quantreg*), `summary.lm`.
 
 ## New functions
 
