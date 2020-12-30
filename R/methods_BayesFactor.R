@@ -89,10 +89,10 @@ model_parameters.BFBayesFactor <- function(model,
   )
 
   # Effect size?
-  if (requireNamespace("effectsize", quietly = TRUE)) {
+  if (requireNamespace("effectsize", quietly = TRUE) && .classify_BFBayesFactor(model) %in% c("ttest1", "ttest2", "xtable")) {
     tryCatch(
       {
-        effsize <- effectsize::effectsize(model)
+        effsize <- effectsize::effectsize(model, centrality = centrality)
         out <- merge(out, effsize, sort = FALSE, all = TRUE)
       },
       error = function(e) {
