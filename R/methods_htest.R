@@ -386,8 +386,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   if (!is.null(cramers_v) && requireNamespace("effectsize", quietly = TRUE)) {
     # Cramers V
-    ## TODO add verbose
-    es <- effectsize::cramers_v(model$observed, ci = ci, adjust = cramers_v == "adjusted")
+    es <- effectsize::effectsize(model$observed, type = "cramers_v", ci = ci, adjust = identical(cramers_v, "adjusted"), verbose = verbose)
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("Cramers_", names(es)[ci_cols])
@@ -396,8 +395,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   if (!is.null(phi) && requireNamespace("effectsize", quietly = TRUE)) {
     # Phi
-    ## TODO add verbose
-    es <- effectsize::phi(model$observed, ci = ci, adjust = phi == "adjusted")
+    es <- effectsize::effectsize(model$observed, type = "phi", ci = ci, adjust = identical(phi, "adjusted"), verbose = verbose)
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("phi_", names(es)[ci_cols])
