@@ -136,22 +136,6 @@ model_parameters.blavaan <- model_parameters.lavaan
 
 
 
-#' @export
-n_parameters.lavaan <- function(x, ...) {
-  length(stats::coef(x))
-  # if (!requireNamespace("lavaan", quietly = TRUE)) {
-  #   stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
-  # }
-  # lavaan::fitmeasures(x)[["npar"]]
-}
-
-
-#' @export
-n_parameters.blavaan <- n_parameters.lavaan
-
-
-
-
 #' @importFrom insight export_table
 #' @export
 print.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...) {
