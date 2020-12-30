@@ -17,7 +17,7 @@
 model_parameters.t1way <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_t1way(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
-  class(parameters) <- c("parameters_model", class(parameters))
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 
@@ -56,7 +56,7 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
 model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_yuen(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
-  class(parameters) <- c("parameters_model", class(parameters))
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 
@@ -98,7 +98,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_mcp(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
-  class(parameters) <- c("parameters_model", class(parameters))
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 

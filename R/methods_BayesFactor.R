@@ -24,7 +24,7 @@
 #'   model_parameters(model)
 #' }}
 #' @return A data frame of indices related to the model's parameters.
-#' @importFrom stats na.omit
+#' @importFrom stats na.omit setNames
 #' @importFrom bayestestR bayesfactor_models
 #' @importFrom insight get_priors
 #' @export
@@ -88,6 +88,21 @@ model_parameters.BFBayesFactor <- function(model,
     }
   )
 
+  # Effect size?
+  if (requireNamespace("effectsize", quietly = TRUE)) {
+    tryCatch(
+      {
+        effsize <- effectsize::effectsize(model)
+        out <- merge(out, effsize, sort = FALSE, all = TRUE)
+      },
+      error = function(e) {
+        NULL
+      }
+    )
+  }
+
+
+
   # Remove unnecessary columns
   if ("CI" %in% names(out) && length(stats::na.omit(unique(out$CI))) == 1) {
     out$CI <- NULL
@@ -105,9 +120,15 @@ model_parameters.BFBayesFactor <- function(model,
   if (.n_unique(out$Component) == 1) out$Component <- NULL
   if (.n_unique(out$Effects) == 1) out$Effects <- NULL
 
+  pretty_names <- stats::setNames(
+    gsub("Cohens_d", "Cohen's D", gsub("Cramers_v", "Cramer's V", out$Parameter, fixed = TRUE), fixed = TRUE),
+    out$Parameter
+  )
+
   attr(out, "ci") <- ci
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(out) <- c("parameters_model", class(out))
+  attr(out, "pretty_names") <- pretty_names
+  class(out) <- c("parameters_model", "see_parameters_model", class(out))
 
   out
 }

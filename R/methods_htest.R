@@ -80,7 +80,7 @@ model_parameters.htest <- function(model,
   }
 
   parameters <- .add_htest_parameters_attributes(parameters, model, ci, ...)
-  class(parameters) <- c("parameters_model", class(parameters))
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 
@@ -116,7 +116,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   parameters <- stats::na.omit(parameters)
 
   parameters <- .add_htest_attributes(parameters, model, p_adjust = model$p.adjust.method)
-  class(parameters) <- c("parameters_model", class(parameters))
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 
