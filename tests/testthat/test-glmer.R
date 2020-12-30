@@ -23,8 +23,8 @@ if (require("testthat") &&
 
   test_that("model_parameters.glmer betwithin", {
     params <- model_parameters(model, df_method = "betwithin")
-    expect_equal(params$SE, c(0.27486, 0.32572, 0.35021, 0.46373), tolerance = 1e-2)
-    expect_equal(params$df, c(36, 36, 36, 36), tolerance = 1e-2)
+    expect_equal(params$SE, c(0.23009, 0.30433, 0.32476, 0.42632), tolerance = 1e-2)
+    expect_equal(params$df, c(822, 822, 822, 822), tolerance = 1e-2)
   })
 
   set.seed(123)
@@ -49,7 +49,7 @@ if (require("testthat") &&
 
   test_that("model_parameters.glmer betwithin", {
     params <- model_parameters(model, df_method = "betwithin")
-    expect_equal(params$SE, c(0.69571, 0.38368, 0.38427, 0.50275, 0.24484), tolerance = 1e-2)
-    expect_equal(params$df, c(35, 35, 35, 35, 9), tolerance = 1e-2)
+    expect_equal(params$SE, c(0.66672, 0.36276, 0.36322, 0.4575, 0.24484), tolerance = 1e-2)
+    expect_equal(params$df, c(821, 821, 821, 821, 9), tolerance = 1e-2)
   })
 }
