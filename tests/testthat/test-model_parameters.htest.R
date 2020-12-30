@@ -49,22 +49,22 @@ if (require("testthat") && require("parameters")) {
 
     params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), standardized_d = TRUE)
     test_that("model_parameters-t-test standardized d", {
-      expect_equal(params$d, -4.854459, tolerance = 0.05)
-      expect_equal(params$d_CI_low, -5.3674, tolerance = 0.05)
+      expect_equal(params$Cohens_d, -4.210417, tolerance = 0.05)
+      expect_equal(params$d_CI_low, -4.655306, tolerance = 0.05)
       expect_equal(
         colnames(params),
         c("Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
-          "Difference", "t", "df_error", "CI_low", "CI_high", "d", "d_CI_low",
+          "Difference", "t", "df_error", "CI_low", "CI_high", "Cohens_d", "d_CI_low",
           "d_CI_high", "p", "Method")
       )
     })
 
-    mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), standardized_d = TRUE)
+    mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), standardized_d = TRUE, verbose = FALSE)
     test_that("model_parameters-t-test standardized d", {
-      expect_equal(mp$d, -1.958435, tolerance = 1e-3)
+      expect_equal(mp$Cohens_d, 4.595532, tolerance = 1e-3)
       expect_equal(colnames(mp),
                    c("Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference",
-                     "t", "df_error", "CI_low", "CI_high", "d", "d_CI_low", "d_CI_high",
+                     "t", "df_error", "CI_low", "CI_high", "Cohens_d", "d_CI_low", "d_CI_high",
                      "p", "Method"))
     })
   }
