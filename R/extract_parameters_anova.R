@@ -1,5 +1,5 @@
 #' @keywords internal
-.extract_parameters_anova <- function(model) {
+.extract_parameters_anova <- function(model, test = "multivariate") {
 
   # Processing
   if ("manova" %in% class(model)) {
@@ -11,7 +11,7 @@
   } else if ("anova" %in% class(model)) {
     parameters <- .extract_anova_anova(model)
   } else if ("Anova.mlm" %in% class(model)) {
-    parameters <- .extract_anova_mlm(model)
+    parameters <- .extract_anova_mlm(model, test)
   } else if ("aovlist" %in% class(model)) {
     parameters <- .extract_anova_aovlist(model)
   } else if ("anova.rms" %in% class(model)) {
@@ -187,32 +187,39 @@
 # Anova.mlm -------------
 
 #' @importFrom stats pf
-.extract_anova_mlm <- function(model) {
-  out <- lapply(1:length(model$terms), function(i) {
-    if (model$repeated) {
-      qr_value <- qr(model$SSPE[[i]])
-    } else {
-      qr_value <- qr(model$SSPE)
-    }
-    eigs <- Re(eigen(qr.coef(qr_value, model$SSP[[i]]), symmetric = FALSE)$values)
-    test <- switch(model$test,
-                   "Pillai" = .pillai_test(eigs, model$df[i], model$error.df),
-                   "Wilks" = .wilks_test(eigs, model$df[i], model$error.df),
-                   "Hotelling-Lawley" = .hl_test(eigs, model$df[i], model$error.df),
-                   "Roy" = .roy_test(eigs, model$df[i], model$error.df))
-    data.frame(
-      Parameter = model$terms[i],
-      df = model$df[i],
-      Statistic = test[1],
-      `F` = test[2],
-      df_num = test[3],
-      df_error = test[4],
-      p = stats::pf(test[2], test[3], test[4], lower.tail = FALSE),
-      stringsAsFactors = FALSE
-    )
-  })
+.extract_anova_mlm <- function(model, test = NULL) {
+  if (identical(test, "univariate")) {
+    ut <- unclass(summary(model)$univariate.tests)
+    out <- data.frame(Parameter = rownames(ut), stringsAsFactors = FALSE)
+    out <- cbind(out, as.data.frame(ut))
+  } else {
+    out <- lapply(1:length(model$terms), function(i) {
+      if (model$repeated) {
+        qr_value <- qr(model$SSPE[[i]])
+      } else {
+        qr_value <- qr(model$SSPE)
+      }
+      eigs <- Re(eigen(qr.coef(qr_value, model$SSP[[i]]), symmetric = FALSE)$values)
+      test <- switch(model$test,
+                     "Pillai" = .pillai_test(eigs, model$df[i], model$error.df),
+                     "Wilks" = .wilks_test(eigs, model$df[i], model$error.df),
+                     "Hotelling-Lawley" = .hl_test(eigs, model$df[i], model$error.df),
+                     "Roy" = .roy_test(eigs, model$df[i], model$error.df))
+      data.frame(
+        Parameter = model$terms[i],
+        df = model$df[i],
+        Statistic = test[1],
+        `F` = test[2],
+        df_num = test[3],
+        df_error = test[4],
+        p = stats::pf(test[2], test[3], test[4], lower.tail = FALSE),
+        stringsAsFactors = FALSE
+      )
+    })
 
-  do.call(rbind, out)
+    out <- do.call(rbind, out)
+  }
+  out
 }
 
 

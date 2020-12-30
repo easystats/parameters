@@ -15,6 +15,10 @@
   print tabular outputs from data frames (as returned by most functions in
   _parameters_) into nicely rendered HTML markdown tables.
 
+## Changes to functions
+
+* Added more effect size measures to `model_parameters()` for `htest` objects.
+
 ## Bug fixes
 
 * `model_parameters()` for t-tests when `standardize_d = TRUE`, did not return

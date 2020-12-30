@@ -7,6 +7,8 @@
 #' @param cramers_v,phi Compute Cramer's V or phi as index of effect size.
 #'   Can be \code{"raw"} or \code{"adjusted"} (effect size will be bias-corrected).
 #'   Only applies to objects from \code{chisq.test()}.
+#' @param cohens_g If \code{TRUE}, compute Cohen's g as index of effect size.
+#'   Only applies to objects from \code{mcnemar.test()}.
 #' @param standardized_d If \code{TRUE}, compute standardized d as index of
 #'   effect size. Only applies to objects from \code{t.test()}. Calculation of
 #'   \code{d} is based on the t-value (see \code{\link[effectsize]{t_to_d}})
@@ -50,6 +52,7 @@ model_parameters.htest <- function(model,
                                    omega_squared = NULL,
                                    eta_squared = NULL,
                                    epsilon_squared = NULL,
+                                   cohens_g = NULL,
                                    ci = .95,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
@@ -65,6 +68,7 @@ model_parameters.htest <- function(model,
       omega_squared = omega_squared,
       eta_squared = eta_squared,
       epsilon_squared = epsilon_squared,
+      cohens_g = cohens_g,
       ci = ci,
       verbose = verbose,
       ...
@@ -129,7 +133,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                       standardized_d = NULL,
                                       omega_squared = NULL,
                                       eta_squared = NULL,
-                                      epsilon_squared = epsilon_squared,
+                                      epsilon_squared = NULL,
+                                      cohens_g = NULL,
                                       ci = 0.95,
                                       verbose = TRUE,
                                       ...) {
@@ -145,7 +150,9 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     out <- .add_effectsize_oneway(model, out, omega_squared, eta_squared, epsilon_squared, ci = ci, verbose = verbose)
   } else if (m_info$is_chi2test) {
     out <- .extract_htest_chi2(model)
-    if (!grepl("^McNemar", model$method)) {
+    if (grepl("^McNemar", model$method)) {
+      out <- .add_effectsize_mcnemar(model, out, cohens_g = cohens_g, ci = ci, verbose = verbose)
+    } else {
       out <- .add_effectsize_chi2(model, out, cramers_v = cramers_v, phi = phi, ci = ci, verbose = verbose)
     }
   } else if (m_info$is_proptest) {
@@ -402,6 +409,36 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     "Chi2", "df", "df_error", "Cramers_v", "Cramers_v_adjusted", "Cramers_CI_low",
     "Cramers_CI_high", "phi", "phi_adjusted", "phi_CI_low",
     "phi_CI_high", "p", "Method", "method"
+  )
+  out <- out[col_order[col_order %in% names(out)]]
+  out
+}
+
+
+
+
+.add_effectsize_mcnemar <- function(model,
+                                    out,
+                                    cohens_g = NULL,
+                                    ci = .95,
+                                    verbose = TRUE) {
+  if (is.null(cohens_g)) {
+    return(out)
+  }
+
+  if (requireNamespace("effectsize", quietly = TRUE)) {
+    ## TODO add verbose
+    es <- effectsize::effectsize(model, ci = ci)
+    es$CI <- NULL
+    ci_cols <- grepl("^CI", names(es))
+    names(es)[ci_cols] <- paste0("Cohens_", names(es)[ci_cols])
+    out <- cbind(out, es)
+  }
+
+  # reorder
+  col_order <- c(
+    "Chi2", "df", "df_error", "Cohens_g", "Cohens_CI_low",
+    "Cohens_CI_high", "p", "Method", "method"
   )
   out <- out[col_order[col_order %in% names(out)]]
   out

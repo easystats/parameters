@@ -13,6 +13,7 @@
   omega_squared = NULL,
   eta_squared = NULL,
   epsilon_squared = NULL,
+  cohens_g = NULL,
   ci = 0.95,
   bootstrap = FALSE,
   verbose = TRUE,
@@ -36,6 +37,9 @@ for details.}
 \item{omega_squared, eta_squared, epsilon_squared}{Logical, if \code{TRUE},
 returns the non-partial effect size Omega, Eta or Epsilon squared. Only
 applies to objects from \code{oneway.test()}.}
+
+\item{cohens_g}{If \code{TRUE}, compute Cohen's g as index of effect size.
+Only applies to objects from \code{mcnemar.test()}.}
 
 \item{ci}{Level of confidence intervals for effect size statistic. Currently
 only applies to objects from \code{chisq.test()} or \code{oneway.test()}.}

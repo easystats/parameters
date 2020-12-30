@@ -107,7 +107,7 @@ proportion of HDI, to use for the percentage in ROPE.}
 \item{effects}{Should parameters for fixed effects, random effects
 or both be returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should all parameters, parameters for the
+\item{component}{Which type of parameters to return, such as parameters for the
  conditional model, the zero-inflated part of the model, the dispersion
  term, the instrumental variables or marginal effects be returned? Applies
  to models with zero-inflated and/or dispersion formula, or to models with

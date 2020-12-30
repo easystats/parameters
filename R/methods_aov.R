@@ -13,6 +13,7 @@
 #' @param df_error Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for ANOVA-tables from mixed models. See 'Examples'. (Ignored for \code{afex_aov}.)
 #' @param type Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for \code{afex_aov}.)
 #' @param ci Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.
+#' @param test String, indicating the type of test for \code{Anova.mlm} to be returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of the multivariate test (that is also given by the \code{print}-method). If \code{test = "univariate"}, returns the summary of the univariate test.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -78,6 +79,7 @@ model_parameters.aov <- function(model,
                                  df_error = NULL,
                                  type = NULL,
                                  ci = NULL,
+                                 test = NULL,
                                  verbose = TRUE,
                                  ...) {
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
@@ -89,13 +91,13 @@ model_parameters.aov <- function(model,
   }
 
   # extract standard parameters
-  parameters <- .extract_parameters_anova(model)
+  parameters <- .extract_parameters_anova(model, test)
 
   # add effect sizes, if available
   parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci, verbose = verbose)
 
   # add attributes
-  parameters <- .add_anova_attributes(parameters, model, ci, ...)
+  parameters <- .add_anova_attributes(parameters, model, ci, test = test, ...)
 
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
