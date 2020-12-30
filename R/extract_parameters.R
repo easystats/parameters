@@ -243,7 +243,7 @@
 
   # ==== Std Coefficients for other methods than "refit"
 
-  if (!is.null(standardize)) {
+  if (!is.null(standardize) && !isFALSE(standardize)) {
     # give minimal attributes required for standardization
     temp_pars <- parameters
     class(temp_pars) <- c("parameters_model", class(temp_pars))
