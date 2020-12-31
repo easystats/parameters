@@ -435,7 +435,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   # reorder
   col_order <- c(
-    "Chi2", "df", "df_error", "Cohens_g", "Cohens_CI_low",
+    "Chi2", "df", "df_error", "Cohens_g", "g", "Cohens_CI_low",
     "Cohens_CI_high", "p", "Method", "method"
   )
   out <- out[col_order[col_order %in% names(out)]]
@@ -467,8 +467,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   col_order <- c(
     "Parameter1", "Parameter2", "Parameter", "Group", "Mean_Parameter1",
     "Mean_Parameter2", "Mean_Group1", "Mean_Group2",  "mu", "Difference",
-    "Mean_Difference", "t", "df_error", "CI_low", "CI_high", "d", "d_CI_low",
-    "d_CI_high", "p", "Method", "method"
+    "Mean_Difference", "t", "df_error", "CI_low", "CI_high", "d", "Cohens_d",
+    "d_CI_low", "d_CI_high", "p", "Method", "method"
   )
   out <- out[col_order[col_order %in% names(out)]]
   out
