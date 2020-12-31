@@ -6,9 +6,8 @@ if (require("testthat") &&
 
   if (.runThisTest) {
     test_that("model_parameters.BFBayesFactor", {
-      skip_on_cran()
       model <- BayesFactor::ttestBF(iris$Sepal.Width, iris$Petal.Length, paired = TRUE)
-      testthat::expect_equal(parameters::model_parameters(model)$BF, 492.770, tolerance = 2)
+      testthat::expect_equal(parameters::model_parameters(model)$BF, c(492.77057, NA), tolerance = 1e-2)
     })
   }
 
@@ -29,7 +28,6 @@ if (require("testthat") &&
 
   if (.runThisTest) {
     test_that("model_parameters.BFBayesFactor", {
-      skip_on_cran()
       model <- BayesFactor::ttestBF(formula = mpg ~ am, data = df)
       expect_equal(model_parameters(model)$BF, 86, tolerance = 2)
     })
