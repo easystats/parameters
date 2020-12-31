@@ -8,7 +8,7 @@ model_parameters.PMCMR <- function(model, ...) {
   parameters <- PMCMRplus::toTidy(model)
   names(parameters) <- c(
     "Group1", "Group2", "Statistic", "p", "alternative", "Method",
-    "Distribution", "p.adjust.method"
+    "Distribution", "p_adjustment"
   )
 
   parameters <- .add_htest_parameters_attributes(parameters, model)

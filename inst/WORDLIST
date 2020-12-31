@@ -83,6 +83,7 @@ Olkin
 PCoA
 PHQ
 PLOS
+PMCMRplus
 PSU
 Pernet
 Pettersson
@@ -121,9 +122,9 @@ Turkheimer
 VSS
 Valls
 Velicer
+WRS
 Waggoner
 Wisenbaker
-WRS
 Zoski
 afex
 al
@@ -176,6 +177,7 @@ lm
 lme
 lmerModLmerTest
 lmerTest
+lmodel
 lmtest
 loadings
 logistf
