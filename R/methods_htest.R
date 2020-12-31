@@ -530,7 +530,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 .add_htest_parameters_attributes <- function(params, model, ci = 0.95, ...) {
-  attr(params, "title") <- params$Method
+  attr(params, "title") <- unique(params$Method)
   attr(params, "model_class") <- class(model)
 
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
