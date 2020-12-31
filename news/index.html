@@ -176,7 +176,7 @@
 <a href="#new-supported-model-classes" class="anchor"></a>New supported model classes</h2>
 <ul>
 <li>
-<code>coxr</code> (<em>coxrobust</em>), <code>coeftest</code> (<em>lmtest</em>), <code>ivfixed</code> (<em>ivfixed</em>), <code>ivprobit</code> (<em>ivprobit</em>), <code>riskRegression</code> (<em>riskRegression</em>), <code>fitdistr</code> (<em>MASS</em>), <code>yuen</code>, <code>t1way</code>, <code>mcp1</code> and <code>mcp2</code> (<em>WRS2</em>), <code>Anova.mlm</code> (<em>car</em>), <code>rqs</code> (<em>quantreg</em>), <code>lmodel2</code> (<em>lmodel2</em>), <code>summary.lm</code>.</li>
+<code>coxr</code> (<em>coxrobust</em>), <code>coeftest</code> (<em>lmtest</em>), <code>ivfixed</code> (<em>ivfixed</em>), <code>ivprobit</code> (<em>ivprobit</em>), <code>riskRegression</code> (<em>riskRegression</em>), <code>fitdistr</code> (<em>MASS</em>), <code>yuen</code>, <code>t1way</code>, <code>mcp1</code> and <code>mcp2</code> (<em>WRS2</em>), <code>Anova.mlm</code> (<em>car</em>), <code>rqs</code> (<em>quantreg</em>), <code>lmodel2</code> (<em>lmodel2</em>), <code>summary.lm</code>, <code>PMCMR</code>, <code>osrt</code> and <code>trendPMCMR</code> (<em>PMCMRplus</em>).</li>
 </ul>
 </div>
 <div id="new-functions" class="section level2">
@@ -228,7 +228,7 @@
 <ul>
 <li><p>Fixed breaking code / failing tests due to latest <em>effectsize</em> update.</p></li>
 <li><p>Fixed issue with <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for models of class <code>mlm</code>.</p></li>
-<li><p>Undocumented arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> worked for <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>, but not when directly called inside <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. Now, <code><a href="../reference/model_parameters.html">model_parameters(model, digits = 5, ci_digits = 8)</a></code> works again.</p></li>
+<li><p>Undocumented arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> worked for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code>, but not when directly called inside <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. Now, <code><a href="../reference/model_parameters.html">model_parameters(model, digits = 5, ci_digits = 8)</a></code> works again.</p></li>
 <li><p>Fixed some minor printing-issues.</p></li>
 </ul>
 </div>
@@ -263,7 +263,7 @@
 <ul>
 <li><p><code><a href="https://easystats.github.io/insight/reference/display.html">display()</a></code>, to format output from package-functions into different formats.</p></li>
 <li><p><code><a href="https://easystats.github.io/insight/reference/display.html">print_md()</a></code> as an alias for <code><a href="https://easystats.github.io/insight/reference/display.html">display(format = "markdown")</a></code>. This allows to print tabular outputs from data frames (as returned by most functions in <em>parameters</em>) into nicely rendered markdown tables.</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/format.html">format()</a></code>, to create a “pretty data frame” with nicer column names and formatted values. This is one of the worker-functions behind <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> or <code><a href="https://easystats.github.io/insight/reference/display.html">print_md()</a></code>.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/format.html">format()</a></code>, to create a “pretty data frame” with nicer column names and formatted values. This is one of the worker-functions behind <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> or <code><a href="https://easystats.github.io/insight/reference/display.html">print_md()</a></code>.</p></li>
 </ul>
 </div>
 </div>
@@ -281,7 +281,7 @@
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>metaBMA</em>-models now includes prior information for the meta-parameters.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for meta-analysis-models gains a <code>include_studies</code>-argument, to include or remove studies from the output.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for gam-models now includes the residual df for smooth terms, and no longer the reference df.</p></li>
-<li><p>Slightly revised and improved the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
+<li><p>Slightly revised and improved the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
 </ul>
 </div>
 <div id="other-functions" class="section level3">
@@ -337,9 +337,9 @@
 <h3 class="hasAnchor">
 <a href="#printing-model-parameters" class="anchor"></a>Printing model parameters</h3>
 <ul>
-<li><p><code><a href="https://rdrr.io/r/base/print.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now names the coefficients column depending on the model type (i.e. <code>"Odds Ratios"</code> for logistic regression when <code>exponentiate = TRUE</code> etc.)</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/print.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>show_sigma</code> argument, to show or hide information on the residual standard deviation.</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/print.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> displays a message for Bayesian models, indicating which method to compute credible intervals was used.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now names the coefficients column depending on the model type (i.e. <code>"Odds Ratios"</code> for logistic regression when <code>exponentiate = TRUE</code> etc.)</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>show_sigma</code> argument, to show or hide information on the residual standard deviation.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> displays a message for Bayesian models, indicating which method to compute credible intervals was used.</p></li>
 </ul>
 </div>
 <div id="other-changes" class="section level3">
@@ -415,7 +415,7 @@
 <li><p>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> when <code>x</code> was a mixed model.</p></li>
 <li><p>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> for data with missing values.</p></li>
 <li><p>Fix issue in <code><a href="../reference/ci_ml1.html">dof_ml1()</a></code> when random-effect terms where character vectors.</p></li>
-<li><p>Fix issue in <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> that printed empty lines for rows with complete missing values. Empty lines are now removed.</p></li>
+<li><p>Fix issue in <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> that printed empty lines for rows with complete missing values. Empty lines are now removed.</p></li>
 <li><p>Fix issue in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when <code><a href="https://rdrr.io/r/base/Log.html">exp()</a></code> was used in a model formula.</p></li>
 </ul>
 </div>
@@ -475,7 +475,7 @@
 <a href="#simulate_parameters-and-simulate_model" class="anchor"></a><code>simulate_parameters()</code> and <code>simulate_model()</code>
 </h3>
 <ul>
-<li><p>has a nicer <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method.</p></li>
+<li><p>has a nicer <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> method.</p></li>
 <li><p>now also simulate parameters from the dispersion model for <em>glmmTMB</em> objects.</p></li>
 <li><p>gets a <code>verbose</code> argument, to show or hide warnings and messages.</p></li>
 </ul>
@@ -595,8 +595,8 @@
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> gains a <code>type</code>-argument to compute type-1, type-2 or type-3 sums of squares.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Bayesian models gains a <code>standardize</code> argument, to return standardized parameters from the posterior distribution.</p></li>
-<li><p>Improved <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for nested <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> (repeated measurements).</p></li>
-<li><p>You can now control whether <code><a href="../reference/check_heterogeneity.html">demean()</a></code> should add attributes to indicate within- and between-effects. This is only relevant for the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>-method of <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
+<li><p>Improved <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for nested <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> (repeated measurements).</p></li>
+<li><p>You can now control whether <code><a href="../reference/check_heterogeneity.html">demean()</a></code> should add attributes to indicate within- and between-effects. This is only relevant for the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code>-method of <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
 </ul>
 </div>
 </div>
@@ -671,7 +671,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li><p>Fixed minor issue with the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>-method for <code><a href="../reference/model_parameters.befa.html">model_parameters.befa()</a></code>.</p></li>
+<li><p>Fixed minor issue with the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code>-method for <code><a href="../reference/model_parameters.befa.html">model_parameters.befa()</a></code>.</p></li>
 <li><p>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with wrong order of degrees of freedom when <code>df_method</code> was different from default.</p></li>
 <li><p>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with accuracy of p-values when <code>df_method = "kenward</code>.</p></li>
 <li><p>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with wrong test statistic for <em>lmerModLmerTest</em> models.</p></li>

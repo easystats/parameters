@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters from Hypothesis Testing — model_parameters.glht • parameters</title>
+<title>Parameters from Hypothesis Testing — model_parameters.PMCMR • parameters</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Parameters from Hypothesis Testing — model_parameters.glht" />
+<meta property="og:title" content="Parameters from Hypothesis Testing — model_parameters.PMCMR" />
 <meta property="og:description" content="Parameters from Hypothesis Testing." />
 <meta property="og:image" content="/logo.png" />
 
@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Hypothesis Testing</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/methods_multcomp.R'><code>R/methods_multcomp.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/parameters/blob/master/R/methods_PMCMRplus.R'><code>R/methods_PMCMRplus.R</code></a>, <a href='https://github.com/easystats/parameters/blob/master/R/methods_multcomp.R'><code>R/methods_multcomp.R</code></a></small>
     <div class="hidden name"><code>model_parameters.glht.Rd</code></div>
     </div>
 
@@ -173,7 +173,10 @@
     <p>Parameters from Hypothesis Testing.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for glht</span>
+    <pre class="usage"><span class='co'># S3 method for PMCMR</span>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for glht</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -181,7 +184,12 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Object of class <code><a href='https://rdrr.io/pkg/multcomp/man/glht.html'>glht</a></code> (<span class="pkg">multcomp</span>).</p></td>
+      <td><p>Object of class <code><a href='https://rdrr.io/pkg/multcomp/man/glht.html'>glht</a></code> (<span class="pkg">multcomp</span>)
+or of class <code>PMCMR</code>, <code>trendPMCMR</code> or <code>osrt</code> (<span class="pkg">PMCMRplus</span>).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -194,10 +202,6 @@
     <tr>
       <th>verbose</th>
       <td><p>Toggle warnings and messages.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
     </table>
 
@@ -242,8 +246,30 @@
 #&gt; Examination == 0      |       -0.26 | 0.25 | [-0.93,  0.41] | -1.02 | 0.785 
 #&gt; Education == 0        |       -0.87 | 0.18 | [-1.35, -0.39] | -4.76 | &lt; .001
 #&gt; Catholic == 0         |        0.10 | 0.04 | [ 0.01,  0.20] |  2.95 | 0.023 
-#&gt; Infant.Mortality == 0 |        1.08 | 0.38 | [ 0.07,  2.09] |  2.82 | 0.032 </div><div class='input'><span class='co'># }</span>
-</div></pre>
+#&gt; Infant.Mortality == 0 |        1.08 | 0.38 | [ 0.07,  2.09] |  2.82 | 0.032 </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"PMCMRplus"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/kwAllPairsConoverTest.html'>kwAllPairsConoverTest</a></span><span class='op'>(</span><span class='va'>count</span> <span class='op'>~</span> <span class='va'>spray</span>, data <span class='op'>=</span> <span class='va'>InsectSprays</span><span class='op'>)</span>
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: PMCMRplus</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Ties are present. Quantiles were corrected for ties.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Conover's all-pairs test
+#&gt; 
+#&gt; </span><span>Group1 | Group2 | Statistic |      p | alternative | Distribution | p.adjust.method
+#&gt; -----------------------------------------------------------------------------------
+#&gt; B      |      A |      0.89 | 0.988  |   two.sided |            q |     single-step
+#&gt; C      |      A |    -13.58 | &lt; .001 |   two.sided |            q |     single-step
+#&gt; C      |      B |    -14.47 | &lt; .001 |   two.sided |            q |     single-step
+#&gt; D      |      A |     -8.87 | &lt; .001 |   two.sided |            q |     single-step
+#&gt; D      |      B |     -9.76 | &lt; .001 |   two.sided |            q |     single-step
+#&gt; D      |      C |      4.71 | 0.017  |   two.sided |            q |     single-step
+#&gt; E      |      A |    -10.95 | &lt; .001 |   two.sided |            q |     single-step
+#&gt; E      |      B |    -11.84 | &lt; .001 |   two.sided |            q |     single-step
+#&gt; E      |      C |      2.63 | 0.437  |   two.sided |            q |     single-step
+#&gt; E      |      D |     -2.09 | 0.681  |   two.sided |            q |     single-step
+#&gt; F      |      A |      1.15 | 0.964  |   two.sided |            q |     single-step
+#&gt; F      |      B |      0.26 | &gt; .999 |   two.sided |            q |     single-step
+#&gt; F      |      C |     14.74 | &lt; .001 |   two.sided |            q |     single-step
+#&gt; F      |      D |     10.02 | &lt; .001 |   two.sided |            q |     single-step
+#&gt; F      |      E |     12.11 | &lt; .001 |   two.sided |            q |     single-step</div><div class='input'><span class='co'># }</span>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
