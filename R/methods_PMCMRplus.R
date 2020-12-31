@@ -1,16 +1,5 @@
-#' Parameters from hypothesis tests from \code{PMCMRplus}
-#'
-#' @param model Object of class \code{PMCMR} or\code{trendPMCMR} or \code{osrt}.
-#' @param ... Arguments passed to or from other methods.
-#'
-#' @examples
-#' if (require("PMCMRplus")) {
-#'   model <- kwAllPairsConoverTest(count ~ spray, data = InsectSprays)
-#'   model_parameters(model)
-#' }
-#' @return A data frame of indices related to the model's parameters.
+#' @rdname model_parameters.glht
 #' @export
-
 model_parameters.PMCMR <- function(model, ...) {
   if (!requireNamespace("PMCMRplus", quietly = TRUE)) {
     stop("Package 'PMCMRplus' needed. Please install it by running `install.packages('PMCMRplus')`.")
@@ -26,7 +15,7 @@ model_parameters.PMCMR <- function(model, ...) {
 
   # TO DO: this is currently commented because it seems to print "Method" name
   # multiple times and I am not sure why
-  #parameters <- .add_htest_parameters_attributes(parameters, model)
+  parameters <- .add_htest_parameters_attributes(parameters, model)
 
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters

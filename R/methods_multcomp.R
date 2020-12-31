@@ -2,7 +2,8 @@
 #'
 #' Parameters from Hypothesis Testing.
 #'
-#' @param model Object of class \code{\link[multcomp:glht]{glht}} (\pkg{multcomp}).
+#' @param model Object of class \code{\link[multcomp:glht]{glht}} (\pkg{multcomp})
+#'   or of class \code{PMCMR}, \code{trendPMCMR} or \code{osrt} (\pkg{PMCMRplus}).
 #' @inheritParams model_parameters.default
 #'
 #' @return A data frame of indices related to the model's parameters.
@@ -23,6 +24,10 @@
 #'     )
 #'   )
 #'   model_parameters(mod)
+#' }
+#' if (require("PMCMRplus")) {
+#'   model <- kwAllPairsConoverTest(count ~ spray, data = InsectSprays)
+#'   model_parameters(model)
 #' }
 #' }
 #' @export
