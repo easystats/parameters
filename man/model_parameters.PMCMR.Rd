@@ -19,8 +19,7 @@ Parameters from hypothesis tests from \code{PMCMRplus}
 }
 \examples{
 if (require("PMCMRplus")) {
-model <- adKSampleTest(count ~ spray, InsectSprays)
-model_parameters(model)
+  model <- kwAllPairsConoverTest(count ~ spray, data = InsectSprays)
+  model_parameters(model)
 }
-
 }
