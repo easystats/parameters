@@ -61,7 +61,7 @@ if (require("testthat") && require("parameters")) {
 
     mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), standardized_d = TRUE, verbose = FALSE)
     test_that("model_parameters-t-test standardized d", {
-      expect_equal(mp$Cohens_d, 4.595532, tolerance = 1e-3)
+      expect_equal(mp$Cohens_d, -1.696032, tolerance = 1e-3)
       expect_equal(colnames(mp),
                    c("Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference",
                      "t", "df_error", "CI_low", "CI_high", "Cohens_d", "d_CI_low", "d_CI_high",
