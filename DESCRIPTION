@@ -117,6 +117,7 @@ Suggests:
     nlme,
     performance (>= 0.5.1),
     plm,
+    PMCMRplus,
     projpred,
     pscl,
     psych,
