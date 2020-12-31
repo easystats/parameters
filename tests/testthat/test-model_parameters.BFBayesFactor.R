@@ -29,7 +29,7 @@ if (require("testthat") &&
   if (.runThisTest) {
     test_that("model_parameters.BFBayesFactor", {
       model <- BayesFactor::ttestBF(formula = mpg ~ am, data = df)
-      expect_equal(model_parameters(model)$BF, 86, tolerance = 2)
+      expect_equal(model_parameters(model)$BF, c(86.58973, NA), tolerance = 1)
     })
   }
 
