@@ -6,7 +6,7 @@
   `ivprobit` (*ivprobit*), `riskRegression` (*riskRegression*),
   `fitdistr` (*MASS*), `yuen`, `t1way`, `mcp1` and `mcp2` (*WRS2*),
   `Anova.mlm` (*car*), `rqs` (*quantreg*), `lmodel2` (*lmodel2*),
-  `summary.lm`.
+  `summary.lm`, `PMCMR`, `osrt` and `trendPMCMR` (*PMCMRplus*).
 
 ## New functions
 
