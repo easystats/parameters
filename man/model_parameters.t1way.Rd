@@ -21,10 +21,7 @@ Parameters from \code{WRS2} objects
 }
 \examples{
 if (require("WRS2")) {
-  model1 <- t1way(libido ~ dose, data = viagra)
-  model_parameters(model1)
-
-  model2 <- rmanova(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster)
-  model_parameters(model2)
+  model <- t1way(libido ~ dose, data = viagra)
+  model_parameters(model)
 }
 }
