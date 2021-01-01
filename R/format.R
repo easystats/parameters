@@ -76,7 +76,7 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
   } else {
     if (!is.null(select)) {
       if (is.numeric(select)) select <- colnames(x)[select]
-      select <- union(select, c("Parameter", "Component", "Effects", "Response", "Subgroup", "Function"))
+      select <- union(select, c("Parameter", "Component", "Effects", "Response", "Subgroup"))
       to_remove <- setdiff(colnames(x), select)
       x[to_remove] <- NULL
     }
@@ -91,6 +91,7 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
       param_table <- insight::format_table(i, ci_width = ci_width, ci_brackets = ci_brackets, preserve_attributes = TRUE)
       param_table$Group <- NULL
       param_table$Response <- NULL
+      param_table$Function <- NULL
       param_table
     })
   }
