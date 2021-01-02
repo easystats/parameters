@@ -22,7 +22,9 @@
 #' if (require("BayesFactor")) {
 #'   model <- ttestBF(x = rnorm(100, 1, 1))
 #'   model_parameters(model)
-#' }}
+#' }
+#' }
+#'
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats na.omit setNames
 #' @importFrom bayestestR bayesfactor_models
@@ -92,7 +94,11 @@ model_parameters.BFBayesFactor <- function(model,
   if (requireNamespace("effectsize", quietly = TRUE) && .classify_BFBayesFactor(model) %in% c("ttest1", "ttest2", "xtable")) {
     tryCatch(
       {
-        effsize <- effectsize::effectsize(model, centrality = centrality)
+        effsize <- effectsize::effectsize(model,
+          centrality = centrality,
+          ci = ci,
+          ci_method = ci_method
+        )
         out <- merge(out, effsize, sort = FALSE, all = TRUE)
       },
       error = function(e) {
