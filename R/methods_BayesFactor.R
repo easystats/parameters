@@ -69,6 +69,8 @@ model_parameters.BFBayesFactor <- function(model,
     ...
   )
 
+  bf_type <- .classify_BFBayesFactor(model)
+
   # Add components and effects columns
   cleaned_params <- NULL
   tryCatch(
@@ -92,7 +94,7 @@ model_parameters.BFBayesFactor <- function(model,
   )
 
   # Effect size?
-  if (requireNamespace("effectsize", quietly = TRUE) && .classify_BFBayesFactor(model) %in% c("ttest1", "ttest2", "xtable")) {
+  if (requireNamespace("effectsize", quietly = TRUE) && bf_type %in% c("ttest1", "ttest2", "xtable")) {
     tryCatch(
       {
         effsize <- effectsize::effectsize(model,
@@ -132,7 +134,7 @@ model_parameters.BFBayesFactor <- function(model,
 
   cp <- out$Parameter
 
-  if (!is.null(cleaned_params)) {
+  if (!is.null(cleaned_params) && length(cleaned_params$Cleaned_Parameter) == length(cp) && bf_type == "linear") {
     match_params <- stats::na.omit(match(cp, cleaned_params$Parameter))
     cp <- cleaned_params$Cleaned_Parameter[match_params]
   }
