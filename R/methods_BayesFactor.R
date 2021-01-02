@@ -70,10 +70,11 @@ model_parameters.BFBayesFactor <- function(model,
   )
 
   # Add components and effects columns
+  cleaned_params <- NULL
   tryCatch(
     {
-      params <- insight::clean_parameters(model)[, c("Parameter", "Effects", "Component")]
-      out <- merge(out, params, sort = FALSE)
+      cleaned_params <- insight::clean_parameters(model)
+      out <- merge(out, cleaned_params[, c("Parameter", "Effects", "Component")], sort = FALSE)
     },
     error = function(e) {
       NULL
@@ -126,8 +127,18 @@ model_parameters.BFBayesFactor <- function(model,
   if (.n_unique(out$Component) == 1) out$Component <- NULL
   if (.n_unique(out$Effects) == 1) out$Effects <- NULL
 
+
+  # ==== pretty parameter names
+
+  cp <- out$Parameter
+
+  if (!is.null(cleaned_params)) {
+    match_params <- stats::na.omit(match(cp, cleaned_params$Parameter))
+    cp <- cleaned_params$Cleaned_Parameter[match_params]
+  }
+
   pretty_names <- stats::setNames(
-    gsub("Cohens_d", "Cohen's D", gsub("Cramers_v", "Cramer's V", out$Parameter, fixed = TRUE), fixed = TRUE),
+    gsub("Cohens_d", "Cohen's D", gsub("Cramers_v", "Cramer's V", cp, fixed = TRUE), fixed = TRUE),
     out$Parameter
   )
 
