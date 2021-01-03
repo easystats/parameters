@@ -97,7 +97,7 @@ model_parameters.glmmTMB <- function(model,
 ci.glmmTMB <- function(x,
                        ci = .95,
                        component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
-                       method = c("wald", "ml1", "betwithin", "robust", "profile"),
+                       method = c("wald", "ml1", "betwithin", "robust", "profile", "uniroot"),
                        verbose = TRUE,
                        ...) {
   method <- tolower(method)
@@ -119,6 +119,9 @@ ci.glmmTMB <- function(x,
   } else if (method == "profile") {
     pp <- stats::profile(x)
     out <- lapply(ci, function(i) .ci_profile_glmmTMB(x, ci = i, profiled = pp, component = component, ...))
+    do.call(rbind, out)
+  } else if (method == "uniroot") {
+    out <- lapply(ci, function(i) .ci_uniroot_glmmTMB(x, ci = i, component = component, ...))
     do.call(rbind, out)
   }
 }

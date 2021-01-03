@@ -77,10 +77,25 @@
 
 
 #' @importFrom stats confint
-#' @importFrom insight get_parameters
 #' @keywords internal
 .ci_profile_glmmTMB <- function(x, ci, profiled, component, ...) {
   out <- as.data.frame(stats::confint(profiled, level = ci, ...))
+  .process_glmmTMB_CI(x, out, ci, component)
+}
+
+
+
+#' @importFrom stats confint
+#' @keywords internal
+.ci_uniroot_glmmTMB <- function(x, ci, component, ...) {
+  out <- as.data.frame(stats::confint(x, level = ci, method = "uniroot", ...))
+  .process_glmmTMB_CI(x, out, ci, component)
+}
+
+
+
+#' @importFrom insight get_parameters
+.process_glmmTMB_CI <- function(x, out, ci, component) {
   rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
 
   pars <- insight::get_parameters(x, effects = "fixed", component = component)

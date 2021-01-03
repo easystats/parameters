@@ -34,7 +34,7 @@
   x,
   ci = 0.95,
   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
-  method = c("wald", "ml1", "betwithin", "robust", "profile"),
+  method = c("wald", "ml1", "betwithin", "robust", "profile", "uniroot"),
   verbose = TRUE,
   ...
 )
@@ -82,7 +82,7 @@
   x,
   ci = 0.95,
   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
-  method = c("wald", "ml1", "betwithin", "robust", "profile"),
+  method = c("wald", "ml1", "betwithin", "robust", "profile", "uniroot"),
   verbose = TRUE,
   ...
 )
@@ -91,7 +91,7 @@
   x,
   ci = 0.95,
   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
-  method = c("wald", "ml1", "betwithin", "robust", "profile"),
+  method = c("wald", "ml1", "betwithin", "robust", "profile", "uniroot"),
   verbose = TRUE,
   ...
 )
@@ -111,7 +111,7 @@
 
 \item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.}
 
-\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}} or \code{\link[=p_value_betwithin]{"betwithin"}}. For linear mixed model, can also be \code{\link[=p_value_satterthwaite]{"satterthwaite"}}, \code{\link[=p_value_kenward]{"kenward"}} or \code{"boot"} (see \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust covariance matrix estimation, and for generalized linear models and models from packages \pkg{lme4} or \pkg{glmmTMB}, may also be \code{"profile"} (default) or \code{"wald"}.}
+\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}} or \code{\link[=p_value_betwithin]{"betwithin"}}. For linear mixed model, can also be \code{\link[=p_value_satterthwaite]{"satterthwaite"}}, \code{\link[=p_value_kenward]{"kenward"}} or \code{"boot"} (see \code{lme4::confint.merMod}). For (generalized) linear models, can be \code{"robust"} to compute confidence intervals based on robust covariance matrix estimation, and for generalized linear models and models from packages \pkg{lme4} or \pkg{glmmTMB}, may also be \code{"profile"}, \code{"uniroot"} or \code{"wald"} (default).}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 

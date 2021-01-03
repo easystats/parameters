@@ -23,7 +23,8 @@
 
 * `ci()` for models from *lme4* and *glmmTMB* can now computed profiled confidence
   intervals, using `method = "profile"`. Consequently, `model_parameters()` with
-  `df_method = "profile"` also computes profiled confidence intervals.
+  `df_method = "profile"` also computes profiled confidence intervals. For
+  models of class `glmmTMB`, option `"uniroot"` is also available.
 
 ## Bug fixes
 

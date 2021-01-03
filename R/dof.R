@@ -53,9 +53,9 @@ degrees_of_freedom <- function(model, ...) {
 #' @export
 degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   method <- tolower(method)
-  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward", "nokr", "wald", "profile", "boot"))
+  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward", "nokr", "wald", "profile", "boot", "uniroot"))
 
-  if (!.dof_method_ok(model, method) || method %in% c("profile", "boot")) {
+  if (!.dof_method_ok(model, method) || method %in% c("profile", "boot", "uniroot")) {
     method <- "any"
   }
 
@@ -202,8 +202,8 @@ dof <- degrees_of_freedom
     return(FALSE)
   }
 
-  if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot"))) {
-    warning("'df_method' must be one of 'wald', 'profile', 'boot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", call. = FALSE)
+  if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot"))) {
+    warning("'df_method' must be one of 'wald', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", call. = FALSE)
     return(FALSE)
   }
 
