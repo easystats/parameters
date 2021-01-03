@@ -10,6 +10,7 @@
   cramers_v = NULL,
   phi = NULL,
   standardized_d = NULL,
+  hedges_g = NULL,
   omega_squared = NULL,
   eta_squared = NULL,
   epsilon_squared = NULL,
@@ -33,6 +34,9 @@ Only applies to objects from \code{chisq.test()}.}
 effect size. Only applies to objects from \code{t.test()}. Calculation of
 \code{d} is based on the t-value (see \code{\link[effectsize]{t_to_d}})
 for details.}
+
+\item{hedges_g}{If \code{TRUE}, compute Hedge's g as index of effect size.
+Only applies to objects from \code{t.test()}.}
 
 \item{omega_squared, eta_squared, epsilon_squared}{Logical, if \code{TRUE},
 returns the non-partial effect size Omega, Eta or Epsilon squared. Only
