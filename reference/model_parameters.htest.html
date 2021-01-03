@@ -179,6 +179,7 @@
   cramers_v <span class='op'>=</span> <span class='cn'>NULL</span>,
   phi <span class='op'>=</span> <span class='cn'>NULL</span>,
   standardized_d <span class='op'>=</span> <span class='cn'>NULL</span>,
+  hedges_g <span class='op'>=</span> <span class='cn'>NULL</span>,
   omega_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
   eta_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
   epsilon_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -211,6 +212,11 @@ Only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.h
 effect size. Only applies to objects from <code><a href='https://rdrr.io/r/stats/t.test.html'>t.test()</a></code>. Calculation of
 <code>d</code> is based on the t-value (see <code><a href='https://easystats.github.io/effectsize/reference/t_to_r.html'>t_to_d</a></code>)
 for details.</p></td>
+    </tr>
+    <tr>
+      <th>hedges_g</th>
+      <td><p>If <code>TRUE</code>, compute Hedge's g as index of effect size.
+Only applies to objects from <code><a href='https://rdrr.io/r/stats/t.test.html'>t.test()</a></code>.</p></td>
     </tr>
     <tr>
       <th>omega_squared, eta_squared, epsilon_squared</th>
