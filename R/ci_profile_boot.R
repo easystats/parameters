@@ -86,11 +86,11 @@
   pars <- insight::get_parameters(x, effects = "fixed", component = component)
   param_names <- switch(
     component,
-    "conditional" = pars$Parameters,
+    "conditional" = pars$Parameter,
     "zi" = ,
-    "zero_inflated" = paste0("zi~", pars$Parameters),
-    c(pars$Parameters[pars$Component == "conditional"],
-      paste0("zi~", pars$Parameters[pars$Component == "zero_inflated"]))
+    "zero_inflated" = paste0("zi~", pars$Parameter),
+    c(pars$Parameter[pars$Component == "conditional"],
+      paste0("zi~", pars$Parameter[pars$Component == "zero_inflated"]))
   )
 
   out <- out[rownames(out) %in% param_names, ]
