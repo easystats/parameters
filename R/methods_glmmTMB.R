@@ -118,7 +118,7 @@ ci.glmmTMB <- function(x,
     ci_betwithin(model = x, ci = ci)
   } else if (method == "profile") {
     pp <- stats::profile(x)
-    out <- lapply(ci, function(i) .ci_profile_merMod(model = x, ci = i, profiled = pp, component = component, ...))
+    out <- lapply(ci, function(i) .ci_profile_glmmTMB(x, ci = i, profiled = pp, component = component, ...))
     out <- do.call(rbind, out)
   }
 }

@@ -74,13 +74,14 @@
 }
 
 
-#' @importFrom insight find_parameters
+#' @importFrom insight find_parameters get_parameters
 #' @keywords internal
 .ci_profile_glmmTMB <- function(x, ci, profiled, component, ...) {
   out <- stats::confint(profiled, level = ci, ...)
   rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
 
   pars <- insight::find_parameters(x, effects = "fixed")
+  comp <- insight::get_parameters(x, effects = "fixed", component = component)
 
   param_names <- switch(
     component,
@@ -94,9 +95,10 @@
   names(out) <- c("CI_low", "CI_high")
 
   # Clean up
-  out$Parameter <- row.names(out)
+  out$Parameter <- comp$Parameter
   out$CI <- ci
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
+  out$Component <- comp$Component
   row.names(out) <- NULL
   out
 }

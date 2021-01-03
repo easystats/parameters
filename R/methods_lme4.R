@@ -60,7 +60,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @param model A mixed model.
 #' @param effects Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.
 #' @param details Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.
-#' @param df_method Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}). Note that when \code{df_method} is not \code{"wald"}, robust standard errors etc. cannot be computed.
+#' @param df_method Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}). The options \code{df_method = "boot"} and \code{df_method = "profile"} only affect confidence intervals; in this case, bootstrapped resp. profiles confidence intervals are computed. Note that when \code{df_method} is not \code{"wald"}, robust standard errors etc. cannot be computed.
 #' @param wb_component Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.
 #' @inheritParams model_parameters.default
 #'
@@ -111,7 +111,7 @@ model_parameters.merMod <- function(model,
 
   # p-values, CI and se might be based of wald, or KR
   df_method <- tolower(df_method)
-  df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin", "satterthwaite", "kenward"))
+  df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile"))
 
   # Processing
   if (bootstrap) {
@@ -231,7 +231,7 @@ ci.merMod <- function(x,
     # profiles CIs
   } else if (method == "profile") {
     pp <- stats::profile(x)
-    out <- lapply(ci, function(i) .ci_profile_merMod(model = x, ci = i, profiled = pp, ...))
+    out <- lapply(ci, function(i) .ci_profile_merMod(x, ci = i, profiled = pp, ...))
     out <- do.call(rbind, out)
   }
 

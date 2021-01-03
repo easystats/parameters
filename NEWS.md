@@ -22,7 +22,8 @@
 * Added more effect size measures to `model_parameters()` for `htest` objects.
 
 * `ci()` for models from *lme4* and *glmmTMB* can now computed profiled confidence
-  intervals, using `method = "profile"`.
+  intervals, using `method = "profile"`. Consequently, `model_parameters()` with
+  `df_method = "profile"` also computes profiled confidence intervals.
 
 ## Bug fixes
 
