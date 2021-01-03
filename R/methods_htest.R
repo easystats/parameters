@@ -462,7 +462,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   if (requireNamespace("effectsize", quietly = TRUE)) {
     # standardized d
     if (!is.null(standardized_d)) {
-      es <- effectsize::effectsize(model, type = "d", ci = ci, verbose = verbose)
+      es <- effectsize::effectsize(model, type = "cohens_d", ci = ci, verbose = verbose)
       es$CI <- NULL
       ci_cols <- grepl("^CI", names(es))
       names(es)[ci_cols] <- paste0("d_", names(es)[ci_cols])
@@ -471,7 +471,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
     # Hedge's g
     if (!is.null(hedges_g)) {
-      es <- effectsize::effectsize(model, type = "g", ci = ci, verbose = verbose)
+      es <- effectsize::effectsize(model, type = "hedges_g", ci = ci, verbose = verbose)
       es$CI <- NULL
       ci_cols <- grepl("^CI", names(es))
       names(es)[ci_cols] <- paste0("g_", names(es)[ci_cols])

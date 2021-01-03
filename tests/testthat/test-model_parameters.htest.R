@@ -48,34 +48,34 @@ if (require("testthat") && require("parameters")) {
     })
 
     set.seed(123)
-    params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), standardized_d = TRUE, hedges_g = TRUE)
+    params <- model_parameters(t.test(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2]),
+                               standardized_d = TRUE,
+                               hedges_g = TRUE)
     test_that("model_parameters-t-test standardized d and Hedge's g", {
       expect_equal(
         as.data.frame(params),
         structure(
           list(
-            Parameter1 = "iris$Sepal.Width",
-            Parameter2 = "iris$Sepal.Length",
-            Mean_Parameter1 = 3.05733333333333,
-            Mean_Parameter2 = 5.84333333333333,
-            Difference = -2.786,
-            t = -36.4632839344491,
-            df_error = 225.678317701878,
-            CI_low = -2.93655968048089,
-            CI_high = -2.63544031951911,
-            Cohens_d = -4.21041735901839,
-            d_CI_low = -4.65530594003237,
-            d_CI_high = -3.75972614970688,
-            Hedges_g = -4.19981177373119,
-            g_CI_low = -4.64357972859652,
-            g_CI_high = -3.75025580676051,
-            p = 1.45954250758609e-96,
+            Parameter1 = "sleep$extra[sleep$group == 1]",
+            Parameter2 = "sleep$extra[sleep$group == 2]",
+            Mean_Parameter1 = 0.75,
+            Mean_Parameter2 = 2.33,
+            Difference = -1.58,
+            t = -1.86081346748685,
+            df_error = 17.7764735161785,
+            CI_low = -3.36548323071171,
+            CI_high = 0.20548323071171,
+            Cohens_d = -0.83218108134954,
+            d_CI_low = -1.73918888274057,
+            d_CI_high = 0.0960614913209062,
+            Hedges_g = -0.797018500447446,
+            g_CI_low = -1.66570202854027,
+            g_CI_high = 0.0920025550679102,
+            p = 0.0793941401873582,
             Method = "Welch Two Sample t-test"
           ),
-          row.names = c(
-            NA,
-            -1L
-          ),
+          row.names = c(NA,
+                        -1L),
           class = "data.frame",
           title = "Welch Two Sample t-test",
           model_class = "htest",
