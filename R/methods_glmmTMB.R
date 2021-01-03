@@ -119,7 +119,7 @@ ci.glmmTMB <- function(x,
   } else if (method == "profile") {
     pp <- stats::profile(x)
     out <- lapply(ci, function(i) .ci_profile_glmmTMB(x, ci = i, profiled = pp, component = component, ...))
-    out <- do.call(rbind, out)
+    do.call(rbind, out)
   }
 }
 
