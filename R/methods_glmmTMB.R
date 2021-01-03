@@ -97,7 +97,7 @@ model_parameters.glmmTMB <- function(model,
 ci.glmmTMB <- function(x,
                        ci = .95,
                        component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
-                       method = c("wald", "ml1", "betwithin", "robust"),
+                       method = c("wald", "ml1", "betwithin", "robust", "profile"),
                        verbose = TRUE,
                        ...) {
   method <- tolower(method)
@@ -116,6 +116,10 @@ ci.glmmTMB <- function(x,
     ci_ml1(model = x, ci = ci)
   } else if (method == "betwithin") {
     ci_betwithin(model = x, ci = ci)
+  } else if (method == "profile") {
+    pp <- stats::profile(x)
+    out <- lapply(ci, function(i) .ci_profile_merMod(model = x, ci = i, profiled = pp, component = component, ...))
+    out <- do.call(rbind, out)
   }
 }
 

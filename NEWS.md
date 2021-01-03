@@ -21,6 +21,9 @@
 
 * Added more effect size measures to `model_parameters()` for `htest` objects.
 
+* `ci()` for models from *lme4* and *glmmTMB* can now computed profiled confidence
+  intervals, using `method = "profile"`.
+
 ## Bug fixes
 
 * `model_parameters()` for t-tests when `standardize_d = TRUE`, did not return

@@ -64,11 +64,7 @@
 \arguments{
 \item{model}{Bayesian model. May also be a data frame with posterior samples.}
 
-\item{centrality}{Only for models with posterior samples, and when
-\code{summary = TRUE}. In this case, \code{centrality = "mean"} would
-calculate means of posterior samples for each parameter, while
-\code{centrality = "median"} would use the more robust median value as
-measure of central tendency.}
+\item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
@@ -104,22 +100,10 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{effects}{Should parameters for fixed effects, random effects
-or both be returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Which type of parameters to return, such as parameters for the
- conditional model, the zero-inflated part of the model, the dispersion
- term, the instrumental variables or marginal effects be returned? Applies
- to models with zero-inflated and/or dispersion formula, or to models with
- instrumental variables (so called fixed-effects regressions), or models
- with marginal effects from \pkg{mfx}. May be abbreviated. Note that the
-\emph{conditional} component is also called \emph{count} or \emph{mean}
-component, depending on the model. There are two convenient shortcuts:
-If \code{component = "location"}, location parameters such as \code{conditional},
-\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned.
-For \code{component = "distributional"} (or \code{"auxiliary"}), components
-like \code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and
-other auxiliary parameters) are returned.}
+\item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}), \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for \code{MuMIn::model.avg()}) or \code{"all"}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
 
