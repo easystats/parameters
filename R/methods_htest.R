@@ -13,6 +13,8 @@
 #'   effect size. Only applies to objects from \code{t.test()}. Calculation of
 #'   \code{d} is based on the t-value (see \code{\link[effectsize]{t_to_d}})
 #'   for details.
+#' @param hedges_g If \code{TRUE}, compute Hedge's g as index of effect size.
+#'   Only applies to objects from \code{t.test()}.
 #' @param omega_squared,eta_squared,epsilon_squared Logical, if \code{TRUE},
 #'   returns the non-partial effect size Omega, Eta or Epsilon squared. Only
 #'   applies to objects from \code{oneway.test()}.
@@ -49,6 +51,7 @@ model_parameters.htest <- function(model,
                                    cramers_v = NULL,
                                    phi = NULL,
                                    standardized_d = NULL,
+                                   hedges_g = NULL,
                                    omega_squared = NULL,
                                    eta_squared = NULL,
                                    epsilon_squared = NULL,
@@ -65,6 +68,7 @@ model_parameters.htest <- function(model,
       cramers_v = cramers_v,
       phi = phi,
       standardized_d = standardized_d,
+      hedges_g = hedges_g,
       omega_squared = omega_squared,
       eta_squared = eta_squared,
       epsilon_squared = epsilon_squared,
@@ -131,6 +135,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                       cramers_v = NULL,
                                       phi = NULL,
                                       standardized_d = NULL,
+                                      hedges_g = NULL,
                                       omega_squared = NULL,
                                       eta_squared = NULL,
                                       epsilon_squared = NULL,
@@ -144,7 +149,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     out <- .extract_htest_correlation(model)
   } else if (m_info$is_ttest) {
     out <- .extract_htest_ttest(model)
-    out <- .add_effectsize_ttest(model, out, standardized_d, ci = ci, verbose = verbose)
+    out <- .add_effectsize_ttest(model, out, standardized_d, hedges_g, ci = ci, verbose = verbose)
   } else if (m_info$is_onewaytest) {
     out <- .extract_htest_oneway(model)
     out <- .add_effectsize_oneway(model, out, omega_squared, eta_squared, epsilon_squared, ci = ci, verbose = verbose)
@@ -216,7 +221,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 # extract htest ttest ----------------------
 
 
-.extract_htest_ttest <- function(model, standardized_d = NULL) {
+.extract_htest_ttest <- function(model, standardized_d = NULL, hedges_g = NULL) {
   if (grepl(" and ", model$data.name)) {
     names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
     out <- data.frame(
@@ -425,8 +430,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   }
 
   if (requireNamespace("effectsize", quietly = TRUE)) {
-    ## TODO add verbose
-    es <- effectsize::effectsize(model, type = "cohens_g", ci = ci)
+    es <- effectsize::effectsize(model, type = "cohens_g", ci = ci, verbose = verbose)
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("Cohens_", names(es)[ci_cols])
@@ -448,28 +452,42 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 .add_effectsize_ttest <- function(model,
                                   out,
                                   standardized_d = NULL,
+                                  hedges_g = NULL,
                                   ci = .95,
                                   verbose = TRUE) {
-  if (is.null(standardized_d)) {
+  if (is.null(standardized_d) && is.null(hedges_g)) {
     return(out)
   }
 
   if (requireNamespace("effectsize", quietly = TRUE)) {
     # standardized d
-    es <- effectsize::effectsize(model, type = "cohens_d", ci = ci, verbose = verbose)
-    es$CI <- NULL
-    ci_cols <- grepl("^CI", names(es))
-    names(es)[ci_cols] <- paste0("d_", names(es)[ci_cols])
-    out <- cbind(out, es)
+    if (!is.null(standardized_d)) {
+      es <- effectsize::effectsize(model, type = "cohens_d", ci = ci, verbose = verbose)
+      es$CI <- NULL
+      ci_cols <- grepl("^CI", names(es))
+      names(es)[ci_cols] <- paste0("d_", names(es)[ci_cols])
+      out <- cbind(out, es)
+    }
+
+    # Hedge's g
+    if (!is.null(hedges_g)) {
+      es <- effectsize::effectsize(model, type = "hedges_g", ci = ci, verbose = verbose)
+      es$CI <- NULL
+      ci_cols <- grepl("^CI", names(es))
+      names(es)[ci_cols] <- paste0("g_", names(es)[ci_cols])
+      out <- cbind(out, es)
+    }
   }
 
   # reorder
   col_order <- c(
     "Parameter1", "Parameter2", "Parameter", "Group", "Mean_Parameter1",
-    "Mean_Parameter2", "Mean_Group1", "Mean_Group2",  "mu", "Difference",
+    "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu", "Difference",
     "Mean_Difference", "t", "df_error", "CI_low", "CI_high", "d", "Cohens_d",
-    "d_CI_low", "d_CI_high", "p", "Method", "method"
+    "d_CI_low", "d_CI_high", "g", "Hedges_g",
+    "g_CI_low", "g_CI_high", "p", "Method", "method"
   )
+
   out <- out[col_order[col_order %in% names(out)]]
   out
 }
@@ -484,7 +502,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                    epsilon_squared = NULL,
                                    ci = .95,
                                    verbose = TRUE) {
-  if (is.null(omega_squared) && is.null(eta_squared)) {
+  if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
     return(out)
   }
 
@@ -497,6 +515,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       names(es)[ci_cols] <- paste0("Omega2_", names(es)[ci_cols])
       out <- cbind(out, es)
     }
+
     # eta squared
     if (!is.null(eta_squared)) {
       es <- effectsize::effectsize(model, ci = ci, type = "eta", partial = TRUE, verbose = verbose)
@@ -505,6 +524,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       names(es)[ci_cols] <- paste0("Eta2_", names(es)[ci_cols])
       out <- cbind(out, es)
     }
+
     # epsilon squared
     if (!is.null(epsilon_squared)) {
       es <- effectsize::effectsize(model, ci = ci, type = "epsilon", partial = TRUE, verbose = verbose)
@@ -516,9 +536,11 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   }
 
   # reorder
-  col_order <- c("F", "df", "df_error", "Eta2", "Eta2_CI_low", "Eta2_CI_high",
-                 "Omega2", "Omega2_CI_low", "Omega2_CI_high", "Epsilon2",
-                 "Epsilon2_CI_low", "Epsilon2_CI_high", "p", "Method", "method")
+  col_order <- c(
+    "F", "df", "df_error", "Eta2", "Eta2_CI_low", "Eta2_CI_high",
+    "Omega2", "Omega2_CI_low", "Omega2_CI_high", "Epsilon2",
+    "Epsilon2_CI_low", "Epsilon2_CI_high", "p", "Method", "method"
+  )
   out <- out[col_order[col_order %in% names(out)]]
   out
 }

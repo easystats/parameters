@@ -47,25 +47,59 @@ if (require("testthat") && require("parameters")) {
       expect_equal(colnames(mp), c("Chi2", "df", "phi_adjusted", "phi_CI_low", "phi_CI_high", "p", "Method"))
     })
 
-    params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), standardized_d = TRUE)
-    test_that("model_parameters-t-test standardized d", {
-      expect_equal(params$Cohens_d, -4.210417, tolerance = 0.05)
-      expect_equal(params$d_CI_low, -4.655306, tolerance = 0.05)
+    set.seed(123)
+    params <- model_parameters(t.test(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2]),
+                               standardized_d = TRUE,
+                               hedges_g = TRUE)
+    test_that("model_parameters-t-test standardized d and Hedge's g", {
       expect_equal(
-        colnames(params),
-        c("Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
-          "Difference", "t", "df_error", "CI_low", "CI_high", "Cohens_d", "d_CI_low",
-          "d_CI_high", "p", "Method")
+        as.data.frame(params),
+        structure(
+          list(
+            Parameter1 = "sleep$extra[sleep$group == 1]",
+            Parameter2 = "sleep$extra[sleep$group == 2]",
+            Mean_Parameter1 = 0.75,
+            Mean_Parameter2 = 2.33,
+            Difference = -1.58,
+            t = -1.86081346748685,
+            df_error = 17.7764735161785,
+            CI_low = -3.36548323071171,
+            CI_high = 0.20548323071171,
+            Cohens_d = -0.83218108134954,
+            d_CI_low = -1.73918888274057,
+            d_CI_high = 0.0960614913209062,
+            Hedges_g = -0.797018500447446,
+            g_CI_low = -1.66570202854027,
+            g_CI_high = 0.0920025550679102,
+            p = 0.0793941401873582,
+            Method = "Welch Two Sample t-test"
+          ),
+          row.names = c(NA,
+                        -1L),
+          class = "data.frame",
+          title = "Welch Two Sample t-test",
+          model_class = "htest",
+          digits = 2,
+          ci_digits = 2,
+          p_digits = 3,
+          ci = 0.95,
+          ci_test = 0.95
+        ),
+        tolerance = 0.05
       )
     })
 
     mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), standardized_d = TRUE, verbose = FALSE)
     test_that("model_parameters-t-test standardized d", {
       expect_equal(mp$Cohens_d, -1.696032, tolerance = 1e-3)
-      expect_equal(colnames(mp),
-                   c("Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference",
-                     "t", "df_error", "CI_low", "CI_high", "Cohens_d", "d_CI_low", "d_CI_high",
-                     "p", "Method"))
+      expect_equal(
+        colnames(mp),
+        c(
+          "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference",
+          "t", "df_error", "CI_low", "CI_high", "Cohens_d", "d_CI_low", "d_CI_high",
+          "p", "Method"
+        )
+      )
     })
   }
 }
