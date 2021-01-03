@@ -282,7 +282,7 @@
     </tr>
     <tr>
       <th>df_method</th>
-      <td><p>Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be <code>"wald"</code> (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see <code><a href='ci_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see <code><a href='ci_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see <code><a href='ci_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see <code><a href='ci_kenward.html'>dof_kenward</a></code>). Note that when <code>df_method</code> is not <code>"wald"</code>, robust standard errors etc. cannot be computed.</p></td>
+      <td><p>Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be <code>"wald"</code> (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see <code><a href='ci_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see <code><a href='ci_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see <code><a href='ci_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see <code><a href='ci_kenward.html'>dof_kenward</a></code>). The options <code>df_method = "boot"</code> and <code>df_method = "profile"</code> only affect confidence intervals; in this case, bootstrapped resp. profiles confidence intervals are computed. Note that when <code>df_method</code> is not <code>"wald"</code>, robust standard errors etc. cannot be computed.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
