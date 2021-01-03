@@ -58,9 +58,11 @@
 }
 
 
+#' @importFrom stats confint
+#' @importFrom insight find_parameters
 #' @keywords internal
 .ci_profile_merMod <- function(x, ci, profiled, ...) {
-  out <- stats::confint(profiled, level = ci, ...)
+  out <- as.data.frame(stats::confint(profiled, level = ci, ...))
   rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
   out <- out[rownames(out) %in% insight::find_parameters(x, effects = "fixed")$conditional, ]
   names(out) <- c("CI_low", "CI_high")
@@ -74,31 +76,31 @@
 }
 
 
-#' @importFrom insight find_parameters get_parameters
+#' @importFrom stats confint
+#' @importFrom insight get_parameters
 #' @keywords internal
 .ci_profile_glmmTMB <- function(x, ci, profiled, component, ...) {
-  out <- stats::confint(profiled, level = ci, ...)
+  out <- as.data.frame(stats::confint(profiled, level = ci, ...))
   rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
 
-  pars <- insight::find_parameters(x, effects = "fixed")
-  comp <- insight::get_parameters(x, effects = "fixed", component = component)
-
+  pars <- insight::get_parameters(x, effects = "fixed", component = component)
   param_names <- switch(
     component,
-    "conditional" = pars$conditional,
+    "conditional" = pars$Parameters,
     "zi" = ,
-    "zero_inflated" = paste0("zi~", pars$zero_inflated),
-    c(pars$conditional, paste0("zi~", pars$zero_inflated))
+    "zero_inflated" = paste0("zi~", pars$Parameters),
+    c(pars$Parameters[pars$Component == "conditional"],
+      paste0("zi~", pars$Parameters[pars$Component == "zero_inflated"]))
   )
 
   out <- out[rownames(out) %in% param_names, ]
   names(out) <- c("CI_low", "CI_high")
 
   # Clean up
-  out$Parameter <- comp$Parameter
+  out$Parameter <- pars$Parameter
   out$CI <- ci
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
-  out$Component <- comp$Component
+  out$Component <- pars$Component
   row.names(out) <- NULL
   out
 }
