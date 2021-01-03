@@ -10,13 +10,13 @@ if (require("testthat") && require("parameters")) {
     expect_equal(params$tau, -0.795, tolerance = 0.05)
 
     params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length))
-    expect_equal(params$Difference, -2.786, tolerance = 0.05)
+    expect_equal(params$Mean_Difference, -2.786, tolerance = 0.05)
 
     params <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs))
-    expect_equal(params$Difference, 7.940, tolerance = 0.05)
+    expect_equal(params$Mean_Difference, 7.940, tolerance = 0.05)
 
     params <- model_parameters(t.test(iris$Sepal.Width, mu = 1))
-    expect_equal(params$Difference, 2.0573, tolerance = 0.05)
+    expect_equal(params$Mean_Difference, 2.0573, tolerance = 0.05)
   })
 
   test_that("model_parameters.htest-2", {
@@ -48,9 +48,10 @@ if (require("testthat") && require("parameters")) {
     })
 
     set.seed(123)
-    params <- model_parameters(t.test(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2]),
-                               standardized_d = TRUE,
-                               hedges_g = TRUE)
+    params <- model_parameters(t.test(sleep$extra[sleep$group == 1], sleep$extra[sleep$group == 2]),
+      standardized_d = TRUE,
+      hedges_g = TRUE
+    )
     test_that("model_parameters-t-test standardized d and Hedge's g", {
       expect_equal(
         as.data.frame(params),
@@ -60,11 +61,11 @@ if (require("testthat") && require("parameters")) {
             Parameter2 = "sleep$extra[sleep$group == 2]",
             Mean_Parameter1 = 0.75,
             Mean_Parameter2 = 2.33,
-            Difference = -1.58,
+            Mean_Difference = -1.58,
+            Difference_CI_low = -3.36548323071171,
+            Difference_CI_high = 0.20548323071171,
             t = -1.86081346748685,
             df_error = 17.7764735161785,
-            CI_low = -3.36548323071171,
-            CI_high = 0.20548323071171,
             Cohens_d = -0.83218108134954,
             d_CI_low = -1.73918888274057,
             d_CI_high = 0.0960614913209062,
@@ -74,8 +75,10 @@ if (require("testthat") && require("parameters")) {
             p = 0.0793941401873582,
             Method = "Welch Two Sample t-test"
           ),
-          row.names = c(NA,
-                        -1L),
+          row.names = c(
+            NA,
+            -1L
+          ),
           class = "data.frame",
           title = "Welch Two Sample t-test",
           model_class = "htest",
@@ -95,9 +98,8 @@ if (require("testthat") && require("parameters")) {
       expect_equal(
         colnames(mp),
         c(
-          "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference",
-          "t", "df_error", "CI_low", "CI_high", "Cohens_d", "d_CI_low", "d_CI_high",
-          "p", "Method"
+          "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Mean_Difference", "Difference_CI_low", "Difference_CI_high",
+          "t", "df_error", "Cohens_d", "d_CI_low", "d_CI_high", "p", "Method"
         )
       )
     })

@@ -229,12 +229,12 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       "Parameter2" = names[2],
       "Mean_Parameter1" = model$estimate[1],
       "Mean_Parameter2" = model$estimate[2],
-      "Difference" = model$estimate[1] - model$estimate[2],
+      "Mean_Difference" = model$estimate[1] - model$estimate[2],
       "t" = model$statistic,
       "df_error" = model$parameter,
       "p" = model$p.value,
-      "CI_low" = model$conf.int[1],
-      "CI_high" = model$conf.int[2],
+      "Difference_CI_low" = model$conf.int[1],
+      "Difference_CI_high" = model$conf.int[2],
       "Method" = model$method,
       stringsAsFactors = FALSE
     )
@@ -248,8 +248,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
         "t" = model$statistic,
         "df_error" = model$parameter,
         "p" = model$p.value,
-        "CI_low" = model$conf.int[1],
-        "CI_high" = model$conf.int[2],
+        "Difference_CI_low" = model$conf.int[1],
+        "Difference_CI_high" = model$conf.int[2],
         "Method" = model$method,
         stringsAsFactors = FALSE
       )
@@ -260,12 +260,12 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
         "Group" = names[2],
         "Mean_Group1" = model$estimate[1],
         "Mean_Group2" = model$estimate[2],
-        "Difference" = model$estimate[2] - model$estimate[1],
+        "Mean_Difference" = model$estimate[2] - model$estimate[1],
         "t" = model$statistic,
         "df_error" = model$parameter,
         "p" = model$p.value,
-        "CI_low" = model$conf.int[1],
-        "CI_high" = model$conf.int[2],
+        "Difference_CI_low" = model$conf.int[1],
+        "Difference_CI_high" = model$conf.int[2],
         "Method" = model$method,
         stringsAsFactors = FALSE
       )
@@ -275,12 +275,12 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       "Parameter" = model$data.name,
       "Mean" = model$estimate,
       "mu" = model$null.value,
-      "Difference" = model$estimate - model$null.value,
+      "Mean_Difference" = model$estimate - model$null.value,
       "t" = model$statistic,
       "df_error" = model$parameter,
       "p" = model$p.value,
-      "CI_low" = model$conf.int[1],
-      "CI_high" = model$conf.int[2],
+      "Difference_CI_low" = model$conf.int[1],
+      "Difference_CI_high" = model$conf.int[2],
       "Method" = model$method,
       stringsAsFactors = FALSE
     )
@@ -360,8 +360,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 .extract_htest_binom <- function(model) {
   out <- data.frame(
     "Probability" = model$estimate,
-    "CI_low" = model$conf.int[1],
-    "CI_high" = model$conf.int[2],
+    "Probability_CI_low" = model$conf.int[1],
+    "Probability_CI_high" = model$conf.int[2],
     "Success" = model$statistic,
     "Trials" = model$parameter,
     stringsAsFactors = FALSE
@@ -482,8 +482,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   # reorder
   col_order <- c(
     "Parameter1", "Parameter2", "Parameter", "Group", "Mean_Parameter1",
-    "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu", "Difference",
-    "Mean_Difference", "t", "df_error", "CI_low", "CI_high", "d", "Cohens_d",
+    "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu", "Mean_Difference", "Difference_CI_low", "Difference_CI_high", "t", "df_error", "d", "Cohens_d",
     "d_CI_low", "d_CI_high", "g", "Hedges_g",
     "g_CI_low", "g_CI_high", "p", "Method", "method"
   )
