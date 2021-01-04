@@ -230,11 +230,11 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       "Mean_Parameter1" = model$estimate[1],
       "Mean_Parameter2" = model$estimate[2],
       "Difference" = model$estimate[1] - model$estimate[2],
+      "CI_low" = model$conf.int[1],
+      "CI_high" = model$conf.int[2],
       "t" = model$statistic,
       "df_error" = model$parameter,
       "p" = model$p.value,
-      "CI_low" = model$conf.int[1],
-      "CI_high" = model$conf.int[2],
       "Method" = model$method,
       stringsAsFactors = FALSE
     )
@@ -244,7 +244,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       out <- data.frame(
         "Parameter" = names[1],
         "Group" = names[2],
-        "Mean_Difference" = model$estimate,
+        "Difference" = model$estimate,
         "t" = model$statistic,
         "df_error" = model$parameter,
         "p" = model$p.value,
@@ -261,11 +261,11 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
         "Mean_Group1" = model$estimate[1],
         "Mean_Group2" = model$estimate[2],
         "Difference" = model$estimate[2] - model$estimate[1],
+        "CI_low" = model$conf.int[1],
+        "CI_high" = model$conf.int[2],
         "t" = model$statistic,
         "df_error" = model$parameter,
         "p" = model$p.value,
-        "CI_low" = model$conf.int[1],
-        "CI_high" = model$conf.int[2],
         "Method" = model$method,
         stringsAsFactors = FALSE
       )
@@ -276,11 +276,11 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       "Mean" = model$estimate,
       "mu" = model$null.value,
       "Difference" = model$estimate - model$null.value,
+      "CI_low" = model$conf.int[1],
+      "CI_high" = model$conf.int[2],
       "t" = model$statistic,
       "df_error" = model$parameter,
       "p" = model$p.value,
-      "CI_low" = model$conf.int[1],
-      "CI_high" = model$conf.int[2],
       "Method" = model$method,
       stringsAsFactors = FALSE
     )
@@ -391,7 +391,13 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   if (!is.null(cramers_v) && requireNamespace("effectsize", quietly = TRUE)) {
     # Cramers V
-    es <- effectsize::effectsize(model, type = "cramers_v", ci = ci, adjust = identical(cramers_v, "adjusted"), verbose = verbose)
+    es <- effectsize::effectsize(
+      model,
+      type = "cramers_v",
+      ci = ci,
+      adjust = identical(cramers_v, "adjusted"),
+      verbose = verbose
+    )
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("Cramers_", names(es)[ci_cols])
@@ -400,7 +406,13 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   if (!is.null(phi) && requireNamespace("effectsize", quietly = TRUE)) {
     # Phi
-    es <- effectsize::effectsize(model, type = "phi", ci = ci, adjust = identical(phi, "adjusted"), verbose = verbose)
+    es <- effectsize::effectsize(
+      model,
+      type = "phi",
+      ci = ci,
+      adjust = identical(phi, "adjusted"),
+      verbose = verbose
+    )
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("phi_", names(es)[ci_cols])
@@ -482,8 +494,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   # reorder
   col_order <- c(
     "Parameter1", "Parameter2", "Parameter", "Group", "Mean_Parameter1",
-    "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu", "Difference",
-    "Mean_Difference", "t", "df_error", "CI_low", "CI_high", "d", "Cohens_d",
+    "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu", "Difference", "CI_low", "CI_high", "t", "df_error", "d", "Cohens_d",
     "d_CI_low", "d_CI_high", "g", "Hedges_g",
     "g_CI_low", "g_CI_high", "p", "Method", "method"
   )
