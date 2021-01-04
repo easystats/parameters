@@ -190,7 +190,6 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     out$Chi2 <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
-    out$Method <- "Pearson"
   } else if (grepl("Pearson", model$method)) {
     out$r <- model$estimate
     out$t <- model$statistic
@@ -198,20 +197,22 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     out$p <- model$p.value
     out$CI_low <- model$conf.int[1]
     out$CI_high <- model$conf.int[2]
-    out$Method <- "Pearson"
   } else if (grepl("Spearman", model$method)) {
     out$rho <- model$estimate
     out$S <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
-    out$Method <- "Spearman"
+  } else if (grepl("Wilcoxon", model$method)) {
+    out$W <- model$W
+    out$df_error <- model$parameter
+    out$p <- model$p.value
   } else {
     out$tau <- model$estimate
     out$z <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
-    out$Method <- "Kendall"
   }
+  out$Method <- model$method
   out
 }
 
