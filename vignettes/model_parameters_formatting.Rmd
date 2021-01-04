@@ -125,14 +125,14 @@ We can get a similar tabular output using *broom*.
 tidy(model, conf.int = TRUE)
 ```
 
-Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the `format_table()` function is a convenient function that does all the work for you (**note:** this function will be renamed into `format_table()` in a future update). 
+Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the `format_table()` function is a convenient function that does all the work for you. 
 
 `format_table()` requires a data frame with model parameters as input, however, there are some requirements to make `format_table()` work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from *broom* or the [*easystats* packages](https://easystats.github.io/easystats/).
 
 ```{r}
 model %>% 
   tidy(conf.int = TRUE) %>% 
-  parameters_table()
+  format_table()
 ```
 
 When the parameters table also includes degrees of freedom, and the degrees of freedom are the same for each parameter, then this information is included in the statistic-column. This is usually the default for `model_parameters()`:
@@ -140,7 +140,7 @@ When the parameters table also includes degrees of freedom, and the degrees of f
 ```{r}
 model %>% 
   model_parameters() %>% 
-  parameters_table()
+  format_table()
 ```
 
 ## Exporting the Parameters Table
@@ -157,7 +157,7 @@ Putting all this together allows us to create nice tabular outputs of parameters
 ```{r}
 model %>% 
   tidy(conf.int = TRUE) %>% 
-  parameters_table() %>% 
+  format_table() %>% 
   export_table() %>% 
   cat()
 ```
@@ -178,7 +178,7 @@ The following table has six columns. Using `align = "lcccrr"` would left-align t
 model %>% 
   tidy(conf.int = TRUE) %>% 
   # parenthesis look better in markdown-tables, so we use "brackets" here
-  parameters_table(brackets = c("(", ")")) %>% 
+  format_table(ci_brackets = c("(", ")")) %>% 
   export_table(format = "markdown", caption = "My Table", align = "lcccrr")
 ```
 
