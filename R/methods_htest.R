@@ -312,13 +312,25 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 .extract_htest_chi2 <- function(model) {
-  data.frame(
-    "Chi2" = model$statistic,
-    "df" = model$parameter,
-    "p" = model$p.value,
-    "Method" = model$method,
-    stringsAsFactors = FALSE
-  )
+  if (!is.null(model$estimate) && identical(names(model$estimate), "odds ratio")) {
+    data.frame(
+      "Odds Ratio" = model$estimate,
+      # "CI" = attributes(model$conf.int)$conf.level,
+      "CI_low" = model$conf.int[1],
+      "CI_high" = model$conf.int[2],
+      "p" = model$p.value,
+      "Method" = model$method,
+      stringsAsFactors = FALSE
+    )
+  } else {
+    data.frame(
+      "Chi2" = model$statistic,
+      "df" = model$parameter,
+      "p" = model$p.value,
+      "Method" = model$method,
+      stringsAsFactors = FALSE
+    )
+  }
 }
 
 
