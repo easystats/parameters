@@ -35,8 +35,8 @@ if (require("testthat") &&
 
   test_that("model_parameters.BFBayesFactor", {
     set.seed(123)
-    model <- BayesFactor::anovaBF(mpg ~ gear * am, data = df, )
-    expect_equal(model_parameters(model)$Median, c(20.7089822877583, -3.23155100974548, 3.23155100974548, 25.0073051419095, 0.798607000921045), tolerance = 1L)
+    model <- BayesFactor::anovaBF(mpg ~ gear * am, data = df)
+    expect_equal(model_parameters(model)$Median, c(20.660577, -3.244485, 3.244485, 25.128301, 0.778598, NA, NA, NA), tolerance = 1L)
   })
 
   if (.runThisTest) {

@@ -150,6 +150,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   } else if (m_info$is_ttest) {
     out <- .extract_htest_ttest(model)
     out <- .add_effectsize_ttest(model, out, standardized_d, hedges_g, ci = ci, verbose = verbose)
+  } else if (m_info$is_ranktest) {
+    out <- .extract_htest_ranktest(model)
   } else if (m_info$is_onewaytest) {
     out <- .extract_htest_oneway(model)
     out <- .add_effectsize_oneway(model, out, omega_squared, eta_squared, epsilon_squared, ci = ci, verbose = verbose)
@@ -190,25 +192,48 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     out$Chi2 <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
-  } else if (grepl("Pearson", model$method)) {
+  } else if (grepl("Pearson", model$method, fixed = TRUE)) {
     out$r <- model$estimate
     out$t <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
     out$CI_low <- model$conf.int[1]
     out$CI_high <- model$conf.int[2]
-  } else if (grepl("Spearman", model$method)) {
+  } else if (grepl("Spearman", model$method, fixed = TRUE)) {
     out$rho <- model$estimate
     out$S <- model$statistic
-    out$df_error <- model$parameter
-    out$p <- model$p.value
-  } else if (grepl("Wilcoxon", model$method)) {
-    out$W <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
   } else {
     out$tau <- model$estimate
     out$z <- model$statistic
+    out$df_error <- model$parameter
+    out$p <- model$p.value
+  }
+  out$Method <- model$method
+  out
+}
+
+
+
+
+# extract htest ranktest ----------------------
+
+
+.extract_htest_ranktest <- function(model) {
+  names <- unlist(strsplit(model$data.name, " (and|by) "))
+  out <- data.frame(
+    "Parameter1" = names[1],
+    "Parameter2" = names[2],
+    stringsAsFactors = FALSE
+  )
+
+  if (grepl("Wilcoxon", model$method, fixed = TRUE)) {
+    out$W <- model$statistic
+    out$df_error <- model$parameter
+    out$p <- model$p.value
+  } else if (grepl("Kruskal-Wallis", model$method, fixed = TRUE)) {
+    out$Chi2 <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
   }
@@ -239,7 +264,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       "Method" = model$method,
       stringsAsFactors = FALSE
     )
-  } else if (grepl(" by ", model$data.name)) {
+  } else if (grepl(" by ", model$data.name, fixed = TRUE)) {
     if (length(model$estimate) == 1) {
       names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
       out <- data.frame(

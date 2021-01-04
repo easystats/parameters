@@ -54,7 +54,7 @@ if (require("testthat") && require("parameters")) {
       expect_equal(
         colnames(params),
         c("Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
-          "Difference", "t", "df_error", "CI_low", "CI_high", "Cohens_d", "d_CI_low",
+          "Difference", "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low",
           "d_CI_high", "p", "Method")
       )
     })
@@ -64,7 +64,7 @@ if (require("testthat") && require("parameters")) {
       expect_equal(mp$Cohens_d, -1.696032, tolerance = 1e-3)
       expect_equal(colnames(mp),
                    c("Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference",
-                     "t", "df_error", "CI_low", "CI_high", "Cohens_d", "d_CI_low", "d_CI_high",
+                     "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low", "d_CI_high",
                      "p", "Method"))
     })
   }
