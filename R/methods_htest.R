@@ -149,12 +149,26 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     out <- .extract_htest_correlation(model)
   } else if (m_info$is_ttest) {
     out <- .extract_htest_ttest(model)
-    out <- .add_effectsize_ttest(model, out, standardized_d, hedges_g, ci = ci, verbose = verbose)
+    out <- .add_effectsize_ttest(model,
+                            out,
+                            standardized_d,
+                            hedges_g,
+                            ci = ci,
+                            verbose = verbose,
+                            ...)
   } else if (m_info$is_ranktest) {
     out <- .extract_htest_ranktest(model)
   } else if (m_info$is_onewaytest) {
     out <- .extract_htest_oneway(model)
-    out <- .add_effectsize_oneway(model, out, omega_squared, eta_squared, epsilon_squared, ci = ci, verbose = verbose)
+    out <- .add_effectsize_oneway(
+        model,
+        out,
+        omega_squared,
+        eta_squared,
+        epsilon_squared,
+        ci = ci,
+        verbose = verbose
+      )
   } else if (m_info$is_chi2test) {
     out <- .extract_htest_chi2(model)
     if (grepl("^McNemar", model$method)) {
@@ -504,7 +518,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                   standardized_d = NULL,
                                   hedges_g = NULL,
                                   ci = .95,
-                                  verbose = TRUE) {
+                                  verbose = TRUE,
+                                  ...) {
   if (is.null(standardized_d) && is.null(hedges_g)) {
     return(out)
   }
@@ -512,7 +527,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   if (requireNamespace("effectsize", quietly = TRUE)) {
     # standardized d
     if (!is.null(standardized_d)) {
-      es <- effectsize::effectsize(model, type = "cohens_d", ci = ci, verbose = verbose)
+      es <- effectsize::effectsize(model, type = "cohens_d", ci = ci, verbose = verbose, ...)
       es$CI <- NULL
       ci_cols <- grepl("^CI", names(es))
       names(es)[ci_cols] <- paste0("d_", names(es)[ci_cols])
@@ -521,7 +536,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
     # Hedge's g
     if (!is.null(hedges_g)) {
-      es <- effectsize::effectsize(model, type = "hedges_g", ci = ci, verbose = verbose)
+      es <- effectsize::effectsize(model, type = "hedges_g", ci = ci, verbose = verbose, ...)
       es$CI <- NULL
       ci_cols <- grepl("^CI", names(es))
       names(es)[ci_cols] <- paste0("g_", names(es)[ci_cols])
