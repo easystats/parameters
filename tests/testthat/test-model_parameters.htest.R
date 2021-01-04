@@ -10,13 +10,13 @@ if (require("testthat") && require("parameters")) {
     expect_equal(params$tau, -0.795, tolerance = 0.05)
 
     params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length))
-    expect_equal(params$Mean_Difference, -2.786, tolerance = 0.05)
+    expect_equal(params$Difference, -2.786, tolerance = 0.05)
 
     params <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs))
-    expect_equal(params$Mean_Difference, 7.940, tolerance = 0.05)
+    expect_equal(params$Difference, 7.940, tolerance = 0.05)
 
     params <- model_parameters(t.test(iris$Sepal.Width, mu = 1))
-    expect_equal(params$Mean_Difference, 2.0573, tolerance = 0.05)
+    expect_equal(params$Difference, 2.0573, tolerance = 0.05)
   })
 
   test_that("model_parameters.htest-2", {
@@ -27,11 +27,42 @@ if (require("testthat") && require("parameters")) {
 
   if (require("effectsize")) {
     data(mtcars)
-    mp <- model_parameters(stats::chisq.test(table(mtcars$am)), cramers_v = "raw", phi = "raw", ci = 0.95)
+    set.seed(123)
+    mp <-
+      model_parameters(
+        stats::chisq.test(table(mtcars$am)),
+        cramers_v = "raw",
+        phi = "raw",
+        ci = 0.95
+      )
     test_that("model_parameters-chisq-test raw", {
-      expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
-      expect_equal(mp$phi, 0.1875, tolerance = 1e-3)
-      expect_equal(colnames(mp), c("Chi2", "df", "Cramers_v", "Cramers_CI_low", "Cramers_CI_high", "phi", "phi_CI_low", "phi_CI_high", "p", "Method"))
+      expect_equal(
+        as.data.frame(mp),
+        structure(
+          list(
+            Chi2 = 1.125,
+            df = 1,
+            Cramers_v = 0.1875,
+            Cramers_CI_low = 0,
+            Cramers_CI_high = 0.533908126292341,
+            phi = 0.1875,
+            phi_CI_low = 0,
+            phi_CI_high = 0.533908126292341,
+            p = 0.288844366346485,
+            Method = "Chi-squared test for given probabilities"
+          ),
+          row.names = c(NA,
+                        -1L),
+          class = "data.frame",
+          title = "Chi-squared test for given probabilities",
+          model_class = "htest",
+          digits = 2,
+          ci_digits = 2,
+          p_digits = 3,
+          ci = 0.95
+        ),
+        tolerance = 1e-3
+      )
     })
 
     mp <- model_parameters(stats::chisq.test(table(mtcars$am)))
@@ -61,9 +92,9 @@ if (require("testthat") && require("parameters")) {
             Parameter2 = "sleep$extra[sleep$group == 2]",
             Mean_Parameter1 = 0.75,
             Mean_Parameter2 = 2.33,
-            Mean_Difference = -1.58,
-            Difference_CI_low = -3.36548323071171,
-            Difference_CI_high = 0.20548323071171,
+            Difference = -1.58,
+            CI_low = -3.36548323071171,
+            CI_high = 0.20548323071171,
             t = -1.86081346748685,
             df_error = 17.7764735161785,
             Cohens_d = -0.83218108134954,
@@ -98,7 +129,7 @@ if (require("testthat") && require("parameters")) {
       expect_equal(
         colnames(mp),
         c(
-          "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Mean_Difference", "Difference_CI_low", "Difference_CI_high",
+          "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference", "CI_low", "CI_high",
           "t", "df_error", "Cohens_d", "d_CI_low", "d_CI_high", "p", "Method"
         )
       )
