@@ -179,7 +179,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 .extract_htest_correlation <- function(model) {
-  names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
+  names <- unlist(strsplit(model$data.name, " (and|by) "))
   out <- data.frame(
     "Parameter1" = names[1],
     "Parameter2" = names[2],
