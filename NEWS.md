@@ -4,7 +4,7 @@
 
 * `coxr` (*coxrobust*), `coeftest` (*lmtest*), `ivfixed` (*ivfixed*), 
   `ivprobit` (*ivprobit*), `riskRegression` (*riskRegression*),
-  `fitdistr` (*MASS*), `yuen`, `t1way`, `mcp1` and `mcp2` (*WRS2*),
+  `fitdistr` (*MASS*), `yuen`, `t1way`, `onesampb`, `mcp1` and `mcp2` (*WRS2*),
   `Anova.mlm` (*car*), `rqs` (*quantreg*), `lmodel2` (*lmodel2*),
   `summary.lm`, `PMCMR`, `osrt` and `trendPMCMR` (*PMCMRplus*), `bamlss`
   (*bamlss*).

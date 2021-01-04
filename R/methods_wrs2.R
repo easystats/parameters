@@ -119,3 +119,27 @@ model_parameters.mcp2 <- model_parameters.mcp1
 
   out
 }
+
+
+#' @export
+model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_onesampb(model)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
+
+
+# extract WRS2 one-sample percentile bootstrap ----------------------
+
+.extract_wrs2_onesampb <- function(model) {
+  data.frame(
+    "Estimate" = model$estimate,
+    "CI_low" =  model$ci[1],
+    "CI_high" =  model$ci[2],
+    "p" = model$p.value,
+    "n_Obs" = model$n,
+    "Method" = "One-sample percentile bootstrap",
+    stringsAsFactors = FALSE
+  )
+}
