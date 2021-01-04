@@ -203,7 +203,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     out$df_error <- model$parameter
     out$p <- model$p.value
   } else if (grepl("Wilcoxon", model$method)) {
-    out$W <- model$W
+    out$W <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
   } else {
