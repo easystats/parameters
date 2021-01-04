@@ -198,4 +198,40 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
       tolerance = 0.001
     )
   })
+
+  # model_parameters.onesampb ---------------------------------------------------
+
+  test_that("model_parameters.onesampb", {
+
+    set.seed(123)
+    x <- rnorm(30)
+
+    set.seed(123)
+    mod <- onesampb(x, nboot = 100)
+
+    expect_equal(
+      as.data.frame(model_parameters(mod)),
+      structure(
+        list(
+          Estimate = -0.0811399751842395,
+          CI_low = -0.414663225939919,
+          CI_high = 0.241710493090677,
+          p = 0.7,
+          n_Obs = 30L,
+          Method = "One-sample percentile bootstrap"
+        ),
+        class = "data.frame",
+        row.names = c(NA,
+                      -1L),
+        title = "One-sample percentile bootstrap",
+        model_class = "onesampb",
+        digits = 2,
+        ci_digits = 2,
+        p_digits = 3,
+        ci = 0.95
+      ),
+      tolerance = 0.001
+    )
+  }
+  )
 }
