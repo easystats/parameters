@@ -185,14 +185,14 @@
 <span class="va">pca</span></code></pre></div>
 <pre><code>#&gt; # Loadings from Principal Component Analysis (no rotation)
 #&gt; 
-#&gt; Variable   |  PC1 | Complexity
+#&gt; Variable   | PC1  | Complexity
 #&gt; ------------------------------
-#&gt; complaints | 0.78 |       1.00
-#&gt; privileges | 0.70 |       1.00
-#&gt; learning   | 0.82 |       1.00
-#&gt; raises     | 0.88 |       1.00
-#&gt; critical   | 0.40 |       1.00
-#&gt; advance    | 0.68 |       1.00
+#&gt; complaints | 0.78 |    1.00   
+#&gt; privileges | 0.70 |    1.00   
+#&gt; learning   | 0.82 |    1.00   
+#&gt; raises     | 0.88 |    1.00   
+#&gt; critical   | 0.40 |    1.00   
+#&gt; advance    | 0.68 |    1.00   
 #&gt; 
 #&gt; The unique principal component accounted for 52.82% of the total variance of the original data.</code></pre>
 <p>The <code>principal_component()</code> function automatically selected one component (if the number of components is not specified, this function uses <a href="https://easystats.github.io/parameters/reference/n_factors.html"><code>n_factors()</code></a> to estimate the optimal number to keep) and returned the <strong>loadings</strong>, i.e., the relationship with all of the original variables.</p>
@@ -222,15 +222,15 @@
 <span class="va">pca</span></code></pre></div>
 <pre><code>#&gt; # Rotated loadings from Principal Component Analysis (varimax-rotation)
 #&gt; 
-#&gt; Variable   |  PC1 | Complexity | Uniqueness
+#&gt; Variable   | PC1  | Complexity | Uniqueness
 #&gt; -------------------------------------------
-#&gt; rating     | 0.80 |       1.00 |       0.37
-#&gt; complaints | 0.85 |       1.00 |       0.28
-#&gt; privileges | 0.68 |       1.00 |       0.53
-#&gt; learning   | 0.83 |       1.00 |       0.32
-#&gt; raises     | 0.86 |       1.00 |       0.26
-#&gt; critical   | 0.36 |       1.00 |       0.87
-#&gt; advance    | 0.58 |       1.00 |       0.66
+#&gt; rating     | 0.80 |    1.00    |    0.37   
+#&gt; complaints | 0.85 |    1.00    |    0.28   
+#&gt; privileges | 0.68 |    1.00    |    0.53   
+#&gt; learning   | 0.83 |    1.00    |    0.32   
+#&gt; raises     | 0.86 |    1.00    |    0.26   
+#&gt; critical   | 0.36 |    1.00    |    0.87   
+#&gt; advance    | 0.58 |    1.00    |    0.66   
 #&gt; 
 #&gt; The unique principal component (varimax rotation) accounted for 53.09% of the total variance of the original data.</code></pre>
 <p><em>Note:</em> By default, <code><a href="https://rdrr.io/pkg/psych/man/principal.html">psych::principal()</a></code> uses a <strong>varimax</strong> rotation to extract rotated components, possibly leading to discrepancies in the results.</p>
