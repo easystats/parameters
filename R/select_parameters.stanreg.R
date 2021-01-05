@@ -16,7 +16,7 @@ select_parameters.stanreg <- function(model, method = NULL, cross_validation = F
   }
 
   # Visualise
-  # varsel_plot(selection, stats = c('elpd', 'rmse'), deltas=T)
+  # varsel_plot(selection, stats = c('elpd', 'rmse'), deltas = TRUE)
 
   # Extract parameters
   projection <- projpred::project(selection, nv = projpred::suggest_size(selection), ...)
