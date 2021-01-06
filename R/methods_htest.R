@@ -262,7 +262,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 .extract_htest_ttest <- function(model, standardized_d = NULL, hedges_g = NULL) {
-  if (grepl(" and ", model$data.name)) {
+  paired_test <- grepl("^Paired", model$method) && length(model$estimate) == 1
+  if (grepl(" and ", model$data.name) && isFALSE(paired_test)) {
     names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
     out <- data.frame(
       "Parameter1" = names[1],
@@ -275,6 +276,20 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       "t" = model$statistic,
       "df_error" = model$parameter,
       "p" = model$p.value,
+      "Method" = model$method,
+      stringsAsFactors = FALSE
+    )
+  } else if (isTRUE(paired_test)) {
+    names <- unlist(strsplit(model$data.name, " (and|by) "))
+    out <- data.frame(
+      "Parameter" = names[1],
+      "Group" = names[2],
+      "Difference" = model$estimate,
+      "t" = model$statistic,
+      "df_error" = model$parameter,
+      "p" = model$p.value,
+      "CI_low" = model$conf.int[1],
+      "CI_high" = model$conf.int[2],
       "Method" = model$method,
       stringsAsFactors = FALSE
     )

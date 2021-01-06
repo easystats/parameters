@@ -40,6 +40,8 @@
 
 * Fixed issues with printing of model parameters for multivariate response 
   models from *brms*.
+  
+* Fixed issue with paired t-tests and `model_parameters()`.
 
 # parameters 0.10.1
 
