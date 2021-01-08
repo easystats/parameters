@@ -22,6 +22,7 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
           Effsize = 0.789441283518576,
           CI_low = 0.419393210047738,
           CI_high = 1.32908145281133,
+          Effectsize = "Explanatory measure of effect size",
           Method = "A heteroscedastic one-way ANOVA for trimmed means"
         ),
         class = "data.frame",
@@ -89,6 +90,7 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
           df_error = 13.9137233889032,
           p = 0.216143324927692,
           Effsize = 0.378416737055775,
+          Effectsize = "Explanatory measure of effect size",
           Method = "Yuen's test on trimmed means for independent samples"
         ),
         class = "data.frame",
@@ -118,6 +120,7 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
           df_error = 5,
           p = 0.103433529948121,
           Effsize = 0.519275279669972,
+          Effectsize = "Explanatory measure of effect size",
           Method = "Yuen's test on trimmed means for dependent samples"
         ),
         class = "data.frame",
@@ -218,6 +221,7 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
           CI_high = 0.241710493090677,
           p = 0.7,
           n_Obs = 30L,
+          Effectsize = "Robust location measure",
           Method = "One-sample percentile bootstrap"
         ),
         class = "data.frame",
