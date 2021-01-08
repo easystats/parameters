@@ -14,6 +14,7 @@
 #' @param type Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for \code{afex_aov}.)
 #' @param ci Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.
 #' @param test String, indicating the type of test for \code{Anova.mlm} to be returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of the multivariate test (that is also given by the \code{print}-method). If \code{test = "univariate"}, returns the summary of the univariate test.
+#' @param power Logical, if \code{TRUE}, adds a column with power for each parameter.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -80,6 +81,7 @@ model_parameters.aov <- function(model,
                                  type = NULL,
                                  ci = NULL,
                                  test = NULL,
+                                 power = FALSE,
                                  verbose = TRUE,
                                  ...) {
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
@@ -95,6 +97,11 @@ model_parameters.aov <- function(model,
 
   # add effect sizes, if available
   parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, ci, verbose = verbose)
+
+  # add power, if possible
+  if (isTRUE(power)) {
+    parameters <- .power_for_aov(model, parameters)
+  }
 
   # add attributes
   parameters <- .add_anova_attributes(parameters, model, ci, test = test, ...)

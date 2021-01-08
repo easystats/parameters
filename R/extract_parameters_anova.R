@@ -274,3 +274,36 @@
   c(test, ((test ^ (-1 / tmp3) - 1) * (tmp1 * tmp3 - 2 * tmp2)) / p / q,
     p * q, tmp1 * tmp3 - 2 * tmp2)
 }
+
+
+
+# parameter-power ----------------
+
+
+#' @importFrom stats pf qf
+.power_for_aov <- function(model, params) {
+  if (requireNamespace("effectsize", quietly = TRUE)) {
+    power <- tryCatch(
+      {
+        cohens_f2 <- effectsize::cohens_f_squared(model, partial = TRUE)
+
+        f2 <- cohens_f2$Cohens_f2[match(cohens_f2$Parameter, params$Parameter)]
+        u <- params$df[params$Parameter != "Residuals"]
+        v <- params$df[params$Parameter == "Residuals"]
+
+        lambda <- f2 * (u + v + 1)
+        cohens_f2$Power <- stats::pf(stats::qf(0.05, u, v, lower = FALSE), u, v, lambda, lower = FALSE)
+        cohens_f2
+      },
+      error = function(e) {
+        NULL
+      }
+    )
+  }
+
+  if (!is.null(power)) {
+    params <- merge(params, cohens_f2[c("Parameter", "Power")], sort = FALSE, all = TRUE)
+  }
+
+  params
+}

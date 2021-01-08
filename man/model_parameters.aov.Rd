@@ -13,6 +13,7 @@
   type = NULL,
   ci = NULL,
   test = NULL,
+  power = FALSE,
   verbose = TRUE,
   ...
 )
@@ -33,6 +34,8 @@
 \item{ci}{Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.}
 
 \item{test}{String, indicating the type of test for \code{Anova.mlm} to be returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of the multivariate test (that is also given by the \code{print}-method). If \code{test = "univariate"}, returns the summary of the univariate test.}
+
+\item{power}{Logical, if \code{TRUE}, adds a column with power for each parameter.}
 
 \item{verbose}{Toggle warnings and messages.}
 
