@@ -19,7 +19,7 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
           df = 2,
           df_error = 4,
           p = 0.16,
-          Effsize = 0.789441283518576,
+          Estimate = 0.789441283518576,
           CI_low = 0.419393210047738,
           CI_high = 1.32908145281133,
           Effectsize = "Explanatory measure of effect size",
@@ -89,7 +89,7 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
           t = 1.29575716084179,
           df_error = 13.9137233889032,
           p = 0.216143324927692,
-          Effsize = 0.378416737055775,
+          Estimate = 0.378416737055775,
           Effectsize = "Explanatory measure of effect size",
           Method = "Yuen's test on trimmed means for independent samples"
         ),
@@ -119,7 +119,7 @@ if (require("testthat") && require("parameters") && require("WRS2")) {
           t = 1.98861015130686,
           df_error = 5,
           p = 0.103433529948121,
-          Effsize = 0.519275279669972,
+          Estimate = 0.519275279669972,
           Effectsize = "Explanatory measure of effect size",
           Method = "Yuen's test on trimmed means for dependent samples"
         ),
