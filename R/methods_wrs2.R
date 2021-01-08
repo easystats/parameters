@@ -33,6 +33,7 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
       "Effsize" = model$effsize,
       "CI_low" =  model$effsize_ci[1],
       "CI_high" = model$effsize_ci[2],
+      "Effectsize" = "Explanatory measure of effect size",
       "Method" = "A heteroscedastic one-way ANOVA for trimmed means",
       stringsAsFactors = FALSE
     )
@@ -72,6 +73,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
       "df_error" = model$df,
       "p" = model$p.value,
       "Effsize" = model$effsize,
+      "Effectsize" = "Explanatory measure of effect size",
       "Method" = "Yuen's test on trimmed means for independent samples",
       stringsAsFactors = FALSE
     )
@@ -84,6 +86,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
       "df_error" = model$df,
       "p" = model$p.value,
       "Effsize" = model$effsize,
+      "Effectsize" = "Explanatory measure of effect size",
       "Method" = "Yuen's test on trimmed means for dependent samples",
       stringsAsFactors = FALSE
     )
@@ -139,6 +142,7 @@ model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
     "CI_high" =  model$ci[2],
     "p" = model$p.value,
     "n_Obs" = model$n,
+    "Effectsize" = "Robust location measure",
     "Method" = "One-sample percentile bootstrap",
     stringsAsFactors = FALSE
   )
