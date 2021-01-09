@@ -144,6 +144,11 @@ model_parameters.BFBayesFactor <- function(model,
     out$Parameter
   )
 
+  if (!"Method" %in% names(out)) {
+    out$Method <- .method_BFBayesFactor(model)
+  }
+
+  attr(out, "title") <- unique(out$Method)
   attr(out, "ci") <- ci
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(out, "pretty_names") <- pretty_names
@@ -205,5 +210,27 @@ p_value.BFBayesFactor <- function(model, ...) {
     "proptest"
   } else {
     class(x@denominator)
+  }
+}
+
+.method_BFBayesFactor <- function(x) {
+  if (!requireNamespace("BayesFactor", quietly = TRUE)) {
+    stop("This function needs `BayesFactor` to be installed.")
+  }
+
+  if (any(class(x@denominator) %in% c("BFcorrelation"))) {
+    "Bayesian correlation analysis"
+  } else if (any(class(x@denominator) %in% c("BFoneSample", "BFindepSample"))) {
+    "Bayesian t-test"
+  } else if (any(class(x@denominator) %in% c("BFmetat"))) {
+    "Meta-analytic Bayes factors"
+  } else if (any(class(x@denominator) %in% c("BFlinearModel"))) {
+    "Bayes factors for linear models"
+  } else if (any(class(x@denominator) %in% c("BFcontingencyTable"))) {
+    "Bayesian contingency tabs analysis"
+  } else if (any(class(x@denominator) %in% c("BFproportion"))) {
+    "Bayesian proportion test"
+  } else {
+    NA_character_
   }
 }
