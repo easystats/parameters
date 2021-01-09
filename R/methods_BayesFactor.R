@@ -148,6 +148,7 @@ model_parameters.BFBayesFactor <- function(model,
     out$Method <- .method_BFBayesFactor(model)
   }
 
+  attr(out, "title") <- unique(out$Method)
   attr(out, "ci") <- ci
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(out, "pretty_names") <- pretty_names
@@ -222,7 +223,7 @@ p_value.BFBayesFactor <- function(model, ...) {
   } else if (any(class(x@denominator) %in% c("BFoneSample", "BFindepSample"))) {
     "Bayesian t-test"
   } else if (any(class(x@denominator) %in% c("BFmetat"))) {
-    "Mata-analytic Bayes factors"
+    "Meta-analytic Bayes factors"
   } else if (any(class(x@denominator) %in% c("BFlinearModel"))) {
     "Bayes factors for linear models"
   } else if (any(class(x@denominator) %in% c("BFcontingencyTable"))) {
