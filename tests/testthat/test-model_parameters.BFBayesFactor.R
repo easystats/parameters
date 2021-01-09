@@ -46,7 +46,7 @@ if (require("testthat") &&
 
     test_that("model_parameters.BFBayesFactor", {
       expect_equal(colnames(mp), c("Parameter", "Median", "CI_low", "CI_high", "pd", "ROPE_Percentage",
-                                   "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF"))
+                                   "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"))
     })
 
     data(puzzles)
@@ -57,10 +57,10 @@ if (require("testthat") &&
     test_that("model_parameters.BFBayesFactor", {
       expect_equal(colnames(mp), c("Parameter", "Median", "CI_low", "CI_high", "pd", "ROPE_Percentage",
                                    "Prior_Distribution", "Prior_Location", "Prior_Scale", "Effects",
-                                   "Component", "BF"))
+                                   "Component", "BF", "Method"))
       expect_equal(mp$Effects, c("fixed", "fixed", "fixed", "fixed", "fixed", "random", "random",
                                  "random", "random", "random", "random", "random", "random", "random",
-                                 "random", "random", "random", "fixed", "fixed", "fixed", "fixed"))
+                                 "random", "random", "random", "fixed", "fixed", "fixed", "fixed", "Method"))
     })
   }
 }
