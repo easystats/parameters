@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -272,12 +274,14 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 #&gt; <span class='message'>Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>Type BFManual() to open the manual.</span>
-#&gt; <span class='message'>************</span></div><div class='output co'>#&gt; Parameter  | Median |         89% CI |   pd | % in ROPE |              Prior |     BF
-#&gt; -------------------------------------------------------------------------------------
-#&gt; Difference |  -0.95 | [-1.11, -0.79] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 1000
-#&gt; Cohen's D  |   0.96 | [ 0.77,  1.16] | 100% |        0% |                    |       </div><div class='input'><span class='co'># }</span>
+#&gt; <span class='message'>************</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayesian t-test
+#&gt; 
+#&gt; </span><span>Parameter  | Median |         89% CI |   pd | % in ROPE |              Prior |     BF |          Method
+#&gt; -------------------------------------------------------------------------------------------------------
+#&gt; Difference |  -0.95 | [-1.11, -0.79] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 1000 | Bayesian t-test
+#&gt; Cohen's D  |   0.96 | [ 0.77,  1.16] | 100% |        0% |                    |        | Bayesian t-test</div><div class='input'><span class='co'># }</span>
 
-</div></pre>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
