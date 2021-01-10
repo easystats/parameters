@@ -60,7 +60,7 @@ if (require("testthat") &&
                                    "Component", "BF", "Method"))
       expect_equal(mp$Effects, c("fixed", "fixed", "fixed", "fixed", "fixed", "random", "random",
                                  "random", "random", "random", "random", "random", "random", "random",
-                                 "random", "random", "random", "fixed", "fixed", "fixed", "fixed", "Method"))
+                                 "random", "random", "random", "fixed", "fixed", "fixed", "fixed"))
     })
   }
 }
