@@ -208,6 +208,7 @@
 <ul>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for t-tests when <code>standardize_d = TRUE</code>, did not return columns for the group-specific means.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/p_value.html">p_value()</a></code> for <code>fixest::feols()</code>.</p></li>
+<li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">glmer()</a></code> models with p-values that were calculated with <code>df_method = "ml1"</code> or <code>df_method = "betwithin"</code>.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for multinomial models when response was a character vector (and no factor).</p></li>
 <li><p>Fixed issue in <code><a href="https://easystats.github.io/insight/reference/display.html">print_md()</a></code> for model-parameters objects from Bayesian models.</p></li>
 <li><p>Fixed issues with printing of model parameters for multivariate response models from <em>brms</em>.</p></li>
