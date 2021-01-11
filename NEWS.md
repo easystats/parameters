@@ -36,6 +36,9 @@
 
 * Fixed issue in `p_value()` for `fixest::feols()`.
 
+* Fixed issue in `model_parameters()` for `glmer()` models with p-values that
+  were calculated with `df_method = "ml1"` or `df_method = "betwithin"`.
+
 * Fixed issue in `model_parameters()` for multinomial models when response
   was a character vector (and no factor).
 

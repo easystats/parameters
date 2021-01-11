@@ -56,20 +56,22 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
 # helper ------------------------------
 
-.p_value_dof <- function(model, dof, method, statistic = NULL) {
+.p_value_dof <- function(model, dof, method, statistic = NULL, se = NULL) {
   params <- insight::get_parameters(model)
   if (is.null(statistic)) {
     statistic <- insight::get_statistic(model)$Statistic
   }
 
   if (method == "kenward") {
-    se <- se_kenward(model)
+    if (is.null(se)) {
+      se <- se_kenward(model)$SE
+    }
     estimate <- if ("Coefficient" %in% colnames(params)) {
       params$Coefficient
     } else {
       params$Estimate
     }
-    statistic <- estimate / se$SE
+    statistic <- estimate / se
   }
 
   p <- 2 * stats::pt(abs(statistic), df = dof, lower.tail = FALSE)
