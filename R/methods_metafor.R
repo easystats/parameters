@@ -141,6 +141,12 @@ model_parameters.rma <- function(model,
   attr(out, "object_name") <- .safe_deparse(substitute(model))
   attr(out, "measure") <- model$measure
 
+  if (!"Method" %in% names(out)) {
+    out$Method <- "Meta-analysis using 'metafor'"
+  }
+
+  attr(out, "title") <- unique(out$Method)
+
   out
 }
 

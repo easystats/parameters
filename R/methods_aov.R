@@ -230,6 +230,12 @@ model_parameters.afex_aov <- function(model,
     ...
   )
 
+  if (!"Method" %in% names(out)) {
+    out$Method <- "ANOVA estimation for factorial designs using 'afex'"
+  }
+
+  attr(out, "title") <- unique(out$Method)
+
   out
 }
 
