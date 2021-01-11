@@ -28,7 +28,7 @@ if (require("testthat") && require("insight") && require("parameters") && requir
       colnames(params),
       c(
         "Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Weight",
-        "BF", "Rhat", "ESS", "Component", "Prior_Distribution", "Prior_Location", "Prior_Scale"
+        "BF", "Rhat", "ESS", "Component", "Prior_Distribution", "Prior_Location", "Prior_Scale", "Method"
       )
     )
   })
@@ -57,7 +57,7 @@ if (require("testthat") && require("insight") && require("parameters") && requir
       colnames(params),
       c(
         "Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Weight",
-        "BF", "Rhat", "ESS", "Component", "Prior_Distribution", "Prior_Location", "Prior_Scale"
+        "BF", "Rhat", "ESS", "Component", "Prior_Distribution", "Prior_Location", "Prior_Scale", "Method"
       )
     )
   })
@@ -88,7 +88,7 @@ if (require("testthat") && require("insight") && require("parameters") && requir
       colnames(params),
       c(
         "Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Weight",
-        "BF", "Rhat", "ESS", "Component", "Prior_Distribution", "Prior_Location", "Prior_Scale"
+        "BF", "Rhat", "ESS", "Component", "Prior_Distribution", "Prior_Location", "Prior_Scale", "Method"
       )
     )
   })
