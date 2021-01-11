@@ -80,6 +80,12 @@ model_parameters.metaplus <- function(model,
   attr(out, "object_name") <- .safe_deparse(substitute(model))
   attr(out, "measure") <- "Estimate"
 
+  if (!"Method" %in% names(out)) {
+    out$Method <- "Robust meta-analysis using 'metaplus'"
+  }
+
+  attr(out, "title") <- unique(out$Method)
+
   out
 }
 
@@ -221,6 +227,12 @@ model_parameters.meta_random <- function(model,
   attr(out, "object_name") <- .safe_deparse(substitute(model))
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 
+  if (!"Method" %in% names(out)) {
+    out$Method <- "Bayesian meta-analysis using 'metaBMA'"
+  }
+
+  attr(out, "title") <- unique(out$Method)
+
   out
 }
 
@@ -359,6 +371,12 @@ model_parameters.meta_bma <- function(model,
   attr(out, "measure") <- "Estimate"
   attr(out, "object_name") <- .safe_deparse(substitute(model))
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
+
+  if (!"Method" %in% names(out)) {
+    out$Method <- "Bayesian meta-analysis using 'metaBMA'"
+  }
+
+  attr(out, "title") <- unique(out$Method)
 
   out
 }
