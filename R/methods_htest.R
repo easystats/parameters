@@ -235,12 +235,19 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 .extract_htest_ranktest <- function(model) {
-  names <- unlist(strsplit(model$data.name, " (and|by) "))
-  out <- data.frame(
-    "Parameter1" = names[1],
-    "Parameter2" = names[2],
-    stringsAsFactors = FALSE
-  )
+  if (grepl(" (and|by) ", model$data.name)) {
+    names <- unlist(strsplit(model$data.name, " (and|by) "))
+    out <- data.frame(
+      "Parameter1" = names[1],
+      "Parameter2" = names[2],
+      stringsAsFactors = FALSE
+    )
+  } else {
+    out <- data.frame(
+      "Parameter" = model$data.name,
+      stringsAsFactors = FALSE
+    )
+  }
 
   if (grepl("Wilcoxon", model$method, fixed = TRUE)) {
     out$W <- model$statistic
