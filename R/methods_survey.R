@@ -55,10 +55,16 @@ ci.svyglm.zip <- ci.tobit
 # p values -----------------------------------------------
 
 #' @export
-p_value.svyglm <- function(model, ...) {
+p_value.svyglm <- function(model, verbose = TRUE, ...) {
   cs <- stats::coef(summary(model))
-  p <- cs[, 4]
+  if (ncol(cs) < 4) {
+    if (isTRUE(verbose)) {
+      warning("Could not retrieve p-values.", call. = FALSE)
+    }
+    return(NULL)
+  }
 
+  p <- cs[, 4]
   .data_frame(
     Parameter = .remove_backticks_from_string(rownames(cs)),
     p = as.vector(p)
@@ -69,6 +75,13 @@ p_value.svyglm <- function(model, ...) {
 #' @export
 p_value.svyolr <- function(model, ...) {
   cs <- stats::coef(summary(model))
+  if (ncol(cs) < 3) {
+    if (isTRUE(verbose)) {
+      warning("Could not retrieve p-values.", call. = FALSE)
+    }
+    return(NULL)
+  }
+
   p <- 2 * stats::pt(abs(cs[, 3]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
 
   .data_frame(
