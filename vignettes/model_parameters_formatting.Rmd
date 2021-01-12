@@ -76,7 +76,7 @@ Now variable names and factor levels, but also polynomial terms or even factors 
 
 ## Standardizing Column Names of Parameter Tables
 
-As seen above, the `summary()` returns columns names `Estimate`, `t value` or `Pr(>|t|)`. While `Estimate` is not specific for certain models, `t value` is. For logistic regression models, you would get `z value`. Some packages alter the names, so you get just `t` or `t-value` etc.
+As seen above, the `summary()` returns columns named `Estimate`, `t value` or `Pr(>|t|)`. While `Estimate` is not specific for certain models, `t value` is. For logistic regression models, you would get `z value`. Some packages alter the names, so you get just `t` or `t-value` etc.
 
 `model_parameters()` also uses context-specific column names, where applicable:
 
@@ -84,7 +84,7 @@ As seen above, the `summary()` returns columns names `Estimate`, `t value` or `P
 colnames(model_parameters(model))
 ```
 
-For Bayesian models, `Coefficient` is usually named `Median` etc. While this makes sense from a user perspective, because you instantly know which type of statistic or coefficient you have, it becomes difficult when you need a generic naming scheme to access model parameters when the input model is unknown. This is the typical approach from the *broom* package, where you can "standardized" column names:
+For Bayesian models, `Coefficient` is usually named `Median` etc. While this makes sense from a user perspective, because you instantly know which type of statistic or coefficient you have, it becomes difficult when you need a generic naming scheme to access model parameters when the input model is unknown. This is the typical approach from the *broom* package, where you get "standardized" column names:
 
 ```{r}
 library(broom)
