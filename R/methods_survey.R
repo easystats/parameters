@@ -73,7 +73,7 @@ p_value.svyglm <- function(model, verbose = TRUE, ...) {
 
 
 #' @export
-p_value.svyolr <- function(model, ...) {
+p_value.svyolr <- function(model, verbose = TRUE, ...) {
   cs <- stats::coef(summary(model))
   if (ncol(cs) < 3) {
     if (isTRUE(verbose)) {

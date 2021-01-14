@@ -25,7 +25,7 @@ if (require("testthat") && require("parameters")) {
     expect_equal(colnames(mp), c("Chi2", "df", "p", "Method"))
   })
 
-  if (require("effectsize")) {
+  if (require("effectsize") && utils::packageVersion("effectsize") > "0.4.1") {
     data(mtcars)
     mp <- model_parameters(stats::chisq.test(table(mtcars$am)), cramers_v = "raw", phi = "raw", ci = 0.95)
     test_that("model_parameters-chisq-test raw", {
