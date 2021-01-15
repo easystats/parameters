@@ -75,5 +75,4 @@ if (require("BayesFactor")) {
   model_parameters(model)
 }
 }
-
 }

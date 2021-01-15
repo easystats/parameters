@@ -24,7 +24,6 @@
 #'   model_parameters(model)
 #' }
 #' }
-#'
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom stats na.omit setNames
 #' @importFrom bayestestR bayesfactor_models
