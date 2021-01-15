@@ -1,5 +1,6 @@
 if (require("testthat") &&
   require("parameters") &&
+  require("stats") &&
   require("plm")) {
   data(Crime)
   data("Produc", package = "plm")
@@ -21,7 +22,7 @@ if (require("testthat") &&
     ret = rnorm(9)
   )
   test3333 <- pdata.frame(test3333)
-  test3333["lag"] <- plm::lag(test3333$ret)
+  test3333["lag"] <- lag(test3333$ret)
   test3333 <- na.omit(test3333)
   test3333model <- ret ~ lag
   m3 <- plm::plm(
