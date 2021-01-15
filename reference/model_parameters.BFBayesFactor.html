@@ -260,7 +260,8 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     <p>The meaning of the extracted parameters:</p><ul>
 <li><p>For <code><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></code>: <code>Difference</code> is the raw difference between the means.</p></li>
 <li><p>For <code><a href='https://rdrr.io/pkg/BayesFactor/man/correlationBF.html'>correlationBF</a></code>: <code>rho</code> is the linear correlation estimate (equivalent to Pearson's <em>r</em>).</p></li>
-<li><p>For <code><a href='https://rdrr.io/pkg/BayesFactor/man/lmBF.html'>lmBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/generalTestBF.html'>generalTestBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/regressionBF.html'>regressionBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></code>: in addition to parameters of the fixed and random effects, there are: <code>mu</code> is the (mean-centered) intercept; <code>sig2</code> is the model's sigma; <code>g</code> / <code>g_*</code> are the <em>g</em> parameters; See the <a href='https://doi.org/10.1016/j.jmp.2012.08.001'><em>Bayes Factors for ANOVAs</em> paper</a>.</p></li>
+<li><p>For <code><a href='https://rdrr.io/pkg/BayesFactor/man/lmBF.html'>lmBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/generalTestBF.html'>generalTestBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/regressionBF.html'>regressionBF</a></code> / <code><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></code>: in addition to parameters of the fixed and random effects, there are: <code>mu</code> is the (mean-centered) intercept; <code>sig2</code> is the model's sigma; <code>g</code> / <code>g_*</code> are the <em>g</em> parameters; See the <em>Bayes Factors for ANOVAs</em> paper (doi: <a href='https://doi.org/10.1016/j.jmp.2012.08.001'>10.1016/j.jmp.2012.08.001</a>
+).</p></li>
 </ul>
 
 
@@ -280,7 +281,6 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 #&gt; -------------------------------------------------------------------------------------------------------
 #&gt; Difference |  -0.95 | [-1.11, -0.79] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 1000 | Bayesian t-test
 #&gt; Cohen's D  |   0.96 | [ 0.77,  1.16] | 100% |        0% |                    |        | Bayesian t-test</div><div class='input'><span class='co'># }</span>
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
