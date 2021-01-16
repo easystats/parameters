@@ -1,4 +1,10 @@
-# parameters 0.10.2
+# parameters 0.11.1
+
+## Changes to functions
+
+* Revised printing for `model_parameters()` for *metafor* models.
+
+# parameters 0.11.0
 
 ## New supported model classes
 
