@@ -1,4 +1,4 @@
-if (require("testthat") && require("insight") && require("parameters") && require("metaBMA")) {
+if (require("testthat") && require("insight") && require("parameters") && require("metaBMA") && getRversion() >= "3.6.0") {
   data(towels)
 
   # default
