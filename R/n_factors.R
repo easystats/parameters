@@ -17,15 +17,16 @@
 #'
 #' @examples
 #' library(parameters)
+#' if (require("nFactors")) {
+#'   n_factors(mtcars, type = "PCA")
 #'
-#' n_factors(mtcars, type = "PCA")
-#'
-#' result <- n_factors(mtcars[1:5], type = "FA")
-#' as.data.frame(result)
-#' summary(result)
+#'   result <- n_factors(mtcars[1:5], type = "FA")
+#'   as.data.frame(result)
+#'   summary(result)
 #' \donttest{
-#' n_factors(mtcars, type = "PCA", package = "all")
-#' n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
+#'   n_factors(mtcars, type = "PCA", package = "all")
+#'   n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
+#' }
 #' }
 #' @return A data frame.
 #'
