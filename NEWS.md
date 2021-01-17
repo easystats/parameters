@@ -1,5 +1,9 @@
 # parameters 0.11.1
 
+## General
+
+* Roll-back R dependency to R >= 3.3.
+
 ## Changes to functions
 
 * Revised printing for `model_parameters()` for *metafor* models.
