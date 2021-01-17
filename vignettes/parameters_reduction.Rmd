@@ -26,6 +26,7 @@ options(digits = 2)
 knitr::opts_chunk$set(comment = "#>")
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
+    !requireNamespace("nFactors", quietly = TRUE) ||
     !requireNamespace("psych", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
