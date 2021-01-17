@@ -1,3 +1,8 @@
+#' @title Backports of newer R functions
+#' @rdname str2lang
+#'
+#' @description Backports of newer R functions.
+#'
 #' @keywords internal
 #' @rawNamespace if (getRversion() < "3.6.0") export(str2lang)
 str2lang <- function(s) {
@@ -8,6 +13,7 @@ str2lang <- function(s) {
 }
 
 
+#' @rdname str2lang
 #' @keywords internal
 #' @rawNamespace if (getRversion() < "3.5.0") export(isTRUE)
 isTRUE <- function(x) {
@@ -15,6 +21,7 @@ isTRUE <- function(x) {
 }
 
 
+#' @rdname str2lang
 #' @keywords internal
 #' @rawNamespace if (getRversion() < "3.5.0") export(isFALSE)
 isFALSE <- function(x) {
@@ -23,6 +30,7 @@ isFALSE <- function(x) {
 
 
 
+#' @rdname str2lang
 #' @keywords internal
 #' @rawNamespace if (getRversion() < "4.0.0") export(deparse1)
 deparse1 <- function(expr, collapse = " ", width.cutoff = 500L, ...) {
