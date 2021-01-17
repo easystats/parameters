@@ -38,6 +38,8 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 \examples{
 library(parameters)
 \donttest{
-n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
+if (require("mclust") && require("NbClust") && require("cluster")) {
+  n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
+}
 }
 }
