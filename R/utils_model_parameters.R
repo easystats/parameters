@@ -108,6 +108,17 @@
     attr(params, "s_value") <- eval(dot.arguments[["s_value"]])
   }
 
+  # add CI, and reorder
+  if (!"CI" %in% colnames(params)) {
+    params$CI <- 100 * ci
+    ci_pos <- grep("CI_low", colnames(params))
+    if (length(ci_pos)) {
+      a <- attributes(params)
+      params <- params[c(1:(ci_pos - 1), ncol(params), ci_pos:(ncol(params) - 1))]
+      attributes(params) <- utils::modifyList(a, attributes(params))
+    }
+  }
+
   params
 }
 
