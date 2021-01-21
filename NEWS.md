@@ -14,6 +14,11 @@
 * `model_parameters()` for *htest* objects now returns the confidence level
   for effect sizes as additional `CI` column.
 
+## Bug fixes
+
+* Fixed edge case when formatting parameters from polynomial terms with many 
+  degrees.
+
 # parameters 0.11.0
 
 ## New supported model classes
