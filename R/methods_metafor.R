@@ -58,6 +58,12 @@ model_parameters.rma <- function(model,
                                  include_studies = TRUE,
                                  verbose = TRUE,
                                  ...) {
+  # handle ci-level that was defined in function call...
+  ci_level <- parse(text = .safe_deparse(model$call))[[1]]$level
+  if (!is.null(ci_level) && missing(ci)) {
+    ci <- ci_level / 100
+  }
+
   meta_analysis_overall <-
     .model_parameters_generic(
       model = model,
