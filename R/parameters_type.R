@@ -215,11 +215,8 @@ parameters_type <- function(model, ...) {
     } else {
       type <- "poly"
     }
-    vars <- gsub("poly(", "", name, fixed = TRUE)
-    vars <- unlist(strsplit(vars, ", ", fixed = TRUE))
-    var <- vars[[1]]
-    degree <- vars[[2]]
-    degree <- substr(vars[[2]], nchar(vars[[2]]), nchar(vars[[2]]))
+    var <- .poly_info(name, "name")
+    degree <- .poly_info(name, "degree")
     return(c(type, "Association", name, var, degree, NA))
 
     # Splines
@@ -275,6 +272,24 @@ parameters_type <- function(model, ...) {
   } else {
     return(c("unknown", NA, NA, NA, NA, NA))
   }
+}
+
+
+
+#' @keywords internal
+.poly_info <- function(x, what = "degree") {
+  if (what == "degree") {
+    subs <- "\\4"
+  } else {
+    subs <- "\\2"
+  }
+  p <- "(.*)poly\\((.*),\\s(.*)\\)(.*)"
+  tryCatch(
+    {
+      trimws(sub(p, replacement = subs, x))
+    },
+    error = function(x) { 1 }
+  )
 }
 
 

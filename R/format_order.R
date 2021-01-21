@@ -33,18 +33,25 @@ format_order <- function(order, textual = TRUE, ...) {
   } else {
     number <- insight::format_value(order, digits = 0, ...)
     last <- substr(number, nchar(number), nchar(number))
-    out <- paste0(number, switch(last,
-      "1" = "st",
-      "2" = "nd",
-      "3" = "rd",
-      "4" = "th",
-      "5" = "th",
-      "6" = "th",
-      "7" = "th",
-      "8" = "th",
-      "9" = "th",
-      "0" = "th"
-    ))
+    last_two <- substr(number, nchar(number) - 1, nchar(number))
+    # exceptions
+    if (last_two %in% c(11, 12, 13)) {
+      out <- paste0(number, "th")
+    } else {
+      out <- paste0(number, switch(
+        last,
+        "1" = "st",
+        "2" = "nd",
+        "3" = "rd",
+        "4" = "th",
+        "5" = "th",
+        "6" = "th",
+        "7" = "th",
+        "8" = "th",
+        "9" = "th",
+        "0" = "th"
+      ))
+    }
   }
 
   out
