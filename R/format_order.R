@@ -42,7 +42,8 @@ format_order <- function(order, textual = TRUE, ...) {
       "6" = "th",
       "7" = "th",
       "8" = "th",
-      "9" = "th"
+      "9" = "th",
+      "0" = "th"
     ))
   }
 
