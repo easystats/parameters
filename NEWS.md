@@ -11,8 +11,8 @@
 * `model_parameters()` for *metafor* models now recognized confidence levels
   specified in the function call (via argument `level`).
 
-* `model_parameters()` for *htest* objects now returns the confidence level
-  for effect sizes as additional `CI` column.
+* `model_parameters()` for *htest* objects and *metafor* models now returns the
+  confidence level for effect sizes as additional `CI` column.
 
 ## Bug fixes
 
