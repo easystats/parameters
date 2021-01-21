@@ -45,6 +45,9 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
   if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
 
+  # no column with CI-level in output
+  formatted_table$CI <- NULL
+
   formatted_table
 }
 

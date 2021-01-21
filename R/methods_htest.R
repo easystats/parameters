@@ -637,6 +637,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 # ==== add attributes ====
 
 
+#' @importFrom utils modifyList
 .add_htest_parameters_attributes <- function(params, model, ci = 0.95, ...) {
   attr(params, "title") <- unique(params$Method)
   attr(params, "model_class") <- class(model)
@@ -662,6 +663,18 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   attr(params, "ci") <- ci
   attr(params, "ci_test") <- attributes(model$conf.int)$conf.level
+
+  # add CI, and reorder
+  if (!"CI" %in% colnames(params)) {
+    params$CI <- 100 * ci
+    ci_pos <- grep("CI_low", colnames(params))
+    if (length(ci_pos)) {
+      a <- attributes(params)
+      params <- params[c(1:(ci_pos - 1), ncol(params), ci_pos:(ncol(params) - 1))]
+      attributes(params) <- utils::modifyList(a, attributes(params))
+    }
+  }
+
   params
 }
 
