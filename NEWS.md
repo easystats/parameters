@@ -8,6 +8,9 @@
 
 * Revised printing for `model_parameters()` for *metafor* models.
 
+* `model_parameters()` for *metafor* models now recognized confidence levels
+  specified in the function call (via argument `level`).
+
 # parameters 0.11.0
 
 ## New supported model classes
