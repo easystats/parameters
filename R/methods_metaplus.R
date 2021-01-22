@@ -14,6 +14,14 @@ model_parameters.metaplus <- function(model,
                                       include_studies = TRUE,
                                       verbose = TRUE,
                                       ...) {
+
+  if (!missing(ci)) {
+    if (isTRUE(verbose)) {
+      message("'metaplus' models do not support other levels for confidence intervals than 0.95. Argument 'ci' is ignored.")
+    }
+    ci <- .95
+  }
+
   meta_analysis_overall <-
     suppressWarnings(.model_parameters_generic(
       model = model,
