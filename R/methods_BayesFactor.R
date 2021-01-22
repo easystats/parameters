@@ -111,10 +111,10 @@ model_parameters.BFBayesFactor <- function(model,
 
 
 
-  # Remove unnecessary columns
-  if ("CI" %in% names(out) && length(stats::na.omit(unique(out$CI))) == 1) {
-    out$CI <- NULL
-  }
+  # # Remove unnecessary columns
+  # if ("CI" %in% names(out) && length(stats::na.omit(unique(out$CI))) == 1) {
+  #   out$CI <- NULL
+  # }
   if ("ROPE_CI" %in% names(out) && length(stats::na.omit(unique(out$ROPE_CI))) == 1) {
     out$ROPE_CI <- NULL
   }
