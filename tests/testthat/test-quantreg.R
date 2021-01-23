@@ -35,20 +35,26 @@ if (require("testthat") &&
 
   set.seed(123)
   data("engel")
-  m1 <- rq(foodexp ~ income, data = engel, tau = 1:9/10)
+  m1 <- rq(foodexp ~ income, data = engel, tau = 1:9 / 10)
 
   mp <- suppressWarnings(model_parameters(m1))
   test_that("mp_rqs", {
-    expect_identical(mp$Parameter, c("(Intercept)", "income", "(Intercept)", "income", "(Intercept)",
-                                     "income", "(Intercept)", "income", "(Intercept)", "income", "(Intercept)",
-                                     "income", "(Intercept)", "income", "(Intercept)", "income", "(Intercept)",
-                                     "income"))
-    expect_equal(mp$Coefficient, c(110.14157, 0.40177, 102.31388, 0.4469, 99.11058, 0.48124, 101.95988,
-                                   0.5099, 81.48225, 0.56018, 79.70227, 0.58585, 79.28362, 0.60885,
-                                   58.00666, 0.65951, 67.35087, 0.6863), tolerance = 1e-3)
-    expect_equal(mp$SE, c(29.39768, 0.04024, 21.42836, 0.02997, 22.18115, 0.02987, 22.06032,
-                          0.02936, 19.25066, 0.02828, 17.61762, 0.02506, 14.25039, 0.02176,
-                          19.21719, 0.02635, 22.39538, 0.02849), tolerance = 1e-3)
+    expect_identical(mp$Parameter, c(
+      "(Intercept)", "income", "(Intercept)", "income", "(Intercept)",
+      "income", "(Intercept)", "income", "(Intercept)", "income", "(Intercept)",
+      "income", "(Intercept)", "income", "(Intercept)", "income", "(Intercept)",
+      "income"
+    ))
+    expect_equal(mp$Coefficient, c(
+      110.14157, 0.40177, 102.31388, 0.4469, 99.11058, 0.48124, 101.95988,
+      0.5099, 81.48225, 0.56018, 79.70227, 0.58585, 79.28362, 0.60885,
+      58.00666, 0.65951, 67.35087, 0.6863
+    ), tolerance = 1e-3)
+    expect_equal(mp$SE, c(
+      29.39768, 0.04024, 21.42836, 0.02997, 22.18115, 0.02987, 22.06032,
+      0.02936, 19.25066, 0.02828, 17.61762, 0.02506, 14.25039, 0.02176,
+      19.21719, 0.02635, 22.39538, 0.02849
+    ), tolerance = 1e-3)
   })
 
 

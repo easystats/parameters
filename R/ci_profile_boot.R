@@ -6,7 +6,7 @@
       out <- as.data.frame(stats::confint(model, level = ci), stringsAsFactors = FALSE)
       names(out) <- c("CI_low", "CI_high")
 
-      out$CI <- ci * 100
+      out$CI <- ci
       out$Parameter <- insight::get_parameters(model, effects = "fixed", component = "conditional")$Parameter
 
       out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
@@ -37,7 +37,7 @@
       out <- as.data.frame(stats::confint(model, level = ci), stringsAsFactors = FALSE)
       names(out) <- c("CI_low", "CI_high")
 
-      out$CI <- ci * 100
+      out$CI <- ci
       out$Parameter <- .remove_backticks_from_string(rownames(out))
 
       out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
@@ -104,8 +104,10 @@
     "conditional" = pars$Parameter,
     "zi" = ,
     "zero_inflated" = paste0("zi~", pars$Parameter),
-    c(pars$Parameter[pars$Component == "conditional"],
-      paste0("zi~", pars$Parameter[pars$Component == "zero_inflated"]))
+    c(
+      pars$Parameter[pars$Component == "conditional"],
+      paste0("zi~", pars$Parameter[pars$Component == "zero_inflated"])
+    )
   )
 
   out <- out[rownames(out) %in% param_names, ]

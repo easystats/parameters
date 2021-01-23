@@ -39,7 +39,7 @@ ci.effectsize_std_params <- function(x, ci = .95, verbose = TRUE, ...) {
     fac <- stats::qt(alpha, df = df)
     data.frame(
       Parameter = x$Parameter,
-      CI = i * 100,
+      CI = i,
       CI_low = x$Std_Coefficient - se * fac,
       CI_high = x$Std_Coefficient + se * fac,
       stringsAsFactors = FALSE

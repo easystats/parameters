@@ -153,6 +153,11 @@ model_parameters.BFBayesFactor <- function(model,
   attr(out, "pretty_names") <- pretty_names
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
 
+  # converting CI to fraction
+  if ("CI" %in% names(out)) {
+    out$CI <- out$CI / 100
+  }
+
   out
 }
 

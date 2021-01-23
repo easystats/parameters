@@ -10,13 +10,13 @@ model_parameters.rqss <- model_parameters.cgam
 
 #' @export
 model_parameters.rqs <- function(model,
-                                  ci = .95,
-                                  bootstrap = FALSE,
-                                  iterations = 1000,
-                                  standardize = NULL,
-                                  exponentiate = FALSE,
-                                  verbose = TRUE,
-                                  ...) {
+                                 ci = .95,
+                                 bootstrap = FALSE,
+                                 iterations = 1000,
+                                 standardize = NULL,
+                                 exponentiate = FALSE,
+                                 verbose = TRUE,
+                                 ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,

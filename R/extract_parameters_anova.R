@@ -201,10 +201,11 @@
       }
       eigs <- Re(eigen(qr.coef(qr_value, model$SSP[[i]]), symmetric = FALSE)$values)
       test <- switch(model$test,
-                     "Pillai" = .pillai_test(eigs, model$df[i], model$error.df),
-                     "Wilks" = .wilks_test(eigs, model$df[i], model$error.df),
-                     "Hotelling-Lawley" = .hl_test(eigs, model$df[i], model$error.df),
-                     "Roy" = .roy_test(eigs, model$df[i], model$error.df))
+        "Pillai" = .pillai_test(eigs, model$df[i], model$error.df),
+        "Wilks" = .wilks_test(eigs, model$df[i], model$error.df),
+        "Hotelling-Lawley" = .hl_test(eigs, model$df[i], model$error.df),
+        "Roy" = .roy_test(eigs, model$df[i], model$error.df)
+      )
       data.frame(
         Parameter = model$terms[i],
         df = model$df[i],
@@ -266,13 +267,16 @@
   p <- length(eig)
   tmp1 <- df.res - 0.5 * (p - q + 1)
   tmp2 <- (p * q - 2) / 4
-  tmp3 <- p ^ 2 + q ^ 2 - 5
-  tmp3 <- if (tmp3 > 0)
-    sqrt(((p * q) ^ 2 - 4) / tmp3)
-  else
+  tmp3 <- p^2 + q^2 - 5
+  tmp3 <- if (tmp3 > 0) {
+    sqrt(((p * q)^2 - 4) / tmp3)
+  } else {
     1
-  c(test, ((test ^ (-1 / tmp3) - 1) * (tmp1 * tmp3 - 2 * tmp2)) / p / q,
-    p * q, tmp1 * tmp3 - 2 * tmp2)
+  }
+  c(
+    test, ((test^(-1 / tmp3) - 1) * (tmp1 * tmp3 - 2 * tmp2)) / p / q,
+    p * q, tmp1 * tmp3 - 2 * tmp2
+  )
 }
 
 

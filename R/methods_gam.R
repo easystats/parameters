@@ -67,6 +67,11 @@ model_parameters.gam <- function(model,
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
+  # converting CI to fraction
+  if ("CI" %in% names(parameters)) {
+    parameters$CI <- parameters$CI / 100
+  }
+
   parameters
 }
 

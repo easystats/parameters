@@ -45,22 +45,30 @@ if (require("testthat") &&
     mp <- model_parameters(bf)
 
     test_that("model_parameters.BFBayesFactor", {
-      expect_equal(colnames(mp), c("Parameter", "Median", "CI_low", "CI_high", "pd", "ROPE_Percentage",
-                                   "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"))
+      expect_equal(colnames(mp), c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+        "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"
+      ))
     })
 
     data(puzzles)
-    result <- anovaBF(RT ~ shape*color + ID, data = puzzles, whichRandom = "ID",
-                      whichModels = 'top', progress = FALSE)
+    result <- anovaBF(RT ~ shape * color + ID,
+      data = puzzles, whichRandom = "ID",
+      whichModels = "top", progress = FALSE
+    )
     mp <- model_parameters(result, verbose = FALSE)
 
     test_that("model_parameters.BFBayesFactor", {
-      expect_equal(colnames(mp), c("Parameter", "Median", "CI_low", "CI_high", "pd", "ROPE_Percentage",
-                                   "Prior_Distribution", "Prior_Location", "Prior_Scale", "Effects",
-                                   "Component", "BF", "Method"))
-      expect_equal(mp$Effects, c("fixed", "fixed", "fixed", "fixed", "fixed", "random", "random",
-                                 "random", "random", "random", "random", "random", "random", "random",
-                                 "random", "random", "random", "fixed", "fixed", "fixed", "fixed"))
+      expect_equal(colnames(mp), c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+        "Prior_Distribution", "Prior_Location", "Prior_Scale", "Effects",
+        "Component", "BF", "Method"
+      ))
+      expect_equal(mp$Effects, c(
+        "fixed", "fixed", "fixed", "fixed", "fixed", "random", "random",
+        "random", "random", "random", "random", "random", "random", "random",
+        "random", "random", "random", "fixed", "fixed", "fixed", "fixed"
+      ))
     })
   }
 }

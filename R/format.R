@@ -23,7 +23,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
 
   # Special print for mcp from WRS2
   if (!is.null(m_class) && any(m_class %in% c("mcp1", "mcp2"))) {
-    x$Group1 <-  paste(x$Group1, x$Group2, sep = " vs. ")
+    x$Group1 <- paste(x$Group1, x$Group2, sep = " vs. ")
     x$Group2 <- NULL
     colnames(x)[1] <- "Group"
   }

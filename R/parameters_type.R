@@ -288,7 +288,9 @@ parameters_type <- function(model, ...) {
     {
       trimws(sub(p, replacement = subs, x))
     },
-    error = function(x) { 1 }
+    error = function(x) {
+      1
+    }
   )
 }
 

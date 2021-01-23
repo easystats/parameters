@@ -123,8 +123,8 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 # stricter tests ---------------------------------------------------------
 
 if (FALSE) {
-  if (require("insight") && require("effectsize") && require("testthat") && require("parameters")
-  && require("car") && require("gam")) {
+  if (require("insight") && require("effectsize") && require("testthat") && require("parameters") &&
+    require("car") && require("gam")) {
 
     # aov ------------------------------------------------
 

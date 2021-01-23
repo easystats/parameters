@@ -245,7 +245,13 @@ model_parameters.afex_aov <- function(model,
 # helper ------------------------------
 
 
-.effectsizes_for_aov <- function(model, parameters, omega_squared, eta_squared, epsilon_squared, ci = NULL, verbose = TRUE) {
+.effectsizes_for_aov <- function(model,
+                                 parameters,
+                                 omega_squared,
+                                 eta_squared,
+                                 epsilon_squared,
+                                 ci = NULL,
+                                 verbose = TRUE) {
   # user actually does not want to compute effect sizes
   if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
     return(parameters)

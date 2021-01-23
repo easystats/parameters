@@ -36,4 +36,3 @@ p_value.biglm <- function(model, ...) {
     p = as.vector(cs[, 5])
   )
 }
-

@@ -22,8 +22,7 @@ model_parameters.metaplus <- function(model,
     ci <- .95
   }
 
-  meta_analysis_overall <-
-    suppressWarnings(.model_parameters_generic(
+  meta_analysis_overall <- suppressWarnings(.model_parameters_generic(
       model = model,
       ci = ci,
       bootstrap = bootstrap,
@@ -93,6 +92,11 @@ model_parameters.metaplus <- function(model,
   }
 
   attr(out, "title") <- unique(out$Method)
+
+  # converting CI to fraction
+  if ("CI" %in% names(out)) {
+    out$CI <- out$CI / 100
+  }
 
   out
 }
@@ -219,8 +223,7 @@ model_parameters.meta_random <- function(model,
   }
 
   if (exponentiate) out <- .exponentiate_parameters(out)
-  out <-
-    .add_model_parameters_attributes(
+  out <- .add_model_parameters_attributes(
       params = out,
       model = model,
       ci = ci,
@@ -364,8 +367,7 @@ model_parameters.meta_bma <- function(model,
   }
 
   if (exponentiate) out <- .exponentiate_parameters(out)
-  out <-
-    .add_model_parameters_attributes(
+  out <- .add_model_parameters_attributes(
       params = out,
       model = model,
       ci = ci,

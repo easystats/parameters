@@ -63,4 +63,3 @@ p_value.rms <- p_value.lrm
 
 #' @export
 p_value.psm <- p_value.lrm
-

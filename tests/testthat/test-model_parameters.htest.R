@@ -31,7 +31,10 @@ if (require("testthat") && require("parameters")) {
     test_that("model_parameters-chisq-test raw", {
       expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
       expect_equal(mp$phi, 0.1875, tolerance = 1e-3)
-      expect_equal(colnames(mp), c("Chi2", "df", "Cramers_v", "Cramers_CI_low", "Cramers_CI_high", "phi", "phi_CI_low", "phi_CI_high", "p", "Method"))
+      expect_equal(
+        colnames(mp),
+        c("Chi2", "df", "Cramers_v", "CI", "Cramers_CI_low", "Cramers_CI_high", "phi", "phi_CI_low", "phi_CI_high", "p", "Method")
+      )
     })
 
     mp <- model_parameters(stats::chisq.test(table(mtcars$am)))
@@ -44,7 +47,7 @@ if (require("testthat") && require("parameters")) {
     test_that("model_parameters-chisq-test adjusted", {
       expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
       expect_equal(mp$phi_adjusted, 0.0538348, tolerance = 1e-3)
-      expect_equal(colnames(mp), c("Chi2", "df", "phi_adjusted", "phi_CI_low", "phi_CI_high", "p", "Method"))
+      expect_equal(colnames(mp), c("Chi2", "df", "phi_adjusted", "CI", "phi_CI_low", "phi_CI_high", "p", "Method"))
     })
 
     params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), standardized_d = TRUE)
@@ -53,19 +56,25 @@ if (require("testthat") && require("parameters")) {
       expect_equal(params$d_CI_low, -4.655306, tolerance = 0.05)
       expect_equal(
         colnames(params),
-        c("Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
-          "Difference", "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low",
-          "d_CI_high", "p", "Method")
+        c(
+          "Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
+          "Difference", "CI", "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low",
+          "d_CI_high", "p", "Method"
+        )
       )
     })
 
     mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), standardized_d = TRUE, verbose = FALSE)
     test_that("model_parameters-t-test standardized d", {
       expect_equal(mp$Cohens_d, -1.696032, tolerance = 1e-3)
-      expect_equal(colnames(mp),
-                   c("Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference",
-                     "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low", "d_CI_high",
-                     "p", "Method"))
+      expect_equal(
+        colnames(mp),
+        c(
+          "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference", "CI",
+          "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low", "d_CI_high",
+          "p", "Method"
+        )
+      )
     })
   }
 }

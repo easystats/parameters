@@ -54,7 +54,8 @@
 #'     iter = 500, refresh = 0, verbose = FALSE
 #'   )
 #'   select_parameters(model, cross_validation = FALSE)
-#' }}
+#' }
+#' }
 #'
 #' @return The model refitted with optimal number of parameters.
 #' @export

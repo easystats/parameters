@@ -8,7 +8,7 @@ if (require("testthat") && require("parameters") && require("blme")) {
     expect_equal(params$SE, c(6.8246, 1.54579), tolerance = 1e-3)
     expect_equal(
       colnames(params),
-      c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "df_error", "p")
+      c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "t", "df_error", "p")
     )
   })
 }

@@ -31,7 +31,7 @@ if (require("testthat") && require("VGAM") && require("parameters")) {
     expect_equal(params$df, c(NA, NA, NA, 0.82686, 2.8054), tolerance = 1e-3)
     expect_equal(as.vector(na.omit(params$df)), as.vector(m2@nl.df), tolerance = 1e-3)
     expect_equal(colnames(params), c(
-      "Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Chi2",
+      "Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Chi2",
       "df_error", "p", "Component"
     ))
   })
