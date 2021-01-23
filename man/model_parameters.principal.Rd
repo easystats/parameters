@@ -87,7 +87,9 @@ if (require("FactoMineR")) {
 
   model <- FactoMineR::FAMD(iris, ncp = 2)
   model_parameters(model)
-}}
+}
+}
+
 }
 \references{
 \itemize{

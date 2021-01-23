@@ -122,11 +122,11 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{effects}{Should standard errors for fixed effects or random effects
-be returned? Only applies to mixed models. May be abbreviated. When
-standard errors for random effects are requested, for each grouping factor
-a list of standard errors (per group level) for random intercepts and slopes
-is returned.}
+\item{effects}{Should standard errors for fixed effects or random effects be
+returned? Only applies to mixed models. May be abbreviated. When standard
+errors for random effects are requested, for each grouping factor a list of
+standard errors (per group level) for random intercepts and slopes is
+returned.}
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 }

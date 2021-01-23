@@ -21,20 +21,36 @@
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{bootstrap}{Should estimates be based on bootstrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
+\item{bootstrap}{Should estimates be based on bootstrapped model? If
+\code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian
+regressions} apply (see also
+\code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
 
-\item{iterations}{The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.}
+\item{iterations}{The number of bootstrap replicates. This only apply in the
+case of bootstrapped frequentist models.}
 
-\item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"}, \code{"pseudo"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only works when \code{standardize="refit"}.}
+\item{standardize}{The method used for standardizing the parameters. Can be
+\code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
+\code{"pseudo"} or \code{NULL} (default) for no standardization. See
+'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that
+robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+works when \code{standardize="refit"}.}
 
-\item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the
+the coefficients (and related confidence intervals). This is typical for,
+say, logistic regressions, or more generally speaking: for models with log
+or logit link. \strong{Note:} standard errors are also transformed (by
+multiplying the standard errors with the exponentiated coefficients), to
+mimic behaviour of other software packages, such as Stata.}
 
 \item{include_studies}{Logical, if \code{TRUE} (default), includes parameters
 for all studies. Else, only parameters for overall-effects are shown.}
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{...}{Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.}
+\item{...}{Arguments passed to or from other methods. For instance, when
+\code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
+\code{\link[bayestestR]{describe_posterior}}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

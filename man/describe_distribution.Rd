@@ -45,26 +45,38 @@ describe_distribution(x, ...)
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
-\item{iqr}{Logical, if \code{TRUE}, the interquartile range is calculated (based on \code{\link[stats]{IQR}}, using \code{type = 6}).}
+\item{iqr}{Logical, if \code{TRUE}, the interquartile range is calculated
+(based on \code{\link[stats]{IQR}}, using \code{type = 6}).}
 
 \item{range}{Return the range (min and max).}
 
-\item{ci}{Confidence Interval (CI) level. Default is \code{NULL}, i.e. no confidence intervals are computed. If not \code{NULL}, confidence intervals are based on bootstrap replicates (see \code{iterations}). If \code{centrality = "all"}, the bootstrapped confidence interval refers to the first centrality index (which is typically the median).}
+\item{ci}{Confidence Interval (CI) level. Default is \code{NULL}, i.e. no
+confidence intervals are computed. If not \code{NULL}, confidence intervals
+are based on bootstrap replicates (see \code{iterations}). If
+\code{centrality = "all"}, the bootstrapped confidence interval refers to
+the first centrality index (which is typically the median).}
 
-\item{iterations}{The number of bootstrap replicates for computing confidence intervals. Only applies when \code{ci} is not \code{NULL}.}
+\item{iterations}{The number of bootstrap replicates for computing confidence
+intervals. Only applies when \code{ci} is not \code{NULL}.}
 
 \item{threshold}{For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.}
 
-\item{include_factors}{Logical, if \code{TRUE}, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.}
+\item{include_factors}{Logical, if \code{TRUE}, factors are included in the
+output, however, only columns for range (first and last factor levels) as
+well as n and missing will contain information.}
 }
 \value{
 A data frame with columns that describe the properties of the variables.
 }
 \description{
-This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).
+This function describes a distribution by a set of indices (e.g., measures of
+centrality, dispersion, range, skewness, kurtosis).
 }
 \note{
-There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+There is also a
+  \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+  implemented in the
+  \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
 describe_distribution(rnorm(100))

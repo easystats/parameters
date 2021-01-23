@@ -93,11 +93,6 @@ model_parameters.metaplus <- function(model,
 
   attr(out, "title") <- unique(out$Method)
 
-  # converting CI to fraction
-  if ("CI" %in% names(out)) {
-    out$CI <- out$CI / 100
-  }
-
   out
 }
 

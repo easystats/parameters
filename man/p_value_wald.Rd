@@ -28,18 +28,22 @@ p_value_wald(model, ...)
 
 \item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.}
 
-\item{effects}{Should standard errors for fixed effects or random effects
-be returned? Only applies to mixed models. May be abbreviated. When
-standard errors for random effects are requested, for each grouping factor
-a list of standard errors (per group level) for random intercepts and slopes
-is returned.}
+\item{effects}{Should standard errors for fixed effects or random effects be
+returned? Only applies to mixed models. May be abbreviated. When standard
+errors for random effects are requested, for each grouping factor a list of
+standard errors (per group level) for random intercepts and slopes is
+returned.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
+\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
+(if possible), and confidence intervals and p-values are based on these
+robust standard errors. Additional arguments like \code{vcov_estimation} or
+\code{vcov_type} are passed down to other methods, see
+\code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
 }

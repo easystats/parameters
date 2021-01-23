@@ -22,7 +22,10 @@
 \arguments{
 \item{model}{A statistical model.}
 
-\item{component}{Should all parameters, parameters for the conditional model, precision- or scale-component or smooth_terms be returned? \code{component} may be one of \code{"conditional"}, \code{"precision"}, \code{"scale"}, \code{"smooth_terms"}, \code{"full"} or \code{"all"} (default).}
+\item{component}{Should all parameters, parameters for the conditional model,
+precision- or scale-component or smooth_terms be returned? \code{component}
+may be one of \code{"conditional"}, \code{"precision"}, \code{"scale"},
+\code{"smooth_terms"}, \code{"full"} or \code{"all"} (default).}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.}
 }
@@ -30,5 +33,6 @@
 The p-values.
 }
 \description{
-This function attempts to return, or compute, p-values of models with special model components.
+This function attempts to return, or compute, p-values of models
+  with special model components.
 }

@@ -2,7 +2,14 @@
 #' @export
 ci_satterthwaite <- function(model, ci = .95) {
   out <- lapply(ci, function(i) {
-    .ci_wald(model = model, ci = i, dof = Inf, effects = "fixed", component = "all", method = "satterthwaite")
+    .ci_wald(
+      model = model,
+      ci = i,
+      dof = Inf,
+      effects = "fixed",
+      component = "all",
+      method = "satterthwaite"
+    )
   })
   out <- do.call(rbind, out)
   row.names(out) <- NULL

@@ -12,7 +12,10 @@ parameters(model, ...)
 \arguments{
 \item{model}{Statistical Model.}
 
-\item{...}{Arguments passed to or from other methods. Non-documented arguments are \code{digits}, \code{p_digits} and \code{ci_digits} to set the number of digits for the output. See 'Examples' in \code{\link{model_parameters.default}}.}
+\item{...}{Arguments passed to or from other methods. Non-documented
+arguments are \code{digits}, \code{p_digits} and \code{ci_digits} to set
+the number of digits for the output. See 'Examples' in
+\code{\link{model_parameters.default}}.}
 }
 \value{
 A data frame of indices related to the model's parameters.
@@ -40,13 +43,21 @@ Compute and extract model parameters. See the documentation for your object's cl
  }
 }
 \details{
-Standardization is based on \code{\link[effectsize:standardize_parameters]{standardize_parameters()}}.
+Standardization is based on
+  \code{\link[effectsize:standardize_parameters]{standardize_parameters()}}.
   In case of \code{standardize = "refit"}, the data used to fit the model
   will be standardized and the model is completely refitted. In such cases,
-  standard errors and confidence intervals refer to the standardized coefficient.
+  standard errors and confidence intervals refer to the standardized
+  coefficient.
 }
 \note{
-The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated method for use inside rmarkdown files, \code{\link[=print_md.parameters_model]{print_md()}}.
+The \code{\link[=print.parameters_model]{print()}} method has several
+  arguments to tweak the output. There is also a
+  \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+  implemented in the
+  \href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated
+  method for use inside rmarkdown files,
+  \code{\link[=print_md.parameters_model]{print_md()}}.
 }
 \section{Labeling the Degrees of Freedom}{
 
@@ -78,6 +89,6 @@ to add the model-specification to the output of the
 }
 
 \seealso{
-\code{\link[insight:standardize_names]{standardize_names()}} to rename
-  columns into a consistent, standardized naming scheme.
+\code{\link[insight:standardize_names]{standardize_names()}} to
+  rename columns into a consistent, standardized naming scheme.
 }

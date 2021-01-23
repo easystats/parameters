@@ -152,11 +152,6 @@ model_parameters.merMod <- function(model,
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
-  # converting CI to fraction
-  if ("CI" %in% names(params)) {
-    params$CI <- params$CI / 100
-  }
-
   params
 }
 

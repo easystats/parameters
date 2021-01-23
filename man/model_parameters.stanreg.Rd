@@ -68,7 +68,8 @@
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
-\item{ci}{Credible Interval (CI) level. Default to 0.89 (89\%). See \code{\link[bayestestR]{ci}} for further details.}
+\item{ci}{Credible Interval (CI) level. Default to 0.89 (89\%). See
+\code{\link[bayestestR]{ci}} for further details.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
 \code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
@@ -103,13 +104,31 @@ proportion of HDI, to use for the percentage in ROPE.}
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}), \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for \code{MuMIn::model.avg()}) or \code{"all"}.}
+\item{component}{Model component for which parameters should be shown. May be
+one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
+\code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
+\code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
+\code{MuMIn::model.avg()}) or \code{"all"}.}
 
-\item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the
+the coefficients (and related confidence intervals). This is typical for,
+say, logistic regressions, or more generally speaking: for models with log
+or logit link. \strong{Note:} standard errors are also transformed (by
+multiplying the standard errors with the exponentiated coefficients), to
+mimic behaviour of other software packages, such as Stata.}
 
-\item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"}, \code{"pseudo"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only works when \code{standardize="refit"}.}
+\item{standardize}{The method used for standardizing the parameters. Can be
+\code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
+\code{"pseudo"} or \code{NULL} (default) for no standardization. See
+'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that
+robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+works when \code{standardize="refit"}.}
 
-\item{group_level}{Logical, for multilevel models (i.e. models with random effects) and when \code{effects = "all"} or \code{effects = "random"}, include the parameters for each group level from random effects. If \code{group_level = FALSE} (the default), only information on SD and COR are shown.}
+\item{group_level}{Logical, for multilevel models (i.e. models with random
+effects) and when \code{effects = "all"} or \code{effects = "random"},
+include the parameters for each group level from random effects. If
+\code{group_level = FALSE} (the default), only information on SD and COR
+are shown.}
 }
 \value{
 A data frame of indices related to the model's parameters.
@@ -118,13 +137,17 @@ A data frame of indices related to the model's parameters.
 Parameters from Bayesian models.
 }
 \details{
-Currently supported models are \code{brmsfit}, \code{stanreg}, \code{stanmvreg}, \code{MCMCglmm}, \code{mcmc} and \code{bcplm}.
+Currently supported models are \code{brmsfit}, \code{stanreg},
+  \code{stanmvreg}, \code{MCMCglmm}, \code{mcmc} and \code{bcplm}.
 }
 \note{
-When \code{standardize = "refit"}, columns \code{diagnostic}, \code{bf_prior} and \code{priors} refer to the \emph{original} \code{model}.
-If \code{model} is a data frame, arguments \code{diagnostic}, \code{bf_prior} and \code{priors} are ignored.
-\cr \cr
-There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+When \code{standardize = "refit"}, columns \code{diagnostic},
+  \code{bf_prior} and \code{priors} refer to the \emph{original}
+  \code{model}. If \code{model} is a data frame, arguments \code{diagnostic},
+  \code{bf_prior} and \code{priors} are ignored. \cr \cr There is also a
+  \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+  implemented in the
+  \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
 \donttest{
@@ -139,6 +162,6 @@ if (require("rstanarm")) {
 }
 }
 \seealso{
-\code{\link[insight:standardize_names]{standardize_names()}} to rename
-  columns into a consistent, standardized naming scheme.
+\code{\link[insight:standardize_names]{standardize_names()}} to
+  rename columns into a consistent, standardized naming scheme.
 }

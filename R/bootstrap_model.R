@@ -130,18 +130,33 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
 
 
 #' @export
-as.data.frame.lm <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
+as.data.frame.lm <- function(x,
+                             row.names = NULL,
+                             optional = FALSE,
+                             iterations = 1000,
+                             verbose = FALSE,
+                             ...) {
   bootstrap_model(x, iterations = iterations, verbose = verbose, ...)
 }
 
 
 #' @export
-as.data.frame.merMod <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
+as.data.frame.merMod <- function(x,
+                                 row.names = NULL,
+                                 optional = FALSE,
+                                 iterations = 1000,
+                                 verbose = FALSE,
+                                 ...) {
   bootstrap_model(x, iterations = iterations, verbose = verbose, ...)
 }
 
 
 #' @export
-as.data.frame.glmmTMB <- function(x, row.names = NULL, optional = FALSE, iterations = 1000, verbose = FALSE, ...) {
+as.data.frame.glmmTMB <- function(x,
+                                  row.names = NULL,
+                                  optional = FALSE,
+                                  iterations = 1000,
+                                  verbose = FALSE,
+                                  ...) {
   bootstrap_model(x, iterations = iterations, verbose = verbose, ...)
 }
