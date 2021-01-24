@@ -60,7 +60,7 @@ if (require("insight") && require("testthat") && require("parameters")) {
       model,
       eta_squared = "partial",
       ci = .9,
-      df_error = dof_satterthwaite(mm)
+      df_error = dof_satterthwaite(mm)[2:3]
     )
 
     test_that("model_parameters_Anova-effectsize", {
