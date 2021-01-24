@@ -3,23 +3,23 @@ if (require("testthat") && require("parameters") && require("boot")) {
   test_that("model_parameters.lm", {
     model <- lm(mpg ~ wt, data = mtcars)
     params <- model_parameters(model)
-    testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 9))
-    testthat::expect_equal(params$CI_high, c(41.119752761418, -4.20263490802709), tolerance = 1e-3)
-    testthat::expect_equal(attributes(params)$sigma, 3.045882, tolerance = 1e-3)
+    expect_equal(c(nrow(params), ncol(params)), c(2, 9))
+    expect_equal(params$CI_high, c(41.119752761418, -4.20263490802709), tolerance = 1e-3)
+    expect_equal(attributes(params)$sigma, 3.045882, tolerance = 1e-3)
 
     params <- model_parameters(model, ci = c(0.8, 0.9))
-    testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 11))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 10))
 
     params <- model_parameters(model, dispersion = TRUE, bootstrap = TRUE, n = 500)
-    testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 7))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 7))
 
     model <- lm(mpg ~ wt + cyl, data = mtcars)
     params <- model_parameters(model)
-    testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(3, 9))
 
     model <- lm(mpg ~ wt * cyl, data = mtcars)
     params <- model_parameters(model)
-    testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(4, 9))
 
     params <- model_parameters(model, component = "conditional", effects = "fixed")
   })
@@ -39,10 +39,10 @@ if (require("testthat") && require("parameters") && require("boot")) {
     model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 
     params <- model_parameters(model)
-    testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(3, 9))
 
     params <- suppressWarnings(model_parameters(model, bootstrap = TRUE, n = 500))
-    testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 6))
+    expect_equal(c(nrow(params), ncol(params)), c(3, 6))
 
     params <- model_parameters(model, component = "conditional", effects = "fixed")
   })
