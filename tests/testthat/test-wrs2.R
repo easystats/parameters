@@ -15,11 +15,12 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
       df_b,
       structure(
         list(
-          F = 3,
+          `F` = 3,
           df = 2,
           df_error = 4,
           p = 0.16,
           Estimate = 0.789441283518576,
+          CI = 95,
           CI_low = 0.419393210047738,
           CI_high = 1.32908145281133,
           Effectsize = "Explanatory measure of effect size",
@@ -45,7 +46,7 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
       df_w,
       structure(
         list(
-          F = 3.26140350877192,
+          `F` = 3.26140350877192,
           df = 1.60923075707166,
           df_error = 20.9199998419316,
           p = 0.0676086468201853,
@@ -84,6 +85,7 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
       structure(
         list(
           Difference = -6.75,
+          CI = 95,
           Difference_CI_low = -17.9293607102093,
           Difference_CI_high = 4.42936071020934,
           t = 1.29575716084179,
@@ -114,6 +116,7 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
       structure(
         list(
           Difference = 28.3333333333333,
+          CI = 95,
           Difference_CI_low = -8.29182014978235,
           Difference_CI_high = 64.958486816449,
           t = 1.98861015130686,
@@ -155,8 +158,8 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
         list(
           Group1 = c('placebo', 'placebo', 'low'),
           Group2 = c('low', 'high', 'high'),
-          Psihat = c(-1,
-                     -3, -2),
+          Psihat = c(-1, -3, -2),
+          CI = c(95, 95, 95),
           CI_low = c(-5.3185800135384, -7.3185800135384, -6.3185800135384),
           CI_high = c(3.3185800135384, 1.3185800135384, 2.3185800135384),
           p.value = c(0.435330942514376, 0.180509539510735, 0.316604846750915)
@@ -181,6 +184,7 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
           Group2 = c('Wine B', 'Wine C', 'Wine C'),
           Psihat = c(0.0214285714285715,
                      0.114285714285714, 0.0821428571428571),
+          CI = c(95, 95, 95),
           CI_low = c(-0.0216368317742901,
                      0.0214755794006548, 0.00891056424896097),
           CI_high = c(0.0644939746314331,
@@ -217,6 +221,7 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
       structure(
         list(
           Estimate = -0.0811399751842395,
+          CI = 95,
           CI_low = -0.414663225939919,
           CI_high = 0.241710493090677,
           p = 0.7,
