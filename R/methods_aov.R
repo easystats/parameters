@@ -68,7 +68,7 @@
 #'       model,
 #'       eta_squared = "partial",
 #'       ci = .9,
-#'       df_error = dof_satterthwaite(mm)
+#'       df_error = dof_satterthwaite(mm)[2:3]
 #'     )
 #'   }
 #' }
@@ -256,19 +256,14 @@ model_parameters.afex_aov <- function(model,
     stop("Package 'effectsize' required for this function to work. Please install it.")
   }
 
-  # Sanity checks
-  if (!is.null(omega_squared) || !is.null(eta_squared) || !is.null(epsilon_squared)) {
-    if (!"Residuals" %in% parameters$Parameter && !inherits(model, "afex_aov")) {
-      if (is.null(df_error)) {
-        if (isTRUE(verbose)) {
-          warning("No residuals data found. Effect size cannot be computed.", call. = FALSE)
-        }
-        return(parameters)
-      } else {
-        return(.effectsizes_for_anova(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error, ci, verbose))
-      }
+  # set error-df, when provided.
+  if (!is.null(df_error) && is.data.frame(model) && !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
+    if (length(df_error) > nrow(model)) {
+      stop("Number of degrees of freedom in argument 'df_error' is larger than number of parameters.")
     }
+    model$df_error <- df_error
   }
+
 
   # set defaults
   if (isTRUE(omega_squared)) {
@@ -309,119 +304,6 @@ model_parameters.afex_aov <- function(model,
     } else {
       fx <- effectsize::epsilon_squared(model, partial = FALSE, ci = ci, verbose = verbose)
     }
-    parameters <- .add_effectsize_to_parameters(fx, parameters)
-  }
-
-  parameters
-}
-
-
-
-
-.effectsizes_for_anova <- function(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error = NULL, ci = NULL, verbose = TRUE) {
-  if (!requireNamespace("effectsize", quietly = TRUE)) {
-    stop("Package 'effectsize' required for this function to work. Please install it.")
-  }
-
-  # user actually does not want to compute effect sizes
-  if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
-    return(parameters)
-  }
-
-  # set defaults
-  if (isTRUE(omega_squared)) {
-    omega_squared <- "partial"
-  }
-  if (isTRUE(eta_squared)) {
-    eta_squared <- "partial"
-  }
-  if (isTRUE(epsilon_squared)) {
-    epsilon_squared <- "partial"
-  }
-
-  # check if we have any information on denominator df
-  if (is.null(df_error) && !("DenDF" %in% colnames(model))) {
-    if ("Residuals" %in% parameters$Parameter) {
-      df_col <- colnames(parameters)[colnames(parameters) %in% c("df", "df_error", "Df", "NumDF")]
-      df_error <- parameters[parameters$Parameter == "Residuals", df_col]
-    } else {
-      if (isTRUE(verbose)) {
-        warning("Cannot compute effect size without denominator degrees of freedom. Please specify 'df_error', or use package 'lmerTest' to fit your mixed model.", call. = FALSE)
-      }
-      return(parameters)
-    }
-  }
-
-  # denominator DF
-  if (is.null(df_error)) {
-    df_error <- model$DenDF
-  } else if (length(df_error) > 1) {
-    # term names
-    rn <- rownames(model)
-
-    # find predictors in degrees of freedom
-    predictor_assignment <- sapply(rn, function(i) {
-      grep(paste0("^", i), names(df_error))
-    }, simplify = FALSE)
-
-    # use average df or categorical
-    df_error <- unlist(lapply(predictor_assignment, function(i) {
-      round(mean(df_error[i]), 2)
-    }))
-  }
-
-  # numerator DF
-  df_num <- NULL
-  df_num_cols <- colnames(model)[colnames(model) %in% c("npar", "Df", "NumDF")]
-
-  if (length(df_num_cols) != 0) {
-    df_num <- model[[df_num_cols[1]]]
-  } else if ("df" %in% colnames(parameters)) {
-    df_num <- parameters[["df"]]
-  }
-
-  # check if we have any information on denominator df
-  if (is.null(df_num)) {
-    if (isTRUE(verbose)) {
-      warning("Cannot compute effect size without numerator degrees of freedom.", call. = FALSE)
-    }
-    return(parameters)
-  }
-
-  # F value
-  f_value <- model[["F value"]]
-
-  # fix NA values
-  missing_f <- is.na(f_value)
-  if (any(missing_f)) {
-    f_value <- f_value[!missing_f]
-    if (length(df_num) > length(f_value)) {
-      df_num <- df_num[!missing_f]
-    }
-    if (length(df_error) > length(f_value)) {
-      df_error <- df_error[!missing_f]
-    }
-  }
-
-  # Omega squared
-  if (!is.null(omega_squared)) {
-    fx <- effectsize::F_to_omega2(f = f_value, df = df_num, df_error = df_error, ci = ci)
-    parameters <- .add_effectsize_to_parameters(fx, parameters)
-  }
-
-  # Eta squared
-  if (!is.null(eta_squared)) {
-    if (eta_squared == "adjusted") {
-      fx <- effectsize::F_to_eta2_adj(f = f_value, df = df_num, df_error = df_error, ci = ci)
-    } else {
-      fx <- effectsize::F_to_eta2(f = f_value, df = df_num, df_error = df_error, ci = ci)
-    }
-    parameters <- .add_effectsize_to_parameters(fx, parameters)
-  }
-
-  # Epsilon squared
-  if (!is.null(epsilon_squared)) {
-    fx <- effectsize::F_to_epsilon2(f = f_value, df = df_num, df_error = df_error, ci = ci)
     parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
 
