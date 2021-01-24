@@ -46,4 +46,30 @@ if (require("insight") && require("testthat") && require("parameters")) {
       })
     }
   }
+
+  if (require("lme4") && require("effectsize")) {
+    data(iris)
+    df <- iris
+    df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
+
+    mm <- suppressMessages(lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species), data = df))
+    model <- anova(mm)
+
+    # parameters table including effect sizes
+    mp <- model_parameters(
+      model,
+      eta_squared = "partial",
+      ci = .9,
+      df_error = dof_satterthwaite(mm)
+    )
+
+    test_that("model_parameters_Anova-effectsize", {
+      expect_equal(
+        colnames(mp),
+        c("Parameter", "Sum_Squares", "df", "Mean_Square", "F", "Eta2_partial",
+          "Eta2_CI_low", "Eta2_CI_high")
+      )
+      expect_equal(mp$Eta2_partial, c(0.03262, 0.6778), tolerance = 1e-3)
+    })
+  }
 }
