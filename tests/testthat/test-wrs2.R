@@ -15,7 +15,7 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
       df_b,
       structure(
         list(
-          F = 3,
+          `F` = 3,
           df = 2,
           df_error = 4,
           p = 0.16,
@@ -46,7 +46,7 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
       df_w,
       structure(
         list(
-          F = 3.26140350877192,
+          `F` = 3.26140350877192,
           df = 1.60923075707166,
           df_error = 20.9199998419316,
           p = 0.0676086468201853,
@@ -158,10 +158,7 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
         list(
           Group1 = c("placebo", "placebo", "low"),
           Group2 = c("low", "high", "high"),
-          Psihat = c(
-            -1,
-            -3, -2
-          ),
+          Psihat = c(-1, -3, -2),
           CI = c(0.95, 0.95, 0.95),
           CI_low = c(-5.3185800135384, -7.3185800135384, -6.3185800135384),
           CI_high = c(3.3185800135384, 1.3185800135384, 2.3185800135384),

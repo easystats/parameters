@@ -84,6 +84,12 @@
 .print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, ...) {
   final_table <- list()
 
+  # default brackets are parenthesis for HTML / MD
+  if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
+    ci_brackets <- c("(", ")")
+  }
+
+
   # check if user supplied digits attributes
   is_ordinal_model <- attributes(x)$ordinal_model
   if (is.null(is_ordinal_model)) is_ordinal_model <- FALSE
@@ -261,8 +267,8 @@
         table_caption <- sprintf("%s %s", s1, tolower(s2))
       }
       # replace brackets by parenthesis
-      formatted_table$Parameter <- gsub("[", "(", formatted_table$Parameter, fixed = TRUE)
-      formatted_table$Parameter <- gsub("]", ")", formatted_table$Parameter, fixed = TRUE)
+      formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
+      formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
     }
 
     if (identical(format, "html")) {
