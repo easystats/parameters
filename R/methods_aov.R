@@ -395,6 +395,18 @@ model_parameters.afex_aov <- function(model,
   # F value
   f_value <- model[["F value"]]
 
+  # fix NA values
+  missing_f <- is.na(f_value)
+  if (any(missing_f)) {
+    f_value <- f_value[-missing_f]
+    if (length(df_num) > length(f_value)) {
+      df_num <- df_num[-missing_f]
+    }
+    if (length(df_error) > length(f_value)) {
+      df_error <- df_error[-missing_f]
+    }
+  }
+
   # Omega squared
   if (!is.null(omega_squared)) {
     fx <- effectsize::F_to_omega2(f = f_value, df = df_num, df_error = df_error, ci = ci)
