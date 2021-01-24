@@ -85,13 +85,26 @@
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{bootstrap}{Should estimates be based on bootstrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
+\item{bootstrap}{Should estimates be based on bootstrapped model? If
+\code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian
+regressions} apply (see also
+\code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 
-\item{standardize}{The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"}, \code{"pseudo"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only works when \code{standardize="refit"}.}
+\item{standardize}{The method used for standardizing the parameters. Can be
+\code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
+\code{"pseudo"} or \code{NULL} (default) for no standardization. See
+'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that
+robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+works when \code{standardize="refit"}.}
 
-\item{exponentiate}{Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.}
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the
+the coefficients (and related confidence intervals). This is typical for,
+say, logistic regressions, or more generally speaking: for models with log
+or logit link. \strong{Note:} standard errors are also transformed (by
+multiplying the standard errors with the exponentiated coefficients), to
+mimic behaviour of other software packages, such as Stata.}
 
 \item{details}{Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.}
 
@@ -106,11 +119,16 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 
-\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
+adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.}
 
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
+\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
+(if possible), and confidence intervals and p-values are based on these
+robust standard errors. Additional arguments like \code{vcov_estimation} or
+\code{vcov_type} are passed down to other methods, see
+\code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
 
 \item{effects}{Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.}
 }

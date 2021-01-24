@@ -9,4 +9,3 @@ p_value.maxLik <- function(model, ...) {
     p = as.vector(p)
   )
 }
-

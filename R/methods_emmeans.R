@@ -245,4 +245,3 @@ p_value.emm_list <- function(model, ...) {
 format_parameters.emm_list <- function(model, ...) {
   NULL
 }
-

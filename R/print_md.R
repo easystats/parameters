@@ -63,7 +63,7 @@ print_md.parameters_sem <- function(x,
                                     p_digits = 3,
                                     ci_brackets = c("(", ")"),
                                     ...) {
-    # check if user supplied digits attributes
+  # check if user supplied digits attributes
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
   if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
@@ -171,7 +171,7 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"
 
 #' @export
 print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(", ")"), ...) {
-  formatted_table <- format(x = x, digits = digits, format = "markdown",  ci_width = NULL, ci_brackets = ci_brackets, ...)
+  formatted_table <- format(x = x, digits = digits, format = "markdown", ci_width = NULL, ci_brackets = ci_brackets, ...)
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 

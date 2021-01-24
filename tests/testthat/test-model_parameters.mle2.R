@@ -13,7 +13,7 @@ if (require("testthat") && require("parameters") && require("bbmle")) {
     testthat::expect_equal(params$SE, c(4.224444, 1.034797), tolerance = 1e-3)
     testthat::expect_equal(
       colnames(params),
-      c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "z", "df_error", "p")
+      c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "df_error", "p")
     )
   })
 }

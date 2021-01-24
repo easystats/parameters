@@ -27,5 +27,3 @@ p_value.coxme <- function(model, ...) {
     )
   }
 }
-
-

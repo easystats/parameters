@@ -117,17 +117,16 @@ model_parameters.merMod <- function(model,
   if (bootstrap) {
     params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    params <-
-      .extract_parameters_mixed(
-        model,
-        ci = ci,
-        df_method = df_method,
-        robust = robust,
-        standardize = standardize,
-        p_adjust = p_adjust,
-        wb_component = wb_component,
-        ...
-      )
+    params <- .extract_parameters_mixed(
+      model,
+      ci = ci,
+      df_method = df_method,
+      robust = robust,
+      standardize = standardize,
+      p_adjust = p_adjust,
+      wb_component = wb_component,
+      ...
+    )
   }
 
 
@@ -277,9 +276,9 @@ standard_error.merMod <- function(model, effects = c("fixed", "random"), method 
       if (method %in% c("wald", "satterthwaite")) {
         .data_frame(
           Parameter = insight::find_parameters(model,
-                                               effects = "fixed",
-                                               component = "conditional",
-                                               flatten = TRUE
+            effects = "fixed",
+            component = "conditional",
+            flatten = TRUE
           ),
           SE = .get_se_from_summary(model)
         )

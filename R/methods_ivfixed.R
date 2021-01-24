@@ -27,9 +27,9 @@ p_value.ivFixed <- function(model, ...) {
 
 #' @export
 model_parameters.ivFixed <- function(model,
-                                      ci = .95,
-                                      verbose = TRUE,
-                                      ...) {
+                                     ci = .95,
+                                     verbose = TRUE,
+                                     ...) {
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -37,6 +37,6 @@ model_parameters.ivFixed <- function(model,
     verbose = verbose,
     ...
   )
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff=500)
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }

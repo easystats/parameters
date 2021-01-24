@@ -150,25 +150,26 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   } else if (m_info$is_ttest) {
     out <- .extract_htest_ttest(model)
     out <- .add_effectsize_ttest(model,
-                            out,
-                            standardized_d,
-                            hedges_g,
-                            ci = ci,
-                            verbose = verbose,
-                            ...)
+      out,
+      standardized_d,
+      hedges_g,
+      ci = ci,
+      verbose = verbose,
+      ...
+    )
   } else if (m_info$is_ranktest) {
     out <- .extract_htest_ranktest(model)
   } else if (m_info$is_onewaytest) {
     out <- .extract_htest_oneway(model)
     out <- .add_effectsize_oneway(
-        model,
-        out,
-        omega_squared,
-        eta_squared,
-        epsilon_squared,
-        ci = ci,
-        verbose = verbose
-      )
+      model,
+      out,
+      omega_squared,
+      eta_squared,
+      epsilon_squared,
+      ci = ci,
+      verbose = verbose
+    )
   } else if (m_info$is_chi2test) {
     out <- .extract_htest_chi2(model)
     if (grepl("^McNemar", model$method)) {

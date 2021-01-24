@@ -1,16 +1,28 @@
 #' Describe a distribution
 #'
-#' This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).
+#' This function describes a distribution by a set of indices (e.g., measures of
+#' centrality, dispersion, range, skewness, kurtosis).
 #'
 #' @param x A numeric vector.
 #' @param range Return the range (min and max).
-#' @param include_factors Logical, if \code{TRUE}, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.
-#' @param ci Confidence Interval (CI) level. Default is \code{NULL}, i.e. no confidence intervals are computed. If not \code{NULL}, confidence intervals are based on bootstrap replicates (see \code{iterations}). If \code{centrality = "all"}, the bootstrapped confidence interval refers to the first centrality index (which is typically the median).
-#' @param iterations The number of bootstrap replicates for computing confidence intervals. Only applies when \code{ci} is not \code{NULL}.
-#' @param iqr Logical, if \code{TRUE}, the interquartile range is calculated (based on \code{\link[stats]{IQR}}, using \code{type = 6}).
+#' @param include_factors Logical, if \code{TRUE}, factors are included in the
+#'   output, however, only columns for range (first and last factor levels) as
+#'   well as n and missing will contain information.
+#' @param ci Confidence Interval (CI) level. Default is \code{NULL}, i.e. no
+#'   confidence intervals are computed. If not \code{NULL}, confidence intervals
+#'   are based on bootstrap replicates (see \code{iterations}). If
+#'   \code{centrality = "all"}, the bootstrapped confidence interval refers to
+#'   the first centrality index (which is typically the median).
+#' @param iterations The number of bootstrap replicates for computing confidence
+#'   intervals. Only applies when \code{ci} is not \code{NULL}.
+#' @param iqr Logical, if \code{TRUE}, the interquartile range is calculated
+#'   (based on \code{\link[stats]{IQR}}, using \code{type = 6}).
 #' @inheritParams bayestestR::point_estimate
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a
+#'   \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+#'   implemented in the
+#'   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @return A data frame with columns that describe the properties of the variables.
 #' @examples
@@ -29,7 +41,15 @@ describe_distribution <- function(x, ...) {
 #' @importFrom stats na.omit IQR
 #' @importFrom bayestestR ci
 #' @export
-describe_distribution.numeric <- function(x, centrality = "mean", dispersion = TRUE, iqr = TRUE, range = TRUE, ci = NULL, iterations = 100, threshold = .1, ...) {
+describe_distribution.numeric <- function(x,
+                                          centrality = "mean",
+                                          dispersion = TRUE,
+                                          iqr = TRUE,
+                                          range = TRUE,
+                                          ci = NULL,
+                                          iterations = 100,
+                                          threshold = .1,
+                                          ...) {
   out <- data.frame(.temp = 0)
 
   # Missing
@@ -40,7 +60,13 @@ describe_distribution.numeric <- function(x, centrality = "mean", dispersion = T
   # Point estimates
   out <- cbind(
     out,
-    bayestestR::point_estimate(x, centrality = centrality, dispersion = dispersion, threshold = threshold, ...)
+    bayestestR::point_estimate(
+      x,
+      centrality = centrality,
+      dispersion = dispersion,
+      threshold = threshold,
+      ...
+    )
   )
 
 
@@ -201,10 +227,28 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
 
 #' @rdname describe_distribution
 #' @export
-describe_distribution.data.frame <- function(x, centrality = "mean", dispersion = TRUE, iqr = TRUE, range = TRUE, include_factors = FALSE, ci = NULL, iterations = 100, threshold = .1, ...) {
+describe_distribution.data.frame <- function(x,
+                                             centrality = "mean",
+                                             dispersion = TRUE,
+                                             iqr = TRUE,
+                                             range = TRUE,
+                                             include_factors = FALSE,
+                                             ci = NULL,
+                                             iterations = 100,
+                                             threshold = .1,
+                                             ...) {
   out <- do.call(rbind, lapply(x, function(i) {
     if ((include_factors && is.factor(i)) || (!is.character(i) && !is.factor(i))) {
-      describe_distribution(i, centrality = centrality, dispersion = dispersion, iqr = iqr, range = range, ci = ci, iterations = iterations, threshold = threshold)
+      describe_distribution(
+        i,
+        centrality = centrality,
+        dispersion = dispersion,
+        iqr = iqr,
+        range = range,
+        ci = ci,
+        iterations = iterations,
+        threshold = threshold
+      )
     }
   }))
 
@@ -224,13 +268,33 @@ describe_distribution.data.frame <- function(x, centrality = "mean", dispersion 
 
 
 #' @export
-describe_distribution.grouped_df <- function(x, centrality = "mean", dispersion = TRUE, iqr = TRUE, range = TRUE, include_factors = FALSE, ci = NULL, iterations = 100, threshold = .1, ...) {
+describe_distribution.grouped_df <- function(x,
+                                             centrality = "mean",
+                                             dispersion = TRUE,
+                                             iqr = TRUE,
+                                             range = TRUE,
+                                             include_factors = FALSE,
+                                             ci = NULL,
+                                             iterations = 100,
+                                             threshold = .1,
+                                             ...) {
   group_vars <- setdiff(colnames(attributes(x)$groups), ".rows")
   group_data <- expand.grid(lapply(x[group_vars], function(i) unique(sort(i))))
   groups <- split(x, x[group_vars])
 
   out <- do.call(rbind, lapply(1:length(groups), function(i) {
-    d <- describe_distribution.data.frame(groups[[i]], centrality = centrality, dispersion = dispersion, iqr = iqr, range = range, include_factors = include_factors, ci = ci, iterations = iterations, threshold = threshold, ...)
+    d <- describe_distribution.data.frame(
+      groups[[i]],
+      centrality = centrality,
+      dispersion = dispersion,
+      iqr = iqr,
+      range = range,
+      include_factors = include_factors,
+      ci = ci,
+      iterations = iterations,
+      threshold = threshold,
+      ...
+    )
     d[[".group"]] <- paste(sprintf("%s=%s", group_vars, sapply(group_data[i, ], as.character)), collapse = " | ")
     d
   }))
@@ -250,7 +314,14 @@ describe_distribution.grouped_df <- function(x, centrality = "mean", dispersion 
 
 #' @export
 print.parameters_distribution <- function(x, digits = 2, ...) {
-  formatted_table <- format(x, digits = digits, format = "text", ci_width = NULL, ci_brackets = TRUE, ...)
+  formatted_table <- format(
+    x,
+    digits = digits,
+    format = "text",
+    ci_width = NULL,
+    ci_brackets = TRUE,
+    ...
+  )
   cat(insight::export_table(formatted_table, format = "text", digits = digits))
   invisible(x)
 }

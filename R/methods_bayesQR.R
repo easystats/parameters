@@ -36,6 +36,3 @@ model_parameters.bayesQR <- function(model,
 
   params
 }
-
-
-

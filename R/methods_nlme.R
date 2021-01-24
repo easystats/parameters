@@ -27,7 +27,7 @@ ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterth
         )
         .data_frame(
           Parameter = rownames(ci_list$fixed),
-          CI = i * 100,
+          CI = i,
           CI_low = as.vector(ci_list$fixed[, "lower"]),
           CI_high = as.vector(ci_list$fixed[, "upper"])
         )

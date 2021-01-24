@@ -5,7 +5,7 @@ ci.biglm <- function(x, ci = .95, ...) {
     ci_list <- stats::confint(x, level = i, ...)
     .data_frame(
       Parameter = rownames(ci_list),
-      CI = i * 100,
+      CI = i,
       CI_low = as.vector(ci_list[, 1]),
       CI_high = as.vector(ci_list[, 2])
     )
@@ -36,4 +36,3 @@ p_value.biglm <- function(model, ...) {
     p = as.vector(cs[, 5])
   )
 }
-

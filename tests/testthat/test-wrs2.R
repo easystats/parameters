@@ -156,8 +156,8 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
       df_b,
       structure(
         list(
-          Group1 = c('placebo', 'placebo', 'low'),
-          Group2 = c('low', 'high', 'high'),
+          Group1 = c("placebo", "placebo", "low"),
+          Group2 = c("low", "high", "high"),
           Psihat = c(-1, -3, -2),
           CI = c(.95, .95, .95),
           CI_low = c(-5.3185800135384, -7.3185800135384, -6.3185800135384),
@@ -209,7 +209,6 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
   # model_parameters.onesampb ---------------------------------------------------
 
   test_that("model_parameters.onesampb", {
-
     set.seed(123)
     x <- rnorm(30)
 
@@ -230,8 +229,10 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
           Method = "One-sample percentile bootstrap"
         ),
         class = "data.frame",
-        row.names = c(NA,
-                      -1L),
+        row.names = c(
+          NA,
+          -1L
+        ),
         title = "One-sample percentile bootstrap",
         model_class = "onesampb",
         digits = 2,
@@ -241,6 +242,5 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
       ),
       tolerance = 0.001
     )
-  }
-  )
+  })
 }

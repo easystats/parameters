@@ -40,4 +40,3 @@ p_value.gmnl <- function(model, ...) {
 
   pv
 }
-

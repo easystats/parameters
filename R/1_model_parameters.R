@@ -26,17 +26,28 @@
 #'  }
 #'
 #' @param model Statistical Model.
-#' @param ... Arguments passed to or from other methods. Non-documented arguments are \code{digits}, \code{p_digits} and \code{ci_digits} to set the number of digits for the output. See 'Examples' in \code{\link{model_parameters.default}}.
+#' @param ... Arguments passed to or from other methods. Non-documented
+#'   arguments are \code{digits}, \code{p_digits} and \code{ci_digits} to set
+#'   the number of digits for the output. See 'Examples' in
+#'   \code{\link{model_parameters.default}}.
 #'
-#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
-#'   columns into a consistent, standardized naming scheme.
+#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to
+#'   rename columns into a consistent, standardized naming scheme.
 #'
-#' @note The \code{\link[=print.parameters_model]{print()}} method has several arguments to tweak the output. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated method for use inside rmarkdown files, \code{\link[=print_md.parameters_model]{print_md()}}.
+#' @note The \code{\link[=print.parameters_model]{print()}} method has several
+#'   arguments to tweak the output. There is also a
+#'   \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+#'   implemented in the
+#'   \href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated
+#'   method for use inside rmarkdown files,
+#'   \code{\link[=print_md.parameters_model]{print_md()}}.
 #'
-#' @details Standardization is based on \code{\link[effectsize:standardize_parameters]{standardize_parameters()}}.
+#' @details Standardization is based on
+#'   \code{\link[effectsize:standardize_parameters]{standardize_parameters()}}.
 #'   In case of \code{standardize = "refit"}, the data used to fit the model
 #'   will be standardized and the model is completely refitted. In such cases,
-#'   standard errors and confidence intervals refer to the standardized coefficient.
+#'   standard errors and confidence intervals refer to the standardized
+#'   coefficient.
 #'
 #' @section Labeling the Degrees of Freedom:
 #' Throughout the \pkg{parameters} package, we decided to label the residual
@@ -63,23 +74,51 @@ parameters <- model_parameters
 
 #' Parameters from (General) Linear Models
 #'
-#' Extract and compute indices and measures to describe parameters of (general) linear models (GLMs).
+#' Extract and compute indices and measures to describe parameters of (general)
+#' linear models (GLMs).
 #'
 #' @param model Model object.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param bootstrap Should estimates be based on bootstrapped model? If \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).
-#' @param iterations The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.
-#' @param standardize The method used for standardizing the parameters. Can be \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"}, \code{"pseudo"} or \code{NULL} (default) for no standardization. See 'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only works when \code{standardize="refit"}.
-#' @param exponentiate Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. \strong{Note:} standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.
-#' @param robust Logical, if \code{TRUE}, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like \code{vcov_estimation} or \code{vcov_type} are passed down to other methods, see \code{\link[=standard_error_robust]{standard_error_robust()}} for details.
-#' @param component Model component for which parameters should be shown. May be one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}), \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}), \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for \code{MuMIn::model.avg()}) or \code{"all"}.
-#' @param p_adjust Character vector, if not \code{NULL}, indicates the method to adjust p-values. See \code{\link[stats]{p.adjust}} for details.
-#' @param df_method Method for computing degrees of freedom for confidence intervals (CI). Only applies to models of class \code{glm} or \code{polr}. May be \code{"profile"} or \code{"wald"}.
+#' @param bootstrap Should estimates be based on bootstrapped model? If
+#'   \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian
+#'   regressions} apply (see also
+#'   \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).
+#' @param iterations The number of bootstrap replicates. This only apply in the
+#'   case of bootstrapped frequentist models.
+#' @param standardize The method used for standardizing the parameters. Can be
+#'   \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
+#'   \code{"pseudo"} or \code{NULL} (default) for no standardization. See
+#'   'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that
+#'   robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+#'   works when \code{standardize="refit"}.
+#' @param exponentiate Logical, indicating whether or not to exponentiate the
+#'   the coefficients (and related confidence intervals). This is typical for,
+#'   say, logistic regressions, or more generally speaking: for models with log
+#'   or logit link. \strong{Note:} standard errors are also transformed (by
+#'   multiplying the standard errors with the exponentiated coefficients), to
+#'   mimic behaviour of other software packages, such as Stata.
+#' @param robust Logical, if \code{TRUE}, robust standard errors are calculated
+#'   (if possible), and confidence intervals and p-values are based on these
+#'   robust standard errors. Additional arguments like \code{vcov_estimation} or
+#'   \code{vcov_type} are passed down to other methods, see
+#'   \code{\link[=standard_error_robust]{standard_error_robust()}} for details.
+#' @param component Model component for which parameters should be shown. May be
+#'   one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
+#'   \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
+#'   \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
+#'   \code{MuMIn::model.avg()}) or \code{"all"}.
+#' @param p_adjust Character vector, if not \code{NULL}, indicates the method to
+#'   adjust p-values. See \code{\link[stats]{p.adjust}} for details.
+#' @param df_method Method for computing degrees of freedom for confidence
+#'   intervals (CI). Only applies to models of class \code{glm} or \code{polr}.
+#'   May be \code{"profile"} or \code{"wald"}.
 #' @param verbose Toggle warnings and messages.
-#' @param ... Arguments passed to or from other methods. For instance, when \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to \code{\link[bayestestR]{describe_posterior}}.
+#' @param ... Arguments passed to or from other methods. For instance, when
+#'   \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
+#'   \code{\link[bayestestR]{describe_posterior}}.
 #'
-#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
-#'   columns into a consistent, standardized naming scheme.
+#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to
+#'   rename columns into a consistent, standardized naming scheme.
 #'
 #' @examples
 #' library(parameters)

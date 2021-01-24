@@ -49,7 +49,7 @@ model_parameters.bamlss <- function(model,
 #' @export
 standard_error.bamlss <- function(model,
                                   component = c("all", "conditional", "location", "distributional", "auxilliary"),
-                                   ...) {
+                                  ...) {
   component <- match.arg(component)
   params <- insight::get_parameters(model, component = component, ...)
 

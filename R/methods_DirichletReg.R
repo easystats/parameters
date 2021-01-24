@@ -88,10 +88,14 @@ standard_error.DirichletRegModel <- function(model, component = c("all", "condit
 #' @title p-values for Models with Special Components
 #' @name p_value.DirichletRegModel
 #'
-#' @description This function attempts to return, or compute, p-values of models with special model components.
+#' @description This function attempts to return, or compute, p-values of models
+#'   with special model components.
 #'
 #' @param model A statistical model.
-#' @param component Should all parameters, parameters for the conditional model, precision- or scale-component or smooth_terms be returned? \code{component} may be one of \code{"conditional"}, \code{"precision"}, \code{"scale"}, \code{"smooth_terms"}, \code{"full"} or \code{"all"} (default).
+#' @param component Should all parameters, parameters for the conditional model,
+#'   precision- or scale-component or smooth_terms be returned? \code{component}
+#'   may be one of \code{"conditional"}, \code{"precision"}, \code{"scale"},
+#'   \code{"smooth_terms"}, \code{"full"} or \code{"all"} (default).
 #' @inheritParams p_value
 #'
 #' @return The p-values.

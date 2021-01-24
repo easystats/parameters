@@ -1,7 +1,8 @@
 if (require("insight") && require("testthat") && require("parameters")) {
   data(mtcars)
   m <- glm(am ~ mpg + hp + factor(cyl),
-           data = mtcars, family = binomial())
+    data = mtcars, family = binomial()
+  )
 
   a <- anova(m, test = "Chisq")
   mp <- model_parameters(a)

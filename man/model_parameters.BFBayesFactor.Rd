@@ -63,9 +63,17 @@ Parameters from BayesFactor objects.
 \details{
 The meaning of the extracted parameters:
 \itemize{
-  \item For \code{\link[BayesFactor]{ttestBF}}: \code{Difference} is the raw difference between the means.
-  \item For \code{\link[BayesFactor]{correlationBF}}: \code{rho} is the linear correlation estimate (equivalent to Pearson's \emph{r}).
-  \item For \code{\link[BayesFactor]{lmBF}} / \code{\link[BayesFactor]{generalTestBF}} / \code{\link[BayesFactor]{regressionBF}} / \code{\link[BayesFactor]{anovaBF}}: in addition to parameters of the fixed and random effects, there are: \code{mu} is the (mean-centered) intercept; \code{sig2} is the model's sigma; \code{g} / \code{g_*} are the \emph{g} parameters; See the \emph{Bayes Factors for ANOVAs} paper (\doi{10.1016/j.jmp.2012.08.001}).
+  \item For \code{\link[BayesFactor]{ttestBF}}: \code{Difference} is the raw
+  difference between the means. \item For
+  \code{\link[BayesFactor]{correlationBF}}: \code{rho} is the linear
+  correlation estimate (equivalent to Pearson's \emph{r}). \item For
+  \code{\link[BayesFactor]{lmBF}} / \code{\link[BayesFactor]{generalTestBF}}
+  / \code{\link[BayesFactor]{regressionBF}} /
+  \code{\link[BayesFactor]{anovaBF}}: in addition to parameters of the fixed
+  and random effects, there are: \code{mu} is the (mean-centered) intercept;
+  \code{sig2} is the model's sigma; \code{g} / \code{g_*} are the \emph{g}
+  parameters; See the \emph{Bayes Factors for ANOVAs} paper
+  (\doi{10.1016/j.jmp.2012.08.001}).
 }
 }
 \examples{

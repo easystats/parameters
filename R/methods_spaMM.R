@@ -35,7 +35,7 @@ ci.HLfit <- function(x,
     }
     colnames(out) <- c("CI_low", "CI_high")
     out$Parameter <- insight::find_parameters(x, effects = "fixed", flatten = TRUE)
-    out$CI <- ci * 100
+    out$CI <- ci
     out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
   }
 

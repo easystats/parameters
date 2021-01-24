@@ -85,7 +85,7 @@ display.parameters_sem <- function(object,
                                    p_digits = 3,
                                    ci_brackets = c("(", ")"),
                                    ...) {
-    print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_brackets = ci_brackets, ...)
+  print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_brackets = ci_brackets, ...)
 }
 
 

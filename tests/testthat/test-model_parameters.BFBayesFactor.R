@@ -50,8 +50,10 @@ if (require("testthat") &&
     })
 
     data(puzzles)
-    result <- anovaBF(RT ~ shape*color + ID, data = puzzles, whichRandom = "ID",
-                      whichModels = 'top', progress = FALSE)
+    result <- anovaBF(RT ~ shape * color + ID,
+      data = puzzles, whichRandom = "ID",
+      whichModels = "top", progress = FALSE
+    )
     mp <- model_parameters(result, verbose = FALSE)
 
     test_that("model_parameters.BFBayesFactor", {

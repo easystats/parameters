@@ -1,5 +1,4 @@
 if (require("testthat") && require("parameters") && require("insight") && require("effectsize") && require("lme4")) {
-
   test_that("parameters_table 1", {
     x <- model_parameters(lm(Sepal.Length ~ Species, data = iris), standardize = "refit")
     tab <- format_table(x)

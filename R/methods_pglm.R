@@ -7,4 +7,3 @@ p_value.pglm <- function(model, ...) {
     p = as.vector(p)
   )
 }
-

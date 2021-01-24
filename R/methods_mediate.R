@@ -34,7 +34,7 @@ ci.mediate <- function(x, ci = .95, ...) {
   if (info$is_linear && !x$INT) {
     out <- data.frame(
       Parameter = c("ACME", "ADE", "Total Effect", "Prop. Mediated"),
-      CI = 100 * ci,
+      CI = ci,
       CI_low = c(
         stats::quantile(x$d0.sims, probs = 1 - alpha, names = FALSE),
         stats::quantile(x$z0.sims, probs = 1 - alpha, names = FALSE),
@@ -57,7 +57,7 @@ ci.mediate <- function(x, ci = .95, ...) {
         "Prop. Mediated (treated)", "ACME (average)", "ADE (average)",
         "Prop. Mediated (average)"
       ),
-      CI = 100 * ci,
+      CI = ci,
       CI_low = c(
         stats::quantile(x$d0.sims, probs = 1 - alpha, names = FALSE),
         stats::quantile(x$d1.sims, probs = 1 - alpha, names = FALSE),

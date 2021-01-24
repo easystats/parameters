@@ -112,7 +112,7 @@ model_parameters.rma <- function(model,
     Parameter = rma_parameters,
     Coefficient = rma_coeffients,
     SE = rma_se,
-    CI = 100 * ci,
+    CI = ci,
     CI_low = rma_ci_low,
     CI_high = rma_ci_high,
     z = rma_statistic,
@@ -177,7 +177,7 @@ ci.rma <- function(x, ci = .95, ...) {
         model <- stats::update(x, level = i)
         .data_frame(
           Parameter = params$Parameter,
-          CI = i * 100,
+          CI = i,
           CI_low = as.vector(model$ci.lb),
           CI_high = as.vector(model$ci.ub)
         )
@@ -195,7 +195,7 @@ ci.rma <- function(x, ci = .95, ...) {
       fac <- stats::qnorm(alpha)
       .data_frame(
         Parameter = params$Parameter,
-        CI = i * 100,
+        CI = i,
         CI_low = params$Estimate - as.vector(se$SE) * fac,
         CI_high = params$Estimate + as.vector(se$SE) * fac
       )
