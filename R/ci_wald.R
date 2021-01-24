@@ -85,7 +85,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
   )
 
   out <- as.data.frame(out)
-  out$CI <- ci * 100
+  out$CI <- ci
   out$Parameter <- params$Parameter
 
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
