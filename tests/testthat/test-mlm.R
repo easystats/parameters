@@ -11,7 +11,7 @@ if (require("testthat") && require("parameters") && getRversion() >= "3.6.0") {
     )
     expect_equal(
       colnames(mp),
-      c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t",
+      c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "t",
         "df_error", "p", "Response")
     )
     expect_equal(mp$Response, c("mpg", "mpg", "disp", "disp"))
