@@ -83,7 +83,7 @@ describe_distribution.numeric <- function(x,
     } else {
       results <- boot::boot(data = x, statistic = .boot_distribution, R = iterations, centrality = centrality)
       out_ci <- bayestestR::ci(results$t, ci = ci, verbose = FALSE)
-      out <- cbind(out, data.frame(CI = ci, CI_low = out_ci$CI_low[1], CI_high = out_ci$CI_high[1]))
+      out <- cbind(out, data.frame(CI_low = out_ci$CI_low[1], CI_high = out_ci$CI_high[1]))
     }
   }
 
@@ -135,7 +135,6 @@ describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...
   out <- data.frame(
     Mean = NA,
     SD = NA,
-    CI = NA,
     CI_low = NA,
     CI_high = NA,
     IQR = NA,
@@ -187,7 +186,6 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
     Mean = NA,
     SD = NA,
     IQR = NA,
-    CI = NA,
     CI_low = NA,
     CI_high = NA,
     Min = values[1],
