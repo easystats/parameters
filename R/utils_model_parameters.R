@@ -113,6 +113,9 @@
     params$CI <- 100 * ci
     ci_pos <- grep("CI_low", colnames(params))
     if (length(ci_pos)) {
+      if (length(ci_pos) > 1) {
+        ci_pos <- ci_pos[1]
+      }
       a <- attributes(params)
       params <- params[c(1:(ci_pos - 1), ncol(params), ci_pos:(ncol(params) - 1))]
       attributes(params) <- utils::modifyList(a, attributes(params))

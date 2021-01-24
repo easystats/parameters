@@ -665,7 +665,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   attr(params, "ci_test") <- attributes(model$conf.int)$conf.level
 
   # add CI, and reorder
-  if (!"CI" %in% colnames(params)) {
+  if (!"CI" %in% colnames(params) && length(ci) == 1) {
     ci_pos <- grep("CI_low", colnames(params), fixed = TRUE)
     if (length(ci_pos)) {
       if (length(ci_pos) > 1) {
