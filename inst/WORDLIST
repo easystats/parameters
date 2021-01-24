@@ -164,6 +164,7 @@ glm
 glmm
 glmmTMB
 heteroskedasticity
+htest
 http
 https
 hyperspectral
