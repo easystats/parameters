@@ -199,8 +199,8 @@
 <p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> also uses context-specific column names, where applicable:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI_low"      "CI_high"    
-#&gt; [6] "t"           "df_error"    "p"</code></pre>
+<pre><code>#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI"          "CI_low"     
+#&gt; [6] "CI_high"     "t"           "df_error"    "p"</code></pre>
 <p>For Bayesian models, <code>Coefficient</code> is usually named <code>Median</code> etc. While this makes sense from a user perspective, because you instantly know which type of statistic or coefficient you have, it becomes difficult when you need a generic naming scheme to access model parameters when the input model is unknown. This is the typical approach from the <em>broom</em> package, where you get “standardized” column names:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span>
@@ -214,16 +214,16 @@
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://easystats.github.io/insight/reference/standardize_names.html">standardize_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI_low"      "CI_high"    
-#&gt; [6] "Statistic"   "df"          "p"</code></pre>
+<pre><code>#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI"          "CI_low"     
+#&gt; [6] "CI_high"     "Statistic"   "df"          "p"</code></pre>
 <p>Furthermore, you can request “broom”-style for column names:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://easystats.github.io/insight/reference/standardize_names.html">standardize_names</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"broom"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; [1] "term"      "estimate"  "std.error" "conf.low"  "conf.high" "statistic"
-#&gt; [7] "df.error"  "p.value"</code></pre>
+<pre><code>#&gt; [1] "term"      "estimate"  "std.error" "ci.width"  "conf.low"  "conf.high"
+#&gt; [7] "statistic" "df.error"  "p.value"</code></pre>
 </div>
 <div id="formatting-column-names-and-columns" class="section level2">
 <h2 class="hasAnchor">
@@ -268,13 +268,13 @@
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html">format_table</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;                   Parameter Coefficient   SE         95% CI t(144)      p
-#&gt; 1               (Intercept)        3.81 0.06 [ 3.70,  3.93]  65.50 &lt; .001
-#&gt; 2 Sepal.Length [1st degree]        4.06 0.47 [ 3.14,  4.98]   8.70 &lt; .001
-#&gt; 3 Sepal.Length [2nd degree]       -1.30 0.31 [-1.92, -0.68]  -4.14 &lt; .001
-#&gt; 4      Species [versicolor]       -1.01 0.28 [-1.56, -0.46]  -3.62 &lt; .001
-#&gt; 5       Species [virginica]       -0.99 0.29 [-1.55, -0.43]  -3.48 &lt; .001
-#&gt; 6              Petlen [4-7]       -0.14 0.28 [-0.69,  0.42]  -0.48 0.630</code></pre>
+<pre><code>#&gt;                   Parameter Coefficient   SE    CI         95% CI t(144)      p
+#&gt; 1               (Intercept)        3.81 0.06 95.00 [ 3.70,  3.93]  65.50 &lt; .001
+#&gt; 2 Sepal.Length [1st degree]        4.06 0.47 95.00 [ 3.14,  4.98]   8.70 &lt; .001
+#&gt; 3 Sepal.Length [2nd degree]       -1.30 0.31 95.00 [-1.92, -0.68]  -4.14 &lt; .001
+#&gt; 4      Species [versicolor]       -1.01 0.28 95.00 [-1.56, -0.46]  -3.62 &lt; .001
+#&gt; 5       Species [virginica]       -0.99 0.29 95.00 [-1.55, -0.43]  -3.48 &lt; .001
+#&gt; 6              Petlen [4-7]       -0.14 0.28 95.00 [-0.69,  0.42]  -0.48 0.630</code></pre>
 </div>
 <div id="exporting-the-parameters-table" class="section level2">
 <h2 class="hasAnchor">
