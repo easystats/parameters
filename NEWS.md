@@ -1,5 +1,10 @@
 # parameters 0.11.1
 
+## Breaking changes
+
+* `model_parameters()` now always returns the confidence level for as additional
+  `CI` column.
+
 ## General
 
 * Roll-back R dependency to R >= 3.4.
@@ -11,8 +16,7 @@
 * `model_parameters()` for *metafor* models now recognized confidence levels
   specified in the function call (via argument `level`).
 
-* `model_parameters()` for *htest* objects and *metafor* models now returns the
-  confidence level for effect sizes as additional `CI` column.
+* Improved support for effect sizes in `model_parameters()` from *anova* objects.
 
 ## Bug fixes
 
