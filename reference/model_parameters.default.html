@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Parameters from (General) Linear Models — model_parameters.default" />
-<meta property="og:description" content="Extract and compute indices and measures to describe parameters of (general) linear models (GLMs)." />
+<meta property="og:description" content="Extract and compute indices and measures to describe parameters of (general)
+linear models (GLMs)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -172,7 +173,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Extract and compute indices and measures to describe parameters of (general) linear models (GLMs).</p>
+    <p>Extract and compute indices and measures to describe parameters of (general)
+linear models (GLMs).</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for default</span>
@@ -261,27 +263,46 @@
     </tr>
     <tr>
       <th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If <code>TRUE</code>, then arguments of <a href='model_parameters.data.frame.html'>Bayesian regressions</a> apply (see also <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
+      <td><p>Should estimates be based on bootstrapped model? If
+<code>TRUE</code>, then arguments of <a href='model_parameters.data.frame.html'>Bayesian
+regressions</a> apply (see also
+<code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
     </tr>
     <tr>
       <th>iterations</th>
-      <td><p>The number of bootstrap replicates. This only apply in the case of bootstrapped frequentist models.</p></td>
+      <td><p>The number of bootstrap replicates. This only apply in the
+case of bootstrapped frequentist models.</p></td>
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code>, <code>"pseudo"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters</a></code>. Note that robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only works when <code>standardize="refit"</code>.</p></td>
+      <td><p>The method used for standardizing the parameters. Can be
+<code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code>,
+<code>"pseudo"</code> or <code>NULL</code> (default) for no standardization. See
+'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters</a></code>. Note that
+robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
+works when <code>standardize="refit"</code>.</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
-      <td><p>Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. <strong>Note:</strong> standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.</p></td>
+      <td><p>Logical, indicating whether or not to exponentiate the
+the coefficients (and related confidence intervals). This is typical for,
+say, logistic regressions, or more generally speaking: for models with log
+or logit link. <strong>Note:</strong> standard errors are also transformed (by
+multiplying the standard errors with the exponentiated coefficients), to
+mimic behaviour of other software packages, such as Stata.</p></td>
     </tr>
     <tr>
       <th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated
+(if possible), and confidence intervals and p-values are based on these
+robust standard errors. Additional arguments like <code>vcov_estimation</code> or
+<code>vcov_type</code> are passed down to other methods, see
+<code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>p_adjust</th>
-      <td><p>Character vector, if not <code>NULL</code>, indicates the method to adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details.</p></td>
+      <td><p>Character vector, if not <code>NULL</code>, indicates the method to
+adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -289,15 +310,23 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods. For instance, when <code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
+      <td><p>Arguments passed to or from other methods. For instance, when
+<code>bootstrap = TRUE</code>, arguments like <code>ci_method</code> are passed down to
+<code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
     </tr>
     <tr>
       <th>df_method</th>
-      <td><p>Method for computing degrees of freedom for confidence intervals (CI). Only applies to models of class <code>glm</code> or <code>polr</code>. May be <code>"profile"</code> or <code>"wald"</code>.</p></td>
+      <td><p>Method for computing degrees of freedom for confidence
+intervals (CI). Only applies to models of class <code>glm</code> or <code>polr</code>.
+May be <code>"profile"</code> or <code>"wald"</code>.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>), <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for <code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
+      <td><p>Model component for which parameters should be shown. May be
+one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>),
+<code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>),
+<code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for
+<code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
     </tr>
     </table>
 
@@ -306,8 +335,8 @@
     <p>A data frame of indices related to the model's parameters.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to rename
-  columns into a consistent, standardized naming scheme.</p></div>
+    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to
+  rename columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>

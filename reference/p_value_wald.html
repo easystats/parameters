@@ -208,11 +208,11 @@
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should standard errors for fixed effects or random effects
-be returned? Only applies to mixed models. May be abbreviated. When
-standard errors for random effects are requested, for each grouping factor
-a list of standard errors (per group level) for random intercepts and slopes
-is returned.</p></td>
+      <td><p>Should standard errors for fixed effects or random effects be
+returned? Only applies to mixed models. May be abbreviated. When standard
+errors for random effects are requested, for each grouping factor a list of
+standard errors (per group level) for random intercepts and slopes is
+returned.</p></td>
     </tr>
     <tr>
       <th>component</th>
@@ -223,7 +223,11 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     </tr>
     <tr>
       <th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated (if possible), and confidence intervals and p-values are based on these robust standard errors. Additional arguments like <code>vcov_estimation</code> or <code>vcov_type</code> are passed down to other methods, see <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated
+(if possible), and confidence intervals and p-values are based on these
+robust standard errors. Additional arguments like <code>vcov_estimation</code> or
+<code>vcov_type</code> are passed down to other methods, see
+<code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -245,11 +249,11 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   <span class='fu'>p_value_wald</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
   <span class='fu'>ci_wald</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>, <span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;      Parameter CI     CI_low   CI_high
-#&gt; 1  (Intercept) 90 -1.5296038 1.6346530
-#&gt; 2 Sepal.Length 90  0.5592337 0.7090408
-#&gt; 3  (Intercept) 95 -1.8363924 1.9414416
-#&gt; 4 Sepal.Length 95  0.5447093 0.7235653</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt;      Parameter   CI     CI_low   CI_high
+#&gt; 1  (Intercept) 0.90 -1.5296038 1.6346530
+#&gt; 2 Sepal.Length 0.90  0.5592337 0.7090408
+#&gt; 3  (Intercept) 0.95 -1.8363924 1.9414416
+#&gt; 4 Sepal.Length 0.95  0.5447093 0.7235653</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

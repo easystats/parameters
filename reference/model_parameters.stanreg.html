@@ -249,7 +249,8 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Credible Interval (CI) level. Default to 0.89 (89%). See <code><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></code> for further details.</p></td>
+      <td><p>Credible Interval (CI) level. Default to 0.89 (89%). See
+<code><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></code> for further details.</p></td>
     </tr>
     <tr>
       <th>ci_method</th>
@@ -306,19 +307,37 @@ Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Model component for which parameters should be shown. May be one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>), <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>), <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for <code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
+      <td><p>Model component for which parameters should be shown. May be
+one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>),
+<code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>),
+<code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for
+<code><a href='https://rdrr.io/pkg/MuMIn/man/model.avg.html'>MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
-      <td><p>Logical, indicating whether or not to exponentiate the the coefficients (and related confidence intervals). This is typical for, say, logistic regressions, or more generally speaking: for models with log or logit link. <strong>Note:</strong> standard errors are also transformed (by multiplying the standard errors with the exponentiated coefficients), to mimic behaviour of other software packages, such as Stata.</p></td>
+      <td><p>Logical, indicating whether or not to exponentiate the
+the coefficients (and related confidence intervals). This is typical for,
+say, logistic regressions, or more generally speaking: for models with log
+or logit link. <strong>Note:</strong> standard errors are also transformed (by
+multiplying the standard errors with the exponentiated coefficients), to
+mimic behaviour of other software packages, such as Stata.</p></td>
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>The method used for standardizing the parameters. Can be <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code>, <code>"pseudo"</code> or <code>NULL</code> (default) for no standardization. See 'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters</a></code>. Note that robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only works when <code>standardize="refit"</code>.</p></td>
+      <td><p>The method used for standardizing the parameters. Can be
+<code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code>,
+<code>"pseudo"</code> or <code>NULL</code> (default) for no standardization. See
+'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters</a></code>. Note that
+robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
+works when <code>standardize="refit"</code>.</p></td>
     </tr>
     <tr>
       <th>group_level</th>
-      <td><p>Logical, for multilevel models (i.e. models with random effects) and when <code>effects = "all"</code> or <code>effects = "random"</code>, include the parameters for each group level from random effects. If <code>group_level = FALSE</code> (the default), only information on SD and COR are shown.</p></td>
+      <td><p>Logical, for multilevel models (i.e. models with random
+effects) and when <code>effects = "all"</code> or <code>effects = "random"</code>,
+include the parameters for each group level from random effects. If
+<code>group_level = FALSE</code> (the default), only information on SD and COR
+are shown.</p></td>
     </tr>
     </table>
 
@@ -327,17 +346,21 @@ Only applies to mixed models. May be abbreviated.</p></td>
     <p>A data frame of indices related to the model's parameters.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Currently supported models are <code>brmsfit</code>, <code>stanreg</code>, <code>stanmvreg</code>, <code>MCMCglmm</code>, <code>mcmc</code> and <code>bcplm</code>.</p>
+    <p>Currently supported models are <code>brmsfit</code>, <code>stanreg</code>,
+  <code>stanmvreg</code>, <code>MCMCglmm</code>, <code>mcmc</code> and <code>bcplm</code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>When <code>standardize = "refit"</code>, columns <code>diagnostic</code>, <code>bf_prior</code> and <code>priors</code> refer to the <em>original</em> <code>model</code>.
-If <code>model</code> is a data frame, arguments <code>diagnostic</code>, <code>bf_prior</code> and <code>priors</code> are ignored.
-<br /> <br />
-There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <p>When <code>standardize = "refit"</code>, columns <code>diagnostic</code>,
+  <code>bf_prior</code> and <code>priors</code> refer to the <em>original</em>
+  <code>model</code>. If <code>model</code> is a data frame, arguments <code>diagnostic</code>,
+  <code>bf_prior</code> and <code>priors</code> are ignored. <br /> <br /> There is also a
+  <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
+  implemented in the
+  <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to rename
-  columns into a consistent, standardized naming scheme.</p></div>
+    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to
+  rename columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>

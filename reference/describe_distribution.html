@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Describe a distribution — describe_distribution" />
-<meta property="og:description" content="This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis)." />
+<meta property="og:description" content="This function describes a distribution by a set of indices (e.g., measures of
+centrality, dispersion, range, skewness, kurtosis)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -172,7 +173,8 @@
     </div>
 
     <div class="ref-description">
-    <p>This function describes a distribution by a set of indices (e.g., measures of centrality, dispersion, range, skewness, kurtosis).</p>
+    <p>This function describes a distribution by a set of indices (e.g., measures of
+centrality, dispersion, range, skewness, kurtosis).</p>
     </div>
 
     <pre class="usage"><span class='fu'>describe_distribution</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -228,7 +230,8 @@
     </tr>
     <tr>
       <th>iqr</th>
-      <td><p>Logical, if <code>TRUE</code>, the interquartile range is calculated (based on <code><a href='https://rdrr.io/r/stats/IQR.html'>IQR</a></code>, using <code>type = 6</code>).</p></td>
+      <td><p>Logical, if <code>TRUE</code>, the interquartile range is calculated
+(based on <code><a href='https://rdrr.io/r/stats/IQR.html'>IQR</a></code>, using <code>type = 6</code>).</p></td>
     </tr>
     <tr>
       <th>range</th>
@@ -236,11 +239,16 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default is <code>NULL</code>, i.e. no confidence intervals are computed. If not <code>NULL</code>, confidence intervals are based on bootstrap replicates (see <code>iterations</code>). If <code>centrality = "all"</code>, the bootstrapped confidence interval refers to the first centrality index (which is typically the median).</p></td>
+      <td><p>Confidence Interval (CI) level. Default is <code>NULL</code>, i.e. no
+confidence intervals are computed. If not <code>NULL</code>, confidence intervals
+are based on bootstrap replicates (see <code>iterations</code>). If
+<code>centrality = "all"</code>, the bootstrapped confidence interval refers to
+the first centrality index (which is typically the median).</p></td>
     </tr>
     <tr>
       <th>iterations</th>
-      <td><p>The number of bootstrap replicates for computing confidence intervals. Only applies when <code>ci</code> is not <code>NULL</code>.</p></td>
+      <td><p>The number of bootstrap replicates for computing confidence
+intervals. Only applies when <code>ci</code> is not <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
@@ -248,7 +256,9 @@
     </tr>
     <tr>
       <th>include_factors</th>
-      <td><p>Logical, if <code>TRUE</code>, factors are included in the output, however, only columns for range (first and last factor levels) as well as n and missing will contain information.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, factors are included in the
+output, however, only columns for range (first and last factor levels) as
+well as n and missing will contain information.</p></td>
     </tr>
     </table>
 
@@ -257,7 +267,10 @@
     <p>A data frame with columns that describe the properties of the variables.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <p>There is also a
+  <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
+  implemented in the
+  <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>describe_distribution</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span>
