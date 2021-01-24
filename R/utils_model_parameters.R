@@ -110,7 +110,7 @@
 
   # add CI, and reorder
   if (!"CI" %in% colnames(params) && length(ci) == 1) {
-    params$CI <- 100 * ci
+    params$CI <- ci
     ci_pos <- grep("CI_low", colnames(params))
     if (length(ci_pos)) {
       if (length(ci_pos) > 1) {

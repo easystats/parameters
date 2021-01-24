@@ -671,7 +671,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       if (length(ci_pos) > 1) {
         ci_pos <- ci_pos[1]
       }
-      params$CI <- 100 * ci
+      params$CI <- ci
       a <- attributes(params)
       params <- params[c(1:(ci_pos - 1), ncol(params), ci_pos:(ncol(params) - 1))]
       attributes(params) <- utils::modifyList(a, attributes(params))
