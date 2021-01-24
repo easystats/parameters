@@ -96,11 +96,7 @@ model_parameters.aov <- function(model,
   parameters <- .extract_parameters_anova(model, test)
 
   # add effect sizes, if available
-  if (inherits(model, "anova")) {
-    parameters <- .effectsizes_for_anova(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error, ci, verbose)
-  } else {
-    parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error, ci, verbose = verbose)
-  }
+  parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error, ci, verbose = verbose)
 
   # add power, if possible
   if (isTRUE(power)) {
