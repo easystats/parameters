@@ -398,12 +398,12 @@ model_parameters.afex_aov <- function(model,
   # fix NA values
   missing_f <- is.na(f_value)
   if (any(missing_f)) {
-    f_value <- f_value[-missing_f]
+    f_value <- f_value[!missing_f]
     if (length(df_num) > length(f_value)) {
-      df_num <- df_num[-missing_f]
+      df_num <- df_num[!missing_f]
     }
     if (length(df_error) > length(f_value)) {
-      df_error <- df_error[-missing_f]
+      df_error <- df_error[!missing_f]
     }
   }
 
