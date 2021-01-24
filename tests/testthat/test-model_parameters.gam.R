@@ -14,7 +14,7 @@ if (require("testthat") && require("insight") && require("parameters") && requir
     testthat::expect_equal(
       colnames(params),
       c(
-        "Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t / F",
+        "Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "t / F",
         "df", "df_error", "p", "Component"
       )
     )
