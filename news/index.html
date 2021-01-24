@@ -173,6 +173,14 @@
 <h1 class="page-header" data-toc-text="0.11.1">
 <a href="#parameters-0111" class="anchor"></a>parameters 0.11.1<small> Unreleased </small>
 </h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> now always returns the confidence level for as additional <code>CI</code> column.</li>
+</ul>
+</div>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#general" class="anchor"></a>General</h2>
@@ -186,7 +194,7 @@
 <ul>
 <li><p>Revised printing for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>metafor</em> models.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>metafor</em> models now recognized confidence levels specified in the function call (via argument <code>level</code>).</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>htest</em> objects and <em>metafor</em> models now returns the confidence level for effect sizes as additional <code>CI</code> column.</p></li>
+<li><p>Improved support for effect sizes in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> from <em>anova</em> objects.</p></li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -271,9 +279,9 @@
 <h1 class="page-header" data-toc-text="0.10.0">
 <a href="#parameters-0100" class="anchor"></a>parameters 0.10.0<small> 2020-12-01 </small>
 </h1>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li><p>The default-method for effect sizes in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (i.e. when arguments <code>omega_squared</code>, <code>eta_squared</code> or <code>epsilon_squared</code> are set to <code>TRUE</code>) is now <code>"partial"</code>, as initially intended.</p></li>
 <li><p>Column names for degrees of freedom were revised. <code>"df_residual"</code> was replaced by the more generic <code>"df_error"</code>. Moreover, models of class <code>htest</code> now also have the column name <code>"df_error"</code> and no longer <code>"df"</code> (where applicable).</p></li>
@@ -646,9 +654,9 @@
 <h1 class="page-header" data-toc-text="0.6.0">
 <a href="#parameters-060" class="anchor"></a>parameters 0.6.0<small> 2020-03-12 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li><p>Alias <code>model_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>.</p></li>
 <li><p>Alias <code>parameters_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>.</p></li>
