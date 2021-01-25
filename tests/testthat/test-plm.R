@@ -1,7 +1,8 @@
 if (require("testthat") &&
   require("parameters") &&
   require("stats") &&
-  require("plm")) {
+  require("plm") &&
+  getRversion() > "3.5") {
   data(Crime)
   data("Produc", package = "plm")
   set.seed(123)
