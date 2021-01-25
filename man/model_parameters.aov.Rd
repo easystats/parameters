@@ -96,7 +96,7 @@ if (requireNamespace("effectsize", quietly = TRUE)) {
       model,
       eta_squared = "partial",
       ci = .9,
-      df_error = dof_satterthwaite(mm)
+      df_error = dof_satterthwaite(mm)[2:3]
     )
   }
 }
