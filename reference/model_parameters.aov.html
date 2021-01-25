@@ -292,7 +292,7 @@
       <span class='va'>model</span>,
       eta_squared <span class='op'>=</span> <span class='st'>"partial"</span>,
       ci <span class='op'>=</span> <span class='fl'>.9</span>,
-      df_error <span class='op'>=</span> <span class='fu'><a href='ci_satterthwaite.html'>dof_satterthwaite</a></span><span class='op'>(</span><span class='va'>mm</span><span class='op'>)</span>
+      df_error <span class='op'>=</span> <span class='fu'><a href='ci_satterthwaite.html'>dof_satterthwaite</a></span><span class='op'>(</span><span class='va'>mm</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
     <span class='op'>)</span>
   <span class='op'>}</span>
 <span class='op'>}</span>
@@ -304,7 +304,10 @@
 #&gt; <span class='message'>Returning eta squared.</span></div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial omega squared is equvilant to omega squared.</span>
 #&gt; <span class='message'>Returning omega squared.</span></div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial eta squared is equvilant to eta squared.</span>
 #&gt; <span class='message'>Returning eta squared.</span></div><div class='output co'>#&gt; <span class='message'>For one-way between subjects designs, partial epsilon squared is equvilant to epsilon squared.</span>
-#&gt; <span class='message'>Returning epsilon squared.</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='error'>Error in .effectsizes_for_aov(model, parameters, omega_squared, eta_squared,     epsilon_squared, df_error, ci, verbose = verbose): Number of degrees of freedom in argument 'df_error' is larger than number of parameters.</span></div></pre>
+#&gt; <span class='message'>Returning epsilon squared.</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; Parameter   | Sum_Squares | df | Mean_Square |      F | Eta2 (partial) |  Eta2 90% CI
+#&gt; -------------------------------------------------------------------------------------
+#&gt; Sepal.Big   |        1.10 |  1 |        1.10 |   4.96 |           0.03 | [0.00, 0.09]
+#&gt; Petal.Width |       68.50 |  1 |       68.50 | 309.23 |           0.68 | [0.61, 0.73]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
