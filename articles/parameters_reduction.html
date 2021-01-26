@@ -140,7 +140,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">attitude</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter   | Coefficient |    SE |         X95..CI | t.23. |      p
+<pre><code>#&gt; Parameter   | Coefficient |    SE |          95% CI | t(23) |      p
 #&gt; --------------------------------------------------------------------
 #&gt; (Intercept) |       10.79 | 11.59 | [-13.19, 34.76] |  0.93 | 0.362 
 #&gt; complaints  |        0.61 |  0.16 | [  0.28,  0.95] |  3.81 | &lt; .001
@@ -153,7 +153,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">newmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">newmodel</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                                                              | Coefficient |   SE |        X95..CI | t.27. |      p
+<pre><code>#&gt; Parameter                                                              | Coefficient |   SE |         95% CI | t(27) |      p
 #&gt; -----------------------------------------------------------------------------------------------------------------------------
 #&gt; (Intercept)                                                            |       64.63 | 1.57 | [61.41, 67.85] | 41.19 | &lt; .001
 #&gt; raises_0.88/learning_0.82/complaints_0.78/privileges_0.70/advance_0.68 |        4.62 | 0.90 | [ 2.78,  6.46] |  5.16 | &lt; .001
@@ -166,7 +166,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"cMDS"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                                                 | Coefficient |   SE |        X95..CI | t.26. |      p
+<pre><code>#&gt; Parameter                                                 | Coefficient |   SE |         95% CI | t(26) |      p
 #&gt; ----------------------------------------------------------------------------------------------------------------
 #&gt; (Intercept)                                               |       64.63 | 1.41 | [61.73, 67.53] | 45.80 | &lt; .001
 #&gt; raises_0.85/complaints_0.84/learning_0.83/privileges_0.74 |        0.43 | 0.07 | [ 0.28,  0.57] |  6.14 | &lt; .001
@@ -204,7 +204,7 @@
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">rating</span> <span class="op">~</span> <span class="va">PC1</span>, data <span class="op">=</span> <span class="va">newdata</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter   | Coefficient |   SE |        X95..CI | t.28. |      p
+<pre><code>#&gt; Parameter   | Coefficient |   SE |         95% CI | t(28) |      p
 #&gt; ------------------------------------------------------------------
 #&gt; (Intercept) |       64.63 | 1.67 | [61.22, 68.05] | 38.78 | &lt; .001
 #&gt; PC1         |        4.62 | 0.95 | [ 2.67,  6.57] |  4.86 | &lt; .001</code></pre>
@@ -240,7 +240,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">rating</span> <span class="op">~</span> <span class="va">PC1</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter   | Coefficient |   SE |        X95..CI | t.28. |      p
+<pre><code>#&gt; Parameter   | Coefficient |   SE |         95% CI | t(28) |      p
 #&gt; ------------------------------------------------------------------
 #&gt; (Intercept) |       64.63 | 1.37 | [61.83, 67.44] | 47.23 | &lt; .001
 #&gt; PC1         |        9.69 | 1.39 | [ 6.84, 12.54] |  6.96 | &lt; .001</code></pre>

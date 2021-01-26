@@ -268,7 +268,7 @@
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html">format_table</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;                   Parameter Coefficient   SE        X95..CI t.144.      p
+<pre><code>#&gt;                   Parameter Coefficient   SE         95% CI t(144)      p
 #&gt; 1               (Intercept)        3.81 0.06 [ 3.70,  3.93]  65.50 &lt; .001
 #&gt; 2 Sepal.Length [1st degree]        4.06 0.47 [ 3.14,  4.98]   8.70 &lt; .001
 #&gt; 3 Sepal.Length [2nd degree]       -1.30 0.31 [-1.92, -0.68]  -4.14 &lt; .001
@@ -311,7 +311,7 @@
 <p>Or, in a simpler way and with much more options (like standardizing, robust standard errors, bootstrapping, …) using <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, which <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code>-method does all these steps automatically:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                 | Coefficient |   SE |        X95..CI | t.144. |      p
+<pre><code>#&gt; Parameter                 | Coefficient |   SE |         95% CI | t(144) |      p
 #&gt; ---------------------------------------------------------------------------------
 #&gt; (Intercept)               |        3.81 | 0.06 | [ 3.70,  3.93] |  65.50 | &lt; .001
 #&gt; Sepal.Length [1st degree] |        4.06 | 0.47 | [ 3.14,  4.98] |   8.70 | &lt; .001
@@ -401,8 +401,8 @@
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
 <th align="center">SE</th>
-<th align="center">X95..CI</th>
-<th align="center">t.144.</th>
+<th align="center">95% CI</th>
+<th align="center">t(144)</th>
 <th align="center">p</th>
 </tr></thead>
 <tbody>
@@ -808,8 +808,8 @@
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Parameter</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Coefficient</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">SE</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">X95..CI</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">t.144.</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">95% CI</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">t(144)</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">p</th>
     </tr></thead>
 <tbody class="gt_table_body">
@@ -1216,8 +1216,8 @@
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Parameter</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Coefficient</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">SE</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">X95..CI</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">t.144.</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">95% CI</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">t(144)</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">p</th>
     </tr></thead>
 <tbody class="gt_table_body">

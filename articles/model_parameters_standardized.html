@@ -154,7 +154,7 @@
 
 <span class="co"># classic model parameters</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                          | Coefficient |   SE |        X95..CI | t.141. |      p
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p
 #&gt; ------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |        1.55 | 0.40 | [ 0.77,  2.34] |   3.87 | &lt; .001
 #&gt; Species [versicolor]               |        0.41 | 0.55 | [-0.66,  1.49] |   0.75 | 0.453 
@@ -166,7 +166,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># standardized model parameters</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                          | Coefficient |   SE |        X95..CI | t.141. |      p
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p
 #&gt; ------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |        0.97 | 0.20 | [ 0.57,  1.37] |   4.74 | &lt; .001
 #&gt; Species [versicolor]               |       -1.29 | 0.26 | [-1.80, -0.77] |  -4.91 | &lt; .001
@@ -183,7 +183,7 @@
   data <span class="op">=</span> <span class="va">iris</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model2</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                          | Coefficient |   SE |        X95..CI | t.141. |      p
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p
 #&gt; ------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |        0.97 | 0.20 | [ 0.57,  1.37] |   4.74 | &lt; .001
 #&gt; Species [versicolor]               |       -1.29 | 0.26 | [-1.80, -0.77] |  -4.91 | &lt; .001
@@ -201,7 +201,7 @@
 <p>When <code>standardize = "posthoc"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html"><code>effectsize::standardize_parameters(method = "posthoc")</code></a>. Test statistic and p-values are not affected, i.e. they are the same as if no standardization would be applied.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"posthoc"</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                          | Std..Coef. |   SE |        X95..CI | t.141. |      p
+<pre><code>#&gt; Parameter                          | Std. Coef. |   SE |         95% CI | t(141) |      p
 #&gt; -----------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |       0.00 | 0.00 | [ 0.00,  0.00] |   3.87 | &lt; .001
 #&gt; Species [versicolor]               |       0.50 | 0.66 | [-0.80,  1.79] |   0.75 | 0.453 
@@ -213,7 +213,7 @@
 <p><code>standardize = "basic"</code> also applies post-hoc standardization, however, factors are converted to numeric, which means that it also scales the coefficient by the standard deviation of model’s matrix’ parameter of factor levels (transformed to integers) or binary predictors.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                          | Std..Coef. |   SE |        X95..CI | t.141. |      p
+<pre><code>#&gt; Parameter                          | Std. Coef. |   SE |         95% CI | t(141) |      p
 #&gt; -----------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |       0.00 | 0.00 | [ 0.00,  0.00] |   3.87 | &lt; .001
 #&gt; Species [versicolor]               |       0.23 | 0.31 | [-0.38,  0.85] |   0.75 | 0.453 
@@ -229,7 +229,7 @@
 <p><code>standardize = "smart"</code> is similar to <code>standardize = "posthoc"</code> in that it does not involve model re-fitting. The difference is that the SD of the response is computed on the relevant section of the data. For instance, if a factor with 3 levels A (the intercept), B and C is entered as a predictor, the effect corresponding to B vs. A will be scaled by the variance of the response at the intercept only. As a results, the coefficients for effects of factors are similar to a Glass’ delta.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"smart"</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                          | Std..Coef. |   SE |        X95..CI | t.141. |      p
+<pre><code>#&gt; Parameter                          | Std. Coef. |   SE |         95% CI | t(141) |      p
 #&gt; -----------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |       0.00 | 0.00 | [ 0.00,  0.00] |   3.87 | &lt; .001
 #&gt; Species [versicolor]               |       1.17 | 1.56 | [-1.88,  4.22] |   0.75 | 0.453 

@@ -148,7 +148,7 @@
 <span class="co"># model parameters, where SE, CI and p-values are based on robust estimation</span>
 <span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, robust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">mp</span></code></pre></div>
-<pre><code>#&gt; Parameter                           | Coefficient |   SE |       X95..CI | t.143. |      p
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI | t(143) |      p
 #&gt; ------------------------------------------------------------------------------------------
 #&gt; (Intercept)                         |        0.87 | 0.45 | [-0.03, 1.76] |   1.91 | 0.059 
 #&gt; Sepal.Length                        |        0.04 | 0.12 | [-0.19, 0.28] |   0.37 | 0.711 
@@ -174,7 +174,7 @@
 <code class="sourceCode R"><span class="co"># change estimation-type</span>
 <span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, robust <span class="op">=</span> <span class="cn">TRUE</span>, vcov_estimation <span class="op">=</span> <span class="st">"CL"</span>, vcov_type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span>
 <span class="va">mp</span></code></pre></div>
-<pre><code>#&gt; Parameter                           | Coefficient |   SE |       X95..CI | t.143. |      p
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI | t(143) |      p
 #&gt; ------------------------------------------------------------------------------------------
 #&gt; (Intercept)                         |        0.87 | 0.42 | [ 0.03, 1.70] |   2.05 | 0.042 
 #&gt; Sepal.Length                        |        0.04 | 0.11 | [-0.18, 0.26] |   0.40 | 0.692 
@@ -202,7 +202,7 @@
   vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">mp</span></code></pre></div>
-<pre><code>#&gt; Parameter                           | Coefficient |   SE |       X95..CI | t.143. |      p
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI | t(143) |      p
 #&gt; ------------------------------------------------------------------------------------------
 #&gt; (Intercept)                         |        0.87 | 0.34 | [ 0.20, 1.53] |   2.57 | 0.011 
 #&gt; Sepal.Length                        |        0.04 | 0.07 | [-0.10, 0.19] |   0.61 | 0.540 
@@ -236,7 +236,7 @@
   vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">mp</span></code></pre></div>
-<pre><code>#&gt; Parameter                           | Coefficient |   SE |       X95..CI | t.143. |      p
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |        95% CI | t(143) |      p
 #&gt; ------------------------------------------------------------------------------------------
 #&gt; (Intercept)                         |        0.87 | 0.33 | [ 0.21, 1.52] |   2.62 | 0.010 
 #&gt; Sepal.Length                        |        0.04 | 0.07 | [-0.10, 0.18] |   0.63 | 0.531 
@@ -260,7 +260,7 @@
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># model parameters, robust estimation on standardized model</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span>, robust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                           | Coefficient |   SE |        X95..CI | t.143. |      p
+<pre><code>#&gt; Parameter                           | Coefficient |   SE |         95% CI | t(143) |      p
 #&gt; -------------------------------------------------------------------------------------------
 #&gt; (Intercept)                         |       -1.30 | 0.07 | [-1.44, -1.16] | -18.70 | &lt; .001
 #&gt; Sepal.Length                        |        0.02 | 0.06 | [-0.09,  0.13] |   0.37 | 0.711 
@@ -294,7 +294,7 @@
 
 <span class="co"># normal model parameters, like from 'summary()'</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                          | Coefficient |   SE |        X95..CI | t.141. |      p
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p
 #&gt; ------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |        1.55 | 0.40 | [ 0.77,  2.34] |   3.87 | &lt; .001
 #&gt; Species [versicolor]               |        0.41 | 0.55 | [-0.66,  1.49] |   0.75 | 0.453 
@@ -312,7 +312,7 @@
   vcov_type <span class="op">=</span> <span class="st">"CR1"</span>, 
   vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">grp</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                          | Coefficient |   SE |        X95..CI | t.141. |      p
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p
 #&gt; ------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |        1.55 | 0.40 | [ 0.76,  2.35] |   3.87 | &lt; .001
 #&gt; Species [versicolor]               |        0.41 | 0.80 | [-1.17,  1.99] |   0.75 | 0.608 
@@ -336,7 +336,7 @@
   vcov_type <span class="op">=</span> <span class="st">"CR1"</span>, 
   vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">grp</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter                          | Coefficient |   SE |        X95..CI | t.141. |      p
+<pre><code>#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p
 #&gt; ------------------------------------------------------------------------------------------
 #&gt; (Intercept)                        |        0.97 | 0.08 | [ 0.82,  1.12] |   4.74 | &lt; .001
 #&gt; Species [versicolor]               |       -1.29 | 0.33 | [-1.95, -0.63] |  -4.91 | &lt; .001
