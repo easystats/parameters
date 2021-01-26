@@ -71,6 +71,8 @@ bootstrap_parameters <- function(model,
   # Remove unnecessary columns
   if ("CI" %in% names(parameters) && .n_unique(parameters$CI) == 1) {
     parameters$CI <- NULL
+  } else if ("CI" %in% names(parameters) && .n_unique(parameters$CI) > 1) {
+    parameters <- bayestestR::reshape_ci(parameters)
   }
 
   # Coef
