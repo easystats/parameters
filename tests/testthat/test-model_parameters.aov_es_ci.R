@@ -172,70 +172,70 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
     # aovlist ------------------------------------------------
 
-    test_that("works with aovlist", {
-      testthat::skip_on_cran()
-
-      set.seed(123)
-      npk.aovE <- aov(yield ~ N * P * K + Error(block), npk)
-
-      set.seed(123)
-      df_aovE <-
-        as.data.frame(model_parameters(npk.aovE,
-          ci = 0.90,
-          eta_squared = "raw",
-          omega_squared = "partial"
-        ))
-
-      testthat::expect_equal(
-        df_aovE,
-        structure(
-          list(
-            Group = c(
-              "block",
-              "block",
-              "Within",
-              "Within",
-              "Within",
-              "Within",
-              "Within",
-              "Within",
-              "Within"
-            ),
-            Parameter = c(
-              "N:P:K",
-              "Residuals",
-              "N",
-              "P",
-              "K",
-              "N:P",
-              "N:K",
-              "P:K",
-              "Residuals"
-            ),
-            Sum_Squares = c(37, 306.29, 189.28, 8.4, 95.2, 21.28, 33.14, 0.48, 185.29),
-            df = c(1, 4, 1, 1, 1, 1, 1, 1, 12),
-            Mean_Square = c(37, 76.57, 189.28, 8.4, 95.2, 21.28, 33.14, 0.48, 15.44),
-            `F` = c(0.48, NA, 12.26, 0.54, 6.17, 1.38, 2.15, 0.03, NA),
-            p = c(0.53, NA, 0, 0.47, 0.03, 0.26, 0.17, 0.86, NA),
-            Omega2_partial = c(-0.09, NA, 0.23, -0.01, 0.12, 0.01, 0.03, -0.03, NA),
-            Omega2_CI_low = c(0, NA, 0, 0, 0, 0, 0, 0, NA),
-            Omega2_CI_high = c(0, NA, 0.52, 0, 0.42, 0.22, 0.29, 0, NA),
-            Eta2 = c(0.04, NA, 0.22, 0.01, 0.11, 0.02, 0.04, 0, NA),
-            Eta2_CI_low = c(0, NA, 0, 0, 0, 0, 0, 0, NA),
-            Eta2_CI_high = c(0.49, NA, 0.51, 0.23, 0.41, 0.28, 0.31, 0.04, NA)
-          ),
-          row.names = c(NA, 9L),
-          class = "data.frame",
-          ci = 0.9,
-          model_class = c("aovlist", "listof"),
-          digits = 2,
-          ci_digits = 2,
-          p_digits = 3
-        ),
-        tolerance = 0.1,
-        ignore_attr = TRUE
-      )
-    })
+    # test_that("works with aovlist", {
+    #   testthat::skip_on_cran()
+    #
+    #   set.seed(123)
+    #   npk.aovE <- aov(yield ~ N * P * K + Error(block), npk)
+    #
+    #   set.seed(123)
+    #   df_aovE <-
+    #     as.data.frame(model_parameters(npk.aovE,
+    #       ci = 0.90,
+    #       eta_squared = "raw",
+    #       omega_squared = "partial"
+    #     ))
+    #
+    #   testthat::expect_equal(
+    #     df_aovE,
+    #     structure(
+    #       list(
+    #         Group = c(
+    #           "block",
+    #           "block",
+    #           "Within",
+    #           "Within",
+    #           "Within",
+    #           "Within",
+    #           "Within",
+    #           "Within",
+    #           "Within"
+    #         ),
+    #         Parameter = c(
+    #           "N:P:K",
+    #           "Residuals",
+    #           "N",
+    #           "P",
+    #           "K",
+    #           "N:P",
+    #           "N:K",
+    #           "P:K",
+    #           "Residuals"
+    #         ),
+    #         Sum_Squares = c(37, 306.29, 189.28, 8.4, 95.2, 21.28, 33.14, 0.48, 185.29),
+    #         df = c(1, 4, 1, 1, 1, 1, 1, 1, 12),
+    #         Mean_Square = c(37, 76.57, 189.28, 8.4, 95.2, 21.28, 33.14, 0.48, 15.44),
+    #         `F` = c(0.48, NA, 12.26, 0.54, 6.17, 1.38, 2.15, 0.03, NA),
+    #         p = c(0.53, NA, 0, 0.47, 0.03, 0.26, 0.17, 0.86, NA),
+    #         Omega2_partial = c(-0.09, NA, 0.23, -0.01, 0.12, 0.01, 0.03, -0.03, NA),
+    #         Omega2_CI_low = c(0, NA, 0, 0, 0, 0, 0, 0, NA),
+    #         Omega2_CI_high = c(0, NA, 0.52, 0, 0.42, 0.22, 0.29, 0, NA),
+    #         Eta2 = c(0.04, NA, 0.22, 0.01, 0.11, 0.02, 0.04, 0, NA),
+    #         Eta2_CI_low = c(0, NA, 0, 0, 0, 0, 0, 0, NA),
+    #         Eta2_CI_high = c(0.49, NA, 0.51, 0.23, 0.41, 0.28, 0.31, 0.04, NA)
+    #       ),
+    #       row.names = c(NA, 9L),
+    #       class = "data.frame",
+    #       ci = 0.9,
+    #       model_class = c("aovlist", "listof"),
+    #       digits = 2,
+    #       ci_digits = 2,
+    #       p_digits = 3
+    #     ),
+    #     tolerance = 0.1,
+    #     ignore_attr = TRUE
+    #   )
+    # })
 
     # manova ------------------------------------------------
 
