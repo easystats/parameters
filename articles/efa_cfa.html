@@ -323,7 +323,7 @@
 <span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/compare_performance.html">compare_performance</a></span><span class="op">(</span><span class="va">big5</span>, <span class="va">big6</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; # Comparison of Model Performance Indices
 #&gt; 
-#&gt; Name |  Model | Chi2(265) | p(Chi2) | Baseline(300) | p(Baseline) |   GFI |  AGFI |   NFI |  NNFI |   CFI | RMSEA |    RMSEA  CI | p(RMSEA) |   RMR |  SRMR |   RFI |  PNFI |   IFI |   RNI | Loglikelihood |       AIC |       BIC | BIC_adjusted
+#&gt; Name |  Model | Chi2.265. | p.Chi2. | Baseline.300. | p.Baseline. |   GFI |  AGFI |   NFI |  NNFI |   CFI | RMSEA |    RMSEA..CI | p.RMSEA. |   RMR |  SRMR |   RFI |  PNFI |   IFI |   RNI | Loglikelihood |       AIC |       BIC | BIC_adjusted
 #&gt; --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #&gt; big5 | lavaan |  1357.270 |  &lt; .001 |      5821.528 |      &lt; .001 | 0.857 | 0.824 | 0.767 | 0.776 | 0.802 | 0.075 | [0.07, 0.08] |   &lt; .001 | 0.157 | 0.077 | 0.736 | 0.677 | 0.803 | 0.802 |    -29897.049 | 59914.097 | 60189.762 |    59999.243
 #&gt; big6 | lavaan |  1529.934 |  &lt; .001 |      5821.528 |      &lt; .001 | 0.842 | 0.806 | 0.737 | 0.741 | 0.771 | 0.081 | [0.08, 0.08] |   &lt; .001 | 0.179 | 0.085 | 0.702 | 0.651 | 0.772 | 0.771 |    -29983.381 | 60086.762 | 60362.427 |    60171.907</code></pre>
@@ -356,7 +356,7 @@
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; # Regression
 #&gt; 
-#&gt; Link      | Coefficient |   SE |        95% CI |      p
+#&gt; Link      | Coefficient |   SE |       X95..CI |      p
 #&gt; -------------------------------------------------------
 #&gt; Y ~ X (c) |        0.04 | 0.10 | [-0.17, 0.24] | 0.728 
 #&gt; M ~ X (a) |        0.47 | 0.10 | [ 0.27, 0.68] | &lt; .001
@@ -364,7 +364,7 @@
 #&gt; 
 #&gt; # Defined
 #&gt; 
-#&gt; Link             | Coefficient |   SE |       95% CI |      p
+#&gt; Link             | Coefficient |   SE |      X95..CI |      p
 #&gt; -------------------------------------------------------------
 #&gt; ab := a*b        |        0.37 | 0.09 | [0.19, 0.55] | &lt; .001
 #&gt; total := c+(a*b) |        0.41 | 0.12 | [0.17, 0.65] | 0.001</code></pre>

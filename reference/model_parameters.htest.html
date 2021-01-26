@@ -259,28 +259,28 @@ only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.h
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Pearson's product-moment correlation
 #&gt; 
-#&gt; </span><span>Parameter1 | Parameter2 |     r | t(30) |      p |         95% CI
+#&gt; </span><span>Parameter1 | Parameter2 |     r | t.30. |      p |        X95..CI
 #&gt; -----------------------------------------------------------------
 #&gt; mtcars$mpg | mtcars$cyl | -0.85 | -8.92 | &lt; .001 | [-0.93, -0.72]</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span>, <span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Welch Two Sample t-test
 #&gt; 
-#&gt; </span><span>Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference |         95% CI | t(225.68) |      p
+#&gt; </span><span>Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference |        X95..CI | t.225.68. |      p
 #&gt; ---------------------------------------------------------------------------------------------------------------------------
 #&gt; iris$Sepal.Width | iris$Sepal.Length |            3.06 |            5.84 |      -2.79 | [-2.94, -2.64] |    -36.46 | &lt; .001</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>mtcars</span><span class='op'>$</span><span class='va'>vs</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Welch Two Sample t-test
 #&gt; 
-#&gt; </span><span>Parameter  |     Group | Mean_Group1 | Mean_Group2 | Difference |          95% CI | t(22.72) |      p
+#&gt; </span><span>Parameter  |     Group | Mean_Group1 | Mean_Group2 | Difference |         X95..CI | t.22.72. |      p
 #&gt; -----------------------------------------------------------------------------------------------------
 #&gt; mtcars$mpg | mtcars$vs |       16.62 |       24.56 |       7.94 | [-11.46, -4.42] |    -4.67 | &lt; .001</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span>, mu <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># One Sample t-test
 #&gt; 
-#&gt; </span><span>Parameter        | Mean |   mu | Difference |       95% CI | t(149) |      p
+#&gt; </span><span>Parameter        | Mean |   mu | Difference |      X95..CI | t.149. |      p
 #&gt; ----------------------------------------------------------------------------
 #&gt; iris$Sepal.Width | 3.06 | 1.00 |       2.06 | [2.99, 3.13] |  57.81 | &lt; .001</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>)</span>
