@@ -1,6 +1,9 @@
 #' Pool Model Parameters
 #'
-#' This function "pools" (i.e. combines) model parameters in a similar fashion as \code{mice::pool()}. However, this function pools parameters from \code{parameters_model} objects, as returned by \code{\link{model_parameters}}.
+#' This function "pools" (i.e. combines) model parameters in a similar fashion
+#' as \code{mice::pool()}. However, this function pools parameters from
+#' \code{parameters_model} objects, as returned by
+#' \code{\link{model_parameters}}.
 #'
 #' @param x A list of \code{parameters_model} objects, as returned by
 #'   \code{\link{model_parameters}}, or a list of model-objects that is
@@ -23,8 +26,9 @@
 #'   small samples (\cite{Barnard and Rubin, 1999}).
 #'
 #' @references
-#' Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with multiple imputation. Biometrika, 86, 948-955.
-#' Rubin, D.B. (1987). Multiple Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.
+#' Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with
+#' multiple imputation. Biometrika, 86, 948-955. Rubin, D.B. (1987). Multiple
+#' Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.
 #'
 #' @examples
 #' # example for multiple imputed datasets

@@ -3,15 +3,35 @@
 #' This function performs a principal component analysis (PCA) and returns the loadings as a data frame.
 #'
 #' @param x A data frame or a statistical model.
-#' @param n Number of components to extract. If \code{n="all"}, then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n="auto"} (default) or \code{n=NULL}, the number of components is selected through \code{\link{n_factors}} resp. \code{\link{n_components}}. In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.
-#' @param rotation If not \code{"none"}, the PCA / FA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, or \code{"cluster"} (and more). See \code{\link[psych]{fa}} for details.
+#' @param n Number of components to extract. If \code{n="all"}, then \code{n} is
+#'   set as the number of variables minus 1 (\code{ncol(x)-1}). If
+#'   \code{n="auto"} (default) or \code{n=NULL}, the number of components is
+#'   selected through \code{\link{n_factors}} resp. \code{\link{n_components}}.
+#'   In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case
+#'   it will select all the components that are maximally pseudo-loaded (i.e.,
+#'   correlated) by at least one variable.
+#' @param rotation If not \code{"none"}, the PCA / FA will be computed using the
+#'   \pkg{psych} package. Possible options include \code{"varimax"},
+#'   \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"},
+#'   or \code{"cluster"} (and more). See \code{\link[psych]{fa}} for details.
 #' @param sort Sort the loadings.
-#' @param threshold A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).
-#' @param standardize A logical value indicating whether the variables should be standardized (centered and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).
-#' @param object An object of class \code{parameters_pca} or \code{parameters_efa}
-#' @param newdata An optional data frame in which to look for variables with which to predict. If omitted, the fitted values are used.
-#' @param names Optional character vector to name columns of the returned data frame.
-#' @param keep_na Logical, if \code{TRUE}, predictions also return observations with missing values from the original data, hence the number of rows of predicted data and original data is equal.
+#' @param threshold A value between 0 and 1 indicates which (absolute) values
+#'   from the loadings should be removed. An integer higher than 1 indicates the
+#'   n strongest loadings to retain. Can also be \code{"max"}, in which case it
+#'   will only display the maximum loading per variable (the most simple
+#'   structure).
+#' @param standardize A logical value indicating whether the variables should be
+#'   standardized (centered and scaled) to have unit variance before the
+#'   analysis takes place (in general, such scaling is advisable).
+#' @param object An object of class \code{parameters_pca} or
+#'   \code{parameters_efa}
+#' @param newdata An optional data frame in which to look for variables with
+#'   which to predict. If omitted, the fitted values are used.
+#' @param names Optional character vector to name columns of the returned data
+#'   frame.
+#' @param keep_na Logical, if \code{TRUE}, predictions also return observations
+#'   with missing values from the original data, hence the number of rows of
+#'   predicted data and original data is equal.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details
@@ -41,8 +61,12 @@
 #'  There is a simplified rule of thumb that may help do decide whether to run
 #'  a factor analysis or a principal component analysis:
 #'  \itemize{
-#'    \item Run \emph{factor analysis} if you assume or wish to test a theoretical model of latent factors causing observed variables.
-#'    \item Run \emph{principal component analysis} If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.
+#'    \item Run \emph{factor analysis} if you assume or wish to test a
+#'    theoretical model of latent factors causing observed variables.
+#'
+#'    \item Run \emph{principal component analysis} If you want to simply reduce
+#'    your correlated observed variables to a smaller set of important
+#'    independent composite variables.
 #'  }
 #'  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
 #'  }
@@ -61,9 +85,20 @@
 #'    components.
 #'  }
 #'
-#' @note There is a \code{summary()}-method that prints the Eigenvalues and (explained) variance for each extracted component. \code{closest_component()} will return a numeric vector with the assigned component index for each column from the original data frame. \code{rotated_data()} will return the rotated data, including missing values, so it matches the original data frame. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is a \code{summary()}-method that prints the Eigenvalues and
+#'   (explained) variance for each extracted component.
+#'   \code{closest_component()} will return a numeric vector with the assigned
+#'   component index for each column from the original data frame.
+#'   \code{rotated_data()} will return the rotated data, including missing
+#'   values, so it matches the original data frame. There is also a
+#'   \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+#'   implemented in the
+#'   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @seealso \code{\link[performance]{check_itemscale}} to compute various measures of internal consistencies applied to the (sub)scales (i.e. components) extracted from the PCA. Use \code{\link{get_scores}} to compute scores for each subscale.
+#' @seealso \code{\link[performance]{check_itemscale}} to compute various
+#'   measures of internal consistencies applied to the (sub)scales (i.e.
+#'   components) extracted from the PCA. Use \code{\link{get_scores}} to compute
+#'   scores for each subscale.
 #'
 #' @examples
 #' \donttest{
@@ -90,10 +125,19 @@
 #' }
 #' @return A data frame of loadings.
 #' @references \itemize{
-#'   \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and Psychological Measurement, 34(1):111–117
-#'   \item Hofmann, R. (1978). Complexity and simplicity as objective indices descriptive of factor solutions. Multivariate Behavioral Research, 13:2, 247-250, \doi{10.1207/s15327906mbr1302_9}
-#'   \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation, and simple structure in personality data. Journal of research in personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
-#'   \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate statistics (6th ed.). Boston: Pearson Education.
+#'   \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
+#'   and Psychological Measurement, 34(1):111–117
+#'
+#'   \item Hofmann, R. (1978). Complexity and simplicity as objective indices
+#'   descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
+#'   247-250, \doi{10.1207/s15327906mbr1302_9}
+#'
+#'   \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
+#'   and simple structure in personality data. Journal of research in
+#'   personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
+#'
+#'   \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
+#'   statistics (6th ed.). Boston: Pearson Education.
 #' }
 #' @export
 principal_components <- function(x,

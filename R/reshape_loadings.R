@@ -46,7 +46,11 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 #' @importFrom insight export_table format_table
 #' @importFrom stats reshape
 #' @keywords internal
-.wide_loadings <- function(loadings, loadings_columns = "Loading", component_column = "Component", variable_column = "Variable", ...) {
+.wide_loadings <- function(loadings,
+                           loadings_columns = "Loading",
+                           component_column = "Component",
+                           variable_column = "Variable",
+                           ...) {
   if (is.numeric(loadings[[component_column]])) {
     loadings[[component_column]] <- paste0("F", loadings[[component_column]])
   }
