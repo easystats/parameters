@@ -11,9 +11,10 @@ bayestestR::equivalence_test
 #' @param x A statistical model.
 #' @param range The range of practical equivalence of an effect. May be \code{"default"},
 #'   to automatically define this range based on properties of the model's data.
-#' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
+#' @param ci Confidence Interval (CI+) level. Default to 0.95 (95\%).
 #' @param rule Character, indicating the rules when testing for practical equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See 'Details'.
 #' @param p_values Logical, if \code{TRUE}, adjusted p-values for equivalence testing are calculated.
+#' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.merMod
 #' @inheritParams p_value
@@ -137,7 +138,7 @@ bayestestR::equivalence_test
 equivalence_test.lm <- function(x,
                                 range = "default",
                                 ci = .95,
-                                rule = "bayes",
+                                rule = "classic",
                                 p_values = FALSE,
                                 verbose = TRUE,
                                 ...) {
@@ -201,7 +202,7 @@ equivalence_test.rma <- equivalence_test.lm
 equivalence_test.merMod <- function(x,
                                     range = "default",
                                     ci = .95,
-                                    rule = "bayes",
+                                    rule = "classic",
                                     effects = c("fixed", "random"),
                                     p_values = FALSE,
                                     verbose = TRUE,
@@ -261,7 +262,7 @@ equivalence_test.parameters_simulate_model <- function(x,
   model <- .get_object(x)
 
   if (all(range == "default") && !is.null(model)) {
-    range <- bayestestR::rope_range(model)
+    range <- bayestestR::rope_range(model, verbose = verbose)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
@@ -293,7 +294,7 @@ equivalence_test.parameters_simulate_model <- function(x,
 .equivalence_test_frequentist <- function(x,
                                           range = "default",
                                           ci = .95,
-                                          rule = "bayes",
+                                          rule = "classic",
                                           p_values = FALSE,
                                           verbose = TRUE,
                                           ...) {
@@ -301,7 +302,7 @@ equivalence_test.parameters_simulate_model <- function(x,
   # ==== define rope range ====
 
   if (all(range == "default")) {
-    range <- bayestestR::rope_range(x)
+    range <- bayestestR::rope_range(x, verbose = verbose)
     if (is.list(range)) {
       range <- range[[which.max(sapply(range, diff))]]
     }
@@ -365,17 +366,19 @@ equivalence_test.parameters_simulate_model <- function(x,
 .equivalence_test_frequentist_random <- function(x,
                                                  range = "default",
                                                  ci = .95,
-                                                 rule = "bayes",
+                                                 rule = "classic",
                                                  verbose = TRUE,
                                                  ...) {
   if (all(range == "default")) {
-    range <- bayestestR::rope_range(x)
+    range <- bayestestR::rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   if (length(ci) > 1) {
-    warning("`ci` may only be of length 1. Using first ci-value now.", call. = FALSE)
+    if (isTRUE(verbose)) {
+      warning("`ci` may only be of length 1. Using first ci-value now.", call. = FALSE)
+    }
     ci <- ci[1]
   }
 

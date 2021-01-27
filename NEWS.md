@@ -5,6 +5,8 @@
 * `model_parameters()` now always returns the confidence level for as additional
   `CI` column.
 
+* The `rule` argument in `equivalenct_test()` defaults to `"classic"`.
+
 ## General
 
 * Roll-back R dependency to R >= 3.4.
