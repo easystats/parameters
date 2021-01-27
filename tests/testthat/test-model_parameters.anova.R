@@ -56,7 +56,7 @@ if (require("insight") && require("testthat") && require("parameters")) {
     model <- anova(mm)
 
     # parameters table including effect sizes
-    model_parameters(
+    mp <- model_parameters(
       model,
       eta_squared = "partial",
       ci = .9,
