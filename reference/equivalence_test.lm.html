@@ -180,7 +180,7 @@
   <span class='va'>x</span>,
   range <span class='op'>=</span> <span class='st'>"default"</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  rule <span class='op'>=</span> <span class='st'>"bayes"</span>,
+  rule <span class='op'>=</span> <span class='st'>"classic"</span>,
   p_values <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
@@ -191,7 +191,7 @@
   <span class='va'>x</span>,
   range <span class='op'>=</span> <span class='st'>"default"</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
-  rule <span class='op'>=</span> <span class='st'>"bayes"</span>,
+  rule <span class='op'>=</span> <span class='st'>"classic"</span>,
   effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>,
   p_values <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -212,7 +212,7 @@ to automatically define this range based on properties of the model's data.</p><
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Confidence Interval (CI+) level. Default to 0.95 (95%).</p></td>
     </tr>
     <tr>
       <th>rule</th>
@@ -338,16 +338,16 @@ the equivalence test.</p>
 
 <span class='co'># default rule</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Note that the default rope range for binomial models might change in future versions (see https://github.com/easystats/bayestestR/issues/364).Please set it explicitly to preserve current results.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Test for Practical Equivalence
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Note that the default rope range for binomial models might change in future versions (see https://github.com/easystats/bayestestR/issues/364).Please set it explicitly to preserve current results.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># TOST-test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-1.99 1.99]
 #&gt; 
-#&gt;         Parameter        H0 inside ROPE        95% CI
-#&gt;       (Intercept)  Rejected      0.00 % [58.46 69.28]
-#&gt;              time Undecided     78.11 % [-1.07  2.85]
-#&gt;               age  Accepted    100.00 % [-0.32  0.37]
-#&gt;   education [mid]  Rejected      0.00 % [ 4.43 13.09]
-#&gt;  education [high]  Rejected      0.00 % [ 9.33 19.38]
+#&gt;         Parameter        H0 inside ROPE        90% CI
+#&gt;       (Intercept)  Rejected      0.00 % [59.33 68.41]
+#&gt;              time Undecided     83.52 % [-0.76  2.53]
+#&gt;               age  Accepted    100.00 % [-0.26  0.32]
+#&gt;   education [mid]  Rejected      0.00 % [ 5.13 12.39]
+#&gt;  education [high]  Rejected      0.00 % [10.14 18.57]
 #&gt; </div><div class='input'>
 <span class='co'># conditional equivalence test</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test</a></span><span class='op'>(</span><span class='va'>model</span>, rule <span class='op'>=</span> <span class='st'>"cet"</span><span class='op'>)</span>
