@@ -38,10 +38,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("remotes"))
+          install.packages(c("remotes", "BiocManager"))
+          remotes::install_bioc("M3C")
           remotes::install_deps(dependencies = TRUE)
-          install.packages("BiocManager")
-          BiocManager::install("M3C")          
           remotes::install_cran("covr")
         shell: Rscript {0}
 
