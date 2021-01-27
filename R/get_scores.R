@@ -1,16 +1,21 @@
 #' Get Scores from Principal Component Analysis (PCA)
 #'
-#' \code{get_scores()} takes \code{n_items} amount of items that load the most (either by loading cutoff or number) on a component, and then computes their average.
+#' \code{get_scores()} takes \code{n_items} amount of items that load the most
+#' (either by loading cutoff or number) on a component, and then computes their
+#' average.
 #'
 #' @param x An object returned by \code{\link{principal_components}}.
-#' @param n_items Number of required (i.e. non-missing) items to build the sum score. If \code{NULL}, the value is chosen to match half of the number of columns in a data frame.
+#' @param n_items Number of required (i.e. non-missing) items to build the sum
+#'   score. If \code{NULL}, the value is chosen to match half of the number of
+#'   columns in a data frame.
 #'
-#' @details \code{get_scores()} takes the results from \code{\link{principal_components}}
-#'   and extracts the variables for each component found by the PCA. Then, for
-#'   each of these "subscales", row means are calculated (which equals adding
-#'   up the single items and dividing by the number of items). This results in
-#'   a sum score for each component from the PCA, which is on the same scale as
-#'   the original, single items that were used to compute the PCA.
+#' @details \code{get_scores()} takes the results from
+#'   \code{\link{principal_components}} and extracts the variables for each
+#'   component found by the PCA. Then, for each of these "subscales", row means
+#'   are calculated (which equals adding up the single items and dividing by the
+#'   number of items). This results in a sum score for each component from the
+#'   PCA, which is on the same scale as the original, single items that were
+#'   used to compute the PCA.
 #'
 #' @examples
 #' if (require("psych")) {
@@ -29,7 +34,8 @@
 #'   # consists of items "hp" and "qsec"
 #'   (mtcars$hp + mtcars$qsec) / 2
 #' }
-#' @return A data frame with subscales, which are average sum scores for all items from each component.
+#' @return A data frame with subscales, which are average sum scores for all
+#'   items from each component.
 #' @export
 get_scores <- function(x, n_items = NULL) {
   subscales <- closest_component(x)

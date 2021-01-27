@@ -1,6 +1,7 @@
 #' Parameters from \code{WRS2} objects
 #'
-#' @param model Object of class \code{t1way}, \code{yuen}, \code{mcp1} or \code{mcp2}.
+#' @param model Object of class \code{t1way}, \code{yuen}, \code{mcp1} or
+#'   \code{mcp2}.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.default
 #'
