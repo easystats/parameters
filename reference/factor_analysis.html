@@ -195,11 +195,20 @@
     </tr>
     <tr>
       <th>n</th>
-      <td><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is set as the number of variables minus 1 (<code>ncol(x)-1</code>). If <code>n="auto"</code> (default) or <code>n=NULL</code>, the number of components is selected through <code><a href='n_factors.html'>n_factors</a></code> resp. <code><a href='n_factors.html'>n_components</a></code>. In <code><a href='reduce_parameters.html'>reduce_parameters</a></code>, can also be <code>"max"</code>, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.</p></td>
+      <td><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is
+set as the number of variables minus 1 (<code>ncol(x)-1</code>). If
+<code>n="auto"</code> (default) or <code>n=NULL</code>, the number of components is
+selected through <code><a href='n_factors.html'>n_factors</a></code> resp. <code><a href='n_factors.html'>n_components</a></code>.
+In <code><a href='reduce_parameters.html'>reduce_parameters</a></code>, can also be <code>"max"</code>, in which case
+it will select all the components that are maximally pseudo-loaded (i.e.,
+correlated) by at least one variable.</p></td>
     </tr>
     <tr>
       <th>rotation</th>
-      <td><p>If not <code>"none"</code>, the PCA / FA will be computed using the <span class="pkg">psych</span> package. Possible options include <code>"varimax"</code>, <code>"quartimax"</code>, <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>, or <code>"cluster"</code> (and more). See <code><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></code> for details.</p></td>
+      <td><p>If not <code>"none"</code>, the PCA / FA will be computed using the
+<span class="pkg">psych</span> package. Possible options include <code>"varimax"</code>,
+<code>"quartimax"</code>, <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>,
+or <code>"cluster"</code> (and more). See <code><a href='https://rdrr.io/pkg/psych/man/fa.html'>fa</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>sort</th>
@@ -207,11 +216,17 @@
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be <code>"max"</code>, in which case it will only display the maximum loading per variable (the most simple structure).</p></td>
+      <td><p>A value between 0 and 1 indicates which (absolute) values
+from the loadings should be removed. An integer higher than 1 indicates the
+n strongest loadings to retain. Can also be <code>"max"</code>, in which case it
+will only display the maximum loading per variable (the most simple
+structure).</p></td>
     </tr>
     <tr>
       <th>standardize</th>
-      <td><p>A logical value indicating whether the variables should be standardized (centered and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).</p></td>
+      <td><p>A logical value indicating whether the variables should be
+standardized (centered and scaled) to have unit variance before the
+analysis takes place (in general, such scaling is advisable).</p></td>
     </tr>
     <tr>
       <th>cor</th>
@@ -248,8 +263,11 @@
    (<cite>Tabachnick and Fidell, 2013</cite>).</p><p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>PCA or FA?</h3>
 <p>There is a simplified rule of thumb that may help do decide whether to run
  a factor analysis or a principal component analysis:</p><ul>
-<li><p>Run <em>factor analysis</em> if you assume or wish to test a theoretical model of latent factors causing observed variables.</p></li>
-<li><p>Run <em>principal component analysis</em> If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.</p></li>
+<li><p>Run <em>factor analysis</em> if you assume or wish to test a
+   theoretical model of latent factors causing observed variables.</p></li>
+<li><p>Run <em>principal component analysis</em> If you want to simply reduce
+   your correlated observed variables to a smaller set of important
+   independent composite variables.</p></li>
 </ul><p>(Source: <a href='https://stats.stackexchange.com/q/1576/54740'>CrossValidated</a>)</p><p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Computing Item Scores</h3>
 <p>Use <code><a href='get_scores.html'>get_scores</a></code> to compute scores for the "subscales" represented
    by the extracted principal components. <code><a href='get_scores.html'>get_scores()</a></code> takes the results
