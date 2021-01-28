@@ -234,7 +234,7 @@ p_value.BFBayesFactor <- function(model, ...) {
   } else if (any(class(x@denominator) %in% c("BFlinearModel"))) {
     "Bayes factors for linear models"
   } else if (any(class(x@denominator) %in% c("BFcontingencyTable"))) {
-    "Bayesian contingency tabs analysis"
+    "Bayesian contingency table analysis"
   } else if (any(class(x@denominator) %in% c("BFproportion"))) {
     "Bayesian proportion test"
   } else {
