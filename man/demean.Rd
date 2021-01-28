@@ -119,9 +119,12 @@ A data frame with the group-/de-meaned variables, which get the suffix
   \subsection{Terminology}{
     The group-meaned variable is simply the mean of an independent variable
     within each group (or id-level or cluster) represented by \code{group}.
-    It represents the cluster-mean of an independent variable. The de-meaned
-    variable is then the centered version of the group-meaned variable. De-meaning
-    is sometimes also called person-mean centering or centering within clusters.
+    It represents the cluster-mean of an independent variable. The regression
+    coefficient of a group-meaned variable is the \emph{between-subject-effect}.
+    The de-meaned variable is then the centered version of the group-meaned
+    variable. De-meaning is sometimes also called person-mean centering or
+    centering within clusters. The regression coefficient of a de-meaned
+    variable represents the \emph{within-subject-effect}.
   }
   \subsection{De-meaning with continuous predictors}{
     For continuous time-varying predictors, the recommendation is to include
@@ -133,12 +136,18 @@ A data frame with the group-/de-meaned variables, which get the suffix
     predictor indicates the between-subject effect.
   }
   \subsection{De-meaning with binary predictors}{
-    For binary time-varying predictors, the recommendation is to include
-    the raw (untransformed) binary predictor as fixed effect only and the
-    \emph{de-meaned} variable as random effect (random slope)
-    (\cite{Hoffmann 2015, chapter 8-2.I}). \code{demean()} will thus coerce
-    categorical time-varying predictors to numeric to compute the de- and
-    group-meaned versions for these variables.
+    For binary time-varying predictors, there are two recommendations. First
+    is to include the raw (untransformed) binary predictor as fixed effect
+    only and the \emph{de-meaned} variable as random effect (random slope).
+    The alternative would be to add the de-meaned version(s) of binary
+    time-varying covariates as additional fixed effect as well (instead of
+    adding it as random slope). Centering time-varying binary variables to
+    obtain within-effects (level 1) isn't necessary. They have a sensible
+    interpretation when left in the typical 0/1 format (\cite{Hoffmann 2015,
+    chapter 8-2.I}). \code{demean()} will thus coerce categorical time-varying
+    predictors to numeric to compute the de- and group-meaned versions for
+    these variables, where the raw (untransformed) binary predictor and the
+    de-meaned version should be added to the model.
   }
   \subsection{De-meaning of factors with more than 2 levels}{
     Factors with more than two levels are demeaned in two ways: first, these

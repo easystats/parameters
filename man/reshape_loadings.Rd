@@ -17,7 +17,11 @@ reshape_loadings(x, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).}
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values
+from the loadings should be removed. An integer higher than 1 indicates the
+n strongest loadings to retain. Can also be \code{"max"}, in which case it
+will only display the maximum loading per variable (the most simple
+structure).}
 
 \item{loadings_columns}{Vector indicating the columns corresponding to loadings.}
 }

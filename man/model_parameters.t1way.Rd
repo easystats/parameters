@@ -7,7 +7,8 @@
 \method{model_parameters}{t1way}(model, verbose = TRUE, ...)
 }
 \arguments{
-\item{model}{Object of class \code{t1way}, \code{yuen}, \code{mcp1} or \code{mcp2}.}
+\item{model}{Object of class \code{t1way}, \code{yuen}, \code{mcp1} or
+\code{mcp2}.}
 
 \item{verbose}{Toggle warnings and messages.}
 

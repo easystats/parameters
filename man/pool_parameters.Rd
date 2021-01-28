@@ -41,7 +41,10 @@ one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
 A data frame of indices related to the model's parameters.
 }
 \description{
-This function "pools" (i.e. combines) model parameters in a similar fashion as \code{mice::pool()}. However, this function pools parameters from \code{parameters_model} objects, as returned by \code{\link{model_parameters}}.
+This function "pools" (i.e. combines) model parameters in a similar fashion
+as \code{mice::pool()}. However, this function pools parameters from
+\code{parameters_model} objects, as returned by
+\code{\link{model_parameters}}.
 }
 \details{
 Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}).
@@ -73,6 +76,7 @@ if (require("mice")) {
 }
 }
 \references{
-Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with multiple imputation. Biometrika, 86, 948-955.
-Rubin, D.B. (1987). Multiple Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.
+Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with
+multiple imputation. Biometrika, 86, 948-955. Rubin, D.B. (1987). Multiple
+Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.
 }

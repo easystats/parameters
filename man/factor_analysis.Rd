@@ -18,15 +18,30 @@ factor_analysis(
 \arguments{
 \item{x}{A data frame or a statistical model.}
 
-\item{n}{Number of components to extract. If \code{n="all"}, then \code{n} is set as the number of variables minus 1 (\code{ncol(x)-1}). If \code{n="auto"} (default) or \code{n=NULL}, the number of components is selected through \code{\link{n_factors}} resp. \code{\link{n_components}}. In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case it will select all the components that are maximally pseudo-loaded (i.e., correlated) by at least one variable.}
+\item{n}{Number of components to extract. If \code{n="all"}, then \code{n} is
+set as the number of variables minus 1 (\code{ncol(x)-1}). If
+\code{n="auto"} (default) or \code{n=NULL}, the number of components is
+selected through \code{\link{n_factors}} resp. \code{\link{n_components}}.
+In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case
+it will select all the components that are maximally pseudo-loaded (i.e.,
+correlated) by at least one variable.}
 
-\item{rotation}{If not \code{"none"}, the PCA / FA will be computed using the \pkg{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, or \code{"cluster"} (and more). See \code{\link[psych]{fa}} for details.}
+\item{rotation}{If not \code{"none"}, the PCA / FA will be computed using the
+\pkg{psych} package. Possible options include \code{"varimax"},
+\code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"},
+or \code{"cluster"} (and more). See \code{\link[psych]{fa}} for details.}
 
 \item{sort}{Sort the loadings.}
 
-\item{threshold}{A value between 0 and 1 indicates which (absolute) values from the loadings should be removed. An integer higher than 1 indicates the n strongest loadings to retain. Can also be \code{"max"}, in which case it will only display the maximum loading per variable (the most simple structure).}
+\item{threshold}{A value between 0 and 1 indicates which (absolute) values
+from the loadings should be removed. An integer higher than 1 indicates the
+n strongest loadings to retain. Can also be \code{"max"}, in which case it
+will only display the maximum loading per variable (the most simple
+structure).}
 
-\item{standardize}{A logical value indicating whether the variables should be standardized (centered and scaled) to have unit variance before the analysis takes place (in general, such scaling is advisable).}
+\item{standardize}{A logical value indicating whether the variables should be
+standardized (centered and scaled) to have unit variance before the
+analysis takes place (in general, such scaling is advisable).}
 
 \item{cor}{An optional correlation matrix that can be used (note that the data must still be passed as the first argument). If \code{NULL}, will compute it by running \code{cor()} on the passed data.}
 
@@ -65,8 +80,12 @@ This function performs a Factor Analysis (FA).
  There is a simplified rule of thumb that may help do decide whether to run
  a factor analysis or a principal component analysis:
  \itemize{
-   \item Run \emph{factor analysis} if you assume or wish to test a theoretical model of latent factors causing observed variables.
-   \item Run \emph{principal component analysis} If you want to simply reduce your correlated observed variables to a smaller set of important independent composite variables.
+   \item Run \emph{factor analysis} if you assume or wish to test a
+   theoretical model of latent factors causing observed variables.
+
+   \item Run \emph{principal component analysis} If you want to simply reduce
+   your correlated observed variables to a smaller set of important
+   independent composite variables.
  }
  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
  }
