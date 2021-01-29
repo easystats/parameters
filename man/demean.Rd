@@ -4,6 +4,7 @@
 \alias{check_heterogeneity}
 \alias{demean}
 \alias{degroup}
+\alias{detrend}
 \title{Compute group-meaned and de-meaned variables}
 \usage{
 check_heterogeneity(x, select = NULL, group = NULL)
@@ -19,6 +20,17 @@ demean(
 )
 
 degroup(
+  x,
+  select,
+  group,
+  center = "mean",
+  suffix_demean = "_within",
+  suffix_groupmean = "_between",
+  add_attributes = TRUE,
+  verbose = TRUE
+)
+
+detrend(
   x,
   select,
   group,

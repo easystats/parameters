@@ -349,7 +349,7 @@ degroup <- function(x, select, group, center = "mean", suffix_demean = "_within"
 }
 
 
-
+#' @rdname demean
 #' @export
 detrend <- degroup
 
