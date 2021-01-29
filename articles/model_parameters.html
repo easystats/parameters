@@ -348,7 +348,9 @@
 
 <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">*</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat | ESS |                   Prior
+<pre><code>#&gt; # Fixed effects
+#&gt; 
+#&gt; Parameter   | Median |          89% CI |     pd | % in ROPE |  Rhat | ESS |                   Prior
 #&gt; ---------------------------------------------------------------------------------------------------
 #&gt; (Intercept) |  52.02 | [ 43.82, 62.54] |   100% |        0% | 1.001 | 152 | Normal (20.09 +- 15.07)
 #&gt; wt          |  -7.88 | [-11.75, -4.60] |   100% |        0% | 0.998 | 156 |  Normal (0.00 +- 15.40)
