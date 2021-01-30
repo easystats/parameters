@@ -214,6 +214,7 @@
   df_method <span class='op'>=</span> <span class='st'>"wald"</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
+  effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -324,16 +325,16 @@ adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adj
       <td><p>Logical, if <code>TRUE</code> and models contains within- and between-effects (see <code><a href='check_heterogeneity.html'>demean</a></code>), the <code>Component</code> column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the <code>Component</code> column indicates, which parameters belong to the conditional or zero-inflated component of the model.</p></td>
     </tr>
     <tr>
+      <th>effects</th>
+      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random effects (<code>"random"</code>) or both (<code>"all"</code>) be returned? Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
       <th>robust</th>
       <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated
 (if possible), and confidence intervals and p-values are based on these
 robust standard errors. Additional arguments like <code>vcov_estimation</code> or
 <code>vcov_type</code> are passed down to other methods, see
 <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> for details.</p></td>
-    </tr>
-    <tr>
-      <th>effects</th>
-      <td><p>Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     </table>
 
