@@ -12,6 +12,7 @@
 #'   are shown.
 #' @inheritParams model_parameters.default
 #' @inheritParams bayestestR::describe_posterior
+#' @inheritParams insight::get_parameters
 #'
 #' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to
 #'   rename columns into a consistent, standardized naming scheme.
@@ -40,7 +41,6 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @importFrom insight get_priors
-#' @inheritParams insight::get_parameters
 #' @export
 model_parameters.stanreg <- function(model,
                                      centrality = "median",

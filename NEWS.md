@@ -17,6 +17,9 @@
 
 ## Changes to functions
 
+* `model_parameters()` for mixed models gains an `effects`-argument, to
+  return fixed, random or both fixed and random effects parameters.
+
 * Revised printing for `model_parameters()` for *metafor* models.
 
 * `model_parameters()` for *metafor* models now recognized confidence levels

@@ -45,6 +45,7 @@
   df_method = "wald",
   iterations = 1000,
   standardize = NULL,
+  effects = "fixed",
   exponentiate = FALSE,
   robust = FALSE,
   details = FALSE,
@@ -124,13 +125,13 @@ adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.}
 
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
+
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
 (if possible), and confidence intervals and p-values are based on these
 robust standard errors. Additional arguments like \code{vcov_estimation} or
 \code{vcov_type} are passed down to other methods, see
 \code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
-
-\item{effects}{Should parameters for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.}
 }
 \value{
 A data frame of indices related to the model's parameters.
