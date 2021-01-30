@@ -31,7 +31,7 @@
   }
 
   if (is.null(attr(params, "pretty_names", exact = TRUE))) {
-    attr(params, "pretty_names") <- format_parameters(model)
+    attr(params, "pretty_names") <- suppressWarnings(format_parameters(model))
   }
   attr(params, "ci") <- ci
   attr(params, "bayes_ci_method") <- ci_method

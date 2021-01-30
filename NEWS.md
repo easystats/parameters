@@ -7,6 +7,10 @@
 
 * The `rule` argument in `equivalenct_test()` defaults to `"classic"`.
 
+## New supported model classes
+
+* `crr` (*cmprsk*)
+
 ## General
 
 * Roll-back R dependency to R >= 3.4.
