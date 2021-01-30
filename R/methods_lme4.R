@@ -148,7 +148,6 @@ model_parameters.merMod <- function(model,
     params <- params_random
   } else if (!is.null(params_random)) {
     params$Effects <- "fixed"
-    params$Group <- NA
     params <- rbind(params, params_random)
   }
 
