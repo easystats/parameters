@@ -7,15 +7,25 @@
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams p_value
 #'
-#' @return A data frame.
+#' @return A data frame of bootstrapped estimates.
+#'
+#' @section Using with \code{emmeans}:
+#' The output can be passed directly to the various functions from the
+#' \code{emmeans} package, to obtain bootstrapped estimates, contrasts, siple
+#' slopes, etc, and their confidence intervals.
 #'
 #' @seealso \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}, \code{\link{simulate_parameters}}
 #'
 #' @examples
 #' \donttest{
 #' if (require("boot")) {
-#'   model <- lm(mpg ~ wt + cyl, data = mtcars)
-#'   head(bootstrap_model(model))
+#'   model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
+#'   b <- bootstrap_model(model)
+#'   print(head(b))
+#'
+#'   if (require("emmeans")) {
+#'     print(emmeans(b, consec ~ cyl))
+#'   }
 #' }
 #' }
 #' @export
@@ -62,6 +72,7 @@ bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, .
   names(out) <- insight::get_parameters(model)$Parameter
 
   class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
+  attr(out, "original_model") <- model
   out
 }
 
@@ -89,6 +100,7 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
   names(out) <- insight::find_parameters(model, effects = "fixed")$conditional
 
   class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
+  attr(out, "original_model") <- model
   out
 }
 

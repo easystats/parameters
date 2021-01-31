@@ -15,6 +15,8 @@
 
 * Roll-back R dependency to R >= 3.4.
 
+* Bootstrapped estimates (from `bootstrap_model()` or `bootstrap_parameters()`) can be passed to `emmeans` to obtain bootstrapped estimates, contrasts, simple slopes (etc) and their CIs.
+
 ## Changes to functions
 
 * `model_parameters()` for mixed models gains an `effects`-argument, to

@@ -34,7 +34,7 @@ to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95}
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-Bootstrapped parameters.
+A data frame summarizing the bootstrapped parameters.
 }
 \description{
 Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
@@ -45,11 +45,23 @@ This function first calls \code{\link{bootstrap_model}} to generate
   are treated as "distribution", and is passed to \code{\link[bayestestR:describe_posterior]{describe_posterior()}}
   to calculate the related indices defined in the \code{"test"} argument.
 }
+\section{Using with \code{emmeans}}{
+
+The output can be passed directly to the various functions from the
+\code{emmeans} package, to obtain bootstrapped estimates, contrasts, siple
+slopes, etc, and their confidence intervals.
+}
+
 \examples{
 \donttest{
 if (require("boot")) {
   model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-  bootstrap_parameters(model)
+  b <- bootstrap_parameters(model)
+  print(b)
+
+  if (require("emmeans")) {
+    print(emmeans(b, trt.vs.ctrl ~ Species))
+  }
 }
 }
 }
