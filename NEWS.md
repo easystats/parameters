@@ -9,7 +9,7 @@
 
 ## New supported model classes
 
-* `crr` (*cmprsk*), `leveneTest()` (*car*)
+* `crr` (*cmprsk*), `leveneTest()` (*car*), `varest` (*vars*)
 
 ## General
 
