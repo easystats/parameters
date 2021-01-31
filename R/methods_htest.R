@@ -91,6 +91,7 @@ model_parameters.htest <- function(model,
 
 #' @export
 standard_error.htest <- function(model, ...) {
+  NULL
 }
 
 
@@ -147,6 +148,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   if (m_info$is_correlation) {
     out <- .extract_htest_correlation(model)
+  } else if (m_info$is_levenetest) {
+    out <- .extract_htest_levenetest(model)
   } else if (m_info$is_ttest) {
     out <- .extract_htest_ttest(model)
     out <- .add_effectsize_ttest(model,
@@ -261,6 +264,23 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   }
   out$Method <- model$method
   out
+}
+
+
+
+
+# extract htest leveneTest ----------------------
+
+
+.extract_htest_levenetest <- function(model) {
+  data.frame(
+    "df" = model$Df[1],
+    "df_error" = model$Df[2],
+    `F` = model$`F value`[1],
+    p = model$`Pr(>F)`[1],
+    Method = "Levene's Test for Homogeneity of Variance",
+    stringsAsFactors = FALSE
+  )
 }
 
 

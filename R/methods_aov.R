@@ -92,6 +92,11 @@ model_parameters.aov <- function(model,
     }
   }
 
+  # exceptions
+  if (insight::model_info(model)$is_levenetest) {
+    return(model_parameters.htest(model, ...))
+  }
+
   # extract standard parameters
   parameters <- .extract_parameters_anova(model, test)
 
