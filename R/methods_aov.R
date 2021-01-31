@@ -370,5 +370,5 @@ model_parameters.afex_aov <- function(model,
 
 
 .is_levenetest <- function(x) {
-  inherits(x, "anova") && !is.null(attributes(x)$heading) && grepl("Levene's Test", attributes(x)$heading, fixed = TRUE)
+  inherits(x, "anova") && !is.null(attributes(x)$heading) && all(isTRUE(grepl("Levene's Test", attributes(x)$heading, fixed = TRUE)))
 }
