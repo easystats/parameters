@@ -263,7 +263,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"nFactors"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"nFactors"</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"EGAnet"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'>n_factors</span><span class='op'>(</span><span class='va'>mtcars</span>, type <span class='op'>=</span> <span class='st'>"PCA"</span><span class='op'>)</span>
 
   <span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>n_factors</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, type <span class='op'>=</span> <span class='st'>"FA"</span><span class='op'>)</span>
@@ -280,7 +280,18 @@
 #&gt; <span class='message'>    melanoma</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘nFactors’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:lattice’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    parallel</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
+#&gt; <span class='message'>    parallel</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: EGAnet</span></div><div class='output co'>#&gt; <span class='message'>Package: EGAnet: Exploratory Graph Analysis - A Framework for Estimating the</span>
+#&gt; <span class='message'>Number of Dimensions in Multivariate Data Using Network</span>
+#&gt; <span class='message'>Psychometrics</span>
+#&gt; <span class='message'>Version: 0.9.6</span>
+#&gt; <span class='message'>Updated on: 2020-07-12</span>
+#&gt; <span class='message'>Maintainer: Hudson Golino, University of Virginia</span>
+#&gt; <span class='message'>Authors: Hudson Golino, University of Virginia &amp; </span>
+#&gt; <span class='message'> Alexander Christensen, University of North Carolina at Greensboro</span>
+#&gt; <span class='message'>Contributors: Robert Moulder, University of Virginia</span>
+#&gt; <span class='message'> For citation information, type citation("EGAnet")</span>
+#&gt; <span class='message'> For vignettes, type browseVignettes("EGAnet")</span>
+#&gt; <span class='message'> For bugs and errors, submit an issue to &lt;https://github.com/hfgolino/EGAnet/issues&gt;</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
 #&gt; 
 #&gt; </span><span>The choice of 3 dimensions is supported by 7 (28.00%) methods out of 25 (Bartlett, CNG, SE Scree, R2, Velicer's MAP, BIC, BIC).</div></span></pre>
   </div>
