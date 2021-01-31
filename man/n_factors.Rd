@@ -58,7 +58,7 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 }
 \examples{
 library(parameters)
-if (require("nFactors")) {
+if (require("nFactors") && require("EGAnet")) {
   n_factors(mtcars, type = "PCA")
 
   result <- n_factors(mtcars[1:5], type = "FA")
