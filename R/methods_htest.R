@@ -148,7 +148,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   if (m_info$is_correlation) {
     out <- .extract_htest_correlation(model)
-  } else if (m_info$is_levenetest) {
+  } else if (.is_levenetest(model)) {
     out <- .extract_htest_levenetest(model)
   } else if (m_info$is_ttest) {
     out <- .extract_htest_ttest(model)

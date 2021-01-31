@@ -93,7 +93,7 @@ model_parameters.aov <- function(model,
   }
 
   # exceptions
-  if (insight::model_info(model)$is_levenetest) {
+  if (.is_levenetest(model)) {
     return(model_parameters.htest(model, ...))
   }
 
@@ -366,4 +366,9 @@ model_parameters.afex_aov <- function(model,
   }
 
   params
+}
+
+
+.is_levenetest <- function(x) {
+  inherits(x, "anova") && !is.null(attributes(x)$heading) && grepl("Levene's Test", attributes(x)$heading, fixed = TRUE)
 }
