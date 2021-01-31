@@ -216,11 +216,18 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Group  | Parameter | Sum_Squares | df | Mean_Square |    F |     p
-#&gt; ------------------------------------------------------------------
-#&gt; gear   |        am |      259.75 |  1 |      259.75 |      |      
-#&gt; Within |        am |      145.45 |  1 |      145.45 | 5.85 | 0.022
-#&gt; Within | Residuals |      720.85 | 29 |       24.86 |      |</code></pre>
+<pre><code>#&gt; # gear
+#&gt; 
+#&gt; Parameter | Sum_Squares | df | Mean_Square
+#&gt; ------------------------------------------
+#&gt; am        |      259.75 |  1 |      259.75
+#&gt; 
+#&gt; # Within
+#&gt; 
+#&gt; Parameter | Sum_Squares | df | Mean_Square |    F |     p
+#&gt; ---------------------------------------------------------
+#&gt; am        |      145.45 |  1 |      145.45 | 5.85 | 0.022
+#&gt; Residuals |      720.85 | 29 |       24.86 |      |</code></pre>
 </div>
 </div>
 <div id="regressions-glms-mixed-models-gams" class="section level2">
