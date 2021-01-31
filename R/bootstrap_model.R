@@ -11,7 +11,7 @@
 #'
 #' @section Using with \code{emmeans}:
 #' The output can be passed directly to the various functions from the
-#' \code{emmeans} package, to obtain bootstrapped estimates, contrasts, siple
+#' \code{emmeans} package, to obtain bootstrapped estimates, contrasts, simple
 #' slopes, etc, and their confidence intervals.
 #'
 #' @seealso \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}, \code{\link{simulate_parameters}}
