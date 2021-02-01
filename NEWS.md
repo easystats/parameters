@@ -9,7 +9,7 @@
 
 ## New supported model classes
 
-* `crr` (*cmprsk*), `leveneTest()` (*car*), `varest` (*vars*), `ergm` (*ergm*), `btergm` (*btergm*), `Rchoice` (*Rchoice*)
+* `crr` (*cmprsk*), `leveneTest()` (*car*), `varest` (*vars*), `ergm` (*ergm*), `btergm` (*btergm*), `Rchoice` (*Rchoice*), `garch` (*tseries*)
 
 ## General
 
