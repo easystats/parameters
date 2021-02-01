@@ -1,5 +1,9 @@
 
 #' @export
+model_parameters.censReg <- model_parameters.default
+
+
+#' @export
 ci.censReg <- ci.tobit
 
 

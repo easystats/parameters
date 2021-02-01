@@ -1,4 +1,7 @@
 
+#' @export
+model_parameters.maxLik <- model_parameters.default
+
 
 #' @export
 p_value.maxLik <- function(model, ...) {
