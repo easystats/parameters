@@ -271,4 +271,3 @@ model_parameters.glm <- function(model,
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
-

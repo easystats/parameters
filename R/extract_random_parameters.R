@@ -9,7 +9,7 @@
     stop("Package 'lme4' required. Please install it.", call. = FALSE)
   }
   out <- as.data.frame(lme4::ranef(model, condVar = TRUE), stringsAsFactors = FALSE)
-  colnames(out) <- c('Group', 'Parameter', 'Level', 'Coefficient', 'SE')
+  colnames(out) <- c("Group", "Parameter", "Level", "Coefficient", "SE")
 
   out$Parameter <- paste0(out$Parameter, " [", out$Level, "]")
   out$Effects <- paste0("Random Effects (", out$Group, ")")

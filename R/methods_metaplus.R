@@ -14,7 +14,6 @@ model_parameters.metaplus <- function(model,
                                       include_studies = TRUE,
                                       verbose = TRUE,
                                       ...) {
-
   if (!missing(ci)) {
     if (isTRUE(verbose)) {
       message("'metaplus' models do not support other levels for confidence intervals than 0.95. Argument 'ci' is ignored.")
@@ -23,15 +22,15 @@ model_parameters.metaplus <- function(model,
   }
 
   meta_analysis_overall <- suppressWarnings(.model_parameters_generic(
-      model = model,
-      ci = ci,
-      bootstrap = bootstrap,
-      iterations = iterations,
-      merge_by = "Parameter",
-      standardize = standardize,
-      exponentiate = exponentiate,
-      ...
-    ))
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  ))
 
   rma_parameters <- if (!is.null(model$slab) && !is.numeric(model$slab)) {
     sprintf("%s", model$slab)
@@ -219,14 +218,14 @@ model_parameters.meta_random <- function(model,
 
   if (exponentiate) out <- .exponentiate_parameters(out)
   out <- .add_model_parameters_attributes(
-      params = out,
-      model = model,
-      ci = ci,
-      exponentiate = exponentiate,
-      ci_method = ci_method,
-      verbose = verbose,
-      ...
-    )
+    params = out,
+    model = model,
+    ci = ci,
+    exponentiate = exponentiate,
+    ci_method = ci_method,
+    verbose = verbose,
+    ...
+  )
 
   # final atributes
   attr(out, "measure") <- "Estimate"
@@ -363,14 +362,14 @@ model_parameters.meta_bma <- function(model,
 
   if (exponentiate) out <- .exponentiate_parameters(out)
   out <- .add_model_parameters_attributes(
-      params = out,
-      model = model,
-      ci = ci,
-      exponentiate = exponentiate,
-      ci_method = ci_method,
-      verbose = verbose,
-      ...
-    )
+    params = out,
+    model = model,
+    ci = ci,
+    exponentiate = exponentiate,
+    ci_method = ci_method,
+    verbose = verbose,
+    ...
+  )
 
   # final attributes
   attr(out, "measure") <- "Estimate"
