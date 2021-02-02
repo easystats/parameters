@@ -30,8 +30,8 @@ model_parameters.varest <- function(model,
 
 #' @export
 ci.varest <- function(x, ci = .95, method = NULL, ...) {
-  params <- lapply(names(model$varresult), function(i) {
-    out <- ci(x = model$varresult[[i]], ci = ci, method = method, ...)
+  params <- lapply(names(x$varresult), function(i) {
+    out <- ci(x = x$varresult[[i]], ci = ci, method = method, ...)
     out$Group <- paste0("Equation ", i)
     out
   })
