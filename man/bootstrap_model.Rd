@@ -25,7 +25,9 @@ Bootstrap a statistical model n times to return a data frame of estimates.
 
 The output can be passed directly to the various functions from the
 \code{emmeans} package, to obtain bootstrapped estimates, contrasts, simple
-slopes, etc, and their confidence intervals.
+slopes, etc, and their confidence intervals. These can then be passed to
+\code{model_parameter()} to obtain standard errors, p-values, etc (see
+example).
 }
 
 \examples{
@@ -36,7 +38,8 @@ if (require("boot")) {
   print(head(b))
 
   if (require("emmeans")) {
-    print(emmeans(b, consec ~ cyl))
+    est <- emmeans(b, consec ~ cyl)
+    print(model_parameters(est))
   }
 }
 }

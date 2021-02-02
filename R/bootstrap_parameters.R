@@ -28,7 +28,8 @@
 #'   print(b)
 #'
 #'   if (require("emmeans")) {
-#'     print(emmeans(b, trt.vs.ctrl ~ Species))
+#'     est <- emmeans(b, trt.vs.ctrl ~ Species)
+#'     print(model_parameters(est))
 #'   }
 #' }
 #' }

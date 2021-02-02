@@ -10,6 +10,7 @@ emm_basis.bootstrap_model <- function(object, trms, xlev, grid, ...) {
     stop("Oops! Cannot create the reference grid. Please open an issue at github.com/easystats/parameters/issues.")
 
   emb$post.beta <- as.matrix(object)
+  emb$misc$is_boot <- TRUE
   emb
 }
 

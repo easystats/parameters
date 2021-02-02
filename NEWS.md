@@ -1,5 +1,12 @@
 # parameters 0.11.1
 
+## General
+
+* Roll-back R dependency to R >= 3.4.
+
+* Bootstrapped estimates (from `bootstrap_model()` or `bootstrap_parameters()`) can be passed to `emmeans` to obtain bootstrapped estimates, contrasts, simple slopes (etc) and their CIs.
+  * These can then be passed to `model_parameters()` and related functions to obtain standard errors, p-values, etc.
+
 ## Breaking changes
 
 * `model_parameters()` now always returns the confidence level for as additional
@@ -10,12 +17,6 @@
 ## New supported model classes
 
 * `crr` (*cmprsk*)
-
-## General
-
-* Roll-back R dependency to R >= 3.4.
-
-* Bootstrapped estimates (from `bootstrap_model()` or `bootstrap_parameters()`) can be passed to `emmeans` to obtain bootstrapped estimates, contrasts, simple slopes (etc) and their CIs.
 
 ## Changes to functions
 
