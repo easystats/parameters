@@ -10,8 +10,8 @@ if (require("testthat") && require("parameters") && require("bbmle")) {
 
   test_that("model_parameters.mle2", {
     params <- model_parameters(model)
-    testthat::expect_equal(params$SE, c(4.224444, 1.034797), tolerance = 1e-3)
-    testthat::expect_equal(
+    expect_equal(params$SE, c(4.224444, 1.034797), tolerance = 1e-3)
+    expect_equal(
       colnames(params),
       c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "df_error", "p")
     )

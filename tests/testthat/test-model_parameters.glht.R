@@ -14,9 +14,9 @@ if (require("testthat") && require("insight") && require("parameters") && requir
 
   test_that("model_parameters.glht", {
     params <- model_parameters(model)
-    testthat::expect_equal(params$Coefficient, c(-0.1721, -0.258, -0.8709, 0.1041, 1.077), tolerance = 1e-2)
-    testthat::expect_equal(params$SE, c(0.0703, 0.2539, 0.183, 0.0353, 0.3817), tolerance = 1e-2)
-    testthat::expect_equal(
+    expect_equal(params$Coefficient, c(-0.1721, -0.258, -0.8709, 0.1041, 1.077), tolerance = 1e-2)
+    expect_equal(params$SE, c(0.0703, 0.2539, 0.183, 0.0353, 0.3817), tolerance = 1e-2)
+    expect_equal(
       params$Parameter,
       c("Agriculture == 0", "Examination == 0", "Education == 0", "Catholic == 0", "Infant.Mortality == 0")
     )

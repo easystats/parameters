@@ -179,4 +179,3 @@ standard_error.default <- function(model, method = NULL, verbose = TRUE, ...) {
 #
 #   se.merMod
 # }
-

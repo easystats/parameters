@@ -119,14 +119,14 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     ))
   })
 
-# stricter tests ---------------------------------------------------------
+  # stricter tests ---------------------------------------------------------
 
   if (require("car") && require("gam")) {
 
     # aov ------------------------------------------------
 
     test_that("works with aov", {
-      testthat::skip_on_cran()
+      skip_on_cran()
 
       set.seed(123)
       npk.aov <- aov(yield ~ block + N * P, npk)
@@ -173,7 +173,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     # aovlist ------------------------------------------------
 
     # test_that("works with aovlist", {
-    #   testthat::skip_on_cran()
+    #   skip_on_cran()
     #
     #   set.seed(123)
     #   npk.aovE <- aov(yield ~ N * P * K + Error(block), npk)
@@ -186,7 +186,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     #       omega_squared = "partial"
     #     ))
     #
-    #   testthat::expect_equal(
+    #   expect_equal(
     #     df_aovE,
     #     structure(
     #       list(
@@ -240,7 +240,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     # manova ------------------------------------------------
 
     test_that("works with manova", {
-      testthat::skip_on_cran()
+      skip_on_cran()
 
       set.seed(123)
       # fake a 2nd response variable
@@ -258,7 +258,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
           epsilon_squared = "partial"
         ))
 
-      testthat::expect_equal(
+      expect_equal(
         df_manova,
         structure(
           list(
@@ -285,13 +285,12 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
         tolerance = 0.1,
         ignore_attr = TRUE
       )
-
     })
 
     # maov ------------------------------------------------
 
     test_that("works with maov", {
-      testthat::skip_on_cran()
+      skip_on_cran()
 
       set.seed(123)
       fit <- lm(cbind(mpg, disp, hp) ~ factor(cyl), data = mtcars)
@@ -306,7 +305,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
           epsilon_squared = "raw"
         ))
 
-      testthat::expect_equal(
+      expect_equal(
         df_maov,
         structure(
           list(
@@ -350,7 +349,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     # Gam ------------------------------------------------
 
     test_that("works with Gam", {
-      testthat::skip_on_cran()
+      skip_on_cran()
 
       # setup
       set.seed(123)
@@ -369,7 +368,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
           omega_squared = "partial"
         ))
 
-      testthat::expect_equal(
+      expect_equal(
         df_Gam,
         structure(
           list(
@@ -400,7 +399,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     # anova ------------------------------------------------
 
     test_that("works with anova", {
-      testthat::skip_on_cran()
+      skip_on_cran()
 
       set.seed(123)
       mod <-
@@ -419,7 +418,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
           epsilon_squared = "raw"
         ))
 
-      testthat::expect_equal(
+      expect_equal(
         df_car,
         structure(
           list(

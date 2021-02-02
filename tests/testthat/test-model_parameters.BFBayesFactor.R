@@ -7,19 +7,19 @@ if (require("testthat") &&
   if (.runThisTest) {
     test_that("model_parameters.BFBayesFactor", {
       model <- BayesFactor::ttestBF(iris$Sepal.Width, iris$Petal.Length, paired = TRUE)
-      testthat::expect_equal(parameters::model_parameters(model)$BF, c(492.77057, NA), tolerance = 1e-2)
+      expect_equal(parameters::model_parameters(model)$BF, c(492.77057, NA), tolerance = 1e-2)
     })
   }
 
   test_that("model_parameters.BFBayesFactor", {
     model <- BayesFactor::correlationBF(iris$Sepal.Width, iris$Petal.Length)
-    testthat::expect_equal(parameters::model_parameters(model)$BF, 348853.6, tolerance = 10)
+    expect_equal(parameters::model_parameters(model)$BF, 348853.6, tolerance = 10)
   })
 
   test_that("model_parameters.BFBayesFactor", {
     set.seed(123)
     model <- BayesFactor::anovaBF(Sepal.Length ~ Species, data = iris)
-    testthat::expect_equal(parameters::model_parameters(model)$Median, c(5.8431, -0.8266, 0.092, 0.734, 0.2681, 2.0415), tolerance = 2)
+    expect_equal(parameters::model_parameters(model)$Median, c(5.8431, -0.8266, 0.092, 0.734, 0.2681, 2.0415), tolerance = 2)
   })
 
   df <- mtcars
@@ -45,8 +45,10 @@ if (require("testthat") &&
     mp <- model_parameters(bf)
 
     test_that("model_parameters.BFBayesFactor", {
-      expect_equal(colnames(mp), c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
-                                   "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"))
+      expect_equal(colnames(mp), c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+        "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"
+      ))
     })
 
     data(puzzles)
@@ -57,12 +59,16 @@ if (require("testthat") &&
     mp <- model_parameters(result, verbose = FALSE)
 
     test_that("model_parameters.BFBayesFactor", {
-      expect_equal(colnames(mp), c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
-                                   "Prior_Distribution", "Prior_Location", "Prior_Scale", "Effects",
-                                   "Component", "BF", "Method"))
-      expect_equal(mp$Effects, c("fixed", "fixed", "fixed", "fixed", "fixed", "random", "random",
-                                 "random", "random", "random", "random", "random", "random", "random",
-                                 "random", "random", "random", "fixed", "fixed", "fixed", "fixed"))
+      expect_equal(colnames(mp), c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+        "Prior_Distribution", "Prior_Location", "Prior_Scale", "Effects",
+        "Component", "BF", "Method"
+      ))
+      expect_equal(mp$Effects, c(
+        "fixed", "fixed", "fixed", "fixed", "fixed", "random", "random",
+        "random", "random", "random", "random", "random", "random", "random",
+        "random", "random", "random", "fixed", "fixed", "fixed", "fixed"
+      ))
     })
   }
 }
