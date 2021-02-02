@@ -13,7 +13,7 @@ standard_error.btergm <- function(model, ...) {
 
   sdev <- sapply(1:ncol(bootstraps), function(i) {
     cur <- (bootstraps[, i] - cf[i])^2
-    sqrt(sum(cur)/length(cur))
+    sqrt(sum(cur) / length(cur))
   })
 
   .data_frame(

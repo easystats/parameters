@@ -181,8 +181,7 @@
 
     formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
 
-    component_name <- switch(
-      type,
+    component_name <- switch(type,
       "mu" = ,
       "fixed" = ,
       "conditional" = "Fixed Effects",

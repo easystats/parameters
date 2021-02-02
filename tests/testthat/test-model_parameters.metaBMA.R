@@ -24,12 +24,14 @@ if (require("testthat") && require("insight") && require("parameters") && requir
     ))
     expect_equal(
       params$Coefficient,
-                 c(0.3806, 0.30494, 0.20554, 0.25084, 0.28768, -0.12154, -1.45792, 0.2004, 0.12107),
-                 tolerance = 1e-3)
+      c(0.3806, 0.30494, 0.20554, 0.25084, 0.28768, -0.12154, -1.45792, 0.2004, 0.12107),
+      tolerance = 1e-3
+    )
     expect_equal(
       params$CI_low,
-                 c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, 0.00824, 0.01884),
-                 tolerance = 1e-3)
+      c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, 0.00824, 0.01884),
+      tolerance = 1e-3
+    )
     expect_equal(
       colnames(params),
       c(

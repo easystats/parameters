@@ -3,31 +3,31 @@ context("model_parameters.bayesian")
 
 # RSTANARM --------------------------------------------------------------------
 
-testthat::test_that("model_parameters.stanreg", {
+test_that("model_parameters.stanreg", {
   set.seed(333)
   library(rstanarm)
   library(logspline)
 
 
   # P value
-  testthat::expect_equal(ncol(p_value(insight::download_model("stanreg_lm_1"))), 2)
+  expect_equal(ncol(p_value(insight::download_model("stanreg_lm_1"))), 2)
 
   # GLM
   params <- model_parameters(insight::download_model("stanreg_lm_1"), centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
-  testthat::expect_equal(params$CI_high, c(40.2985874345282, -4.46283763262213), tolerance = 1e-3)
+  expect_equal(c(nrow(params), ncol(params)), c(2, 18))
+  expect_equal(params$CI_high, c(40.2985874345282, -4.46283763262213), tolerance = 1e-3)
 
   params <- model_parameters(insight::download_model("stanreg_lm_2"), centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 18))
+  expect_equal(c(nrow(params), ncol(params)), c(3, 18))
 
   params <- model_parameters(insight::download_model("stanreg_lm_3"), centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 18))
+  expect_equal(c(nrow(params), ncol(params)), c(4, 18))
 
   params <- model_parameters(insight::download_model("stanreg_glm_1"), centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
+  expect_equal(c(nrow(params), ncol(params)), c(2, 18))
 
   params <- model_parameters(insight::download_model("stanreg_glm_2"), centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 18))
+  expect_equal(c(nrow(params), ncol(params)), c(3, 18))
 
   # Mixed
   params <- model_parameters(insight::download_model("stanreg_lmerMod_1"), centrality = "all", test = "all", dispersion = TRUE)

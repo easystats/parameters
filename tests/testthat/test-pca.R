@@ -2,7 +2,7 @@ if (require("testthat") && require("parameters") && require("psych") && require(
   test_that("principal_components", {
     x <- parameters::principal_components(mtcars[, 1:7], rotation = "varimax")
 
-    testthat::expect_equal(
+    expect_equal(
       x$RC1,
       c(
         -0.836114674884308,
@@ -16,7 +16,7 @@ if (require("testthat") && require("parameters") && require("psych") && require(
       tolerance = 0.01
     )
 
-    testthat::expect_equal(
+    expect_equal(
       colnames(x),
       c("Variable", "RC1", "RC2", "Complexity", "Uniqueness", "MSA")
     )
@@ -26,7 +26,7 @@ if (require("testthat") && require("parameters") && require("psych") && require(
   test_that("principal_components", {
     x <- parameters::principal_components(mtcars[, 1:7])
 
-    testthat::expect_equal(
+    expect_equal(
       x$PC1,
       c(
         -0.930866058535747,
@@ -40,7 +40,7 @@ if (require("testthat") && require("parameters") && require("psych") && require(
       tolerance = 0.01
     )
 
-    testthat::expect_equal(
+    expect_equal(
       colnames(x),
       c("Variable", "PC1", "PC2", "Complexity")
     )

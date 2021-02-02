@@ -42,8 +42,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
     stderror <- if (isTRUE(robust)) {
       standard_error_robust(model, ...)
     } else {
-      switch(
-        method,
+      switch(method,
         "wald" = standard_error(model, component = component),
         "kenward" = ,
         "kr" = se_kenward(model),
