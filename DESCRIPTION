@@ -79,6 +79,7 @@ Suggests:
     dplyr,
     DRR,
     effectsize (>= 0.4.3),
+    emmeans (>= 1.4),
     EGAnet (>= 0.7),
     FactoMineR,
     fastICA,

@@ -7,7 +7,9 @@
 #' @inheritParams bootstrap_model
 #' @inheritParams bayestestR::describe_posterior
 #'
-#' @return Bootstrapped parameters.
+#' @return A data frame summarizing the bootstrapped parameters.
+#'
+#' @inheritSection bootstrap_model Using with \code{emmeans}
 #'
 #' @references Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.
 #'
@@ -22,7 +24,13 @@
 #' \donttest{
 #' if (require("boot")) {
 #'   model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-#'   bootstrap_parameters(model)
+#'   b <- bootstrap_parameters(model)
+#'   print(b)
+#'
+#'   if (require("emmeans")) {
+#'     est <- emmeans(b, trt.vs.ctrl ~ Species)
+#'     print(model_parameters(est))
+#'   }
 #' }
 #' }
 #' @export
@@ -34,7 +42,7 @@ bootstrap_parameters <- function(model,
                                  test = "p-value",
                                  ...) {
   data <- bootstrap_model(model, iterations = iterations, ...)
-  .summary_bootstrap(
+  out <- .summary_bootstrap(
     data = data,
     test = test,
     centrality = centrality,
@@ -42,6 +50,10 @@ bootstrap_parameters <- function(model,
     ci_method = ci_method,
     ...
   )
+
+  class(out) <- c("bootstrap_parameters", "parameters_model", class(out))
+  attr(out, "boot_samples") <- data
+  out
 }
 
 
@@ -90,5 +102,6 @@ bootstrap_parameters <- function(model,
   }
 
   rownames(parameters) <- NULL
+  attr(parameters, "ci") <- ci
   parameters
 }
