@@ -102,7 +102,13 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
 
   boot_function <- function(model) {
     params <- insight::get_parameters(model)
-    params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
+    n_params <- insight::n_parameters(model)
+
+    if (nrow(params) != n_params) {
+      params <- stats::setNames(rep.int(NA, n_params), params$Parameter)
+    } else {
+      params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
+    }
     return(params)
   }
 
