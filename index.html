@@ -134,7 +134,7 @@
 <a href="#parameters-" class="anchor"></a>parameters <img src="reference/figures/logo.png" align="right" height="139">
 </h1></div>
 
-<p><em><strong>Describe and understand your model’s parameters!</strong></em></p>
+<p><strong><em>Describe and understand your model’s parameters!</em></strong></p>
 <p><strong>parameters</strong>’ primary goal is to provide utilities for processing the parameters of various statistical models (see <a href="https://easystats.github.io/insight/">here</a> for a list of supported models). Beyond computing <em>p-values</em>, <em>CIs</em>, <em>Bayesian indices</em> and other measures for a wide variety of models, this package implements features like <em>bootstrapping</em> of parameters and models, <em>feature reduction</em> (feature extraction and variable selection), or tools for data reduction like functions to perform cluster, factor or principal component analysis.</p>
 <p>Another important goal of the <strong>parameters</strong> package is to facilitate and streamline the process of reporting results of statistical models, which includes the easy and intuitive calculation of standardized estimates or robust standard errors and p-values. <strong>parameters</strong> therefor offers a simple and unified syntax to process a large variety of (model) objects from many different packages.</p>
 <div id="installation" class="section level2">
@@ -179,7 +179,6 @@
 <a href="#models-parameters-description" class="anchor"></a>Model’s parameters description</h2>
 <p>
 <img src="reference/figures/figure1.png" align="center"></p>
-
 <p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code>model_parameters()</code></a> function (that can be accessed via the <code><a href="reference/model_parameters.html">parameters()</a></code> shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom"><code>broom::tidy()</code></a>, with some notable differences:</p>
 <ul>
 <li>The column names of the returned data frame are <em>specific</em> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (however, you can get standardized (generic) column names using <a href="https://easystats.github.io/insight/reference/standardize_names.html"><code>standardize_names()</code></a>).</li>
@@ -267,7 +266,6 @@
 <a href="#variable-and-parameters-selection" class="anchor"></a>Variable and parameters selection</h2>
 <p>
 <img src="reference/figures/figure2.png" align="center"></p>
-
 <p><a href="https://easystats.github.io/parameters/articles/parameters_selection.html"><code>select_parameters()</code></a> can help you quickly select and retain the most relevant predictors using methods tailored for the model type.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
@@ -309,17 +307,16 @@
 <li>Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). parameters: Extracting, Computing and Exploring the Parameters of Statistical Models using R. <em>Journal of Open Source Software</em>, <em>5</em>(53), 2445. doi: 10.21105/joss.02445</li>
 </ul>
 <p>Corresponding BibTeX entry:</p>
-<pre><code>@Article{,
-  title = {parameters: Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},
-  volume = {5},
-  doi = {10.21105/joss.02445},
-  number = {53},
-  journal = {Journal of Open Source Software},
-  author = {Daniel Lüdecke and Mattan S. Ben-Shachar and Indrajeet Patil and Dominique Makowski},
-  year = {2020},
-  pages = {2445},
-}
-</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="op">@</span>Article{,</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  title =<span class="st"> </span>{parameters<span class="op">:</span><span class="st"> </span>Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  volume =<span class="st"> </span>{<span class="dv">5</span>},</span>
+<span id="cb8-4"><a href="#cb8-4"></a>  doi =<span class="st"> </span>{<span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>},</span>
+<span id="cb8-5"><a href="#cb8-5"></a>  number =<span class="st"> </span>{<span class="dv">53</span>},</span>
+<span id="cb8-6"><a href="#cb8-6"></a>  journal =<span class="st"> </span>{Journal of Open Source Software},</span>
+<span id="cb8-7"><a href="#cb8-7"></a>  author =<span class="st"> </span>{Daniel Lüdecke and Mattan S. Ben<span class="op">-</span>Shachar and Indrajeet Patil and Dominique Makowski},</span>
+<span id="cb8-8"><a href="#cb8-8"></a>  year =<span class="st"> </span>{<span class="dv">2020</span>},</span>
+<span id="cb8-9"><a href="#cb8-9"></a>  pages =<span class="st"> </span>{<span class="dv">2445</span>},</span>
+<span id="cb8-10"><a href="#cb8-10"></a>}</span></code></pre></div>
 </div>
 </div>
 </div>

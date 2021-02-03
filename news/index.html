@@ -217,7 +217,8 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed edge case when formatting parameters from polynomial terms with many degrees.</li>
+<li><p>Fixed edge case when formatting parameters from polynomial terms with many degrees.</p></li>
+<li><p>Fixed issue with random sampling and dropped factor levels in <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>.</p></li>
 </ul>
 </div>
 </div>
@@ -299,7 +300,7 @@
 <h2 class="hasAnchor">
 <a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
-<li><p>The default-method for effect sizes in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (i.e. when arguments <code>omega_squared</code>, <code>eta_squared</code> or <code>epsilon_squared</code> are set to <code>TRUE</code>) is now <code>"partial"</code>, as initially intended.</p></li>
+<li><p>The default-method for effect sizes in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (i.e. when arguments <code>omega_squared</code>, <code>eta_squared</code> or <code>epsilon_squared</code> are set to <code>TRUE</code>) is now <code>"partial"</code>, as initially intended.</p></li>
 <li><p>Column names for degrees of freedom were revised. <code>"df_residual"</code> was replaced by the more generic <code>"df_error"</code>. Moreover, models of class <code>htest</code> now also have the column name <code>"df_error"</code> and no longer <code>"df"</code> (where applicable).</p></li>
 <li><p>Some re-exports for functions that were moved to <em>insight</em> longer ago, were now removed.</p></li>
 </ul>
@@ -309,7 +310,7 @@
 <a href="#new-supported-model-classes-2" class="anchor"></a>New supported model classes</h2>
 <ul>
 <li><p><code>Glm</code> (<em>rms</em>), <code>mediate</code> (<em>mediation</em>).</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> supports <code>Gam</code> models (<em>gam</em>), <code>ridgelm</code> (<em>MASS</em>), <code>htest</code> objects from <code><a href="https://rdrr.io/r/stats/oneway.test.html">oneway.test()</a></code>, <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code>, <code><a href="https://rdrr.io/r/stats/prop.test.html">prop.test()</a></code>, <code><a href="https://rdrr.io/r/stats/mcnemar.test.html">mcnemar.test()</a></code> and <code>pairwise.htest</code> objects, <code>mcmc.list</code> (e.g. from <em>bayesGARCH</em>).</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> supports <code>Gam</code> models (<em>gam</em>), <code>ridgelm</code> (<em>MASS</em>), <code>htest</code> objects from <code><a href="https://rdrr.io/r/stats/oneway.test.html">oneway.test()</a></code>, <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code>, <code><a href="https://rdrr.io/r/stats/prop.test.html">prop.test()</a></code>, <code><a href="https://rdrr.io/r/stats/mcnemar.test.html">mcnemar.test()</a></code> and <code>pairwise.htest</code> objects, <code>mcmc.list</code> (e.g. from <em>bayesGARCH</em>).</p></li>
 </ul>
 </div>
 <div id="new-functions-2" class="section level2">
@@ -395,7 +396,7 @@
 <h3 class="hasAnchor">
 <a href="#printing-model-parameters" class="anchor"></a>Printing model parameters</h3>
 <ul>
-<li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now names the coefficients column depending on the model type (i.e. <code>"Odds Ratios"</code> for logistic regression when <code>exponentiate = TRUE</code> etc.)</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> now names the coefficients column depending on the model type (i.e. <code>"Odds Ratios"</code> for logistic regression when <code>exponentiate = TRUE</code> etc.)</p></li>
 <li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>show_sigma</code> argument, to show or hide information on the residual standard deviation.</p></li>
 <li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> displays a message for Bayesian models, indicating which method to compute credible intervals was used.</p></li>
 </ul>
@@ -606,7 +607,7 @@
 <ul>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Stan-models (<em>brms</em>, <em>rstanarm</em>) gains a <code>group_level</code> argument to show or hide parameters for group levels of random effects.</p></li>
 <li><p>Improved accuracy of confidence intervals in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with <code>standardize = "basic"</code> or <code>standardize = "posthoc"</code>.</p></li>
-<li><p><code><a href="../reference/model_parameters.cpglmm.html">model_parameters.merMod()</a></code> no longer passes <code>...</code> down to bootstrap-functions (i.e. when <code>bootstrap = TRUE</code>), as this might conflict with <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html">lme4::bootMer()</a></code>.</p></li>
+<li><p><code><a href="../reference/model_parameters.cpglmm.html">model_parameters.merMod()</a></code> no longer passes <code>...</code> down to bootstrap-functions (i.e. when <code>bootstrap = TRUE</code>), as this might conflict with <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html">lme4::bootMer()</a></code>.</p></li>
 <li><p>For ordinal models (like <code><a href="https://rdrr.io/pkg/MASS/man/polr.html">MASS::polr()</a></code> or <code>ordinal::clm()</code>), a <code>Component</code> column is added, indicating intercept categories (<code>"alpha"</code>) and estimates (<code>"beta"</code>).</p></li>
 <li><p>The <code>select</code>-argument from <code><a href="../reference/print.parameters_model.html">print.parameters_model()</a></code> now gets a <code>"minimal"</code>-option as shortcut to print coefficients, confidence intervals and p-values only.</p></li>
 </ul>
