@@ -16,6 +16,11 @@ if (require("testthat") && require("parameters")) {
     expect_equal(summary(emmeans::emmeans(b, ~ cyl))$emmean,
                  summary(emmeans::emmeans(model, ~ cyl))$emmean,
                  tolerance = 0.1)
+
+    mp <- model_parameters(emmeans::emmeans(b, consec ~ cyl))
+    expect_true("p" %in% colnames(mp))
+    expect_true("SE" %in% colnames(mp))
+    expect_equal(nrow(mp), 5)
   })
 
 
@@ -37,5 +42,10 @@ if (require("testthat") && require("parameters")) {
     expect_equal(summary(emmeans::emmeans(b, ~ cyl))$emmean,
                  summary(emmeans::emmeans(model, ~ cyl))$emmean,
                  tolerance = 0.1)
+
+    mp <- model_parameters(emmeans::emmeans(b, consec ~ cyl))
+    expect_true("p" %in% colnames(mp))
+    expect_true("SE" %in% colnames(mp))
+    expect_equal(nrow(mp), 5)
   })
 }
