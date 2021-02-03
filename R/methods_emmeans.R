@@ -278,10 +278,7 @@ p_value.emm_list <- function(model, adjust = "none", ...) {
 boot_em_pval <- function(model, adjust) {
   est <- insight::get_parameters(model, summary = FALSE)
 
-  p <- sapply(est, function(x) {
-    k <- 2 * min(sum(x > 0), sum(x < 0))
-    (1 + k) / (1 + length(x))
-  })
+  p <- sapply(est, p_value)
 
   p <- p.adjust(p, method = adjust)
 

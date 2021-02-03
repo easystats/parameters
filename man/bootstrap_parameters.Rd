@@ -44,6 +44,10 @@ This function first calls \code{\link{bootstrap_model}} to generate
   bootstrapped coefficients. The resulting replicated for each coefficient
   are treated as "distribution", and is passed to \code{\link[bayestestR:describe_posterior]{describe_posterior()}}
   to calculate the related indices defined in the \code{"test"} argument.
+  \cr\cr
+  Note that that p-values returned here are "reversed" p-values - they are
+  the probability under the bootstrapped distribution of obtaining the null
+  (0) or more extreme.
 }
 \section{Using with \code{emmeans}}{
 
@@ -52,11 +56,16 @@ The output can be passed directly to the various functions from the
 slopes, etc, and their confidence intervals. These can then be passed to
 \code{model_parameter()} to obtain standard errors, p-values, etc (see
 example).
+\cr\cr
+Note that that p-values returned here are "reversed" p-values - they are the
+probability under the bootstrapped distribution of obtaining the null (0) or
+more extreme.
 }
 
 \examples{
 \donttest{
 if (require("boot")) {
+  set.seed(2)
   model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
   b <- bootstrap_parameters(model)
   print(b)

@@ -20,6 +20,8 @@
 
 ## Changes to functions
 
+* Small bias in bootstrapped *p*-values has been corrected.
+
 * `model_parameters()` for mixed models gains an `effects`-argument, to
   return fixed, random or both fixed and random effects parameters.
 

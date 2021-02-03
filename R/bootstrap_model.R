@@ -15,12 +15,17 @@
 #' slopes, etc, and their confidence intervals. These can then be passed to
 #' \code{model_parameter()} to obtain standard errors, p-values, etc (see
 #' example).
+#' \cr\cr
+#' Note that that p-values returned here are "reversed" p-values - they are the
+#' probability under the bootstrapped distribution of obtaining the null (0) or
+#' more extreme.
 #'
 #' @seealso \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}, \code{\link{simulate_parameters}}
 #'
 #' @examples
 #' \donttest{
 #' if (require("boot")) {
+#'   set.seed(2)
 #'   model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
 #'   b <- bootstrap_model(model)
 #'   print(head(b))

@@ -128,12 +128,11 @@ standard_error.effectsize_std_params <- function(model, verbose = TRUE, ...) {
 #' @seealso https://blogs.sas.com/content/iml/2011/11/02/how-to-compute-p-values-for-a-bootstrap-distribution.html
 #' @export
 p_value.numeric <- function(model, ...) {
-  2 * (1 - max(
-    c(
-      (1 + length(model[model > 0])) / (1 + length(model)),
-      (1 + length(model[model < 0])) / (1 + length(model))
-    )
-  ))
+  k_lt0 <- sum(model <= 0)
+  k_gt0 <- sum(model >= 0)
+  k <- 2 * min(k_lt0, k_gt0)
+  N <- length(model)
+  (k + 1) / (N + 1)
 }
 
 
