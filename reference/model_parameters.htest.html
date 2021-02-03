@@ -259,9 +259,9 @@ only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.h
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Pearson's product-moment correlation
 #&gt; 
-#&gt; </span><span>Parameter1 | Parameter2 |     r | t(30) |      p |         95% CI
+#&gt; </span><span>Parameter1 | Parameter2 |     r |         95% CI | t(30) |      p
 #&gt; -----------------------------------------------------------------
-#&gt; mtcars$mpg | mtcars$cyl | -0.85 | -8.92 | &lt; .001 | [-0.93, -0.72]</div><div class='input'>
+#&gt; mtcars$mpg | mtcars$cyl | -0.85 | [-0.93, -0.72] | -8.92 | &lt; .001</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span>, <span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Welch Two Sample t-test

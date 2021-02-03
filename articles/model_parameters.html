@@ -149,9 +149,9 @@
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; # Pearson's product-moment correlation
 #&gt; 
-#&gt; Parameter1        |       Parameter2 |     r | t(148) |     p |        95% CI
+#&gt; Parameter1        |       Parameter2 |     r |        95% CI | t(148) |     p
 #&gt; -----------------------------------------------------------------------------
-#&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 |  -1.44 | 0.152 | [-0.27, 0.04]</code></pre>
+#&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 | [-0.27, 0.04] |  -1.44 | 0.152</code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
