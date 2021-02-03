@@ -173,6 +173,19 @@
 <h1 class="page-header" data-toc-text="0.11.1">
 <a href="#parameters-0111" class="anchor"></a>parameters 0.11.1<small> Unreleased </small>
 </h1>
+<div id="general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general" class="anchor"></a>General</h2>
+<ul>
+<li><p>Roll-back R dependency to R &gt;= 3.4.</p></li>
+<li>
+<p>Bootstrapped estimates (from <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code> or <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>) can be passed to <code>emmeans</code> to obtain bootstrapped estimates, contrasts, simple slopes (etc) and their CIs.</p>
+<ul>
+<li>These can then be passed to <code><a href="../reference/model_parameters.html">model_parameters()</a></code> and related functions to obtain standard errors, p-values, etc.</li>
+</ul>
+</li>
+</ul>
+</div>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
@@ -187,13 +200,6 @@
 <ul>
 <li>
 <code>crr</code> (<em>cmprsk</em>), <code>leveneTest()</code> (<em>car</em>), <code>varest</code> (<em>vars</em>), <code>ergm</code> (<em>ergm</em>), <code>btergm</code> (<em>btergm</em>), <code>Rchoice</code> (<em>Rchoice</em>), <code>garch</code> (<em>tseries</em>)</li>
-</ul>
-</div>
-<div id="general" class="section level2">
-<h2 class="hasAnchor">
-<a href="#general" class="anchor"></a>General</h2>
-<ul>
-<li>Roll-back R dependency to R &gt;= 3.4.</li>
 </ul>
 </div>
 <div id="changes-to-functions" class="section level2">

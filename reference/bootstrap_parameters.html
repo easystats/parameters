@@ -224,13 +224,22 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Bootstrapped parameters.</p>
+    <p>A data frame summarizing the bootstrapped parameters.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function first calls <code><a href='bootstrap_model.html'>bootstrap_model</a></code> to generate
   bootstrapped coefficients. The resulting replicated for each coefficient
   are treated as "distribution", and is passed to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior()</a></code>
   to calculate the related indices defined in the <code>"test"</code> argument.</p>
+    <h2 class="hasAnchor" id="using-with-emmeans"><a class="anchor" href="#using-with-emmeans"></a>Using with <code>emmeans</code></h2>
+
+    
+
+<p>The output can be passed directly to the various functions from the
+<code>emmeans</code> package, to obtain bootstrapped estimates, contrasts, simple
+slopes, etc, and their confidence intervals. These can then be passed to
+<code>model_parameter()</code> to obtain standard errors, p-values, etc (see
+example).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Davison, A. C., &amp; Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.</p>
@@ -242,16 +251,36 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"boot"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Width</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-  <span class='fu'>bootstrap_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+  <span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'>bootstrap_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>
+
+  <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/rvlenth/emmeans'>"emmeans"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='va'>est</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emmeans.html'>emmeans</a></span><span class='op'>(</span><span class='va'>b</span>, <span class='va'>trt.vs.ctrl</span> <span class='op'>~</span> <span class='va'>Species</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>est</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>}</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;                       Parameter Coefficient     CI_low   CI_high           p
-#&gt; 1                   (Intercept)   4.7766617  4.5135438 4.9897666 0.000000000
-#&gt; 2             Speciesversicolor  -0.7181220 -1.6069290 0.1527264 0.105894106
-#&gt; 3              Speciesvirginica   0.5204686 -0.7304722 1.7185077 0.401598402
-#&gt; 4                   Petal.Width   0.9180041  0.2656675 1.9659747 0.003996004
-#&gt; 5 Speciesversicolor:Petal.Width   0.4702195 -0.6860819 1.4379762 0.399600400
-#&gt; 6  Speciesvirginica:Petal.Width  -0.2886256 -1.4616369 0.6301752 0.535464535</div><div class='input'><span class='co'># }</span>
-</div></pre>
+</div><div class='output co'>#&gt; Parameter                     | Coefficient |        95% CI |      p
+#&gt; --------------------------------------------------------------------
+#&gt; (Intercept)                   |        4.78 | [ 4.51, 4.99] | &lt; .001
+#&gt; Speciesversicolor             |       -0.72 | [-1.61, 0.15] | 0.106 
+#&gt; Speciesvirginica              |        0.52 | [-0.73, 1.72] | 0.402 
+#&gt; Petal.Width                   |        0.92 | [ 0.27, 1.97] | 0.004 
+#&gt; Speciesversicolor:Petal.Width |        0.47 | [-0.69, 1.44] | 0.400 
+#&gt; Speciesvirginica:Petal.Width  |       -0.29 | [-1.46, 0.63] | 0.535 </div><div class='output co'>#&gt; <span class='message'>NOTE: Results may be misleading due to involvement in interactions</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Estimated Marginal Means </span><span>
+#&gt; 
+#&gt; Parameter  | Coefficient |   SE |       95% CI |      p
+#&gt; -------------------------------------------------------
+#&gt; setosa     |        5.89 | 0.41 | [5.26, 6.87] | &lt; .001
+#&gt; versicolor |        5.76 | 0.07 | [5.62, 5.89] | &lt; .001
+#&gt; virginica  |        6.06 | 0.27 | [5.49, 6.54] | &lt; .001
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Contrasts </span><span>
+#&gt; 
+#&gt; Parameter           | Coefficient |   SE |        95% CI |     p
+#&gt; ----------------------------------------------------------------
+#&gt; versicolor - setosa |       -0.14 | 0.41 | [-1.05, 0.55] | 0.716
+#&gt; virginica - setosa  |        0.16 | 0.49 | [-0.85, 0.99] | 0.770</div><div class='input'><span class='co'># }</span>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
