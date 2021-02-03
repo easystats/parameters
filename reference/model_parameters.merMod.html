@@ -404,10 +404,10 @@ robust standard errors. Additional arguments like <code>vcov_estimation</code> o
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>gear</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, bootstrap <span class='op'>=</span> <span class='cn'>TRUE</span>, iterations <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |      p
-#&gt; ---------------------------------------------------
-#&gt; (Intercept) |       36.73 | [32.40, 39.99] | &lt; .001
-#&gt; wt          |       -5.29 | [-6.24, -4.01] | &lt; .001</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; Parameter   | Coefficient |         95% CI |     p
+#&gt; --------------------------------------------------
+#&gt; (Intercept) |       36.73 | [32.40, 39.99] | 0.020
+#&gt; wt          |       -5.29 | [-6.24, -4.01] | 0.020</div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

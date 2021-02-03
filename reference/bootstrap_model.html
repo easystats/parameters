@@ -209,7 +209,11 @@
 <code>emmeans</code> package, to obtain bootstrapped estimates, contrasts, simple
 slopes, etc, and their confidence intervals. These can then be passed to
 <code>model_parameter()</code> to obtain standard errors, p-values, etc (see
-example).</p>
+example).
+<br /><br />
+Note that that p-values returned here are "reversed" p-values - they are the
+probability under the bootstrapped distribution of obtaining the null (0) or
+more extreme.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='bootstrap_parameters.html'>bootstrap_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code>, <code><a href='simulate_parameters.glmmTMB.html'>simulate_parameters</a></code></p></div>
