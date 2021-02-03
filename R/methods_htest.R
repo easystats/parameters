@@ -206,7 +206,11 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     stringsAsFactors = FALSE
   )
 
-  if (grepl("Pearson", model$method, fixed = TRUE)) {
+  if (model$method == "Pearson's Chi-squared test") {
+    out$Chi2 <- model$statistic
+    out$df_error <- model$parameter
+    out$p <- model$p.value
+  } else if (grepl("Pearson", model$method, fixed = TRUE)) {
     out$r <- model$estimate
     out$t <- model$statistic
     out$df_error <- model$parameter
