@@ -19,6 +19,10 @@
 #'   bootstrapped coefficients. The resulting replicated for each coefficient
 #'   are treated as "distribution", and is passed to \code{\link[bayestestR:describe_posterior]{describe_posterior()}}
 #'   to calculate the related indices defined in the \code{"test"} argument.
+#'   \cr\cr
+#'   Note that that p-values returned here are "reversed" p-values - they are
+#'   the probability under the bootstrapped distribution of obtaining the null
+#'   (0) or more extreme.
 #'
 #' @examples
 #' \donttest{
