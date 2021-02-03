@@ -228,7 +228,16 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     out$df_error <- model$parameter
     out$p <- model$p.value
   }
+
   out$Method <- model$method
+
+  # reorder
+  col_order <- c(
+    "Parameter1", "Parameter2", "Parameter", "r", "rho", "tau", "CI_low", "CI_high",
+    "t", "z", "S", "df_error", "p", "Method", "method"
+  )
+
+  out <- out[col_order[col_order %in% names(out)]]
   out
 }
 
