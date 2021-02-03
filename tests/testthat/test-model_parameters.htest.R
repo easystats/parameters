@@ -1,6 +1,13 @@
 if (require("testthat") && require("parameters")) {
   test_that("model_parameters.htest", {
     params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "pearson"))
+    expect_equal(
+      colnames(params),
+      c(
+        "Parameter1", "Parameter2", "r", "CI", "CI_low", "CI_high",
+        "t", "df_error", "p", "Method"
+      )
+    )
     expect_equal(params$r, -0.852, tolerance = 0.05)
 
     expect_warning(params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "spearman")))
@@ -31,7 +38,13 @@ if (require("testthat") && require("parameters")) {
     test_that("model_parameters-chisq-test raw", {
       expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
       expect_equal(mp$phi, 0.1875, tolerance = 1e-3)
-      expect_equal(colnames(mp), c("Chi2", "df", "Cramers_v", "CI", "Cramers_CI_low", "Cramers_CI_high", "phi", "phi_CI_low", "phi_CI_high", "p", "Method"))
+      expect_equal(
+        colnames(mp),
+        c(
+          "Chi2", "df", "Cramers_v", "CI", "Cramers_CI_low", "Cramers_CI_high",
+          "phi", "phi_CI_low", "phi_CI_high", "p", "Method"
+        )
+      )
     })
 
     mp <- model_parameters(stats::chisq.test(table(mtcars$am)))
