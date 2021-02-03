@@ -65,6 +65,7 @@ more extreme.
 \examples{
 \donttest{
 if (require("boot")) {
+  set.seed(2)
   model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
   b <- bootstrap_parameters(model)
   print(b)

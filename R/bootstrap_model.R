@@ -25,6 +25,7 @@
 #' @examples
 #' \donttest{
 #' if (require("boot")) {
+#'   set.seed(2)
 #'   model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
 #'   b <- bootstrap_model(model)
 #'   print(head(b))
