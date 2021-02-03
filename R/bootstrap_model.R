@@ -41,7 +41,7 @@ bootstrap_model <- function(model, iterations = 1000, verbose = FALSE, ...) {
 
 
 
-#' @importFrom stats coef update setNames
+#' @importFrom stats coef update setNames complete.cases
 #' @importFrom insight get_data find_parameters get_parameters
 #' @export
 bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, ...) {
@@ -65,13 +65,22 @@ bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, .
     }
 
     params <- insight::get_parameters(fit)
-    params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
+    n_params <- insight::n_parameters(model)
+
+    if (nrow(params) != n_params) {
+      params <- stats::setNames(rep.int(NA, n_params), params$Parameter)
+    } else {
+      params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
+    }
+
     return(params)
   }
 
   results <- boot::boot(data = data, statistic = boot_function, R = iterations, model = model)
 
   out <- as.data.frame(results$t)
+  out <- out[stats::complete.cases(out), ]
+
   names(out) <- insight::get_parameters(model)$Parameter
 
   class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
@@ -100,8 +109,9 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
   }
 
   out <- as.data.frame(results$t)
-  names(out) <- insight::find_parameters(model, effects = "fixed")$conditional
+  out <- out[stats::complete.cases(out), ]
 
+  names(out) <- insight::find_parameters(model, effects = "fixed")$conditional
   class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
   attr(out, "original_model") <- model
   out
