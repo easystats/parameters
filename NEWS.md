@@ -36,6 +36,9 @@
 
 * Fixed edge case when formatting parameters from polynomial terms with many 
   degrees.
+  
+* Fixed issue with random sampling and dropped factor levels in 
+  `bootstrap_model()`.
 
 # parameters 0.11.0
 
