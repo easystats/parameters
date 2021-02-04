@@ -124,14 +124,20 @@ standard_error.effectsize_std_params <- function(model, verbose = TRUE, ...) {
 
 # p-Values from standard classes ---------------------------------------------
 
-
-#' @seealso https://blogs.sas.com/content/iml/2011/11/02/how-to-compute-p-values-for-a-bootstrap-distribution.html
 #' @export
 p_value.numeric <- function(model, ...) {
-  k_lt0 <- sum(model <= 0)
-  k_gt0 <- sum(model >= 0)
-  k <- 2 * min(k_lt0, k_gt0)
-  N <- length(model)
+  # k_lt0 <- sum(model <= 0)
+  # k_gt0 <- sum(model >= 0)
+  # k <- 2 * min(k_lt0, k_gt0)
+  # N <- length(model)
+
+  # https://blogs.sas.com/content/iml/2011/11/02/how-to-compute-p-values-for-a-bootstrap-distribution.html
+  # https://stats.stackexchange.com/a/28725/293056
+  x <- model
+  xM <- mean(x)
+  x0 <- x - xM
+  k <- sum(abs(x0) > abs(xM))
+  N <- length(x)
   (k + 1) / (N + 1)
 }
 

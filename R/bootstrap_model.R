@@ -16,9 +16,11 @@
 #' \code{model_parameter()} to obtain standard errors, p-values, etc (see
 #' example).
 #' \cr\cr
-#' Note that that p-values returned here are "reversed" p-values - they are the
-#' probability under the bootstrapped distribution of obtaining the null (0) or
-#' more extreme.
+#' Note that that p-values returned here are estimated under the assumption of
+#' \emph{translation equivariance}: that shape of the sampling distribution is
+#' unaffected by the null being true or not. If this assumption does not hold,
+#' p-values can be biased, and it is suggested to use proper permutation tests
+#' to obtain non-parametric p-values.
 #'
 #' @seealso \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}, \code{\link{simulate_parameters}}
 #'
