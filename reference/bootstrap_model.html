@@ -211,9 +211,11 @@ slopes, etc, and their confidence intervals. These can then be passed to
 <code>model_parameter()</code> to obtain standard errors, p-values, etc (see
 example).
 <br /><br />
-Note that that p-values returned here are "reversed" p-values - they are the
-probability under the bootstrapped distribution of obtaining the null (0) or
-more extreme.</p>
+Note that that p-values returned here are estimated under the assumption of
+<em>translation equivariance</em>: that shape of the sampling distribution is
+unaffected by the null being true or not. If this assumption does not hold,
+p-values can be biased, and it is suggested to use proper permutation tests
+to obtain non-parametric p-values.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='bootstrap_parameters.html'>bootstrap_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code>, <code><a href='simulate_parameters.glmmTMB.html'>simulate_parameters</a></code></p></div>
@@ -248,8 +250,8 @@ more extreme.</p>
 #&gt; 
 #&gt; Parameter | Coefficient |   SE |         95% CI |     p
 #&gt; -------------------------------------------------------
-#&gt; 6 - 4     |       -4.08 | 1.26 | [-6.70, -1.81] | 0.003
-#&gt; 8 - 6     |       -1.81 | 0.86 | [-3.38, -0.05] | 0.059</div><div class='input'><span class='co'># }</span>
+#&gt; 6 - 4     |       -4.08 | 1.26 | [-6.70, -1.81] | 0.004
+#&gt; 8 - 6     |       -1.81 | 0.86 | [-3.38, -0.05] | 0.038</div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

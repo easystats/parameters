@@ -232,9 +232,11 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
   are treated as "distribution", and is passed to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior()</a></code>
   to calculate the related indices defined in the <code>"test"</code> argument.
   <br /><br />
-  Note that that p-values returned here are "reversed" p-values - they are
-  the probability under the bootstrapped distribution of obtaining the null
-  (0) or more extreme.</p>
+  Note that that p-values returned here are estimated under the assumption of
+  <em>translation equivariance</em>: that shape of the sampling distribution is
+  unaffected by the null being true or not. If this assumption does not hold,
+  p-values can be biased, and it is suggested to use proper permutation tests
+  to obtain non-parametric p-values.</p>
     <h2 class="hasAnchor" id="using-with-emmeans"><a class="anchor" href="#using-with-emmeans"></a>Using with <code>emmeans</code></h2>
 
     
@@ -245,9 +247,11 @@ slopes, etc, and their confidence intervals. These can then be passed to
 <code>model_parameter()</code> to obtain standard errors, p-values, etc (see
 example).
 <br /><br />
-Note that that p-values returned here are "reversed" p-values - they are the
-probability under the bootstrapped distribution of obtaining the null (0) or
-more extreme.</p>
+Note that that p-values returned here are estimated under the assumption of
+<em>translation equivariance</em>: that shape of the sampling distribution is
+unaffected by the null being true or not. If this assumption does not hold,
+p-values can be biased, and it is suggested to use proper permutation tests
+to obtain non-parametric p-values.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Davison, A. C., &amp; Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.</p>
@@ -271,11 +275,11 @@ more extreme.</p>
 </div><div class='output co'>#&gt; Parameter                     | Coefficient |        95% CI |      p
 #&gt; --------------------------------------------------------------------
 #&gt; (Intercept)                   |        4.78 | [ 4.50, 5.00] | &lt; .001
-#&gt; Speciesversicolor             |       -0.72 | [-1.62, 0.08] | 0.083 
-#&gt; Speciesvirginica              |        0.50 | [-0.67, 1.65] | 0.423 
-#&gt; Petal.Width                   |        0.91 | [ 0.22, 1.97] | 0.017 
-#&gt; Speciesversicolor:Petal.Width |        0.50 | [-0.66, 1.52] | 0.391 
-#&gt; Speciesvirginica:Petal.Width  |       -0.27 | [-1.36, 0.67] | 0.558 </div><div class='output co'>#&gt; <span class='message'>NOTE: Results may be misleading due to involvement in interactions</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Estimated Marginal Means </span><span>
+#&gt; Speciesversicolor             |       -0.72 | [-1.62, 0.08] | 0.094 
+#&gt; Speciesvirginica              |        0.50 | [-0.67, 1.65] | 0.415 
+#&gt; Petal.Width                   |        0.91 | [ 0.22, 1.97] | 0.039 
+#&gt; Speciesversicolor:Petal.Width |        0.50 | [-0.66, 1.52] | 0.393 
+#&gt; Speciesvirginica:Petal.Width  |       -0.27 | [-1.36, 0.67] | 0.545 </div><div class='output co'>#&gt; <span class='message'>NOTE: Results may be misleading due to involvement in interactions</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Estimated Marginal Means </span><span>
 #&gt; 
 #&gt; Parameter  | Coefficient |   SE |       95% CI |      p
 #&gt; -------------------------------------------------------
@@ -287,8 +291,8 @@ more extreme.</p>
 #&gt; 
 #&gt; Parameter           | Coefficient |   SE |        95% CI |     p
 #&gt; ----------------------------------------------------------------
-#&gt; versicolor - setosa |       -0.12 | 0.43 | [-1.05, 0.57] | 0.768
-#&gt; virginica - setosa  |        0.14 | 0.50 | [-0.86, 1.06] | 0.766</div><div class='input'><span class='co'># }</span>
+#&gt; versicolor - setosa |       -0.12 | 0.43 | [-1.05, 0.57] | 0.700
+#&gt; virginica - setosa  |        0.14 | 0.50 | [-0.86, 1.06] | 0.799</div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
