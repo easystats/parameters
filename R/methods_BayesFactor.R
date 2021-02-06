@@ -133,8 +133,8 @@ model_parameters.BFBayesFactor <- function(model,
 
   # ==== remove Component column if not needed
 
-  if (.n_unique(out$Component) == 1) out$Component <- NULL
-  if (.n_unique(out$Effects) == 1) out$Effects <- NULL
+  if (!is.null(out$Component) && .n_unique(out$Component) == 1) out$Component <- NULL
+  if (!is.null(out$Effects) && .n_unique(out$Effects) == 1) out$Effects <- NULL
 
 
   # ==== pretty parameter names
@@ -156,9 +156,13 @@ model_parameters.BFBayesFactor <- function(model,
   }
 
   attr(out, "title") <- unique(out$Method)
-  attr(out, "ci") <- ci
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(out, "pretty_names") <- pretty_names
+  out <- .add_model_parameters_attributes(params = out,
+                                          model = model,
+                                          ci = ci,
+                                          ci_method = ci_method,
+                                          verbose = verbose)
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
 
   out
