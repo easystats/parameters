@@ -218,8 +218,8 @@
 
   # ==== remove Component column if not needed
 
-  if (.n_unique(parameters$Component) == 1) parameters$Component <- NULL
-  if (.n_unique(parameters$Effects) == 1 || effects == "fixed") parameters$Effects <- NULL
+  if (!is.null(parameters$Component) && .n_unique(parameters$Component) == 1) parameters$Component <- NULL
+  if ((!is.null(parameters$Effects) && .n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL
 
 
   # ==== adjust p-values?
