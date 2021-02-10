@@ -318,13 +318,15 @@ while <code>select = "short"</code> prints coefficient, standard errors and p-va
     </tr>
     <tr>
       <th>caption</th>
-      <td><p>Table caption and subtitle, as string. If <code>NULL</code>,
-no caption or subtitle is printed.</p></td>
+      <td><p>Table title (same as caption) and subtitle, as strings. If <code>NULL</code>,
+no title or subtitle is printed, unless it is stored as attributes (<code>table_title</code>,
+or its alias <code>table_caption</code>, and <code>table_subtitle</code>).</p></td>
     </tr>
     <tr>
       <th>subtitle</th>
-      <td><p>Table caption and subtitle, as string. If <code>NULL</code>,
-no caption or subtitle is printed.</p></td>
+      <td><p>Table title (same as caption) and subtitle, as strings. If <code>NULL</code>,
+no title or subtitle is printed, unless it is stored as attributes (<code>table_title</code>,
+or its alias <code>table_caption</code>, and <code>table_subtitle</code>).</p></td>
     </tr>
     <tr>
       <th>footer</th>
@@ -398,8 +400,9 @@ standard deviation.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector. If <code>format = "markdown"</code>, the return value
-  will be a character vector in markdown-table format.</p>
+    <p>If <code>format = "markdown"</code>, the return value will be a character
+  vector in markdown-table format. If <code>format = "html"</code>, an object of
+  class <code>gt_tbl</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code><a href='https://easystats.github.io/insight/reference/display.html'>display()</a></code> is useful when the table-output from functions,
