@@ -58,7 +58,7 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "al
   # merge all data frames
   all_models <- Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component")), m)
 
-  attr(all_models, "model_names") <- gsub("\"", "", .safe_deparse(object_names), fixed = TRUE)
+  attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(object_names, .safe_deparse)), fixed = TRUE)
   attr(all_models, "output_style") <- style
   class(all_models) <- c("compare_parameters", unique(class(all_models)))
 
