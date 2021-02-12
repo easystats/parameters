@@ -34,15 +34,22 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "al
     object_names <- object_names[supported_models]
   }
 
-  m <- mapply(function(.x, .y) {
+  m <- lapply(objects, function(.x) {
+    # model parameters
     dat <- model_parameters(.x, ci = ci, effects = effects, component = component, standardize = standardize, exponentiate = exponentiate, df_method = df_method, p_adjust = p_adjust, verbose = verbose)
-    model_name <- gsub("\"", "", .safe_deparse(.y), fixed = TRUE)
+    # set specific names for coefficient column
+    coef_name <- attributes(dat)$coefficient_name
+    if (!is.null(coef_name)) {
+      colnames(dat)[colnames(dat) == "Coefficient"] <- coef_name
+    }
+    # make sure we have a component-column, for merging
     if (!"Component" %in% colnames(dat)) {
       dat$Component <- "conditional"
     }
-    attr(dat, "model_name") <- model_name
     dat
-  }, objects, object_names, SIMPLIFY = FALSE)
+  })
+
+  model_names <- gsub("\"", "", .safe_deparse(object_names), fixed = TRUE)
 
   all_models <- Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component")), m)
   all_models
