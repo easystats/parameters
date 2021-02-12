@@ -4,11 +4,51 @@
 \alias{compare_paramerers}
 \title{Compare model parameters of multiple models}
 \usage{
-compare_paramerers(...)
+compare_paramerers(
+  ...,
+  ci = 0.95,
+  effects = "fixed",
+  component = "all",
+  standardize = NULL,
+  exponentiate = FALSE,
+  df_method = NULL,
+  p_adjust = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{...}{One or more regression model objects. Regression models may be
 of different model types.}
+
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
+
+\item{component}{Model component for which parameters should be shown. See
+documentation for related model class in \code{\link{model_parameters}}.}
+
+\item{standardize}{The method used for standardizing the parameters. Can be
+\code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
+\code{"pseudo"} or \code{NULL} (default) for no standardization. See
+'Details' in \code{\link[effectsize]{standardize_parameters}}. Note that
+robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+works when \code{standardize="refit"}.}
+
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the
+the coefficients (and related confidence intervals). This is typical for,
+say, logistic regressions, or more generally speaking: for models with log
+or logit link. \strong{Note:} standard errors are also transformed (by
+multiplying the standard errors with the exponentiated coefficients), to
+mimic behaviour of other software packages, such as Stata.}
+
+\item{df_method}{Method for computing degrees of freedom for confidence
+intervals (CI). Only applies to models of class \code{glm} or \code{polr}.
+May be \code{"profile"} or \code{"wald"}.}
+
+\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
+adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+
+\item{verbose}{Toggle warnings and messages.}
 }
 \value{
 A data frame of indices related to the model's parameters.
@@ -16,4 +56,12 @@ A data frame of indices related to the model's parameters.
 \description{
 Compute and extract model parameters of multiple regression models.
   See \code{\link{model_parameters}} for further details.
+}
+\examples{
+data(iris)
+lm1 <- lm(Sepal.Length ~ Species, data = iris)
+lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+compare_parameters(lm1, lm2, lm3)
+
 }
