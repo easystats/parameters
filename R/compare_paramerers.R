@@ -22,7 +22,7 @@
 #' compare_parameters(lm1, lm2, lm3)
 #' @importFrom insight is_model_supported
 #' @export
-compare_parameters <- function(..., ci = .95, effects = "fixed", component = "all", standardize = NULL, exponentiate = FALSE, df_method = NULL, p_adjust = NULL, verbose = TRUE, style = NULL) {
+compare_parameters <- function(..., ci = .95, effects = "fixed", component = "conditional", standardize = NULL, exponentiate = FALSE, df_method = NULL, p_adjust = NULL, verbose = TRUE, style = NULL) {
   objects <- list(...)
   object_names <- match.call(expand.dots = FALSE)$`...`
 
@@ -32,6 +32,11 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "al
     warning(sprintf("Following objects are not supported: %s", paste0(object_names[!supported_models], collapse = ", ")))
     objects <- objects[supported_models]
     object_names <- object_names[supported_models]
+  }
+
+  # set default
+  if (is.null(style)) {
+    style <- "minimal"
   }
 
   # iterate all models and create list of model parameters
@@ -48,6 +53,10 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "al
     # make sure we have a component-column, for merging
     if (!"Component" %in% colnames(dat)) {
       dat$Component <- "conditional"
+    }
+    # add zi-suffix to parameter names
+    if (any(dat$Component == "zero_inflated")) {
+      dat$Parameter[dat$Component == "zero_inflated"] <- paste0(dat$Parameter[dat$Component == "zero_inflated"], " (zi)")
     }
     # add suffix
     ignore <- colnames(dat) %in% c("Parameter", "Component")

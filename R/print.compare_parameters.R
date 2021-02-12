@@ -31,34 +31,130 @@ print.compare_parameters <- function(x,
 
 
 
+#' @export
+print_html.compare_parameters <- function(x,
+                                          digits = 2,
+                                          ci_digits = 2,
+                                          p_digits = 3,
+                                          ...) {
+  # save original input
+  orig_x <- x
+
+  # get attributes
+  style <- attributes(x)$output_style
+
+  formatted_table <- format(
+    x,
+    style,
+    split_components = TRUE,
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    ci_width = "auto",
+    ci_brackets = c("(", ")"),
+    format = "html"
+  )
+
+  insight::export_table(formatted_table, format = "html", footer = NULL)
+}
+
+
+
+
+
+#' @export
+print_md.compare_parameters <- function(x,
+                                        digits = 2,
+                                        ci_digits = 2,
+                                        p_digits = 3,
+                                        ...) {
+  # save original input
+  orig_x <- x
+
+  # get attributes
+  style <- attributes(x)$output_style
+
+  formatted_table <- format(
+    x,
+    style,
+    split_components = TRUE,
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    ci_width = "auto",
+    ci_brackets = c("(", ")"),
+    format = "md"
+  )
+
+  insight::export_table(formatted_table, format = "md", footer = NULL)
+}
+
+
+
+
+
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
   x$Method <- NULL
 
-  if (!is.null(x$Component) && .n_unique(x$Component) == 1) {
-    x$Component <- NULL
-  }
+  out <- data.frame(
+    Parameter = x$Parameter,
+    Component = x$Component,
+    stringsAsFactors = FALSE
+  )
 
-  # style / template
-  ## TODO select columns
+  models <- attributes(x)$model_names
+
+  for (i in models) {
+    pattern <- paste0("\\.", i, "$")
+    cols <- x[grepl(pattern, colnames(x))]
+    colnames(cols) <- gsub(pattern, "", colnames(cols))
+    cols <- insight::format_table(cols)
+    out <- cbind(out, .format_output_style(cols, style, format, i))
+  }
 
   # check whether to split table by certain factors/columns (like component, response...)
-  split_by <- .prepare_splitby_for_print(x)
+  split_by <- split_column <- .prepare_splitby_for_print(x)
 
-  # print everything now...
-  if (split_components && !is.null(split_by) && length(split_by)) {
-    formatted_table <- .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
+  if (length(split_by) > 0) {
+    # set up split-factor
+    if (length(split_column) > 1) {
+      split_by <- lapply(split_column, function(i) x[[i]])
+    } else {
+      split_by <- list(x[[split_column]])
+    }
+    names(split_by) <- split_column
+
+    # make sure we have correct sorting here...
+    formatted_table <- split(out, f = split_by)
+    formatted_table <- lapply(formatted_table, function(i) {
+      # remove unique columns
+      if (.n_unique(i$Component) == 1) i$Component <- NULL
+      if (.n_unique(i$Effects) == 1) i$Effects <- NULL
+      i
+    })
   } else {
-    formatted_table <- insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
+    formatted_table <- out
+    # remove unique columns
+    if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
+    if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
   }
 
-  # remove unique columns
-  if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
-  if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
-
-  # no column with CI-level in output
-  formatted_table$CI <- NULL
-
   formatted_table
+}
+
+
+
+.format_output_style <- function(x, style, format, modelname) {
+  if (style == "minimal") {
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], " ", x[[ci_col]], ""))
+    x <- x[c(param_col, "p")]
+    if (identical(format, "html")) {
+      colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+    }
+  }
+  x
 }
