@@ -15,6 +15,7 @@ template:
 reference:
 - title: "Comprehensive Model Parameters"
   contents:
+  - compare_parameters
   - model_parameters
   - model_parameters.aov
   - model_parameters.befa
