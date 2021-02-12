@@ -14,7 +14,8 @@ compare_parameters(
   exponentiate = FALSE,
   df_method = NULL,
   p_adjust = NULL,
-  verbose = TRUE
+  verbose = TRUE,
+  style = NULL
 )
 
 compare_models(
@@ -26,7 +27,8 @@ compare_models(
   exponentiate = FALSE,
   df_method = NULL,
   p_adjust = NULL,
-  verbose = TRUE
+  verbose = TRUE,
+  style = NULL
 )
 }
 \arguments{
@@ -62,6 +64,8 @@ May be \code{"profile"} or \code{"wald"}.}
 adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{style}{String, indicating which style of output is requested.}
 }
 \value{
 A data frame of indices related to the model's parameters.
@@ -76,5 +80,4 @@ lm1 <- lm(Sepal.Length ~ Species, data = iris)
 lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 compare_parameters(lm1, lm2, lm3)
-
 }

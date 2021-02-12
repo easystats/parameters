@@ -8,6 +8,7 @@
 #'   of different model types.
 #' @param component Model component for which parameters should be shown. See
 #'   documentation for related model class in \code{\link{model_parameters}}.
+#' @param style String, indicating which style of output is requested.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
 #'
@@ -19,10 +20,9 @@
 #' lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 #' lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 #' compare_parameters(lm1, lm2, lm3)
-#'
 #' @importFrom insight is_model_supported
 #' @export
-compare_parameters <- function(..., ci = .95, effects = "fixed", component = "all", standardize = NULL, exponentiate = FALSE, df_method = NULL, p_adjust = NULL, verbose = TRUE) {
+compare_parameters <- function(..., ci = .95, effects = "fixed", component = "all", standardize = NULL, exponentiate = FALSE, df_method = NULL, p_adjust = NULL, verbose = TRUE, style = NULL) {
   objects <- list(...)
   object_names <- match.call(expand.dots = FALSE)$`...`
 
@@ -34,6 +34,7 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "al
     object_names <- object_names[supported_models]
   }
 
+  # iterate all models and create list of model parameters
   m <- mapply(function(.x, .y) {
     # model parameters
     dat <- model_parameters(.x, ci = ci, effects = effects, component = component, standardize = standardize, exponentiate = exponentiate, df_method = df_method, p_adjust = p_adjust, verbose = verbose)
@@ -54,8 +55,12 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "al
     dat
   }, objects, object_names, SIMPLIFY = FALSE)
 
-  model_names <- gsub("\"", "", .safe_deparse(object_names), fixed = TRUE)
+  # merge all data frames
   all_models <- Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component")), m)
+
+  attr(all_models, "model_names") <- gsub("\"", "", .safe_deparse(object_names), fixed = TRUE)
+  attr(all_models, "output_style") <- style
+  class(all_models) <- c("compare_parameters", unique(class(all_models)))
 
   all_models
 }
