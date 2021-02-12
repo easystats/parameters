@@ -1,5 +1,5 @@
 #' @title Compare model parameters of multiple models
-#' @name compare_paramerers
+#' @name compare_parameters
 #'
 #' @description Compute and extract model parameters of multiple regression models.
 #'   See \code{\link{model_parameters}} for further details.
@@ -22,7 +22,7 @@
 #'
 #' @importFrom insight is_model_supported
 #' @export
-compare_paramerers <- function(..., ci = .95, effects = "fixed", component = "all", standardize = NULL, exponentiate = FALSE, df_method = NULL, p_adjust = NULL, verbose = TRUE) {
+compare_parameters <- function(..., ci = .95, effects = "fixed", component = "all", standardize = NULL, exponentiate = FALSE, df_method = NULL, p_adjust = NULL, verbose = TRUE) {
   objects <- list(...)
   object_names <- match.call(expand.dots = FALSE)$`...`
 
@@ -47,3 +47,8 @@ compare_paramerers <- function(..., ci = .95, effects = "fixed", component = "al
   all_models <- Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component")), m)
   all_models
 }
+
+
+#' @rdname compare_parameters
+#' @export
+compare_models <- compare_parameters
