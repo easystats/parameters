@@ -50,7 +50,7 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "al
       dat$Component <- "conditional"
     }
     # add suffix
-    ignore <- colnames(mop) %in% c("Parameter", "Component")
+    ignore <- colnames(dat) %in% c("Parameter", "Component")
     colnames(dat)[!ignore] <- paste0(colnames(dat)[!ignore], ".", .y)
     dat
   }, objects, object_names, SIMPLIFY = FALSE)
