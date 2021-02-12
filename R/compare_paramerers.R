@@ -34,7 +34,7 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "al
     object_names <- object_names[supported_models]
   }
 
-  m <- lapply(objects, function(.x) {
+  m <- mapply(function(.x, .y) {
     # model parameters
     dat <- model_parameters(.x, ci = ci, effects = effects, component = component, standardize = standardize, exponentiate = exponentiate, df_method = df_method, p_adjust = p_adjust, verbose = verbose)
     # set specific names for coefficient column
@@ -42,16 +42,21 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "al
     if (!is.null(coef_name)) {
       colnames(dat)[colnames(dat) == "Coefficient"] <- coef_name
     }
+    # set pretty parameter names
+    dat <- .set_pretty_names(dat)
     # make sure we have a component-column, for merging
     if (!"Component" %in% colnames(dat)) {
       dat$Component <- "conditional"
     }
+    # add suffix
+    ignore <- colnames(mop) %in% c("Parameter", "Component")
+    colnames(dat)[!ignore] <- paste0(colnames(dat)[!ignore], ".", .y)
     dat
-  })
+  }, objects, object_names, SIMPLIFY = FALSE)
 
   model_names <- gsub("\"", "", .safe_deparse(object_names), fixed = TRUE)
-
   all_models <- Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component")), m)
+
   all_models
 }
 
@@ -59,3 +64,34 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "al
 #' @rdname compare_parameters
 #' @export
 compare_models <- compare_parameters
+
+
+
+
+
+# helper ----------------------------
+
+.set_pretty_names <- function(x) {
+  att <- attributes(x)
+  if (!is.null(att$pretty_names)) {
+    # remove strings with NA names
+    att$pretty_names <- att$pretty_names[!is.na(names(att$pretty_names))]
+    if (length(att$pretty_names) != length(x$Parameter)) {
+      match_pretty_names <- stats::na.omit(match(names(att$pretty_names), x$Parameter))
+      if (length(match_pretty_names)) {
+        x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[match_pretty_names]]
+      }
+    } else {
+      match_pretty_names <- att$pretty_names[x$Parameter]
+      if (!anyNA(match_pretty_names)) {
+        x$Parameter <- att$pretty_names[x$Parameter]
+      } else {
+        match_pretty_names <- stats::na.omit(match(names(att$pretty_names), x$Parameter))
+        if (length(match_pretty_names)) {
+          x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[match_pretty_names]]
+        }
+      }
+    }
+  }
+  x
+}

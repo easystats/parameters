@@ -216,7 +216,7 @@ model_parameters.meta_random <- function(model,
     out <- out[out$Parameter %in% c("Overall", "tau"), ]
   }
 
-  if (exponentiate) out <- .exponentiate_parameters(out)
+  if (exponentiate) out <- .exponentiate_parameters(out, model)
   out <- .add_model_parameters_attributes(
     params = out,
     model = model,
@@ -360,7 +360,7 @@ model_parameters.meta_bma <- function(model,
     out <- out[out$Parameter %in% c("averaged", "fixed", "random"), ]
   }
 
-  if (exponentiate) out <- .exponentiate_parameters(out)
+  if (exponentiate) out <- .exponentiate_parameters(out, model-)
   out <- .add_model_parameters_attributes(
     params = out,
     model = model,

@@ -212,7 +212,7 @@ model_parameters.default <- function(model,
     )
   }
 
-  if (exponentiate) params <- .exponentiate_parameters(params)
+  if (exponentiate) params <- .exponentiate_parameters(params, model)
   params <- .add_model_parameters_attributes(
     params,
     model,
