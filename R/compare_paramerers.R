@@ -15,12 +15,15 @@
 #'     \item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
 #'     \item \code{"ci"}: Estimate and confidence intervals, no asterisks for p-values.
 #'     \item \code{"se"}: Estimate and standard errors, no asterisks for p-values.
+#'     \item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
+#'     \item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
 #'   }
-#'   \code{"ci_p2"}, \code{"se_p2"}, \code{"ci2"} and \code{"se2"} are the same as
-#'   above, except that a new line between estimate and confidence intervals or
-#'   standard errors is added.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
+#'
+#' @note This function is in an early stage and does not yet cope with more
+#'   complex models, and probably does not yet properly render all model
+#'   components.
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'

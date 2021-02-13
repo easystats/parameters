@@ -167,35 +167,21 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
 # this function does the main composition of columns for the output
 
 .format_output_style <- function(x, style, format, modelname) {
-
-  if (grepl("2$", style)) {
-    style <- substr(style, 0, nchar(style) - 1)
-    if (identical(format, "html")) {
-      linesep <- "<br>"
-    } else {
-      linesep <- "\n"
-    }
-  } else {
-    linesep <- " "
-  }
-
+  linesep <- " "
   if (style %in% c("se", "ci")) {
     x$p_stars <- ""
   }
 
-
   if (style == "minimal") {
     ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
     param_col <- colnames(x)[1]
-    x[[param_col]] <- trimws(paste0(x[[param_col]], " ", x[[ci_col]], ""))
+    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, x[[ci_col]]))
     x <- x[c(param_col, "p")]
-    if (identical(format, "html")) {
-      colnames(x) <- paste0(colnames(x), " (", modelname, ")")
-    }
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
   } else if (style %in% c("ci_p", "ci")) {
     ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
     param_col <- colnames(x)[1]
-    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, x[[ci_col]], ""))
+    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, x[[ci_col]]))
     x <- x[param_col]
     colnames(x) <- modelname
   } else if (style %in% c("se_p", "se")) {
@@ -203,6 +189,17 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, "(", x$SE, ")"))
     x <- x[param_col]
     colnames(x) <- modelname
+  } else if (style %in% c("ci_p2")) {
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, x[[ci_col]]))
+    x <- x[c(param_col, "p")]
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  } else if (style %in% c("se_p2")) {
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, "(", x$SE, ")"))
+    x <- x[c(param_col, "p")]
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
   }
   x[[1]][x[[1]] == "()"] <- ""
   x
