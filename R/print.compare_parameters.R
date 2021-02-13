@@ -92,7 +92,7 @@ print_md.compare_parameters <- function(x,
 
 
 
-
+#' @importFrom insight format_p format_table
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
@@ -104,12 +104,19 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     stringsAsFactors = FALSE
   )
 
+  # save model names
   models <- attributes(x)$model_names
 
   for (i in models) {
+    # each column is suffixed with ".model_name", so we extract
+    # columns for each model separately here
     pattern <- paste0("\\.", i, "$")
     cols <- x[grepl(pattern, colnames(x))]
+    # since we now have the columns for a single model, we clean the
+    # column names (i.e. remove suffix), so we can use "format_table" function
     colnames(cols) <- gsub(pattern, "", colnames(cols))
+    # save p-stars in extra column
+    cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
     cols <- insight::format_table(cols)
     out <- cbind(out, .format_output_style(cols, style, format, i))
   }
@@ -155,6 +162,17 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     if (identical(format, "html")) {
       colnames(x) <- paste0(colnames(x), " (", modelname, ")")
     }
+  } else if (style == "one_col_1") {
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, " ", x[[ci_col]], ""))
+    x <- x[param_col]
+    colnames(x) <- modelname
+  } else if (style == "one_col_2") {
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, " (", x$SE, ")"))
+    x <- x[param_col]
+    colnames(x) <- modelname
   }
   x
 }

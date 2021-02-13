@@ -36,7 +36,7 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
 
   # set default
   if (is.null(style)) {
-    style <- "minimal"
+    style <- "one_col_1"
   }
 
   # iterate all models and create list of model parameters
