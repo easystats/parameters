@@ -56,7 +56,7 @@ print_html.compare_parameters <- function(x,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
-    ci_width = "auto",
+    ci_width = NULL,
     ci_brackets = c("(", ")"),
     format = "html"
   )
@@ -90,7 +90,7 @@ print_md.compare_parameters <- function(x,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
-    ci_width = "auto",
+    ci_width = NULL,
     ci_brackets = c("(", ")"),
     format = "md"
   )
