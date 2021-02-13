@@ -18,6 +18,11 @@
 
 * `crr` (*cmprsk*), `leveneTest()` (*car*), `varest` (*vars*), `ergm` (*ergm*), `btergm` (*btergm*), `Rchoice` (*Rchoice*), `garch` (*tseries*)
 
+## New functions
+
+* `compare_parameters()` (and its alias `compare_models()`) to show / print
+  parameters of multiple models in one table.
+
 ## Changes to functions
 
 * Estimation of bootstrapped *p*-values has been re-written to be more accurate.

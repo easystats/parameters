@@ -60,13 +60,13 @@ display.parameters_simulate <- display.parameters_model
 display.parameters_brms_meta <- display.parameters_model
 
 #' @export
-display.parameters_model <- function(object,
-                                     format = "markdown",
-                                     digits = 2,
-                                     ci_digits = 2,
-                                     p_digits = 3,
-                                     style = NULL,
-                                     ...) {
+display.compare_parameters <- function(object,
+                                       format = "markdown",
+                                       digits = 2,
+                                       ci_digits = 2,
+                                       p_digits = 3,
+                                       style = NULL,
+                                       ...) {
   if (identical(format, "html")) {
     print_html(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, style = style, ...)
   } else {
