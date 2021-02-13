@@ -3,12 +3,15 @@ print.compare_parameters <- function(x,
                                      digits = 2,
                                      ci_digits = 2,
                                      p_digits = 3,
+                                     style = NULL,
                                      ...) {
   # save original input
   orig_x <- x
 
   # get attributes
-  style <- attributes(x)$output_style
+  if (missing(style)) {
+    style <- attributes(x)$output_style
+  }
 
   formatted_table <- format(
     x,
@@ -36,12 +39,15 @@ print_html.compare_parameters <- function(x,
                                           digits = 2,
                                           ci_digits = 2,
                                           p_digits = 3,
+                                          style = NULL,
                                           ...) {
   # save original input
   orig_x <- x
 
   # get attributes
-  style <- attributes(x)$output_style
+  if (missing(style)) {
+    style <- attributes(x)$output_style
+  }
 
   formatted_table <- format(
     x,
@@ -67,12 +73,15 @@ print_md.compare_parameters <- function(x,
                                         digits = 2,
                                         ci_digits = 2,
                                         p_digits = 3,
+                                        style = NULL,
                                         ...) {
   # save original input
   orig_x <- x
 
   # get attributes
-  style <- attributes(x)$output_style
+  if (missing(style)) {
+    style <- attributes(x)$output_style
+  }
 
   formatted_table <- format(
     x,
@@ -153,7 +162,28 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
 
 
 
+# output-format helper  -------------------------
+
+# this function does the main composition of columns for the output
+
 .format_output_style <- function(x, style, format, modelname) {
+
+  if (grepl("2$", style)) {
+    style <- substr(style, 0, nchar(style) - 1)
+    if (identical(format, "html")) {
+      linesep <- "<br>"
+    } else {
+      linesep <- "\n"
+    }
+  } else {
+    linesep <- " "
+  }
+
+  if (style %in% c("se", "ci")) {
+    x$p_stars <- ""
+  }
+
+
   if (style == "minimal") {
     ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
     param_col <- colnames(x)[1]
@@ -162,19 +192,18 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     if (identical(format, "html")) {
       colnames(x) <- paste0(colnames(x), " (", modelname, ")")
     }
-  } else if (style == "one_col_1") {
+  } else if (style %in% c("ci_p", "ci")) {
     ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
     param_col <- colnames(x)[1]
-    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, " ", x[[ci_col]], ""))
+    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, x[[ci_col]], ""))
     x <- x[param_col]
     colnames(x) <- modelname
-    x[[1]][x[[1]] == "()"] <- ""
-  } else if (style == "one_col_2") {
+  } else if (style %in% c("se_p", "se")) {
     param_col <- colnames(x)[1]
-    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, " (", x$SE, ")"))
+    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, "(", x$SE, ")"))
     x <- x[param_col]
     colnames(x) <- modelname
-    x[[1]][x[[1]] == "()"] <- ""
   }
+  x[[1]][x[[1]] == "()"] <- ""
   x
 }

@@ -8,7 +8,17 @@
 #'   of different model types.
 #' @param component Model component for which parameters should be shown. See
 #'   documentation for related model class in \code{\link{model_parameters}}.
-#' @param style String, indicating which style of output is requested.
+#' @param style String, indicating which style of output is requested. Following
+#'   templates are possible:
+#'   \itemize{
+#'     \item \code{"ci_p"}: Estimate, confidence intervals and asterisks for p-values.
+#'     \item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
+#'     \item \code{"ci"}: Estimate and confidence intervals, no asterisks for p-values.
+#'     \item \code{"se"}: Estimate and standard errors, no asterisks for p-values.
+#'   }
+#'   \code{"ci_p2"}, \code{"se_p2"}, \code{"ci2"} and \code{"se2"} are the same as
+#'   above, except that a new line between estimate and confidence intervals or
+#'   standard errors is added.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
 #'
@@ -36,7 +46,7 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
 
   # set default
   if (is.null(style)) {
-    style <- "one_col_1"
+    style <- "ci_p"
   }
 
   # iterate all models and create list of model parameters
@@ -107,5 +117,6 @@ compare_models <- compare_parameters
       }
     }
   }
+  x$Parameter <- gsub("]", ")", gsub("[", "(", x$Parameter, fixed = TRUE), fixed = TRUE)
   x
 }
