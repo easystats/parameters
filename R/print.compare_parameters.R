@@ -18,7 +18,7 @@ print.compare_parameters <- function(x,
     ci_digits = ci_digits,
     p_digits = p_digits,
     ci_width = "auto",
-    ci_brackets = TRUE,
+    ci_brackets = c("(", ")"),
     format = "text"
   )
 
@@ -117,7 +117,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     colnames(cols) <- gsub(pattern, "", colnames(cols))
     # save p-stars in extra column
     cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
-    cols <- insight::format_table(cols)
+    cols <- insight::format_table(cols, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits)
     out <- cbind(out, .format_output_style(cols, style, format, i))
   }
 
@@ -168,11 +168,13 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, " ", x[[ci_col]], ""))
     x <- x[param_col]
     colnames(x) <- modelname
+    x[[1]][x[[1]] == "()"] <- ""
   } else if (style == "one_col_2") {
     param_col <- colnames(x)[1]
     x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, " (", x$SE, ")"))
     x <- x[param_col]
     colnames(x) <- modelname
+    x[[1]][x[[1]] == "()"] <- ""
   }
   x
 }
