@@ -187,7 +187,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
   # check if model had weights, and if due to missing values n of weighted
   # observations differs from "raw" observations
   if (!all(is.na(weighted_observations)) && !all(is.na(observations))) {
-    if (!all.equal(as.vector(weighted_observations), as.vector(observations))) {
+    if (!isTRUE(all.equal(as.vector(weighted_observations), as.vector(observations)))) {
       message("Number of weighted observations differs from number of unweighted observations.")
     }
     observations <- weighted_observations
