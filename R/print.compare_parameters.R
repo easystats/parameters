@@ -25,7 +25,7 @@ print.compare_parameters <- function(x,
     format = "text"
   )
 
-  cat(insight::export_table(formatted_table, format = "text", footer = NULL))
+  cat(insight::export_table(formatted_table, format = "text", footer = NULL, empty_line = "-"))
 
   invisible(orig_x)
 }
