@@ -69,10 +69,10 @@ adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 \item{style}{String, indicating which style of output is requested. Following
 templates are possible:
 \itemize{
-  \item \code{"ci_p"}: Estimate, confidence intervals and asterisks for p-values.
-  \item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
   \item \code{"ci"}: Estimate and confidence intervals, no asterisks for p-values.
   \item \code{"se"}: Estimate and standard errors, no asterisks for p-values.
+  \item \code{"ci_p"}: Estimate, confidence intervals and asterisks for p-values.
+  \item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
   \item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
   \item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
 }}
