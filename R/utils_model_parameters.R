@@ -39,11 +39,23 @@
   attr(params, "exponentiate") <- exponentiate
   attr(params, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)
   attr(params, "linear_model") <- isTRUE(info$is_linear)
+  attr(params, "n_obs") <- info$n_obs
   attr(params, "model_class") <- class(model)
   attr(params, "bootstrap") <- bootstrap
   attr(params, "iterations") <- iterations
   attr(params, "df_method") <- df_method
   attr(params, "p_adjust") <- p_adjust
+
+  weighted_nobs <- tryCatch(
+    {
+      w <- insight::get_weights(model, na_rm = TRUE, null_as_ones = TRUE)
+      round(info$n_obs * sum(w))
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+  attr(params, "weighted_nobs") <- weighted_nobs
 
   model_formula <- tryCatch(
     {
