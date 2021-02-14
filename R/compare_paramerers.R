@@ -82,6 +82,9 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
     dat
   }, objects, object_names, SIMPLIFY = FALSE)
 
+  object_attributes <- lapply(m, attributes)
+  names(object_attributes) <- object_names
+
   # tell user that exponentiate only applies to non-Gaussian...
   if (isTRUE(exponentiate)) {
     if (any(sapply(m, function(i) isTRUE(attributes(i)$linear_model))) && isTRUE(verbose)) {
@@ -94,6 +97,7 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
 
   attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(object_names, .safe_deparse)), fixed = TRUE)
   attr(all_models, "output_style") <- style
+  attr(all_models, "all_attributes") <- object_attributes
   class(all_models) <- c("compare_parameters", "see_compare_parameters", unique(class(all_models)))
 
   all_models

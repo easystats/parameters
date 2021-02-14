@@ -111,6 +111,8 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     # remove unique columns
     if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
     if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+    # add line with info about observations
+
   }
 
   formatted_table
