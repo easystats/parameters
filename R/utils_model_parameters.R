@@ -49,7 +49,7 @@
   weighted_nobs <- tryCatch(
     {
       w <- insight::get_weights(model, na_rm = TRUE, null_as_ones = TRUE)
-      round(info$n_obs * sum(w))
+      round(sum(w))
     },
     error = function(e) {
       NULL
