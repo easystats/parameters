@@ -94,7 +94,7 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
 
   attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(object_names, .safe_deparse)), fixed = TRUE)
   attr(all_models, "output_style") <- style
-  class(all_models) <- c("compare_parameters", unique(class(all_models)))
+  class(all_models) <- c("compare_parameters", "see_compare_parameters", unique(class(all_models)))
 
   all_models
 }

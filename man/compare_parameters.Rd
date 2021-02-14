@@ -32,8 +32,9 @@ compare_models(
 )
 }
 \arguments{
-\item{...}{One or more regression model objects. Regression models may be
-of different model types.}
+\item{...}{One or more regression model objects, or objects returned by
+\code{model_parameters()}. Regression models may be of different model
+types.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
