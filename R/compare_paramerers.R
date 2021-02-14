@@ -4,8 +4,9 @@
 #' @description Compute and extract model parameters of multiple regression models.
 #'   See \code{\link{model_parameters}} for further details.
 #'
-#' @param ... One or more regression model objects. Regression models may be
-#'   of different model types.
+#' @param ... One or more regression model objects, or objects returned by
+#'   \code{model_parameters()}. Regression models may be of different model
+#'   types.
 #' @param component Model component for which parameters should be shown. See
 #'   documentation for related model class in \code{\link{model_parameters}}.
 #' @param style String, indicating which style of output is requested. Following
@@ -39,7 +40,7 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
   objects <- list(...)
   object_names <- match.call(expand.dots = FALSE)$`...`
 
-  supported_models <- sapply(objects, function(i) insight::is_model_supported(i) | inherits(i, "lavaan"))
+  supported_models <- sapply(objects, function(i) insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model"))
 
   if (!all(supported_models)) {
     warning(sprintf("Following objects are not supported: %s", paste0(object_names[!supported_models], collapse = ", ")))
@@ -55,7 +56,11 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
   # iterate all models and create list of model parameters
   m <- mapply(function(.x, .y) {
     # model parameters
-    dat <- model_parameters(.x, ci = ci, effects = effects, component = component, standardize = standardize, exponentiate = exponentiate, df_method = df_method, p_adjust = p_adjust, verbose = verbose)
+    if (inherits(.x, "parameters_model")) {
+      dat <- .x
+    } else {
+      dat <- model_parameters(.x, ci = ci, effects = effects, component = component, standardize = standardize, exponentiate = exponentiate, df_method = df_method, p_adjust = p_adjust, verbose = verbose)
+    }
     # set specific names for coefficient column
     coef_name <- attributes(dat)$coefficient_name
     if (!is.null(coef_name)) {
@@ -76,6 +81,13 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
     colnames(dat)[!ignore] <- paste0(colnames(dat)[!ignore], ".", .y)
     dat
   }, objects, object_names, SIMPLIFY = FALSE)
+
+  # tell user that exponentiate only applies to non-Gaussian...
+  if (isTRUE(exponentiate)) {
+    if (any(sapply(m, function(i) isTRUE(attributes(i)$linear_model))) && isTRUE(verbose)) {
+      message("Coefficients for linear models were not exponentiated.")
+    }
+  }
 
   # merge all data frames
   all_models <- Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component")), m)
