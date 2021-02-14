@@ -72,6 +72,9 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
   # save model names
   models <- attributes(x)$model_names
 
+  # save model parameters attributes
+  parameters_attributes <- attributes(x)$all_attributes
+
   for (i in models) {
     # each column is suffixed with ".model_name", so we extract
     # columns for each model separately here
@@ -112,7 +115,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
     if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
     # add line with info about observations
-
+    formatted_table <- .add_obs_row(formatted_table, parameters_attributes)
   }
 
   formatted_table
@@ -163,6 +166,36 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
   x
 }
 
+
+
+.add_obs_row <- function(x, att) {
+  observations <- unlist(lapply(att, function(i) {
+    if (is.null(i$n_obs)) {
+      NA
+    } else {
+      i$n_obs
+    }
+  }))
+  weighted_observations <- unlist(lapply(att, function(i) {
+    if (is.null(i$weighted_nobs)) {
+      NA
+    } else {
+      i$weighted_nobs
+    }
+  }))
+
+  if (!all(is.na(observations))) {
+    # add empty row, as separator
+    empty_row <- do.call(data.frame, as.list(rep(NA, ncol(x))))
+    colnames(empty_row) <- colnames(x)
+    x <- rbind(x, empty_row)
+    # add observations
+    obs <- data.frame(as.list(c("Observations", observations)), stringsAsFactors = FALSE)
+    colnames(obs) <- colnames(x)
+    x <- rbind(x, obs)
+  }
+  x
+}
 
 
 
