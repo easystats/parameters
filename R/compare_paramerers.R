@@ -36,7 +36,7 @@
 #' compare_parameters(lm1, lm2, lm3)
 #' @importFrom insight is_model_supported
 #' @export
-compare_parameters <- function(..., ci = .95, effects = "fixed", component = "conditional", standardize = NULL, exponentiate = FALSE, df_method = NULL, p_adjust = NULL, verbose = TRUE, style = NULL) {
+compare_parameters <- function(..., ci = .95, effects = "fixed", component = "conditional", standardize = NULL, exponentiate = FALSE, df_method = "wald", p_adjust = NULL, verbose = TRUE, style = NULL) {
   models <- list(...)
   model_names <- match.call(expand.dots = FALSE)$`...`
 

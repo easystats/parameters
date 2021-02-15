@@ -12,7 +12,7 @@ compare_parameters(
   component = "conditional",
   standardize = NULL,
   exponentiate = FALSE,
-  df_method = NULL,
+  df_method = "wald",
   p_adjust = NULL,
   verbose = TRUE,
   style = NULL
@@ -25,7 +25,7 @@ compare_models(
   component = "conditional",
   standardize = NULL,
   exponentiate = FALSE,
-  df_method = NULL,
+  df_method = "wald",
   p_adjust = NULL,
   verbose = TRUE,
   style = NULL
