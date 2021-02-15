@@ -194,15 +194,8 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
   }
 
   if (!all(is.na(observations))) {
-    ## TODO make sure we match "style" pattern here, so once the argument
-    # values changes, we have to adopt this here as well
-    fill_vector <- if (grepl("2$", style)) {
-      c(NA, NA)
-    } else {
-      NA
-    }
     # add empty row, as separator
-    empty_row <- do.call(data.frame, as.list(rep(fill_vector, ncol(x))))
+    empty_row <- do.call(data.frame, as.list(rep(NA, ncol(x))))
     colnames(empty_row) <- colnames(x)
     x <- rbind(x, empty_row)
     # add observations
