@@ -37,15 +37,15 @@
 #' @importFrom insight is_model_supported
 #' @export
 compare_parameters <- function(..., ci = .95, effects = "fixed", component = "conditional", standardize = NULL, exponentiate = FALSE, df_method = NULL, p_adjust = NULL, verbose = TRUE, style = NULL) {
-  objects <- list(...)
-  object_names <- match.call(expand.dots = FALSE)$`...`
+  models <- list(...)
+  model_names <- match.call(expand.dots = FALSE)$`...`
 
-  supported_models <- sapply(objects, function(i) insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model"))
+  supported_models <- sapply(models, function(i) insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model"))
 
   if (!all(supported_models)) {
-    warning(sprintf("Following objects are not supported: %s", paste0(object_names[!supported_models], collapse = ", ")))
-    objects <- objects[supported_models]
-    object_names <- object_names[supported_models]
+    warning(sprintf("Following objects are not supported: %s", paste0(model_names[!supported_models], collapse = ", ")))
+    models <- models[supported_models]
+    model_names <- model_names[supported_models]
   }
 
   # set default
@@ -54,12 +54,14 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
   }
 
   # iterate all models and create list of model parameters
-  m <- mapply(function(.x, .y) {
+  m <- lapply(1:length(models), function(i) {
+    model <- models[[i]]
+    model_name <- model_names[[i]]
     # model parameters
-    if (inherits(.x, "parameters_model")) {
-      dat <- .x
+    if (inherits(model, "parameters_model")) {
+      dat <- model
     } else {
-      dat <- model_parameters(.x, ci = ci, effects = effects, component = component, standardize = standardize, exponentiate = exponentiate, df_method = df_method, p_adjust = p_adjust, verbose = verbose)
+      dat <- model_parameters(model, ci = ci, effects = effects, component = component, standardize = standardize, exponentiate = exponentiate, df_method = df_method, p_adjust = p_adjust, verbose = verbose)
     }
     # set specific names for coefficient column
     coef_name <- attributes(dat)$coefficient_name
@@ -78,12 +80,15 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
     }
     # add suffix
     ignore <- colnames(dat) %in% c("Parameter", "Component")
-    colnames(dat)[!ignore] <- paste0(colnames(dat)[!ignore], ".", .y)
+    colnames(dat)[!ignore] <- paste0(colnames(dat)[!ignore], ".", model_name)
+    # save model number, for sorting
+    dat$model <- i
+    dat$model[.in_intercepts(dat$Parameter)] <- 0
     dat
-  }, objects, object_names, SIMPLIFY = FALSE)
+  })
 
   object_attributes <- lapply(m, attributes)
-  names(object_attributes) <- object_names
+  names(object_attributes) <- model_names
 
   # tell user that exponentiate only applies to non-Gaussian...
   if (isTRUE(exponentiate)) {
@@ -93,9 +98,11 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
   }
 
   # merge all data frames
-  all_models <- Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component")), m)
+  all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", "model")), m))
+  all_models <- all_models[order(all_models$model), ]
+  all_models$model <- NULL
 
-  attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(object_names, .safe_deparse)), fixed = TRUE)
+  attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(model_names, .safe_deparse)), fixed = TRUE)
   attr(all_models, "output_style") <- style
   attr(all_models, "all_attributes") <- object_attributes
   class(all_models) <- c("compare_parameters", "see_compare_parameters", unique(class(all_models)))
@@ -113,6 +120,7 @@ compare_models <- compare_parameters
 
 
 # helper ----------------------------
+
 
 .set_pretty_names <- function(x) {
   att <- attributes(x)
