@@ -199,9 +199,13 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     colnames(empty_row) <- colnames(x)
     x <- rbind(x, empty_row)
     # add observations
-    obs <- data.frame(as.list(c("Observations", observations)), stringsAsFactors = FALSE)
-    colnames(obs) <- colnames(x)
-    x <- rbind(x, obs)
+    steps <- (ncol(x) - 1) / length(observations)
+    empty_row[[1]] <- "Observations"
+    insert_at <- seq(2, ncol(x), by = steps)
+    for (i in 1:length(insert_at)) {
+      empty_row[[insert_at[i]]] <- observations[i]
+    }
+    x <- rbind(x, empty_row)
   }
   x
 }
