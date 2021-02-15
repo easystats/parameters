@@ -297,7 +297,7 @@ print.parameters_omega_summary <- function(x, ...) {
       ")."
     )
   }
-  paste0(sep, text)
+  paste0(sep, text, sep)
 }
 
 

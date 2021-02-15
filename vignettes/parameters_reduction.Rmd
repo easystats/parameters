@@ -27,6 +27,9 @@ knitr::opts_chunk$set(comment = "#>")
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
     !requireNamespace("nFactors", quietly = TRUE) ||
+    !requireNamespace("EGAnet", quietly = TRUE) ||
+    !requireNamespace("parameters", quietly = TRUE) ||
+    !requireNamespace("insight", quietly = TRUE) ||
     !requireNamespace("psych", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
@@ -77,7 +80,7 @@ Although this function can be useful in exploratory data analysis, it's best to 
 
 ## Principal Component Analysis (PCA)
 
-PCA is a widely used procedure that lies in-between dimension reduction and structural modelling. Indeed, one of the way of reducing the number of predictors is to extract a new set of uncorrelated variables that will *represent* variance of your initial dataset. But how the original variables relate between themselves can also be a question on its own.
+PCA is a widely used procedure that lies in-between dimension reduction and structural modeling. Indeed, one of the way of reducing the number of predictors is to extract a new set of uncorrelated variables that will *represent* variance of your initial dataset. But how the original variables relate between themselves can also be a question on its own.
 
 We can apply the `principal_components()` function to do the the predictors of the model:
 
