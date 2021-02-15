@@ -115,7 +115,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
     if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
     # add line with info about observations
-    formatted_table <- .add_obs_row(formatted_table, parameters_attributes)
+    formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style)
   }
 
   formatted_table
@@ -168,7 +168,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
 
 
 
-.add_obs_row <- function(x, att) {
+.add_obs_row <- function(x, att, style) {
   observations <- unlist(lapply(att, function(i) {
     if (is.null(i$n_obs)) {
       NA
@@ -194,8 +194,15 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
   }
 
   if (!all(is.na(observations))) {
+    ## TODO make sure we match "style" pattern here, so once the argument
+    # values changes, we have to adopt this here as well
+    fill_vector <- if (grepl("2$", style)) {
+      c(NA, NA)
+    } else {
+      NA
+    }
     # add empty row, as separator
-    empty_row <- do.call(data.frame, as.list(rep(NA, ncol(x))))
+    empty_row <- do.call(data.frame, as.list(rep(fill_vector, ncol(x))))
     colnames(empty_row) <- colnames(x)
     x <- rbind(x, empty_row)
     # add observations
