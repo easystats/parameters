@@ -1,7 +1,8 @@
 if (require("testthat") &&
   require("parameters") &&
   require("BayesFactor") &&
-  require("logspline")) {
+  require("logspline") &&
+  getRversion() >= "3.6") {
   .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
   if (.runThisTest) {
