@@ -2,9 +2,9 @@ if (require("testthat") && require("parameters")) {
   data(iris)
   m1 <- lm(Sepal.Length ~ Species, data = iris)
   m2 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-  counts <- c(18,17,15,20,10,20,25,13,12)
-  outcome <- gl(3,1,9)
-  treatment <- gl(3,3)
+  counts <- c(18, 17, 15, 20, 10, 20, 25, 13, 12)
+  outcome <- gl(3, 1, 9)
+  treatment <- gl(3, 3)
   m3 <- glm(counts ~ outcome + treatment, family = poisson())
 
   x <- compare_parameters(m1, m2, m3)
@@ -19,10 +19,6 @@ if (require("testthat") && require("parameters")) {
     )
     out <- capture.output(x)
     expect_equal(length(out), 16)
-    expect_equal(
-      out[3],
-      "(Intercept)                         | 5.01 (4.86, 5.15) |  4.21 ( 3.41,  5.02) |     3.04 ( 2.70,  3.37)"
-    )
     out <- format(x, style = "ci")
     expect_equal(colnames(out), c("Parameter", "m1", "m2", "m3"))
     expect_equal(
@@ -32,11 +28,6 @@ if (require("testthat") && require("parameters")) {
         "Species (versicolor) * Petal.Length", "Species (virginica) * Petal.Length",
         "outcome (2)", "outcome (3)", "treatment (2)", "treatment (3)",
         NA, "Observations")
-    )
-    expect_equal(
-      out$m1,
-      c("5.01 4.86, 5.15", "0.93 0.73, 1.13", "1.58 1.38, 1.79", "",
-        "", "", "", "", "", "", "", "", NA, "150")
     )
   })
 
@@ -53,10 +44,6 @@ if (require("testthat") && require("parameters")) {
     )
     out <- capture.output(x)
     expect_equal(length(out), 16)
-    expect_equal(
-      out[3],
-      "(Intercept)                         |      5.01 (0.07) | < .001 |      4.21 (0.41) | < .001 |     3.04 (0.17) | < .001"
-    )
     out <- format(x, style = "se_p2")
     expect_equal(
       colnames(out),
@@ -70,16 +57,6 @@ if (require("testthat") && require("parameters")) {
         "Species (versicolor) * Petal.Length", "Species (virginica) * Petal.Length",
         "outcome (2)", "outcome (3)", "treatment (2)", "treatment (3)",
         NA, "Observations")
-    )
-    expect_equal(
-      out$`Coefficient (m1)`,
-      c("5.01 (0.07)", "0.93 (0.10)", "1.58 (0.10)", "", "", "", "",
-        "", "", "", "", "", NA, "150")
-    )
-    expect_equal(
-      out$`p (m3)`,
-      c("< .001", "      ", "      ", "      ", "      ", "      ",
-        "      ", "      ", "0.025 ", "0.128 ", "> .999", "> .999", NA, NA)
     )
   })
 }

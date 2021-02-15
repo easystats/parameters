@@ -82,22 +82,24 @@ if (requireNamespace("effectsize", quietly = TRUE)) {
   model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
   model_parameters(model)
 
-  if (require("lme4")) {
-    mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species),
-      data = df
-    )
-    model <- anova(mm)
+  \dontrun{
+    if (require("lme4")) {
+      mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species),
+        data = df
+      )
+      model <- anova(mm)
 
-    # simple parameters table
-    model_parameters(model)
+      # simple parameters table
+      model_parameters(model)
 
-    # parameters table including effect sizes
-    model_parameters(
-      model,
-      eta_squared = "partial",
-      ci = .9,
-      df_error = dof_satterthwaite(mm)[2:3]
-    )
+      # parameters table including effect sizes
+      model_parameters(
+        model,
+        eta_squared = "partial",
+        ci = .9,
+        df_error = dof_satterthwaite(mm)[2:3]
+      )
+    }
   }
 }
 }

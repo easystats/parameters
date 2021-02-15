@@ -27,6 +27,7 @@
   ci = 0.95,
   bootstrap = FALSE,
   iterations = 1000,
+  effects = "fixed",
   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
   standardize = NULL,
   exponentiate = FALSE,
@@ -115,6 +116,8 @@ mimic behaviour of other software packages, such as Stata.}
 
 \item{...}{Arguments passed to or from other methods.}
 
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
+
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
@@ -124,8 +127,6 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.}
-
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
 
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
 (if possible), and confidence intervals and p-values are based on these
