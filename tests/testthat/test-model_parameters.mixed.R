@@ -27,6 +27,23 @@ if (require("testthat") &&
     # TODO: Not sure how to deal with bootstrapped mixed models... As it throws an unreasonable amount of singular fits...
   })
 
+
+  test_that("model_parameters.mixed-random", {
+    params <- model_parameters(m1, effects = "random")
+    expect_equal(c(nrow(params), ncol(params)), c(3, 6))
+    expect_equal(params$Parameter, c("(Intercept) [3]", "(Intercept) [4]", "(Intercept) [5]"))
+    expect_equal(params$Coefficient, c(0.1692, 0.0566, -0.2259), tolerance = 1e-2)
+  })
+
+  test_that("model_parameters.mixed-all", {
+    params <- model_parameters(m1, effects = "all")
+    expect_equal(c(nrow(params), ncol(params)), c(5, 10))
+    expect_equal(params$Parameter,
+                 c("(Intercept)", "cyl", "(Intercept) [3]", "(Intercept) [4]",
+                   "(Intercept) [5]"))
+    expect_equal(params$Coefficient, c(0.6511, 0.4042, 0.1692, 0.0566, -0.2259), tolerance = 1e-2)
+  })
+
   data("qol_cancer")
   qol_cancer <- cbind(
     qol_cancer,
