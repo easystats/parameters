@@ -116,7 +116,7 @@ Suggests:
     NbClust,
     nFactors,
     nlme,
-    performance (>= 0.6.1),
+    performance (>= 0.7.0),
     plm,
     PMCMRplus,
     projpred,
