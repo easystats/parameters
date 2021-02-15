@@ -32,7 +32,7 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
     params$p <- stats::p.adjust(params$p, method = p_adjust)
   }
 
-  if (exponentiate) params <- .exponentiate_parameters(params)
+  if (exponentiate) params <- .exponentiate_parameters(params, model)
 
   params <- .add_model_parameters_attributes(
     params,

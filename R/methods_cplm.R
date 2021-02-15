@@ -62,7 +62,7 @@ model_parameters.zcpglm <- function(model,
   }
 
 
-  if (exponentiate) parameters <- .exponentiate_parameters(parameters)
+  if (exponentiate) parameters <- .exponentiate_parameters(parameters, model)
 
   parameters <- .add_model_parameters_attributes(
     parameters,

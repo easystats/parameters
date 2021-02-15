@@ -47,7 +47,7 @@ if (require("insight") && require("testthat") && require("parameters")) {
     }
   }
 
-  if (require("lme4") && require("effectsize")) {
+  if (require("lme4") && require("effectsize") && utils::packageVersion("effectsize") > "0.4.3") {
     data(iris)
     df <- iris
     df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")

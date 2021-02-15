@@ -57,6 +57,161 @@ format.parameters_simulate <- format.parameters_model
 #' @export
 format.parameters_brms_meta <- format.parameters_model
 
+#' @importFrom insight format_p format_table
+#' @inheritParams print.parameters_model
+#' @export
+format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
+  x$Method <- NULL
+
+  out <- data.frame(
+    Parameter = x$Parameter,
+    Component = x$Component,
+    stringsAsFactors = FALSE
+  )
+
+  # save model names
+  models <- attributes(x)$model_names
+
+  # save model parameters attributes
+  parameters_attributes <- attributes(x)$all_attributes
+
+  for (i in models) {
+    # each column is suffixed with ".model_name", so we extract
+    # columns for each model separately here
+    pattern <- paste0("\\.", i, "$")
+    cols <- x[grepl(pattern, colnames(x))]
+    # since we now have the columns for a single model, we clean the
+    # column names (i.e. remove suffix), so we can use "format_table" function
+    colnames(cols) <- gsub(pattern, "", colnames(cols))
+    # save p-stars in extra column
+    cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
+    cols <- insight::format_table(cols, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits)
+    out <- cbind(out, .format_output_style(cols, style, format, i))
+  }
+
+  # check whether to split table by certain factors/columns (like component, response...)
+  split_by <- split_column <- .prepare_splitby_for_print(x)
+
+  if (length(split_by) > 0) {
+    # set up split-factor
+    if (length(split_column) > 1) {
+      split_by <- lapply(split_column, function(i) x[[i]])
+    } else {
+      split_by <- list(x[[split_column]])
+    }
+    names(split_by) <- split_column
+
+    # make sure we have correct sorting here...
+    formatted_table <- split(out, f = split_by)
+    formatted_table <- lapply(formatted_table, function(i) {
+      # remove unique columns
+      if (.n_unique(i$Component) == 1) i$Component <- NULL
+      if (.n_unique(i$Effects) == 1) i$Effects <- NULL
+      i
+    })
+  } else {
+    formatted_table <- out
+    # remove unique columns
+    if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
+    if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+    # add line with info about observations
+    formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style)
+  }
+
+  formatted_table
+}
+
+
+
+# output-format helper  -------------------------
+
+# this function does the main composition of columns for the output
+
+.format_output_style <- function(x, style, format, modelname) {
+  linesep <- " "
+  if (style %in% c("se", "ci")) {
+    x$p_stars <- ""
+  }
+
+  if (style == "minimal") {
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, x[[ci_col]]))
+    x <- x[c(param_col, "p")]
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  } else if (style %in% c("ci_p", "ci")) {
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, x[[ci_col]]))
+    x <- x[param_col]
+    colnames(x) <- modelname
+  } else if (style %in% c("se_p", "se")) {
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, "(", x$SE, ")"))
+    x <- x[param_col]
+    colnames(x) <- modelname
+  } else if (style %in% c("ci_p2")) {
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, x[[ci_col]]))
+    x <- x[c(param_col, "p")]
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  } else if (style %in% c("se_p2")) {
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, "(", x$SE, ")"))
+    x <- x[c(param_col, "p")]
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  }
+  x[[1]][x[[1]] == "()"] <- ""
+  x
+}
+
+
+
+.add_obs_row <- function(x, att, style) {
+  observations <- unlist(lapply(att, function(i) {
+    if (is.null(i$n_obs)) {
+      NA
+    } else {
+      i$n_obs
+    }
+  }))
+  weighted_observations <- unlist(lapply(att, function(i) {
+    if (is.null(i$weighted_nobs)) {
+      NA
+    } else {
+      i$weighted_nobs
+    }
+  }))
+
+  # check if model had weights, and if due to missing values n of weighted
+  # observations differs from "raw" observations
+  if (!all(is.na(weighted_observations)) && !all(is.na(observations))) {
+    if (!isTRUE(all.equal(as.vector(weighted_observations), as.vector(observations)))) {
+      message("Number of weighted observations differs from number of unweighted observations.")
+    }
+    observations <- weighted_observations
+  }
+
+  if (!all(is.na(observations))) {
+    # add empty row, as separator
+    empty_row <- do.call(data.frame, as.list(rep(NA, ncol(x))))
+    colnames(empty_row) <- colnames(x)
+    x <- rbind(x, empty_row)
+    # add observations
+    steps <- (ncol(x) - 1) / length(observations)
+    empty_row[[1]] <- "Observations"
+    insert_at <- seq(2, ncol(x), by = steps)
+    for (i in 1:length(insert_at)) {
+      empty_row[[insert_at[i]]] <- observations[i]
+    }
+    x <- rbind(x, empty_row)
+  }
+  x
+}
+
+
+
 
 
 # stan models ----------------------------

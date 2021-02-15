@@ -136,7 +136,7 @@ model_parameters.merMod <- function(model,
       )
     }
 
-    if (exponentiate) params <- .exponentiate_parameters(params)
+    if (exponentiate) params <- .exponentiate_parameters(params, model)
   }
 
   if (effects != "fixed") {

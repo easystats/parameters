@@ -60,7 +60,7 @@ model_parameters.emmGrid <- function(model,
   # rename
   names(params) <- gsub("Estimate", "Coefficient", names(params))
 
-  if (exponentiate) params <- .exponentiate_parameters(params)
+  if (exponentiate) params <- .exponentiate_parameters(params, model)
 
   params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, p_adjust = p_adjust, verbose = verbose, ...))
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -89,7 +89,7 @@ model_parameters.emm_list <- function(model,
   params <- do.call(rbind,params)
   params$Component <- .pretty_emmeans_Component_names(s)
 
-  if (exponentiate) params <- .exponentiate_parameters(params)
+  if (exponentiate) params <- .exponentiate_parameters(params, model)
   params <- .add_model_parameters_attributes(params, model, ci, exponentiate, p_adjust = p_adjust, verbose = verbose, ...)
 
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)

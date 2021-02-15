@@ -17,6 +17,15 @@ plot.parameters_model <- function(x, ...) {
 
 
 #' @export
+plot.compare_parameters <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot model parameters. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
+}
+
+
+#' @export
 plot.parameters_stan <- function(x, ...) {
   if (!requireNamespace("see", quietly = TRUE)) {
     stop("Package 'see' needed to plot model parameters. Please install it by running `install.packages('see')`.")

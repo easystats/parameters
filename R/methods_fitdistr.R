@@ -10,7 +10,7 @@ model_parameters.fitdistr <- function(model,
     stringsAsFactors = FALSE
   )
 
-  if (exponentiate) out <- .exponentiate_parameters(out)
+  if (exponentiate) out <- .exponentiate_parameters(out, model)
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
