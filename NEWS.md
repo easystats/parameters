@@ -4,8 +4,12 @@
 
 * Roll-back R dependency to R >= 3.4.
 
-* Bootstrapped estimates (from `bootstrap_model()` or `bootstrap_parameters()`) can be passed to `emmeans` to obtain bootstrapped estimates, contrasts, simple slopes (etc) and their CIs.
-  * These can then be passed to `model_parameters()` and related functions to obtain standard errors, p-values, etc.
+* Bootstrapped estimates (from `bootstrap_model()` or `bootstrap_parameters()`) 
+  can be passed to `emmeans` to obtain bootstrapped estimates, contrasts, 
+  simple slopes (etc) and their CIs.
+
+  * These can then be passed to `model_parameters()` and related functions to 
+    obtain standard errors, p-values, etc.
 
 ## Breaking changes
 
@@ -16,7 +20,8 @@
 
 ## New supported model classes
 
-* `crr` (*cmprsk*), `leveneTest()` (*car*), `varest` (*vars*), `ergm` (*ergm*), `btergm` (*btergm*), `Rchoice` (*Rchoice*), `garch` (*tseries*)
+* `crr` (*cmprsk*), `leveneTest()` (*car*), `varest` (*vars*), `ergm` (*ergm*),
+  `btergm` (*btergm*), `Rchoice` (*Rchoice*), `garch` (*tseries*)
 
 ## New functions
 

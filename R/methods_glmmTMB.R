@@ -12,6 +12,7 @@ model_parameters.glmmTMB <- function(model,
                                      ci = .95,
                                      bootstrap = FALSE,
                                      iterations = 1000,
+                                     effects = "fixed",
                                      component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
                                      standardize = NULL,
                                      exponentiate = FALSE,
@@ -26,6 +27,9 @@ model_parameters.glmmTMB <- function(model,
   # p-values, CI and se might be based on different df-methods
   df_method <- .check_df_method(df_method)
 
+  # which component to return?
+  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
+
   # fix argument, if model has only conditional component
   cs <- stats::coef(summary(model))
   has_zeroinf <- insight::model_info(model)$is_zero_inflated
@@ -35,37 +39,54 @@ model_parameters.glmmTMB <- function(model,
     component <- "conditional"
   }
 
-  # Processing
-  if (bootstrap) {
-    params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
-  } else {
-    params <- .extract_parameters_generic(
-      model,
-      ci = ci,
-      component = component,
-      standardize = standardize,
-      robust = FALSE,
-      df_method = df_method,
-      p_adjust = p_adjust,
-      wb_component = wb_component,
-      ...
-    )
-  }
+  params <- params_random <- NULL
 
-
-  # add dispersion parameter
-  if (inherits(model, "glmmTMB") && !is.null(params$Component) && !"dispersion" %in% params$Component) {
-    dispersion_param <- insight::get_parameters(model, component = "dispersion")
-    if (!is.null(dispersion_param)) {
-      params[nrow(params) + 1, ] <- NA
-      params[nrow(params), "Parameter"] <- dispersion_param$Parameter[1]
-      params[nrow(params), "Coefficient"] <- dispersion_param$Estimate[1]
-      params[nrow(params), "Component"] <- dispersion_param$Component[1]
+  if (effects != "random") {
+    # Processing
+    if (bootstrap) {
+      params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+    } else {
+      params <- .extract_parameters_generic(
+        model,
+        ci = ci,
+        component = component,
+        standardize = standardize,
+        robust = FALSE,
+        df_method = df_method,
+        p_adjust = p_adjust,
+        wb_component = wb_component,
+        ...
+      )
     }
+
+    # add dispersion parameter
+    if (inherits(model, "glmmTMB") && !is.null(params$Component) && !"dispersion" %in% params$Component) {
+      dispersion_param <- insight::get_parameters(model, component = "dispersion")
+      if (!is.null(dispersion_param)) {
+        params[nrow(params) + 1, ] <- NA
+        params[nrow(params), "Parameter"] <- dispersion_param$Parameter[1]
+        params[nrow(params), "Coefficient"] <- dispersion_param$Estimate[1]
+        params[nrow(params), "Component"] <- dispersion_param$Component[1]
+      }
+    }
+
+    if (exponentiate) params <- .exponentiate_parameters(params, model)
   }
 
 
-  if (exponentiate) params <- .exponentiate_parameters(params, model)
+  if (effects != "fixed") {
+    params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
+  }
+
+
+  # merge random and fixed effects, if necessary
+  if (is.null(params)) {
+    params <- params_random
+  } else if (!is.null(params_random)) {
+    params$Effects <- "fixed"
+    params <- rbind(params, params_random)
+  }
+
 
   params <- .add_model_parameters_attributes(
     params,

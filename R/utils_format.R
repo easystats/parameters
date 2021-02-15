@@ -220,6 +220,12 @@
       type
     )
 
+    if (grepl("^conditional\\.Random", type)) {
+      type <- paste0("Count Model: ", gsub("^conditional\\.", "", type))
+    }
+    if (grepl("^zero_inflated\\.Random", type)) {
+      type <- paste0("Zero-inflated Model: ", gsub("^conditional\\.", "", type))
+    }
 
     # tweaking of sub headers
 
