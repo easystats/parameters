@@ -170,9 +170,6 @@
 #' @importFrom insight model_info
 #' @keywords internal
 .exponentiate_parameters <- function(params, model = NULL) {
-  if (!is.null(model) && insight::model_info(model)$is_linear) {
-    return(params)
-  }
   columns <- grepl(pattern = "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)", colnames(params))
   if (any(columns)) {
     params[columns] <- exp(params[columns])
