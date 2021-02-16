@@ -22,4 +22,4 @@ knitr::opts_chunk$set(
 )
 ```
 
-Due to technical reasons, all package vignettes are currently only available at [https://easystats.github.io/parameters](https://easystats.github.io/parameters).
+Due to technical reasons, all package vignettes are currently only available at [https://easystats.github.io/parameters/](https://easystats.github.io/parameters/).
