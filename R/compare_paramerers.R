@@ -90,13 +90,6 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
   object_attributes <- lapply(m, attributes)
   names(object_attributes) <- model_names
 
-  # tell user that exponentiate only applies to non-Gaussian...
-  if (isTRUE(exponentiate)) {
-    if (any(sapply(m, function(i) isTRUE(attributes(i)$linear_model))) && isTRUE(verbose)) {
-      message("Coefficients for linear models were not exponentiated.")
-    }
-  }
-
   # merge all data frames
   all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", "model")), m))
   all_models <- all_models[order(all_models$model), ]
