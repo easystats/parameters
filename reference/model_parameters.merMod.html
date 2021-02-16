@@ -66,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -195,6 +201,7 @@
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
+  effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span><span class='op'>)</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -290,7 +297,9 @@ the coefficients (and related confidence intervals). This is typical for,
 say, logistic regressions, or more generally speaking: for models with log
 or logit link. <strong>Note:</strong> standard errors are also transformed (by
 multiplying the standard errors with the exponentiated coefficients), to
-mimic behaviour of other software packages, such as Stata.</p></td>
+mimic behaviour of other software packages, such as Stata. For
+<code><a href='compare_parameters.html'>compare_parameters()</a></code>, <code>exponentiate = "nongaussian"</code> will only
+exponentiate coefficients for all models except those from Gaussian family.</p></td>
     </tr>
     <tr>
       <th>details</th>
@@ -309,6 +318,10 @@ mimic behaviour of other software packages, such as Stata.</p></td>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     <tr>
+      <th>effects</th>
+      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random effects (<code>"random"</code>) or both (<code>"all"</code>) be returned? Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
       <th>component</th>
       <td><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
@@ -323,10 +336,6 @@ adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adj
     <tr>
       <th>wb_component</th>
       <td><p>Logical, if <code>TRUE</code> and models contains within- and between-effects (see <code><a href='check_heterogeneity.html'>demean</a></code>), the <code>Component</code> column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the <code>Component</code> column indicates, which parameters belong to the conditional or zero-inflated component of the model.</p></td>
-    </tr>
-    <tr>
-      <th>effects</th>
-      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random effects (<code>"random"</code>) or both (<code>"all"</code>) be returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>robust</th>
@@ -370,7 +379,7 @@ robust standard errors. Additional arguments like <code>vcov_estimation</code> o
   <span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, details <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects
+</div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects
 #&gt; 
 #&gt; # Fixed Effects </span><span>
 #&gt; 
@@ -432,6 +441,8 @@ robust standard errors. Additional arguments like <code>vcov_estimation</code> o
 
   
 
+
+  
 
   </body>
 </html>

@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -178,7 +180,7 @@
 <div id="principal-component-analysis-pca" class="section level2">
 <h2 class="hasAnchor">
 <a href="#principal-component-analysis-pca" class="anchor"></a>Principal Component Analysis (PCA)</h2>
-<p>PCA is a widely used procedure that lies in-between dimension reduction and structural modelling. Indeed, one of the way of reducing the number of predictors is to extract a new set of uncorrelated variables that will <em>represent</em> variance of your initial dataset. But how the original variables relate between themselves can also be a question on its own.</p>
+<p>PCA is a widely used procedure that lies in-between dimension reduction and structural modeling. Indeed, one of the way of reducing the number of predictors is to extract a new set of uncorrelated variables that will <em>represent</em> variance of your initial dataset. But how the original variables relate between themselves can also be a question on its own.</p>
 <p>We can apply the <code><a href="../reference/principal_components.html">principal_components()</a></code> function to do the the predictors of the model:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_predictors.html">get_predictors</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span>
@@ -280,6 +282,8 @@
 
   
 
+
+  
 
   </body>
 </html>
