@@ -9,7 +9,8 @@ articles:
   model_parameters_mice: model_parameters_mice.html
   model_parameters_robust: model_parameters_robust.html
   model_parameters_standardized: model_parameters_standardized.html
+  overview_of_vignettes: overview_of_vignettes.html
   parameters_reduction: parameters_reduction.html
   parameters_selection: parameters_selection.html
-last_built: 2021-02-16T21:42Z
+last_built: 2021-02-16T21:56Z
 
