@@ -101,7 +101,9 @@ the coefficients (and related confidence intervals). This is typical for,
 say, logistic regressions, or more generally speaking: for models with log
 or logit link. \strong{Note:} standard errors are also transformed (by
 multiplying the standard errors with the exponentiated coefficients), to
-mimic behaviour of other software packages, such as Stata.}
+mimic behaviour of other software packages, such as Stata. For
+\code{compare_parameters()}, \code{exponentiate = "nongaussian"} will only
+exponentiate coefficients for all models except those from Gaussian family.}
 
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
 (if possible), and confidence intervals and p-values are based on these

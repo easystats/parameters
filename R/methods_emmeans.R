@@ -60,7 +60,9 @@ model_parameters.emmGrid <- function(model,
   # rename
   names(params) <- gsub("Estimate", "Coefficient", names(params))
 
-  if (exponentiate) params <- .exponentiate_parameters(params, model)
+  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
+    params <- .exponentiate_parameters(params, model, exponentiate)
+  }
 
   params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, p_adjust = p_adjust, verbose = verbose, ...))
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -82,14 +84,16 @@ model_parameters.emm_list <- function(model,
   params <- lapply(seq_along(s), function(i) {
     pars <- model_parameters(model[[i]])
     estimate_pos <- which(colnames(pars) == "Coefficient")
-    pars[1:(estimate_pos-1)] <- NULL
+    pars[1:(estimate_pos - 1)] <- NULL
     cbind(Parameter = .pretty_emmeans_Parameter_names(model[[i]]),
           pars)
   })
   params <- do.call(rbind,params)
   params$Component <- .pretty_emmeans_Component_names(s)
 
-  if (exponentiate) params <- .exponentiate_parameters(params, model)
+  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
+    params <- .exponentiate_parameters(params, model, exponentiate)
+  }
   params <- .add_model_parameters_attributes(params, model, ci, exponentiate, p_adjust = p_adjust, verbose = verbose, ...)
 
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)

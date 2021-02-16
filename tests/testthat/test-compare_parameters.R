@@ -18,16 +18,15 @@ if (require("testthat") && require("parameters")) {
         "z.m3", "df_error.m3", "p.m3")
     )
     out <- capture.output(x)
-    expect_equal(length(out), 16)
+    expect_equal(length(out), 14)
     out <- format(x, style = "ci")
     expect_equal(colnames(out), c("Parameter", "m1", "m2", "m3"))
     expect_equal(
       out$Parameter,
       c("(Intercept)", "Species (versicolor)", "Species (virginica)",
-        "Species (versicolor)", "Species (virginica)", "Petal.Length",
-        "Species (versicolor) * Petal.Length", "Species (virginica) * Petal.Length",
-        "outcome (2)", "outcome (3)", "treatment (2)", "treatment (3)",
-        NA, "Observations")
+        "Petal.Length", "Species (versicolor) * Petal.Length",
+        "Species (virginica) * Petal.Length", "outcome (2)", "outcome (3)",
+        "treatment (2)", "treatment (3)", NA, "Observations")
     )
   })
 
@@ -43,7 +42,7 @@ if (require("testthat") && require("parameters")) {
         "z.m3", "df_error.m3", "p.m3")
     )
     out <- capture.output(x)
-    expect_equal(length(out), 16)
+    expect_equal(length(out), 14)
     out <- format(x, style = "se_p2")
     expect_equal(
       colnames(out),
@@ -53,10 +52,9 @@ if (require("testthat") && require("parameters")) {
     expect_equal(
       out$Parameter,
       c("(Intercept)", "Species (versicolor)", "Species (virginica)",
-        "Species (versicolor)", "Species (virginica)", "Petal.Length",
-        "Species (versicolor) * Petal.Length", "Species (virginica) * Petal.Length",
-        "outcome (2)", "outcome (3)", "treatment (2)", "treatment (3)",
-        NA, "Observations")
+        "Petal.Length", "Species (versicolor) * Petal.Length",
+        "Species (virginica) * Petal.Length", "outcome (2)", "outcome (3)",
+        "treatment (2)", "treatment (3)", NA, "Observations")
     )
   })
 }

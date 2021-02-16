@@ -166,7 +166,9 @@ pool_parameters <- function(x,
 
   # final attributes -----
 
-  if (exponentiate) pooled_params <- .exponentiate_parameters(pooled_params)
+  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
+    pooled_params <- .exponentiate_parameters(pooled_params, NULL, exponentiate)
+  }
   # this needs to be done extra here, cannot call ".add_model_parameters_attributes()"
   pooled_params <- .add_pooled_params_attributes(
     pooled_params,

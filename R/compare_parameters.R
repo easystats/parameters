@@ -91,9 +91,16 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
   names(object_attributes) <- model_names
 
   # merge all data frames
-  all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", "model")), m))
-  all_models <- all_models[order(all_models$model), ]
-  all_models$model <- NULL
+  all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component")), m))
+
+  # find columns with model numbers and create new variable "params_order",
+  # which is pasted together of all model-column indices. Take lowest index of
+  # all model-column indices, which then indicates order of parameters/rows.
+  model_cols <- which(grepl("^model", colnames(all_models)))
+  params_order <- as.numeric(substr(gsub("NA", "", do.call(paste0, all_models[model_cols]), fixed = TRUE), 0, 1))
+
+  all_models <- all_models[order(params_order), ]
+  all_models[model_cols] <- NULL
 
   attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(model_names, .safe_deparse)), fixed = TRUE)
   attr(all_models, "output_style") <- style

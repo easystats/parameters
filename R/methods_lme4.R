@@ -136,7 +136,9 @@ model_parameters.merMod <- function(model,
       )
     }
 
-    if (exponentiate) params <- .exponentiate_parameters(params, model)
+    if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
+      params <- .exponentiate_parameters(params, model, exponentiate)
+    }
   }
 
   if (effects != "fixed") {

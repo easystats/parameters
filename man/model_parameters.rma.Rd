@@ -41,7 +41,9 @@ the coefficients (and related confidence intervals). This is typical for,
 say, logistic regressions, or more generally speaking: for models with log
 or logit link. \strong{Note:} standard errors are also transformed (by
 multiplying the standard errors with the exponentiated coefficients), to
-mimic behaviour of other software packages, such as Stata.}
+mimic behaviour of other software packages, such as Stata. For
+\code{compare_parameters()}, \code{exponentiate = "nongaussian"} will only
+exponentiate coefficients for all models except those from Gaussian family.}
 
 \item{include_studies}{Logical, if \code{TRUE} (default), includes parameters
 for all studies. Else, only parameters for overall-effects are shown.}

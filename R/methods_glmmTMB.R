@@ -70,7 +70,9 @@ model_parameters.glmmTMB <- function(model,
       }
     }
 
-    if (exponentiate) params <- .exponentiate_parameters(params, model)
+    if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
+      params <- .exponentiate_parameters(params, model, exponentiate)
+    }
   }
 
 

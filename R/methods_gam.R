@@ -54,7 +54,9 @@ model_parameters.gam <- function(model,
     }
   }
 
-  if (exponentiate) parameters <- .exponentiate_parameters(parameters, model)
+  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
+    parameters <- .exponentiate_parameters(parameters, model, exponentiate)
+  }
   parameters <- .add_model_parameters_attributes(
     parameters,
     model,

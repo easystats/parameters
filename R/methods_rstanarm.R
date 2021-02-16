@@ -85,7 +85,9 @@ model_parameters.stanreg <- function(model,
   }
 
   params <- .add_pretty_names(params, model)
-  if (exponentiate) params <- .exponentiate_parameters(params, model)
+  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
+    params <- .exponentiate_parameters(params, model, exponentiate)
+  }
 
   params <- .add_model_parameters_attributes(
     params,
