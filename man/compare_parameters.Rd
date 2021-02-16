@@ -14,8 +14,9 @@ compare_parameters(
   exponentiate = FALSE,
   df_method = "wald",
   p_adjust = NULL,
-  verbose = TRUE,
-  style = NULL
+  style = NULL,
+  column_names = NULL,
+  verbose = TRUE
 )
 
 compare_models(
@@ -27,8 +28,9 @@ compare_models(
   exponentiate = FALSE,
   df_method = "wald",
   p_adjust = NULL,
-  verbose = TRUE,
-  style = NULL
+  style = NULL,
+  column_names = NULL,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -66,8 +68,6 @@ May be \code{"profile"} or \code{"wald"}.}
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
 
-\item{verbose}{Toggle warnings and messages.}
-
 \item{style}{String, indicating which style of output is requested. Following
 templates are possible:
 \itemize{
@@ -78,6 +78,11 @@ templates are possible:
   \item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
   \item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
 }}
+
+\item{column_names}{Character vector with strings that should be used as
+column headers. Must be of same length as number of models in \code{...}.}
+
+\item{verbose}{Toggle warnings and messages.}
 }
 \value{
 A data frame of indices related to the model's parameters.
@@ -97,4 +102,15 @@ lm1 <- lm(Sepal.Length ~ Species, data = iris)
 lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 compare_parameters(lm1, lm2, lm3)
+
+data(mtcars)
+m1 <- lm(mpg ~ wt, data = mtcars)
+m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
+compare_parameters(m1, m2)
+
+# exponentiate coefficients, but not for lm
+compare_parameters(m1, m2, exponentiate = "nongaussian")
+
+# change column names
+compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
 }

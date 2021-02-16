@@ -9,6 +9,8 @@
 #'   types.
 #' @param component Model component for which parameters should be shown. See
 #'   documentation for related model class in \code{\link{model_parameters}}.
+#' @param column_names Character vector with strings that should be used as
+#'   column headers. Must be of same length as number of models in \code{...}.
 #' @param style String, indicating which style of output is requested. Following
 #'   templates are possible:
 #'   \itemize{
@@ -34,9 +36,20 @@
 #' lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 #' lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 #' compare_parameters(lm1, lm2, lm3)
+#'
+#' data(mtcars)
+#' m1 <- lm(mpg ~ wt, data = mtcars)
+#' m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
+#' compare_parameters(m1, m2)
+#'
+#' # exponentiate coefficients, but not for lm
+#' compare_parameters(m1, m2, exponentiate = "nongaussian")
+#'
+#' # change column names
+#' compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
 #' @importFrom insight is_model_supported
 #' @export
-compare_parameters <- function(..., ci = .95, effects = "fixed", component = "conditional", standardize = NULL, exponentiate = FALSE, df_method = "wald", p_adjust = NULL, verbose = TRUE, style = NULL) {
+compare_parameters <- function(..., ci = .95, effects = "fixed", component = "conditional", standardize = NULL, exponentiate = FALSE, df_method = "wald", p_adjust = NULL, style = NULL, column_names = NULL, verbose = TRUE) {
   models <- list(...)
   model_names <- match.call(expand.dots = FALSE)$`...`
 
@@ -51,6 +64,17 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
   # set default
   if (is.null(style)) {
     style <- "ci"
+  }
+
+  # provide own names
+  if (!is.null(column_names)) {
+    if (length(column_names) != length(model_names)) {
+      if (isTRUE(verbose)) {
+        warning("Number of column names does not match number of models.", call. = FALSE)
+      }
+    } else {
+      model_names <- column_names
+    }
   }
 
   # iterate all models and create list of model parameters
