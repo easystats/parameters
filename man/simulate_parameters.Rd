@@ -82,7 +82,7 @@ library(parameters)
 
 model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 simulate_parameters(model)
-\donttest{
+\dontrun{
 if (require("glmmTMB")) {
   model <- glmmTMB(
     count ~ spp + mined + (1 | site),
