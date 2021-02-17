@@ -106,7 +106,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -127,29 +127,29 @@
       <h1 data-toc-skip>Standardized Model Parameters</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/vignettes/model_parameters_standardized.Rmd"><code>vignettes/model_parameters_standardized.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/vignettes/model_parameters_standardized.Rmd" class="external-link"><code>vignettes/model_parameters_standardized.Rmd</code></a></small>
       <div class="hidden name"><code>model_parameters_standardized.Rmd</code></div>
 
     </div>
 
     
     
-<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code>model_parameters()</code></a> function (also accessible via the shortcut <code><a href="../reference/model_parameters.html">parameters()</a></code>) can be used to calculate standardized model parameters, too, via the <code>standardize</code>-argument. There are different methods of standardizing model parameters: <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code> and <code>"basic"</code> (see <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html"><code>?effectsize::standardize_parameters</code></a> for further details).</p>
+<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html" class="external-link"><code>model_parameters()</code></a> function (also accessible via the shortcut <code><a href="../reference/model_parameters.html">parameters()</a></code>) can be used to calculate standardized model parameters, too, via the <code>standardize</code>-argument. There are different methods of standardizing model parameters: <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code> and <code>"basic"</code> (see <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link"><code>?effectsize::standardize_parameters</code></a> for further details).</p>
 <div id="standardization-by-re-fitting-the-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#standardization-by-re-fitting-the-model" class="anchor"></a>Standardization by re-fitting the model</h2>
 <p><code>standardize = "refit"</code> is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for heavy models such as, for instance, for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms).</p>
-<p>When <code>standardize = "refit"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize.html"><code>effectsize::standardize()</code></a> to standardize the data that was used to fit the model and updates the model with the standardized data. Note that <code><a href="https://easystats.github.io/effectsize/reference/standardize.html">effectsize::standardize()</a></code> tries to detect which variables should be standardized and which not. For instance, having a <code><a href="https://rdrr.io/r/base/Log.html">log(x)</a></code> in the model formula would exclude <code>x</code> from being standardized, because <code>x</code> might get negative values, and thus <code><a href="https://rdrr.io/r/base/Log.html">log(x)</a></code> would no longer be defined. Factors will also be not standardized. Response variables will be standardized, if appropriate.</p>
+<p>When <code>standardize = "refit"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize.html" class="external-link"><code>effectsize::standardize()</code></a> to standardize the data that was used to fit the model and updates the model with the standardized data. Note that <code><a href="https://easystats.github.io/effectsize/reference/standardize.html" class="external-link">effectsize::standardize()</a></code> tries to detect which variables should be standardized and which not. For instance, having a <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log(x)</a></code> in the model formula would exclude <code>x</code> from being standardized, because <code>x</code> might get negative values, and thus <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log(x)</a></code> would no longer be defined. Factors will also be not standardized. Response variables will be standardized, if appropriate.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; Loading required package: Matrix</code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
-<span class="va">iris</span><span class="op">$</span><span class="va">grp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
+<span class="va">iris</span><span class="op">$</span><span class="va">grp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># fit example model</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span>
   <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>,
   data <span class="op">=</span> <span class="va">iris</span>
 <span class="op">)</span>
@@ -180,8 +180,8 @@
 <p>The second output is identical to following:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># standardize continuous variables manually</span>
-<span class="va">model2</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">Petal.Length</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>,
+<span class="va">model2</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">Petal.Length</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>,
   data <span class="op">=</span> <span class="va">iris</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model2</span><span class="op">)</span></code></pre></div>
@@ -200,7 +200,7 @@
 <a href="#post-hoc-standardization" class="anchor"></a>Post-hoc standardization</h2>
 <p><code>standardize = "posthoc"</code> aims at emulating the results obtained by <code>"refit"</code> without refitting the model. The coefficients are divided by the standard deviation of the outcome (which becomes their expression ‘unit’). Then, the coefficients related to numeric variables are additionally multiplied by the standard deviation of the related terms, so that they correspond to changes of 1 SD of the predictor (e.g., “a change in 1 SD of x is related to a change of 0.24 of the SD of y”). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p>
 <p>This method is not accurate and tends to give aberrant results when interactions are specified. However, this method of standardization is the “classic” result obtained by many statistical packages when standardized coefficients are requested.</p>
-<p>When <code>standardize = "posthoc"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html"><code>effectsize::standardize_parameters(method = "posthoc")</code></a>. Test statistic and p-values are not affected, i.e. they are the same as if no standardization would be applied.</p>
+<p>When <code>standardize = "posthoc"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link"><code>effectsize::standardize_parameters(method = "posthoc")</code></a>. Test statistic and p-values are not affected, i.e. they are the same as if no standardization would be applied.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"posthoc"</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; Parameter                          | Std. Coef. |   SE |         95% CI | t(141) |      p
@@ -254,11 +254,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>, Søren Højsgaard.</p>
+  <p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
