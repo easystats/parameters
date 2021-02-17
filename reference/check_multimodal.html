@@ -213,16 +213,13 @@ multimodal). A better method might be needed here.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://arxiv.org/abs/1803.00472/'>"multimode"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='co'># Univariate</span>
   <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>
   <span class='fu'>check_multimodal</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: multimode</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Is the variable multimodal?
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The Ameijeiras-Alonso et al. (2018) excess mass test suggests that the hypothesis of a multimodal distribution cannot be rejected (excess mass = 0.02, p = 0.538).
-#&gt; </span><span></div><div class='input'>
+
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://arxiv.org/abs/1803.00472/'>"multimode"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mclust-org.github.io/mclust/'>"mclust"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'>check_multimodal</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
@@ -242,12 +239,8 @@ multimodal). A better method might be needed here.</p>
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>m</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span>
   <span class='fu'>check_multimodal</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: mclust</span></div><div class='output co'>#&gt; <span class='message'>Package 'mclust' version 5.4.7</span>
-#&gt; <span class='message'>Type 'citation("mclust")' for citing this R package in publications.</span></div><div class='img'><img src='check_multimodal-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='check_multimodal-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Is the data multimodal?
-#&gt; 
-#&gt; </span><span style='color: #00BB00;'>The parametric mixture modelling test suggests that the multivariate distribution is significantly multimodal (Chi2(14) = 106.03, p &lt; .001).
-#&gt; </span><span></div><div class='input'><span class='co'># }</span>
-</div></span></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

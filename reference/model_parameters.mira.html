@@ -273,13 +273,13 @@ adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adj
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |     p
-#&gt; ------------------------------------------------------------------------------
-#&gt; (Intercept) |       19.41 | 4.12 | [  9.58, 29.23] |      4.71 |  6.75 | 0.002
-#&gt; age40-59    |       -5.58 | 1.96 | [ -9.79, -1.37] |     -2.85 | 13.71 | 0.013
-#&gt; age60-99    |       -6.41 | 2.57 | [-12.55, -0.27] |     -2.49 |  6.69 | 0.043
-#&gt; hypyes      |        2.16 | 1.99 | [ -2.21,  6.53] |      1.09 |  5.75 | 0.300
-#&gt; chl         |        0.05 | 0.02 | [ -0.01,  0.11] |      2.17 | 11.43 | 0.075</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
+#&gt; -------------------------------------------------------------------------------
+#&gt; (Intercept) |       18.06 | 3.24 | [ 11.21, 24.91] |      5.57 | 16.56 | &lt; .001
+#&gt; age40-59    |       -5.34 | 1.87 | [ -9.40, -1.28] |     -2.85 | 12.60 | 0.014 
+#&gt; age60-99    |       -7.59 | 2.34 | [-12.96, -2.22] |     -3.24 |  8.27 | 0.011 
+#&gt; hypyes      |        2.36 | 2.00 | [ -2.28,  7.01] |      1.18 | 16.60 | 0.273 
+#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.10] |      3.28 |  7.65 | 0.005 </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># model_parameters() also works for models that have no "tidy"-method in mice</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/amices/mice'>"mice"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"gee"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span>
@@ -332,13 +332,13 @@ adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adj
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |     p
-#&gt; ------------------------------------------------------------------------------
-#&gt; (Intercept) |       18.35 | 4.25 | [  7.84, 28.86] |      4.32 |  5.75 | 0.005
-#&gt; age40-59    |       -6.04 | 1.86 | [-10.17, -1.90] |     -3.24 | 10.30 | 0.009
-#&gt; age60-99    |       -7.90 | 2.43 | [-13.75, -2.05] |     -3.25 |  6.43 | 0.016
-#&gt; hypyes      |        1.82 | 2.10 | [ -3.31,  6.95] |      0.86 |  5.82 | 0.420
-#&gt; chl         |        0.06 | 0.02 | [  0.00,  0.12] |      2.59 |  6.10 | 0.042</div></pre>
+#&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
+#&gt; -------------------------------------------------------------------------------
+#&gt; (Intercept) |       19.89 | 3.47 | [ 12.44, 27.33] |      5.74 | 13.78 | &lt; .001
+#&gt; age40-59    |       -5.39 | 2.26 | [-10.78,  0.01] |     -2.38 |  6.67 | 0.050 
+#&gt; age60-99    |       -6.99 | 2.74 | [-13.95, -0.02] |     -2.55 |  5.16 | 0.050 
+#&gt; hypyes      |        2.23 | 2.03 | [ -2.26,  6.71] |      1.10 |  9.83 | 0.297 
+#&gt; chl         |        0.05 | 0.02 | [  0.00,  0.09] |      2.38 | 10.80 | 0.039 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
