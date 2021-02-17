@@ -227,7 +227,7 @@ to obtain non-parametric p-values.</p>
     <div class='dont-index'><p><code><a href='bootstrap_parameters.html'>bootstrap_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code>, <code><a href='simulate_parameters.glmmTMB.html'>simulate_parameters</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"boot"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
   <span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'>bootstrap_model</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
@@ -238,27 +238,8 @@ to obtain non-parametric p-values.</p>
     <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>est</span><span class='op'>)</span><span class='op'>)</span>
   <span class='op'>}</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: boot</span></div><div class='output co'>#&gt;   (Intercept)        wt factor(cyl)6 factor(cyl)8
-#&gt; 1    32.80447 -3.275128    -2.994874    -5.535547
-#&gt; 2    33.53835 -3.192280    -3.371982    -5.269348
-#&gt; 3    33.50110 -3.043621    -4.561783    -6.336212
-#&gt; 4    33.73882 -3.031721    -4.529576    -6.089992
-#&gt; 5    30.77663 -2.298175    -4.044469    -5.561024
-#&gt; 6    32.50119 -2.431631    -5.943601    -7.659333</div><div class='output co'>#&gt; <span class='message'>Loading required package: emmeans</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Estimated Marginal Means </span><span>
-#&gt; 
-#&gt; Parameter | Coefficient |   SE |         95% CI |      p
-#&gt; --------------------------------------------------------
-#&gt; 4         |       23.47 | 1.24 | [21.20, 26.02] | &lt; .001
-#&gt; 6         |       19.39 | 0.43 | [18.59, 20.21] | &lt; .001
-#&gt; 8         |       17.55 | 0.71 | [16.26, 19.02] | &lt; .001
-#&gt; 
-#&gt; </span><span style='color: #0000BB;'># Contrasts </span><span>
-#&gt; 
-#&gt; Parameter | Coefficient |   SE |         95% CI |     p
-#&gt; -------------------------------------------------------
-#&gt; 6 - 4     |       -4.08 | 1.26 | [-6.70, -1.81] | 0.004
-#&gt; 8 - 6     |       -1.81 | 0.86 | [-3.38, -0.05] | 0.038</div><div class='input'><span class='co'># }</span>
-</div></span></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
