@@ -1,6 +1,9 @@
-if (require("testthat") &&
-  require("parameters") &&
-  require("lme4")) {
+.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+
+if (.runThisTest &&
+    require("testthat") &&
+    require("parameters") &&
+    require("lme4")) {
   data("cbpp")
   set.seed(123)
   model <- glmer(

@@ -29,7 +29,7 @@
 #'   \code{stanmvreg}, \code{MCMCglmm}, \code{mcmc} and \code{bcplm}.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' library(parameters)
 #' if (require("rstanarm")) {
 #'   model <- stan_glm(

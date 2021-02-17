@@ -152,7 +152,7 @@ When \code{standardize = "refit"}, columns \code{diagnostic},
   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
-\donttest{
+\dontrun{
 library(parameters)
 if (require("rstanarm")) {
   model <- stan_glm(

@@ -1,4 +1,6 @@
-if (require("insight") && require("testthat") && require("parameters")) {
+.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+
+if (.runThisTest && require("insight") && require("testthat") && require("parameters")) {
   data(mtcars)
   m <- glm(am ~ mpg + hp + factor(cyl),
     data = mtcars, family = binomial()
