@@ -27,7 +27,7 @@
 #'   to obtain non-parametric p-values.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (require("boot")) {
 #'   set.seed(2)
 #'   model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)

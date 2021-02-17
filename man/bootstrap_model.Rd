@@ -37,7 +37,7 @@ to obtain non-parametric p-values.
 }
 
 \examples{
-\donttest{
+\dontrun{
 if (require("boot")) {
   model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
   b <- bootstrap_model(model)

@@ -25,7 +25,7 @@
 #' @seealso \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}, \code{\link{simulate_parameters}}
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (require("boot")) {
 #'   model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
 #'   b <- bootstrap_model(model)
