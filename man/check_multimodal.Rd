@@ -19,7 +19,7 @@ it always returns a significant result (suggesting that the distribution is
 multimodal). A better method might be needed here.
 }
 \examples{
-\donttest{
+\dontrun{
 if (require("multimode")) {
   # Univariate
   x <- rnorm(1000)

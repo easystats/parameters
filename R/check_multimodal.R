@@ -11,7 +11,7 @@
 #' @inheritParams check_factorstructure
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (require("multimode")) {
 #'   # Univariate
 #'   x <- rnorm(1000)
