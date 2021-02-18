@@ -1,7 +1,7 @@
 Package: parameters
 Type: Package
 Title: Processing of Model Parameters
-Version: 0.11.0.1
+Version: 0.11.1.1
 Authors@R: 
   c(
     person("Daniel", 
@@ -53,7 +53,7 @@ Depends:
     R (>= 3.4)
 Imports:
     bayestestR (>= 0.8.2),
-    insight (>= 0.12.0),
+    insight (>= 0.13.0),
     methods,
     stats,
     utils
