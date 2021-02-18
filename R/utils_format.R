@@ -88,6 +88,8 @@
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
     ci_brackets <- c("(", ")")
+  } else if (is.null(ci_brackets) || isTRUE(ci_brackets)) {
+    ci_brackets <- c("[", "]")
   }
 
 
@@ -173,6 +175,12 @@
     attr(tables[[type]], "ci_digits") <- ci_digits
     attr(tables[[type]], "p_digits") <- p_digits
 
+    # random pars with level? combine into parameter column
+    if (all(c("Parameter", "Level") %in% colnames(tables[[type]]))) {
+      tables[[type]]$Parameter <- paste0(tables[[type]]$Parameter, " ", ci_brackets[1], tables[[type]]$Level, ci_brackets[2])
+      tables[[type]]$Level <- NULL
+    }
+
     # rename columns for zero-inflation part
     if (grepl("^zero", type) && !is.null(zi_coef_name) && !is.null(coef_column)) {
       colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- zi_coef_name
@@ -184,7 +192,10 @@
     component_name <- switch(type,
       "mu" = ,
       "fixed" = ,
-      "conditional" = "Fixed Effects",
+      "fixed." = ,
+      "conditional" = ,
+      "conditional." = "Fixed Effects",
+      "random." = ,
       "random" = "Random Effects",
       "conditional.fixed" = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
       "conditional.random" = ifelse(is_zero_inflated, "Random Effects (Count Model)", "Random Effects"),
@@ -226,6 +237,9 @@
     if (grepl("^zero_inflated\\.Random", component_name)) {
       component_name <- paste0("Zero-Inflated Model: ", gsub("^zero_inflated\\.", "", component_name))
     }
+    if (grepl("^random\\.(.*)", component_name)) {
+      component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
+    }
 
     # tweaking of sub headers
 
@@ -263,6 +277,11 @@
       s2 <- ifelse(tolower(split_column) == "component", "", split_column)
     }
 
+    # exceptions for random effects
+    if (length(split_column) == 1 && .n_unique(formatted_table$Group) == 1) {
+      s1 <- paste0(s1, " (", formatted_table$Group, ")")
+      formatted_table$Group <- NULL
+    }
 
     table_caption <- NULL
     if (is.null(format) || format == "text") {
