@@ -33,17 +33,18 @@ if (.runThisTest &&
 
   test_that("model_parameters.mixed-random", {
     params <- model_parameters(m1, effects = "random")
-    expect_equal(c(nrow(params), ncol(params)), c(3, 6))
-    expect_equal(params$Parameter, c("(Intercept) [3]", "(Intercept) [4]", "(Intercept) [5]"))
+    expect_equal(c(nrow(params), ncol(params)), c(3, 9))
+    expect_equal(as.vector(params$Parameter), c("(Intercept)", "(Intercept)", "(Intercept)"))
+    expect_equal(as.vector(params$Level), c("3", "4", "5"))
     expect_equal(params$Coefficient, c(0.1692, 0.0566, -0.2259), tolerance = 1e-2)
   })
 
   test_that("model_parameters.mixed-all", {
     params <- model_parameters(m1, effects = "all")
-    expect_equal(c(nrow(params), ncol(params)), c(5, 10))
-    expect_equal(params$Parameter,
-                 c("(Intercept)", "cyl", "(Intercept) [3]", "(Intercept) [4]",
-                   "(Intercept) [5]"))
+    expect_equal(c(nrow(params), ncol(params)), c(5, 12))
+    expect_equal(as.vector(params$Parameter),
+                 c("(Intercept)", "cyl", "(Intercept)", "(Intercept)", "(Intercept)"))
+    expect_equal(as.vector(params$Level), c(NA, NA, "3", "4", "5"))
     expect_equal(params$Coefficient, c(0.6511, 0.4042, 0.1692, 0.0566, -0.2259), tolerance = 1e-2)
   })
 
