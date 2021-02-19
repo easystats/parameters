@@ -31,22 +31,24 @@
 #' @return A data frame of indices related to the model's parameters.
 #'
 #' @examples
-#' data(iris)
-#' lm1 <- lm(Sepal.Length ~ Species, data = iris)
-#' lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
-#' lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-#' compare_parameters(lm1, lm2, lm3)
+#' if (packageVersion("insight") >= "0.13.0") {
+#'   data(iris)
+#'   lm1 <- lm(Sepal.Length ~ Species, data = iris)
+#'   lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+#'   lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+#'   compare_parameters(lm1, lm2, lm3)
 #'
-#' data(mtcars)
-#' m1 <- lm(mpg ~ wt, data = mtcars)
-#' m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
-#' compare_parameters(m1, m2)
+#'   data(mtcars)
+#'   m1 <- lm(mpg ~ wt, data = mtcars)
+#'   m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
+#'   compare_parameters(m1, m2)
 #'
-#' # exponentiate coefficients, but not for lm
-#' compare_parameters(m1, m2, exponentiate = "nongaussian")
+#'   # exponentiate coefficients, but not for lm
+#'   compare_parameters(m1, m2, exponentiate = "nongaussian")
 #'
-#' # change column names
-#' compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
+#'   # change column names
+#'   compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
+#' }
 #' @importFrom insight is_model_supported
 #' @export
 compare_parameters <- function(..., ci = .95, effects = "fixed", component = "conditional", standardize = NULL, exponentiate = FALSE, df_method = "wald", p_adjust = NULL, style = NULL, column_names = NULL, verbose = TRUE) {

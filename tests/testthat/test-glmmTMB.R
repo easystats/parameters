@@ -174,13 +174,13 @@ if (.runThisTest) {
 
     test_that("model_parameters.mixed-random", {
       params <- model_parameters(m1, effects = "random")
-      expect_equal(c(nrow(params), ncol(params)), c(8, 7))
+      expect_equal(c(nrow(params), ncol(params)), c(8, 10))
       expect_equal(colnames(params),
-                   c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
-                     "Component"))
-      expect_equal(params$Parameter,
-                   c("(Intercept) [1]", "(Intercept) [2]", "(Intercept) [3]", "(Intercept) [4]",
-                     "(Intercept) [1]", "(Intercept) [2]", "(Intercept) [3]", "(Intercept) [4]"))
+                   c("Parameter", "Level", "Coefficient", "SE", "CI", "CI_low",
+                     "CI_high", "Component", "Effects", "Group"))
+      expect_equal(as.vector(params$Parameter),
+                   c("(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)",
+                     "(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)"))
       expect_equal(params$Component,
                    c("conditional", "conditional", "conditional", "conditional",
                      "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated"))
@@ -193,15 +193,15 @@ if (.runThisTest) {
 
     test_that("model_parameters.mixed-all", {
       params <- model_parameters(m1, effects = "all")
-      expect_equal(c(nrow(params), ncol(params)), c(14, 11))
+      expect_equal(c(nrow(params), ncol(params)), c(14, 13))
       expect_equal(colnames(params),
-                   c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
-                     "z", "df_error", "p", "Component", "Effects"))
+                   c("Parameter", "Level", "Coefficient", "SE", "CI", "CI_low",
+                     "CI_high", "z", "df_error", "p", "Component", "Effects",
+                     "Group"))
       expect_equal(params$Parameter,
                    c("(Intercept)", "child", "camper1", "(Intercept)", "child",
-                     "camper1", "(Intercept) [1]", "(Intercept) [2]", "(Intercept) [3]",
-                     "(Intercept) [4]", "(Intercept) [1]", "(Intercept) [2]", "(Intercept) [3]",
-                     "(Intercept) [4]"))
+                     "camper1", "(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)",
+                     "(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)"))
       expect_equal(params$Component,
                    c("conditional", "conditional", "conditional", "zero_inflated",
                      "zero_inflated", "zero_inflated", "conditional", "conditional",

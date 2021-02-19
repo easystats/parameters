@@ -11,8 +11,10 @@
   out <- as.data.frame(lme4::ranef(model, condVar = TRUE), stringsAsFactors = FALSE)
   colnames(out) <- c("Group", "Parameter", "Level", "Coefficient", "SE")
 
-  # out$Parameter <- paste0(out$Parameter, " [", out$Level, "]")
-  # out$Effects <- paste0("Random Effects (", out$Group, ")")
+  # coerce to character
+  out$Parameter <- as.character(out$Parameter)
+  out$Level <- as.character(out$Level)
+  out$Group <- as.character(out$Group)
   out$Effects <- "random"
 
   if (length(ci) == 1) {
@@ -65,8 +67,12 @@
                 "conditional" = out[out$Component == "cond", ],
                 out)
 
-  out$Parameter <- paste0(out$Parameter, " [", out$Level, "]")
-  out$Effects <- paste0("Random Effects (", out$Group, ")")
+  # coerce to character
+  out$Parameter <- as.character(out$Parameter)
+  out$Level <- as.character(out$Level)
+  out$Group <- as.character(out$Group)
+  out$Effects <- "random"
+
   # rename
   out$Component[out$Component == "zi"] <- "zero_inflated"
   out$Component[out$Component == "cond"] <- "conditional"
@@ -95,10 +101,12 @@
   out$df_error <- NA
   out$p <- NA
 
-  out <- out[c("Parameter", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Component", "Effects")]
+  # out <- out[c("Parameter", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Component", "Effects")]
+  out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Component", "Effects", "Group")]
 
   if (effects == "random") {
-    out[c(stat_column, "df_error", "p", "Effects")] <- NULL
+    # out[c(stat_column, "df_error", "p", "Effects")] <- NULL
+    out[c(stat_column, "df_error", "p")] <- NULL
   }
   out
 }

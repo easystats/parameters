@@ -86,6 +86,10 @@ model_parameters.glmmTMB <- function(model,
     params <- params_random
   } else if (!is.null(params_random)) {
     params$Effects <- "fixed"
+    params$Level <- NA
+    params$Group <- ""
+    # reorder
+    params <- params[match(colnames(params_random), colnames(params))]
     params <- rbind(params, params_random)
   }
 
