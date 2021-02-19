@@ -188,111 +188,29 @@
     }
 
     formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
-
-    component_name <- switch(type,
-      "mu" = ,
-      "fixed" = ,
-      "fixed." = ,
-      "conditional" = ,
-      "conditional." = "Fixed Effects",
-      "random." = ,
-      "random" = "Random Effects",
-      "conditional.fixed" = ,
-      "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
-      "conditional.random" = ifelse(is_zero_inflated, "Random Effects (Count Model)", "Random Effects"),
-      "zero_inflated" = "Zero-Inflated",
-      "zero_inflated.fixed" = ,
-      "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
-      "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
-      "dispersion" = "Dispersion",
-      "marginal" = "Marginal Effects",
-      "emmeans" = "Estimated Marginal Means",
-      "contrasts" = "Contrasts",
-      "simplex.fixed" = ,
-      "simplex" = "Monotonic Effects",
-      "smooth_sd" = "Smooth Terms (SD)",
-      "smooth_terms" = "Smooth Terms",
-      "sigma.fixed" = ,
-      "sigma" = "Sigma",
-      "Correlation" = "Correlation",
-      "SD/Cor" = "SD / Correlation",
-      "Loading" = "Loading",
-      "scale" = ,
-      "scale.fixed" = "Scale Parameters",
-      "extra" = ,
-      "extra.fixed" = "Extra Parameters",
-      "nu" = "Nu",
-      "tau" = "Tau",
-      "meta" = "Meta-Parameters",
-      "studies" = "Studies",
-      "within" = "Within-Effects",
-      "between" = "Between-Effects",
-      "interactions" = "(Cross-Level) Interactions",
-      "precision" = ,
-      "precision." = "Precision",
-      type
-    )
-
-    if (grepl("^conditional\\.(r|R)andom", component_name)) {
-      component_name <- trimws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
-      if (nchar(component_name) > 0) {
-        component_name <- "Random Effects (Count Model)"
-      } else {
-        component_name <- paste0("Random Effects (Count Model): ", component_name)
-      }
-    }
-    if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
-      component_name <- trimws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
-      if (nchar(component_name) > 0) {
-        component_name <- "Random Effects (Zero-Inflated Model)"
-      } else {
-        component_name <- paste0("Random Effects (Zero-Inflated Model): ", component_name)
-      }
-    }
-    if (grepl("^random\\.(.*)", component_name)) {
-      component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
-    }
-
-    # tweaking of sub headers
-
-    if ("DirichletRegModel" %in% attributes(x)$model_class) {
-      if (grepl("^conditional\\.", component_name) || split_column == "Response") {
-        s1 <- "Response level:"
-        s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)
-      } else {
-        s1 <- component_name
-        s2 <- ""
-      }
-    } else if (length(split_column) > 1 ||
-               split_column %in% c("Subgroup", "Type", "Group") ||
-               grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
-               component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
-      s1 <- component_name
-      s2 <- ""
-    } else if (split_column == "Response" && is_ordinal_model) {
-      s1 <- "Response level:"
-      s2 <- component_name
-    } else {
-      s1 <- component_name
-      s2 <- ifelse(tolower(split_column) == "component", "", split_column)
-    }
+    component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model)
 
     # exceptions for random effects
-    if (length(split_column) == 1 && .n_unique(formatted_table$Group) == 1) {
-      s1 <- paste0(s1, " (", formatted_table$Group, ")")
+    if (.n_unique(formatted_table$Group) == 1) {
+      component_header$subheader1 <- paste0(component_header$subheader1, " (", formatted_table$Group, ")")
       formatted_table$Group <- NULL
+    }
+
+    # remove non-necessary columns
+    if (.n_unique(formatted_table$Component) == 1) {
+      formatted_table$Component <- NULL
     }
 
     table_caption <- NULL
     if (is.null(format) || format == "text") {
       # Print
-      if (component_name != "rewb-contextual") {
-        table_caption <- c(sprintf("# %s %s", s1, tolower(s2)), "blue")
+      if (component_header$name != "rewb-contextual") {
+        table_caption <- c(sprintf("# %s %s", component_header$subheader1, tolower(component_header$subheader2)), "blue")
       }
     } else if (format %in% c("markdown", "html")) {
       # Print
-      if (component_name != "rewb-contextual") {
-        table_caption <- sprintf("%s %s", s1, tolower(s2))
+      if (component_header$name != "rewb-contextual") {
+        table_caption <- sprintf("%s %s", component_header$subheader1, tolower(component_header$subheader2))
       }
       # replace brackets by parenthesis
       formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
@@ -309,8 +227,130 @@
   }
 
   if (identical(format, "html")) {
+    # fix non-equal length of columns
+    final_table <- .fix_nonmatching_columns(final_table)
     do.call(rbind, final_table)
   } else {
     .compact_list(final_table)
   }
+}
+
+
+
+
+# helper to fix unequal number of columns for list of data frames,
+# when used for HTML printing
+
+#' @importFrom utils modifyList
+.fix_nonmatching_columns <- function(final_table) {
+  col_len <- sapply(final_table, function(i) length(colnames(i)))
+  if (!all(col_len) == max(col_len)) {
+    all_columns <- unique(unlist(lapply(final_table, colnames)))
+    for (i in 1:length(final_table)) {
+      missing_columns <- setdiff(all_columns, colnames(final_table[[i]]))
+      if (length(missing_columns)) {
+        a <- attributes(final_table[[i]])
+        final_table[[i]][missing_columns] <- NA
+        final_table[[i]] <- final_table[[i]][match(all_columns, colnames(final_table[[i]]))]
+        attributes(final_table[[i]]) <- utils::modifyList(a, attributes(final_table[[i]]))
+      }
+    }
+  }
+  final_table
+}
+
+
+
+# helper to format the header / subheader of different model components
+.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model) {
+
+  component_name <- switch(type,
+                           "mu" = ,
+                           "fixed" = ,
+                           "fixed." = ,
+                           "conditional" = ,
+                           "conditional." = "Fixed Effects",
+                           "random." = ,
+                           "random" = "Random Effects",
+                           "conditional.fixed" = ,
+                           "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
+                           "conditional.random" = ifelse(is_zero_inflated, "Random Effects (Count Model)", "Random Effects"),
+                           "zero_inflated" = "Zero-Inflated",
+                           "zero_inflated.fixed" = ,
+                           "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
+                           "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
+                           "dispersion" = "Dispersion",
+                           "marginal" = "Marginal Effects",
+                           "emmeans" = "Estimated Marginal Means",
+                           "contrasts" = "Contrasts",
+                           "simplex.fixed" = ,
+                           "simplex" = "Monotonic Effects",
+                           "smooth_sd" = "Smooth Terms (SD)",
+                           "smooth_terms" = "Smooth Terms",
+                           "sigma.fixed" = ,
+                           "sigma" = "Sigma",
+                           "Correlation" = "Correlation",
+                           "SD/Cor" = "SD / Correlation",
+                           "Loading" = "Loading",
+                           "scale" = ,
+                           "scale.fixed" = "Scale Parameters",
+                           "extra" = ,
+                           "extra.fixed" = "Extra Parameters",
+                           "nu" = "Nu",
+                           "tau" = "Tau",
+                           "meta" = "Meta-Parameters",
+                           "studies" = "Studies",
+                           "within" = "Within-Effects",
+                           "between" = "Between-Effects",
+                           "interactions" = "(Cross-Level) Interactions",
+                           "precision" = ,
+                           "precision." = "Precision",
+                           type
+  )
+
+  if (grepl("^conditional\\.(r|R)andom", component_name)) {
+    component_name <- trimws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
+    if (nchar(component_name) > 0) {
+      component_name <- "Random Effects (Count Model)"
+    } else {
+      component_name <- paste0("Random Effects (Count Model): ", component_name)
+    }
+  }
+  if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
+    component_name <- trimws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
+    if (nchar(component_name) > 0) {
+      component_name <- "Random Effects (Zero-Inflated Model)"
+    } else {
+      component_name <- paste0("Random Effects (Zero-Inflated Model): ", component_name)
+    }
+  }
+  if (grepl("^random\\.(.*)", component_name)) {
+    component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
+  }
+
+  # tweaking of sub headers
+
+  if ("DirichletRegModel" %in% attributes(x)$model_class) {
+    if (grepl("^conditional\\.", component_name) || split_column == "Response") {
+      s1 <- "Response level:"
+      s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)
+    } else {
+      s1 <- component_name
+      s2 <- ""
+    }
+  } else if (length(split_column) > 1 ||
+             split_column %in% c("Subgroup", "Type", "Group") ||
+             grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
+             component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
+    s1 <- component_name
+    s2 <- ""
+  } else if (split_column == "Response" && is_ordinal_model) {
+    s1 <- "Response level:"
+    s2 <- component_name
+  } else {
+    s1 <- component_name
+    s2 <- ifelse(tolower(split_column) == "component", "", split_column)
+  }
+
+  list(name = component_name, subheader1 = s1, subheader2 = s2)
 }
