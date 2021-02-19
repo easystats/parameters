@@ -88,6 +88,10 @@ model_parameters.glmmTMB <- function(model,
     params$Effects <- "fixed"
     params$Level <- NA
     params$Group <- ""
+    # add component column
+    if (!"Component" %in% colnames(params)) {
+      params$Component <- "conditional"
+    }
     # reorder
     params <- params[match(colnames(params_random), colnames(params))]
     params <- rbind(params, params_random)

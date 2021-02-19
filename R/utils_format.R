@@ -197,10 +197,12 @@
       "conditional." = "Fixed Effects",
       "random." = ,
       "random" = "Random Effects",
-      "conditional.fixed" = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
+      "conditional.fixed" = ,
+      "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
       "conditional.random" = ifelse(is_zero_inflated, "Random Effects (Count Model)", "Random Effects"),
       "zero_inflated" = "Zero-Inflated",
-      "zero_inflated.fixed" = "Fixed Effects (Zero-Inflated Model)",
+      "zero_inflated.fixed" = ,
+      "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
       "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
       "dispersion" = "Dispersion",
       "marginal" = "Marginal Effects",
@@ -231,11 +233,21 @@
       type
     )
 
-    if (grepl("^conditional\\.Random", component_name)) {
-      component_name <- paste0("Count Model: ", gsub("^conditional\\.", "", component_name))
+    if (grepl("^conditional\\.(r|R)andom", component_name)) {
+      component_name <- trimws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
+      if (nchar(component_name) > 0) {
+        component_name <- "Random Effects (Count Model)"
+      } else {
+        component_name <- paste0("Random Effects (Count Model): ", component_name)
+      }
     }
-    if (grepl("^zero_inflated\\.Random", component_name)) {
-      component_name <- paste0("Zero-Inflated Model: ", gsub("^zero_inflated\\.", "", component_name))
+    if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
+      component_name <- trimws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
+      if (nchar(component_name) > 0) {
+        component_name <- "Random Effects (Zero-Inflated Model)"
+      } else {
+        component_name <- paste0("Random Effects (Zero-Inflated Model): ", component_name)
+      }
     }
     if (grepl("^random\\.(.*)", component_name)) {
       component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
@@ -251,27 +263,15 @@
         s1 <- component_name
         s2 <- ""
       }
-    } else if (length(split_column) > 1) {
+    } else if (length(split_column) > 1 ||
+               split_column %in% c("Subgroup", "Type", "Group") ||
+               grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
+               component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
       s1 <- component_name
       s2 <- ""
     } else if (split_column == "Response" && is_ordinal_model) {
       s1 <- "Response level:"
       s2 <- component_name
-    } else if (split_column == "Subgroup") {
-      s1 <- component_name
-      s2 <- ""
-    } else if (component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
-      s1 <- component_name
-      s2 <- ""
-    } else if (grepl(tolower(split_column), tolower(component_name), fixed = TRUE)) {
-      s1 <- component_name
-      s2 <- ""
-    } else if (split_column == "Type") {
-      s1 <- component_name
-      s2 <- ""
-    } else if (split_column == "Group") {
-      s1 <- component_name
-      s2 <- ""
     } else {
       s1 <- component_name
       s2 <- ifelse(tolower(split_column) == "component", "", split_column)
