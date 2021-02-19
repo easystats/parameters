@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters")) {
+if (require("testthat") && require("parameters") && require("insight") && packageVersion("insight") >= "0.13.0") {
   data(iris)
   m1 <- lm(Sepal.Length ~ Species, data = iris)
   m2 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
