@@ -64,7 +64,7 @@ print.parameters_model <- function(x,
   # get attributes
   res <- attributes(x)$details
   sigma <- attributes(x)$sigma
-  ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
+  ci_method <- .additional_arguments(x, "ci_method", NULL)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
   # set defaults, if necessary
@@ -151,7 +151,7 @@ print.parameters_stan <- function(x,
                                   p_digits = 3,
                                   ...) {
   orig_x <- x
-  ci_method <- .additional_arguments(x, "bayes_ci_method", NULL)
+  ci_method <- .additional_arguments(x, "ci_method", NULL)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
   # check if user supplied digits attributes
