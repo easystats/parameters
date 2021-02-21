@@ -87,11 +87,11 @@ center.factor <- function(x, weights = NULL, robust = FALSE, verbose = TRUE, ...
   center(.factor_to_numeric(x), weights = weights, robust = robust, verbose = verbose, ...)
 }
 
+#' @export
+center.logical <- center.factor
 
 #' @export
-center.character <- function(x, weights = NULL, robust = FALSE, verbose = TRUE, ...) {
-  center(.factor_to_numeric(x), weights = weights, robust = robust, verbose = verbose, ...)
-}
+center.character <- center.factor
 
 
 #' @rdname center
