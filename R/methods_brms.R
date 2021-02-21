@@ -176,7 +176,7 @@ model_parameters.brmsfit <- function(model,
   attr(params, "pretty_names") <- cleaned_parameters
   attr(params, "cleaned_parameters") <- cleaned_parameters
   attr(params, "ci") <- ci
-  attr(params, "bayes_ci_method") <- ci_method
+  attr(params, "ci_method") <- ci_method
   attr(params, "exponentiate") <- exponentiate
   attr(params, "model_class") <- class(model)
   attr(params, "is_bayes_meta") <- TRUE
