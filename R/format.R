@@ -134,13 +134,13 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
   }
 
   if (style == "minimal") {
-    ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
     param_col <- colnames(x)[1]
     x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, x[[ci_col]]))
     x <- x[c(param_col, "p")]
     colnames(x) <- paste0(colnames(x), " (", modelname, ")")
   } else if (style %in% c("ci_p", "ci")) {
-    ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
     param_col <- colnames(x)[1]
     x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, x[[ci_col]]))
     x <- x[param_col]
@@ -151,7 +151,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     x <- x[param_col]
     colnames(x) <- modelname
   } else if (style %in% c("ci_p2")) {
-    ci_col <- colnames(x)[grepl(" CI$", colnames(x))]
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
     param_col <- colnames(x)[1]
     x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, x[[ci_col]]))
     x <- x[c(param_col, "p")]
