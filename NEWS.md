@@ -5,6 +5,10 @@
 * Fixed issue with non-initialized argument `style` in `display()` for
   `compare_parameters()`.
 
+* Make `print()` for `compare_parameters()` work with objects that have "simple"
+  column names for confidence intervals with missing CI-level (i.e. when column
+  is named `"CI"` instead of, say, `"95% CI"`).
+
 # parameters 0.12.0
 
 ## General
