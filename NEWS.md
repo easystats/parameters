@@ -1,3 +1,10 @@
+# parameters 0.12.1
+
+## Bug fixes
+
+* Fixed issue with non-initialized argument `style` in `display()` for
+  `compare_parameters()`.
+
 # parameters 0.12.0
 
 ## General
