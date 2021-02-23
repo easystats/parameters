@@ -63,7 +63,7 @@ print_html.compare_parameters <- function(x,
   orig_x <- x
 
   # get attributes
-  if (missing(style)) {
+  if (missing(style) || is.null(style)) {
     style <- attributes(x)$output_style
   }
 
