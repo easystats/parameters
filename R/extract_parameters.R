@@ -224,7 +224,7 @@
 
   # ==== adjust p-values?
 
-  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
+  if (!is.null(p_adjust) && tolower(p_adjust) %in% tolower(stats::p.adjust.methods) && "p" %in% colnames(parameters)) {
     parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
   }
 
@@ -447,7 +447,7 @@
   names(parameters) <- gsub("z value", "z", names(parameters))
 
   # adjust p-values?
-  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
+  if (!is.null(p_adjust) && tolower(p_adjust) %in% tolower(stats::p.adjust.methods) && "p" %in% colnames(parameters)) {
     parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
   }
 

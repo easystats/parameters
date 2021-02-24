@@ -9,6 +9,9 @@
   column names for confidence intervals with missing CI-level (i.e. when column
   is named `"CI"` instead of, say, `"95% CI"`).
 
+* Fixed issue with `p_adjust` in `model_parameters()`, which did not work for
+  adjustment-methods `"BY"` and `"BH"`.
+
 # parameters 0.12.0
 
 ## General

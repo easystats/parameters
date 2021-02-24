@@ -28,7 +28,7 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
 
   # ==== adjust p-values?
 
-  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(params)) {
+  if (!is.null(p_adjust) && tolower(p_adjust) %in% tolower(stats::p.adjust.methods) && "p" %in% colnames(params)) {
     params$p <- stats::p.adjust(params$p, method = p_adjust)
   }
 
