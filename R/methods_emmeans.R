@@ -10,25 +10,28 @@ model_parameters.emmGrid <- function(model,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
-  if (is.null(p_adjust)) {
-    p_adjust <- "none"
-  }
-
-  s <- summary(model, level = ci, adjust = p_adjust)
+  s <- summary(model, level = ci, adjust = "none")
   params <- as.data.frame(s)
 
   # get statistic, se and p
-  statistic <- insight::get_statistic(model, ci = ci, adjust = p_adjust)
+  statistic <- insight::get_statistic(model, ci = ci, adjust = "none")
   SE <- standard_error(model)
-  p <- p_value(model, ci = ci, adjust = p_adjust)
+  p <- p_value(model, ci = ci, adjust = "none")
 
   params$Statistic <- statistic$Statistic
   params$SE <- SE$SE
   params$p <- p$p
 
+  # ==== adjust p-values?
+
+  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
+    parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
+  }
+
   # Renaming
-  if (!is.null(statistic))
+  if (!is.null(statistic)) {
     names(params) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(params))
+  }
   names(params) <- gsub("Std. Error", "SE", names(params))
   names(params) <- gsub(model@misc$estName, "Estimate", names(params))
   names(params) <- gsub("lower.CL", "CI_low", names(params))
