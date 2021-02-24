@@ -24,8 +24,8 @@ model_parameters.emmGrid <- function(model,
 
   # ==== adjust p-values?
 
-  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(parameters)) {
-    parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
+  if (!is.null(p_adjust) && tolower(p_adjust) %in% stats::p.adjust.methods && "p" %in% colnames(params)) {
+    params$p <- stats::p.adjust(params$p, method = p_adjust)
   }
 
   # Renaming
