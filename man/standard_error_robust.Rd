@@ -84,5 +84,7 @@ if (require("clubSandwich")) {
   )
 }
 }
-
+}
+\seealso{
+Working examples cam be found \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{in this vignette}.
 }

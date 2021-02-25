@@ -26,6 +26,8 @@
 #'   (the latter if \code{vcov_estimation = "CR"} for cluster-robust standard errors)
 #'   and will thus only work for those models supported by those packages.
 #'
+#' @seealso Working examples cam be found \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{in this vignette}.
+#'
 #' @examples
 #' if (require("sandwich")) {
 #'   # robust standard errors, calling sandwich::vcovHC(type="HC3") by default
@@ -43,7 +45,6 @@
 #'   )
 #' }
 #' }
-#'
 #' @return A data frame.
 #' @export
 standard_error_robust <- function(model,

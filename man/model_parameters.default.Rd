@@ -109,7 +109,9 @@ exponentiate coefficients for all models except those from Gaussian family.}
 (if possible), and confidence intervals and p-values are based on these
 robust standard errors. Additional arguments like \code{vcov_estimation} or
 \code{vcov_type} are passed down to other methods, see
-\code{\link[=standard_error_robust]{standard_error_robust()}} for details.}
+\code{\link[=standard_error_robust]{standard_error_robust()}} for details
+and \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{this vignette}
+for working examples.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
