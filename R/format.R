@@ -374,6 +374,11 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     footer <- c(footer, "blue")
   }
 
+  # if we have two trailing newlines, remove one
+  if (identical(type, "text") && !is.null(footer) && grepl("\n\n$", footer[1])) {
+    footer[1] <- substr(footer[1], 0, nchar(x) - 1)
+  }
+
   footer
 }
 
