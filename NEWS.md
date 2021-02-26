@@ -12,6 +12,8 @@
 * Fixed issue with `p_adjust` in `model_parameters()`, which did not work for
   adjustment-methods `"BY"` and `"BH"`.
 
+* Fixed issue with `show_sigma` in `print()` for `model_parameters()`.
+
 # parameters 0.12.0
 
 ## General

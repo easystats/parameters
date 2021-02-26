@@ -345,6 +345,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   footer <- NULL
   type <- tolower(type)
 
+  sigma <- attributes(x)$sigma
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
   anova_test <- attributes(x)$anova_test
