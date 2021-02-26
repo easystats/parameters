@@ -121,8 +121,8 @@ p_value.lqm <- p_value.lqmm
 
   parameters$p <- summary_table[, 5]
 
-  if (!is.null(p_adjust) && tolower(p_adjust) %in% tolower(stats::p.adjust.methods) && "p" %in% colnames(parameters)) {
-    parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
+  if (!is.null(p_adjust)) {
+    parameters <- .p_adjust(parameters, p_adjust)
   }
 
   # ==== Reorder

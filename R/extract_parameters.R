@@ -2,7 +2,7 @@
 
 
 #' @importFrom insight get_statistic get_parameters get_sigma
-#' @importFrom stats confint p.adjust.methods p.adjust
+#' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_generic <- function(model,
                                         ci,
@@ -224,8 +224,8 @@
 
   # ==== adjust p-values?
 
-  if (!is.null(p_adjust) && tolower(p_adjust) %in% tolower(stats::p.adjust.methods) && "p" %in% colnames(parameters)) {
-    parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
+  if (!is.null(p_adjust)) {
+    parameters <- .p_adjust(parameters, p_adjust)
   }
 
 
@@ -447,8 +447,8 @@
   names(parameters) <- gsub("z value", "z", names(parameters))
 
   # adjust p-values?
-  if (!is.null(p_adjust) && tolower(p_adjust) %in% tolower(stats::p.adjust.methods) && "p" %in% colnames(parameters)) {
-    parameters$p <- stats::p.adjust(parameters$p, method = p_adjust)
+  if (!is.null(p_adjust)) {
+    parameters <- .p_adjust(parameters, p_adjust)
   }
 
   # if we have within/between effects (from demean()), we can add a component

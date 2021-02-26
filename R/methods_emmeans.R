@@ -15,9 +15,6 @@ model_parameters.emmGrid <- function(model,
   emm_padjust <- tryCatch(
     {
       adj <- model@misc$adjust
-      switch(adj,
-             tukey = "fdr",
-             adj)
     },
     error = function(e) {
       NULL
@@ -42,9 +39,10 @@ model_parameters.emmGrid <- function(model,
 
   # ==== adjust p-values?
 
-  if (!is.null(p_adjust) && tolower(p_adjust) %in% tolower(stats::p.adjust.methods) && "p" %in% colnames(params)) {
-    params$p <- stats::p.adjust(params$p, method = p_adjust)
+  if (!is.null(p_adjust)) {
+    params <- .p_adjust(params, p_adjust)
   }
+
 
   # Renaming
   if (!is.null(statistic)) {
