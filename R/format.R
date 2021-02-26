@@ -382,7 +382,12 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 .add_footer_sigma <- function(footer = NULL, digits, sigma, type = "text") {
   if (!is.null(sigma)) {
     if (type == "text") {
-      footer <- paste0(footer, sprintf("\nResidual standard deviation: %.*f", digits, sigma))
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, sprintf("%sResidual standard deviation: %.*f\n", fill, digits, sigma))
     } else if (type == "html") {
       footer <- c(footer, sprintf("Residual standard deviation: %.*f", digits, sigma))
     }
@@ -391,13 +396,18 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 }
 
 
-# footer: residual standard deviation
+# footer: anova test
 .add_footer_anova_test <- function(footer = NULL, test, type = "text") {
   if (!is.null(test)) {
     if (type == "text") {
-      footer <- paste0(footer, sprintf("\n%s test statistic", test))
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, sprintf("%s%s test statistic\n", fill, test))
     } else if (type == "html") {
-      footer <- c(footer, sprintf("\n%s test statistic", test))
+      footer <- c(footer, sprintf("%s test statistic", test))
     }
   }
   footer
@@ -408,7 +418,12 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 .add_footer_padjust <- function(footer = NULL, p_adjust, type = "text") {
   if (!is.null(p_adjust) && p_adjust != "none") {
     if (type == "text") {
-      footer <- paste0(footer, "\np-value adjustment method: ", format_p_adjust(p_adjust))
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, fill, "p-value adjustment method: ", format_p_adjust(p_adjust), "\n")
     } else if (type == "html") {
       footer <- c(footer, paste0("p-value adjustment method: ", format_p_adjust(p_adjust)))
     }
@@ -421,7 +436,12 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 .add_footer_formula <- function(footer = NULL, model_formula, type = "text") {
   if (!is.null(model_formula)) {
     if (type == "text") {
-      footer <- paste0(footer, "\nModel: ", model_formula)
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, fill, "Model: ", model_formula, "\n")
     } else if (type == "html") {
       footer <- c(footer, paste0("Model: ", model_formula))
     }
