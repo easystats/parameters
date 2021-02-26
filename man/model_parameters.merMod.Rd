@@ -126,7 +126,8 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
+possible adjustment methods are \code{"tukey"}.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.}
 

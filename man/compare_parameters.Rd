@@ -66,7 +66,8 @@ standard errors and confidence intervals (CI). See documentation for
 related model class in \code{\link{model_parameters}}.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
+possible adjustment methods are \code{"tukey"}.}
 
 \item{style}{String, indicating which style of output is requested. Following
 templates are possible:

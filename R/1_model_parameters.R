@@ -112,7 +112,8 @@ parameters <- model_parameters
 #'   \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
 #'   \code{MuMIn::model.avg()}) or \code{"all"}.
 #' @param p_adjust Character vector, if not \code{NULL}, indicates the method to
-#'   adjust p-values. See \code{\link[stats]{p.adjust}} for details.
+#'   adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
+#'   possible adjustment methods are \code{"tukey"}.
 #' @param df_method Method for computing degrees of freedom for confidence
 #'   intervals (CI). Only applies to models of class \code{glm} or \code{polr}.
 #'   May be \code{"profile"} or \code{"wald"}.

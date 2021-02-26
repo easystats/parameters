@@ -99,7 +99,8 @@ exponentiate coefficients for all models except those from Gaussian family.}
 \code{\link[bayestestR]{describe_posterior}}.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
+possible adjustment methods are \code{"tukey"}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

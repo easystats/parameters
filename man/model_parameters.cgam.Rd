@@ -94,7 +94,8 @@ and \href{https://easystats.github.io/parameters/articles/model_parameters_robus
 for working examples.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
+possible adjustment methods are \code{"tukey"}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

@@ -28,7 +28,8 @@ mimic behaviour of other software packages, such as Stata. For
 exponentiate coefficients for all models except those from Gaussian family.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats]{p.adjust}} for details.}
+adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
+possible adjustment methods are \code{"tukey"}.}
 
 \item{verbose}{Toggle warnings and messages.}
 
