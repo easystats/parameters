@@ -115,8 +115,9 @@ for working examples.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
-possible adjustment methods are \code{"tukey"}, and \code{"none"} to
-explicitly disable adjustment for \code{emmGrid} objects (from \pkg{emmeans}).}
+possible adjustment methods are \code{"tukey"}, \code{"scheffe"} and
+\code{"none"} to explicitly disable adjustment for \code{emmGrid} objects
+(from \pkg{emmeans}).}
 
 \item{verbose}{Toggle warnings and messages.}
 

@@ -40,7 +40,7 @@ model_parameters.emmGrid <- function(model,
   # ==== adjust p-values?
 
   if (!is.null(p_adjust)) {
-    params <- .p_adjust(params, p_adjust)
+    params <- .p_adjust(params, p_adjust, model)
   }
 
 
@@ -73,7 +73,7 @@ model_parameters.emmGrid <- function(model,
   # Reorder
   estimate_pos <- which(colnames(s) == model@misc$estName)
   parameter_names <- colnames(params)[1:(estimate_pos - 1)]
-  order <- c(parameter_names, "Estimate", "SE", "CI_low", "CI_high", "t", "z", "df", "df_error", "p")
+  order <- c(parameter_names, "Estimate", "SE", "CI_low", "CI_high", "F", "t", "z", "df", "df_error", "p")
   params <- params[order[order %in% names(params)]]
 
   # rename

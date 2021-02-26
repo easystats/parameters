@@ -225,7 +225,7 @@
   # ==== adjust p-values?
 
   if (!is.null(p_adjust)) {
-    parameters <- .p_adjust(parameters, p_adjust)
+    parameters <- .p_adjust(parameters, p_adjust, model)
   }
 
 
@@ -448,7 +448,7 @@
 
   # adjust p-values?
   if (!is.null(p_adjust)) {
-    parameters <- .p_adjust(parameters, p_adjust)
+    parameters <- .p_adjust(parameters, p_adjust, model)
   }
 
   # if we have within/between effects (from demean()), we can add a component

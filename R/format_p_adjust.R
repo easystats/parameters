@@ -24,6 +24,7 @@ format_p_adjust <- function(method) {
     "bh" = "Benjamini & Hochberg (1995)",
     "by" = "Benjamini & Yekutieli (2001)",
     "tukey" = "Tukey",
+    "scheffe" = "Scheffe",
     method
   )
 }
@@ -32,15 +33,35 @@ format_p_adjust <- function(method) {
 
 
 
-#' @importFrom stats ptukey p.adjust.methods p.adjust
-.p_adjust <- function(params, p_adjust) {
+#' @importFrom stats ptukey p.adjust.methods p.adjust pf
+.p_adjust <- function(params, p_adjust, model = NULL) {
   if (!is.null(p_adjust) && "p" %in% colnames(params)) {
+
+    stat_column <- stats::na.omit(match(c("F", "t", "Statistic"), colnames(params)))
+
     if (tolower(p_adjust) %in% tolower(stats::p.adjust.methods)) {
       params$p <- stats::p.adjust(params$p, method = p_adjust)
     } else if (tolower(p_adjust) == "tukey") {
-      stat_column <- stats::na.omit(match(c("t", "Statistic"), colnames(params)))
       if ("df" %in% colnames(params) && length(stat_column) > 0) {
         params$p <- stats::ptukey(sqrt(2) * abs(params[[stat_column]]), nrow(params), params$df, lower.tail = FALSE)
+      }
+    } else if (tolower(p_adjust) == "scheffe" && !is.null(model)) {
+      if ("df" %in% colnames(params) && length(stat_column) > 0) {
+        # 1st try
+        scheffe_ranks <- try(qr(model@linfct)$rank, silent = TRUE)
+
+        # 2nd try
+        if (inherits(scheffe_ranks, "try-error") || is.null(scheffe_ranks)) {
+          scheffe_ranks <- try(model$qr$rank, silent = TRUE)
+        }
+
+        if (inherits(scheffe_ranks, "try-error") || is.null(scheffe_ranks)) {
+          scheffe_ranks <- nrow(params)
+        }
+        params$p <- stats::pf(params[[stat_column]]^2 / scheffe_ranks,
+                              df1 = scheffe_ranks,
+                              df2 = params$df,
+                              lower.tail = FALSE)
       }
     }
   }

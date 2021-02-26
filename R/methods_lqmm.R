@@ -122,7 +122,7 @@ p_value.lqm <- p_value.lqmm
   parameters$p <- summary_table[, 5]
 
   if (!is.null(p_adjust)) {
-    parameters <- .p_adjust(parameters, p_adjust)
+    parameters <- .p_adjust(parameters, p_adjust, model)
   }
 
   # ==== Reorder
