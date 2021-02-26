@@ -100,7 +100,8 @@ exponentiate coefficients for all models except those from Gaussian family.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
-possible adjustment methods are \code{"tukey"}.}
+possible adjustment methods are \code{"tukey"}, and \code{"none"} to
+explicitly disable adjustment for \code{emmGrid} objects (from \pkg{emmeans}).}
 }
 \value{
 A data frame of indices related to the model's parameters.
