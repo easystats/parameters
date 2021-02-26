@@ -10,6 +10,24 @@ model_parameters.emmGrid <- function(model,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
+
+  # set default for p-adjust
+  emm_padjust <- tryCatch(
+    {
+      adj <- model@misc$adjust
+      switch(adj,
+             tukey = "fdr",
+             adj)
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+  if (!is.null(emm_padjust) && is.null(p_adjust)) {
+    p_adjust <- emm_padjust
+  }
+
+
   s <- summary(model, level = ci, adjust = "none")
   params <- as.data.frame(s)
 
