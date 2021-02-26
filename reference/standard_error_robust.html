@@ -257,6 +257,9 @@ and <code>vcov_args</code> can be passed down to <code>standard_error_robust()</
     <p>These functions rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package
   (the latter if <code>vcov_estimation = "CR"</code> for cluster-robust standard errors)
   and will thus only work for those models supported by those packages.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Working examples cam be found <a href='https://easystats.github.io/parameters/articles/model_parameters_robust.html'>in this vignette</a>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://sandwich.R-Forge.R-project.org/'>"sandwich"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
@@ -281,7 +284,6 @@ and <code>vcov_args</code> can be passed down to <code>standard_error_robust()</
   <span class='op'>)</span>
 <span class='op'>}</span>
 <span class='op'>}</span>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

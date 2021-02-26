@@ -254,11 +254,11 @@ included in the summary output.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Technical Details</h3>
+<h3 class='hasAnchor' id='technical-details'><a class='anchor' href='#technical-details'></a>Technical Details</h3>
 <p><code>simulate_parameters()</code> is a computationally faster alternative
     to <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>. Simulated draws for coefficients are based
     on a multivariate normal distribution (<code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>MASS::mvrnorm()</a></code>) with mean
-    <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p><p></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Models with Zero-Inflation Component</h3>
+    <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p><p></p><h3 class='hasAnchor' id='models-with-zero-inflation-component'><a class='anchor' href='#models-with-zero-inflation-component'></a>Models with Zero-Inflation Component</h3>
 <p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
     <span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
     which parameters should be simulated. For all other models, parameters
