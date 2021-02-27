@@ -173,6 +173,9 @@ compare_models <- compare_parameters
       }
     }
   }
-  x$Parameter <- gsub("]", ")", gsub("[", "(", x$Parameter, fixed = TRUE), fixed = TRUE)
+
+  if (!is.null(x$Parameter)) {
+    x$Parameter <- gsub("]", ")", gsub("[", "(", x$Parameter, fixed = TRUE), fixed = TRUE)
+  }
   x
 }

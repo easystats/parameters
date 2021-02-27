@@ -112,7 +112,7 @@ model_parameters.lavaan <- function(model,
                                     type = c("regression", "correlation", "loading", "defined"),
                                     verbose = TRUE,
                                     ...) {
-  params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, ...)
+  params <- .extract_parameters_lavaan(model, ci = ci, standardize = standardize, verbose = verbose, ...)
 
   # Filter
   if (all(type == "all")) {

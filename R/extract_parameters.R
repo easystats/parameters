@@ -689,15 +689,22 @@
 
 
 #' @keywords internal
-.extract_parameters_lavaan <- function(model, ci = 0.95, standardize = FALSE, ...) {
+.extract_parameters_lavaan <- function(model, ci = 0.95, standardize = FALSE, verbose = TRUE, ...) {
   if (!requireNamespace("lavaan", quietly = TRUE)) {
     stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
+  }
+
+  # set proper default
+  if (is.null(standardize)) {
+    standardize <- FALSE
   }
 
   # check for valid parameters
   if (!is.logical(standardize)) {
     if (!(standardize %in% c("all", "std.all", "latent", "std.lv", "no_exogenous", "std.nox"))) {
-      warning("'standardize' should be one of TRUE, 'all', 'std.all', 'latent', 'std.lv', 'no_exogenous' or 'std.nox'. Returning unstandardized solution.", call. = FALSE)
+      if (verbose) {
+        warning("'standardize' should be one of TRUE, 'all', 'std.all', 'latent', 'std.lv', 'no_exogenous' or 'std.nox'. Returning unstandardized solution.", call. = FALSE)
+      }
       standardize <- FALSE
     }
   }
@@ -705,7 +712,9 @@
   # CI
   if (length(ci) > 1) {
     ci <- ci[1]
-    warning(paste0("lavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`."))
+    if (verbose) {
+      warning(paste0("lavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`."), call. = FALSE)
+    }
   }
 
   # collect dots
