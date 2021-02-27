@@ -36,6 +36,11 @@ model_parameters.glht <- function(model,
                                   exponentiate = FALSE,
                                   verbose = TRUE,
                                   ...) {
+
+  # p-adjustment method
+  s <- summary(model)
+  p_adjust <- s$test$type
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -46,9 +51,11 @@ model_parameters.glht <- function(model,
     exponentiate = exponentiate,
     robust = FALSE,
     p_adjust = NULL,
+    verbose = verbose,
     ...
   )
 
+  attr(out, "p_adjust") <- p_adjust
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
