@@ -67,9 +67,9 @@ related model class in \code{\link{model_parameters}}.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
-possible adjustment methods are \code{"tukey"}, \code{"scheffe"} and
-\code{"none"} to explicitly disable adjustment for \code{emmGrid} objects
-(from \pkg{emmeans}).}
+possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
+\code{"sidak"} and \code{"none"} to explicitly disable adjustment for
+\code{emmGrid} objects (from \pkg{emmeans}).}
 
 \item{style}{String, indicating which style of output is requested. Following
 templates are possible:

@@ -25,6 +25,7 @@ format_p_adjust <- function(method) {
     "by" = "Benjamini & Yekutieli (2001)",
     "tukey" = "Tukey",
     "scheffe" = "Scheffe",
+    "sidak" = "Sidak",
     method
   )
 }
@@ -35,9 +36,9 @@ format_p_adjust <- function(method) {
 
 #' @importFrom stats ptukey p.adjust.methods p.adjust pf
 .p_adjust <- function(params, p_adjust, model = NULL, verbose = TRUE) {
-  all_methods <- c(tolower(stats::p.adjust.methods), "tukey", "scheffe")
+  all_methods <- c(tolower(stats::p.adjust.methods), "tukey", "scheffe", "sidak")
   if (!is.null(p_adjust) && "p" %in% colnames(params)) {
-    if (tolower(p_adjust) %in% all_methods) {
+    if (!is.na(pmatch(tolower(p_adjust), all_methods))) {
       old_p_vals <- params$p
       stat_column <- stats::na.omit(match(c("F", "t", "Statistic"), colnames(params)))
 
@@ -65,6 +66,8 @@ format_p_adjust <- function(method) {
                                 df2 = params$df,
                                 lower.tail = FALSE)
         }
+      } else if (tolower(p_adjust) == "sidak") {
+        params$p <- 1 - (1 - params$p)^nrow(params)
       }
 
       if (isTRUE(all.equal(old_p_vals, params$p))) {
