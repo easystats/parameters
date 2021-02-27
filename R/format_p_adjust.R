@@ -36,19 +36,34 @@ format_p_adjust <- function(method) {
 
 #' @importFrom stats ptukey p.adjust.methods p.adjust pf
 .p_adjust <- function(params, p_adjust, model = NULL, verbose = TRUE) {
-  all_methods <- c(tolower(stats::p.adjust.methods), "tukey", "scheffe", "sidak")
+
+  # check if we have any adjustment at all, and a p-column
   if (!is.null(p_adjust) && "p" %in% colnames(params)) {
-    if (!is.na(pmatch(tolower(p_adjust), all_methods))) {
+
+    # prepare arguments
+    p_adjust <- tolower(p_adjust)
+    all_methods <- c(tolower(stats::p.adjust.methods), "tukey", "scheffe", "sidak")
+
+    # only proceed if valid argument-value
+    if (tolower(p_adjust) %in% all_methods) {
+
+      # save old values, to check if p-adjustment worked
       old_p_vals <- params$p
+      # find statistic column
       stat_column <- stats::na.omit(match(c("F", "t", "Statistic"), colnames(params)))
 
       if (tolower(p_adjust) %in% tolower(stats::p.adjust.methods)) {
+        # base R adjustments
         params$p <- stats::p.adjust(params$p, method = p_adjust)
+
       } else if (tolower(p_adjust) == "tukey") {
+        # tukey adjustment
         if ("df" %in% colnames(params) && length(stat_column) > 0) {
           params$p <- stats::ptukey(sqrt(2) * abs(params[[stat_column]]), nrow(params), params$df, lower.tail = FALSE)
         }
+
       } else if (tolower(p_adjust) == "scheffe" && !is.null(model)) {
+        # scheffe adjustment
         if ("df" %in% colnames(params) && length(stat_column) > 0) {
           # 1st try
           scheffe_ranks <- try(qr(model@linfct)$rank, silent = TRUE)
@@ -66,8 +81,11 @@ format_p_adjust <- function(method) {
                                 df2 = params$df,
                                 lower.tail = FALSE)
         }
+
       } else if (tolower(p_adjust) == "sidak") {
+        # sidak adjustment
         params$p <- 1 - (1 - params$p)^nrow(params)
+
       }
 
       if (isTRUE(all.equal(old_p_vals, params$p))) {
