@@ -15,6 +15,7 @@
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
+  effects = "fixed",
   exponentiate = FALSE,
   details = FALSE,
   df_method = NULL,
@@ -75,6 +76,7 @@
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
+  effects = "fixed",
   exponentiate = FALSE,
   details = FALSE,
   df_method = NULL,
@@ -101,6 +103,8 @@ regressions} apply (see also
 robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
 works when \code{standardize="refit"}.}
 
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
+
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for,
 say, logistic regressions, or more generally speaking: for models with log
@@ -117,8 +121,6 @@ exponentiate coefficients for all models except those from Gaussian family.}
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
-
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
