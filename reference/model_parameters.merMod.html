@@ -188,6 +188,7 @@
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
+  effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -252,6 +253,7 @@
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
+  effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -291,6 +293,10 @@ robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters onl
 works when <code>standardize="refit"</code>.</p></td>
     </tr>
     <tr>
+      <th>effects</th>
+      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random effects (<code>"random"</code>) or both (<code>"all"</code>) be returned? Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
       <th>exponentiate</th>
       <td><p>Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for,
@@ -316,10 +322,6 @@ exponentiate coefficients for all models except those from Gaussian family.</p><
     <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
-    </tr>
-    <tr>
-      <th>effects</th>
-      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random effects (<code>"random"</code>) or both (<code>"all"</code>) be returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
