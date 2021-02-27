@@ -41,7 +41,6 @@ format_p_adjust <- function(method) {
   if (!is.null(p_adjust) && "p" %in% colnames(params)) {
 
     # prepare arguments
-    p_adjust <- tolower(p_adjust)
     all_methods <- c(tolower(stats::p.adjust.methods), "tukey", "scheffe", "sidak")
 
     # only proceed if valid argument-value
