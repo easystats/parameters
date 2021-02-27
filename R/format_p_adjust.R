@@ -67,7 +67,7 @@ format_p_adjust <- function(method) {
         }
       }
 
-      if (all.equal(old_p_vals, params$p)) {
+      if (isTRUE(all.equal(old_p_vals, params$p))) {
         if (verbose) {
           warning(paste0("Something went wrong. Could not apply ", p_adjust, "-adjustment."), call. = FALSE)
         }
