@@ -35,41 +35,45 @@ format_p_adjust <- function(method) {
 
 #' @importFrom stats ptukey p.adjust.methods p.adjust pf
 .p_adjust <- function(params, p_adjust, model = NULL, verbose = TRUE) {
+  all_methods <- c(tolower(stats::p.adjust.methods), "tukey", "scheffe")
   if (!is.null(p_adjust) && "p" %in% colnames(params)) {
+    if (tolower(p_adjust) %in% all_methods) {
+      old_p_vals <- params$p
+      stat_column <- stats::na.omit(match(c("F", "t", "Statistic"), colnames(params)))
 
-    old_p_vals <- params$p
-    stat_column <- stats::na.omit(match(c("F", "t", "Statistic"), colnames(params)))
-
-    if (tolower(p_adjust) %in% tolower(stats::p.adjust.methods)) {
-      params$p <- stats::p.adjust(params$p, method = p_adjust)
-    } else if (tolower(p_adjust) == "tukey") {
-      if ("df" %in% colnames(params) && length(stat_column) > 0) {
-        params$p <- stats::ptukey(sqrt(2) * abs(params[[stat_column]]), nrow(params), params$df, lower.tail = FALSE)
-      }
-    } else if (tolower(p_adjust) == "scheffe" && !is.null(model)) {
-      if ("df" %in% colnames(params) && length(stat_column) > 0) {
-        # 1st try
-        scheffe_ranks <- try(qr(model@linfct)$rank, silent = TRUE)
-
-        # 2nd try
-        if (inherits(scheffe_ranks, "try-error") || is.null(scheffe_ranks)) {
-          scheffe_ranks <- try(model$qr$rank, silent = TRUE)
+      if (tolower(p_adjust) %in% tolower(stats::p.adjust.methods)) {
+        params$p <- stats::p.adjust(params$p, method = p_adjust)
+      } else if (tolower(p_adjust) == "tukey") {
+        if ("df" %in% colnames(params) && length(stat_column) > 0) {
+          params$p <- stats::ptukey(sqrt(2) * abs(params[[stat_column]]), nrow(params), params$df, lower.tail = FALSE)
         }
+      } else if (tolower(p_adjust) == "scheffe" && !is.null(model)) {
+        if ("df" %in% colnames(params) && length(stat_column) > 0) {
+          # 1st try
+          scheffe_ranks <- try(qr(model@linfct)$rank, silent = TRUE)
 
-        if (inherits(scheffe_ranks, "try-error") || is.null(scheffe_ranks)) {
-          scheffe_ranks <- nrow(params)
+          # 2nd try
+          if (inherits(scheffe_ranks, "try-error") || is.null(scheffe_ranks)) {
+            scheffe_ranks <- try(model$qr$rank, silent = TRUE)
+          }
+
+          if (inherits(scheffe_ranks, "try-error") || is.null(scheffe_ranks)) {
+            scheffe_ranks <- nrow(params)
+          }
+          params$p <- stats::pf(params[[stat_column]]^2 / scheffe_ranks,
+                                df1 = scheffe_ranks,
+                                df2 = params$df,
+                                lower.tail = FALSE)
         }
-        params$p <- stats::pf(params[[stat_column]]^2 / scheffe_ranks,
-                              df1 = scheffe_ranks,
-                              df2 = params$df,
-                              lower.tail = FALSE)
       }
-    }
 
-    if (all.equal(old_p_vals, params$p)) {
-      if (verbose) {
-        warning(paste0("Something went wrong. Could not apply ", p_adjust, "-adjustment."), call. = FALSE)
+      if (all.equal(old_p_vals, params$p)) {
+        if (verbose) {
+          warning(paste0("Something went wrong. Could not apply ", p_adjust, "-adjustment."), call. = FALSE)
+        }
       }
+    } else if (verbose) {
+      warning(paste0("'p_adjust' must be one of ", paste0(all_methods, collapse = ", ")), call. = FALSE)
     }
   }
   params
