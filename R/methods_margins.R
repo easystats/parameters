@@ -29,7 +29,7 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
   # ==== adjust p-values?
 
   if (!is.null(p_adjust)) {
-    params <- .p_adjust(params, p_adjust, model)
+    params <- .p_adjust(params, p_adjust, model, verbose)
   }
 
   if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {

@@ -11,7 +11,7 @@ model_parameters.lqmm <- function(model,
   if (bootstrap) {
     parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
   } else {
-    parameters <- .extract_parameters_lqmm(model, ci = ci, p_adjust = p_adjust, ...)
+    parameters <- .extract_parameters_lqmm(model, ci = ci, p_adjust = p_adjust, verbose = verbose, ...)
   }
 
   parameters <- .add_model_parameters_attributes(
@@ -83,7 +83,7 @@ p_value.lqm <- p_value.lqmm
 # helper ------------------
 
 
-.extract_parameters_lqmm <- function(model, ci, p_adjust, ...) {
+.extract_parameters_lqmm <- function(model, ci, p_adjust, verbose = TRUE, ...) {
   cs <- summary(model)
   parameters <- insight::get_parameters(model)
 
@@ -122,7 +122,7 @@ p_value.lqm <- p_value.lqmm
   parameters$p <- summary_table[, 5]
 
   if (!is.null(p_adjust)) {
-    parameters <- .p_adjust(parameters, p_adjust, model)
+    parameters <- .p_adjust(parameters, p_adjust, model, verbose)
   }
 
   # ==== Reorder

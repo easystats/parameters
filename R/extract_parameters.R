@@ -225,7 +225,7 @@
   # ==== adjust p-values?
 
   if (!is.null(p_adjust)) {
-    parameters <- .p_adjust(parameters, p_adjust, model)
+    parameters <- .p_adjust(parameters, p_adjust, model, verbose)
   }
 
 
@@ -308,10 +308,13 @@
                                       robust = FALSE,
                                       p_adjust = NULL,
                                       wb_component = FALSE,
+                                      verbose = TRUE,
                                       ...) {
   # check if standardization is required and package available
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
-    insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
+    if (verbose) {
+      warning("Package 'effectsize' required to calculate standardized coefficients. Please install it.", call. = FALSE)
+    }
     standardize <- NULL
   }
 
@@ -448,7 +451,7 @@
 
   # adjust p-values?
   if (!is.null(p_adjust)) {
-    parameters <- .p_adjust(parameters, p_adjust, model)
+    parameters <- .p_adjust(parameters, p_adjust, model, verbose)
   }
 
   # if we have within/between effects (from demean()), we can add a component

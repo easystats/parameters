@@ -40,7 +40,7 @@ model_parameters.emmGrid <- function(model,
   # ==== adjust p-values?
 
   if (!is.null(p_adjust)) {
-    params <- .p_adjust(params, p_adjust, model)
+    params <- .p_adjust(params, p_adjust, model, verbose)
   }
 
 

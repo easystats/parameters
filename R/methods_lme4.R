@@ -132,6 +132,7 @@ model_parameters.merMod <- function(model,
         standardize = standardize,
         p_adjust = p_adjust,
         wb_component = wb_component,
+        verbose = verbose,
         ...
       )
     }

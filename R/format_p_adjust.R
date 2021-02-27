@@ -34,9 +34,10 @@ format_p_adjust <- function(method) {
 
 
 #' @importFrom stats ptukey p.adjust.methods p.adjust pf
-.p_adjust <- function(params, p_adjust, model = NULL) {
+.p_adjust <- function(params, p_adjust, model = NULL, verbose = TRUE) {
   if (!is.null(p_adjust) && "p" %in% colnames(params)) {
 
+    old_p_vals <- params$p
     stat_column <- stats::na.omit(match(c("F", "t", "Statistic"), colnames(params)))
 
     if (tolower(p_adjust) %in% tolower(stats::p.adjust.methods)) {
@@ -62,6 +63,12 @@ format_p_adjust <- function(method) {
                               df1 = scheffe_ranks,
                               df2 = params$df,
                               lower.tail = FALSE)
+      }
+    }
+
+    if (all.equal(old_p_vals, params$p)) {
+      if (verbose) {
+        warning(paste0("Something went wrong. Could not apply ", p_adjust, "-adjustment."), call. = FALSE)
       }
     }
   }
