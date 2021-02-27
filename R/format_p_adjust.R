@@ -43,6 +43,24 @@ format_p_adjust <- function(method) {
     # prepare arguments
     all_methods <- c(tolower(stats::p.adjust.methods), "tukey", "scheffe", "sidak")
 
+    # for interaction terms, e.g. for "by" argument in emmeans
+    # pairwise comparison, we have to adjust the rank resp. the
+    # number of estimates in a comparison family
+    rank_adjust <- tryCatch(
+      {
+        correction <- 1
+        by_vars <- model@misc$by.vars
+        if (!is.null(by_vars) && by_vars %in% colnames(params)) {
+          correction <- .n_unique(params[[by_vars]])
+        }
+        correction
+      },
+      error = function(e) {
+        1
+      }
+    )
+
+
     # only proceed if valid argument-value
     if (tolower(p_adjust) %in% all_methods) {
 
@@ -58,7 +76,7 @@ format_p_adjust <- function(method) {
       } else if (tolower(p_adjust) == "tukey") {
         # tukey adjustment
         if ("df" %in% colnames(params) && length(stat_column) > 0) {
-          params$p <- stats::ptukey(sqrt(2) * abs(params[[stat_column]]), nrow(params), params$df, lower.tail = FALSE)
+          params$p <- stats::ptukey(sqrt(2) * abs(params[[stat_column]]), nrow(params) / rank_adjust, params$df, lower.tail = FALSE)
         }
 
       } else if (tolower(p_adjust) == "scheffe" && !is.null(model)) {
@@ -75,6 +93,7 @@ format_p_adjust <- function(method) {
           if (inherits(scheffe_ranks, "try-error") || is.null(scheffe_ranks)) {
             scheffe_ranks <- nrow(params)
           }
+          scheffe_ranks <- scheffe_ranks / rank_adjust
           params$p <- stats::pf(params[[stat_column]]^2 / scheffe_ranks,
                                 df1 = scheffe_ranks,
                                 df2 = params$df,
@@ -83,7 +102,7 @@ format_p_adjust <- function(method) {
 
       } else if (tolower(p_adjust) == "sidak") {
         # sidak adjustment
-        params$p <- 1 - (1 - params$p)^nrow(params)
+        params$p <- 1 - (1 - params$p)^(nrow(params) / rank_adjust)
 
       }
 
