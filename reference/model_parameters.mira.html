@@ -217,9 +217,9 @@ exponentiate coefficients for all models except those from Gaussian family.</p><
       <th>p_adjust</th>
       <td><p>Character vector, if not <code>NULL</code>, indicates the method to
 adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details. Further
-possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code> and
-<code>"none"</code> to explicitly disable adjustment for <code>emmGrid</code> objects
-(from <span class="pkg">emmeans</span>).</p></td>
+possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
+<code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
+<code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -276,13 +276,13 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code> and
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
-#&gt; -------------------------------------------------------------------------------
-#&gt; (Intercept) |       18.06 | 3.24 | [ 11.21, 24.91] |      5.57 | 16.56 | &lt; .001
-#&gt; age40-59    |       -5.34 | 1.87 | [ -9.40, -1.28] |     -2.85 | 12.60 | 0.014 
-#&gt; age60-99    |       -7.59 | 2.34 | [-12.96, -2.22] |     -3.24 |  8.27 | 0.011 
-#&gt; hypyes      |        2.36 | 2.00 | [ -2.28,  7.01] |      1.18 | 16.60 | 0.273 
-#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.10] |      3.28 |  7.65 | 0.005 </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |     p
+#&gt; ------------------------------------------------------------------------------
+#&gt; (Intercept) |       19.33 | 4.64 | [  8.43, 30.24] |      4.16 |  7.26 | 0.004
+#&gt; age40-59    |       -5.35 | 2.12 | [-10.13, -0.57] |     -2.53 |  9.10 | 0.032
+#&gt; age60-99    |       -7.06 | 2.17 | [-11.79, -2.34] |     -3.25 | 12.33 | 0.007
+#&gt; hypyes      |        2.62 | 2.51 | [ -3.52,  8.75] |      1.04 |  6.61 | 0.337
+#&gt; chl         |        0.05 | 0.03 | [ -0.01,  0.11] |      2.01 |  6.04 | 0.087</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># model_parameters() also works for models that have no "tidy"-method in mice</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/amices/mice'>"mice"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"gee"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span>
@@ -335,13 +335,13 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code> and
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
-#&gt; -------------------------------------------------------------------------------
-#&gt; (Intercept) |       19.89 | 3.47 | [ 12.44, 27.33] |      5.74 | 13.78 | &lt; .001
-#&gt; age40-59    |       -5.39 | 2.26 | [-10.78,  0.01] |     -2.38 |  6.67 | 0.050 
-#&gt; age60-99    |       -6.99 | 2.74 | [-13.95, -0.02] |     -2.55 |  5.16 | 0.050 
-#&gt; hypyes      |        2.23 | 2.03 | [ -2.26,  6.71] |      1.10 |  9.83 | 0.297 
-#&gt; chl         |        0.05 | 0.02 | [  0.00,  0.09] |      2.38 | 10.80 | 0.039 </div></pre>
+#&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |   df |     p
+#&gt; -----------------------------------------------------------------------------
+#&gt; (Intercept) |       18.05 | 4.23 | [  8.15, 27.94] |      4.27 | 7.38 | 0.003
+#&gt; age40-59    |       -5.90 | 2.13 | [-10.73, -1.07] |     -2.78 | 8.76 | 0.022
+#&gt; age60-99    |       -7.32 | 2.25 | [-12.45, -2.19] |     -3.25 | 8.62 | 0.011
+#&gt; hypyes      |        1.50 | 2.10 | [ -3.21,  6.21] |      0.71 | 7.66 | 0.492
+#&gt; chl         |        0.06 | 0.02 | [  0.01,  0.11] |      2.71 | 9.70 | 0.028</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
