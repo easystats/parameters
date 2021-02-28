@@ -74,7 +74,6 @@ Suggests:
     car,
     clubSandwich,
     cluster,
-    covr,
     cplm,
     dplyr,
     DRR,

@@ -28,8 +28,6 @@ of (model) objects from many different packages.
 
 [![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
 [![R-check](https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/easystats/parameters/branch/main/graph/badge.svg)](https://codecov.io/gh/easystats/parameters?branch=main)
 
 Run the following to install the stable release of **parameters** from
 CRAN:
