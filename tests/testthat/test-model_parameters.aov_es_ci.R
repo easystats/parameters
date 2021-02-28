@@ -1,4 +1,4 @@
-if (require("insight") && require("effectsize") && require("testthat") && require("lme4") && require("parameters")) {
+if (require("insight") && require("effectsize") && require("testthat") && require("lme4") && require("parameters") && packageVersion("effectsize") >= "0.4.3") {
   unloadNamespace("lmerTest")
   data(iris)
   iris$Cat1 <- rep(c("X", "X", "Y"), length.out = nrow(iris))
