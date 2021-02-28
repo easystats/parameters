@@ -1,18 +1,34 @@
+## from rms / rmsb package
+
+
+# model parameters -------------
+
+
+#' @export
+model_parameters.blrm <- model_parameters.bayesQR
+
+
+
+
+# ci -------------
+
 
 #' @export
 ci.lrm <- ci.tobit
 
-
 #' @export
 ci.psm <- ci.tobit
-
 
 #' @export
 ci.ols <- ci.tobit
 
-
 #' @export
 ci.rms <- ci.tobit
+
+
+
+
+# standard error -------------
 
 
 #' @export
@@ -28,18 +44,19 @@ standard_error.lrm <- function(model, ...) {
   )
 }
 
-
 #' @export
 standard_error.ols <- standard_error.lrm
-
 
 #' @export
 standard_error.rms <- standard_error.lrm
 
-
 #' @export
 standard_error.psm <- standard_error.lrm
 
+
+
+
+# p-values -----------------------
 
 #' @export
 p_value.lrm <- function(model, ...) {
@@ -52,14 +69,14 @@ p_value.lrm <- function(model, ...) {
   )
 }
 
-
 #' @export
 p_value.ols <- p_value.lrm
-
 
 #' @export
 p_value.rms <- p_value.lrm
 
-
 #' @export
 p_value.psm <- p_value.lrm
+
+#' @export
+p_value.blrm <- p_value.BFBayesFactor

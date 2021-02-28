@@ -1,5 +1,9 @@
 # parameters 0.12.1
 
+## New supported model classes
+
+* `blrm` (*rmsb*)
+
 ## Bug fixes
 
 * Fixed issue with non-initialized argument `style` in `display()` for
