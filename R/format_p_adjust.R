@@ -14,8 +14,7 @@
 format_p_adjust <- function(method) {
   method <- tolower(method)
 
-  switch(
-    method,
+  switch(method,
     "holm" = "Holm (1979)",
     "hochberg" = "Hochberg (1988)",
     "hommel" = "Hommel (1988)",
@@ -72,13 +71,11 @@ format_p_adjust <- function(method) {
       if (tolower(p_adjust) %in% tolower(stats::p.adjust.methods)) {
         # base R adjustments
         params$p <- stats::p.adjust(params$p, method = p_adjust)
-
       } else if (tolower(p_adjust) == "tukey") {
         # tukey adjustment
         if ("df" %in% colnames(params) && length(stat_column) > 0) {
           params$p <- stats::ptukey(sqrt(2) * abs(params[[stat_column]]), nrow(params) / rank_adjust, params$df, lower.tail = FALSE)
         }
-
       } else if (tolower(p_adjust) == "scheffe" && !is.null(model)) {
         # scheffe adjustment
         if ("df" %in% colnames(params) && length(stat_column) > 0) {
@@ -95,15 +92,14 @@ format_p_adjust <- function(method) {
           }
           scheffe_ranks <- scheffe_ranks / rank_adjust
           params$p <- stats::pf(params[[stat_column]]^2 / scheffe_ranks,
-                                df1 = scheffe_ranks,
-                                df2 = params$df,
-                                lower.tail = FALSE)
+            df1 = scheffe_ranks,
+            df2 = params$df,
+            lower.tail = FALSE
+          )
         }
-
       } else if (tolower(p_adjust) == "sidak") {
         # sidak adjustment
         params$p <- 1 - (1 - params$p)^(nrow(params) / rank_adjust)
-
       }
 
       if (isTRUE(all.equal(old_p_vals, params$p))) {

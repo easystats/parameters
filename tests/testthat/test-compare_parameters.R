@@ -11,11 +11,13 @@ if (require("testthat") && require("parameters") && require("insight") && packag
   test_that("compare_parameters, default", {
     expect_equal(
       colnames(x),
-      c("Parameter", "Component", "Coefficient.m1", "SE.m1", "CI.m1",
+      c(
+        "Parameter", "Component", "Coefficient.m1", "SE.m1", "CI.m1",
         "CI_low.m1", "CI_high.m1", "t.m1", "df_error.m1", "p.m1", "Coefficient.m2",
         "SE.m2", "CI.m2", "CI_low.m2", "CI_high.m2", "t.m2", "df_error.m2",
         "p.m2", "Log-Mean.m3", "SE.m3", "CI.m3", "CI_low.m3", "CI_high.m3",
-        "z.m3", "df_error.m3", "p.m3")
+        "z.m3", "df_error.m3", "p.m3"
+      )
     )
     out <- capture.output(x)
     expect_equal(length(out), 14)
@@ -23,10 +25,12 @@ if (require("testthat") && require("parameters") && require("insight") && packag
     expect_equal(colnames(out), c("Parameter", "m1", "m2", "m3"))
     expect_equal(
       out$Parameter,
-      c("(Intercept)", "Species (versicolor)", "Species (virginica)",
+      c(
+        "(Intercept)", "Species (versicolor)", "Species (virginica)",
         "Petal.Length", "Species (versicolor) * Petal.Length",
         "Species (virginica) * Petal.Length", "outcome (2)", "outcome (3)",
-        "treatment (2)", "treatment (3)", NA, "Observations")
+        "treatment (2)", "treatment (3)", NA, "Observations"
+      )
     )
   })
 
@@ -35,26 +39,32 @@ if (require("testthat") && require("parameters") && require("insight") && packag
   test_that("compare_parameters, se_p2", {
     expect_equal(
       colnames(x),
-      c("Parameter", "Component", "Coefficient.m1", "SE.m1", "CI.m1",
+      c(
+        "Parameter", "Component", "Coefficient.m1", "SE.m1", "CI.m1",
         "CI_low.m1", "CI_high.m1", "t.m1", "df_error.m1", "p.m1", "Coefficient.m2",
         "SE.m2", "CI.m2", "CI_low.m2", "CI_high.m2", "t.m2", "df_error.m2",
         "p.m2", "Log-Mean.m3", "SE.m3", "CI.m3", "CI_low.m3", "CI_high.m3",
-        "z.m3", "df_error.m3", "p.m3")
+        "z.m3", "df_error.m3", "p.m3"
+      )
     )
     out <- capture.output(x)
     expect_equal(length(out), 14)
     out <- format(x, style = "se_p2")
     expect_equal(
       colnames(out),
-      c("Parameter", "Coefficient (m1)", "p (m1)", "Coefficient (m2)",
-        "p (m2)", "Log-Mean (m3)", "p (m3)")
+      c(
+        "Parameter", "Coefficient (m1)", "p (m1)", "Coefficient (m2)",
+        "p (m2)", "Log-Mean (m3)", "p (m3)"
+      )
     )
     expect_equal(
       out$Parameter,
-      c("(Intercept)", "Species (versicolor)", "Species (virginica)",
+      c(
+        "(Intercept)", "Species (versicolor)", "Species (virginica)",
         "Petal.Length", "Species (versicolor) * Petal.Length",
         "Species (virginica) * Petal.Length", "outcome (2)", "outcome (3)",
-        "treatment (2)", "treatment (3)", NA, "Observations")
+        "treatment (2)", "treatment (3)", NA, "Observations"
+      )
     )
   })
 }

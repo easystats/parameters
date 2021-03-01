@@ -459,8 +459,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 # footer: type of uncertainty interval
 .print_footer_cimethod <- function(ci_method = NULL) {
   if (!is.null(ci_method)) {
-    ci_method <- switch(
-      toupper(ci_method),
+    ci_method <- switch(toupper(ci_method),
       "HDI" = "highest density intervals",
       "ETI" = "equal-tailed intervals",
       "SI" = "support intervals",

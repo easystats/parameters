@@ -238,8 +238,10 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
           Effectsize = "Algina-Keselman-Penfield robust standardized difference"
         ),
         class = "data.frame",
-        row.names = c(NA,
-                      -1L),
+        row.names = c(
+          NA,
+          -1L
+        ),
         model_class = "AKP",
         digits = 2,
         ci_digits = 2,

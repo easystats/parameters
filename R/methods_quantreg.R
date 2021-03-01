@@ -133,8 +133,7 @@ standard_error.rqss <- function(model, component = c("all", "conditional", "smoo
     Component = "smooth_terms"
   )
 
-  switch(
-    component,
+  switch(component,
     "all" = rbind(out_cond, out_smooth),
     "conditional" = out_cond,
     "smooth_terms" = out_smooth
@@ -259,8 +258,7 @@ p_value.rqss <- function(model, component = c("all", "conditional", "smooth_term
     Component = "smooth_terms"
   )
 
-  switch(
-    component,
+  switch(component,
     "all" = rbind(out_cond, out_smooth),
     "conditional" = out_cond,
     "smooth_terms" = out_smooth

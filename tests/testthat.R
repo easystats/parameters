@@ -23,4 +23,3 @@ osx <- tryCatch(
 if (!osx) {
   test_check("parameters")
 }
-

@@ -410,8 +410,7 @@ ci.meta_bma <- ci.meta_random
 
 
 .metabma_ci_columns <- function(ci_method, ci) {
-  switch(
-    toupper(ci_method),
+  switch(toupper(ci_method),
     "HDI" = sprintf(c("hpd%i_lower", "hpd%i_upper"), 100 * ci),
     c(sprintf("%g%%", (100 * (1 - ci)) / 2), sprintf("%g%%", 100 - (100 * (1 - ci)) / 2))
   )

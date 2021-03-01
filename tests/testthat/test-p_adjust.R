@@ -15,12 +15,12 @@ if (.runThisTest && require("testthat") && require("parameters")) {
 
   if (require("emmeans")) {
     data(iris)
-    m <- pairs(emmeans(aov(Sepal.Width ~ Species, data = iris), ~ Species))
+    m <- pairs(emmeans(aov(Sepal.Width ~ Species, data = iris), ~Species))
     test_that("model_parameters, emmeans, p-adjust", {
       mp <- model_parameters(m)
       expect_equal(mp$p, as.data.frame(m)$p.value, tolerance = 1e-4)
     })
-    m <- pairs(emmeans(aov(Sepal.Width ~ Species, data = iris), ~ Species), adjust = "scheffe")
+    m <- pairs(emmeans(aov(Sepal.Width ~ Species, data = iris), ~Species), adjust = "scheffe")
     test_that("model_parameters, emmeans, p-adjust", {
       mp <- model_parameters(m, p_adjust = "scheffe")
       expect_equal(mp$p, as.data.frame(m)$p.value, tolerance = 1e-4)

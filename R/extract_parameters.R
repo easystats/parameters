@@ -756,8 +756,7 @@
     if (is.logical(standardize)) {
       standardize <- "all"
     }
-    type <- switch(
-      standardize,
+    type <- switch(standardize,
       "all" = ,
       "std.all" = "std.all",
       "latent" = ,

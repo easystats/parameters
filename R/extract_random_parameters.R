@@ -62,10 +62,11 @@
 
   # filter component
   out <- switch(component,
-                "zi" = ,
-                "zero_inflated" = out[out$Component == "zi", ],
-                "conditional" = out[out$Component == "cond", ],
-                out)
+    "zi" = ,
+    "zero_inflated" = out[out$Component == "zi", ],
+    "conditional" = out[out$Component == "cond", ],
+    out
+  )
 
   # coerce to character
   out$Parameter <- as.character(out$Parameter)

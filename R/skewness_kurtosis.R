@@ -84,8 +84,7 @@ skewness.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
     type <- "1"
   }
 
-  .skewness <- switch(
-    type,
+  .skewness <- switch(type,
     "1" = out,
     "2" = out * sqrt(n * (n - 1)) / (n - 2),
     "3" = out * ((1 - 1 / n))^1.5
@@ -93,8 +92,7 @@ skewness.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
 
   out_se <- sqrt((6 * (n - 2)) / ((n + 1) * (n + 3)))
 
-  .skewness_se <- switch(
-    type,
+  .skewness_se <- switch(type,
     "1" = out_se,
     "2" = out_se * ((sqrt(n * (n - 1))) / (n - 2)),
     "3" = out_se * (((n - 1) / n)^1.5),
@@ -179,8 +177,7 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
     type <- "1"
   }
 
-  .kurtosis <- switch(
-    type,
+  .kurtosis <- switch(type,
     "1" = out - 3,
     "2" = ((n + 1) * (out - 3) + 6) * (n - 1) / ((n - 2) * (n - 3)),
     "3" = out * (1 - 1 / n)^2 - 3
@@ -188,8 +185,7 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
 
   out_se <- sqrt((24 * n * (n - 2) * (n - 3)) / (((n + 1)^2) * (n + 3) * (n + 5)))
 
-  .kurtosis_se <- switch(
-    type,
+  .kurtosis_se <- switch(type,
     "1" = out_se,
     "2" = out_se * (((n - 1) * (n + 1)) / ((n - 2) * (n - 3))),
     "3" = out_se * ((n - 1) / n)^2
@@ -314,8 +310,7 @@ summary.parameters_kurtosis <- function(object, test = FALSE, ...) {
     type <- "2"
   }
 
-  switch(
-    type,
+  switch(type,
     "1" = ,
     "I" = ,
     "classic" = "1",

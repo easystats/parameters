@@ -38,8 +38,7 @@ format_order <- function(order, textual = TRUE, ...) {
     if (last_two %in% c(11, 12, 13)) {
       out <- paste0(number, "th")
     } else {
-      out <- paste0(number, switch(
-        last,
+      out <- paste0(number, switch(last,
         "1" = "st",
         "2" = "nd",
         "3" = "rd",
