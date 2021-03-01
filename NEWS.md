@@ -2,7 +2,7 @@
 
 ## New supported model classes
 
-* `blrm` (*rmsb*)
+* `blrm` (*rmsb*), `AKP` (*WRS2*)
 
 ## Bug fixes
 

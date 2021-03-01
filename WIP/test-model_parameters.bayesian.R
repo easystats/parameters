@@ -31,18 +31,18 @@ test_that("model_parameters.stanreg", {
 
   # Mixed
   params <- model_parameters(insight::download_model("stanreg_lmerMod_1"), centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
-  testthat::expect_equal(params$CI_high, c(1.54338200856639, 0.532327852257708), tolerance = 1e-3)
+  expect_equal(c(nrow(params), ncol(params)), c(2, 18))
+  expect_equal(params$CI_high, c(1.54338200856639, 0.532327852257708), tolerance = 1e-3)
 
   params <- model_parameters(insight::download_model("stanreg_merMod_1"), centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(2, 18))
+  expect_equal(c(nrow(params), ncol(params)), c(2, 18))
 
   params <- model_parameters(insight::download_model("stanreg_merMod_2"), centrality = "all", test = "all", dispersion = TRUE)
-  testthat::expect_equal(c(nrow(params), ncol(params)), c(3, 18))
+  expect_equal(c(nrow(params), ncol(params)), c(3, 18))
 
   # GAM
   params <- model_parameters(insight::download_model("stanreg_gam_1"), centrality = "all", test = "all", dispersion = TRUE)
-  # testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 22)) # skip on travis and CRAN for now until new insight
+  # expect_equal(c(nrow(params), ncol(params)), c(4, 22)) # skip on travis and CRAN for now until new insight
 })
 
 
@@ -56,7 +56,7 @@ test_that("model_parameters.brmsfit", {
 
   library(brms)
   # LM
-  # testthat::expect_warning(params <- model_parameters(insight::download_model("brms_mixed_1"), standardize = "refit", centrality = "all", test = c("pd", "rope"), dispersion=TRUE))
-  # testthat::expect_equal(nrow(params), 2)
-  # testthat::expect_equal(ncol(params), 15)
+  # expect_warning(params <- model_parameters(insight::download_model("brms_mixed_1"), standardize = "refit", centrality = "all", test = c("pd", "rope"), dispersion=TRUE))
+  # expect_equal(nrow(params), 2)
+  # expect_equal(ncol(params), 15)
 })
