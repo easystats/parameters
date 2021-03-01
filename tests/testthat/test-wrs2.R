@@ -61,8 +61,7 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
         model_class = "t1way",
         digits = 2,
         ci_digits = 2,
-        p_digits = 3,
-        ci = 0.95
+        p_digits = 3
       ),
       tolerance = 0.001
     )
@@ -146,7 +145,7 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
 
   test_that("model_parameters.mcp", {
     set.seed(123)
-    df_b <- as.data.frame(model_parameters(lincon(libido ~ dose, data = viagra)))
+    df_b <- as.data.frame(model_parameters(lincon(libido ~ dose, data = viagra, alpha = 0.1)))
 
     set.seed(123)
     df_w <- as.data.frame(model_parameters(rmmcp(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster)))
@@ -157,20 +156,21 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
       structure(
         list(
           Group1 = c("placebo", "placebo", "low"),
-          Group2 = c("low", "high", "high"),
+          Group2 = c("low",
+                     "high", "high"),
           Psihat = c(-1, -3, -2),
-          CI = c(.95, .95, .95),
-          CI_low = c(-5.3185800135384, -7.3185800135384, -6.3185800135384),
-          CI_high = c(3.3185800135384, 1.3185800135384, 2.3185800135384),
+          CI = c(0.9, 0.9, 0.9),
+          CI_low = c(-3.86773684147887, -5.86773684147887, -4.86773684147887),
+          CI_high = c(1.86773684147887, -0.132263158521127, 0.867736841478873),
           p.value = c(0.435330942514376, 0.180509539510735, 0.316604846750915)
         ),
-        class = "data.frame",
         row.names = c(NA, -3L),
+        class = "data.frame",
         model_class = "mcp1",
         digits = 2,
         ci_digits = 2,
         p_digits = 3,
-        ci = 0.95
+        ci = 0.9
       ),
       tolerance = 0.001
     )
@@ -216,39 +216,73 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
     )
   })
 
-  # model_parameters.onesampb ---------------------------------------------------
+  # model_parameters.akp.effect -----------------------------------------------
+
+  test_that("model_parameters.AKP", {
+    set.seed(123)
+    mod <-
+      WRS2::akp.effect(
+        formula = wt ~ am,
+        data = mtcars,
+        EQVAR = FALSE,
+        tr = 0.1,
+        alpha = 0.10
+      )
+
+    expect_equal(
+      as.data.frame(model_parameters(mod)),
+      structure(
+        list(
+          Estimate = 1.56091100525642,
+          CI = 0.9,
+          CI_low = 1.09596969116976,
+          CI_high = 3.46002470421431,
+          Effectsize = "Algina-Keselman-Penfield robust standardized difference"
+        ),
+        class = "data.frame",
+        row.names = c(NA,
+                      -1L),
+        model_class = "AKP",
+        digits = 2,
+        ci_digits = 2,
+        p_digits = 3,
+        ci = 0.9
+      ),
+      tolerance = 0.002
+    )
+  })
+
+  # model_parameters.onesampb -------------------------------------------------
 
   test_that("model_parameters.onesampb", {
     set.seed(123)
     x <- rnorm(30)
 
     set.seed(123)
-    mod <- onesampb(x, nboot = 100)
+    mod <- onesampb(x, nboot = 100, alpha = 0.1)
 
     expect_equal(
       as.data.frame(model_parameters(mod)),
       structure(
         list(
           Estimate = -0.0811399751842395,
-          CI = .95,
-          CI_low = -0.414663225939919,
-          CI_high = 0.241710493090677,
+          CI = 0.9,
+          CI_low = -0.386608132810069,
+          CI_high = 0.194377616500882,
           p = 0.7,
           n_Obs = 30L,
           Effectsize = "Robust location measure",
           Method = "One-sample percentile bootstrap"
         ),
         class = "data.frame",
-        row.names = c(
-          NA,
-          -1L
-        ),
+        row.names = c(NA,
+                      -1L),
         title = "One-sample percentile bootstrap",
         model_class = "onesampb",
         digits = 2,
         ci_digits = 2,
         p_digits = 3,
-        ci = 0.95
+        ci = 0.9
       ),
       tolerance = 0.001
     )

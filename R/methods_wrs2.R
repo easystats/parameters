@@ -14,25 +14,33 @@
 #' @export
 model_parameters.t1way <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_t1way(model)
-  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ci = parameters$CI[[1]], ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 
 
-# extract WRS2 anova ----------------------
+# anova ----------------------
 
 .extract_wrs2_t1way <- function(model) {
   fcall <- .safe_deparse(model$call)
+
   # effect sizes are by default contained for `t1way` but not `rmanova`
   if (grepl("^(t1way|WRS2::t1way)", fcall)) {
+    # if alpha was specified in the call, use it to compute conf.level (default alpha = 0.05)
+    if ("alpha" %in% names(as.list(model$call))) {
+      ci <- 1 - as.list(model$call)$alpha[[1]]
+    } else {
+      ci <- .95
+    }
+
     data.frame(
       "F" = model$test,
       "df" = model$df1,
       "df_error" = model$df2,
       "p" = model$p.value,
       "Estimate" = model$effsize,
-      "CI" = .95,
+      "CI" = ci,
       "CI_low" =  model$effsize_ci[1],
       "CI_high" = model$effsize_ci[2],
       "Effectsize" = "Explanatory measure of effect size",
@@ -61,7 +69,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 }
 
 
-# extract WRS2 ttest ----------------------
+# ttest ----------------------
 
 .extract_wrs2_yuen <- function(model) {
   fcall <- .safe_deparse(model$call)
@@ -101,7 +109,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 #' @export
 model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_mcp(model)
-  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ci = parameters$CI[[1]], ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
@@ -111,9 +119,16 @@ model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
 model_parameters.mcp2 <- model_parameters.mcp1
 
 
-# extract WRS2 post hoc comparisons ----------------------
+# post hoc comparisons ----------------------
 
 .extract_wrs2_mcp <- function(model) {
+  # if alpha was specified in the call, use it to compute conf.level (default alpha = 0.05)
+  if ("alpha" %in% names(as.list(model$call))) {
+    ci <- 1 - as.list(model$call)$alpha[[1]]
+  } else {
+    ci <- .95
+  }
+
   # component of the object containing results from multiple comparisons
   out <- as.data.frame(model$comp)
 
@@ -125,7 +140,7 @@ model_parameters.mcp2 <- model_parameters.mcp1
   out$Group2 <- model$fnames[model$comp[, 2]]
 
   # CI column
-  out$CI <- .95
+  out$CI <- ci
 
   # reorder
   col_order <- c("Group1", "Group2", "Psihat", "CI", "CI_low", "CI_high", "p.value", "p.crit")
@@ -139,24 +154,61 @@ model_parameters.mcp2 <- model_parameters.mcp1
 #' @export
 model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_onesampb(model)
-  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ci = parameters$CI[[1]], ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 
 
-# extract WRS2 one-sample percentile bootstrap ----------------------
+# one-sample percentile bootstrap ----------------------
 
 .extract_wrs2_onesampb <- function(model) {
+  # if alpha was specified in the call, use it to compute conf.level (default alpha = 0.05)
+  if ("alpha" %in% names(as.list(model$call))) {
+    ci <- 1 - as.list(model$call)$alpha[[1]]
+  } else {
+    ci <- .95
+  }
+
   data.frame(
     "Estimate" = model$estimate,
-    "CI" = .95,
+    "CI" = ci,
     "CI_low" =  model$ci[1],
     "CI_high" =  model$ci[2],
     "p" = model$p.value,
     "n_Obs" = model$n,
     "Effectsize" = "Robust location measure",
     "Method" = "One-sample percentile bootstrap",
+    stringsAsFactors = FALSE
+  )
+}
+
+
+#' @export
+model_parameters.AKP <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_AKP(model)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ci = parameters$CI[[1]], ...)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
+
+
+# extract AKP effect size ----------------------
+
+.extract_wrs2_AKP <- function(model) {
+  # if alpha was specified in the call, use it to compute conf.level (default alpha = 0.05)
+  if ("alpha" %in% names(as.list(model$call))) {
+    ci <- 1 - as.list(model$call)$alpha[[1]]
+  } else {
+    ci <- .95
+  }
+
+  data.frame(
+    "Estimate" = model$AKPeffect,
+    "CI" = ci,
+    "CI_low" =  model$AKPci[1],
+    "CI_high" =  model$AKPci[2],
+    "Effectsize" = "Algina-Keselman-Penfield robust standardized difference",
     stringsAsFactors = FALSE
   )
 }

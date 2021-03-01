@@ -2,7 +2,7 @@
 
 ## New supported model classes
 
-* `blrm` (*rmsb*)
+* `blrm` (*rmsb*), `AKP` (*WRS2*)
 
 ## Bug fixes
 
@@ -17,6 +17,9 @@
   adjustment-methods `"BY"` and `"BH"`.
 
 * Fixed issue with `show_sigma` in `print()` for `model_parameters()`.
+
+* The methods for objects from `WRS2` package now compute confidence level based
+  on the specified `alpha` in the function call.
 
 # parameters 0.12.0
 
