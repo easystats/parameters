@@ -50,4 +50,3 @@ ci.glm <- function(x, ci = .95, method = c("profile", "wald", "robust"), ...) {
   }
   x
 }
-

@@ -133,4 +133,3 @@ p_value.default <- function(model, method = NULL, verbose = TRUE, ...) {
   names(p) <- .remove_backticks_from_string(names(p))
   p
 }
-

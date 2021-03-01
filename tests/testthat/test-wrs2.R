@@ -216,6 +216,43 @@ if (require("testthat") && require("parameters") && require("WRS2") && getRversi
     )
   })
 
+  # model_parameters.akp.effect -----------------------------------------------
+
+  test_that("model_parameters.AKP", {
+    set.seed(123)
+    mod <-
+      WRS2::akp.effect(
+        formula = wt ~ am,
+        data = mtcars,
+        EQVAR = FALSE
+      )
+
+    expect_equal(
+      as.data.frame(model_parameters(mod)),
+      structure(
+        list(
+          Estimate = 2.48169367327709,
+          CI = 0.95,
+          CI_low = 0.791129191725663,
+          CI_high = 5.09573917444489,
+          Effectsize = "Algina-Keselman-Penfield robust standardized difference"
+        ),
+        class = "data.frame",
+        row.names = c(
+          NA,
+          -1L
+        ),
+        model_class = "AKP",
+        digits = 2,
+        ci_digits = 2,
+        p_digits = 3,
+        ci = 0.95
+      ),
+      tolerance = 0.002
+    )
+  })
+
+
   # model_parameters.onesampb ---------------------------------------------------
 
   test_that("model_parameters.onesampb", {

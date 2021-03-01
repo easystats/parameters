@@ -157,8 +157,7 @@
 #' for models with zero-inflation component, return required component of model-summary
 #' @keywords internal
 .filter_component <- function(dat, component) {
-  switch(
-    component,
+  switch(component,
     "conditional" = dat[dat$Component == "conditional", ],
     "zi" = ,
     "zero_inflated" = dat[dat$Component == "zero_inflated", ],

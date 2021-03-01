@@ -160,3 +160,26 @@ model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
     stringsAsFactors = FALSE
   )
 }
+
+
+#' @export
+model_parameters.AKP <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_AKP(model)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
+
+
+# extract AKP effect size ----------------------
+
+.extract_wrs2_AKP <- function(model) {
+  data.frame(
+    "Estimate" = model$AKPeffect,
+    "CI" = .95,
+    "CI_low" =  model$AKPci[1],
+    "CI_high" =  model$AKPci[2],
+    "Effectsize" = "Algina-Keselman-Penfield robust standardized difference",
+    stringsAsFactors = FALSE
+  )
+}

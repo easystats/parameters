@@ -263,49 +263,48 @@
 
 # helper to format the header / subheader of different model components
 .format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model) {
-
   component_name <- switch(type,
-                           "mu" = ,
-                           "fixed" = ,
-                           "fixed." = ,
-                           "conditional" = ,
-                           "conditional." = "Fixed Effects",
-                           "random." = ,
-                           "random" = "Random Effects",
-                           "conditional.fixed" = ,
-                           "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
-                           "conditional.random" = ifelse(is_zero_inflated, "Random Effects (Count Model)", "Random Effects"),
-                           "zero_inflated" = "Zero-Inflated",
-                           "zero_inflated.fixed" = ,
-                           "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
-                           "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
-                           "dispersion" = "Dispersion",
-                           "marginal" = "Marginal Effects",
-                           "emmeans" = "Estimated Marginal Means",
-                           "contrasts" = "Contrasts",
-                           "simplex.fixed" = ,
-                           "simplex" = "Monotonic Effects",
-                           "smooth_sd" = "Smooth Terms (SD)",
-                           "smooth_terms" = "Smooth Terms",
-                           "sigma.fixed" = ,
-                           "sigma" = "Sigma",
-                           "Correlation" = "Correlation",
-                           "SD/Cor" = "SD / Correlation",
-                           "Loading" = "Loading",
-                           "scale" = ,
-                           "scale.fixed" = "Scale Parameters",
-                           "extra" = ,
-                           "extra.fixed" = "Extra Parameters",
-                           "nu" = "Nu",
-                           "tau" = "Tau",
-                           "meta" = "Meta-Parameters",
-                           "studies" = "Studies",
-                           "within" = "Within-Effects",
-                           "between" = "Between-Effects",
-                           "interactions" = "(Cross-Level) Interactions",
-                           "precision" = ,
-                           "precision." = "Precision",
-                           type
+    "mu" = ,
+    "fixed" = ,
+    "fixed." = ,
+    "conditional" = ,
+    "conditional." = "Fixed Effects",
+    "random." = ,
+    "random" = "Random Effects",
+    "conditional.fixed" = ,
+    "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
+    "conditional.random" = ifelse(is_zero_inflated, "Random Effects (Count Model)", "Random Effects"),
+    "zero_inflated" = "Zero-Inflated",
+    "zero_inflated.fixed" = ,
+    "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
+    "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
+    "dispersion" = "Dispersion",
+    "marginal" = "Marginal Effects",
+    "emmeans" = "Estimated Marginal Means",
+    "contrasts" = "Contrasts",
+    "simplex.fixed" = ,
+    "simplex" = "Monotonic Effects",
+    "smooth_sd" = "Smooth Terms (SD)",
+    "smooth_terms" = "Smooth Terms",
+    "sigma.fixed" = ,
+    "sigma" = "Sigma",
+    "Correlation" = "Correlation",
+    "SD/Cor" = "SD / Correlation",
+    "Loading" = "Loading",
+    "scale" = ,
+    "scale.fixed" = "Scale Parameters",
+    "extra" = ,
+    "extra.fixed" = "Extra Parameters",
+    "nu" = "Nu",
+    "tau" = "Tau",
+    "meta" = "Meta-Parameters",
+    "studies" = "Studies",
+    "within" = "Within-Effects",
+    "between" = "Between-Effects",
+    "interactions" = "(Cross-Level) Interactions",
+    "precision" = ,
+    "precision." = "Precision",
+    type
   )
 
   if (grepl("^conditional\\.(r|R)andom", component_name)) {
@@ -339,9 +338,9 @@
       s2 <- ""
     }
   } else if (length(split_column) > 1 ||
-             split_column %in% c("Subgroup", "Type", "Group") ||
-             grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
-             component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
+    split_column %in% c("Subgroup", "Type", "Group") ||
+    grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
+    component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
     s1 <- component_name
     s2 <- ""
   } else if (split_column == "Response" && is_ordinal_model) {

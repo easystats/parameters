@@ -104,10 +104,12 @@ model_parameters.emm_list <- function(model,
     pars <- model_parameters(model[[i]])
     estimate_pos <- which(colnames(pars) == "Coefficient")
     pars[1:(estimate_pos - 1)] <- NULL
-    cbind(Parameter = .pretty_emmeans_Parameter_names(model[[i]]),
-          pars)
+    cbind(
+      Parameter = .pretty_emmeans_Parameter_names(model[[i]]),
+      pars
+    )
   })
-  params <- do.call(rbind,params)
+  params <- do.call(rbind, params)
   params$Component <- .pretty_emmeans_Component_names(s)
 
   if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
@@ -129,8 +131,9 @@ model_parameters.emm_list <- function(model,
 
 #' @export
 standard_error.emmGrid <- function(model, ...) {
-  if (!is.null(model@misc$is_boot) && model@misc$is_boot)
+  if (!is.null(model@misc$is_boot) && model@misc$is_boot) {
     return(boot_em_standard_error(model))
+  }
 
   s <- summary(model)
   estimate_pos <- which(colnames(s) == model@misc$estName)
@@ -149,8 +152,9 @@ standard_error.emmGrid <- function(model, ...) {
 
 #' @export
 standard_error.emm_list <- function(model, ...) {
-  if (!is.null(model[[1]]@misc$is_boot) && model[[1]]@misc$is_boot)
+  if (!is.null(model[[1]]@misc$is_boot) && model[[1]]@misc$is_boot) {
     return(boot_em_standard_error(model))
+  }
 
   params <- insight::get_parameters(model)
   s <- summary(model)
@@ -195,8 +199,9 @@ boot_em_standard_error <- function(model) {
 
 #' @export
 degrees_of_freedom.emmGrid <- function(model, ...) {
-  if (!is.null(model@misc$is_boot) && model@misc$is_boot)
+  if (!is.null(model@misc$is_boot) && model@misc$is_boot) {
     return(boot_em_df(model))
+  }
 
   summary(model)$df
 }
@@ -204,8 +209,9 @@ degrees_of_freedom.emmGrid <- function(model, ...) {
 
 #' @export
 degrees_of_freedom.emm_list <- function(model, ...) {
-  if (!is.null(model[[1]]@misc$is_boot) && model[[1]]@misc$is_boot)
+  if (!is.null(model[[1]]@misc$is_boot) && model[[1]]@misc$is_boot) {
     return(boot_em_df(model))
+  }
 
   s <- summary(model)
   unname(unlist(lapply(s, function(i) {
@@ -229,8 +235,9 @@ boot_em_df <- function(model) {
 #' @rdname p_value
 #' @export
 p_value.emmGrid <- function(model, ci = .95, adjust = "none", ...) {
-  if (!is.null(model@misc$is_boot) && model@misc$is_boot)
+  if (!is.null(model@misc$is_boot) && model@misc$is_boot) {
     return(boot_em_pval(model, adjust))
+  }
 
 
   s <- summary(model, level = ci, adjust = adjust)
@@ -252,8 +259,9 @@ p_value.emmGrid <- function(model, ci = .95, adjust = "none", ...) {
 
 #' @export
 p_value.emm_list <- function(model, adjust = "none", ...) {
-  if (!is.null(model[[1]]@misc$is_boot) && model[[1]]@misc$is_boot)
+  if (!is.null(model[[1]]@misc$is_boot) && model[[1]]@misc$is_boot) {
     return(boot_em_pval(model, adjust))
+  }
 
 
   params <- insight::get_parameters(model)

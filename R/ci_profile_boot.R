@@ -99,8 +99,7 @@
   rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
 
   pars <- insight::get_parameters(x, effects = "fixed", component = component)
-  param_names <- switch(
-    component,
+  param_names <- switch(component,
     "conditional" = pars$Parameter,
     "zi" = ,
     "zero_inflated" = paste0("zi~", pars$Parameter),

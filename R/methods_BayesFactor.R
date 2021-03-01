@@ -158,11 +158,13 @@ model_parameters.BFBayesFactor <- function(model,
   attr(out, "title") <- unique(out$Method)
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(out, "pretty_names") <- pretty_names
-  out <- .add_model_parameters_attributes(params = out,
-                                          model = model,
-                                          ci = ci,
-                                          ci_method = ci_method,
-                                          verbose = verbose)
+  out <- .add_model_parameters_attributes(
+    params = out,
+    model = model,
+    ci = ci,
+    ci_method = ci_method,
+    verbose = verbose
+  )
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
 
   out
