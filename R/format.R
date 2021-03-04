@@ -9,6 +9,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   coef_name <- attributes(x)$coefficient_name
   s_value <- attributes(x)$s_value
   m_class <- attributes(x)$model_class
+  mixed_model <- attributes(x)$mixed_model
 
   if (identical(format, "html")) {
     coef_name <- NULL
@@ -44,6 +45,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   # remove unique columns
   if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
   if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+  if (.n_unique(formatted_table$Group) == 1 && isTRUE(mixed_model)) formatted_table$Group <- NULL
 
   # no column with CI-level in output
   formatted_table$CI <- NULL

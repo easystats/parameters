@@ -225,6 +225,7 @@
 
     # remove unique columns
     if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+    if (.n_unique(formatted_table$Group) == 1) formatted_table$Group <- NULL
 
     final_table <- c(final_table, list(formatted_table))
   }

@@ -39,6 +39,7 @@
   attr(params, "exponentiate") <- exponentiate
   attr(params, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)
   attr(params, "linear_model") <- isTRUE(info$is_linear)
+  attr(params, "mixed_model") <- isTRUE(info$is_mixed)
   attr(params, "n_obs") <- info$n_obs
   attr(params, "model_class") <- class(model)
   attr(params, "bootstrap") <- bootstrap
