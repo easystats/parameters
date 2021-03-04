@@ -28,7 +28,11 @@ model_parameters.glmmTMB <- function(model,
   df_method <- .check_df_method(df_method)
 
   # which component to return?
-  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
+  effects <- match.arg(effects, choices = c("fixed", "random", "ranef", "ran_pars", "random_variance", "all"))
+  effects <- switch(effects,
+                    "ranef" = "random",
+                    "ran_pars" = "random_variance",
+                    effects)
 
   # fix argument, if model has only conditional component
   cs <- stats::coef(summary(model))
@@ -39,9 +43,9 @@ model_parameters.glmmTMB <- function(model,
     component <- "conditional"
   }
 
-  params <- params_random <- NULL
+  params <- params_random <- params_variance <- NULL
 
-  if (effects != "random") {
+  if (effects %in% c("fixed", "all")) {
     # Processing
     if (bootstrap) {
       params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
@@ -76,15 +80,18 @@ model_parameters.glmmTMB <- function(model,
   }
 
 
-  if (effects != "fixed") {
+  if (effects %in% c("random", "all")) {
     params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
+  }
+
+  if (effects %in% c("random_variance", "all")) {
+    params_variance <- .extract_random_variances(model)
+    params_variance$Component <- "conditional"
   }
 
 
   # merge random and fixed effects, if necessary
-  if (is.null(params)) {
-    params <- params_random
-  } else if (!is.null(params_random)) {
+  if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
     params$Effects <- "fixed"
     params$Level <- NA
     params$Group <- ""
@@ -92,11 +99,16 @@ model_parameters.glmmTMB <- function(model,
     if (!"Component" %in% colnames(params)) {
       params$Component <- "conditional"
     }
+
     # reorder
-    params <- params[match(colnames(params_random), colnames(params))]
-    params <- rbind(params, params_random)
+    if (!is.null(params_random)) {
+      params <- params[match(colnames(params_random), colnames(params))]
+    } else {
+      params <- params[match(colnames(params_variance), colnames(params))]
+    }
   }
 
+  params <- rbind(params, params_random, params_variance)
 
   params <- .add_model_parameters_attributes(
     params,

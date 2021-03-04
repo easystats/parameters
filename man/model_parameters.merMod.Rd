@@ -103,7 +103,7 @@ regressions} apply (see also
 robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
 works when \code{standardize="refit"}.}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"} or \code{"ranef"}), random parameters (i.e. variance components of the random effects, \code{"random_variance"} or \code{"ran_pars"}), or all (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for,

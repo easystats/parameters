@@ -223,6 +223,9 @@
       attr(formatted_table, "table_caption") <- table_caption
     }
 
+    # remove unique columns
+    if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+
     final_table <- c(final_table, list(formatted_table))
   }
 
@@ -271,6 +274,8 @@
     "conditional." = "Fixed Effects",
     "random." = ,
     "random" = "Random Effects",
+    "random_variances." = ,
+    "random_variances" = "Random Effects Variances",
     "conditional.fixed" = ,
     "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
     "conditional.random" = ifelse(is_zero_inflated, "Random Effects (Count Model)", "Random Effects"),
@@ -325,6 +330,9 @@
   }
   if (grepl("^random\\.(.*)", component_name)) {
     component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
+  }
+  if (grepl("^random_variances\\.(.*)", component_name)) {
+    component_name <- paste0("Random Effects Variances: ", gsub("^random_variances\\.", "", component_name))
   }
 
   # tweaking of sub headers

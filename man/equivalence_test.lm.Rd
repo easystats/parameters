@@ -42,7 +42,7 @@ to automatically define this range based on properties of the model's data.}
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"} or \code{"ranef"}), random parameters (i.e. variance components of the random effects, \code{"random_variance"} or \code{"ran_pars"}), or all (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
 }
 \value{
 A data frame.

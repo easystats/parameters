@@ -58,7 +58,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @description Parameters from (linear) mixed models.
 #'
 #' @param model A mixed model.
-#' @param effects Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.
+#' @param effects Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"} or \code{"ranef"}), random parameters (i.e. variance components of the random effects, \code{"random_variance"} or \code{"ran_pars"}), or all (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.
 #' @param details Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.
 #' @param df_method Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}). The options \code{df_method = "boot"}, \code{df_method = "profile"} and \code{df_method = "uniroot"} only affect confidence intervals; in this case, bootstrapped resp. profiled confidence intervals are computed. \code{"uniroot"} only applies to models of class \code{glmmTMB}. Note that when \code{df_method} is not \code{"wald"}, robust standard errors etc. cannot be computed.
 #' @param wb_component Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.
@@ -115,11 +115,15 @@ model_parameters.merMod <- function(model,
   df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile", "uniroot"))
 
   # which component to return?
-  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
+  effects <- match.arg(effects, choices = c("fixed", "random", "ranef", "ran_pars", "random_variance", "all"))
+  effects <- switch(effects,
+                    "ranef" = "random",
+                    "ran_pars" = "random_variance",
+                    effects)
 
-  params <- params_random <- NULL
+  params <- params_random <- params_variance <- NULL
 
-  if (effects != "random") {
+  if (effects %in% c("fixed", "all")) {
     # Processing
     if (bootstrap) {
       params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
@@ -142,21 +146,28 @@ model_parameters.merMod <- function(model,
     }
   }
 
-  if (effects != "fixed") {
+  if (effects %in% c("random", "all")) {
     params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
   }
 
+  if (effects %in% c("random_variance", "all")) {
+    params_variance <- .extract_random_variances(model)
+  }
+
   # merge random and fixed effects, if necessary
-  if (is.null(params)) {
-    params <- params_random
-  } else if (!is.null(params_random)) {
+  if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
     params$Effects <- "fixed"
     params$Level <- NA
     params$Group <- ""
-    # reorder
-    params <- params[match(colnames(params_random), colnames(params))]
-    params <- rbind(params, params_random)
+
+    if (!is.null(params_random)) {
+      params <- params[match(colnames(params_random), colnames(params))]
+    } else {
+      params <- params[match(colnames(params_variance), colnames(params))]
+    }
   }
+
+  params <- rbind(params, params_random, params_variance)
 
   params <- .add_model_parameters_attributes(
     params,
