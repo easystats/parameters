@@ -151,7 +151,7 @@ model_parameters.merMod <- function(model,
   }
 
   if (effects %in% c("random_variance", "all")) {
-    params_variance <- .extract_random_variances(model)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
   }
 
   # merge random and fixed effects, if necessary
