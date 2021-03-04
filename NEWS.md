@@ -4,6 +4,19 @@
 
 * `blrm` (*rmsb*), `AKP` (*WRS2*)
 
+## Changes to functions
+
+* The `effects`-argument from `model_parameters()` for mixed models gets a
+  third option, `"random_variance"` (or `"ran_pars"`), to show the random
+  effects variances (same functionality as `random_parameters()`, but mimicking
+  the behaviour from `broom.mixed::tidy()`).
+
+* `model_parameters()` for mixed models now returns an `Effects` column even
+  when there is just one type of "effects", to mimic the behaviour from 
+  `broom.mixed::tidy()`. In conjunction with `standardize_names()` users
+  can get the same column names as in `tidy()` for `model_parameters()`
+  objects.
+
 ## Bug fixes
 
 * Fixed issue with non-initialized argument `style` in `display()` for
