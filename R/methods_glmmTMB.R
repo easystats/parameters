@@ -28,7 +28,7 @@ model_parameters.glmmTMB <- function(model,
   df_method <- .check_df_method(df_method)
 
   # which component to return?
-  effects <- match.arg(effects, choices = c("fixed", "random", "ranef", "ran_pars", "random_variance", "all"))
+  effects <- match.arg(effects, choices = c("fixed", "random", "ranef", "ran_pars", "all_pars", "random_variance", "all"))
   effects <- switch(effects,
                     "ranef" = "random",
                     "ran_pars" = "random_variance",
@@ -45,7 +45,7 @@ model_parameters.glmmTMB <- function(model,
 
   params <- params_random <- params_variance <- NULL
 
-  if (effects %in% c("fixed", "all")) {
+  if (effects %in% c("fixed", "all", "all_pars")) {
     # Processing
     if (bootstrap) {
       params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
@@ -85,7 +85,7 @@ model_parameters.glmmTMB <- function(model,
     params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
   }
 
-  if (effects %in% c("random_variance", "all")) {
+  if (effects %in% c("random_variance", "all", "all_pars")) {
     params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
     params_variance$Component <- "conditional"
   }
@@ -113,7 +113,7 @@ model_parameters.glmmTMB <- function(model,
   params <- .add_model_parameters_attributes(
     params,
     model,
-    ci,
+    ci = ifelse(effects == "random_variance", NA, ci),
     exponentiate,
     df_method = df_method,
     p_adjust = p_adjust,

@@ -228,6 +228,31 @@ if (.runThisTest) {
       )
     })
 
+    test_that("model_parameters.mixed-all_pars", {
+      params <- model_parameters(m1, effects = "all_pars")
+      expect_equal(c(nrow(params), ncol(params)), c(8, 13))
+      expect_equal(
+        colnames(params),
+        c("Parameter", "Level", "Coefficient", "SE", "CI", "CI_low",
+          "CI_high", "z", "df_error", "p", "Effects", "Group",  "Component")
+      )
+      expect_equal(
+        params$Parameter,
+        c("(Intercept)", "child", "camper1", "(Intercept)", "child",
+          "camper1", "SD (Observations)", "SD (Intercept)")
+      )
+      expect_equal(
+        params$Component,
+        c("conditional", "conditional", "conditional", "zero_inflated",
+          "zero_inflated", "zero_inflated", "conditional", "conditional")
+      )
+      expect_equal(
+        params$Coefficient,
+        c(1.2628, -1.1417, 0.7335, -0.3894, 2.0541, -1.0082,  0.1623, 0.9312),
+        tolerance = 1e-2
+      )
+    })
+
     test_that("model_parameters.mixed-all", {
       params <- model_parameters(m1, effects = "all")
       expect_equal(c(nrow(params), ncol(params)), c(16, 13))

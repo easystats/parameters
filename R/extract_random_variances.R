@@ -28,7 +28,7 @@
       cor_groups <- which(grepl(paste0("^\\Q", i, "\\E"), out$Term[ran_cor]))
       if (length(cor_groups)) {
         out$Group[ran_cor[cor_groups]] <- i
-        out$Type[ran_cor[cor_groups]] <- paste0("Rho (Intercept~",
+        out$Type[ran_cor[cor_groups]] <- paste0("Cor (Intercept~",
                                                   gsub("^\\.", "", gsub(i, "", out$Term[ran_slope[slope_groups]], fixed = TRUE)),
                                                   ")")
       }
@@ -49,6 +49,7 @@
   out$df_error <- NA
   out$p <- NA
   out$Level <- NA
+  out$CI <- NA
 
   out$Effects <- "random_variances"
 
@@ -66,7 +67,7 @@
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
 
-  if (!effects %in% c("fixed", "all")) {
+  if (!effects %in% c("fixed", "all", "all_pars")) {
     out[c(stat_column, "df_error", "p", "CI")] <- NULL
   }
   out

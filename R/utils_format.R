@@ -187,6 +187,12 @@
       colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
 
+    # rename columns for zero-inflation part
+    if (grepl("random_variances", type) && !is.null(coef_column)) {
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Coefficient"
+      tables[[type]]$CI <- NULL
+    }
+
     formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
     component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model)
 
@@ -313,9 +319,17 @@
     type
   )
 
+  if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
+    component_name <- trimws(gsub("^conditional\\.(r|R)andom_variances(\\.)*", "", component_name))
+    if (nchar(component_name) == 0) {
+      component_name <- "Random Effects Variances"
+    } else {
+      component_name <- paste0("Random Effects Variances: ", component_name)
+    }
+  }
   if (grepl("^conditional\\.(r|R)andom", component_name)) {
     component_name <- trimws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
-    if (nchar(component_name) > 0) {
+    if (nchar(component_name) == 0) {
       component_name <- "Random Effects (Count Model)"
     } else {
       component_name <- paste0("Random Effects (Count Model): ", component_name)
@@ -323,7 +337,7 @@
   }
   if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
     component_name <- trimws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
-    if (nchar(component_name) > 0) {
+    if (nchar(component_name) == 0) {
       component_name <- "Random Effects (Zero-Inflated Model)"
     } else {
       component_name <- paste0("Random Effects (Zero-Inflated Model): ", component_name)
