@@ -52,7 +52,7 @@ if (.runThisTest &&
 
   test_that("model_parameters.mixed-all", {
     params <- model_parameters(m1, effects = "all")
-    expect_equal(c(nrow(params), ncol(params)), c(7, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(7, 12))
     expect_equal(
       as.vector(params$Parameter),
       c("(Intercept)", "cyl", "(Intercept)", "(Intercept)", "(Intercept)",
