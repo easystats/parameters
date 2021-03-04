@@ -44,7 +44,7 @@
   # out <- out[c("Parameter", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects")]
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
 
-  if (effects != "fixed") {
+  if (!effects %in% c("fixed", "all")) {
     # out[c(stat_column, "df_error", "p", "Effects")] <- NULL
     out[c(stat_column, "df_error", "p")] <- NULL
   }
@@ -105,7 +105,7 @@
   # out <- out[c("Parameter", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Component", "Effects")]
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Component", "Effects", "Group")]
 
-  if (effects == "random") {
+  if (!effects %in% c("fixed", "all")) {
     # out[c(stat_column, "df_error", "p", "Effects")] <- NULL
     out[c(stat_column, "df_error", "p")] <- NULL
   }
