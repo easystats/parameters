@@ -140,6 +140,7 @@ model_parameters.merMod <- function(model,
         ...
       )
     }
+    params$Effects <- "fixed"
 
     if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
       params <- .exponentiate_parameters(params, model, exponentiate)
@@ -156,7 +157,6 @@ model_parameters.merMod <- function(model,
 
   # merge random and fixed effects, if necessary
   if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
-    params$Effects <- "fixed"
     params$Level <- NA
     params$Group <- ""
 

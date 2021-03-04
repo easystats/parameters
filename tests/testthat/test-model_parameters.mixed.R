@@ -10,21 +10,23 @@ if (.runThisTest &&
 
   test_that("model_parameters.mixed", {
     params <- model_parameters(m1)
-    expect_equal(c(nrow(params), ncol(params)), c(2, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 10))
     expect_equal(params$CI_high, c(1.6373105660317, 0.554067677205595), tolerance = 1e-3)
 
     params <- model_parameters(m1, ci = c(0.8, 0.9))
-    expect_equal(c(nrow(params), ncol(params)), c(2, 10))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 11))
     expect_equal(params$CI_high_0.8, c(1.29595665381331, 0.502185700948862), tolerance = 1e-3)
     expect_equal(params$CI_high_0.9, c(1.47875781798108, 0.529969433080186), tolerance = 1e-3)
 
     params <- model_parameters(m2)
-    expect_equal(c(nrow(params), ncol(params)), c(2, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 10))
 
     model <- lme4::glmer(vs ~ drat + cyl + (1 | gear), data = mtcars, family = "binomial")
     params <- model_parameters(model)
     cs <- coef(summary(model))
-    expect_equal(c(nrow(params), ncol(params)), c(3, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(3, 10))
+    expect_equal(colnames(params), c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
+                                     "z", "df_error", "p", "Effects"))
     expect_equal(params$Parameter, rownames(cs))
 
     # TODO: Not sure how to deal with bootstrapped mixed models... As it throws an unreasonable amount of singular fits...

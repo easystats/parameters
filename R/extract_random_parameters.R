@@ -111,3 +111,8 @@
   }
   out
 }
+
+
+.extract_random_parameters.MixMod <- function(model, ...) {
+  NULL
+}

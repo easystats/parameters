@@ -77,6 +77,7 @@ model_parameters.glmmTMB <- function(model,
     if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
       params <- .exponentiate_parameters(params, model, exponentiate)
     }
+    params$Effects <- "fixed"
   }
 
 
@@ -92,7 +93,6 @@ model_parameters.glmmTMB <- function(model,
 
   # merge random and fixed effects, if necessary
   if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
-    params$Effects <- "fixed"
     params$Level <- NA
     params$Group <- ""
     # add component column
