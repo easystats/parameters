@@ -67,7 +67,7 @@
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
 
   if (!effects %in% c("fixed", "all")) {
-    out[c(stat_column, "df_error", "p")] <- NULL
+    out[c(stat_column, "df_error", "p", "CI")] <- NULL
   }
   out
 }
