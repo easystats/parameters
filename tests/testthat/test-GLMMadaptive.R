@@ -1,3 +1,5 @@
+.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+
 if (require("testthat") &&
   require("parameters") &&
   require("lme4") &&
@@ -128,4 +130,41 @@ if (require("testthat") &&
       tolerance = 1e-3
     )
   })
+
+  if (.runThisTest && require("glmmTMB")) {
+    data("Salamanders")
+    model <- mixed_model(
+      count ~ spp + mined,
+      random = ~DOY | site,
+      zi_fixed = ~spp + mined,
+      zi_random = ~DOP | site,
+      family = zi.negative.binomial(),
+      data = Salamanders,
+      control = list(nAGQ = 1)
+    )
+
+    test_that("model_parameters.mixed-ran_pars", {
+      params <- model_parameters(model, effects = "random")
+      expect_equal(c(nrow(params), ncol(params)), c(8, 9))
+      expect_equal(
+        colnames(params),
+        c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high","Effects", "Group", "Component")
+      )
+      expect_equal(
+        params$Parameter,
+        c("SD (Intercept)", "SD (DOY)", "Cor (Intercept~site)", "SD (Observations)",
+          "SD (Intercept)", "SD (DOP)", "Cor (Intercept~site)", "SD (Observations)")
+      )
+      expect_equal(
+        params$Component,
+        c("conditional", "conditional", "conditional", "conditional",
+          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated")
+      )
+      expect_equal(
+        params$Coefficient,
+        c(0.56552, 0.29951, 0.06307, 1.54471, 1.02233, 0.38209, -0.17162, 1.54471),
+        tolerance = 1e-2
+      )
+    })
+  }
 }
