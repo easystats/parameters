@@ -6,7 +6,38 @@
 
 #' @importFrom insight get_variance get_sigma find_statistic
 .extract_random_variances.default <- function(model, ci = .95, effects = "random", component = "conditional", ...) {
+  suppressWarnings(.extract_random_variances_helper(model, ci = ci, effects = effects, component = component, ...))
+}
 
+
+
+
+
+
+
+.extract_random_variances.glmmTMB <- function(model, ci = .95, effects = "random", ...) {
+  out <- suppressWarnings(.extract_random_variances_helper(model, ci = ci, effects = effects, component = "conditional", ...))
+  out$Component <- "conditional"
+
+  if (insight::model_info(model)$is_zero_inflated) {
+    zi_var <- suppressWarnings(.extract_random_variances_helper(model, ci = ci, effects = effects, component = "zi", ...))
+    zi_var$Component <- "zero_inflated"
+    out <- rbind(out, zi_var)
+  }
+  out
+}
+
+
+.extract_random_variances.MixMod <- .extract_random_variances.glmmTMB
+
+
+
+
+
+# workhorse ------------------------
+
+
+.extract_random_variances_helper <- function(model, ci = ci, effects = effects, component = "conditional", ...) {
   ran_intercept <- data.frame(insight::get_variance(model, component = "intercept", verbose = FALSE, model_component = component))
   ran_slope <- data.frame(insight::get_variance(model, component = "slope", verbose = FALSE, model_component = component))
   ran_corr <- data.frame(insight::get_variance(model, component = "rho01", verbose = FALSE, model_component = component))
@@ -92,21 +123,3 @@
   }
   out
 }
-
-
-
-
-.extract_random_variances.glmmTMB <- function(model, ci = .95, effects = "random", ...) {
-  out <- .extract_random_variances.default(model, ci = ci, effects = effects, component = "conditional", ...)
-  out$Component <- "conditional"
-
-  if (insight::model_info(model)$is_zero_inflated) {
-    zi_var <- .extract_random_variances.default(model, ci = ci, effects = effects, component = "zi", ...)
-    zi_var$Component <- "zero_inflated"
-    out <- rbind(out, zi_var)
-  }
-  out
-}
-
-
-.extract_random_variances.MixMod <- .extract_random_variances.glmmTMB
