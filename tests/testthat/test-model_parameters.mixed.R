@@ -43,24 +43,22 @@ if (.runThisTest &&
 
   test_that("model_parameters.mixed-ran_pars", {
     params <- model_parameters(m1, effects = "random")
-    expect_equal(c(nrow(params), ncol(params)), c(2, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 8))
     expect_equal(
       as.vector(params$Parameter),
-      c("SD (Observations)", "SD (Intercept)")
+      c("SD (Intercept)", "SD (Observations)")
     )
-    expect_equal(as.vector(params$Level), c(NA, NA))
-    expect_equal(params$Coefficient, c(0.59385, 0.27049), tolerance = 1e-2)
+    expect_equal(params$Coefficient, c(0.27049, 0.77061), tolerance = 1e-2)
   })
 
   test_that("model_parameters.mixed-all", {
     params <- model_parameters(m1, effects = "all")
-    expect_equal(c(nrow(params), ncol(params)), c(4, 12))
+    expect_equal(c(nrow(params), ncol(params)), c(4, 11))
     expect_equal(
       as.vector(params$Parameter),
-      c("(Intercept)", "cyl", "SD (Observations)", "SD (Intercept)")
+      c("(Intercept)", "cyl", "SD (Intercept)", "SD (Observations)")
     )
-    expect_equal(as.vector(params$Level), c(NA, NA, NA, NA))
-    expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.59385, 0.27049), tolerance = 1e-2)
+    expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.27049, 0.77617), tolerance = 1e-2)
   })
 
   test_that("model_parameters.mixed-all_pars", {
