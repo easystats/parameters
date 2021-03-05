@@ -289,5 +289,67 @@ if (.runThisTest) {
         tolerance = 1e-2
       )
     })
+
+
+    m4 <- suppressWarnings(glmmTMB(
+      count ~ child + camper + (1 + xb | persons),
+      ziformula = ~ child + camper + (1 + zg| persons),
+      data = fish,
+      family = truncated_poisson()
+    ))
+
+    test_that("model_parameters.mixed-ran_pars", {
+      params <- model_parameters(m4, effects = "random")
+      expect_equal(c(nrow(params), ncol(params)), c(8, 9))
+      expect_equal(
+        colnames(params),
+        c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high","Effects", "Group", "Component")
+      )
+      expect_equal(
+        params$Parameter,
+        c("SD (Intercept)", "SD (xb)", "Cor (Intercept~persons)", "SD (Observations)",
+          "SD (Intercept)", "SD (zg)", "Cor (Intercept~persons)", "SD (Observations)")
+      )
+      expect_equal(
+        params$Component,
+        c("conditional", "conditional", "conditional", "conditional",
+          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated")
+      )
+      expect_equal(
+        params$Coefficient,
+        c(3.40563, 1.21316, -1, 1, 2.73583, 1.56833, 1, 1),
+        tolerance = 1e-2
+      )
+    })
+
+    test_that("model_parameters.mixed-all", {
+      params <- model_parameters(m4, effects = "all")
+      expect_equal(c(nrow(params), ncol(params)), c(14, 12))
+      expect_equal(
+        colnames(params),
+        c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
+          "z", "df_error", "p", "Effects", "Group", "Component")
+      )
+      expect_equal(
+        params$Parameter,
+        c("(Intercept)", "child", "camper1", "(Intercept)", "child",
+          "camper1", "SD (Intercept)", "SD (xb)", "Cor (Intercept~persons)",
+          "SD (Observations)", "SD (Intercept)", "SD (zg)", "Cor (Intercept~persons)",
+          "SD (Observations)")
+      )
+      expect_equal(
+        params$Component,
+        c("conditional", "conditional", "conditional", "zero_inflated",
+          "zero_inflated", "zero_inflated", "conditional", "conditional",
+          "conditional", "conditional", "zero_inflated", "zero_inflated",
+          "zero_inflated", "zero_inflated")
+      )
+      expect_equal(
+        params$Coefficient,
+        c(2.54713, -1.08747, 0.2723, 1.88964, 0.15712, -0.17007, 3.40563,
+          1.21316, -1, 1, 2.73583, 1.56833, 1, 1),
+        tolerance = 1e-2
+      )
+    })
   }
 }
