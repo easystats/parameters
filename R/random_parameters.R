@@ -64,6 +64,7 @@ random_parameters <- function(model) {
 
 
 #' @importFrom insight find_random get_variance find_random_slopes n_obs
+#' @importFrom stats setNames
 .randomeffects_summary <- function(model) {
   out <- list()
 
@@ -106,8 +107,12 @@ random_parameters <- function(model) {
 
   # Number of levels per random-effect groups
   n_re <- as.list(.n_randomeffects(model))
-  names(n_re) <- paste0("N_", names(n_re))
-  out <- c(out, n_re)
+  if (.is_empty_object(n_re)) {
+    n_re <- stats::setNames(as.numeric(NA), "N")
+  } else {
+    names(n_re) <- paste0("N_", names(n_re))
+    out <- c(out, n_re)
+  }
 
   # number of observations
   out$Observations <- insight::n_obs(model)
