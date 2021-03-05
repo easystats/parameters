@@ -165,6 +165,10 @@ model_parameters.merMod <- function(model,
   }
 
   params <- rbind(params, params_random, params_variance)
+  # remove empty column
+  if (!is.null(params$Level) && all(is.na(params$Level))) {
+    params$Level <- NULL
+  }
 
   params <- .add_model_parameters_attributes(
     params,
