@@ -57,35 +57,23 @@ if (.runThisTest &&
     expect_equal(c(nrow(params), ncol(params)), c(4, 12))
     expect_equal(
       as.vector(params$Parameter),
-      c("(Intercept)", "cyl", "(Intercept)", "(Intercept)", "(Intercept)",
-        "SD (Observations)", "SD (Intercept)")
-    )
-    expect_equal(as.vector(params$Level), c(NA, NA, "3", "4", "5", NA, NA))
-    expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.16923, 0.05663, -0.22586, 0.59385, 0.27049), tolerance = 1e-2)
-  })
-
-  test_that("model_parameters.mixed-all_pars", {
-    params <- model_parameters(m1, effects = "all_pars")
-    expect_equal(c(nrow(params), ncol(params)), c(4, 12))
-    expect_equal(
-      as.vector(params$Parameter),
       c("(Intercept)", "cyl", "SD (Observations)", "SD (Intercept)")
     )
     expect_equal(as.vector(params$Level), c(NA, NA, NA, NA))
     expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.59385, 0.27049), tolerance = 1e-2)
   })
 
-  test_that("model_parameters.mixed-all", {
-    params <- model_parameters(m1, effects = "all")
-    expect_equal(c(nrow(params), ncol(params)), c(7, 12))
+  test_that("model_parameters.mixed-all_pars", {
+    params <- model_parameters(m1, effects = "all", group_level = TRUE)
+    expect_equal(c(nrow(params), ncol(params)), c(5, 12))
     expect_equal(
       as.vector(params$Parameter),
-      c("(Intercept)", "cyl", "(Intercept)", "(Intercept)", "(Intercept)",
-        "SD (Observations)", "SD (Intercept)")
+      c("(Intercept)", "cyl", "(Intercept)", "(Intercept)", "(Intercept)")
     )
-    expect_equal(as.vector(params$Level), c(NA, NA, "3", "4", "5", NA, NA))
-    expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.16923, 0.05663, -0.22586, 0.59385, 0.27049), tolerance = 1e-2)
+    expect_equal(as.vector(params$Level), c(NA, NA, "3", "4", "5"))
+    expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.16923, 0.05663, -0.22586), tolerance = 1e-2)
   })
+
 
   data("qol_cancer")
   qol_cancer <- cbind(
