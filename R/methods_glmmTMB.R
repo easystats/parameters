@@ -84,7 +84,6 @@ model_parameters.glmmTMB <- function(model,
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
     params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
-    params_variance$Component <- "conditional"
   }
 
 

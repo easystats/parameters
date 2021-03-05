@@ -7,9 +7,9 @@
 #' @importFrom insight get_variance get_sigma find_statistic
 .extract_random_variances.default <- function(model, ci = .95, effects = "random", component = "conditional", ...) {
 
-  ran_intercept <- data.frame(insight::get_variance(model, component = "intercept", verbose = FALSE))
-  ran_slope <- data.frame(insight::get_variance(model, component = "slope", verbose = FALSE))
-  ran_corr <- data.frame(insight::get_variance(model, component = "rho01", verbose = FALSE))
+  ran_intercept <- data.frame(insight::get_variance(model, component = "intercept", verbose = FALSE, model_component = component))
+  ran_slope <- data.frame(insight::get_variance(model, component = "slope", verbose = FALSE, model_component = component))
+  ran_corr <- data.frame(insight::get_variance(model, component = "rho01", verbose = FALSE, model_component = component))
   ran_sigma <- data.frame(insight::get_sigma(model))
 
   # random intercept - tau00
@@ -57,6 +57,10 @@
   out <- rbind(ran_intercept, ran_slope, ran_corr, ran_sigma)
   rownames(out) <- NULL
 
+  # variances to SD (sqrt)
+  corr_param <- grepl("Cor (Intercept~", out$Parameter, fixed = TRUE)
+  out$Coefficient[!corr_param] <- sqrt(out$Coefficient[!corr_param])
+
   stat_column <- gsub("-statistic", "", insight::find_statistic(model), fixed = TRUE)
 
   # to match rbind
@@ -85,6 +89,21 @@
 
   if (effects == "random") {
     out[c(stat_column, "df_error", "p", "CI")] <- NULL
+  }
+  out
+}
+
+
+
+
+.extract_random_variances.glmmTMB <- function(model, ci = .95, effects = "random", ...) {
+  out <- .extract_random_variances.default(model, ci = ci, effects = effects, component = "conditional", ...)
+  out$Component <- "conditional"
+
+  if (insight::model_info(model)$is_zero_inflated) {
+    zi_var <- .extract_random_variances.default(model, ci = ci, effects = effects, component = "zi", ...)
+    zi_var$Component <- "zero_inflated"
+    out <- rbind(out, zi_var)
   }
   out
 }

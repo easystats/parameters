@@ -143,3 +143,4 @@ Language: en-US
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Remotes: easystats/insight
