@@ -52,7 +52,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   if (split_components && !is.null(split_by) && length(split_by)) {
     formatted_table <- .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
   } else {
-    formatted_table <- .format_columns_single_component(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
+    formatted_table <- .format_columns_single_component(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, format = format, ...)
   }
 
   # remove unique columns
@@ -67,10 +67,19 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
 }
 
 
-.format_columns_single_component <- function(x, pretty_names, digits = 2, ci_digits = 2, p_digits = 3, ci_width = "auto", ci_brackets = TRUE, ...) {
+.format_columns_single_component <- function(x, pretty_names, digits = 2, ci_digits = 2, p_digits = 3, ci_width = "auto", ci_brackets = TRUE, format = NULL, ...) {
+  # default brackets are parenthesis for HTML / MD
+  if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
+    brackets <- c("(", ")")
+  } else if (is.null(ci_brackets) || isTRUE(ci_brackets)) {
+    brackets <- c("[", "]")
+  } else {
+    brackets <- ci_brackets
+  }
+
   # random pars with level? combine into parameter column
   if (all(c("Parameter", "Level") %in% colnames(x))) {
-    x$Parameter <- paste0(x$Parameter, " ", ci_brackets[1], x$Level, ci_brackets[2])
+    x$Parameter <- paste0(x$Parameter, " ", brackets[1], x$Level, brackets[2])
     x$Level <- NULL
     if (!is.null(x$Group) && all(x$EFfects == "random")) {
       x$Group <- format(paste0(x$Group, ":"))
