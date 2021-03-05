@@ -189,9 +189,11 @@
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
+  group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -204,6 +206,7 @@
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"dispersion"</span><span class='op'>)</span>,
+  group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -223,6 +226,7 @@
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
+  group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -254,9 +258,11 @@
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
+  group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -294,7 +300,15 @@ works when <code>standardize="refit"</code>.</p></td>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random effects (<code>"random"</code> or <code>"ranef"</code>), random parameters (i.e. variance components of the random effects, <code>"random_variance"</code> or <code>"ran_pars"</code>), a combination of fixed effects and random effects variances (<code>"all_pars"</code>), or all (<code>"all"</code>) be returned? Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>group_level</th>
+      <td><p>Logical, for multilevel models (i.e. models with random
+effects) and when <code>effects = "all"</code> or <code>effects = "random"</code>,
+include the parameters for each group level from random effects. If
+<code>group_level = FALSE</code> (the default), only information on SD and COR
+are shown.</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
@@ -316,6 +330,14 @@ exponentiate coefficients for all models except those from Gaussian family.</p><
       <td><p>Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be <code>"wald"</code> (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see <code><a href='ci_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see <code><a href='ci_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see <code><a href='ci_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see <code><a href='ci_kenward.html'>dof_kenward</a></code>). The options <code>df_method = "boot"</code>, <code>df_method = "profile"</code> and <code>df_method = "uniroot"</code> only affect confidence intervals; in this case, bootstrapped resp. profiled confidence intervals are computed. <code>"uniroot"</code> only applies to models of class <code>glmmTMB</code>. Note that when <code>df_method</code> is not <code>"wald"</code>, robust standard errors etc. cannot be computed.</p></td>
     </tr>
     <tr>
+      <th>p_adjust</th>
+      <td><p>Character vector, if not <code>NULL</code>, indicates the method to
+adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details. Further
+possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
+<code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
+<code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></td>
+    </tr>
+    <tr>
       <th>verbose</th>
       <td><p>Toggle warnings and messages.</p></td>
     </tr>
@@ -329,14 +351,6 @@ exponentiate coefficients for all models except those from Gaussian family.</p><
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
-    </tr>
-    <tr>
-      <th>p_adjust</th>
-      <td><p>Character vector, if not <code>NULL</code>, indicates the method to
-adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details. Further
-possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
-<code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
-<code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></td>
     </tr>
     <tr>
       <th>wb_component</th>
@@ -389,7 +403,7 @@ for working examples.</p></td>
   <span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, details <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects
+</div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='message'>Argument 'details' is deprecated. Please use 'group_level'.</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects
 #&gt; 
 #&gt; # Fixed Effects </span><span>
 #&gt; 

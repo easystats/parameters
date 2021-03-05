@@ -242,21 +242,21 @@
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter        | Log-Odds |   SE |          95% CI |     z |     p
-#&gt; --------------------------------------------------------------------
-#&gt; (Intercept)      |    13.51 | 7.20 | [  2.56, 33.42] |  1.88 | 0.060
-#&gt; mpg [1st degree] |    -6.64 | 8.99 | [-27.81, 11.13] | -0.74 | 0.461
-#&gt; mpg [2nd degree] |     1.16 | 3.59 | [ -7.91,  8.56] |  0.32 | 0.746
-#&gt; cyl              |    -2.28 | 1.18 | [ -5.58, -0.51] | -1.92 | 0.055</code></pre>
+<pre><code>#&gt; Parameter        | Coefficient |   SE |          95% CI |     z |     p
+#&gt; -----------------------------------------------------------------------
+#&gt; (Intercept)      |       13.51 | 7.20 | [  2.56, 33.42] |  1.88 | 0.060
+#&gt; mpg [1st degree] |       -6.64 | 8.99 | [-27.81, 11.13] | -0.74 | 0.461
+#&gt; mpg [2nd degree] |        1.16 | 3.59 | [ -7.91,  8.56] |  0.32 | 0.746
+#&gt; cyl              |       -2.28 | 1.18 | [ -5.58, -0.51] | -1.92 | 0.055</code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, df_method <span class="op">=</span> <span class="st">"wald"</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter        | Odds Ratio |       SE |           95% CI |     z |     p
-#&gt; ---------------------------------------------------------------------------
-#&gt; (Intercept)      |   7.38e+05 | 5.31e+06 | [0.55, 9.87e+11] |  1.88 | 0.060
-#&gt; mpg [1st degree] |   1.31e-03 |     0.01 | [0.00, 59497.56] | -0.74 | 0.461
-#&gt; mpg [2nd degree] |       3.20 |    11.49 | [0.00,  3637.30] |  0.32 | 0.746
-#&gt; cyl              |       0.10 |     0.12 | [0.01,     1.05] | -1.92 | 0.055</code></pre>
+<pre><code>#&gt; Parameter        | Coefficient |       SE |           95% CI |     z |     p
+#&gt; ----------------------------------------------------------------------------
+#&gt; (Intercept)      |    7.38e+05 | 5.31e+06 | [0.55, 9.87e+11] |  1.88 | 0.060
+#&gt; mpg [1st degree] |    1.31e-03 |     0.01 | [0.00, 59497.56] | -0.74 | 0.461
+#&gt; mpg [2nd degree] |        3.20 |    11.49 | [0.00,  3637.30] |  0.32 | 0.746
+#&gt; cyl              |        0.10 |     0.12 | [0.01,     1.05] | -1.92 | 0.055</code></pre>
 </div>
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
@@ -276,7 +276,7 @@
 <a href="#mixed-models-including-random-effects-variances" class="anchor"></a>Mixed Models, including Random Effects Variances</h3>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>effects <span class="op">=</span> <span class="st">"all_pars"</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>effects <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; # Fixed Effects
 #&gt; 
 #&gt; Parameter    | Coefficient |   SE |       95% CI | t(146) |      p
@@ -284,17 +284,12 @@
 #&gt; (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] |   3.56 | &lt; .001
 #&gt; Petal.Length |        0.28 | 0.06 | [0.17, 0.40] |   4.75 | &lt; .001
 #&gt; 
-#&gt; # Random Effects Variances: Residual
+#&gt; # Random Effects
 #&gt; 
-#&gt; Parameter         | Coefficient
-#&gt; -------------------------------
-#&gt; SD (Observations) |        0.32
-#&gt; 
-#&gt; # Random Effects Variances: Species
-#&gt; 
-#&gt; Parameter      | Coefficient
-#&gt; ----------------------------
-#&gt; SD (Intercept) |        0.89</code></pre>
+#&gt; Parameter               | Coefficient
+#&gt; -------------------------------------
+#&gt; SD (Intercept: Species) |        0.89
+#&gt; SD (Residual)           |        0.56</code></pre>
 </div>
 <div id="mixed-model-with-zero-inflation-model" class="section level3">
 <h3 class="hasAnchor">
