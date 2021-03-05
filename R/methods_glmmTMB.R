@@ -115,6 +115,7 @@ model_parameters.glmmTMB <- function(model,
     df_method = df_method,
     p_adjust = p_adjust,
     verbose = verbose,
+    group_level = group_level,
     ...
   )
 
@@ -125,7 +126,6 @@ model_parameters.glmmTMB <- function(model,
     }
   }
 
-  attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 

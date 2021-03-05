@@ -52,7 +52,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   if (split_components && !is.null(split_by) && length(split_by)) {
     formatted_table <- .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
   } else {
-    formatted_table <- .format_columns_single_component(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, format = format, ...)
+    formatted_table <- .format_columns_single_component(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, format = format, coef_name = coef_name, ...)
   }
 
   # remove unique columns
@@ -67,7 +67,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
 }
 
 
-.format_columns_single_component <- function(x, pretty_names, digits = 2, ci_digits = 2, p_digits = 3, ci_width = "auto", ci_brackets = TRUE, format = NULL, ...) {
+.format_columns_single_component <- function(x, pretty_names, digits = 2, ci_digits = 2, p_digits = 3, ci_width = "auto", ci_brackets = TRUE, format = NULL, coef_name = NULL, ...) {
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
     brackets <- c("(", ")")
@@ -75,6 +75,11 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
     brackets <- c("[", "]")
   } else {
     brackets <- ci_brackets
+  }
+
+  # fix coefficient column name for random effects
+  if (all(x$EFfects == "random") && any(colnames(x) %in% .all_coefficient_types())) {
+    colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
   }
 
   # random pars with level? combine into parameter column

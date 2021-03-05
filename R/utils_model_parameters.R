@@ -10,6 +10,7 @@
                                              ci_method = NULL,
                                              p_adjust = NULL,
                                              verbose = TRUE,
+                                             group_level = FALSE,
                                              ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   info <- tryCatch(
@@ -46,6 +47,8 @@
   attr(params, "iterations") <- iterations
   attr(params, "df_method") <- df_method
   attr(params, "p_adjust") <- p_adjust
+  attr(params, "ignore_group") <- isFALSE(group_level)
+  attr(params, "ran_pars") <- isFALSE(group_level)
 
   weighted_nobs <- tryCatch(
     {
@@ -164,6 +167,11 @@
     }
   }
   coef_col
+}
+
+
+.all_coefficient_types <- function() {
+  c("Odds Ratio", "Risk Ratio", "IRR", "Log-Odds", "Log-Mean")
 }
 
 
