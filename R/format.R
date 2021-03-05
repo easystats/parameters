@@ -10,6 +10,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   s_value <- attributes(x)$s_value
   m_class <- attributes(x)$model_class
   mixed_model <- attributes(x)$mixed_model
+  ignore_group <- attributes(x)$ignore_group
 
   if (identical(format, "html")) {
     coef_name <- NULL
@@ -29,6 +30,18 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
     colnames(x)[1] <- "Group"
   }
 
+  # check if we have mixed models with random variance parameters
+  # in such cases, we don't need the group-column, but we rather
+  # merge it with the parameter column
+  if (isTRUE(ignore_group)) {
+    if (!is.null(x$Effects) && !is.null(x$Group)) {
+      ran_pars <- which(x$Effects == "random")
+      x$Group[ran_pars] <- format(paste0(x$Group[ran_pars], ":"))
+      x$Parameter[ran_pars] <- paste0(x$Group[ran_pars], " ", x$Parameter[ran_pars])
+      x$Group <- NULL
+    }
+  }
+
   # prepare output, to have in shape for printing
   x <- .prepare_x_for_print(x, select, coef_name, s_value)
 
@@ -39,7 +52,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   if (split_components && !is.null(split_by) && length(split_by)) {
     formatted_table <- .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
   } else {
-    formatted_table <- insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
+    formatted_table <- .format_columns_single_component(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
   }
 
   # remove unique columns
@@ -52,6 +65,22 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
 
   formatted_table
 }
+
+
+.format_columns_single_component <- function(x, pretty_names, digits = 2, ci_digits = 2, p_digits = 3, ci_width = "auto", ci_brackets = TRUE, ...) {
+  # random pars with level? combine into parameter column
+  if (all(c("Parameter", "Level") %in% colnames(x))) {
+    x$Parameter <- paste0(x$Parameter, " ", ci_brackets[1], x$Level, ci_brackets[2])
+    x$Level <- NULL
+    if (!is.null(x$Group) && all(x$EFfects == "random")) {
+      x$Group <- format(paste0(x$Group, ":"))
+      x$Parameter <- paste0(x$Group, " ", x$Parameter)
+      x$Group <- NULL
+    }
+  }
+  insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
+}
+
 
 #' @export
 format.parameters_simulate <- format.parameters_model

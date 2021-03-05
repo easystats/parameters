@@ -51,7 +51,7 @@
   out$Level <- NA
   out$CI <- NA
 
-  out$Effects <- "random_variances"
+  out$Effects <- "random"
 
   if (length(ci) == 1) {
     ci_cols <- c("CI_low", "CI_high")
@@ -67,7 +67,7 @@
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
 
-  if (!effects %in% c("fixed", "all", "all_pars")) {
+  if (effects == "random") {
     out[c(stat_column, "df_error", "p", "CI")] <- NULL
   }
   out

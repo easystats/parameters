@@ -84,6 +84,7 @@
 #' @keywords internal
 .print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, ...) {
   final_table <- list()
+  ignore_group <- attributes(x)$ignore_group
 
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -187,10 +188,12 @@
       colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
 
-    # rename columns for zero-inflation part
-    if (grepl("random_variances", type) && !is.null(coef_column)) {
+    # rename columns for random part
+    if (grepl("random", type) && !is.null(coef_column)) {
       colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Coefficient"
-      tables[[type]]$CI <- NULL
+      if (isTRUE(ignore_group)) {
+        tables[[type]]$CI <- NULL
+      }
     }
 
     formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
@@ -281,8 +284,6 @@
     "conditional." = "Fixed Effects",
     "random." = ,
     "random" = "Random Effects",
-    "random_variances." = ,
-    "random_variances" = "Random Effects Variances",
     "conditional.fixed" = ,
     "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
     "conditional.random" = ifelse(is_zero_inflated, "Random Effects (Count Model)", "Random Effects"),
@@ -349,9 +350,6 @@
   }
   if (grepl("^random\\.(.*)", component_name)) {
     component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
-  }
-  if (grepl("^random_variances\\.(.*)", component_name)) {
-    component_name <- paste0("Random Effects Variances: ", gsub("^random_variances\\.", "", component_name))
   }
 
   # tweaking of sub headers

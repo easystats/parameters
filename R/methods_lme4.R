@@ -58,11 +58,12 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @description Parameters from (linear) mixed models.
 #'
 #' @param model A mixed model.
-#' @param effects Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"} or \code{"ranef"}), random parameters (i.e. variance components of the random effects, \code{"random_variance"} or \code{"ran_pars"}), a combination of fixed effects and random effects variances (\code{"all_pars"}), or all (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.
+#' @param effects Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.
 #' @param details Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.
 #' @param df_method Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}). The options \code{df_method = "boot"}, \code{df_method = "profile"} and \code{df_method = "uniroot"} only affect confidence intervals; in this case, bootstrapped resp. profiled confidence intervals are computed. \code{"uniroot"} only applies to models of class \code{glmmTMB}. Note that when \code{df_method} is not \code{"wald"}, robust standard errors etc. cannot be computed.
 #' @param wb_component Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.
 #' @inheritParams model_parameters.default
+#' @inheritParams model_parameters.stanreg
 #'
 #' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
 #'   columns into a consistent, standardized naming scheme.
@@ -102,6 +103,7 @@ model_parameters.merMod <- function(model,
                                     iterations = 1000,
                                     standardize = NULL,
                                     effects = "fixed",
+                                    group_level = FALSE,
                                     exponentiate = FALSE,
                                     robust = FALSE,
                                     details = FALSE,
@@ -115,15 +117,10 @@ model_parameters.merMod <- function(model,
   df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile", "uniroot"))
 
   # which component to return?
-  effects <- match.arg(effects, choices = c("fixed", "random", "ranef", "ran_pars", "all_pars", "random_variance", "all"))
-  effects <- switch(effects,
-                    "ranef" = "random",
-                    "ran_pars" = "random_variance",
-                    effects)
-
+  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
   params <- params_random <- params_variance <- NULL
 
-  if (effects %in% c("fixed", "all", "all_pars")) {
+  if (effects %in% c("fixed", "all")) {
     # Processing
     if (bootstrap) {
       params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
@@ -147,11 +144,11 @@ model_parameters.merMod <- function(model,
     }
   }
 
-  if (effects %in% c("random", "all")) {
+  if (effects %in% c("random", "all") && isTRUE(group_level)) {
     params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
   }
 
-  if (effects %in% c("random_variance", "all", "all_pars")) {
+  if (effects %in% c("random", "all") && isFALSE(group_level)) {
     params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
   }
 
@@ -172,7 +169,7 @@ model_parameters.merMod <- function(model,
   params <- .add_model_parameters_attributes(
     params,
     model,
-    ci = ifelse(effects == "random_variance", NA, ci),
+    ci = ifelse(effects == "random" && isFALSE(group_level), NA, ci),
     exponentiate,
     bootstrap,
     iterations,
@@ -184,8 +181,12 @@ model_parameters.merMod <- function(model,
 
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
+    if (verbose) {
+      message("Argument 'details' is deprecated. Please use 'group_level'.")
+    }
   }
 
+  attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 

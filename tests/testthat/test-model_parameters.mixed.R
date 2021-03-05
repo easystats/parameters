@@ -34,7 +34,7 @@ if (.runThisTest &&
 
 
   test_that("model_parameters.mixed-random", {
-    params <- model_parameters(m1, effects = "random")
+    params <- model_parameters(m1, effects = "random", group_level = TRUE)
     expect_equal(c(nrow(params), ncol(params)), c(3, 9))
     expect_equal(as.vector(params$Parameter), c("(Intercept)", "(Intercept)", "(Intercept)"))
     expect_equal(as.vector(params$Level), c("3", "4", "5"))
@@ -42,7 +42,7 @@ if (.runThisTest &&
   })
 
   test_that("model_parameters.mixed-ran_pars", {
-    params <- model_parameters(m1, effects = "ran_pars")
+    params <- model_parameters(m1, effects = "random")
     expect_equal(c(nrow(params), ncol(params)), c(2, 9))
     expect_equal(
       as.vector(params$Parameter),
@@ -52,9 +52,9 @@ if (.runThisTest &&
     expect_equal(params$Coefficient, c(0.59385, 0.27049), tolerance = 1e-2)
   })
 
-  test_that("model_parameters.mixed-ran_pars", {
+  test_that("model_parameters.mixed-all", {
     params <- model_parameters(m1, effects = "all")
-    expect_equal(c(nrow(params), ncol(params)), c(7, 12))
+    expect_equal(c(nrow(params), ncol(params)), c(4, 12))
     expect_equal(
       as.vector(params$Parameter),
       c("(Intercept)", "cyl", "(Intercept)", "(Intercept)", "(Intercept)",

@@ -30,6 +30,7 @@
   iterations = 1000,
   effects = "fixed",
   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+  group_level = FALSE,
   standardize = NULL,
   exponentiate = FALSE,
   df_method = NULL,
@@ -48,6 +49,7 @@
   iterations = 1000,
   standardize = NULL,
   effects = "fixed",
+  group_level = FALSE,
   exponentiate = FALSE,
   robust = FALSE,
   details = FALSE,
@@ -103,7 +105,7 @@ regressions} apply (see also
 robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
 works when \code{standardize="refit"}.}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"} or \code{"ranef"}), random parameters (i.e. variance components of the random effects, \code{"random_variance"} or \code{"ran_pars"}), a combination of fixed effects and random effects variances (\code{"all_pars"}), or all (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for,
@@ -126,6 +128,12 @@ exponentiate coefficients for all models except those from Gaussian family.}
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+
+\item{group_level}{Logical, for multilevel models (i.e. models with random
+effects) and when \code{effects = "all"} or \code{effects = "random"},
+include the parameters for each group level from random effects. If
+\code{group_level = FALSE} (the default), only information on SD and COR
+are shown.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further

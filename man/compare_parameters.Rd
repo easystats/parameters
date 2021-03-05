@@ -40,7 +40,7 @@ types.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"} or \code{"ranef"}), random parameters (i.e. variance components of the random effects, \code{"random_variance"} or \code{"ran_pars"}), a combination of fixed effects and random effects variances (\code{"all_pars"}), or all (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
 
 \item{component}{Model component for which parameters should be shown. See
 documentation for related model class in \code{\link{model_parameters}}.}

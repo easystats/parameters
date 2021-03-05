@@ -14,6 +14,7 @@ model_parameters.glmmTMB <- function(model,
                                      iterations = 1000,
                                      effects = "fixed",
                                      component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                                     group_level = FALSE,
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      df_method = NULL,
@@ -28,11 +29,7 @@ model_parameters.glmmTMB <- function(model,
   df_method <- .check_df_method(df_method)
 
   # which component to return?
-  effects <- match.arg(effects, choices = c("fixed", "random", "ranef", "ran_pars", "all_pars", "random_variance", "all"))
-  effects <- switch(effects,
-                    "ranef" = "random",
-                    "ran_pars" = "random_variance",
-                    effects)
+  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
   # fix argument, if model has only conditional component
   cs <- stats::coef(summary(model))
@@ -45,7 +42,7 @@ model_parameters.glmmTMB <- function(model,
 
   params <- params_random <- params_variance <- NULL
 
-  if (effects %in% c("fixed", "all", "all_pars")) {
+  if (effects %in% c("fixed", "all")) {
     # Processing
     if (bootstrap) {
       params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
@@ -81,11 +78,11 @@ model_parameters.glmmTMB <- function(model,
   }
 
 
-  if (effects %in% c("random", "all")) {
+  if (effects %in% c("random", "all") && isTRUE(group_level)) {
     params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
   }
 
-  if (effects %in% c("random_variance", "all", "all_pars")) {
+  if (effects %in% c("random", "all") && isFALSE(group_level)) {
     params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
     params_variance$Component <- "conditional"
   }
@@ -113,7 +110,7 @@ model_parameters.glmmTMB <- function(model,
   params <- .add_model_parameters_attributes(
     params,
     model,
-    ci = ifelse(effects == "random_variance", NA, ci),
+    ci = ifelse(effects == "random" && isFALSE(group_level), NA, ci),
     exponentiate,
     df_method = df_method,
     p_adjust = p_adjust,
@@ -123,8 +120,12 @@ model_parameters.glmmTMB <- function(model,
 
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
+    if (verbose) {
+      message("Argument 'details' is deprecated. Please use 'group_level'.")
+    }
   }
 
+  attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
