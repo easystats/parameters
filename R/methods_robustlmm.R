@@ -1,5 +1,5 @@
 #' @export
-model_parameters.rlmerMod <- model_parameters.clmm
+model_parameters.rlmerMod <- model_parameters.cpglmm
 
 
 #' @export

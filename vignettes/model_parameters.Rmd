@@ -137,7 +137,7 @@ lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) %>%
 
 ```{r, warning=FALSE, message=FALSE}
 lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) %>% 
-  parameters(effects = "all_pars")
+  parameters(effects = "all")
 ```
 
 ### Mixed Model with Zero-Inflation Model

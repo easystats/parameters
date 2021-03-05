@@ -107,3 +107,6 @@
   }
   out
 }
+
+
+.extract_random_variances.MixMod <- .extract_random_variances.glmmTMB

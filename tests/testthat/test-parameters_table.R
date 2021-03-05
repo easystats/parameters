@@ -8,7 +8,7 @@ if (require("testthat") && require("parameters") && require("insight") && requir
   test_that("parameters_table 2", {
     x <- model_parameters(lme4::lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris))
     tab <- format_table(x)
-    expect_true(all(names(tab) == c("Parameter", "Coefficient", "SE", "95% CI", "t(146)", "p")))
+    expect_true(all(names(tab) == c("Parameter", "Coefficient", "SE", "95% CI", "t(146)", "p", "Effects")))
   })
 
   test_that("parameters_table 3", {
