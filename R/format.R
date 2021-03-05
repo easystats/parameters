@@ -10,7 +10,8 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   s_value <- attributes(x)$s_value
   m_class <- attributes(x)$model_class
   mixed_model <- attributes(x)$mixed_model
-  ignore_group <- attributes(x)$ignore_group
+  ignore_group <- isTRUE(attributes(x)$ignore_group)
+  random_variances <- isTRUE(attributes(x)$ran_pars)
 
   if (identical(format, "html")) {
     coef_name <- NULL
@@ -33,11 +34,12 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   # check if we have mixed models with random variance parameters
   # in such cases, we don't need the group-column, but we rather
   # merge it with the parameter column
-  if (isTRUE(ignore_group)) {
-    if (!is.null(x$Effects) && !is.null(x$Group)) {
+  if (isTRUE(random_variances)) {
+    if (!is.null(x$Group) && !is.null(x$Effects)) {
       ran_pars <- which(x$Effects == "random")
-      x$Group[ran_pars] <- format(paste0(x$Group[ran_pars], ":"))
-      x$Parameter[ran_pars] <- paste0(x$Group[ran_pars], " ", x$Parameter[ran_pars])
+      stddevs <- grepl("^SD \\(", x$Parameter[ran_pars])
+      x$Parameter[ran_pars[stddevs]] <- paste0(gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]), ": ", x$Group[ran_pars[stddevs]], ")")
+      x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
       x$Group <- NULL
     }
   }
@@ -86,12 +88,8 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   if (all(c("Parameter", "Level") %in% colnames(x))) {
     x$Parameter <- paste0(x$Parameter, " ", brackets[1], x$Level, brackets[2])
     x$Level <- NULL
-    if (!is.null(x$Group) && all(x$EFfects == "random")) {
-      x$Group <- format(paste0(x$Group, ":"))
-      x$Parameter <- paste0(x$Group, " ", x$Parameter)
-      x$Group <- NULL
-    }
   }
+
   insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
 }
 

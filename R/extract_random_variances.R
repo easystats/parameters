@@ -1,45 +1,61 @@
-.extract_random_variances <- function(model, ci = .95, effects = "random_variances", ...) {
-  out <- random_parameters(model)
 
-  out <- out[!out$Description %in% c("N", "Observations"), ]
-  out$Value <- sqrt(out$Value)
-  out$Type[out$Component == "tau00"] <- "SD (Intercept)"
-  out$Type[out$Component == "sigma2"] <- "SD (Observations)"
+.extract_random_variances <- function(model, ...) {
+  UseMethod(".extract_random_variances")
+}
 
-  out$Group <- NA
-  out$Group[out$Component == "tau00"] <- out$Term[out$Component == "tau00"]
-  out$Group[out$Component == "sigma2"] <- "Residual"
 
-  ran_slope <- which(out$Component == "tau11")
-  ran_cor <- which(out$Component == "rho01")
-  group_names <- out$Term[out$Component == "tau00"]
+#' @importFrom insight get_variance get_sigma find_statistic
+.extract_random_variances.default <- function(model, ci = .95, effects = "random", component = "conditional", ...) {
 
-  for (i in group_names) {
-    if (length(ran_slope)) {
-      slope_groups <- which(grepl(paste0("^\\Q", i, "\\E"), out$Term[ran_slope]))
-      if (length(slope_groups)) {
-        out$Group[ran_slope[slope_groups]] <- i
-        out$Type[ran_slope[slope_groups]] <- paste0("SD (",
-                                                      gsub("^\\.", "", gsub(i, "", out$Term[ran_slope[slope_groups]], fixed = TRUE)),
-                                                      ")")
-      }
-    }
-    if (length(ran_cor)) {
-      cor_groups <- which(grepl(paste0("^\\Q", i, "\\E"), out$Term[ran_cor]))
-      if (length(cor_groups)) {
-        out$Group[ran_cor[cor_groups]] <- i
-        out$Type[ran_cor[cor_groups]] <- paste0("Cor (Intercept~",
-                                                  gsub("^\\.", "", gsub(i, "", out$Term[ran_slope[slope_groups]], fixed = TRUE)),
-                                                  ")")
+  ran_intercept <- data.frame(insight::get_variance(model, component = "intercept", verbose = FALSE))
+  ran_slope <- data.frame(insight::get_variance(model, component = "slope", verbose = FALSE))
+  ran_corr <- data.frame(insight::get_variance(model, component = "rho01", verbose = FALSE))
+  ran_sigma <- data.frame(insight::get_sigma(model))
+
+  # random intercept - tau00
+  if (nrow(ran_intercept) > 0) {
+    colnames(ran_intercept) <- "Coefficient"
+    ran_intercept$Group <- rownames(ran_intercept)
+    ran_intercept$Parameter <- "SD (Intercept)"
+  }
+
+  # random slope - tau11
+  if (nrow(ran_slope) > 0) {
+    colnames(ran_slope) <- "Coefficient"
+    ran_slope$Group <- rownames(ran_slope)
+    for (i in unique(ran_intercept$Group)) {
+      slopes <- which(grepl(paste0("^\\Q", i, "\\E"), ran_slope$Group))
+      if (length(slopes)) {
+        ran_slope$Parameter[slopes] <- paste0(
+          "SD (", gsub("^\\.", "", gsub(i, "", ran_slope$Group[slopes], fixed = TRUE)), ")"
+        )
+        ran_slope$Group[slopes] <- i
       }
     }
   }
 
-  out$Description <- NULL
-  out$Component <- NULL
-  out$Term <- NULL
+  # random slope-intercept correlation - rho01
+  if (nrow(ran_corr) > 0) {
+    colnames(ran_corr) <- "Coefficient"
+    ran_corr$Group <- rownames(ran_corr)
+    for (i in unique(ran_intercept$Group)) {
+      corrs <- which(grepl(paste0("^\\Q", i, "\\E"), ran_corr$Group))
+      if (length(corrs)) {
+        ran_corr$Parameter[corrs] <- paste0("Cor (Intercept~", i, ")")
+        ran_corr$Group[corrs] <- i
+      }
+    }
+  }
 
-  colnames(out) <- c("Parameter", "Coefficient", "Group")
+  # residuals - sigma
+  if (nrow(ran_sigma) > 0) {
+    colnames(ran_sigma) <- "Coefficient"
+    ran_sigma$Group <- "Residual"
+    ran_sigma$Parameter <- "SD (Observations)"
+  }
+
+  out <- rbind(ran_intercept, ran_slope, ran_corr, ran_sigma)
+  rownames(out) <- NULL
 
   stat_column <- gsub("-statistic", "", insight::find_statistic(model), fixed = TRUE)
 

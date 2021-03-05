@@ -5,6 +5,7 @@
 #'   mixed model and returns the result as a data frame.
 #'
 #' @param model A mixed effects model (including \code{stanreg} models).
+#' @inheritParams simulate_model
 #'
 #' @return A data frame with random effects statistics for the variance components,
 #'   including number of levels per random effect group, as well as complete
@@ -47,8 +48,9 @@
 #'   random_parameters(model)
 #' }
 #' @export
-random_parameters <- function(model) {
-  out <- .randomeffects_summary(model)
+random_parameters <- function(model, component = "conditional") {
+  component <- match.arg(component, choices = c("conditional", "zi", "zero_inflated"))
+  out <- .randomeffects_summary(model, component)
   class(out) <- c("parameters_random", class(out))
   out
 }
@@ -65,10 +67,10 @@ random_parameters <- function(model) {
 
 #' @importFrom insight find_random get_variance find_random_slopes n_obs
 #' @importFrom stats setNames
-.randomeffects_summary <- function(model) {
+.randomeffects_summary <- function(model, component = "conditional") {
   out <- list()
 
-  re_variances <- suppressWarnings(insight::get_variance(model))
+  re_variances <- suppressWarnings(insight::get_variance(model, model_component = component))
   model_re <- insight::find_random(model, split_nested = FALSE, flatten = TRUE)
   model_rs <- unlist(insight::find_random_slopes(model))
 

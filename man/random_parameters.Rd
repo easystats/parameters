@@ -4,10 +4,15 @@
 \alias{random_parameters}
 \title{Summary information from random effects}
 \usage{
-random_parameters(model)
+random_parameters(model, component = "conditional")
 }
 \arguments{
 \item{model}{A mixed effects model (including \code{stanreg} models).}
+
+\item{component}{Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. \code{component} may be one of \code{"conditional"},
+\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 }
 \value{
 A data frame with random effects statistics for the variance components,

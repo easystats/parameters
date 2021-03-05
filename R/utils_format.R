@@ -205,9 +205,10 @@
     # rename columns for random part
     if (grepl("random", type) && any(colnames(tables[[type]]) %in% .all_coefficient_types())) {
       colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types()] <- "Coefficient"
-      if (isTRUE(ignore_group)) {
-        tables[[type]]$CI <- NULL
-      }
+    }
+
+    if (grepl("random", type) && isTRUE(ran_pars)) {
+      tables[[type]]$CI <- NULL
     }
 
     formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
