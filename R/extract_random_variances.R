@@ -10,7 +10,7 @@
   ran_intercept <- data.frame(insight::get_variance(model, component = "intercept", verbose = FALSE, model_component = component))
   ran_slope <- data.frame(insight::get_variance(model, component = "slope", verbose = FALSE, model_component = component))
   ran_corr <- data.frame(insight::get_variance(model, component = "rho01", verbose = FALSE, model_component = component))
-  ran_sigma <- data.frame(insight::get_sigma(model))
+  ran_sigma <- data.frame(insight::get_sigma(model, verbose = FALSE))
 
   # random intercept - tau00
   if (nrow(ran_intercept) > 0) {
