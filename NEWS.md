@@ -6,10 +6,11 @@
 
 ## Changes to functions
 
-* The `effects`-argument from `model_parameters()` for mixed models gets a
-  third option, `"random_variance"` (or `"ran_pars"`), to show the random
-  effects variances (same functionality as `random_parameters()`, but mimicking
-  the behaviour from `broom.mixed::tidy()`).
+* The `effects`-argument from `model_parameters()` for mixed models was
+  revised and now shows the random effects variances by default (same 
+  functionality as `random_parameters()`, but mimicking the behaviour from
+  `broom.mixed::tidy()`). When the `group_level` argument is set to `TRUE`,
+  the conditional modes (BLUPs) of the random effects are shown.
 
 * `model_parameters()` for mixed models now returns an `Effects` column even
   when there is just one type of "effects", to mimic the behaviour from 
