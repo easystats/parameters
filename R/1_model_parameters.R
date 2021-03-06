@@ -161,19 +161,30 @@ model_parameters.default <- function(model,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = "Parameter",
-    standardize = standardize,
-    exponentiate = exponentiate,
-    robust = robust,
-    p_adjust = p_adjust,
-    verbose = verbose,
-    ...
+  out <- tryCatch(
+    {
+      .model_parameters_generic(
+        model = model,
+        ci = ci,
+        bootstrap = bootstrap,
+        iterations = iterations,
+        merge_by = "Parameter",
+        standardize = standardize,
+        exponentiate = exponentiate,
+        robust = robust,
+        p_adjust = p_adjust,
+        verbose = verbose,
+        ...
+      )
+    },
+    error = function(e) {
+      NULL
+    }
   )
+
+  if (is.null(out)) {
+    stop(paste0("Sorry, `model_parameters()` does currently not work for objects of class '", class(model)[1], "'."), call. = FALSE)
+  }
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
