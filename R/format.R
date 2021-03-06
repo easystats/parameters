@@ -63,7 +63,9 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   if (.n_unique(formatted_table$Group) == 1 && isTRUE(mixed_model)) formatted_table$Group <- NULL
 
   # no column with CI-level in output
-  formatted_table$CI <- NULL
+  if (!is.null(formatted_table$CI) && .n_unique(formatted_table$CI) == 1) {
+    formatted_table$CI <- NULL
+  }
 
   formatted_table
 }
@@ -392,6 +394,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
   anova_test <- attributes(x)$anova_test
+  footer_text <- attributes(x)$footer_text
 
   # footer: residual standard deviation
   if (isTRUE(show_sigma)) {
@@ -413,6 +416,11 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     footer <- .add_footer_anova_test(footer, anova_test, type)
   }
 
+  # footer: generic text
+  if (!is.null(footer_text)) {
+    footer <- .add_footer_text(footer, footer_text, type)
+  }
+
   # add color code, if we have a footer
   if (!is.null(footer) && type == "text") {
     footer <- c(footer, "blue")
@@ -423,6 +431,24 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     footer[1] <- substr(footer[1], 0, nchar(x) - 1)
   }
 
+  footer
+}
+
+
+# footer: generic text
+.add_footer_text <- function(footer = NULL, text, type = "text") {
+  if (!is.null(text)) {
+    if (type == "text") {
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, sprintf("%s%s\n", fill, text))
+    } else if (type == "html") {
+      footer <- c(footer, text)
+    }
+  }
   footer
 }
 

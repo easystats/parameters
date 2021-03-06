@@ -2,7 +2,7 @@
 
 ## New supported model classes
 
-* `blrm` (*rmsb*), `AKP` (*WRS2*)
+* `blrm` (*rmsb*), `AKP` (*WRS2*), `epi.2by2` (*epiR*)
 
 ## Changes to functions
 
