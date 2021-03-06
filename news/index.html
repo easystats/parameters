@@ -193,6 +193,7 @@
 <ul>
 <li><p>The <code>effects</code>-argument from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models was revised and now shows the random effects variances by default (same functionality as <code><a href="../reference/random_parameters.html">random_parameters()</a></code>, but mimicking the behaviour from <code>broom.mixed::tidy()</code>). When the <code>group_level</code> argument is set to <code>TRUE</code>, the conditional modes (BLUPs) of the random effects are shown.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models now returns an <code>Effects</code> column even when there is just one type of “effects”, to mimic the behaviour from <code>broom.mixed::tidy()</code>. In conjunction with <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> users can get the same column names as in <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> objects.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for t-tests now uses the group values as column names.</p></li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">

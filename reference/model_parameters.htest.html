@@ -279,9 +279,9 @@ only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.h
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Welch Two Sample t-test
 #&gt; 
-#&gt; </span><span>Parameter  |     Group | Mean_Group1 | Mean_Group2 | Difference |          95% CI | t(22.72) |      p
-#&gt; -----------------------------------------------------------------------------------------------------
-#&gt; mtcars$mpg | mtcars$vs |       16.62 |       24.56 |       7.94 | [-11.46, -4.42] |    -4.67 | &lt; .001</div><div class='input'>
+#&gt; </span><span>Parameter  |     Group | mtcars$vs = 0 | mtcars$vs = 1 | Difference |          95% CI | t(22.72) |      p
+#&gt; ---------------------------------------------------------------------------------------------------------
+#&gt; mtcars$mpg | mtcars$vs |         16.62 |         24.56 |       7.94 | [-11.46, -4.42] |    -4.67 | &lt; .001</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span>, mu <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># One Sample t-test
