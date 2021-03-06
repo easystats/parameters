@@ -18,6 +18,8 @@
   can get the same column names as in `tidy()` for `model_parameters()`
   objects.
 
+* `model_parameters()` for t-tests now uses the group values as column names.
+
 ## Bug fixes
 
 * Fixed issue with non-initialized argument `style` in `display()` for

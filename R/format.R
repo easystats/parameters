@@ -5,13 +5,13 @@
 #' @export
 format.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
   # save attributes
-  res <- attributes(x)$details
   coef_name <- attributes(x)$coefficient_name
   s_value <- attributes(x)$s_value
   m_class <- attributes(x)$model_class
+  htest_type <- attributes(x)$htest_type
   mixed_model <- attributes(x)$mixed_model
-  ignore_group <- isTRUE(attributes(x)$ignore_group)
   random_variances <- isTRUE(attributes(x)$ran_pars)
+  mean_group_values <- attributes(x)$mean_group_values
 
   if (identical(format, "html")) {
     coef_name <- NULL
@@ -22,6 +22,14 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
   # remove method for htest
   if (!is.null(m_class) && any(m_class %in% c("BFBayesFactor", "htest", "rma", "t1way", "yuen", "PMCMR", "osrt", "trendPMCMR", "anova"))) {
     x$Method <- NULL
+  }
+
+  # rename columns for t-tests
+  if (!is.null(htest_type) && htest_type == "ttest" && !is.null(mean_group_values)) {
+    if (all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))) {
+      colnames(x)[which(colnames(x) == "Mean_Group1")] <- paste0(x$Group, " = ", mean_group_values[1])
+      colnames(x)[which(colnames(x) == "Mean_Group2")] <- paste0(x$Group, " = ", mean_group_values[2])
+    }
   }
 
   # Special print for mcp from WRS2
