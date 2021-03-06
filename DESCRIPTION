@@ -119,6 +119,7 @@ Suggests:
     performance (>= 0.7.0),
     plm,
     PMCMRplus,
+    pbkrtest,
     projpred,
     pscl,
     psych,

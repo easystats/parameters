@@ -250,6 +250,9 @@ model_parameters.cpglmm <- function(model,
 
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
+    if (verbose) {
+      message("Argument 'details' is deprecated. Please use 'group_level'.")
+    }
   }
 
   params

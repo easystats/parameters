@@ -1,7 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest) {
-  if (require("testthat") && require("parameters") && require("lmerTest")) {
+  if (require("testthat") && require("parameters") && require("lmerTest") && require("pbkrtest")) {
     data("carrots", package = "lmerTest")
     m1 <- lmerTest::lmer(Preference ~ sens2 + Homesize + (1 + sens2 | Consumer), data = carrots)
 
