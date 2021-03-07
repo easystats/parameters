@@ -192,6 +192,7 @@
   p_digits <span class='op'>=</span> <span class='fl'>3</span>,
   show_sigma <span class='op'>=</span> <span class='cn'>FALSE</span>,
   show_formula <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  zap_small <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -240,6 +241,10 @@ standard deviation.</p></td>
     <tr>
       <th>show_formula</th>
       <td><p>Logical, if <code>TRUE</code>, adds the model formula to the output.</p></td>
+    </tr>
+    <tr>
+      <th>zap_small</th>
+      <td><p>Logical, if <code>TRUE</code>, small values are rounded after <code>digits</code> decimal places. If <code>FALSE</code>, values with more decimal places than <code>digits</code> are printed in scientific notation.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -372,7 +377,6 @@ freedom.</p>
 #&gt; ------------------------------------------------
 #&gt; (Intercept) |     0.79 | [ 0.26,  1.32] | 0.004 
 #&gt; mined [no]  |    -1.84 | [-2.46, -1.23] | &lt; .001</div><div class='input'><span class='co'># }</span>
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
