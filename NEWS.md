@@ -2,7 +2,7 @@
 
 ## New supported model classes
 
-* `blrm` (*rmsb*), `AKP` (*WRS2*), `epi.2by2` (*epiR*), `mjoint` (*joineRML*)
+* `blrm` (*rmsb*), `AKP` (*WRS2*), `epi.2by2` (*epiR*), `mjoint` (*joineRML*), `mhurdle` (*mhurdle*)
 
 ## Changes to functions
 

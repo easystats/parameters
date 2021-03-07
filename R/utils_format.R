@@ -341,6 +341,8 @@
     "interactions" = "(Cross-Level) Interactions",
     "precision" = ,
     "precision." = "Precision",
+    "infrequent_purchase" = "Infrequent Purchase",
+    "auxiliary" = "Auxiliary",
     type
   )
 
