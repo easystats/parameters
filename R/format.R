@@ -3,8 +3,19 @@
 #' @inheritParams print.parameters_model
 #' @rdname display.parameters_model
 #' @export
-format.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
-  # save attributes
+format.parameters_model <- function(x,
+                                    pretty_names = TRUE,
+                                    split_components = TRUE,
+                                    select = NULL,
+                                    digits = 2,
+                                    ci_digits = 2,
+                                    p_digits = 3,
+                                    ci_width = NULL,
+                                    ci_brackets = NULL,
+                                    zap_small = FALSE,
+                                    format = NULL,
+                                    ...) {
+    # save attributes
   coef_name <- attributes(x)$coefficient_name
   s_value <- attributes(x)$s_value
   m_class <- attributes(x)$model_class
@@ -60,9 +71,9 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
 
   # print everything now...
   if (split_components && !is.null(split_by) && length(split_by)) {
-    formatted_table <- .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
+    formatted_table <- .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = format, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
   } else {
-    formatted_table <- .format_columns_single_component(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, format = format, coef_name = coef_name, ...)
+    formatted_table <- .format_columns_single_component(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, format = format, coef_name = coef_name, zap_small = zap_small, ...)
   }
 
   # remove unique columns
@@ -79,7 +90,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
 }
 
 
-.format_columns_single_component <- function(x, pretty_names, digits = 2, ci_digits = 2, p_digits = 3, ci_width = "auto", ci_brackets = TRUE, format = NULL, coef_name = NULL, ...) {
+.format_columns_single_component <- function(x, pretty_names, digits = 2, ci_digits = 2, p_digits = 3, ci_width = "auto", ci_brackets = TRUE, format = NULL, coef_name = NULL, zap_small = FALSE, ...) {
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
     brackets <- c("(", ")")
@@ -100,7 +111,7 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
     x$Level <- NULL
   }
 
-  insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
+  insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, zap_small = zap_small, ...)
 }
 
 
@@ -113,7 +124,7 @@ format.parameters_brms_meta <- format.parameters_model
 #' @importFrom insight format_p format_table
 #' @inheritParams print.parameters_model
 #' @export
-format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
+format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, zap_small = FALSE, format = NULL, ...) {
   x$Method <- NULL
 
   out <- data.frame(
@@ -138,7 +149,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     colnames(cols) <- gsub(pattern, "", colnames(cols))
     # save p-stars in extra column
     cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
-    cols <- insight::format_table(cols, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits)
+    cols <- insight::format_table(cols, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, zap_small = zap_small)
     out <- cbind(out, .format_output_style(cols, style, format, i))
   }
 
@@ -272,7 +283,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
 #' @importFrom utils modifyList
 #' @importFrom insight print_parameters format_table
 #' @export
-format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
+format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci_width = NULL, ci_brackets = NULL, zap_small = FALSE, format = NULL, ...) {
   cp <- attributes(x)$parameter_info
   att <- attributes(x)
   final_table <- list()
@@ -299,7 +310,7 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
         attr(i, "table_caption") <- attributes(i)$main_title
       }
       attributes(i) <- utils::modifyList(att, attributes(i))
-      param_table <- insight::format_table(i, ci_width = ci_width, ci_brackets = ci_brackets, preserve_attributes = TRUE)
+      param_table <- insight::format_table(i, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, preserve_attributes = TRUE)
       param_table$Group <- NULL
       param_table$Response <- NULL
       param_table$Function <- NULL

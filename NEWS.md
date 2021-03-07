@@ -20,6 +20,10 @@
 
 * `model_parameters()` for t-tests now uses the group values as column names.
 
+* `print()` for `model_parameters()` gains a `zap_small` argument, to avoid
+  scientific notation for very small numbers. Instead, `zap_small` forces to
+  round to the specified number of digits.
+
 ## Bug fixes
 
 * Fixed issue with non-initialized argument `style` in `display()` for

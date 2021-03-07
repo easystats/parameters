@@ -82,7 +82,7 @@
 # or edge cases...
 
 #' @keywords internal
-.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, ...) {
+.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, zap_small = FALSE, ...) {
   final_table <- list()
 
   ignore_group <- isTRUE(attributes(x)$ignore_group)
@@ -211,7 +211,7 @@
       tables[[type]]$CI <- NULL
     }
 
-    formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
+    formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
     component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars)
 
     # exceptions for random effects
