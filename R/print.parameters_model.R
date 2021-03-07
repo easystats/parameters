@@ -95,7 +95,8 @@ print.parameters_model <- function(x,
     p_digits = p_digits,
     ci_width = "auto",
     ci_brackets = TRUE,
-    format = "text"
+    format = "text",
+    ...
   )
 
   footer <- .format_footer(x, digits = digits, verbose = verbose, show_sigma = show_sigma, show_formula = show_formula)

@@ -309,6 +309,8 @@
     "zero_inflated.fixed" = ,
     "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
     "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
+    "survival" = ,
+    "survival.fixed" = "Survival",
     "dispersion.fixed." = ,
     "dispersion" = "Dispersion",
     "marginal" = "Marginal Effects",
