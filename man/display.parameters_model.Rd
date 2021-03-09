@@ -175,7 +175,7 @@ standard deviation.}
 
 \item{show_formula}{Logical, if \code{TRUE}, adds the model formula to the output.}
 
-\item{verbose}{Toggle warnings and messages.}
+\item{verbose}{Toggle messages and warnings.}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character

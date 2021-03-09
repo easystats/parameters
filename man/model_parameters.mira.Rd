@@ -47,7 +47,7 @@ Format models of class \code{mira}, obtained from \code{mice::width.mids()}.
 }
 \examples{
 library(parameters)
-if (require("mice")) {
+if (require("mice", quietly = TRUE)) {
   data(nhanes2)
   imp <- mice(nhanes2)
   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
@@ -55,7 +55,7 @@ if (require("mice")) {
 }
 \dontrun{
 # model_parameters() also works for models that have no "tidy"-method in mice
-if (require("mice") && require("gee")) {
+if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) {
   data(warpbreaks)
   set.seed(1234)
   warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA

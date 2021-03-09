@@ -26,7 +26,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' if (require("boot")) {
+#' if (require("boot", quietly = TRUE)) {
 #'   model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
 #'   b <- bootstrap_model(model)
 #'   print(head(b))

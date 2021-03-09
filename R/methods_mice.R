@@ -96,7 +96,7 @@ model_parameters.mipo <- model_parameters.default
 #'
 #' @examples
 #' library(parameters)
-#' if (require("mice")) {
+#' if (require("mice", quietly = TRUE)) {
 #'   data(nhanes2)
 #'   imp <- mice(nhanes2)
 #'   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
@@ -104,7 +104,7 @@ model_parameters.mipo <- model_parameters.default
 #' }
 #' \dontrun{
 #' # model_parameters() also works for models that have no "tidy"-method in mice
-#' if (require("mice") && require("gee")) {
+#' if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) {
 #'   data(warpbreaks)
 #'   set.seed(1234)
 #'   warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA

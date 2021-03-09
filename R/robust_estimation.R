@@ -29,13 +29,13 @@
 #' @seealso Working examples cam be found \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{in this vignette}.
 #'
 #' @examples
-#' if (require("sandwich")) {
+#' if (require("sandwich", quietly = TRUE)) {
 #'   # robust standard errors, calling sandwich::vcovHC(type="HC3") by default
 #'   model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #'   standard_error_robust(model)
 #' }
 #' \dontrun{
-#' if (require("clubSandwich")) {
+#' if (require("clubSandwich", quietly = TRUE)) {
 #'   # cluster-robust standard errors, using clubSandwich
 #'   iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
 #'   standard_error_robust(

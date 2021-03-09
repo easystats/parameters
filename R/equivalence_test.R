@@ -130,7 +130,7 @@ bayestestR::equivalence_test
 #' equivalence_test(model, rule = "cet")
 #'
 #' # plot method
-#' if (require("see")) {
+#' if (require("see", quietly = TRUE)) {
 #'   result <- equivalence_test(model)
 #'   plot(result)
 #' }

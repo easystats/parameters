@@ -66,13 +66,13 @@ mydat <<- data.frame(
   effectsize = c(-0.393, 0.675, 0.282, -1.398),
   stderr = c(0.317, 0.317, 0.13, 0.36)
 )
-if (require("metafor")) {
+if (require("metafor", quietly = TRUE)) {
   model <- rma(yi = effectsize, sei = stderr, method = "REML", data = mydat)
   model_parameters(model)
 }
 \dontrun{
 # with subgroups
-if (require("metafor")) {
+if (require("metafor", quietly = TRUE)) {
   data(dat.bcg)
   dat <- escalc(
     measure = "RR",
@@ -87,7 +87,7 @@ if (require("metafor")) {
   model_parameters(model)
 }
 
-if (require("metaBMA")) {
+if (require("metaBMA", quietly = TRUE)) {
   data(towels)
   m <- meta_random(logOR, SE, study, data = towels)
   model_parameters(m)

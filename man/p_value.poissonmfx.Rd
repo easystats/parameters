@@ -24,13 +24,15 @@
 \item{...}{Currently not used.}
 }
 \value{
-A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
+A data frame with at least two columns: the parameter names and the
+  p-values. Depending on the model, may also include columns for model
+  components etc.
 }
 \description{
 This function attempts to return, or compute, p-values of marginal effects models from package \pkg{mfx}.
 }
 \examples{
-if (require("mfx")) {
+if (require("mfx", quietly = TRUE)) {
   set.seed(12345)
   n <- 1000
   x <- rnorm(n)

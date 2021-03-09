@@ -98,7 +98,7 @@ Parameters from special regression models not listed under one of the previous c
 }
 \examples{
 library(parameters)
-if (require("brglm2")) {
+if (require("brglm2", quietly = TRUE)) {
   data("stemcell")
   model <- bracl(
     research ~ as.numeric(religion) + gender,

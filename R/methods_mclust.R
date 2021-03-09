@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' library(parameters)
-#' if (require("mclust")) {
+#' if (require("mclust", quietly = TRUE)) {
 #'   model <- mclust::Mclust(iris[1:4], verbose = FALSE)
 #'   model_parameters(model)
 #' }

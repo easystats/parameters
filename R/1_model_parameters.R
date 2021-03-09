@@ -202,7 +202,12 @@ model_parameters.default <- function(model,
 
   # Processing
   if (bootstrap) {
-    params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+    params <- bootstrap_parameters(
+      model,
+      iterations = iterations,
+      ci = ci,
+      ...
+    )
   } else {
     params <- .extract_parameters_generic(
       model,
@@ -222,6 +227,7 @@ model_parameters.default <- function(model,
   if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
     params <- .exponentiate_parameters(params, model, exponentiate)
   }
+
   params <- .add_model_parameters_attributes(
     params,
     model,
@@ -234,6 +240,7 @@ model_parameters.default <- function(model,
     verbose = verbose,
     ...
   )
+
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params

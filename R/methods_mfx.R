@@ -338,10 +338,12 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
 #' @param component Should all parameters, parameters for the conditional model, precision-component or marginal effects be returned? \code{component} may be one of \code{"conditional"}, \code{"precision"}, \code{"marginal"} or \code{"all"} (default).
 #' @param ... Currently not used.
 #'
-#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
+#' @return A data frame with at least two columns: the parameter names and the
+#'   p-values. Depending on the model, may also include columns for model
+#'   components etc.
 #'
 #' @examples
-#' if (require("mfx")) {
+#' if (require("mfx", quietly = TRUE)) {
 #'   set.seed(12345)
 #'   n <- 1000
 #'   x <- rnorm(n)

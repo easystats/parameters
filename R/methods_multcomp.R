@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' \donttest{
-#' if (require("multcomp")) {
+#' if (require("multcomp", quietly = TRUE)) {
 #'   # multiple linear model, swiss data
 #'   lmod <- lm(Fertility ~ ., data = swiss)
 #'   mod <- glht(
@@ -25,7 +25,7 @@
 #'   )
 #'   model_parameters(mod)
 #' }
-#' if (require("PMCMRplus")) {
+#' if (require("PMCMRplus", quietly = TRUE)) {
 #'   model <- kwAllPairsConoverTest(count ~ spray, data = InsectSprays)
 #'   model_parameters(model)
 #' }

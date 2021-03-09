@@ -83,7 +83,7 @@ freedom.
 \examples{
 \donttest{
 library(parameters)
-if (require("glmmTMB")) {
+if (require("glmmTMB", quietly = TRUE)) {
   model <- glmmTMB(
     count ~ spp + mined + (1 | site),
     ziformula = ~mined,
@@ -104,5 +104,6 @@ if (require("glmmTMB")) {
 
 }
 \seealso{
-There is a dedicated method to use inside rmarkdown files, \code{\link[=print_md.parameters_model]{print_md()}}.
+There is a dedicated method to use inside rmarkdown files,
+  \code{\link[=print_md.parameters_model]{print_md()}}.
 }

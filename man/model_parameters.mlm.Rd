@@ -119,7 +119,7 @@ Multinomial or cumulative link models, i.e. models where the
 }
 \examples{
 library(parameters)
-if (require("brglm2")) {
+if (require("brglm2", quietly = TRUE)) {
   data("stemcell")
   model <- bracl(
     research ~ as.numeric(religion) + gender,
