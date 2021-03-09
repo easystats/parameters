@@ -2,7 +2,27 @@
 
 ## New supported model classes
 
-* `blrm` (*rmsb*), `AKP` (*WRS2*)
+* `blrm` (*rmsb*), `AKP` (*WRS2*), `epi.2by2` (*epiR*), `mjoint` (*joineRML*), `mhurdle` (*mhurdle*)
+
+## Changes to functions
+
+* The `effects`-argument from `model_parameters()` for mixed models was
+  revised and now shows the random effects variances by default (same 
+  functionality as `random_parameters()`, but mimicking the behaviour from
+  `broom.mixed::tidy()`). When the `group_level` argument is set to `TRUE`,
+  the conditional modes (BLUPs) of the random effects are shown.
+
+* `model_parameters()` for mixed models now returns an `Effects` column even
+  when there is just one type of "effects", to mimic the behaviour from 
+  `broom.mixed::tidy()`. In conjunction with `standardize_names()` users
+  can get the same column names as in `tidy()` for `model_parameters()`
+  objects.
+
+* `model_parameters()` for t-tests now uses the group values as column names.
+
+* `print()` for `model_parameters()` gains a `zap_small` argument, to avoid
+  scientific notation for very small numbers. Instead, `zap_small` forces to
+  round to the specified number of digits.
 
 ## Bug fixes
 

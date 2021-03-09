@@ -41,11 +41,9 @@
   out$df_error <- NA
   out$p <- NA
 
-  # out <- out[c("Parameter", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects")]
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
 
   if (effects == "random") {
-    # out[c(stat_column, "df_error", "p", "Effects")] <- NULL
     out[c(stat_column, "df_error", "p")] <- NULL
   }
   out
@@ -102,12 +100,15 @@
   out$df_error <- NA
   out$p <- NA
 
-  # out <- out[c("Parameter", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Component", "Effects")]
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Component", "Effects", "Group")]
 
   if (effects == "random") {
-    # out[c(stat_column, "df_error", "p", "Effects")] <- NULL
     out[c(stat_column, "df_error", "p")] <- NULL
   }
   out
+}
+
+
+.extract_random_parameters.MixMod <- function(model, ...) {
+  NULL
 }

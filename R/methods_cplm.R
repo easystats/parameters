@@ -228,36 +228,36 @@ model_parameters.cpglmm <- function(model,
                                     iterations = 1000,
                                     standardize = NULL,
                                     effects = "fixed",
+                                    group_level = FALSE,
                                     exponentiate = FALSE,
                                     details = FALSE,
                                     df_method = NULL,
+                                    p_adjust = NULL,
                                     verbose = TRUE,
                                     ...) {
 
   # p-values, CI and se might be based on different df-methods
   df_method <- .check_df_method(df_method)
+  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = "Parameter",
-    standardize = standardize,
-    exponentiate = exponentiate,
-    effects = "fixed",
-    robust = FALSE,
-    df_method = df_method,
-    ...
+  params <- .mixed_model_parameters_generic(
+    model = model, ci = ci, bootstrap = bootstrap, iterations = iterations,
+    merge_by = "Parameter", standardize = standardize,
+    exponentiate = exponentiate, effects = effects, robust = FALSE,
+    p_adjust = p_adjust, group_level = group_level, df_method = df_method, ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
 
   if (isTRUE(details)) {
-    attr(out, "details") <- .randomeffects_summary(model)
+    attr(params, "details") <- .randomeffects_summary(model)
+    if (verbose) {
+      message("Argument 'details' is deprecated. Please use 'group_level'.")
+    }
   }
 
-  out
+  params
 }
 
 

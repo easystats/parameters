@@ -82,8 +82,11 @@
 # or edge cases...
 
 #' @keywords internal
-.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, ...) {
+.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, zap_small = FALSE, ...) {
   final_table <- list()
+
+  ignore_group <- isTRUE(attributes(x)$ignore_group)
+  ran_pars <- isTRUE(attributes(x)$ran_pars)
 
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -131,6 +134,18 @@
 
   # sanity check - only preserve tables with any data in data frames
   tables <- tables[sapply(tables, nrow) > 0]
+
+
+  # fix table names for random effects, when we only have random
+  # effects. in such cases, the wrong header (fixed effects) is chosen
+  # to prevent this, we "fake" the name of the splitted components by
+  # prefixing them with "random."
+
+  if (!is.null(x$Effects) && all(x$Effects == "random") && !all(grepl("^random\\.", names(tables)))) {
+    wrong_names <- !grepl("^random\\.", names(tables))
+    names(tables)[wrong_names] <- paste0("random.", names(tables)[wrong_names])
+  }
+
 
   for (type in names(tables)) {
 
@@ -187,8 +202,17 @@
       colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
 
-    formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, ...)
-    component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model)
+    # rename columns for random part
+    if (grepl("random", type) && any(colnames(tables[[type]]) %in% .all_coefficient_types())) {
+      colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types()] <- "Coefficient"
+    }
+
+    if (grepl("random", type) && isTRUE(ran_pars)) {
+      tables[[type]]$CI <- NULL
+    }
+
+    formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
+    component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars)
 
     # exceptions for random effects
     if (.n_unique(formatted_table$Group) == 1) {
@@ -222,6 +246,10 @@
     } else {
       attr(formatted_table, "table_caption") <- table_caption
     }
+
+    # remove unique columns
+    if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+    if (.n_unique(formatted_table$Group) == 1) formatted_table$Group <- NULL
 
     final_table <- c(final_table, list(formatted_table))
   }
@@ -262,7 +290,7 @@
 
 
 # helper to format the header / subheader of different model components
-.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model) {
+.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars) {
   component_name <- switch(type,
     "mu" = ,
     "fixed" = ,
@@ -273,11 +301,17 @@
     "random" = "Random Effects",
     "conditional.fixed" = ,
     "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
-    "conditional.random" = ifelse(is_zero_inflated, "Random Effects (Count Model)", "Random Effects"),
+    "conditional.random" = ifelse(ran_pars,
+                                  "Random Effects Variances",
+                                  ifelse(is_zero_inflated,
+                                         "Random Effects (Count Model)", "Random Effects")),
     "zero_inflated" = "Zero-Inflated",
     "zero_inflated.fixed" = ,
     "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
     "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
+    "survival" = ,
+    "survival.fixed" = "Survival",
+    "dispersion.fixed." = ,
     "dispersion" = "Dispersion",
     "marginal" = "Marginal Effects",
     "emmeans" = "Estimated Marginal Means",
@@ -287,14 +321,17 @@
     "smooth_sd" = "Smooth Terms (SD)",
     "smooth_terms" = "Smooth Terms",
     "sigma.fixed" = ,
+    "sigma.fixed." = ,
     "sigma" = "Sigma",
     "Correlation" = "Correlation",
     "SD/Cor" = "SD / Correlation",
     "Loading" = "Loading",
     "scale" = ,
-    "scale.fixed" = "Scale Parameters",
+    "scale.fixed" = ,
+    "scale.fixed." = "Scale Parameters",
     "extra" = ,
-    "extra.fixed" = "Extra Parameters",
+    "extra.fixed" = ,
+    "extra.fixed." = "Extra Parameters",
     "nu" = "Nu",
     "tau" = "Tau",
     "meta" = "Meta-Parameters",
@@ -304,20 +341,30 @@
     "interactions" = "(Cross-Level) Interactions",
     "precision" = ,
     "precision." = "Precision",
+    "infrequent_purchase" = "Infrequent Purchase",
+    "auxiliary" = "Auxiliary",
     type
   )
 
+  if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
+    component_name <- trimws(gsub("^conditional\\.(r|R)andom_variances(\\.)*", "", component_name))
+    if (nchar(component_name) == 0) {
+      component_name <- "Random Effects Variances"
+    } else {
+      component_name <- paste0("Random Effects Variances: ", component_name)
+    }
+  }
   if (grepl("^conditional\\.(r|R)andom", component_name)) {
     component_name <- trimws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
-    if (nchar(component_name) > 0) {
-      component_name <- "Random Effects (Count Model)"
+    if (nchar(component_name) == 0) {
+      component_name <- ifelse(ran_pars, "Random Effects Variances", "Random Effects (Count Model)")
     } else {
       component_name <- paste0("Random Effects (Count Model): ", component_name)
     }
   }
   if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
     component_name <- trimws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
-    if (nchar(component_name) > 0) {
+    if (nchar(component_name) == 0) {
       component_name <- "Random Effects (Zero-Inflated Model)"
     } else {
       component_name <- paste0("Random Effects (Zero-Inflated Model): ", component_name)

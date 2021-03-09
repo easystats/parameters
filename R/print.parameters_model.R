@@ -46,7 +46,6 @@
 #'   print(mp, select = "minimal")
 #' }
 #' }
-#'
 #' @importFrom insight export_table
 #' @export
 print.parameters_model <- function(x,
@@ -58,6 +57,7 @@ print.parameters_model <- function(x,
                                    p_digits = 3,
                                    show_sigma = FALSE,
                                    show_formula = FALSE,
+                                   zap_small = FALSE,
                                    ...) {
   # save original input
   orig_x <- x
@@ -96,7 +96,9 @@ print.parameters_model <- function(x,
     p_digits = p_digits,
     ci_width = "auto",
     ci_brackets = TRUE,
-    format = "text"
+    zap_small = zap_small,
+    format = "text",
+    ...
   )
 
   footer <- .format_footer(x, digits = digits, verbose = verbose, show_sigma = show_sigma, show_formula = show_formula)

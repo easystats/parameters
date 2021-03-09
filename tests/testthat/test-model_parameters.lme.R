@@ -10,7 +10,7 @@ if (require("testthat") && require("insight") && require("parameters") && requir
     expect_equal(params$SE, c(6.8245, 1.5458), tolerance = 1e-3)
     expect_equal(
       colnames(params),
-      c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "t", "df_error", "p")
+      c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "t", "df_error", "p", "Effects")
     )
   })
 }

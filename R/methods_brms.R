@@ -119,26 +119,24 @@ model_parameters.brmsfit <- function(model,
       ...
     )
 
-  params_diagnostics <-
-    bayestestR::diagnostic_posterior(
-      model,
-      effects = "all",
-      diagnostic = diagnostic,
-      ...
-    )
+  params_diagnostics <- bayestestR::diagnostic_posterior(
+    model,
+    effects = "all",
+    diagnostic = diagnostic,
+    ...
+  )
 
-  params_tau <-
-    bayestestR::describe_posterior(
-      tau,
-      centrality = centrality,
-      dispersion = dispersion,
-      ci = ci,
-      ci_method = ci_method,
-      test = test,
-      rope_range = rope_range,
-      rope_ci = rope_ci,
-      ...
-    )
+  params_tau <- bayestestR::describe_posterior(
+    tau,
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    ...
+  )
 
   # add weights
   params$Weight <- 1 / c(insight::get_response(model)[[2]], NA)

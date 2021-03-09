@@ -10,21 +10,23 @@ if (.runThisTest &&
 
   test_that("model_parameters.mixed", {
     params <- model_parameters(m1)
-    expect_equal(c(nrow(params), ncol(params)), c(2, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 10))
     expect_equal(params$CI_high, c(1.6373105660317, 0.554067677205595), tolerance = 1e-3)
 
     params <- model_parameters(m1, ci = c(0.8, 0.9))
-    expect_equal(c(nrow(params), ncol(params)), c(2, 10))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 12))
     expect_equal(params$CI_high_0.8, c(1.29595665381331, 0.502185700948862), tolerance = 1e-3)
     expect_equal(params$CI_high_0.9, c(1.47875781798108, 0.529969433080186), tolerance = 1e-3)
 
     params <- model_parameters(m2)
-    expect_equal(c(nrow(params), ncol(params)), c(2, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 10))
 
     model <- lme4::glmer(vs ~ drat + cyl + (1 | gear), data = mtcars, family = "binomial")
     params <- model_parameters(model)
     cs <- coef(summary(model))
-    expect_equal(c(nrow(params), ncol(params)), c(3, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(3, 10))
+    expect_equal(colnames(params), c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
+                                     "z", "df_error", "p", "Effects"))
     expect_equal(params$Parameter, rownames(cs))
 
     # TODO: Not sure how to deal with bootstrapped mixed models... As it throws an unreasonable amount of singular fits...
@@ -32,23 +34,44 @@ if (.runThisTest &&
 
 
   test_that("model_parameters.mixed-random", {
-    params <- model_parameters(m1, effects = "random")
+    params <- model_parameters(m1, effects = "random", group_level = TRUE)
     expect_equal(c(nrow(params), ncol(params)), c(3, 9))
     expect_equal(as.vector(params$Parameter), c("(Intercept)", "(Intercept)", "(Intercept)"))
     expect_equal(as.vector(params$Level), c("3", "4", "5"))
     expect_equal(params$Coefficient, c(0.1692, 0.0566, -0.2259), tolerance = 1e-2)
   })
 
+  test_that("model_parameters.mixed-ran_pars", {
+    params <- model_parameters(m1, effects = "random")
+    expect_equal(c(nrow(params), ncol(params)), c(2, 8))
+    expect_equal(
+      as.vector(params$Parameter),
+      c("SD (Intercept)", "SD (Observations)")
+    )
+    expect_equal(params$Coefficient, c(0.27049, 0.77061), tolerance = 1e-2)
+  })
+
   test_that("model_parameters.mixed-all", {
     params <- model_parameters(m1, effects = "all")
+    expect_equal(c(nrow(params), ncol(params)), c(4, 11))
+    expect_equal(
+      as.vector(params$Parameter),
+      c("(Intercept)", "cyl", "SD (Intercept)", "SD (Observations)")
+    )
+    expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.27049, 0.77617), tolerance = 1e-2)
+  })
+
+  test_that("model_parameters.mixed-all_pars", {
+    params <- model_parameters(m1, effects = "all", group_level = TRUE)
     expect_equal(c(nrow(params), ncol(params)), c(5, 12))
     expect_equal(
       as.vector(params$Parameter),
       c("(Intercept)", "cyl", "(Intercept)", "(Intercept)", "(Intercept)")
     )
     expect_equal(as.vector(params$Level), c(NA, NA, "3", "4", "5"))
-    expect_equal(params$Coefficient, c(0.6511, 0.4042, 0.1692, 0.0566, -0.2259), tolerance = 1e-2)
+    expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.16923, 0.05663, -0.22586), tolerance = 1e-2)
   })
+
 
   data("qol_cancer")
   qol_cancer <- cbind(

@@ -14,6 +14,7 @@ model_parameters.glmmTMB <- function(model,
                                      iterations = 1000,
                                      effects = "fixed",
                                      component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                                     group_level = FALSE,
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      df_method = NULL,
@@ -39,9 +40,9 @@ model_parameters.glmmTMB <- function(model,
     component <- "conditional"
   }
 
-  params <- params_random <- NULL
+  params <- params_random <- params_variance <- NULL
 
-  if (effects != "random") {
+  if (effects %in% c("fixed", "all")) {
     # Processing
     if (bootstrap) {
       params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
@@ -73,44 +74,59 @@ model_parameters.glmmTMB <- function(model,
     if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
       params <- .exponentiate_parameters(params, model, exponentiate)
     }
+    params$Effects <- "fixed"
   }
 
 
-  if (effects != "fixed") {
+  if (effects %in% c("random", "all") && isTRUE(group_level)) {
     params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
+  }
+
+  if (effects %in% c("random", "all") && isFALSE(group_level)) {
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
   }
 
 
   # merge random and fixed effects, if necessary
-  if (is.null(params)) {
-    params <- params_random
-  } else if (!is.null(params_random)) {
-    params$Effects <- "fixed"
+  if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
     params$Level <- NA
     params$Group <- ""
     # add component column
     if (!"Component" %in% colnames(params)) {
       params$Component <- "conditional"
     }
+
     # reorder
-    params <- params[match(colnames(params_random), colnames(params))]
-    params <- rbind(params, params_random)
+    if (!is.null(params_random)) {
+      params <- params[match(colnames(params_random), colnames(params))]
+    } else {
+      params <- params[match(colnames(params_variance), colnames(params))]
+    }
   }
 
+  params <- rbind(params, params_random, params_variance)
+  # remove empty column
+  if (!is.null(params$Level) && all(is.na(params$Level))) {
+    params$Level <- NULL
+  }
 
   params <- .add_model_parameters_attributes(
     params,
     model,
-    ci,
+    ci = ifelse(effects == "random" && isFALSE(group_level), NA, ci),
     exponentiate,
     df_method = df_method,
     p_adjust = p_adjust,
     verbose = verbose,
+    group_level = group_level,
     ...
   )
 
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
+    if (verbose) {
+      message("Argument 'details' is deprecated. Please use 'group_level'.")
+    }
   }
 
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)

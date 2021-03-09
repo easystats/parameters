@@ -3,12 +3,26 @@
 #' @inheritParams print.parameters_model
 #' @rdname display.parameters_model
 #' @export
-format.parameters_model <- function(x, pretty_names = TRUE, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
-  # save attributes
-  res <- attributes(x)$details
+format.parameters_model <- function(x,
+                                    pretty_names = TRUE,
+                                    split_components = TRUE,
+                                    select = NULL,
+                                    digits = 2,
+                                    ci_digits = 2,
+                                    p_digits = 3,
+                                    ci_width = NULL,
+                                    ci_brackets = NULL,
+                                    zap_small = FALSE,
+                                    format = NULL,
+                                    ...) {
+    # save attributes
   coef_name <- attributes(x)$coefficient_name
   s_value <- attributes(x)$s_value
   m_class <- attributes(x)$model_class
+  htest_type <- attributes(x)$htest_type
+  mixed_model <- attributes(x)$mixed_model
+  random_variances <- isTRUE(attributes(x)$ran_pars)
+  mean_group_values <- attributes(x)$mean_group_values
 
   if (identical(format, "html")) {
     coef_name <- NULL
@@ -21,11 +35,32 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
     x$Method <- NULL
   }
 
+  # rename columns for t-tests
+  if (!is.null(htest_type) && htest_type == "ttest" && !is.null(mean_group_values)) {
+    if (all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))) {
+      colnames(x)[which(colnames(x) == "Mean_Group1")] <- paste0(x$Group, " = ", mean_group_values[1])
+      colnames(x)[which(colnames(x) == "Mean_Group2")] <- paste0(x$Group, " = ", mean_group_values[2])
+    }
+  }
+
   # Special print for mcp from WRS2
   if (!is.null(m_class) && any(m_class %in% c("mcp1", "mcp2"))) {
     x$Group1 <- paste(x$Group1, x$Group2, sep = " vs. ")
     x$Group2 <- NULL
     colnames(x)[1] <- "Group"
+  }
+
+  # check if we have mixed models with random variance parameters
+  # in such cases, we don't need the group-column, but we rather
+  # merge it with the parameter column
+  if (isTRUE(random_variances)) {
+    if (!is.null(x$Group) && !is.null(x$Effects)) {
+      ran_pars <- which(x$Effects == "random")
+      stddevs <- grepl("^SD \\(", x$Parameter[ran_pars])
+      x$Parameter[ran_pars[stddevs]] <- paste0(gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]), ": ", x$Group[ran_pars[stddevs]], ")")
+      x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
+      x$Group <- NULL
+    }
   }
 
   # prepare output, to have in shape for printing
@@ -36,20 +71,49 @@ format.parameters_model <- function(x, pretty_names = TRUE, split_components = T
 
   # print everything now...
   if (split_components && !is.null(split_by) && length(split_by)) {
-    formatted_table <- .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
+    formatted_table <- .print_model_parms_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = format, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
   } else {
-    formatted_table <- insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, ...)
+    formatted_table <- .format_columns_single_component(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, format = format, coef_name = coef_name, zap_small = zap_small, ...)
   }
 
   # remove unique columns
   if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
   if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+  if (.n_unique(formatted_table$Group) == 1 && isTRUE(mixed_model)) formatted_table$Group <- NULL
 
   # no column with CI-level in output
-  formatted_table$CI <- NULL
+  if (!is.null(formatted_table$CI) && .n_unique(formatted_table$CI) == 1) {
+    formatted_table$CI <- NULL
+  }
 
   formatted_table
 }
+
+
+.format_columns_single_component <- function(x, pretty_names, digits = 2, ci_digits = 2, p_digits = 3, ci_width = "auto", ci_brackets = TRUE, format = NULL, coef_name = NULL, zap_small = FALSE, ...) {
+  # default brackets are parenthesis for HTML / MD
+  if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
+    brackets <- c("(", ")")
+  } else if (is.null(ci_brackets) || isTRUE(ci_brackets)) {
+    brackets <- c("[", "]")
+  } else {
+    brackets <- ci_brackets
+  }
+
+  # fix coefficient column name for random effects
+  if (all(x$EFfects == "random") && any(colnames(x) %in% .all_coefficient_types())) {
+    colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
+  }
+
+  # random pars with level? combine into parameter column
+  if (all(c("Parameter", "Level") %in% colnames(x))) {
+    x$Parameter <- paste0(x$Parameter, " ", brackets[1], x$Level, brackets[2])
+    x$Level <- NULL
+  }
+
+  insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, zap_small = zap_small, ...)
+}
+
 
 #' @export
 format.parameters_simulate <- format.parameters_model
@@ -60,7 +124,7 @@ format.parameters_brms_meta <- format.parameters_model
 #' @importFrom insight format_p format_table
 #' @inheritParams print.parameters_model
 #' @export
-format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
+format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, zap_small = FALSE, format = NULL, ...) {
   x$Method <- NULL
 
   out <- data.frame(
@@ -85,7 +149,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     colnames(cols) <- gsub(pattern, "", colnames(cols))
     # save p-stars in extra column
     cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
-    cols <- insight::format_table(cols, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits)
+    cols <- insight::format_table(cols, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, zap_small = zap_small)
     out <- cbind(out, .format_output_style(cols, style, format, i))
   }
 
@@ -219,7 +283,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
 #' @importFrom utils modifyList
 #' @importFrom insight print_parameters format_table
 #' @export
-format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci_width = NULL, ci_brackets = NULL, format = NULL, ...) {
+format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci_width = NULL, ci_brackets = NULL, zap_small = FALSE, format = NULL, ...) {
   cp <- attributes(x)$parameter_info
   att <- attributes(x)
   final_table <- list()
@@ -246,7 +310,7 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
         attr(i, "table_caption") <- attributes(i)$main_title
       }
       attributes(i) <- utils::modifyList(att, attributes(i))
-      param_table <- insight::format_table(i, ci_width = ci_width, ci_brackets = ci_brackets, preserve_attributes = TRUE)
+      param_table <- insight::format_table(i, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, preserve_attributes = TRUE)
       param_table$Group <- NULL
       param_table$Response <- NULL
       param_table$Function <- NULL
@@ -349,6 +413,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
   anova_test <- attributes(x)$anova_test
+  footer_text <- attributes(x)$footer_text
 
   # footer: residual standard deviation
   if (isTRUE(show_sigma)) {
@@ -370,6 +435,11 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     footer <- .add_footer_anova_test(footer, anova_test, type)
   }
 
+  # footer: generic text
+  if (!is.null(footer_text)) {
+    footer <- .add_footer_text(footer, footer_text, type)
+  }
+
   # add color code, if we have a footer
   if (!is.null(footer) && type == "text") {
     footer <- c(footer, "blue")
@@ -380,6 +450,24 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     footer[1] <- substr(footer[1], 0, nchar(x) - 1)
   }
 
+  footer
+}
+
+
+# footer: generic text
+.add_footer_text <- function(footer = NULL, text, type = "text") {
+  if (!is.null(text)) {
+    if (type == "text") {
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, sprintf("%s%s\n", fill, text))
+    } else if (type == "html") {
+      footer <- c(footer, text)
+    }
+  }
   footer
 }
 

@@ -1,6 +1,7 @@
 if (require("testthat") &&
   require("parameters") &&
   require("lmerTest") &&
+  require("pbkrtest") &&
   require("lme4")) {
   data("mtcars")
   mtcars$cyl <- as.factor(mtcars$cyl)

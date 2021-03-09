@@ -14,6 +14,7 @@
   p_digits = 3,
   show_sigma = FALSE,
   show_formula = FALSE,
+  zap_small = FALSE,
   ...
 )
 }
@@ -42,6 +43,8 @@ while \code{select = "short"} prints coefficient, standard errors and p-values.}
 standard deviation.}
 
 \item{show_formula}{Logical, if \code{TRUE}, adds the model formula to the output.}
+
+\item{zap_small}{Logical, if \code{TRUE}, small values are rounded after \code{digits} decimal places. If \code{FALSE}, values with more decimal places than \code{digits} are printed in scientific notation.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -101,7 +104,6 @@ if (require("glmmTMB", quietly = TRUE)) {
   print(mp, select = "minimal")
 }
 }
-
 }
 \seealso{
 There is a dedicated method to use inside rmarkdown files,

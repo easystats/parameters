@@ -7,6 +7,8 @@
 #' @export
 model_parameters.wbm <- function(model,
                                  ci = .95,
+                                 effects = "fixed",
+                                 group_level = FALSE,
                                  bootstrap = FALSE,
                                  iterations = 1000,
                                  exponentiate = FALSE,
@@ -14,26 +16,27 @@ model_parameters.wbm <- function(model,
                                  p_adjust = NULL,
                                  verbose = TRUE,
                                  ...) {
-  out <- .model_parameters_generic(
-    model = model,
-    ci = ci,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = c("Parameter", "Component"),
-    standardize = NULL,
-    exponentiate = exponentiate,
-    robust = FALSE,
-    p_adjust = p_adjust,
-    ...
+
+  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
+
+  params <- .mixed_model_parameters_generic(
+    model = model, ci = ci, bootstrap = bootstrap, iterations = iterations,
+    merge_by = c("Parameter", "Component"), standardize = NULL,
+    exponentiate = exponentiate, effects = effects, robust = FALSE,
+    p_adjust = p_adjust, group_level = group_level, df_method = NULL, ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
 
   if (isTRUE(details)) {
-    attr(out, "details") <- .randomeffects_summary(model)
+    attr(params, "details") <- .randomeffects_summary(model)
+    if (verbose) {
+      message("Argument 'details' is deprecated. Please use 'group_level'.")
+    }
   }
 
-  out
+  params
 }
 
 
@@ -93,3 +96,67 @@ p_value.wbm <- function(model, ...) {
 
 #' @export
 p_value.wbgee <- p_value.wbm
+
+
+
+
+
+# utils -------------------
+
+
+.mixed_model_parameters_generic <- function(model, ci, bootstrap, iterations, merge_by, standardize, exponentiate, effects, robust, p_adjust, group_level, df_method, ...) {
+  params <- params_random <- params_variance <- att <- NULL
+
+  if (effects %in% c("fixed", "all")) {
+    params <- .model_parameters_generic(
+      model = model,
+      ci = ci,
+      bootstrap = bootstrap,
+      iterations = iterations,
+      merge_by = merge_by,
+      standardize = standardize,
+      exponentiate = exponentiate,
+      effects = "fixed",
+      robust = FALSE,
+      p_adjust = p_adjust,
+      df_method = df_method,
+      ...
+    )
+    params$Effects <- "fixed"
+    att <- attributes(params)
+  }
+
+  if (effects %in% c("random", "all") && isTRUE(group_level)) {
+    params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
+  }
+
+  if (effects %in% c("random", "all") && isFALSE(group_level)) {
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
+  }
+
+
+  # merge random and fixed effects, if necessary
+  if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
+    params$Level <- NA
+    params$Group <- ""
+
+    # reorder
+    if (!is.null(params_random)) {
+      params <- params[match(colnames(params_random), colnames(params))]
+    } else {
+      params <- params[match(colnames(params_variance), colnames(params))]
+    }
+  }
+
+  params <- rbind(params, params_random, params_variance)
+  if (!is.null(att)) {
+    attributes(params) <- utils::modifyList(att, attributes(params))
+  }
+
+  # remove empty column
+  if (!is.null(params$Level) && all(is.na(params$Level))) {
+    params$Level <- NULL
+  }
+
+  params
+}

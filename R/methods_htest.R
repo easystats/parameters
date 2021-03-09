@@ -316,6 +316,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       "Method" = model$method,
       stringsAsFactors = FALSE
     )
+    attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
   } else if (isTRUE(paired_test)) {
     names <- unlist(strsplit(model$data.name, " (and|by) "))
     out <- data.frame(
@@ -361,6 +362,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
         "Method" = model$method,
         stringsAsFactors = FALSE
       )
+      attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
     }
   } else {
     out <- data.frame(
@@ -377,6 +379,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       stringsAsFactors = FALSE
     )
   }
+  attr(out, "htest_type") <- "ttest"
   out
 }
 
