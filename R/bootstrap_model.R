@@ -82,7 +82,13 @@ bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, .
     return(params)
   }
 
-  results <- boot::boot(data = data, statistic = boot_function, R = iterations, model = model)
+  results <- boot::boot(
+    data = data,
+    statistic = boot_function,
+    R = iterations,
+    model = model,
+    ...
+  )
 
   out <- as.data.frame(results$t)
   out <- out[stats::complete.cases(out), ]
@@ -115,9 +121,20 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
   }
 
   if (verbose) {
-    results <- suppressMessages(lme4::bootMer(model, boot_function, nsim = iterations, verbose = FALSE))
+    results <- suppressMessages(lme4::bootMer(
+      model,
+      boot_function,
+      nsim = iterations,
+      verbose = FALSE,
+      ...
+    ))
   } else {
-    results <- lme4::bootMer(model, boot_function, nsim = iterations)
+    results <- lme4::bootMer(
+      model,
+      boot_function,
+      nsim = iterations,
+      ...
+    )
   }
 
   out <- as.data.frame(results$t)

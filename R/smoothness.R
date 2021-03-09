@@ -40,7 +40,13 @@ smoothness.numeric <- function(x, method = "cor", lag = 1, iterations = NULL, ..
     if (!requireNamespace("boot", quietly = TRUE)) {
       warning("Package 'boot' needed for bootstrapping SEs.", call. = FALSE)
     } else {
-      results <- boot::boot(data = x, statistic = .boot_smoothness, R = iterations, method = method, lag = lag)
+      results <- boot::boot(
+        data = x,
+        statistic = .boot_smoothness,
+        R = iterations,
+        method = method,
+        lag = lag
+      )
       out_se <- stats::sd(results$t, na.rm = TRUE)
       smooth <- data.frame(Smoothness = smooth, SE = out_se)
     }
