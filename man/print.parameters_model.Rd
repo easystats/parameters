@@ -21,7 +21,8 @@
 \arguments{
 \item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
 
-\item{pretty_names}{Return "pretty" (i.e. more human readable) parameter names.}
+\item{pretty_names}{Return "pretty" (i.e. more human readable) parameter
+names.}
 
 \item{split_components}{Logical, if \code{TRUE} (default), For models with
 multiple components (zero-inflation, smooth terms, ...), each component is
@@ -33,7 +34,8 @@ be printed. If \code{NULL} (default), all columns are printed. The shortcut
 \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
 while \code{select = "short"} prints coefficient, standard errors and p-values.}
 
-\item{digits}{Number of decimal places for numeric values (except confidence intervals and p-values).}
+\item{digits}{Number of decimal places for numeric values (except confidence
+intervals and p-values).}
 
 \item{ci_digits}{Number of decimal places for confidence intervals.}
 
