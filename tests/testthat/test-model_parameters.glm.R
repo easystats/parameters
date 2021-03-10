@@ -10,7 +10,7 @@ if (require("testthat") && require("parameters") && require("boot")) {
     params <- model_parameters(model, ci = c(0.8, 0.9))
     expect_equal(c(nrow(params), ncol(params)), c(2, 10))
 
-    params <- model_parameters(model, dispersion = TRUE, bootstrap = TRUE, n = 500)
+    params <- model_parameters(model, dispersion = TRUE, bootstrap = TRUE, iterations = 500)
     expect_equal(c(nrow(params), ncol(params)), c(2, 7))
 
     model <- lm(mpg ~ wt + cyl, data = mtcars)
@@ -41,7 +41,7 @@ if (require("testthat") && require("parameters") && require("boot")) {
     params <- model_parameters(model)
     expect_equal(c(nrow(params), ncol(params)), c(3, 9))
 
-    params <- suppressWarnings(model_parameters(model, bootstrap = TRUE, n = 500))
+    params <- suppressWarnings(model_parameters(model, bootstrap = TRUE, iterations = 500))
     expect_equal(c(nrow(params), ncol(params)), c(3, 6))
 
     params <- model_parameters(model, component = "conditional", effects = "fixed")
