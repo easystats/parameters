@@ -15,7 +15,7 @@ format.parameters_model <- function(x,
                                     zap_small = FALSE,
                                     format = NULL,
                                     ...) {
-    # save attributes
+  # save attributes
   coef_name <- attributes(x)$coefficient_name
   s_value <- attributes(x)$s_value
   m_class <- attributes(x)$model_class

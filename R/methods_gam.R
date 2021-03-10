@@ -19,7 +19,12 @@ model_parameters.gam <- function(model,
 
   # Processing
   if (bootstrap) {
-    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+    parameters <- bootstrap_parameters(
+      model,
+      iterations = iterations,
+      ci = ci,
+      ...
+    )
   } else {
     parameters <-
       .extract_parameters_generic(

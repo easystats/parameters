@@ -13,10 +13,15 @@ model_parameters.varest <- function(model,
                                     ...) {
   params <- lapply(names(model$varresult), function(i) {
     out <- model_parameters(
-      model = model$varresult[[i]], ci = ci,
-      bootstrap = bootstrap, iterations = iterations,
-      standardize = standardize, exponentiate = exponentiate,
-      robust = robust, p_adjust = p_adjust, verbose = verbose,
+      model = model$varresult[[i]],
+      ci = ci,
+      bootstrap = bootstrap,
+      iterations = iterations,
+      standardize = standardize,
+      exponentiate = exponentiate,
+      robust = robust,
+      p_adjust = p_adjust,
+      verbose = verbose,
       ...
     )
     out$Group <- paste0("Equation ", i)

@@ -111,7 +111,9 @@ standard_error.nlrq <- standard_error.rq
 
 
 #' @export
-standard_error.rqss <- function(model, component = c("all", "conditional", "smooth_terms"), ...) {
+standard_error.rqss <- function(model,
+                                component = c("all", "conditional", "smooth_terms"),
+                                ...) {
   component <- match.arg(component)
 
   cs <- summary(model)$coef
@@ -233,7 +235,9 @@ p_value.nlrq <- p_value.rq
 
 
 #' @export
-p_value.rqss <- function(model, component = c("all", "conditional", "smooth_terms"), ...) {
+p_value.rqss <- function(model,
+                         component = c("all", "conditional", "smooth_terms"),
+                         ...) {
   component <- match.arg(component)
 
   cs <- summary(model)$coef

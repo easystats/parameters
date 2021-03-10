@@ -9,9 +9,20 @@ model_parameters.lqmm <- function(model,
 
   # Processing
   if (bootstrap) {
-    parameters <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+    parameters <- bootstrap_parameters(
+      model,
+      iterations = iterations,
+      ci = ci,
+      ...
+    )
   } else {
-    parameters <- .extract_parameters_lqmm(model, ci = ci, p_adjust = p_adjust, verbose = verbose, ...)
+    parameters <- .extract_parameters_lqmm(
+      model,
+      ci = ci,
+      p_adjust = p_adjust,
+      verbose = verbose,
+      ...
+    )
   }
 
   parameters <- .add_model_parameters_attributes(

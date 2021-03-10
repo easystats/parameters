@@ -25,7 +25,7 @@ if (.runThisTest) {
 
     test_that("model_parameters, standardize-posthoc", {
       params <- model_parameters(model, standardize = "posthoc")
-      expect_equal(c(nrow(params), ncol(params)), c(7,10))
+      expect_equal(c(nrow(params), ncol(params)), c(7, 10))
       expect_equal(params$Std_Coefficient, c(0, 0.49679, -0.49355, 0.34791, 1.74252, -0.25421, -0.18834), tolerance = 1e-3)
       expect_equal(params$SE, c(0, 0.66228, 0.70202, 0.05968, 0.13914, 0.09762, 0.0945), tolerance = 1e-3)
       expect_equal(params$CI_high, c(0, 1.79483, 0.88238, 0.46488, 2.01523, -0.06287, -0.00312), tolerance = 1e-3)

@@ -38,7 +38,10 @@
 #' }
 #' }
 #' @export
-bootstrap_model <- function(model, iterations = 1000, verbose = FALSE, ...) {
+bootstrap_model <- function(model,
+                            iterations = 1000,
+                            verbose = FALSE,
+                            ...) {
   UseMethod("bootstrap_model")
 }
 
@@ -50,7 +53,10 @@ bootstrap_model <- function(model, iterations = 1000, verbose = FALSE, ...) {
 #' @importFrom stats coef update setNames complete.cases
 #' @importFrom insight get_data find_parameters get_parameters
 #' @export
-bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, ...) {
+bootstrap_model.default <- function(model,
+                                    iterations = 1000,
+                                    verbose = FALSE,
+                                    ...) {
   if (!requireNamespace("boot", quietly = TRUE)) {
     stop("Package 'boot' needed for this function to work. Please install it.")
   }
@@ -87,7 +93,7 @@ bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, .
     statistic = boot_function,
     R = iterations,
     model = model,
-    ...
+    ncpus = ncpus
   )
 
   out <- as.data.frame(results$t)
@@ -126,14 +132,14 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
       boot_function,
       nsim = iterations,
       verbose = FALSE,
-      ...
+      ncpus = ncpus
     ))
   } else {
     results <- lme4::bootMer(
       model,
       boot_function,
       nsim = iterations,
-      ...
+      ncpus = ncpus
     )
   }
 

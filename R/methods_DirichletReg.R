@@ -40,7 +40,10 @@ model_parameters.DirichletRegModel <- function(model,
 
 #' @rdname ci.merMod
 #' @export
-ci.DirichletRegModel <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
+ci.DirichletRegModel <- function(x,
+                                 ci = .95,
+                                 component = c("all", "conditional", "precision"),
+                                 ...) {
   component <- match.arg(component)
   params <- insight::get_parameters(x, component = component)
   out <- ci_wald(model = x, ci = ci, dof = Inf, ...)
@@ -61,7 +64,9 @@ ci.DirichletRegModel <- function(x, ci = .95, component = c("all", "conditional"
 
 #' @rdname standard_error
 #' @export
-standard_error.DirichletRegModel <- function(model, component = c("all", "conditional", "precision"), ...) {
+standard_error.DirichletRegModel <- function(model,
+                                             component = c("all", "conditional", "precision"),
+                                             ...) {
   component <- match.arg(component)
   params <- insight::get_parameters(model)
 
@@ -102,7 +107,9 @@ standard_error.DirichletRegModel <- function(model, component = c("all", "condit
 #' @importFrom stats pnorm
 #' @importFrom insight get_parameters
 #' @export
-p_value.DirichletRegModel <- function(model, component = c("all", "conditional", "precision"), ...) {
+p_value.DirichletRegModel <- function(model,
+                                      component = c("all", "conditional", "precision"),
+                                      ...) {
   component <- match.arg(component)
   params <- insight::get_parameters(model)
 

@@ -7,7 +7,7 @@ if (require("testthat") && require("VGAM") && require("parameters")) {
 
   m1 <- suppressWarnings(vgam(
     cbind(normal, mild, severe) ~ s(let) + exposure.time,
-    cumulative(parallel = TRUE),
+    # cumulative(parallel = TRUE),
     data = pneumo,
     trace = FALSE
   ))

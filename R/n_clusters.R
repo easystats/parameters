@@ -16,7 +16,7 @@
 #' library(parameters)
 #' \donttest{
 #' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
-#' require("cluster", quietly = TRUE)) {
+#'   require("cluster", quietly = TRUE)) {
 #'   n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
 #' }
 #' }

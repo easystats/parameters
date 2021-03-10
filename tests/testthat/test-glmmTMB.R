@@ -208,7 +208,7 @@ if (.runThisTest) {
       expect_equal(c(nrow(params), ncol(params)), c(4, 9))
       expect_equal(
         colnames(params),
-        c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high","Effects", "Group", "Component")
+        c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
       )
       expect_equal(
         params$Parameter,
@@ -230,20 +230,26 @@ if (.runThisTest) {
       expect_equal(c(nrow(params), ncol(params)), c(10, 12))
       expect_equal(
         colnames(params),
-        c("Parameter", "Coefficient", "SE", "CI", "CI_low",
-          "CI_high", "z", "df_error", "p", "Effects", "Group",  "Component")
+        c(
+          "Parameter", "Coefficient", "SE", "CI", "CI_low",
+          "CI_high", "z", "df_error", "p", "Effects", "Group", "Component"
+        )
       )
       expect_equal(
         params$Parameter,
-        c("(Intercept)", "child", "camper1", "(Intercept)", "child",
+        c(
+          "(Intercept)", "child", "camper1", "(Intercept)", "child",
           "camper1", "SD (Intercept)", "SD (Observations)", "SD (Intercept)",
-          "SD (Observations)")
+          "SD (Observations)"
+        )
       )
       expect_equal(
         params$Component,
-        c("conditional", "conditional", "conditional", "zero_inflated",
+        c(
+          "conditional", "conditional", "conditional", "zero_inflated",
           "zero_inflated", "zero_inflated", "conditional", "conditional",
-          "zero_inflated", "zero_inflated")
+          "zero_inflated", "zero_inflated"
+        )
       )
       expect_equal(
         params$Coefficient,
@@ -293,7 +299,7 @@ if (.runThisTest) {
 
     m4 <- suppressWarnings(glmmTMB(
       count ~ child + camper + (1 + xb | persons),
-      ziformula = ~ child + camper + (1 + zg| persons),
+      ziformula = ~ child + camper + (1 + zg | persons),
       data = fish,
       family = truncated_poisson()
     ))
@@ -303,17 +309,21 @@ if (.runThisTest) {
       expect_equal(c(nrow(params), ncol(params)), c(8, 9))
       expect_equal(
         colnames(params),
-        c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high","Effects", "Group", "Component")
+        c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
       )
       expect_equal(
         params$Parameter,
-        c("SD (Intercept)", "SD (xb)", "Cor (Intercept~persons)", "SD (Observations)",
-          "SD (Intercept)", "SD (zg)", "Cor (Intercept~persons)", "SD (Observations)")
+        c(
+          "SD (Intercept)", "SD (xb)", "Cor (Intercept~persons)", "SD (Observations)",
+          "SD (Intercept)", "SD (zg)", "Cor (Intercept~persons)", "SD (Observations)"
+        )
       )
       expect_equal(
         params$Component,
-        c("conditional", "conditional", "conditional", "conditional",
-          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated")
+        c(
+          "conditional", "conditional", "conditional", "conditional",
+          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated"
+        )
       )
       expect_equal(
         params$Coefficient,
@@ -327,27 +337,35 @@ if (.runThisTest) {
       expect_equal(c(nrow(params), ncol(params)), c(14, 12))
       expect_equal(
         colnames(params),
-        c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
-          "z", "df_error", "p", "Effects", "Group", "Component")
+        c(
+          "Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
+          "z", "df_error", "p", "Effects", "Group", "Component"
+        )
       )
       expect_equal(
         params$Parameter,
-        c("(Intercept)", "child", "camper1", "(Intercept)", "child",
+        c(
+          "(Intercept)", "child", "camper1", "(Intercept)", "child",
           "camper1", "SD (Intercept)", "SD (xb)", "Cor (Intercept~persons)",
           "SD (Observations)", "SD (Intercept)", "SD (zg)", "Cor (Intercept~persons)",
-          "SD (Observations)")
+          "SD (Observations)"
+        )
       )
       expect_equal(
         params$Component,
-        c("conditional", "conditional", "conditional", "zero_inflated",
+        c(
+          "conditional", "conditional", "conditional", "zero_inflated",
           "zero_inflated", "zero_inflated", "conditional", "conditional",
           "conditional", "conditional", "zero_inflated", "zero_inflated",
-          "zero_inflated", "zero_inflated")
+          "zero_inflated", "zero_inflated"
+        )
       )
       expect_equal(
         params$Coefficient,
-        c(2.54713, -1.08747, 0.2723, 1.88964, 0.15712, -0.17007, 3.40563,
-          1.21316, -1, 1, 2.73583, 1.56833, 1, 1),
+        c(
+          2.54713, -1.08747, 0.2723, 1.88964, 0.15712, -0.17007, 3.40563,
+          1.21316, -1, 1, 2.73583, 1.56833, 1, 1
+        ),
         tolerance = 1e-2
       )
     })

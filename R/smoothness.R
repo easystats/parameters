@@ -1,8 +1,10 @@
 #' Quantify the smoothness of a vector
 #'
 #' @param x Numeric vector (similar to a time series).
-#' @param method Can be "diff" (the standard deviation of the standardized differences) or "cor" (default, lag-one autocorrelation).
-#' @param lag An integer indicating which lag to use. If less than 1, will be interpreted as expressed in percentage of the length of the vector.
+#' @param method Can be "diff" (the standard deviation of the standardized
+#'   differences) or "cor" (default, lag-one autocorrelation).
+#' @param lag An integer indicating which lag to use. If less than 1, will be
+#'   interpreted as expressed in percentage of the length of the vector.
 #' @inheritParams skewness
 #'
 #' @examples

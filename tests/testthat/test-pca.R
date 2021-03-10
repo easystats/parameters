@@ -48,6 +48,7 @@ if (require("testthat") && require("parameters") && require("psych") && require(
 
 
   # predict ----------------------
+  # N.B tests will fail if `GPArotation` package is not installed
 
   data(bfi)
   d <- na.omit(bfi[, 1:25])

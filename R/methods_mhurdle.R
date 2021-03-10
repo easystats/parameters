@@ -6,7 +6,6 @@ model_parameters.mhurdle <- function(model,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
-
   component <- match.arg(component)
 
   params <- .model_parameters_generic(

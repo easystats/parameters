@@ -25,8 +25,10 @@ if (.runThisTest &&
     params <- model_parameters(model)
     cs <- coef(summary(model))
     expect_equal(c(nrow(params), ncol(params)), c(3, 10))
-    expect_equal(colnames(params), c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
-                                     "z", "df_error", "p", "Effects"))
+    expect_equal(colnames(params), c(
+      "Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
+      "z", "df_error", "p", "Effects"
+    ))
     expect_equal(params$Parameter, rownames(cs))
 
     # TODO: Not sure how to deal with bootstrapped mixed models... As it throws an unreasonable amount of singular fits...
