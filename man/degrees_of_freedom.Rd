@@ -54,12 +54,12 @@ dof(model)
 model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 dof(model)
 \dontrun{
-if (require("lme4")) {
+if (require("lme4", quietly = TRUE)) {
   model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
   dof(model)
 }
 
-if (require("rstanarm")) {
+if (require("rstanarm", quietly = TRUE)) {
   model <- stan_glm(
     Sepal.Length ~ Petal.Length * Species,
     data = iris,

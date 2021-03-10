@@ -26,7 +26,7 @@
 #'
 #' @examples
 #' \donttest{
-#' if (require("lme4")) {
+#' if (require("lme4", quietly = TRUE)) {
 #'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #'   p_value_satterthwaite(model)
 #' }

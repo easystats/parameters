@@ -22,12 +22,13 @@
 #'
 #' @return Invisibly returns the original input object.
 #'
-#' @seealso There is a dedicated method to use inside rmarkdown files, \code{\link[=print_md.parameters_model]{print_md()}}.
+#' @seealso There is a dedicated method to use inside rmarkdown files,
+#'   \code{\link[=print_md.parameters_model]{print_md()}}.
 #'
 #' @examples
 #' \donttest{
 #' library(parameters)
-#' if (require("glmmTMB")) {
+#' if (require("glmmTMB", quietly = TRUE)) {
 #'   model <- glmmTMB(
 #'     count ~ spp + mined + (1 | site),
 #'     ziformula = ~mined,

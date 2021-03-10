@@ -7,7 +7,6 @@ model_parameters.mjoint <- function(model,
                                     p_adjust = NULL,
                                     verbose = TRUE,
                                     ...) {
-
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
   component <- match.arg(component)
 

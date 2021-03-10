@@ -161,7 +161,11 @@ ci.negbinirr <- ci.logitor
 
 #' @rdname ci.merMod
 #' @export
-ci.poissonmfx <- function(x, ci = .95, component = c("all", "conditional", "marginal"), method = NULL, ...) {
+ci.poissonmfx <- function(x,
+                          ci = .95,
+                          component = c("all", "conditional", "marginal"),
+                          method = NULL,
+                          ...) {
   component <- match.arg(component)
   robust <- !is.null(method) && method == "robust"
   ci_wald(model = x, ci = ci, component = component, robust = robust, ...)
@@ -181,7 +185,10 @@ ci.probitmfx <- ci.poissonmfx
 
 
 #' @export
-ci.betaor <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
+ci.betaor <- function(x,
+                      ci = .95,
+                      component = c("all", "conditional", "precision"),
+                      ...) {
   component <- match.arg(component)
   ci_wald(model = x$fit, ci = ci, dof = Inf, component = component)
 }
@@ -189,7 +196,11 @@ ci.betaor <- function(x, ci = .95, component = c("all", "conditional", "precisio
 
 #' @rdname ci.merMod
 #' @export
-ci.betamfx <- function(x, ci = .95, component = c("all", "conditional", "precision", "marginal"), method = NULL, ...) {
+ci.betamfx <- function(x,
+                       ci = .95,
+                       component = c("all", "conditional", "precision", "marginal"),
+                       method = NULL,
+                       ...) {
   component <- match.arg(component)
   robust <- !is.null(method) && method == "robust"
   ci_wald(model = x, ci = ci, component = component, robust = robust, ...)
@@ -221,7 +232,9 @@ standard_error.negbinirr <- standard_error.logitor
 
 #' @rdname standard_error
 #' @export
-standard_error.poissonmfx <- function(model, component = c("all", "conditional", "marginal"), ...) {
+standard_error.poissonmfx <- function(model,
+                                      component = c("all", "conditional", "marginal"),
+                                      ...) {
   parms <- insight::get_parameters(model, component = "all")
   cs <- stats::coef(summary(model$fit))
   se <- c(as.vector(model$mfxest[, 2]), as.vector(cs[, 2]))
@@ -254,7 +267,9 @@ standard_error.negbinmfx <- standard_error.poissonmfx
 
 
 #' @export
-standard_error.betaor <- function(model, component = c("all", "conditional", "precision"), ...) {
+standard_error.betaor <- function(model,
+                                  component = c("all", "conditional", "precision"),
+                                  ...) {
   component <- match.arg(component)
   standard_error.betareg(model$fit, component = component, ...)
 }
@@ -262,7 +277,9 @@ standard_error.betaor <- function(model, component = c("all", "conditional", "pr
 
 #' @rdname standard_error
 #' @export
-standard_error.betamfx <- function(model, component = c("all", "conditional", "precision", "marginal"), ...) {
+standard_error.betamfx <- function(model,
+                                   component = c("all", "conditional", "precision", "marginal"),
+                                   ...) {
   parms <- insight::get_parameters(model, component = "all")
   cs <- do.call(rbind, stats::coef(summary(model$fit)))
   se <- c(as.vector(model$mfxest[, 2]), as.vector(cs[, 2]))
@@ -338,10 +355,12 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
 #' @param component Should all parameters, parameters for the conditional model, precision-component or marginal effects be returned? \code{component} may be one of \code{"conditional"}, \code{"precision"}, \code{"marginal"} or \code{"all"} (default).
 #' @param ... Currently not used.
 #'
-#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
+#' @return A data frame with at least two columns: the parameter names and the
+#'   p-values. Depending on the model, may also include columns for model
+#'   components etc.
 #'
 #' @examples
-#' if (require("mfx")) {
+#' if (require("mfx", quietly = TRUE)) {
 #'   set.seed(12345)
 #'   n <- 1000
 #'   x <- rnorm(n)

@@ -135,9 +135,9 @@ if (require("testthat") &&
     data("Salamanders")
     model <- mixed_model(
       count ~ spp + mined,
-      random = ~DOY | site,
-      zi_fixed = ~spp + mined,
-      zi_random = ~DOP | site,
+      random = ~ DOY | site,
+      zi_fixed = ~ spp + mined,
+      zi_random = ~ DOP | site,
       family = zi.negative.binomial(),
       data = Salamanders,
       control = list(nAGQ = 1)
@@ -148,17 +148,21 @@ if (require("testthat") &&
       expect_equal(c(nrow(params), ncol(params)), c(8, 9))
       expect_equal(
         colnames(params),
-        c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high","Effects", "Group", "Component")
+        c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
       )
       expect_equal(
         params$Parameter,
-        c("SD (Intercept)", "SD (DOY)", "Cor (Intercept~site)", "SD (Observations)",
-          "SD (Intercept)", "SD (DOP)", "Cor (Intercept~site)", "SD (Observations)")
+        c(
+          "SD (Intercept)", "SD (DOY)", "Cor (Intercept~site)", "SD (Observations)",
+          "SD (Intercept)", "SD (DOP)", "Cor (Intercept~site)", "SD (Observations)"
+        )
       )
       expect_equal(
         params$Component,
-        c("conditional", "conditional", "conditional", "conditional",
-          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated")
+        c(
+          "conditional", "conditional", "conditional", "conditional",
+          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated"
+        )
       )
       expect_equal(
         params$Coefficient,

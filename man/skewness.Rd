@@ -26,15 +26,21 @@ kurtosis(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
 
 \item{na.rm}{Remove missing values.}
 
-\item{type}{Type of algorithm for computing skewness. May be one of \code{1} (or \code{"1"}, \code{"I"} or \code{"classic"}), \code{2} (or \code{"2"}, \code{"II"} or \code{"SPSS"} or \code{"SAS"}) or \code{3} (or  \code{"3"}, \code{"III"} or \code{"Minitab"}). See 'Details'.}
+\item{type}{Type of algorithm for computing skewness. May be one of \code{1}
+(or \code{"1"}, \code{"I"} or \code{"classic"}), \code{2} (or \code{"2"},
+\code{"II"} or \code{"SPSS"} or \code{"SAS"}) or \code{3} (or  \code{"3"},
+\code{"III"} or \code{"Minitab"}). See 'Details'.}
 
-\item{iterations}{The number of bootstrap replicates for computing standard errors. If \code{NULL} (default), parametric standard errors are computed. See 'Details'.}
+\item{iterations}{The number of bootstrap replicates for computing standard
+errors. If \code{NULL} (default), parametric standard errors are computed.
+See 'Details'.}
 
 \item{...}{Arguments passed to or from other methods.}
 
 \item{digits}{Number of decimal places.}
 
-\item{test}{Logical, if \code{TRUE}, tests if skewness or kurtosis is significantly different from zero.}
+\item{test}{Logical, if \code{TRUE}, tests if skewness or kurtosis is
+significantly different from zero.}
 
 \item{object}{An object returned by \code{skewness()} or \code{kurtosis()}.}
 }
@@ -51,10 +57,12 @@ a negative skewness values indicates a "left-skewed" distribution, and a
 positive skewness values indicates a "right-skewed" distribution. Examples
 for the relationship of skewness and distributions are:
 \itemize{
-  \item Normal distribution (and other symmetric distribution) has a skewness of 0
+  \item Normal distribution (and other symmetric distribution) has a skewness
+  of 0
   \item Half-normal distribution has a skewness just below 1
   \item Exponential distribution has a skewness of 2
-  \item Lognormal distribution can have a skewness of any positive value, depending on its parameters
+  \item Lognormal distribution can have a skewness of any positive value,
+  depending on its parameters
 }
 (\cite{https://en.wikipedia.org/wiki/Skewness})
 }

@@ -81,7 +81,12 @@ describe_distribution.numeric <- function(x,
     if (!requireNamespace("boot", quietly = TRUE)) {
       warning("Package 'boot' needed for bootstrapping confidence intervals.", call. = FALSE)
     } else {
-      results <- boot::boot(data = x, statistic = .boot_distribution, R = iterations, centrality = centrality)
+      results <- boot::boot(
+        data = x,
+        statistic = .boot_distribution,
+        R = iterations,
+        centrality = centrality
+      )
       out_ci <- bayestestR::ci(results$t, ci = ci, verbose = FALSE)
       out <- cbind(out, data.frame(CI_low = out_ci$CI_low[1], CI_high = out_ci$CI_high[1]))
     }

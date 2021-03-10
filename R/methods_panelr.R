@@ -16,14 +16,22 @@ model_parameters.wbm <- function(model,
                                  p_adjust = NULL,
                                  verbose = TRUE,
                                  ...) {
-
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
   params <- .mixed_model_parameters_generic(
-    model = model, ci = ci, bootstrap = bootstrap, iterations = iterations,
-    merge_by = c("Parameter", "Component"), standardize = NULL,
-    exponentiate = exponentiate, effects = effects, robust = FALSE,
-    p_adjust = p_adjust, group_level = group_level, df_method = NULL, ...
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = c("Parameter", "Component"),
+    standardize = NULL,
+    exponentiate = exponentiate,
+    effects = effects,
+    robust = FALSE,
+    p_adjust = p_adjust,
+    group_level = group_level,
+    df_method = NULL,
+    ...
   )
 
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)

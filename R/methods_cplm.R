@@ -120,10 +120,12 @@ standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi
 #' @inheritParams standard_error
 #' @inheritParams ci.merMod
 #'
-#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
+#' @return A data frame with at least two columns: the parameter names and the
+#'   p-values. Depending on the model, may also include columns for model
+#'   components etc.
 #'
 #' @examples
-#' if (require("pscl")) {
+#' if (require("pscl", quietly = TRUE)) {
 #'   data("bioChemists")
 #'   model <- zeroinfl(art ~ fem + mar + kid5 | kid5 + phd, data = bioChemists)
 #'   p_value(model)

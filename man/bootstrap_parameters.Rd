@@ -68,7 +68,7 @@ to obtain non-parametric p-values.
 
 \examples{
 \dontrun{
-if (require("boot")) {
+if (require("boot", quietly = TRUE)) {
   set.seed(2)
   model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
   b <- bootstrap_parameters(model)

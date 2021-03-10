@@ -26,7 +26,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' if (require("boot")) {
+#' if (require("boot", quietly = TRUE)) {
 #'   model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
 #'   b <- bootstrap_model(model)
 #'   print(head(b))
@@ -38,7 +38,10 @@
 #' }
 #' }
 #' @export
-bootstrap_model <- function(model, iterations = 1000, verbose = FALSE, ...) {
+bootstrap_model <- function(model,
+                            iterations = 1000,
+                            verbose = FALSE,
+                            ...) {
   UseMethod("bootstrap_model")
 }
 
@@ -50,7 +53,10 @@ bootstrap_model <- function(model, iterations = 1000, verbose = FALSE, ...) {
 #' @importFrom stats coef update setNames complete.cases
 #' @importFrom insight get_data find_parameters get_parameters
 #' @export
-bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, ...) {
+bootstrap_model.default <- function(model,
+                                    iterations = 1000,
+                                    verbose = FALSE,
+                                    ...) {
   if (!requireNamespace("boot", quietly = TRUE)) {
     stop("Package 'boot' needed for this function to work. Please install it.")
   }
@@ -82,7 +88,12 @@ bootstrap_model.default <- function(model, iterations = 1000, verbose = FALSE, .
     return(params)
   }
 
-  results <- boot::boot(data = data, statistic = boot_function, R = iterations, model = model)
+  results <- boot::boot(
+    data = data,
+    statistic = boot_function,
+    R = iterations,
+    model = model
+  )
 
   out <- as.data.frame(results$t)
   out <- out[stats::complete.cases(out), ]
@@ -115,9 +126,18 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
   }
 
   if (verbose) {
-    results <- suppressMessages(lme4::bootMer(model, boot_function, nsim = iterations, verbose = FALSE))
+    results <- suppressMessages(lme4::bootMer(
+      model,
+      boot_function,
+      nsim = iterations,
+      verbose = FALSE
+    ))
   } else {
-    results <- lme4::bootMer(model, boot_function, nsim = iterations)
+    results <- lme4::bootMer(
+      model,
+      boot_function,
+      nsim = iterations
+    )
   }
 
   out <- as.data.frame(results$t)

@@ -60,7 +60,7 @@ For the structural models obtained with \pkg{psych}, the following indices are p
 \examples{
 \donttest{
 library(parameters)
-if (require("psych")) {
+if (require("psych", quietly = TRUE)) {
   # Principal Component Analysis (PCA) ---------
   pca <- psych::principal(attitude)
   model_parameters(pca)
@@ -84,7 +84,7 @@ if (require("psych")) {
 }
 
 # FactoMineR ---------
-if (require("FactoMineR")) {
+if (require("FactoMineR", quietly = TRUE)) {
   model <- FactoMineR::PCA(iris[, 1:4], ncp = 2)
   model_parameters(model)
   attributes(model_parameters(model))$scores

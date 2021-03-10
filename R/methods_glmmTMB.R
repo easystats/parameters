@@ -45,7 +45,12 @@ model_parameters.glmmTMB <- function(model,
   if (effects %in% c("fixed", "all")) {
     # Processing
     if (bootstrap) {
-      params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+      params <- bootstrap_parameters(
+        model,
+        iterations = iterations,
+        ci = ci,
+        ...
+      )
     } else {
       params <- .extract_parameters_generic(
         model,

@@ -4,6 +4,7 @@ Ameijeiras
 Analysing
 Anova
 Asparouhov
+BLUPs
 BMC
 Bafumi
 BayesFactor
@@ -158,6 +159,7 @@ effectsize
 emmGrid
 emmeans
 endogeneity
+epiR
 equivariance
 ergm
 et
@@ -177,6 +179,7 @@ interpretable
 io
 ivfixed
 ivprobit
+joineRML
 joss
 jstatsoft
 kmeans
@@ -199,6 +202,7 @@ metaBMA
 metafor
 metaplus
 mfx
+mhurdle
 minkowski
 mira
 mlm

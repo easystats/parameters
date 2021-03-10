@@ -109,7 +109,9 @@ regressions} apply (see also
 robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
 works when \code{standardize="refit"}.}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
+effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
+to mixed models. May be abbreviated.}
 
 \item{group_level}{Logical, for multilevel models (i.e. models with random
 effects) and when \code{effects = "all"} or \code{effects = "random"},
@@ -126,9 +128,21 @@ mimic behaviour of other software packages, such as Stata. For
 \code{compare_parameters()}, \code{exponentiate = "nongaussian"} will only
 exponentiate coefficients for all models except those from Gaussian family.}
 
-\item{details}{Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.}
+\item{details}{Logical, if \code{TRUE}, a summary of the random effects is
+included. See \code{\link{random_parameters}} for details.}
 
-\item{df_method}{Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be \code{"wald"} (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see \code{\link{dof_kenward}}). The options \code{df_method = "boot"}, \code{df_method = "profile"} and \code{df_method = "uniroot"} only affect confidence intervals; in this case, bootstrapped resp. profiled confidence intervals are computed. \code{"uniroot"} only applies to models of class \code{glmmTMB}. Note that when \code{df_method} is not \code{"wald"}, robust standard errors etc. cannot be computed.}
+\item{df_method}{Method for computing degrees of freedom for p values,
+standard errors and confidence intervals (CI). May be \code{"wald"}
+(default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see
+\code{\link{dof_ml1}}), \code{"betwithin"} (see
+\code{\link{dof_betwithin}}), \code{"satterthwaite"} (see
+\code{\link{dof_satterthwaite}}) or \code{"kenward"} (see
+\code{\link{dof_kenward}}). The options \code{df_method = "boot"},
+\code{df_method = "profile"} and \code{df_method = "uniroot"} only affect
+confidence intervals; in this case, bootstrapped resp. profiled confidence
+intervals are computed. \code{"uniroot"} only applies to models of class
+\code{glmmTMB}. Note that when \code{df_method} is not \code{"wald"},
+robust standard errors etc. cannot be computed.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
@@ -145,7 +159,12 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
 
-\item{wb_component}{Logical, if \code{TRUE} and models contains within- and between-effects (see \code{\link{demean}}), the \code{Component} column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the \code{Component} column indicates, which parameters belong to the conditional or zero-inflated component of the model.}
+\item{wb_component}{Logical, if \code{TRUE} and models contains within- and
+between-effects (see \code{\link{demean}}), the \code{Component} column
+will indicate which variables belong to the within-effects,
+between-effects, and cross-level interactions. By default, the
+\code{Component} column indicates, which parameters belong to the
+conditional or zero-inflated component of the model.}
 
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
 (if possible), and confidence intervals and p-values are based on these
@@ -190,6 +209,6 @@ if (require("lme4")) {
 }
 }
 \seealso{
-\code{\link[insight:standardize_names]{standardize_names()}} to rename
-  columns into a consistent, standardized naming scheme.
+\code{\link[insight:standardize_names]{standardize_names()}} to
+  rename columns into a consistent, standardized naming scheme.
 }

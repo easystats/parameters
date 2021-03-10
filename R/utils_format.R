@@ -302,9 +302,11 @@
     "conditional.fixed" = ,
     "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
     "conditional.random" = ifelse(ran_pars,
-                                  "Random Effects Variances",
-                                  ifelse(is_zero_inflated,
-                                         "Random Effects (Count Model)", "Random Effects")),
+      "Random Effects Variances",
+      ifelse(is_zero_inflated,
+        "Random Effects (Count Model)", "Random Effects"
+      )
+    ),
     "zero_inflated" = "Zero-Inflated",
     "zero_inflated.fixed" = ,
     "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",

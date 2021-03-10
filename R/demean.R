@@ -235,10 +235,13 @@ degroup <- function(x, select, group, center = "mean", suffix_demean = "_within"
   not_found <- setdiff(select, colnames(x))
 
   if (length(not_found) && isTRUE(verbose)) {
-    insight::print_color(sprintf("%i variables were not found in the dataset: %s\n",
-                                 length(not_found),
-                                 paste0(not_found, collapse = ", ")),
-                         color = "red")
+    insight::print_color(sprintf(
+      "%i variables were not found in the dataset: %s\n",
+      length(not_found),
+      paste0(not_found, collapse = ", ")
+    ),
+    color = "red"
+    )
   }
 
   select <- intersect(colnames(x), select)

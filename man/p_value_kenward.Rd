@@ -43,14 +43,15 @@ to linear mixed models only.
 }
 \examples{
 \donttest{
-if (require("lme4")) {
+if (require("lme4", quietly = TRUE)) {
   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
   p_value_kenward(model)
 }
 }
 }
 \references{
-Kenward, M. G., & Roger, J. H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics, 983-997.
+Kenward, M. G., & Roger, J. H. (1997). Small sample inference for
+  fixed effects from restricted maximum likelihood. Biometrics, 983-997.
 }
 \seealso{
 \code{dof_kenward()} and \code{se_kenward()} are small helper-functions

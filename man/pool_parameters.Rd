@@ -33,7 +33,8 @@ one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
 \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
 \code{MuMIn::model.avg()}) or \code{"all"}.}
 
-\item{details}{Logical, if \code{TRUE}, a summary of the random effects is included. See \code{\link{random_parameters}} for details.}
+\item{details}{Logical, if \code{TRUE}, a summary of the random effects is
+included. See \code{\link{random_parameters}} for details.}
 
 \item{verbose}{Toggle warnings and messages.}
 

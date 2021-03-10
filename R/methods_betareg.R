@@ -39,7 +39,10 @@ model_parameters.betareg <- function(model,
 
 #' @rdname ci.merMod
 #' @export
-ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precision"), ...) {
+ci.betareg <- function(x,
+                       ci = .95,
+                       component = c("all", "conditional", "precision"),
+                       ...) {
   component <- match.arg(component)
   ci_wald(model = x, ci = ci, dof = Inf, component = component)
 }
@@ -47,7 +50,9 @@ ci.betareg <- function(x, ci = .95, component = c("all", "conditional", "precisi
 
 #' @rdname standard_error
 #' @export
-standard_error.betareg <- function(model, component = c("all", "conditional", "precision"), ...) {
+standard_error.betareg <- function(model,
+                                   component = c("all", "conditional", "precision"),
+                                   ...) {
   component <- match.arg(component)
 
   params <- insight::get_parameters(model)
@@ -70,7 +75,9 @@ standard_error.betareg <- function(model, component = c("all", "conditional", "p
 
 #' @rdname p_value.DirichletRegModel
 #' @export
-p_value.betareg <- function(model, component = c("all", "conditional", "precision"), ...) {
+p_value.betareg <- function(model,
+                            component = c("all", "conditional", "precision"),
+                            ...) {
   component <- match.arg(component)
 
   params <- insight::get_parameters(model)
@@ -92,7 +99,10 @@ p_value.betareg <- function(model, component = c("all", "conditional", "precisio
 
 
 #' @export
-simulate_model.betareg <- function(model, iterations = 1000, component = c("all", "conditional", "precision"), ...) {
+simulate_model.betareg <- function(model,
+                                   iterations = 1000,
+                                   component = c("all", "conditional", "precision"),
+                                   ...) {
   component <- match.arg(component)
   out <- .simulate_model(model, iterations, component = component)
 

@@ -42,7 +42,9 @@ to automatically define this range based on properties of the model's data.}
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
+effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
+to mixed models. May be abbreviated.}
 }
 \value{
 A data frame.
@@ -147,7 +149,7 @@ equivalence_test(model)
 equivalence_test(model, rule = "cet")
 
 # plot method
-if (require("see")) {
+if (require("see", quietly = TRUE)) {
   result <- equivalence_test(model)
   plot(result)
 }

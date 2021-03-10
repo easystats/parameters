@@ -1,8 +1,10 @@
 #' Quantify the smoothness of a vector
 #'
 #' @param x Numeric vector (similar to a time series).
-#' @param method Can be "diff" (the standard deviation of the standardized differences) or "cor" (default, lag-one autocorrelation).
-#' @param lag An integer indicating which lag to use. If less than 1, will be interpreted as expressed in percentage of the length of the vector.
+#' @param method Can be "diff" (the standard deviation of the standardized
+#'   differences) or "cor" (default, lag-one autocorrelation).
+#' @param lag An integer indicating which lag to use. If less than 1, will be
+#'   interpreted as expressed in percentage of the length of the vector.
 #' @inheritParams skewness
 #'
 #' @examples
@@ -40,7 +42,13 @@ smoothness.numeric <- function(x, method = "cor", lag = 1, iterations = NULL, ..
     if (!requireNamespace("boot", quietly = TRUE)) {
       warning("Package 'boot' needed for bootstrapping SEs.", call. = FALSE)
     } else {
-      results <- boot::boot(data = x, statistic = .boot_smoothness, R = iterations, method = method, lag = lag)
+      results <- boot::boot(
+        data = x,
+        statistic = .boot_smoothness,
+        R = iterations,
+        method = method,
+        lag = lag
+      )
       out_se <- stats::sd(results$t, na.rm = TRUE)
       smooth <- data.frame(Smoothness = smooth, SE = out_se)
     }
