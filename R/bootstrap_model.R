@@ -92,8 +92,7 @@ bootstrap_model.default <- function(model,
     data = data,
     statistic = boot_function,
     R = iterations,
-    model = model,
-    ncpus = ncpus
+    model = model
   )
 
   out <- as.data.frame(results$t)
@@ -131,15 +130,13 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
       model,
       boot_function,
       nsim = iterations,
-      verbose = FALSE,
-      ncpus = ncpus
+      verbose = FALSE
     ))
   } else {
     results <- lme4::bootMer(
       model,
       boot_function,
-      nsim = iterations,
-      ncpus = ncpus
+      nsim = iterations
     )
   }
 
