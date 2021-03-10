@@ -238,7 +238,9 @@ to automatically define this range based on properties of the model's data.</p><
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random
+effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies
+to mixed models. May be abbreviated.</p></td>
     </tr>
     </table>
 
@@ -369,11 +371,11 @@ the equivalence test.</p>
 #&gt;  education [high]  Rejected      0.00 % [10.14 18.57]
 #&gt; </div><div class='input'>
 <span class='co'># plot method</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://easystats.github.io/see/'>"see"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://easystats.github.io/see/'>"see"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: see</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Note that the default rope range for binomial models might change in future versions (see https://github.com/easystats/bayestestR/issues/364).Please set it explicitly to preserve current results.</span></div><div class='img'><img src='equivalence_test.lm-1.png' alt='' width='700' height='433' /></div></span></pre>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Note that the default rope range for binomial models might change in future versions (see https://github.com/easystats/bayestestR/issues/364).Please set it explicitly to preserve current results.</span></div><div class='img'><img src='equivalence_test.lm-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

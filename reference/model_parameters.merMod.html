@@ -300,7 +300,9 @@ works when <code>standardize="refit"</code>.</p></td>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random
+effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies
+to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>group_level</th>
@@ -323,11 +325,23 @@ exponentiate coefficients for all models except those from Gaussian family.</p><
     </tr>
     <tr>
       <th>details</th>
-      <td><p>Logical, if <code>TRUE</code>, a summary of the random effects is included. See <code><a href='random_parameters.html'>random_parameters</a></code> for details.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, a summary of the random effects is
+included. See <code><a href='random_parameters.html'>random_parameters</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>df_method</th>
-      <td><p>Method for computing degrees of freedom for p values, standard errors and confidence intervals (CI). May be <code>"wald"</code> (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see <code><a href='ci_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see <code><a href='ci_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see <code><a href='ci_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see <code><a href='ci_kenward.html'>dof_kenward</a></code>). The options <code>df_method = "boot"</code>, <code>df_method = "profile"</code> and <code>df_method = "uniroot"</code> only affect confidence intervals; in this case, bootstrapped resp. profiled confidence intervals are computed. <code>"uniroot"</code> only applies to models of class <code>glmmTMB</code>. Note that when <code>df_method</code> is not <code>"wald"</code>, robust standard errors etc. cannot be computed.</p></td>
+      <td><p>Method for computing degrees of freedom for p values,
+standard errors and confidence intervals (CI). May be <code>"wald"</code>
+(default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see
+<code><a href='ci_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see
+<code><a href='ci_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see
+<code><a href='ci_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see
+<code><a href='ci_kenward.html'>dof_kenward</a></code>). The options <code>df_method = "boot"</code>,
+<code>df_method = "profile"</code> and <code>df_method = "uniroot"</code> only affect
+confidence intervals; in this case, bootstrapped resp. profiled confidence
+intervals are computed. <code>"uniroot"</code> only applies to models of class
+<code>glmmTMB</code>. Note that when <code>df_method</code> is not <code>"wald"</code>,
+robust standard errors etc. cannot be computed.</p></td>
     </tr>
     <tr>
       <th>p_adjust</th>
@@ -354,7 +368,12 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     </tr>
     <tr>
       <th>wb_component</th>
-      <td><p>Logical, if <code>TRUE</code> and models contains within- and between-effects (see <code><a href='check_heterogeneity.html'>demean</a></code>), the <code>Component</code> column will indicate which variables belong to the within-effects, between-effects, and cross-level interactions. By default, the <code>Component</code> column indicates, which parameters belong to the conditional or zero-inflated component of the model.</p></td>
+      <td><p>Logical, if <code>TRUE</code> and models contains within- and
+between-effects (see <code><a href='check_heterogeneity.html'>demean</a></code>), the <code>Component</code> column
+will indicate which variables belong to the within-effects,
+between-effects, and cross-level interactions. By default, the
+<code>Component</code> column indicates, which parameters belong to the
+conditional or zero-inflated component of the model.</p></td>
     </tr>
     <tr>
       <th>robust</th>
@@ -376,8 +395,8 @@ for working examples.</p></td>
     <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to rename
-  columns into a consistent, standardized naming scheme.</p></div>
+    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to
+  rename columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>

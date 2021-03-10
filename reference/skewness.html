@@ -210,11 +210,16 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Type of algorithm for computing skewness. May be one of <code>1</code> (or <code>"1"</code>, <code>"I"</code> or <code>"classic"</code>), <code>2</code> (or <code>"2"</code>, <code>"II"</code> or <code>"SPSS"</code> or <code>"SAS"</code>) or <code>3</code> (or  <code>"3"</code>, <code>"III"</code> or <code>"Minitab"</code>). See 'Details'.</p></td>
+      <td><p>Type of algorithm for computing skewness. May be one of <code>1</code>
+(or <code>"1"</code>, <code>"I"</code> or <code>"classic"</code>), <code>2</code> (or <code>"2"</code>,
+<code>"II"</code> or <code>"SPSS"</code> or <code>"SAS"</code>) or <code>3</code> (or  <code>"3"</code>,
+<code>"III"</code> or <code>"Minitab"</code>). See 'Details'.</p></td>
     </tr>
     <tr>
       <th>iterations</th>
-      <td><p>The number of bootstrap replicates for computing standard errors. If <code>NULL</code> (default), parametric standard errors are computed. See 'Details'.</p></td>
+      <td><p>The number of bootstrap replicates for computing standard
+errors. If <code>NULL</code> (default), parametric standard errors are computed.
+See 'Details'.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -226,7 +231,8 @@
     </tr>
     <tr>
       <th>test</th>
-      <td><p>Logical, if <code>TRUE</code>, tests if skewness or kurtosis is significantly different from zero.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, tests if skewness or kurtosis is
+significantly different from zero.</p></td>
     </tr>
     <tr>
       <th>object</th>
@@ -245,10 +251,12 @@
 a negative skewness values indicates a "left-skewed" distribution, and a
 positive skewness values indicates a "right-skewed" distribution. Examples
 for the relationship of skewness and distributions are:</p><ul>
-<li><p>Normal distribution (and other symmetric distribution) has a skewness of 0</p></li>
+<li><p>Normal distribution (and other symmetric distribution) has a skewness
+  of 0</p></li>
 <li><p>Half-normal distribution has a skewness just below 1</p></li>
 <li><p>Exponential distribution has a skewness of 2</p></li>
-<li><p>Lognormal distribution can have a skewness of any positive value, depending on its parameters</p></li>
+<li><p>Lognormal distribution can have a skewness of any positive value,
+  depending on its parameters</p></li>
 </ul><p>(<cite>https://en.wikipedia.org/wiki/Skewness</cite>)</p>
 <h3 class='hasAnchor' id='types-of-skewness'><a class='anchor' href='#types-of-skewness'></a>Types of Skewness</h3>
 <p><code>skewness()</code> supports three different methods for estimating skewness, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>

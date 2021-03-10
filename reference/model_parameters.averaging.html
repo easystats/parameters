@@ -301,7 +301,7 @@ works when <code>standardize="refit"</code>.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/ikosmidis/brglm2'>"brglm2"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/ikosmidis/brglm2'>"brglm2"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"stemcell"</span><span class='op'>)</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brglm2/man/bracl.html'>bracl</a></span><span class='op'>(</span>
     <span class='va'>research</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>religion</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>gender</span>,
@@ -311,7 +311,7 @@ works when <code>standardize="refit"</code>.</p></td>
   <span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: brglm2</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Response level: definitely</span><span>
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Response level: definitely</span><span>
 #&gt; 
 #&gt; Parameter       | Log-Odds |   SE |         95% CI |     z |      p
 #&gt; -------------------------------------------------------------------
