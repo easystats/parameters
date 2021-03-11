@@ -8,14 +8,6 @@ ci.lavaan <- function(x, ci = .95, ...) {
 
 
 #' @export
-ci.blavaan <- function(x, ci = .95, ...) {
-  out <- .extract_parameters_lavaan(model = x, ci = ci, ...)
-  out$CI <- ci
-  out[out$Operator != "~1", c("To", "Operator", "From", "CI", "CI_low", "CI_high")]
-}
-
-
-#' @export
 standard_error.lavaan <- function(model, ...) {
   out <- .extract_parameters_lavaan(model, ...)
   out[out$Operator != "~1", c("To", "Operator", "From", "SE")]
