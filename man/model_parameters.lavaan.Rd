@@ -8,14 +8,15 @@
   model,
   ci = 0.95,
   standardize = FALSE,
-  type = c("regression", "correlation", "loading", "defined"),
+  component = c("regression", "correlation", "loading", "defined"),
   verbose = TRUE,
+  type = component,
   ...
 )
 }
 \arguments{
 \item{model}{CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem}
-functions (or from \pkg{blavaan}).}
+functions.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
@@ -28,7 +29,7 @@ on the variances of the latent variables only; or \code{"no_exogenous"}
 variances of observed and latent variables, but not the variances of
 exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 
-\item{type}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
+\item{component, type}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -38,7 +39,7 @@ exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 A data frame of indices related to the model's parameters.
 }
 \description{
-Format CFA/SEM objects from the (b)lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).
+Format CFA/SEM objects from the lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.

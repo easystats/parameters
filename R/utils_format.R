@@ -325,7 +325,7 @@
     "sigma.fixed" = ,
     "sigma.fixed." = ,
     "sigma" = "Sigma",
-    "Correlation" = "Correlation",
+    "correlation" = "Correlation",
     "SD/Cor" = "SD / Correlation",
     "Loading" = "Loading",
     "scale" = ,
@@ -345,6 +345,10 @@
     "precision." = "Precision",
     "infrequent_purchase" = "Infrequent Purchase",
     "auxiliary" = "Auxiliary",
+    "residual" = "Residual",
+    "intercept" = "Intercept",
+    "regression" = "Regression",
+    "latent" = "Latent",
     type
   )
 

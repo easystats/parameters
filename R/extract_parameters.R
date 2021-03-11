@@ -799,7 +799,7 @@
     params$Label <- label
   }
 
-  params$Type <- ifelse(params$Operator == "=~", "Loading",
+  params$Component <- ifelse(params$Operator == "=~", "Loading",
     ifelse(params$Operator == "~", "Regression",
       ifelse(params$Operator == "~~", "Correlation",
         ifelse(params$Operator == ":=", "Defined",
@@ -808,7 +808,7 @@
       )
     )
   )
-  params$Type <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Type)
+  params$Component <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Component)
 
   if ("p" %in% colnames(params)) {
     params$p <- ifelse(is.na(params$p), 0, params$p)

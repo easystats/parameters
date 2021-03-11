@@ -2,7 +2,8 @@
 #'
 #' Parameters from Bayesian models.
 #'
-#' @param model Bayesian model. May also be a data frame with posterior samples.
+#' @param model Bayesian model (including SEM from \pkg{blavaan}. May also be
+#'   a data frame with posterior samples.
 #' @param ci Credible Interval (CI) level. Default to 0.89 (89\%). See
 #'   \code{\link[bayestestR]{ci}} for further details.
 #' @param group_level Logical, for multilevel models (i.e. models with random
@@ -24,9 +25,6 @@
 #'   \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
 #'   implemented in the
 #'   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
-#'
-#' @details Currently supported models are \code{brmsfit}, \code{stanreg},
-#'   \code{stanmvreg}, \code{MCMCglmm}, \code{mcmc} and \code{bcplm}.
 #'
 #' @examples
 #' \dontrun{

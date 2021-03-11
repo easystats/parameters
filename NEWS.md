@@ -6,6 +6,12 @@
 
 ## Changes to functions
 
+### `model_parameters()`
+
+* `model_parameters()` for `blavaan` models is now fully treated as Bayesian 
+  model and thus relies on the functions from *bayestestR* (i.e. ROPE, Rhat or
+  ESS are reported) .
+
 * The `effects`-argument from `model_parameters()` for mixed models was
   revised and now shows the random effects variances by default (same 
   functionality as `random_parameters()`, but mimicking the behaviour from

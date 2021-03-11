@@ -62,7 +62,8 @@
 )
 }
 \arguments{
-\item{model}{Bayesian model. May also be a data frame with posterior samples.}
+\item{model}{Bayesian model (including SEM from \pkg{blavaan}. May also be
+a data frame with posterior samples.}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
@@ -137,10 +138,6 @@ A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters from Bayesian models.
-}
-\details{
-Currently supported models are \code{brmsfit}, \code{stanreg},
-  \code{stanmvreg}, \code{MCMCglmm}, \code{mcmc} and \code{bcplm}.
 }
 \note{
 When \code{standardize = "refit"}, columns \code{diagnostic},
