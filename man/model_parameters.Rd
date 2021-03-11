@@ -32,9 +32,9 @@ Compute and extract model parameters. See the documentation for your object's cl
  \item{\link[=model_parameters.averaging]{Other special models} (\code{model.avg}, \code{betareg}, \code{glmx}, ...)}
  \item{\link[=model_parameters.merMod]{Mixed models} (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, \pkg{afex}, ...)}
  \item{\link[=model_parameters.BFBayesFactor]{Bayesian tests} (\pkg{BayesFactor})}
- \item{\link[=model_parameters.stanreg]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
+ \item{\link[=model_parameters.stanreg]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, \pkg{blavaan}, ...)}
  \item{\link[=model_parameters.principal]{PCA and FA} (\pkg{psych})}
- \item{\link[=model_parameters.lavaan]{CFA and SEM} (\pkg{lavaan}, \pkg{blavaan})}
+ \item{\link[=model_parameters.lavaan]{CFA and SEM} (\pkg{lavaan})}
  \item{\link[=model_parameters.kmeans]{Cluster models} (k-means, ...)}
  \item{\link[=model_parameters.rma]{Meta-Analysis via linear (mixed) models} (\code{rma}, \code{metaplus}, \pkg{metaBMA}, ...)}
  \item{\link[=model_parameters.glht]{Hypothesis testing} (\code{glht}, \pkg{PMCMRplus})}

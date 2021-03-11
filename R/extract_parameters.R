@@ -770,30 +770,17 @@
   }
 
 
-  if (inherits(model, "blavaan")) {
-    params <- data.frame(
-      To = data$lhs,
-      Operator = data$op,
-      From = data$rhs,
-      Coefficient = data$est,
-      SE = data$se,
-      CI_low = data$ci.lower,
-      CI_high = data$ci.upper,
-      stringsAsFactors = FALSE
-    )
-  } else {
-    params <- data.frame(
-      To = data$lhs,
-      Operator = data$op,
-      From = data$rhs,
-      Coefficient = data$est,
-      SE = data$se,
-      CI_low = data$ci.lower,
-      CI_high = data$ci.upper,
-      p = data$pvalue,
-      stringsAsFactors = FALSE
-    )
-  }
+  params <- data.frame(
+    To = data$lhs,
+    Operator = data$op,
+    From = data$rhs,
+    Coefficient = data$est,
+    SE = data$se,
+    CI_low = data$ci.lower,
+    CI_high = data$ci.upper,
+    p = data$pvalue,
+    stringsAsFactors = FALSE
+  )
 
   if (!is.null(label)) {
     params$Label <- label
