@@ -184,18 +184,24 @@
 <a href="#new-supported-model-classes" class="anchor"></a>New supported model classes</h2>
 <ul>
 <li>
-<code>blrm</code> (<em>rmsb</em>), <code>AKP</code> (<em>WRS2</em>), <code>epi.2by2</code> (<em>epiR</em>), <code>mjoint</code> (<em>joineRML</em>), <code>mhurdle</code> (<em>mhurdle</em>)</li>
+<code>blrm</code> (<em>rmsb</em>), <code>AKP</code> (<em>WRS2</em>), <code>epi.2by2</code> (<em>epiR</em>), <code>mjoint</code> (<em>joineRML</em>), <code>mhurdle</code> (<em>mhurdle</em>), <code>sarlm</code> (<em>spatialreg</em>)</li>
 </ul>
 </div>
 <div id="changes-to-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<div id="model_parameters" class="section level3">
+<h3 class="hasAnchor">
+<a href="#model_parameters" class="anchor"></a><code>model_parameters()</code>
+</h3>
 <ul>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>blavaan</code> models is now fully treated as Bayesian model and thus relies on the functions from <em>bayestestR</em> (i.e. ROPE, Rhat or ESS are reported) .</p></li>
 <li><p>The <code>effects</code>-argument from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models was revised and now shows the random effects variances by default (same functionality as <code><a href="../reference/random_parameters.html">random_parameters()</a></code>, but mimicking the behaviour from <code>broom.mixed::tidy()</code>). When the <code>group_level</code> argument is set to <code>TRUE</code>, the conditional modes (BLUPs) of the random effects are shown.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models now returns an <code>Effects</code> column even when there is just one type of “effects”, to mimic the behaviour from <code>broom.mixed::tidy()</code>. In conjunction with <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> users can get the same column names as in <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> objects.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for t-tests now uses the group values as column names.</p></li>
 <li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>zap_small</code> argument, to avoid scientific notation for very small numbers. Instead, <code>zap_small</code> forces to round to the specified number of digits.</p></li>
 </ul>
+</div>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
@@ -376,9 +382,9 @@
 <div id="changes-to-functions-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-3" class="anchor"></a>Changes to functions</h2>
-<div id="model_parameters" class="section level3">
+<div id="model_parameters-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#model_parameters" class="anchor"></a><code>model_parameters()</code>
+<a href="#model_parameters-1" class="anchor"></a><code>model_parameters()</code>
 </h3>
 <ul>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (of class <code>aov</code>, <code>anova</code> etc.) gains a <code>ci</code>-argument, to add confidence intervals to effect size parameters.</p></li>
@@ -647,9 +653,9 @@
 <li><p><code>SE</code> column was removed.</p></li>
 </ul>
 </div>
-<div id="model_parameters-1" class="section level3">
+<div id="model_parameters-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#model_parameters-1" class="anchor"></a><code>model_parameters()</code>
+<a href="#model_parameters-2" class="anchor"></a><code>model_parameters()</code>
 </h3>
 <ul>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Stan-models (<em>brms</em>, <em>rstanarm</em>) gains a <code>group_level</code> argument to show or hide parameters for group levels of random effects.</p></li>
@@ -693,9 +699,9 @@
 <div id="changes-to-functions-9" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-9" class="anchor"></a>Changes to functions</h2>
-<div id="model_parameters-2" class="section level3">
+<div id="model_parameters-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#model_parameters-2" class="anchor"></a>model_parameters()</h3>
+<a href="#model_parameters-3" class="anchor"></a>model_parameters()</h3>
 <ul>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> now also transforms standard errors when <code>exponentiate = TRUE</code>.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html" class="external-link">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</p></li>
@@ -742,9 +748,9 @@
 <div id="changes-to-functions-10" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-10" class="anchor"></a>Changes to functions</h2>
-<div id="model_parameters-3" class="section level3">
+<div id="model_parameters-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#model_parameters-3" class="anchor"></a>model_parameters()</h3>
+<a href="#model_parameters-4" class="anchor"></a>model_parameters()</h3>
 <ul>
 <li><p>Improved print-method for <code><a href="../reference/model_parameters.data.frame.html">model_parameters.brmsfit()</a></code>.</p></li>
 <li><p>Improved print-method for <code><a href="../reference/model_parameters.cpglmm.html">model_parameters.merMod()</a></code> when fitting REWB-Models (see <code><a href="../reference/check_heterogeneity.html">demean()</a></code>).</p></li>

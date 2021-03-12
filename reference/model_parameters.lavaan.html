@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Parameters from CFA/SEM models — model_parameters.lavaan" />
-<meta property="og:description" content="Format CFA/SEM objects from the (b)lavaan package (Rosseel, 2012; Merkle and Rosseel 2018)." />
+<meta property="og:description" content="Format CFA/SEM objects from the lavaan package (Rosseel, 2012; Merkle and Rosseel 2018)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -178,7 +178,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Format CFA/SEM objects from the (b)lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).</p>
+    <p>Format CFA/SEM objects from the lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for lavaan</span>
@@ -186,8 +186,9 @@
   <span class='va'>model</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   standardize <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"regression"</span>, <span class='st'>"correlation"</span>, <span class='st'>"loading"</span>, <span class='st'>"defined"</span><span class='op'>)</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"regression"</span>, <span class='st'>"correlation"</span>, <span class='st'>"loading"</span>, <span class='st'>"defined"</span><span class='op'>)</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  type <span class='op'>=</span> <span class='va'>component</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -197,7 +198,7 @@
     <tr>
       <th>model</th>
       <td><p>CFA or SEM created by the <code><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>lavaan::cfa</a></code> or <code><a href='https://rdrr.io/pkg/lavaan/man/sem.html'>lavaan::sem</a></code>
-functions (or from <span class="pkg">blavaan</span>).</p></td>
+functions.</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -215,7 +216,7 @@ variances of observed and latent variables, but not the variances of
 exogenous covariates. See <code><a href='https://rdrr.io/pkg/lavaan/man/standardizedSolution.html'>lavaan::standardizedsolution</a></code> for details.</p></td>
     </tr>
     <tr>
-      <th>type</th>
+      <th>component, type</th>
       <td><p>What type of links to return. Can be <code>"all"</code> or some of <code><a href='https://rdrr.io/r/base/c.html'>c("regression", "correlation", "loading", "variance", "mean")</a></code>.</p></td>
     </tr>
     <tr>
@@ -250,7 +251,7 @@ exogenous covariates. See <code><a href='https://rdrr.io/pkg/lavaan/man/standard
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
 
 <span class='co'># lavaan -------------------------------------</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://lavaan.org'>"lavaan"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://lavaan.ugent.be'>"lavaan"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
   <span class='co'># Confirmatory Factor Analysis (CFA) ---------</span>
 
