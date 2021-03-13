@@ -102,7 +102,7 @@ format_p_adjust <- function(method) {
         params$p <- 1 - (1 - params$p)^(nrow(params) / rank_adjust)
       }
 
-      if (isTRUE(all.equal(old_p_vals, params$p))) {
+      if (isTRUE(all.equal(old_p_vals, params$p)) && !identical(p_adjust, "none")) {
         if (verbose) {
           warning(paste0("Something went wrong. Could not apply ", p_adjust, "-adjustment."), call. = FALSE)
         }
