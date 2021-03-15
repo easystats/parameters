@@ -288,11 +288,6 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
   att <- attributes(x)
   final_table <- list()
 
-  # round ESS
-  if (!is.null(x$ESS)) {
-    x$ESS <- round(x$ESS)
-  }
-
   if (!split_components || is.null(cp)) {
     NextMethod()
   } else {
@@ -331,12 +326,6 @@ format.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, fo
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
   if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
-
-  # round ESS
-  if (!is.null(x$ESS)) {
-    x$ESS <- round(x$ESS)
-  }
-
   .print_model_parms_components(x, pretty_names = TRUE, split_column = "Component", digits = digits, ci_digits = ci_digits, p_digits = p_digits, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
 }
 
