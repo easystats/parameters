@@ -50,19 +50,19 @@
 #' @export
 pool_parameters <- function(x,
                             exponentiate = FALSE,
+                            effects = "fixed",
                             component = "conditional",
-                            details = FALSE,
                             verbose = TRUE,
                             ...) {
 
   # check input, save original model -----
 
-  original_model <- NULL
+  original_model <- random_params <- NULL
   obj_name <- deparse(substitute(x), width.cutoff = 500)
 
   if (all(sapply(x, insight::is_model)) && all(sapply(x, insight::is_model_supported))) {
     original_model <- x[[1]]
-    x <- lapply(x, model_parameters, component = component, details = details, ...)
+    x <- lapply(x, model_parameters, effects = effects, component = component, ...)
   }
 
   if (!all(sapply(x, inherits, "parameters_model"))) {
@@ -97,11 +97,18 @@ pool_parameters <- function(x,
   len <- length(x)
   ci <- attributes(original_x[[1]])$ci
   if (is.null(ci)) ci <- .95
+  parameter_values <- x[[1]]$Parameter
 
+  # split multiply (imputed) datasets by parameters,
+  # but only for fixed effects. Filter random effects,
+  # and save parameter names from fixed effects for later use...
 
-  # split multiply (imputed) datasets by parameters
-
-  estimates <- split(params, factor(params$Parameter, levels = unique(x[[1]]$Parameter)))
+  if (effects == "all" && "Effects" %in% colnames(params) && "random" %in% params$Effects) {
+    random_params <- params[params$Effects == "random", ]
+    params <- params[params$Effects != "random", ]
+    parameter_values <- x[[1]]$Parameter[x[[1]]$Effects != "random"]
+  }
+  estimates <- split(params, factor(params$Parameter, levels = unique(parameter_values)))
 
 
   # pool estimates etc. -----
@@ -145,22 +152,23 @@ pool_parameters <- function(x,
   # pool random effect variances -----
 
   pooled_random <- NULL
-  if (details && !is.null(attributes(original_x[[1]])$details)) {
-    pooled_random <- attributes(original_x[[1]])$details
-    n_rows <- nrow(pooled_random)
-    for (i in 1:n_rows) {
-      re <- unlist(lapply(original_x, function(j) {
-        # random effects
-        attributes(j)$details$Value[i]
-      }))
-      pooled_random$Value[i] <- mean(re, na.rm = TRUE)
-    }
+  if (!is.null(random_params)) {
+    estimates <- split(random_params, factor(random_params$Parameter, levels = unique(random_params$Parameter)))
+    pooled_random <- do.call(rbind, lapply(estimates, function(i) {
+      pooled_estimate <- mean(i$Coefficient, na.rm = TRUE)
+      data.frame(
+        Parameter = unique(i$Parameter),
+        Coefficient = pooled_estimate,
+        Effects = "random",
+        stringsAsFactors = FALSE
+      )
+    }))
   }
 
 
   # reorder ------
 
-  pooled_params$Parameter <- x[[1]]$Parameter
+  pooled_params$Parameter <- parameter_values
   pooled_params <- pooled_params[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic", "df_error", "p")]
 
 
@@ -169,6 +177,11 @@ pool_parameters <- function(x,
   if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
     pooled_params <- .exponentiate_parameters(pooled_params, NULL, exponentiate)
   }
+
+  if (!is.null(pooled_random)) {
+    pooled_params <- merge(pooled_params, pooled_random, all = TRUE, sort = FALSE)
+  }
+
   # this needs to be done extra here, cannot call ".add_model_parameters_attributes()"
   pooled_params <- .add_pooled_params_attributes(
     pooled_params,
@@ -179,7 +192,6 @@ pool_parameters <- function(x,
     verbose = verbose
   )
   attr(pooled_params, "object_name") <- obj_name
-  attr(pooled_params, "details") <- pooled_random
 
 
   # pool sigma ----
