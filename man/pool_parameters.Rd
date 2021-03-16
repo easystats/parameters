@@ -9,7 +9,6 @@ pool_parameters(
   exponentiate = FALSE,
   effects = "fixed",
   component = "conditional",
-  details = FALSE,
   verbose = TRUE,
   ...
 )
@@ -37,9 +36,6 @@ one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
 \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
 \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
 \code{MuMIn::model.avg()}) or \code{"all"}.}
-
-\item{details}{Logical, if \code{TRUE}, a summary of the random effects is
-included. See \code{\link{random_parameters}} for details.}
 
 \item{verbose}{Toggle warnings and messages.}
 
