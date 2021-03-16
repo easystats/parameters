@@ -1,10 +1,6 @@
 ---
 title: "Feature Reduction (PCA, cMDS, ICA...)"
 output: 
-  github_document:
-    toc: true
-    fig_width: 10.08
-    fig_height: 6
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -21,16 +17,24 @@ bibliography: bibliography.bib
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
-options(knitr.kable.NA = '')
+options(knitr.kable.NA = "")
 options(digits = 2)
-knitr::opts_chunk$set(comment = "#>")
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  out.width = "100%"
+)
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
-    !requireNamespace("nFactors", quietly = TRUE) ||
-    !requireNamespace("EGAnet", quietly = TRUE) ||
-    !requireNamespace("parameters", quietly = TRUE) ||
-    !requireNamespace("insight", quietly = TRUE) ||
-    !requireNamespace("psych", quietly = TRUE)) {
+  !requireNamespace("nFactors", quietly = TRUE) ||
+  !requireNamespace("EGAnet", quietly = TRUE) ||
+  !requireNamespace("parameters", quietly = TRUE) ||
+  !requireNamespace("insight", quietly = TRUE) ||
+  !requireNamespace("psych", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
@@ -39,9 +43,6 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
 
 set.seed(333)
 ```
-
-
-
 
 Also known as [**feature extraction** or **dimension reduction**](https://en.wikipedia.org/wiki/Feature_extraction) in machine learning, the goal of variable reduction is to **reduce the number of predictors** by derivating, from a set of measured data, new variables intended to be informative and non-redundant. This method can be used to **simplify models**, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
 
@@ -69,7 +70,7 @@ This quickly *hints* toward the fact that the model could be represented via **t
 This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is "**PCA**", but other are available via the `method` argument, such as "**cMDS**", "**DRR**" or "**ICA**"). Then, it names this new dimensions using the original variables that *correlate* the most with it. For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension.
 
 ```{r message=FALSE, warning=FALSE}
-reduce_parameters(model, method = "cMDS") %>% 
+reduce_parameters(model, method = "cMDS") %>%
   parameters()
 ```
 
@@ -100,7 +101,7 @@ newdata$rating <- attitude$rating
 
 We can know update the model with this new component:
 ```{r message=FALSE, warning=FALSE}
-update(model, rating ~ PC1, data = newdata) %>% 
+update(model, rating ~ PC1, data = newdata) %>%
   parameters()
 ```
 
@@ -115,7 +116,7 @@ As such, the above analysis can be fully reproduced as follows:
 library(psych)
 
 # Fit the PCA
-pca <- psych::principal(attitude, nfactors = 1) %>% 
+pca <- psych::principal(attitude, nfactors = 1) %>%
   model_parameters()
 pca
 ```
@@ -127,7 +128,7 @@ Finally, refit the model:
 ```{r message=FALSE, warning=FALSE}
 df <- cbind(attitude, predict(pca))
 
-update(model, rating ~ PC1, data = df) %>% 
+update(model, rating ~ PC1, data = df) %>%
   model_parameters()
 ```
 

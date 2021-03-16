@@ -1,10 +1,6 @@
 ---
 title: "Formatting Model Parameters"
 output: 
-  github_document:
-    toc: true
-    fig_width: 10.08
-    fig_height: 6
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -19,11 +15,20 @@ editor_options:
 bibliography: bibliography.bib
 ---
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r , include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
 options(digits = 2)
-knitr::opts_chunk$set(comment = "#>", tidy.opts = list(width.cutoff = 100))
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  out.width = "100%",
+  tidy.opts = list(width.cutoff = 100)
+)
 
 if (!requireNamespace("broom", quietly = TRUE) ||
     !requireNamespace("gt", quietly = TRUE) ||
