@@ -1,10 +1,6 @@
 ---
 title: "Standardized Model Parameters"
 output: 
-  github_document:
-    toc: true
-    fig_width: 10.08
-    fig_height: 6
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -23,7 +19,15 @@ bibliography: bibliography.bib
 library(knitr)
 options(knitr.kable.NA = '')
 options(digits = 2)
-knitr::opts_chunk$set(comment = "#>")
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  out.width = "100%"
+)
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
     !requireNamespace("lme4", quietly = TRUE)) {

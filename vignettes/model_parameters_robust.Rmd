@@ -1,10 +1,6 @@
 ---
 title: "Robust Estimation of Standard Errors, Confidence Intervals and p-values"
 output: 
-  github_document:
-    toc: true
-    fig_width: 10.08
-    fig_height: 6
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -21,14 +17,22 @@ bibliography: bibliography.bib
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
-options(knitr.kable.NA = '')
+options(knitr.kable.NA = "")
 options(digits = 2)
-knitr::opts_chunk$set(comment = "#>")
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  out.width = "100%"
+)
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
-    !requireNamespace("clubSandwich", quietly = TRUE) ||
-    !requireNamespace("sandwich", quietly = TRUE) ||
-    !requireNamespace("lme4", quietly = TRUE)) {
+  !requireNamespace("clubSandwich", quietly = TRUE) ||
+  !requireNamespace("sandwich", quietly = TRUE) ||
+  !requireNamespace("lme4", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
@@ -65,7 +69,9 @@ unname(sqrt(diag(sandwich::vcovHC(model))))
 
 If another covariance matrix estimation is required, use the `vcov_estimation`-argument. This argument needs the suffix for the related `vcov*()`-functions as value, i.e. `vcov_estimation = "CL"` would call `sandwich::vcovCL()`, or `vcov_estimation = "HAC"` would call `sandwich::vcovHAC()`.
 
-The specific estimation type can be changed with `vcov_type`. E.g., `sandwich::vcovCL()` accepts estimation types HC0 to HC3. In the next example, we use a clustered covariance matrix estimation with HC1-estimation type.
+The specific estimation type can be changed with `vcov_type`. E.g.,
+`sandwich::vcovCL()` accepts estimation types HC0 to HC3. In the next example,
+we use a clustered covariance matrix estimation with HC1-estimation type.
 
 ```{r}
 # change estimation-type
@@ -83,9 +89,9 @@ Usually, clustered covariance matrix estimation is used when there is a cluster-
 iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
 # change estimation-type, defining additional arguments
 mp <- model_parameters(
-  model, 
-  robust = TRUE, 
-  vcov_estimation = "CL", 
+  model,
+  robust = TRUE,
+  vcov_estimation = "CL",
   vcov_type = "HC1",
   vcov_args = list(cluster = iris$cluster)
 )
@@ -106,10 +112,10 @@ iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
 
 # cluster-robust estimation
 mp <- model_parameters(
-  model, 
-  robust = TRUE, 
-  vcov_estimation = "CR", 
-  vcov_type = "CR1", 
+  model,
+  robust = TRUE,
+  vcov_estimation = "CR",
+  vcov_type = "CR1",
   vcov_args = list(cluster = iris$cluster)
 )
 mp
@@ -153,10 +159,10 @@ model_parameters(model)
 
 # model parameters, cluster robust estimation for mixed models
 model_parameters(
-  model, 
-  robust = TRUE, 
-  vcov_estimation = "CR", 
-  vcov_type = "CR1", 
+  model,
+  robust = TRUE,
+  vcov_estimation = "CR",
+  vcov_type = "CR1",
   vcov_args = list(cluster = iris$grp)
 )
 ```
@@ -168,11 +174,11 @@ Again, robust estimation can be combined with standardization for linear mixed m
 ```{r}
 # model parameters, cluster robust estimation on standardized mixed model
 model_parameters(
-  model, 
+  model,
   standardize = "refit",
-  robust = TRUE, 
-  vcov_estimation = "CR", 
-  vcov_type = "CR1", 
+  robust = TRUE,
+  vcov_estimation = "CR",
+  vcov_type = "CR1",
   vcov_args = list(cluster = iris$grp)
 )
 ```
