@@ -186,11 +186,6 @@ describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...
     out$Min <- NULL
     out$Max <- NULL
   }
-  
-  if (!quartiles) {
-    out$Q1 <- NULL
-    out$Q3 <- NULL
-  }
 
   class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
   attr(out, "data") <- x
@@ -238,15 +233,10 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
     out$IQR <- NULL
   }
 
-
+  
   if (!range) {
     out$Min <- NULL
     out$Max <- NULL
-  }
-  
-  if (!quartiles) {
-    out$Q1 <- NULL
-    out$Q3 <- NULL
   }
 
   class(out) <- unique(c("parameters_distribution", "see_parameters_distribution", class(out)))
