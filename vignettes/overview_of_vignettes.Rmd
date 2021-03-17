@@ -14,7 +14,7 @@ editor_options:
 library(knitr)
 knitr::opts_chunk$set(
   echo = TRUE,
-  collapse = TRUE, 
+  collapse = TRUE,
   warning = FALSE,
   message = FALSE,
   comment = "#>",
@@ -22,4 +22,5 @@ knitr::opts_chunk$set(
 )
 ```
 
-Due to technical reasons, all package vignettes are currently only available at [https://easystats.github.io/parameters/](https://easystats.github.io/parameters/).
+Due to technical reasons, all package vignettes are currently only available at
+[https://easystats.github.io/parameters/](https://easystats.github.io/parameters/).
