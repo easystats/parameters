@@ -343,7 +343,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   }
 
   if (all(c("Q1", "Q3") %in% names(x))) {
-    x$Q1 <- insight::format_ci(x$Q1, x$Q3, ci = NULL, digits = digits, width = ci_width, brackets = ci_brackets)
+    x$Q1 <- insight::format_ci(x$Q1, x$Q3, ci = NULL, digits = digits, width = ci_width, brackets = FALSE)
     x$Q3 <- NULL
     colnames(x)[which(colnames(x) == "Q1")] <- "Quartiles"
   }
