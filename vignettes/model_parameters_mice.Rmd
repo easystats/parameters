@@ -17,13 +17,13 @@ bibliography: bibliography.bib
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
-options(knitr.kable.NA = '')
+options(knitr.kable.NA = "")
 options(digits = 2)
 knitr::opts_chunk$set(comment = "#>")
 
 if (!requireNamespace("mice", quietly = TRUE) ||
-    !requireNamespace("GLMMadaptive", quietly = TRUE) ||
-    !requireNamespace("lme4", quietly = TRUE)) {
+  !requireNamespace("GLMMadaptive", quietly = TRUE) ||
+  !requireNamespace("lme4", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -32,7 +32,13 @@ set.seed(333)
 
 ## Model Parameters from `mira` objects
 
-`model_parameters()` can be used in combination with the *mice* package to deal with missing data, in particular to summaries regression models used with multiple imputed datasets. It computes pooled summaries of multiple imputed repeated regression analyses, i.e. of objects of class `mira`. Thus, `model_parameters()` for `mira`-objects is comparable to the `pool()`-function from *mice*, but only focuses on the final summary of parameters and does not include the diagnostic statistic per estimate.
+`model_parameters()` can be used in combination with the *mice* package to deal
+with missing data, in particular to summaries regression models used with
+multiple imputed datasets. It computes pooled summaries of multiple imputed
+repeated regression analyses, i.e. of objects of class `mira`. Thus,
+`model_parameters()` for `mira`-objects is comparable to the `pool()`-function
+from *mice*, but only focuses on the final summary of parameters and does not
+include the diagnostic statistic per estimate.
 
 ```{r message=FALSE, warning=FALSE}
 library(mice)
@@ -45,9 +51,14 @@ fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
 model_parameters(fit)
 ```
 
-Not all packages work with `with.mids()` from package *mice*. Thus, for some modeling packages, it's not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the *GLMMadaptive* package here.
+Not all packages work with `with.mids()` from package *mice*. Thus, for some
+modeling packages, it's not possible to perform multiply imputed repeated
+analyses, i.e. you cannot work with imputed data for such models. We give an
+example for the *GLMMadaptive* package here.
 
-First, we generate a dataset with missing values. We take the data `cbpp` from *lme4* and randomly assign some missing values into one of the predictors. Then we impute the data, using `mice()` from package *mice*.
+First, we generate a dataset with missing values. We take the data `cbpp` from
+*lme4* and randomly assign some missing values into one of the predictors. Then
+we impute the data, using `mice()` from package *mice*.
 
 ```{r message=FALSE, warning=FALSE}
 library(lme4)
@@ -59,7 +70,8 @@ cbpp$period[sample(1:nrow(cbpp), size = 10)] <- NA
 imputed_data <- mice(cbpp, printFlag = FALSE)
 ```
 
-Using `with` to compute multiple regression analyses for each imputed dataset fails.
+Using `with` to compute multiple regression analyses for each imputed dataset
+fails.
 
 ```{r message=FALSE, eval=FALSE}
 fit <- with(data = imputed_data, expr = GLMMadaptive::mixed_model(
@@ -67,17 +79,24 @@ fit <- with(data = imputed_data, expr = GLMMadaptive::mixed_model(
   random = ~ 1 | herd,
   family = binomial
 ))
-#> Error in as.data.frame(data) : 
-#>   argument "data" is missing, with no default
+# > Error in as.data.frame(data) :
+# >   argument "data" is missing, with no default
 ```
 
-However, we can use a workaround by using `pool_parameters()`, which works on a list of model objects. So whenever a model-object is not yet supported by `mice::with()`, you can instead fit multiple models to the imputed datasets and pool all parameters with `pool_parameters()`:
+However, we can use a workaround by using `pool_parameters()`, which works on a
+list of model objects. So whenever a model-object is not yet supported by
+`mice::with()`, you can instead fit multiple models to the imputed datasets and
+pool all parameters with `pool_parameters()`:
 
 The steps would be:
 
-1. Calculate the regression models for each imputed dataset manually (either by using `complete()` from package *mice* to get the imputed datasets, or by accessing the datasets directly from the `mids` object)
+1. Calculate the regression models for each imputed dataset manually (either by
+   using `complete()` from package *mice* to get the imputed datasets, or by
+   accessing the datasets directly from the `mids` object)
+
 2. Save all model objects in a list.
-3. Pass the list to `pool_parameters()`. 
+
+3. Pass the list to `pool_parameters()`.
 
 ```{r message=FALSE}
 models <- lapply(1:imputed_data$m, function(i) {
@@ -91,7 +110,9 @@ models <- lapply(1:imputed_data$m, function(i) {
 pool_parameters(models)
 ```
 
-For comparison and to show that the results from `mice:pool()` and `pool_parameters()` are identical, we take an example that also works with the _mice_ package:
+For comparison and to show that the results from `mice:pool()` and
+`pool_parameters()` are identical, we take an example that also works with the
+_mice_ package:
 
 ```{r message=FALSE}
 library(mice)
@@ -110,7 +131,6 @@ models <- lapply(1:5, function(i) {
 })
 pool_parameters(models)
 ```
-
 
 ## Model Parameters from `mipo` objects
 

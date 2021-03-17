@@ -40,13 +40,34 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
 set.seed(333)
 ```
 
-The [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html) function (also accessible via the shortcut `parameters()`) can be used to calculate standardized model parameters, too, via the `standardize`-argument. There are different methods of standardizing model parameters: `"refit"`, `"posthoc"`, `"smart"` and `"basic"` (see [`?effectsize::standardize_parameters`](https://easystats.github.io/effectsize/reference/standardize_parameters.html) for further details).
+The
+[`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html)
+function (also accessible via the shortcut `parameters()`) can be used to
+calculate standardized model parameters, too, via the `standardize`-argument.
+There are different methods of standardizing model parameters: `"refit"`,
+`"posthoc"`, `"smart"` and `"basic"` (see
+[`?effectsize::standardize_parameters`](https://easystats.github.io/effectsize/reference/standardize_parameters.html)
+for further details).
 
 ## Standardization by re-fitting the model
 
-`standardize = "refit"` is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables before fitting the model. It is the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for heavy models such as, for instance, for Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms).
+`standardize = "refit"` is based on a complete model re-fit with a standardized
+version of data. Hence, this method is equal to standardizing the variables
+before fitting the model. It is the most accurate (Neter et al., 1989), but it
+is also the most computationally costly and long (especially for heavy models
+such as, for instance, for Bayesian models). This method is particularly
+recommended for complex models that include interactions or transformations
+(e.g., polynomial or spline terms).
 
-When `standardize = "refit"`, `model_parameters()` internally calls [`effectsize::standardize()`](https://easystats.github.io/effectsize/reference/standardize.html) to standardize the data that was used to fit the model and updates the model with the standardized data. Note that `effectsize::standardize()` tries to detect which variables should be standardized and which not. For instance, having a `log(x)` in the model formula would exclude `x` from being standardized, because `x` might get negative values, and thus `log(x)` would no longer be defined. Factors will also be not standardized. Response variables will be standardized, if appropriate.
+When `standardize = "refit"`, `model_parameters()` internally calls
+[`effectsize::standardize()`](https://easystats.github.io/effectsize/reference/standardize.html)
+to standardize the data that was used to fit the model and updates the model
+with the standardized data. Note that `effectsize::standardize()` tries to
+detect which variables should be standardized and which not. For instance,
+having a `log(x)` in the model formula would exclude `x` from being
+standardized, because `x` might get negative values, and thus `log(x)` would no
+longer be defined. Factors will also be not standardized. Response variables
+will be standardized, if appropriate.
 
 ```{r}
 library(lme4)
@@ -80,17 +101,33 @@ model_parameters(model2)
 
 ## Post-hoc standardization
 
-`standardize = "posthoc"` aims at emulating the results obtained by `"refit"` without refitting the model. The coefficients are divided by the standard deviation of the outcome (which becomes their expression 'unit'). Then, the coefficients related to numeric variables are additionally multiplied by the standard deviation of the related terms, so that they correspond to changes of 1 SD of the predictor (e.g., "a change in 1 SD of x is related to a change of 0.24 of the SD of y"). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.
+`standardize = "posthoc"` aims at emulating the results obtained by `"refit"`
+without refitting the model. The coefficients are divided by the standard
+deviation of the outcome (which becomes their expression 'unit'). Then, the
+coefficients related to numeric variables are additionally multiplied by the
+standard deviation of the related terms, so that they correspond to changes of 1
+SD of the predictor (e.g., "a change in 1 SD of x is related to a change of 0.24
+of the SD of y"). This does not apply to binary variables or factors, so the
+coefficients are still related to changes in levels.
 
-This method is not accurate and tends to give aberrant results when interactions are specified. However, this method of standardization is the "classic" result obtained by many statistical packages when standardized coefficients are requested.
+This method is not accurate and tends to give aberrant results when interactions
+are specified. However, this method of standardization is the "classic" result
+obtained by many statistical packages when standardized coefficients are
+requested.
 
-When `standardize = "posthoc"`, `model_parameters()` internally calls [`effectsize::standardize_parameters(method = "posthoc")`](https://easystats.github.io/effectsize/reference/standardize_parameters.html). Test statistic and p-values are not affected, i.e. they are the same as if no standardization would be applied.
+When `standardize = "posthoc"`, `model_parameters()` internally calls
+[`effectsize::standardize_parameters(method = "posthoc")`](https://easystats.github.io/effectsize/reference/standardize_parameters.html).
+Test statistic and p-values are not affected, i.e. they are the same as if no
+standardization would be applied.
 
 ```{r}
 model_parameters(model, standardize = "posthoc")
 ```
 
-`standardize = "basic"` also applies post-hoc standardization, however, factors are converted to numeric, which means that it also scales the coefficient by the standard deviation of model's matrix' parameter of factor levels (transformed to integers) or binary predictors.
+`standardize = "basic"` also applies post-hoc standardization, however, factors
+are converted to numeric, which means that it also scales the coefficient by the
+standard deviation of model's matrix' parameter of factor levels (transformed to
+integers) or binary predictors.
 
 ```{r}
 model_parameters(model, standardize = "basic")
@@ -98,8 +135,15 @@ model_parameters(model, standardize = "basic")
 
 ## Smart standardization
 
-`standardize = "smart"` is similar to `standardize = "posthoc"` in that it does not involve model re-fitting. The difference is that the SD of the response is computed on the relevant section of the data. For instance, if a factor with 3 levels A (the intercept), B and C is entered as a predictor, the effect corresponding to B vs. A will be scaled by the variance of the response at the intercept only. As a results, the coefficients for effects of factors are similar to a Glass' delta.
+`standardize = "smart"` is similar to `standardize = "posthoc"` in that it does
+not involve model re-fitting. The difference is that the SD of the response is
+computed on the relevant section of the data. For instance, if a factor with 3
+levels A (the intercept), B and C is entered as a predictor, the effect
+corresponding to B vs. A will be scaled by the variance of the response at the
+intercept only. As a results, the coefficients for effects of factors are
+similar to a Glass' delta.
 
 ```{r}
 model_parameters(model, standardize = "smart")
 ```
+
