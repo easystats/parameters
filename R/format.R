@@ -342,6 +342,12 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     colnames(x)[which(colnames(x) == "Min")] <- "Range"
   }
 
+  if (all(c("Q1", "Q3") %in% names(x))) {
+    x$Q1 <- insight::format_ci(x$Q1, x$Q3, ci = NULL, digits = digits, width = ci_width, brackets = FALSE)
+    x$Q3 <- NULL
+    colnames(x)[which(colnames(x) == "Q1")] <- "Quartiles"
+  }
+
   if (all(c("CI_low", "CI_high") %in% names(x))) {
     x$CI_low <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = ci_width, brackets = ci_brackets)
     x$CI_high <- NULL
