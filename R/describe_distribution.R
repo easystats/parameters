@@ -111,8 +111,8 @@ describe_distribution.numeric <- function(x,
     out <- cbind(
       out,
       data.frame(
-        Q1 = quantile(x, probs = 0.25, na.rm = TRUE),
-        Q3 = quantile(x, probs = 0.75, na.rm = TRUE)
+        Q1 = stats::quantile(x, probs = 0.25, na.rm = TRUE),
+        Q3 = stats::quantile(x, probs = 0.75, na.rm = TRUE)
       )
     )
   }
