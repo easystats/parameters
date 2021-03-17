@@ -36,7 +36,12 @@ Authors@R:
            family = "Arel-Bundock",
            role = c("ctb"),
            email = "vincent.arel-bundock@umontreal.ca",
-           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@vincentab"))
+           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@vincentab")),
+    person(given = "Jeffrey",
+           family = "Girard",
+           role = c("ctb"),
+           email = "me@jmgirard.com",
+           comment = c(ORCID = "0000-0002-7359-3746", Twitter = "@jeffreymgirard"))
   )
 Description: Utilities for processing the parameters of various
     statistical models. Beyond computing p values, CIs, and other indices
