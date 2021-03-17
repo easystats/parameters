@@ -180,7 +180,10 @@ describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...
   if (is.null(dot.arguments[["iqr"]])) {
     out$IQR <- NULL
   }
-
+  if (is.null(dot.arguments[["quartiles"]])) {
+    out$Q1 <- NULL
+    out$Q3 <- NULL
+  }
 
   if (!range) {
     out$Min <- NULL
@@ -232,8 +235,12 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
   if (is.null(dot.arguments[["iqr"]])) {
     out$IQR <- NULL
   }
+  if (is.null(dot.arguments[["quartiles"]])) {
+    out$Q1 <- NULL
+    out$Q3 <- NULL
+  }
 
-  
+
   if (!range) {
     out$Min <- NULL
     out$Max <- NULL
