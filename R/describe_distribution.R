@@ -177,14 +177,13 @@ describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...
     out$CI_low <- NULL
     out$CI_high <- NULL
   }
-  if (is.null(dot.arguments[["iqr"]])) {
+  if (is.null(dot.arguments[["iqr"]]) || isFALSE(dot.arguments[["iqr"]])) {
     out$IQR <- NULL
   }
-  if (is.null(dot.arguments[["quartiles"]])) {
+  if (is.null(dot.arguments[["quartiles"]]) || isFALSE(dot.arguments[["quartiles"]])) {
     out$Q1 <- NULL
     out$Q3 <- NULL
   }
-
   if (!range) {
     out$Min <- NULL
     out$Max <- NULL
@@ -232,14 +231,13 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
     out$CI_low <- NULL
     out$CI_high <- NULL
   }
-  if (is.null(dot.arguments[["iqr"]])) {
+  if (is.null(dot.arguments[["iqr"]]) || isFALSE(dot.arguments[["iqr"]])) {
     out$IQR <- NULL
   }
-  if (is.null(dot.arguments[["quartiles"]])) {
+  if (is.null(dot.arguments[["quartiles"]]) || isFALSE(dot.arguments[["quartiles"]])) {
     out$Q1 <- NULL
     out$Q3 <- NULL
   }
-
 
   if (!range) {
     out$Min <- NULL
