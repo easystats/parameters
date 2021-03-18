@@ -87,5 +87,5 @@ describe_distribution(rnorm(100))
 
 data(iris)
 describe_distribution(iris)
-describe_distribution(iris, include_factors = TRUE)
+describe_distribution(iris, include_factors = TRUE, quartiles = TRUE)
 }
