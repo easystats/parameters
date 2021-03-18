@@ -142,10 +142,27 @@ model_parameters.robtab <- function(model, verbose = TRUE, ...) {
 }
 
 .extract_wrs2_robtab <- function(model) {
+  fcall <- .safe_deparse(model$call)
+
+  # dataframe
   out <- as.data.frame(model$partable)
 
   # rename to `eaystats` conventions
-  names(out)[1:3] <- c("Group1", "Group2", "p")
+  if (grepl("^(discmcp\\(|WRS2::discmcp\\()", fcall)) {
+    names(out)[1:3] <- c("Group1", "Group2", "p")
+  }
+
+  if (grepl("^(discstep\\(|WRS2::discstep\\()", fcall)) {
+    names(out)[1:2] <- c("Groups", "p")
+  }
+
+  if (grepl("^(binband\\(|WRS2::binband\\()", fcall)) {
+    names(out)[1:4] <- c("Value", "Probability1", "Probability2", "Difference")
+    if ("p.value" %in% names(out)) {
+      out$p <- out$p.value
+      out <- subset(out, select = -c(p.value))
+    }
+  }
 
   out
 }
