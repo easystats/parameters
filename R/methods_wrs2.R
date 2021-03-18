@@ -109,6 +109,13 @@ model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
 #' @export
 model_parameters.mcp2 <- model_parameters.mcp1
 
+#' @export
+model_parameters.robtab <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_robtab(model)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
 
 # WRS2 post hoc comparisons ----------------------
 
@@ -117,7 +124,7 @@ model_parameters.mcp2 <- model_parameters.mcp1
   out <- as.data.frame(model$comp)
 
   # rename to `eaystats` conventions
-  names(out)[1:5] <- c("Group1", "Group2", "Psihat", "CI_low", "CI_high")
+  names(out)[1:6] <- c("Group1", "Group2", "Psihat", "CI_low", "CI_high", "p")
 
   # convert names to character
   out$Group1 <- model$fnames[model$comp[, 1]]
@@ -127,9 +134,18 @@ model_parameters.mcp2 <- model_parameters.mcp1
   out$CI <- .95
 
   # reorder
-  col_order <- c("Group1", "Group2", "Psihat", "CI", "CI_low", "CI_high", "p.value", "p.crit")
+  col_order <- c("Group1", "Group2", "Psihat", "CI", "CI_low", "CI_high", "p", "p.crit")
   out <- out[col_order[col_order %in% names(out)]]
   out
+
+  out
+}
+
+.extract_wrs2_robtab <- function(model) {
+  out <- as.data.frame(model$partable)
+
+  # rename to `eaystats` conventions
+  names(out)[1:3] <- c("Group1", "Group2", "p")
 
   out
 }
