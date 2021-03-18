@@ -2,8 +2,8 @@
 
 ## New supported model classes
 
-* `blrm` (*rmsb*), `AKP` (*WRS2*), `epi.2by2` (*epiR*), `mjoint` (*joineRML*),
-  `mhurdle` (*mhurdle*), `sarlm` (*spatialreg*)
+* `blrm` (*rmsb*), `AKP`, `med1way` (*WRS2*), `epi.2by2` (*epiR*), `mjoint`
+  (*joineRML*), `mhurdle` (*mhurdle*), `sarlm` (*spatialreg*)
 
 ## Changes to functions
 
