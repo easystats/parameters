@@ -192,6 +192,7 @@ centrality, dispersion, range, skewness, kurtosis).</p>
   dispersion <span class='op'>=</span> <span class='cn'>TRUE</span>,
   iqr <span class='op'>=</span> <span class='cn'>TRUE</span>,
   range <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  quartiles <span class='op'>=</span> <span class='cn'>FALSE</span>,
   ci <span class='op'>=</span> <span class='cn'>NULL</span>,
   iterations <span class='op'>=</span> <span class='fl'>100</span>,
   threshold <span class='op'>=</span> <span class='fl'>0.1</span>,
@@ -208,6 +209,7 @@ centrality, dispersion, range, skewness, kurtosis).</p>
   dispersion <span class='op'>=</span> <span class='cn'>TRUE</span>,
   iqr <span class='op'>=</span> <span class='cn'>TRUE</span>,
   range <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  quartiles <span class='op'>=</span> <span class='cn'>FALSE</span>,
   include_factors <span class='op'>=</span> <span class='cn'>FALSE</span>,
   ci <span class='op'>=</span> <span class='cn'>NULL</span>,
   iterations <span class='op'>=</span> <span class='fl'>100</span>,
@@ -242,6 +244,10 @@ centrality, dispersion, range, skewness, kurtosis).</p>
     <tr>
       <th>range</th>
       <td><p>Return the range (min and max).</p></td>
+    </tr>
+    <tr>
+      <th>quartiles</th>
+      <td><p>Return the first and third quartiles (25th and 75pth percentiles).</p></td>
     </tr>
     <tr>
       <th>ci</th>

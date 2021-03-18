@@ -142,20 +142,15 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"qol_cancer"</span><span class="op">)</span></code></pre></div>
 <ul>
-<li>Variables:
+<li>
+<p>Variables:</p>
 <ul>
-<li>
-<code>QoL</code> : Response (quality of life of patient)</li>
-<li>
-<code>phq4</code> : Patient Health Questionnaire, <strong>time-varying</strong> variable</li>
-<li>
-<code>hospital</code> : Location of treatment, <strong>time-invariant</strong> variable, co-variate</li>
-<li>
-<code>education</code>: Educational level, <strong>time-invariant</strong> variable, co-variate</li>
-<li>
-<code>ID</code> : patient ID</li>
-<li>
-<code>time</code> : time-point of measurement</li>
+<li><p><code>QoL</code> : Response (quality of life of patient)</p></li>
+<li><p><code>phq4</code> : Patient Health Questionnaire, <strong>time-varying</strong> variable</p></li>
+<li><p><code>hospital</code> : Location of treatment, <strong>time-invariant</strong> variable, co-variate</p></li>
+<li><p><code>education</code>: Educational level, <strong>time-invariant</strong> variable, co-variate</p></li>
+<li><p><code>ID</code> : patient ID</p></li>
+<li><p><code>time</code> : time-point of measurement</p></li>
 </ul>
 </li>
 </ul>
@@ -184,22 +179,20 @@
 <span class="op">)</span></code></pre></div>
 <p>Now we have:</p>
 <ul>
-<li>
-<code>phq4_between</code>: time-varying variable with the mean of <code>phq4</code> across all time-points, for each patient (ID).</li>
-<li>
-<code>phq4_within</code>: the de-meaned time-varying variable <code>phq4</code>.</li>
+<li><p><code>phq4_between</code>: time-varying variable with the mean of <code>phq4</code> across all time-points, for each patient (ID).</p></li>
+<li><p><code>phq4_within</code>: the de-meaned time-varying variable <code>phq4</code>.</p></li>
 </ul>
 <p>A FE model is a classical linear model, where</p>
 <ul>
-<li>Intercept is removed</li>
-<li>time-invariant predictors are not allowed to be included</li>
-<li>the group-level factor is included as predictor</li>
-<li>time-varying predictors are de-meaned (“person-mean centered”, indicating the “within-subject” effect)</li>
+<li><p>Intercept is removed</p></li>
+<li><p>time-invariant predictors are not allowed to be included</p></li>
+<li><p>the group-level factor is included as predictor</p></li>
+<li><p>time-varying predictors are de-meaned (“person-mean centered”, indicating the “within-subject” effect)</p></li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fe_model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span>
   <span class="va">QoL</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">ID</span>,
-   data <span class="op">=</span> <span class="va">qol_cancer</span>
+  data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
 <span class="co"># we use only the first two rows, because the remaining rows are</span>
 <span class="co"># the estimates for "ID", which is not of interest here...</span>
@@ -210,11 +203,11 @@
 <span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span>
 
 
-<span class="co"># instead of removing the intercept, we could also use the </span>
+<span class="co"># instead of removing the intercept, we could also use the</span>
 <span class="co"># de-meaned response...</span>
 <span class="va">fe_model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span>
   <span class="va">QoL_within</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">ID</span>,
-   data <span class="op">=</span> <span class="va">qol_cancer</span>
+  data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model2</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, <span class="op">]</span>
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
@@ -233,16 +226,16 @@
 <p>But how can this issue be addressed outside the FE framework?</p>
 <p>There are several ways how to address this using a mixed models approach:</p>
 <ul>
-<li>Correlated group factors and predictors are no problem anyway, because <a href="https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/" class="external-link">partial pooling</a> allows estimates of units o borrow strength from the whole sample and shrink toward a common mean (<span class="citation">Shor et al. (2007)</span>).</li>
-<li>If predictor and group factors correlate, one can remove this correlation by group-meaning <span class="citation">(or “mean within clusters”, Bafumi and Gelman 2006; Gelman and Hill 2007, Chap. 12.6.)</span>.</li>
-<li>When time-varying predictors are “decomposed” into their time-varying and time-invariant components (demeaning), then mixed models can model <strong>both</strong> within- and between-subject effects <span class="citation">(Bell, Fairbrother, and Jones 2019)</span> - this approach is essentially a further development of a long-known recommendation by Mundlak <span class="citation">(Mundlak 1978)</span>.</li>
+<li><p>Correlated group factors and predictors are no problem anyway, because <a href="https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/" class="external-link">partial pooling</a> allows estimates of units o borrow strength from the whole sample and shrink toward a common mean (<span class="citation">Shor et al. (2007)</span>).</p></li>
+<li><p>If predictor and group factors correlate, one can remove this correlation by group-meaning <span class="citation">(or “mean within clusters”, Bafumi and Gelman 2006; Gelman and Hill 2007, Chap. 12.6.)</span>.</p></li>
+<li><p>When time-varying predictors are “decomposed” into their time-varying and time-invariant components (demeaning), then mixed models can model <strong>both</strong> within- and between-subject effects <span class="citation">(Bell, Fairbrother, and Jones 2019)</span> - this approach is essentially a further development of a long-known recommendation by Mundlak <span class="citation">(Mundlak 1978)</span>.</p></li>
 </ul>
 <p>For now, we will follow the last recommendation and use the within- and between-version of <code>phq4</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span>
 <span class="va">mixed_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span>
   <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">phq4_between</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">ID</span><span class="op">)</span>,
-   data <span class="op">=</span> <span class="va">qol_cancer</span>
+  data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_1</span><span class="op">)</span>
 <span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(558) |      p</span>
@@ -273,7 +266,7 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mixed_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span>
   <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">phq4_between</span> <span class="op">+</span> <span class="va">education</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">|</span> <span class="va">ID</span><span class="op">)</span>,
-   data <span class="op">=</span> <span class="va">qol_cancer</span>
+  data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_2</span><span class="op">)</span>
 <span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI | t(554) |      p</span>
@@ -321,9 +314,9 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <p>In R-code, the model is written down like this:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rewb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span>
-  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">phq4_between</span> <span class="op">+</span> <span class="va">education</span> <span class="op">+</span> 
+  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">phq4_between</span> <span class="op">+</span> <span class="va">education</span> <span class="op">+</span>
     <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">|</span> <span class="va">ID</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">|</span> <span class="va">ID</span><span class="op">)</span>,
-   data <span class="op">=</span> <span class="va">qol_cancer</span>
+  data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span></code></pre></div>
 <p><strong>What about time-constant predictors?</strong></p>
 <p>After demeaning time-varying predictors, “at the higher level, the mean term is no longer constrained by Level 1 effects, so it is free to account for all the higher-level variance associated with that variable” <span class="citation">(Bell and Jones 2015)</span>.</p>
@@ -385,9 +378,11 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span> <span class="op">*</span> <span class="va">n</span>, <span class="fl">2</span><span class="op">)</span>
 
 <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span>,
-             y <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">+</span> <span class="va">b</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">21</span><span class="op">)</span>,
-             grp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
+    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span>,
+    y <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">+</span> <span class="va">b</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">21</span><span class="op">)</span>,
+    grp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">i</span><span class="op">)</span>
+  <span class="op">)</span>
 <span class="op">}</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d</span> <span class="op">%&gt;%</span>
@@ -400,12 +395,12 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 
 <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">d</span>, <span class="fu"><a href="../reference/check_heterogeneity.html">demean</a></span><span class="op">(</span><span class="va">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"grp"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let’s look at the raw data…</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
 <div id="model-1-linear-relationship-between-typing-errors-and-typing-speed" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-1-linear-relationship-between-typing-errors-and-typing-speed" class="anchor"></a>Model 1: Linear relationship between typing errors and typing speed</h2>
 <p>We can now assume a (linear) relationship between typing errors and typing speed.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-15-1.png" width="100%"></p>
 <p>Looking at the coefficients, we have following model with a coefficient of <code>-1.92</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
@@ -415,13 +410,13 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; (Intercept) |       30.20 | 1.42 | [27.39, 33.00] |  21.34 | &lt; .001</span>
 <span class="co">#&gt; x           |       -1.92 | 0.18 | [-2.27, -1.56] | -10.69 | &lt; .001</span></code></pre></div>
 <p>However, we have ignored the clustered structure in our data, in this example due to repeated measurements.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-17-1.png" width="100%"></p>
 </div>
 <div id="model-2-within-subject-effect-of-typing-speed" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-2-within-subject-effect-of-typing-speed" class="anchor"></a>Model 2: Within-subject effect of typing speed</h2>
 <p>A fixed effects regression (FE-regression) would now remove all between-effects and include only the within-effects as well as the group-level indicator.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-18-1.png" width="100%"></p>
 <p>This returns the coefficient of the “within”-effect, which is <code>1.2</code>, with a standard error of <code>0.07</code>. Note that the FE-model does <em>not</em> take the variation <em>between</em> subjects into account, thus resulting in (possibly) biased estimates, and biased standard errors.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="va">grp</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
@@ -434,7 +429,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <h2 class="hasAnchor">
 <a href="#model-3-between-subject-effect-of-typing-speed" class="anchor"></a>Model 3: Between-subject effect of typing speed</h2>
 <p>To understand, why the above model 1 (<code>m1</code>) returns a biased estimate, which is a “weighted average” of the within- and between-effects, let us look at the between-effect now.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-20-1.png" width="100%"></p>
 <p>As we can see, the between-effect is <code>-2.93</code>, which is different from the <code>-1.92</code> estimated in the model <code>m1</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
@@ -448,7 +443,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <h2 class="hasAnchor">
 <a href="#model-4-mixed-model-with-within--and-between-subjects" class="anchor"></a>Model 4: Mixed model with within- and between-subjects</h2>
 <p>Since FE-models can only model within-effects, we now use a mixed model with within- and between-effects.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-22-1.png" width="100%"></p>
 <p>We see, the estimate for the within-effects is <em>not</em> biased. Furthermore, we get the correct between-effect as well (standard errors differ, because the variance in the grouping structure is more accurately taken into account).</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
@@ -506,9 +501,11 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span> <span class="op">*</span> <span class="va">n</span>, <span class="fl">2</span><span class="op">)</span>
 
 <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span>,
-             y <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">+</span> <span class="va">b</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">21</span><span class="op">)</span>,
-             grp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
+    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span>,
+    y <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">+</span> <span class="va">b</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">21</span><span class="op">)</span>,
+    grp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">i</span><span class="op">)</span>
+  <span class="op">)</span>
 <span class="op">}</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># create imbalanced groups</span>

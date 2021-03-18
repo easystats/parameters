@@ -171,14 +171,14 @@
   random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">herd</span>,
   family <span class="op">=</span> <span class="va">binomial</span>
 <span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Error in as.data.frame(data) : </span>
-<span class="co">#&gt;   argument "data" is missing, with no default</span></code></pre></div>
+<span class="co"># &gt; Error in as.data.frame(data) :</span>
+<span class="co"># &gt;   argument "data" is missing, with no default</span></code></pre></div>
 <p>However, we can use a workaround by using <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>, which works on a list of model objects. So whenever a model-object is not yet supported by <code>mice::with()</code>, you can instead fit multiple models to the imputed datasets and pool all parameters with <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>:</p>
 <p>The steps would be:</p>
 <ol style="list-style-type: decimal">
-<li>Calculate the regression models for each imputed dataset manually (either by using <code><a href="https://amices.org/mice/reference/complete.mids.html" class="external-link">complete()</a></code> from package <em>mice</em> to get the imputed datasets, or by accessing the datasets directly from the <code>mids</code> object)</li>
-<li>Save all model objects in a list.</li>
-<li>Pass the list to <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>.</li>
+<li><p>Calculate the regression models for each imputed dataset manually (either by using <code><a href="https://amices.org/mice/reference/complete.mids.html" class="external-link">complete()</a></code> from package <em>mice</em> to get the imputed datasets, or by accessing the datasets directly from the <code>mids</code> object)</p></li>
+<li><p>Save all model objects in a list.</p></li>
+<li><p>Pass the list to <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>.</p></li>
 </ol>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">imputed_data</span><span class="op">$</span><span class="va">m</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
