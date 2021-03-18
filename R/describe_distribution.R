@@ -31,7 +31,7 @@
 #'
 #' data(iris)
 #' describe_distribution(iris)
-#' describe_distribution(iris, include_factors = TRUE)
+#' describe_distribution(iris, include_factors = TRUE, quartiles = TRUE)
 #' @export
 describe_distribution <- function(x, ...) {
   UseMethod("describe_distribution")

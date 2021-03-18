@@ -68,14 +68,26 @@ robust estimation:
 
 Let us start with a simple example, which uses a heteroskedasticity-consistent
 covariance matrix estimation with estimation-type "HC3" (i.e.
-`sandwich::vcovHC(type = "HC3")`). We would extract model parameters both with
-and without robust estimation to highlight difference it makes to standard
-errors, confidence intervals, and *p*-values. Also, note that the coefficient estimate and the statistic associated with it remain unchanged.
+`sandwich::vcovHC(type = "HC3")`). 
+
+First let's create a simple linear regression model, which we know violates
+homoscedasticity assumption, and thus robust estimation methods are to be
+considered.
 
 ```{r}
-data(iris)
-model <- lm(Petal.Length ~ Sepal.Length * Species + Sepal.Width, data = iris)
+data(cars)
+model <- lm(dist ~ speed, data = cars)
 
+library(performance)
+check_heteroscedasticity(model)
+```
+
+We would extract model parameters both with and without robust estimation to
+highlight difference it makes to standard errors, confidence intervals, and
+*p*-values. Also, note that the coefficient estimate and the *t*-statistic
+associated with it remain unchanged.
+
+```{r}
 # model parameters, where SE, CI, and p-values are *not* based on robust estimation
 model_parameters(model)
 
@@ -102,6 +114,10 @@ example, we use a clustered covariance matrix estimation with `HC1`-estimation
 type.
 
 ```{r}
+# let's create a more complicated model
+data(iris)
+model <- lm(Petal.Length ~ Sepal.Length * Species + Sepal.Width, data = iris)
+
 # change estimation-type
 mp <- model_parameters(
   model,
@@ -180,7 +196,7 @@ However, robust covariance matrix estimation only works for `standardize = "refi
 model_parameters(model, standardize = "refit", robust = TRUE)
 ```
 
-## Linear Mixed-Effects Models
+## Linear Mixed-Effects Regression Models
 
 ### Robust Covariance Matrix Estimation for Mixed Models
 
