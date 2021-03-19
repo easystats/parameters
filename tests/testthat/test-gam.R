@@ -46,7 +46,7 @@ if (require("testthat") &&
       )
       expect_equal(
         mp$df_error,
-        c(383.04913, 383.04913, 383.04913, 383.04913, 383.04913),
+        c(383.04913, NA, NA, NA, NA),
         tolerance = 1e-3
       )
     })

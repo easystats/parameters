@@ -71,6 +71,11 @@ model_parameters.gam <- function(model,
     verbose = verbose,
     ...
   )
+
+  if ("CI" %in% colnames(parameters)) {
+    parameters$CI[is.na(parameters$CI_low)] <- NA
+  }
+
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
