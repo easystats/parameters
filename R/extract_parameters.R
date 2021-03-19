@@ -105,7 +105,7 @@
     if (!is.null(ci_df)) {
       if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
-      parameters <- merge(parameters, ci_df, by = merge_by)
+      parameters <- merge(parameters, ci_df, by = merge_by, sort = FALSE)
     } else {
       ci_cols <- c()
     }
@@ -135,7 +135,7 @@
   }
 
   if (!is.null(pval)) {
-    parameters <- merge(parameters, pval, by = merge_by)
+    parameters <- merge(parameters, pval, by = merge_by, sort = FALSE)
   }
 
 
@@ -162,7 +162,7 @@
   }
 
   if (!is.null(std_err)) {
-    parameters <- merge(parameters, std_err, by = merge_by)
+    parameters <- merge(parameters, std_err, by = merge_by, sort = FALSE)
   }
 
 
@@ -171,7 +171,7 @@
   if (isTRUE(robust)) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else if (!is.null(statistic)) {
-    parameters <- merge(parameters, statistic, by = merge_by)
+    parameters <- merge(parameters, statistic, by = merge_by, sort = FALSE)
   }
 
 
@@ -182,7 +182,9 @@
     df_error <- degrees_of_freedom(model, method = "any")
   }
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
-    parameters$df_error <- df_error
+    # order may have changed due to merging, so make sure
+    # df are in correct order.
+    parameters$df_error <- df_error[order(parameters$.id)]
   }
 
 
@@ -376,7 +378,7 @@
     }
     if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
-    parameters <- merge(parameters, ci_df, by = "Parameter")
+    parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
   } else {
     ci_cols <- c()
   }
@@ -385,30 +387,30 @@
   # standard error - only if we don't already have SE for std. parameters
   if (!("SE" %in% colnames(parameters))) {
     if (isTRUE(robust)) {
-      parameters <- merge(parameters, standard_error_robust(model, ...), by = "Parameter")
+      parameters <- merge(parameters, standard_error_robust(model, ...), by = "Parameter", sort = FALSE)
       # special handling for KR-SEs, which we already have computed from dof
     } else if ("SE" %in% colnames(df_error)) {
       se_kr <- df_error
       se_kr$df_error <- NULL
-      parameters <- merge(parameters, se_kr, by = "Parameter")
+      parameters <- merge(parameters, se_kr, by = "Parameter", sort = FALSE)
     } else {
-      parameters <- merge(parameters, standard_error(model, method = df_method, effects = "fixed"), by = "Parameter")
+      parameters <- merge(parameters, standard_error(model, method = df_method, effects = "fixed"), by = "Parameter", sort = FALSE)
     }
   }
 
 
   # p value
   if (isTRUE(robust)) {
-    parameters <- merge(parameters, p_value_robust(model, ...), by = "Parameter")
+    parameters <- merge(parameters, p_value_robust(model, ...), by = "Parameter", sort = FALSE)
   } else {
     if ("Pr(>|z|)" %in% names(parameters)) {
       names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
     } else if (df_method %in% special_df_methods) {
       # special handling for KR-p, which we already have computed from dof
       # parameters <- merge(parameters, .p_value_dof_kr(model, params = parameters, dof = df_error), by = "Parameter")
-      parameters <- merge(parameters, .p_value_dof(model, dof = df_error$df_error, method = df_method, se = df_error$SE), by = "Parameter")
+      parameters <- merge(parameters, .p_value_dof(model, dof = df_error$df_error, method = df_method, se = df_error$SE), by = "Parameter", sort = FALSE)
     } else {
-      parameters <- merge(parameters, p_value(model, dof = df, effects = "fixed"), by = "Parameter")
+      parameters <- merge(parameters, p_value(model, dof = df, effects = "fixed"), by = "Parameter", sort = FALSE)
     }
   }
 
@@ -417,7 +419,7 @@
   if (isFALSE(robust) && df_method %in% special_df_methods) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
-    parameters <- merge(parameters, statistic, by = "Parameter")
+    parameters <- merge(parameters, statistic, by = "Parameter", sort = FALSE)
   }
 
 
@@ -434,7 +436,7 @@
       if ("SE" %in% colnames(df_error)) {
         df_error$SE <- NULL
       }
-      parameters <- merge(parameters, df_error, by = "Parameter")
+      parameters <- merge(parameters, df_error, by = "Parameter", sort = FALSE)
     }
   }
 

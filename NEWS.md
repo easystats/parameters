@@ -45,6 +45,9 @@
 
 * Fixed issue with `show_sigma` in `print()` for `model_parameters()`.
 
+* Fixed issue in `model_parameters()` with incorrect order of degrees of
+  freedom.
+
 # parameters 0.12.0
 
 ## General
