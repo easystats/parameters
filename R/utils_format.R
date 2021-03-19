@@ -81,12 +81,15 @@
 # sophisticated, to ensure nicely outputs even for complicated or complex models,
 # or edge cases...
 
+#' @importFrom insight format_value
+#' @importFrom stats quantile
 #' @keywords internal
 .print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, zap_small = FALSE, ...) {
   final_table <- list()
 
   ignore_group <- isTRUE(attributes(x)$ignore_group)
   ran_pars <- isTRUE(attributes(x)$ran_pars)
+    is_ggeffects <- isTRUE(attributes(x)$is_ggeffects)
 
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -211,7 +214,17 @@
       tables[[type]]$CI <- NULL
     }
 
-    formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
+    # for ggeffects objects, only choose selectes lines, to have
+    # a more compact output
+    if (is_ggeffects && is.numeric(tables[[type]][[1]])) {
+      n_rows <- nrow(tables[[type]])
+      row_steps <- round(sqrt(n_rows))
+      sample_rows <- round(c(1, stats::quantile(seq_len(n_rows), seq_len(row_steps - 2) / row_steps), n_rows))
+      tables[[type]] <- tables[[type]][sample_rows, ]
+      tables[[type]][[1]] <- insight::format_value(tables[[type]][[1]], digits = digits, protect_integers = TRUE)
+    }
+
+    formatted_table <- insight::format_table(tables[[type]], digits = digits, ci_digits = ci_digits, p_digits = p_digits, pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
     component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars)
 
     # exceptions for random effects
@@ -382,7 +395,10 @@
 
   # tweaking of sub headers
 
-  if ("DirichletRegModel" %in% attributes(x)$model_class) {
+  if (isTRUE(attributes(x)$is_ggeffects)) {
+    s1 <- gsub("(.*)\\.(.*) = (.*)", "\\1 (\\2 = \\3)", component_name)
+    s2 <- ""
+  } else if ("DirichletRegModel" %in% attributes(x)$model_class) {
     if (grepl("^conditional\\.", component_name) || split_column == "Response") {
       s1 <- "Response level:"
       s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)
