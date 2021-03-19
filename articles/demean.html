@@ -210,10 +210,10 @@
   data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model2</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, <span class="op">]</span>
-<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
-<span class="co">#&gt; -------------------------------------------------------------------</span>
-<span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span>
-<span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></code></pre></div>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |     t |      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------</span>
+<span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 0.089 </span>
+<span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] | -8.95 | &lt; .001</span></code></pre></div>
 <p>As we can see, the <em>within-effect</em> of PHQ-4 is <code>-3.66</code>, hence the mean of the change for an average individual case in our sample (or, the “net” effect), is <code>-3.66</code>.</p>
 <p>But what about the between-effect? How do people with higher PHQ-4 score differ from people with lower PHQ-4 score? Or what about educational inequalities? Do higher educated people have a higher PHQ-4 score than lower educated people?</p>
 <p>This question cannot be answered with FE regression. But: “Can one fit a multilevel model with varying intercepts (or coefficients) when the units and predictors correlate? The answer is yes. And the solution is simple.” <span class="citation">(Bafumi and Gelman 2006)</span></p>
