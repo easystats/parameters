@@ -47,7 +47,18 @@
 
 
 <meta property="og:title" content="Dimensionality reduction (DR) / Features Reduction — reduce_parameters" />
-<meta property="og:description" content="This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is &quot;PCA&quot;, but other are available via the method argument, such as &quot;cMDS&quot;, &quot;DRR&quot; or &quot;ICA&quot;). Then, it names this new dimensions using the original variables that correlates the most with it. For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension. Although this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a separate and dedicated stage, as this is a very important process in the data analysis workflow. reduce_data() is an alias for reduce_parameters.data.frame()." />
+<meta property="og:description" content="This function performs a reduction in the parameter space (the number of
+variables). It starts by creating a new set of variables, based on the given
+method (the default method is &quot;PCA&quot;, but other are available via the
+method argument, such as &quot;cMDS&quot;, &quot;DRR&quot; or &quot;ICA&quot;). Then, it names this
+new dimensions using the original variables that correlates the most with it.
+For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the
+V4 variables correlate maximally (with respective coefficients of .97 and
+-.88) with this dimension. Although this function can be useful in
+exploratory data analysis, it's best to perform the dimension reduction step
+in a separate and dedicated stage, as this is a very important process in the
+data analysis workflow. reduce_data() is an alias for
+reduce_parameters.data.frame()." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -64,6 +75,9 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+
+<!-- dependencies from examples -->
 
 
   
@@ -178,7 +192,18 @@
     </div>
 
     <div class="ref-description">
-    <p>This function performs a reduction in the parameters space (the number of variables). It starts by creating a new set of variables, based on a given method (the default method is "PCA", but other are available via the <code>method</code> argument, such as "cMDS", "DRR" or "ICA"). Then, it names this new dimensions using the original variables that correlates the most with it. For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the V4 variables correlate maximally (with respective coefficients of .97 and -.88) with this dimension. Although this function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a separate and dedicated stage, as this is a very important process in the data analysis workflow. <code>reduce_data()</code> is an alias for <code>reduce_parameters.data.frame()</code>.</p>
+    <p>This function performs a reduction in the parameter space (the number of
+variables). It starts by creating a new set of variables, based on the given
+method (the default method is "PCA", but other are available via the
+<code>method</code> argument, such as "cMDS", "DRR" or "ICA"). Then, it names this
+new dimensions using the original variables that correlates the most with it.
+For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the
+V4 variables correlate maximally (with respective coefficients of .97 and
+-.88) with this dimension. Although this function can be useful in
+exploratory data analysis, it's best to perform the dimension reduction step
+in a separate and dedicated stage, as this is a very important process in the
+data analysis workflow. <code>reduce_data()</code> is an alias for
+<code>reduce_parameters.data.frame()</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>reduce_parameters</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"PCA"</span>, n <span class='op'>=</span> <span class='st'>"max"</span>, distance <span class='op'>=</span> <span class='st'>"euclidean"</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -194,7 +219,8 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>The features reduction method. Can be one of 'PCA', 'cMDS', 'DRR', 'ICA' (see the Details section).</p></td>
+      <td><p>The feature reduction method. Can be one of 'PCA', 'cMDS',
+'DRR', 'ICA' (see the Details section).</p></td>
     </tr>
     <tr>
       <th>n</th>
@@ -208,7 +234,10 @@ correlated) by at least one variable.</p></td>
     </tr>
     <tr>
       <th>distance</th>
-      <td><p>The distance measure to be used. Only applies when <code>method = "cMDS"</code>. This must be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski". Any unambiguous substring can be given.</p></td>
+      <td><p>The distance measure to be used. Only applies when
+<code>method = "cMDS"</code>. This must be one of "euclidean", "maximum",
+"manhattan", "canberra", "binary" or "minkowski". Any unambiguous substring
+can be given.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -222,17 +251,36 @@ correlated) by at least one variable.</p></td>
 
 <ul>
 <li><p><strong>PCA</strong>: See <code><a href='principal_components.html'>principal_components</a></code>.</p></li>
-<li><p><strong>cMDS / PCoA</strong>: Classical Multidimensional Scaling (cMDS) takes a set of dissimilarities (i.e., a distance matrix) and returns a set of points such that the distances between the points are approximately equal to the dissimilarities.</p></li>
-<li><p><strong>DRR</strong>: Dimensionality Reduction via Regression (DRR) is a very recent technique extending PCA (Laparra et al., 2015). Starting from a rotated PCA, it predicts redundant information from the remaining components using non-linear regression. Some of the most notable advantages of performing PCR are avoidance of multicollinearity between predictors and overfitting mitigation. PCR tends to perform well when the first principal components are enough to explain most of the variation in the predictors. Requires the <span class="pkg">DRR</span> package to be installed.</p></li>
-<li><p><strong>ICA</strong>: Performs an Independent Component Analysis using the FastICA algorithm. Contrary to PCA, that attempts to find uncorrelated sources (through least squares minimization), ICA attempts to find independent sources, i.e., the source space that maximizes the "non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each source, which makes it a poor tool for dimensionality reduction. Requires the <span class="pkg">fastICA</span> package to be installed.</p></li>
+<li><p><strong>cMDS / PCoA</strong>: Classical Multidimensional Scaling (cMDS) takes a
+set of dissimilarities (i.e., a distance matrix) and returns a set of points
+such that the distances between the points are approximately equal to the
+dissimilarities.</p></li>
+<li><p><strong>DRR</strong>: Dimensionality Reduction via Regression (DRR) is a very
+recent technique extending PCA (Laparra et al., 2015). Starting from a
+rotated PCA, it predicts redundant information from the remaining components
+using non-linear regression. Some of the most notable advantages of
+performing DRR are avoidance of multicollinearity between predictors and
+overfitting mitigation. DRR tends to perform well when the first principal
+component is enough to explain most of the variation in the predictors.
+Requires the <span class="pkg">DRR</span> package to be installed.</p></li>
+<li><p><strong>ICA</strong>: Performs an Independent Component Analysis using the
+FastICA algorithm. Contrary to PCA, which attempts to find uncorrelated
+sources (through least squares minimization), ICA attempts to find
+independent sources, i.e., the source space that maximizes the
+"non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each
+source, which makes it a poor tool for dimensionality reduction. Requires the
+<span class="pkg">fastICA</span> package to be installed.</p></li>
 </ul>
 <p>See also <a href='https://CRAN.R-project.org/package=parameters/vignettes/parameters_reduction.html'>package vignette</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
-<li><p>Nguyen, L. H., \&amp; Holmes, S. (2019). Ten quick tips for effective dimensionality reduction. PLOS Computational Biology, 15(6).</p></li>
-<li><p>Laparra, V., Malo, J., &amp; Camps-Valls, G. (2015). Dimensionality reduction via regression in hyperspectral imagery. IEEE Journal of Selected Topics in Signal Processing, 9(6), 1026-1036.</p></li>
+<li><p>Nguyen, L. H., \&amp; Holmes, S. (2019). Ten quick tips for effective
+ dimensionality reduction. PLOS Computational Biology, 15(6).</p></li>
+<li><p>Laparra, V., Malo, J., &amp; Camps-Valls, G. (2015). Dimensionality
+ reduction via regression in hyperspectral imagery. IEEE Journal of Selected
+ Topics in Signal Processing, 9(6), 1026-1036.</p></li>
 </ul>
 
 
@@ -299,7 +347,7 @@ correlated) by at least one variable.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>

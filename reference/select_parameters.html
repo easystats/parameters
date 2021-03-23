@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Automated selection of model parameters — select_parameters" />
-<meta property="og:description" content="This function performs an automated selection of the 'best' parameters, updating and returning the &quot;best&quot; model." />
+<meta property="og:description" content="This function performs an automated selection of the 'best' parameters,
+updating and returning the &quot;best&quot; model." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -64,6 +65,9 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+
+<!-- dependencies from examples -->
 
 
   
@@ -178,7 +182,8 @@
     </div>
 
     <div class="ref-description">
-    <p>This function performs an automated selection of the 'best' parameters, updating and returning the "best" model.</p>
+    <p>This function performs an automated selection of the 'best' parameters,
+updating and returning the "best" model.</p>
     </div>
 
     <pre class="usage"><span class='fu'>select_parameters</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -197,7 +202,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>A statistical model (of class <code>lm</code>, <code>glm</code>, <code>merMod</code>, <code>stanreg</code> or <code>brmsfit</code>).</p></td>
+      <td><p>A statistical model (of class <code>lm</code>, <code>glm</code>,
+<code>merMod</code>, <code>stanreg</code> or <code>brmsfit</code>).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -240,12 +246,16 @@
     
 <h3 class='hasAnchor' id='classical-lm-and-glm'><a class='anchor' href='#classical-lm-and-glm'></a>Classical lm and glm</h3>
 <p>For frequentist GLMs, <code>select_parameters()</code> performs an AIC-based
-    stepwise selection.</p><p></p><h3 class='hasAnchor' id='mixed-models'><a class='anchor' href='#mixed-models'></a>Mixed models</h3>
-<p>For mixed models of class <code>merMod</code>, stepwise selection is
+    stepwise selection.</p>
+
+<p></p><h3 class='hasAnchor' id='mixed-models'><a class='anchor' href='#mixed-models'></a>Mixed models</h3>
+<p>For mixed-effects models of class <code>merMod</code>, stepwise selection is
     based on <code><a href='https://rdrr.io/pkg/cAIC4/man/stepcAIC.html'>stepcAIC()</a></code>. This step function
-    only searches the "best" model based on the random effects structure,
-    i.e. <code>select_parameters()</code> adds or excludes random effects until
-    the cAIC can't be improved further.</p><p></p><h3 class='hasAnchor' id='bayesian-models'><a class='anchor' href='#bayesian-models'></a>Bayesian models</h3>
+    only searches the "best" model based on the random-effects structure,
+    i.e. <code>select_parameters()</code> adds or excludes random-effects until
+    the cAIC can't be improved further.</p>
+
+<p></p><h3 class='hasAnchor' id='bayesian-models'><a class='anchor' href='#bayesian-models'></a>Bayesian models</h3>
 <p>For Bayesian models, it uses the <span class="pkg">projpred</span> package.</p>
 
 
@@ -339,7 +349,7 @@
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>

@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Principal Component Analysis (PCA) — principal_components" />
-<meta property="og:description" content="This function performs a principal component analysis (PCA) and returns the loadings as a data frame." />
+<meta property="og:description" content="This function performs a principal component analysis (PCA) and returns the
+loadings as a data frame." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -64,6 +65,9 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+
+<!-- dependencies from examples -->
 
 
   
@@ -178,7 +182,8 @@
     </div>
 
     <div class="ref-description">
-    <p>This function performs a principal component analysis (PCA) and returns the loadings as a data frame.</p>
+    <p>This function performs a principal component analysis (PCA) and returns the
+loadings as a data frame.</p>
     </div>
 
     <pre class="usage"><span class='fu'>principal_components</span><span class='op'>(</span>
@@ -238,7 +243,7 @@ structure).</p></td>
       <th>standardize</th>
       <td><p>A logical value indicating whether the variables should be
 standardized (centered and scaled) to have unit variance before the
-analysis takes place (in general, such scaling is advisable).</p></td>
+analysis (in general, such scaling is advisable).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -278,35 +283,43 @@ predicted data and original data is equal.</p></td>
    for the observed variables. Whereas a perfect simple structure solution
    has a complexity of 1 in that each item would only load on one factor,
    a solution with evenly distributed items has a complexity greater than 1
-   (<cite>Hofman, 1978; Pettersson and Turkheimer, 2010</cite>) .</p><p></p><h3 class='hasAnchor' id='uniqueness'><a class='anchor' href='#uniqueness'></a>Uniqueness</h3>
+   (<cite>Hofman, 1978; Pettersson and Turkheimer, 2010</cite>) .</p>
+
+<p></p><h3 class='hasAnchor' id='uniqueness'><a class='anchor' href='#uniqueness'></a>Uniqueness</h3>
 <p>Uniqueness represents the variance that is 'unique' to the variable and
    not shared with other variables. It is equal to <code>1 – communality</code>
    (variance that is shared with other variables). A uniqueness of <code>0.20</code>
    suggests that 20% or that variable's variance is not shared with other
    variables in the overall factor model. The greater 'uniqueness' the lower
-   the relevance of the variable in the factor model.</p><p></p><h3 class='hasAnchor' id='msa'><a class='anchor' href='#msa'></a>MSA</h3>
+   the relevance of the variable in the factor model.</p>
+
+<p></p><h3 class='hasAnchor' id='msa'><a class='anchor' href='#msa'></a>MSA</h3>
 <p>MSA represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy
    (<cite>Kaiser and Rice, 1974</cite>) for each item. It indicates whether there
    is enough data for each factor give reliable results for the PCA. The
    value should be &gt; 0.6, and desirable values are &gt; 0.8
-   (<cite>Tabachnick and Fidell, 2013</cite>).</p><p></p><h3 class='hasAnchor' id='pca-or-fa-'><a class='anchor' href='#pca-or-fa-'></a>PCA or FA?</h3>
+   (<cite>Tabachnick and Fidell, 2013</cite>).</p>
+
+<p></p><h3 class='hasAnchor' id='pca-or-fa-'><a class='anchor' href='#pca-or-fa-'></a>PCA or FA?</h3>
 <p>There is a simplified rule of thumb that may help do decide whether to run
  a factor analysis or a principal component analysis:</p><ul>
 <li><p>Run <em>factor analysis</em> if you assume or wish to test a
-   theoretical model of latent factors causing observed variables.</p></li>
-<li><p>Run <em>principal component analysis</em> If you want to simply reduce
-   your correlated observed variables to a smaller set of important
-   independent composite variables.</p></li>
-</ul><p>(Source: <a href='https://stats.stackexchange.com/q/1576/54740'>CrossValidated</a>)</p><p></p><h3 class='hasAnchor' id='computing-item-scores'><a class='anchor' href='#computing-item-scores'></a>Computing Item Scores</h3>
-<p>Use <code><a href='get_scores.html'>get_scores</a></code> to compute scores for the "subscales" represented
-   by the extracted principal components. <code><a href='get_scores.html'>get_scores()</a></code> takes the results
-   from <code>principal_components()</code> and extracts the variables for each
-   component found by the PCA. Then, for each of these "subscales", row means
-   are calculated (which equals adding up the single items and dividing by
-   the number of items). This results in a sum score for each component from
-   the PCA, which is on the same scale as the original, single items that were
-   used to compute the PCA.</p>
-<p>One can also use <code><a href='https://rdrr.io/r/stats/predict.html'>predict()</a></code> to back-predict scores for each component,
+   theoretical model of <em>latent factors</em> causing observed variables.</p></li>
+<li><p>Run <em>principal component analysis</em> If you want to simply
+   <em>reduce</em> your correlated observed variables to a smaller set of
+   important independent composite variables.</p></li>
+</ul><p>(Source: <a href='https://stats.stackexchange.com/q/1576/54740'>CrossValidated</a>)</p>
+
+<p></p><h3 class='hasAnchor' id='computing-item-scores'><a class='anchor' href='#computing-item-scores'></a>Computing Item Scores</h3>
+<p>Use <code><a href='get_scores.html'>get_scores</a></code> to compute scores for the "subscales"
+   represented by the extracted principal components. <code><a href='get_scores.html'>get_scores()</a></code>
+   takes the results from <code>principal_components()</code> and extracts the
+   variables for each component found by the PCA. Then, for each of these
+   "subscales", raw means are calculated (which equals adding up the single
+   items and dividing by the number of items). This results in a sum score
+   for each component from the PCA, which is on the same scale as the
+   original, single items that were used to compute the PCA.
+   One can also use <code><a href='https://rdrr.io/r/stats/predict.html'>predict()</a></code> to back-predict scores for each component,
    to which one can provide <code>newdata</code> or a vector of <code>names</code> for the
    components.</p>
 
@@ -394,7 +407,7 @@ predicted data and original data is equal.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>

@@ -135,15 +135,15 @@
     
     
 <p>Also known as <a href="https://en.wikipedia.org/wiki/Feature_selection" class="external-link"><strong>feature selection</strong></a> in machine learning, the goal of variable selection is to <strong>identify a subset of predictors</strong> to <strong>simplify models</strong>. This can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).</p>
-<p>There are many different methods. The one that is appropriate for a given problem depends on the model type, the data, the objective and the theoretical rationale.</p>
-<p>The <code>parameters</code> package implements a helper that will <strong>automatically pick a method deemed appropriate for the provided model</strong>, run the variables selection and return the <strong>optimal formula</strong>, which you can then re-use to update the model.</p>
+<p>There are many different methods. The appropriate method for a given problem will depend on the model type, the data, the objective, and the theoretical rationale.</p>
+<p>The <code>parameters</code> package implements a helper that will <strong>automatically</strong> pick a method deemed appropriate for the provided model, run the variables selection and return the <strong>optimal formula</strong>, which you can then re-use to update the model.</p>
 <div id="simple-linear-regression" class="section level2">
 <h2 class="hasAnchor">
 <a href="#simple-linear-regression" class="anchor"></a>Simple linear regression</h2>
 <div id="fit-a-powerful-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fit-a-powerful-model" class="anchor"></a>Fit a powerful model</h3>
-<p>If you are familiar with R and the formula interface, you know of the possibility of including a dot (<code>.</code>) in the formula, signifying <strong>“all the remaining variables”</strong>. Curiously, few are aware of the possibility of additionally easily adding <strong>all the interaction terms</strong>. This can be achieved using the <code>.*.</code> notation.</p>
+<p>If you are familiar with R and the formula interface, you know of the possibility of including a dot (<code>.</code>) in the formula, signifying “all the remaining variables”. Curiously, few are aware of the possibility of additionally easily adding “all the interaction terms”. This can be achieved using the <code>.*.</code> notation.</p>
 <p>Let’s try that with the linear regression predicting <strong>Sepal.Length</strong> with the <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set" class="external-link"><code>iris</code></a> dataset, included by default in R.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">.</span> <span class="op">*</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
@@ -179,8 +179,9 @@
 <span class="co">#&gt; Residual standard error: 0.3 on 135 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.882,  Adjusted R-squared:  0.87 </span>
 <span class="co">#&gt; F-statistic: 72.1 on 14 and 135 DF,  p-value: &lt;2e-16</span></code></pre></div>
-<p><strong><em>Wow, that’s a lot of parameters! And almost none of them is significant…</em></strong></p>
-<p>Which is <strong><em>weird</em></strong>, considering that <strong>gorgeous R2! 0.882!</strong> <em>I wish I had that in my research…</em></p>
+<p><strong><em>Wow, that’s a lot of parameters! And almost none of them are significant!</em></strong></p>
+<p>Which is <strong><em>weird</em></strong>, considering that <strong>gorgeous <span class="math inline">\(R^2\)</span> of 0.882!</strong></p>
+<p><em>I wish I had that in my research!</em></p>
 </div>
 <div id="too-many-parameters" class="section level3">
 <h3 class="hasAnchor">
@@ -217,7 +218,7 @@
 <div id="parameters-selection" class="section level3">
 <h3 class="hasAnchor">
 <a href="#parameters-selection" class="anchor"></a>Parameters selection</h3>
-<p>Time to do some variables selection. This can be easily done using the <code><a href="../reference/select_parameters.html">select_parameters()</a></code> function, that will <strong>automatically select the best variables</strong> and update the model accordingly. One way of using that is in a tidy pipeline (using <a href="https://cran.r-project.org/package=magrittr/" class="external-link"><code>%&gt;%</code></a>), using this output to update a new model.</p>
+<p>Time to do some variables selection! This can be easily done using the <code><a href="../reference/select_parameters.html">select_parameters()</a></code> function in <code>parameters</code>. It will <strong>automatically</strong> select the best variables and update the model accordingly. One way of using that is in a tidy pipeline (using <a href="https://cran.r-project.org/package=magrittr/" class="external-link"><code>%&gt;%</code></a>), using this output to update a new model.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">.</span> <span class="op">*</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -251,8 +252,8 @@
 <span class="co">#&gt; Residual standard error: 0.3 on 139 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.88,   Adjusted R-squared:  0.872 </span>
 <span class="co">#&gt; F-statistic:  102 on 10 and 139 DF,  p-value: &lt;2e-16</span></code></pre></div>
-<p>That’s still a lot of parameters, but as you can see, but almost all of them are now significant, and the R2 did not change much.</p>
-<p>Although appealing, please note that these automated selection methods are <a href="https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df" class="external-link"><strong>quite criticized</strong></a>, and should not be used in place of <strong>theoretical</strong> or <strong>hypothetical</strong> reasons (<em>i.e.</em>, you should have justified hypotheses about the parameters of your model).</p>
+<p>That’s still a lot of parameters, but as you can see, almost all of them are now significant, and the <span class="math inline">\(R^2\)</span> did not change much.</p>
+<p>Although appealing, please note that these automated selection methods are <a href="https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df" class="external-link"><strong>quite criticized</strong></a>, and should not be used in place of <strong>theoretical</strong> or <strong>hypothetical</strong> reasons (<em>i.e.</em>, you should have <em>a priori</em> hypotheses about which parameters of your model you want to focus on).</p>
 </div>
 </div>
 <div id="mixed-and-bayesian-models" class="section level2">
@@ -262,12 +263,54 @@
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mixed-models" class="anchor"></a>Mixed models</h3>
-<p>For mixed models (of class <code>merMod</code>), stepwise selection is based on <code><a href="https://rdrr.io/pkg/cAIC4/man/stepcAIC.html" class="external-link">cAIC4::stepcAIC()</a></code>. This step function only searches the “best” model based on the <em>random effects structure</em>, i.e. <code><a href="../reference/select_parameters.html">select_parameters()</a></code> adds or excludes random effects until the cAIC can’t be improved further.</p>
+<p>For mixed models (of class <code>merMod</code>), stepwise selection is based on <code><a href="https://rdrr.io/pkg/cAIC4/man/stepcAIC.html" class="external-link">cAIC4::stepcAIC()</a></code>. This step function only searches the “best” model based on the <em>random effects structure</em>, i.e. <code><a href="../reference/select_parameters.html">select_parameters()</a></code> adds or excludes random effects until the <code>cAIC</code> can’t be improved further.</p>
+<p>This is what our initial model looks like.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"qol_cancer"</span><span class="op">)</span>
 
-<span class="co"># multiple models are checked, however, initial models</span>
+<span class="co"># initial model</span>
+<span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span>
+  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">|</span> <span class="va">hospital</span> <span class="op">/</span> <span class="va">ID</span><span class="op">)</span>,
+  data <span class="op">=</span> <span class="va">qol_cancer</span>
+<span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Linear mixed model fit by REML ['lmerMod']</span>
+<span class="co">#&gt; Formula: QoL ~ time + phq4 + age + (1 + time | hospital/ID)</span>
+<span class="co">#&gt;    Data: qol_cancer</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; REML criterion at convergence: 4647</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Scaled residuals: </span>
+<span class="co">#&gt;    Min     1Q Median     3Q    Max </span>
+<span class="co">#&gt; -3.581 -0.393  0.082  0.507  2.505 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Random effects:</span>
+<span class="co">#&gt;  Groups      Name        Variance Std.Dev. Corr </span>
+<span class="co">#&gt;  ID:hospital (Intercept) 202.48   14.23         </span>
+<span class="co">#&gt;              time         12.54    3.54    -0.72</span>
+<span class="co">#&gt;  hospital    (Intercept)   8.54    2.92         </span>
+<span class="co">#&gt;              time          1.28    1.13    -1.00</span>
+<span class="co">#&gt;  Residual                143.11   11.96         </span>
+<span class="co">#&gt; Number of obs: 564, groups:  ID:hospital, 188; hospital, 2</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Fixed effects:</span>
+<span class="co">#&gt;             Estimate Std. Error t value</span>
+<span class="co">#&gt; (Intercept)  70.6456     3.1363   22.52</span>
+<span class="co">#&gt; time          1.4920     1.2230    1.22</span>
+<span class="co">#&gt; phq4         -4.7687     0.3235  -14.74</span>
+<span class="co">#&gt; age          -0.0173     0.1889   -0.09</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Correlation of Fixed Effects:</span>
+<span class="co">#&gt;      (Intr) time   phq4  </span>
+<span class="co">#&gt; time -0.954              </span>
+<span class="co">#&gt; phq4  0.014 -0.010       </span>
+<span class="co">#&gt; age  -0.017  0.004  0.107</span>
+<span class="co">#&gt; optimizer (nloptwrap) convergence code: 0 (OK)</span>
+<span class="co">#&gt; boundary (singular) fit: see ?isSingular</span></code></pre></div>
+<p>This is the model selected by <code><a href="../reference/select_parameters.html">select_parameters()</a></code>. Please notice the differences in the random effects structure between the initial and the selected models:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># multiple models are checked, however, initial models</span>
 <span class="co"># already seems to be the best one...</span>
 <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span>
   <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">|</span> <span class="va">hospital</span> <span class="op">/</span> <span class="va">ID</span><span class="op">)</span>,
@@ -325,7 +368,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
