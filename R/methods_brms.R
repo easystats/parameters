@@ -58,6 +58,7 @@ model_parameters.brmsfit <- function(model,
       effects = effects,
       component = component,
       standardize = standardize,
+      verbose = verbose,
       ...
     )
 

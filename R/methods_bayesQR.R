@@ -27,6 +27,7 @@ model_parameters.bayesQR <- function(model,
     bf_prior = bf_prior,
     diagnostic = diagnostic,
     priors = priors,
+    verbose = verbose,
     ...
   )
 

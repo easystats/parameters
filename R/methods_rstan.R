@@ -30,6 +30,7 @@ model_parameters.stanfit <- function(model,
     priors = FALSE,
     effects = effects,
     standardize = standardize,
+    verbose = verbose,
     ...
   )
 

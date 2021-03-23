@@ -590,6 +590,7 @@
                                          diagnostic = c("ESS", "Rhat"),
                                          priors = TRUE,
                                          standardize = NULL,
+                                         verbose = TRUE,
                                          ...) {
   # check if standardization is required and package available
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
@@ -615,6 +616,7 @@
       rope_range = rope_range,
       rope_ci = rope_ci,
       diagnostic = "ESS",
+      verbose = verbose,
       ...
     )
   } else if (!is.null(standardize)) {
@@ -630,6 +632,7 @@
       bf_prior = bf_prior,
       diagnostic = diagnostic,
       priors = priors,
+      verbose = verbose,
       ...
     )
 
@@ -646,6 +649,7 @@
       test = test_no_BF,
       rope_range = rope_range,
       rope_ci = rope_ci,
+      verbose = verbose,
       ...
     )
 
@@ -663,6 +667,7 @@
       bf_prior = bf_prior,
       diagnostic = diagnostic,
       priors = priors,
+      verbose = verbose,
       ...
     )
   }

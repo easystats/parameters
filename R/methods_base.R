@@ -11,7 +11,21 @@ model_parameters.data.frame <- function(model,
                                         verbose = TRUE,
                                         ...) {
   # Processing
-  params <- .extract_parameters_bayesian(model, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = NULL, diagnostic = NULL, priors = FALSE, ...)
+  params <- .extract_parameters_bayesian(
+    model,
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    bf_prior = NULL,
+    diagnostic = NULL,
+    priors = FALSE,
+    verbose = verbose,
+    ...
+  )
 
   attr(params, "ci") <- ci
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)

@@ -51,6 +51,7 @@ model_parameters.MCMCglmm <- function(model,
       bf_prior = bf_prior,
       diagnostic = diagnostic,
       priors = priors,
+      verbose = verbose,
       ...
     )
 

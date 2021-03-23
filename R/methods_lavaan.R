@@ -137,6 +137,7 @@ model_parameters.blavaan <- function(model,
     diagnostic = diagnostic,
     effects = "all",
     standardize = standardize,
+    verbose = verbose,
     ...
   )
 

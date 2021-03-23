@@ -31,6 +31,7 @@ model_parameters.bamlss <- function(model,
     effects = "all",
     component = component,
     standardize = standardize,
+    verbose = verbose,
     ...
   )
 
