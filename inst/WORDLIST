@@ -34,6 +34,7 @@ DoF
 DoFs
 Dupont
 EFA
+ESS
 Elff
 Epskamp
 Fairbrother
@@ -97,6 +98,7 @@ Recode
 Rescale
 Rescaling
 Revelle
+Rhat
 Rocklin
 Rodríguez
 Rosseel
@@ -133,6 +135,7 @@ al
 anova
 bamlss
 bayesGARCH
+bayestestR
 bbmle
 behaviour
 bife
@@ -151,7 +154,6 @@ cmprsk
 coxrobust
 cplm
 de
-derivating
 df
 doi
 easystats
@@ -172,6 +174,7 @@ glm
 glmm
 glmmTMB
 heteroskedasticity
+homoscedasticity
 http
 https
 hyperspectral
@@ -216,7 +219,10 @@ performant
 platykurtic
 plm
 pre
+priori
+pth
 quantreg
+quartiles
 reproducibility
 rescale
 rescaled
@@ -228,6 +234,7 @@ robmixglm
 rstanarm
 smicd
 spaMM
+spatialreg
 sphericity
 stackexchange
 stanreg
@@ -236,6 +243,7 @@ subscale
 subscales
 tailedness
 th
+tidymodels
 tseries
 untransformed
 varimax

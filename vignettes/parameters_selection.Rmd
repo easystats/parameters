@@ -44,16 +44,15 @@ set.seed(333)
 ```
 
 Also known as [**feature selection**](https://en.wikipedia.org/wiki/Feature_selection) in machine
-learning, the goal of variable selection is to **identify a subset of
-predictors** to **simplify models**. This can benefit model interpretation,
+learning, the goal of variable selection is to **identify a subset of predictors** to **simplify models**. This can benefit model interpretation,
 shorten fitting time, and improve generalization (by reducing overfitting).
 
-There are many different methods. The one that is appropriate for a given
-problem depends on the model type, the data, the objective and the theoretical
+There are many different methods. The appropriate method for a given problem
+will depend on the model type, the data, the objective, and the theoretical
 rationale.
 
-The `parameters` package implements a helper that will **automatically pick a
-method deemed appropriate for the provided model**, run the variables selection
+The `parameters` package implements a helper that will **automatically** pick a
+method deemed appropriate for the provided model, run the variables selection
 and return the **optimal formula**, which you can then re-use to update the
 model.
 
@@ -62,8 +61,9 @@ model.
 ### Fit a powerful model
 
 If you are familiar with R and the formula interface, you know of the
-possibility of including a dot (`.`) in the formula, signifying **"all the remaining variables"**. Curiously, few are aware of the possibility of
-additionally easily adding **all the interaction terms**. This can be achieved
+possibility of including a dot (`.`) in the formula, signifying "all the
+remaining variables". Curiously, few are aware of the possibility of
+additionally easily adding "all the interaction terms". This can be achieved
 using the `.*.` notation.
 
 Let's try that with the linear regression predicting **Sepal.Length** with the
@@ -75,11 +75,11 @@ model <- lm(Sepal.Length ~ . * ., data = iris)
 summary(model)
 ```
 
-***Wow, that's a lot of parameters! And almost none of them is
-significant...***
+***Wow, that's a lot of parameters! And almost none of them are significant!***
 
-Which is ***weird***, considering that **gorgeous R2! 0.882!** *I wish I had
-that in my research...*
+Which is ***weird***, considering that **gorgeous $R^2$ of 0.882!** 
+
+*I wish I had that in my research!*
 
 ### Too many parameters?
 
@@ -112,11 +112,11 @@ others.
 
 ### Parameters selection
 
-Time to do some variables selection. This can be easily done using the
-`select_parameters()` function, that will **automatically select the best
-variables** and update the model accordingly. One way of using that is in a tidy
-pipeline (using [`%>%`](https://cran.r-project.org/package=magrittr/)), using
-this output to update a new model.
+Time to do some variables selection! This can be easily done using the
+`select_parameters()` function in `parameters`. It will **automatically** select
+the best variables and update the model accordingly. One way of using that is in
+a tidy pipeline (using [`%>%`](https://cran.r-project.org/package=magrittr/)),
+using this output to update a new model.
 
 ```{r}
 lm(Sepal.Length ~ . * ., data = iris) %>%
@@ -124,14 +124,14 @@ lm(Sepal.Length ~ . * ., data = iris) %>%
   summary()
 ```
 
-That's still a lot of parameters, but as you can see, but almost all of them are
-now significant, and the R2 did not change much.
+That's still a lot of parameters, but as you can see, almost all of them are
+now significant, and the $R^2$ did not change much.
 
 Although appealing, please note that these automated selection methods are
 [**quite criticized**](https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df),
 and should not be used in place of **theoretical** or **hypothetical** reasons
-(*i.e.*, you should have justified hypotheses about the parameters of your
-model).
+(*i.e.*, you should have *a priori* hypotheses about which parameters of your
+model you want to focus on).
 
 ## Mixed and Bayesian models
 
@@ -146,12 +146,27 @@ However, this procedures is not available for other types of models, such as
 For mixed models (of class `merMod`), stepwise selection is based on
 `cAIC4::stepcAIC()`. This step function only searches the "best" model based on
 the _random effects structure_, i.e. `select_parameters()` adds or excludes
-random effects until the cAIC can't be improved further.
+random effects until the `cAIC` can't be improved further.
+
+This is what our initial model looks like.
 
 ```{r}
 library(lme4)
 data("qol_cancer")
 
+# initial model
+lmer(
+  QoL ~ time + phq4 + age + (1 + time | hospital / ID),
+  data = qol_cancer
+) %>%
+  summary()
+```
+
+This is the model selected by `select_parameters()`. Please notice the
+differences in the random effects structure between the initial and the selected
+models:
+
+```{r}
 # multiple models are checked, however, initial models
 # already seems to be the best one...
 lmer(
