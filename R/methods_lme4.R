@@ -209,6 +209,8 @@ model_parameters.merMod <- function(model,
     ...
   )
 
+
+  ## TODO remove in a future update
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
     if (verbose) {

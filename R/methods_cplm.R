@@ -250,6 +250,8 @@ model_parameters.cpglmm <- function(model,
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
 
+
+  ## TODO remove in a future update
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
     if (verbose) {
