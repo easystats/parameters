@@ -126,18 +126,18 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
   }
 
   if (verbose) {
+    results <- lme4::bootMer(
+      model,
+      boot_function,
+      nsim = iterations
+    )
+  } else {
     results <- suppressMessages(lme4::bootMer(
       model,
       boot_function,
       nsim = iterations,
       verbose = FALSE
     ))
-  } else {
-    results <- lme4::bootMer(
-      model,
-      boot_function,
-      nsim = iterations
-    )
   }
 
   out <- as.data.frame(results$t)
