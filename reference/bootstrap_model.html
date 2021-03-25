@@ -210,6 +210,13 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of bootstrapped estimates.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>By default, <code><a href='https://rdrr.io/pkg/boot/man/boot.html'>boot::boot()</a></code> is used to generate bootstraps from
+the model data, which are then used to <code><a href='https://rdrr.io/r/stats/update.html'>update()</a></code> the model, i.e. refit
+the model with the bootstrapped samples. For <code>merMod</code> objects (<span class="pkg">lme4</span>)
+the <code><a href='https://rdrr.io/pkg/lme4/man/bootMer.html'>lme4::bootMer()</a></code> function is used to obtain bootstrapped samples.
+<code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code> summarizes the bootstrapped model estimates.</p>
     <h2 class="hasAnchor" id="using-with-emmeans"><a class="anchor" href="#using-with-emmeans"></a>Using with <code>emmeans</code></h2>
 
     
