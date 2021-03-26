@@ -4,15 +4,22 @@ model_parameters.ggeffects <- function(model, verbose = TRUE, ...) {
   response_name <- attributes(model)$response.name
   terms <- attributes(model)$terms[-1]
 
+  # exception for survival
+  if (attributes(model)$type %in% c("surv", "survival", "cumhaz", "cumulative_hazard")) {
+    response_name <- "Time"
+  }
+
   model <- as.data.frame(model)
 
-  if (ncol(model) == 6) {
-    new_colnames <- c("x", "Predicted", "SE", "CI_low", "CI_high", "Component")
-  } else if (ncol(model) == 7) {
-    new_colnames <- c("x", "Predicted", "SE", "CI_low", "CI_high", "Component", "Group")
-  } else {
-    new_colnames <- c("x", "Predicted", "SE", "CI_low", "CI_high", "Component", "Group", "Subgroup")
-  }
+  # rename columns
+  new_colnames <- colnames(model)
+  new_colnames[new_colnames == "predicted"] <- "Predicted"
+  new_colnames[new_colnames == "std.error"] <- "SE"
+  new_colnames[new_colnames == "conf.low"] <- "CI_low"
+  new_colnames[new_colnames == "conf.high"] <- "CI_high"
+  new_colnames[new_colnames == "group"] <- "Component"
+  new_colnames[new_colnames == "facet"] <- "Group"
+  new_colnames[new_colnames == "response"] <- "Subgroup"
 
   colnames(model) <- new_colnames
   model$SE <- NULL

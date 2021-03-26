@@ -89,7 +89,17 @@
 
   ignore_group <- isTRUE(attributes(x)$ignore_group)
   ran_pars <- isTRUE(attributes(x)$ran_pars)
-    is_ggeffects <- isTRUE(attributes(x)$is_ggeffects)
+  is_ggeffects <- isTRUE(attributes(x)$is_ggeffects)
+
+
+  # name of "Parameter" column - usually the first column, however, for
+  # ggeffects objects, this column has the name of the focal term
+
+  if (is_ggeffects) {
+    parameter_column <- colnames(x)[1]
+  } else {
+    parameter_column <- "Parameter"
+  }
 
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -250,8 +260,8 @@
         table_caption <- sprintf("%s %s", component_header$subheader1, tolower(component_header$subheader2))
       }
       # replace brackets by parenthesis
-      formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
-      formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+      formatted_table[[parameter_column]] <- gsub("[", ci_brackets[1], formatted_table[[parameter_column]], fixed = TRUE)
+      formatted_table[[parameter_column]] <- gsub("]", ci_brackets[2], formatted_table[[parameter_column]], fixed = TRUE)
     }
 
     if (identical(format, "html")) {
