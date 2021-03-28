@@ -221,7 +221,7 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models, can be <code><a href='ci_wald.html'>"wald"</a></code> (default), <code><a href='ci_ml1.html'>"ml1"</a></code>, <code><a href='ci_betwithin.html'>"betwithin"</a></code>, <code><a href='ci_satterthwaite.html'>"satterthwaite"</a></code> or <code><a href='ci_kenward.html'>"kenward"</a></code>. For models that are supported by the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> packages, may also be <code>method = "robust"</code> to compute p-values based ob robust standard errors.</p></td>
+      <td><p>For mixed models, can be <code><a href='p_value_wald.html'>"wald"</a></code> (default), <code><a href='p_value_ml1.html'>"ml1"</a></code>, <code><a href='p_value_betwithin.html'>"betwithin"</a></code>, <code><a href='p_value_satterthwaite.html'>"satterthwaite"</a></code> or <code><a href='p_value_kenward.html'>"kenward"</a></code>. For models that are supported by the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> packages, may also be <code>method = "robust"</code> to compute p-values based ob robust standard errors.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -253,7 +253,7 @@ returned.</p></td>
     <p>A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>By default, p-values are based on Wald-test approximations (see <code><a href='ci_wald.html'>p_value_wald</a></code>). For certain situations, the "m-l-1" rule might be a better approximation. That is, for <code>method = "ml1"</code>, <code><a href='ci_ml1.html'>p_value_ml1</a></code> is called. For <code>lmerMod</code> objects, if <code>method = "kenward"</code>, p-values are based on Kenward-Roger approximations, i.e. <code><a href='ci_kenward.html'>p_value_kenward</a></code> is called, and <code>method = "satterthwaite"</code> calls <code><a href='ci_satterthwaite.html'>p_value_satterthwaite</a></code>.</p>
+    <p>By default, p-values are based on Wald-test approximations (see <code><a href='p_value_wald.html'>p_value_wald</a></code>). For certain situations, the "m-l-1" rule might be a better approximation. That is, for <code>method = "ml1"</code>, <code><a href='p_value_ml1.html'>p_value_ml1</a></code> is called. For <code>lmerMod</code> objects, if <code>method = "kenward"</code>, p-values are based on Kenward-Roger approximations, i.e. <code><a href='p_value_kenward.html'>p_value_kenward</a></code> is called, and <code>method = "satterthwaite"</code> calls <code><a href='p_value_satterthwaite.html'>p_value_satterthwaite</a></code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p><code><a href='standard_error_robust.html'>p_value_robust()</a></code> resp. <code><a href='p_value.html'>p_value(method = "robust")</a></code>

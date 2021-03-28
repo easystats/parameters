@@ -295,15 +295,15 @@
     </tr>
     <tr>
       <th>dof</th>
-      <td><p>Degrees of Freedom. If not specified, for <code><a href='ci_wald.html'>ci_wald()</a></code>, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters). For <code><a href='ci_wald.html'>p_value_wald()</a></code>, defaults to <code>Inf</code>.</p></td>
+      <td><p>Degrees of Freedom. If not specified, for <code><a href='p_value_wald.html'>ci_wald()</a></code>, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters). For <code><a href='p_value_wald.html'>p_value_wald()</a></code>, defaults to <code>Inf</code>.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models, can be <code><a href='ci_wald.html'>"wald"</a></code>
-(default), <code><a href='ci_ml1.html'>"ml1"</a></code> or
-<code><a href='ci_betwithin.html'>"betwithin"</a></code>. For linear mixed model, can
-also be <code><a href='ci_satterthwaite.html'>"satterthwaite"</a></code>,
-<code><a href='ci_kenward.html'>"kenward"</a></code> or <code>"boot"</code> (see
+      <td><p>For mixed models, can be <code><a href='p_value_wald.html'>"wald"</a></code>
+(default), <code><a href='p_value_ml1.html'>"ml1"</a></code> or
+<code><a href='p_value_betwithin.html'>"betwithin"</a></code>. For linear mixed model, can
+also be <code><a href='p_value_satterthwaite.html'>"satterthwaite"</a></code>,
+<code><a href='p_value_kenward.html'>"kenward"</a></code> or <code>"boot"</code> (see
 <code><a href='https://rdrr.io/pkg/lme4/man/confint.merMod.html'>lme4::confint.merMod</a></code>). For (generalized) linear models, can be
 <code>"robust"</code> to compute confidence intervals based on robust covariance
 matrix estimation, and for generalized linear models and models from

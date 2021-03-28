@@ -284,7 +284,7 @@
     <tr>
       <th>bootstrap</th>
       <td><p>Should estimates be based on bootstrapped model? If
-<code>TRUE</code>, then arguments of <a href='model_parameters.data.frame.html'>Bayesian
+<code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian
 regressions</a> apply (see also
 <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
     </tr>
@@ -336,10 +336,10 @@ included. See <code><a href='random_parameters.html'>random_parameters</a></code
       <td><p>Method for computing degrees of freedom for p values,
 standard errors and confidence intervals (CI). May be <code>"wald"</code>
 (default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see
-<code><a href='ci_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see
-<code><a href='ci_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see
-<code><a href='ci_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see
-<code><a href='ci_kenward.html'>dof_kenward</a></code>). The options <code>df_method = "boot"</code>,
+<code><a href='p_value_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see
+<code><a href='p_value_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see
+<code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see
+<code><a href='p_value_kenward.html'>dof_kenward</a></code>). The options <code>df_method = "boot"</code>,
 <code>df_method = "profile"</code> and <code>df_method = "uniroot"</code> only affect
 confidence intervals; in this case, bootstrapped resp. profiled confidence
 intervals are computed. <code>"uniroot"</code> only applies to models of class
@@ -372,7 +372,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <tr>
       <th>wb_component</th>
       <td><p>Logical, if <code>TRUE</code> and models contains within- and
-between-effects (see <code><a href='check_heterogeneity.html'>demean</a></code>), the <code>Component</code> column
+between-effects (see <code><a href='demean.html'>demean</a></code>), the <code>Component</code> column
 will indicate which variables belong to the within-effects,
 between-effects, and cross-level interactions. By default, the
 <code>Component</code> column indicates, which parameters belong to the

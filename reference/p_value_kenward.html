@@ -184,13 +184,13 @@
     <p>An approximate F-test based on the Kenward-Roger (1997) approach.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ci_kenward</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'><a href='p_value_kenward.html'>ci_kenward</a></span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 
-<span class='fu'>dof_kenward</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='fu'><a href='p_value_kenward.html'>dof_kenward</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 
-<span class='fu'>p_value_kenward</span><span class='op'>(</span><span class='va'>model</span>, dof <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'><a href='p_value_kenward.html'>p_value_kenward</a></span><span class='op'>(</span><span class='va'>model</span>, dof <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>se_kenward</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></pre>
+<span class='fu'><a href='p_value_kenward.html'>se_kenward</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -230,19 +230,19 @@ to linear mixed models only.</p>
   fixed effects from restricted maximum likelihood. Biometrics, 983-997.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>dof_kenward()</code> and <code>se_kenward()</code> are small helper-functions
+    <div class='dont-index'><p><code><a href='p_value_kenward.html'>dof_kenward()</a></code> and <code><a href='p_value_kenward.html'>se_kenward()</a></code> are small helper-functions
 to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Kenward-Roger (1997) approach.
 <br /> <br />
-<code><a href='ci_satterthwaite.html'>dof_satterthwaite()</a></code> and
-<code><a href='ci_ml1.html'>dof_ml1()</a></code> approximate degrees
+<code><a href='p_value_satterthwaite.html'>dof_satterthwaite()</a></code> and
+<code><a href='p_value_ml1.html'>dof_ml1()</a></code> approximate degrees
 of freedom based on Satterthwaite's method or the "m-l-1" rule.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-  <span class='fu'>p_value_kenward</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+  <span class='fu'><a href='p_value_kenward.html'>p_value_kenward</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div><div class='output co'>#&gt;      Parameter            p
 #&gt; 1  (Intercept) 9.605137e-01

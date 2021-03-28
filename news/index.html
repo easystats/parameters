@@ -203,6 +203,14 @@
 <li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>zap_small</code> argument, to avoid scientific notation for very small numbers. Instead, <code>zap_small</code> forces to round to the specified number of digits.</p></li>
 </ul>
 </div>
+<div id="other-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other-functions" class="anchor"></a>Other functions</h3>
+<ul>
+<li>
+<code><a href="../reference/describe_distribution.html">describe_distribution()</a></code> gets a <code>quartiles</code> argument to include 25th and 75th quartiles of a variable.</li>
+</ul>
+</div>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
@@ -398,9 +406,9 @@
 <li><p>Slightly revised and improved the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
 </ul>
 </div>
-<div id="other-functions" class="section level3">
+<div id="other-functions-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other-functions" class="anchor"></a>Other functions</h3>
+<a href="#other-functions-1" class="anchor"></a>Other functions</h3>
 <ul>
 <li><p><code><a href="../reference/describe_distribution.html">describe_distribution()</a></code> now includes the name of the centrality index in the <code>CI</code>-column, when <code>centrality = "all"</code>.</p></li>
 <li><p><code><a href="../reference/pool_parameters.html">pool_parameters()</a></code> gains a <code>details</code>-argument. For mixed models, and if <code>details = TRUE</code>, random effect variances will also be pooled.</p></li>
@@ -432,7 +440,7 @@
 <a href="#new-functions-4" class="anchor"></a>New functions</h2>
 <ul>
 <li><p><code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>, to pool parameters estimates from multiple models.</p></li>
-<li><p><code><a href="../reference/check_heterogeneity.html">degroup()</a></code>, as a more generic case for <code><a href="../reference/check_heterogeneity.html">demean()</a></code>.</p></li>
+<li><p><code><a href="../reference/demean.html">degroup()</a></code>, as a more generic case for <code><a href="../reference/demean.html">demean()</a></code>.</p></li>
 <li><p><code><a href="../reference/center.html">center()</a></code>, to center variables.</p></li>
 </ul>
 </div>
@@ -440,7 +448,7 @@
 <h2 class="hasAnchor">
 <a href="#general-1" class="anchor"></a>General</h2>
 <ul>
-<li><p>Better support for (weighted) multivariate response models of class <code>mlm</code> for functions like <code><a href="../reference/model_parameters.html">model_parameters()</a></code> or <code><a href="../reference/simulate_parameters.glmmTMB.html">simulate_parameters()</a></code>.</p></li>
+<li><p>Better support for (weighted) multivariate response models of class <code>mlm</code> for functions like <code><a href="../reference/model_parameters.html">model_parameters()</a></code> or <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code>.</p></li>
 <li><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> is now re-exported from the <em>insight</em> package.</p></li>
 </ul>
 </div>
@@ -526,9 +534,9 @@
 <ul>
 <li><p>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>coxph.penal</code> models.</p></li>
 <li><p>Fix issue in <code>model_parameters.metaplus()</code> with random effects.</p></li>
-<li><p>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> when <code>x</code> was a mixed model.</p></li>
-<li><p>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> for data with missing values.</p></li>
-<li><p>Fix issue in <code><a href="../reference/ci_ml1.html">dof_ml1()</a></code> when random-effect terms where character vectors.</p></li>
+<li><p>Fix issue in <code><a href="../reference/demean.html">check_heterogeneity()</a></code> when <code>x</code> was a mixed model.</p></li>
+<li><p>Fix issue in <code><a href="../reference/demean.html">check_heterogeneity()</a></code> for data with missing values.</p></li>
+<li><p>Fix issue in <code><a href="../reference/p_value_ml1.html">dof_ml1()</a></code> when random-effect terms where character vectors.</p></li>
 <li><p>Fix issue in <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> that printed empty lines for rows with complete missing values. Empty lines are now removed.</p></li>
 <li><p>Fix issue in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp()</a></code> was used in a model formula.</p></li>
 </ul>
@@ -564,7 +572,7 @@
 <li><p>Fix CRAN check issues.</p></li>
 <li><p>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for models with non-estimable parameters or statistics.</p></li>
 <li><p>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>plm</em> models with only one parameter.</p></li>
-<li><p>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> in case no predictor would cause heterogeneity bias.</p></li>
+<li><p>Fix issue in <code><a href="../reference/demean.html">check_heterogeneity()</a></code> in case no predictor would cause heterogeneity bias.</p></li>
 <li><p>Make sure <em>clubSandwich</em> is used conditionally in all places, to properly pass CRAN checks.</p></li>
 </ul>
 </div>
@@ -627,7 +635,7 @@
 <a href="#new-functions-5" class="anchor"></a>New functions</h2>
 <ul>
 <li>
-<code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> as a small helper to find variables that have a within- and between-effect related to a grouping variable (and thus, may result in heterogeneity bias, see <a href="https://easystats.github.io/parameters/articles/demean.html" class="external-link">this vignette</a>).</li>
+<code><a href="../reference/demean.html">check_heterogeneity()</a></code> as a small helper to find variables that have a within- and between-effect related to a grouping variable (and thus, may result in heterogeneity bias, see <a href="https://easystats.github.io/parameters/articles/demean.html" class="external-link">this vignette</a>).</li>
 </ul>
 </div>
 <div id="changes-to-functions-8" class="section level2">
@@ -662,7 +670,7 @@
 <ul>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Stan-models (<em>brms</em>, <em>rstanarm</em>) gains a <code>group_level</code> argument to show or hide parameters for group levels of random effects.</p></li>
 <li><p>Improved accuracy of confidence intervals in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with <code>standardize = "basic"</code> or <code>standardize = "posthoc"</code>.</p></li>
-<li><p><code><a href="../reference/model_parameters.cpglmm.html">model_parameters.merMod()</a></code> no longer passes <code>...</code> down to bootstrap-functions (i.e. when <code>bootstrap = TRUE</code>), as this might conflict with <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">lme4::bootMer()</a></code>.</p></li>
+<li><p><code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> no longer passes <code>...</code> down to bootstrap-functions (i.e. when <code>bootstrap = TRUE</code>), as this might conflict with <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">lme4::bootMer()</a></code>.</p></li>
 <li><p>For ordinal models (like <code><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">MASS::polr()</a></code> or <code>ordinal::clm()</code>), a <code>Component</code> column is added, indicating intercept categories (<code>"alpha"</code>) and estimates (<code>"beta"</code>).</p></li>
 <li><p>The <code>select</code>-argument from <code><a href="../reference/print.parameters_model.html">print.parameters_model()</a></code> now gets a <code>"minimal"</code>-option as shortcut to print coefficients, confidence intervals and p-values only.</p></li>
 </ul>
@@ -710,7 +718,7 @@
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> gains a <code>type</code>-argument to compute type-1, type-2 or type-3 sums of squares.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Bayesian models gains a <code>standardize</code> argument, to return standardized parameters from the posterior distribution.</p></li>
 <li><p>Improved <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for nested <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> (repeated measurements).</p></li>
-<li><p>You can now control whether <code><a href="../reference/check_heterogeneity.html">demean()</a></code> should add attributes to indicate within- and between-effects. This is only relevant for the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>-method of <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
+<li><p>You can now control whether <code><a href="../reference/demean.html">demean()</a></code> should add attributes to indicate within- and between-effects. This is only relevant for the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>-method of <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
 </ul>
 </div>
 </div>
@@ -733,7 +741,7 @@
 <li><p>Alias <code>model_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>.</p></li>
 <li><p>Alias <code>parameters_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>.</p></li>
 <li><p>Alias <code>model_simulate()</code> was removed, please use <code><a href="../reference/simulate_model.html">simulate_model()</a></code>.</p></li>
-<li><p>Alias <code>parameters_simulate()</code> was removed, please use <code><a href="../reference/simulate_parameters.glmmTMB.html">simulate_parameters()</a></code>.</p></li>
+<li><p>Alias <code>parameters_simulate()</code> was removed, please use <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code>.</p></li>
 <li><p>Alias <code>parameters_selection()</code> was removed, please use <code><a href="../reference/select_parameters.html">select_parameters()</a></code>.</p></li>
 <li><p>Alias <code>parameters_reduction()</code> was removed, please use <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>.</p></li>
 <li><p>Functions <code>DDR()</code>, <code>ICA()</code> and <code>cmds()</code> are no longer exported, as these were intended to be used internally by <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> only.</p></li>
@@ -754,8 +762,8 @@
 <h3 class="hasAnchor">
 <a href="#model_parameters-4" class="anchor"></a>model_parameters()</h3>
 <ul>
-<li><p>Improved print-method for <code><a href="../reference/model_parameters.data.frame.html">model_parameters.brmsfit()</a></code>.</p></li>
-<li><p>Improved print-method for <code><a href="../reference/model_parameters.cpglmm.html">model_parameters.merMod()</a></code> when fitting REWB-Models (see <code><a href="../reference/check_heterogeneity.html">demean()</a></code>).</p></li>
+<li><p>Improved print-method for <code><a href="../reference/model_parameters.stanreg.html">model_parameters.brmsfit()</a></code>.</p></li>
+<li><p>Improved print-method for <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> when fitting REWB-Models (see <code><a href="../reference/demean.html">demean()</a></code>).</p></li>
 <li><p>Improved efficiency for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) when <code>df_method = "kenward"</code>.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a <code>p_adjust</code>-argument, to adjust p-values for multiple comparisons.</p></li>
 <li><p>Minor improvements for <code><a href="../reference/cluster_analysis.html">cluster_analysis()</a></code> when <code>method = "kmeans"</code> and <code>force = TRUE</code> (factors now also work for kmeans-clustering).</p></li>
@@ -765,7 +773,7 @@
 <h3 class="hasAnchor">
 <a href="#p_value-ci-and-standard_error" class="anchor"></a>p_value(), ci() and standard_error()</h3>
 <ul>
-<li><p><code><a href="../reference/ci_kenward.html">p_value_kenward()</a></code>, <code><a href="../reference/ci_kenward.html">se_kenward()</a></code> etc. now give a warning when model was not fitted by REML.</p></li>
+<li><p><code><a href="../reference/p_value_kenward.html">p_value_kenward()</a></code>, <code><a href="../reference/p_value_kenward.html">se_kenward()</a></code> etc. now give a warning when model was not fitted by REML.</p></li>
 <li><p>Added <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code> for <em>lavaan</em> and <em>blavaan</em> objects.</p></li>
 <li><p>Added <code><a href="../reference/standard_error.html">standard_error()</a></code> for <em>brmsfit</em> and <em>stanreg</em> objects.</p></li>
 </ul>
@@ -777,7 +785,7 @@
 <li><p>Run certain tests only locally, to reduce duration of CRAN checks.</p></li>
 <li><p><code><a href="../reference/skewness.html">skewness()</a></code>, <code><a href="../reference/skewness.html">kurtosis()</a></code> and <code><a href="../reference/smoothness.html">smoothness()</a></code> get an <code>iteration</code> argument, to set the numbers of bootstrap replicates for computing standard errors.</p></li>
 <li><p>Improved print-method for <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</p></li>
-<li><p><code><a href="../reference/check_heterogeneity.html">demean()</a></code> now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic <em>panelr</em>-behaviour.</p></li>
+<li><p><code><a href="../reference/demean.html">demean()</a></code> now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic <em>panelr</em>-behaviour.</p></li>
 </ul>
 </div>
 </div>

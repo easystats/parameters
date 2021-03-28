@@ -184,13 +184,13 @@
     <p>Approximation of degrees of freedom based on a "between-within" heuristic.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ci_betwithin</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'><a href='p_value_betwithin.html'>ci_betwithin</a></span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 
-<span class='fu'>dof_betwithin</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='fu'><a href='p_value_betwithin.html'>dof_betwithin</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 
-<span class='fu'>p_value_betwithin</span><span class='op'>(</span><span class='va'>model</span>, dof <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'><a href='p_value_betwithin.html'>p_value_betwithin</a></span><span class='op'>(</span><span class='va'>model</span>, dof <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>se_betwithin</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></pre>
+<span class='fu'><a href='p_value_betwithin.html'>se_betwithin</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -230,7 +230,7 @@ but similar.</p>
 <h3 class='hasAnchor' id='degrees-of-freedom-for-longitudinal-designs-repeated-measures-'><a class='anchor' href='#degrees-of-freedom-for-longitudinal-designs-repeated-measures-'></a>Degrees of Freedom for Longitudinal Designs (Repeated Measures)</h3>
 <p>In particular for repeated measure designs (longitudinal data analysis),
 the <em>between-within</em> heuristic is likely to be more accurate than simply
-using the residual or infinite degrees of freedom, because <code>dof_betwithin()</code>
+using the residual or infinite degrees of freedom, because <code><a href='p_value_betwithin.html'>dof_betwithin()</a></code>
 returns different degrees of freedom for within-cluster and between-cluster effects.</p>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -243,7 +243,7 @@ returns different degrees of freedom for within-cluster and between-cluster effe
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>dof_betwithin()</code> and <code>se_betwithin()</code> are small helper-functions
+    <div class='dont-index'><p><code><a href='p_value_betwithin.html'>dof_betwithin()</a></code> and <code><a href='p_value_betwithin.html'>se_betwithin()</a></code> are small helper-functions
 to calculate approximated degrees of freedom and standard errors of model
 parameters, based on the "between-within" heuristic.</p></div>
 
@@ -252,8 +252,8 @@ parameters, based on the "between-within" heuristic.</p></div>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sleepstudy</span><span class='op'>)</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Reaction</span> <span class='op'>~</span> <span class='va'>Days</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>Days</span> <span class='op'>|</span> <span class='va'>Subject</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>sleepstudy</span><span class='op'>)</span>
-  <span class='fu'>dof_betwithin</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-  <span class='fu'>p_value_betwithin</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+  <span class='fu'><a href='p_value_betwithin.html'>dof_betwithin</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+  <span class='fu'><a href='p_value_betwithin.html'>p_value_betwithin</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div><div class='output co'>#&gt;     Parameter            p
 #&gt; 1 (Intercept) 9.306054e-80
