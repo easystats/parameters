@@ -32,6 +32,11 @@
   scientific notation for very small numbers. Instead, `zap_small` forces to
   round to the specified number of digits.
 
+### Other functions
+
+* `describe_distribution()` gets a `quartiles` argument to include 25th
+  and 75th quartiles of a variable.
+
 ## Bug fixes
 
 * Fixed issue with non-initialized argument `style` in `display()` for
