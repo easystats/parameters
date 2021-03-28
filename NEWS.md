@@ -4,7 +4,7 @@
 
 * `blrm` (*rmsb*), `AKP`, `med1way`, `robtab` (*WRS2*), `epi.2by2` (*epiR*),
   `mjoint` (*joineRML*), `mhurdle` (*mhurdle*), `sarlm` (*spatialreg*),
-  `model_fit` (*tidymodels*).
+  `model_fit` (*tidymodels*), `BGGM` (*BGGM*).
 
 ## Changes to functions
 

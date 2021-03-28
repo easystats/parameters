@@ -37,3 +37,7 @@ model_parameters.bayesQR <- function(model,
 
   params
 }
+
+
+#' @export
+p_value.bayesQR <- p_value.BFBayesFactor
