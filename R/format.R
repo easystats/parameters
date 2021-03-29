@@ -101,7 +101,7 @@ format.parameters_model <- function(x,
   }
 
   # fix coefficient column name for random effects
-  if (all(x$EFfects == "random") && any(colnames(x) %in% .all_coefficient_types())) {
+  if (!is.null(x$Effects) && all(x$Effects == "random") && any(colnames(x) %in% .all_coefficient_types())) {
     colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
   }
 
