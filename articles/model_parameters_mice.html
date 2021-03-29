@@ -190,12 +190,12 @@
   <span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="../reference/pool_parameters.html">pool_parameters</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Parameter   | Coefficient |   SE |         95% CI | Statistic |      p
-#&gt; ----------------------------------------------------------------------
-#&gt; (Intercept) |       -1.45 | 0.24 | [-1.93, -0.97] |     -5.93 | &lt; .001
-#&gt; period [2]  |       -0.88 | 0.34 | [-1.55, -0.20] |     -2.55 | 0.011 
-#&gt; period [3]  |       -1.41 | 0.38 | [-2.16, -0.66] |     -3.70 | &lt; .001
-#&gt; period [4]  |       -1.65 | 0.62 | [-2.87, -0.43] |     -2.66 | 0.008</code></pre>
+<pre><code>#&gt; Parameter   | Log-Odds |   SE |         95% CI | Statistic |      p
+#&gt; -------------------------------------------------------------------
+#&gt; (Intercept) |    -1.45 | 0.24 | [-1.93, -0.97] |     -5.93 | &lt; .001
+#&gt; period [2]  |    -0.88 | 0.34 | [-1.55, -0.20] |     -2.55 | 0.011 
+#&gt; period [3]  |    -1.41 | 0.38 | [-2.16, -0.66] |     -3.70 | &lt; .001
+#&gt; period [4]  |    -1.65 | 0.62 | [-2.87, -0.43] |     -2.66 | 0.008</code></pre>
 <p>For comparison and to show that the results from <code>mice:pool()</code> and <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code> are identical, we take an example that also works with the <em>mice</em> package:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span><span class="op">)</span>
