@@ -182,9 +182,13 @@
     df_error <- degrees_of_freedom(model, method = "any")
   }
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
-    # order may have changed due to merging, so make sure
-    # df are in correct order.
-    parameters$df_error <- df_error[order(parameters$.id)]
+    if (length(df_error) == 1) {
+      parameters$df_error <- df_error
+    } else {
+      # order may have changed due to merging, so make sure
+      # df are in correct order.
+      parameters$df_error <- df_error[order(parameters$.id)]
+    }
   }
 
 
