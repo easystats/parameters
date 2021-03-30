@@ -1,4 +1,6 @@
-if (require("testthat") && require("parameters")) {
+.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+
+if (.runThisTest && require("testthat") && require("parameters")) {
 
   test_that("model_parameters output as expected", {
   set.seed(123)
