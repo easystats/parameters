@@ -47,6 +47,7 @@ model_parameters.gam <- function(model,
   if (inherits(model, c("gam", "scam")) && "smooth_terms" %in% parameters$Component && !("df" %in% names(parameters))) {
     parameters$df <- parameters$Coefficient
     parameters$df[parameters$Component != "smooth_terms"] <- NA
+    parameters$df_error[parameters$Component == "smooth_terms"] <- NA
     parameters$Coefficient[parameters$Component == "smooth_terms"] <- NA
     # reorder
     insert_column <- which(names(parameters) == "df_error")
@@ -57,6 +58,8 @@ model_parameters.gam <- function(model,
       n_col <- ncol(parameters)
       parameters <- parameters[c(1:(insert_column - 1), n_col, insert_column:(n_col - 1))]
     }
+  } else if (all(c("df", "df_error") %in% names(parameters)) && "smooth_terms" %in% parameters$Component) {
+    parameters$df_error[parameters$Component == "smooth_terms"] <- NA
   }
 
   if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
