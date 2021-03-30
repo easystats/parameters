@@ -56,7 +56,7 @@ if (require("testthat") &&
   test_that("model_parameters", {
     expect_equal(
       mp$df_error,
-      c(183.4606, 183.460603, 183.460603, 183.460603),
+      c(183.4606, NA, NA, NA),
       tolerance = 1e-3
     )
   })
