@@ -49,7 +49,7 @@
 #' \pkg{fastICA} package to be installed.
 #' }
 #' }
-#' See also \href{https://CRAN.R-project.org/package=parameters/vignettes/parameters_reduction.html}{package vignette}.
+#' See also \href{https://easystats.github.io/parameters/articles/parameters_reduction.html}{package vignette}.
 #'
 #' @references \itemize{
 #'  \item Nguyen, L. H., \& Holmes, S. (2019). Ten quick tips for effective

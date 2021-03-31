@@ -177,7 +177,9 @@ intervals. If not \code{NULL} and width is larger than the string's length,
 leading whitespaces are added to the string. If \code{width="auto"}, width
 will be set to the length of the longest string.}
 
-\item{zap_small}{Logical, if \code{TRUE}, small values are rounded after \code{digits} decimal places. If \code{FALSE}, values with more decimal places than \code{digits} are printed in scientific notation.}
+\item{zap_small}{Logical, if \code{TRUE}, small values are rounded after
+\code{digits} decimal places. If \code{FALSE}, values with more decimal
+places than \code{digits} are printed in scientific notation.}
 
 \item{show_sigma}{Logical, if \code{TRUE}, adds information about the residual
 standard deviation.}
