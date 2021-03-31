@@ -160,7 +160,7 @@ model_parameters.robtab <- function(model, verbose = TRUE, ...) {
     names(out)[1:4] <- c("Value", "Probability1", "Probability2", "Difference")
     if ("p.value" %in% names(out)) {
       out$p <- out$p.value
-      out <- subset(out, select = -c(p.value))
+      out <- subset(out, select = -c("p.value"))
     }
   }
 

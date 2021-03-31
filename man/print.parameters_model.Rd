@@ -46,7 +46,9 @@ standard deviation.}
 
 \item{show_formula}{Logical, if \code{TRUE}, adds the model formula to the output.}
 
-\item{zap_small}{Logical, if \code{TRUE}, small values are rounded after \code{digits} decimal places. If \code{FALSE}, values with more decimal places than \code{digits} are printed in scientific notation.}
+\item{zap_small}{Logical, if \code{TRUE}, small values are rounded after
+\code{digits} decimal places. If \code{FALSE}, values with more decimal
+places than \code{digits} are printed in scientific notation.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
