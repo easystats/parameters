@@ -46,12 +46,12 @@ if (require("testthat") &&
 
     m1 <- suppressWarnings(lavaan::cfa(model1, data = attitude))
     params <- parameters::model_parameters(m1)
-    expect_equal(c(nrow(params), ncol(params)), c(10, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(10, 10))
 
     expect_warning(parameters::model_parameters(m1, ci = c(0.8, 0.9)))
 
     params <- parameters::model_parameters(m1, standardize = TRUE, type = "all")
-    expect_equal(c(nrow(params), ncol(params)), c(20, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(20, 10))
 
     x <- lavaan::anova(m1, lavaan::cfa(model2, data = attitude))
     params <- parameters::model_parameters(x)
