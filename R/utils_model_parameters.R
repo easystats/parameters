@@ -184,9 +184,17 @@
   }
   columns <- grepl(pattern = "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)", colnames(params))
   if (any(columns)) {
-    params[columns] <- exp(params[columns])
-    if (all(c("Coefficient", "SE") %in% names(params))) {
-      params$SE <- params$Coefficient * params$SE
+    if (inherits(model, "mvord")) {
+      rows <- params$Component != "correlation"
+      params[rows, columns] <- exp(params[rows, columns])
+      if (all(c("Coefficient", "SE") %in% names(params))) {
+        params$SE[rows] <- params$Coefficient[rows] * params$SE[rows]
+      }
+    } else {
+      params[columns] <- exp(params[columns])
+      if (all(c("Coefficient", "SE") %in% names(params))) {
+        params$SE <- params$Coefficient * params$SE
+      }
     }
   }
   params

@@ -35,6 +35,11 @@ format.parameters_model <- function(x,
     x$Method <- NULL
   }
 
+  # remove response for mvord
+  if (!is.null(m_class) && m_class == "mvord") {
+    x$Response <- NULL
+  }
+
   # rename columns for t-tests
   if (!is.null(htest_type) && htest_type == "ttest" && !is.null(mean_group_values)) {
     if (all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))) {
@@ -121,11 +126,18 @@ format.parameters_simulate <- format.parameters_model
 #' @export
 format.parameters_brms_meta <- format.parameters_model
 
+
 #' @importFrom insight format_p format_table
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, zap_small = FALSE, format = NULL, ...) {
+  m_class <- attributes(x)$model_class
   x$Method <- NULL
+
+  # remove response for mvord
+  if (!is.null(m_class) && m_class == "mvord") {
+    x$Response <- NULL
+  }
 
   out <- data.frame(
     Parameter = x$Parameter,
@@ -184,6 +196,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
 
   formatted_table
 }
+
 
 
 

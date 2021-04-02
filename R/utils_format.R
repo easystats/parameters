@@ -62,6 +62,9 @@
 
 
 .prepare_splitby_for_print <- function(x) {
+  if (!is.null(attributes(x)$model_class) && attributes(x)$model_class == "mvord") {
+    x$Response <- NULL
+  }
   split_by <- ""
   split_by <- c(split_by, ifelse("Component" %in% names(x) && .n_unique(x$Component) > 1, "Component", ""))
   split_by <- c(split_by, ifelse("Effects" %in% names(x) && .n_unique(x$Effects) > 1, "Effects", ""))
@@ -226,6 +229,11 @@
       colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
 
+    # rename columns for correlation part
+    if (type == "correlation" && !is.null(coef_column)) {
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Estimate"
+    }
+
     # rename columns for random part
     if (grepl("random", type) && any(colnames(tables[[type]]) %in% .all_coefficient_types())) {
       colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types()] <- "Coefficient"
@@ -359,6 +367,7 @@
     "sigma.fixed" = ,
     "sigma.fixed." = ,
     "sigma" = "Sigma",
+    "thresholds" = "Thresholds",
     "correlation" = "Correlation",
     "SD/Cor" = "SD / Correlation",
     "Loading" = "Loading",
