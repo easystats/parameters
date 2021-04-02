@@ -77,3 +77,14 @@ p_value.mvord <- function(model, component = c("all", "conditional", "thresholds
 
   .remove_backticks_from_parameter_names(params)
 }
+
+
+#' @export
+simulate_model.mvord <- function(model, iterations = 1000, component = c("all", "conditional", "thresholds", "correlation"), ...) {
+  component <- match.arg(component)
+  out <- .simulate_model(model, iterations, component = component)
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  out
+}
