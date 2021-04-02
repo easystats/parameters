@@ -36,7 +36,7 @@ format.parameters_model <- function(x,
   }
 
   # remove response for mvord
-  if (!is.null(m_class) && m_class == "mvord") {
+  if (!is.null(m_class) && any(m_class == "mvord")) {
     x$Response <- NULL
   }
 
@@ -135,7 +135,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
   x$Method <- NULL
 
   # remove response for mvord
-  if (!is.null(m_class) && m_class == "mvord") {
+  if (!is.null(m_class) && any(m_class == "mvord")) {
     x$Response <- NULL
   }
 
