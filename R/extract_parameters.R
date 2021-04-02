@@ -789,6 +789,7 @@
     SE = data$se,
     CI_low = data$ci.lower,
     CI_high = data$ci.upper,
+    z = data$z,
     p = data$pvalue,
     stringsAsFactors = FALSE
   )
