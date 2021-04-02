@@ -62,7 +62,7 @@ model_parameters.cgam <- function(model,
   )
 
   # get degrees of freedom
-  out$df_error = model$resid_df_obs
+  # out$df_error <- model$resid_df_obs
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
@@ -108,4 +108,10 @@ standard_error.cgam <- function(model, ...) {
     SE = se,
     Component = params$Component
   )
+}
+
+
+#' @export
+degrees_of_freedom.cgam <- function(model, ...) {
+  model$resid_df_obs
 }
