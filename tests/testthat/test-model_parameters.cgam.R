@@ -1,4 +1,6 @@
-if (require("testthat") && require("cgam")) {
+.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+
+if (.runThisTest && require("testthat") && require("cgam")) {
   test_that("model_parameters - cgam", {
     # cgam -----------------------
 

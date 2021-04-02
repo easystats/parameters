@@ -62,7 +62,7 @@
 
 
 .prepare_splitby_for_print <- function(x) {
-  if (!is.null(attributes(x)$model_class) && attributes(x)$model_class == "mvord") {
+  if (!is.null(attributes(x)$model_class) && any(attributes(x)$model_class == "mvord")) {
     x$Response <- NULL
   }
   split_by <- ""
