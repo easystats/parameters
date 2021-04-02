@@ -201,6 +201,7 @@
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models now returns an <code>Effects</code> column even when there is just one type of “effects”, to mimic the behaviour from <code>broom.mixed::tidy()</code>. In conjunction with <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> users can get the same column names as in <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> objects.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for t-tests now uses the group values as column names.</p></li>
 <li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>zap_small</code> argument, to avoid scientific notation for very small numbers. Instead, <code>zap_small</code> forces to round to the specified number of digits.</p></li>
+<li><p>To be internally consistent, the degrees of freedom column for <code>lqm(m)</code> and <code>cgam(m)</code> objects (with <em>t</em>-statistic) is called <code>df_error</code>.</p></li>
 </ul>
 </div>
 <div id="other-functions" class="section level3">
@@ -420,7 +421,7 @@
 <a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fixed issue in <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for <em>lme</em> models with non-positive definite variance-covariance.</p></li>
-<li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code>, <code>lqmm::lqm()</code>, <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">mgcv::gam()</a></code>, and <code>margins::margins()</code> models, and models from package <em>blme</em>.</p></li>
+<li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code>, <code><a href="https://rdrr.io/pkg/lqmm/man/lqm.html" class="external-link">lqmm::lqm()</a></code>, <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">mgcv::gam()</a></code>, and <code>margins::margins()</code> models, and models from package <em>blme</em>.</p></li>
 </ul>
 </div>
 </div>
