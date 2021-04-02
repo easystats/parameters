@@ -5,11 +5,13 @@ if (.runThisTest && require("testthat") && require("lqmm") && require("parameter
 
   test_that("model_parameters - lqm", {
     # data
+    set.seed(123)
     n <- 500
     p <- 1:3 / 4
     set.seed(123)
-    test <- data.frame(x = runif(n, 0, 1))
-    test$y <- 30 + test$x + rnorm(n)
+    x <- runif(n, 0, 1)
+    y <- 30 + x + rnorm(n)
+    test <<- data.frame(x, y)
 
     # model
     set.seed(123)
