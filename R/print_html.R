@@ -32,7 +32,18 @@ print_html.parameters_model <- function(x,
   if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
 
-  formatted_table <- format(x, format = "html", pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = ci_brackets)
+  formatted_table <- format(
+    x,
+    format = "html",
+    pretty_names = pretty_names,
+    split_components = split_components,
+    select = select,
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    ci_width = NULL,
+    ci_brackets = ci_brackets
+  )
 
   # replace brackets by parenthesis
   if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
@@ -41,9 +52,24 @@ print_html.parameters_model <- function(x,
   }
 
   if (is.null(footer)) {
-    footer <- .format_footer(x, digits = digits, verbose = verbose, show_sigma = show_sigma, show_formula = show_formula, type = "html")
+    footer <- .format_footer(
+      x,
+      digits = digits,
+      verbose = verbose,
+      show_sigma = show_sigma,
+      show_formula = show_formula,
+      type = "html"
+    )
   }
-  insight::export_table(formatted_table, format = "html", caption = table_caption, subtitle = subtitle, footer = footer, align = align, ...)
+  insight::export_table(
+    formatted_table,
+    format = "html",
+    caption = table_caption,
+    subtitle = subtitle,
+    footer = footer,
+    align = align,
+    ...
+  )
 }
 
 #' @export

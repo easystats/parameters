@@ -84,7 +84,18 @@
 #' @importFrom insight format_value
 #' @importFrom stats quantile
 #' @keywords internal
-.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, zap_small = FALSE, ...) {
+.print_model_parms_components <- function(x,
+                                          pretty_names,
+                                          split_column = "Component",
+                                          digits = 2,
+                                          ci_digits = 2,
+                                          p_digits = 3,
+                                          coef_column = NULL,
+                                          format = NULL,
+                                          ci_width = "auto",
+                                          ci_brackets = TRUE,
+                                          zap_small = FALSE,
+                                          ...) {
   final_table <- list()
 
   ignore_group <- isTRUE(attributes(x)$ignore_group)

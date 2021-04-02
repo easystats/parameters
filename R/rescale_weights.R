@@ -2,33 +2,35 @@
 #' @name rescale_weights
 #'
 #' @description Most functions to fit multilevel and mixed effects models only
-#'    allow to specify frequency weights, but not design (i.e. sampling or probability)
-#'    weights, which should be used when analyzing complex samples and survey data.
-#'    \code{rescale_weights()} implements an algorithm proposed by \cite{Asparouhov (2006)}
-#'    and \cite{Carle (2009)} to rescale design weights in survey data to account for
-#'    the grouping structure of multilevel models, which then can be used for
-#'    multilevel modelling.
+#'   allow to specify frequency weights, but not design (i.e. sampling or
+#'   probability) weights, which should be used when analyzing complex samples
+#'   and survey data. \code{rescale_weights()} implements an algorithm proposed
+#'   by \cite{Asparouhov (2006)} and \cite{Carle (2009)} to rescale design
+#'   weights in survey data to account for the grouping structure of multilevel
+#'   models, which then can be used for multilevel modelling.
 #'
 #' @param data A data frame.
 #' @param group Variable names (as character vector, or as formula), indicating
-#'   the grouping structure (strata) of the survey data (level-2-cluster variable).
-#'   It is also possible to create weights for multiple group variables; in such
-#'   cases, each created weighting variable will be suffixed by the name of the
-#'   group variable.
-#' @param probability_weights Variable indicating the probability (design or sampling)
-#'   weights of the survey data (level-1-weight).
+#'   the grouping structure (strata) of the survey data (level-2-cluster
+#'   variable). It is also possible to create weights for multiple group
+#'   variables; in such cases, each created weighting variable will be suffixed
+#'   by the name of the group variable.
+#' @param probability_weights Variable indicating the probability (design or
+#'   sampling) weights of the survey data (level-1-weight).
 #' @param nest Logical, if \code{TRUE} and \code{group} indicates at least two
-#'   group variables, then groups are "nested", i.e. groups are now a combination
-#'   from each group level of the variables in \code{group}.
+#'   group variables, then groups are "nested", i.e. groups are now a
+#'   combination from each group level of the variables in \code{group}.
 #'
-#' @return \code{data}, including the new weighting variables: \code{pweights_a} and \code{pweights_b}, which represent the rescaled design weights to use in multilevel models (use these variables for the \code{weights} argument).
+#' @return \code{data}, including the new weighting variables: \code{pweights_a}
+#'   and \code{pweights_b}, which represent the rescaled design weights to use
+#'   in multilevel models (use these variables for the \code{weights} argument).
 #'
 #' @details Rescaling is based on two methods: For \code{pweights_a}, the sample
-#'    weights \code{probability_weights} are adjusted by a factor that represents the proportion
-#'    of group size divided by the sum of sampling weights within each group.
-#'    The adjustment factor for \code{pweights_b} is the sum of sample weights
-#'    within each group divided by the sum of squared sample weights within
-#'    each group (see \cite{Carle (2009)}, Appendix B).
+#'   weights \code{probability_weights} are adjusted by a factor that represents
+#'   the proportion of group size divided by the sum of sampling weights within
+#'   each group. The adjustment factor for \code{pweights_b} is the sum of
+#'   sample weights within each group divided by the sum of squared sample
+#'   weights within each group (see \cite{Carle (2009)}, Appendix B).
 #'    \cr \cr
 #'    Regarding the choice between scaling methods A and B, Carle suggests
 #'    that "analysts who wish to discuss point estimates should report results
@@ -47,8 +49,12 @@
 #'    on the survey design that should be mimicked.
 #'
 #' @references \itemize{
-#'   \item Carle A.C. (2009). Fitting multilevel models in complex survey data with design weights: Recommendations. BMC Medical Research Methodology 9(49): 1-13
-#'   \item Asparouhov T. (2006). General Multi-Level Modeling with Sampling Weights. Communications in Statistics - Theory and Methods 35: 439-460
+#'   \item Carle A.C. (2009). Fitting multilevel models in complex survey data
+#'   with design weights: Recommendations. BMC Medical Research Methodology
+#'   9(49): 1-13
+#'
+#'   \item Asparouhov T. (2006). General Multi-Level Modeling with Sampling
+#'   Weights. Communications in Statistics - Theory and Methods 35: 439-460
 #'   }
 #'
 #' @examples

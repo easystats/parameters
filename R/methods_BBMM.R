@@ -10,7 +10,11 @@ ci.BBreg <- ci.default
 #' @export
 standard_error.BBmm <- function(model, ...) {
   .data_frame(
-    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    Parameter = insight::find_parameters(model,
+      effects = "fixed",
+      component = "conditional",
+      flatten = TRUE
+    ),
     SE = as.data.frame(summary(model)$fixed.coefficients)$StdErr
   )
 }
@@ -19,7 +23,11 @@ standard_error.BBmm <- function(model, ...) {
 #' @export
 standard_error.BBreg <- function(model, ...) {
   .data_frame(
-    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    Parameter = insight::find_parameters(model,
+      effects = "fixed",
+      component = "conditional",
+      flatten = TRUE
+    ),
     SE = as.data.frame(summary(model)$coefficients)$StdErr
   )
 }
@@ -28,7 +36,11 @@ standard_error.BBreg <- function(model, ...) {
 #' @export
 p_value.BBmm <- function(model, ...) {
   .data_frame(
-    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    Parameter = insight::find_parameters(model,
+      effects = "fixed",
+      component = "conditional",
+      flatten = TRUE
+    ),
     p = as.data.frame(summary(model)$fixed.coefficients)$p.value
   )
 }
@@ -37,7 +49,11 @@ p_value.BBmm <- function(model, ...) {
 #' @export
 p_value.BBreg <- function(model, ...) {
   .data_frame(
-    Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+    Parameter = insight::find_parameters(model,
+      effects = "fixed",
+      component = "conditional",
+      flatten = TRUE
+    ),
     p = as.data.frame(summary(model)$coefficients)$p.value
   )
 }

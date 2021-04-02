@@ -1,6 +1,4 @@
 
-
-
 #' @importFrom insight print_color
 #' @importFrom stats qt
 #' @export

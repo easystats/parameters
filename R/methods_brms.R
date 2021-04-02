@@ -68,10 +68,19 @@ model_parameters.brmsfit <- function(model,
     }
 
     params <- .add_pretty_names(params, model)
+
     if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
       params <- .exponentiate_parameters(params, model, exponentiate)
     }
-    params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, verbose = verbose, ...)
+
+    params <- .add_model_parameters_attributes(params,
+      model,
+      ci,
+      exponentiate,
+      ci_method = ci_method,
+      verbose = verbose,
+      ...
+    )
 
     attr(params, "parameter_info") <- insight::clean_parameters(model)
     attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -107,18 +116,17 @@ model_parameters.brmsfit <- function(model,
   studies[] <- lapply(studies, function(i) i + smd[[1]])
   tau <- insight::get_parameters(model, effects = "random", parameters = "^sd_")
 
-  params <-
-    bayestestR::describe_posterior(
-      cbind(studies, smd),
-      centrality = centrality,
-      dispersion = dispersion,
-      ci = ci,
-      ci_method = ci_method,
-      test = test,
-      rope_range = rope_range,
-      rope_ci = rope_ci,
-      ...
-    )
+  params <- bayestestR::describe_posterior(
+    cbind(studies, smd),
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    ...
+  )
 
   params_diagnostics <- bayestestR::diagnostic_posterior(
     model,
