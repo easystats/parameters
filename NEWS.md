@@ -32,6 +32,9 @@
   scientific notation for very small numbers. Instead, `zap_small` forces to
   round to the specified number of digits.
 
+* To be internally consistent, the degrees of freedom column for `lqm(m)` and
+  `cgam(m)` objects (with *t*-statistic) is called `df_error`.
+
 ### Other functions
 
 * `describe_distribution()` gets a `quartiles` argument to include 25th
