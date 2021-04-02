@@ -225,11 +225,14 @@ to automatically define this range based on properties of the model's data.</p><
     </tr>
     <tr>
       <th>rule</th>
-      <td><p>Character, indicating the rules when testing for practical equivalence. Can be <code>"bayes"</code>, <code>"classic"</code> or <code>"cet"</code>. See 'Details'.</p></td>
+      <td><p>Character, indicating the rules when testing for practical
+equivalence. Can be <code>"bayes"</code>, <code>"classic"</code> or <code>"cet"</code>. See
+'Details'.</p></td>
     </tr>
     <tr>
       <th>p_values</th>
-      <td><p>Logical, if <code>TRUE</code>, adjusted p-values for equivalence testing are calculated.</p></td>
+      <td><p>Logical, if <code>TRUE</code>, adjusted p-values for equivalence
+testing are calculated.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -272,27 +275,29 @@ interpretation of the p-value may differ from the results returned from
 the equivalence test.</p>
 <h3 class='hasAnchor' id='calculation-of-equivalence-testing'><a class='anchor' href='#calculation-of-equivalence-testing'></a>Calculation of equivalence testing</h3>
 <p></p><dl>
-    <dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the &#8220;HDI+ROPE decision rule&#8221; <cite>(Kruschke, 2014, 2018)</cite>
-      used for the <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>Bayesian counterpart</a></code>.
-      This means, if the confidence intervals are completely outside the ROPE,
-      the "null hypothesis" for this parameter is "rejected". If the ROPE
+    <dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the &#8220;HDI+ROPE decision rule&#8221; <cite>(Kruschke,
+      2014, 2018)</cite> used for the
+      <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>Bayesian counterpart</a></code>. This
+      means, if the confidence intervals are completely outside the ROPE, the
+      "null hypothesis" for this parameter is "rejected". If the ROPE
       completely covers the CI, the null hypothesis is accepted. Else, it's
       undecided whether to accept or reject the null hypothesis. Desirable
-      results are low proportions inside the ROPE (the closer to zero the better).</p></dd>
+      results are low proportions inside the ROPE (the closer to zero the
+      better).</p></dd>
     <dt>"classic" - The TOST rule (Lakens 2017)</dt><dd><p>This rule follows the &#8220;TOST rule&#8221;, i.e. a two one-sided test
-      procedure (<cite>Lakens 2017</cite>). Following this rule, practical equivalence
-      of an effect (i.e. H0) is <em>rejected</em>, when the coefficient is statistically
-      significant <em>and</em> the narrow confidence intervals (i.e. <code>1-2*alpha</code>)
-      <em>include</em> or <em>exceed</em> the ROPE boundaries. Practical equivalence
-      is assumed (i.e. H0 accepted) when the narrow confidence intervals are
-      completely inside the ROPE, no matter if the effect is statistically
-      significant or not. Else, the decision whether to accept or reject H0 is
-      undecided.</p></dd>
-    <dt>"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)</dt><dd><p>The Conditional Equivalence Testing as described by <cite>Campbell and Gustafson 2018</cite>.
-      According to this rule, practical equivalence is rejected when the
-      coefficient is statistically significant. When the effect is <em>not</em>
-      significant and the narrow confidence intervals are completely inside the ROPE,
-      we accept H0, else it is undecided.</p></dd>
+      procedure (<cite>Lakens 2017</cite>). Following this rule, practical
+      equivalence of an effect (i.e. H0) is <em>rejected</em>, when the
+      coefficient is statistically significant <em>and</em> the narrow
+      confidence intervals (i.e. <code>1-2*alpha</code>) <em>include</em> or
+      <em>exceed</em> the ROPE boundaries. Practical equivalence is assumed
+      (i.e. H0 accepted) when the narrow confidence intervals are completely
+      inside the ROPE, no matter if the effect is statistically significant
+      or not. Else, the decision whether to accept or reject H0 is undecided.</p></dd>
+    <dt>"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)</dt><dd><p>The Conditional Equivalence Testing as described by <cite>Campbell and
+    Gustafson 2018</cite>. According to this rule, practical equivalence is
+    rejected when the coefficient is statistically significant. When the
+    effect is <em>not</em> significant and the narrow confidence intervals are
+    completely inside the ROPE, we accept H0, else it is undecided.</p></dd>
   
 </dl>
 
@@ -313,10 +318,16 @@ the equivalence test.</p>
   column reflects the SGPV.</p>
 <h3 class='hasAnchor' id='adjustment-for-multiple-testing'><a class='anchor' href='#adjustment-for-multiple-testing'></a>Adjustment for multiple testing</h3>
 <p>The calculation of p-values is somewhat "experimental". For parameters, where H0...</p><ul>
-<li><p>... is rejected, the p-value equals a NHST as if the upper / lower boundary of the ROPE (see <code>range</code>) would be the point-null to test against.</p></li>
+<li><p>... is rejected, the p-value equals a NHST as if the upper / lower
+    boundary of the ROPE (see <code>range</code>) would be the point-null to test
+    against.</p></li>
 <li><p>... is accepted, the p-value is set to 1.</p></li>
-<li><p>... is undecided, the p-value equals a NHST against the point-null, however, the "uncertainty" (i.e. ROPE range) is added to the confidence intervals (so the upper confidence interval limit equals the regular upper confidence interval limit + half the ROPE range).</p></li>
-</ul><p>All p-values are then adjusted for multiple testing (using <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> with <code>method = "fdr"</code>).</p>
+<li><p>... is undecided, the p-value equals a NHST against the point-null,
+    however, the "uncertainty" (i.e. ROPE range) is added to the confidence
+    intervals (so the upper confidence interval limit equals the regular
+    upper confidence interval limit + half the ROPE range).</p></li>
+</ul><p>All p-values are then adjusted for multiple testing (using
+  <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> with <code>method = "fdr"</code>).</p>
 <h3 class='hasAnchor' id='rope-range'><a class='anchor' href='#rope-range'></a>ROPE range</h3>
 <p>Some attention is required for finding suitable values for the ROPE limits
   (argument <code>range</code>). See 'Details' in <code><a href='https://easystats.github.io/bayestestR/reference/rope_range.html'>rope_range</a></code>
@@ -329,13 +340,27 @@ the equivalence test.</p>
 
     
 <ul>
-<li><p>Blume, J. D., D'Agostino McGowan, L., Dupont, W. D., &amp; Greevy, R. A. (2018). Second-generation p-values: Improved rigor, reproducibility, &amp; transparency in statistical analyses. PLOS ONE, 13(3), e0188299. https://doi.org/10.1371/journal.pone.0188299</p></li>
-<li><p>Campbell, H., &amp; Gustafson, P. (2018). Conditional equivalence testing: An alternative remedy for publication bias. PLOS ONE, 13(4), e0195145. doi: 10.1371/journal.pone.0195145</p></li>
-<li><p>Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press</p></li>
-<li><p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. doi: 10.1177/2515245918771304</p></li>
-<li><p>Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses. Social Psychological and Personality Science, 8(4), 355–362. doi: 10.1177/1948550617697177</p></li>
-<li><p>Lakens, D., &amp; Delacre, M. (2020). Equivalence Testing and the Second Generation P-Value. Meta-Psychology, 4. https://doi.org/10.15626/MP.2018.933</p></li>
-<li><p>Pernet, C. (2017). Null hypothesis significance testing: A guide to commonly misunderstood concepts and recommendations for good practice. F1000Research, 4, 621. doi: 10.12688/f1000research.6963.5</p></li>
+<li><p>Blume, J. D., D'Agostino McGowan, L., Dupont, W. D., &amp; Greevy, R. A.
+  (2018). Second-generation p-values: Improved rigor, reproducibility, &amp;
+  transparency in statistical analyses. PLOS ONE, 13(3), e0188299.
+  https://doi.org/10.1371/journal.pone.0188299</p></li>
+<li><p>Campbell, H., &amp; Gustafson, P. (2018). Conditional equivalence
+  testing: An alternative remedy for publication bias. PLOS ONE, 13(4),
+  e0195145. doi: 10.1371/journal.pone.0195145</p></li>
+<li><p>Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with
+  R, JAGS, and Stan. Academic Press</p></li>
+<li><p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in
+  Bayesian estimation. Advances in Methods and Practices in Psychological
+  Science, 1(2), 270-280. doi: 10.1177/2515245918771304</p></li>
+<li><p>Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests,
+  Correlations, and Meta-Analyses. Social Psychological and Personality
+  Science, 8(4), 355–362. doi: 10.1177/1948550617697177</p></li>
+<li><p>Lakens, D., &amp; Delacre, M. (2020). Equivalence Testing and the Second
+  Generation P-Value. Meta-Psychology, 4.
+  https://doi.org/10.15626/MP.2018.933</p></li>
+<li><p>Pernet, C. (2017). Null hypothesis significance testing: A guide to
+  commonly misunderstood concepts and recommendations for good practice.
+  F1000Research, 4, 621. doi: 10.12688/f1000research.6963.5</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
