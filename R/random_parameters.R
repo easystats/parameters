@@ -11,8 +11,8 @@
 #'   including number of levels per random effect group, as well as complete
 #'   observations in the model.
 #'
-#' @details The variance components are obtained from \code{\link[insight]{get_variance}}
-#'   and are denoted as following:
+#' @details The variance components are obtained from
+#'   \code{\link[insight]{get_variance}} and are denoted as following:
 #'   \subsection{Within-group (or residual) variance}{
 #'     The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
 #'     is the sum of the distribution-specific variance and the variance due to additive dispersion.

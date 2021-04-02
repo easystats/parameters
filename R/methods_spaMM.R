@@ -59,7 +59,11 @@ standard_error.HLfit <- function(model, method = NULL, ...) {
   } else {
     utils::capture.output(se <- summary(model)$beta_table[, 2])
     .data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE),
+      Parameter = insight::find_parameters(model,
+        effects = "fixed",
+        component = "conditional",
+        flatten = TRUE
+      ),
       SE = as.vector(se)
     )
   }

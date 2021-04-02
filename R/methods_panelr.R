@@ -114,7 +114,19 @@ p_value.wbgee <- p_value.wbm
 # utils -------------------
 
 
-.mixed_model_parameters_generic <- function(model, ci, bootstrap, iterations, merge_by, standardize, exponentiate, effects, robust, p_adjust, group_level, df_method, ...) {
+.mixed_model_parameters_generic <- function(model,
+                                            ci,
+                                            bootstrap,
+                                            iterations,
+                                            merge_by,
+                                            standardize,
+                                            exponentiate,
+                                            effects,
+                                            robust,
+                                            p_adjust,
+                                            group_level,
+                                            df_method,
+                                            ...) {
   params <- params_random <- params_variance <- att <- NULL
 
   if (effects %in% c("fixed", "all")) {

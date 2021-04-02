@@ -24,8 +24,8 @@ This function extracts the different variance components of a
   mixed model and returns the result as a data frame.
 }
 \details{
-The variance components are obtained from \code{\link[insight]{get_variance}}
-  and are denoted as following:
+The variance components are obtained from
+  \code{\link[insight]{get_variance}} and are denoted as following:
   \subsection{Within-group (or residual) variance}{
     The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
     is the sum of the distribution-specific variance and the variance due to additive dispersion.
