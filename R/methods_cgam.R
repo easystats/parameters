@@ -61,6 +61,9 @@ model_parameters.cgam <- function(model,
     ...
   )
 
+  # get degrees of freedom
+  out$df_error = model$resid_df_obs
+
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
