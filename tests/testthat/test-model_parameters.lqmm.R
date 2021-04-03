@@ -47,8 +47,10 @@ if (.runThisTest && require("testthat") && require("lqmm") && require("parameter
     M <- 50
     n <- 10
     set.seed(123)
-    test <<- data.frame(x = runif(n * M, 0, 1), group = rep(1:M, each = n))
-    test$y <- 10 * test$x + rep(rnorm(M, 0, 2), each = n) + rchisq(n * M, 3)
+    x <- runif(n * M, 0, 1)
+    group <- rep(1:M, each = n)
+    y <- 10 * x + rep(rnorm(M, 0, 2), each = n) + rchisq(n * M, 3)
+    test <<- data.frame(x, y)
 
     # model
     set.seed(123)
