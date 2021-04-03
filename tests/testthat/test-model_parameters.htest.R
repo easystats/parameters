@@ -96,19 +96,51 @@ if (require("effectsize")) {
     mod_paired <- wilcox.test(x, y, paired = TRUE, alternative = "greater")
 
     set.seed(123)
-    expect_snapshot(model_parameters(mod_paired, rank_biserial = TRUE, ci = 0.90))
+    expect_snapshot(model_parameters(mod_paired))
 
     x <- c(1.15, 0.88, 0.90, 0.74, 1.21)
     mod_one <- wilcox.test(x, mu = 1)
 
     set.seed(123)
-    expect_snapshot(model_parameters(mod_one, rank_biserial = TRUE))
+    expect_snapshot(model_parameters(mod_one))
 
     m <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
     n <- c(1.15, 0.88, 0.90, 0.74, 1.21)
-    mod_unpaired <-  wilcox.test(m, n, alternative = "g")
+    mod_unpaired <- wilcox.test(m, n, alternative = "g")
 
     set.seed(123)
-    expect_snapshot(model_parameters(mod_unpaired, rank_biserial = TRUE, ci = 0.99))
+    expect_snapshot(model_parameters(mod_unpaired))
   })
+
+  test_that("model_parameters- rank epsilon squared", {
+    x <- c(x, y, z)
+    g <- factor(rep(1:3, c(5, 4, 5)),
+      labels = c(
+        "Normal subjects",
+        "Subjects with obstructive airway disease",
+        "Subjects with asbestosis"
+      )
+    )
+    mod <- kruskal.test(x, g)
+
+    set.seed(123)
+    expect_snapshot(model_parameters(mod))
+  })
+
+  if (packageVersion("insight") > "0.13.2") {
+    test_that("model_parameters- Kendall's W", {
+      wb <- aggregate(warpbreaks$breaks,
+        by = list(
+          w = warpbreaks$wool,
+          t = warpbreaks$tension
+        ),
+        FUN = mean
+      )
+
+      mod <- friedman.test(x ~ w | t, data = wb)
+
+      set.seed(123)
+      expect_snapshot(suppressWarnings(model_parameters(mod)))
+    })
+  }
 }

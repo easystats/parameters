@@ -16,6 +16,8 @@
   epsilon_squared = NULL,
   cohens_g = NULL,
   rank_biserial = NULL,
+  rank_epsilon_squared = NULL,
+  kendalls_w = NULL,
   ci = 0.95,
   bootstrap = FALSE,
   verbose = TRUE,
@@ -48,6 +50,13 @@ Only applies to objects from \code{mcnemar.test()}.}
 
 \item{rank_biserial}{If \code{TRUE}, compute the rank-biserial correlation as
 effect size measure. Only applies to objects from \code{wilcox.test()}.}
+
+\item{rank_epsilon_squared}{If \code{TRUE}, compute the rank epsilon squared
+as effect size measure. Only applies to objects from \code{kruskal.test()}.}
+
+\item{kendalls_w}{If \code{TRUE}, compute the Kendall's coefficient of
+concordance as effect size measure. Only applies to objects from
+\code{friedman.test()}.}
 
 \item{ci}{Level of confidence intervals for effect size statistic. Currently
 only applies to objects from \code{chisq.test()} or \code{oneway.test()}.}
