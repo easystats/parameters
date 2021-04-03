@@ -113,6 +113,10 @@ if (require("effectsize")) {
   })
 
   test_that("model_parameters- rank epsilon squared", {
+    x <- c(2.9, 3.0, 2.5, 2.6, 3.2)
+    y <- c(3.8, 2.7, 4.0, 2.4)
+    z <- c(2.8, 3.4, 3.7, 2.2, 2.0)
+
     x <- c(x, y, z)
     g <- factor(rep(1:3, c(5, 4, 5)),
       labels = c(

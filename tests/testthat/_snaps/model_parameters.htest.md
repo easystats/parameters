@@ -31,6 +31,17 @@
       ---------------------------------------
       m          |          n | 35.00 | 0.127
 
+# model_parameters- rank epsilon squared
+
+    Code
+      model_parameters(mod)
+    Output
+      # Kruskal-Wallis rank sum test
+      
+      Parameter1 | Parameter2 | Chi2(2) |     p
+      -----------------------------------------
+      x          |          g |    0.77 | 0.680
+
 # model_parameters- Kendall's W
 
     Code
