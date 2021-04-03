@@ -32,7 +32,7 @@ if (require("testthat") && require("parameters")) {
     expect_equal(colnames(mp), c("Chi2", "df", "p", "Method"))
   })
 
-  if (require("effectsize") && packageVersion("effectsize") >= "0.4.3") {
+  if (require("effectsize")) {
     data(mtcars)
     mp <- model_parameters(stats::chisq.test(table(mtcars$am)), cramers_v = "raw", phi = "raw", ci = 0.95)
     test_that("model_parameters-chisq-test raw", {
@@ -87,4 +87,28 @@ if (require("testthat") && require("parameters")) {
       )
     })
   }
+}
+
+if (require("effectsize")) {
+  test_that("model_parameters-rank biserial", {
+    x <- c(1.83, 0.50, 1.62, 2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
+    y <- c(0.878, 0.647, 0.598, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29)
+    mod_paired <- wilcox.test(x, y, paired = TRUE, alternative = "greater")
+
+    set.seed(123)
+    expect_snapshot(model_parameters(mod_paired, rank_biserial = TRUE, ci = 0.90))
+
+    x <- c(1.15, 0.88, 0.90, 0.74, 1.21)
+    mod_one <- wilcox.test(x, mu = 1)
+
+    set.seed(123)
+    expect_snapshot(model_parameters(mod_one, rank_biserial = TRUE))
+
+    m <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
+    n <- c(1.15, 0.88, 0.90, 0.74, 1.21)
+    mod_unpaired <-  wilcox.test(m, n, alternative = "g")
+
+    set.seed(123)
+    expect_snapshot(model_parameters(mod_unpaired, rank_biserial = TRUE, ci = 0.99))
+  })
 }

@@ -18,6 +18,8 @@
 #' @param omega_squared,eta_squared,epsilon_squared Logical, if \code{TRUE},
 #'   returns the non-partial effect size Omega, Eta or Epsilon squared. Only
 #'   applies to objects from \code{oneway.test()}.
+#' @param rank_biserial If \code{TRUE}, compute the rank-biserial correlation as
+#'   effect size measure. Only applies to objects from \code{wilcox.test()}.
 #' @param ci Level of confidence intervals for effect size statistic. Currently
 #'   only applies to objects from \code{chisq.test()} or \code{oneway.test()}.
 #' @inheritParams model_parameters.default
@@ -56,6 +58,7 @@ model_parameters.htest <- function(model,
                                    eta_squared = NULL,
                                    epsilon_squared = NULL,
                                    cohens_g = NULL,
+                                   rank_biserial = NULL,
                                    ci = .95,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
@@ -73,6 +76,7 @@ model_parameters.htest <- function(model,
       eta_squared = eta_squared,
       epsilon_squared = epsilon_squared,
       cohens_g = cohens_g,
+      rank_biserial = rank_biserial,
       ci = ci,
       verbose = verbose,
       ...
@@ -141,6 +145,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                       eta_squared = NULL,
                                       epsilon_squared = NULL,
                                       cohens_g = NULL,
+                                      rank_biserial = NULL,
                                       ci = 0.95,
                                       verbose = TRUE,
                                       ...) {
@@ -162,6 +167,16 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     )
   } else if (m_info$is_ranktest) {
     out <- .extract_htest_ranktest(model)
+
+    if (grepl("^Wilcox", model$method)) {
+      out <- .add_effectsize_rankbiserial(model,
+        out,
+        rank_biserial,
+        ci = ci,
+        verbose = verbose,
+        ...
+      )
+    }
   } else if (m_info$is_onewaytest) {
     out <- .extract_htest_oneway(model)
     out <- .add_effectsize_oneway(
@@ -612,7 +627,41 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 }
 
 
+.add_effectsize_rankbiserial <- function(model,
+                                         out,
+                                         rank_biserial = NULL,
+                                         ci = .95,
+                                         verbose = TRUE,
+                                         ...) {
+  if (is.null(rank_biserial)) {
+    return(out)
+  }
 
+  if (requireNamespace("effectsize", quietly = TRUE)) {
+    # standardized d
+    if (!is.null(rank_biserial)) {
+      es <- effectsize::effectsize(model,
+        type = "r_rank_biserial",
+        ci = ci,
+        verbose = verbose,
+        ...
+      )
+      es$CI <- NULL
+      ci_cols <- grepl("^CI", names(es))
+      names(es)[ci_cols] <- paste0("rank_biserial_", names(es)[ci_cols])
+      out <- cbind(out, es)
+    }
+  }
+
+  # reorder
+  col_order <- c(
+    "Parameter1", "Parameter2", "Parameter", "W", "r_rank_biserial",
+    "rank_biserial_CI_low", "rank_biserial_CI_high", "p", "Method", "method"
+  )
+
+  out <- out[col_order[col_order %in% names(out)]]
+  out
+}
 
 .add_effectsize_oneway <- function(model,
                                    out,
