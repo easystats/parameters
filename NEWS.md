@@ -35,6 +35,8 @@
 * To be internally consistent, the degrees of freedom column for `lqm(m)` and
   `cgam(m)` objects (with *t*-statistic) is called `df_error`.
 
+* Minor improvements for models from *quantreg*.
+
 ### Other functions
 
 * `describe_distribution()` gets a `quartiles` argument to include 25th
