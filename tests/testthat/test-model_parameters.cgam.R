@@ -25,7 +25,7 @@ if (.runThisTest && require("testthat") && require("cgam")) {
           p = 4e-04
         ),
         row.names = 1L,
-        sigma = 1.93886007243119,
+        sigma = 2.159464,
         pretty_names = c(`(Intercept)` = "(Intercept)"),
         ci = 0.95,
         verbose = TRUE,
@@ -49,7 +49,7 @@ if (.runThisTest && require("testthat") && require("cgam")) {
         class = "data.frame",
         object_name = "m_cgam"
       ),
-      tolerance = 0.001
+      tolerance = 0.01
     )
   })
 
