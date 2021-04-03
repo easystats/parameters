@@ -70,6 +70,11 @@ model_parameters.emmGrid <- function(model,
     params$CI_high <- params$Estimate + fac * params$SE
   }
 
+  # rename if necessary
+  if ("df" %in% colnames(params) && insight::find_statistic(model) == "t-statistic") {
+    colnames(params)[colnames(params) == "df"] <- "df_error"
+  }
+
   # Reorder
   estimate_pos <- which(colnames(s) == model@misc$estName)
   parameter_names <- colnames(params)[1:(estimate_pos - 1)]
