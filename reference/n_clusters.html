@@ -47,7 +47,9 @@
 
 
 <meta property="og:title" content="Number of clusters to extract — n_clusters" />
-<meta property="og:description" content="This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters." />
+<meta property="og:description" content="This function runs many existing procedures for determining how many clusters
+are present in data. It returns the number of clusters based on the maximum
+consensus. In case of ties, it will select the solution with fewer clusters." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -181,7 +183,9 @@
     </div>
 
     <div class="ref-description">
-    <p>This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.</p>
+    <p>This function runs many existing procedures for determining how many clusters
+are present in data. It returns the number of clusters based on the maximum
+consensus. In case of ties, it will select the solution with fewer clusters.</p>
     </div>
 
     <pre class="usage"><span class='fu'>n_clusters</span><span class='op'>(</span>
@@ -208,16 +212,20 @@
       <th>force</th>
       <td><p>Logical, if <code>TRUE</code>, factors are converted to numerical
 values in order to be included in the data for determining the number of
-clusters. By default, factors are removed, because most methods that determine
-the number of clusters need numeric input only.</p></td>
+clusters. By default, factors are removed, because most methods that
+determine the number of clusters need numeric input only.</p></td>
     </tr>
     <tr>
       <th>package</th>
-      <td><p>These are the packages from which methods are used to determine the number of clusters. Can be <code>"all"</code> or a vector containing <code>"NbClust"</code>, <code>"mclust"</code>, <code>"cluster"</code> and <code>"M3C"</code>.</p></td>
+      <td><p>Package from which methods are to be called to determine the
+number of clusters. Can be <code>"all"</code> or a vector containing
+<code>"NbClust"</code>, <code>"mclust"</code>, <code>"cluster"</code> and <code>"M3C"</code>.</p></td>
     </tr>
     <tr>
       <th>fast</th>
-      <td><p>If <code>FALSE</code>, will compute 4 more indices (sets <code>index = "allong"</code> in <code>NbClust</code>). This has been deactivated by default as it is computationally heavy.</p></td>
+      <td><p>If <code>FALSE</code>, will compute 4 more indices (sets <code>index =
+"allong"</code> in <code>NbClust</code>). This has been deactivated by default as it is
+computationally heavy.</p></td>
     </tr>
     <tr>
       <th>...</th>

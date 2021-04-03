@@ -47,7 +47,11 @@
 
 
 <meta property="og:title" content="Number of components/factors to retain in PCA/FA — n_factors" />
-<meta property="og:description" content="This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors." />
+<meta property="og:description" content="This function runs many existing procedures for determining how many factors
+to retain/extract from factor analysis (FA) or dimension reduction (PCA). It
+returns the number of factors based on the maximum consensus between methods.
+In case of ties, it will keep the simplest model and select the solution
+with the fewer factors." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -181,7 +185,11 @@
     </div>
 
     <div class="ref-description">
-    <p>This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors.</p>
+    <p>This function runs many existing procedures for determining how many factors
+to retain/extract from factor analysis (FA) or dimension reduction (PCA). It
+returns the number of factors based on the maximum consensus between methods.
+In case of ties, it will keep the simplest model and select the solution
+with the fewer factors.</p>
     </div>
 
     <pre class="usage"><span class='fu'>n_factors</span><span class='op'>(</span>
@@ -215,27 +223,45 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Can be <code>"FA"</code> or <code>"PCA"</code>, depending on what you want to do.</p></td>
+      <td><p>Can be <code>"FA"</code> or <code>"PCA"</code>, depending on what you want to
+do.</p></td>
     </tr>
     <tr>
       <th>rotation</th>
-      <td><p>Only used for VSS (Very Simple Structure criterion, see <code><a href='https://rdrr.io/pkg/psych/man/VSS.html'>VSS</a></code>). The rotation to apply. Can be <code>"none"</code>, <code>"varimax"</code>, <code>"quartimax"</code>, <code>"bentlerT"</code>, <code>"equamax"</code>, <code>"varimin"</code>, <code>"geominT"</code> and <code>"bifactor"</code> for orthogonal rotations, and <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>, <code>"bentlerQ"</code>, <code>"geominQ"</code>, <code>"biquartimin"</code> and <code>"cluster"</code> for oblique transformations.</p></td>
+      <td><p>Only used for VSS (Very Simple Structure criterion, see
+<code><a href='https://rdrr.io/pkg/psych/man/VSS.html'>VSS</a></code>). The rotation to apply. Can be <code>"none"</code>,
+<code>"varimax"</code>, <code>"quartimax"</code>, <code>"bentlerT"</code>, <code>"equamax"</code>,
+<code>"varimin"</code>, <code>"geominT"</code> and <code>"bifactor"</code> for orthogonal
+rotations, and <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>,
+<code>"bentlerQ"</code>, <code>"geominQ"</code>, <code>"biquartimin"</code> and
+<code>"cluster"</code> for oblique transformations.</p></td>
     </tr>
     <tr>
       <th>algorithm</th>
-      <td><p>Factoring method used by VSS. Can be <code>"pa"</code> for Principal Axis Factor Analysis, <code>"minres"</code> for minimum residual (OLS) factoring, <code>"mle"</code> for Maximum Likelihood FA and <code>"pc"</code> for Principal Components. <code>"default"</code> will select <code>"minres"</code> if <code>type = "FA"</code> and <code>"pc"</code> if <code>type = "PCA"</code>.</p></td>
+      <td><p>Factoring method used by VSS. Can be <code>"pa"</code> for
+Principal Axis Factor Analysis, <code>"minres"</code> for minimum residual (OLS)
+factoring, <code>"mle"</code> for Maximum Likelihood FA and <code>"pc"</code> for
+Principal Components. <code>"default"</code> will select <code>"minres"</code> if
+<code>type = "FA"</code> and <code>"pc"</code> if <code>type = "PCA"</code>.</p></td>
     </tr>
     <tr>
       <th>package</th>
-      <td><p>These are the packages from which methods are used. Can be <code>"all"</code> or a vector containing <code>"nFactors"</code>, <code>"psych"</code> and <code>"EGAnet"</code>. However, <code>"EGAnet"</code> can be very slow for bigger datasets. Thus, by default, <code><a href='https://rdrr.io/r/base/c.html'>c("nFactors", "psych")</a></code> are selected.</p></td>
+      <td><p>Package from which respective methods are used. Can be
+<code>"all"</code> or a vector containing <code>"nFactors"</code>, <code>"psych"</code> and
+<code>"EGAnet"</code>. However, <code>"EGAnet"</code> can be very slow for bigger
+datasets. Thus, by default, <code><a href='https://rdrr.io/r/base/c.html'>c("nFactors", "psych")</a></code> are selected.</p></td>
     </tr>
     <tr>
       <th>cor</th>
-      <td><p>An optional correlation matrix that can be used (note that the data must still be passed as the first argument). If <code>NULL</code>, will compute it by running <code><a href='https://rdrr.io/r/stats/cor.html'>cor()</a></code> on the passed data.</p></td>
+      <td><p>An optional correlation matrix that can be used (note that the
+data must still be passed as the first argument). If <code>NULL</code>, will
+compute it by running <code><a href='https://rdrr.io/r/stats/cor.html'>cor()</a></code> on the passed data.</p></td>
     </tr>
     <tr>
       <th>safe</th>
-      <td><p>If <code>TRUE</code>, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.</p></td>
+      <td><p>If <code>TRUE</code>, the function will run all the procedures in try
+blocks, and will only return those that work and silently skip the ones
+that may fail.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -262,17 +288,38 @@
 
     
 <ul>
-<li><p>Bartlett, M. S. (1950). Tests of significance in factor analysis. British Journal of statistical psychology, 3(2), 77-85.</p></li>
-<li><p>Bentler, P. M., &amp; Yuan, K. H. (1996). Test of linear trend in eigenvalues of a covariance matrix with application to data analysis. British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.</p></li>
-<li><p>Cattell, R. B. (1966). The scree test for the number of factors. Multivariate behavioral research, 1(2), 245-276.</p></li>
-<li><p>Finch, W. H. (2019). Using Fit Statistic Differences to Determine the Optimal Number of Factors to Retain in an Exploratory Factor Analysis. Educational and Psychological Measurement.</p></li>
-<li><p>Zoski, K. W., &amp; Jurs, S. (1996). An objective counterpart to the visual scree test for factor analysis: The standard error scree. Educational and Psychological Measurement, 56(3), 443-451.</p></li>
-<li><p>Zoski, K., &amp; Jurs, S. (1993). Using multiple regression to determine the number of factors to retain in factor analysis. Multiple Linear Regression Viewpoints, 20(1), 5-9.</p></li>
-<li><p>Nasser, F., Benson, J., &amp; Wisenbaker, J. (2002). The performance of regression-based variations of the visual scree for determining the number of common factors. Educational and psychological measurement, 62(3), 397-419.</p></li>
-<li><p>Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M. D., Sadana, R., &amp; Thiyagarajan, J. A. (2018). Investigating the performance of Exploratory Graph Analysis and traditional techniques to identify the number of latent factors: A simulation and tutorial.</p></li>
-<li><p>Golino, H. F., &amp; Epskamp, S. (2017). Exploratory graph analysis: A new approach for estimating the number of dimensions in psychological research. PloS one, 12(6), e0174035.</p></li>
-<li><p>Revelle, W., &amp; Rocklin, T. (1979). Very simple structure: An alternative procedure for estimating the optimal number of interpretable factors. Multivariate Behavioral Research, 14(4), 403-414.</p></li>
-<li><p>Velicer, W. F. (1976). Determining the number of components from the matrix of partial correlations. Psychometrika, 41(3), 321-327.</p></li>
+<li><p>Bartlett, M. S. (1950). Tests of significance in factor analysis.
+  British Journal of statistical psychology, 3(2), 77-85.</p></li>
+<li><p>Bentler, P. M., &amp; Yuan, K. H. (1996). Test of linear trend in
+  eigenvalues of a covariance matrix with application to data analysis.
+  British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.</p></li>
+<li><p>Cattell, R. B. (1966). The scree test for the number of factors.
+  Multivariate behavioral research, 1(2), 245-276.</p></li>
+<li><p>Finch, W. H. (2019). Using Fit Statistic Differences to Determine the
+  Optimal Number of Factors to Retain in an Exploratory Factor Analysis.
+  Educational and Psychological Measurement.</p></li>
+<li><p>Zoski, K. W., &amp; Jurs, S. (1996). An objective counterpart to the
+  visual scree test for factor analysis: The standard error scree.
+  Educational and Psychological Measurement, 56(3), 443-451.</p></li>
+<li><p>Zoski, K., &amp; Jurs, S. (1993). Using multiple regression to determine
+  the number of factors to retain in factor analysis. Multiple Linear
+  Regression Viewpoints, 20(1), 5-9.</p></li>
+<li><p>Nasser, F., Benson, J., &amp; Wisenbaker, J. (2002). The performance of
+  regression-based variations of the visual scree for determining the number
+  of common factors. Educational and psychological measurement, 62(3),
+  397-419.</p></li>
+<li><p>Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M.
+  D., Sadana, R., &amp; Thiyagarajan, J. A. (2018). Investigating the performance
+  of Exploratory Graph Analysis and traditional techniques to identify the
+  number of latent factors: A simulation and tutorial.</p></li>
+<li><p>Golino, H. F., &amp; Epskamp, S. (2017). Exploratory graph analysis: A
+  new approach for estimating the number of dimensions in psychological
+  research. PloS one, 12(6), e0174035.</p></li>
+<li><p>Revelle, W., &amp; Rocklin, T. (1979). Very simple structure: An
+  alternative procedure for estimating the optimal number of interpretable
+  factors. Multivariate Behavioral Research, 14(4), 403-414.</p></li>
+<li><p>Velicer, W. F. (1976). Determining the number of components from the
+  matrix of partial correlations. Psychometrika, 41(3), 321-327.</p></li>
 </ul>
 
 
@@ -284,7 +331,7 @@
   <span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'>n_factors</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, type <span class='op'>=</span> <span class='st'>"FA"</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>)</span>
-<span class='co'># \donttest{</span>
+  <span class='co'># \donttest{</span>
   <span class='fu'>n_factors</span><span class='op'>(</span><span class='va'>mtcars</span>, type <span class='op'>=</span> <span class='st'>"PCA"</span>, package <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
   <span class='fu'>n_factors</span><span class='op'>(</span><span class='va'>mtcars</span>, type <span class='op'>=</span> <span class='st'>"FA"</span>, algorithm <span class='op'>=</span> <span class='st'>"mle"</span>, package <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
 <span class='co'># }</span>

@@ -47,7 +47,12 @@
 
 
 <meta property="og:title" content="Bartlett's Test of Sphericity — check_sphericity" />
-<meta property="og:description" content="Bartlett (1951) introduced the test of sphericity, which tests whether a matrix is significantly different from an identity matrix. This statistical test for the presence of correlations among variables, providing the statistical probability that the correlation matrix has significant correlations among at least some of variables. As for factor analysis to work, some relationships between variables are needed, thus, a significant Bartlett’s test of sphericity is required, say p &amp;lt; .001." />
+<meta property="og:description" content="Bartlett's (1951) test of sphericity tests whether a matrix (of correlations)
+is significantly different from an identity matrix. The test provides
+probability that the correlation matrix has significant correlations among at
+least some of the variables in a dataset, a prerequisite for factor analysis
+to work. In other words, before starting with factor analysis, one needs to
+check whether Bartlett’s test of sphericity is significant." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -181,7 +186,12 @@
     </div>
 
     <div class="ref-description">
-    <p>Bartlett (1951) introduced the test of sphericity, which tests whether a matrix is significantly different from an identity matrix. This statistical test for the presence of correlations among variables, providing the statistical probability that the correlation matrix has significant correlations among at least some of variables. As for factor analysis to work, some relationships between variables are needed, thus, a significant Bartlett’s test of sphericity is required, say p &lt; .001.</p>
+    <p>Bartlett's (1951) test of sphericity tests whether a matrix (of correlations)
+is significantly different from an identity matrix. The test provides
+probability that the correlation matrix has significant correlations among at
+least some of the variables in a dataset, a prerequisite for factor analysis
+to work. In other words, before starting with factor analysis, one needs to
+check whether Bartlett’s test of sphericity is significant.</p>
     </div>
 
     <pre class="usage"><span class='fu'>check_sphericity</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -204,13 +214,17 @@
     <p>A list of indices related to sphericity.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is strongly inspired by the <code>cortest.bartlett</code> function in the <span class="pkg">psych</span> package (Revelle, 2016). All credits go to its author.</p>
+    <p>This function is strongly inspired by the <code>cortest.bartlett</code>
+  function in the <span class="pkg">psych</span> package (Revelle, 2016). All credit goes to its
+  author.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
-<li><p>Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.</p></li>
-<li><p>Bartlett, M. S. (1951). The effect of standardization on a Chi-square approximation in factor analysis. Biometrika, 38(3/4), 337-344.</p></li>
+<li><p>Revelle, W. (2016). How To: Use the psych package for Factor Analysis
+  and data reduction.</p></li>
+<li><p>Bartlett, M. S. (1951). The effect of standardization on a Chi-square
+  approximation in factor analysis. Biometrika, 38(3/4), 337-344.</p></li>
 </ul>
 
 
@@ -219,7 +233,8 @@
 <span class='fu'>check_sphericity</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Test of Sphericity
 #&gt; 
-#&gt; </span><span style='color: #00BB00;'>Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analysis (Chisq(55) = 408.01, p &lt; .001).</span><span></div></span></pre>
+#&gt; </span><span style='color: #00BB00;'>Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analysis (Chisq(55) = 408.01, p &lt; .001).</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
