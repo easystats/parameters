@@ -592,7 +592,7 @@
                                          rope_ci = 1.0,
                                          bf_prior = NULL,
                                          diagnostic = c("ESS", "Rhat"),
-                                         priors = TRUE,
+                                         priors = FALSE,
                                          standardize = NULL,
                                          verbose = TRUE,
                                          ...) {
